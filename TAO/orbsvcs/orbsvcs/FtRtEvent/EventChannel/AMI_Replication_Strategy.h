@@ -22,10 +22,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class  AMI_Replication_Strategy.
+ *
+ * @brief Used by backup replicas when AMI calls are used for replicating requests.
+ */
+
 class AMI_Replication_Strategy: public Replication_Strategy
 {
 public:
-  AMI_Replication_Strategy();
+  /**
+   * @param mt Specifies whether multithreaded ORB is used. 
+   */
+  AMI_Replication_Strategy(bool mt);
+  ~AMI_Replication_Strategy();
   virtual void replicate_request(const FTRT::State& state,
                                  RollbackOperation rollback,
                                  const FtRtecEventChannelAdmin::ObjectId& oid
@@ -38,7 +48,8 @@ public:
   virtual int  acquire_read (void);
   virtual int  acquire_write (void);
   virtual int  release (void);
-
+private:
+  bool mt_;
 };
 
 

@@ -10,9 +10,15 @@ ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 
-Basic_Replication_Strategy::Basic_Replication_Strategy()
+Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
 : sequence_num_(0)
+, mutex_(mt ? new ACE_Thread_Mutex : 0)
 {
+}
+
+Basic_Replication_Strategy::~Basic_Replication_Strategy()
+{
+  delete mutex_;
 }
 
 void
@@ -73,7 +79,6 @@ Basic_Replication_Strategy::replicate_request(
 
     if (transaction_depth > 1) {
       successor->set_update(state ACE_ENV_ARG_PARAMETER);
-      TAO_FTRTEC::Log(3, "synchronous update complete\n");
     }
     else {
       ACE_TRY {
@@ -100,16 +105,16 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
 int  Basic_Replication_Strategy::acquire_read (void)
 {
-  return mutex_.acquire_read();
+  return mutex_ ? mutex_->acquire_read() : 0;
 }
 
 int  Basic_Replication_Strategy::acquire_write (void)
 {
-  return mutex_.acquire_write();
+  return mutex_ ? mutex_->acquire_write() : 0;
 }
 
 int  Basic_Replication_Strategy::release (void)
 {
-  return mutex_.release();
+  return mutex_ ? mutex_->release() : 0;
 }
 

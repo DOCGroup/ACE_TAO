@@ -16,8 +16,8 @@ ACE_RCSID (EventChannel,
            AMI_Primary_Replication_Strategy,
            "$Id$")
 
-AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy()
-: handler_(this)
+AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
+: handler_(this), mutex_(mt ? new ACE_RW_Thread_Mutex : 0)
 {
 }
 
@@ -29,17 +29,17 @@ AMI_Primary_Replication_Strategy::~AMI_Primary_Replication_Strategy()
 
 int  AMI_Primary_Replication_Strategy::acquire_read (void)
 {
-  return mutex_.acquire_read();
+  return mutex_ ? mutex_->acquire_read() : 0;
 }
 
 int  AMI_Primary_Replication_Strategy::acquire_write (void)
 {
-  return mutex_.acquire_write();
+  return mutex_ ? mutex_->acquire_write() : 0;
 }
 
 int  AMI_Primary_Replication_Strategy::release (void)
 {
-  return mutex_.release();
+  return  mutex_ ? mutex_->release() : 0;
 }
 
 
