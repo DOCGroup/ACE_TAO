@@ -41,7 +41,7 @@ namespace TAO
       // Adjust the nesting level.
       this->object_adapter_.non_servant_upcall_nesting_level_++;
 
-      // Release the Object Adapter lock.
+      // We always release
       this->object_adapter_.lock ().release ();
     }
 
@@ -50,11 +50,11 @@ namespace TAO
       // Reacquire the Object Adapter lock.
       this->object_adapter_.lock ().acquire ();
 
-      // We are done with this nested upcall.
-      this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;
-
       // Adjust the nesting level.
       this->object_adapter_.non_servant_upcall_nesting_level_--;
+
+      // We are done with this nested upcall.
+      this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;
 
       // If we are at the outer nested upcall.
       if (this->object_adapter_.non_servant_upcall_nesting_level_ == 0)
