@@ -1,3 +1,11 @@
+Fri Aug  6 14:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_sys_socket.h:
+          Removed include for 'ace/os_include/netinet/os_tcp.h'.
+        * ace/Pipe.cpp:
+          Added include for 'ace/os_include/netinet/os_tcp.h' to provide
+          TCP macros/constants (f.i. TCP_NODELAY) for OS like OpenVMS.
+
 Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Message_Block.cpp (crunch): If rd_ptr_ was greater than
