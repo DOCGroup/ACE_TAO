@@ -40,8 +40,8 @@ How to run:
 
 Run the server.
 
-./server -o ior_file -ORBId ORT_test_ORB -ORBServerId ORT_test_server
+./server -o server.ior -ORBId ORT_test_ORB -ORBServerId ORT_test_server
 
 Run the client.
 
-./client -k file://ior_file
+./client -k file://server.ior

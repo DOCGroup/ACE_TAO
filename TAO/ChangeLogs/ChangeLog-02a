@@ -1,3 +1,56 @@
+Wed Apr 17 15:23:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/run_test.pl:
+
+	  Created this (missing) script.  It will be used mostly by our
+	  automated regression tests.
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp (establish_components):
+
+	  Fixed unused argument warning for the emulated exception case.
+
+	  (components_established, adapter_manager_state_changed):
+	  (adapter_state_changed):
+
+	  Added missing emulated exception macro parameter.  Fixes a
+	  compile-time problem.
+
+	* tests/ORT/ORT_test.idl:
+	* tests/ORT/ORT_test.h:
+	* tests/ORT/ORT_test.cpp:
+
+	  Added a shutdown() method to allow the client to shutdown the
+	  server.  Useful for automated testing.
+
+	* tests/ORT/ORT_test_i.h (request_server):
+
+	  Fixed emulated exception macro in this method's parameter list.
+
+	* tests/ORT/ORT_test_i.cpp (ORT_test_i):
+
+	  Fixed unused argument warning.
+
+	* tests/ORT/client.cpp (main):
+
+	  Fixed incorrect emulated exception macros.
+	  "ACE_ENV_ARG_PARAMETER," not "ACE_ENV_ARG_DECL."
+	  "ACE_ENV_SINGLE_ARG_PARAMETER," not "ACE_ENV_SINGLE_ARG_DECL."
+
+	  Addressed comment I left in a code review.  It was never
+	  addressed for some reason.
+
+	  Invoke the server's shutdown() method upon successful
+	  completion.
+
+	* tests/ORT/server.cpp (main):
+
+	  Fixed incorrect emulated exception macros.
+
+	  Fixed incorrect string assignment.
+
+	  Pass the ORB pseudo-reference to the test servant's
+	  constructor.  Used by the servant's shutdown() method.
+
 Wed Apr 17 14:46:30 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/ORT/Makefile (.PRECIOUS, realclean):
