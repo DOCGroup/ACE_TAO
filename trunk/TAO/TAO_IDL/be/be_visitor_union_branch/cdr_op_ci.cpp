@@ -976,8 +976,8 @@ be_visitor_union_branch_cdr_op_ci::explicit_default (void)
                                      UTL_Scope::IK_decls);
 
       int i = 0; // counter
-      be_union_branch *bub; // union branch node
-      AST_Decl *d;  // temp node
+      be_union_branch *bub = 0; // union branch node
+      AST_Decl *d = 0;  // temp node
 
       while (!(si->is_done ()))
         {
