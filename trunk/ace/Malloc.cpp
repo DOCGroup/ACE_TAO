@@ -3,7 +3,6 @@
 #if !defined (ACE_MALLOC_CPP)
 #define ACE_MALLOC_CPP
 
-#define ACE_BUILD_DLL
 #include "ace/Malloc.h"
 #include "ace/Object_Manager.h"
 

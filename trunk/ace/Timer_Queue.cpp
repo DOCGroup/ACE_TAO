@@ -3,8 +3,6 @@
 #if !defined (ACE_TIMER_QUEUE_C)
 #define ACE_TIMER_QUEUE_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
 

@@ -3,8 +3,6 @@
 #ifndef CACHED_CONNECT_STRATEGY_T_C
 #define CACHED_CONNECT_STRATEGY_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Cached_Connect_Strategy_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

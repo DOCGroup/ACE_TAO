@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Active_Map_Manager.h"
 
 ACE_RCSID(ace, Active_Map_Manager, "$Id$")

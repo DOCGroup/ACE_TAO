@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #ifndef ACE_MANAGED_OBJECT_CPP
 #define ACE_MANAGED_OBJECT_CPP
 

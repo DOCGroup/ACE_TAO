@@ -1,7 +1,6 @@
 // MEM_Acceptor.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/MEM_Acceptor.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

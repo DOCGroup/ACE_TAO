@@ -1,7 +1,6 @@
 // Service_Repository.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
 

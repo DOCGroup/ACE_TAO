@@ -1,7 +1,6 @@
 // FILE_IO.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/FILE_IO.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,7 +1,6 @@
 // Name_Proxy.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Name_Proxy.h"
 
 ACE_RCSID(ace, Name_Proxy, "$Id$")

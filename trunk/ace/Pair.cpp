@@ -13,8 +13,6 @@
 //
 // ============================================================================
 
-#define ACE_BUILD_DLL
-
 #include "ace/Pair.h"
 
 ACE_RCSID(ace, Pair, "$Id$")

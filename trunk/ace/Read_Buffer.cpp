@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Read_Buffer.h"
 #include "ace/Service_Config.h"
 

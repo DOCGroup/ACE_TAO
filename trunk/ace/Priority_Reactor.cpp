@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Priority_Reactor.h"
 #include "ace/Malloc_T.h"
 

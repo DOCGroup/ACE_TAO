@@ -3,7 +3,6 @@
 // Defines the member functions for the base class of the ACE_TLI
 // abstraction.
 
-#define ACE_BUILD_DLL
 #include "ace/TLI.h"
 
 ACE_RCSID(ace, TLI, "$Id$")

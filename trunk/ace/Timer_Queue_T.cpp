@@ -3,7 +3,6 @@
 #ifndef ACE_TIMER_QUEUE_T_C
 #define ACE_TIMER_QUEUE_T_C
 
-#define ACE_BUILD_DLL
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

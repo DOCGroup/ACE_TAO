@@ -20,7 +20,7 @@
 // ============================================================================
 
 // Note, for this test the config.h file *must* come first!
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 #include "test_config.h"
 #include "ace/Containers.h"

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/FILE_Addr.h"
 
 #if !defined (__ACE_INLINE__)

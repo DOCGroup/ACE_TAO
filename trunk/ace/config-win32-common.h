@@ -76,6 +76,13 @@
 # define ACE_HAS_SVC_DLL 1
 #endif
 
+// Define the special export macros needed to export symbols outside a dll
+#define ACE_HAS_CUSTOM_EXPORT_MACROS
+#define ACE_Proper_Export_Flag __declspec (dllexport)
+#define ACE_Proper_Import_Flag __declspec (dllimport)
+#define ACE_EXPORT_SINGLETON_DECLARATION(T)  template class __declspec (dllexport) T
+#define ACE_IMPORT_SINGLETON_DECLARATION(T)  extern template class T
+
 // Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
 // want to compile with WinSock 2.0.
 //  Setting applies to  : building ACE

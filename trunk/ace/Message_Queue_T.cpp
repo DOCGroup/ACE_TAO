@@ -3,7 +3,6 @@
 #ifndef ACE_MESSAGE_QUEUE_T_C
 #define ACE_MESSAGE_QUEUE_T_C
 
-#define ACE_BUILD_DLL
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
 #include "ace/Message_Queue.h"

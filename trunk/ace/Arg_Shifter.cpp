@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 // #include "ace/OS.h"
 #include "ace/Arg_Shifter.h"
 

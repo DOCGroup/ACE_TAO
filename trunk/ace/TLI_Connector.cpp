@@ -1,7 +1,6 @@
 // TLI_Connector.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Handle_Set.h"
 #include "ace/TLI_Connector.h"
 

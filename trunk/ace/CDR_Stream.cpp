@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/CDR_Stream.h"
 
 #if !defined (__ACE_INLINE__)

@@ -4,7 +4,6 @@
 #ifndef ACE_STREAM_MODULES_C
 #define ACE_STREAM_MODULES_C
 
-#define ACE_BUILD_DLL
 #include "ace/Stream_Modules.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,7 +1,6 @@
 // Token_Request_Reply.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Token_Request_Reply.h"
 
 #if !defined (__ACE_INLINE__)

@@ -35,53 +35,22 @@ CFG=ACE DLL - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir ".\DLL\Debug"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\DLL\Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-RSC=rc.exe
-# ADD BASE RSC /l 0x407 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o".\ace.bsc"
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
-# SUBTRACT LINK32 /pdb:none
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Output_Dir "Unicode Release"
+# PROP BASE Intermediate_Dir "Unicode Release"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
-# PROP Intermediate_Dir ".\DLL\Release"
+# PROP Intermediate_Dir ".\DLL\Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -94,7 +63,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o".\ace.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /machine:I386 /out:"..\bin\ace.dll"
+# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /machine:I386 /out:"..\bin\aceu.dll"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
@@ -112,7 +81,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -126,69 +95,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aceud.pdb" /debug /machine:I386 /out:"..\bin\aceud.dll" /pdbtype:sept
-# SUBTRACT LINK32 /pdb:none
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Unicode Release"
-# PROP BASE Intermediate_Dir "Unicode Release"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\DLL\Unicode_Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "UNICODE" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT CPP /YX
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
-RSC=rc.exe
-# ADD BASE RSC /l 0x407 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo /o".\ace.bsc"
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /machine:I386 /out:"..\bin\aceu.dll"
-# SUBTRACT LINK32 /pdb:none
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir ".\DLL\Debug"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir ".\DLL\Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
-MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo /o".\ace.bsc"
-# ADD BSC32 /nologo /o".\ace.bsc"
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:ALPHA /out:"..\bin\aced.dll" /pdbtype:sept
-# SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:ALPHA /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -223,23 +129,23 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /machine:ALPHA /out:"..\bin\ace.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir ""
-# PROP BASE Intermediate_Dir "DLL\Unicode_Debug"
+# PROP BASE Intermediate_Dir ".\DLL\Debug"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\Unicode_Debug"
+# PROP Intermediate_Dir ".\DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "_DEBUG" /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
@@ -250,9 +156,9 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /debug /machine:ALPHA /out:"..\bin\aceud.dll" /pdbtype:sept
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:ALPHA /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceud.pdb" /debug /machine:ALPHA /out:"..\bin\aceud.dll" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:ALPHA /out:"..\bin\aced.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
@@ -287,28 +193,26 @@ LINK32=link.exe
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /machine:ALPHA /out:"..\bin\aceu.dll"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "ACE_DLL___Win32_MFC_Debug"
-# PROP BASE Intermediate_Dir "ACE_DLL___Win32_MFC_Debug"
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir "DLL\Unicode_Debug"
 # PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ""
-# PROP Intermediate_Dir "DLL\MFC_Debug"
+# PROP Intermediate_Dir "DLL\Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
-# SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
-# SUBTRACT CPP /YX /Yc /Yu
+# ADD BASE CPP /Gt0 /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "..\\ /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D ACE_HAS_DLL=1 /D "UNICODE" /FD /MTd /c
 MTL=midl.exe
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /o /win32 "NUL" "NUL"
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -316,9 +220,9 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
 # ADD BSC32 /nologo /o".\ace.bsc"
 LINK32=link.exe
-# ADD BASE LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceu.pdb" /debug /machine:ALPHA /out:"..\bin\aceud.dll" /pdbtype:sept
 # SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\acemfcd.pdb" /debug /machine:I386 /out:"..\bin\acemfcd.dll" /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:windows /dll /pdb:".\aceud.pdb" /debug /machine:ALPHA /out:"..\bin\aceud.dll" /pdbtype:sept
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
@@ -338,7 +242,7 @@ LINK32=link.exe
 CPP=cl.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FR /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FR /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -355,18 +259,114 @@ LINK32=link.exe
 # ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\acemfc.pdb" /machine:I386 /out:"..\bin\acemfc.dll"
 # SUBTRACT LINK32 /pdb:none
 
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "ACE_DLL___Win32_MFC_Debug"
+# PROP BASE Intermediate_Dir "ACE_DLL___Win32_MFC_Debug"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\MFC_Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# SUBTRACT BASE CPP /YX /Yc /Yu
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo /o".\ace.bsc"
+# ADD BSC32 /nologo /o".\ace.bsc"
+LINK32=link.exe
+# ADD BASE LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\ace.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
+# SUBTRACT BASE LINK32 /pdb:none
+# ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\acemfcd.pdb" /debug /machine:I386 /out:"..\bin\acemfcd.dll" /pdbtype:sept
+# SUBTRACT LINK32 /pdb:none
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "Release"
+# PROP BASE Intermediate_Dir "Release"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\DLL\Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+RSC=rc.exe
+# ADD BASE RSC /l 0x407 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo /o".\ace.bsc"
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
+# ADD LINK32 advapi32.lib user32.lib /nologo /subsystem:windows /dll /pdb:".\ace.pdb" /machine:I386 /out:"..\bin\ace.dll"
+# SUBTRACT LINK32 /pdb:none
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir ".\DLL\Debug"
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\DLL\Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_ACE_HAS_DLL=1 /D "ACE_BUILD_DLL" /FD /c
+# SUBTRACT CPP /YX /Yc /Yu
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+RSC=rc.exe
+# ADD BASE RSC /l 0x407 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo /o".\ace.bsc"
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 advapi32.lib user32.lib /nologo /version:4.4 /subsystem:windows /dll /pdb:".\aced.pdb" /debug /machine:I386 /out:"..\bin\aced.dll" /pdbtype:sept
+# SUBTRACT LINK32 /pdb:none
+
 !ENDIF 
 
 # Begin Target
 
-# Name "ACE DLL - Win32 Unicode Debug"
 # Name "ACE DLL - Win32 Unicode Release"
-# Name "ACE DLL - Win32 Alpha Debug"
+# Name "ACE DLL - Win32 Unicode Debug"
 # Name "ACE DLL - Win32 Alpha Release"
-# Name "ACE DLL - Win32 Alpha Unicode Debug"
+# Name "ACE DLL - Win32 Alpha Debug"
 # Name "ACE DLL - Win32 Alpha Unicode Release"
-# Name "ACE DLL - Win32 MFC Debug"
+# Name "ACE DLL - Win32 Alpha Unicode Debug"
 # Name "ACE DLL - Win32 MFC Release"
+# Name "ACE DLL - Win32 MFC Debug"
 # Name "ACE DLL - Win32 Release"
 # Name "ACE DLL - Win32 Debug"
 # Begin Group "Source Files"
@@ -376,25 +376,25 @@ LINK32=link.exe
 
 SOURCE=.\ACE.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -403,25 +403,25 @@ SOURCE=.\ACE.cpp
 
 SOURCE=.\Activation_Queue.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -430,25 +430,25 @@ SOURCE=.\Activation_Queue.cpp
 
 SOURCE=.\Active_Map_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -457,25 +457,25 @@ SOURCE=.\Active_Map_Manager.cpp
 
 SOURCE=.\Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -484,25 +484,25 @@ SOURCE=.\Addr.cpp
 
 SOURCE=.\Arg_Shifter.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -511,25 +511,25 @@ SOURCE=.\Arg_Shifter.cpp
 
 SOURCE=.\ARGV.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -538,25 +538,25 @@ SOURCE=.\ARGV.cpp
 
 SOURCE=.\Asynch_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -565,25 +565,25 @@ SOURCE=.\Asynch_IO.cpp
 
 SOURCE=.\Asynch_IO_Impl.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -592,25 +592,25 @@ SOURCE=.\Asynch_IO_Impl.cpp
 
 SOURCE=.\ATM_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -619,25 +619,25 @@ SOURCE=.\ATM_Acceptor.cpp
 
 SOURCE=.\ATM_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -646,25 +646,25 @@ SOURCE=.\ATM_Addr.cpp
 
 SOURCE=.\ATM_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -673,25 +673,25 @@ SOURCE=.\ATM_Connector.cpp
 
 SOURCE=.\ATM_Params.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -700,25 +700,25 @@ SOURCE=.\ATM_Params.cpp
 
 SOURCE=.\ATM_QoS.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -727,25 +727,25 @@ SOURCE=.\ATM_QoS.cpp
 
 SOURCE=.\ATM_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -754,25 +754,25 @@ SOURCE=.\ATM_Stream.cpp
 
 SOURCE=.\Based_Pointer_Repository.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -781,25 +781,25 @@ SOURCE=.\Based_Pointer_Repository.cpp
 
 SOURCE=.\Basic_Types.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -808,25 +808,25 @@ SOURCE=.\Basic_Types.cpp
 
 SOURCE=.\Capabilities.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -835,25 +835,25 @@ SOURCE=.\Capabilities.cpp
 
 SOURCE=.\CDR_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -862,25 +862,25 @@ SOURCE=.\CDR_Stream.cpp
 
 SOURCE=.\Configuration.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -889,25 +889,25 @@ SOURCE=.\Configuration.cpp
 
 SOURCE=.\Containers.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -916,25 +916,25 @@ SOURCE=.\Containers.cpp
 
 SOURCE=.\CORBA_Handler.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -943,25 +943,25 @@ SOURCE=.\CORBA_Handler.cpp
 
 SOURCE=.\CORBA_Ref.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -970,25 +970,25 @@ SOURCE=.\CORBA_Ref.cpp
 
 SOURCE=.\Date_Time.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -997,25 +997,25 @@ SOURCE=.\Date_Time.cpp
 
 SOURCE=.\DEV.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1024,25 +1024,25 @@ SOURCE=.\DEV.cpp
 
 SOURCE=.\DEV_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1051,25 +1051,25 @@ SOURCE=.\DEV_Addr.cpp
 
 SOURCE=.\DEV_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1078,25 +1078,25 @@ SOURCE=.\DEV_Connector.cpp
 
 SOURCE=.\DEV_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1105,25 +1105,25 @@ SOURCE=.\DEV_IO.cpp
 
 SOURCE=.\Dirent.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1132,25 +1132,25 @@ SOURCE=.\Dirent.cpp
 
 SOURCE=.\DLL.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1159,25 +1159,25 @@ SOURCE=.\DLL.cpp
 
 SOURCE=.\Dump.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1186,25 +1186,25 @@ SOURCE=.\Dump.cpp
 
 SOURCE=.\Dynamic.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1213,25 +1213,25 @@ SOURCE=.\Dynamic.cpp
 
 SOURCE=.\Dynamic_Service.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1240,25 +1240,25 @@ SOURCE=.\Dynamic_Service.cpp
 
 SOURCE=.\Event_Handler.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1267,25 +1267,25 @@ SOURCE=.\Event_Handler.cpp
 
 SOURCE=.\Event_Handler_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1294,25 +1294,25 @@ SOURCE=.\Event_Handler_T.cpp
 
 SOURCE=.\FIFO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1321,25 +1321,25 @@ SOURCE=.\FIFO.cpp
 
 SOURCE=.\FIFO_Recv.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1348,25 +1348,25 @@ SOURCE=.\FIFO_Recv.cpp
 
 SOURCE=.\FIFO_Recv_Msg.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1375,25 +1375,25 @@ SOURCE=.\FIFO_Recv_Msg.cpp
 
 SOURCE=.\FIFO_Send.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1402,25 +1402,25 @@ SOURCE=.\FIFO_Send.cpp
 
 SOURCE=.\FIFO_Send_Msg.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1429,25 +1429,25 @@ SOURCE=.\FIFO_Send_Msg.cpp
 
 SOURCE=.\FILE.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1456,25 +1456,25 @@ SOURCE=.\FILE.cpp
 
 SOURCE=.\FILE_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1483,25 +1483,25 @@ SOURCE=.\FILE_Addr.cpp
 
 SOURCE=.\FILE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1510,25 +1510,25 @@ SOURCE=.\FILE_Connector.cpp
 
 SOURCE=.\FILE_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1537,25 +1537,25 @@ SOURCE=.\FILE_IO.cpp
 
 SOURCE=.\Filecache.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1564,25 +1564,25 @@ SOURCE=.\Filecache.cpp
 
 SOURCE=.\Functor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1591,25 +1591,25 @@ SOURCE=.\Functor.cpp
 
 SOURCE=.\Get_Opt.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1618,25 +1618,25 @@ SOURCE=.\Get_Opt.cpp
 
 SOURCE=.\Handle_Set.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1645,25 +1645,25 @@ SOURCE=.\Handle_Set.cpp
 
 SOURCE=.\Hash_Map_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1672,25 +1672,25 @@ SOURCE=.\Hash_Map_Manager.cpp
 
 SOURCE=.\High_Res_Timer.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1699,25 +1699,25 @@ SOURCE=.\High_Res_Timer.cpp
 
 SOURCE=.\INET_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1726,25 +1726,25 @@ SOURCE=.\INET_Addr.cpp
 
 SOURCE=.\IO_Cntl_Msg.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1753,25 +1753,25 @@ SOURCE=.\IO_Cntl_Msg.cpp
 
 SOURCE=.\IO_SAP.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1780,25 +1780,25 @@ SOURCE=.\IO_SAP.cpp
 
 SOURCE=.\IOStream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1807,25 +1807,25 @@ SOURCE=.\IOStream.cpp
 
 SOURCE=.\IPC_SAP.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1834,25 +1834,25 @@ SOURCE=.\IPC_SAP.cpp
 
 SOURCE=.\Local_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1861,25 +1861,25 @@ SOURCE=.\Local_Name_Space.cpp
 
 SOURCE=.\Local_Tokens.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1888,25 +1888,25 @@ SOURCE=.\Local_Tokens.cpp
 
 SOURCE=.\Log_Msg.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1915,25 +1915,25 @@ SOURCE=.\Log_Msg.cpp
 
 SOURCE=.\Log_Record.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1942,25 +1942,25 @@ SOURCE=.\Log_Record.cpp
 
 SOURCE=.\LSOCK.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1969,25 +1969,25 @@ SOURCE=.\LSOCK.cpp
 
 SOURCE=.\LSOCK_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -1996,25 +1996,25 @@ SOURCE=.\LSOCK_Acceptor.cpp
 
 SOURCE=.\LSOCK_CODgram.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2023,25 +2023,25 @@ SOURCE=.\LSOCK_CODgram.cpp
 
 SOURCE=.\LSOCK_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2050,25 +2050,25 @@ SOURCE=.\LSOCK_Connector.cpp
 
 SOURCE=.\LSOCK_Dgram.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2077,25 +2077,25 @@ SOURCE=.\LSOCK_Dgram.cpp
 
 SOURCE=.\LSOCK_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2104,25 +2104,25 @@ SOURCE=.\LSOCK_Stream.cpp
 
 SOURCE=.\Malloc.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2131,25 +2131,25 @@ SOURCE=.\Malloc.cpp
 
 SOURCE=.\Map.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2158,25 +2158,25 @@ SOURCE=.\Map.cpp
 
 SOURCE=.\MEM_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2185,25 +2185,25 @@ SOURCE=.\MEM_Acceptor.cpp
 
 SOURCE=.\MEM_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2212,25 +2212,25 @@ SOURCE=.\MEM_Addr.cpp
 
 SOURCE=.\MEM_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2239,25 +2239,25 @@ SOURCE=.\MEM_Connector.cpp
 
 SOURCE=.\MEM_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2266,25 +2266,25 @@ SOURCE=.\MEM_IO.cpp
 
 SOURCE=.\Mem_Map.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2293,25 +2293,25 @@ SOURCE=.\Mem_Map.cpp
 
 SOURCE=.\MEM_SAP.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2320,25 +2320,25 @@ SOURCE=.\MEM_SAP.cpp
 
 SOURCE=.\MEM_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2347,25 +2347,25 @@ SOURCE=.\MEM_Stream.cpp
 
 SOURCE=.\Memory_Pool.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2374,25 +2374,25 @@ SOURCE=.\Memory_Pool.cpp
 
 SOURCE=.\Message_Block.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2401,25 +2401,25 @@ SOURCE=.\Message_Block.cpp
 
 SOURCE=.\Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2428,25 +2428,25 @@ SOURCE=.\Message_Queue.cpp
 
 SOURCE=.\Method_Request.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2455,25 +2455,25 @@ SOURCE=.\Method_Request.cpp
 
 SOURCE=.\Msg_WFMO_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2482,25 +2482,25 @@ SOURCE=.\Msg_WFMO_Reactor.cpp
 
 SOURCE=.\Multiplexor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2509,25 +2509,25 @@ SOURCE=.\Multiplexor.cpp
 
 SOURCE=.\Name_Proxy.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2536,25 +2536,25 @@ SOURCE=.\Name_Proxy.cpp
 
 SOURCE=.\Name_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2563,25 +2563,25 @@ SOURCE=.\Name_Request_Reply.cpp
 
 SOURCE=.\Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2590,25 +2590,25 @@ SOURCE=.\Name_Space.cpp
 
 SOURCE=.\Naming_Context.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2617,25 +2617,25 @@ SOURCE=.\Naming_Context.cpp
 
 SOURCE=.\NT_Service.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2644,25 +2644,25 @@ SOURCE=.\NT_Service.cpp
 
 SOURCE=.\Object_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2671,25 +2671,25 @@ SOURCE=.\Object_Manager.cpp
 
 SOURCE=.\Obstack.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2698,25 +2698,25 @@ SOURCE=.\Obstack.cpp
 
 SOURCE=.\OS.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2725,25 +2725,25 @@ SOURCE=.\OS.cpp
 
 SOURCE=.\Pair.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2752,25 +2752,25 @@ SOURCE=.\Pair.cpp
 
 SOURCE=.\Parse_Node.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2779,25 +2779,25 @@ SOURCE=.\Parse_Node.cpp
 
 SOURCE=.\Pipe.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2806,25 +2806,25 @@ SOURCE=.\Pipe.cpp
 
 SOURCE=.\Priority_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2833,25 +2833,25 @@ SOURCE=.\Priority_Reactor.cpp
 
 SOURCE=.\Proactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2860,25 +2860,25 @@ SOURCE=.\Proactor.cpp
 
 SOURCE=.\Process.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2887,25 +2887,25 @@ SOURCE=.\Process.cpp
 
 SOURCE=.\Process_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2914,25 +2914,25 @@ SOURCE=.\Process_Manager.cpp
 
 SOURCE=.\Profile_Timer.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2941,25 +2941,25 @@ SOURCE=.\Profile_Timer.cpp
 
 SOURCE=.\QoS_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2968,25 +2968,25 @@ SOURCE=.\QoS_Manager.cpp
 
 SOURCE=.\QoS_Session_Factory.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -2995,25 +2995,25 @@ SOURCE=.\QoS_Session_Factory.cpp
 
 SOURCE=.\QoS_Session_Impl.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3022,25 +3022,25 @@ SOURCE=.\QoS_Session_Impl.cpp
 
 SOURCE=.\Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3049,25 +3049,25 @@ SOURCE=.\Reactor.cpp
 
 SOURCE=.\Read_Buffer.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3076,25 +3076,25 @@ SOURCE=.\Read_Buffer.cpp
 
 SOURCE=.\Registry.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3103,25 +3103,25 @@ SOURCE=.\Registry.cpp
 
 SOURCE=.\Registry_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3130,25 +3130,25 @@ SOURCE=.\Registry_Name_Space.cpp
 
 SOURCE=.\Remote_Name_Space.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3157,25 +3157,25 @@ SOURCE=.\Remote_Name_Space.cpp
 
 SOURCE=.\Remote_Tokens.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3184,25 +3184,25 @@ SOURCE=.\Remote_Tokens.cpp
 
 SOURCE=.\Sched_Params.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3211,25 +3211,25 @@ SOURCE=.\Sched_Params.cpp
 
 SOURCE=.\Select_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3238,25 +3238,25 @@ SOURCE=.\Select_Reactor.cpp
 
 SOURCE=.\Select_Reactor_Base.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3265,25 +3265,25 @@ SOURCE=.\Select_Reactor_Base.cpp
 
 SOURCE=.\Service_Config.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3292,25 +3292,25 @@ SOURCE=.\Service_Config.cpp
 
 SOURCE=.\Service_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3319,25 +3319,25 @@ SOURCE=.\Service_Manager.cpp
 
 SOURCE=.\Service_Object.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3346,25 +3346,25 @@ SOURCE=.\Service_Object.cpp
 
 SOURCE=.\Service_Repository.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3373,25 +3373,25 @@ SOURCE=.\Service_Repository.cpp
 
 SOURCE=.\Service_Types.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3400,25 +3400,25 @@ SOURCE=.\Service_Types.cpp
 
 SOURCE=.\Shared_Memory.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3427,25 +3427,25 @@ SOURCE=.\Shared_Memory.cpp
 
 SOURCE=.\Shared_Memory_MM.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3454,25 +3454,25 @@ SOURCE=.\Shared_Memory_MM.cpp
 
 SOURCE=.\Shared_Memory_SV.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3481,25 +3481,25 @@ SOURCE=.\Shared_Memory_SV.cpp
 
 SOURCE=.\Shared_Object.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3508,25 +3508,25 @@ SOURCE=.\Shared_Object.cpp
 
 SOURCE=.\Signal.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3535,25 +3535,25 @@ SOURCE=.\Signal.cpp
 
 SOURCE=.\SOCK.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3562,25 +3562,25 @@ SOURCE=.\SOCK.cpp
 
 SOURCE=.\SOCK_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3589,25 +3589,25 @@ SOURCE=.\SOCK_Acceptor.cpp
 
 SOURCE=.\SOCK_CODgram.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3616,25 +3616,25 @@ SOURCE=.\SOCK_CODgram.cpp
 
 SOURCE=.\SOCK_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3643,25 +3643,25 @@ SOURCE=.\SOCK_Connector.cpp
 
 SOURCE=.\SOCK_Dgram.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3670,25 +3670,25 @@ SOURCE=.\SOCK_Dgram.cpp
 
 SOURCE=.\SOCK_Dgram_Bcast.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3697,25 +3697,25 @@ SOURCE=.\SOCK_Dgram_Bcast.cpp
 
 SOURCE=.\SOCK_Dgram_Mcast.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3724,25 +3724,25 @@ SOURCE=.\SOCK_Dgram_Mcast.cpp
 
 SOURCE=.\SOCK_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3751,25 +3751,25 @@ SOURCE=.\SOCK_IO.cpp
 
 SOURCE=.\SOCK_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3778,25 +3778,25 @@ SOURCE=.\SOCK_Stream.cpp
 
 SOURCE=.\SPIPE.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3805,25 +3805,25 @@ SOURCE=.\SPIPE.cpp
 
 SOURCE=.\SPIPE_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3832,25 +3832,25 @@ SOURCE=.\SPIPE_Acceptor.cpp
 
 SOURCE=.\SPIPE_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3859,25 +3859,25 @@ SOURCE=.\SPIPE_Addr.cpp
 
 SOURCE=.\SPIPE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3886,25 +3886,25 @@ SOURCE=.\SPIPE_Connector.cpp
 
 SOURCE=.\SPIPE_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3913,25 +3913,25 @@ SOURCE=.\SPIPE_Stream.cpp
 
 SOURCE=.\SString.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3940,25 +3940,25 @@ SOURCE=.\SString.cpp
 
 SOURCE=.\Stats.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3967,25 +3967,25 @@ SOURCE=.\Stats.cpp
 
 SOURCE=.\Strategies.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -3994,25 +3994,25 @@ SOURCE=.\Strategies.cpp
 
 SOURCE=.\SV_Message.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4021,25 +4021,25 @@ SOURCE=.\SV_Message.cpp
 
 SOURCE=.\SV_Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4048,25 +4048,25 @@ SOURCE=.\SV_Message_Queue.cpp
 
 SOURCE=.\SV_Semaphore_Complex.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4075,25 +4075,25 @@ SOURCE=.\SV_Semaphore_Complex.cpp
 
 SOURCE=.\SV_Semaphore_Simple.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4102,25 +4102,25 @@ SOURCE=.\SV_Semaphore_Simple.cpp
 
 SOURCE=.\SV_Shared_Memory.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4129,25 +4129,25 @@ SOURCE=.\SV_Shared_Memory.cpp
 
 SOURCE=.\Svc_Conf_l.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4156,25 +4156,25 @@ SOURCE=.\Svc_Conf_l.cpp
 
 SOURCE=.\Svc_Conf_y.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4183,25 +4183,25 @@ SOURCE=.\Svc_Conf_y.cpp
 
 SOURCE=.\Svc_Handler.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4210,25 +4210,25 @@ SOURCE=.\Svc_Handler.cpp
 
 SOURCE=.\Synch.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4237,25 +4237,25 @@ SOURCE=.\Synch.cpp
 
 SOURCE=.\Synch_Options.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4264,25 +4264,25 @@ SOURCE=.\Synch_Options.cpp
 
 SOURCE=.\System_Time.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4291,25 +4291,25 @@ SOURCE=.\System_Time.cpp
 
 SOURCE=.\Task.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4318,25 +4318,25 @@ SOURCE=.\Task.cpp
 
 SOURCE=.\Template_Instantiations.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4345,25 +4345,25 @@ SOURCE=.\Template_Instantiations.cpp
 
 SOURCE=.\Thread.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4372,25 +4372,25 @@ SOURCE=.\Thread.cpp
 
 SOURCE=.\Thread_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4399,25 +4399,25 @@ SOURCE=.\Thread_Manager.cpp
 
 SOURCE=.\Time_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4426,25 +4426,25 @@ SOURCE=.\Time_Request_Reply.cpp
 
 SOURCE=.\Timeprobe.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4453,25 +4453,25 @@ SOURCE=.\Timeprobe.cpp
 
 SOURCE=.\Timer_Hash.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4480,25 +4480,25 @@ SOURCE=.\Timer_Hash.cpp
 
 SOURCE=.\Timer_Heap.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4507,25 +4507,25 @@ SOURCE=.\Timer_Heap.cpp
 
 SOURCE=.\Timer_List.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4534,25 +4534,25 @@ SOURCE=.\Timer_List.cpp
 
 SOURCE=.\Timer_Queue.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4561,25 +4561,25 @@ SOURCE=.\Timer_Queue.cpp
 
 SOURCE=.\Timer_Queue_Adapters.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4588,25 +4588,25 @@ SOURCE=.\Timer_Queue_Adapters.cpp
 
 SOURCE=.\Timer_Wheel.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4615,25 +4615,25 @@ SOURCE=.\Timer_Wheel.cpp
 
 SOURCE=.\TLI.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4642,25 +4642,25 @@ SOURCE=.\TLI.cpp
 
 SOURCE=.\TLI_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4669,25 +4669,25 @@ SOURCE=.\TLI_Acceptor.cpp
 
 SOURCE=.\TLI_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4696,25 +4696,25 @@ SOURCE=.\TLI_Connector.cpp
 
 SOURCE=.\TLI_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4723,25 +4723,25 @@ SOURCE=.\TLI_Stream.cpp
 
 SOURCE=.\Token.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4750,25 +4750,25 @@ SOURCE=.\Token.cpp
 
 SOURCE=.\Token_Collection.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4777,25 +4777,25 @@ SOURCE=.\Token_Collection.cpp
 
 SOURCE=.\Token_Invariants.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4804,25 +4804,25 @@ SOURCE=.\Token_Invariants.cpp
 
 SOURCE=.\Token_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4831,25 +4831,25 @@ SOURCE=.\Token_Manager.cpp
 
 SOURCE=.\Token_Request_Reply.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4858,25 +4858,25 @@ SOURCE=.\Token_Request_Reply.cpp
 
 SOURCE=.\TP_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4885,25 +4885,25 @@ SOURCE=.\TP_Reactor.cpp
 
 SOURCE=.\Trace.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4912,25 +4912,25 @@ SOURCE=.\Trace.cpp
 
 SOURCE=.\TTY_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4939,25 +4939,25 @@ SOURCE=.\TTY_IO.cpp
 
 SOURCE=.\Typed_SV_Message.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4966,25 +4966,25 @@ SOURCE=.\Typed_SV_Message.cpp
 
 SOURCE=.\Typed_SV_Message_Queue.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -4993,25 +4993,25 @@ SOURCE=.\Typed_SV_Message_Queue.cpp
 
 SOURCE=.\UNIX_Addr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5020,25 +5020,25 @@ SOURCE=.\UNIX_Addr.cpp
 
 SOURCE=.\UPIPE_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5047,25 +5047,25 @@ SOURCE=.\UPIPE_Acceptor.cpp
 
 SOURCE=.\UPIPE_Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5074,25 +5074,25 @@ SOURCE=.\UPIPE_Connector.cpp
 
 SOURCE=.\UPIPE_Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5101,25 +5101,25 @@ SOURCE=.\UPIPE_Stream.cpp
 
 SOURCE=.\WFMO_Reactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5128,25 +5128,25 @@ SOURCE=.\WFMO_Reactor.cpp
 
 SOURCE=.\WIN32_Asynch_IO.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5155,25 +5155,25 @@ SOURCE=.\WIN32_Asynch_IO.cpp
 
 SOURCE=.\WIN32_Proactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -5182,25 +5182,25 @@ SOURCE=.\WIN32_Proactor.cpp
 
 SOURCE=.\XtReactor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
 
 !ENDIF 
 
@@ -6897,11 +6897,7 @@ SOURCE=.\WIN32_Proactor.i
 
 SOURCE=.\Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6909,7 +6905,7 @@ SOURCE=.\Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6917,7 +6913,7 @@ SOURCE=.\Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6925,8 +6921,9 @@ SOURCE=.\Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -6934,9 +6931,12 @@ SOURCE=.\Acceptor.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -6946,11 +6946,7 @@ SOURCE=.\Acceptor.cpp
 
 SOURCE=.\Active_Map_Manager_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6958,7 +6954,7 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6966,7 +6962,7 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -6974,8 +6970,9 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -6983,9 +6980,12 @@ SOURCE=.\Active_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -6995,11 +6995,7 @@ SOURCE=.\Active_Map_Manager_T.cpp
 
 SOURCE=.\Asynch_Acceptor.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7007,7 +7003,7 @@ SOURCE=.\Asynch_Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7015,7 +7011,7 @@ SOURCE=.\Asynch_Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7023,8 +7019,9 @@ SOURCE=.\Asynch_Acceptor.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7032,9 +7029,12 @@ SOURCE=.\Asynch_Acceptor.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7044,11 +7044,7 @@ SOURCE=.\Asynch_Acceptor.cpp
 
 SOURCE=.\Auto_Ptr.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7056,7 +7052,7 @@ SOURCE=.\Auto_Ptr.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7064,7 +7060,7 @@ SOURCE=.\Auto_Ptr.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7072,8 +7068,9 @@ SOURCE=.\Auto_Ptr.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7081,9 +7078,12 @@ SOURCE=.\Auto_Ptr.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7098,11 +7098,7 @@ SOURCE=.\Based_Pointer_T.cpp
 
 SOURCE=.\Cache_Map_Manager_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7110,7 +7106,7 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7118,7 +7114,7 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7126,8 +7122,9 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7135,9 +7132,12 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7147,11 +7147,7 @@ SOURCE=.\Cache_Map_Manager_T.cpp
 
 SOURCE=.\Cached_Connect_Strategy_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7159,7 +7155,7 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7167,7 +7163,7 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7175,8 +7171,9 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7184,9 +7181,12 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7196,11 +7196,7 @@ SOURCE=.\Cached_Connect_Strategy_T.cpp
 
 SOURCE=.\Caching_Strategies_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7208,7 +7204,7 @@ SOURCE=.\Caching_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7216,7 +7212,7 @@ SOURCE=.\Caching_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7224,8 +7220,9 @@ SOURCE=.\Caching_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7233,9 +7230,12 @@ SOURCE=.\Caching_Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7245,11 +7245,7 @@ SOURCE=.\Caching_Strategies_T.cpp
 
 SOURCE=.\Caching_Utility_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7257,7 +7253,7 @@ SOURCE=.\Caching_Utility_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7265,7 +7261,7 @@ SOURCE=.\Caching_Utility_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7273,8 +7269,9 @@ SOURCE=.\Caching_Utility_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7282,9 +7279,12 @@ SOURCE=.\Caching_Utility_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7294,11 +7294,7 @@ SOURCE=.\Caching_Utility_T.cpp
 
 SOURCE=.\Cleanup_Strategies_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7306,7 +7302,7 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7314,7 +7310,7 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7322,8 +7318,9 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7331,9 +7328,12 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7343,11 +7343,7 @@ SOURCE=.\Cleanup_Strategies_T.cpp
 
 SOURCE=.\Connector.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7355,7 +7351,7 @@ SOURCE=.\Connector.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7363,7 +7359,7 @@ SOURCE=.\Connector.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7371,8 +7367,9 @@ SOURCE=.\Connector.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7380,9 +7377,12 @@ SOURCE=.\Connector.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7392,11 +7392,7 @@ SOURCE=.\Connector.cpp
 
 SOURCE=.\Containers_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7404,7 +7400,7 @@ SOURCE=.\Containers_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7412,7 +7408,7 @@ SOURCE=.\Containers_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7420,8 +7416,9 @@ SOURCE=.\Containers_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7429,9 +7426,12 @@ SOURCE=.\Containers_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7441,11 +7441,7 @@ SOURCE=.\Containers_T.cpp
 
 SOURCE=.\Dump_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7453,7 +7449,7 @@ SOURCE=.\Dump_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7461,7 +7457,7 @@ SOURCE=.\Dump_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7469,8 +7465,9 @@ SOURCE=.\Dump_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7478,9 +7475,12 @@ SOURCE=.\Dump_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7490,11 +7490,7 @@ SOURCE=.\Dump_T.cpp
 
 SOURCE=.\Free_List.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7502,7 +7498,7 @@ SOURCE=.\Free_List.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7510,7 +7506,7 @@ SOURCE=.\Free_List.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7518,8 +7514,9 @@ SOURCE=.\Free_List.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7527,9 +7524,12 @@ SOURCE=.\Free_List.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7539,11 +7539,7 @@ SOURCE=.\Free_List.cpp
 
 SOURCE=.\Functor_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7551,7 +7547,7 @@ SOURCE=.\Functor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7559,7 +7555,7 @@ SOURCE=.\Functor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7567,8 +7563,9 @@ SOURCE=.\Functor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7576,9 +7573,12 @@ SOURCE=.\Functor_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7588,11 +7588,7 @@ SOURCE=.\Functor_T.cpp
 
 SOURCE=.\Future.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7600,7 +7596,7 @@ SOURCE=.\Future.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7608,7 +7604,7 @@ SOURCE=.\Future.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7616,8 +7612,9 @@ SOURCE=.\Future.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7625,9 +7622,12 @@ SOURCE=.\Future.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7637,11 +7637,7 @@ SOURCE=.\Future.cpp
 
 SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7649,7 +7645,7 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7657,7 +7653,7 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7665,8 +7661,9 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7674,9 +7671,12 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7686,11 +7686,7 @@ SOURCE=.\Hash_Cache_Map_Manager_T.cpp
 
 SOURCE=.\Hash_Map_Manager_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7698,7 +7694,7 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7706,7 +7702,7 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7714,8 +7710,9 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7723,9 +7720,12 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7735,11 +7735,7 @@ SOURCE=.\Hash_Map_Manager_T.cpp
 
 SOURCE=.\Hash_Map_With_Allocator_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7747,7 +7743,7 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7755,7 +7751,7 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7763,8 +7759,9 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7772,9 +7769,12 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7784,11 +7784,7 @@ SOURCE=.\Hash_Map_With_Allocator_T.cpp
 
 SOURCE=.\IOStream_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7796,7 +7792,7 @@ SOURCE=.\IOStream_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7804,7 +7800,7 @@ SOURCE=.\IOStream_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7812,8 +7808,9 @@ SOURCE=.\IOStream_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7821,9 +7818,12 @@ SOURCE=.\IOStream_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7833,11 +7833,7 @@ SOURCE=.\IOStream_T.cpp
 
 SOURCE=.\Local_Name_Space_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7845,7 +7841,7 @@ SOURCE=.\Local_Name_Space_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7853,7 +7849,7 @@ SOURCE=.\Local_Name_Space_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7861,8 +7857,9 @@ SOURCE=.\Local_Name_Space_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7870,9 +7867,12 @@ SOURCE=.\Local_Name_Space_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7882,11 +7882,7 @@ SOURCE=.\Local_Name_Space_T.cpp
 
 SOURCE=.\Malloc_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7894,7 +7890,7 @@ SOURCE=.\Malloc_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7902,7 +7898,7 @@ SOURCE=.\Malloc_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7910,8 +7906,9 @@ SOURCE=.\Malloc_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7919,9 +7916,12 @@ SOURCE=.\Malloc_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7931,11 +7931,7 @@ SOURCE=.\Malloc_T.cpp
 
 SOURCE=.\Managed_Object.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7943,7 +7939,7 @@ SOURCE=.\Managed_Object.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7951,7 +7947,7 @@ SOURCE=.\Managed_Object.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7959,8 +7955,9 @@ SOURCE=.\Managed_Object.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -7968,9 +7965,12 @@ SOURCE=.\Managed_Object.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -7980,11 +7980,7 @@ SOURCE=.\Managed_Object.cpp
 
 SOURCE=.\Map_Manager.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -7992,7 +7988,7 @@ SOURCE=.\Map_Manager.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8000,7 +7996,7 @@ SOURCE=.\Map_Manager.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8008,8 +8004,9 @@ SOURCE=.\Map_Manager.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8017,9 +8014,12 @@ SOURCE=.\Map_Manager.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8029,11 +8029,7 @@ SOURCE=.\Map_Manager.cpp
 
 SOURCE=.\Map_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8041,7 +8037,7 @@ SOURCE=.\Map_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8049,7 +8045,7 @@ SOURCE=.\Map_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8057,8 +8053,9 @@ SOURCE=.\Map_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8066,9 +8063,12 @@ SOURCE=.\Map_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8078,11 +8078,7 @@ SOURCE=.\Map_T.cpp
 
 SOURCE=.\Message_Block_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8090,7 +8086,7 @@ SOURCE=.\Message_Block_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8098,7 +8094,7 @@ SOURCE=.\Message_Block_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8106,8 +8102,9 @@ SOURCE=.\Message_Block_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8115,9 +8112,12 @@ SOURCE=.\Message_Block_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8127,11 +8127,7 @@ SOURCE=.\Message_Block_T.cpp
 
 SOURCE=.\Message_Queue_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8139,7 +8135,7 @@ SOURCE=.\Message_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8147,7 +8143,7 @@ SOURCE=.\Message_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8155,8 +8151,9 @@ SOURCE=.\Message_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8164,9 +8161,12 @@ SOURCE=.\Message_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8176,11 +8176,7 @@ SOURCE=.\Message_Queue_T.cpp
 
 SOURCE=.\Module.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8188,7 +8184,7 @@ SOURCE=.\Module.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8196,7 +8192,7 @@ SOURCE=.\Module.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8204,8 +8200,9 @@ SOURCE=.\Module.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8213,9 +8210,12 @@ SOURCE=.\Module.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8225,11 +8225,7 @@ SOURCE=.\Module.cpp
 
 SOURCE=.\Pair_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8237,7 +8233,7 @@ SOURCE=.\Pair_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8245,7 +8241,7 @@ SOURCE=.\Pair_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8253,8 +8249,9 @@ SOURCE=.\Pair_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8262,9 +8259,12 @@ SOURCE=.\Pair_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8274,11 +8274,7 @@ SOURCE=.\Pair_T.cpp
 
 SOURCE=.\RB_Tree.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8286,7 +8282,7 @@ SOURCE=.\RB_Tree.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8294,7 +8290,7 @@ SOURCE=.\RB_Tree.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8302,8 +8298,9 @@ SOURCE=.\RB_Tree.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8311,9 +8308,12 @@ SOURCE=.\RB_Tree.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8323,11 +8323,7 @@ SOURCE=.\RB_Tree.cpp
 
 SOURCE=.\Select_Reactor_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8335,7 +8331,7 @@ SOURCE=.\Select_Reactor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8343,7 +8339,7 @@ SOURCE=.\Select_Reactor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8351,8 +8347,9 @@ SOURCE=.\Select_Reactor_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8360,9 +8357,12 @@ SOURCE=.\Select_Reactor_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8372,11 +8372,7 @@ SOURCE=.\Select_Reactor_T.cpp
 
 SOURCE=.\Singleton.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8384,7 +8380,7 @@ SOURCE=.\Singleton.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8392,7 +8388,7 @@ SOURCE=.\Singleton.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8400,8 +8396,9 @@ SOURCE=.\Singleton.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8409,9 +8406,12 @@ SOURCE=.\Singleton.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8421,11 +8421,7 @@ SOURCE=.\Singleton.cpp
 
 SOURCE=.\Strategies_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8433,7 +8429,7 @@ SOURCE=.\Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8441,7 +8437,7 @@ SOURCE=.\Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8449,8 +8445,9 @@ SOURCE=.\Strategies_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8458,9 +8455,12 @@ SOURCE=.\Strategies_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8470,11 +8470,7 @@ SOURCE=.\Strategies_T.cpp
 
 SOURCE=.\Stream.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8482,7 +8478,7 @@ SOURCE=.\Stream.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8490,7 +8486,7 @@ SOURCE=.\Stream.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8498,8 +8494,9 @@ SOURCE=.\Stream.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8507,9 +8504,12 @@ SOURCE=.\Stream.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8519,11 +8519,7 @@ SOURCE=.\Stream.cpp
 
 SOURCE=.\Stream_Modules.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8531,7 +8527,7 @@ SOURCE=.\Stream_Modules.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8539,7 +8535,7 @@ SOURCE=.\Stream_Modules.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8547,8 +8543,9 @@ SOURCE=.\Stream_Modules.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8556,9 +8553,12 @@ SOURCE=.\Stream_Modules.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8568,11 +8568,7 @@ SOURCE=.\Stream_Modules.cpp
 
 SOURCE=.\Synch_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8580,7 +8576,7 @@ SOURCE=.\Synch_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8588,7 +8584,7 @@ SOURCE=.\Synch_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8596,8 +8592,9 @@ SOURCE=.\Synch_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8605,9 +8602,12 @@ SOURCE=.\Synch_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8617,11 +8617,7 @@ SOURCE=.\Synch_T.cpp
 
 SOURCE=.\Task_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8629,7 +8625,7 @@ SOURCE=.\Task_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8637,7 +8633,7 @@ SOURCE=.\Task_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8645,8 +8641,9 @@ SOURCE=.\Task_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8654,9 +8651,12 @@ SOURCE=.\Task_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8666,11 +8666,7 @@ SOURCE=.\Task_T.cpp
 
 SOURCE=.\Timer_Hash_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8678,7 +8674,7 @@ SOURCE=.\Timer_Hash_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8686,7 +8682,7 @@ SOURCE=.\Timer_Hash_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8694,8 +8690,9 @@ SOURCE=.\Timer_Hash_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8703,9 +8700,12 @@ SOURCE=.\Timer_Hash_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8715,11 +8715,7 @@ SOURCE=.\Timer_Hash_T.cpp
 
 SOURCE=.\Timer_Heap_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8727,7 +8723,7 @@ SOURCE=.\Timer_Heap_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8735,7 +8731,7 @@ SOURCE=.\Timer_Heap_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8743,8 +8739,9 @@ SOURCE=.\Timer_Heap_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8752,9 +8749,12 @@ SOURCE=.\Timer_Heap_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8764,11 +8764,7 @@ SOURCE=.\Timer_Heap_T.cpp
 
 SOURCE=.\Timer_List_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8776,7 +8772,7 @@ SOURCE=.\Timer_List_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8784,7 +8780,7 @@ SOURCE=.\Timer_List_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8792,8 +8788,9 @@ SOURCE=.\Timer_List_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8801,9 +8798,12 @@ SOURCE=.\Timer_List_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8813,11 +8813,7 @@ SOURCE=.\Timer_List_T.cpp
 
 SOURCE=.\Timer_Queue_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8825,7 +8821,7 @@ SOURCE=.\Timer_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8833,7 +8829,7 @@ SOURCE=.\Timer_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8841,8 +8837,9 @@ SOURCE=.\Timer_Queue_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8850,9 +8847,12 @@ SOURCE=.\Timer_Queue_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 
@@ -8862,11 +8862,7 @@ SOURCE=.\Timer_Queue_T.cpp
 
 SOURCE=.\Timer_Wheel_T.cpp
 
-!IF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+!IF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8874,7 +8870,7 @@ SOURCE=.\Timer_Wheel_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8882,7 +8878,7 @@ SOURCE=.\Timer_Wheel_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
 
 # PROP Exclude_From_Build 1
 
@@ -8890,8 +8886,9 @@ SOURCE=.\Timer_Wheel_T.cpp
 
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Unicode Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
 
+# PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
 !ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
@@ -8899,9 +8896,12 @@ SOURCE=.\Timer_Wheel_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
 
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
 
-# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
 # PROP Exclude_From_Build 1
 
 !ENDIF 

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/LSOCK_Dgram.h"
 
 ACE_RCSID(ace, LSOCK_Dgram, "$Id$")

@@ -1,7 +1,6 @@
 // ATM_Connector.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Handle_Set.h"
 #include "ace/ATM_Connector.h"
 

@@ -3,7 +3,6 @@
 /* Defines the member functions for the base class of the ACE_ATM_Stream
    abstraction. */
 
-#define ACE_BUILD_DLL
 #include "ace/ATM_Stream.h"
 
 ACE_RCSID(ace, ATM_Stream, "$Id$")

@@ -1,7 +1,6 @@
 // Remote_Tokens.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Remote_Tokens.h"
 #include "ace/Singleton.h"
 

@@ -21,7 +21,7 @@
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
 
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

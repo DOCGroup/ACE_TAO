@@ -2,7 +2,6 @@
 
 /* -*- C++ -*- */
 
-#define ACE_BUILD_DLL
 #include "ace/SV_Semaphore_Simple.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

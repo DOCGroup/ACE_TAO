@@ -3,8 +3,6 @@
 #ifndef ACE_TIMER_WHEEL_T_C
 #define ACE_TIMER_WHEEL_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Timer_Wheel_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

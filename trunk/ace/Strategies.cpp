@@ -4,7 +4,6 @@
 #if !defined (ACE_STRATEGIES_C)
 #define ACE_STRATEGIES_C
 
-#define ACE_BUILD_DLL
 #include "ace/Reactor.h"
 #include "ace/Strategies.h"
 

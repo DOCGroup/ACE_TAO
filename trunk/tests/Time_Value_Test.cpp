@@ -20,7 +20,7 @@
 // ============================================================================
 
 // Note, for this test the config.h file *must* come first!
-#include "ace/inc_user_config.h"
+#include "ace/config-all.h"
 
 ACE_RCSID(tests, Time_Value_Test, "$Id$")
 

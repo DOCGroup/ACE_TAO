@@ -1,7 +1,6 @@
 // Token_Collection.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Token_Collection.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,7 +1,6 @@
 // DEV_IO.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/DEV_IO.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)

@@ -1,7 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
-
 #include "ace/Select_Reactor.h"
 
 ACE_RCSID(ace, Select_Reactor, "$Id$")

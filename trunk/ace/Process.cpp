@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/ARGV.h"

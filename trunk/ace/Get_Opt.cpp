@@ -1,7 +1,6 @@
 // Get_Opt.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Get_Opt.h"
 
 #if !defined (__ACE_INLINE__)

@@ -32,7 +32,6 @@
 #if !defined (ACE_FUNCTOR_C)
 #define ACE_FUNCTOR_C
 
-#define ACE_BUILD_DLL
 #include "ace/Functor_T.h"
 #include "ace/Functor.h"
 

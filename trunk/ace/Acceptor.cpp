@@ -4,7 +4,6 @@
 #ifndef ACE_ACCEPTOR_C
 #define ACE_ACCEPTOR_C
 
-#define ACE_BUILD_DLL
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

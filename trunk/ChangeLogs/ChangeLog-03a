@@ -1,3 +1,267 @@
+Tue Apr 18 19:08:37 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-all.h: (added)
+        * ace/inc_user_config.h: (removed)
+        * ace/Codeset_IBM1047.h:
+        * ace/NT_Service.h:
+        * ace/config-win32-common.h:
+        * ace/OS.h:
+
+          Started moving several of the macros from OS.h to config-all.h.  
+          The plan is to eventually split up OS.h, and config-all is a 
+          place where the macros (which are not specific to any part of 
+          ACE_OS) can go.  config-all.h also ate inc_user_config.h.
+
+        * ASNMP/agent/main.cpp:
+        * ace/iosfwd.h:
+        * ace/streams.h:
+        * apps/JAWS/PROTOTYPE/JAWS/Assoc_Array.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/test_config.h:
+
+          Since inc_user_config.h was eaten, needed to change includes of
+          it to config-all.h.
+
+        * bin/generate_export_file.pl: (added)
+        * bin/GenExportH.BAT: (removed)
+
+          Replaced the batch file with a perl file so
+          - people can generate on other platforms
+          - it can generate Word_export and WORD_BUILD_DLL
+            (the batch file couldn't change the case of the key)
+
+        * ace/ACE_export.h: (added)
+        * ace/svc_export.h: (added)
+
+          Took the existing ACE_Export and ACE_Svc_Export macro and 
+          moved them to separate files.  Also tested out the new
+          generate_export_file.pl.
+
+        * ace/ACE.cpp:
+        * ace/ARGV.cpp:
+        * ace/ATM_Acceptor.cpp:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Connector.cpp:
+        * ace/ATM_Params.cpp:
+        * ace/ATM_QoS.cpp:
+        * ace/ATM_Stream.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Activation_Queue.cpp:
+        * ace/Active_Map_Manager.cpp:
+        * ace/Addr.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Asynch_IO_Impl.cpp:
+        * ace/Auto_IncDec_T.cpp:
+        * ace/Auto_Ptr.cpp:
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Based_Pointer_T.cpp:
+        * ace/Basic_Types.cpp:
+        * ace/CDR_Stream.cpp:
+        * ace/CORBA_Handler.cpp:
+        * ace/CORBA_Ref.cpp:
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Capabilities.cpp:
+        * ace/Cleanup_Strategies_T.cpp:
+        * ace/Configuration.cpp:
+        * ace/Connector.cpp:
+        * ace/Containers.cpp:
+        * ace/Containers_T.cpp:
+        * ace/DEV.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/DEV_Connector.cpp:
+        * ace/DEV_IO.cpp:
+        * ace/DLL.cpp:
+        * ace/Date_Time.cpp:
+        * ace/Dirent.cpp:
+        * ace/Dump.cpp:
+        * ace/Dynamic.cpp:
+        * ace/Dynamic_Service.cpp:
+        * ace/Event_Handler.cpp:
+        * ace/Event_Handler_T.cpp:
+        * ace/FIFO.cpp:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_IO.cpp:
+        * ace/Filecache.cpp:
+        * ace/FlReactor.cpp:
+        * ace/Functor.cpp:
+        * ace/Functor_T.cpp:
+        * ace/Future.cpp:
+        * ace/Future_Set.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Cache_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager.cpp:
+        * ace/High_Res_Timer.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/IOStream.cpp:
+        * ace/IOStream_T.cpp:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_Acceptor.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/LSOCK_Stream.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Record.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_IO.cpp:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_Stream.cpp:
+        * ace/Malloc.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Managed_Object.cpp:
+        * ace/Map.cpp:
+        * ace/Map_Manager.cpp:
+        * ace/Mem_Map.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Block_T.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Method_Request.cpp:
+        * ace/Module.cpp:
+        * ace/Msg_WFMO_Reactor.cpp:
+        * ace/Multiplexor.cpp:
+        * ace/NT_Service.cpp:
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Name_Space.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/OS.cpp:
+        * ace/Object_Manager.cpp:
+        * ace/Obstack.cpp:
+        * ace/POSIX_Proactor.cpp:
+        * ace/Pair.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Pipe.cpp:
+        * ace/Priority_Reactor.cpp:
+        * ace/Proactor.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/Profile_Timer.cpp:
+        * ace/QoS_Manager.cpp:
+        * ace/QoS_Session_Factory.cpp:
+        * ace/QoS_Session_Impl.cpp:
+        * ace/Reactor.cpp:
+        * ace/Read_Buffer.cpp:
+        * ace/Registry.cpp:
+        * ace/Registry_Name_Space.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/SOCK.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_Stream.cpp:
+        * ace/SPIPE.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SPIPE_Stream.cpp:
+        * ace/SString.cpp:
+        * ace/SV_Message.cpp:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Shared_Memory.cpp:
+        * ace/Sched_Params.cpp:
+        * ace/Select_Reactor.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Shared_Memory.cpp:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_SV.cpp:
+        * ace/Shared_Object.cpp:
+        * ace/Signal.cpp:
+        * ace/Singleton.cpp:
+        * ace/Stats.cpp:
+        * ace/Strategies.cpp:
+        * ace/Strategies_T.cpp:
+        * ace/Stream.cpp:
+        * ace/Stream_Modules.cpp:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Synch.cpp:
+        * ace/Synch_Options.cpp:
+        * ace/Synch_T.cpp:
+        * ace/System_Time.cpp:
+        * ace/TLI.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.cpp:
+        * ace/TLI_Stream.cpp:
+        * ace/TP_Reactor.cpp:
+        * ace/TTY_IO.cpp:
+        * ace/Task.cpp:
+        * ace/Task_T.cpp:
+        * ace/Thread.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Time_Request_Reply.cpp:
+        * ace/Timeprobe.cpp:
+        * ace/Timer_Hash.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel.cpp:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/TkReactor.cpp:
+        * ace/Token.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Request_Reply.cpp:
+        * ace/Trace.cpp:
+        * ace/Typed_SV_Message.cpp:
+        * ace/Typed_SV_Message_Queue.cpp:
+        * ace/UNIX_Addr.cpp:
+        * ace/UPIPE_Acceptor.cpp:
+        * ace/UPIPE_Connector.cpp:
+        * ace/UPIPE_Stream.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Proactor.cpp:
+        * ace/XTI_ATM_Mcast.cpp:
+        * ace/XtReactor.cpp:
+        * include/makeinclude/ace_flags.bor:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          The definition of ACE_BUILD_DLL was moved from the .cpp files
+          to the project files - so it is now handled like most of the 
+          other libraries in ACE and TAO.
+
 Tue Apr 18 21:32:21 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (sema_init): Fixed another problem that required

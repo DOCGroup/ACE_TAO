@@ -1,7 +1,6 @@
 // SV_Shared_Memory.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/SV_Shared_Memory.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/ATM_QoS.h"
 
 ACE_RCSID(ace, ATM_QoS, "$Id$")

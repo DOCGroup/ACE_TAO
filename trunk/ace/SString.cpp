@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/Malloc.h"
 #if !defined (ACE_HAS_WINCE)
 # include "ace/Service_Config.h"

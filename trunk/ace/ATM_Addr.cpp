@@ -2,7 +2,6 @@
 
 // Defines the Internet domain address family address format.
 
-#define ACE_BUILD_DLL
 #include "ace/ATM_Addr.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)

@@ -3,8 +3,6 @@
 #ifndef ACE_IOSTREAM_T_C
 #define ACE_IOSTREAM_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/IOStream_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

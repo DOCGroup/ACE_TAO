@@ -1,7 +1,6 @@
 // QoS_Manager.cpp
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/QoS_Manager.h"
 
 ACE_RCSID(ace, QoS_Manager, "$Id $")

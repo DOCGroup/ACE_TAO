@@ -3,8 +3,6 @@
 #ifndef ACE_CACHE_MAP_MANAGER_T_C
 #define ACE_CACHE_MAP_MANAGER_T_C
 
-#define ACE_BUILD_DLL
-
 #include "ace/Cache_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

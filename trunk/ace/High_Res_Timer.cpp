@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_BUILD_DLL
 #include "ace/High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
