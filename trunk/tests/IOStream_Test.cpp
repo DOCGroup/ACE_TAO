@@ -220,9 +220,9 @@ client (void *arg = 0)
 
   // Now, make a little change & send 'em back.
   i  *= -1; server << i  << " ";
-  f1 *= -1; server << f1 << " ";
+  f1 *= -1.0; server << f1 << " ";
   l  *= -1; server << l  << " ";
-  f2 *= -1; server << f2 << " ";
+  f2 *= -1.0; server << f2 << " ";
   d  *= -1; server << d  << " ";
   server << endl;
 
