@@ -1,41 +1,46 @@
+Sun Mar 28 07:40:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: added
+          ACE_Auto_Basic_Ptr<TAO_Naming_Context> explicit instantiation.
+
 Sun Mar 28 03:27:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	*  TAO/examples/Callback_Quoter/Notifier_i.cpp:
-	*  TAO/examples/Simple/bank/AccountManager_i.cpp:
-	*  TAO/examples/Simple/grid/Grid_i.cpp:
-	*  TAO/orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	*  TAO/orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
-	*  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
-	*  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
-	*  TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp:
-	*  TAO/orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
-	*  TAO/orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
-	*  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
-	*  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	*  TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
-	*  TAO/tao/DynAny_i.cpp:
-	*  TAO/tao/Invocation.cpp:
-	*  TAO/tao/ORB.cpp:
-	*  TAO/tao/Typecode.cpp: Replaced ACE_NEW_THROW* macros with
-	   ACE_NEW_THROW_EX and appropriate ACE_CHECK* macros.
+        *  TAO/examples/Callback_Quoter/Notifier_i.cpp:
+        *  TAO/examples/Simple/bank/AccountManager_i.cpp:
+        *  TAO/examples/Simple/grid/Grid_i.cpp:
+        *  TAO/orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        *  TAO/orbsvcs/orbsvcs/Concurrency/CC_LockSetFactory.cpp:
+        *  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp:
+        *  TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.cpp:
+        *  TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp:
+        *  TAO/orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        *  TAO/orbsvcs/orbsvcs/Time/TAO_TIO.cpp:
+        *  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        *  TAO/orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        *  TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        *  TAO/tao/DynAny_i.cpp:
+        *  TAO/tao/Invocation.cpp:
+        *  TAO/tao/ORB.cpp:
+        *  TAO/tao/Typecode.cpp: Replaced ACE_NEW_THROW* macros with
+           ACE_NEW_THROW_EX and appropriate ACE_CHECK* macros.
 
 1999-03-27  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Updated the A/V documentation.
+        * docs/releasenotes/index.html: Updated the A/V documentation.
 
 Sat Mar 27 14:20:09 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	*  examples/Event_Comm/Consumer_Input_Handler.cpp,
-	   Notifier_Handler.cpp, Supplier_Input_Handler.cpp,
-	   notifier.cpp:
-	   Fixed compile warnings.
+        *  examples/Event_Comm/Consumer_Input_Handler.cpp,
+           Notifier_Handler.cpp, Supplier_Input_Handler.cpp,
+           notifier.cpp:
+           Fixed compile warnings.
 
 Sat Mar 27 11:57:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	  Removed an Unbounded_Set<ACE_INET_Addr> that I moved from
-	  IIOP_ORB, but it was not used at all.
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Removed an Unbounded_Set<ACE_INET_Addr> that I moved from
+          IIOP_ORB, but it was not used at all.
 
 Sat Mar 27 06:51:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -45,7 +50,7 @@ Sat Mar 27 06:51:38 1999  David L. Levine  <levine@cs.wustl.edu>
 Fri Mar 26 23:50:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/POA.pidl (PortableServer): Added State and get_state.
-  	  Thanks to Umar Syyid <usyyid@hns.com> for pointing this out.
+          Thanks to Umar Syyid <usyyid@hns.com> for pointing this out.
 
 Fri Mar 26 22:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -73,8 +78,8 @@ Fri Mar 26 22:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Fri Mar 26 21:57:44 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/POAManager.cpp (get_state): Made changes to the type
- 	  declarations in this file. The scoping was not right to acces
- 	  the enum variables. Thanks to Naga for pointing out the mistake.
+          declarations in this file. The scoping was not right to acces
+          the enum variables. Thanks to Naga for pointing out the mistake.
 
 Fri Mar 26 18:08:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
