@@ -426,7 +426,7 @@ public:
  * <handler> to uniquiely identify the completion of the
  * asynchronous write.
  */
-  class  ACE_Export Result : public ACE_Asynch_Result
+  class ACE_Export Result : public ACE_Asynch_Result
   {
 
     /// The concrete implementation result classes only construct this

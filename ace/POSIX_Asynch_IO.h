@@ -420,7 +420,6 @@ protected:
   int shared_read (ACE_POSIX_Asynch_Read_Stream_Result *result);
 };
 
-
 /**
  * @class ACE_POSIX_SIG_Asynch_Read_Stream
  *
@@ -472,7 +471,6 @@ protected:
   /// the ACE_Asynch_Read_File class can use it too.
   int shared_read (ACE_POSIX_Asynch_Read_Stream_Result *result);
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Write_Stream_Result
@@ -704,7 +702,6 @@ protected:
 class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl,
                                                      public ACE_POSIX_Asynch_Read_Stream_Result
 {
-
   /// Factory classes willl have special permissions.
   friend class ACE_POSIX_AIOCB_Asynch_Read_File;
   friend class ACE_POSIX_SIG_Asynch_Read_File;
@@ -1768,7 +1765,6 @@ protected:
   ACE_POSIX_AIOCB_Asynch_Read_Dgram (void);
 };
 
-
 /**
  * @class ACE_POSIX__Asynch_Write_Dgram_Result
  *
@@ -1877,7 +1873,6 @@ protected:
 
   };
 
-
 /**
  * @class ACE_POSIX_AIOCB_Asynch_Write_Dgram
  *
@@ -1956,7 +1951,6 @@ protected:
 
 
 /*****************************************************/
-
 
 /**
  * @class ACE_POSIX_Asynch_Read_Dgram_Result
@@ -2077,7 +2071,6 @@ protected:
 
 };
 
-
 /**
  * @class ACE_POSIX_SIG_Asynch_Read_Dgram
  *
@@ -2155,8 +2148,6 @@ protected:
   /// Do-nothing constructor.
   ACE_POSIX_SIG_Asynch_Read_Dgram (void);
 };
-
-
 
 /**
  * @class ACE_POSIX_SIG_Asynch_Write_Dgram

@@ -55,7 +55,6 @@ class ACE_WIN32_Proactor;
 class ACE_Export ACE_WIN32_Asynch_Result : public virtual ACE_Asynch_Result_Impl,
                                            public OVERLAPPED
 {
-
   /// Factory class has special permissions.
   friend class ACE_WIN32_Asynch_Accept;
 
@@ -195,7 +194,6 @@ protected:
 class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public virtual ACE_WIN32_Asynch_Result
 {
-
   /// Factory class will have special permissions.
   friend class ACE_WIN32_Asynch_Read_Stream;
 
@@ -1253,7 +1251,6 @@ public:
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
                                                       public virtual ACE_WIN32_Asynch_Result
 {
-
   /// Factory class will have special permissions.
   friend class ACE_WIN32_Asynch_Read_Dgram;
 
@@ -1361,7 +1358,6 @@ protected:
   ACE_HANDLE handle_;
 };
 
-
 /**
  * @class ACE_WIN32_Asynch_Read_Dgram
  *
@@ -1437,7 +1433,6 @@ protected:
   /// Do-nothing constructor.
   ACE_WIN32_Asynch_Read_Dgram (void);
 };
-
 
 /**
  * @class ACE_WIN32_Asynch_Write_Dgram_Result
@@ -1544,7 +1539,6 @@ protected:
   /// I/O handle used for writing.
   ACE_HANDLE handle_;
 };
-
 
 /**
  * @class ACE_WIN32_Asynch_Write_Dgram
