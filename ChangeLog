@@ -31,7 +31,7 @@ Thu Jul 31 00:49:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           warnings and errors.
 
         * examples/Reactor/Proactor/test_multiple_loops.cpp:
-          Fixed a capilalization typo in an include, and added an else
+          Fixed a capitalization typo in an include, and added an else
           branch to define a main() function.
 
         * examples/RMCast/Send_File/RMCast_Send_File.mpc:
