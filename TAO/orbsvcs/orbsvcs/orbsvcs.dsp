@@ -1769,7 +1769,7 @@ SOURCE=.\Event\Module_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Naming\Naming_Context.cpp
+SOURCE=.\Naming\Naming_Context_Interface.cpp
 
 !IF  "$(CFG)" == "ORB Services DLL - Win32 Release"
 
@@ -2948,7 +2948,7 @@ SOURCE=.\Event\Module_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Naming\Naming_Context.h
+SOURCE=.\Naming\Naming_Context_Interface.h
 # End Source File
 # Begin Source File
 
