@@ -132,7 +132,6 @@ ACE_SUN_Proactor::handle_events (u_long milli_seconds)
           // Call the application code.
           this->application_specific_code (asynch_result,
                                        return_status, // Bytes transferred.
-                                       1,             // Success
                                        0,             // No completion key.
                                        error_status); // Error
           retval ++ ;
