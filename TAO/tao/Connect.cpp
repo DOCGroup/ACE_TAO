@@ -596,9 +596,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
         this->send_error (request_id, &ex);
       else
         {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) exception thrown "
-                      "but client is not waiting a response\n"));
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) exception thrown "
+                          "but client is not waiting a response\n"));
+              TAO_TRY_ENV.print_exception ("");
+            }
           this->handle_close ();
           result = -1;
         }
