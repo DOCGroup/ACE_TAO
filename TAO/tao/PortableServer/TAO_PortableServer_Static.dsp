@@ -173,6 +173,10 @@ SOURCE=.\Default_Acceptor_Filter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Direct_Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainS.h
 # End Source File
 # Begin Source File
@@ -247,6 +251,14 @@ SOURCE=.\PortableServerC.h
 
 SOURCE=.\Servant_Base.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\Strategized_Object_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ThruPOA_Object_Proxy_Impl.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
@@ -262,6 +274,10 @@ SOURCE=.\Collocated_Object.cpp
 # Begin Source File
 
 SOURCE=.\Default_Acceptor_Filter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -322,6 +338,14 @@ SOURCE=.\PortableServerC.cpp
 # Begin Source File
 
 SOURCE=.\Servant_Base.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Strategized_Object_Proxy_Broker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ThruPOA_Object_Proxy_Impl.cpp
 # End Source File
 # End Group
 # End Target

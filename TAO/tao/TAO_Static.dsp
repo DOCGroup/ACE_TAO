@@ -87,6 +87,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "h"
 # Begin Source File
 
+SOURCE=.\Abstract_Servant_Base.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Filter.h
 # End Source File
 # Begin Source File
@@ -375,6 +379,14 @@ SOURCE=.\Object_Loader.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
@@ -480,6 +492,14 @@ SOURCE=.\Reactor_Per_Priority.h
 # Begin Source File
 
 SOURCE=.\Reactor_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Object_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
@@ -1183,6 +1203,10 @@ SOURCE=.\TAO_Singleton.cpp
 # PROP Default_Filter "cpp"
 # Begin Source File
 
+SOURCE=.\Abstract_Servant_Base.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
@@ -1471,6 +1495,14 @@ SOURCE=.\Object_Loader.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Proxy_Broker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Proxy_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
@@ -1560,6 +1592,14 @@ SOURCE=.\Reactor_Per_Priority.cpp
 # Begin Source File
 
 SOURCE=.\Reactor_Registry.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Object_Proxy_Broker.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Remote_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
