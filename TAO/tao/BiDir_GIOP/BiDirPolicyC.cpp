@@ -22,6 +22,10 @@
 #include "BiDirGIOP.h"
 #include "tao/Typecode.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
+
 #if !defined (__ACE_INLINE__)
 #include "BiDirPolicyC.i"
 #endif /* !defined INLINE */
@@ -29,16 +33,44 @@
 static const CORBA::Long _oc_BiDirPolicy_BidirectionalPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x42694469), ACE_NTOHL (0x72506f6c), ACE_NTOHL (0x6963792f), ACE_NTOHL (0x42696469), ACE_NTOHL (0x72656374), ACE_NTOHL (0x696f6e61), ACE_NTOHL (0x6c506f6c), ACE_NTOHL (0x69637956), ACE_NTOHL (0x616c7565), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:BiDirPolicy/BidirectionalPolicyValue:1.0
-  25, ACE_NTOHL (0x42696469), ACE_NTOHL (0x72656374), ACE_NTOHL (0x696f6e61), ACE_NTOHL (0x6c506f6c), ACE_NTOHL (0x69637956), ACE_NTOHL (0x616c7565), ACE_NTOHL (0x0),  // name = BidirectionalPolicyValue
+  45,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x42694469), 
+  ACE_NTOHL (0x72506f6c), 
+  ACE_NTOHL (0x6963792f), 
+  ACE_NTOHL (0x42696469), 
+  ACE_NTOHL (0x72656374), 
+  ACE_NTOHL (0x696f6e61), 
+  ACE_NTOHL (0x6c506f6c), 
+  ACE_NTOHL (0x69637956), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:BiDirPolicy/BidirectionalPolicyValue:1.0
+  25,
+  ACE_NTOHL (0x42696469), 
+  ACE_NTOHL (0x72656374), 
+  ACE_NTOHL (0x696f6e61), 
+  ACE_NTOHL (0x6c506f6c), 
+  ACE_NTOHL (0x69637956), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x0),  // name = BidirectionalPolicyValue
   CORBA::tk_ushort,
 
 };
-static CORBA::TypeCode _tc_TAO_tc_BiDirPolicy_BidirectionalPolicyValue (CORBA::tk_alias, sizeof (_oc_BiDirPolicy_BidirectionalPolicyValue), (char *) &_oc_BiDirPolicy_BidirectionalPolicyValue, 0, sizeof (BiDirPolicy::BidirectionalPolicyValue));
+
+static CORBA::TypeCode _tc_TAO_tc_BiDirPolicy_BidirectionalPolicyValue (
+    CORBA::tk_alias,
+    sizeof (_oc_BiDirPolicy_BidirectionalPolicyValue),
+    (char *) &_oc_BiDirPolicy_BidirectionalPolicyValue,
+    0,
+    sizeof (BiDirPolicy::BidirectionalPolicyValue)
+  );
+
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (BiDirPolicy)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_BidirectionalPolicyValue, &_tc_TAO_tc_BiDirPolicy_BidirectionalPolicyValue)
 TAO_NAMESPACE_END
+
 TAO_NAMESPACE_TYPE (const CORBA::UShort)
 TAO_NAMESPACE_BEGIN (BiDirPolicy)
 TAO_NAMESPACE_DEFINE (const CORBA::UShort, NORMAL, 0U)
@@ -51,6 +83,188 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (BiDirPolicy)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, BIDIRECTIONAL_POLICY_TYPE, 37U)
 TAO_NAMESPACE_END
+// *************************************************************
+// Operations for class BiDirPolicy::BidirectionalPolicy_var
+// *************************************************************
+
+BiDirPolicy::BidirectionalPolicy_var::BidirectionalPolicy_var (void) // default constructor
+  : ptr_ (BidirectionalPolicy::_nil ())
+{}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+BiDirPolicy::BidirectionalPolicy_var::BidirectionalPolicy_var (const ::BiDirPolicy::BidirectionalPolicy_var &p) // copy constructor
+  : TAO_Base_var (),
+    ptr_ (BidirectionalPolicy::_duplicate (p.ptr ()))
+{}
+
+BiDirPolicy::BidirectionalPolicy_var::~BidirectionalPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+BiDirPolicy::BidirectionalPolicy_var &
+BiDirPolicy::BidirectionalPolicy_var::operator= (BidirectionalPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+BiDirPolicy::BidirectionalPolicy_var &
+BiDirPolicy::BidirectionalPolicy_var::operator= (const ::BiDirPolicy::BidirectionalPolicy_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+BiDirPolicy::BidirectionalPolicy_var::operator const ::BiDirPolicy::BidirectionalPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+BiDirPolicy::BidirectionalPolicy_var::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast 
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr &
+BiDirPolicy::BidirectionalPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr &
+BiDirPolicy::BidirectionalPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::BiDirPolicy::BidirectionalPolicy_ptr val = this->ptr_;
+  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
+  return val;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::duplicate (BidirectionalPolicy_ptr p)
+{
+  return ::BiDirPolicy::BidirectionalPolicy::_duplicate (p);
+}
+
+void
+BiDirPolicy::BidirectionalPolicy_var::release (BidirectionalPolicy_ptr p)
+{
+  CORBA::release (p);
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::nil (void)
+{
+  return ::BiDirPolicy::BidirectionalPolicy::_nil ();
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::BiDirPolicy::BidirectionalPolicy::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+BiDirPolicy::BidirectionalPolicy_var::upcast (void *src)
+{
+  BidirectionalPolicy **tmp =
+    ACE_static_cast (BidirectionalPolicy **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Inline operations for class BiDirPolicy::BidirectionalPolicy_out
+// *************************************************************
+
+BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (BidirectionalPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
+}
+
+BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (BidirectionalPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
+}
+
+BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (const ::BiDirPolicy::BidirectionalPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (BidirectionalPolicy_out &, p).ptr_)
+{}
+
+::BiDirPolicy::BidirectionalPolicy_out &
+BiDirPolicy::BidirectionalPolicy_out::operator= (const ::BiDirPolicy::BidirectionalPolicy_out &p)
+{
+  this->ptr_ = ACE_const_cast (BidirectionalPolicy_out&, p).ptr_;
+  return *this;
+}
+
+BiDirPolicy::BidirectionalPolicy_out &
+BiDirPolicy::BidirectionalPolicy_out::operator= (const ::BiDirPolicy::BidirectionalPolicy_var &p)
+{
+  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+BiDirPolicy::BidirectionalPolicy_out &
+BiDirPolicy::BidirectionalPolicy_out::operator= (BidirectionalPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+BiDirPolicy::BidirectionalPolicy_out::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr &
+BiDirPolicy::BidirectionalPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+::BiDirPolicy::BidirectionalPolicy_ptr
+BiDirPolicy::BidirectionalPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 
 // default constructor
 BiDirPolicy::BidirectionalPolicy::BidirectionalPolicy ()
@@ -121,7 +335,7 @@ void *BiDirPolicy::BidirectionalPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;
@@ -138,3 +352,4 @@ const char* BiDirPolicy::BidirectionalPolicy::_interface_repository_id (void) co
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<BiDirPolicy::BidirectionalPolicy,BiDirPolicy::BidirectionalPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -171,6 +171,14 @@ TAO_NAMESPACE  Messaging
     RebindPolicy_ptr _retn (void);
     RebindPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RebindPolicy_ptr duplicate (RebindPolicy_ptr);
+    static void release (RebindPolicy_ptr);
+    static RebindPolicy_ptr nil (void);
+    static RebindPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RebindPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -298,6 +306,14 @@ class TAO_Export RebindPolicy: public virtual CORBA::Policy
     SyncScopePolicy_ptr _retn (void);
     SyncScopePolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static SyncScopePolicy_ptr duplicate (SyncScopePolicy_ptr);
+    static void release (SyncScopePolicy_ptr);
+    static SyncScopePolicy_ptr nil (void);
+    static SyncScopePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     SyncScopePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -475,6 +491,14 @@ class TAO_Export SyncScopePolicy: public virtual CORBA::Policy
     RequestPriorityPolicy_ptr _retn (void);
     RequestPriorityPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RequestPriorityPolicy_ptr duplicate (RequestPriorityPolicy_ptr);
+    static void release (RequestPriorityPolicy_ptr);
+    static RequestPriorityPolicy_ptr nil (void);
+    static RequestPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RequestPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -598,6 +622,14 @@ class TAO_Export RequestPriorityPolicy: public virtual CORBA::Policy
     ReplyPriorityPolicy_ptr _retn (void);
     ReplyPriorityPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ReplyPriorityPolicy_ptr duplicate (ReplyPriorityPolicy_ptr);
+    static void release (ReplyPriorityPolicy_ptr);
+    static ReplyPriorityPolicy_ptr nil (void);
+    static ReplyPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ReplyPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -725,6 +757,14 @@ class TAO_Export ReplyPriorityPolicy: public virtual CORBA::Policy
     RequestStartTimePolicy_ptr _retn (void);
     RequestStartTimePolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RequestStartTimePolicy_ptr duplicate (RequestStartTimePolicy_ptr);
+    static void release (RequestStartTimePolicy_ptr);
+    static RequestStartTimePolicy_ptr nil (void);
+    static RequestStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RequestStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -852,6 +892,14 @@ class TAO_Export RequestStartTimePolicy: public virtual CORBA::Policy
     RequestEndTimePolicy_ptr _retn (void);
     RequestEndTimePolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RequestEndTimePolicy_ptr duplicate (RequestEndTimePolicy_ptr);
+    static void release (RequestEndTimePolicy_ptr);
+    static RequestEndTimePolicy_ptr nil (void);
+    static RequestEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RequestEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -979,6 +1027,14 @@ class TAO_Export RequestEndTimePolicy: public virtual CORBA::Policy
     ReplyStartTimePolicy_ptr _retn (void);
     ReplyStartTimePolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ReplyStartTimePolicy_ptr duplicate (ReplyStartTimePolicy_ptr);
+    static void release (ReplyStartTimePolicy_ptr);
+    static ReplyStartTimePolicy_ptr nil (void);
+    static ReplyStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ReplyStartTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1106,6 +1162,14 @@ class TAO_Export ReplyStartTimePolicy: public virtual CORBA::Policy
     ReplyEndTimePolicy_ptr _retn (void);
     ReplyEndTimePolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ReplyEndTimePolicy_ptr duplicate (ReplyEndTimePolicy_ptr);
+    static void release (ReplyEndTimePolicy_ptr);
+    static ReplyEndTimePolicy_ptr nil (void);
+    static ReplyEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ReplyEndTimePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1233,6 +1297,14 @@ class TAO_Export ReplyEndTimePolicy: public virtual CORBA::Policy
     RelativeRequestTimeoutPolicy_ptr _retn (void);
     RelativeRequestTimeoutPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RelativeRequestTimeoutPolicy_ptr duplicate (RelativeRequestTimeoutPolicy_ptr);
+    static void release (RelativeRequestTimeoutPolicy_ptr);
+    static RelativeRequestTimeoutPolicy_ptr nil (void);
+    static RelativeRequestTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1360,6 +1432,14 @@ class TAO_Export RelativeRequestTimeoutPolicy: public virtual CORBA::Policy
     RelativeRoundtripTimeoutPolicy_ptr _retn (void);
     RelativeRoundtripTimeoutPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RelativeRoundtripTimeoutPolicy_ptr duplicate (RelativeRoundtripTimeoutPolicy_ptr);
+    static void release (RelativeRoundtripTimeoutPolicy_ptr);
+    static RelativeRoundtripTimeoutPolicy_ptr nil (void);
+    static RelativeRoundtripTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1537,6 +1617,14 @@ class TAO_Export RelativeRoundtripTimeoutPolicy: public virtual CORBA::Policy
     RoutingPolicy_ptr _retn (void);
     RoutingPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static RoutingPolicy_ptr duplicate (RoutingPolicy_ptr);
+    static void release (RoutingPolicy_ptr);
+    static RoutingPolicy_ptr nil (void);
+    static RoutingPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     RoutingPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1664,6 +1752,14 @@ class TAO_Export RoutingPolicy: public virtual CORBA::Policy
     MaxHopsPolicy_ptr _retn (void);
     MaxHopsPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static MaxHopsPolicy_ptr duplicate (MaxHopsPolicy_ptr);
+    static void release (MaxHopsPolicy_ptr);
+    static MaxHopsPolicy_ptr nil (void);
+    static MaxHopsPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     MaxHopsPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1791,6 +1887,14 @@ class TAO_Export MaxHopsPolicy: public virtual CORBA::Policy
     QueueOrderPolicy_ptr _retn (void);
     QueueOrderPolicy_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static QueueOrderPolicy_ptr duplicate (QueueOrderPolicy_ptr);
+    static void release (QueueOrderPolicy_ptr);
+    static QueueOrderPolicy_ptr nil (void);
+    static QueueOrderPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     QueueOrderPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2369,6 +2473,14 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
     ReplyHandler_ptr _retn (void);
     ReplyHandler_ptr ptr (void) const;
 
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ReplyHandler_ptr duplicate (ReplyHandler_ptr);
+    static void release (ReplyHandler_ptr);
+    static ReplyHandler_ptr nil (void);
+    static ReplyHandler_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ReplyHandler_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2595,7 +2707,9 @@ TAO_NAMESPACE_CLOSE // module Messaging
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-extern TAO_Export Messaging::_TAO_ReplyHandler_Proxy_Broker * (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
+extern TAO_Export
+Messaging::_TAO_ReplyHandler_Proxy_Broker *
+(*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 

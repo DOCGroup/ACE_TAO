@@ -29,8 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
-#include "PolicyC.h"
+#include "tao/TAO_Export.h"
+#include "tao/PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -87,6 +87,14 @@ public:
   CORBA_DomainManager_ptr &out (void);
   CORBA_DomainManager_ptr _retn (void);
   CORBA_DomainManager_ptr ptr (void) const;
+
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_DomainManager_ptr duplicate (CORBA_DomainManager_ptr);
+  static void release (CORBA_DomainManager_ptr);
+  static CORBA_DomainManager_ptr nil (void);
+  static CORBA_DomainManager_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_DomainManager_ptr ptr_;
@@ -365,6 +373,14 @@ public:
   CORBA_ConstructionPolicy_ptr &out (void);
   CORBA_ConstructionPolicy_ptr _retn (void);
   CORBA_ConstructionPolicy_ptr ptr (void) const;
+
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_ConstructionPolicy_ptr duplicate (CORBA_ConstructionPolicy_ptr);
+  static void release (CORBA_ConstructionPolicy_ptr);
+  static CORBA_ConstructionPolicy_ptr nil (void);
+  static CORBA_ConstructionPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_ConstructionPolicy_ptr ptr_;
@@ -770,11 +786,15 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_DomainManagerList;
 
 // Proxy Broker Factory function pointer declarations.
 
-extern TAO_Export _TAO_CORBA_DomainManager_Proxy_Broker * (*_TAO_CORBA_DomainManager_Proxy_Broker_Factory_function_pointer) (
+extern TAO_Export
+_TAO_CORBA_DomainManager_Proxy_Broker *
+(*_TAO_CORBA_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_Export _TAO_CORBA_ConstructionPolicy_Proxy_Broker * (*_TAO_CORBA_ConstructionPolicy_Proxy_Broker_Factory_function_pointer) (
+extern TAO_Export
+_TAO_CORBA_ConstructionPolicy_Proxy_Broker *
+(*_TAO_CORBA_ConstructionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 

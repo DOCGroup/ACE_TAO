@@ -23,6 +23,49 @@
 #if !defined (_CORBA_DOMAINMANAGER___CI_)
 #define _CORBA_DOMAINMANAGER___CI_
 
+ACE_INLINE CORBA_DomainManager_ptr
+tao_CORBA_DomainManager_duplicate (
+    CORBA_DomainManager_ptr p
+  )
+{
+  return CORBA_DomainManager::_duplicate (p);
+}
+
+ACE_INLINE void
+tao_CORBA_DomainManager_release (
+    CORBA_DomainManager_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE CORBA_DomainManager_ptr
+tao_CORBA_DomainManager_nil (
+    void
+  )
+{
+  return CORBA_DomainManager::_nil ();
+}
+
+ACE_INLINE CORBA_DomainManager_ptr
+tao_CORBA_DomainManager_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_DomainManager::_narrow (p, ACE_TRY_ENV);
+}
+
+ACE_INLINE CORBA::Object *
+tao_CORBA_DomainManager_upcast (
+    void *src
+  )
+{
+  CORBA_DomainManager **tmp =
+    ACE_static_cast (CORBA_DomainManager **, src);
+  return *tmp;
+}
+
 ACE_INLINE
 CORBA_DomainManager::CORBA_DomainManager (
     TAO_Stub *objref,
@@ -34,181 +77,55 @@ CORBA_DomainManager::CORBA_DomainManager (
   this->CORBA_DomainManager_setup_collocation (_tao_collocated);
 }
 
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_DOMAINMANAGER___VAR_CI_)
-#define _CORBA_DOMAINMANAGER___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_DomainManager_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_DomainManager_var::CORBA_DomainManager_var (void) // default constructor
-  : ptr_ (CORBA_DomainManager::_nil ())
-{}
-
-ACE_INLINE ::CORBA_DomainManager_ptr
-CORBA_DomainManager_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_DomainManager_var::CORBA_DomainManager_var (const ::CORBA_DomainManager_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (CORBA_DomainManager::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_DomainManager_var::~CORBA_DomainManager_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_DomainManager_var &
-CORBA_DomainManager_var::operator= (CORBA_DomainManager_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_DomainManager_var &
-CORBA_DomainManager_var::operator= (const ::CORBA_DomainManager_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA_DomainManager::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-CORBA_DomainManager_var::operator const ::CORBA_DomainManager_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_DomainManager_var::operator ::CORBA_DomainManager_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr
-CORBA_DomainManager_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr
-CORBA_DomainManager_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr &
-CORBA_DomainManager_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr &
-CORBA_DomainManager_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_DomainManager::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr
-CORBA_DomainManager_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA_DomainManager_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA_DomainManager::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_DOMAINMANAGER___OUT_CI_)
-#define _CORBA_DOMAINMANAGER___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_DomainManager_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_DomainManager_out::CORBA_DomainManager_out (CORBA_DomainManager_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA_DomainManager::_nil ();
-}
-
-ACE_INLINE
-CORBA_DomainManager_out::CORBA_DomainManager_out (CORBA_DomainManager_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_DomainManager::_nil ();
-}
-
-ACE_INLINE
-CORBA_DomainManager_out::CORBA_DomainManager_out (const ::CORBA_DomainManager_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_DomainManager_out &, p).ptr_)
-{}
-
-ACE_INLINE ::CORBA_DomainManager_out &
-CORBA_DomainManager_out::operator= (const ::CORBA_DomainManager_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_DomainManager_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_DomainManager_out &
-CORBA_DomainManager_out::operator= (const ::CORBA_DomainManager_var &p)
-{
-  this->ptr_ = ::CORBA_DomainManager::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_DomainManager_out &
-CORBA_DomainManager_out::operator= (CORBA_DomainManager_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-CORBA_DomainManager_out::operator ::CORBA_DomainManager_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr &
-CORBA_DomainManager_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_DomainManager_ptr
-CORBA_DomainManager_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___CI_)
 #define _CORBA_CONSTRUCTIONPOLICY___CI_
+
+ACE_INLINE CORBA_ConstructionPolicy_ptr
+tao_CORBA_ConstructionPolicy_duplicate (
+    CORBA_ConstructionPolicy_ptr p
+  )
+{
+  return CORBA_ConstructionPolicy::_duplicate (p);
+}
+
+ACE_INLINE void
+tao_CORBA_ConstructionPolicy_release (
+    CORBA_ConstructionPolicy_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE CORBA_ConstructionPolicy_ptr
+tao_CORBA_ConstructionPolicy_nil (
+    void
+  )
+{
+  return CORBA_ConstructionPolicy::_nil ();
+}
+
+ACE_INLINE CORBA_ConstructionPolicy_ptr
+tao_CORBA_ConstructionPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_ConstructionPolicy::_narrow (p, ACE_TRY_ENV);
+}
+
+ACE_INLINE CORBA::Object *
+tao_CORBA_ConstructionPolicy_upcast (
+    void *src
+  )
+{
+  CORBA_ConstructionPolicy **tmp =
+    ACE_static_cast (CORBA_ConstructionPolicy **, src);
+  return *tmp;
+}
 
 ACE_INLINE
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
@@ -219,175 +136,6 @@ CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
   : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->CORBA_ConstructionPolicy_setup_collocation (_tao_collocated);
-}
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___VAR_CI_)
-#define _CORBA_CONSTRUCTIONPOLICY___VAR_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ConstructionPolicy_var
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstructionPolicy_var::CORBA_ConstructionPolicy_var (void) // default constructor
-  : ptr_ (CORBA_ConstructionPolicy::_nil ())
-{}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr
-CORBA_ConstructionPolicy_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_var::CORBA_ConstructionPolicy_var (const ::CORBA_ConstructionPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (CORBA_ConstructionPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_var::~CORBA_ConstructionPolicy_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_var &
-CORBA_ConstructionPolicy_var::operator= (CORBA_ConstructionPolicy_ptr p)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_var &
-CORBA_ConstructionPolicy_var::operator= (const ::CORBA_ConstructionPolicy_var &p)
-{
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::CORBA_ConstructionPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_var::operator const ::CORBA_ConstructionPolicy_ptr &() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_var::operator ::CORBA_ConstructionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr
-CORBA_ConstructionPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr
-CORBA_ConstructionPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr &
-CORBA_ConstructionPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr &
-CORBA_ConstructionPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_ConstructionPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr
-CORBA_ConstructionPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::CORBA_ConstructionPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::CORBA_ConstructionPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___OUT_CI_)
-#define _CORBA_CONSTRUCTIONPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class CORBA_ConstructionPolicy_out
-// *************************************************************
-
-ACE_INLINE
-CORBA_ConstructionPolicy_out::CORBA_ConstructionPolicy_out (CORBA_ConstructionPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::CORBA_ConstructionPolicy::_nil ();
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_out::CORBA_ConstructionPolicy_out (CORBA_ConstructionPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::CORBA_ConstructionPolicy::_nil ();
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_out::CORBA_ConstructionPolicy_out (const ::CORBA_ConstructionPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_ConstructionPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_out &
-CORBA_ConstructionPolicy_out::operator= (const ::CORBA_ConstructionPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (CORBA_ConstructionPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_out &
-CORBA_ConstructionPolicy_out::operator= (const ::CORBA_ConstructionPolicy_var &p)
-{
-  this->ptr_ = ::CORBA_ConstructionPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE CORBA_ConstructionPolicy_out &
-CORBA_ConstructionPolicy_out::operator= (CORBA_ConstructionPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-CORBA_ConstructionPolicy_out::operator ::CORBA_ConstructionPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr &
-CORBA_ConstructionPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::CORBA_ConstructionPolicy_ptr
-CORBA_ConstructionPolicy_out::operator-> (void)
-{
-  return this->ptr_;
 }
 
 
@@ -407,7 +155,9 @@ CORBA_ConstructionPolicy_out::operator-> (void)
     ACE_NEW_RETURN (buf, CORBA_DomainManager*[nelems], 0);
 
     for (CORBA::ULong i = 0; i < nelems; i++)
-      buf[i] = CORBA_DomainManager::_nil ();
+      {
+        buf[i] = CORBA_DomainManager::_nil ();
+      }
 
     return buf;
   }
@@ -450,7 +200,9 @@ CORBA_ConstructionPolicy_out::operator-> (void)
       CORBA_DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA_DomainManager ** ACE_CAST_CONST, rhs.buffer_);
 
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+        {
+          tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+        }
 
       this->buffer_ = tmp1;
     }
@@ -490,7 +242,9 @@ CORBA_ConstructionPolicy_out::operator-> (void)
     CORBA_DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA_DomainManager ** ACE_CAST_CONST, rhs.buffer_);
 
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-      tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+      {
+        tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+      }
 
     return *this;
   }
@@ -761,103 +515,25 @@ CORBA_DomainManagerList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
-ACE_INLINE CORBA::Boolean
-operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const CORBA_DomainManager_ptr
   );
-ACE_INLINE CORBA::Boolean
-operator>> (
+
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CORBA_DomainManager_ptr &
   );
 
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA_DomainManager_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    CORBA_DomainManager_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      CORBA_DomainManager::_unchecked_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const CORBA_ConstructionPolicy_ptr
   );
-ACE_INLINE CORBA::Boolean
-operator>> (
+
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     CORBA_ConstructionPolicy_ptr &
   );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA_ConstructionPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    CORBA_ConstructionPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      CORBA_ConstructionPolicy::_unchecked_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_I_

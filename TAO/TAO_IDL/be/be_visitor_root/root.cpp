@@ -66,28 +66,76 @@ int be_visitor_root::visit_root (be_root *node)
 
 
   // If we are generating the client header file, this is the place to
-  // generate the proxy broker factory function pointer declarations.
+  // generate the proxy broker factory function pointer declarations
+  // and the extern declarations for non-defined interfaces.
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << "// Proxy Broker Factory function pointer declarations."
-          << be_nl << be_nl;
-
       size_t size = be_global->non_local_interfaces.size ();
+      be_interface *i = 0;
+      be_interface_fwd *ifwd = 0;
+      size_t index = 0;
 
-      for (size_t index = 0; index < size; ++index)
+      if (size > 0)
         {
-          be_interface *i = 0;
+          *os << "// Proxy Broker Factory function pointer declarations."
+              << be_nl << be_nl;
+        }
+
+      for (index = 0; index < size; ++index)
+        {
           be_global->non_local_interfaces.dequeue_head (i);
 
-          *os << "extern " << be_global->stub_export_macro () << " "
-              << i->full_base_proxy_broker_name () << " * (*"
-              << i->flat_client_enclosing_scope () 
+          *os << "extern " << be_global->stub_export_macro () << be_nl
+              << i->full_base_proxy_broker_name () << " *" << be_nl
+              << "(*" << i->flat_client_enclosing_scope () 
               << i->base_proxy_broker_name () 
               << "_Factory_function_pointer) ("
               << be_idt << be_idt_nl
               << "CORBA::Object_ptr obj" << be_uidt_nl
+              << ");" << be_uidt_nl << be_nl;
+        }
+
+      size = be_global->non_defined_interfaces.size ();
+
+      for (index = 0; index < size; ++index)
+        {
+          be_global->non_defined_interfaces.dequeue_head (ifwd);
+
+          *os << "// External declarations for undefined interface" << be_nl
+              << "// " << ifwd->full_name () << be_nl;
+
+          *os << "extern " << be_global->stub_export_macro () << be_nl
+              << ifwd->full_name () << "_ptr" << be_nl
+              << "tao_" << ifwd->flat_name () << "_duplicate (" 
+              << be_idt << be_idt_nl
+              << ifwd->full_name  () << "_ptr" << be_uidt_nl
+              << ");" << be_uidt_nl
+              << "extern " << be_global->stub_export_macro () << be_nl
+              << "void" << be_nl
+              << "tao_" << ifwd->flat_name () << "_release ("
+              << be_idt << be_idt_nl
+              << ifwd->full_name () << "_ptr" << be_uidt_nl
+              << ");" << be_uidt_nl
+              << "extern " << be_global->stub_export_macro () << be_nl
+              << ifwd->full_name () << "_ptr" << be_nl
+              << "tao_" << ifwd->flat_name () << "_nil (" 
+              << be_idt << be_idt_nl
+              << "void" << be_uidt_nl
+              << ");" << be_uidt_nl
+              << "extern " << be_global->stub_export_macro () << be_nl
+              << ifwd->full_name () << "_ptr" << be_nl
+              << "tao_" << ifwd->flat_name () << "_narrow (" 
+              << be_idt << be_idt_nl
+              << "CORBA::Object *," << be_nl
+              << "CORBA::Environment &" << be_uidt_nl
+              << ");" << be_uidt_nl
+              << "extern " << be_global->stub_export_macro () << be_nl
+              << "CORBA::Object *" << be_nl
+              << "tao_" << ifwd->flat_name () << "_upcast (" 
+              << be_idt << be_idt_nl
+              << "void *" << be_uidt_nl
               << ");" << be_uidt_nl << be_nl;
         }
     }
@@ -666,6 +714,8 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
       ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CH);
       break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_ANY_OP_CH);
+      break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CS:
     case TAO_CodeGen::TAO_ROOT_SH:

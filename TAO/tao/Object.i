@@ -196,6 +196,41 @@ CORBA_Object_var::_retn (void)
   return val;
 }
 
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object_var::duplicate (CORBA_Object_ptr p)
+{
+  return CORBA_Object::_duplicate (p);
+}
+
+ACE_INLINE void
+CORBA_Object_var::release (CORBA_Object_ptr p)
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object_var::nil (void)
+{
+  return CORBA_Object::_nil ();
+}
+
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &
+  )
+{
+  return CORBA_Object::_duplicate (p);
+}
+
+ACE_INLINE CORBA::Object *
+CORBA_Object_var::upcast (void *src)
+{
+  CORBA_Object **tmp =
+    ACE_static_cast (CORBA_Object **, src);
+  return *tmp;
+}
+
 // *************************************************************
 // Inline operations for class CORBA_Object_out
 // *************************************************************

@@ -20,170 +20,50 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___VAR_CI_)
-#define _BIDIRPOLICY_BIDIRECTIONALPOLICY___VAR_CI_
+#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_)
+#define _BIDIRPOLICY_BIDIRECTIONALPOLICY___CI_
 
-// *************************************************************
-// Inline operations for class BiDirPolicy::BidirectionalPolicy_var
-// *************************************************************
-
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_var::BidirectionalPolicy_var (void) // default constructor
-  : ptr_ (BidirectionalPolicy::_nil ())
-{}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::ptr (void) const
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_duplicate (
+    BiDirPolicy::BidirectionalPolicy_ptr p
+  )
 {
-  return this->ptr_;
+  return BiDirPolicy::BidirectionalPolicy::_duplicate (p);
 }
 
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_var::BidirectionalPolicy_var (const ::BiDirPolicy::BidirectionalPolicy_var &p) // copy constructor
-  : TAO_Base_var (),
-    ptr_ (BidirectionalPolicy::_duplicate (p.ptr ()))
-{}
-
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_var::~BidirectionalPolicy_var (void) // destructor
+ACE_INLINE void
+tao_BiDirPolicy_BidirectionalPolicy_release (
+    BiDirPolicy::BidirectionalPolicy_ptr p
+  )
 {
-  CORBA::release (this->ptr_);
+  CORBA::release (p);
 }
 
-ACE_INLINE BiDirPolicy::BidirectionalPolicy_var &
-BiDirPolicy::BidirectionalPolicy_var::operator= (BidirectionalPolicy_ptr p)
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_nil (
+    void
+  )
 {
-  CORBA::release (this->ptr_);
-  this->ptr_ = p;
-  return *this;
+  return BiDirPolicy::BidirectionalPolicy::_nil ();
 }
 
-ACE_INLINE BiDirPolicy::BidirectionalPolicy_var &
-BiDirPolicy::BidirectionalPolicy_var::operator= (const ::BiDirPolicy::BidirectionalPolicy_var &p)
+ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
+tao_BiDirPolicy_BidirectionalPolicy_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
 {
-  if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_duplicate (p.ptr ());
-  }
-  return *this;
+  return BiDirPolicy::BidirectionalPolicy::_narrow (p, ACE_TRY_ENV);
 }
 
-ACE_INLINE 
-BiDirPolicy::BidirectionalPolicy_var::operator const ::BiDirPolicy::BidirectionalPolicy_ptr &() const // cast
+ACE_INLINE CORBA::Object *
+tao_BiDirPolicy_BidirectionalPolicy_upcast (
+    void *src
+  )
 {
-  return this->ptr_;
-}
-
-ACE_INLINE 
-BiDirPolicy::BidirectionalPolicy_var::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast 
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr &
-BiDirPolicy::BidirectionalPolicy_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr &
-BiDirPolicy::BidirectionalPolicy_var::out (void)
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_var::_retn (void)
-{
-  // yield ownership of managed obj reference
-  ::BiDirPolicy::BidirectionalPolicy_ptr val = this->ptr_;
-  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
-  return val;
-}
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_BIDIRPOLICY_BIDIRECTIONALPOLICY___OUT_CI_)
-#define _BIDIRPOLICY_BIDIRECTIONALPOLICY___OUT_CI_
-
-// *************************************************************
-// Inline operations for class BiDirPolicy::BidirectionalPolicy_out
-// *************************************************************
-
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (BidirectionalPolicy_ptr &p)
-  : ptr_ (p)
-{
-  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
-}
-
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (BidirectionalPolicy_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  CORBA::release (this->ptr_);
-  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_nil ();
-}
-
-ACE_INLINE
-BiDirPolicy::BidirectionalPolicy_out::BidirectionalPolicy_out (const ::BiDirPolicy::BidirectionalPolicy_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (BidirectionalPolicy_out &, p).ptr_)
-{}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_out &
-BiDirPolicy::BidirectionalPolicy_out::operator= (const ::BiDirPolicy::BidirectionalPolicy_out &p)
-{
-  this->ptr_ = ACE_const_cast (BidirectionalPolicy_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE BiDirPolicy::BidirectionalPolicy_out &
-BiDirPolicy::BidirectionalPolicy_out::operator= (const ::BiDirPolicy::BidirectionalPolicy_var &p)
-{
-  this->ptr_ = ::BiDirPolicy::BidirectionalPolicy::_duplicate (p.ptr ());
-  return *this;
-}
-
-ACE_INLINE BiDirPolicy::BidirectionalPolicy_out &
-BiDirPolicy::BidirectionalPolicy_out::operator= (BidirectionalPolicy_ptr p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-BiDirPolicy::BidirectionalPolicy_out::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr &
-BiDirPolicy::BidirectionalPolicy_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::BiDirPolicy::BidirectionalPolicy_ptr
-BiDirPolicy::BidirectionalPolicy_out::operator-> (void)
-{
-  return this->ptr_;
+  BiDirPolicy::BidirectionalPolicy **tmp =
+    ACE_static_cast (BiDirPolicy::BidirectionalPolicy **, src);
+  return *tmp;
 }
 
 

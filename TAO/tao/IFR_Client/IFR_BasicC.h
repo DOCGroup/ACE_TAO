@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef TAO_IDL_IFR_BASICC_H
-#define TAO_IDL_IFR_BASICC_H
+#ifndef _TAO_IDL_IFR_BASICC_H_
+#define _TAO_IDL_IFR_BASICC_H_
 
 #include "ace/pre.h"
 #include "IFR_BaseC.h"
@@ -52,460 +52,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// *******************************************************************
-// Sequence classes moved fron IFR_BaseC.h
+class CORBA_PrimitiveDef;
 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CH_
-
-  class _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    // = Initialization and termination methods.
-    
-    _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum);
-    _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (CORBA::ULong maximum,
-      CORBA::ULong length,
-      CORBA_InterfaceDef* *value,
-      CORBA::Boolean release = 0);
-    _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs);
-    virtual ~_TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &operator= (const _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq &rhs);
-    TAO_Object_Manager<CORBA::InterfaceDef,CORBA::InterfaceDef_var> operator[] (CORBA::ULong index) const;
-    static CORBA_InterfaceDef **allocbuf (CORBA::ULong nelems);
-    static void freebuf (CORBA_InterfaceDef **buffer);
-    // The Base_Sequence functions, please see tao/Sequence.h
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    CORBA_InterfaceDef* *get_buffer (CORBA::Boolean orphan = 0);
-    const CORBA_InterfaceDef* *get_buffer (void) const;
-    virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-    virtual void _downcast (
-        void* target,
-        CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    virtual CORBA_Object* _upcast (void *src) const;
-    
-  };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_INTERFACEDEFSEQ_CH_)
-#define _CORBA_INTERFACEDEFSEQ_CH_
-
-class CORBA_InterfaceDefSeq;
-class CORBA_InterfaceDefSeq_var;
-
-// *************************************************************
-// CORBA_InterfaceDefSeq
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_InterfaceDefSeq : public 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA_InterfaceDef,CORBA_InterfaceDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-{
-public:
-  CORBA_InterfaceDefSeq (void); // default ctor
-  CORBA_InterfaceDefSeq (CORBA::ULong max); // uses max size
-  CORBA_InterfaceDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA_InterfaceDef_ptr *buffer, 
-    CORBA::Boolean release = 0
-  );
-  CORBA_InterfaceDefSeq (const CORBA_InterfaceDefSeq &); // copy ctor
-  ~CORBA_InterfaceDefSeq (void);
-  static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef CORBA_InterfaceDefSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-};
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_INTERFACEDEFSEQ___VAR_CH_)
-#define _CORBA_INTERFACEDEFSEQ___VAR_CH_
-
-// *************************************************************
-// class CORBA_InterfaceDefSeq_var
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_InterfaceDefSeq_var
-{
-public:
-  CORBA_InterfaceDefSeq_var (void); // default constructor
-  CORBA_InterfaceDefSeq_var (CORBA_InterfaceDefSeq *);
-  CORBA_InterfaceDefSeq_var (const CORBA_InterfaceDefSeq_var &); // copy constructor
-  ~CORBA_InterfaceDefSeq_var (void); // destructor
-  
-  CORBA_InterfaceDefSeq_var &operator= (CORBA_InterfaceDefSeq *);
-  CORBA_InterfaceDefSeq_var &operator= (const CORBA_InterfaceDefSeq_var &);
-  CORBA_InterfaceDefSeq *operator-> (void);
-  const CORBA_InterfaceDefSeq *operator-> (void) const;
-  
-  operator const CORBA_InterfaceDefSeq &() const;
-  operator CORBA_InterfaceDefSeq &();
-  operator CORBA_InterfaceDefSeq &() const;
-  operator CORBA_InterfaceDefSeq *&(); // variable-size base types only
-  
-  TAO_Object_Manager<CORBA::InterfaceDef, CORBA::InterfaceDef_var> operator[] (CORBA::ULong index);
-  
-  // in, inout, out, _retn 
-  const CORBA_InterfaceDefSeq &in (void) const;
-  CORBA_InterfaceDefSeq &inout (void);
-  CORBA_InterfaceDefSeq *&out (void);
-  CORBA_InterfaceDefSeq *_retn (void);
-  CORBA_InterfaceDefSeq *ptr (void) const;
-
-private:
-  CORBA_InterfaceDefSeq *ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_INTERFACEDEFSEQ___OUT_CH_)
-#define _CORBA_INTERFACEDEFSEQ___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_InterfaceDefSeq_out
-{
-public:
-  CORBA_InterfaceDefSeq_out (CORBA_InterfaceDefSeq *&);
-  CORBA_InterfaceDefSeq_out (CORBA_InterfaceDefSeq_var &);
-  CORBA_InterfaceDefSeq_out (const CORBA_InterfaceDefSeq_out &);
-  CORBA_InterfaceDefSeq_out &operator= (const CORBA_InterfaceDefSeq_out &);
-  CORBA_InterfaceDefSeq_out &operator= (CORBA_InterfaceDefSeq *);
-  operator CORBA_InterfaceDefSeq *&();
-  CORBA_InterfaceDefSeq *&ptr (void);
-  CORBA_InterfaceDefSeq *operator-> (void);
-  TAO_Object_Manager<CORBA::InterfaceDef, CORBA::InterfaceDef_var> operator[] (CORBA::ULong index);
-  
-private:
-  CORBA_InterfaceDefSeq *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const CORBA_InterfaceDefSeq_var &);
-};
-
-
-#endif /* end #if !defined */
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CH_
-
-  class _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    // = Initialization and termination methods.
-    
-    _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum);
-    _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (CORBA::ULong maximum,
-      CORBA::ULong length,
-      CORBA_AbstractInterfaceDef* *value,
-      CORBA::Boolean release = 0);
-    _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs);
-    virtual ~_TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &operator= (const _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq &rhs);
-    TAO_Object_Manager<CORBA::AbstractInterfaceDef,CORBA::AbstractInterfaceDef_var> operator[] (CORBA::ULong index) const;
-    static CORBA_AbstractInterfaceDef **allocbuf (CORBA::ULong nelems);
-    static void freebuf (CORBA_AbstractInterfaceDef **buffer);
-    // The Base_Sequence functions, please see tao/Sequence.h
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    CORBA_AbstractInterfaceDef* *get_buffer (CORBA::Boolean orphan = 0);
-    const CORBA_AbstractInterfaceDef* *get_buffer (void) const;
-    virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-    virtual void _downcast (
-        void* target,
-        CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    virtual CORBA_Object* _upcast (void *src) const;
-    
-  };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ_CH_)
-#define _CORBA_ABSTRACTINTERFACEDEFSEQ_CH_
-
-class CORBA_AbstractInterfaceDefSeq;
-class CORBA_AbstractInterfaceDefSeq_var;
-
-// *************************************************************
-// CORBA_AbstractInterfaceDefSeq
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_AbstractInterfaceDefSeq : public 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA_AbstractInterfaceDef,CORBA_AbstractInterfaceDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-{
-public:
-  CORBA_AbstractInterfaceDefSeq (void); // default ctor
-  CORBA_AbstractInterfaceDefSeq (CORBA::ULong max); // uses max size
-  CORBA_AbstractInterfaceDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA_AbstractInterfaceDef_ptr *buffer, 
-    CORBA::Boolean release = 0
-  );
-  CORBA_AbstractInterfaceDefSeq (const CORBA_AbstractInterfaceDefSeq &); // copy ctor
-  ~CORBA_AbstractInterfaceDefSeq (void);
-  static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef CORBA_AbstractInterfaceDefSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-};
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ___VAR_CH_)
-#define _CORBA_ABSTRACTINTERFACEDEFSEQ___VAR_CH_
-
-// *************************************************************
-// class CORBA_AbstractInterfaceDefSeq_var
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_AbstractInterfaceDefSeq_var
-{
-public:
-  CORBA_AbstractInterfaceDefSeq_var (void); // default constructor
-  CORBA_AbstractInterfaceDefSeq_var (CORBA_AbstractInterfaceDefSeq *);
-  CORBA_AbstractInterfaceDefSeq_var (const CORBA_AbstractInterfaceDefSeq_var &); // copy constructor
-  ~CORBA_AbstractInterfaceDefSeq_var (void); // destructor
-  
-  CORBA_AbstractInterfaceDefSeq_var &operator= (CORBA_AbstractInterfaceDefSeq *);
-  CORBA_AbstractInterfaceDefSeq_var &operator= (const CORBA_AbstractInterfaceDefSeq_var &);
-  CORBA_AbstractInterfaceDefSeq *operator-> (void);
-  const CORBA_AbstractInterfaceDefSeq *operator-> (void) const;
-  
-  operator const CORBA_AbstractInterfaceDefSeq &() const;
-  operator CORBA_AbstractInterfaceDefSeq &();
-  operator CORBA_AbstractInterfaceDefSeq &() const;
-  operator CORBA_AbstractInterfaceDefSeq *&(); // variable-size base types only
-  
-  TAO_Object_Manager<CORBA::AbstractInterfaceDef, CORBA::AbstractInterfaceDef_var> operator[] (CORBA::ULong index);
-  
-  // in, inout, out, _retn 
-  const CORBA_AbstractInterfaceDefSeq &in (void) const;
-  CORBA_AbstractInterfaceDefSeq &inout (void);
-  CORBA_AbstractInterfaceDefSeq *&out (void);
-  CORBA_AbstractInterfaceDefSeq *_retn (void);
-  CORBA_AbstractInterfaceDefSeq *ptr (void) const;
-
-private:
-  CORBA_AbstractInterfaceDefSeq *ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ___OUT_CH_)
-#define _CORBA_ABSTRACTINTERFACEDEFSEQ___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_AbstractInterfaceDefSeq_out
-{
-public:
-  CORBA_AbstractInterfaceDefSeq_out (CORBA_AbstractInterfaceDefSeq *&);
-  CORBA_AbstractInterfaceDefSeq_out (CORBA_AbstractInterfaceDefSeq_var &);
-  CORBA_AbstractInterfaceDefSeq_out (const CORBA_AbstractInterfaceDefSeq_out &);
-  CORBA_AbstractInterfaceDefSeq_out &operator= (const CORBA_AbstractInterfaceDefSeq_out &);
-  CORBA_AbstractInterfaceDefSeq_out &operator= (CORBA_AbstractInterfaceDefSeq *);
-  operator CORBA_AbstractInterfaceDefSeq *&();
-  CORBA_AbstractInterfaceDefSeq *&ptr (void);
-  CORBA_AbstractInterfaceDefSeq *operator-> (void);
-  TAO_Object_Manager<CORBA::AbstractInterfaceDef, CORBA::AbstractInterfaceDef_var> operator[] (CORBA::ULong index);
-  
-private:
-  CORBA_AbstractInterfaceDefSeq *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const CORBA_AbstractInterfaceDefSeq_var &);
-};
-
-
-#endif /* end #if !defined */
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
-#if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CH_)
-#define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CH_
-
-  class _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq : public TAO_Unbounded_Base_Sequence
-  {
-  public:
-    // = Initialization and termination methods.
-    
-    _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum);
-    _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (CORBA::ULong maximum,
-      CORBA::ULong length,
-      CORBA_LocalInterfaceDef* *value,
-      CORBA::Boolean release = 0);
-    _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs);
-    virtual ~_TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq (void);
-    _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &operator= (const _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq &rhs);
-    TAO_Object_Manager<CORBA::LocalInterfaceDef,CORBA::LocalInterfaceDef_var> operator[] (CORBA::ULong index) const;
-    static CORBA_LocalInterfaceDef **allocbuf (CORBA::ULong nelems);
-    static void freebuf (CORBA_LocalInterfaceDef **buffer);
-    // The Base_Sequence functions, please see tao/Sequence.h
-    virtual void _allocate_buffer (CORBA::ULong length);
-    virtual void _deallocate_buffer (void);
-    CORBA_LocalInterfaceDef* *get_buffer (CORBA::Boolean orphan = 0);
-    const CORBA_LocalInterfaceDef* *get_buffer (void) const;
-    virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
-    virtual void _downcast (
-        void* target,
-        CORBA_Object *src,
-        CORBA_Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    virtual CORBA_Object* _upcast (void *src) const;
-    
-  };
-
-#endif /* end #if !defined */
-
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-
-#if !defined (_CORBA_LOCALINTERFACEDEFSEQ_CH_)
-#define _CORBA_LOCALINTERFACEDEFSEQ_CH_
-
-class CORBA_LocalInterfaceDefSeq;
-class CORBA_LocalInterfaceDefSeq_var;
-
-// *************************************************************
-// CORBA_LocalInterfaceDefSeq
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_LocalInterfaceDefSeq : public 
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<CORBA_LocalInterfaceDef,CORBA_LocalInterfaceDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-{
-public:
-  CORBA_LocalInterfaceDefSeq (void); // default ctor
-  CORBA_LocalInterfaceDefSeq (CORBA::ULong max); // uses max size
-  CORBA_LocalInterfaceDefSeq (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA_LocalInterfaceDef_ptr *buffer, 
-    CORBA::Boolean release = 0
-  );
-  CORBA_LocalInterfaceDefSeq (const CORBA_LocalInterfaceDefSeq &); // copy ctor
-  ~CORBA_LocalInterfaceDefSeq (void);
-  static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef CORBA_LocalInterfaceDefSeq_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-};
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_LOCALINTERFACEDEFSEQ___VAR_CH_)
-#define _CORBA_LOCALINTERFACEDEFSEQ___VAR_CH_
-
-// *************************************************************
-// class CORBA_LocalInterfaceDefSeq_var
-// *************************************************************
-
-class TAO_IFR_Client_Export CORBA_LocalInterfaceDefSeq_var
-{
-public:
-  CORBA_LocalInterfaceDefSeq_var (void); // default constructor
-  CORBA_LocalInterfaceDefSeq_var (CORBA_LocalInterfaceDefSeq *);
-  CORBA_LocalInterfaceDefSeq_var (const CORBA_LocalInterfaceDefSeq_var &); // copy constructor
-  ~CORBA_LocalInterfaceDefSeq_var (void); // destructor
-  
-  CORBA_LocalInterfaceDefSeq_var &operator= (CORBA_LocalInterfaceDefSeq *);
-  CORBA_LocalInterfaceDefSeq_var &operator= (const CORBA_LocalInterfaceDefSeq_var &);
-  CORBA_LocalInterfaceDefSeq *operator-> (void);
-  const CORBA_LocalInterfaceDefSeq *operator-> (void) const;
-  
-  operator const CORBA_LocalInterfaceDefSeq &() const;
-  operator CORBA_LocalInterfaceDefSeq &();
-  operator CORBA_LocalInterfaceDefSeq &() const;
-  operator CORBA_LocalInterfaceDefSeq *&(); // variable-size base types only
-  
-  TAO_Object_Manager<CORBA::LocalInterfaceDef, CORBA::LocalInterfaceDef_var> operator[] (CORBA::ULong index);
-  
-  // in, inout, out, _retn 
-  const CORBA_LocalInterfaceDefSeq &in (void) const;
-  CORBA_LocalInterfaceDefSeq &inout (void);
-  CORBA_LocalInterfaceDefSeq *&out (void);
-  CORBA_LocalInterfaceDefSeq *_retn (void);
-  CORBA_LocalInterfaceDefSeq *ptr (void) const;
-
-private:
-  CORBA_LocalInterfaceDefSeq *ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_LOCALINTERFACEDEFSEQ___OUT_CH_)
-#define _CORBA_LOCALINTERFACEDEFSEQ___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_LocalInterfaceDefSeq_out
-{
-public:
-  CORBA_LocalInterfaceDefSeq_out (CORBA_LocalInterfaceDefSeq *&);
-  CORBA_LocalInterfaceDefSeq_out (CORBA_LocalInterfaceDefSeq_var &);
-  CORBA_LocalInterfaceDefSeq_out (const CORBA_LocalInterfaceDefSeq_out &);
-  CORBA_LocalInterfaceDefSeq_out &operator= (const CORBA_LocalInterfaceDefSeq_out &);
-  CORBA_LocalInterfaceDefSeq_out &operator= (CORBA_LocalInterfaceDefSeq *);
-  operator CORBA_LocalInterfaceDefSeq *&();
-  CORBA_LocalInterfaceDefSeq *&ptr (void);
-  CORBA_LocalInterfaceDefSeq *operator-> (void);
-  TAO_Object_Manager<CORBA::LocalInterfaceDef, CORBA::LocalInterfaceDef_var> operator[] (CORBA::ULong index);
-  
-private:
-  CORBA_LocalInterfaceDefSeq *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const CORBA_LocalInterfaceDefSeq_var &);
-};
-
-
-#endif /* end #if !defined */
-
-// ************************************************************************
-
-  class CORBA_PrimitiveDef;
-  
 #if !defined (_CORBA_PRIMITIVEDEF___PTR_CH_)
 #define _CORBA_PRIMITIVEDEF___PTR_CH_
 
@@ -517,33 +65,41 @@ typedef CORBA_PrimitiveDef *CORBA_PrimitiveDef_ptr;
 #if !defined (_CORBA_PRIMITIVEDEF___VAR_CH_)
 #define _CORBA_PRIMITIVEDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_PrimitiveDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_PrimitiveDef_var (void); // default constructor
-    CORBA_PrimitiveDef_var (CORBA_PrimitiveDef_ptr p) : ptr_ (p) {} 
-    CORBA_PrimitiveDef_var (const CORBA_PrimitiveDef_var &); // copy constructor
-    ~CORBA_PrimitiveDef_var (void); // destructor
-    
-    CORBA_PrimitiveDef_var &operator= (CORBA_PrimitiveDef_ptr);
-    CORBA_PrimitiveDef_var &operator= (const CORBA_PrimitiveDef_var &);
-    CORBA_PrimitiveDef_ptr operator-> (void) const;
-    
-    operator const CORBA_PrimitiveDef_ptr &() const;
-    operator CORBA_PrimitiveDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_PrimitiveDef_ptr in (void) const;
-    CORBA_PrimitiveDef_ptr &inout (void);
-    CORBA_PrimitiveDef_ptr &out (void);
-    CORBA_PrimitiveDef_ptr _retn (void);
-    CORBA_PrimitiveDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_PrimitiveDef_var : public TAO_Base_var
+{
+public:
+  CORBA_PrimitiveDef_var (void); // default constructor
+  CORBA_PrimitiveDef_var (CORBA::PrimitiveDef_ptr p) : ptr_ (p) {} 
+  CORBA_PrimitiveDef_var (const CORBA_PrimitiveDef_var &); // copy constructor
+  ~CORBA_PrimitiveDef_var (void); // destructor
+  
+  CORBA_PrimitiveDef_var &operator= (CORBA::PrimitiveDef_ptr);
+  CORBA_PrimitiveDef_var &operator= (const CORBA_PrimitiveDef_var &);
+  CORBA::PrimitiveDef_ptr operator-> (void) const;
+  
+  operator const CORBA::PrimitiveDef_ptr &() const;
+  operator CORBA::PrimitiveDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA::PrimitiveDef_ptr in (void) const;
+  CORBA::PrimitiveDef_ptr &inout (void);
+  CORBA::PrimitiveDef_ptr &out (void);
+  CORBA::PrimitiveDef_ptr _retn (void);
+  CORBA::PrimitiveDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA::PrimitiveDef_ptr duplicate (CORBA::PrimitiveDef_ptr);
+  static void release (CORBA::PrimitiveDef_ptr);
+  static CORBA::PrimitiveDef_ptr nil (void);
+  static CORBA::PrimitiveDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_PrimitiveDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_PrimitiveDef_var (const TAO_Base_var &rhs);
-    CORBA_PrimitiveDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA::PrimitiveDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_PrimitiveDef_var (const TAO_Base_var &rhs);
+  CORBA_PrimitiveDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -552,28 +108,28 @@ typedef CORBA_PrimitiveDef *CORBA_PrimitiveDef_ptr;
 #if !defined (_CORBA_PRIMITIVEDEF___OUT_CH_)
 #define _CORBA_PRIMITIVEDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_PrimitiveDef_out
-  {
-  public:
-    CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_ptr &);
-    CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_var &);
-    CORBA_PrimitiveDef_out (const CORBA_PrimitiveDef_out &);
-    CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_out &);
-    CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_var &);
-    CORBA_PrimitiveDef_out &operator= (CORBA_PrimitiveDef_ptr);
-    operator CORBA_PrimitiveDef_ptr &();
-    CORBA_PrimitiveDef_ptr &ptr (void);
-    CORBA_PrimitiveDef_ptr operator-> (void);
-    
-  private:
-    CORBA_PrimitiveDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_PrimitiveDef_out
+{
+public:
+  CORBA_PrimitiveDef_out (CORBA::PrimitiveDef_ptr &);
+  CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_var &);
+  CORBA_PrimitiveDef_out (const CORBA_PrimitiveDef_out &);
+  CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_out &);
+  CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_var &);
+  CORBA_PrimitiveDef_out &operator= (CORBA::PrimitiveDef_ptr);
+  operator CORBA::PrimitiveDef_ptr &();
+  CORBA::PrimitiveDef_ptr &ptr (void);
+  CORBA::PrimitiveDef_ptr operator-> (void);
+
+private:
+  CORBA::PrimitiveDef_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
 
-  class CORBA_StringDef;
-  
+class CORBA_StringDef;
+
 #if !defined (_CORBA_STRINGDEF___PTR_CH_)
 #define _CORBA_STRINGDEF___PTR_CH_
 
@@ -585,33 +141,41 @@ typedef CORBA_StringDef *CORBA_StringDef_ptr;
 #if !defined (_CORBA_STRINGDEF___VAR_CH_)
 #define _CORBA_STRINGDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_StringDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_StringDef_var (void); // default constructor
-    CORBA_StringDef_var (CORBA_StringDef_ptr p) : ptr_ (p) {} 
-    CORBA_StringDef_var (const CORBA_StringDef_var &); // copy constructor
-    ~CORBA_StringDef_var (void); // destructor
-    
-    CORBA_StringDef_var &operator= (CORBA_StringDef_ptr);
-    CORBA_StringDef_var &operator= (const CORBA_StringDef_var &);
-    CORBA_StringDef_ptr operator-> (void) const;
-    
-    operator const CORBA_StringDef_ptr &() const;
-    operator CORBA_StringDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_StringDef_ptr in (void) const;
-    CORBA_StringDef_ptr &inout (void);
-    CORBA_StringDef_ptr &out (void);
-    CORBA_StringDef_ptr _retn (void);
-    CORBA_StringDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_StringDef_var : public TAO_Base_var
+{
+public:
+  CORBA_StringDef_var (void); // default constructor
+  CORBA_StringDef_var (CORBA_StringDef_ptr p) : ptr_ (p) {} 
+  CORBA_StringDef_var (const CORBA_StringDef_var &); // copy constructor
+  ~CORBA_StringDef_var (void); // destructor
+  
+  CORBA_StringDef_var &operator= (CORBA_StringDef_ptr);
+  CORBA_StringDef_var &operator= (const CORBA_StringDef_var &);
+  CORBA_StringDef_ptr operator-> (void) const;
+  
+  operator const CORBA_StringDef_ptr &() const;
+  operator CORBA_StringDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA_StringDef_ptr in (void) const;
+  CORBA_StringDef_ptr &inout (void);
+  CORBA_StringDef_ptr &out (void);
+  CORBA_StringDef_ptr _retn (void);
+  CORBA_StringDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_StringDef_ptr duplicate (CORBA_StringDef_ptr);
+  static void release (CORBA_StringDef_ptr);
+  static CORBA_StringDef_ptr nil (void);
+  static CORBA_StringDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_StringDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_StringDef_var (const TAO_Base_var &rhs);
-    CORBA_StringDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_StringDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_StringDef_var (const TAO_Base_var &rhs);
+  CORBA_StringDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -620,28 +184,28 @@ typedef CORBA_StringDef *CORBA_StringDef_ptr;
 #if !defined (_CORBA_STRINGDEF___OUT_CH_)
 #define _CORBA_STRINGDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_StringDef_out
-  {
-  public:
-    CORBA_StringDef_out (CORBA_StringDef_ptr &);
-    CORBA_StringDef_out (CORBA_StringDef_var &);
-    CORBA_StringDef_out (const CORBA_StringDef_out &);
-    CORBA_StringDef_out &operator= (const CORBA_StringDef_out &);
-    CORBA_StringDef_out &operator= (const CORBA_StringDef_var &);
-    CORBA_StringDef_out &operator= (CORBA_StringDef_ptr);
-    operator CORBA_StringDef_ptr &();
-    CORBA_StringDef_ptr &ptr (void);
-    CORBA_StringDef_ptr operator-> (void);
-    
-  private:
-    CORBA_StringDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_StringDef_out
+{
+public:
+  CORBA_StringDef_out (CORBA_StringDef_ptr &);
+  CORBA_StringDef_out (CORBA_StringDef_var &);
+  CORBA_StringDef_out (const CORBA_StringDef_out &);
+  CORBA_StringDef_out &operator= (const CORBA_StringDef_out &);
+  CORBA_StringDef_out &operator= (const CORBA_StringDef_var &);
+  CORBA_StringDef_out &operator= (CORBA_StringDef_ptr);
+  operator CORBA_StringDef_ptr &();
+  CORBA_StringDef_ptr &ptr (void);
+  CORBA_StringDef_ptr operator-> (void);
+
+private:
+  CORBA_StringDef_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
 
-  class CORBA_SequenceDef;
-  
+class CORBA_SequenceDef;
+
 #if !defined (_CORBA_SEQUENCEDEF___PTR_CH_)
 #define _CORBA_SEQUENCEDEF___PTR_CH_
 
@@ -653,33 +217,41 @@ typedef CORBA_SequenceDef *CORBA_SequenceDef_ptr;
 #if !defined (_CORBA_SEQUENCEDEF___VAR_CH_)
 #define _CORBA_SEQUENCEDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_SequenceDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_SequenceDef_var (void); // default constructor
-    CORBA_SequenceDef_var (CORBA_SequenceDef_ptr p) : ptr_ (p) {} 
-    CORBA_SequenceDef_var (const CORBA_SequenceDef_var &); // copy constructor
-    ~CORBA_SequenceDef_var (void); // destructor
-    
-    CORBA_SequenceDef_var &operator= (CORBA_SequenceDef_ptr);
-    CORBA_SequenceDef_var &operator= (const CORBA_SequenceDef_var &);
-    CORBA_SequenceDef_ptr operator-> (void) const;
-    
-    operator const CORBA_SequenceDef_ptr &() const;
-    operator CORBA_SequenceDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_SequenceDef_ptr in (void) const;
-    CORBA_SequenceDef_ptr &inout (void);
-    CORBA_SequenceDef_ptr &out (void);
-    CORBA_SequenceDef_ptr _retn (void);
-    CORBA_SequenceDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_SequenceDef_var : public TAO_Base_var
+{
+public:
+  CORBA_SequenceDef_var (void); // default constructor
+  CORBA_SequenceDef_var (CORBA_SequenceDef_ptr p) : ptr_ (p) {} 
+  CORBA_SequenceDef_var (const CORBA_SequenceDef_var &); // copy constructor
+  ~CORBA_SequenceDef_var (void); // destructor
+  
+  CORBA_SequenceDef_var &operator= (CORBA_SequenceDef_ptr);
+  CORBA_SequenceDef_var &operator= (const CORBA_SequenceDef_var &);
+  CORBA_SequenceDef_ptr operator-> (void) const;
+  
+  operator const CORBA_SequenceDef_ptr &() const;
+  operator CORBA_SequenceDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA_SequenceDef_ptr in (void) const;
+  CORBA_SequenceDef_ptr &inout (void);
+  CORBA_SequenceDef_ptr &out (void);
+  CORBA_SequenceDef_ptr _retn (void);
+  CORBA_SequenceDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_SequenceDef_ptr duplicate (CORBA_SequenceDef_ptr);
+  static void release (CORBA_SequenceDef_ptr);
+  static CORBA_SequenceDef_ptr nil (void);
+  static CORBA_SequenceDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_SequenceDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_SequenceDef_var (const TAO_Base_var &rhs);
-    CORBA_SequenceDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_SequenceDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_SequenceDef_var (const TAO_Base_var &rhs);
+  CORBA_SequenceDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -688,28 +260,28 @@ typedef CORBA_SequenceDef *CORBA_SequenceDef_ptr;
 #if !defined (_CORBA_SEQUENCEDEF___OUT_CH_)
 #define _CORBA_SEQUENCEDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_SequenceDef_out
-  {
-  public:
-    CORBA_SequenceDef_out (CORBA_SequenceDef_ptr &);
-    CORBA_SequenceDef_out (CORBA_SequenceDef_var &);
-    CORBA_SequenceDef_out (const CORBA_SequenceDef_out &);
-    CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_out &);
-    CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_var &);
-    CORBA_SequenceDef_out &operator= (CORBA_SequenceDef_ptr);
-    operator CORBA_SequenceDef_ptr &();
-    CORBA_SequenceDef_ptr &ptr (void);
-    CORBA_SequenceDef_ptr operator-> (void);
-    
-  private:
-    CORBA_SequenceDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_SequenceDef_out
+{
+public:
+  CORBA_SequenceDef_out (CORBA_SequenceDef_ptr &);
+  CORBA_SequenceDef_out (CORBA_SequenceDef_var &);
+  CORBA_SequenceDef_out (const CORBA_SequenceDef_out &);
+  CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_out &);
+  CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_var &);
+  CORBA_SequenceDef_out &operator= (CORBA_SequenceDef_ptr);
+  operator CORBA_SequenceDef_ptr &();
+  CORBA_SequenceDef_ptr &ptr (void);
+  CORBA_SequenceDef_ptr operator-> (void);
+
+private:
+  CORBA_SequenceDef_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
 
-  class CORBA_ArrayDef;
-  
+class CORBA_ArrayDef;
+
 #if !defined (_CORBA_ARRAYDEF___PTR_CH_)
 #define _CORBA_ARRAYDEF___PTR_CH_
 
@@ -721,33 +293,41 @@ typedef CORBA_ArrayDef *CORBA_ArrayDef_ptr;
 #if !defined (_CORBA_ARRAYDEF___VAR_CH_)
 #define _CORBA_ARRAYDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_ArrayDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_ArrayDef_var (void); // default constructor
-    CORBA_ArrayDef_var (CORBA_ArrayDef_ptr p) : ptr_ (p) {} 
-    CORBA_ArrayDef_var (const CORBA_ArrayDef_var &); // copy constructor
-    ~CORBA_ArrayDef_var (void); // destructor
-    
-    CORBA_ArrayDef_var &operator= (CORBA_ArrayDef_ptr);
-    CORBA_ArrayDef_var &operator= (const CORBA_ArrayDef_var &);
-    CORBA_ArrayDef_ptr operator-> (void) const;
-    
-    operator const CORBA_ArrayDef_ptr &() const;
-    operator CORBA_ArrayDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_ArrayDef_ptr in (void) const;
-    CORBA_ArrayDef_ptr &inout (void);
-    CORBA_ArrayDef_ptr &out (void);
-    CORBA_ArrayDef_ptr _retn (void);
-    CORBA_ArrayDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_ArrayDef_var : public TAO_Base_var
+{
+public:
+  CORBA_ArrayDef_var (void); // default constructor
+  CORBA_ArrayDef_var (CORBA_ArrayDef_ptr p) : ptr_ (p) {} 
+  CORBA_ArrayDef_var (const CORBA_ArrayDef_var &); // copy constructor
+  ~CORBA_ArrayDef_var (void); // destructor
+  
+  CORBA_ArrayDef_var &operator= (CORBA_ArrayDef_ptr);
+  CORBA_ArrayDef_var &operator= (const CORBA_ArrayDef_var &);
+  CORBA_ArrayDef_ptr operator-> (void) const;
+  
+  operator const CORBA_ArrayDef_ptr &() const;
+  operator CORBA_ArrayDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA_ArrayDef_ptr in (void) const;
+  CORBA_ArrayDef_ptr &inout (void);
+  CORBA_ArrayDef_ptr &out (void);
+  CORBA_ArrayDef_ptr _retn (void);
+  CORBA_ArrayDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_ArrayDef_ptr duplicate (CORBA_ArrayDef_ptr);
+  static void release (CORBA_ArrayDef_ptr);
+  static CORBA_ArrayDef_ptr nil (void);
+  static CORBA_ArrayDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_ArrayDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_ArrayDef_var (const TAO_Base_var &rhs);
-    CORBA_ArrayDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_ArrayDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_ArrayDef_var (const TAO_Base_var &rhs);
+  CORBA_ArrayDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -756,28 +336,28 @@ typedef CORBA_ArrayDef *CORBA_ArrayDef_ptr;
 #if !defined (_CORBA_ARRAYDEF___OUT_CH_)
 #define _CORBA_ARRAYDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_ArrayDef_out
-  {
-  public:
-    CORBA_ArrayDef_out (CORBA_ArrayDef_ptr &);
-    CORBA_ArrayDef_out (CORBA_ArrayDef_var &);
-    CORBA_ArrayDef_out (const CORBA_ArrayDef_out &);
-    CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_out &);
-    CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_var &);
-    CORBA_ArrayDef_out &operator= (CORBA_ArrayDef_ptr);
-    operator CORBA_ArrayDef_ptr &();
-    CORBA_ArrayDef_ptr &ptr (void);
-    CORBA_ArrayDef_ptr operator-> (void);
-    
-  private:
-    CORBA_ArrayDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_ArrayDef_out
+{
+public:
+  CORBA_ArrayDef_out (CORBA_ArrayDef_ptr &);
+  CORBA_ArrayDef_out (CORBA_ArrayDef_var &);
+  CORBA_ArrayDef_out (const CORBA_ArrayDef_out &);
+  CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_out &);
+  CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_var &);
+  CORBA_ArrayDef_out &operator= (CORBA_ArrayDef_ptr);
+  operator CORBA_ArrayDef_ptr &();
+  CORBA_ArrayDef_ptr &ptr (void);
+  CORBA_ArrayDef_ptr operator-> (void);
+
+private:
+  CORBA_ArrayDef_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
 
-  class CORBA_WstringDef;
-  
+class CORBA_WstringDef;
+
 #if !defined (_CORBA_WSTRINGDEF___PTR_CH_)
 #define _CORBA_WSTRINGDEF___PTR_CH_
 
@@ -789,33 +369,41 @@ typedef CORBA_WstringDef *CORBA_WstringDef_ptr;
 #if !defined (_CORBA_WSTRINGDEF___VAR_CH_)
 #define _CORBA_WSTRINGDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_WstringDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_WstringDef_var (void); // default constructor
-    CORBA_WstringDef_var (CORBA_WstringDef_ptr p) : ptr_ (p) {} 
-    CORBA_WstringDef_var (const CORBA_WstringDef_var &); // copy constructor
-    ~CORBA_WstringDef_var (void); // destructor
-    
-    CORBA_WstringDef_var &operator= (CORBA_WstringDef_ptr);
-    CORBA_WstringDef_var &operator= (const CORBA_WstringDef_var &);
-    CORBA_WstringDef_ptr operator-> (void) const;
-    
-    operator const CORBA_WstringDef_ptr &() const;
-    operator CORBA_WstringDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_WstringDef_ptr in (void) const;
-    CORBA_WstringDef_ptr &inout (void);
-    CORBA_WstringDef_ptr &out (void);
-    CORBA_WstringDef_ptr _retn (void);
-    CORBA_WstringDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_WstringDef_var : public TAO_Base_var
+{
+public:
+  CORBA_WstringDef_var (void); // default constructor
+  CORBA_WstringDef_var (CORBA_WstringDef_ptr p) : ptr_ (p) {} 
+  CORBA_WstringDef_var (const CORBA_WstringDef_var &); // copy constructor
+  ~CORBA_WstringDef_var (void); // destructor
+  
+  CORBA_WstringDef_var &operator= (CORBA_WstringDef_ptr);
+  CORBA_WstringDef_var &operator= (const CORBA_WstringDef_var &);
+  CORBA_WstringDef_ptr operator-> (void) const;
+  
+  operator const CORBA_WstringDef_ptr &() const;
+  operator CORBA_WstringDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA_WstringDef_ptr in (void) const;
+  CORBA_WstringDef_ptr &inout (void);
+  CORBA_WstringDef_ptr &out (void);
+  CORBA_WstringDef_ptr _retn (void);
+  CORBA_WstringDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_WstringDef_ptr duplicate (CORBA_WstringDef_ptr);
+  static void release (CORBA_WstringDef_ptr);
+  static CORBA_WstringDef_ptr nil (void);
+  static CORBA_WstringDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_WstringDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_WstringDef_var (const TAO_Base_var &rhs);
-    CORBA_WstringDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_WstringDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_WstringDef_var (const TAO_Base_var &rhs);
+  CORBA_WstringDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -824,28 +412,28 @@ typedef CORBA_WstringDef *CORBA_WstringDef_ptr;
 #if !defined (_CORBA_WSTRINGDEF___OUT_CH_)
 #define _CORBA_WSTRINGDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_WstringDef_out
-  {
-  public:
-    CORBA_WstringDef_out (CORBA_WstringDef_ptr &);
-    CORBA_WstringDef_out (CORBA_WstringDef_var &);
-    CORBA_WstringDef_out (const CORBA_WstringDef_out &);
-    CORBA_WstringDef_out &operator= (const CORBA_WstringDef_out &);
-    CORBA_WstringDef_out &operator= (const CORBA_WstringDef_var &);
-    CORBA_WstringDef_out &operator= (CORBA_WstringDef_ptr);
-    operator CORBA_WstringDef_ptr &();
-    CORBA_WstringDef_ptr &ptr (void);
-    CORBA_WstringDef_ptr operator-> (void);
-    
-  private:
-    CORBA_WstringDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_WstringDef_out
+{
+public:
+  CORBA_WstringDef_out (CORBA_WstringDef_ptr &);
+  CORBA_WstringDef_out (CORBA_WstringDef_var &);
+  CORBA_WstringDef_out (const CORBA_WstringDef_out &);
+  CORBA_WstringDef_out &operator= (const CORBA_WstringDef_out &);
+  CORBA_WstringDef_out &operator= (const CORBA_WstringDef_var &);
+  CORBA_WstringDef_out &operator= (CORBA_WstringDef_ptr);
+  operator CORBA_WstringDef_ptr &();
+  CORBA_WstringDef_ptr &ptr (void);
+  CORBA_WstringDef_ptr operator-> (void);
+
+private:
+  CORBA_WstringDef_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
 
-  class CORBA_FixedDef;
-  
+class CORBA_FixedDef;
+
 #if !defined (_CORBA_FIXEDDEF___PTR_CH_)
 #define _CORBA_FIXEDDEF___PTR_CH_
 
@@ -857,33 +445,41 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 #if !defined (_CORBA_FIXEDDEF___VAR_CH_)
 #define _CORBA_FIXEDDEF___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_FixedDef_var : public TAO_Base_var
-  {
-  public:
-    CORBA_FixedDef_var (void); // default constructor
-    CORBA_FixedDef_var (CORBA_FixedDef_ptr p) : ptr_ (p) {} 
-    CORBA_FixedDef_var (const CORBA_FixedDef_var &); // copy constructor
-    ~CORBA_FixedDef_var (void); // destructor
-    
-    CORBA_FixedDef_var &operator= (CORBA_FixedDef_ptr);
-    CORBA_FixedDef_var &operator= (const CORBA_FixedDef_var &);
-    CORBA_FixedDef_ptr operator-> (void) const;
-    
-    operator const CORBA_FixedDef_ptr &() const;
-    operator CORBA_FixedDef_ptr &();
-    // in, inout, out, _retn 
-    CORBA_FixedDef_ptr in (void) const;
-    CORBA_FixedDef_ptr &inout (void);
-    CORBA_FixedDef_ptr &out (void);
-    CORBA_FixedDef_ptr _retn (void);
-    CORBA_FixedDef_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_FixedDef_var : public TAO_Base_var
+{
+public:
+  CORBA_FixedDef_var (void); // default constructor
+  CORBA_FixedDef_var (CORBA_FixedDef_ptr p) : ptr_ (p) {} 
+  CORBA_FixedDef_var (const CORBA_FixedDef_var &); // copy constructor
+  ~CORBA_FixedDef_var (void); // destructor
+  
+  CORBA_FixedDef_var &operator= (CORBA_FixedDef_ptr);
+  CORBA_FixedDef_var &operator= (const CORBA_FixedDef_var &);
+  CORBA_FixedDef_ptr operator-> (void) const;
+  
+  operator const CORBA_FixedDef_ptr &() const;
+  operator CORBA_FixedDef_ptr &();
+  // in, inout, out, _retn 
+  CORBA_FixedDef_ptr in (void) const;
+  CORBA_FixedDef_ptr &inout (void);
+  CORBA_FixedDef_ptr &out (void);
+  CORBA_FixedDef_ptr _retn (void);
+  CORBA_FixedDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_FixedDef_ptr duplicate (CORBA_FixedDef_ptr);
+  static void release (CORBA_FixedDef_ptr);
+  static CORBA_FixedDef_ptr nil (void);
+  static CORBA_FixedDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_FixedDef_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_FixedDef_var (const TAO_Base_var &rhs);
-    CORBA_FixedDef_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_FixedDef_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_FixedDef_var (const TAO_Base_var &rhs);
+  CORBA_FixedDef_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -892,23 +488,31 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 #if !defined (_CORBA_FIXEDDEF___OUT_CH_)
 #define _CORBA_FIXEDDEF___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_FixedDef_out
-  {
-  public:
-    CORBA_FixedDef_out (CORBA_FixedDef_ptr &);
-    CORBA_FixedDef_out (CORBA_FixedDef_var &);
-    CORBA_FixedDef_out (const CORBA_FixedDef_out &);
-    CORBA_FixedDef_out &operator= (const CORBA_FixedDef_out &);
-    CORBA_FixedDef_out &operator= (const CORBA_FixedDef_var &);
-    CORBA_FixedDef_out &operator= (CORBA_FixedDef_ptr);
-    operator CORBA_FixedDef_ptr &();
-    CORBA_FixedDef_ptr &ptr (void);
-    CORBA_FixedDef_ptr operator-> (void);
-    
-  private:
-    CORBA_FixedDef_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_FixedDef_out
+{
+public:
+  CORBA_FixedDef_out (CORBA_FixedDef_ptr &);
+  CORBA_FixedDef_out (CORBA_FixedDef_var &);
+  CORBA_FixedDef_out (const CORBA_FixedDef_out &);
+  CORBA_FixedDef_out &operator= (const CORBA_FixedDef_out &);
+  CORBA_FixedDef_out &operator= (const CORBA_FixedDef_var &);
+  CORBA_FixedDef_out &operator= (CORBA_FixedDef_ptr);
+  operator CORBA_FixedDef_ptr &();
+  CORBA_FixedDef_ptr &ptr (void);
+  CORBA_FixedDef_ptr operator-> (void);
 
+private:
+  CORBA_FixedDef_ptr &ptr_;
+};
+
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_REPOSITORY___PTR_CH_)
+#define _CORBA_REPOSITORY___PTR_CH_
+
+class CORBA_Repository;
+typedef CORBA_Repository *CORBA_Repository_ptr;
 
 #endif /* end #if !defined */
 
@@ -916,33 +520,41 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 #if !defined (_CORBA_REPOSITORY___VAR_CH_)
 #define _CORBA_REPOSITORY___VAR_CH_
 
-  class TAO_IFR_Client_Export CORBA_Repository_var : public TAO_Base_var
-  {
-  public:
-    CORBA_Repository_var (void); // default constructor
-    CORBA_Repository_var (CORBA_Repository_ptr p) : ptr_ (p) {} 
-    CORBA_Repository_var (const CORBA_Repository_var &); // copy constructor
-    ~CORBA_Repository_var (void); // destructor
-    
-    CORBA_Repository_var &operator= (CORBA_Repository_ptr);
-    CORBA_Repository_var &operator= (const CORBA_Repository_var &);
-    CORBA_Repository_ptr operator-> (void) const;
-    
-    operator const CORBA_Repository_ptr &() const;
-    operator CORBA_Repository_ptr &();
-    // in, inout, out, _retn 
-    CORBA_Repository_ptr in (void) const;
-    CORBA_Repository_ptr &inout (void);
-    CORBA_Repository_ptr &out (void);
-    CORBA_Repository_ptr _retn (void);
-    CORBA_Repository_ptr ptr (void) const;
+class TAO_IFR_Client_Export CORBA_Repository_var : public TAO_Base_var
+{
+public:
+  CORBA_Repository_var (void); // default constructor
+  CORBA_Repository_var (CORBA_Repository_ptr p) : ptr_ (p) {} 
+  CORBA_Repository_var (const CORBA_Repository_var &); // copy constructor
+  ~CORBA_Repository_var (void); // destructor
+  
+  CORBA_Repository_var &operator= (CORBA_Repository_ptr);
+  CORBA_Repository_var &operator= (const CORBA_Repository_var &);
+  CORBA_Repository_ptr operator-> (void) const;
+  
+  operator const CORBA_Repository_ptr &() const;
+  operator CORBA_Repository_ptr &();
+  // in, inout, out, _retn 
+  CORBA_Repository_ptr in (void) const;
+  CORBA_Repository_ptr &inout (void);
+  CORBA_Repository_ptr &out (void);
+  CORBA_Repository_ptr _retn (void);
+  CORBA_Repository_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_Repository_ptr duplicate (CORBA_Repository_ptr);
+  static void release (CORBA_Repository_ptr);
+  static CORBA_Repository_ptr nil (void);
+  static CORBA_Repository_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
-  private:
-    CORBA_Repository_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    CORBA_Repository_var (const TAO_Base_var &rhs);
-    CORBA_Repository_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  CORBA_Repository_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_Repository_var (const TAO_Base_var &rhs);
+  CORBA_Repository_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -951,22 +563,22 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 #if !defined (_CORBA_REPOSITORY___OUT_CH_)
 #define _CORBA_REPOSITORY___OUT_CH_
 
-  class TAO_IFR_Client_Export CORBA_Repository_out
-  {
-  public:
-    CORBA_Repository_out (CORBA_Repository_ptr &);
-    CORBA_Repository_out (CORBA_Repository_var &);
-    CORBA_Repository_out (const CORBA_Repository_out &);
-    CORBA_Repository_out &operator= (const CORBA_Repository_out &);
-    CORBA_Repository_out &operator= (const CORBA_Repository_var &);
-    CORBA_Repository_out &operator= (CORBA_Repository_ptr);
-    operator CORBA_Repository_ptr &();
-    CORBA_Repository_ptr &ptr (void);
-    CORBA_Repository_ptr operator-> (void);
-    
-  private:
-    CORBA_Repository_ptr &ptr_;
-  };
+class TAO_IFR_Client_Export CORBA_Repository_out
+{
+public:
+  CORBA_Repository_out (CORBA_Repository_ptr &);
+  CORBA_Repository_out (CORBA_Repository_var &);
+  CORBA_Repository_out (const CORBA_Repository_out &);
+  CORBA_Repository_out &operator= (const CORBA_Repository_out &);
+  CORBA_Repository_out &operator= (const CORBA_Repository_var &);
+  CORBA_Repository_out &operator= (CORBA_Repository_ptr);
+  operator CORBA_Repository_ptr &();
+  CORBA_Repository_ptr &ptr (void);
+  CORBA_Repository_ptr operator-> (void);
+
+private:
+  CORBA_Repository_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -976,147 +588,147 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 #define _CORBA_REPOSITORY_CH_
 
 // Forward Classes Declaration
-  class _TAO_Repository_Proxy_Impl;
-  class _TAO_Repository_Remote_Proxy_Impl;
-  class _TAO_Repository_Proxy_Broker;
-  class _TAO_Repository_Remote_Proxy_Broker;
+class _TAO_CORBA_Repository_Proxy_Impl;
+class _TAO_CORBA_Repository_Remote_Proxy_Impl;
+class _TAO_CORBA_Repository_Proxy_Broker;
+class _TAO_CORBA_Repository_Remote_Proxy_Broker;
+
+class TAO_IFR_Client_Export CORBA_Repository: public virtual CORBA_Container
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef CORBA_Repository_ptr _ptr_type;
+  typedef CORBA_Repository_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  // the static operations
+  static CORBA_Repository_ptr _duplicate (CORBA_Repository_ptr obj);
+  static CORBA_Repository_ptr _narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static CORBA_Repository_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static CORBA_Repository_ptr _nil (void)
+    {
+      return (CORBA_Repository_ptr)0;
+    }
+
+  static void _tao_any_destructor (void*);
+
+  virtual CORBA_Contained_ptr lookup_id (
+      const char * search_id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA::TypeCode_ptr get_canonical_typecode (
+      CORBA::TypeCode_ptr tc,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA::PrimitiveDef_ptr get_primitive (
+      CORBA::PrimitiveKind kind,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA_StringDef_ptr create_string (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA_WstringDef_ptr create_wstring (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA_SequenceDef_ptr create_sequence (
+      CORBA::ULong bound,
+      CORBA_IDLType_ptr element_type,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA_ArrayDef_ptr create_array (
+      CORBA::ULong length,
+      CORBA_IDLType_ptr element_type,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA_FixedDef_ptr create_fixed (
+      CORBA::UShort digits,
+      CORBA::Short scale,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual CORBA::Boolean _is_a (
+      const CORBA::Char *type_id, 
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
   
-  class TAO_IFR_Client_Export CORBA_Repository: public virtual CORBA_Container
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef CORBA_Repository_ptr _ptr_type;
-    typedef CORBA_Repository_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+  virtual const char* _interface_repository_id (void) const;
 
-    // the static operations
-    static CORBA_Repository_ptr _duplicate (CORBA_Repository_ptr obj);
-    static CORBA_Repository_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static CORBA_Repository_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static CORBA_Repository_ptr _nil (void)
-      {
-        return (CORBA_Repository_ptr)0;
-      }
-
-    static void _tao_any_destructor (void*);
-
-    virtual CORBA::Contained_ptr lookup_id (
-        const char * search_id,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::TypeCode_ptr get_canonical_typecode (
-        CORBA::TypeCode_ptr tc,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::PrimitiveDef_ptr get_primitive (
-        CORBA::PrimitiveKind kind,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::StringDef_ptr create_string (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::WstringDef_ptr create_wstring (
-        CORBA::ULong bound,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::SequenceDef_ptr create_sequence (
-        CORBA::ULong bound,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::ArrayDef_ptr create_array (
-        CORBA::ULong length,
-        CORBA::IDLType_ptr element_type,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::FixedDef_ptr create_fixed (
-        CORBA::UShort digits,
-        CORBA::Short scale,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
-
-    virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
-    virtual const char* _interface_repository_id (void) const;
-
-  private:
-    _TAO_Repository_Proxy_Broker *the_TAO_Repository_Proxy_Broker_;
-    
+private:
+  _TAO_CORBA_Repository_Proxy_Broker *the_TAO_CORBA_Repository_Proxy_Broker_;
+  
+protected:
+  CORBA_Repository (int collocated = 0);
+  
   protected:
-    CORBA_Repository (int collocated = 0);
+    // This methods travese the inheritance tree and set the
+    // parents piece of the given class in the right mode
+    virtual void CORBA_Repository_setup_collocation (int collocated);
     
-    protected:
-      // This methods travese the inheritance tree and set the
-      // parents piece of the given class in the right mode
-      virtual void CORBA_Repository_setup_collocation (int collocated);
-      
-      CORBA_Repository (
-        TAO_Stub *objref, 
-        CORBA::Boolean _tao_collocated = 0,
-        TAO_Abstract_ServantBase *servant = 0
-        );
-      
-      friend class _TAO_Repository_Remote_Proxy_Impl;
-      friend class _TAO_Repository_ThruPOA_Proxy_Impl;
-      friend class _TAO_Repository_Direct_Proxy_Impl;
+    CORBA_Repository (
+      TAO_Stub *objref, 
+      CORBA::Boolean _tao_collocated = 0,
+      TAO_Abstract_ServantBase *servant = 0
+      );
     
-    virtual ~CORBA_Repository (void);
-  private:
-    CORBA_Repository (const CORBA_Repository &);
-    void operator= (const CORBA_Repository &);    
+    friend class _TAO_CORBA_Repository_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_Repository_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_Repository_Direct_Proxy_Impl;
+  
+  virtual ~CORBA_Repository (void);
+private:
+  CORBA_Repository (const CORBA_Repository &);
+  void operator= (const CORBA_Repository &);
 };
 
 
@@ -1129,13 +741,13 @@ typedef CORBA_FixedDef *CORBA_FixedDef_ptr;
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_Repository_Proxy_Impl : 
-  public virtual _TAO_Container_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_Repository_Proxy_Impl : 
+  public virtual _TAO_CORBA_Container_Proxy_Impl
 {
 public:
-  virtual ~_TAO_Repository_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_Repository_Proxy_Impl (void) { }
   
-    virtual CORBA::Contained_ptr lookup_id (
+    virtual CORBA_Contained_ptr lookup_id (
       CORBA_Object *_collocated_tao_target_,
       const char * search_id,
       CORBA::Environment &ACE_TRY_ENV
@@ -1162,7 +774,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::StringDef_ptr create_string (
+  virtual CORBA_StringDef_ptr create_string (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV
@@ -1171,7 +783,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::WstringDef_ptr create_wstring (
+  virtual CORBA_WstringDef_ptr create_wstring (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV
@@ -1180,27 +792,27 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::SequenceDef_ptr create_sequence (
+  virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ArrayDef_ptr create_array (
+  virtual CORBA_ArrayDef_ptr create_array (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::FixedDef_ptr create_fixed (
+  virtual CORBA_FixedDef_ptr create_fixed (
       CORBA_Object *_collocated_tao_target_,
       CORBA::UShort digits,
       CORBA::Short scale,
@@ -1211,7 +823,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_Repository_Proxy_Impl (void);
+  _TAO_CORBA_Repository_Proxy_Impl (void);
 
 };
 //
@@ -1223,18 +835,18 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_Repository_Remote_Proxy_Impl : 
-  public virtual _TAO_Repository_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_Repository_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_Repository_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Container_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_Repository_Remote_Proxy_Impl (void);
+  _TAO_CORBA_Repository_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_Repository_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_Repository_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::Contained_ptr lookup_id (
+    virtual CORBA_Contained_ptr lookup_id (
       CORBA_Object *_collocated_tao_target_,
       const char * search_id,
       CORBA::Environment &ACE_TRY_ENV
@@ -1261,7 +873,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::StringDef_ptr create_string (
+  virtual CORBA_StringDef_ptr create_string (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV
@@ -1270,7 +882,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::WstringDef_ptr create_wstring (
+  virtual CORBA_WstringDef_ptr create_wstring (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV
@@ -1279,27 +891,27 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::SequenceDef_ptr create_sequence (
+  virtual CORBA_SequenceDef_ptr create_sequence (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::ArrayDef_ptr create_array (
+  virtual CORBA_ArrayDef_ptr create_array (
       CORBA_Object *_collocated_tao_target_,
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type,
+      CORBA_IDLType_ptr element_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::FixedDef_ptr create_fixed (
+  virtual CORBA_FixedDef_ptr create_fixed (
       CORBA_Object *_collocated_tao_target_,
       CORBA::UShort digits,
       CORBA::Short scale,
@@ -1327,17 +939,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_Repository_Proxy_Broker
 {
 public:
-  virtual ~_TAO_Repository_Proxy_Broker (void);
-  virtual _TAO_Repository_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_Repository_Proxy_Broker (void);
+  virtual _TAO_CORBA_Repository_Proxy_Impl &select_proxy (
     CORBA_Repository *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_Repository_Proxy_Broker (void);
+  _TAO_CORBA_Repository_Proxy_Broker (void);
   
 };
 
@@ -1350,26 +962,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_Repository_Remote_Proxy_Broker : public virtual _TAO_Repository_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_Repository_Remote_Proxy_Broker : public virtual _TAO_CORBA_Repository_Proxy_Broker
 {
 public: 
-  _TAO_Repository_Remote_Proxy_Broker (void);
+  _TAO_CORBA_Repository_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_Repository_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_Repository_Remote_Proxy_Broker (void);
   
-  virtual _TAO_Repository_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_Repository_Proxy_Impl &select_proxy (
     CORBA_Repository *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_Repository_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_Repository_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_Repository_Remote_Proxy_Broker *the_TAO_Repository_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_Repository_Remote_Proxy_Broker *the_TAO_CORBA_Repository_Remote_Proxy_Broker (void);
 };
 
 
@@ -1377,6 +989,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_MODULEDEF___PTR_CH_)
+#define _CORBA_MODULEDEF___PTR_CH_
+
+class CORBA_ModuleDef;
+typedef CORBA_ModuleDef *CORBA_ModuleDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1404,6 +1025,14 @@ public:
   CORBA_ModuleDef_ptr &out (void);
   CORBA_ModuleDef_ptr _retn (void);
   CORBA_ModuleDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_ModuleDef_ptr duplicate (CORBA_ModuleDef_ptr);
+  static void release (CORBA_ModuleDef_ptr);
+  static CORBA_ModuleDef_ptr nil (void);
+  static CORBA_ModuleDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_ModuleDef_ptr ptr_;
@@ -1431,7 +1060,7 @@ public:
   operator CORBA_ModuleDef_ptr &();
   CORBA_ModuleDef_ptr &ptr (void);
   CORBA_ModuleDef_ptr operator-> (void);
-  
+
 private:
   CORBA_ModuleDef_ptr &ptr_;
 };
@@ -1444,10 +1073,10 @@ private:
 #define _CORBA_MODULEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_ModuleDef_Proxy_Impl;
-class _TAO_ModuleDef_Remote_Proxy_Impl;
-class _TAO_ModuleDef_Proxy_Broker;
-class _TAO_ModuleDef_Remote_Proxy_Broker;
+class _TAO_CORBA_ModuleDef_Proxy_Impl;
+class _TAO_CORBA_ModuleDef_Remote_Proxy_Impl;
+class _TAO_CORBA_ModuleDef_Proxy_Broker;
+class _TAO_CORBA_ModuleDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_ModuleDef: public virtual CORBA_Container, public virtual CORBA_Contained
 {
@@ -1486,7 +1115,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_ModuleDef_Proxy_Broker *the_TAO_ModuleDef_Proxy_Broker_;
+  _TAO_CORBA_ModuleDef_Proxy_Broker *the_TAO_CORBA_ModuleDef_Proxy_Broker_;
   
 protected:
   CORBA_ModuleDef (int collocated = 0);
@@ -1502,14 +1131,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_ModuleDef_Remote_Proxy_Impl;
-    friend class _TAO_ModuleDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_ModuleDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_ModuleDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_ModuleDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_ModuleDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_ModuleDef (void);
 private:
   CORBA_ModuleDef (const CORBA_ModuleDef &);
-  void operator= (const CORBA_ModuleDef &);  
+  void operator= (const CORBA_ModuleDef &);
 };
 
 
@@ -1522,15 +1151,15 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Impl : 
-  public virtual _TAO_Container_Proxy_Impl, 
-  public virtual _TAO_Contained_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_ModuleDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Container_Proxy_Impl, 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
-  virtual ~_TAO_ModuleDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ModuleDef_Proxy_Impl (void) { }
   
   protected:
-  _TAO_ModuleDef_Proxy_Impl (void);
+  _TAO_CORBA_ModuleDef_Proxy_Impl (void);
 
 };
 //
@@ -1542,17 +1171,17 @@ public:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ModuleDef_Remote_Proxy_Impl : 
-  public virtual _TAO_ModuleDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_ModuleDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_ModuleDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Container_Remote_Proxy_Impl, 
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_ModuleDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_ModuleDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_ModuleDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ModuleDef_Remote_Proxy_Impl (void) { }
   
   };
 
@@ -1572,17 +1201,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ModuleDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_ModuleDef_Proxy_Broker (void);
-  virtual _TAO_ModuleDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_ModuleDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_ModuleDef_Proxy_Impl &select_proxy (
     CORBA_ModuleDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_ModuleDef_Proxy_Broker (void);
+  _TAO_CORBA_ModuleDef_Proxy_Broker (void);
   
 };
 
@@ -1595,26 +1224,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ModuleDef_Remote_Proxy_Broker : public virtual _TAO_ModuleDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ModuleDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_ModuleDef_Proxy_Broker
 {
 public: 
-  _TAO_ModuleDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_ModuleDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_ModuleDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ModuleDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_ModuleDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_ModuleDef_Proxy_Impl &select_proxy (
     CORBA_ModuleDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_ModuleDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_ModuleDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_ModuleDef_Remote_Proxy_Broker *the_TAO_ModuleDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_ModuleDef_Remote_Proxy_Broker *the_TAO_CORBA_ModuleDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -1691,6 +1320,15 @@ private:
 };
 
 
+#if !defined (_CORBA_CONSTANTDEF___PTR_CH_)
+#define _CORBA_CONSTANTDEF___PTR_CH_
+
+class CORBA_ConstantDef;
+typedef CORBA_ConstantDef *CORBA_ConstantDef_ptr;
+
+#endif /* end #if !defined */
+
+
 #if !defined (_CORBA_CONSTANTDEF___VAR_CH_)
 #define _CORBA_CONSTANTDEF___VAR_CH_
 
@@ -1714,6 +1352,14 @@ public:
   CORBA_ConstantDef_ptr &out (void);
   CORBA_ConstantDef_ptr _retn (void);
   CORBA_ConstantDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_ConstantDef_ptr duplicate (CORBA_ConstantDef_ptr);
+  static void release (CORBA_ConstantDef_ptr);
+  static CORBA_ConstantDef_ptr nil (void);
+  static CORBA_ConstantDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_ConstantDef_ptr ptr_;
@@ -1741,7 +1387,7 @@ public:
   operator CORBA_ConstantDef_ptr &();
   CORBA_ConstantDef_ptr &ptr (void);
   CORBA_ConstantDef_ptr operator-> (void);
-  
+
 private:
   CORBA_ConstantDef_ptr &ptr_;
 };
@@ -1754,10 +1400,10 @@ private:
 #define _CORBA_CONSTANTDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_ConstantDef_Proxy_Impl;
-class _TAO_ConstantDef_Remote_Proxy_Impl;
-class _TAO_ConstantDef_Proxy_Broker;
-class _TAO_ConstantDef_Remote_Proxy_Broker;
+class _TAO_CORBA_ConstantDef_Proxy_Impl;
+class _TAO_CORBA_ConstantDef_Remote_Proxy_Impl;
+class _TAO_CORBA_ConstantDef_Proxy_Broker;
+class _TAO_CORBA_ConstantDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_ConstantDef: public virtual CORBA_Contained
 {
@@ -1794,7 +1440,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1803,7 +1449,7 @@ public:
     ));
 
   virtual void type_def (
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -1838,7 +1484,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_ConstantDef_Proxy_Broker *the_TAO_ConstantDef_Proxy_Broker_;
+  _TAO_CORBA_ConstantDef_Proxy_Broker *the_TAO_CORBA_ConstantDef_Proxy_Broker_;
   
 protected:
   CORBA_ConstantDef (int collocated = 0);
@@ -1854,14 +1500,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_ConstantDef_Remote_Proxy_Impl;
-    friend class _TAO_ConstantDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_ConstantDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_ConstantDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_ConstantDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_ConstantDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_ConstantDef (void);
 private:
   CORBA_ConstantDef (const CORBA_ConstantDef &);
-  void operator= (const CORBA_ConstantDef &);  
+  void operator= (const CORBA_ConstantDef &);
 };
 
 
@@ -1874,11 +1520,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_ConstantDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
-  virtual ~_TAO_ConstantDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ConstantDef_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -1888,7 +1534,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1898,7 +1544,7 @@ public:
 
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -1923,7 +1569,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_ConstantDef_Proxy_Impl (void);
+  _TAO_CORBA_ConstantDef_Proxy_Impl (void);
 
 };
 //
@@ -1935,16 +1581,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ConstantDef_Remote_Proxy_Impl : 
-  public virtual _TAO_ConstantDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_ConstantDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_ConstantDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_ConstantDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_ConstantDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_ConstantDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ConstantDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -1954,7 +1600,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -1964,7 +1610,7 @@ public:
 
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2006,17 +1652,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ConstantDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_ConstantDef_Proxy_Broker (void);
-  virtual _TAO_ConstantDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_ConstantDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_ConstantDef_Proxy_Impl &select_proxy (
     CORBA_ConstantDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_ConstantDef_Proxy_Broker (void);
+  _TAO_CORBA_ConstantDef_Proxy_Broker (void);
   
 };
 
@@ -2029,26 +1675,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ConstantDef_Remote_Proxy_Broker : public virtual _TAO_ConstantDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ConstantDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_ConstantDef_Proxy_Broker
 {
 public: 
-  _TAO_ConstantDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_ConstantDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_ConstantDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ConstantDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_ConstantDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_ConstantDef_Proxy_Impl &select_proxy (
     CORBA_ConstantDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_ConstantDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_ConstantDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_ConstantDef_Remote_Proxy_Broker *the_TAO_ConstantDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_ConstantDef_Remote_Proxy_Broker *the_TAO_CORBA_ConstantDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -2127,6 +1773,15 @@ private:
 };
 
 
+#if !defined (_CORBA_STRUCTDEF___PTR_CH_)
+#define _CORBA_STRUCTDEF___PTR_CH_
+
+class CORBA_StructDef;
+typedef CORBA_StructDef *CORBA_StructDef_ptr;
+
+#endif /* end #if !defined */
+
+
 #if !defined (_CORBA_STRUCTDEF___VAR_CH_)
 #define _CORBA_STRUCTDEF___VAR_CH_
 
@@ -2150,6 +1805,14 @@ public:
   CORBA_StructDef_ptr &out (void);
   CORBA_StructDef_ptr _retn (void);
   CORBA_StructDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_StructDef_ptr duplicate (CORBA_StructDef_ptr);
+  static void release (CORBA_StructDef_ptr);
+  static CORBA_StructDef_ptr nil (void);
+  static CORBA_StructDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_StructDef_ptr ptr_;
@@ -2177,7 +1840,7 @@ public:
   operator CORBA_StructDef_ptr &();
   CORBA_StructDef_ptr &ptr (void);
   CORBA_StructDef_ptr operator-> (void);
-  
+
 private:
   CORBA_StructDef_ptr &ptr_;
 };
@@ -2190,10 +1853,10 @@ private:
 #define _CORBA_STRUCTDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_StructDef_Proxy_Impl;
-class _TAO_StructDef_Remote_Proxy_Impl;
-class _TAO_StructDef_Proxy_Broker;
-class _TAO_StructDef_Remote_Proxy_Broker;
+class _TAO_CORBA_StructDef_Proxy_Impl;
+class _TAO_CORBA_StructDef_Remote_Proxy_Impl;
+class _TAO_CORBA_StructDef_Proxy_Broker;
+class _TAO_CORBA_StructDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_StructDef: public virtual CORBA_TypedefDef, public virtual CORBA_Container
 {
@@ -2222,7 +1885,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::StructMemberSeq * members (
+  virtual CORBA_StructMemberSeq * members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2231,7 +1894,7 @@ public:
     ));
 
   virtual void members (
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2249,7 +1912,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_StructDef_Proxy_Broker *the_TAO_StructDef_Proxy_Broker_;
+  _TAO_CORBA_StructDef_Proxy_Broker *the_TAO_CORBA_StructDef_Proxy_Broker_;
   
 protected:
   CORBA_StructDef (int collocated = 0);
@@ -2265,14 +1928,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_StructDef_Remote_Proxy_Impl;
-    friend class _TAO_StructDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_StructDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_StructDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_StructDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_StructDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_StructDef (void);
 private:
   CORBA_StructDef (const CORBA_StructDef &);
-  void operator= (const CORBA_StructDef &);  
+  void operator= (const CORBA_StructDef &);
 };
 
 
@@ -2285,14 +1948,14 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_StructDef_Proxy_Impl : 
-  public virtual _TAO_TypedefDef_Proxy_Impl, 
-  public virtual _TAO_Container_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_StructDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_TypedefDef_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Proxy_Impl
 {
 public:
-  virtual ~_TAO_StructDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_StructDef_Proxy_Impl (void) { }
   
-    virtual CORBA::StructMemberSeq * members (
+    virtual CORBA_StructMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2302,7 +1965,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2310,7 +1973,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_StructDef_Proxy_Impl (void);
+  _TAO_CORBA_StructDef_Proxy_Impl (void);
 
 };
 //
@@ -2322,19 +1985,19 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_StructDef_Remote_Proxy_Impl : 
-  public virtual _TAO_StructDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_StructDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_StructDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_TypedefDef_Remote_Proxy_Impl, 
-  public virtual _TAO_Container_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_TypedefDef_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_StructDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_StructDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_StructDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_StructDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::StructMemberSeq * members (
+    virtual CORBA_StructMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2344,7 +2007,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2369,17 +2032,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_StructDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_StructDef_Proxy_Broker (void);
-  virtual _TAO_StructDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_StructDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_StructDef_Proxy_Impl &select_proxy (
     CORBA_StructDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_StructDef_Proxy_Broker (void);
+  _TAO_CORBA_StructDef_Proxy_Broker (void);
   
 };
 
@@ -2392,26 +2055,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_StructDef_Remote_Proxy_Broker : public virtual _TAO_StructDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_StructDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_StructDef_Proxy_Broker
 {
 public: 
-  _TAO_StructDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_StructDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_StructDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_StructDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_StructDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_StructDef_Proxy_Impl &select_proxy (
     CORBA_StructDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_StructDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_StructDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_StructDef_Remote_Proxy_Broker *the_TAO_StructDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_StructDef_Remote_Proxy_Broker *the_TAO_CORBA_StructDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -2419,6 +2082,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_UNIONDEF___PTR_CH_)
+#define _CORBA_UNIONDEF___PTR_CH_
+
+class CORBA_UnionDef;
+typedef CORBA_UnionDef *CORBA_UnionDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -2446,6 +2118,14 @@ public:
   CORBA_UnionDef_ptr &out (void);
   CORBA_UnionDef_ptr _retn (void);
   CORBA_UnionDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_UnionDef_ptr duplicate (CORBA_UnionDef_ptr);
+  static void release (CORBA_UnionDef_ptr);
+  static CORBA_UnionDef_ptr nil (void);
+  static CORBA_UnionDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_UnionDef_ptr ptr_;
@@ -2473,7 +2153,7 @@ public:
   operator CORBA_UnionDef_ptr &();
   CORBA_UnionDef_ptr &ptr (void);
   CORBA_UnionDef_ptr operator-> (void);
-  
+
 private:
   CORBA_UnionDef_ptr &ptr_;
 };
@@ -2486,10 +2166,10 @@ private:
 #define _CORBA_UNIONDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_UnionDef_Proxy_Impl;
-class _TAO_UnionDef_Remote_Proxy_Impl;
-class _TAO_UnionDef_Proxy_Broker;
-class _TAO_UnionDef_Remote_Proxy_Broker;
+class _TAO_CORBA_UnionDef_Proxy_Impl;
+class _TAO_CORBA_UnionDef_Remote_Proxy_Impl;
+class _TAO_CORBA_UnionDef_Proxy_Broker;
+class _TAO_CORBA_UnionDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_UnionDef: public virtual CORBA_TypedefDef, public virtual CORBA_Container
 {
@@ -2526,7 +2206,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr discriminator_type_def (
+  virtual CORBA_IDLType_ptr discriminator_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2535,7 +2215,7 @@ public:
     ));
 
   virtual void discriminator_type_def (
-      CORBA::IDLType_ptr discriminator_type_def,
+      CORBA_IDLType_ptr discriminator_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2543,7 +2223,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::UnionMemberSeq * members (
+  virtual CORBA_UnionMemberSeq * members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2552,7 +2232,7 @@ public:
     ));
 
   virtual void members (
-      const CORBA::UnionMemberSeq & members,
+      const CORBA_UnionMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2570,7 +2250,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_UnionDef_Proxy_Broker *the_TAO_UnionDef_Proxy_Broker_;
+  _TAO_CORBA_UnionDef_Proxy_Broker *the_TAO_CORBA_UnionDef_Proxy_Broker_;
   
 protected:
   CORBA_UnionDef (int collocated = 0);
@@ -2586,14 +2266,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_UnionDef_Remote_Proxy_Impl;
-    friend class _TAO_UnionDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_UnionDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_UnionDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_UnionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_UnionDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_UnionDef (void);
 private:
   CORBA_UnionDef (const CORBA_UnionDef &);
-  void operator= (const CORBA_UnionDef &);  
+  void operator= (const CORBA_UnionDef &);
 };
 
 
@@ -2606,12 +2286,12 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Impl : 
-  public virtual _TAO_TypedefDef_Proxy_Impl, 
-  public virtual _TAO_Container_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_UnionDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_TypedefDef_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Proxy_Impl
 {
 public:
-  virtual ~_TAO_UnionDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_UnionDef_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr discriminator_type (
       CORBA_Object *_collocated_tao_target_,
@@ -2621,7 +2301,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr discriminator_type_def (
+  virtual CORBA_IDLType_ptr discriminator_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2631,14 +2311,14 @@ public:
 
   virtual void discriminator_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr discriminator_type_def,
+      CORBA_IDLType_ptr discriminator_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::UnionMemberSeq * members (
+  virtual CORBA_UnionMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2648,7 +2328,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::UnionMemberSeq & members,
+      const CORBA_UnionMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2656,7 +2336,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_UnionDef_Proxy_Impl (void);
+  _TAO_CORBA_UnionDef_Proxy_Impl (void);
 
 };
 //
@@ -2668,17 +2348,17 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_UnionDef_Remote_Proxy_Impl : 
-  public virtual _TAO_UnionDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_UnionDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_UnionDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_TypedefDef_Remote_Proxy_Impl, 
-  public virtual _TAO_Container_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_TypedefDef_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_UnionDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_UnionDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_UnionDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_UnionDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr discriminator_type (
       CORBA_Object *_collocated_tao_target_,
@@ -2688,7 +2368,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr discriminator_type_def (
+  virtual CORBA_IDLType_ptr discriminator_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2698,14 +2378,14 @@ public:
 
   virtual void discriminator_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr discriminator_type_def,
+      CORBA_IDLType_ptr discriminator_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::UnionMemberSeq * members (
+  virtual CORBA_UnionMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2715,7 +2395,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::UnionMemberSeq & members,
+      const CORBA_UnionMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2740,17 +2420,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_UnionDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_UnionDef_Proxy_Broker (void);
-  virtual _TAO_UnionDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_UnionDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_UnionDef_Proxy_Impl &select_proxy (
     CORBA_UnionDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_UnionDef_Proxy_Broker (void);
+  _TAO_CORBA_UnionDef_Proxy_Broker (void);
   
 };
 
@@ -2763,26 +2443,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_UnionDef_Remote_Proxy_Broker : public virtual _TAO_UnionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_UnionDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_UnionDef_Proxy_Broker
 {
 public: 
-  _TAO_UnionDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_UnionDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_UnionDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_UnionDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_UnionDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_UnionDef_Proxy_Impl &select_proxy (
     CORBA_UnionDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_UnionDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_UnionDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_UnionDef_Remote_Proxy_Broker *the_TAO_UnionDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_UnionDef_Remote_Proxy_Broker *the_TAO_CORBA_UnionDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -2790,6 +2470,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_ENUMDEF___PTR_CH_)
+#define _CORBA_ENUMDEF___PTR_CH_
+
+class CORBA_EnumDef;
+typedef CORBA_EnumDef *CORBA_EnumDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -2817,6 +2506,14 @@ public:
   CORBA_EnumDef_ptr &out (void);
   CORBA_EnumDef_ptr _retn (void);
   CORBA_EnumDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_EnumDef_ptr duplicate (CORBA_EnumDef_ptr);
+  static void release (CORBA_EnumDef_ptr);
+  static CORBA_EnumDef_ptr nil (void);
+  static CORBA_EnumDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_EnumDef_ptr ptr_;
@@ -2844,7 +2541,7 @@ public:
   operator CORBA_EnumDef_ptr &();
   CORBA_EnumDef_ptr &ptr (void);
   CORBA_EnumDef_ptr operator-> (void);
-  
+
 private:
   CORBA_EnumDef_ptr &ptr_;
 };
@@ -2857,10 +2554,10 @@ private:
 #define _CORBA_ENUMDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_EnumDef_Proxy_Impl;
-class _TAO_EnumDef_Remote_Proxy_Impl;
-class _TAO_EnumDef_Proxy_Broker;
-class _TAO_EnumDef_Remote_Proxy_Broker;
+class _TAO_CORBA_EnumDef_Proxy_Impl;
+class _TAO_CORBA_EnumDef_Remote_Proxy_Impl;
+class _TAO_CORBA_EnumDef_Proxy_Broker;
+class _TAO_CORBA_EnumDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_EnumDef: public virtual CORBA_TypedefDef
 {
@@ -2889,7 +2586,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::EnumMemberSeq * members (
+  virtual CORBA_EnumMemberSeq * members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2898,7 +2595,7 @@ public:
     ));
 
   virtual void members (
-      const CORBA::EnumMemberSeq & members,
+      const CORBA_EnumMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2916,7 +2613,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_EnumDef_Proxy_Broker *the_TAO_EnumDef_Proxy_Broker_;
+  _TAO_CORBA_EnumDef_Proxy_Broker *the_TAO_CORBA_EnumDef_Proxy_Broker_;
   
 protected:
   CORBA_EnumDef (int collocated = 0);
@@ -2932,14 +2629,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_EnumDef_Remote_Proxy_Impl;
-    friend class _TAO_EnumDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_EnumDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_EnumDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_EnumDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_EnumDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_EnumDef (void);
 private:
   CORBA_EnumDef (const CORBA_EnumDef &);
-  void operator= (const CORBA_EnumDef &);  
+  void operator= (const CORBA_EnumDef &);
 };
 
 
@@ -2952,13 +2649,13 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Impl : 
-  public virtual _TAO_TypedefDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_EnumDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_TypedefDef_Proxy_Impl
 {
 public:
-  virtual ~_TAO_EnumDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_EnumDef_Proxy_Impl (void) { }
   
-    virtual CORBA::EnumMemberSeq * members (
+    virtual CORBA_EnumMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2968,7 +2665,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::EnumMemberSeq & members,
+      const CORBA_EnumMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2976,7 +2673,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_EnumDef_Proxy_Impl (void);
+  _TAO_CORBA_EnumDef_Proxy_Impl (void);
 
 };
 //
@@ -2988,18 +2685,18 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_EnumDef_Remote_Proxy_Impl : 
-  public virtual _TAO_EnumDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_EnumDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_EnumDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_TypedefDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_TypedefDef_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_EnumDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_EnumDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_EnumDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_EnumDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::EnumMemberSeq * members (
+    virtual CORBA_EnumMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3009,7 +2706,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::EnumMemberSeq & members,
+      const CORBA_EnumMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -3034,17 +2731,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_EnumDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_EnumDef_Proxy_Broker (void);
-  virtual _TAO_EnumDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_EnumDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_EnumDef_Proxy_Impl &select_proxy (
     CORBA_EnumDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_EnumDef_Proxy_Broker (void);
+  _TAO_CORBA_EnumDef_Proxy_Broker (void);
   
 };
 
@@ -3057,26 +2754,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_EnumDef_Remote_Proxy_Broker : public virtual _TAO_EnumDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_EnumDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_EnumDef_Proxy_Broker
 {
 public: 
-  _TAO_EnumDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_EnumDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_EnumDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_EnumDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_EnumDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_EnumDef_Proxy_Impl &select_proxy (
     CORBA_EnumDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_EnumDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_EnumDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_EnumDef_Remote_Proxy_Broker *the_TAO_EnumDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_EnumDef_Remote_Proxy_Broker *the_TAO_CORBA_EnumDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -3084,6 +2781,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_ALIASDEF___PTR_CH_)
+#define _CORBA_ALIASDEF___PTR_CH_
+
+class CORBA_AliasDef;
+typedef CORBA_AliasDef *CORBA_AliasDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -3111,6 +2817,14 @@ public:
   CORBA_AliasDef_ptr &out (void);
   CORBA_AliasDef_ptr _retn (void);
   CORBA_AliasDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_AliasDef_ptr duplicate (CORBA_AliasDef_ptr);
+  static void release (CORBA_AliasDef_ptr);
+  static CORBA_AliasDef_ptr nil (void);
+  static CORBA_AliasDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_AliasDef_ptr ptr_;
@@ -3138,7 +2852,7 @@ public:
   operator CORBA_AliasDef_ptr &();
   CORBA_AliasDef_ptr &ptr (void);
   CORBA_AliasDef_ptr operator-> (void);
-  
+
 private:
   CORBA_AliasDef_ptr &ptr_;
 };
@@ -3151,10 +2865,10 @@ private:
 #define _CORBA_ALIASDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_AliasDef_Proxy_Impl;
-class _TAO_AliasDef_Remote_Proxy_Impl;
-class _TAO_AliasDef_Proxy_Broker;
-class _TAO_AliasDef_Remote_Proxy_Broker;
+class _TAO_CORBA_AliasDef_Proxy_Impl;
+class _TAO_CORBA_AliasDef_Remote_Proxy_Impl;
+class _TAO_CORBA_AliasDef_Proxy_Broker;
+class _TAO_CORBA_AliasDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_AliasDef: public virtual CORBA_TypedefDef
 {
@@ -3183,7 +2897,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::IDLType_ptr original_type_def (
+  virtual CORBA_IDLType_ptr original_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -3192,7 +2906,7 @@ public:
     ));
 
   virtual void original_type_def (
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -3210,7 +2924,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_AliasDef_Proxy_Broker *the_TAO_AliasDef_Proxy_Broker_;
+  _TAO_CORBA_AliasDef_Proxy_Broker *the_TAO_CORBA_AliasDef_Proxy_Broker_;
   
 protected:
   CORBA_AliasDef (int collocated = 0);
@@ -3226,14 +2940,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_AliasDef_Remote_Proxy_Impl;
-    friend class _TAO_AliasDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_AliasDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_AliasDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_AliasDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_AliasDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_AliasDef (void);
 private:
   CORBA_AliasDef (const CORBA_AliasDef &);
-  void operator= (const CORBA_AliasDef &);  
+  void operator= (const CORBA_AliasDef &);
 };
 
 
@@ -3246,13 +2960,13 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Impl : 
-  public virtual _TAO_TypedefDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_AliasDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_TypedefDef_Proxy_Impl
 {
 public:
-  virtual ~_TAO_AliasDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AliasDef_Proxy_Impl (void) { }
   
-    virtual CORBA::IDLType_ptr original_type_def (
+    virtual CORBA_IDLType_ptr original_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3262,7 +2976,7 @@ public:
 
   virtual void original_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -3270,7 +2984,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_AliasDef_Proxy_Impl (void);
+  _TAO_CORBA_AliasDef_Proxy_Impl (void);
 
 };
 //
@@ -3282,18 +2996,18 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AliasDef_Remote_Proxy_Impl : 
-  public virtual _TAO_AliasDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_AliasDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_AliasDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_TypedefDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_TypedefDef_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_AliasDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_AliasDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_AliasDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AliasDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::IDLType_ptr original_type_def (
+    virtual CORBA_IDLType_ptr original_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3303,7 +3017,7 @@ public:
 
   virtual void original_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr original_type_def,
+      CORBA_IDLType_ptr original_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -3328,17 +3042,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AliasDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_AliasDef_Proxy_Broker (void);
-  virtual _TAO_AliasDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_AliasDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_AliasDef_Proxy_Impl &select_proxy (
     CORBA_AliasDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_AliasDef_Proxy_Broker (void);
+  _TAO_CORBA_AliasDef_Proxy_Broker (void);
   
 };
 
@@ -3351,26 +3065,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AliasDef_Remote_Proxy_Broker : public virtual _TAO_AliasDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AliasDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_AliasDef_Proxy_Broker
 {
 public: 
-  _TAO_AliasDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_AliasDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_AliasDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_AliasDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_AliasDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_AliasDef_Proxy_Impl &select_proxy (
     CORBA_AliasDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_AliasDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_AliasDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_AliasDef_Remote_Proxy_Broker *the_TAO_AliasDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_AliasDef_Remote_Proxy_Broker *the_TAO_CORBA_AliasDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -3378,6 +3092,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_NATIVEDEF___PTR_CH_)
+#define _CORBA_NATIVEDEF___PTR_CH_
+
+class CORBA_NativeDef;
+typedef CORBA_NativeDef *CORBA_NativeDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -3405,6 +3128,14 @@ public:
   CORBA_NativeDef_ptr &out (void);
   CORBA_NativeDef_ptr _retn (void);
   CORBA_NativeDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_NativeDef_ptr duplicate (CORBA_NativeDef_ptr);
+  static void release (CORBA_NativeDef_ptr);
+  static CORBA_NativeDef_ptr nil (void);
+  static CORBA_NativeDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_NativeDef_ptr ptr_;
@@ -3432,7 +3163,7 @@ public:
   operator CORBA_NativeDef_ptr &();
   CORBA_NativeDef_ptr &ptr (void);
   CORBA_NativeDef_ptr operator-> (void);
-  
+
 private:
   CORBA_NativeDef_ptr &ptr_;
 };
@@ -3445,10 +3176,10 @@ private:
 #define _CORBA_NATIVEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_NativeDef_Proxy_Impl;
-class _TAO_NativeDef_Remote_Proxy_Impl;
-class _TAO_NativeDef_Proxy_Broker;
-class _TAO_NativeDef_Remote_Proxy_Broker;
+class _TAO_CORBA_NativeDef_Proxy_Impl;
+class _TAO_CORBA_NativeDef_Remote_Proxy_Impl;
+class _TAO_CORBA_NativeDef_Proxy_Broker;
+class _TAO_CORBA_NativeDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_NativeDef: public virtual CORBA_TypedefDef
 {
@@ -3487,7 +3218,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_NativeDef_Proxy_Broker *the_TAO_NativeDef_Proxy_Broker_;
+  _TAO_CORBA_NativeDef_Proxy_Broker *the_TAO_CORBA_NativeDef_Proxy_Broker_;
   
 protected:
   CORBA_NativeDef (int collocated = 0);
@@ -3503,14 +3234,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_NativeDef_Remote_Proxy_Impl;
-    friend class _TAO_NativeDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_NativeDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_NativeDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_NativeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_NativeDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_NativeDef (void);
 private:
   CORBA_NativeDef (const CORBA_NativeDef &);
-  void operator= (const CORBA_NativeDef &);  
+  void operator= (const CORBA_NativeDef &);
 };
 
 
@@ -3523,14 +3254,14 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Impl : 
-  public virtual _TAO_TypedefDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_NativeDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_TypedefDef_Proxy_Impl
 {
 public:
-  virtual ~_TAO_NativeDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_NativeDef_Proxy_Impl (void) { }
   
   protected:
-  _TAO_NativeDef_Proxy_Impl (void);
+  _TAO_CORBA_NativeDef_Proxy_Impl (void);
 
 };
 //
@@ -3542,16 +3273,16 @@ public:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_NativeDef_Remote_Proxy_Impl : 
-  public virtual _TAO_NativeDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_NativeDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_NativeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_TypedefDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_TypedefDef_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_NativeDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_NativeDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_NativeDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_NativeDef_Remote_Proxy_Impl (void) { }
   
   };
 
@@ -3571,17 +3302,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_NativeDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_NativeDef_Proxy_Broker (void);
-  virtual _TAO_NativeDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_NativeDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_NativeDef_Proxy_Impl &select_proxy (
     CORBA_NativeDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_NativeDef_Proxy_Broker (void);
+  _TAO_CORBA_NativeDef_Proxy_Broker (void);
   
 };
 
@@ -3594,26 +3325,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_NativeDef_Remote_Proxy_Broker : public virtual _TAO_NativeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_NativeDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_NativeDef_Proxy_Broker
 {
 public: 
-  _TAO_NativeDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_NativeDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_NativeDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_NativeDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_NativeDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_NativeDef_Proxy_Impl &select_proxy (
     CORBA_NativeDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_NativeDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_NativeDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_NativeDef_Remote_Proxy_Broker *the_TAO_NativeDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_NativeDef_Remote_Proxy_Broker *the_TAO_CORBA_NativeDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -3625,97 +3356,38 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_PRIMITIVEDEF___VAR_CH_)
-#define _CORBA_PRIMITIVEDEF___VAR_CH_
-
-class TAO_IFR_Client_Export CORBA_PrimitiveDef_var : public TAO_Base_var
-{
-public:
-  CORBA_PrimitiveDef_var (void); // default constructor
-  CORBA_PrimitiveDef_var (CORBA_PrimitiveDef_ptr p) : ptr_ (p) {} 
-  CORBA_PrimitiveDef_var (const CORBA_PrimitiveDef_var &); // copy constructor
-  ~CORBA_PrimitiveDef_var (void); // destructor
-  
-  CORBA_PrimitiveDef_var &operator= (CORBA_PrimitiveDef_ptr);
-  CORBA_PrimitiveDef_var &operator= (const CORBA_PrimitiveDef_var &);
-  CORBA_PrimitiveDef_ptr operator-> (void) const;
-  
-  operator const CORBA_PrimitiveDef_ptr &() const;
-  operator CORBA_PrimitiveDef_ptr &();
-  // in, inout, out, _retn 
-  CORBA_PrimitiveDef_ptr in (void) const;
-  CORBA_PrimitiveDef_ptr &inout (void);
-  CORBA_PrimitiveDef_ptr &out (void);
-  CORBA_PrimitiveDef_ptr _retn (void);
-  CORBA_PrimitiveDef_ptr ptr (void) const;
-
-private:
-  CORBA_PrimitiveDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_PrimitiveDef_var (const TAO_Base_var &rhs);
-  CORBA_PrimitiveDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_PRIMITIVEDEF___OUT_CH_)
-#define _CORBA_PRIMITIVEDEF___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_PrimitiveDef_out
-{
-public:
-  CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_ptr &);
-  CORBA_PrimitiveDef_out (CORBA_PrimitiveDef_var &);
-  CORBA_PrimitiveDef_out (const CORBA_PrimitiveDef_out &);
-  CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_out &);
-  CORBA_PrimitiveDef_out &operator= (const CORBA_PrimitiveDef_var &);
-  CORBA_PrimitiveDef_out &operator= (CORBA_PrimitiveDef_ptr);
-  operator CORBA_PrimitiveDef_ptr &();
-  CORBA_PrimitiveDef_ptr &ptr (void);
-  CORBA_PrimitiveDef_ptr operator-> (void);
-  
-private:
-  CORBA_PrimitiveDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_CORBA_PRIMITIVEDEF_CH_)
 #define _CORBA_PRIMITIVEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_PrimitiveDef_Proxy_Impl;
-class _TAO_PrimitiveDef_Remote_Proxy_Impl;
-class _TAO_PrimitiveDef_Proxy_Broker;
-class _TAO_PrimitiveDef_Remote_Proxy_Broker;
+class _TAO_CORBA_PrimitiveDef_Proxy_Impl;
+class _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl;
+class _TAO_CORBA_PrimitiveDef_Proxy_Broker;
+class _TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_PrimitiveDef: public virtual CORBA_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-  typedef CORBA_PrimitiveDef_ptr _ptr_type;
+  typedef CORBA::PrimitiveDef_ptr _ptr_type;
   typedef CORBA_PrimitiveDef_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   // the static operations
-  static CORBA_PrimitiveDef_ptr _duplicate (CORBA_PrimitiveDef_ptr obj);
-  static CORBA_PrimitiveDef_ptr _narrow (
+  static CORBA::PrimitiveDef_ptr _duplicate (CORBA::PrimitiveDef_ptr obj);
+  static CORBA::PrimitiveDef_ptr _narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
-  static CORBA_PrimitiveDef_ptr _unchecked_narrow (
+  static CORBA::PrimitiveDef_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     );
-  static CORBA_PrimitiveDef_ptr _nil (void)
+  static CORBA::PrimitiveDef_ptr _nil (void)
     {
-      return (CORBA_PrimitiveDef_ptr)0;
+      return (CORBA::PrimitiveDef_ptr)0;
     }
 
   static void _tao_any_destructor (void*);
@@ -3738,7 +3410,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_PrimitiveDef_Proxy_Broker *the_TAO_PrimitiveDef_Proxy_Broker_;
+  _TAO_CORBA_PrimitiveDef_Proxy_Broker *the_TAO_CORBA_PrimitiveDef_Proxy_Broker_;
   
 protected:
   CORBA_PrimitiveDef (int collocated = 0);
@@ -3754,14 +3426,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_PrimitiveDef_Remote_Proxy_Impl;
-    friend class _TAO_PrimitiveDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_PrimitiveDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_PrimitiveDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_PrimitiveDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_PrimitiveDef (void);
 private:
   CORBA_PrimitiveDef (const CORBA_PrimitiveDef &);
-  void operator= (const CORBA_PrimitiveDef &);  
+  void operator= (const CORBA_PrimitiveDef &);
 };
 
 
@@ -3774,11 +3446,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Impl : 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_PrimitiveDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_IDLType_Proxy_Impl
 {
 public:
-  virtual ~_TAO_PrimitiveDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_PrimitiveDef_Proxy_Impl (void) { }
   
     virtual CORBA::PrimitiveKind kind (
       CORBA_Object *_collocated_tao_target_,
@@ -3789,7 +3461,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_PrimitiveDef_Proxy_Impl (void);
+  _TAO_CORBA_PrimitiveDef_Proxy_Impl (void);
 
 };
 //
@@ -3801,16 +3473,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_PrimitiveDef_Remote_Proxy_Impl : 
-  public virtual _TAO_PrimitiveDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_PrimitiveDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_IDLType_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_PrimitiveDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_PrimitiveDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::PrimitiveKind kind (
       CORBA_Object *_collocated_tao_target_,
@@ -3838,17 +3510,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_PrimitiveDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_PrimitiveDef_Proxy_Broker (void);
-  virtual _TAO_PrimitiveDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_PrimitiveDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_PrimitiveDef_Proxy_Impl &select_proxy (
     CORBA_PrimitiveDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_PrimitiveDef_Proxy_Broker (void);
+  _TAO_CORBA_PrimitiveDef_Proxy_Broker (void);
   
 };
 
@@ -3861,26 +3533,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_PrimitiveDef_Remote_Proxy_Broker : public virtual _TAO_PrimitiveDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_PrimitiveDef_Proxy_Broker
 {
 public: 
-  _TAO_PrimitiveDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_PrimitiveDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_PrimitiveDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_PrimitiveDef_Proxy_Impl &select_proxy (
     CORBA_PrimitiveDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_PrimitiveDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_PrimitiveDef_Remote_Proxy_Broker *the_TAO_PrimitiveDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker *the_TAO_CORBA_PrimitiveDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -3892,73 +3564,14 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_STRINGDEF___VAR_CH_)
-#define _CORBA_STRINGDEF___VAR_CH_
-
-class TAO_IFR_Client_Export CORBA_StringDef_var : public TAO_Base_var
-{
-public:
-  CORBA_StringDef_var (void); // default constructor
-  CORBA_StringDef_var (CORBA_StringDef_ptr p) : ptr_ (p) {} 
-  CORBA_StringDef_var (const CORBA_StringDef_var &); // copy constructor
-  ~CORBA_StringDef_var (void); // destructor
-  
-  CORBA_StringDef_var &operator= (CORBA_StringDef_ptr);
-  CORBA_StringDef_var &operator= (const CORBA_StringDef_var &);
-  CORBA_StringDef_ptr operator-> (void) const;
-  
-  operator const CORBA_StringDef_ptr &() const;
-  operator CORBA_StringDef_ptr &();
-  // in, inout, out, _retn 
-  CORBA_StringDef_ptr in (void) const;
-  CORBA_StringDef_ptr &inout (void);
-  CORBA_StringDef_ptr &out (void);
-  CORBA_StringDef_ptr _retn (void);
-  CORBA_StringDef_ptr ptr (void) const;
-
-private:
-  CORBA_StringDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_StringDef_var (const TAO_Base_var &rhs);
-  CORBA_StringDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_STRINGDEF___OUT_CH_)
-#define _CORBA_STRINGDEF___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_StringDef_out
-{
-public:
-  CORBA_StringDef_out (CORBA_StringDef_ptr &);
-  CORBA_StringDef_out (CORBA_StringDef_var &);
-  CORBA_StringDef_out (const CORBA_StringDef_out &);
-  CORBA_StringDef_out &operator= (const CORBA_StringDef_out &);
-  CORBA_StringDef_out &operator= (const CORBA_StringDef_var &);
-  CORBA_StringDef_out &operator= (CORBA_StringDef_ptr);
-  operator CORBA_StringDef_ptr &();
-  CORBA_StringDef_ptr &ptr (void);
-  CORBA_StringDef_ptr operator-> (void);
-  
-private:
-  CORBA_StringDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_CORBA_STRINGDEF_CH_)
 #define _CORBA_STRINGDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_StringDef_Proxy_Impl;
-class _TAO_StringDef_Remote_Proxy_Impl;
-class _TAO_StringDef_Proxy_Broker;
-class _TAO_StringDef_Remote_Proxy_Broker;
+class _TAO_CORBA_StringDef_Proxy_Impl;
+class _TAO_CORBA_StringDef_Remote_Proxy_Impl;
+class _TAO_CORBA_StringDef_Proxy_Broker;
+class _TAO_CORBA_StringDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_StringDef: public virtual CORBA_IDLType
 {
@@ -4014,7 +3627,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_StringDef_Proxy_Broker *the_TAO_StringDef_Proxy_Broker_;
+  _TAO_CORBA_StringDef_Proxy_Broker *the_TAO_CORBA_StringDef_Proxy_Broker_;
   
 protected:
   CORBA_StringDef (int collocated = 0);
@@ -4030,14 +3643,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_StringDef_Remote_Proxy_Impl;
-    friend class _TAO_StringDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_StringDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_StringDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_StringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_StringDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_StringDef (void);
 private:
   CORBA_StringDef (const CORBA_StringDef &);
-  void operator= (const CORBA_StringDef &);  
+  void operator= (const CORBA_StringDef &);
 };
 
 
@@ -4050,11 +3663,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_StringDef_Proxy_Impl : 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_StringDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_IDLType_Proxy_Impl
 {
 public:
-  virtual ~_TAO_StringDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_StringDef_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4074,7 +3687,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_StringDef_Proxy_Impl (void);
+  _TAO_CORBA_StringDef_Proxy_Impl (void);
 
 };
 //
@@ -4086,16 +3699,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_StringDef_Remote_Proxy_Impl : 
-  public virtual _TAO_StringDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_StringDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_StringDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_IDLType_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_StringDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_StringDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_StringDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_StringDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4132,17 +3745,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_StringDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_StringDef_Proxy_Broker (void);
-  virtual _TAO_StringDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_StringDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_StringDef_Proxy_Impl &select_proxy (
     CORBA_StringDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_StringDef_Proxy_Broker (void);
+  _TAO_CORBA_StringDef_Proxy_Broker (void);
   
 };
 
@@ -4155,26 +3768,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_StringDef_Remote_Proxy_Broker : public virtual _TAO_StringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_StringDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_StringDef_Proxy_Broker
 {
 public: 
-  _TAO_StringDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_StringDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_StringDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_StringDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_StringDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_StringDef_Proxy_Impl &select_proxy (
     CORBA_StringDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_StringDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_StringDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_StringDef_Remote_Proxy_Broker *the_TAO_StringDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_StringDef_Remote_Proxy_Broker *the_TAO_CORBA_StringDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -4186,73 +3799,14 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_WSTRINGDEF___VAR_CH_)
-#define _CORBA_WSTRINGDEF___VAR_CH_
-
-class TAO_IFR_Client_Export CORBA_WstringDef_var : public TAO_Base_var
-{
-public:
-  CORBA_WstringDef_var (void); // default constructor
-  CORBA_WstringDef_var (CORBA_WstringDef_ptr p) : ptr_ (p) {} 
-  CORBA_WstringDef_var (const CORBA_WstringDef_var &); // copy constructor
-  ~CORBA_WstringDef_var (void); // destructor
-  
-  CORBA_WstringDef_var &operator= (CORBA_WstringDef_ptr);
-  CORBA_WstringDef_var &operator= (const CORBA_WstringDef_var &);
-  CORBA_WstringDef_ptr operator-> (void) const;
-  
-  operator const CORBA_WstringDef_ptr &() const;
-  operator CORBA_WstringDef_ptr &();
-  // in, inout, out, _retn 
-  CORBA_WstringDef_ptr in (void) const;
-  CORBA_WstringDef_ptr &inout (void);
-  CORBA_WstringDef_ptr &out (void);
-  CORBA_WstringDef_ptr _retn (void);
-  CORBA_WstringDef_ptr ptr (void) const;
-
-private:
-  CORBA_WstringDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_WstringDef_var (const TAO_Base_var &rhs);
-  CORBA_WstringDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_WSTRINGDEF___OUT_CH_)
-#define _CORBA_WSTRINGDEF___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_WstringDef_out
-{
-public:
-  CORBA_WstringDef_out (CORBA_WstringDef_ptr &);
-  CORBA_WstringDef_out (CORBA_WstringDef_var &);
-  CORBA_WstringDef_out (const CORBA_WstringDef_out &);
-  CORBA_WstringDef_out &operator= (const CORBA_WstringDef_out &);
-  CORBA_WstringDef_out &operator= (const CORBA_WstringDef_var &);
-  CORBA_WstringDef_out &operator= (CORBA_WstringDef_ptr);
-  operator CORBA_WstringDef_ptr &();
-  CORBA_WstringDef_ptr &ptr (void);
-  CORBA_WstringDef_ptr operator-> (void);
-  
-private:
-  CORBA_WstringDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_CORBA_WSTRINGDEF_CH_)
 #define _CORBA_WSTRINGDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_WstringDef_Proxy_Impl;
-class _TAO_WstringDef_Remote_Proxy_Impl;
-class _TAO_WstringDef_Proxy_Broker;
-class _TAO_WstringDef_Remote_Proxy_Broker;
+class _TAO_CORBA_WstringDef_Proxy_Impl;
+class _TAO_CORBA_WstringDef_Remote_Proxy_Impl;
+class _TAO_CORBA_WstringDef_Proxy_Broker;
+class _TAO_CORBA_WstringDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_WstringDef: public virtual CORBA_IDLType
 {
@@ -4308,7 +3862,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_WstringDef_Proxy_Broker *the_TAO_WstringDef_Proxy_Broker_;
+  _TAO_CORBA_WstringDef_Proxy_Broker *the_TAO_CORBA_WstringDef_Proxy_Broker_;
   
 protected:
   CORBA_WstringDef (int collocated = 0);
@@ -4324,14 +3878,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_WstringDef_Remote_Proxy_Impl;
-    friend class _TAO_WstringDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_WstringDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_WstringDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_WstringDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_WstringDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_WstringDef (void);
 private:
   CORBA_WstringDef (const CORBA_WstringDef &);
-  void operator= (const CORBA_WstringDef &);  
+  void operator= (const CORBA_WstringDef &);
 };
 
 
@@ -4344,11 +3898,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Impl : 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_WstringDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_IDLType_Proxy_Impl
 {
 public:
-  virtual ~_TAO_WstringDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_WstringDef_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4368,7 +3922,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_WstringDef_Proxy_Impl (void);
+  _TAO_CORBA_WstringDef_Proxy_Impl (void);
 
 };
 //
@@ -4380,16 +3934,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_WstringDef_Remote_Proxy_Impl : 
-  public virtual _TAO_WstringDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_WstringDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_WstringDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_IDLType_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_WstringDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_WstringDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_WstringDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_WstringDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4426,17 +3980,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_WstringDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_WstringDef_Proxy_Broker (void);
-  virtual _TAO_WstringDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_WstringDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_WstringDef_Proxy_Impl &select_proxy (
     CORBA_WstringDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_WstringDef_Proxy_Broker (void);
+  _TAO_CORBA_WstringDef_Proxy_Broker (void);
   
 };
 
@@ -4449,26 +4003,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_WstringDef_Remote_Proxy_Broker : public virtual _TAO_WstringDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_WstringDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_WstringDef_Proxy_Broker
 {
 public: 
-  _TAO_WstringDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_WstringDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_WstringDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_WstringDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_WstringDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_WstringDef_Proxy_Impl &select_proxy (
     CORBA_WstringDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_WstringDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_WstringDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_WstringDef_Remote_Proxy_Broker *the_TAO_WstringDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_WstringDef_Remote_Proxy_Broker *the_TAO_CORBA_WstringDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -4480,75 +4034,16 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_SEQUENCEDEF___VAR_CH_)
-#define _CORBA_SEQUENCEDEF___VAR_CH_
-
-class TAO_IFR_Client_Export CORBA_SequenceDef_var : public TAO_Base_var
-{
-public:
-  CORBA_SequenceDef_var (void); // default constructor
-  CORBA_SequenceDef_var (CORBA_SequenceDef_ptr p) : ptr_ (p) {} 
-  CORBA_SequenceDef_var (const CORBA_SequenceDef_var &); // copy constructor
-  ~CORBA_SequenceDef_var (void); // destructor
-  
-  CORBA_SequenceDef_var &operator= (CORBA_SequenceDef_ptr);
-  CORBA_SequenceDef_var &operator= (const CORBA_SequenceDef_var &);
-  CORBA_SequenceDef_ptr operator-> (void) const;
-  
-  operator const CORBA_SequenceDef_ptr &() const;
-  operator CORBA_SequenceDef_ptr &();
-  // in, inout, out, _retn 
-  CORBA_SequenceDef_ptr in (void) const;
-  CORBA_SequenceDef_ptr &inout (void);
-  CORBA_SequenceDef_ptr &out (void);
-  CORBA_SequenceDef_ptr _retn (void);
-  CORBA_SequenceDef_ptr ptr (void) const;
-
-private:
-  CORBA_SequenceDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_SequenceDef_var (const TAO_Base_var &rhs);
-  CORBA_SequenceDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_SEQUENCEDEF___OUT_CH_)
-#define _CORBA_SEQUENCEDEF___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_SequenceDef_out
-{
-public:
-  CORBA_SequenceDef_out (CORBA_SequenceDef_ptr &);
-  CORBA_SequenceDef_out (CORBA_SequenceDef_var &);
-  CORBA_SequenceDef_out (const CORBA_SequenceDef_out &);
-  CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_out &);
-  CORBA_SequenceDef_out &operator= (const CORBA_SequenceDef_var &);
-  CORBA_SequenceDef_out &operator= (CORBA_SequenceDef_ptr);
-  operator CORBA_SequenceDef_ptr &();
-  CORBA_SequenceDef_ptr &ptr (void);
-  CORBA_SequenceDef_ptr operator-> (void);
-  
-private:
-  CORBA_SequenceDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_CORBA_SEQUENCEDEF_CH_)
 #define _CORBA_SEQUENCEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_SequenceDef_Proxy_Impl;
-class _TAO_SequenceDef_Remote_Proxy_Impl;
-class _TAO_SequenceDef_Proxy_Broker;
-class _TAO_SequenceDef_Remote_Proxy_Broker;
+class _TAO_CORBA_SequenceDef_Proxy_Impl;
+class _TAO_CORBA_SequenceDef_Remote_Proxy_Impl;
+class _TAO_CORBA_SequenceDef_Proxy_Broker;
+class _TAO_CORBA_SequenceDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export CORBA_SequenceDef: public virtual CORBA_IDLType
+class TAO_IFR_Client_Export CORBA_SequenceDef : public virtual CORBA_IDLType
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -4600,7 +4095,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -4609,7 +4104,7 @@ public:
     ));
 
   virtual void element_type_def (
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -4627,7 +4122,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_SequenceDef_Proxy_Broker *the_TAO_SequenceDef_Proxy_Broker_;
+  _TAO_CORBA_SequenceDef_Proxy_Broker *the_TAO_CORBA_SequenceDef_Proxy_Broker_;
   
 protected:
   CORBA_SequenceDef (int collocated = 0);
@@ -4643,14 +4138,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_SequenceDef_Remote_Proxy_Impl;
-    friend class _TAO_SequenceDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_SequenceDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_SequenceDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_SequenceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_SequenceDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_SequenceDef (void);
 private:
   CORBA_SequenceDef (const CORBA_SequenceDef &);
-  void operator= (const CORBA_SequenceDef &);  
+  void operator= (const CORBA_SequenceDef &);
 };
 
 
@@ -4663,11 +4158,10 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Impl : 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_SequenceDef_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
 public:
-  virtual ~_TAO_SequenceDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_SequenceDef_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4694,7 +4188,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -4704,7 +4198,7 @@ public:
 
   virtual void element_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -4712,7 +4206,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_SequenceDef_Proxy_Impl (void);
+  _TAO_CORBA_SequenceDef_Proxy_Impl (void);
 
 };
 //
@@ -4724,16 +4218,14 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_SequenceDef_Remote_Proxy_Impl : 
-  public virtual _TAO_SequenceDef_Proxy_Impl,
-  public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
-  
+class TAO_IFR_Client_Export _TAO_CORBA_SequenceDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_SequenceDef_Proxy_Impl,
+  public virtual TAO_Remote_Object_Proxy_Impl
 {
 public:
-  _TAO_SequenceDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_SequenceDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_SequenceDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_SequenceDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::ULong bound (
       CORBA_Object *_collocated_tao_target_,
@@ -4760,7 +4252,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -4770,7 +4262,7 @@ public:
 
   virtual void element_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -4795,17 +4287,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_SequenceDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_SequenceDef_Proxy_Broker (void);
-  virtual _TAO_SequenceDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_SequenceDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_SequenceDef_Proxy_Impl &select_proxy (
     CORBA_SequenceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_SequenceDef_Proxy_Broker (void);
+  _TAO_CORBA_SequenceDef_Proxy_Broker (void);
   
 };
 
@@ -4818,26 +4310,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_SequenceDef_Remote_Proxy_Broker : public virtual _TAO_SequenceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_SequenceDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_SequenceDef_Proxy_Broker
 {
 public: 
-  _TAO_SequenceDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_SequenceDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_SequenceDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_SequenceDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_SequenceDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_SequenceDef_Proxy_Impl &select_proxy (
     CORBA_SequenceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_SequenceDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_SequenceDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_SequenceDef_Remote_Proxy_Broker *the_TAO_SequenceDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_SequenceDef_Remote_Proxy_Broker *the_TAO_CORBA_SequenceDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -4849,73 +4341,14 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_CORBA_ARRAYDEF___VAR_CH_)
-#define _CORBA_ARRAYDEF___VAR_CH_
-
-class TAO_IFR_Client_Export CORBA_ArrayDef_var : public TAO_Base_var
-{
-public:
-  CORBA_ArrayDef_var (void); // default constructor
-  CORBA_ArrayDef_var (CORBA_ArrayDef_ptr p) : ptr_ (p) {} 
-  CORBA_ArrayDef_var (const CORBA_ArrayDef_var &); // copy constructor
-  ~CORBA_ArrayDef_var (void); // destructor
-  
-  CORBA_ArrayDef_var &operator= (CORBA_ArrayDef_ptr);
-  CORBA_ArrayDef_var &operator= (const CORBA_ArrayDef_var &);
-  CORBA_ArrayDef_ptr operator-> (void) const;
-  
-  operator const CORBA_ArrayDef_ptr &() const;
-  operator CORBA_ArrayDef_ptr &();
-  // in, inout, out, _retn 
-  CORBA_ArrayDef_ptr in (void) const;
-  CORBA_ArrayDef_ptr &inout (void);
-  CORBA_ArrayDef_ptr &out (void);
-  CORBA_ArrayDef_ptr _retn (void);
-  CORBA_ArrayDef_ptr ptr (void) const;
-
-private:
-  CORBA_ArrayDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  CORBA_ArrayDef_var (const TAO_Base_var &rhs);
-  CORBA_ArrayDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_ARRAYDEF___OUT_CH_)
-#define _CORBA_ARRAYDEF___OUT_CH_
-
-class TAO_IFR_Client_Export CORBA_ArrayDef_out
-{
-public:
-  CORBA_ArrayDef_out (CORBA_ArrayDef_ptr &);
-  CORBA_ArrayDef_out (CORBA_ArrayDef_var &);
-  CORBA_ArrayDef_out (const CORBA_ArrayDef_out &);
-  CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_out &);
-  CORBA_ArrayDef_out &operator= (const CORBA_ArrayDef_var &);
-  CORBA_ArrayDef_out &operator= (CORBA_ArrayDef_ptr);
-  operator CORBA_ArrayDef_ptr &();
-  CORBA_ArrayDef_ptr &ptr (void);
-  CORBA_ArrayDef_ptr operator-> (void);
-  
-private:
-  CORBA_ArrayDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_CORBA_ARRAYDEF_CH_)
 #define _CORBA_ARRAYDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_ArrayDef_Proxy_Impl;
-class _TAO_ArrayDef_Remote_Proxy_Impl;
-class _TAO_ArrayDef_Proxy_Broker;
-class _TAO_ArrayDef_Remote_Proxy_Broker;
+class _TAO_CORBA_ArrayDef_Proxy_Impl;
+class _TAO_CORBA_ArrayDef_Remote_Proxy_Impl;
+class _TAO_CORBA_ArrayDef_Proxy_Broker;
+class _TAO_CORBA_ArrayDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_ArrayDef: public virtual CORBA_IDLType
 {
@@ -4969,7 +4402,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -4978,7 +4411,7 @@ public:
     ));
 
   virtual void element_type_def (
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -4996,7 +4429,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_ArrayDef_Proxy_Broker *the_TAO_ArrayDef_Proxy_Broker_;
+  _TAO_CORBA_ArrayDef_Proxy_Broker *the_TAO_CORBA_ArrayDef_Proxy_Broker_;
   
 protected:
   CORBA_ArrayDef (int collocated = 0);
@@ -5012,14 +4445,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_ArrayDef_Remote_Proxy_Impl;
-    friend class _TAO_ArrayDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_ArrayDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_ArrayDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_ArrayDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_ArrayDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_ArrayDef (void);
 private:
   CORBA_ArrayDef (const CORBA_ArrayDef &);
-  void operator= (const CORBA_ArrayDef &);  
+  void operator= (const CORBA_ArrayDef &);
 };
 
 
@@ -5032,11 +4465,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Impl : 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_ArrayDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_IDLType_Proxy_Impl
 {
 public:
-  virtual ~_TAO_ArrayDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ArrayDef_Proxy_Impl (void) { }
   
     virtual CORBA::ULong length (
       CORBA_Object *_collocated_tao_target_,
@@ -5063,7 +4496,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5073,7 +4506,7 @@ public:
 
   virtual void element_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5081,7 +4514,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_ArrayDef_Proxy_Impl (void);
+  _TAO_CORBA_ArrayDef_Proxy_Impl (void);
 
 };
 //
@@ -5093,16 +4526,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ArrayDef_Remote_Proxy_Impl : 
-  public virtual _TAO_ArrayDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_ArrayDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_ArrayDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_IDLType_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_ArrayDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_ArrayDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_ArrayDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ArrayDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::ULong length (
       CORBA_Object *_collocated_tao_target_,
@@ -5129,7 +4562,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr element_type_def (
+  virtual CORBA_IDLType_ptr element_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5139,7 +4572,7 @@ public:
 
   virtual void element_type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr element_type_def,
+      CORBA_IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5164,17 +4597,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ArrayDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_ArrayDef_Proxy_Broker (void);
-  virtual _TAO_ArrayDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_ArrayDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_ArrayDef_Proxy_Impl &select_proxy (
     CORBA_ArrayDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_ArrayDef_Proxy_Broker (void);
+  _TAO_CORBA_ArrayDef_Proxy_Broker (void);
   
 };
 
@@ -5187,26 +4620,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ArrayDef_Remote_Proxy_Broker : public virtual _TAO_ArrayDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ArrayDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_ArrayDef_Proxy_Broker
 {
 public: 
-  _TAO_ArrayDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_ArrayDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_ArrayDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ArrayDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_ArrayDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_ArrayDef_Proxy_Impl &select_proxy (
     CORBA_ArrayDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_ArrayDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_ArrayDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_ArrayDef_Remote_Proxy_Broker *the_TAO_ArrayDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_ArrayDef_Remote_Proxy_Broker *the_TAO_CORBA_ArrayDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -5214,6 +4647,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_EXCEPTIONDEF___PTR_CH_)
+#define _CORBA_EXCEPTIONDEF___PTR_CH_
+
+class CORBA_ExceptionDef;
+typedef CORBA_ExceptionDef *CORBA_ExceptionDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -5241,6 +4683,14 @@ public:
   CORBA_ExceptionDef_ptr &out (void);
   CORBA_ExceptionDef_ptr _retn (void);
   CORBA_ExceptionDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_ExceptionDef_ptr duplicate (CORBA_ExceptionDef_ptr);
+  static void release (CORBA_ExceptionDef_ptr);
+  static CORBA_ExceptionDef_ptr nil (void);
+  static CORBA_ExceptionDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_ExceptionDef_ptr ptr_;
@@ -5268,7 +4718,7 @@ public:
   operator CORBA_ExceptionDef_ptr &();
   CORBA_ExceptionDef_ptr &ptr (void);
   CORBA_ExceptionDef_ptr operator-> (void);
-  
+
 private:
   CORBA_ExceptionDef_ptr &ptr_;
 };
@@ -5281,10 +4731,10 @@ private:
 #define _CORBA_EXCEPTIONDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_ExceptionDef_Proxy_Impl;
-class _TAO_ExceptionDef_Remote_Proxy_Impl;
-class _TAO_ExceptionDef_Proxy_Broker;
-class _TAO_ExceptionDef_Remote_Proxy_Broker;
+class _TAO_CORBA_ExceptionDef_Proxy_Impl;
+class _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl;
+class _TAO_CORBA_ExceptionDef_Proxy_Broker;
+class _TAO_CORBA_ExceptionDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_ExceptionDef: public virtual CORBA_Contained, public virtual CORBA_Container
 {
@@ -5321,7 +4771,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::StructMemberSeq * members (
+  virtual CORBA_StructMemberSeq * members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5330,7 +4780,7 @@ public:
     ));
 
   virtual void members (
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5348,7 +4798,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_ExceptionDef_Proxy_Broker *the_TAO_ExceptionDef_Proxy_Broker_;
+  _TAO_CORBA_ExceptionDef_Proxy_Broker *the_TAO_CORBA_ExceptionDef_Proxy_Broker_;
   
 protected:
   CORBA_ExceptionDef (int collocated = 0);
@@ -5364,14 +4814,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_ExceptionDef_Remote_Proxy_Impl;
-    friend class _TAO_ExceptionDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_ExceptionDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_ExceptionDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_ExceptionDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_ExceptionDef (void);
 private:
   CORBA_ExceptionDef (const CORBA_ExceptionDef &);
-  void operator= (const CORBA_ExceptionDef &);  
+  void operator= (const CORBA_ExceptionDef &);
 };
 
 
@@ -5384,12 +4834,12 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl, 
-  public virtual _TAO_Container_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_ExceptionDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Proxy_Impl
 {
 public:
-  virtual ~_TAO_ExceptionDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ExceptionDef_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -5399,7 +4849,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::StructMemberSeq * members (
+  virtual CORBA_StructMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5409,7 +4859,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5417,7 +4867,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_ExceptionDef_Proxy_Impl (void);
+  _TAO_CORBA_ExceptionDef_Proxy_Impl (void);
 
 };
 //
@@ -5429,17 +4879,17 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_ExceptionDef_Remote_Proxy_Impl : 
-  public virtual _TAO_ExceptionDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_ExceptionDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl, 
-  public virtual _TAO_Container_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_ExceptionDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_ExceptionDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_ExceptionDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -5449,7 +4899,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::StructMemberSeq * members (
+  virtual CORBA_StructMemberSeq * members (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5459,7 +4909,7 @@ public:
 
   virtual void members (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::StructMemberSeq & members,
+      const CORBA_StructMemberSeq & members,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5484,17 +4934,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ExceptionDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_ExceptionDef_Proxy_Broker (void);
-  virtual _TAO_ExceptionDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_ExceptionDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_ExceptionDef_Proxy_Impl &select_proxy (
     CORBA_ExceptionDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_ExceptionDef_Proxy_Broker (void);
+  _TAO_CORBA_ExceptionDef_Proxy_Broker (void);
   
 };
 
@@ -5507,26 +4957,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_ExceptionDef_Remote_Proxy_Broker : public virtual _TAO_ExceptionDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_ExceptionDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_ExceptionDef_Proxy_Broker
 {
 public: 
-  _TAO_ExceptionDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_ExceptionDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_ExceptionDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_ExceptionDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_ExceptionDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_ExceptionDef_Proxy_Impl &select_proxy (
     CORBA_ExceptionDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_ExceptionDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_ExceptionDef_Remote_Proxy_Broker *the_TAO_ExceptionDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_ExceptionDef_Remote_Proxy_Broker *the_TAO_CORBA_ExceptionDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -5623,7 +5073,7 @@ private:
     _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs);
     virtual ~_TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq (void);
     _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &operator= (const _TAO_Unbounded_Object_Sequence_CORBA_ExceptionDefSeq &rhs);
-    TAO_Object_Manager<CORBA::ExceptionDef,CORBA::ExceptionDef_var> operator[] (CORBA::ULong index) const;
+    TAO_Object_Manager<CORBA_ExceptionDef,CORBA_ExceptionDef_var> operator[] (CORBA::ULong index) const;
     static CORBA_ExceptionDef **allocbuf (CORBA::ULong nelems);
     static void freebuf (CORBA_ExceptionDef **buffer);
     // The Base_Sequence functions, please see tao/Sequence.h
@@ -5711,7 +5161,7 @@ public:
   operator CORBA_ExceptionDefSeq &() const;
   operator CORBA_ExceptionDefSeq *&(); // variable-size base types only
   
-  TAO_Object_Manager<CORBA::ExceptionDef, CORBA::ExceptionDef_var> operator[] (CORBA::ULong index);
+  TAO_Object_Manager<CORBA_ExceptionDef, CORBA_ExceptionDef_var> operator[] (CORBA::ULong index);
   
   // in, inout, out, _retn 
   const CORBA_ExceptionDefSeq &in (void) const;
@@ -5742,7 +5192,7 @@ public:
   operator CORBA_ExceptionDefSeq *&();
   CORBA_ExceptionDefSeq *&ptr (void);
   CORBA_ExceptionDefSeq *operator-> (void);
-  TAO_Object_Manager<CORBA::ExceptionDef, CORBA::ExceptionDef_var> operator[] (CORBA::ULong index);
+  TAO_Object_Manager<CORBA_ExceptionDef, CORBA_ExceptionDef_var> operator[] (CORBA::ULong index);
   
 private:
   CORBA_ExceptionDefSeq *&ptr_;
@@ -5819,7 +5269,7 @@ public:
   CORBA_ExcDescriptionSeq (
     CORBA::ULong max, 
     CORBA::ULong length, 
-    CORBA::ExceptionDescription *buffer, 
+    CORBA_ExceptionDescription *buffer, 
     CORBA::Boolean release = 0
   );
   CORBA_ExcDescriptionSeq (const CORBA_ExcDescriptionSeq &); // copy ctor
@@ -5860,8 +5310,8 @@ public:
   operator CORBA_ExcDescriptionSeq &() const;
   operator CORBA_ExcDescriptionSeq *&(); // variable-size base types only
   
-  CORBA::ExceptionDescription & operator[] (CORBA::ULong index);
-  const CORBA::ExceptionDescription & operator[] (CORBA::ULong index) const;
+  CORBA_ExceptionDescription & operator[] (CORBA::ULong index);
+  const CORBA_ExceptionDescription & operator[] (CORBA::ULong index) const;
   
   // in, inout, out, _retn 
   const CORBA_ExcDescriptionSeq &in (void) const;
@@ -5892,7 +5342,7 @@ public:
   operator CORBA_ExcDescriptionSeq *&();
   CORBA_ExcDescriptionSeq *&ptr (void);
   CORBA_ExcDescriptionSeq *operator-> (void);
-  CORBA::ExceptionDescription & operator[] (CORBA::ULong index);
+  CORBA_ExceptionDescription & operator[] (CORBA::ULong index);
   
 private:
   CORBA_ExcDescriptionSeq *&ptr_;
@@ -5900,6 +5350,15 @@ private:
   void operator= (const CORBA_ExcDescriptionSeq_var &);
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_ATTRIBUTEDEF___PTR_CH_)
+#define _CORBA_ATTRIBUTEDEF___PTR_CH_
+
+class CORBA_AttributeDef;
+typedef CORBA_AttributeDef *CORBA_AttributeDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -5927,6 +5386,14 @@ public:
   CORBA_AttributeDef_ptr &out (void);
   CORBA_AttributeDef_ptr _retn (void);
   CORBA_AttributeDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_AttributeDef_ptr duplicate (CORBA_AttributeDef_ptr);
+  static void release (CORBA_AttributeDef_ptr);
+  static CORBA_AttributeDef_ptr nil (void);
+  static CORBA_AttributeDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_AttributeDef_ptr ptr_;
@@ -5954,7 +5421,7 @@ public:
   operator CORBA_AttributeDef_ptr &();
   CORBA_AttributeDef_ptr &ptr (void);
   CORBA_AttributeDef_ptr operator-> (void);
-  
+
 private:
   CORBA_AttributeDef_ptr &ptr_;
 };
@@ -5967,10 +5434,10 @@ private:
 #define _CORBA_ATTRIBUTEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_AttributeDef_Proxy_Impl;
-class _TAO_AttributeDef_Remote_Proxy_Impl;
-class _TAO_AttributeDef_Proxy_Broker;
-class _TAO_AttributeDef_Remote_Proxy_Broker;
+class _TAO_CORBA_AttributeDef_Proxy_Impl;
+class _TAO_CORBA_AttributeDef_Remote_Proxy_Impl;
+class _TAO_CORBA_AttributeDef_Proxy_Broker;
+class _TAO_CORBA_AttributeDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_AttributeDef: public virtual CORBA_Contained
 {
@@ -6007,7 +5474,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6016,7 +5483,7 @@ public:
     ));
 
   virtual void type_def (
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6051,7 +5518,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_AttributeDef_Proxy_Broker *the_TAO_AttributeDef_Proxy_Broker_;
+  _TAO_CORBA_AttributeDef_Proxy_Broker *the_TAO_CORBA_AttributeDef_Proxy_Broker_;
   
 protected:
   CORBA_AttributeDef (int collocated = 0);
@@ -6067,14 +5534,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_AttributeDef_Remote_Proxy_Impl;
-    friend class _TAO_AttributeDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_AttributeDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_AttributeDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_AttributeDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_AttributeDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_AttributeDef (void);
 private:
   CORBA_AttributeDef (const CORBA_AttributeDef &);
-  void operator= (const CORBA_AttributeDef &);  
+  void operator= (const CORBA_AttributeDef &);
 };
 
 
@@ -6087,11 +5554,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_AttributeDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
-  virtual ~_TAO_AttributeDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AttributeDef_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -6101,7 +5568,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6111,7 +5578,7 @@ public:
 
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6136,7 +5603,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_AttributeDef_Proxy_Impl (void);
+  _TAO_CORBA_AttributeDef_Proxy_Impl (void);
 
 };
 //
@@ -6148,16 +5615,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AttributeDef_Remote_Proxy_Impl : 
-  public virtual _TAO_AttributeDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_AttributeDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_AttributeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_AttributeDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_AttributeDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_AttributeDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AttributeDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_,
@@ -6167,7 +5634,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr type_def (
+  virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6177,7 +5644,7 @@ public:
 
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr type_def,
+      CORBA_IDLType_ptr type_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6219,17 +5686,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AttributeDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_AttributeDef_Proxy_Broker (void);
-  virtual _TAO_AttributeDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_AttributeDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_AttributeDef_Proxy_Impl &select_proxy (
     CORBA_AttributeDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_AttributeDef_Proxy_Broker (void);
+  _TAO_CORBA_AttributeDef_Proxy_Broker (void);
   
 };
 
@@ -6242,26 +5709,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AttributeDef_Remote_Proxy_Broker : public virtual _TAO_AttributeDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AttributeDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_AttributeDef_Proxy_Broker
 {
 public: 
-  _TAO_AttributeDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_AttributeDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_AttributeDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_AttributeDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_AttributeDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_AttributeDef_Proxy_Impl &select_proxy (
     CORBA_AttributeDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_AttributeDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_AttributeDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_AttributeDef_Remote_Proxy_Broker *the_TAO_AttributeDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_AttributeDef_Remote_Proxy_Broker *the_TAO_CORBA_AttributeDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -6353,7 +5820,7 @@ struct TAO_IFR_Client_Export CORBA_ParameterDescription
 
   TAO_String_Manager name;
   CORBA::TypeCode_var type;
-  CORBA::IDLType_var type_def;
+  CORBA_IDLType_var type_def;
   CORBA::ParameterMode mode;
 };
 
@@ -6470,7 +5937,7 @@ public:
   CORBA_ParDescriptionSeq (
     CORBA::ULong max, 
     CORBA::ULong length, 
-    CORBA::ParameterDescription *buffer, 
+    CORBA_ParameterDescription *buffer, 
     CORBA::Boolean release = 0
   );
   CORBA_ParDescriptionSeq (const CORBA_ParDescriptionSeq &); // copy ctor
@@ -6511,8 +5978,8 @@ public:
   operator CORBA_ParDescriptionSeq &() const;
   operator CORBA_ParDescriptionSeq *&(); // variable-size base types only
   
-  CORBA::ParameterDescription & operator[] (CORBA::ULong index);
-  const CORBA::ParameterDescription & operator[] (CORBA::ULong index) const;
+  CORBA_ParameterDescription & operator[] (CORBA::ULong index);
+  const CORBA_ParameterDescription & operator[] (CORBA::ULong index) const;
   
   // in, inout, out, _retn 
   const CORBA_ParDescriptionSeq &in (void) const;
@@ -6543,7 +6010,7 @@ public:
   operator CORBA_ParDescriptionSeq *&();
   CORBA_ParDescriptionSeq *&ptr (void);
   CORBA_ParDescriptionSeq *operator-> (void);
-  CORBA::ParameterDescription & operator[] (CORBA::ULong index);
+  CORBA_ParameterDescription & operator[] (CORBA::ULong index);
   
 private:
   CORBA_ParDescriptionSeq *&ptr_;
@@ -6554,9 +6021,6 @@ private:
 
 #endif /* end #if !defined */
 
-typedef char * ContextIdentifier;
-typedef CORBA::String_var ContextIdentifier_var;
-typedef CORBA::String_out ContextIdentifier_out;
 
 #if !defined (_CORBA_CONTEXTIDSEQ_CH_)
 #define _CORBA_CONTEXTIDSEQ_CH_
@@ -6665,6 +6129,15 @@ private:
 #endif /* end #if !defined */
 
 
+#if !defined (_CORBA_OPERATIONDEF___PTR_CH_)
+#define _CORBA_OPERATIONDEF___PTR_CH_
+
+class CORBA_OperationDef;
+typedef CORBA_OperationDef *CORBA_OperationDef_ptr;
+
+#endif /* end #if !defined */
+
+
 #if !defined (_CORBA_OPERATIONDEF___VAR_CH_)
 #define _CORBA_OPERATIONDEF___VAR_CH_
 
@@ -6688,6 +6161,14 @@ public:
   CORBA_OperationDef_ptr &out (void);
   CORBA_OperationDef_ptr _retn (void);
   CORBA_OperationDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_OperationDef_ptr duplicate (CORBA_OperationDef_ptr);
+  static void release (CORBA_OperationDef_ptr);
+  static CORBA_OperationDef_ptr nil (void);
+  static CORBA_OperationDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_OperationDef_ptr ptr_;
@@ -6715,7 +6196,7 @@ public:
   operator CORBA_OperationDef_ptr &();
   CORBA_OperationDef_ptr &ptr (void);
   CORBA_OperationDef_ptr operator-> (void);
-  
+
 private:
   CORBA_OperationDef_ptr &ptr_;
 };
@@ -6728,10 +6209,10 @@ private:
 #define _CORBA_OPERATIONDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_OperationDef_Proxy_Impl;
-class _TAO_OperationDef_Remote_Proxy_Impl;
-class _TAO_OperationDef_Proxy_Broker;
-class _TAO_OperationDef_Remote_Proxy_Broker;
+class _TAO_CORBA_OperationDef_Proxy_Impl;
+class _TAO_CORBA_OperationDef_Remote_Proxy_Impl;
+class _TAO_CORBA_OperationDef_Proxy_Broker;
+class _TAO_CORBA_OperationDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_OperationDef: public virtual CORBA_Contained
 {
@@ -6768,7 +6249,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr result_def (
+  virtual CORBA_IDLType_ptr result_def (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6777,7 +6258,7 @@ public:
     ));
 
   virtual void result_def (
-      CORBA::IDLType_ptr result_def,
+      CORBA_IDLType_ptr result_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6785,7 +6266,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ParDescriptionSeq * params (
+  virtual CORBA_ParDescriptionSeq * params (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6794,7 +6275,7 @@ public:
     ));
 
   virtual void params (
-      const CORBA::ParDescriptionSeq & params,
+      const CORBA_ParDescriptionSeq & params,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6819,7 +6300,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ContextIdSeq * contexts (
+  virtual CORBA_ContextIdSeq * contexts (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6828,7 +6309,7 @@ public:
     ));
 
   virtual void contexts (
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6836,7 +6317,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ExceptionDefSeq * exceptions (
+  virtual CORBA_ExceptionDefSeq * exceptions (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6845,7 +6326,7 @@ public:
     ));
 
   virtual void exceptions (
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6863,7 +6344,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_OperationDef_Proxy_Broker *the_TAO_OperationDef_Proxy_Broker_;
+  _TAO_CORBA_OperationDef_Proxy_Broker *the_TAO_CORBA_OperationDef_Proxy_Broker_;
   
 protected:
   CORBA_OperationDef (int collocated = 0);
@@ -6879,14 +6360,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_OperationDef_Remote_Proxy_Impl;
-    friend class _TAO_OperationDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_OperationDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_OperationDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_OperationDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_OperationDef (void);
 private:
   CORBA_OperationDef (const CORBA_OperationDef &);
-  void operator= (const CORBA_OperationDef &);  
+  void operator= (const CORBA_OperationDef &);
 };
 
 
@@ -6899,11 +6380,11 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_OperationDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
-  virtual ~_TAO_OperationDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_OperationDef_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr result (
       CORBA_Object *_collocated_tao_target_,
@@ -6913,7 +6394,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::IDLType_ptr result_def (
+  virtual CORBA_IDLType_ptr result_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6923,14 +6404,14 @@ public:
 
   virtual void result_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr result_def,
+      CORBA_IDLType_ptr result_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ParDescriptionSeq * params (
+  virtual CORBA_ParDescriptionSeq * params (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6940,7 +6421,7 @@ public:
 
   virtual void params (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ParDescriptionSeq & params,
+      const CORBA_ParDescriptionSeq & params,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6964,7 +6445,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ContextIdSeq * contexts (
+  virtual CORBA_ContextIdSeq * contexts (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6974,14 +6455,14 @@ public:
 
   virtual void contexts (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ExceptionDefSeq * exceptions (
+  virtual CORBA_ExceptionDefSeq * exceptions (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -6991,7 +6472,7 @@ public:
 
   virtual void exceptions (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6999,7 +6480,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_OperationDef_Proxy_Impl (void);
+  _TAO_CORBA_OperationDef_Proxy_Impl (void);
 
 };
 //
@@ -7011,16 +6492,16 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_OperationDef_Remote_Proxy_Impl : 
-  public virtual _TAO_OperationDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_OperationDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_OperationDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_OperationDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_OperationDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_OperationDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_OperationDef_Remote_Proxy_Impl (void) { }
   
     virtual CORBA::TypeCode_ptr result (
       CORBA_Object *_collocated_tao_target_,
@@ -7030,7 +6511,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::IDLType_ptr result_def (
+  virtual CORBA_IDLType_ptr result_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7040,14 +6521,14 @@ public:
 
   virtual void result_def (
       CORBA_Object *_collocated_tao_target_,
-      CORBA::IDLType_ptr result_def,
+      CORBA_IDLType_ptr result_def,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::ParDescriptionSeq * params (
+  virtual CORBA_ParDescriptionSeq * params (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7057,7 +6538,7 @@ public:
 
   virtual void params (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ParDescriptionSeq & params,
+      const CORBA_ParDescriptionSeq & params,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -7081,7 +6562,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ContextIdSeq * contexts (
+  virtual CORBA_ContextIdSeq * contexts (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7091,14 +6572,14 @@ public:
 
   virtual void contexts (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual CORBA::ExceptionDefSeq * exceptions (
+  virtual CORBA_ExceptionDefSeq * exceptions (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7108,7 +6589,7 @@ public:
 
   virtual void exceptions (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -7133,17 +6614,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_OperationDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_OperationDef_Proxy_Broker (void);
-  virtual _TAO_OperationDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_OperationDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_OperationDef_Proxy_Impl &select_proxy (
     CORBA_OperationDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_OperationDef_Proxy_Broker (void);
+  _TAO_CORBA_OperationDef_Proxy_Broker (void);
   
 };
 
@@ -7156,26 +6637,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_OperationDef_Remote_Proxy_Broker : public virtual _TAO_OperationDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_OperationDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_OperationDef_Proxy_Broker
 {
 public: 
-  _TAO_OperationDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_OperationDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_OperationDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_OperationDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_OperationDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_OperationDef_Proxy_Impl &select_proxy (
     CORBA_OperationDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_OperationDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_OperationDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_OperationDef_Remote_Proxy_Broker *the_TAO_OperationDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_OperationDef_Remote_Proxy_Broker *the_TAO_CORBA_OperationDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -7204,9 +6685,9 @@ struct TAO_IFR_Client_Export CORBA_OperationDescription
   TAO_String_Manager version;
   CORBA::TypeCode_var result;
   CORBA::OperationMode mode;
-  CORBA::ContextIdSeq contexts;
-  CORBA::ParDescriptionSeq parameters;
-  CORBA::ExcDescriptionSeq exceptions;
+  CORBA_ContextIdSeq contexts;
+  CORBA_ParDescriptionSeq parameters;
+  CORBA_ExcDescriptionSeq exceptions;
 };
 
 class TAO_IFR_Client_Export CORBA_OperationDescription_var
@@ -7429,7 +6910,7 @@ public:
   CORBA_OpDescriptionSeq (
     CORBA::ULong max, 
     CORBA::ULong length, 
-    CORBA::OperationDescription *buffer, 
+    CORBA_OperationDescription *buffer, 
     CORBA::Boolean release = 0
   );
   CORBA_OpDescriptionSeq (const CORBA_OpDescriptionSeq &); // copy ctor
@@ -7470,8 +6951,8 @@ public:
   operator CORBA_OpDescriptionSeq &() const;
   operator CORBA_OpDescriptionSeq *&(); // variable-size base types only
   
-  CORBA::OperationDescription & operator[] (CORBA::ULong index);
-  const CORBA::OperationDescription & operator[] (CORBA::ULong index) const;
+  CORBA_OperationDescription & operator[] (CORBA::ULong index);
+  const CORBA_OperationDescription & operator[] (CORBA::ULong index) const;
   
   // in, inout, out, _retn 
   const CORBA_OpDescriptionSeq &in (void) const;
@@ -7502,7 +6983,7 @@ public:
   operator CORBA_OpDescriptionSeq *&();
   CORBA_OpDescriptionSeq *&ptr (void);
   CORBA_OpDescriptionSeq *operator-> (void);
-  CORBA::OperationDescription & operator[] (CORBA::ULong index);
+  CORBA_OperationDescription & operator[] (CORBA::ULong index);
   
 private:
   CORBA_OpDescriptionSeq *&ptr_;
@@ -7579,7 +7060,7 @@ public:
   CORBA_AttrDescriptionSeq (
     CORBA::ULong max, 
     CORBA::ULong length, 
-    CORBA::AttributeDescription *buffer, 
+    CORBA_AttributeDescription *buffer, 
     CORBA::Boolean release = 0
   );
   CORBA_AttrDescriptionSeq (const CORBA_AttrDescriptionSeq &); // copy ctor
@@ -7620,8 +7101,8 @@ public:
   operator CORBA_AttrDescriptionSeq &() const;
   operator CORBA_AttrDescriptionSeq *&(); // variable-size base types only
   
-  CORBA::AttributeDescription & operator[] (CORBA::ULong index);
-  const CORBA::AttributeDescription & operator[] (CORBA::ULong index) const;
+  CORBA_AttributeDescription & operator[] (CORBA::ULong index);
+  const CORBA_AttributeDescription & operator[] (CORBA::ULong index) const;
   
   // in, inout, out, _retn 
   const CORBA_AttrDescriptionSeq &in (void) const;
@@ -7652,7 +7133,7 @@ public:
   operator CORBA_AttrDescriptionSeq *&();
   CORBA_AttrDescriptionSeq *&ptr (void);
   CORBA_AttrDescriptionSeq *operator-> (void);
-  CORBA::AttributeDescription & operator[] (CORBA::ULong index);
+  CORBA_AttributeDescription & operator[] (CORBA::ULong index);
   
 private:
   CORBA_AttrDescriptionSeq *&ptr_;
@@ -7660,6 +7141,15 @@ private:
   void operator= (const CORBA_AttrDescriptionSeq_var &);
 };
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_INTERFACEDEF___PTR_CH_)
+#define _CORBA_INTERFACEDEF___PTR_CH_
+
+class CORBA_InterfaceDef;
+typedef CORBA_InterfaceDef *CORBA_InterfaceDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -7687,6 +7177,14 @@ public:
   CORBA_InterfaceDef_ptr &out (void);
   CORBA_InterfaceDef_ptr _retn (void);
   CORBA_InterfaceDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_InterfaceDef_ptr duplicate (CORBA_InterfaceDef_ptr);
+  static void release (CORBA_InterfaceDef_ptr);
+  static CORBA_InterfaceDef_ptr nil (void);
+  static CORBA_InterfaceDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_InterfaceDef_ptr ptr_;
@@ -7714,7 +7212,7 @@ public:
   operator CORBA_InterfaceDef_ptr &();
   CORBA_InterfaceDef_ptr &ptr (void);
   CORBA_InterfaceDef_ptr operator-> (void);
-  
+
 private:
   CORBA_InterfaceDef_ptr &ptr_;
 };
@@ -7727,10 +7225,10 @@ private:
 #define _CORBA_INTERFACEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_InterfaceDef_Proxy_Impl;
-class _TAO_InterfaceDef_Remote_Proxy_Impl;
-class _TAO_InterfaceDef_Proxy_Broker;
-class _TAO_InterfaceDef_Remote_Proxy_Broker;
+class _TAO_CORBA_InterfaceDef_Proxy_Impl;
+class _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl;
+class _TAO_CORBA_InterfaceDef_Proxy_Broker;
+class _TAO_CORBA_InterfaceDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_InterfaceDef: public virtual CORBA_Container, public virtual CORBA_Contained, public virtual CORBA_IDLType
 {
@@ -7759,7 +7257,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::InterfaceDefSeq * base_interfaces (
+  virtual CORBA_InterfaceDefSeq * base_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -7768,7 +7266,7 @@ public:
     ));
 
   virtual void base_interfaces (
-      const CORBA::InterfaceDefSeq & base_interfaces,
+      const CORBA_InterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -7801,9 +7299,9 @@ public:
     TAO_String_Manager id;
     TAO_String_Manager defined_in;
     TAO_String_Manager version;
-    CORBA::OpDescriptionSeq operations;
-    CORBA::AttrDescriptionSeq attributes;
-    CORBA::RepositoryIdSeq base_interfaces;
+    CORBA_OpDescriptionSeq operations;
+    CORBA_AttrDescriptionSeq attributes;
+    CORBA_RepositoryIdSeq base_interfaces;
     CORBA::TypeCode_var type;
   };
 
@@ -7856,7 +7354,7 @@ public:
 
   static CORBA::TypeCode_ptr _tc_FullInterfaceDescription;
 
-  virtual CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
+  virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -7864,11 +7362,11 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -7877,15 +7375,15 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -7903,7 +7401,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_InterfaceDef_Proxy_Broker *the_TAO_InterfaceDef_Proxy_Broker_;
+  _TAO_CORBA_InterfaceDef_Proxy_Broker *the_TAO_CORBA_InterfaceDef_Proxy_Broker_;
   
 protected:
   CORBA_InterfaceDef (int collocated = 0);
@@ -7919,14 +7417,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_InterfaceDef_Remote_Proxy_Impl;
-    friend class _TAO_InterfaceDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_InterfaceDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_InterfaceDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_InterfaceDef (void);
 private:
   CORBA_InterfaceDef (const CORBA_InterfaceDef &);
-  void operator= (const CORBA_InterfaceDef &);  
+  void operator= (const CORBA_InterfaceDef &);
 };
 
 
@@ -7939,15 +7437,15 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Impl : 
-  public virtual _TAO_Container_Proxy_Impl, 
-  public virtual _TAO_Contained_Proxy_Impl, 
-  public virtual _TAO_IDLType_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_InterfaceDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_Container_Proxy_Impl, 
+  public virtual _TAO_CORBA_Contained_Proxy_Impl, 
+  public virtual _TAO_CORBA_IDLType_Proxy_Impl
 {
 public:
-  virtual ~_TAO_InterfaceDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_InterfaceDef_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDefSeq * base_interfaces (
+    virtual CORBA_InterfaceDefSeq * base_interfaces (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7957,7 +7455,7 @@ public:
 
   virtual void base_interfaces (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InterfaceDefSeq & base_interfaces,
+      const CORBA_InterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -7973,7 +7471,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
+  virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7981,12 +7479,12 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -7994,16 +7492,16 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -8011,7 +7509,7 @@ public:
     )) = 0;
 
 protected:
-  _TAO_InterfaceDef_Proxy_Impl (void);
+  _TAO_CORBA_InterfaceDef_Proxy_Impl (void);
 
 };
 //
@@ -8023,20 +7521,20 @@ protected:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_InterfaceDef_Remote_Proxy_Impl : 
-  public virtual _TAO_InterfaceDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_InterfaceDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Container_Remote_Proxy_Impl, 
-  public virtual _TAO_Contained_Remote_Proxy_Impl, 
-  public virtual _TAO_IDLType_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Container_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl, 
+  public virtual _TAO_CORBA_IDLType_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_InterfaceDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_InterfaceDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_InterfaceDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDefSeq * base_interfaces (
+    virtual CORBA_InterfaceDefSeq * base_interfaces (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -8046,7 +7544,7 @@ public:
 
   virtual void base_interfaces (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InterfaceDefSeq & base_interfaces,
+      const CORBA_InterfaceDefSeq & base_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -8062,7 +7560,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::InterfaceDef::FullInterfaceDescription * describe_interface (
+  virtual CORBA_InterfaceDef::FullInterfaceDescription * describe_interface (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -8070,12 +7568,12 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::AttributeDef_ptr create_attribute (
+  virtual CORBA_AttributeDef_ptr create_attribute (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr type,
+      CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -8083,16 +7581,16 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::OperationDef_ptr create_operation (
+  virtual CORBA_OperationDef_ptr create_operation (
       CORBA_Object *_collocated_tao_target_,
       const char * id,
       const char * name,
       const char * version,
-      CORBA::IDLType_ptr result,
+      CORBA_IDLType_ptr result,
       CORBA::OperationMode mode,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
-      const CORBA::ContextIdSeq & contexts,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
+      const CORBA_ContextIdSeq & contexts,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -8117,17 +7615,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_InterfaceDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_InterfaceDef_Proxy_Broker (void);
-  virtual _TAO_InterfaceDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_InterfaceDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_InterfaceDef_Proxy_Impl &select_proxy (
     CORBA_InterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_InterfaceDef_Proxy_Broker (void);
+  _TAO_CORBA_InterfaceDef_Proxy_Broker (void);
   
 };
 
@@ -8140,26 +7638,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_InterfaceDef_Remote_Proxy_Broker : public virtual _TAO_InterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_InterfaceDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_InterfaceDef_Proxy_Broker
 {
 public: 
-  _TAO_InterfaceDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_InterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_InterfaceDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_InterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_InterfaceDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_InterfaceDef_Proxy_Impl &select_proxy (
     CORBA_InterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_InterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_InterfaceDef_Remote_Proxy_Broker *the_TAO_InterfaceDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_InterfaceDef_Remote_Proxy_Broker *the_TAO_CORBA_InterfaceDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -8186,7 +7684,7 @@ struct TAO_IFR_Client_Export CORBA_InterfaceDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  CORBA::RepositoryIdSeq base_interfaces;
+  CORBA_RepositoryIdSeq base_interfaces;
 };
 
 class TAO_IFR_Client_Export CORBA_InterfaceDescription_var
@@ -8237,6 +7735,15 @@ private:
 };
 
 
+#if !defined (_CORBA_ABSTRACTINTERFACEDEF___PTR_CH_)
+#define _CORBA_ABSTRACTINTERFACEDEF___PTR_CH_
+
+class CORBA_AbstractInterfaceDef;
+typedef CORBA_AbstractInterfaceDef *CORBA_AbstractInterfaceDef_ptr;
+
+#endif /* end #if !defined */
+
+
 #if !defined (_CORBA_ABSTRACTINTERFACEDEF___VAR_CH_)
 #define _CORBA_ABSTRACTINTERFACEDEF___VAR_CH_
 
@@ -8260,6 +7767,14 @@ public:
   CORBA_AbstractInterfaceDef_ptr &out (void);
   CORBA_AbstractInterfaceDef_ptr _retn (void);
   CORBA_AbstractInterfaceDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_AbstractInterfaceDef_ptr duplicate (CORBA_AbstractInterfaceDef_ptr);
+  static void release (CORBA_AbstractInterfaceDef_ptr);
+  static CORBA_AbstractInterfaceDef_ptr nil (void);
+  static CORBA_AbstractInterfaceDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_AbstractInterfaceDef_ptr ptr_;
@@ -8287,7 +7802,7 @@ public:
   operator CORBA_AbstractInterfaceDef_ptr &();
   CORBA_AbstractInterfaceDef_ptr &ptr (void);
   CORBA_AbstractInterfaceDef_ptr operator-> (void);
-  
+
 private:
   CORBA_AbstractInterfaceDef_ptr &ptr_;
 };
@@ -8300,10 +7815,10 @@ private:
 #define _CORBA_ABSTRACTINTERFACEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_AbstractInterfaceDef_Proxy_Impl;
-class _TAO_AbstractInterfaceDef_Remote_Proxy_Impl;
-class _TAO_AbstractInterfaceDef_Proxy_Broker;
-class _TAO_AbstractInterfaceDef_Remote_Proxy_Broker;
+class _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl;
+class _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl;
+class _TAO_CORBA_AbstractInterfaceDef_Proxy_Broker;
+class _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_AbstractInterfaceDef: public virtual CORBA_InterfaceDef
 {
@@ -8342,7 +7857,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_AbstractInterfaceDef_Proxy_Broker *the_TAO_AbstractInterfaceDef_Proxy_Broker_;
+  _TAO_CORBA_AbstractInterfaceDef_Proxy_Broker *the_TAO_CORBA_AbstractInterfaceDef_Proxy_Broker_;
   
 protected:
   CORBA_AbstractInterfaceDef (int collocated = 0);
@@ -8358,14 +7873,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_AbstractInterfaceDef_Remote_Proxy_Impl;
-    friend class _TAO_AbstractInterfaceDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_AbstractInterfaceDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_AbstractInterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_AbstractInterfaceDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_AbstractInterfaceDef (void);
 private:
   CORBA_AbstractInterfaceDef (const CORBA_AbstractInterfaceDef &);
-  void operator= (const CORBA_AbstractInterfaceDef &);  
+  void operator= (const CORBA_AbstractInterfaceDef &);
 };
 
 
@@ -8378,14 +7893,14 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AbstractInterfaceDef_Proxy_Impl : 
-  public virtual _TAO_InterfaceDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_InterfaceDef_Proxy_Impl
 {
 public:
-  virtual ~_TAO_AbstractInterfaceDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AbstractInterfaceDef_Proxy_Impl (void) { }
   
   protected:
-  _TAO_AbstractInterfaceDef_Proxy_Impl (void);
+  _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl (void);
 
 };
 //
@@ -8397,16 +7912,16 @@ public:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_AbstractInterfaceDef_Remote_Proxy_Impl : 
-  public virtual _TAO_AbstractInterfaceDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_AbstractInterfaceDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_AbstractInterfaceDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl (void) { }
   
   };
 
@@ -8426,17 +7941,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AbstractInterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AbstractInterfaceDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_AbstractInterfaceDef_Proxy_Broker (void);
-  virtual _TAO_AbstractInterfaceDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_AbstractInterfaceDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl &select_proxy (
     CORBA_AbstractInterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_AbstractInterfaceDef_Proxy_Broker (void);
+  _TAO_CORBA_AbstractInterfaceDef_Proxy_Broker (void);
   
 };
 
@@ -8449,26 +7964,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_AbstractInterfaceDef_Remote_Proxy_Broker : public virtual _TAO_AbstractInterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Broker
 {
 public: 
-  _TAO_AbstractInterfaceDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_AbstractInterfaceDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_AbstractInterfaceDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_AbstractInterfaceDef_Proxy_Impl &select_proxy (
     CORBA_AbstractInterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_AbstractInterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_AbstractInterfaceDef_Remote_Proxy_Broker *the_TAO_AbstractInterfaceDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker *the_TAO_CORBA_AbstractInterfaceDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -8476,6 +7991,15 @@ public:
 //              End Remote Proxy Broker Declaration 
 ///////////////////////////////////////////////////////////////////////
 
+
+#endif /* end #if !defined */
+
+
+#if !defined (_CORBA_LOCALINTERFACEDEF___PTR_CH_)
+#define _CORBA_LOCALINTERFACEDEF___PTR_CH_
+
+class CORBA_LocalInterfaceDef;
+typedef CORBA_LocalInterfaceDef *CORBA_LocalInterfaceDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -8503,6 +8027,14 @@ public:
   CORBA_LocalInterfaceDef_ptr &out (void);
   CORBA_LocalInterfaceDef_ptr _retn (void);
   CORBA_LocalInterfaceDef_ptr ptr (void) const;
+  
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static CORBA_LocalInterfaceDef_ptr duplicate (CORBA_LocalInterfaceDef_ptr);
+  static void release (CORBA_LocalInterfaceDef_ptr);
+  static CORBA_LocalInterfaceDef_ptr nil (void);
+  static CORBA_LocalInterfaceDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * upcast (void *);
 
 private:
   CORBA_LocalInterfaceDef_ptr ptr_;
@@ -8530,7 +8062,7 @@ public:
   operator CORBA_LocalInterfaceDef_ptr &();
   CORBA_LocalInterfaceDef_ptr &ptr (void);
   CORBA_LocalInterfaceDef_ptr operator-> (void);
-  
+
 private:
   CORBA_LocalInterfaceDef_ptr &ptr_;
 };
@@ -8543,10 +8075,10 @@ private:
 #define _CORBA_LOCALINTERFACEDEF_CH_
 
 // Forward Classes Declaration
-class _TAO_LocalInterfaceDef_Proxy_Impl;
-class _TAO_LocalInterfaceDef_Remote_Proxy_Impl;
-class _TAO_LocalInterfaceDef_Proxy_Broker;
-class _TAO_LocalInterfaceDef_Remote_Proxy_Broker;
+class _TAO_CORBA_LocalInterfaceDef_Proxy_Impl;
+class _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl;
+class _TAO_CORBA_LocalInterfaceDef_Proxy_Broker;
+class _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker;
 
 class TAO_IFR_Client_Export CORBA_LocalInterfaceDef: public virtual CORBA_InterfaceDef
 {
@@ -8585,7 +8117,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
 
 private:
-  _TAO_LocalInterfaceDef_Proxy_Broker *the_TAO_LocalInterfaceDef_Proxy_Broker_;
+  _TAO_CORBA_LocalInterfaceDef_Proxy_Broker *the_TAO_CORBA_LocalInterfaceDef_Proxy_Broker_;
   
 protected:
   CORBA_LocalInterfaceDef (int collocated = 0);
@@ -8601,14 +8133,14 @@ protected:
       TAO_Abstract_ServantBase *servant = 0
       );
     
-    friend class _TAO_LocalInterfaceDef_Remote_Proxy_Impl;
-    friend class _TAO_LocalInterfaceDef_ThruPOA_Proxy_Impl;
-    friend class _TAO_LocalInterfaceDef_Direct_Proxy_Impl;
+    friend class _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl;
+    friend class _TAO_CORBA_LocalInterfaceDef_ThruPOA_Proxy_Impl;
+    friend class _TAO_CORBA_LocalInterfaceDef_Direct_Proxy_Impl;
   
   virtual ~CORBA_LocalInterfaceDef (void);
 private:
   CORBA_LocalInterfaceDef (const CORBA_LocalInterfaceDef &);
-  void operator= (const CORBA_LocalInterfaceDef &);  
+  void operator= (const CORBA_LocalInterfaceDef &);
 };
 
 
@@ -8621,14 +8153,14 @@ private:
 //                    Base  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_LocalInterfaceDef_Proxy_Impl : 
-  public virtual _TAO_InterfaceDef_Proxy_Impl
+class TAO_IFR_Client_Export _TAO_CORBA_LocalInterfaceDef_Proxy_Impl : 
+  public virtual _TAO_CORBA_InterfaceDef_Proxy_Impl
 {
 public:
-  virtual ~_TAO_LocalInterfaceDef_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_LocalInterfaceDef_Proxy_Impl (void) { }
   
   protected:
-  _TAO_LocalInterfaceDef_Proxy_Impl (void);
+  _TAO_CORBA_LocalInterfaceDef_Proxy_Impl (void);
 
 };
 //
@@ -8640,16 +8172,16 @@ public:
 //                    Remote  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_LocalInterfaceDef_Remote_Proxy_Impl : 
-  public virtual _TAO_LocalInterfaceDef_Proxy_Impl,
+class TAO_IFR_Client_Export _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl : 
+  public virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl
   
 {
 public:
-  _TAO_LocalInterfaceDef_Remote_Proxy_Impl (void);
+  _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl (void);
   
-  virtual ~_TAO_LocalInterfaceDef_Remote_Proxy_Impl (void) { }
+  virtual ~_TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl (void) { }
   
   };
 
@@ -8669,17 +8201,17 @@ public:
 //                 Base Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_LocalInterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_LocalInterfaceDef_Proxy_Broker
 {
 public:
-  virtual ~_TAO_LocalInterfaceDef_Proxy_Broker (void);
-  virtual _TAO_LocalInterfaceDef_Proxy_Impl &select_proxy (
+  virtual ~_TAO_CORBA_LocalInterfaceDef_Proxy_Broker (void);
+  virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Impl &select_proxy (
     CORBA_LocalInterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   ) = 0;
 
 protected:
-  _TAO_LocalInterfaceDef_Proxy_Broker (void);
+  _TAO_CORBA_LocalInterfaceDef_Proxy_Broker (void);
   
 };
 
@@ -8692,26 +8224,26 @@ protected:
 //                 Remote Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_LocalInterfaceDef_Remote_Proxy_Broker : public virtual _TAO_LocalInterfaceDef_Proxy_Broker
+class TAO_IFR_Client_Export _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker : public virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Broker
 {
 public: 
-  _TAO_LocalInterfaceDef_Remote_Proxy_Broker (void);
+  _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual ~_TAO_LocalInterfaceDef_Remote_Proxy_Broker (void);
+  virtual ~_TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker (void);
   
-  virtual _TAO_LocalInterfaceDef_Proxy_Impl &select_proxy (
+  virtual _TAO_CORBA_LocalInterfaceDef_Proxy_Impl &select_proxy (
     CORBA_LocalInterfaceDef *object,
     CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
   );
 
 private:
-  _TAO_LocalInterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
+  _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Impl remote_proxy_impl_;
 // This member function is used to get an handle to the unique instance
 // of the Remote Proxy Broker that is available for a given
 // interface.
 
 public:
-  static _TAO_LocalInterfaceDef_Remote_Proxy_Broker *the_TAO_LocalInterfaceDef_Remote_Proxy_Broker (void);
+  static _TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker *the_TAO_CORBA_LocalInterfaceDef_Remote_Proxy_Broker (void);
 };
 
 
@@ -8724,324 +8256,329 @@ public:
 
 // Proxy Broker Factory function pointer declarations.
 
-extern TAO_IFR_Client_Export _TAO_Repository_Proxy_Broker * (*CORBA__TAO_Repository_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_Repository_Proxy_Broker *
+(*_TAO_CORBA_Repository_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_ModuleDef_Proxy_Broker * (*CORBA__TAO_ModuleDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_ModuleDef_Proxy_Broker *
+(*_TAO_CORBA_ModuleDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_ConstantDef_Proxy_Broker * (*CORBA__TAO_ConstantDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_ConstantDef_Proxy_Broker *
+(*_TAO_CORBA_ConstantDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_StructDef_Proxy_Broker * (*CORBA__TAO_StructDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_StructDef_Proxy_Broker *
+(*_TAO_CORBA_StructDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_UnionDef_Proxy_Broker * (*CORBA__TAO_UnionDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_UnionDef_Proxy_Broker *
+(*_TAO_CORBA_UnionDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_EnumDef_Proxy_Broker * (*CORBA__TAO_EnumDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_EnumDef_Proxy_Broker *
+(*_TAO_CORBA_EnumDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_AliasDef_Proxy_Broker * (*CORBA__TAO_AliasDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_AliasDef_Proxy_Broker *
+(*_TAO_CORBA_AliasDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_NativeDef_Proxy_Broker * (*CORBA__TAO_NativeDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_NativeDef_Proxy_Broker *
+(*_TAO_CORBA_NativeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_PrimitiveDef_Proxy_Broker * (*CORBA__TAO_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_PrimitiveDef_Proxy_Broker *
+(*_TAO_CORBA_PrimitiveDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_StringDef_Proxy_Broker * (*CORBA__TAO_StringDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_StringDef_Proxy_Broker *
+(*_TAO_CORBA_StringDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_WstringDef_Proxy_Broker * (*CORBA__TAO_WstringDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_WstringDef_Proxy_Broker *
+(*_TAO_CORBA_WstringDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_SequenceDef_Proxy_Broker * (*CORBA__TAO_SequenceDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_SequenceDef_Proxy_Broker *
+(*_TAO_CORBA_SequenceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_ArrayDef_Proxy_Broker * (*CORBA__TAO_ArrayDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_ArrayDef_Proxy_Broker *
+(*_TAO_CORBA_ArrayDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_ExceptionDef_Proxy_Broker * (*CORBA__TAO_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_ExceptionDef_Proxy_Broker *
+(*_TAO_CORBA_ExceptionDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_AttributeDef_Proxy_Broker * (*CORBA__TAO_AttributeDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_AttributeDef_Proxy_Broker *
+(*_TAO_CORBA_AttributeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_OperationDef_Proxy_Broker * (*CORBA__TAO_OperationDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_OperationDef_Proxy_Broker *
+(*_TAO_CORBA_OperationDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_InterfaceDef_Proxy_Broker * (*CORBA__TAO_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_InterfaceDef_Proxy_Broker *
+(*_TAO_CORBA_InterfaceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_AbstractInterfaceDef_Proxy_Broker * (*CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_AbstractInterfaceDef_Proxy_Broker *
+(*_TAO_CORBA_AbstractInterfaceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export _TAO_LocalInterfaceDef_Proxy_Broker * (*CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+_TAO_CORBA_LocalInterfaceDef_Proxy_Broker *
+(*_TAO_CORBA_LocalInterfaceDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-// ********************************************************
-// Any operators for classes moved from IFR_BaseC.h
+// External declarations for undefined interface
+// CORBA_FixedDef
+extern TAO_IFR_Client_Export
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_duplicate (
+    CORBA_FixedDef_ptr
+  );
+extern TAO_IFR_Client_Export
+void
+tao_CORBA_FixedDef_release (
+    CORBA_FixedDef_ptr
+  );
+extern TAO_IFR_Client_Export
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_nil (
+    void
+  );
+extern TAO_IFR_Client_Export
+CORBA_FixedDef_ptr
+tao_CORBA_FixedDef_narrow (
+    CORBA::Object *,
+    CORBA::Environment &
+  );
+extern TAO_IFR_Client_Export
+CORBA::Object *
+tao_CORBA_FixedDef_upcast (
+    void *
+  );
 
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceDefSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDefSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceDefSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceDefSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::AbstractInterfaceDefSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AbstractInterfaceDefSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AbstractInterfaceDefSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::AbstractInterfaceDefSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::LocalInterfaceDefSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::LocalInterfaceDefSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::LocalInterfaceDefSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::LocalInterfaceDefSeq *&);
-
-// ********************************************************
-
+// Any operators for interface CORBA_FixedDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_FixedDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_FixedDef *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::PrimitiveKind);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PrimitiveKind &);
-// Any operators for interface CORBA::Repository
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::Repository_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Repository *&);
-// Any operators for interface CORBA::ModuleDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ModuleDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ModuleDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ModuleDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ModuleDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ModuleDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ModuleDescription *&);
-// Any operators for interface CORBA::ConstantDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ConstantDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstantDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ConstantDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ConstantDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstantDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ConstantDescription *&);
-// Any operators for interface CORBA::StructDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StructDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StructDef *&);
-// Any operators for interface CORBA::UnionDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::UnionDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::UnionDef *&);
-// Any operators for interface CORBA::EnumDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::EnumDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::EnumDef *&);
-// Any operators for interface CORBA::AliasDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AliasDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AliasDef *&);
-// Any operators for interface CORBA::NativeDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::NativeDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::NativeDef *&);
-// Any operators for interface CORBA::PrimitiveDef
+// Any operators for interface CORBA_Repository
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_Repository_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Repository *&);
+// Any operators for interface CORBA_ModuleDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ModuleDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ModuleDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ModuleDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ModuleDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ModuleDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ModuleDescription *&);
+// Any operators for interface CORBA_ConstantDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ConstantDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ConstantDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ConstantDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ConstantDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ConstantDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ConstantDescription *&);
+// Any operators for interface CORBA_StructDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_StructDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_StructDef *&);
+// Any operators for interface CORBA_UnionDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_UnionDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_UnionDef *&);
+// Any operators for interface CORBA_EnumDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_EnumDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_EnumDef *&);
+// Any operators for interface CORBA_AliasDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_AliasDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_AliasDef *&);
+// Any operators for interface CORBA_NativeDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_NativeDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_NativeDef *&);
+// Any operators for interface CORBA_PrimitiveDef
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::PrimitiveDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PrimitiveDef *&);
-// Any operators for interface CORBA::StringDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StringDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StringDef *&);
-// Any operators for interface CORBA::WstringDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::WstringDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WstringDef *&);
-// Any operators for interface CORBA::SequenceDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::SequenceDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::SequenceDef *&);
-// Any operators for interface CORBA::ArrayDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ArrayDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ArrayDef *&);
-// Any operators for interface CORBA::ExceptionDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExceptionDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExceptionDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExceptionDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExceptionDescription *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExceptionDefSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDefSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExceptionDefSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExceptionDefSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExcDescriptionSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExcDescriptionSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExcDescriptionSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExcDescriptionSeq *&);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_PrimitiveDef *&);
+// Any operators for interface CORBA_StringDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_StringDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_StringDef *&);
+// Any operators for interface CORBA_WstringDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_WstringDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_WstringDef *&);
+// Any operators for interface CORBA_SequenceDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_SequenceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_SequenceDef *&);
+// Any operators for interface CORBA_ArrayDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ArrayDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ArrayDef *&);
+// Any operators for interface CORBA_ExceptionDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ExceptionDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ExceptionDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ExceptionDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ExceptionDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ExceptionDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ExceptionDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ExceptionDefSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ExceptionDefSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ExceptionDefSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ExceptionDefSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ExcDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ExcDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ExcDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ExcDescriptionSeq *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttributeMode &);
-// Any operators for interface CORBA::AttributeDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttributeDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::AttributeDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttributeDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::AttributeDescription *&);
+// Any operators for interface CORBA_AttributeDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_AttributeDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_AttributeDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_AttributeDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_AttributeDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_AttributeDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_AttributeDescription *&);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OperationMode &);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ParameterMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ParameterMode &);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ParameterDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ParameterDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ParameterDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ParameterDescription *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ParDescriptionSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ParDescriptionSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ParDescriptionSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ParDescriptionSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ContextIdSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ContextIdSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ContextIdSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ContextIdSeq *&);
-// Any operators for interface CORBA::OperationDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OperationDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::OperationDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OperationDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OperationDescription *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::RepositoryIdSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::RepositoryIdSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::RepositoryIdSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::RepositoryIdSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::OpDescriptionSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OpDescriptionSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OpDescriptionSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OpDescriptionSeq *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::AttrDescriptionSeq &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttrDescriptionSeq*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttrDescriptionSeq *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::AttrDescriptionSeq *&);
-// Any operators for interface CORBA::InterfaceDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceDef *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceDef::FullInterfaceDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDef::FullInterfaceDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceDef::FullInterfaceDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceDef::FullInterfaceDescription *&);
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceDescription &); // copying version
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDescription*); // noncopying version
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceDescription *&); // deprecated
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceDescription *&);
-// Any operators for interface CORBA::AbstractInterfaceDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AbstractInterfaceDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AbstractInterfaceDef *&);
-// Any operators for interface CORBA::LocalInterfaceDef
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::LocalInterfaceDef_ptr);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::LocalInterfaceDef *&);
-
-// **************************************************************
-// CDR operators for classes moved from IFR_BaseC.h
-
-#if !defined _TAO_CDR_OP_CORBA_InterfaceDefSeq_H_
-#define _TAO_CDR_OP_CORBA_InterfaceDefSeq_H_
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::InterfaceDefSeq &
-  );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::InterfaceDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_InterfaceDefSeq_H_ */
-
-
-#if !defined _TAO_CDR_OP_CORBA_AbstractInterfaceDefSeq_H_
-#define _TAO_CDR_OP_CORBA_AbstractInterfaceDefSeq_H_
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::AbstractInterfaceDefSeq &
-  );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::AbstractInterfaceDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_AbstractInterfaceDefSeq_H_ */
-
-
-#if !defined _TAO_CDR_OP_CORBA_LocalInterfaceDefSeq_H_
-#define _TAO_CDR_OP_CORBA_LocalInterfaceDefSeq_H_
-
-TAO_IFR_Client_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::LocalInterfaceDefSeq &
-  );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::LocalInterfaceDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_LocalInterfaceDefSeq_H_ */
-
-// **********************************************************
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ParameterDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ParameterDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ParameterDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ParameterDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ParDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ParDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ParDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ParDescriptionSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_ContextIdSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_ContextIdSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_ContextIdSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_ContextIdSeq *&);
+// Any operators for interface CORBA_OperationDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_OperationDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_OperationDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_OperationDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_OperationDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_OperationDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_OperationDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_RepositoryIdSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_RepositoryIdSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_RepositoryIdSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_RepositoryIdSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_OpDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_OpDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_OpDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_OpDescriptionSeq *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_AttrDescriptionSeq &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_AttrDescriptionSeq*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_AttrDescriptionSeq *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_AttrDescriptionSeq *&);
+// Any operators for interface CORBA_InterfaceDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_InterfaceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_InterfaceDef *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_InterfaceDef::FullInterfaceDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_InterfaceDef::FullInterfaceDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_InterfaceDef::FullInterfaceDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_InterfaceDef::FullInterfaceDescription *&);
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA_InterfaceDescription &); // copying version
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_InterfaceDescription*); // noncopying version
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_InterfaceDescription *&); // deprecated
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_InterfaceDescription *&);
+// Any operators for interface CORBA_AbstractInterfaceDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_AbstractInterfaceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_AbstractInterfaceDef *&);
+// Any operators for interface CORBA_LocalInterfaceDef
+TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA_LocalInterfaceDef_ptr);
+TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_LocalInterfaceDef *&);
 
 #ifndef __ACE_INLINE__
 
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_FixedDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_FixedDef_ptr &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PrimitiveKind &); // 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PrimitiveKind &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Repository_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Repository_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ModuleDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ModuleDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ModuleDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ModuleDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ConstantDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ConstantDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ConstantDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ConstantDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::StructDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::StructDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::UnionDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::UnionDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::EnumDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::EnumDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::AliasDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::AliasDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::NativeDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::NativeDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_Repository_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_Repository_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ModuleDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ModuleDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ModuleDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ModuleDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstantDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ConstantDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ConstantDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ConstantDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_StructDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_StructDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_UnionDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_UnionDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_EnumDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_EnumDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_AliasDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_AliasDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_NativeDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_NativeDef_ptr &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PrimitiveDef_ptr );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PrimitiveDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::StringDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::StringDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::WstringDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WstringDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SequenceDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SequenceDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ArrayDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ArrayDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ExceptionDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ExceptionDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ExceptionDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ExceptionDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_StringDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_StringDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_WstringDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_WstringDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_SequenceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_SequenceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ArrayDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ArrayDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ExceptionDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ExceptionDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ExceptionDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ExceptionDescription &);
 
 #if !defined _TAO_CDR_OP_CORBA_ExceptionDefSeq_H_
 #define _TAO_CDR_OP_CORBA_ExceptionDefSeq_H_
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ExceptionDefSeq &
+    const CORBA_ExceptionDefSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ExceptionDefSeq &
+    CORBA_ExceptionDefSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_ExceptionDefSeq_H_ */
@@ -9052,38 +8589,38 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ExcDescriptionSeq &
+    const CORBA_ExcDescriptionSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ExcDescriptionSeq &
+    CORBA_ExcDescriptionSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_ExcDescriptionSeq_H_ */
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::AttributeMode &); // 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::AttributeMode &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::AttributeDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::AttributeDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::AttributeDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::AttributeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_AttributeDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_AttributeDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_AttributeDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_AttributeDescription &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::OperationMode &); // 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::OperationMode &);
 TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ParameterMode &); // 
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ParameterMode &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ParameterDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ParameterDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_ParameterDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_ParameterDescription &);
 
 #if !defined _TAO_CDR_OP_CORBA_ParDescriptionSeq_H_
 #define _TAO_CDR_OP_CORBA_ParDescriptionSeq_H_
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ParDescriptionSeq &
+    const CORBA_ParDescriptionSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ParDescriptionSeq &
+    CORBA_ParDescriptionSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_ParDescriptionSeq_H_ */
@@ -9094,30 +8631,30 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::ContextIdSeq &
+    const CORBA_ContextIdSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::ContextIdSeq &
+    CORBA_ContextIdSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_ContextIdSeq_H_ */
 
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::OperationDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::OperationDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::OperationDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::OperationDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_OperationDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_OperationDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_OperationDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_OperationDescription &);
 
 #if !defined _TAO_CDR_OP_CORBA_RepositoryIdSeq_H_
 #define _TAO_CDR_OP_CORBA_RepositoryIdSeq_H_
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::RepositoryIdSeq &
+    const CORBA_RepositoryIdSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::RepositoryIdSeq &
+    CORBA_RepositoryIdSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_RepositoryIdSeq_H_ */
@@ -9128,11 +8665,11 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::OpDescriptionSeq &
+    const CORBA_OpDescriptionSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::OpDescriptionSeq &
+    CORBA_OpDescriptionSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_OpDescriptionSeq_H_ */
@@ -9143,25 +8680,25 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA::AttrDescriptionSeq &
+    const CORBA_AttrDescriptionSeq &
   );
 TAO_IFR_Client_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA::AttrDescriptionSeq &
+    CORBA_AttrDescriptionSeq &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_AttrDescriptionSeq_H_ */
 
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InterfaceDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InterfaceDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InterfaceDef::FullInterfaceDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InterfaceDef::FullInterfaceDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InterfaceDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InterfaceDescription &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::AbstractInterfaceDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::AbstractInterfaceDef_ptr &);
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::LocalInterfaceDef_ptr );
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::LocalInterfaceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_InterfaceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_InterfaceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_InterfaceDef::FullInterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_InterfaceDef::FullInterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_InterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_InterfaceDescription &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_AbstractInterfaceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_AbstractInterfaceDef_ptr &);
+TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA_LocalInterfaceDef_ptr );
+TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA_LocalInterfaceDef_ptr &);
 
 #endif /* __ACE_INLINE__ */
 

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef TAO_IDL_IFR_COMPONENTSC_H
-#define TAO_IDL_IFR_COMPONENTSC_H
+#ifndef _TAO_IDL_IFR_COMPONENTSC_H_
+#define _TAO_IDL_IFR_COMPONENTSC_H_
 
 #include "ace/pre.h"
 #include "ifr_client_export.h"
@@ -56,46 +56,6 @@
 
 TAO_NAMESPACE  IR
 {
-  enum DefinitionKind
-  {
-        dk_none,
-        dk_all,
-        dk_Attribute,
-        dk_Constant,
-        dk_Exception,
-        dk_Interface,
-        dk_Module,
-        dk_Operation,
-        dk_Typedef,
-        dk_Alias,
-        dk_Struct,
-        dk_Union,
-        dk_Enum,
-        dk_Primitive,
-        dk_String,
-        dk_Sequence,
-        dk_Array,
-        dk_Repository,
-        dk_Wstring,
-        dk_Fixed,
-        dk_Value,
-        dk_ValueBox,
-        dk_ValueMember,
-        dk_Native,
-        dk_Component,
-        dk_Home,
-        dk_Factory,
-        dk_Finder,
-        dk_PrimaryKey,
-        dk_Emits,
-        dk_Publishes,
-        dk_Consumes,
-        dk_Provides,
-        dk_Uses    
-  };
-  typedef DefinitionKind &DefinitionKind_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
-
   typedef char * Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
@@ -230,7 +190,7 @@ TAO_NAMESPACE  IR
 #if !defined (_IR_COMPONENTDEF___PTR_CH_)
 #define _IR_COMPONENTDEF___PTR_CH_
 
-typedef ComponentDef *ComponentDef_ptr;
+  typedef ComponentDef *ComponentDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -258,7 +218,15 @@ typedef ComponentDef *ComponentDef_ptr;
     ComponentDef_ptr &out (void);
     ComponentDef_ptr _retn (void);
     ComponentDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ComponentDef_ptr duplicate (ComponentDef_ptr);
+    static void release (ComponentDef_ptr);
+    static ComponentDef_ptr nil (void);
+    static ComponentDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ComponentDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -285,7 +253,7 @@ typedef ComponentDef *ComponentDef_ptr;
     operator ComponentDef_ptr &();
     ComponentDef_ptr &ptr (void);
     ComponentDef_ptr operator-> (void);
-    
+  
   private:
     ComponentDef_ptr &ptr_;
   };
@@ -450,7 +418,7 @@ typedef ComponentDef *ComponentDef_ptr;
 #if !defined (_IR_PROVIDESDEF___PTR_CH_)
 #define _IR_PROVIDESDEF___PTR_CH_
 
-typedef ProvidesDef *ProvidesDef_ptr;
+  typedef ProvidesDef *ProvidesDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -478,7 +446,15 @@ typedef ProvidesDef *ProvidesDef_ptr;
     ProvidesDef_ptr &out (void);
     ProvidesDef_ptr _retn (void);
     ProvidesDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ProvidesDef_ptr duplicate (ProvidesDef_ptr);
+    static void release (ProvidesDef_ptr);
+    static ProvidesDef_ptr nil (void);
+    static ProvidesDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ProvidesDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -505,7 +481,7 @@ typedef ProvidesDef *ProvidesDef_ptr;
     operator ProvidesDef_ptr &();
     ProvidesDef_ptr &ptr (void);
     ProvidesDef_ptr operator-> (void);
-    
+  
   private:
     ProvidesDef_ptr &ptr_;
   };
@@ -670,7 +646,7 @@ typedef ProvidesDef *ProvidesDef_ptr;
 #if !defined (_IR_USESDEF___PTR_CH_)
 #define _IR_USESDEF___PTR_CH_
 
-typedef UsesDef *UsesDef_ptr;
+  typedef UsesDef *UsesDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -698,7 +674,15 @@ typedef UsesDef *UsesDef_ptr;
     UsesDef_ptr &out (void);
     UsesDef_ptr _retn (void);
     UsesDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static UsesDef_ptr duplicate (UsesDef_ptr);
+    static void release (UsesDef_ptr);
+    static UsesDef_ptr nil (void);
+    static UsesDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     UsesDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -725,7 +709,7 @@ typedef UsesDef *UsesDef_ptr;
     operator UsesDef_ptr &();
     UsesDef_ptr &ptr (void);
     UsesDef_ptr operator-> (void);
-    
+  
   private:
     UsesDef_ptr &ptr_;
   };
@@ -890,7 +874,7 @@ typedef UsesDef *UsesDef_ptr;
 #if !defined (_IR_HOMEDEF___PTR_CH_)
 #define _IR_HOMEDEF___PTR_CH_
 
-typedef HomeDef *HomeDef_ptr;
+  typedef HomeDef *HomeDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -918,7 +902,15 @@ typedef HomeDef *HomeDef_ptr;
     HomeDef_ptr &out (void);
     HomeDef_ptr _retn (void);
     HomeDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static HomeDef_ptr duplicate (HomeDef_ptr);
+    static void release (HomeDef_ptr);
+    static HomeDef_ptr nil (void);
+    static HomeDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     HomeDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -945,7 +937,7 @@ typedef HomeDef *HomeDef_ptr;
     operator HomeDef_ptr &();
     HomeDef_ptr &ptr (void);
     HomeDef_ptr operator-> (void);
-    
+  
   private:
     HomeDef_ptr &ptr_;
   };
@@ -1110,7 +1102,7 @@ typedef HomeDef *HomeDef_ptr;
 #if !defined (_IR_EVENTDEF___PTR_CH_)
 #define _IR_EVENTDEF___PTR_CH_
 
-typedef EventDef *EventDef_ptr;
+  typedef EventDef *EventDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1138,7 +1130,15 @@ typedef EventDef *EventDef_ptr;
     EventDef_ptr &out (void);
     EventDef_ptr _retn (void);
     EventDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static EventDef_ptr duplicate (EventDef_ptr);
+    static void release (EventDef_ptr);
+    static EventDef_ptr nil (void);
+    static EventDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     EventDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1165,7 +1165,7 @@ typedef EventDef *EventDef_ptr;
     operator EventDef_ptr &();
     EventDef_ptr &ptr (void);
     EventDef_ptr operator-> (void);
-    
+  
   private:
     EventDef_ptr &ptr_;
   };
@@ -1178,7 +1178,7 @@ typedef EventDef *EventDef_ptr;
 #if !defined (_IR_EMITSDEF___PTR_CH_)
 #define _IR_EMITSDEF___PTR_CH_
 
-typedef EmitsDef *EmitsDef_ptr;
+  typedef EmitsDef *EmitsDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1206,7 +1206,15 @@ typedef EmitsDef *EmitsDef_ptr;
     EmitsDef_ptr &out (void);
     EmitsDef_ptr _retn (void);
     EmitsDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static EmitsDef_ptr duplicate (EmitsDef_ptr);
+    static void release (EmitsDef_ptr);
+    static EmitsDef_ptr nil (void);
+    static EmitsDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     EmitsDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1233,7 +1241,7 @@ typedef EmitsDef *EmitsDef_ptr;
     operator EmitsDef_ptr &();
     EmitsDef_ptr &ptr (void);
     EmitsDef_ptr operator-> (void);
-    
+  
   private:
     EmitsDef_ptr &ptr_;
   };
@@ -1398,7 +1406,7 @@ typedef EmitsDef *EmitsDef_ptr;
 #if !defined (_IR_PUBLISHESDEF___PTR_CH_)
 #define _IR_PUBLISHESDEF___PTR_CH_
 
-typedef PublishesDef *PublishesDef_ptr;
+  typedef PublishesDef *PublishesDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1426,7 +1434,15 @@ typedef PublishesDef *PublishesDef_ptr;
     PublishesDef_ptr &out (void);
     PublishesDef_ptr _retn (void);
     PublishesDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PublishesDef_ptr duplicate (PublishesDef_ptr);
+    static void release (PublishesDef_ptr);
+    static PublishesDef_ptr nil (void);
+    static PublishesDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PublishesDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1453,7 +1469,7 @@ typedef PublishesDef *PublishesDef_ptr;
     operator PublishesDef_ptr &();
     PublishesDef_ptr &ptr (void);
     PublishesDef_ptr operator-> (void);
-    
+  
   private:
     PublishesDef_ptr &ptr_;
   };
@@ -1618,7 +1634,7 @@ typedef PublishesDef *PublishesDef_ptr;
 #if !defined (_IR_CONSUMESDEF___PTR_CH_)
 #define _IR_CONSUMESDEF___PTR_CH_
 
-typedef ConsumesDef *ConsumesDef_ptr;
+  typedef ConsumesDef *ConsumesDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1646,7 +1662,15 @@ typedef ConsumesDef *ConsumesDef_ptr;
     ConsumesDef_ptr &out (void);
     ConsumesDef_ptr _retn (void);
     ConsumesDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ConsumesDef_ptr duplicate (ConsumesDef_ptr);
+    static void release (ConsumesDef_ptr);
+    static ConsumesDef_ptr nil (void);
+    static ConsumesDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ConsumesDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1673,7 +1697,7 @@ typedef ConsumesDef *ConsumesDef_ptr;
     operator ConsumesDef_ptr &();
     ConsumesDef_ptr &ptr (void);
     ConsumesDef_ptr operator-> (void);
-    
+  
   private:
     ConsumesDef_ptr &ptr_;
   };
@@ -1838,7 +1862,7 @@ typedef ConsumesDef *ConsumesDef_ptr;
 #if !defined (_IR_FACTORYDEF___PTR_CH_)
 #define _IR_FACTORYDEF___PTR_CH_
 
-typedef FactoryDef *FactoryDef_ptr;
+  typedef FactoryDef *FactoryDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -1866,7 +1890,15 @@ typedef FactoryDef *FactoryDef_ptr;
     FactoryDef_ptr &out (void);
     FactoryDef_ptr _retn (void);
     FactoryDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static FactoryDef_ptr duplicate (FactoryDef_ptr);
+    static void release (FactoryDef_ptr);
+    static FactoryDef_ptr nil (void);
+    static FactoryDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     FactoryDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -1893,7 +1925,7 @@ typedef FactoryDef *FactoryDef_ptr;
     operator FactoryDef_ptr &();
     FactoryDef_ptr &ptr (void);
     FactoryDef_ptr operator-> (void);
-    
+  
   private:
     FactoryDef_ptr &ptr_;
   };
@@ -2058,7 +2090,7 @@ typedef FactoryDef *FactoryDef_ptr;
 #if !defined (_IR_FINDERDEF___PTR_CH_)
 #define _IR_FINDERDEF___PTR_CH_
 
-typedef FinderDef *FinderDef_ptr;
+  typedef FinderDef *FinderDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -2086,7 +2118,15 @@ typedef FinderDef *FinderDef_ptr;
     FinderDef_ptr &out (void);
     FinderDef_ptr _retn (void);
     FinderDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static FinderDef_ptr duplicate (FinderDef_ptr);
+    static void release (FinderDef_ptr);
+    static FinderDef_ptr nil (void);
+    static FinderDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     FinderDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2113,7 +2153,7 @@ typedef FinderDef *FinderDef_ptr;
     operator FinderDef_ptr &();
     FinderDef_ptr &ptr (void);
     FinderDef_ptr operator-> (void);
-    
+  
   private:
     FinderDef_ptr &ptr_;
   };
@@ -2278,7 +2318,7 @@ typedef FinderDef *FinderDef_ptr;
 #if !defined (_IR_PRIMARYKEYDEF___PTR_CH_)
 #define _IR_PRIMARYKEYDEF___PTR_CH_
 
-typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
+  typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
 
 #endif /* end #if !defined */
 
@@ -2306,7 +2346,15 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
     PrimaryKeyDef_ptr &out (void);
     PrimaryKeyDef_ptr _retn (void);
     PrimaryKeyDef_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static PrimaryKeyDef_ptr duplicate (PrimaryKeyDef_ptr);
+    static void release (PrimaryKeyDef_ptr);
+    static PrimaryKeyDef_ptr nil (void);
+    static PrimaryKeyDef_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     PrimaryKeyDef_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2333,7 +2381,7 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
     operator PrimaryKeyDef_ptr &();
     PrimaryKeyDef_ptr &ptr (void);
     PrimaryKeyDef_ptr operator-> (void);
-    
+  
   private:
     PrimaryKeyDef_ptr &ptr_;
   };
@@ -2374,7 +2422,15 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
     ComponentRepository_ptr &out (void);
     ComponentRepository_ptr _retn (void);
     ComponentRepository_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static ComponentRepository_ptr duplicate (ComponentRepository_ptr);
+    static void release (ComponentRepository_ptr);
+    static ComponentRepository_ptr nil (void);
+    static ComponentRepository_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     ComponentRepository_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -2401,7 +2457,7 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
     operator ComponentRepository_ptr &();
     ComponentRepository_ptr &ptr (void);
     ComponentRepository_ptr operator-> (void);
-    
+  
   private:
     ComponentRepository_ptr &ptr_;
   };
@@ -2419,7 +2475,7 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
   class _TAO_ComponentRepository_Proxy_Broker;
   class _TAO_ComponentRepository_Remote_Proxy_Broker;
   
-  class TAO_IFR_Client_Export ComponentRepository: public virtual CORBA::Repository
+  class TAO_IFR_Client_Export ComponentRepository: public virtual CORBA_Repository
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2451,7 +2507,7 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
         const char * name,
         const char * version,
         IR::ComponentDef_ptr base_component,
-        const CORBA::InterfaceDefSeq & supports_interfaces,
+        const CORBA_InterfaceDefSeq & supports_interfaces,
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
@@ -2465,7 +2521,7 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
         const char * version,
         IR::HomeDef_ptr base_home,
         IR::ComponentDef_ptr managed_component,
-        CORBA::ValueDef_ptr primary_key,
+        CORBA_ValueDef_ptr primary_key,
         CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
@@ -2506,61 +2562,61 @@ typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
     virtual ~ComponentRepository (void);
   private:
     ComponentRepository (const ComponentRepository &);
-    void operator= (const ComponentRepository &);    
-};
+    void operator= (const ComponentRepository &);
+  };
 
-
+  
 // The Proxy Implementations are used by each interface to
 // perform a call. Each different implementation encapsulate
 // an invocation logics.
 
 
-///////////////////////////////////////////////////////////////////////
-//                    Base  Impl. Declaration
-//
-
-class TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Impl : 
-  public virtual _TAO_Repository_Proxy_Impl
-{
-public:
-  virtual ~_TAO_ComponentRepository_Proxy_Impl (void) { }
+  ///////////////////////////////////////////////////////////////////////
+  //                    Base  Impl. Declaration
+  //
   
-    virtual IR::ComponentDef_ptr create_component (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      IR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
+  class TAO_IFR_Client_Export _TAO_ComponentRepository_Proxy_Impl : 
+    public virtual _TAO_CORBA_Repository_Proxy_Impl
+  {
+  public:
+    virtual ~_TAO_ComponentRepository_Proxy_Impl (void) { }
+    
+        virtual IR::ComponentDef_ptr create_component (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR::ComponentDef_ptr base_component,
+        const CORBA_InterfaceDefSeq & supports_interfaces,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
-  virtual IR::HomeDef_ptr create_home (
-      CORBA_Object *_collocated_tao_target_,
-      const char * id,
-      const char * name,
-      const char * version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      CORBA::ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-    )) = 0;
+    virtual IR::HomeDef_ptr create_home (
+        CORBA_Object *_collocated_tao_target_,
+        const char * id,
+        const char * name,
+        const char * version,
+        IR::HomeDef_ptr base_home,
+        IR::ComponentDef_ptr managed_component,
+        CORBA_ValueDef_ptr primary_key,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
 protected:
-  _TAO_ComponentRepository_Proxy_Impl (void);
-
-};
-//
-//                Base  Proxy Impl. Declaration
-///////////////////////////////////////////////////////////////////////
-
-
+    _TAO_ComponentRepository_Proxy_Impl (void);
+  
+  };
+  //
+  //                Base  Proxy Impl. Declaration
+  ///////////////////////////////////////////////////////////////////////
+  
+  
 ///////////////////////////////////////////////////////////////////////
 //                    Remote  Impl. Declaration
 //
@@ -2568,7 +2624,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_ComponentRepository_Remote_Proxy_Impl : 
   public virtual _TAO_ComponentRepository_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Repository_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Repository_Remote_Proxy_Impl
   
 {
 public:
@@ -2582,7 +2638,7 @@ public:
       const char * name,
       const char * version,
       IR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq & supports_interfaces,
+      const CORBA_InterfaceDefSeq & supports_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2596,7 +2652,7 @@ public:
       const char * version,
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -2677,74 +2733,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ComponentRepository;
 
 
-#if !defined (_IR_PROVIDESDEF___PTR_CH_)
-#define _IR_PROVIDESDEF___PTR_CH_
-
-class ProvidesDef;
-typedef ProvidesDef *ProvidesDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PROVIDESDEF___VAR_CH_)
-#define _IR_PROVIDESDEF___VAR_CH_
-
-class TAO_IFR_Client_Export ProvidesDef_var : public TAO_Base_var
-{
-public:
-  ProvidesDef_var (void); // default constructor
-  ProvidesDef_var (ProvidesDef_ptr p) : ptr_ (p) {} 
-  ProvidesDef_var (const ProvidesDef_var &); // copy constructor
-  ~ProvidesDef_var (void); // destructor
-  
-  ProvidesDef_var &operator= (ProvidesDef_ptr);
-  ProvidesDef_var &operator= (const ProvidesDef_var &);
-  ProvidesDef_ptr operator-> (void) const;
-  
-  operator const ProvidesDef_ptr &() const;
-  operator ProvidesDef_ptr &();
-  // in, inout, out, _retn 
-  ProvidesDef_ptr in (void) const;
-  ProvidesDef_ptr &inout (void);
-  ProvidesDef_ptr &out (void);
-  ProvidesDef_ptr _retn (void);
-  ProvidesDef_ptr ptr (void) const;
-
-private:
-  ProvidesDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  ProvidesDef_var (const TAO_Base_var &rhs);
-  ProvidesDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PROVIDESDEF___OUT_CH_)
-#define _IR_PROVIDESDEF___OUT_CH_
-
-class TAO_IFR_Client_Export ProvidesDef_out
-{
-public:
-  ProvidesDef_out (ProvidesDef_ptr &);
-  ProvidesDef_out (ProvidesDef_var &);
-  ProvidesDef_out (const ProvidesDef_out &);
-  ProvidesDef_out &operator= (const ProvidesDef_out &);
-  ProvidesDef_out &operator= (const ProvidesDef_var &);
-  ProvidesDef_out &operator= (ProvidesDef_ptr);
-  operator ProvidesDef_ptr &();
-  ProvidesDef_ptr &ptr (void);
-  ProvidesDef_ptr operator-> (void);
-  
-private:
-  ProvidesDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_PROVIDESDEF_CH_)
 #define _IR_PROVIDESDEF_CH_
 
@@ -2754,7 +2742,7 @@ class _TAO_ProvidesDef_Remote_Proxy_Impl;
 class _TAO_ProvidesDef_Proxy_Broker;
 class _TAO_ProvidesDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export ProvidesDef: public virtual CORBA::Contained
+class TAO_IFR_Client_Export ProvidesDef: public virtual CORBA_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2781,7 +2769,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::InterfaceDef_ptr interface_type (
+  virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -2822,7 +2810,7 @@ protected:
   virtual ~ProvidesDef (void);
 private:
   ProvidesDef (const ProvidesDef &);
-  void operator= (const ProvidesDef &);  
+  void operator= (const ProvidesDef &);
 };
 
 
@@ -2836,12 +2824,12 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_ProvidesDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
   virtual ~_TAO_ProvidesDef_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDef_ptr interface_type (
+    virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2865,7 +2853,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_ProvidesDef_Remote_Proxy_Impl : 
   public virtual _TAO_ProvidesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
@@ -2873,7 +2861,7 @@ public:
   
   virtual ~_TAO_ProvidesDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDef_ptr interface_type (
+    virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -2970,7 +2958,7 @@ struct TAO_IFR_Client_Export ProvidesDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  CORBA::InterfaceDef_var interface_type;
+  CORBA_InterfaceDef_var interface_type;
 };
 
 class TAO_IFR_Client_Export ProvidesDescription_var
@@ -3023,74 +3011,6 @@ private:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ProvidesDescription;
 
 
-#if !defined (_IR_USESDEF___PTR_CH_)
-#define _IR_USESDEF___PTR_CH_
-
-class UsesDef;
-typedef UsesDef *UsesDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_USESDEF___VAR_CH_)
-#define _IR_USESDEF___VAR_CH_
-
-class TAO_IFR_Client_Export UsesDef_var : public TAO_Base_var
-{
-public:
-  UsesDef_var (void); // default constructor
-  UsesDef_var (UsesDef_ptr p) : ptr_ (p) {} 
-  UsesDef_var (const UsesDef_var &); // copy constructor
-  ~UsesDef_var (void); // destructor
-  
-  UsesDef_var &operator= (UsesDef_ptr);
-  UsesDef_var &operator= (const UsesDef_var &);
-  UsesDef_ptr operator-> (void) const;
-  
-  operator const UsesDef_ptr &() const;
-  operator UsesDef_ptr &();
-  // in, inout, out, _retn 
-  UsesDef_ptr in (void) const;
-  UsesDef_ptr &inout (void);
-  UsesDef_ptr &out (void);
-  UsesDef_ptr _retn (void);
-  UsesDef_ptr ptr (void) const;
-
-private:
-  UsesDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  UsesDef_var (const TAO_Base_var &rhs);
-  UsesDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_USESDEF___OUT_CH_)
-#define _IR_USESDEF___OUT_CH_
-
-class TAO_IFR_Client_Export UsesDef_out
-{
-public:
-  UsesDef_out (UsesDef_ptr &);
-  UsesDef_out (UsesDef_var &);
-  UsesDef_out (const UsesDef_out &);
-  UsesDef_out &operator= (const UsesDef_out &);
-  UsesDef_out &operator= (const UsesDef_var &);
-  UsesDef_out &operator= (UsesDef_ptr);
-  operator UsesDef_ptr &();
-  UsesDef_ptr &ptr (void);
-  UsesDef_ptr operator-> (void);
-  
-private:
-  UsesDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_USESDEF_CH_)
 #define _IR_USESDEF_CH_
 
@@ -3100,7 +3020,7 @@ class _TAO_UsesDef_Remote_Proxy_Impl;
 class _TAO_UsesDef_Proxy_Broker;
 class _TAO_UsesDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export UsesDef: public virtual CORBA::Contained
+class TAO_IFR_Client_Export UsesDef: public virtual CORBA_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -3127,7 +3047,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::InterfaceDef_ptr interface_type (
+  virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -3176,7 +3096,7 @@ protected:
   virtual ~UsesDef (void);
 private:
   UsesDef (const UsesDef &);
-  void operator= (const UsesDef &);  
+  void operator= (const UsesDef &);
 };
 
 
@@ -3190,12 +3110,12 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_UsesDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
   virtual ~_TAO_UsesDef_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDef_ptr interface_type (
+    virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3227,7 +3147,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_UsesDef_Remote_Proxy_Impl : 
   public virtual _TAO_UsesDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
@@ -3235,7 +3155,7 @@ public:
   
   virtual ~_TAO_UsesDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDef_ptr interface_type (
+    virtual CORBA_InterfaceDef_ptr interface_type (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3340,7 +3260,7 @@ struct TAO_IFR_Client_Export UsesDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  CORBA::InterfaceDef_var interface_type;
+  CORBA_InterfaceDef_var interface_type;
   CORBA::Boolean is_multiple;
 };
 
@@ -3698,74 +3618,6 @@ private:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UsesDescSeq;
 
 
-#if !defined (_IR_EVENTDEF___PTR_CH_)
-#define _IR_EVENTDEF___PTR_CH_
-
-class EventDef;
-typedef EventDef *EventDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_EVENTDEF___VAR_CH_)
-#define _IR_EVENTDEF___VAR_CH_
-
-class TAO_IFR_Client_Export EventDef_var : public TAO_Base_var
-{
-public:
-  EventDef_var (void); // default constructor
-  EventDef_var (EventDef_ptr p) : ptr_ (p) {} 
-  EventDef_var (const EventDef_var &); // copy constructor
-  ~EventDef_var (void); // destructor
-  
-  EventDef_var &operator= (EventDef_ptr);
-  EventDef_var &operator= (const EventDef_var &);
-  EventDef_ptr operator-> (void) const;
-  
-  operator const EventDef_ptr &() const;
-  operator EventDef_ptr &();
-  // in, inout, out, _retn 
-  EventDef_ptr in (void) const;
-  EventDef_ptr &inout (void);
-  EventDef_ptr &out (void);
-  EventDef_ptr _retn (void);
-  EventDef_ptr ptr (void) const;
-
-private:
-  EventDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  EventDef_var (const TAO_Base_var &rhs);
-  EventDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_EVENTDEF___OUT_CH_)
-#define _IR_EVENTDEF___OUT_CH_
-
-class TAO_IFR_Client_Export EventDef_out
-{
-public:
-  EventDef_out (EventDef_ptr &);
-  EventDef_out (EventDef_var &);
-  EventDef_out (const EventDef_out &);
-  EventDef_out &operator= (const EventDef_out &);
-  EventDef_out &operator= (const EventDef_var &);
-  EventDef_out &operator= (EventDef_ptr);
-  operator EventDef_ptr &();
-  EventDef_ptr &ptr (void);
-  EventDef_ptr operator-> (void);
-  
-private:
-  EventDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_EVENTDEF_CH_)
 #define _IR_EVENTDEF_CH_
 
@@ -3775,7 +3627,7 @@ class _TAO_EventDef_Remote_Proxy_Impl;
 class _TAO_EventDef_Proxy_Broker;
 class _TAO_EventDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export EventDef: public virtual CORBA::Contained
+class TAO_IFR_Client_Export EventDef: public virtual CORBA_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -3811,7 +3663,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef_ptr event (
+  virtual CORBA_ValueDef_ptr event (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -3852,7 +3704,7 @@ protected:
   virtual ~EventDef (void);
 private:
   EventDef (const EventDef &);
-  void operator= (const EventDef &);  
+  void operator= (const EventDef &);
 };
 
 
@@ -3866,7 +3718,7 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_EventDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
   virtual ~_TAO_EventDef_Proxy_Impl (void) { }
@@ -3880,7 +3732,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ValueDef_ptr event (
+  virtual CORBA_ValueDef_ptr event (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -3904,7 +3756,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_EventDef_Remote_Proxy_Impl : 
   public virtual _TAO_EventDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
@@ -3921,7 +3773,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef_ptr event (
+  virtual CORBA_ValueDef_ptr event (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -4018,7 +3870,7 @@ struct TAO_IFR_Client_Export EventDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  CORBA::ValueDef_var value;
+  CORBA_ValueDef_var value;
 };
 
 class TAO_IFR_Client_Export EventDescription_var
@@ -4069,74 +3921,6 @@ private:
 };
 
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EventDescription;
-
-
-#if !defined (_IR_EMITSDEF___PTR_CH_)
-#define _IR_EMITSDEF___PTR_CH_
-
-class EmitsDef;
-typedef EmitsDef *EmitsDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_EMITSDEF___VAR_CH_)
-#define _IR_EMITSDEF___VAR_CH_
-
-class TAO_IFR_Client_Export EmitsDef_var : public TAO_Base_var
-{
-public:
-  EmitsDef_var (void); // default constructor
-  EmitsDef_var (EmitsDef_ptr p) : ptr_ (p) {} 
-  EmitsDef_var (const EmitsDef_var &); // copy constructor
-  ~EmitsDef_var (void); // destructor
-  
-  EmitsDef_var &operator= (EmitsDef_ptr);
-  EmitsDef_var &operator= (const EmitsDef_var &);
-  EmitsDef_ptr operator-> (void) const;
-  
-  operator const EmitsDef_ptr &() const;
-  operator EmitsDef_ptr &();
-  // in, inout, out, _retn 
-  EmitsDef_ptr in (void) const;
-  EmitsDef_ptr &inout (void);
-  EmitsDef_ptr &out (void);
-  EmitsDef_ptr _retn (void);
-  EmitsDef_ptr ptr (void) const;
-
-private:
-  EmitsDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  EmitsDef_var (const TAO_Base_var &rhs);
-  EmitsDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_EMITSDEF___OUT_CH_)
-#define _IR_EMITSDEF___OUT_CH_
-
-class TAO_IFR_Client_Export EmitsDef_out
-{
-public:
-  EmitsDef_out (EmitsDef_ptr &);
-  EmitsDef_out (EmitsDef_var &);
-  EmitsDef_out (const EmitsDef_out &);
-  EmitsDef_out &operator= (const EmitsDef_out &);
-  EmitsDef_out &operator= (const EmitsDef_var &);
-  EmitsDef_out &operator= (EmitsDef_ptr);
-  operator EmitsDef_ptr &();
-  EmitsDef_ptr &ptr (void);
-  EmitsDef_ptr operator-> (void);
-  
-private:
-  EmitsDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
 
 
 #if !defined (_IR_EMITSDEF_CH_)
@@ -4208,7 +3992,7 @@ protected:
   virtual ~EmitsDef (void);
 private:
   EmitsDef (const EmitsDef &);
-  void operator= (const EmitsDef &);  
+  void operator= (const EmitsDef &);
 };
 
 
@@ -4325,74 +4109,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EmitsDef;
 
 
-#if !defined (_IR_PUBLISHESDEF___PTR_CH_)
-#define _IR_PUBLISHESDEF___PTR_CH_
-
-class PublishesDef;
-typedef PublishesDef *PublishesDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PUBLISHESDEF___VAR_CH_)
-#define _IR_PUBLISHESDEF___VAR_CH_
-
-class TAO_IFR_Client_Export PublishesDef_var : public TAO_Base_var
-{
-public:
-  PublishesDef_var (void); // default constructor
-  PublishesDef_var (PublishesDef_ptr p) : ptr_ (p) {} 
-  PublishesDef_var (const PublishesDef_var &); // copy constructor
-  ~PublishesDef_var (void); // destructor
-  
-  PublishesDef_var &operator= (PublishesDef_ptr);
-  PublishesDef_var &operator= (const PublishesDef_var &);
-  PublishesDef_ptr operator-> (void) const;
-  
-  operator const PublishesDef_ptr &() const;
-  operator PublishesDef_ptr &();
-  // in, inout, out, _retn 
-  PublishesDef_ptr in (void) const;
-  PublishesDef_ptr &inout (void);
-  PublishesDef_ptr &out (void);
-  PublishesDef_ptr _retn (void);
-  PublishesDef_ptr ptr (void) const;
-
-private:
-  PublishesDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  PublishesDef_var (const TAO_Base_var &rhs);
-  PublishesDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PUBLISHESDEF___OUT_CH_)
-#define _IR_PUBLISHESDEF___OUT_CH_
-
-class TAO_IFR_Client_Export PublishesDef_out
-{
-public:
-  PublishesDef_out (PublishesDef_ptr &);
-  PublishesDef_out (PublishesDef_var &);
-  PublishesDef_out (const PublishesDef_out &);
-  PublishesDef_out &operator= (const PublishesDef_out &);
-  PublishesDef_out &operator= (const PublishesDef_var &);
-  PublishesDef_out &operator= (PublishesDef_ptr);
-  operator PublishesDef_ptr &();
-  PublishesDef_ptr &ptr (void);
-  PublishesDef_ptr operator-> (void);
-  
-private:
-  PublishesDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_PUBLISHESDEF_CH_)
 #define _IR_PUBLISHESDEF_CH_
 
@@ -4462,7 +4178,7 @@ protected:
   virtual ~PublishesDef (void);
 private:
   PublishesDef (const PublishesDef &);
-  void operator= (const PublishesDef &);  
+  void operator= (const PublishesDef &);
 };
 
 
@@ -4579,74 +4295,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PublishesDef;
 
 
-#if !defined (_IR_CONSUMESDEF___PTR_CH_)
-#define _IR_CONSUMESDEF___PTR_CH_
-
-class ConsumesDef;
-typedef ConsumesDef *ConsumesDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_CONSUMESDEF___VAR_CH_)
-#define _IR_CONSUMESDEF___VAR_CH_
-
-class TAO_IFR_Client_Export ConsumesDef_var : public TAO_Base_var
-{
-public:
-  ConsumesDef_var (void); // default constructor
-  ConsumesDef_var (ConsumesDef_ptr p) : ptr_ (p) {} 
-  ConsumesDef_var (const ConsumesDef_var &); // copy constructor
-  ~ConsumesDef_var (void); // destructor
-  
-  ConsumesDef_var &operator= (ConsumesDef_ptr);
-  ConsumesDef_var &operator= (const ConsumesDef_var &);
-  ConsumesDef_ptr operator-> (void) const;
-  
-  operator const ConsumesDef_ptr &() const;
-  operator ConsumesDef_ptr &();
-  // in, inout, out, _retn 
-  ConsumesDef_ptr in (void) const;
-  ConsumesDef_ptr &inout (void);
-  ConsumesDef_ptr &out (void);
-  ConsumesDef_ptr _retn (void);
-  ConsumesDef_ptr ptr (void) const;
-
-private:
-  ConsumesDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  ConsumesDef_var (const TAO_Base_var &rhs);
-  ConsumesDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_CONSUMESDEF___OUT_CH_)
-#define _IR_CONSUMESDEF___OUT_CH_
-
-class TAO_IFR_Client_Export ConsumesDef_out
-{
-public:
-  ConsumesDef_out (ConsumesDef_ptr &);
-  ConsumesDef_out (ConsumesDef_var &);
-  ConsumesDef_out (const ConsumesDef_out &);
-  ConsumesDef_out &operator= (const ConsumesDef_out &);
-  ConsumesDef_out &operator= (const ConsumesDef_var &);
-  ConsumesDef_out &operator= (ConsumesDef_ptr);
-  operator ConsumesDef_ptr &();
-  ConsumesDef_ptr &ptr (void);
-  ConsumesDef_ptr operator-> (void);
-  
-private:
-  ConsumesDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_CONSUMESDEF_CH_)
 #define _IR_CONSUMESDEF_CH_
 
@@ -4716,7 +4364,7 @@ protected:
   virtual ~ConsumesDef (void);
 private:
   ConsumesDef (const ConsumesDef &);
-  void operator= (const ConsumesDef &);  
+  void operator= (const ConsumesDef &);
 };
 
 
@@ -4833,74 +4481,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConsumesDef;
 
 
-#if !defined (_IR_COMPONENTDEF___PTR_CH_)
-#define _IR_COMPONENTDEF___PTR_CH_
-
-class ComponentDef;
-typedef ComponentDef *ComponentDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_COMPONENTDEF___VAR_CH_)
-#define _IR_COMPONENTDEF___VAR_CH_
-
-class TAO_IFR_Client_Export ComponentDef_var : public TAO_Base_var
-{
-public:
-  ComponentDef_var (void); // default constructor
-  ComponentDef_var (ComponentDef_ptr p) : ptr_ (p) {} 
-  ComponentDef_var (const ComponentDef_var &); // copy constructor
-  ~ComponentDef_var (void); // destructor
-  
-  ComponentDef_var &operator= (ComponentDef_ptr);
-  ComponentDef_var &operator= (const ComponentDef_var &);
-  ComponentDef_ptr operator-> (void) const;
-  
-  operator const ComponentDef_ptr &() const;
-  operator ComponentDef_ptr &();
-  // in, inout, out, _retn 
-  ComponentDef_ptr in (void) const;
-  ComponentDef_ptr &inout (void);
-  ComponentDef_ptr &out (void);
-  ComponentDef_ptr _retn (void);
-  ComponentDef_ptr ptr (void) const;
-
-private:
-  ComponentDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  ComponentDef_var (const TAO_Base_var &rhs);
-  ComponentDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_COMPONENTDEF___OUT_CH_)
-#define _IR_COMPONENTDEF___OUT_CH_
-
-class TAO_IFR_Client_Export ComponentDef_out
-{
-public:
-  ComponentDef_out (ComponentDef_ptr &);
-  ComponentDef_out (ComponentDef_var &);
-  ComponentDef_out (const ComponentDef_out &);
-  ComponentDef_out &operator= (const ComponentDef_out &);
-  ComponentDef_out &operator= (const ComponentDef_var &);
-  ComponentDef_out &operator= (ComponentDef_ptr);
-  operator ComponentDef_ptr &();
-  ComponentDef_ptr &ptr (void);
-  ComponentDef_ptr operator-> (void);
-  
-private:
-  ComponentDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_COMPONENTDEF_CH_)
 #define _IR_COMPONENTDEF_CH_
 
@@ -4910,7 +4490,7 @@ class _TAO_ComponentDef_Remote_Proxy_Impl;
 class _TAO_ComponentDef_Proxy_Broker;
 class _TAO_ComponentDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export ComponentDef: public virtual CORBA::InterfaceDef
+class TAO_IFR_Client_Export ComponentDef: public virtual CORBA_InterfaceDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -4937,7 +4517,7 @@ public:
 
   static void _tao_any_destructor (void*);
 
-  virtual CORBA::InterfaceDefSeq * supported_interfaces (
+  virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -4946,7 +4526,7 @@ public:
     ));
 
   virtual void supported_interfaces (
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5014,7 +4594,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5026,7 +4606,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -5039,7 +4619,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5051,7 +4631,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5063,7 +4643,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5104,7 +4684,7 @@ protected:
   virtual ~ComponentDef (void);
 private:
   ComponentDef (const ComponentDef &);
-  void operator= (const ComponentDef &);  
+  void operator= (const ComponentDef &);
 };
 
 
@@ -5118,12 +4698,12 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_ComponentDef_Proxy_Impl : 
-  public virtual _TAO_InterfaceDef_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Proxy_Impl
 {
 public:
   virtual ~_TAO_ComponentDef_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDefSeq * supported_interfaces (
+    virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5133,7 +4713,7 @@ public:
 
   virtual void supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5201,7 +4781,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5213,7 +4793,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5226,7 +4806,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5238,7 +4818,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5250,7 +4830,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5273,7 +4853,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_ComponentDef_Remote_Proxy_Impl : 
   public virtual _TAO_ComponentDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl
   
 {
 public:
@@ -5281,7 +4861,7 @@ public:
   
   virtual ~_TAO_ComponentDef_Remote_Proxy_Impl (void) { }
   
-    virtual CORBA::InterfaceDefSeq * supported_interfaces (
+    virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5291,7 +4871,7 @@ public:
 
   virtual void supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
+      const CORBA_InterfaceDefSeq & supported_interfaces,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5359,7 +4939,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5371,7 +4951,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::InterfaceDef_ptr interface_type,
+      CORBA_InterfaceDef_ptr interface_type,
       CORBA::Boolean is_multiple,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5384,7 +4964,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5396,7 +4976,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5408,7 +4988,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr value,
+      CORBA_ValueDef_ptr value,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -5508,7 +5088,7 @@ struct TAO_IFR_Client_Export ComponentDescription
   ACE_NESTED_CLASS (IR, RepositoryIdSeq) supports_interfaces;
   ACE_NESTED_CLASS (IR, ProvidesDefSeq) provides_interfaces;
   ACE_NESTED_CLASS (IR, UsesDefSeq) uses_interfaces;
-  CORBA::AttrDescriptionSeq attributes;
+  CORBA_AttrDescriptionSeq attributes;
   ACE_NESTED_CLASS (IR, EmitsDefSeq) emits_events;
   ACE_NESTED_CLASS (IR, PublishesDefSeq) publishes_events;
   ACE_NESTED_CLASS (IR, ConsumesDefSeq) consumes_events;
@@ -5565,74 +5145,6 @@ private:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ComponentDescription;
 
 
-#if !defined (_IR_PRIMARYKEYDEF___PTR_CH_)
-#define _IR_PRIMARYKEYDEF___PTR_CH_
-
-class PrimaryKeyDef;
-typedef PrimaryKeyDef *PrimaryKeyDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PRIMARYKEYDEF___VAR_CH_)
-#define _IR_PRIMARYKEYDEF___VAR_CH_
-
-class TAO_IFR_Client_Export PrimaryKeyDef_var : public TAO_Base_var
-{
-public:
-  PrimaryKeyDef_var (void); // default constructor
-  PrimaryKeyDef_var (PrimaryKeyDef_ptr p) : ptr_ (p) {} 
-  PrimaryKeyDef_var (const PrimaryKeyDef_var &); // copy constructor
-  ~PrimaryKeyDef_var (void); // destructor
-  
-  PrimaryKeyDef_var &operator= (PrimaryKeyDef_ptr);
-  PrimaryKeyDef_var &operator= (const PrimaryKeyDef_var &);
-  PrimaryKeyDef_ptr operator-> (void) const;
-  
-  operator const PrimaryKeyDef_ptr &() const;
-  operator PrimaryKeyDef_ptr &();
-  // in, inout, out, _retn 
-  PrimaryKeyDef_ptr in (void) const;
-  PrimaryKeyDef_ptr &inout (void);
-  PrimaryKeyDef_ptr &out (void);
-  PrimaryKeyDef_ptr _retn (void);
-  PrimaryKeyDef_ptr ptr (void) const;
-
-private:
-  PrimaryKeyDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  PrimaryKeyDef_var (const TAO_Base_var &rhs);
-  PrimaryKeyDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_PRIMARYKEYDEF___OUT_CH_)
-#define _IR_PRIMARYKEYDEF___OUT_CH_
-
-class TAO_IFR_Client_Export PrimaryKeyDef_out
-{
-public:
-  PrimaryKeyDef_out (PrimaryKeyDef_ptr &);
-  PrimaryKeyDef_out (PrimaryKeyDef_var &);
-  PrimaryKeyDef_out (const PrimaryKeyDef_out &);
-  PrimaryKeyDef_out &operator= (const PrimaryKeyDef_out &);
-  PrimaryKeyDef_out &operator= (const PrimaryKeyDef_var &);
-  PrimaryKeyDef_out &operator= (PrimaryKeyDef_ptr);
-  operator PrimaryKeyDef_ptr &();
-  PrimaryKeyDef_ptr &ptr (void);
-  PrimaryKeyDef_ptr operator-> (void);
-  
-private:
-  PrimaryKeyDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_PRIMARYKEYDEF_CH_)
 #define _IR_PRIMARYKEYDEF_CH_
 
@@ -5642,7 +5154,7 @@ class _TAO_PrimaryKeyDef_Remote_Proxy_Impl;
 class _TAO_PrimaryKeyDef_Proxy_Broker;
 class _TAO_PrimaryKeyDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export PrimaryKeyDef: public virtual CORBA::Contained
+class TAO_IFR_Client_Export PrimaryKeyDef: public virtual CORBA_Contained
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -5678,7 +5190,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef_ptr primary_key (
+  virtual CORBA_ValueDef_ptr primary_key (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -5719,7 +5231,7 @@ protected:
   virtual ~PrimaryKeyDef (void);
 private:
   PrimaryKeyDef (const PrimaryKeyDef &);
-  void operator= (const PrimaryKeyDef &);  
+  void operator= (const PrimaryKeyDef &);
 };
 
 
@@ -5733,7 +5245,7 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Proxy_Impl : 
-  public virtual _TAO_Contained_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Proxy_Impl
 {
 public:
   virtual ~_TAO_PrimaryKeyDef_Proxy_Impl (void) { }
@@ -5747,7 +5259,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual CORBA::ValueDef_ptr primary_key (
+  virtual CORBA_ValueDef_ptr primary_key (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5771,7 +5283,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_PrimaryKeyDef_Remote_Proxy_Impl : 
   public virtual _TAO_PrimaryKeyDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_Contained_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_Contained_Remote_Proxy_Impl
   
 {
 public:
@@ -5788,7 +5300,7 @@ public:
       CORBA::SystemException
     ));
 
-  virtual CORBA::ValueDef_ptr primary_key (
+  virtual CORBA_ValueDef_ptr primary_key (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Environment &ACE_TRY_ENV
     )
@@ -5885,7 +5397,7 @@ struct TAO_IFR_Client_Export PrimaryKeyDescription
   TAO_String_Manager id;
   TAO_String_Manager defined_in;
   TAO_String_Manager version;
-  CORBA::ValueDef_var primary_key;
+  CORBA_ValueDef_var primary_key;
 };
 
 class TAO_IFR_Client_Export PrimaryKeyDescription_var
@@ -5938,74 +5450,6 @@ private:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimaryKeyDescription;
 
 
-#if !defined (_IR_FACTORYDEF___PTR_CH_)
-#define _IR_FACTORYDEF___PTR_CH_
-
-class FactoryDef;
-typedef FactoryDef *FactoryDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_FACTORYDEF___VAR_CH_)
-#define _IR_FACTORYDEF___VAR_CH_
-
-class TAO_IFR_Client_Export FactoryDef_var : public TAO_Base_var
-{
-public:
-  FactoryDef_var (void); // default constructor
-  FactoryDef_var (FactoryDef_ptr p) : ptr_ (p) {} 
-  FactoryDef_var (const FactoryDef_var &); // copy constructor
-  ~FactoryDef_var (void); // destructor
-  
-  FactoryDef_var &operator= (FactoryDef_ptr);
-  FactoryDef_var &operator= (const FactoryDef_var &);
-  FactoryDef_ptr operator-> (void) const;
-  
-  operator const FactoryDef_ptr &() const;
-  operator FactoryDef_ptr &();
-  // in, inout, out, _retn 
-  FactoryDef_ptr in (void) const;
-  FactoryDef_ptr &inout (void);
-  FactoryDef_ptr &out (void);
-  FactoryDef_ptr _retn (void);
-  FactoryDef_ptr ptr (void) const;
-
-private:
-  FactoryDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  FactoryDef_var (const TAO_Base_var &rhs);
-  FactoryDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_FACTORYDEF___OUT_CH_)
-#define _IR_FACTORYDEF___OUT_CH_
-
-class TAO_IFR_Client_Export FactoryDef_out
-{
-public:
-  FactoryDef_out (FactoryDef_ptr &);
-  FactoryDef_out (FactoryDef_var &);
-  FactoryDef_out (const FactoryDef_out &);
-  FactoryDef_out &operator= (const FactoryDef_out &);
-  FactoryDef_out &operator= (const FactoryDef_var &);
-  FactoryDef_out &operator= (FactoryDef_ptr);
-  operator FactoryDef_ptr &();
-  FactoryDef_ptr &ptr (void);
-  FactoryDef_ptr operator-> (void);
-  
-private:
-  FactoryDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_FACTORYDEF_CH_)
 #define _IR_FACTORYDEF_CH_
 
@@ -6015,7 +5459,7 @@ class _TAO_FactoryDef_Remote_Proxy_Impl;
 class _TAO_FactoryDef_Proxy_Broker;
 class _TAO_FactoryDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export FactoryDef: public virtual CORBA::OperationDef
+class TAO_IFR_Client_Export FactoryDef: public virtual CORBA_OperationDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6075,7 +5519,7 @@ protected:
   virtual ~FactoryDef (void);
 private:
   FactoryDef (const FactoryDef &);
-  void operator= (const FactoryDef &);  
+  void operator= (const FactoryDef &);
 };
 
 
@@ -6089,7 +5533,7 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_FactoryDef_Proxy_Impl : 
-  public virtual _TAO_OperationDef_Proxy_Impl
+  public virtual _TAO_CORBA_OperationDef_Proxy_Impl
 {
 public:
   virtual ~_TAO_FactoryDef_Proxy_Impl (void) { }
@@ -6110,7 +5554,7 @@ public:
 class TAO_IFR_Client_Export _TAO_FactoryDef_Remote_Proxy_Impl : 
   public virtual _TAO_FactoryDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_OperationDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_OperationDef_Remote_Proxy_Impl
   
 {
 public:
@@ -6192,74 +5636,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FactoryDef;
 
 
-#if !defined (_IR_FINDERDEF___PTR_CH_)
-#define _IR_FINDERDEF___PTR_CH_
-
-class FinderDef;
-typedef FinderDef *FinderDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_FINDERDEF___VAR_CH_)
-#define _IR_FINDERDEF___VAR_CH_
-
-class TAO_IFR_Client_Export FinderDef_var : public TAO_Base_var
-{
-public:
-  FinderDef_var (void); // default constructor
-  FinderDef_var (FinderDef_ptr p) : ptr_ (p) {} 
-  FinderDef_var (const FinderDef_var &); // copy constructor
-  ~FinderDef_var (void); // destructor
-  
-  FinderDef_var &operator= (FinderDef_ptr);
-  FinderDef_var &operator= (const FinderDef_var &);
-  FinderDef_ptr operator-> (void) const;
-  
-  operator const FinderDef_ptr &() const;
-  operator FinderDef_ptr &();
-  // in, inout, out, _retn 
-  FinderDef_ptr in (void) const;
-  FinderDef_ptr &inout (void);
-  FinderDef_ptr &out (void);
-  FinderDef_ptr _retn (void);
-  FinderDef_ptr ptr (void) const;
-
-private:
-  FinderDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  FinderDef_var (const TAO_Base_var &rhs);
-  FinderDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_FINDERDEF___OUT_CH_)
-#define _IR_FINDERDEF___OUT_CH_
-
-class TAO_IFR_Client_Export FinderDef_out
-{
-public:
-  FinderDef_out (FinderDef_ptr &);
-  FinderDef_out (FinderDef_var &);
-  FinderDef_out (const FinderDef_out &);
-  FinderDef_out &operator= (const FinderDef_out &);
-  FinderDef_out &operator= (const FinderDef_var &);
-  FinderDef_out &operator= (FinderDef_ptr);
-  operator FinderDef_ptr &();
-  FinderDef_ptr &ptr (void);
-  FinderDef_ptr operator-> (void);
-  
-private:
-  FinderDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_FINDERDEF_CH_)
 #define _IR_FINDERDEF_CH_
 
@@ -6269,7 +5645,7 @@ class _TAO_FinderDef_Remote_Proxy_Impl;
 class _TAO_FinderDef_Proxy_Broker;
 class _TAO_FinderDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export FinderDef: public virtual CORBA::OperationDef
+class TAO_IFR_Client_Export FinderDef: public virtual CORBA_OperationDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6329,7 +5705,7 @@ protected:
   virtual ~FinderDef (void);
 private:
   FinderDef (const FinderDef &);
-  void operator= (const FinderDef &);  
+  void operator= (const FinderDef &);
 };
 
 
@@ -6343,7 +5719,7 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_FinderDef_Proxy_Impl : 
-  public virtual _TAO_OperationDef_Proxy_Impl
+  public virtual _TAO_CORBA_OperationDef_Proxy_Impl
 {
 public:
   virtual ~_TAO_FinderDef_Proxy_Impl (void) { }
@@ -6364,7 +5740,7 @@ public:
 class TAO_IFR_Client_Export _TAO_FinderDef_Remote_Proxy_Impl : 
   public virtual _TAO_FinderDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_OperationDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_OperationDef_Remote_Proxy_Impl
   
 {
 public:
@@ -6446,74 +5822,6 @@ public:
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FinderDef;
 
 
-#if !defined (_IR_HOMEDEF___PTR_CH_)
-#define _IR_HOMEDEF___PTR_CH_
-
-class HomeDef;
-typedef HomeDef *HomeDef_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_HOMEDEF___VAR_CH_)
-#define _IR_HOMEDEF___VAR_CH_
-
-class TAO_IFR_Client_Export HomeDef_var : public TAO_Base_var
-{
-public:
-  HomeDef_var (void); // default constructor
-  HomeDef_var (HomeDef_ptr p) : ptr_ (p) {} 
-  HomeDef_var (const HomeDef_var &); // copy constructor
-  ~HomeDef_var (void); // destructor
-  
-  HomeDef_var &operator= (HomeDef_ptr);
-  HomeDef_var &operator= (const HomeDef_var &);
-  HomeDef_ptr operator-> (void) const;
-  
-  operator const HomeDef_ptr &() const;
-  operator HomeDef_ptr &();
-  // in, inout, out, _retn 
-  HomeDef_ptr in (void) const;
-  HomeDef_ptr &inout (void);
-  HomeDef_ptr &out (void);
-  HomeDef_ptr _retn (void);
-  HomeDef_ptr ptr (void) const;
-
-private:
-  HomeDef_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  HomeDef_var (const TAO_Base_var &rhs);
-  HomeDef_var &operator= (const TAO_Base_var &rhs);
-};
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_IR_HOMEDEF___OUT_CH_)
-#define _IR_HOMEDEF___OUT_CH_
-
-class TAO_IFR_Client_Export HomeDef_out
-{
-public:
-  HomeDef_out (HomeDef_ptr &);
-  HomeDef_out (HomeDef_var &);
-  HomeDef_out (const HomeDef_out &);
-  HomeDef_out &operator= (const HomeDef_out &);
-  HomeDef_out &operator= (const HomeDef_var &);
-  HomeDef_out &operator= (HomeDef_ptr);
-  operator HomeDef_ptr &();
-  HomeDef_ptr &ptr (void);
-  HomeDef_ptr operator-> (void);
-  
-private:
-  HomeDef_ptr &ptr_;
-};
-
-
-#endif /* end #if !defined */
-
-
 #if !defined (_IR_HOMEDEF_CH_)
 #define _IR_HOMEDEF_CH_
 
@@ -6523,7 +5831,7 @@ class _TAO_HomeDef_Remote_Proxy_Impl;
 class _TAO_HomeDef_Proxy_Broker;
 class _TAO_HomeDef_Remote_Proxy_Broker;
 
-class TAO_IFR_Client_Export HomeDef: public virtual CORBA::InterfaceDef
+class TAO_IFR_Client_Export HomeDef: public virtual CORBA_InterfaceDef
 {
 public:
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -6602,7 +5910,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6614,8 +5922,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6627,8 +5935,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -6669,7 +5977,7 @@ protected:
   virtual ~HomeDef (void);
 private:
   HomeDef (const HomeDef &);
-  void operator= (const HomeDef &);  
+  void operator= (const HomeDef &);
 };
 
 
@@ -6683,7 +5991,7 @@ private:
 //
 
 class TAO_IFR_Client_Export _TAO_HomeDef_Proxy_Impl : 
-  public virtual _TAO_InterfaceDef_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Proxy_Impl
 {
 public:
   virtual ~_TAO_HomeDef_Proxy_Impl (void) { }
@@ -6741,7 +6049,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6753,8 +6061,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6766,8 +6074,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6790,7 +6098,7 @@ protected:
 class TAO_IFR_Client_Export _TAO_HomeDef_Remote_Proxy_Impl : 
   public virtual _TAO_HomeDef_Proxy_Impl,
   public virtual TAO_Remote_Object_Proxy_Impl,
-  public virtual _TAO_InterfaceDef_Remote_Proxy_Impl
+  public virtual _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl
   
 {
 public:
@@ -6851,7 +6159,7 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      CORBA::ValueDef_ptr primary_key,
+      CORBA_ValueDef_ptr primary_key,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6863,8 +6171,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6876,8 +6184,8 @@ public:
       const char * id,
       const char * name,
       const char * version,
-      const CORBA::ParDescriptionSeq & params,
-      const CORBA::ExceptionDefSeq & exceptions,
+      const CORBA_ParDescriptionSeq & params,
+      const CORBA_ExceptionDefSeq & exceptions,
       CORBA::Environment &ACE_TRY_ENV
     )
     ACE_THROW_SPEC ((
@@ -6978,8 +6286,8 @@ struct TAO_IFR_Client_Export HomeDescription
   ACE_NESTED_CLASS (IR, PrimaryKeyDef_var) primary_key_def;
   ACE_NESTED_CLASS (IR, FactoryDefSeq) factories;
   ACE_NESTED_CLASS (IR, FinderDefSeq) finders;
-  CORBA::OpDescriptionSeq operations;
-  CORBA::AttrDescriptionSeq attributes;
+  CORBA_OpDescriptionSeq operations;
+  CORBA_AttrDescriptionSeq attributes;
   CORBA::Boolean is_basic;
 };
 
@@ -7038,56 +6346,78 @@ TAO_NAMESPACE_CLOSE // module IR
 
 // Proxy Broker Factory function pointer declarations.
 
-extern TAO_IFR_Client_Export IR::_TAO_ComponentRepository_Proxy_Broker * (*IR__TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_ComponentRepository_Proxy_Broker *
+(*IR__TAO_ComponentRepository_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_ProvidesDef_Proxy_Broker * (*IR__TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_ProvidesDef_Proxy_Broker *
+(*IR__TAO_ProvidesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_UsesDef_Proxy_Broker * (*IR__TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_UsesDef_Proxy_Broker *
+(*IR__TAO_UsesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_EventDef_Proxy_Broker * (*IR__TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_EventDef_Proxy_Broker *
+(*IR__TAO_EventDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_EmitsDef_Proxy_Broker * (*IR__TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_EmitsDef_Proxy_Broker *
+(*IR__TAO_EmitsDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_PublishesDef_Proxy_Broker * (*IR__TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_PublishesDef_Proxy_Broker *
+(*IR__TAO_PublishesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_ConsumesDef_Proxy_Broker * (*IR__TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_ConsumesDef_Proxy_Broker *
+(*IR__TAO_ConsumesDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_ComponentDef_Proxy_Broker * (*IR__TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_ComponentDef_Proxy_Broker *
+(*IR__TAO_ComponentDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_PrimaryKeyDef_Proxy_Broker * (*IR__TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_PrimaryKeyDef_Proxy_Broker *
+(*IR__TAO_PrimaryKeyDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_FactoryDef_Proxy_Broker * (*IR__TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_FactoryDef_Proxy_Broker *
+(*IR__TAO_FactoryDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_FinderDef_Proxy_Broker * (*IR__TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_FinderDef_Proxy_Broker *
+(*IR__TAO_FinderDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-extern TAO_IFR_Client_Export IR::_TAO_HomeDef_Proxy_Broker * (*IR__TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
+extern TAO_IFR_Client_Export
+IR::_TAO_HomeDef_Proxy_Broker *
+(*IR__TAO_HomeDef_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   );
 
-TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR::DefinitionKind);
-TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR::DefinitionKind &);
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const IR::RepositoryIdSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, IR::RepositoryIdSeq*); // noncopying version
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, IR::RepositoryIdSeq *&); // deprecated
@@ -7199,8 +6529,6 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IR::
 
 #ifndef __ACE_INLINE__
 
-TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IR::DefinitionKind &); // 
-TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, IR::DefinitionKind &);
 
 #if !defined _TAO_CDR_OP_IR_RepositoryIdSeq_H_
 #define _TAO_CDR_OP_IR_RepositoryIdSeq_H_

@@ -116,6 +116,7 @@ public:
   idl_bool cli_hdr_cdr_op_gen (void);
   idl_bool cli_stub_cdr_op_gen (void);
   idl_bool cli_inline_cdr_op_gen (void);
+  idl_bool cli_inline_cdr_decl_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (idl_bool);
@@ -131,6 +132,7 @@ public:
   void cli_hdr_cdr_op_gen (idl_bool);
   void cli_stub_cdr_op_gen (idl_bool);
   void cli_inline_cdr_op_gen (idl_bool);
+  void cli_inline_cdr_decl_gen (idl_bool);
 
   idl_bool is_child (be_decl *node);
   // Am I a direct child of node?
@@ -164,6 +166,7 @@ protected:
   idl_bool cli_hdr_cdr_op_gen_;
   idl_bool cli_stub_cdr_op_gen_;
   idl_bool cli_inline_cdr_op_gen_;
+  idl_bool cli_inline_cdr_decl_gen_;
 
   char *flat_name_;
   // Flattened fully scoped name.

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef TAO_ID_IFR_BASES_T_H
-#define TAO_ID_IFR_BASES_T_H
+#ifndef _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_BASES_T_H_
+#define _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_BASES_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)

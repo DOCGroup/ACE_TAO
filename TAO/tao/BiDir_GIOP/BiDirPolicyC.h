@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_BIDIRPOLICYC_H_
-#define _TAO_IDL_BIDIRPOLICYC_H_
+#ifndef _TAO_IDL_ORIG_BIDIRPOLICYC_H_
+#define _TAO_IDL_ORIG_BIDIRPOLICYC_H_
 
 #ifndef TAO_BIDIRGIOP_SAFE_INCLUDE
 #error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
@@ -54,11 +54,15 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
 TAO_NAMESPACE  BiDirPolicy
 {
   typedef CORBA::UShort BidirectionalPolicyValue;
   typedef CORBA::UShort_out BidirectionalPolicyValue_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
+    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BidirectionalPolicyValue;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort NORMAL;
 
@@ -72,7 +76,7 @@ TAO_NAMESPACE  BiDirPolicy
 
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
-
+  
 #endif /* end #if !defined */
 
 
@@ -83,23 +87,31 @@ TAO_NAMESPACE  BiDirPolicy
   {
   public:
     BidirectionalPolicy_var (void); // default constructor
-    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {}
+    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {} 
     BidirectionalPolicy_var (const BidirectionalPolicy_var &); // copy constructor
     ~BidirectionalPolicy_var (void); // destructor
-
+    
     BidirectionalPolicy_var &operator= (BidirectionalPolicy_ptr);
     BidirectionalPolicy_var &operator= (const BidirectionalPolicy_var &);
     BidirectionalPolicy_ptr operator-> (void) const;
-
+    
     operator const BidirectionalPolicy_ptr &() const;
     operator BidirectionalPolicy_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     BidirectionalPolicy_ptr in (void) const;
     BidirectionalPolicy_ptr &inout (void);
     BidirectionalPolicy_ptr &out (void);
     BidirectionalPolicy_ptr _retn (void);
     BidirectionalPolicy_ptr ptr (void) const;
-
+    
+    // Hooks used by template sequence and object manager classes
+    // for non-defined forward declared interfaces.
+    static BidirectionalPolicy_ptr duplicate (BidirectionalPolicy_ptr);
+    static void release (BidirectionalPolicy_ptr);
+    static BidirectionalPolicy_ptr nil (void);
+    static BidirectionalPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * upcast (void *);
+  
   private:
     BidirectionalPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -126,7 +138,7 @@ TAO_NAMESPACE  BiDirPolicy
     operator BidirectionalPolicy_ptr &();
     BidirectionalPolicy_ptr &ptr (void);
     BidirectionalPolicy_ptr operator-> (void);
-
+  
   private:
     BidirectionalPolicy_ptr &ptr_;
   };
@@ -150,12 +162,12 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
     static BidirectionalPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static BidirectionalPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
     static BidirectionalPolicy_ptr _nil (void)
@@ -164,7 +176,7 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
       }
 
     virtual BiDirPolicy::BidirectionalPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -172,12 +184,12 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     BidirectionalPolicy ();
-
+    
     virtual ~BidirectionalPolicy (void);
   private:
     BidirectionalPolicy (const BidirectionalPolicy &);
@@ -205,6 +217,10 @@ TAO_NAMESPACE_CLOSE // module BiDirPolicy
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ifndef */

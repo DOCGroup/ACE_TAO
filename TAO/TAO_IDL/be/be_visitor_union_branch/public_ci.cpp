@@ -350,14 +350,25 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       ub->gen_default_label_value (os, bu);
     }
 
+  idl_bool bt_is_defined = node->is_defined ();
+
   *os << ";" << be_nl
       << "typedef "
       << bt->nested_type_name (bu, "_var")
       << " OBJECT_FIELD;" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->u_." << ub->local_name () << "_," << be_nl
-      << "OBJECT_FIELD (" << bt->name ()
-      << "::_duplicate (val))" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "OBJECT_FIELD (" << bt->name () << "::";
+        }
+      else
+        {
+          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+        }
+
+  *os << "_duplicate (val))" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -428,14 +439,25 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       ub->gen_default_label_value (os, bu);
     }
 
+  idl_bool bt_is_defined = node->full_definition ()->is_defined ();
+
   *os << ";" << be_nl
       << "typedef "
       << bt->nested_type_name (bu, "_var")
       << " OBJECT_FIELD;" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->u_." << ub->local_name () << "_," << be_nl
-      << "OBJECT_FIELD (" << bt->name ()
-      << "::_duplicate (val))" << be_uidt_nl
+      << "this->u_." << ub->local_name () << "_," << be_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "OBJECT_FIELD (" << bt->name () << "::";
+        }
+      else
+        {
+          *os << "OBJECT_FIELD (tao_" << node->flat_name ();
+        }
+
+  *os << "_duplicate (val))" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 

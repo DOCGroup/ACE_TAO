@@ -227,6 +227,8 @@ public:
 
   UTL_StrList *pragmas (void);
 
+  void pragmas (UTL_StrList *p);
+
   idl_bool added (void);
 
   void set_added (idl_bool is_it);

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef TAO_IDL_IFR_BASES_T_CPP
-#define TAO_IDL_IFR_BASES_T_CPP
+#ifndef _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_BASES_T_CPP_
+#define _TAO_IDL__________ORBSVCS_IFR_SERVICE_ORIG_IFR_BASES_T_CPP_
 
 #include "IFR_BaseS_T.h"
 

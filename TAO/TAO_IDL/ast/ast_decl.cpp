@@ -907,6 +907,12 @@ AST_Decl::pragmas (void)
   return this->pd_pragmas;
 }
 
+void
+AST_Decl:: pragmas (UTL_StrList *p)
+{
+  this->pd_pragmas = p;
+}
+
 //Narrowing methods for AST_Decl.
 IMPL_NARROW_METHODS0(AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Decl)

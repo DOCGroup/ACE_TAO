@@ -172,6 +172,10 @@ public:
   virtual void gen_copy_ctors (TAO_OutStream* os);
   // Call the copy constructors of all the base classes.
 
+  virtual void gen_stub_ctor (TAO_OutStream* os);
+  // Generated the global hooks used for non-defined forward
+  // declared interfaces, and the contructor from stub object.
+
   virtual int gen_var_defn (char *interface_name = 0);
   // Generate the var definition. If <interface_name> is not 0, generate
   // the var defn for that name. Otherwise, do it for the interface you
