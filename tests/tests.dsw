@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CDR_Test"=.\CDR_Test\CDR_Test.dsp - Package Owner=<4>
+Project: "CDR_Test"=.\CDR_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
