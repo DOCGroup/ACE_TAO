@@ -60,7 +60,14 @@ ACE_File_Lock::remove (void)
 {
 // ACE_TRACE ("ACE_File_Lock::remove");
 
-  return ACE_OS::flock_destroy (&this->lock_);
+  int result = 0;
+
+  if (this->removed_ == 0)
+    {
+      this->removed_ = 1;
+      result = ACE_OS::flock_destroy (&this->lock_);
+    }
+  return result;
 }
 
 ACE_INLINE ACE_HANDLE
@@ -248,18 +255,24 @@ ACE_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Mutex::remove");
 #if defined (CHORUS)
-   int result = -1;
+   int result = 0;
    // Are we the owner?
    if (this->process_lock_ && this->lockname_) 
      {
-       // Only destroy the lock if we're the ones who initialized it.
-       result = ACE_OS::mutex_destroy (this->process_lock_);
-       ACE_OS::munmap (this->process_lock_,
-                       sizeof (ACE_mutex_t));
-       ACE_OS::shm_unlink (this->lockname_);
-       ACE_OS::free (ACE_static_cast (void *,
-                                      ACE_const_cast (LPTSTR,
-                                                      this->lockname_)));
+       if (this->removed_ == 0)
+         {
+           this->removed_ = 1;
+
+           // Only destroy the lock if we're the ones who initialized
+           // it.
+           result = ACE_OS::mutex_destroy (this->process_lock_);
+           ACE_OS::munmap (this->process_lock_,
+                           sizeof (ACE_mutex_t));
+           ACE_OS::shm_unlink (this->lockname_);
+           ACE_OS::free (ACE_static_cast (void *,
+                                          ACE_const_cast (LPTSTR,
+                                                          this->lockname_)));
+         }
      }
    else if (this->process_lock_)
      {

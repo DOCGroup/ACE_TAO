@@ -1,17 +1,17 @@
-Mon Jan  4 13:00:07 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+Tue Jan  5 00:59:04 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Synch: Changed the remove() method of ACE_Thread_Mutex,
  	  ACE_Mutex, ACE_Semaphore, ACE_RW_Mutex, ACE_Event,
- 	  ACE_Thread_Condition_Mutex, and ACE_Recursive_Thread_Mutex so
- 	  that they check a flag to see if remove() has already been
- 	  called.  If it has, then the remove() call does nothing.  This
- 	  avoids nasty problems on platforms like Win95 that fail
- 	  mysteriously if locks are destroyed multiple times.  Note that
- 	  our solution isn't perfect since it won't protect against race
- 	  conditions if multiple threads call remove() simultaneously.
-  	  However, if this happens it's a sign that the application was
- 	  designed incorrectly...  Thanks to Paul Felix <pef@fluent.com>
- 	  and Irfan for tracking this down.
+ 	  ACE_Thread_Condition_Mutex, ACE_File_Lock, and
+ 	  ACE_Recursive_Thread_Mutex so that they check a flag to see if
+ 	  remove() has already been called.  If it has, then the remove()
+ 	  call does nothing.  This avoids nasty problems on platforms like
+ 	  Win95 that fail mysteriously if locks are destroyed multiple
+ 	  times.  Note that our solution isn't perfect since it won't
+ 	  protect against race conditions if multiple threads call
+ 	  remove() simultaneously.  However, if this happens it's a sign
+ 	  that the application was designed incorrectly...  Thanks to Paul
+ 	  Felix <pef@fluent.com> and Irfan for tracking this down.
 
 	* ace/FILE: Added new methods, seek() and tell(), that are more
  	  intuitively named than the existing position() methods.  The
