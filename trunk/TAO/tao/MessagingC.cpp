@@ -4954,6 +4954,7 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 */
 
+#if (TAO_HAS_PRIORITY_POLICIES == 1)
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
 {
@@ -5038,6 +5039,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   return 0;
 }
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::RequestPriorityPolicy,Messaging::RequestPriorityPolicy_var>;
@@ -5052,12 +5054,20 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   #  pragma instantiate TAO_Object_Manager<Messaging::ReplyPriorityPolicy,Messaging::ReplyPriorityPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
+
+#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<Messaging::RequestStartTimePolicy,Messaging::RequestStartTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -5066,12 +5076,20 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   #  pragma instantiate TAO_Object_Manager<Messaging::RequestEndTimePolicy,Messaging::RequestEndTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<Messaging::ReplyStartTimePolicy,Messaging::ReplyStartTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
+
+#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
@@ -5080,6 +5098,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   #  pragma instantiate TAO_Object_Manager<Messaging::ReplyEndTimePolicy,Messaging::ReplyEndTimePolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var>;
@@ -5087,12 +5109,20 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   #  pragma instantiate TAO_Object_Manager<Messaging::RelativeRequestTimeoutPolicy,Messaging::RelativeRequestTimeoutPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::RelativeRoundtripTimeoutPolicy,Messaging::RelativeRoundtripTimeoutPolicy_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<Messaging::RelativeRoundtripTimeoutPolicy,Messaging::RelativeRoundtripTimeoutPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_ROUTING_POLICY == 1)
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::RoutingTypeRange &_tao_elem) // copying
 {
@@ -5184,6 +5214,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Routing
   #  pragma instantiate TAO_Object_Manager<Messaging::RoutingPolicy,Messaging::RoutingPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_ROUTING_POLICY == 1 */
+
+#if (TAO_HAS_MAX_HOPS_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>;
@@ -5191,12 +5225,18 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Routing
   #  pragma instantiate TAO_Object_Manager<Messaging::MaxHopsPolicy,Messaging::MaxHopsPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
+
+#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
     template class TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<Messaging::QueueOrderPolicy,Messaging::QueueOrderPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
 
 void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
 {
