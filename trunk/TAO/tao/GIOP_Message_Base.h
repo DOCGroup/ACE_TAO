@@ -58,7 +58,7 @@ public:
                      CORBA::Octet minor);
 
   /// Reset the messaging the object
-  virtual void reset (int reset_flag = 1);
+  virtual void reset (void);
 
   /// Write the RequestHeader in to the <cdr> stream. The underlying
   /// implementation of the mesaging should do the right thing.
@@ -113,6 +113,10 @@ public:
 
   /// Get the details of the message parsed through the <qd>.
   virtual void get_message_data (TAO_Queued_Data *qd);
+
+  /// @@Bala:Docu??
+  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
+                                     const TAO_Queued_Data *sqd);
 
   /// Process the request message that we have received on the
   /// connection

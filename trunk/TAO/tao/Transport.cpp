@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "Transport.h"
 
 #include "Exception.h"
@@ -888,6 +889,23 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
   // Extract the data for the node..
   this->messaging_object ()->get_message_data (&qd);
 
+  // Check whether the message was fragmented..
+  if (qd.more_fragments_ ||
+      (qd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+    {
+      // Make a copy of the message that we have
+      ACE_Data_Block *ndb =
+        message_block.data_block ()->clone ();
+
+      // Replace the underlying the datablock
+      message_block.replace_data_block (ndb);
+
+      // Duplicate the node that we have as the node is on stack..
+      TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (qd);
+
+      return this->consolidate_fragments (nqd, rh);
+    }
+
   // Resume before starting to process the request..
   rh.resume_handle ();
 
@@ -907,6 +925,7 @@ TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
 
   // Check whether we have a complete message for processing
   ssize_t missing_data = this->missing_data (block);
+
 
   if (missing_data < 0)
     {
@@ -1070,12 +1089,62 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   pqd.missing_data_ = missing_data;
   this->messaging_object ()->get_message_data (&pqd);
 
+  // Check whether the message was fragmented and try to consolidate
+  // the fragments..
+  if (pqd.more_fragments_ ||
+      (pqd.msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+    {
+      // Duplicate the queued data as it is on stack..
+      TAO_Queued_Data *nqd = TAO_Queued_Data::duplicate (pqd);
+
+      return this->consolidate_fragments (nqd, rh);
+    }
+
   // Resume the handle before processing the request
   rh.resume_handle ();
 
   // Now we have a full message in our buffer. Just go ahead and
   // process that
   return this->process_parsed_messages (&pqd);
+}
+
+int
+TAO_Transport::consolidate_fragments (TAO_Queued_Data *qd,
+                                      TAO_Resume_Handle &rh)
+{
+  // If we have received a fragment message then we have to
+  // consolidate <qd> with the last message in queue
+  // @@todo: this piece of logic follows GIOP a bit... Need to revisit
+  // if we have protocols other than GIOP
+
+  // @@todo: Fragments now have too much copying overhead. Need to get
+  // them out if we want to have some reasonable performance metrics
+  // in future.. Post 1.2 seems a nice time..
+  if (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+    {
+      TAO_Queued_Data *tqd =
+        this->incoming_message_queue_.dequeue_tail ();
+
+      tqd->more_fragments_ = qd->more_fragments_;
+
+      if (this->messaging_object ()->consolidate_fragments (tqd,
+                                                            qd) == -1)
+        return -1;
+
+      TAO_Queued_Data::release (qd);
+
+      this->incoming_message_queue_.enqueue_tail (tqd);
+
+      this->process_queue_head (rh);
+    }
+  else
+    {
+      // if we dont have a fragment already in the queue just add it in
+      // the queue
+      this->incoming_message_queue_.enqueue_tail (qd);
+    }
+
+  return 0;
 }
 
 int
@@ -1241,7 +1310,18 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
         this->messaging_object ()->extract_next_message (incoming,
                                                          q_data);
       if (q_data)
-        this->incoming_message_queue_.enqueue_tail (q_data);
+        {
+          // If we have read a framented message then...
+          if (q_data->more_fragments_ ||
+              q_data->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT)
+            {
+              this->consolidate_fragments (q_data, rh);
+            }
+          else
+            {
+              this->incoming_message_queue_.enqueue_tail (q_data);
+            }
+        }
     }
 
   // In case of error return..

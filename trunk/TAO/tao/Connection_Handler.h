@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Bala Natarajan  <bala@cs.wustl.edu>
+ *  @author Balachandran  Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================
 

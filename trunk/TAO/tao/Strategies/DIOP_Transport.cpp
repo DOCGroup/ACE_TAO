@@ -20,7 +20,7 @@
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
-// #include "tao/GIOP_Message_Lite.h"
+#include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Transport.i"
@@ -30,7 +30,7 @@ ACE_RCSID (tao, DIOP_Transport, "$Id$")
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean /*flag*/)
+                                        CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_UDP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
@@ -38,10 +38,20 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 {
   // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
   //             we read the whole UDP packet on a single read.
-
-  ACE_NEW (this->messaging_object_,
-           TAO_GIOP_Message_Base (orb_core,
-                                  ACE_MAX_DGRAM_SIZE));
+  if (flag)
+    {
+      // Use the lite version of the protocol
+      ACE_NEW (this->messaging_object_,
+               TAO_GIOP_Message_Lite (orb_core,
+                                      ACE_MAX_DGRAM_SIZE));
+                                      }
+  else
+    {
+      // Use the normal GIOP object
+      ACE_NEW (this->messaging_object_,
+               TAO_GIOP_Message_Base (orb_core,
+                                      ACE_MAX_DGRAM_SIZE));
+    }
 }
 
 TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
