@@ -122,7 +122,7 @@ Quoter_Client::run (void)
       ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
 
       // Move the Quoter
-    
+
       exception_message = "While moving the quoter";
       this->quoter_var_->move (factory_Finder_var_.in (),
                                criteria,
@@ -147,7 +147,7 @@ Quoter_Client::run (void)
       return -1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -263,8 +263,8 @@ Quoter_Client::init_naming_service (void)
 
       // Narrow it to a Quoter Generic Factory
       exception_message = "While narrowing the factory";
-      generic_Factory_var_ = 
-        CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (), 
+      generic_Factory_var_ =
+        CosLifeCycle::GenericFactory::_narrow (quoter_FactoryObj_var.in (),
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -390,7 +390,8 @@ main (int argc, char **argv)
 
 
   for (i = 0; i < threads; i++)
-    clients[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);
+    clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0
+                          ACE_DEFAULT_THREAD_PRIORITY);
 
   int result = ACE_Thread_Manager::instance ()->wait ();
 
@@ -401,4 +402,3 @@ main (int argc, char **argv)
 
   return result;
 }
-
