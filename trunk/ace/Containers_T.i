@@ -366,15 +366,16 @@ ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
 
 // Assignment operator (performs assignment).
 
-template <class T> ACE_INLINE void
+template <class T> ACE_INLINE ACE_Array<T> &
 ACE_Array<T>::operator= (const ACE_Array<T> &s)
 {
   // Check for "self-assignment".
 
   if (this == &s)
-    return;
+    return *this;
   else {
     this->ACE_Array_Base<T>::operator= (s);
+    return *this;
   }
 }
 
@@ -429,10 +430,12 @@ ACE_Array_Iterator<T>::done (void) const
 
 // ****************************************************************
 
-template <class T> ACE_INLINE void
+template <class T> ACE_INLINE ACE_DLList<T> &
 ACE_DLList<T>::operator= (ACE_DLList<T> &l)
 {
   *(ACE_DLList_Base *) this = l;
+
+  return *this;
 }
 
 template <class T> ACE_INLINE int
