@@ -83,6 +83,12 @@ public:
   virtual int svc (void);
 
 private:
+  void setup_connection (CORBA::Environment &ACE_TRY_ENV);
+  // Pre-establish a connection to the server.
+  // The current implementation is more of a hack than the well
+  // established way to do it.
+
+private:
   Test_var server_;
   // The server.
 
@@ -143,7 +149,7 @@ main (int argc, char *argv[])
 
       Client* client;
       ACE_NEW_RETURN (client, Client[nthreads], 1);
-      
+
       for (int i = 0; i != nthreads; ++i)
         {
           client[i].set (server.in (), niterations);
@@ -202,17 +208,33 @@ Client::set (Test_ptr server, int niterations)
   this->niterations_ = niterations;
 }
 
+void
+Client::setup_connection (CORBA::Environment &ACE_TRY_ENV)
+{
+  for (int j = 0; j < 100; ++j)
+    {
+      ACE_TRY
+        {
+          server_->_non_existent (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::SystemException,ex)
+        {
+          if (ex.completed () != CORBA::COMPLETED_NO)
+            ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+}
+
 int
 Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // @@ We should use "validate_connection" for this
-      for (int j = 0; j < 100; ++j)
-        {
-          server_->_non_existent (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      this->setup_connection (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
@@ -236,11 +258,11 @@ Client::svc (void)
 
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-	  if (period != -1)
-	    {
-	      ACE_Time_Value tv (0, period * 1000);
-	      ACE_OS::sleep (tv);
-	    }
+          if (period != -1)
+            {
+              ACE_Time_Value tv (0, period * 1000);
+              ACE_OS::sleep (tv);
+            }
         }
     }
   ACE_CATCHANY
