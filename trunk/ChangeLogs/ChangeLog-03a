@@ -1,3 +1,9 @@
+Tue Jun  6 22:32:16 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/OS.i:
+        * ace/OS_TLI.h:
+          Moved the explicit declaration of t_getname() from OS.i to OS_TLI.h
+
 Tue Jun  6 20:02:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:

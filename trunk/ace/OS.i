@@ -608,7 +608,6 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 
 // These prototypes are chronically lacking from many versions of
 // UNIX.
-extern "C" int t_getname (int, struct netbuf *, int);
 extern "C" int isastream (int);
 # if !defined (ACE_HAS_GETRUSAGE_PROTO)
 extern "C" int getrusage (int who, struct rusage *rusage);
