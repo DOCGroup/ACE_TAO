@@ -1,3 +1,10 @@
+Thu Oct 29 15:13:07 EST 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+        * docs/tutorials/index.html
+        * docs/tutorials/016/*
+	  Added Tutorial 016.  This discusses ACE_Condition<> and ways
+	  to make it more manageable in an application.
+
 Thu Oct 29 11:44:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.6.h: changed ACE_THREAD_POSIX_SEM to
