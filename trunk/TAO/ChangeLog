@@ -1,3 +1,10 @@
+Tue Mar 23 07:34:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/TAO_IDL.mwc:
+
+          Put an empty workspace back since some existing MPC builds rely on
+          it being there.
+
 Mon Mar 22 09:10:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
