@@ -19,7 +19,9 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
 }
 
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
-  : poa_ (rhs.poa_),
+  : PortableServer::RefCountServantBase (rhs),
+    POA_TAO::ClientPriorityPolicy (rhs),
+    poa_ (rhs.poa_),
     priority_spec_ (rhs.priority_spec_)
 {
 }
