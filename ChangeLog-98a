@@ -14,6 +14,9 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-kcc.h: commented out ACE_TEMPLATES_REQUIRE_SOURCE.
           Thanks to Ben Eng <ben@jetpen.com> for this update.
 
+        * include/makeinclude/platform_chorus.GNU: added CHORUS = 1,
+          for use by individual Makefiles.
+
         * ace/Future.cpp: removed ACE_Atomic_Op<ACE_Thread_Mutex, int>
           instantiation, when __ACE_INLINE__ is enabled, because it no
           longer appears to be necessary, and caused link collisions on
