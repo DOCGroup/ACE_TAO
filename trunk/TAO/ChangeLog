@@ -1,3 +1,11 @@
+Thu Feb 19 15:17:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        
+          Fixed code generation in the base class constructor call for
+          sequences of eventtypes and components. Thanks to Patrick
+          Lardieri <plardier@atl.lmco.com> for reporting the problem.
+
 Thu Feb 19 13:06:45 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp:
