@@ -583,7 +583,8 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 
   if (s != 0)
     {
-      // Check whether this matches the appropriate platform-specific suffix.
+      // Check whether this matches the appropriate platform-specific
+      // suffix.
       if (ACE_OS::strcmp (s, dll_suffix) == 0)
         got_suffix = 1;
       else
