@@ -1,3 +1,8 @@
+Sat Oct 11 11:28:04 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTScheduling/Starter.dsp: Added include/library paths
+	  and libraries to release configuration.
+
 Sat Oct 11 11:17:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
