@@ -35,7 +35,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE fd) const
   iov.iov_len = sizeof a;
   send_msg.msg_iov = &iov;
   send_msg.msg_iovlen = 1;
-  send_msg.msg_name = (char *) 0;
+  send_msg.msg_name = 0;
   send_msg.msg_namelen = 0;
   send_msg.msg_accrights = (char *) &fd;
   send_msg.msg_accrightslen = sizeof fd;
@@ -68,7 +68,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &fd, char *pbuf, int *len) const
    
   recv_msg.msg_iov = &iov;
   recv_msg.msg_iovlen = 1;
-  recv_msg.msg_name = (char *) 0;
+  recv_msg.msg_name = 0;
   recv_msg.msg_namelen = 0;
   recv_msg.msg_accrights = (char *) &fd;
   recv_msg.msg_accrightslen = sizeof fd;

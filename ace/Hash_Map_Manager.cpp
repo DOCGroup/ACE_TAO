@@ -191,8 +191,6 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
-  assert (temp != 0);
-
   for (this->sentinel_->ext_id_ = ext_id;
        temp->ext_id_ != ext_id;
        temp = temp->next_)
@@ -232,8 +230,6 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
   size_t loc = ext_id.hash () % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
-
-  assert (temp != 0);
 
   for (this->sentinel_->ext_id_ = ext_id;
        temp->ext_id_ != ext_id;
@@ -333,8 +329,6 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
   size_t loc = ext_id.hash () % total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
-
-  assert (temp != 0);
 
   for (this->sentinel_->ext_id_ = ext_id;
        temp->ext_id_ != ext_id;

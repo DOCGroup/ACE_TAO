@@ -541,8 +541,7 @@ ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
 {
   // ACE_TRACE ("ACE_OS::strcasecmp");
-#if defined (UNIXWARE) || defined (VXWORKS)
-
+#if defined (ACE_LACKS_STRCASECMP)
   // Handles most of what the BSD version does, but does not indicate
   // lexicographic ordering if the strings are unequal.  Just
   // indicates equal (ignoring case) by return value == 0, else not
@@ -556,13 +555,14 @@ ACE_OS::strcasecmp (const char *s, const char *t)
 	  result = 1;
 	  break;
 	}
+
       ++s; ++t;
     }
 
   return result; // == 0 for match, else 1
 #else
   return ::strcasecmp (s, t);
-#endif /* UNIXWARE || VXWORKS */
+#endif /* ACE_LACKS_STRCASECMP */
 }
 
 ACE_INLINE mode_t 
@@ -2503,6 +2503,10 @@ ACE_OS::getprotobyname (const char *name)
 {
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_NONCONST_GETBY)
+#else
+  ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
+		       struct protoent *, 0);
 #else
   ACE_SOCKCALL_RETURN (::getprotobyname (name),
 		       struct protoent *, 0);
@@ -2532,6 +2536,9 @@ ACE_OS::getprotobyname_r (const char *name,
   		       struct protoent *, 0);
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
+#if defined (ACE_HAS_NONCONST_GETBY)
+  ACE_SOCKCALL_RETURN (::getprotobyname ((char *) name),
+		       struct protoent *, 0);
 #else
   ACE_UNUSED_ARG(buffer);
   ACE_UNUSED_ARG(result);

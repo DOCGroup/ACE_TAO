@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Message_Block.h"
+#include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Block.i"
