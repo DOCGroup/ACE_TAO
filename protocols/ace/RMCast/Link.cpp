@@ -8,6 +8,11 @@
 
 namespace ACE_RMCast
 {
+  // Time period after which a manual cancellation request is
+  // checked for.
+  //
+  ACE_Time_Value const timeout (0, 500);
+
   Link::
   Link (Address const& addr)
       : addr_ (addr),
@@ -15,7 +20,8 @@ namespace ACE_RMCast
                          static_cast<ACE_UINT32> (INADDR_ANY)),
                 AF_INET,
                 IPPROTO_UDP,
-                1)
+                1),
+        stop_ (false)
 
   {
     srand (time (0));
@@ -82,7 +88,10 @@ namespace ACE_RMCast
   {
     // Stop receiving thread.
     //
-    recv_mgr_.cancel_all (1);
+    {
+      Lock l (mutex_);
+      stop_ = true;
+    }
     recv_mgr_.wait ();
 
     Element::in_stop ();
@@ -167,7 +176,33 @@ namespace ACE_RMCast
 
       //@@ CDR-specific.
       //
-      size = rsock_.recv (data, 4, addr, MSG_PEEK);
+      // Block for up to timeout time waiting for an incomming message.
+      //
+      for (;;)
+      {
+        ACE_Time_Value t (timeout);
+        ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
+
+        if (r == -1)
+        {
+          if (errno != ETIME)
+            abort ();
+        }
+        else
+        {
+          size = static_cast<size_t> (r);
+          break;
+        }
+
+        // Check for cancellation request.
+        //
+        {
+          Lock l (mutex_);
+          if (stop_)
+            return;
+        }
+      }
+
 
       if (size != 4 || addr == self_)
       {

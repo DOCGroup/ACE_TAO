@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 // file      : ace/RMCast/Bits.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
@@ -8,14 +6,9 @@
 #define ACE_RMCAST_BITS_H
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Condition_T.h"
 #include "ace/Synch_Traits.h"
-
-
-class ACE_Thread_Mutex;
-template <typename T> class ACE_Guard;
-template <typename T> class ACE_Guard;
-template <typename T> class ACE_Condition;
-
 
 namespace ACE_RMCast
 {

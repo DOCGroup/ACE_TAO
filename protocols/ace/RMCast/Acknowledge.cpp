@@ -14,7 +14,9 @@ namespace ACE_RMCast
 
   Acknowledge::
   Acknowledge ()
-      : nrtm_timer_ (nrtm_timeout)
+      : cond_ (mutex_),
+        nrtm_timer_ (nrtm_timeout),
+        stop_ (false)
   {
   }
 
@@ -35,7 +37,12 @@ namespace ACE_RMCast
   void Acknowledge::
   out_stop ()
   {
-    tracker_mgr_.cancel_all (1);
+    {
+      Lock l (mutex_);
+      stop_ = true;
+      cond_.signal ();
+    }
+
     tracker_mgr_.wait ();
 
     Element::out_stop ();
@@ -75,6 +82,9 @@ namespace ACE_RMCast
 
       {
         Lock l (mutex_);
+
+        if (stop_)
+          break;
 
         if (hold_.current_size () != 0)
         {
@@ -117,7 +127,28 @@ namespace ACE_RMCast
         send (*ppm);
       }
 
-      ACE_OS::sleep (tick);
+      // Go to sleep but watch for "manual cancellation" request.
+      //
+      {
+        ACE_Time_Value time (ACE_OS::gettimeofday ());
+        time += tick;
+
+        Lock l (mutex_);
+
+        while (!stop_)
+        {
+          if (cond_.wait (&time) == -1)
+          {
+            if (errno != ETIME)
+              abort ();
+            else
+              break;
+          }
+        }
+
+        if (stop_)
+          break;
+      }
     }
   }
 

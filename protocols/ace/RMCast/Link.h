@@ -53,11 +53,13 @@ namespace ACE_RMCast
     ACE_SOCK_Dgram_Mcast rsock_;
     ACE_SOCK_Dgram ssock_;
 
+    bool stop_;
     ACE_Thread_Manager recv_mgr_;
 
     // Simulator.
     //
     Message_ptr hold_;
+
     Mutex mutex_;
   };
 }

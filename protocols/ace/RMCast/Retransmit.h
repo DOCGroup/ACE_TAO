@@ -6,7 +6,6 @@
 #define ACE_RMCAST_RETRANSMIT_H
 
 #include <ace/Hash_Map_Manager.h>
-
 #include <ace/Thread_Manager.h>
 
 #include "Stack.h"
@@ -88,7 +87,9 @@ namespace ACE_RMCast
   private:
     Queue queue_;
     Mutex mutex_;
+    Condition cond_;
 
+    bool stop_;
     ACE_Thread_Manager tracker_mgr_;
   };
 }
