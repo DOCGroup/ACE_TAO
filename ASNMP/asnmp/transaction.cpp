@@ -201,3 +201,9 @@ int transaction::send()
 }
 
 transaction_result::~transaction_result() {}
+
+ACE_HANDLE 
+transaction::get_handle () const 
+{
+  return session_.get_handle ();
+}

@@ -73,7 +73,6 @@ public:
  /// remove the given entry from the hash table.
  int remove (DsLogAdmin::LogId id);
 
-
 protected:
 
   /// Define the HASHMAP.
@@ -89,5 +88,6 @@ protected:
   /// A list of the current log ids.
   DsLogAdmin::LogIdList logid_list_;
 };
+
 #include /**/ "ace/post.h"
 #endif /* TAO_TLS_LOGMGR_I_H */

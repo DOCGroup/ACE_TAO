@@ -1,3 +1,9 @@
+Fri Aug  6 08:14:12 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* asnmp/transaction.{h,cpp}: Added a get_handle() call to
+	  session.  Thanks to Geo Sebastian <geosebastian@onmobile.com>
+ 	  for this fix.
+
 Fri May  7 14:42:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Counter_Test.cpp (TestCounter):

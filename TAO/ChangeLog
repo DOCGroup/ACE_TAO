@@ -1,3 +1,13 @@
+Fri Aug  6 08:05:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp (TAO_LogMgr_i): Initialize
+	  max_id_ to 0.  Thanks to Thomas Girard <thomas.g.girard@free.fr>
+ 	  for reporting this.
+
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id): 
+	  Duplidate object references before putting them in the hash map.
+  	  Thanks to Thomas Girard <thomas.g.girard@free.fr> for this fix.
+
 Fri Aug  6 12:16:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* utils/nslist/nslist.cpp:
