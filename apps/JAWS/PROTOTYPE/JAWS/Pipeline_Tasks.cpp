@@ -18,7 +18,7 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 
   int status = this->handle_put (db, tv);
 
-  if (status != -1)
+  if (status != -1 && status != 2)
     {
       JAWS_Pipeline_Handler *task = db->io_handler ()->task ();
       JAWS_Pipeline_Handler *next
