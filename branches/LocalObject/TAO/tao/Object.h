@@ -47,6 +47,7 @@ public:
   static CORBA_Object_ptr _nil (void);
   // return a NUL object
 
+  ACE_INLINE_FOR_GNUC
   static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
                                    CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());

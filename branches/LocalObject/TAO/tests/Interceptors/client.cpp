@@ -80,7 +80,7 @@ main (int argc, char *argv[])
 
       // Installing the Echo interceptor
       ACE_NEW_RETURN (interceptor,
-                      Echo_Client_Request_Interceptor (orb),
+                      Echo_Client_Request_Interceptor (orb.in ()),
                       -1);
       orb->_register_client_interceptor (interceptor);
 

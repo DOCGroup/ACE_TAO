@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 
       // Installing the Echo interceptor
       ACE_NEW_RETURN (interceptor,
-                      Echo_Server_Request_Interceptor (orb),
+                      Echo_Server_Request_Interceptor (orb.in ()),
                       -1);
       orb->_register_server_interceptor (interceptor);
 
@@ -77,11 +77,12 @@ main (int argc, char *argv[])
 
       CORBA::Object_var test_obj =
         root_poa->id_to_reference (id.in (),
-                                    ACE_TRY_ENV);
+                                   ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       Test_Interceptors::Visual_var server =
-        Test_Interceptors::Visual::_narrow (test_obj, ACE_TRY_ENV);
+        Test_Interceptors::Visual::_narrow (test_obj.in (),
+                                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =

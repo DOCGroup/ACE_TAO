@@ -3,7 +3,7 @@
 // ****************************************************************
 
 ACE_INLINE
-CORBA::Object::Object (int)
+CORBA_Object::CORBA_Object (int)
   : servant_ (0),
     is_collocated_ (0),
     is_local_ (1),
@@ -42,18 +42,18 @@ CORBA_Object::_duplicate (CORBA_Object_ptr obj)
   return obj;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  return obj == 0;
+}
+
 // Null pointers represent nil objects.
 
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object::_nil (void)
 {
   return 0;
-}
-
-ACE_INLINE CORBA_Object_ptr
-CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&ACE_TRY_ENV)
-{
-  return CORBA::Object::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 ACE_INLINE CORBA_Object_ptr
@@ -69,7 +69,13 @@ CORBA_Object::_unchecked_narrow (CORBA_Object_ptr obj, CORBA::Environment&)
                             (ACE_reinterpret_cast (ptr_arith_t,
                                                    &CORBA::Object::_narrow)));
   else
-    return CORBA_Object::_duplicate (obj);
+    return CORBA::Object::_duplicate (obj);
+}
+
+ACE_INLINE CORBA_Object_ptr
+CORBA_Object::_narrow (CORBA_Object_ptr obj, CORBA::Environment&ACE_TRY_ENV)
+{
+  return CORBA_Object::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 ACE_INLINE TAO_Stub *
@@ -81,12 +87,6 @@ CORBA_Object::_stubobj (void) const
 
 // ************************************************************
 // These are in CORBA namespace
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  return obj == 0;
-}
 
 ACE_INLINE void
 CORBA::release (CORBA_Object_ptr obj)
