@@ -57,11 +57,14 @@ public:
   // set the <ACE_Reactor> to use when quitting.
 
   virtual void push (const Event_Comm::Event & event,
-                     CORBA::Environment &TAO_TRY_ENV);
+                     CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));  
   // Pass the <event> to the <Consumer>.
 
   virtual void disconnect (const char * reason,
-                           CORBA::Environment &TAO_TRY_ENV);
+                           CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   // Disconnect the <Consumer> from the <Notifier>, giving it the
   // <reason>.
 
@@ -91,23 +94,27 @@ public:
   // Initialize a Notifier_i object with the specified size hint.
 
   virtual void disconnect (const char *reason,
-                           CORBA::Environment &TAO_TRY_ENV);
+                           CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnect all the receivers, giving them the <reason>.
 
   virtual void push (const Event_Comm::Event &event,
-                     CORBA::Environment &TAO_TRY_ENV);
+                     CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Send the <event> to all the consumers who have subscribed and who
   // match the filtering criteria.
 
    virtual void subscribe (Event_Comm::Consumer_ptr Consumer,
                            const char * filtering_criteria,
-                           CORBA::Environment &TAO_TRY_ENV);
+                           CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Subscribe the <Consumer> to receive events that match
   // <filtering_criteria> applied by the <Notifier>.
 
  void unsubscribe (Event_Comm::Consumer *consumer,
                     const char *filtering_criteria,
-                    CORBA::Environment &TAO_TRY_ENV);
+                    CORBA::Environment &TAO_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Unsubscribe the <Consumer>.
 
 private:

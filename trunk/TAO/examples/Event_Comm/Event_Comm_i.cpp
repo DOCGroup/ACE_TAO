@@ -158,6 +158,7 @@ void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 		       const char *filtering_criteria,
 		       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
@@ -219,6 +220,7 @@ void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 			 const char *filtering_criteria,
 			 CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
@@ -273,6 +275,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 void
 Notifier_i::disconnect (const char *reason,
 			CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_disconnect = %s\n",
@@ -327,6 +330,7 @@ Notifier_i::disconnect (const char *reason,
 void
 Notifier_i::push (const Event_Comm::Event &event,
 		  CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
@@ -398,6 +402,7 @@ Consumer_i::~Consumer_i (void)
 void
 Consumer_i::push (const Event_Comm::Event &event,
 		  CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   const char *tmpstr = event.tag_;
 
@@ -412,6 +417,7 @@ Consumer_i::push (const Event_Comm::Event &event,
 void
 Consumer_i::disconnect (const char *reason,
 			CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "**** got disconnected due to %s\n",

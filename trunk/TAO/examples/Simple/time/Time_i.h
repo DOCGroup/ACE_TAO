@@ -44,11 +44,11 @@ public:
   // Destructor
   
   virtual CORBA::Long time (CORBA::Environment &env)
-    ACE_THROW_SPEC (CORBA::SystemException);
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the current time/date on the server
   
   virtual void shutdown (CORBA::Environment &env)
-    ACE_THROW_SPEC (CORBA::SystemException);
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
   // Shutdown the server.
 

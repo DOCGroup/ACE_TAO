@@ -4,10 +4,10 @@
 #include "ttcp_i.h"
 #include "ttcp_decl.h"
 
-ACE_RCSID(TAO, ttcp_i, "$Id$")
+ACE_RCSID (TAO, ttcp_i, "$Id$")
 
-/* the ttcp_i class implementation */
-ttcp_sequence_i::ttcp_sequence_i()
+  // the ttcp_i class implementation
+ttcp_sequence_i::ttcp_sequence_i (void)
 {
   this->nbytes_ = 0;
   numCalls = 0;
@@ -15,6 +15,7 @@ ttcp_sequence_i::ttcp_sequence_i()
 
 void
 ttcp_sequence_i::start_timer (CORBA::Environment &IT_env)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   this->nbytes_ = 0;
@@ -23,86 +24,89 @@ ttcp_sequence_i::start_timer (CORBA::Environment &IT_env)
 
 void
 ttcp_sequence_i::stop_timer (CORBA::Environment &IT_env)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
 
-  (void) ::read_timer (stats, sizeof (stats));
-        ::nbytes = this->nbytes_;
-        ::PrintStats();
-        // reset
-        this->nbytes_ = 0;
-        numCalls = 0;
+  ::read_timer (stats, sizeof (stats));
+  ::nbytes = this->nbytes_;
+  ::PrintStats ();
+  // reset
+  this->nbytes_ = 0;
+  numCalls = 0;
 #if defined (ACE_HAS_QUANTIFY)
-    quantify_stop_recording_data();
-    ACE_Service_Config::end_reactor_event_loop();
-    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
+  quantify_stop_recording_data ();
+  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif /* ACE_HAS_QUANTIFY */
 #if defined (ACE_HAS_PURIFY)
-    ACE_Service_Config::end_reactor_event_loop();
-    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
-#endif
+  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_OS::fprintf (stderr, "*********** just before exiting\n");
+#endif /* ACE_HAS_PURIFY */
 }
 
 void
-ttcp_sequence_i::sendShortSeq(const ttcp_sequence::ShortSeq& ttcp_seq,
+ttcp_sequence_i::sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq,
                               CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(CORBA::Short);
+  this->nbytes_ += ttcp_seq.length () * sizeof (CORBA::Short);
 }
 
 void
-ttcp_sequence_i::sendLongSeq(const ttcp_sequence::LongSeq& ttcp_seq,
+ttcp_sequence_i::sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq,
                              CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(CORBA::Long) ;
+  this->nbytes_ += ttcp_seq.length () * sizeof (CORBA::Long);
 }
 
 void
-ttcp_sequence_i::sendOctetSeq(const ttcp_sequence::OctetSeq& ttcp_seq,
+ttcp_sequence_i::sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq,
                               CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(CORBA::Octet) ;
+  this->nbytes_ += ttcp_seq.length () * sizeof (CORBA::Octet);
 }
 
 void
-ttcp_sequence_i::sendDoubleSeq(const ttcp_sequence::DoubleSeq&
-                               ttcp_seq, CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+ttcp_sequence_i::sendDoubleSeq (const ttcp_sequence::DoubleSeq &
+                                ttcp_seq,
+                                CORBA::Environment &IT_env)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(CORBA::Double) ;
+  this->nbytes_ += ttcp_seq.length () * sizeof (CORBA::Double);
 }
 
 void
-ttcp_sequence_i::sendCharSeq(const ttcp_sequence::CharSeq& ttcp_seq,
+ttcp_sequence_i::sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq,
                              CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(CORBA::Char) ;
+  this->nbytes_ += ttcp_seq.length () * sizeof (CORBA::Char);
 }
 
 void
-ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq,
+ttcp_sequence_i::sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq,
                                CORBA::Environment &IT_env)
-      ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (IT_env);
   numCalls++;
-  this->nbytes_ += ttcp_seq.length()*sizeof(BinStruct) ;
+  this->nbytes_ += ttcp_seq.length () * sizeof (BinStruct);
 #if !defined (ACE_NDEBUG)
   ACE_DEBUG ((LM_DEBUG,
-              "Bytes received so far = %d\n", this->nbytes_));
-#endif
+              "Bytes received so far = %d\n",
+              this->nbytes_));
+#endif /* ACE_NDEBUG */
 }
