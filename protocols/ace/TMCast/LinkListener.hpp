@@ -87,7 +87,7 @@ namespace TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ::abort ();
+      if (ACE_OS::thr_join (thread_, &thread_, 0) != 0) ::abort ();
 
       // cerr << "Link listener is down." << endl;
     }
@@ -158,7 +158,7 @@ namespace TMCast
   private:
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
 
-    ACE_hthread_t thread_;
+    ACE_thread_t thread_;
     ACE_SOCK_Dgram_Mcast& sock_;
     MessageQueue& out_;
     MessageQueue  control_;
