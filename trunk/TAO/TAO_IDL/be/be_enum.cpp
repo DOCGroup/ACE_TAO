@@ -82,6 +82,32 @@ be_enum::member_count (void)
   return this->member_count_;
 }
 
+// Convert a numeric value to the string name
+UTL_ScopedName *
+be_enum::value_to_name (const unsigned long v)
+{
+  UTL_ScopeActiveIterator *iter;
+  AST_EnumVal             *item;
+  AST_Decl		            *i;
+
+  iter = new UTL_ScopeActiveIterator (this, 
+                                      IK_decls);
+
+  while (!iter->is_done ()) 
+    {
+      i = iter->item  ();
+      item = AST_EnumVal::narrow_from_decl (i);
+      if (item->constant_value  ()->ev ()->u.ulval == v) 
+        {
+          delete iter;
+          return item->name ();
+        }
+      iter->next ();
+    }
+  delete iter;
+  return NULL;
+}
+
 int
 be_enum::accept (be_visitor *visitor)
 {
