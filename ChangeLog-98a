@@ -13,7 +13,7 @@ Thu Dec  4 13:11:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  to DEFAULT_LOGGER_KEY.  Thanks to Steven Coy for pointing out
  	  this inconsistency.
 
-	* ace/OS.h: Renamed ACE_LOGGER_KEY to ACE_DEFAULT_LOGGER_KEY to 
+	* ace/OS.h: Renamed ACE_LOGGER_KEY to ACE_DEFAULT_LOGGER_KEY to
 	  make it consistent with other ACE_DEFAULT_* names.
 
 	* ace/OS.h: Changed the definition for ACE_LOGGER_KEY so that it
@@ -50,6 +50,8 @@ Thu Dec 04 09:57:40 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_osf1_4.GNU: allow enabling of
           WARNING_FLAGS by setting CXX_VER to POST_5X.  Thanks to
           James Johnson for this suggestion.
+
+        * ace/Svc_Conf_l.cpp: rebuilt with Doug's flex.
 
 Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 
@@ -88,7 +90,7 @@ Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 	  filebuf
 	  ifstream
 	  ofstream
-	  fstream	
+	  fstream
 
 	  Use this file where you would usually forward declare the
  	  classes listed above.
@@ -111,14 +113,14 @@ Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
  	  depending on OS.h to provide you the stream header files, you
  	  will have to change your code to either include iostream.h or
  	  iostream, or more portably ace/streams.h.
-	
+
 	* ace/OS.h: Removed stdcpp.h. Moved the standard C library
  	  includes from stdcpp.h to OS.h.  Also added ace/iosfwd.h to give
  	  forward declaration for the stream classes.
 
 	* ACE: Added explicit inclusion of ace/streams.h to the following
  	  files:
-	  
+
 	  ace/IOStream.cpp
 	  ace/Log_Record.cpp
 	  ace/OS.cpp
@@ -128,21 +130,21 @@ Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 	  examples/Log_Msg/test_log_msg.cpp
 	  examples/Reactor/Misc/test_time_value.cpp
 	  examples/Threads/task_three.cpp
-	  netsvcs/lib/Logging_Strategy.cpp	
+	  netsvcs/lib/Logging_Strategy.cpp
 	  examples/Logger/Acceptor-server/server_loggerd.cpp
 	  examples/ASX/UPIPE_Event_Server/event_server.cpp
-	  examples/Reactor/Ntalker/ntalker.cpp	  
-	  examples/Shared_Malloc/test_persistence.cpp	
-	  examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp	
+	  examples/Reactor/Ntalker/ntalker.cpp
+	  examples/Shared_Malloc/test_persistence.cpp
+	  examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp
 	  examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp
 	  examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp
 	  examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp
-	
+
 	* Updated makefile dependencies throughout ACE to reflect the
  	  removal of stdcpp.h and the addition of streams.h.
-	
+
 	* examples/Threads/barrier2.cpp: Removed inclusion of stdcpp.h.
-	
+
 	* ace/IOStream_T.cpp: Reorganized include files so that inclusion
  	  of config.h is not necessary.
 
@@ -159,7 +161,7 @@ Thu Dec 04 03:46:04 1997    <irfan@TWOSTEP>
 
 	* ace: Added code to protect against multiple inclusions of
  	  config.h.  Following files were effected:
-	  
+
 	  Trace.cpp
 	  Log_Msg.cpp
 
@@ -197,7 +199,7 @@ Wed Dec 03 18:02:09 1997    <irfan@TWOSTEP>
 
 Wed Dec  3 10:29:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/ACE.cpp: 
+	* ace/ACE.cpp:
 	  Use ACE_UINT32 to compute the 32-bit CRC, on Alphas (and
 	  probably other 64 bit machines) u_long seems to be longer than
 	  that.
