@@ -8,8 +8,8 @@
 // Constructor.
 TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 						IORS servers)
-  :    server_ (servers),
-       helper_ (this)
+  : server_ (servers),
+    helper_ (this)
 {
   TAO_TRY
     {
@@ -17,7 +17,6 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
       // periodically.
       ACE_DEBUG ((LM_DEBUG,
 		  "In the constructor of Clerk\n"));
-
       if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
 	  (&helper_,
 	   0,
@@ -46,7 +45,6 @@ TAO_Time_Service_Clerk::~TAO_Time_Service_Clerk (void)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time (CORBA::Environment &_env)
 {
-
   TAO_UTO *uto = 0;
 
   ACE_NEW_THROW_RETURN (uto,
@@ -59,7 +57,6 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &_env)
 
   return uto->_this ();
 }
-
 
 // This method returns the global time in a UTO only if the time can
 // be guaranteed to have been obtained securely.  This method is not
@@ -132,6 +129,7 @@ TAO_Time_Service_Clerk::get_time (void)
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
 
-  return ACE_OS::gettimeofday ().sec () - this->update_timestamp_ + this->time_;
+  return ACE_OS::gettimeofday ().sec () 
+    - this->update_timestamp_ + this->time_;
 
 }

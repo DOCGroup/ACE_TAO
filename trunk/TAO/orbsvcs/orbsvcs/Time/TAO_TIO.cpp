@@ -16,7 +16,7 @@ TAO_TIO::~TAO_TIO (void)
 {
 }
 
- // This is the get method for the attribute time interval.
+// This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
 TAO_TIO::time_interval (CORBA::Environment &env)
@@ -24,11 +24,11 @@ TAO_TIO::time_interval (CORBA::Environment &env)
   return attr_time_interval;
 }
 
-
-  // This operation returns a value of type OverlapType depending on how the
-  // interval in the object and the time range represented by the parameter UTO overlap.
-  // If OverlapType is not OTNoOverlap, then the out parameter overlap contains the overlap
-  // interval, otherwise the out parameter contains the gap between the two intervals.
+// This operation returns a value of type OverlapType depending on how
+// the interval in the object and the time range represented by the
+// parameter UTO overlap.  If OverlapType is not OTNoOverlap, then the
+// out parameter overlap contains the overlap interval, otherwise the
+// out parameter contains the gap between the two intervals.
 
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
@@ -37,17 +37,20 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 {
   TAO_TIO *tio = 0;
 
-  TimeBase::TimeT lb1 = this->time_interval (env).lower_bound;
-  TimeBase::TimeT up1 = this->time_interval (env).upper_bound;
-  TimeBase::TimeT lb2 = uto->time (env) - uto->inaccuracy (env);
-  TimeBase::TimeT up2 = uto->time (env) + uto->inaccuracy (env);
+  TimeBase::TimeT lb1 =
+    this->time_interval (env).lower_bound;
+  TimeBase::TimeT up1 =
+    this->time_interval (env).upper_bound;
+  TimeBase::TimeT lb2 =
+    uto->time (env) - uto->inaccuracy (env);
+  TimeBase::TimeT up2 =
+    uto->time (env) + uto->inaccuracy (env);
 
   if (lb1 == lb2 && up1 == up2)
     {
       ACE_NEW_RETURN (tio,
 		      TAO_TIO (lb1, up1),
 		      CosTime::OTNoOverlap);
-
       overlap = tio->_this ();
 
       return CosTime::OTOverlap;
@@ -89,44 +92,41 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 	  ACE_NEW_RETURN (tio,
 			  TAO_TIO (lb2, up1),
 			  CosTime::OTNoOverlap);
-
 	  overlap = tio->_this ();
 
 	  return CosTime::OTOverlap;
 	}
     }
+  else if (up2 < lb1)
+    {
+
+      ACE_NEW_RETURN (tio,
+                      TAO_TIO (0, 0),
+                      CosTime::OTNoOverlap);
+
+      overlap = tio->_this ();
+
+      return CosTime::OTNoOverlap;
+    }
   else
     {
-      if (up2 < lb1)
-	{
+      ACE_NEW_RETURN (tio,
+                      TAO_TIO (lb1, up2),
+                      CosTime::OTNoOverlap);
 
-	  ACE_NEW_RETURN (tio,
-			  TAO_TIO (0, 0),
-			  CosTime::OTNoOverlap);
+      overlap = tio->_this ();
 
-	  overlap = tio->_this ();
-
-	  return CosTime::OTNoOverlap;
-	}
-      else
-	{
-	  ACE_NEW_RETURN (tio,
-			  TAO_TIO (lb1, up2),
-			  CosTime::OTNoOverlap);
-
-	  overlap = tio->_this ();
-
-	  return CosTime::OTOverlap;
-	}
+      return CosTime::OTOverlap;
     }
 
   return CosTime::OTNoOverlap;
 }
 
-  // This operation returns a value of type OverlapType depending on how the interval in the
-  // object and interval in the parameter TIO overlap. If OverlapType is not OTNoOverlap, then
-  // the out parameter overlap contains the overlap interval, otherwise the out parameter
-  // contains the gap between the two intervals.
+// This operation returns a value of type OverlapType depending on how
+// the interval in the object and interval in the parameter TIO
+// overlap. If OverlapType is not OTNoOverlap, then the out parameter
+// overlap contains the overlap interval, otherwise the out parameter
+// contains the gap between the two intervals.
 
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
@@ -136,14 +136,17 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
   TimeBase::IntervalT interval;
   TAO_TIO *tio_i = 0;
 
-  TimeBase::TimeT lb1 = this->time_interval (env).lower_bound;
-  TimeBase::TimeT up1 = this->time_interval (env).upper_bound;
-  TimeBase::TimeT lb2 = tio->time_interval (env).lower_bound;
-  TimeBase::TimeT up2 = tio->time_interval (env).upper_bound;
+  TimeBase::TimeT lb1 =
+    this->time_interval (env).lower_bound;
+  TimeBase::TimeT up1 =
+    this->time_interval (env).upper_bound;
+  TimeBase::TimeT lb2 =
+    tio->time_interval (env).lower_bound;
+  TimeBase::TimeT up2 =
+    tio->time_interval (env).upper_bound;
 
   if (lb1 == lb2 && up1 == up2)
     {
-
       ACE_NEW_RETURN (tio_i,
 		      TAO_TIO (lb1, up1),
 		      CosTime::OTNoOverlap);
@@ -195,28 +198,25 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 	  return CosTime::OTOverlap;
 	}
     }
+  else if (up2 < lb1)
+    {
+      ACE_NEW_RETURN (tio_i,
+                      TAO_TIO (0, 0),
+                      CosTime::OTNoOverlap);
+
+      overlap = tio_i->_this ();
+
+      return CosTime::OTNoOverlap;
+    }
   else
     {
-      if (up2 < lb1)
-	{
-	  ACE_NEW_RETURN (tio_i,
-			  TAO_TIO (0, 0),
-			  CosTime::OTNoOverlap);
+      ACE_NEW_RETURN (tio_i,
+                      TAO_TIO (lb1, up2),
+                      CosTime::OTNoOverlap);
 
-	  overlap = tio_i->_this ();
+      overlap = tio_i->_this ();
 
-	  return CosTime::OTNoOverlap;
-	}
-      else
-	{
-	  ACE_NEW_RETURN (tio_i,
-			  TAO_TIO (lb1, up2),
-			  CosTime::OTNoOverlap);
-
-	  overlap = tio_i->_this ();
-
-	  return CosTime::OTOverlap;
-	}
+      return CosTime::OTOverlap;
     }
 
   return CosTime::OTNoOverlap;

@@ -61,8 +61,9 @@ public:
 
   virtual CosTime::UTO_ptr secure_universal_time (CORBA::Environment &env);
   // This operation returns the global time in a UTO only if the time
-  // can be guaranteed to have been obtained securely. Currently this operation
-  // is not implemented and throws a CORBA::NO_IMPLEMENT exception, if called.
+  // can be guaranteed to have been obtained securely. Currently this
+  // operation is not implemented and throws a CORBA::NO_IMPLEMENT
+  // exception, if called.
 
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
 					       TimeBase::InaccuracyT inaccuracy,
@@ -98,11 +99,12 @@ private:
   // Time when last global synchronization was done.
 
   Timer_Helper helper_;
-  // This is a friend class that inherits from the Event Handler class.
-  // The handle_timeout method of this class is scheduled for periodic
-  // invocation by the reactor. This method, in turn, updates the clerks
-  // notion of time. Using this class obviates the need for the clerk to
-  // multiple inherit from the servant base as well as the event handler.
+  // This is a friend class that inherits from the Event Handler
+  // class.  The handle_timeout method of this class is scheduled for
+  // periodic invocation by the reactor. This method, in turn, updates
+  // the clerks notion of time. Using this class obviates the need for
+  // the clerk to multiple inherit from the servant base as well as
+  // the event handler.
 };
 
 #endif /* TIME_SERVICE_CLERK_H */

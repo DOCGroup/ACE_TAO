@@ -13,7 +13,6 @@ Timer_Helper::Timer_Helper (void)
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
   : clerk_ (clerk)
 {
-
   ACE_DEBUG ((LM_DEBUG,
 	      "In the constructor of the Timer Helper\n"));
 }
@@ -63,7 +62,6 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
       ACE_DEBUG ((LM_DEBUG,
 		  "\nUpdated time from %d servers in the network",
 		  no_of_servers));
-
 
       // Return the average of the times retrieved from the various
       // servers.

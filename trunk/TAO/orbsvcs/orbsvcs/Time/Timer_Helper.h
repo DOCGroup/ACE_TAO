@@ -66,9 +66,8 @@ protected:
   // Clerk's instance that this class helps to update time.
 
   typedef ACE_Unbounded_Set<CosTime::TimeService_var>
-  IORS;
+          IORS;
   // The set of server IORs.
-
 };
 
 #endif /* TIMER_HELPER_H */

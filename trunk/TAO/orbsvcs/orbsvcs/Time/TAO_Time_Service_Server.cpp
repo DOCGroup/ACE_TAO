@@ -30,14 +30,12 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &_env)
 				 0),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
-
   return uto->_this (_env);
 }
 
-
-// This method returns the current time in a UTO only if the
-// time can be guaranteed to have been obtained securely.
-// This method is not implemented currently.
+// This method returns the current time in a UTO only if the time can
+// be guaranteed to have been obtained securely.  This method is not
+// implemented currently.
 
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
@@ -45,7 +43,6 @@ TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
   env.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
   return 0;
 }
-
 
 // This creates a new UTO based on the given parameters.
 
@@ -63,10 +60,8 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 				 tdf),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
-
   return uto->_this ();
 }
-
 
 // This creates a new UTO given a time in the UtcT form.
 
@@ -82,11 +77,8 @@ TAO_Time_Service_Server::uto_from_utc (const TimeBase::UtcT &utc,
 				 utc.tdf),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::UTO::_nil ());
-
   return uto->_this ();
-
 }
-
 
 // This creates a new TIO with the given parameters.
 
@@ -103,6 +95,5 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
 				 upper),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			CosTime::TIO::_nil ());
-
   return tio->_this ();
 }

@@ -49,29 +49,31 @@ public:
   virtual CosTime::OverlapType spans (CosTime::UTO_ptr time,
 				      CosTime::TIO_out overlap,
 				      CORBA::Environment &env);
-  // This operation returns a value of type OverlapType depending on how the
-  // interval in the object and the time range represented by the parameter UTO overlap.
-  // If OverlapType is not OTNoOverlap, then the out parameter overlap contains the overlap
-  // interval, otherwise the out parameter contains the gap between the two intervals.
+  // This operation returns a value of type OverlapType depending on
+  // how the interval in the object and the time range represented by
+  // the parameter UTO overlap.  If OverlapType is not OTNoOverlap,
+  // then the out parameter overlap contains the overlap interval,
+  // otherwise the out parameter contains the gap between the two
+  // intervals.
 
   virtual CosTime::OverlapType overlaps (CosTime::TIO_ptr interval,
 					 CosTime::TIO_out overlap,
 					 CORBA::Environment &env);
-  // This operation returns a value of type OverlapType depending on how the interval in the
-  // object and interval in the parameter TIO overlap. If OverlapType is not OTNoOverlap, then
-  // the out parameter overlap contains the overlap interval, otherwise the out parameter
-  // contains the gap between the two intervals.
+  // This operation returns a value of type OverlapType depending on
+  // how the interval in the object and interval in the parameter TIO
+  // overlap. If OverlapType is not OTNoOverlap, then the out
+  // parameter overlap contains the overlap interval, otherwise the
+  // out parameter contains the gap between the two intervals.
 
   virtual CosTime::UTO_ptr time (CORBA::Environment &env);
-  // Returns a UTO in which the inaccuracy interval is equal to the time interval in the TIO
-  // and time value is the midpoint of the interval.
+  // Returns a UTO in which the inaccuracy interval is equal to the
+  // time interval in the TIO and time value is the midpoint of the
+  // interval.
 
 private:
-
   TimeBase::IntervalT attr_time_interval;
-  // This attribute returns an IntervalT structure with the values of its
-  // fields filled in with the corresponding values from the TIO.
-
+  // This attribute returns an IntervalT structure with the values of
+  // its fields filled in with the corresponding values from the TIO.
 };
 
 #endif /* TAO_TIO_H */

@@ -77,7 +77,6 @@ public:
   // Compares the time contained in the object with the time in the
   // supplied uto according to the supplied comparison type.
 
-
   CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr,
 				     CORBA::Environment &env);
   // Returns a TIO representing the time interval between the time in
