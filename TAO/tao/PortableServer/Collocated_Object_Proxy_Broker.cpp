@@ -279,8 +279,6 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t)
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
-    ACE_reinterpret_cast (
-        size_t,
-        _TAO_collocation_Object_Proxy_Broker_Factory_Initializer
+    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer
       )
   );

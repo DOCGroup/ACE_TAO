@@ -79,8 +79,7 @@ namespace TAO
         if (ami_allocator)
           {
             ACE_NEW_MALLOC (rd,
-                            ACE_static_cast (TAO_Asynch_Reply_Dispatcher *,
-                              ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
+                            static_cast<TAO_Asynch_Reply_Dispatcher *> (ami_allocator->malloc (sizeof (TAO_Asynch_Reply_Dispatcher))),
                             TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
                                                          reply_handler_ptr,
                                                          stub->orb_core (),

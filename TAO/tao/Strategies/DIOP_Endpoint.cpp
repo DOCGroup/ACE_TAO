@@ -166,11 +166,9 @@ TAO_DIOP_Endpoint::duplicate (void)
 CORBA::Boolean
 TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
-  TAO_DIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_DIOP_Endpoint *,
-                                                  endpt);
+  TAO_DIOP_Endpoint *endpoint = dynamic_cast<TAO_DIOP_Endpoint *> (endpt);
   if (endpoint == 0)
     return 0;
 
@@ -215,8 +213,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
       // We need to modify the object_addr_ in this method.  Do so
       // using a  non-const copy of the <this> pointer.
       TAO_DIOP_Endpoint *endpoint =
-        ACE_const_cast (TAO_DIOP_Endpoint *,
-                        this);
+        const_cast<TAO_DIOP_Endpoint *> (this);
 
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,

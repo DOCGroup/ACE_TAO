@@ -39,8 +39,7 @@ CORBA::Boolean
 TAO_RT_Transport_Descriptor_Private_Connection_Property::is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop)
 {
   const TAO_RT_Transport_Descriptor_Private_Connection_Property *rhs =
-    ACE_dynamic_cast (const TAO_RT_Transport_Descriptor_Private_Connection_Property*,
-                      other_prop);
+    dynamic_cast<const TAO_RT_Transport_Descriptor_Private_Connection_Property*> (other_prop);
   return (rhs != 0 &&
           this->object_id_ == rhs->object_id_);
 }
@@ -69,8 +68,7 @@ CORBA::Boolean
 TAO_RT_Transport_Descriptor_Banded_Connection_Property::is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop)
 {
   const TAO_RT_Transport_Descriptor_Banded_Connection_Property *rhs =
-    ACE_dynamic_cast (const TAO_RT_Transport_Descriptor_Banded_Connection_Property*,
-                      other_prop);
+    dynamic_cast<const TAO_RT_Transport_Descriptor_Banded_Connection_Property*> (other_prop);
 
   return (rhs != 0 &&
           this->low_priority_ == rhs->low_priority_ &&

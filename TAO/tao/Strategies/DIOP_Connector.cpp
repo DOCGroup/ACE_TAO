@@ -241,8 +241,7 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_DIOP_Endpoint *diop_endpoint =
-    ACE_dynamic_cast (TAO_DIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO_DIOP_Endpoint *> (endpoint );
 
   if (diop_endpoint == 0)
     return 0;

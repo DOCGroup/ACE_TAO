@@ -92,8 +92,7 @@ TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
     return 0;
 
   TAO_ServerProtocolPolicy *server_protocols =
-    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                      server_protocol_policy.in ());
+    dynamic_cast<TAO_ServerProtocolPolicy *> (server_protocol_policy.in ());
 
   if (server_protocols == 0)
     return 0;
@@ -130,8 +129,7 @@ TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
     return 0;
 
   TAO_ClientProtocolPolicy *client_protocols =
-    ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
-                      client_protocol_policy.in ());
+    dynamic_cast<TAO_ClientProtocolPolicy *> (client_protocol_policy.in ());
 
   if (client_protocols == 0)
     return 0;
@@ -575,8 +573,7 @@ TAO_RT_Protocols_Hooks::rt_service_context (
   if (!restart)
     {
       TAO_RT_Stub *rt_stub =
-        ACE_dynamic_cast (TAO_RT_Stub *,
-                          stub);
+        dynamic_cast<TAO_RT_Stub *> (stub);
 
       CORBA::Policy_var priority_model_policy =
         rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
@@ -622,8 +619,7 @@ TAO_RT_Protocols_Hooks::add_rt_service_context_hook (
   ACE_CHECK;
 
   TAO_PriorityModelPolicy *priority_model =
-    ACE_static_cast (TAO_PriorityModelPolicy *,
-                     model_policy_ptr.in ());
+    static_cast<TAO_PriorityModelPolicy *> (model_policy_ptr.in ());
 
   if (priority_model->get_priority_model () == RTCORBA::CLIENT_PROPAGATED)
     {
@@ -652,8 +648,7 @@ TAO_RT_Protocols_Hooks::get_selector_hook (
     RTCORBA::PriorityModelPolicy::_narrow (model_policy);
 
   TAO_PriorityModelPolicy *priority_model_policy =
-    ACE_static_cast (TAO_PriorityModelPolicy *,
-                     model_policy_ptr.in ());
+    static_cast<TAO_PriorityModelPolicy *> (model_policy_ptr.in ());
 
   if (priority_model_policy->get_priority_model ()
         == RTCORBA::CLIENT_PROPAGATED)
@@ -682,8 +677,7 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands_policy);
 
   TAO_PriorityBandedConnectionPolicy *priority_bands_policy =
-    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                     bands_policy_ptr.in ());
+    static_cast<TAO_PriorityBandedConnectionPolicy *> (bands_policy_ptr.in ());
 
   // Find the band with the range covering our target priority.
   RTCORBA::PriorityBands &bands =
