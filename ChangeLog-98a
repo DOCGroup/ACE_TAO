@@ -30,6 +30,10 @@ Wed Dec 03 06:26:14 1997  David L. Levine  <levine@cs.wustl.edu>
           DIGITAL_UNIX's cxx 6.0, which now uses ACE_HAS_ONEARG_SIGWAIT.
           Also, added an ACE_DEFAULT_BASE_ADDR to the config file.
 
+        * tests/{Priority_Reactor_Test,Reactor_Performance_Test}.cpp:
+          instantiate ACE_Map_*, for use by ACE_Connector, with ACE_HANDLE
+          instead of int.  That's the way it's declared in ace/Connector.h.
+
 Wed Dec 03 00:17:50 1997    <irfan@TWOSTEP>
 
 	* tests/test_config.h: Removed code for
