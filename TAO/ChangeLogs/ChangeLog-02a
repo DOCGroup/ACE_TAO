@@ -1,3 +1,8 @@
+Tue May 28 11:12:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+          Converted old style documentation to doxygen style documentation
+
 Tue May 28 09:02:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Cached_Policies.h:
