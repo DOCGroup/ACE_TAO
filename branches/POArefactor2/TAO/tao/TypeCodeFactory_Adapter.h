@@ -22,7 +22,6 @@
 
 #include "tao/SystemException.h"
 #include "tao/OBV_Constants.h"
-#include "tao/default_environment.h"
 
 namespace CORBA
 {

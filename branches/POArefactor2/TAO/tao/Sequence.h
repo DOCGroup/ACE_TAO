@@ -23,7 +23,6 @@
 
 #include "tao/Managed_Types.h"
 #include "tao/orbconf.h"
-#include "tao/default_environment.h"
 
 namespace CORBA
 {

@@ -28,6 +28,7 @@ ACE_RCSID (tao,
 #include "debug.h"
 #include "CDR.h"
 #include "SystemException.h"
+#include "default_environment.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
