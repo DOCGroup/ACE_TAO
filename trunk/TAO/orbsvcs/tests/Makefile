@@ -46,7 +46,9 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 
 ifeq ($(minimum_corba),0)
   ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    DIRS += InterfaceRepo
+    ifneq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
+      DIRS += InterfaceRepo
+    endif # findstring Compilers 4.2
   endif # ACE_HAS_GNUG_PRE_2_8
 endif # minimum_corba
 
