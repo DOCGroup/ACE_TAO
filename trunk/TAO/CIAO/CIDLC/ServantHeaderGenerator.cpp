@@ -1473,17 +1473,14 @@ namespace
 
 }
 
-
+// ===========================================================
 
 HeaderEmitterBase::HeaderEmitterBase (ostream& os_)
   : os (os_)
 {
 }
 
-// ===========================================================
-
-ServantHeaderEmitter::ServantHeaderEmitter (
-                                            ostream& os_,
+ServantHeaderEmitter::ServantHeaderEmitter (ostream& os_,
                                             CommandLine const& cl,
                                             string export_macro,
                                             Declarations const& declarations)

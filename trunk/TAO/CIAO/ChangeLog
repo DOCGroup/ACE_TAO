@@ -1,3 +1,35 @@
+Wed Aug 20 17:09:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+        
+          Added missing header files to the project.
+          
+        * CCF/CCF/CodeGenerationKit/Regex.hpp:
+        
+          Boris Kolpackov's <boris@dre.vanderbilt.edu> change
+          to allow a choice of delimiters when passing a
+          regular expression string to the perl_s() method.
+          
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Minor cosmetic changes.
+          
+        * CIDLC/DescriptorGenerator.cpp:
+        * CIDLC/DescriptorGenerator.hpp:
+        
+          New files, containing code for an XML generator, the
+          CORBA Component Descriptor .ccd file.
+          
+        * CIDLC/CIDLC.vcproj:
+        * CIDLC/cidlc.cpp:
+        
+          Updated these files to recognize the new generator.
+          Also changed the output directory of the executable
+          to be CIAO_ROOT/bin.
+
 Wed Aug 20 14:48:15 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
