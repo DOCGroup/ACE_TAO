@@ -1,3 +1,8 @@
+Wed Dec 26 10:33:35 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp: 
+	  Removed a duplicate template instantiation.
+
 Wed Dec 26 10:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: Removed a

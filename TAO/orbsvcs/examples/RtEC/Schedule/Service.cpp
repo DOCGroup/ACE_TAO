@@ -429,7 +429,6 @@ template class auto_ptr<TAO_Reconfig_Scheduler_Entry>;
 template class ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>;
 template class ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>;
 template class ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>;
-template class ACE_Equal_To<int>;
 template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>;
@@ -466,7 +465,6 @@ template class TAO_RSE_Utilization_Visitor<TAO_MUF_Reconfig_Sched_Strategy>;
 #pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::Config_Info>
 #pragma instantiate ACE_Auto_Basic_Ptr<RtecScheduler::RT_Info>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Reconfig_Scheduler_Entry>
-#pragma instantiate ACE_Equal_To<int>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Config_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::Dependency_Set *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<int, RtecScheduler::RT_Info *, ACE_Hash<int>, ACE_Equal_To<int>, TAO_SYNCH_MUTEX>
