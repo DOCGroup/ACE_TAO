@@ -1,4 +1,4 @@
-Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc701.comm.mot.com>
+Tue Mar 07 18:37:26 2000  Tom Ziomek <tomz@cc.comm.mot.com>
 
         * ace/Singleton.h: added comment to ACE_Unmanaged_Singleton
           description to clarify that friend declaration must be
