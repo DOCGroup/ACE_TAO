@@ -6,10 +6,10 @@
   <link rev=made href="mailto:schmidt@cs.wustl.edu">
 </HEAD>
 
-<BODY text = "#000000"
-link="#000fff"
-vlink="#ff0f0f"
-bgcolor="#ffffff">
+<BODY text    = "#000000"
+      link    = "#000fff"
+      vlink   = "#ff0f0f"
+      bgcolor = "#ffffff">
 
 <HR>
 <H3>Building and Installing ACE and Its Network Services</H3>
@@ -1457,11 +1457,13 @@ in your PATH.<P>
 
 <HR><P>
 <H3><A NAME="resource requirements">System Resource Requirements</A></H3>
-The amount of system resources required to build ACE (and TAO) varies
+The amount of system resources required to build ACE and TAO varies
 greatly.  Platform, build options, and components built primarily
 influence the required system resources.  As a rough guide, the
-typical peak memory requirement is about 256 Mb.  An entire build of
-ACE+TAO can use over 700 Mb of disk space.<p>
+typical peak memory requirement could be about 256 Mb (notably, for
+TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
+can use well over 1300 Mb of disk space.  It's usually not necessary
+to build <strong>all</strong> of ACE and TAO, though.<p>
 
 If you run out of memory when building, you might consider trying
 some or all of these suggestions:<p>
