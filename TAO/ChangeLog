@@ -1,3 +1,34 @@
+Thu Dec 11 18:13:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTScheduling/RTScheduler_include.pidl:
+        * tao/RTScheduling/RTScheduler_includeC.h:
+        * tao/RTScheduling/RTSchedulerC.h:
+          Added a new RTScheduler_include.pidl file, which
+          just includes RTScheduler.idl. Users of RTScheduler should include
+          this pidl file in their IDL file and include RTScheduler.h
+          in their code instead of RTSchedulerC.h. Thanks to Bala for pointing
+          me the correct direction.
+
+        * tao/RTScheduling/Makefile.bor:
+          Also install the pidl file
+
+        * tests/RTScheduling/VoidData/test.idl:
+        * tests/RTScheduling/VoidData/test.pidl:
+          Removed test.pidl and added test.idl. This test now can compile
+          the IDL file as normally. Include then RTScheduler_include.pidl
+          instead of RTScheduler.idl.
+
+        * tests/RTScheduling/VoidData/Makefile:
+        * tests/RTScheduling/VoidData/VoidData.bor:
+        * tests/RTScheduling/VoidData/VoidData.dsp:
+        * tests/RTScheduling/VoidData/VoidData.mpc:
+          Updated these files
+
+        * tests/RTScheduling/VoidData/testC.cpp:
+        * tests/RTScheduling/VoidData/testC.h:
+        * tests/RTScheduling/VoidData/testC.i:
+          Removed these generated file from the repo
+
 Thu Dec 11 10:45:53 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp
