@@ -1,3 +1,7 @@
+Sat May 22 17:10:11 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * TAO version 0.3.23 released.
+
 Sat May 22 14:07:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp} (TAO_Forward_FlowSpec_Entry): 
