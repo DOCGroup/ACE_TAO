@@ -1,5 +1,6 @@
 /* -*- c++ -*- */
 // Hey, Emacs!  This is a C++ file!
+// $Id$
 
 #ifndef JAWS_IO_H
 #define JAWS_IO_H

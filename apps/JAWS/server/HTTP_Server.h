@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #if !defined (HTTP_SERVER_H)
 #define HTTP_SERVER_H

@@ -1,4 +1,4 @@
-// VFS.h
+// $Id$
 
 // Associate URI's to real path.
 // Hash on URI.

@@ -1,3 +1,5 @@
+// $Id$
+
 // HTTP_Helpers.cpp -- Helper utilities for both server and client
 
 #include "JAWS/server/HTTP_Helpers.h"
