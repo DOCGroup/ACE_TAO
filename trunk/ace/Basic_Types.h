@@ -432,12 +432,9 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
-// Definitions of the CORBA IDL basic types 
-// not already defined in ACE, and aliases for 
-// some that might have to be a different size. 
-typedef u_char CDR_Octet;
-typedef ACE_UINT64 CDR_ULongLong;
-
+// Definitions of the CORBA IDL basic types, 
+// for use in the CDR classes. The cleanest way to avoid 
+// complaints from all compilers is to define them all. 
 #if defined (ghs) && defined (CHORUS)
   // This is non-compliant, but a nasty bout with Green Hills C++68000 1.8.8
   // forces us into it.
@@ -445,6 +442,14 @@ typedef ACE_UINT64 CDR_ULongLong;
 #else  /* ! (ghs && CHORUS) */
   typedef u_char CDR_Boolean;
 #endif /* ! (ghs && CHORUS) */
+
+typedef u_char CDR_Octet;
+typedef char CDR_Char;
+typedef ACE_INT16 CDR_Short;
+typedef ACE_UINT16 CDR_UShort;
+typedef ACE_INT32 CDR_Long;
+typedef ACE_UINT32 CDR_ULong;
+typedef ACE_UINT64 CDR_ULongLong;
 
 # if defined (_MSC_VER) && _MSC_VER >= 900
     typedef __int64 CDR_LongLong;
@@ -466,13 +471,60 @@ typedef ACE_UINT64 CDR_ULongLong;
     // types in normal arithmetic expressions.  If any particular
     // application can cope with the loss of range, it can define
     // conversion operators itself.
-#   define NONNATIVE_LONGLONG
 #   if defined (ACE_BIG_ENDIAN)
       struct CDR_LongLong { ACE_INT32 h, l; };
 #   else
       struct CDR_LongLong { ACE_INT32 l, h; };
 #   endif /* ! ACE_BIG_ENDIAN */
 # endif /* no native 64 bit integer type */
+
+# if ACE_SIZEOF_FLOAT == 4
+    typedef float CDR_Float;
+# else  /* ACE_SIZEOF_FLOAT != 4 */
+    struct CDR_Float
+    {
+#     if ACE_SIZEOF_INT == 4
+        // Use u_int to get word alignment.
+        u_int f;
+#     else  /* ACE_SIZEOF_INT != 4 */
+        // Applications will probably have trouble with this.
+        char f[4];
+#     endif /* ACE_SIZEOF_INT != 4 */
+    };
+# endif /* ACE_SIZEOF_FLOAT != 4 */
+
+# if ACE_SIZEOF_DOUBLE == 8
+    typedef double CDR_Double;
+# else  /* ACE_SIZEOF_DOUBLE != 8 */
+    struct CDR_Double
+    {
+#     if ACE_SIZEOF_LONG == 8
+        // Use u_long to get word alignment.
+        u_long f;
+#     else  /* ACE_SIZEOF_INT != 8 */
+        // Applications will probably have trouble with this.
+        char f[8];
+#     endif /* ACE_SIZEOF_INT != 8 */
+    };
+# endif /* ACE_SIZEOF_DOUBLE != 8 */
+
+  // 94-9-32 Appendix A defines a 128 bit floating point "long double"
+  // data type, with greatly extended precision and four more bits of
+  // exponent (compared to "double").  This is an IDL extension, not
+  // yet standard.
+
+#  if   ACE_SIZEOF_LONG_DOUBLE == 16
+  typedef long double CDR_LongDouble;
+#  else
+#    define NONNATIVE_LONGDOUBLE
+  struct ACE_Export CDR_LongDouble
+  {
+    char ld[16];
+    int operator== (CDR_LongDouble &rhs);
+    int operator!= (CDR_LongDouble &rhs);
+    // @@ also need other comparison operators.
+  };
+#  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
 # if defined (__ACE_INLINE__)
 #   include "ace/Basic_Types.i"
