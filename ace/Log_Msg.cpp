@@ -117,8 +117,6 @@ ACE_Log_Msg_Manager::close (void)
   delete ACE_Log_Msg::instance ();
 #endif /* ACE_HAS_STHREADS && ! TSS_EMULATION && ! ACE_HAS_EXCEPTIONS */
 
-  ACE_Thread::keyfree (ACE_Log_Msg_key_);
-
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
