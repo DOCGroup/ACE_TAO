@@ -1,3 +1,9 @@
+Sun Jan 13 09:03:25 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tests/Two_Objects/worker.h: 
+	* tests/Two_Objects/server.cpp:
+	  Fixed compile errors on SunCC51.
+
 Sat Jan 12 21:45:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FT_ORB.dsp (RSC): Added a new dsp file

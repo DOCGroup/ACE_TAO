@@ -7,8 +7,8 @@
 #ifndef TAO_TWO_OBJECTS_WORKER_H
 #define TAO_TWO_OBJECTS_WORKER_H
 
+#include "tao/ORB_Core.h"
 #include "ace/Task.h"
-#include "Two_ObjectsS.h"
 
 //   Use the ACE_Task_Base class to run server threads
 class Worker : public ACE_Task_Base
