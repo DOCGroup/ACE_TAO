@@ -63,6 +63,14 @@ myallocator (const void *base_addr = 0)
 static Test_Data *
 initialize (MALLOC *allocator)
 {
+  double *temp = 0;
+  ACE_ALLOCATOR_RETURN (temp,
+                        (double *) allocator->malloc (sizeof (double)),
+                        0);
+  // Make sure that doubles work!
+  *temp = 5.0;
+  allocator->free (temp);
+
   void *ptr;
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
@@ -72,6 +80,7 @@ initialize (MALLOC *allocator)
   data1->i1_ = 111;
   data1->i2_ = 222;
   data1->i3_ = 333;
+  data1->d1_ = 87.5;
 
   void *gap = 0;
   ACE_ALLOCATOR_RETURN (gap,
@@ -79,19 +88,18 @@ initialize (MALLOC *allocator)
                         0);
   allocator->free (gap);
 
+
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         0);
   Test_Data *data2 = new (ptr) Test_Data;
 
   data1->next_ = 0;
-  data1->i1_ = 111;
-  data1->i2_ = 222;
-  data1->i3_ = 333;
   data2->next_ = data1;
   data2->i1_ = -111;
   data2->i2_ = -222;
   data2->i3_ = -333;
+  data2->d1_ = 77.34;
 
   // Test in shared memory using long (array/pointer)
   ACE_ALLOCATOR_RETURN (ptr,
@@ -144,11 +152,12 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d\n"),
+                  ASYS_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,
-                  t->i3_));
+                  t->i3_,
+                  t->d1_));
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("*t->bpl_ = %d, t->long_test_->array_[0] = ")
                   ASYS_TEXT ("%d\n>>>>\n"),
