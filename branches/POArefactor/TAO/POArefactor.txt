@@ -1,3 +1,8 @@
+Wed Sep 15 07:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb_typesS.h:
+          New file
+
 Tue Sep 14 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_ThreadPolicy.{cpp,h}:
