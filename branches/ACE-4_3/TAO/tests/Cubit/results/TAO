@@ -1,0 +1,92 @@
+Cubit results over Ethernet with 20,000 calls
+---------------------------------------------
+
+                                Clients         Latency (ms)      Calls/Sec
+                
+TAO reactive                    1               1.172             853
+                                2               1.342             745
+                                3               1.902             525
+
+TAO threaded version            1               1.174             851
+                                2               1.219             820
+                                3               1.600             625
+
+
+Cubit results over ATM with 20,000 calls
+---------------------------------------------
+
+                                Clients         Latency (ms)      Calls/Sec
+
+TAO reactive                    1               1.161             861
+                                2               1.302             768
+                                3               1.732             577
+
+TAO threaded version            1               1.170             854
+                                2               1.3               769
+                                3               1.600             625
+
+
+Cubit results over ATM after optimizations with 20,000 calls
+------------------------------------------------------------
+
+                                Clients         Latency (ms)      Calls/Sec
+
+TAO reactive                    1               1.127             887
+                                2               1.238             807
+                                3               1.501             666
+
+TAO threaded version            1               1.057             946
+                                2               1.225             816
+                                3               1.471             679
+
+Prime_Factor results over ATM  with 20,000 calls
+-------------------------------------------------
+
+                                Clients         Latency (ms)      Calls/Sec
+
+TAO reactive                    1               7.407             135
+                                2              13.7                73
+                                3              19.7                51    
+
+TAO threaded version            1               7.389             135
+                                2               8.080             124
+                                3              10.726              93
+
+IO-bound results over ATM  with 20,000 calls
+--------------------------------------------
+
+                                Clients         Latency (ms)      Calls/Sec
+
+TAO reactive                    1               6.404             156
+                                2              11.909              83
+                                3              17.324              57
+                                               
+TAO threaded version            1               6.378             156
+                                2               6.449             155
+                                3               6.500             153
+
+
+
+
+                        Sample client-side profile for TAO for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+rw_rdlock            0.40      146.579  20006    0.007    1.200    0.005   0.000
+rw_unlock            0.25       91.386  20009    0.005    0.058    0.004   0.000
+mutex_lock           0.06       21.087   5265    0.004    0.178    0.002   0.000
+mutex_unlock         0.04       14.372   5271    0.003    0.075    0.002   0.000
+rw_wrlock            0.00        0.045      3    0.015    0.034    0.005   0.008
+
+
+                       Sample server-side profile for TAO for 20000 calls
+
+Function name         %      self+desc.          mean     max      min     std.
+                     time       ms       calls  ms/call ms/call  ms/call   err
+________________________________________________________________________________
+mutex_lock           1.12      154.491  54507    0.003    0.140    0.002   0.000
+mutex_unlock         1.06      145.638  54508    0.003    0.310    0.002   0.000
+rw_rdlock            0.27       37.265   6813    0.005    0.037    0.004   0.000
+rw_unlock            0.20       27.792   6813    0.004    0.045    0.004   0.000
+

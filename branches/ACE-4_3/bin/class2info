@@ -1,0 +1,197 @@
+#! /bin/sh
+# =============================================================================
+#
+# = DESCRIPTION
+#     Converts a C++ class header file into a classinfo description file.
+#
+# = AUTHOR(S)
+#     Graham Dumpleton
+#     K. Dorn
+# 
+# = COPYRIGHT
+#     Copyright - OTC LIMITED (1991)
+#
+# =============================================================================
+
+OSE_HOST=
+
+OSE_RELEASE_NAME=
+export OSE_RELEASE_NAME
+
+OSE_ROOT=${OSE_ROOT-$ACE_ROOT}
+export OSE_ROOT
+
+OSE_VERSION_ROOT=$OSE_ROOT
+export OSE_VERSION_ROOT
+
+BINDIR="$OSE_VERSION_ROOT/$OSE_HOST/bin"
+LIBDIR=${CLASSINFOLIBDIR-"$OSE_VERSION_ROOT/bin"}
+
+INFO2INFO="$BINDIR/info2info"
+
+AWK="nawk"
+
+if test "$AWK" = "nawk"
+then
+  VARG="-v"
+fi
+
+
+FILES=
+V2=
+
+trap 'rm -f /tmp/ci.$$; exit' 1 2 3 13 15
+
+#
+# Error.
+#
+ERROR()
+{
+  echo "`basename $0`: $1" >&2
+  shift
+  while test $# != "0"
+  do
+    echo $1 >&2
+    shift
+  done
+  exit 1
+}
+
+#
+# Usage message.
+#
+USAGE()
+{
+  ERROR "Usage: `basename $0` file.h ..."
+}
+
+#
+# Check usage.
+#
+if test $# = 0
+then
+  USAGE
+fi
+
+#
+# Parse command line.
+#
+while test $# != 0
+do
+  case $1 in
+#    -v2)
+#      V2=YES
+#      shift
+#      ;;
+    *.h|*.hh|*.H|*.hxx|*.hpp|*.h++)
+      FILES="$FILES $1"
+      shift
+      ;;
+    *)
+      USAGE
+      ;;
+    esac
+done
+
+#
+# Check usage again.
+#
+if test -z "$FILES"
+then
+  USAGE
+fi
+
+#
+# Check for awk file.
+#
+CLASS2INFO=$LIBDIR/class2info.awk
+HIDINGFMT=$LIBDIR/hiding.fmt
+
+if test ! -f $HIDINGFMT
+then
+  ERROR "Can't find $HIDINGFMT"
+fi
+
+
+if ( test ! -f $CLASS2INFO )
+then
+  ERROR "Can't find $CLASS2INFO"
+fi
+
+
+
+VCSA=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^CSAHEADER$" {
+ if ( $2 ~ "on" )
+  printf("%s","csaprintheader=on");
+ else
+  printf("%s","csaprintheader=");
+}' $HIDINGFMT`
+
+VPUBL=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PUBLIC$" {
+ if ( $2 ~ "on" )
+  printf("%s","publ=on");
+ else
+  printf("%s","publ=");
+}' $HIDINGFMT`
+
+VPROT=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PROTECTED$" {
+ if ( $2 ~ "on" )
+  printf("%s","prot=on");
+ else
+  printf("%s","prot=");
+}' $HIDINGFMT`
+
+VPRIV=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PRIVATE$" {
+ if ( $2 ~ "on" )
+  printf("%s","priv=on");
+ else
+  printf("%s","priv=");
+}' $HIDINGFMT`
+
+#echo " $VPUBL   $VPROT    $VPRIV "
+
+
+#
+# Parse each file.
+#
+#     $VARG publ=on $VARG prot=off $VARG priv=off \
+for i in $FILES
+do
+  if test ! -f $i
+  then
+    ERROR "$i doesn't exist."
+  fi
+  FILENAME=`basename $i`
+  INFOFILE=`echo $FILENAME | sed -e 's/\..*$//'`.ci
+  rm -f $INFOFILE
+  if test "$?" != 0
+  then
+    ERROR "Couldn't remove info file $INFOFILE."
+  fi
+  expand $i > /tmp/ci.$$
+  $AWK \
+     -f $CLASS2INFO $VARG filename=$i \
+     $VARG $VPUBL $VARG $VPROT $VARG $VPRIV \
+     /tmp/ci.$$ > $INFOFILE
+  rm -f /tmp/ci.$$
+#  if test ! -z "$V2"
+#  then
+#    $INFO2INFO $INFOFILE
+#  fi
+done

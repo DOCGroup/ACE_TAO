@@ -1,0 +1,326 @@
+#! /bin/sh
+# =============================================================================
+#
+# = DESCRIPTION
+#     Front end to awk script for generating <class>.hxx and <class>.hxx files
+#     from classinfo files.
+#
+# = AUTHOR(S)
+#     K. Dorn
+# 
+#
+# =============================================================================
+
+OSE_HOST=
+
+OSE_RELEASE_NAME=
+export OSE_RELEASE_NAME
+
+OSE_ROOT=${OSE_ROOT-$ACE_ROOT}
+export OSE_ROOT
+
+OSE_VERSION_ROOT=$OSE_ROOT
+export OSE_VERSION_ROOT
+
+BINDIR="$OSE_VERSION_ROOT/$OSE_HOST/bin"
+LIBDIR=${CLASSINFOLIBDIR-"$OSE_VERSION_ROOT/bin"}
+
+AWK="${AWK-nawk}"
+
+
+if test "$AWK" = "nawk"
+then
+  VARG="-v"
+fi
+
+EXT="3"
+
+#
+# Error.
+#
+ERROR()
+{
+  echo "`basename $0`: $1" >&2
+  shift
+  while test $# != "0"
+  do
+    echo $1 >&2
+    shift
+  done
+  exit 1
+}
+
+#
+# Usage message.
+#
+USAGE()
+{
+  ERROR "Usage: `basename $0` file.ci"
+} 
+
+#
+# Check usage.
+#
+if test $# != "1" -o "'basename $1 .ci'" = "$1"
+then
+  USAGE
+fi
+
+
+#
+# Check for awk file etc.
+#
+INFO2SRC=$BINDIR/info2src.awk
+INFO2DOC=$LIBDIR/info2doc.awk
+MANFMT=$LIBDIR/info2head.fmt
+HIDINGFMT=$LIBDIR/hiding.fmt
+VENDORFMT=$LIBDIR/vendor.fmt
+
+if test ! -f $VENDORFMT
+then
+  ERROR "Can't find $VENDORFMT"
+fi
+
+if test ! -f $HIDINGFMT
+then
+  ERROR "Can't find $HIDINGFMT"
+fi
+
+if test ! -f $INFO2DOC
+then
+  ERROR "Can't find $INFO2DOC"
+fi
+
+if test ! -f $MANFMT
+then
+  ERROR "Can't find $MANFMT"
+fi
+
+ADTS=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^(CLASS|STRUCT|UNION)$" && $2 !~ "(::|<)" {
+  printf( "%s\n", $2 )
+}
+$1 ~ "^TEMPLATE$" && $3 !~ "::" {
+  printf( "%s\n", $3 )
+}' $1`
+
+
+
+VMERGE=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^CSAMERGECXXHXX$" {
+ if ( $2 ~ "on" )
+  printf("%s","merge=on");
+ else
+  printf("%s","merge=");
+}' $HIDINGFMT`
+
+VCSA=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^CSAHEADER$" {
+ if ( $2 ~ "on" )
+  printf("%s","csaprintheader=on");
+ else
+  printf("%s","csaprintheader=");
+}' $HIDINGFMT`
+
+VPUBL=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PUBLIC$" {
+ if ( $2 ~ "on" )
+  printf("%s","publ=on");
+ else
+  printf("%s","publ=");
+}' $HIDINGFMT`
+
+VPROT=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PROTECTED$" {
+ if ( $2 ~ "on" )
+  printf("%s","prot=on");
+ else
+  printf("%s","prot=");
+}' $HIDINGFMT`
+
+VPRIV=`$AWK '
+BEGIN {
+  FS="\n"; RS=""
+}
+$1 ~ "^PRIVATE$" {
+ if ( $2 ~ "on" )
+  printf("%s","priv=on");
+ else
+  printf("%s","priv=");
+}' $HIDINGFMT`
+
+
+
+
+VCOCXX=`$AWK '
+BEGIN {
+  FS=""; RS=""
+}
+/VENDOR_COMPILATION_HEADER_CXX_START/, /VENDOR_COMPILATION_HEADER_CXX_END/ {
+sub("^VENDOR_COMPILATION_HEADER_CXX_START\n","",$0)
+sub("VENDOR_COMPILATION_HEADER_CXX_END$","",$0)
+
+gsub( / \\\" /, "999", $0 )
+gsub( "\"\\[\t ]*", "234", $0 )
+gsub( "234\\\n", "345", $0 )
+gsub( /234.\n/, "456", $0 )
+gsub( /456[\t ]*234/, "567", $0 )
+gsub( /567/, "", $0 )
+gsub( /234/, "", $0 )
+gsub( /345/, "", $0 )
+gsub( "999", "\"", $0 )
+
+print $0
+}' $VENDORFMT`
+
+
+VMECXX=`$AWK '
+BEGIN {
+  FS=""; RS=""
+}
+/VENDOR_METHOD_HEADER_CXX_START/, /VENDOR_METHOD_HEADER_CXX_END/ {
+sub("^VENDOR_METHOD_HEADER_CXX_START\n","",$0)
+sub("VENDOR_METHOD_HEADER_CXX_END$","",$0)
+
+gsub( / \\\" /, "999", $0 )
+gsub( "\"\\[\t ]*", "234", $0 )
+gsub( "234\\\n", "345", $0 )
+gsub( /234.\n/, "456", $0 )
+gsub( /456[\t ]*234/, "567", $0 )
+gsub( /567/, "", $0 )
+gsub( /234/, "", $0 )
+gsub( /345/, "", $0 )
+gsub( "999", "\"", $0 )
+
+print $0
+}' $VENDORFMT`
+
+VCOHXX=`$AWK '
+BEGIN {
+  FS=""; RS=""
+}
+/VENDOR_COMPILATION_HEADER_HXX_START/, /VENDOR_COMPILATION_HEADER_HXX_END/ {
+sub("^VENDOR_COMPILATION_HEADER_HXX_START\n","",$0)
+sub("VENDOR_COMPILATION_HEADER_HXX_END$","",$0)
+
+gsub( / \\\" /, "999", $0 )
+gsub( "\"\\[\t ]*", "234", $0 )
+gsub( "234\\\n", "345", $0 )
+gsub( /234.\n/, "456", $0 )
+gsub( /456[\t ]*234/, "567", $0 )
+gsub( /567/, "", $0 )
+gsub( /234/, "", $0 )
+gsub( /345/, "", $0 )
+gsub( "999", "\"", $0 )
+
+print $0
+}' $VENDORFMT`  
+
+
+VCLHXX=`$AWK '
+BEGIN {
+  FS=""; RS=""
+}
+/VENDOR_CLASS_HEADER_HXX_START/, /VENDOR_CLASS_HEADER_HXX_END/ {
+sub("^VENDOR_CLASS_HEADER_HXX_START\n","",$0)
+sub("VENDOR_CLASS_HEADER_HXX_END$","",$0)
+
+gsub( / \\\" /, "999", $0 )
+gsub( "\"\\[\t ]*", "234", $0 )
+gsub( "234\\\n", "345", $0 )
+gsub( /234.\n/, "456", $0 )
+gsub( /456[\t ]*234/, "567", $0 )
+gsub( /567/, "", $0 )
+gsub( /234/, "", $0 )
+gsub( /345/, "", $0 )
+gsub( "999", "\"", $0 )
+
+print $0
+}' $VENDORFMT` 
+
+
+echo " $VCOCXX " > vcocxx.txt
+echo " $VMECXX " > vmecxx.txt
+echo " $VCOHXX " > vcohxx.txt
+echo " $VCLHXX " > vclhxx.txt
+
+
+
+echo " $VPUBL   $VPROT    $VPRIV    $VCSA    $VMERGE"
+
+#
+# get from *.ci file the classes that should separated
+# and make the <class>.hxx and <class>.cxx files
+#
+if test ! -z "$ADTS"
+then
+  LASTADT=""
+  LOPCNT=1
+  BASEFILENAME=`basename $1`
+  HXXMERGEFILE=`echo $BASEFILENAME | sed -e 's/\..*$//'`.mhxx
+  CXXMERGEFILE=`echo $BASEFILENAME | sed -e 's/\..*$//'`.mcxx
+  rm -f $HXXMERGEFILE
+  rm -f $CXXMERGEFILE
+  for ADT in $ADTS
+  do
+   if test "$LASTADT" != "$ADT"
+   then
+    echo "loop = $LOPCNT"
+    echo "$ADT"
+
+    echo "making $ADTS.hxx file ..."
+    $AWK -f $INFO2DOC \
+     $VARG fvclhxx=vclhxx.txt \
+     $VARG fvcohxx=vcohxx.txt \
+     $VARG $VPUBL $VARG $VPROT $VARG $VPRIV $VARG $VCSA $VARG $VMERGE \
+     $VARG pass=0 $VARG device=text $VARG infile=$1 \
+     $VARG class=$ADT  $VARG loop=$LOPCNT\
+     $MANFMT $MANFMT > $ADT.hxx
+    echo "$ADTS.hxx file done!"
+    if test "$VMERGE" = "merge=on"
+    then
+     echo "merging $ADT.hxx into $HXXMERGEFILE"
+     cat $ADT.hxx >> $HXXMERGEFILE
+    fi
+
+    echo "making $ADTS.cxx file ..."
+    $AWK -f $INFO2SRC \
+     $VARG fvmecxx=vmecxx.txt \
+     $VARG fvcocxx=vcocxx.txt \
+     $VARG $VPUBL $VARG $VPROT $VARG $VPRIV $VARG $VCSA $VARG $VMERGE \
+     $VARG infile=$1 $VARG classext=$ADT $VARG mode=single $VARG loop=$LOPCNT\
+     $1  > $ADT.cxx
+    echo "$ADTS.cxx file done!"
+    if test "$VMERGE" = "merge=on"
+    then
+     echo "merging $ADT.cxx into $CXXMERGEFILE"
+     cat $ADT.cxx >> $CXXMERGEFILE
+    fi
+
+    LOPCNT=`expr $LOPCNT + 1`
+    LASTADT=$ADT
+   fi
+  done
+fi
+#
+# remove temporary vendor files
+#
+rm -f vcocxx.txt
+rm -f vmecxx.txt
+rm -f vcohxx.txt
+rm -f vclhxx.txt

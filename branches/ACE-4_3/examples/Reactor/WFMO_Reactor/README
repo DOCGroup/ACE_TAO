@@ -1,0 +1,224 @@
+The ACE_ReactorEx encapsulates the Win32 WaitForMultipleObjects() API
+within ACE.  The ACE_ReactorEx is similar in spirit to the
+ACE_Reactor, except that (1) it is much simpler and (2) it works for
+the complete range of Win32 handles (whereas the ACE_Reactor just
+works for socket handles.
+
+Here's the API for the ACE_ReactorEx:
+
+class ACE_ReactorEx
+{
+public:
+	// = Event loop.
+	virtual int handle_events (ACE_Time_Value *);
+
+	// = Handler registration management.
+	virtual int register_handler (ACE_Event_Handler *);
+	virtual int remove_handler (ACE_Event_Handler *);
+
+	virtual int notify (void);
+
+	// = Timer management
+	virtual int schedule_timer (), etc.
+	// ...
+};
+
+----------------------------------------
+
+Here's how you might use it:
+
+----------------------------------------
+
+class My_Thread_Handler : public ACE_Event_Handler 
+{
+public:
+	My_Thread_Handler (void) {
+		// Create a thread that will run
+		// for a time and then exit.
+		this->thread_handle_ = 
+			ACE_OS::thr_create (run, ......);
+	}
+
+	// Called back by the ACE_ReactorEx when the
+	// event is signaled.
+	virtual int handle_signal (int)
+	{
+		cout << "thread is done" << endl;
+	}
+
+	virtual ACE_HANDLE get_handle (void) const
+	{
+		return this->thread_handle_;
+	}
+
+private:
+	ACE_HANDLE thread_handle_;
+
+	static void *run (void *) {
+		// Sleep for a while and then exit.
+		ACE_OS::sleep (100000);
+		return 0;
+	}
+};
+
+----------------------------------------
+
+The main program might look something like this:
+
+----------------------------------------
+
+int main (void)
+{
+	// ...
+	ACE_ReactorEx dispatcher;
+	My_Thread_Handler handler;
+
+	// Register the thread handler.
+	dispatcher.register_handler (&handler);
+	
+	// Block until the thread exits and the
+	// handle_signal() method of the My_Thread_Handler
+	// is called!
+	dispatcher.handle_events ();
+
+	// ...
+}
+
+----------------------------------------
+
+. test_timeout --
+
+This example application shows how to write ReactorEx and Proactor
+event loops that handle events for some fixed amount of time.  It uses
+ACE_ReactorEx::run_event_loop(run_time) to handle
+events for run_time seconds.  The output should be the following:
+
+1 timeout occurred for Foo.
+2 timeout occurred for Bar.
+3 timeout occurred for Foo.
+4 timeout occurred for Bar.
+5 timeout occurred for Foo.
+6 timeout occurred for Bar.
+7 timeout occurred for Foo.
+8 timeout occurred for Foo.
+9 timeout occurred for Bar.
+10 timeout occurred for Foo.
+11 timeout occurred for Bar.
+12 timeout occurred for Foo.
+
+. test_remove_handler -- 
+
+This application tests the ReactorEx's ability to handle simultaneous
+events.  If you pass anything on the command-line, then each handler
+requests to be removed from the ReactorEx after each event.  This has
+a funky effect on the order in which handlers are serviced.  So, if no
+parameters are passed in, the handlers should be serviced 1 through
+MAXIMUM_WAIT_OBJECTS. If handlers to request to be removed as signals
+occur, they will be serviced 1, MAX, MAX-1, ..., 2.  This is because
+of a ReactorEx bookkeeping optimization.
+
+. test_reactorEx.cpp --
+
+This test application tests a wide range of events that can be
+demultiplexed using various ACE utilities.  Events used include ^C
+events, reading from STDIN, vanilla Win32 events, thread exits,
+ReactorEx notifications, proactive reads, and proactive writes.
+
+The proactive I/O events are demultiplexed by the ACE_Proactor.  The
+thread exits, notications, and vanilla Win32 events are demultiplexed
+by the ACE_ReactorEx.  To enable a single thread to run all these
+events, the Proactor is integrated with the ReactorEx.
+
+The test application prototypes a simple ntalk program.  Two instances
+of the application connect.  Input from either console is displayed on
+the others console also.  Because of the evils of Win32 STDIN, a
+separate thread is used to read from STDIN.  To test the Proactor and
+ReactorEx, I/O between the remote processes is performed proactively
+and interactions between the STDIN thread and the main thread are
+performed reactively.
+
+The following description of the test application is in two parts.
+The participants section explains the main components involved in the
+application.  The collaboration section describes how the partipants
+interact in response to the multiple event types which occur.
+
+The ReactorEx test application has the following participants:
+
+. ReactorEx -- The ReactorEx demultiplexes Win32 "waitable" events
+  using WaitForMultipleObjects.
+
+. Proactor  -- The proactor initiates and demultiplexes overlapped I/O
+  operations.  The Proactor registers with the ReactorEx so that a
+  single-thread can demultiplex all application events.
+
+. STDIN_Handler -- STDIN_Handler is an Active Object which reads from
+  STDIN and forwards the input to the Peer_Handler.  This runs
+  in a separate thread to make the test more interesting.  However,
+  STDIN is "waitable", so in general it can be waited on by the ACE
+  ReactorEx, thanks MicroSlush!
+
+. Peer_Handler -- The Peer_Handler connects to another instance of
+  test_reactorEx.  It Proactively reads and writes data to the peer.
+  When the STDIN_Handler gives it messages, it fowards them to the
+  remote peer.  When it receives messages from the remote peer, it
+  prints the output to the console.
+
+The collaborations of the participants are as follows:
+
+. Initialization
+
+  Peer_Handler -- connects to the remote peer.  It then begins
+  proactively reading from the remote connection.  Note that it will
+  be notified by the Proactor when a read completes.  It also
+  registers a new_msg_event with the ReactorEx.  Note that when the
+  new_msg_event is signaled (by the STDIN_Handler),
+  Peer_Handler::handle_signal will get called.
+
+  STDIN_Handler -- STDIN_Handler registers a signal handler for
+  SIGINT.  This just captures the exception so that the kernel doesn't
+  kill our process; We want to exit gracefully.  It also creates an
+  Exit_Hook object which registers the STDIN_Handler's thread handle
+  with the ReactorEx.  The Exit_Hook will get called back when the
+  STDIN_Handler thread exits.  After registering these, it blocks
+  reading from STDIN.
+
+  Proactor -- is registered with the ReactorEx.
+
+  The main thread of control waits in the ReactorEx.
+
+. STDIN events -- When the STDIN_Handler thread reads from STDIN, it
+  puts the message on Peer_Handler's message queue and signals the
+  new_msg_event.  It then returns to reading from STDIN.
+
+. new_msg_events -- The ReactorEx thread wakes up and calls
+  Peer_Handler::handle_signal.  The Peer_Handler then tries to dequeue
+  a message from its message queue.  If it can, the message is
+  Proactively sent to the remote peer.  Note that the Peer_Handler
+  will be notified with this operation is complete.  The Peer_Handler
+  then falls back into the ReactorEx event loop.
+
+. Send complete event -- When a proactive send is complete, the
+  Proactor is notified by the ReactorEx.  The Proactor, in turn,
+  notifies the Peer_Handler.  The Peer_Handler then checks for more
+  messages from the message queue.  If there are any, it tries to send
+  them.  If there are not, it returns to the ReactorEx event loop.
+  This is ok since it is notified via new_msg_event when new message
+  arrive.
+
+. Read complete event -- When a proactive read is complete (the
+  Peer_Handler initiated a proactive read when it connected to the
+  remote peer), the Proactor is notified by the ReactorEx.  The
+  Proactor, in turn notifies the Peer_Handler.  If the read was
+  successful the Peer_Handler just displays the received msg to the
+  console and reinvokes a proactive read from the network connection.
+  If the read failed (i.e. the remote peer exited), the Peer_Handler
+  sets a flag to end the event loop and returns.  This will cause the
+  application to exit.
+
+. ^C events -- When the user types ^C at the console, the
+  STDIN_Handler's signal handler will be called.  It does nothing, but
+  as a result of the signal, the STDIN_Handler thread will exit.
+
+. STDIN_Handler thread exits -- The Exit_Hook will get called back
+  from the ReactorEx.  Exit_Hook::handle_signal sets a flag to end the
+  event loop and returns.  This will cause the application to exit.
