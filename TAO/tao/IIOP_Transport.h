@@ -22,6 +22,10 @@
 
 #include "tao/Pluggable.h"
 
+// BALA Temporrary inclusion
+#include "tao/Pluggable_Messaging.h"
+
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -77,11 +81,29 @@ public:
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
+  
+  CORBA::Boolean 
+  send_request_header (const IOP::ServiceContextList &svc_ctx,  
+                       CORBA::ULong request_id,
+                       CORBA::Octet response_flags,
+                       TAO_Stub *stub,
+                       const short address_disposition,
+                       const char* opname,
+                       TAO_OutputCDR &msg);
+
+  void messaging_init (TAO_Pluggable_Message_Factory *mesg);
+  // Initialising the messaging object
 
 protected:
   TAO_IIOP_Handler_Base *handler_;
   // the connection service handler used for accessing lower layer
   // communication protocols.
+
+  TAO_Pluggable_Message_Factory *giop_factory_;
+  // The message_factor instance specific for this particular
+  // transport protocol.  
+
+  // @@ Shouldn't  this be TAO_Pluggable_message_Factory??
 };
 
 class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
@@ -125,6 +147,7 @@ public:
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
+
   virtual int handle_client_input (int block = 0,
                                    ACE_Time_Value *max_time_value = 0);
   virtual int register_handler (void);
