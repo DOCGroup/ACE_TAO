@@ -1,3 +1,19 @@
+Fri Aug 15 14:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp:
+          Increased the number of events to send before quitting
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
+          Added ability to suspend and resume the connection to the supplier
+          ec.
+
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp:
+          When connection is lost to the consumer ec, suspend events from
+          the supplier ec.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+          Doxygen fix.
+
 Fri Aug 15 10:07:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/IIOPGateway/*:
