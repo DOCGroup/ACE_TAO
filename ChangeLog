@@ -28,9 +28,9 @@ Fri Mar  5 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  value of the priority passed in. This argument is set to false
 	  by default, which would retain the classical behaviour. 
 
-          Thanks to Abhi <abhi@qualcomm.com> for reporting the bug. Thanks
-	  to Dr. Schmidt and Kitty for motivating me to add the fix in
-	  ACE. 
+          Thanks to Abhijit Sachdev <abhi@qualcomm.com> for reporting the 
+          bug. Thanks to Dr. Schmidt and Kitty for motivating me to add 
+          the fix in ACE. 
 
 	  I am not still certain whether the above fix is okay. Folks who
 	  call ACE_Thread::spawn* and ACE_OS::thr_create () will not get
