@@ -1,3 +1,15 @@
+Mon Jun  7 01:11:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context.h: Added default
+ 	  CORBA::Environment & = TAO_default_environment() calls.  Thanks
+ 	  to Frank Buschmann for reporting this.
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h,
+ 	  orbsvcs/orbsvcs/Event/EC_Event_Channel.h: Added default
+ 	  CORBA::Environment & = TAO_default_environment() calls.  Thanks
+ 	  to J. Russell Noseworthy <rnosewor@objectsciences.com> for
+ 	  catching this.
+
 Sun Jun 06 23:17:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POAC: Changed <InvalidPolicy::slot> back to

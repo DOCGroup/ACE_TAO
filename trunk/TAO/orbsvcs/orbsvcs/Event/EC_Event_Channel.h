@@ -109,11 +109,11 @@ public:
   virtual ~TAO_EC_Event_Channel (void);
   // destructor
 
-  virtual void activate (CORBA::Environment& env);
+  virtual void activate (CORBA::Environment &env = TAO_default_environment ());
   // Start the internal threads (if any), etc.
   // After this call the EC can be used.
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env = TAO_default_environment ());
   // Shutdown any internal threads, cleanup all the internal
   // structures, flush all the messages, etc.
 
