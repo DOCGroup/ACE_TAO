@@ -1,3 +1,9 @@
+Fri Jan 23 09:42:15 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.inl:
+          Dinkum STL doesn't have tzset. Fixes another compile problem with
+          the new Borland CBuilderX Preview compiler
+
 Fri Jan 23 09:36:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager.cpp:
