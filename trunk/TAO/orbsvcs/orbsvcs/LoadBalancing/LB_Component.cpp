@@ -134,8 +134,8 @@ ACE_STATIC_SVC_DEFINE (TAO_LB_Component,
                        ACE_TEXT ("LB_Component"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_LB_Component),
-                       ACE_Service_Type::DELETE_THIS |
-                                  ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_LoadBalancing, TAO_LB_Component)

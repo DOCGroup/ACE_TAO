@@ -30,7 +30,7 @@
  * @class TAO_LB_Component
  *
  * @brief Service_Object that can be used to add load balancer support
- *        to a CORBA-base server.
+ *        to a CORBA-based server.
  *
  * Servers wishing to transparently add load balancing/management
  * support load this object via the ACE_Service_Configurator (e.g. by

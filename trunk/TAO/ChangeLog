@@ -1,3 +1,30 @@
+Fri Nov 15 15:03:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Signal_Handler.cpp (activate):
+
+	  sigwait() is not supported on MS Windows, meaning that signals
+	  cannot be handled synchronously with the current implementation
+	  of this signal handler.  Handle signals asynchronously through
+	  the ORB's reactor instead.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp (init):
+
+	  Fixed buffer overrun problem that was causing an unhandled
+	  exception to be thrown on MS Windows.  The hexidecimal
+	  representation of the time in milliseconds was supposed to be
+	  embedded in a string buffer of 8 characters.  The decimal
+	  representation, which is greater than 8 characters long, was
+	  being embedded into the string instead.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.cpp:
+
+	  Cosmetic and spelling fixes/updates.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+
+	  CORBA::SystemException, not CORBA_SystemException.
+
 Fri Nov 15 16:59:49 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h:
