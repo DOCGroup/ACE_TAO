@@ -5,6 +5,13 @@
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
 #define ACE_TIMER_QUEUE_ADAPTERS_C
 
+#define ACE_BUILD_DLL
+#include "ace/Timer_Queue_Adapters.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Timer_Queue_Adapters.i"
+#endif /* __ACE_INLINE__ */
+
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
 {
