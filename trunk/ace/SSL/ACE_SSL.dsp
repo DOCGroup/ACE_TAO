@@ -123,6 +123,10 @@ SOURCE=.\SSL_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSL_Export.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSL_SOCK.h
 # End Source File
 # Begin Source File
