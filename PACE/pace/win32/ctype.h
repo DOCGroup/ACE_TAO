@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/ctype.h
+ *    pace/win32/ctype.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -51,7 +51,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/ctype.inl"
+# include "pace/win32/ctype.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_CTYPE_H */

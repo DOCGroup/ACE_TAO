@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stat.c
+ *    pace/win32/stat.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sys/stat.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/stat.inl"
+# include "pace/win32/stat.inl"
 #endif /* ! PACE_HAS_INLINE */

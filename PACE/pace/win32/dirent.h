@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/dirent.h
+ *    pace/win32/dirent.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -40,7 +40,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/dirent.inl"
+# include "pace/win32/dirent.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_DIRENT_H */

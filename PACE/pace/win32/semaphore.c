@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/semaphore.c
+ *    pace/win32/semaphore.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/semaphore.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/semaphore.inl"
+# include "pace/win32/semaphore.inl"
 #endif /* ! PACE_HAS_INLINE */

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/signal.c
+ *    pace/win32/signal.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/signal.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/signal.inl"
+# include "pace/win32/signal.inl"
 #endif /* ! PACE_HAS_INLINE */

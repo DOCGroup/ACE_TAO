@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/assert.c
+ *    pace/win32/assert.c
  *
  * = AUTHOR
  *    Joe Hoffert
@@ -16,5 +16,5 @@
 #include "pace/assert.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/assert.inl"
+# include "pace/win32/assert.inl"
 #endif /* ! PACE_HAS_INLINE */
