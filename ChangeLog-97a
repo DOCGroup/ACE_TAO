@@ -1,3 +1,10 @@
+Mon May 05 14:53:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: fixed ACE_Svc_Handler
+	  specializations, yet again, for Linux w/LXPthreads.  Thanks to
+	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this
+	  problem with sufficient detail for us to track it down.
+
 Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-osf1-4.0-g++.h: Removed the ACE_LACKS_SIGNED_CHAR
