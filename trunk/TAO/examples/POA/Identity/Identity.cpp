@@ -617,8 +617,7 @@ main (int argc, char **argv)
     }
   ACE_CATCHANY
     {
-      CORBA_Exception &exception = *ACE_TRY_ENV.exception ();
-      ACE_PRINT_EXCEPTION (exception,
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception!");
     }
   ACE_ENDTRY;
