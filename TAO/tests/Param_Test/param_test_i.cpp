@@ -20,7 +20,7 @@ ACE_RCSID(Param_Test, param_test_i, "$Id$")
 
 // ********* class Coffee_i ****************
 // Constructor
-
+  
 Coffee_i::Coffee_i (const char *name)
   : name_ (name)
 {
@@ -144,11 +144,11 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 // = Sequences
 
 Param_Test::Long_Seq * Param_Test_i::test_long_sequence (
-      const Param_Test::Long_Seq & s1,
-      Param_Test::Long_Seq & s2,
-      Param_Test::Long_Seq_out s3,
-      CORBA::Environment &
-     )
+                                                         const Param_Test::Long_Seq & s1,
+                                                         Param_Test::Long_Seq & s2,
+                                                         Param_Test::Long_Seq_out s3,
+                                                         CORBA::Environment &
+                                                         )
 {
   Param_Test::Long_Seq
     *ret = new Param_Test::Long_Seq,
@@ -162,11 +162,11 @@ Param_Test::Long_Seq * Param_Test_i::test_long_sequence (
 }
 
 Param_Test::Short_Seq * Param_Test_i::test_short_sequence (
-      const Param_Test::Short_Seq & s1,
-      Param_Test::Short_Seq & s2,
-      Param_Test::Short_Seq_out s3,
-      CORBA::Environment &
-     )
+                                                           const Param_Test::Short_Seq & s1,
+                                                           Param_Test::Short_Seq & s2,
+                                                           Param_Test::Short_Seq_out s3,
+                                                           CORBA::Environment &
+                                                           )
 {
   Param_Test::Short_Seq
     *ret = new Param_Test::Short_Seq,
@@ -180,11 +180,11 @@ Param_Test::Short_Seq * Param_Test_i::test_short_sequence (
 }
 
 Param_Test::Bounded_Short_Seq * Param_Test_i::test_bounded_short_sequence (
-      const Param_Test::Bounded_Short_Seq & s1,
-      Param_Test::Bounded_Short_Seq & s2,
-      Param_Test::Bounded_Short_Seq_out s3,
-      CORBA::Environment &
-     )
+                                                                           const Param_Test::Bounded_Short_Seq & s1,
+                                                                           Param_Test::Bounded_Short_Seq & s2,
+                                                                           Param_Test::Bounded_Short_Seq_out s3,
+                                                                           CORBA::Environment &
+                                                                           )
 {
   Param_Test::Bounded_Short_Seq
     *ret = new Param_Test::Bounded_Short_Seq,
@@ -198,11 +198,11 @@ Param_Test::Bounded_Short_Seq * Param_Test_i::test_bounded_short_sequence (
 }
 
 Param_Test::Bounded_Long_Seq * Param_Test_i::test_bounded_long_sequence (
-      const Param_Test::Bounded_Long_Seq & s1,
-      Param_Test::Bounded_Long_Seq & s2,
-      Param_Test::Bounded_Long_Seq_out s3,
-      CORBA::Environment &
-     )
+                                                                         const Param_Test::Bounded_Long_Seq & s1,
+                                                                         Param_Test::Bounded_Long_Seq & s2,
+                                                                         Param_Test::Bounded_Long_Seq_out s3,
+                                                                         CORBA::Environment &
+                                                                         )
 {
   Param_Test::Bounded_Long_Seq
     *ret = new Param_Test::Bounded_Long_Seq,
@@ -252,11 +252,11 @@ Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
 }
 
 Param_Test::Bounded_StrSeq * Param_Test_i::test_bounded_strseq (
-      const Param_Test::Bounded_StrSeq & s1,
-      Param_Test::Bounded_StrSeq & s2,
-      Param_Test::Bounded_StrSeq_out s3,
-      CORBA::Environment &
-     )
+                                                                const Param_Test::Bounded_StrSeq & s1,
+                                                                Param_Test::Bounded_StrSeq & s2,
+                                                                Param_Test::Bounded_StrSeq_out s3,
+                                                                CORBA::Environment &
+                                                                )
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
 
@@ -295,11 +295,11 @@ Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
 }
 
 Param_Test::Bounded_StructSeq * Param_Test_i::test_bounded_struct_sequence (
-      const Param_Test::Bounded_StructSeq & s1,
-      Param_Test::Bounded_StructSeq & s2,
-      Param_Test::Bounded_StructSeq_out s3,
-      CORBA::Environment &
-     )
+                                                                            const Param_Test::Bounded_StructSeq & s1,
+                                                                            Param_Test::Bounded_StructSeq & s2,
+                                                                            Param_Test::Bounded_StructSeq_out s3,
+                                                                            CORBA::Environment &
+                                                                            )
 {
   Param_Test::Bounded_StructSeq
     *ret = new Param_Test::Bounded_StructSeq,
@@ -314,11 +314,11 @@ Param_Test::Bounded_StructSeq * Param_Test_i::test_bounded_struct_sequence (
 
 
 Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
-      const Param_Test::PathSpec & s1,
-      Param_Test::PathSpec & s2,
-      Param_Test::PathSpec_out s3,
-      CORBA::Environment &
-     )
+                                                                     const Param_Test::PathSpec & s1,
+                                                                     Param_Test::PathSpec & s2,
+                                                                     Param_Test::PathSpec_out s3,
+                                                                     CORBA::Environment &
+                                                                     )
 {
   Param_Test::PathSpec
     *ret = new Param_Test::PathSpec,
@@ -334,7 +334,7 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
   
   rPathSpec[(unsigned long)1].name.id = CORBA::string_dup("john");
   rPathSpec[(unsigned long)1].name.kind = CORBA::string_dup("john");
-  rPathSpec[(unsigned long)1].process = TRUE;
+  rPathSpec[(unsigned long)1].process = 1;
 
   s2 = s1;
   *out = s1;
@@ -346,11 +346,11 @@ Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
 
 
 Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
-      const Param_Test::Coffee_Mix & s1,
-      Param_Test::Coffee_Mix & s2,
-      Param_Test::Coffee_Mix_out s3,
-      CORBA::Environment &
-     )
+                                                       const Param_Test::Coffee_Mix & s1,
+                                                       Param_Test::Coffee_Mix & s2,
+                                                       Param_Test::Coffee_Mix_out s3,
+                                                       CORBA::Environment &
+                                                       )
 {
   Param_Test::Coffee_Mix
     *ret = new Param_Test::Coffee_Mix,
@@ -389,11 +389,11 @@ Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
 }
 
 Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
-      const Param_Test::Bounded_Coffee_Mix & s1,
-      Param_Test::Bounded_Coffee_Mix & s2,
-      Param_Test::Bounded_Coffee_Mix_out s3,
-      CORBA::Environment &
-     )
+                                                                       const Param_Test::Bounded_Coffee_Mix & s1,
+                                                                       Param_Test::Bounded_Coffee_Mix & s2,
+                                                                       Param_Test::Bounded_Coffee_Mix_out s3,
+                                                                       CORBA::Environment &
+                                                                       )
 {
   Param_Test::Bounded_Coffee_Mix
     *ret = new Param_Test::Bounded_Coffee_Mix,
@@ -457,9 +457,9 @@ Param_Test_i::test_anyseq (const Param_Test::AnySeq &s1,
 // test for variable structs
 Param_Test::Var_Struct *
 Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
-                             Param_Test::Var_Struct &s2,
-                             Param_Test::Var_Struct_out s3,
-                             CORBA::Environment &env)
+                               Param_Test::Var_Struct &s2,
+                               Param_Test::Var_Struct_out s3,
+                               CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
   // we copy the "in" sequences into all the inout, out and return sequences.
