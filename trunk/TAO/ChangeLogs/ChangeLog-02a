@@ -1,3 +1,27 @@
+Sun Mar 18 01:53:42 2001  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.SSLIOP:
+	* Makefile.Security:
+	M SSLIOP/SSLIOP_Connection_Handler.cpp
+	M SSLIOP/SSLIOP_Connector.cpp
+	M SSLIOP/SSLIOP_Current.cpp
+	M SSLIOP/SSLIOP_Current.inl
+	M SSLIOP/SSLIOP_Current_Impl.cpp
+	M SSLIOP/SSLIOP_Current_Impl.h
+	M SSLIOP/SSLIOP_Factory.cpp
+	M SSLIOP/SSLIOP_Factory.h
+	M SSLIOP/SSLIOP_ORBInitializer.cpp
+	M SSLIOP/SSLIOP_ORBInitializer.h
+	M SSLIOP/SSLIOP_Profile.cpp
+	M SSLIOP/SSLIOP_Profile.h
+	A Security/Security_Current.cpp
+	A Security/Security_Current.h
+	A Security/Security_Current.inl
+	A Security/Security_Current_Impl.cpp
+	A Security/Security_Current_Impl.h
+	A Security/Security_ORBInitializer.cpp
+	A Security/Security_ORBInitializer.h
+
 Sat Mar 17 14:33:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/CosEC/Simple/Makefile:
