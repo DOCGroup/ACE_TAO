@@ -1,3 +1,20 @@
+Sun Jun 20 12:17:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent.mpc (FTRT_EventChannel):
+
+	  Removed "avoids += minimum_corba".  It is now inherited via the
+	  ftrtevent base project.
+
+	* performance-tests/Protocols/client.cpp (run):
+
+	  Fixed another emulated exception problem compile-time problem.
+	  ACE_ENV_SINGLE_ARG_PARAMETER in this case, not
+	  ACE_ENV_ARG_PARAMETER.
+
+	* performance-tests/Protocols/server.cpp (end_test):
+
+	  Fixed "unused parameter warning in emulated exception builds.
+
 Sun Jun 20 20:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Callback_Quoter/Consumer_Input_Handler.h:
