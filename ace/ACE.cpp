@@ -772,6 +772,25 @@ ACE::ldfind (const ASYS_TCHAR filename[],
     {
       char *ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 
+#if defined (ACE_WIN32)
+      char *ld_path_temp = 0;
+      if (ld_path != 0)
+        {
+          ld_path_temp = (char *) ACE_OS::malloc (ACE_OS::strlen (ld_path) + 2);
+          if (ld_path_temp != 0)
+            {
+              ACE_OS::strcpy (ld_path_temp, ACE_LD_SEARCH_PATH_SEPARATOR_STR);
+              ACE_OS::strcat (ld_path_temp, ld_path);
+              ld_path = ld_path_temp;
+            }
+          else
+            {
+              ACE_OS::free ((void *) ld_path_temp);
+              ld_path = ld_path_temp = 0;
+            }
+        }
+#endif /* ACE_WIN32 */
+
       if (ld_path != 0
           && (ld_path = ACE_OS::strdup (ld_path)) != 0)
         {
@@ -789,6 +808,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
           // following special code to cope with this:
 
           // Look at each dynamic lib directory in the search path.
+
           char *nextholder = 0;
           const char *path_entry =
             ACE::strsplit_r (ld_path,
@@ -875,6 +895,10 @@ ACE::ldfind (const ASYS_TCHAR filename[],
                                             nextholder);
             }
 
+#if defined (ACE_WIN32)
+          if (ld_path_temp != 0)
+            ACE_OS::free (ld_path_temp);
+#endif /* ACE_WIN32 */
           ACE_OS::free ((void *) ld_path);
 #if defined (ACE_WIN32) && defined (_DEBUG) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
           if (result == 0 || tag == 0)
@@ -1979,7 +2003,7 @@ ACE::daemonize (const char pathname[],
 
   if (pathname != 0)
     // change working directory.
-    ACE_OS::chdir (pathname); 
+    ACE_OS::chdir (pathname);
 
   ACE_OS::umask (0); // clear our file mode creation mask.
 
@@ -2011,7 +2035,7 @@ ACE::fork (const char *program_name,
       // Andrew Gierth's Unix Programming FAQ.  It creates an orphan
       // process that's inherited by the init process; init cleans up
       // when the orphan process terminates.
-      // 
+      //
       // Another way to avoid zombies is to ignore or catch the
       // SIGCHLD signal; we don't use that approach here.
 
@@ -2019,10 +2043,10 @@ ACE::fork (const char *program_name,
       if (pid == 0)
         {
           // The child process forks again to create a grandchild.
-          switch (ACE_OS::fork (program_name)) 
+          switch (ACE_OS::fork (program_name))
             {
             case 0: // grandchild returns 0.
-              return 0;  
+              return 0;
             case -1: // assumes all errnos are < 256
               ACE_OS::_exit (errno);
             default:  // child terminates, orphaning grandchild
@@ -2037,16 +2061,16 @@ ACE::fork (const char *program_name,
 
       // child terminated by calling exit()?
       if (WIFEXITED (status))
-        { 
+        {
           // child terminated normally?
           if (WEXITSTATUS (status) == 0)
-            return 1; 
+            return 1;
           else
             errno = WEXITSTATUS (status);
-        } 
+        }
       else
         // child didn't call exit(); perhaps it received a signal?
-        errno = EINTR; 
+        errno = EINTR;
 
       return -1;
     }
@@ -2547,7 +2571,7 @@ ACE::recv_n (ACE_HANDLE handle,
 
 
 // Euclid's greatest common divisor algorithm.
-u_long 
+u_long
 ACE::gcd (u_long x, u_long y)
 {
   if (y == 0)
@@ -2562,7 +2586,7 @@ ACE::gcd (u_long x, u_long y)
 
 
 // Calculates the minimum enclosing frame size for the given values.
-u_long 
+u_long
 ACE::minimum_frame_size (u_long period1, u_long period2)
 {
   // if one of the periods is zero, treat it as though it as
@@ -2570,11 +2594,11 @@ ACE::minimum_frame_size (u_long period1, u_long period2)
   if (0 == period1)
   {
     return period2;
-  } 
+  }
   if (0 == period2)
   {
     return period1;
-  } 
+  }
 
   // if neither is zero, find the greatest common divisor of the two periods
   u_long greatest_common_divisor = ACE::gcd (period1, period2);
