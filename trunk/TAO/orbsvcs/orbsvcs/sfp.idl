@@ -19,7 +19,8 @@ module SFP
   
   struct frame_header
   { 
-    sequence <char> magic_number; 
+    //sequence <char> magic_number; 
+    unsigned long magic_number;
     // '=', 'S', 'F', 'P' 
     octet flags;   
     // bit 0 = byte order, 
