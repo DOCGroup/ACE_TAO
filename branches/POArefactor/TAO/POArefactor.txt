@@ -11,6 +11,7 @@ Tue Sep 21 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/PortableServer/POA_ThreadPolicy.h:
         * tao/PortableServer/PortableServer.h:
         * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
           Changed handling of Loadable_Thread_Policy and the usage of svc conf
 
 Tue Sep 21 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>

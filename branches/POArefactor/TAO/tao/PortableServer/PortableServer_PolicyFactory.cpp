@@ -23,8 +23,26 @@ TAO_PortableServer_PolicyFactory::create_policy (
       ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
              "Loadable_Thread_Policy");
 
-    return policy->create(value
-                          ACE_ENV_ARG_PARAMETER);
+    // For static libraries force load
+    if (policy == 0)
+      {
+        ACE_Service_Config::process_directive (
+          TAO::ace_svc_desc_Loadable_Thread_Policy);
+
+        policy =
+          ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
+             "Loadable_Thread_Policy");
+      }
+
+    if (policy == 0)
+      {
+        return PortableServer::ThreadPolicy::_nil();
+      }
+    else
+      {
+       return policy->create(value
+                             ACE_ENV_ARG_PARAMETER);
+      }
   }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -54,9 +54,10 @@ namespace TAO
     CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // @@ Johnny, should this be public?
+    /// Initialise with the passed value
     void init (PortableServer::ThreadPolicyValue value);
 
+    /// Initialise with the passed value
     void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::PolicyError));
 

@@ -39,7 +39,6 @@ namespace TAO
   public:
     virtual ~POA_Policy (void);
 
-    // @@Johnny, why aren't the following methods implemented?
     /// Return the cached policy type for this policy.
     virtual TAO_Cached_Policy_Type _tao_cached_type (void) const = 0;
 
