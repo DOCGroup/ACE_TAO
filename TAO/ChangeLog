@@ -1,3 +1,9 @@
+Mon Nov 22 10:20:49 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Proxy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+          More const vs non const arguments.
+
 Mon Nov 22 10:05:01 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:

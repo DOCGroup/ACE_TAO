@@ -35,12 +35,12 @@ TAO_Notify_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 
 CORBA::Object_ptr
 TAO_Notify_Proxy::activate (PortableServer::Servant servant,
-                            const CosNotifyChannelAdmin::ProxyID proxy_id
+                            CORBA::Long id
                             ACE_ENV_ARG_DECL)
 {
   // Set the POA that we use to return our <ref>
   this->poa_ = this->proxy_poa_;
-  return TAO_Notify_Object::activate (servant, proxy_id ACE_ENV_ARG_PARAMETER);
+  return TAO_Notify_Object::activate (servant, id ACE_ENV_ARG_PARAMETER);
 }
 
 void

@@ -136,7 +136,6 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       // TODO: we should distinguish between these (someday)
       case DISPATCH_FAIL:
       case DISPATCH_DISCARD:
-      case DISPATCH_RETRY:
       {
         TAO_Notify_Method_Request_Event_Queueable *  request;
         while (completed.dequeue_head (request) == 0)
@@ -161,7 +160,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
           }
         }
         break;
-
+      case DISPATCH_RETRY:
         if (DEBUG_LEVEL > 0) ACE_DEBUG ( (LM_DEBUG,
           ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
           ACE_static_cast (int, this->proxy ()->id ()),
