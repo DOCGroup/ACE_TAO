@@ -52,15 +52,12 @@ public:
   virtual int svc (void);
   // The thread entry point.
 
+  // Shutdown ORB
   void done (void);
-  // Set done flag.
 
 private:
   CORBA::ORB_var orb_;
   // The orb
-
-  CORBA::Boolean done_;
-  // Flag to tell that we're done servicing.
 };
 
 class RedGreen_Test
