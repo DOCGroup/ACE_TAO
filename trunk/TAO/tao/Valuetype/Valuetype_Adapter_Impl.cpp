@@ -15,13 +15,15 @@ TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
   static const CORBA::Long _oc_CORBA_ValueBase[] =
   {
       TAO_ENCAP_BYTE_ORDER, // byte order
-    24,
+    32,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
     ACE_NTOHL (0x412f5661), 
     ACE_NTOHL (0x6c756542), 
     ACE_NTOHL (0x6173653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:CORBA/ValueBase:1.0
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ValueBase:1.0
       10,
     ACE_NTOHL (0x56616c75), 
     ACE_NTOHL (0x65426173), 
@@ -42,14 +44,16 @@ TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
   static const CORBA::Long _oc_CORBA_Visibility[] =
   {
       TAO_ENCAP_BYTE_ORDER, // byte order
-    25,
+    33,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
     ACE_NTOHL (0x412f5669), 
     ACE_NTOHL (0x73696269), 
     ACE_NTOHL (0x6c697479), 
     ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:CORBA/Visibility:1.0
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Visibility:1.0
       11,
     ACE_NTOHL (0x56697369), 
     ACE_NTOHL (0x62696c69), 
@@ -68,14 +72,16 @@ TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
   static const CORBA::Long _oc_CORBA_ValueModifier[] =
   {
       TAO_ENCAP_BYTE_ORDER, // byte order
-    28,
+    36,
     ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
     ACE_NTOHL (0x434f5242), 
     ACE_NTOHL (0x412f5661), 
     ACE_NTOHL (0x6c75654d), 
     ACE_NTOHL (0x6f646966), 
     ACE_NTOHL (0x6965723a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:CORBA/ValueModifier:1.0
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ValueModifier:1.0
       14,
     ACE_NTOHL (0x56616c75), 
     ACE_NTOHL (0x654d6f64), 
