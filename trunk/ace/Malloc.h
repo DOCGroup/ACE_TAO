@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -174,12 +173,15 @@ public:
   ACE_Malloc_Stats malloc_stats_;
 #endif /* ACE_MALLOC_STATS */
 
-  long align_[(ACE_MALLOC_ALIGN/sizeof (long)) - 
-	     ((sizeof (ACE_Name_Node *) 
-	       + sizeof (ACE_Malloc_Header *) + MAXNAMELEN) / sizeof (long))];
-
   ACE_Malloc_Header base_;
   // Dummy node used to anchor the freelist. 
+
+#if 0
+  long align_[ACE_MALLOC_ALIGN/sizeof (long)];
+#else
+	      (ACE_MALLOC_ALIGN/sizeof (long)) -
+	      1 - ((sizeof (ACE_Name_Node *) + sizeof (ACE_Malloc_Header *) + MAXNAMELEN) / sizeof (long))];
+#endif /* 0 */
 
   void dump (void) const;
   // Dump the state of the object.

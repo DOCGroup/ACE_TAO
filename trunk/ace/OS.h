@@ -209,19 +209,6 @@ struct ip_mreq
 };
 #endif /* ACE_HAS_IP_MULTICAST */
 
-#if defined (ACE_LACKS_FILELOCKS)
-struct flock 
-{
-  short	l_type;
-  short	l_whence;
-  off_t	l_start;
-  off_t	l_len;		/* len == 0 means until end of file */
-  long	l_sysid;
-  pid_t	l_pid;
-  long	l_pad[4];		/* reserve area */
-};
-#endif /* ACE_LACKS_FILELOCKS */
-
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
 #else
@@ -732,18 +719,6 @@ struct sembuf
   short sem_flg; // operation flags 
 };
 #endif /* ACE_LACKS_SEMBUF_T */
-
-#if defined (ACE_LACKS_UTSNAME_T)
-#define _SYS_NMLN 257
-struct utsname 
-{
-  char sysname[_SYS_NMLN];
-  char nodename[_SYS_NMLN];
-  char release[_SYS_NMLN];
-  char version[_SYS_NMLN];
-  char machine[_SYS_NMLN];
-};
-#endif /* ACE_LACKS_UTSNAME_T */
 
 #if defined (ACE_HAS_H_ERRNO)
 void herror (const char *str);
@@ -1781,10 +1756,6 @@ extern "C" {
 #include /**/ <cx/select.h>
 #include /**/ <sys/uio.h>
 #include /**/ <time.h>
-#include /**/ <sys/ioctl.h>
-#include /**/ <dirent.h>
-#include /**/ <sys/stat.h>
-#include /**/ <unistd.h>
 #include /**/ <pwd.h>
 #include /**/ <stdfileio.h>
 
@@ -1811,9 +1782,22 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #endif /* VXWORKS */
 #include /**/ <sys/ioctl.h>
 #include /**/ <dirent.h>
-#include /**/ <sys/utsname.h>
 #include /**/ <sys/stat.h>
 #include /**/ <unistd.h>
+
+#if defined (ACE_LACKS_UTSNAME_T)
+#define _SYS_NMLN 257
+struct utsname 
+{
+  char sysname[_SYS_NMLN];
+  char nodename[_SYS_NMLN];
+  char release[_SYS_NMLN];
+  char version[_SYS_NMLN];
+  char machine[_SYS_NMLN];
+};
+#else
+#include /**/ <sys/utsname.h>
+#endif /* ACE_LACKS_UTSNAME_T */
 
 #if !defined (ACE_LACKS_PARAM_H)
 #include /**/ <sys/param.h>
@@ -2411,6 +2395,19 @@ typedef int ACE_Sched_Priority;
 
 // forward declaration
 class ACE_Sched_Params;
+
+#if defined (ACE_LACKS_FILELOCKS)
+struct flock 
+{
+  short	l_type;
+  short	l_whence;
+  off_t	l_start;
+  off_t	l_len;		/* len == 0 means until end of file */
+  long	l_sysid;
+  pid_t	l_pid;
+  long	l_pad[4];		/* reserve area */
+};
+#endif /* ACE_LACKS_FILELOCKS */
 
 class ACE_Export ACE_OS
   // = TITLE
