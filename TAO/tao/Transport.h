@@ -729,6 +729,11 @@ public:
   /// and output CDRs.
   void assign_translators (TAO_InputCDR *, TAO_OutputCDR *);
 
+  /// It is necessary to clear the codeset translator when a CDR stream
+  /// is used for more than one GIOP message. This is required since the
+  /// header must not be translated, whereas the body must be.
+  void clear_translators (TAO_InputCDR *, TAO_OutputCDR *);
+
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
