@@ -14,10 +14,10 @@ ACE_RCSID(ace, DLL, "$Id$")
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.
 
-ACE_DLL::ACE_DLL (int close_on_destruction)
+ACE_DLL::ACE_DLL (int close_handle_on_destruction)
   : open_mode_ (0),
     dll_name_ (0),
-    close_on_destruction_ (close_on_destruction),
+    close_handle_on_destruction_ (close_handle_on_destruction),
     dll_handle_ (0),
     error_ (0)
 {
@@ -25,21 +25,20 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 }
 
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
+  : open_mode_ (0),
+    dll_name_ (0),
+    close_handle_on_destruction_ (0),
+    dll_handle_ (0),
+    error_ (0)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
 
-  // Have to do this since open() calls close()...
-  this->dll_handle_ = 0;
-  this->dll_name_ = 0;
-  this->close_on_destruction_ = 1;
-  this->error_ = 0;
-
-  if (rhs.dll_name_)
-    // This will automatically up the refcount.
-    if (this->open (rhs.dll_name_,
-                    rhs.open_mode_,
-                    this->close_on_destruction_) != 0
-        && ACE::debug ())
+  if (rhs.dll_name_ 
+      // This will automatically up the refcount.
+      && this->open (rhs.dll_name_,
+                     rhs.open_mode_,
+                     rhs.close_handle_on_destruction_) != 0
+      && ACE::debug ())
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("ACE_DLL::copy_ctor: error: %s\n"),
                   this->error ()));
@@ -50,16 +49,16 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
 
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
-                  int close_on_destruction)
+                  int close_handle_on_destruction)
   : open_mode_ (open_mode),
     dll_name_ (0),
-    close_on_destruction_ (close_on_destruction),
+    close_handle_on_destruction_ (close_handle_on_destruction),
     dll_handle_ (0),
     error_ (0)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL");
 
-  if (this->open (dll_name, this->open_mode_, close_on_destruction) != 0
+  if (this->open (dll_name, this->open_mode_, close_handle_on_destruction) != 0
       && ACE::debug ())
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_DLL::open: error calling open: %s\n"),
@@ -67,8 +66,8 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 }
 
 // The library is closed before the class gets destroyed depending on
-// the close_on_destruction value specified which is stored in
-// close_on_destruction_.
+// the close_handle_on_destruction value specified which is stored in
+// close_handle_on_destruction_.
 
 ACE_DLL::~ACE_DLL (void)
 {
@@ -91,17 +90,17 @@ ACE_DLL::~ACE_DLL (void)
 int
 ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
-               int close_on_destruction)
+               int close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::open");
 
-  return open_i (dll_filename, open_mode, close_on_destruction);
+  return open_i (dll_filename, open_mode, close_handle_on_destruction);
 }
 
 int
 ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  int open_mode,
-                 int close_on_destruction,
+                 int close_handle_on_destruction,
                  ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL::open_i");
@@ -112,9 +111,8 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
     {
       if (ACE::debug ())
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name: %s\n"),
-                    this->dll_name_));
-
+                    ACE_LIB_TEXT ("ACE_DLL::open_i: dll_name is %s\n"),
+                    this->dll_name_ == 0 ? "(null)" : this->dll_name_));
       return -1;
     }
 
@@ -126,12 +124,12 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
       else
         this->close ();
     }
+
   if (!this->dll_name_)
-    {
-      this->dll_name_ = ACE::strnew (dll_filename);
-    }
+    this->dll_name_ = ACE::strnew (dll_filename);
+
   this->open_mode_ = open_mode;
-  this->close_on_destruction_ = close_on_destruction;
+  this->close_handle_on_destruction_ = close_handle_on_destruction;
 
   this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
                                                              this->open_mode_,
@@ -162,24 +160,31 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   return sym;
 }
 
-// The library is closed using the ACE_SHLIB_HANDLE obejct.  i.e. The
+// The library is closed using the ACE_SHLIB_HANDLE obejct, i.e., the
 // shared object is now disassociated form the current process.
 
 int
 ACE_DLL::close (void)
 {
   ACE_TRACE ("ACE_DLL::close");
+
+  // Guard against multiple calls to close(), e.g., one explicitly and
+  // one from the destructor.
+  if (dll_handle_ == 0)
+    return;
+
   int retval = 0;
 
-  if (this->close_on_destruction_ && this->dll_name_ &&
-      (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
+  if (this->close_handle_on_destruction_ 
+      && this->dll_name_ 
+      && (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
     this->error_ = 1;
 
   // Even if close_dll() failed, go ahead and cleanup.
   this->dll_handle_ = 0;
-  delete[] this->dll_name_;
+  delete [] this->dll_name_;
   this->dll_name_ = 0;
-  this->close_on_destruction_ = 0;
+  this->close_handle_on_destruction_ = 0;
 
   return retval;
 }
@@ -219,7 +224,7 @@ ACE_DLL::get_handle (int become_owner) const
 
 int
 ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
-                     int close_on_destruction)
+                     int close_handle_on_destruction)
 {
   ACE_TRACE ("ACE_DLL::set_handle");
 
@@ -228,5 +233,5 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
   ACE_TCHAR temp[ACE_UNIQUE_NAME_LEN];
   ACE_OS::unique_name (this, temp, ACE_UNIQUE_NAME_LEN);
 
-  return this->open_i (temp, 1, close_on_destruction, handle);
+  return this->open_i (temp, 1, close_handle_on_destruction, handle);
 }
