@@ -1,6 +1,11 @@
+Tue Jul 20 08:27:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.dsp: Fixed
+	  a typo in the  library names.
+
 Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.cpp:
 	* tao/Leader_Follower.i:
 	* tao/Strategies/DIOP_Acceptor.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
@@ -8,7 +13,7 @@ Fri Jul 20 08:10:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	  Removed old, meanwhile unrelevant comments from me.
 
 	* tao/Asynch_Reply_Dispatcher.cpp:
-	  
+
 	  Added a check for a nil reply handler. In the case of a nil reply
 	  handler no response is dispatched. Thanks to Andreas Geisler
 	  <Andreas.Geisler@erl9.siemens.de> for pointing this out.
