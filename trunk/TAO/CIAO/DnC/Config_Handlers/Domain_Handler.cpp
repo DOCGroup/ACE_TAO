@@ -61,46 +61,39 @@ namespace CIAO
             (process_string(this->iter_, node_name, "UUID", domain.UUID));
           else if
             (process_string(this->iter_, node_name, "label", domain.label));
-          else if (node_name == XStr (ACE_TEXT ("sharedResource")))
-            {
-              this->process_sr_element (node, this->doc_,
-                                        this->iter_,
-                                        domain);
-            }
+          else if
+            (process_sequence<Deployment::SharedResource>(this->doc_, this->iter_, node,
+                                                          node_name, "sharedResource", domain.sharedResource,
+                                                          this, &Domain_Handler::process_sr,
+                                                          this->id_map_));
           else if
             (process_sequence<Deployment::Node>(this->doc_, this->iter_, node,
                                                 node_name, "node", domain.node,
                                                 this, &Domain_Handler::process_node,
                                                 this->id_map_));
+          else if
+            (process_sequence<Deployment::Interconnect>(this->doc_, this->iter_, node,
+                                                        node_name, "interconnect", domain.interconnect,
+                                                        this, &Domain_Handler::process_interconnect,
+                                                        this->id_map_));
+          else if
+            (process_sequence<Deployment::Bridge>(this->doc_, this->iter_, node,
+                                                  node_name, "bridge", domain.bridge,
+                                                  this, &Domain_Handler::process_bridge,
+                                                  this->id_map_));
+          else if
+            (process_sequence<Deployment::Property>(this->doc_, this->iter_, node,
+                                                    node_name, "infoProperty", domain.infoProperty,
+                                                    &Property_Handler::process_Property,
+                                                    this->id_map_));
           /*
- if (node_name == XStr (ACE_TEXT ("node")))
-            {
-              process_function<Deployment::Node>
-                (this, domain.node, &Domain_Handler::process_node,
-                 node, this->doc_, this->iter_, this->id_map_);
-              //              this->process_node_element (node, this->doc_,
-              //                                          this->iter_,
-              //                                          domain);
-            }
-          */
-          else if (node_name == XStr (ACE_TEXT ("interconnect")))
-            {
-              this->process_ic_element (node, this->doc_,
-                                        this->iter_,
-                                        domain);
-            }
-          else if (node_name == XStr (ACE_TEXT ("bridge")))
-            {
-              this->process_bridge_element (node, this->doc_,
-                                            this->iter_,
-                                            domain);
-            }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
               this->process_property_element (node, this->doc_,
                                               this->iter_,
                                               domain);
             }
+          */
           else
             {
               // ??? How did we get here ???
@@ -115,7 +108,7 @@ namespace CIAO
 
       return;
     }
-
+    /*
     // handle the sr element
     void Domain_Handler::process_sr_element (DOMNode* node,
                                              DOMDocument* doc,
@@ -141,7 +134,7 @@ namespace CIAO
             }
         }      
     }
-    /*
+
     // handle the node element
     void Domain_Handler::process_node_element (DOMNode* node,
                                                DOMDocument* doc,
@@ -168,7 +161,7 @@ namespace CIAO
             }
         }
     }
-    */
+
     // handle the interconnect element
     void Domain_Handler::process_ic_element (DOMNode* node,
                                              DOMDocument* doc,
@@ -246,8 +239,8 @@ namespace CIAO
             }
         }
     }
-
-    void Domain_Handler::process_node (DOMNodeIterator*& iter,
+    */
+    void Domain_Handler::process_node (DOMNodeIterator* iter,
                                        Deployment::Node& domain_node)
     {
       for (DOMNode* node = iter->nextNode();
@@ -448,8 +441,7 @@ namespace CIAO
     }
 
     void Domain_Handler::process_bridge 
-           (DOMDocument* doc,
-            DOMNodeIterator* iter, Deployment::Bridge& domain_bridge)
+           (DOMNodeIterator* iter, Deployment::Bridge& domain_bridge)
     {
       for (DOMNode* node = iter->nextNode();
            node != 0;
@@ -481,12 +473,12 @@ namespace CIAO
                   if (length == 1)
                     {
                       this->process_resource 
-                        (doc, iter, domain_bridge.resource[resource_length]);
+                        (node->getOwnerDocument(), iter, domain_bridge.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
                       this->process_attributes_for_resource 
-                        (named_node_map, doc,
+                        (named_node_map, node->getOwnerDocument(),
                          iter, resource_length,
                          domain_bridge.resource[resource_length]);
                     }
@@ -514,7 +506,6 @@ namespace CIAO
 
 
     void Domain_Handler::process_interconnect (
-          DOMDocument* doc,
           DOMNodeIterator* iter, Deployment::Interconnect& domain_ic)
     {
       for (DOMNode* node = iter->nextNode();
@@ -545,12 +536,12 @@ namespace CIAO
                   if (length == 1)
                     {
                       this->process_resource 
-                        (doc, iter, domain_ic.resource[resource_length]);
+                        (node->getOwnerDocument(), iter, domain_ic.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
                       this->process_attributes_for_resource 
-                        (named_node_map, doc,
+                        (named_node_map, node->getOwnerDocument(),
                          iter, resource_length,
                          domain_ic.resource[resource_length]);
                     }
@@ -590,7 +581,7 @@ namespace CIAO
 
 
     void Domain_Handler::process_sr 
-                (DOMDocument* doc, DOMNodeIterator* iter,
+                (DOMNodeIterator* iter,
                  Deployment::SharedResource& domain_sr)
     {
       for (DOMNode* node = iter->nextNode();
@@ -640,7 +631,7 @@ namespace CIAO
                   else if (length > 1)
                     {
                       this->process_attributes_for_satisfier_property 
-                        (named_node_map, doc,
+                        (named_node_map, node->getOwnerDocument(),
                          iter, sp_length,
                          domain_sr.property[sp_length]);
                     }
@@ -789,6 +780,7 @@ namespace CIAO
       return doc;
     }
 
+    /*
     void Domain_Handler::process_attributes_for_sr 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,
@@ -857,7 +849,6 @@ namespace CIAO
       return;
     }
 
-    /*
     void Domain_Handler::process_attributes_for_node 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,
@@ -925,7 +916,7 @@ namespace CIAO
 
       return;
     }
-    */
+
     void Domain_Handler::process_attributes_for_ic 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,
@@ -1127,7 +1118,7 @@ namespace CIAO
 
       return;
     }
-
+    */
     void Domain_Handler::process_attributes_for_satisfier_property 
          (DOMNamedNodeMap* named_node_map,
           DOMDocument* doc,
