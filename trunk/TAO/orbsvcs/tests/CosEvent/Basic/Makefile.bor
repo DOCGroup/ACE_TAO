@@ -21,7 +21,8 @@ CFLAGS = \
         $(TAO_SVC_UTILS_CFLAGS) \
         $(TAO_IORTABLE_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
-        $(TAO_COSEVENT_CECTEST_CFLAGS)
+        $(TAO_COSEVENT_CECTEST_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS)
 
 CPPDIR = .
 
@@ -33,7 +34,8 @@ LIBFILES = \
         $(TAO_SVC_UTILS_LIB) \
         $(TAO_IORTABLE_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
-        $(TAO_COSEVENT_CECTEST_LIB)
+        $(TAO_COSEVENT_CECTEST_LIB) \
+        $(TAO_MESSAGING_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
