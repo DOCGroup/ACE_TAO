@@ -272,7 +272,11 @@ main (int, ASYS_TCHAR *[])
   // All <ACE_MAX_TIMERS> should be counted in the return value + 2
   // I/O dispatches (one for <handle_input> and the other for
   // <handle_exception>).
-  ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+  if (result != ACE_MAX_TIMERS + 2) {
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("expected %d events, got %d instead\n"),
+                ACE_MAX_TIMERS + 2, result));
+    ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+  }
 
 #if defined (ACE_HAS_THREADS)
 
