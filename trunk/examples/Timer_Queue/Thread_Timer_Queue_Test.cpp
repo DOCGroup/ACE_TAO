@@ -60,7 +60,8 @@ public:
 
 private:
   ACE_Time_Value expires_;
-  // @@ Please add comments.
+  // Store the expected time of expiration, it is used to print a nice
+  // message saying how much delay was at the actual expiration time.
 
   int id_;
   // Store an "id" for the Handler, which is only use to print better
@@ -82,20 +83,30 @@ public:
   // The method run on the new thread.
 
 private:
-  // Some helper methods.
-  // @@ Please add comments.
+  // = Some helper methods.
 
   void usage (void) const;
+  // Print a "Usage" message to the user.
+
   int add_timer (u_long seconds);
+  // Add a new timer to expire in <seconds> more.
+
   void cancel_timer (int id);
+  // Cancel timer <id>.
+
   int parse_commands (const char *buffer);
+  // Parse the commands in <buffer>, it is expected to be a line of
+  // input from the user.
+
   void dump (void);
+  // Dump the state of the timer queue.
 
 private:
-  // @@ Please add comments.
   Thread_Timer_Queue *queue_;
+  // The timer queue implementation.
 
   const int usecs_;
+  // How many micro seconds are in a second.
 };
 
 // Administrivia methods...
@@ -307,10 +318,28 @@ main (int argc, char* argv[])
   return 0;
 }
 
-// @@ Add template specializations.
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if !defined(ACE_MT_SAFE)
+
+// These templates will specialized in liACE.* if the platforms does
+// not define ACE_MT_SAFE.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
+template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
+#pragma instantiate ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
+#pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_MT_SAFE */
