@@ -199,13 +199,16 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (grp_id != -1);
   thread_start->wait ();
 
-  // Pthreads doesn't do suspend/resume.
-#if !defined (ACE_HAS_PTHREADS)
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) suspending group\n")));
-
-  ACE_ASSERT (thr_mgr->suspend_grp (grp_id) != -1);
+  if (thr_mgr->suspend_grp (grp_id) == -1)
+    {
+      // Pthreads w/o UNIX 98 extensions doesn't support suspend/resume,
+      // so it's allowed to ENOTSUP; anything else is a hard fail.
+      ACE_ASSERT (errno == ENOTSUP);
+      ACE_DEBUG((LM_DEBUG, "%p\n", "suspend_grp"));
+    }
 
   // Wait for 1 more second and then resume every thread in the
   // group.
@@ -213,8 +216,11 @@ main (int, ASYS_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) resuming group\n")));
 
-  ACE_ASSERT (thr_mgr->resume_grp (grp_id) != -1);
-#endif /* ! ACE_HAS_PTHREADS */
+  if (thr_mgr->resume_grp (grp_id) == -1)
+    {
+      ACE_ASSERT (errno == ENOTSUP);
+      ACE_DEBUG((LM_DEBUG, "%p\n", "suspend_grp"));
+    }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
@@ -226,6 +232,9 @@ main (int, ASYS_TCHAR *[])
   thr_mgr->kill_grp (grp_id, SIGINT);
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id, SIGINT) != -1);
+#else
+  if (thr_mgr->kill_grp (grp_id, SIGINT) == -1)
+    ACE_ASSERT (errno == ENOTSUP);
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait for 1 more second and then cancel all the threads.
