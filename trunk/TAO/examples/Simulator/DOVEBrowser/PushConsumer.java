@@ -121,7 +121,7 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				   new TimeBase.ulonglong (0,0),
 				   new TimeBase.ulonglong (0,0),
 				   new TimeBase.ulonglong (0,0),
-				   new RtecEventComm.EventData (0, 0, orb_.create_any())
+				   new RtecEventComm.EventData (orb_.create_any())
 				    );
 
 	

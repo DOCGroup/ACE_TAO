@@ -193,8 +193,6 @@ DOVE_Supplier::connect_Supplier ()
     qos.publications[0].event.creation_time_ = ORBSVCS_Time::zero; 
     qos.publications[0].event.ec_recv_time_ = ORBSVCS_Time::zero;
     qos.publications[0].event.ec_send_time_ = ORBSVCS_Time::zero;
-    //qos.publications[0].event.data_.x = 0;
-    //qos.publications[0].event.data_.y = 0;
     qos.publications[0].event.data_.any_value.replace (CORBA::_tc_short,
                                                        &x,
                                                        CORBA::B_FALSE,
@@ -218,6 +216,7 @@ DOVE_Supplier::connect_Supplier ()
     TAO_CHECK_ENV;
 
     // Connect the supplier to the proxy consumer.
+    ACE_SupplierQOS_Factory::debug (qos);
     this->proxyPushConsumer_var_->connect_push_supplier (pushSupplier_var.in (),
                                                          qos,
                                                          TAO_TRY_ENV);
