@@ -5,6 +5,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
+#include "ace/INET_Addr.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram.i"
@@ -455,9 +456,19 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
 {
   /* The first step would be to get the interface address for the
      nic_name specified */
-  ifreq if_address;
   ip_mreq multicast_address;
-
+  ACE_INET_Addr mcast_addr;
+#if defined (ACE_WIN32)
+  // This port number is not necessary, just convenient
+  ACE_INET_Addr interface_addr;
+  if (interface_addr.set (mcast_addr.get_port_number (),
+                          option_value) == -1)
+    return;
+  multicast_address.imr_interface.s_addr =
+    htonl (interface_addr.get_ip_address ());
+#else
+  ifreq if_address;
+  
 #if defined (ACE_PSOS)
   // Look up the interface by number, not name.
   if_address.ifr_ifno = ACE_OS::atoi (option_value);
@@ -485,5 +496,6 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
                               IP_MULTICAST_IF,
                               &multicast_address.imr_interface.s_addr,
                               sizeof (struct in_addr));
+#endif /* ACE_WIN32 */
 
 }
