@@ -232,12 +232,11 @@ Connection_Manager::connect_to_receivers (CORBA::Environment &ACE_TRY_ENV)
                                streamctrl_object);
 
       // Bind the sender and receiver MMDevices.
-      int result =
-        streamctrl->bind_devs (this->sender_.in (),
-                               (*iterator).int_id_,
-                               the_qos.inout (),
-                               flow_spec,
-                               ACE_TRY_ENV);
+      (void) streamctrl->bind_devs (this->sender_.in (),
+                                    (*iterator).int_id_.in (),
+                                    the_qos.inout (),
+                                    flow_spec,
+                                    ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -336,7 +335,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
   //
   if (sender_context_exists)
     {
-      ACE_TRY
+      ACE_TRY_EX(SENDER_CONTEXT_EXISTS)
         {
           // Try binding the sender under the sender context
           name [0].id =
@@ -345,10 +344,11 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
           CORBA::Object_var object =
             this->sender_context_->resolve (name,
                                             ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX(SENDER_CONTEXT_EXISTS);
 
           this->sender_ =
-            AVStreams::MMDevice::_narrow (object.in ());
+            AVStreams::MMDevice::_narrow (object.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX(SENDER_CONTEXT_EXISTS);
         }
       ACE_CATCH (CosNaming::NamingContext::NotFound, al_ex)
         {

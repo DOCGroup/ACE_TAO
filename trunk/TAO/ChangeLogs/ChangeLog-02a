@@ -1,3 +1,11 @@
+Wed Mar 28 11:57:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+          Fixed compilation problems on platforms without exceptions.
+          Also fixed g++ warnings
+
 Wed Mar 28 11:49:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/OBV/Typed_Events/Event_Types_impl.cpp:
