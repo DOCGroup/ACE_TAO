@@ -1,3 +1,9 @@
+Wed Jul 31 08:11:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/Task.cpp:
+          Also the MinGW32 GCC3.1 compiler has problems with the
+          reinterpret_cast in the svc_run method. Use the static_cast instead.
+
 Wed Jul 31 07:40:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
