@@ -1,4 +1,8 @@
-Fri May 21 20:50:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri May 21 20:58:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/Simple_util.cpp (test_for_ins): Removed
+	  unnecessary bank dependencies that Vishal had added to this
+	  generic code.
 
 	* tao/Connect.cpp (svc):
 	* tao/ORB_Core.cpp (inherit_from_parent_thread):
