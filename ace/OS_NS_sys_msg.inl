@@ -66,7 +66,7 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 # elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 # else
-  ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
+  ACE_OSCALL_RETURN (::msgsnd (int_id, static_cast <void *> (buf), len, flags), int, -1);
 # endif /* ACE_LACKS_POSIX_PROTOTYPES || ACE_HAS_NONCONST_MSGSND */
 #else
   ACE_UNUSED_ARG (int_id);
