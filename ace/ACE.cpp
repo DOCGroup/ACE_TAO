@@ -26,7 +26,7 @@ ACE::unique_name (const void *object,
   // uniqueness between other "live" objects in the same process. The
   // uniqueness of this name is therefore only valid for the life of
   // <object>.
-  TCHAR temp_name[100];  
+  TCHAR temp_name[ACE_UNIQUE_NAME_LEN];  
   ACE_OS::sprintf (temp_name, __TEXT ("%d %d"), ACE_OS::getpid (), object);
   ACE_OS::strncpy (name, temp_name, length);
 }
