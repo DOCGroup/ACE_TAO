@@ -26,7 +26,7 @@ void
 MT_Cubit_Timer::stop (void)
 {
 #if defined (CHORUS)
-  pstopTime = pccTime1Get ();
+  this->pstopTime_ = pccTime1Get ();
 #else /* CHORUS */
   // If CHORUS is not defined just use plain timer_.stop ().
   this->timer_.stop ();
@@ -47,7 +47,7 @@ MT_Cubit_Timer::get_elapsed (void)
                this->delta_.usec ()) / this->granularity_;
 #endif /* !CHORUS */
 #else /* !ACE_LACKS_FLOATING_POINT */
-  
+
   // Store the time in usecs.
 
 #if defined (VXWORKS)
@@ -81,4 +81,3 @@ MT_Cubit_Timer::get_elapsed (void)
 #endif /* !ACE_LACKS_FLOATING_POINT */
   return real_time; // in usecs.
 }
-   

@@ -59,16 +59,12 @@ ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,\
                                         ACE_SCOPE_PROCESS))
 
 #if defined (CHORUS)
-#define PCCTIMER_INIT \
-{\
-int pTime;\
-// Initialize the PCC timer chip
-pccTimerInit ();\
+#define PCCTIMER_INIT {int pTime;/*Initialize the PCC timer chip */pccTimerInit ();\
 if (pccTimer (PCC2_TIMER1_START, &pTime) != K_OK)\
 ACE_DEBUG ((LM_DEBUG,"pccTimer has a pending benchmark\n"));\
 }
 #else /* !CHORUS */
-#define PCCTIMER_INIT 
+#define PCCTIMER_INIT
 #endif /* !CHORUS */
 
 #if defined (VXWORKS) && defined (FORCE_ARGS)
@@ -77,7 +73,7 @@ static char *force_argv[]=
   "server",
   "-s",
   "-f",
-  "ior.txt" 
+  "ior.txt"
 };
 #endif /* defined (VXWORKS) && defined (FORCE_ARGS) */
 
@@ -159,7 +155,7 @@ public:
   ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
-  
+
   ACE_Barrier *barrier_;
   // Barrier for the multiple servants to synchronize after binding to
   // the orb.
@@ -187,7 +183,7 @@ public:
   virtual ACE_Sched_Priority get_high_priority (void);
   // Sets the priority of the high priority thread.
 
-  virtual ACE_Sched_Priority get_low_priority 
+  virtual ACE_Sched_Priority get_low_priority
     (u_int num_low_priority,
      ACE_Sched_Priority prev_priority,
      u_int use_multiple_priority);
@@ -211,7 +207,3 @@ protected:
 };
 
 #endif /* GLOBALS_H */
-
-
-
-
