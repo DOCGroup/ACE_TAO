@@ -39,7 +39,7 @@ CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
 CPPDIR = .
 
 INCDIR_NAME = tao\PortableServer
-INCLUDES = *.h *.i *_T.cpp PortableServer.pidl ImplRepo.pidl
+INCLUDES = *.h *.i *.inl *_T.cpp PortableServer.pidl ImplRepo.pidl
 
 LIBFILES = $(ACE_LIB) $(TAO_LIB)
 
