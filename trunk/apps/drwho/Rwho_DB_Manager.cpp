@@ -63,7 +63,7 @@ RWho_DB_Manager::~RWho_DB_Manager (void)
 int 
 RWho_DB_Manager::get_next_host (void)
 {
-  long current_time;
+  time_t current_time;
 
   ACE_OS::time (&current_time);
 

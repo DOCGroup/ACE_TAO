@@ -25,7 +25,7 @@
 static char *
 tstamp (void)
 {
-  long time_now;
+  time_t time_now;
   char *temp;
 
   time_now = ACE_OS::time (0);
