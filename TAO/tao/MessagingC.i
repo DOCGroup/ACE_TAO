@@ -1848,7 +1848,7 @@ Messaging::ReplyHandler::ReplyHandler (
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
   )
-  : CORBA::Object (objref, _tao_collocated, servant)
+  : CORBA_Object (objref, _tao_collocated, servant)
 {
   this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
 }
