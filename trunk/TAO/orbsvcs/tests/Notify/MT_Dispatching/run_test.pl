@@ -78,6 +78,11 @@ if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
 
 for $test (@tests)
   {
+    $Supplier->Arguments ("Structured_Supplier",
+                          "-ORBInitRef NameService=file://$naming_ior ");
+    $Consumer->Arguments ("Structured_Consumer",
+                          "-ORBInitRef NameService=file://$naming_ior ");
+
     print STDERR "\nTesting $test->{description} ....\n\n";
 
     unlink $notify_ior;
