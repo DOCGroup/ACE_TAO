@@ -1,3 +1,8 @@
+Thu Jan 21 20:16:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_module/module_ih.cpp: 
+	  Removed warning about unused variable.
+
 Thu Jan 21 19:04:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB_Core.h: 
