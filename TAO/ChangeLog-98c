@@ -1,3 +1,16 @@
+Wed Jun 24 09:56:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/client_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
+	  Removed DII test.
+	  Print clearer messages for sequences (to distinguish octet vs
+	  long sequences).
+	  Print the results for each test (long, short, octet, structs
+	  and unions) and *also* a mixin of lonng/short/octet.
+
 Wed Jun 24 02:23:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.33 released.
