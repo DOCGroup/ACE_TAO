@@ -3,10 +3,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//     TAO/tests/POA/On_Demand_Loading
+//     TAO/examples/POA/On_Demand_Loading
 //
 // = FILENAME
-//     Servant_Locator.cpp
+//     Servant_Manager.cpp
 //
 // = DESCRIPTION
 //     Implementation of the helper class for the ServantActivator_i
