@@ -44,7 +44,13 @@ public:
   
   // main starting point includes analysing and printing
   void printAny (CORBA::TypeCode_ptr any_type, const void *any_value);
-  
+
+  void printTimeStamp (ACE_hrtime_t creation,
+                       ACE_hrtime_t ec_recv,
+                       ACE_hrtime_t ec_send);
+  // Print the time stamp, which means forward this 
+  // call to the PrintVisitor
+
 private:
   Node *analyse (CORBA::TypeCode_ptr tc_ptr, 
 		             const unsigned char *&value_ptr,

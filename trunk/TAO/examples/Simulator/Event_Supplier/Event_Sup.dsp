@@ -83,10 +83,41 @@ LINK32=link.exe
 
 # Name "Event_Sup - Win32 Release"
 # Name "Event_Sup - Win32 Debug"
+# Begin Group "Source files"
+
+# PROP Default_Filter "*.cpp"
+# Begin Source File
+
+SOURCE=.\DOVE_Supplier.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\Event_Sup.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\NavWeapC.cpp
+# End Source File
+# End Group
+# Begin Group "Header files"
+
+# PROP Default_Filter "*.h"
+# Begin Source File
+
+SOURCE=.\DOVE_Supplier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event_Sup.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\NavWeapC.h
+# End Source File
+# End Group
+# Begin Group "IDL files"
+
+# PROP Default_Filter "*.idl"
 # Begin Source File
 
 SOURCE=.\NavWeap.idl
@@ -124,9 +155,6 @@ BuildCmds= \
 !ENDIF 
 
 # End Source File
-# Begin Source File
-
-SOURCE=.\NavWeapC.cpp
-# End Source File
+# End Group
 # End Target
 # End Project

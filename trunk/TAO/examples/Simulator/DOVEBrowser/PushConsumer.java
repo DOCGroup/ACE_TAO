@@ -115,14 +115,6 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	// Register for Notification and Shutdown events
 
 	
-	RtecEventComm.Event disjunction_designator_ = 
-	  new RtecEventComm.Event (ACE_ES_DISJUNCTION_DESIGNATOR,  0, 
-				   1,        // ttl
-				   new TimeBase.ulonglong (0,0),
-				   new TimeBase.ulonglong (0,0),
-				   new TimeBase.ulonglong (0,0),
-				   new RtecEventComm.EventData (0, 0, orb_.create_any())
-				    );
 	RtecEventComm.Event notification_event_ = 
 	  new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0, 
 				   1,        // ttl
@@ -131,20 +123,11 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 				   new TimeBase.ulonglong (0,0),
 				   new RtecEventComm.EventData (0, 0, orb_.create_any())
 				    );
-	RtecEventComm.Event shutdown_event_ = 
-	    new RtecEventComm.Event (ACE_ES_EVENT_SHUTDOWN,  0, 
-				     1,        // ttl
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new TimeBase.ulonglong (0,0),
-				     new RtecEventComm.EventData (0, 0, orb_.create_any())
-				      );
+
 	
 	
-	RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[3];  
-	dependencies_[0] = new RtecEventChannelAdmin.Dependency (disjunction_designator_, rt_info_.value);
-	dependencies_[1] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
-	dependencies_[2] = new RtecEventChannelAdmin.Dependency (shutdown_event_, rt_info_.value); 
+	RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];  
+	dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
 	
 	
 	// @@ Carlos please help me to set the right boolean value

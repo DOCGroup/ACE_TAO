@@ -23,13 +23,24 @@ AnyAnalyser::AnyAnalyser (const char *file_name)
 }
 
 AnyAnalyser::~AnyAnalyser () {
-  delete printVisitor_ptr_;
+  delete this->printVisitor_ptr_;
 }
 
 void
 AnyAnalyser::close () { 
-  printVisitor_ptr_->close();
+  this->printVisitor_ptr_->close();
 }
+
+void 
+AnyAnalyser::printTimeStamp (ACE_hrtime_t creation,
+                             ACE_hrtime_t ec_recv,
+                             ACE_hrtime_t ec_send)
+{
+  this->printVisitor_ptr_->printTimeStamp (creation,
+                                          ec_recv,
+                                          ec_send);
+}
+
 
 void 
 AnyAnalyser::printAny (CORBA::TypeCode_ptr any_type, const void *any_value) {

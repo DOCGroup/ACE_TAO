@@ -3,21 +3,45 @@ $Id$
 Documentation for the Simulator/DOVE demo
 
 Purpose: To show how the event service can be used to as a media to 
-         transport monitoring events including data. 
+         transport monitoring events including data. Also to 
+         show how objects implemented in Java can access/can be accessed
+         by TAO objects.
+         An other purpose is also to show the feasability of
+         the DOVE framework as mentioned in 
+         "http://wwww.cs.wustl.edu/~schmidt/dove.html".
 
-Application: The events contain C++ structs with avionics information.
+Application: Using the Event Service as distribution media, event 
+             consumers and event suppliers are needed. The central
+             element in the Event Service is a so called, event channel.
+             The event channel transports events from suppliers to
+             consumers. Filtering can be activated.
+             The mapping to DOVE is the following: 
+             Event Channel - DOVE Agent
+             Event Consumer - DOVE Browser and/or DOVE MIB
+             Event Supplier - Monitored Application (here 
+                              an object supplying recorded scheduling 
+                              and dummy information)
+
+
+Implementation:
+             The events contain structs with avionics information.
              They are supllied by sensors of an avionic and are
-             consumed by an JAVA applet running on a different machine and/or
-             location. The collected metrics are displayed in
-			 JAVA Beans. A object called DOVE Management Information
-			 Base keeps track of all sent events.
+             consumed by the DOVE Browser, an JAVA applet running on 
+             a different machine and/or location. The collected metrics are displayed in
+             JAVA Beans. A object called DOVE Management Information
+             Base connects to the same Event Channel. The MIB analyses the 
+             the data field in the event. The field is a CORBA::Any,
+             so no assumptions can be made about the kind of data in 
+             the event. The analysed Any is then printed into a file.
 
-Implementation: A C++ Supplier pushes events containing a
-            navigation or weapons struct to the Event Service.
-            The Event Service dispatches the events to any number of
-            Consumers which are implemented in JAVA. The JAVA
-            consumer extracts the data of the structs and dispatches
-            it to various Visualization Components.
+             A C++ Supplier pushes events containing a
+             navigation or weapons struct to the Event Service.
+             The latency and other machine metrics are read from
+             a file, which contains recorded scheduling information.
+             The Event Service  dispatches the events to any number of
+             DOVE Browsers/MIBs which are implemented using JAVA/C++. 
+             The DOVE Browser extracts the data of the structs and dispatches
+             it to various Visualization Components.
 
 
 For more informations refer to:
