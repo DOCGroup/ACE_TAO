@@ -155,8 +155,8 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
     {
       Task_Entry_Link **link;
 
-      if (iter.next (link) == 0 
-          || link == 0 
+      if (iter.next (link) == 0
+          || link == 0
           || *link == 0
           || (*link)->dependency_type () == dt)
         return -1;
@@ -185,8 +185,8 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
 
-      if (iter.next (link) == 0 
-          || link == 0 
+      if (iter.next (link) == 0
+          || link == 0
           || *link == 0)
         return -1;
 
@@ -195,8 +195,8 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL 
-              && (*link)->caller ().has_unresolved_remote_dependencies () 
+          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
@@ -219,8 +219,8 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL 
-              && (*link)->caller ().has_unresolved_local_dependencies () 
+          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
@@ -293,8 +293,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL 
-              && (*link)->caller ().has_unresolved_remote_dependencies () 
+          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
@@ -316,8 +316,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL 
-              && (*link)->caller ().has_unresolved_local_dependencies () 
+          if ((*link)->dependency_type () == RtecScheduler::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
@@ -364,7 +364,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
     {
       Task_Entry_Link **link;
       if (dep_iter.next (link) == 0
-          || link == 0 
+          || link == 0
           || *link == 0)
         return -1;
 
@@ -425,7 +425,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           // Obtain a pointer to the current dispatch proxy iterator.
           Dispatch_Proxy_Iterator **proxy_iter;
           if (conj_set_iter.next (proxy_iter) == 0
-              || proxy_iter == 0 
+              || proxy_iter == 0
               || *proxy_iter == 0)
             return -1;
 
@@ -683,7 +683,7 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   // lowest laxity (highest dynamic sub-priority) third Just use low
   // 32 bits of worst_case_execution_time.  This will have to change
   // when TimeBase.idl is finalized.
-  // 
+  //
   // NOTE: Leave the -= code intact as it's a workaround of a BCB4
   // internal compiler error.
   Time this_laxity = deadline_;
@@ -857,14 +857,15 @@ RtecScheduler::Time
 Dispatch_Proxy_Iterator::arrival (void) const
 {
   Dispatch_Entry_Link *link;
-  if (iter_.done () 
+  if (iter_.done ()
       || iter_.next(link) == 0
       || link == 0)
     return 0;
 
   // Just use low 32 bits of arrival.  This will have to change when
   // TimeBase.idl is finalized.
-  return link->dispatch_entry ().arrival () + current_frame_offset_;
+  return link->dispatch_entry ().arrival () +
+         RtecScheduler::Time (current_frame_offset_);
 }
 
 // returns the adjusted deadline time of the virtual entry
@@ -880,7 +881,8 @@ Dispatch_Proxy_Iterator::deadline (void) const
 
   // Just use low 32 bits of deadline.  This will have to change when
   // TimeBase.idl is finalized.
-  return link->dispatch_entry ().deadline () + current_frame_offset_;
+  return link->dispatch_entry ().deadline () +
+         RtecScheduler::Time (current_frame_offset_);
 }
 
 // returns the scheduler priority of the virtual entry
@@ -890,7 +892,7 @@ Dispatch_Proxy_Iterator::priority (void) const
 {
   Dispatch_Entry_Link *link;
 
-  if (iter_.done () 
+  if (iter_.done ()
       || iter_.next(link) == 0
       || link == 0)
     return 0;

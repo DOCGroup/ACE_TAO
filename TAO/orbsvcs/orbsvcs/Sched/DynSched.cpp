@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "DynSched.h"
+#include "ace/Basic_Types.h"
 #include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -1856,9 +1857,11 @@ ACE_DynScheduler::create_timeline ()
       // Just use low 32 bits of arrival and deadline.  This will
       // have to change when TimeBase.idl is finalized.
       const TimeBase::TimeT arrival =
-        ordered_dispatch_entries_[i]->arrival () + current_frame_offset;
+        ordered_dispatch_entries_[i]->arrival () +
+        ACE_static_cast (ACE_UINT32, current_frame_offset);
       const TimeBase::TimeT deadline=
-        ordered_dispatch_entries_[i]->deadline () + current_frame_offset;
+        ordered_dispatch_entries_[i]->deadline () +
+        ACE_static_cast (ACE_UINT32, current_frame_offset);
 
       ACE_NEW_RETURN (
         new_dispatch_entry,
@@ -2232,7 +2235,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
 
         if ((last_entry->stop () > last_completion) &&
             ((last_entry->stop () < current_completion) ||
-             (current_completion == 0)))
+             (current_completion == 0U)))
         {
           current_completion = last_entry->stop ();
           current_entry = &(link->entry ());
