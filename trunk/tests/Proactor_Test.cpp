@@ -155,9 +155,9 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   MyTask (void): lock_ (), sem_ (0), proactor_(0) {}
 
-  virtual ~MyTask() 
-    { 
-      (void) this->stop (); 
+  virtual ~MyTask()
+    {
+      (void) this->stop ();
       (void) this->delete_proactor();
     }
 
@@ -257,7 +257,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
   // always delete implementation  1 , not  !(proactor_impl == 0)
   ACE_NEW_RETURN (this->proactor_,
-                  ACE_Proactor (proactor_impl, 1 ), 
+                  ACE_Proactor (proactor_impl, 1 ),
                   -1);
   // Set new singleton and delete it in close_singleton()
   ACE_Proactor::instance (this->proactor_, 1);
@@ -1427,7 +1427,7 @@ Sender::initiate_read_stream (void)
   ACE_NEW_RETURN (mb2, ACE_Message_Block (complete_message_length + 1), -1);
   ACE_NEW_RETURN (mb3, ACE_Message_Block (complete_message_length + 1), -1);
 
-  // Let allocate memory for one more triplet, 
+  // Let allocate memory for one more triplet,
   // This improves performance
   // as we can receive more the than one block at once
   // Generally, we can receive more triplets ....
@@ -1511,7 +1511,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     ACE_Message_Block & mb = result.message_block ();
 
     if (loglevel > 1)
-      { 
+      {
         LogLocker log_lock;
 
         ACE_DEBUG ((LM_DEBUG,
@@ -1966,19 +1966,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ));
   connector.cancel_all ();
 #endif
- 
+
   //Cancel all pending AIO on Acceptor And Receivers
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Cancel Acceptor/Receivers:sessions_=%d\n"),
               acceptor.get_number_sessions ()
             ));
   acceptor.cancel_all ();
-   
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Stop Thread Pool Task\n")
             ));
   task1.stop ();
- 
+
   // As Proactor event loop now is inactive it is safe to destroy all
   // Senders
   ACE_DEBUG ((LM_DEBUG,
@@ -1999,11 +1999,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+  ACE_OS::sprintf (bufs,
+                   ACE_TEXT ("%u(%ld)"),
                    connector.get_total_snd (),
                    connector.get_total_w ());
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+  ACE_OS::sprintf (bufr,
+                   ACE_TEXT ("%u(%ld)"),
                    connector.get_total_rcv (),
                    connector.get_total_r ());
 
@@ -2012,14 +2014,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               bufs,
               bufr));
 
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
+  ACE_OS::sprintf (bufs, ACE_TEXT ("%u(%ld)"),
                    acceptor.get_total_snd (),
                    acceptor.get_total_w ());
 
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
+  ACE_OS::sprintf (bufr, ACE_TEXT ("%u(%ld)"),
                    acceptor.get_total_rcv (),
                    acceptor.get_total_r ());
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Acceptor/Receivers total bytes: snd=%s rcv=%s\n"),
               bufs,

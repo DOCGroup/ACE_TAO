@@ -1,6 +1,7 @@
 Mon Mar 10 08:25:30 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Log_Msg.cpp (log_hexdump):
+	* tests/Proactor_Test.cpp:
 
 	  Corrected format specifier for size_t (unsigned integer)
 	  variable, i.e. "%u" instead of "%d".  Fixes mismatched format
