@@ -267,10 +267,43 @@ typedef ACE_UINT16 ACE_USHORT16;
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
-    ACE_UINT32 hi_;
-    // High 32 bits.
-    ACE_UINT32 lo_;
-    // Low 32 bits.
+    union
+      {
+        struct
+          {
+            ACE_UINT32 hi_;
+            // High 32 bits.
+
+            ACE_UINT32 lo_;
+            // Low 32 bits.
+          } data_;
+        // To ensure alignment on 8-byte boundary.
+
+        // double isn't usually usable with ACE_LACKS_FLOATING_POINT,
+        // but this seems OK.
+        double for_alignment_;
+        // To ensure alignment on 8-byte boundary.
+      };
+
+    // NOTE:  the following four accessors are inlined here in
+    // order to minimize the extent of the data_ struct.  It's
+    // only used here; the .i and .cpp files use the accessors.
+
+    const ACE_UINT32 &h_ () const { return data_.hi_; }
+    // Internal utility function to hide access through struct.
+
+    ACE_UINT32 &h_ () { return data_.hi_; }
+    // Internal utility function to hide access through struct.
+
+    const ACE_UINT32 &l_ () const { return data_.lo_; }
+    // Internal utility function to hide access through struct.
+
+    ACE_UINT32 &l_ () { return data_.lo_; }
+    // Internal utility function to hide access through struct.
+
+    // NOTE:  the above four accessors are inlined here in
+    // order to minimize the extent of the data_ struct.  It's
+    // only used here; the .i and .cpp files use the accessors.
 
     ACE_UINT32 ul_shift (ACE_UINT32 a, ACE_UINT32 c_in, ACE_UINT32 *c_out);
     ACE_U_LongLong ull_shift (ACE_U_LongLong a, ACE_UINT32 c_in,
