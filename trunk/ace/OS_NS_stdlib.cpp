@@ -272,7 +272,7 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
 #if defined (ACE_LACKS_REALPATH) && !defined (ACE_HAS_WINCE)
 char *
 ACE_OS::realpath (const char *file_name,
-		  char *resolved_name)
+                  char *resolved_name)
 {
   ACE_OS_TRACE ("ACE_OS::realpath");
 
@@ -342,7 +342,7 @@ ACE_OS::realpath (const char *file_name,
 
       // Skip multiple separators
       while (*file_name == '/')
-	++file_name;
+        ++file_name;
 
       char* start = dest;
 
@@ -389,10 +389,10 @@ ACE_OS::realpath (const char *file_name,
                 return 0;
             }
 
-	  // Check if current path is a link
-	  if (S_ISLNK (st.st_mode))
-	    {
-	      if (++nlinks > MAXSYMLINKS)
+          // Check if current path is a link
+          if (S_ISLNK (st.st_mode))
+            {
+              if (++nlinks > MAXSYMLINKS)
                 {
                   errno = ELOOP;
                   if (resolved_name == 0)
@@ -400,13 +400,13 @@ ACE_OS::realpath (const char *file_name,
                   return 0;
                 }
 
-	      char link_buf[PATH_MAX];
+              char link_buf[PATH_MAX];
 
-	      int link_len = ACE_OS::readlink (rpath, link_buf, PATH_MAX);
-	      int tail_len = ACE_OS::strlen (file_name) + 1;
+              int link_len = ACE_OS::readlink (rpath, link_buf, PATH_MAX);
+              int tail_len = ACE_OS::strlen (file_name) + 1;
 
-	      // Check if there is room to expand link?
-	      if (link_len + tail_len > PATH_MAX)
+              // Check if there is room to expand link?
+              if (link_len + tail_len > PATH_MAX)
                 {
                   errno = ENAMETOOLONG;
                   if (resolved_name == 0)
@@ -414,22 +414,22 @@ ACE_OS::realpath (const char *file_name,
                   return 0;
                 }
 
-	      // Move tail and prefix it with expanded link
-	      ACE_OS::memmove (expand_buf + link_len, file_name, tail_len);
-	      ACE_OS::memcpy (expand_buf, link_buf, link_len);
+              // Move tail and prefix it with expanded link
+              ACE_OS::memmove (expand_buf + link_len, file_name, tail_len);
+              ACE_OS::memcpy (expand_buf, link_buf, link_len);
 
-	      if (*link_buf == '/') // Absolute link?
+              if (*link_buf == '/') // Absolute link?
                 {
                   dest = rpath;
                 }
-	      else // Relative link, remove expanded link component
+              else // Relative link, remove expanded link component
                 {
                   --dest;
                   while (*--dest != '/')
                     ;
                 }
-	      file_name = expand_buf; // Source path is now in expand_buf
-	    }
+              file_name = expand_buf; // Source path is now in expand_buf
+            }
         }
     }
 #  endif /* ACE_LACKS_SYMLINKS */
