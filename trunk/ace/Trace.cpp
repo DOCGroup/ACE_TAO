@@ -14,7 +14,7 @@
 
 // This must come first to avoid "order of include" problems...
 
-#if !defined (ACE_HAS_INLINED_OSCALLS) && !defined (ACE_WIN32)
+#if !defined (ACE_HAS_INLINED_OSCALLS) && !defined(ACE_HAS_ONE_DEFINITION_RULE)
 #define ACE_HAS_INLINED_OSCALLS
 #include "ace/ACE.h"
 #undef ACE_HAS_INLINED_OSCALLS
