@@ -15,7 +15,9 @@
 
 #include "SSL-server-fancy.h"
 
-ACE_RCSID(SSL_SAP, SSL_server_fancy, "$Id$")
+ACE_RCSID (SSL_SAP,
+           SSL_server_fancy,
+           "$Id$")
 
 // Forward declaration.
 class Handler;
@@ -39,15 +41,16 @@ private:
   // Initialize the acceptors.
 
   int create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
-                      Handler *(*handler_factory) (ACE_HANDLE),
+                      Handler *(*handler_factory) (ACE_SSL_SOCK_Stream *),
                       const char *handler_type);
   // Factory that creates the right kind of <Handler>.
 
   // = Factory functions.
-  static Handler *make_twoway_handler (ACE_HANDLE);
+
+  static Handler *make_twoway_handler (ACE_SSL_SOCK_Stream *);
   // Create a twoway handler.
 
-  static Handler *make_oneway_handler (ACE_HANDLE);
+  static Handler *make_oneway_handler (ACE_SSL_SOCK_Stream *);
   // Create a oneway handler.
 
   ACE_SSL_SOCK_Acceptor twoway_acceptor_;
@@ -73,7 +76,8 @@ public:
   // Close down and delete this.
 
 protected:
-  Handler (ACE_HANDLE handle);
+
+  Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
   int parse_header_and_allocate_buffer (char *&buf,
@@ -100,6 +104,9 @@ protected:
 
   ACE_Profile_Timer timer_;
   // Keeps track of how much time we're using.
+
+  ACE_SSL_SOCK_Stream *ssl_stream_;
+  //keep state information for a ssl_stream.
 };
 
 class Twoway_Handler : public Handler
@@ -107,19 +114,22 @@ class Twoway_Handler : public Handler
   // = TITLE
   //   Performs the twoway protocol.
 public:
-  Twoway_Handler (ACE_HANDLE handle);
+
+  Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
 private:
+
   virtual int run (void);
   // Template Method hook called by <svc>.
+
 };
 
 class Oneway_Handler : public Handler
 {
   // = TITLE
 public:
-  Oneway_Handler (ACE_HANDLE handle);
+  Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
 private:
@@ -189,11 +199,12 @@ Options::parse_args (int argc, char *argv[])
 // Options Singleton.
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
-Handler::Handler (ACE_HANDLE handle)
+Handler::Handler (ACE_SSL_SOCK_Stream *ssl_stream)
   : total_bytes_ (0),
-    message_count_ (0)
+    message_count_ (0),
+    ssl_stream_ (ssl_stream)
+
 {
-  this->peer ().set_handle (handle);
 }
 
 int
@@ -202,17 +213,17 @@ Handler::open (void *)
   ACE_INET_Addr cli_addr;
 
   // Make sure we're not in non-blocking mode.
-  if (this->peer ().disable (ACE_NONBLOCK) == -1)
+  if (this->ssl_stream_-> disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "disable"),
                        0);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d on handle %d\n",
+              "(%P|%t) client %s connected from %d \n",
               cli_addr.get_host_name (),
-              cli_addr.get_port_number (),
-              this->peer ().get_handle ()));
+              cli_addr.get_port_number ()));
+
   return 0;
 }
 
@@ -222,7 +233,10 @@ Handler::close (u_long)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) closing down %x\n",
               this));
+
+  delete this->ssl_stream_;
   delete this;
+
   return 0;
 }
 
@@ -246,8 +260,8 @@ int
 Handler::parse_header_and_allocate_buffer (char *&request,
                                            ACE_INT32 *len)
 {
-  ssize_t result = this->peer ().recv_n ((void *) len,
-                                         sizeof (ACE_INT32));
+  ssize_t result = this->ssl_stream_ -> recv_n ((void *) len,
+                                                sizeof (ACE_INT32));
   if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -275,8 +289,8 @@ Handler::print_results (void)
 {
 }
 
-Twoway_Handler::Twoway_Handler (ACE_HANDLE handle)
-  : Handler (handle)
+Twoway_Handler::Twoway_Handler (ACE_SSL_SOCK_Stream* ssl_stream)
+  : Handler (ssl_stream)
 {
 }
 
@@ -298,8 +312,9 @@ Twoway_Handler::run (void)
         return -1;
 
       // Subtract off the sizeof the length prefix.
-      ssize_t r_bytes = this->peer ().recv_n (request,
-                                              len - sizeof (ACE_UINT32));
+      ssize_t r_bytes =
+        this->ssl_stream_ -> recv_n (request,
+                                     len - sizeof (ACE_UINT32));
 
       if (r_bytes == -1)
         {
@@ -311,7 +326,8 @@ Twoway_Handler::run (void)
       else if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) reached end of input, connection closed by client\n"));
+                      "(%P|%t) reached end of input, connection closed "
+                      "by client\n"));
           break;
         }
       else if (OPTIONS::instance ()->verbose ()
@@ -323,14 +339,15 @@ Twoway_Handler::run (void)
                     "ACE::write_n"));
       else
         {
-          ssize_t s_bytes = (ssize_t) OPTIONS::instance ()->reply_message_len ();
+          ssize_t s_bytes =
+            (ssize_t) OPTIONS::instance ()->reply_message_len ();
 
           // Don't try to send more than is in the request buffer!
           if (s_bytes > r_bytes)
             s_bytes = r_bytes;
 
-          if (this->peer ().send_n (request,
-                                    s_bytes) != s_bytes)
+          if (this->ssl_stream_ -> send_n (request,
+                                           s_bytes) != s_bytes)
             ACE_ERROR ((LM_ERROR,
                         "%p\n",
                         "send_n"));
@@ -346,8 +363,8 @@ Twoway_Handler::run (void)
   return 0;
 }
 
-Oneway_Handler::Oneway_Handler (ACE_HANDLE handle)
-  : Handler (handle)
+Oneway_Handler::Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream)
+  : Handler (ssl_stream)
 {
 }
 
@@ -389,8 +406,9 @@ Oneway_Handler::run (void)
         return -1;
 
       // Subtract off the sizeof the length prefix.
-      ssize_t r_bytes = this->peer ().recv_n (request,
-                                              len - sizeof (ACE_UINT32));
+      ssize_t r_bytes =
+        this->ssl_stream_ -> recv_n (request,
+                                     len - sizeof (ACE_UINT32));
 
       if (r_bytes == -1)
         {
@@ -402,7 +420,8 @@ Oneway_Handler::run (void)
       else if (r_bytes == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) reached end of input, connection closed by client\n"));
+                      "(%P|%t) reached end of input, connection closed "
+                      "by client\n"));
           break;
         }
       else if (OPTIONS::instance ()->verbose ()
@@ -426,17 +445,18 @@ Oneway_Handler::run (void)
 // Create a twoway handler.
 
 Handler *
-Handler_Factory::make_twoway_handler (ACE_HANDLE handle)
+Handler_Factory::make_twoway_handler (ACE_SSL_SOCK_Stream *ssl_stream)
 {
-  return new Twoway_Handler (handle);
+  return new Twoway_Handler (ssl_stream);
 }
 
 // Create a oneway handler.
 
 Handler *
-Handler_Factory::make_oneway_handler (ACE_HANDLE handle)
+Handler_Factory::make_oneway_handler (ACE_SSL_SOCK_Stream *ssl_stream)
+
 {
-  return new Oneway_Handler (handle);
+  return new Oneway_Handler (ssl_stream);
 }
 
 int
@@ -467,13 +487,16 @@ Handler_Factory::init_acceptors (void)
 }
 
 int
-Handler_Factory::create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
-                                 Handler * (*handler_factory) (ACE_HANDLE),
-                                 const char *handler_type)
+Handler_Factory::create_handler (
+  ACE_SSL_SOCK_Acceptor &acceptor,
+  Handler * (*handler_factory) (ACE_SSL_SOCK_Stream* ),
+  const char *handler_type)
 {
-  ACE_SSL_SOCK_Stream new_stream;
+  ACE_SSL_SOCK_Stream* new_stream;
 
-  if (acceptor.accept (new_stream) == -1)
+  ACE_NEW_RETURN (new_stream, ACE_SSL_SOCK_Stream, -1);
+
+  if (acceptor.accept (*new_stream) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "accept"),
@@ -482,7 +505,7 @@ Handler_Factory::create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
   Handler *handler;
 
   ACE_ALLOCATOR_RETURN (handler,
-                        (*handler_factory) (new_stream.get_handle ()),
+                        (*handler_factory) (new_stream),
                         -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -524,9 +547,9 @@ Handler_Factory::handle_events (void)
   fd_set handles;
 
   FD_ZERO (&handles);
-  FD_SET (this->twoway_acceptor_.get_handle (),
+  FD_SET ( (int) this->twoway_acceptor_.get_handle (),
           &handles);
-  FD_SET (this->oneway_acceptor_.get_handle (),
+  FD_SET ( (int) this->oneway_acceptor_.get_handle (),
           &handles);
 
   // Performs the iterative server activities.
@@ -536,11 +559,12 @@ Handler_Factory::handle_events (void)
       ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
       fd_set temp = handles;
 
-      int result = ACE_OS::select (int (this->oneway_acceptor_.get_handle ()) + 1,
-                                   (fd_set *) &temp,
-                                   0,
-                                   0,
-                                   timeout);
+      int result =
+        ACE_OS::select (int (this->oneway_acceptor_.get_handle ()) + 1,
+                        (fd_set *) &temp,
+                        0,
+                        0,
+                        timeout);
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
@@ -569,6 +593,12 @@ Handler_Factory::handle_events (void)
 int
 main (int argc, char *argv[])
 {
+
+  ACE_SSL_Context *context = ACE_SSL_Context::instance ();
+
+  context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);
+  context->private_key ("./key.pem", SSL_FILETYPE_PEM);
+
   OPTIONS::instance ()->parse_args (argc, argv);
 
   Handler_Factory server;
