@@ -12,6 +12,12 @@
 
 ACE_RCSID(tao, SSLIOP_Connector, "$Id$")
 
+// @@ Very temporary hack that allows us to specify if the client
+//    should use SSLIOP with SSL or SSLIOP without SSL.
+//    This is defined in SSLIOP_Factory.cpp.
+//         -Ossama
+extern int using_ssl;
+
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
 TAO_SSLIOP_Connector::purge_connections (void)
@@ -444,8 +450,7 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
                              ACE_Time_Value *max_wait_time)
 {
   // @@ Use the policies to decide if SSL is the right protocol...
-  int using_ssl = 1;
-  if (!using_ssl)
+  if (!::using_ssl)
     return this->TAO_IIOP_Connector::connect (pfile,
 					      transport,
 					      max_wait_time);
