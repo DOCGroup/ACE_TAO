@@ -1,8 +1,27 @@
+Mon Dec 29 08:48:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing changes originally made by Trevor Fields
+        <fields_t@ociweb.com> on TAO 1.3a.
+
+        * bin/MakeProjectCreator/config/dsnotifylogadmin.mpb:
+
+          Changed the inheritance to correspond with what the
+          DsNotifyLogAdmin library uses.
+
+        * bin/MakeProjectCreator/config/openssl.mpb:
+
+          Added $(SSL_ROOT)/out32 to the libpaths to pick up static
+          OpenSSL libraries on Windows.
+
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+
+          Added inheritance of minimum_corba.
+
 Sun Dec 28 22:36:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added Bug_1693_Test to the daily builds.
+          Added Bug_1693_Test to the daily builds.
 
 Sun Dec 28 15:46:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -26,9 +45,9 @@ Sun Dec 28 15:09:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Dec 28 11:38:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/Message_Queue.h:
-	  Use doxygen style of comments for deprecated enum members so that
-	  they appear on the doxygen deprecated page.
+        * ace/Message_Queue.h:
+          Use doxygen style of comments for deprecated enum members so that
+          they appear on the doxygen deprecated page.
 
 Sun Dec 28 10:44:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -40,9 +59,9 @@ Sun Dec 28 10:44:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec 27 12:55:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* ace/SOCK_Dgram_Mcast.h:
-	  Added @deprecated to the deprecated methods in this file so that
-	  they appear on the doxygen deprecated page.
+        * ace/SOCK_Dgram_Mcast.h:
+          Added @deprecated to the deprecated methods in this file so that
+          they appear on the doxygen deprecated page.
 
 Sat Dec 27 10:32:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -63,115 +82,115 @@ Sat Dec 27 10:22:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 26 17:29:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* m4/ace.m4: Uncommented the AM_CONDITIONAL for BUILD_SSL so
-	  explicit sets of --with-ssl work.
+        * m4/ace.m4: Uncommented the AM_CONDITIONAL for BUILD_SSL so
+          explicit sets of --with-ssl work.
 
 Fri Dec 26 16:53:18 2003  Steve Huston  <shuston@riverace.com>
 
-	* m4/ace.m4: Don't restrict --enable-rtti to Solaris. AIX Visual Age
-	  C++ needs to be able to turn this on also. Also changed the default
-	  to yes, believing I saw a need for RTTI in TAO recently.
+        * m4/ace.m4: Don't restrict --enable-rtti to Solaris. AIX Visual Age
+          C++ needs to be able to turn this on also. Also changed the default
+          to yes, believing I saw a need for RTTI in TAO recently.
 
-	* m4/compiler.m4: For AIX Visual Age C++, if rtti is desired, add
-	  -qrtti to CXXFLAGS.
+        * m4/compiler.m4: For AIX Visual Age C++, if rtti is desired, add
+          -qrtti to CXXFLAGS.
 
-	* ace/OS_NS_Thread.inl: Added #include "ace/OS_NS_sys_mman.h" to see
-	  ACE_OS::shm_unlink() and ACE_OS::shm_open(), needed when
-	  ACE_LACKS_NAMED_POSIX_SEM is defined.
+        * ace/OS_NS_Thread.inl: Added #include "ace/OS_NS_sys_mman.h" to see
+          ACE_OS::shm_unlink() and ACE_OS::shm_open(), needed when
+          ACE_LACKS_NAMED_POSIX_SEM is defined.
 
-	* ace/Timer_Hash_T.cpp:
-	* ace/TImer_Wheel_T.cpp: Added #include "ace/OS_NS_sys_time.h" so
-	  Visual Age C++ can see ACE_OS::gettimeofday(), and "ace/Guard_T.h"
-	  so Visual Age C++ can see ACE_Guard classes.
+        * ace/Timer_Hash_T.cpp:
+        * ace/TImer_Wheel_T.cpp: Added #include "ace/OS_NS_sys_time.h" so
+          Visual Age C++ can see ACE_OS::gettimeofday(), and "ace/Guard_T.h"
+          so Visual Age C++ can see ACE_Guard classes.
 
-	* tests/test_config.h:
-	* tests/Signal_Test.cpp:
-	* tests/Thread_Pool_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
-	  Visual Age C++ sees ACE_OS::sprintf().
+        * tests/test_config.h:
+        * tests/Signal_Test.cpp:
+        * tests/Thread_Pool_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
+          Visual Age C++ sees ACE_OS::sprintf().
 
-	* tests/Message_Block_Test.cpp: Added #include "ace/OS_NS_string.h"
-	  so Visual Age C++ sees ACE_OS::strcmp() and "ace/OS_NS_stdio.h"
-	  so Visual Age C++ sees ACE_OS::sprintf().
+        * tests/Message_Block_Test.cpp: Added #include "ace/OS_NS_string.h"
+          so Visual Age C++ sees ACE_OS::strcmp() and "ace/OS_NS_stdio.h"
+          so Visual Age C++ sees ACE_OS::sprintf().
 
-	* tests/Message_Queue_Test.cpp:
-	* tests/Upgradable_RW_Test.cpp: Added #include "ace/OS_NS_sys_time.h"
-	  so Visual Age C++ can see ACE_OS::gettimeofday() and
-	  "ace/OS_NS_stdio.h" so it can see ACE_OS::sprintf().
+        * tests/Message_Queue_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp: Added #include "ace/OS_NS_sys_time.h"
+          so Visual Age C++ can see ACE_OS::gettimeofday() and
+          "ace/OS_NS_stdio.h" so it can see ACE_OS::sprintf().
 
-	* tests/Message_Queue_Test_Ex.cpp:
-	* tests/Recursive_Condition_Bug_Test.cpp:
-	* tests/Thread_Manager_Test.cpp: Added #include
-	  "ace/OS_NS_sys_time.h" so Visual Age C++ can see
-	  ACE_OS::gettimeofday().
+        * tests/Message_Queue_Test_Ex.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Thread_Manager_Test.cpp: Added #include
+          "ace/OS_NS_sys_time.h" so Visual Age C++ can see
+          ACE_OS::gettimeofday().
 
-	* tests/Message_Queue_Notifications_Test.cpp:
-	* tests/Reactor_Dispatch_Order_Test.cpp:
-	* tests/SString_Test.cpp:
-	* tests/Svc_Handler_Test.cpp: Added #include "ace/OS_NS_string.h" so
-	  Visual Age C++ sees ACE_OS::strlen().
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/SString_Test.cpp:
+        * tests/Svc_Handler_Test.cpp: Added #include "ace/OS_NS_string.h" so
+          Visual Age C++ sees ACE_OS::strlen().
 
-	* tests/Multicast_Test.cpp: Added #include "ace/Min_Max.h" so
-	  Visual Age C++ can see ACE_MIN and ACE_MAX. Added #include
-	  "ace/OS_NS_sys_time.h" so Visual Age C++ can see
-	  ACE_OS::gettimeofday() and "ace/OS_NS_stdio.h" so it can see
-	  ACE_OS::sprintf().
+        * tests/Multicast_Test.cpp: Added #include "ace/Min_Max.h" so
+          Visual Age C++ can see ACE_MIN and ACE_MAX. Added #include
+          "ace/OS_NS_sys_time.h" so Visual Age C++ can see
+          ACE_OS::gettimeofday() and "ace/OS_NS_stdio.h" so it can see
+          ACE_OS::sprintf().
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
-	* tests/Reactor_Registration_Test.cpp:
-	* tests/Reference_Counted_Event_Handler_Test.cpp: Added #include
-	  "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor.
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp: Added #include
+          "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor.
 
-	* tests/MT_Reference_Counted_Notify_Test.cpp:
-	* tests/Timer_Cancellation_Test.cpp: Added #include
-	  "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor and
-	  "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/Timer_Cancellation_Test.cpp: Added #include
+          "ace/Reactor.h" so Visual Age C++ sees ACE_Reactor and
+          "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
 
-	* tests/Naming_Test.cpp:
-	* tests/Priority_Task_Test.cpp:
-	* tests/Thread_Pool_Reactor_Test.cpp:
-	* tests/Thread_Pool_Reactor_Resume_Test.cpp: Added #include
-	  "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS::strcmp().
+        * tests/Naming_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp: Added #include
+          "ace/OS_NS_string.h" so Visual Age C++ can see ACE_OS::strcmp().
 
-	* tests/Process_Manager_Test.cpp:
-	* tests/Reactor_Notify_Test.cpp: Added #include "ace/OS_NS_unistd.h"
-	  so Visual Age C++ can see ACE_OS::sleep().
+        * tests/Process_Manager_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp: Added #include "ace/OS_NS_unistd.h"
+          so Visual Age C++ can see ACE_OS::sleep().
 
-	* tests/Process_Strategy_Test.cpp: Added #include "ace/OS_NS_string.h"
-	  so Visual Age C++ can see ACE_OS::strcpy(), strcat(), strlen().
+        * tests/Process_Strategy_Test.cpp: Added #include "ace/OS_NS_string.h"
+          so Visual Age C++ can see ACE_OS::strcpy(), strcat(), strlen().
 
-	* tests/Reader_Writer_Test.cpp: Added #include "ace/Guard_T.h" and
-	  "ace/RW_Thread_Mutex.h" so Visual Age C++ can see ACE_Guard and
-	  ACE_RW_Thread_Mutex classes.
+        * tests/Reader_Writer_Test.cpp: Added #include "ace/Guard_T.h" and
+          "ace/RW_Thread_Mutex.h" so Visual Age C++ can see ACE_Guard and
+          ACE_RW_Thread_Mutex classes.
 
-	* tests/Recursive_Condition_Test.cpp: Added #include
-	  "ace/OS_NS_sys_time.h" so Visual Age C++ sees ACE_OS::gettimeofday()
-	  and "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
+        * tests/Recursive_Condition_Test.cpp: Added #include
+          "ace/OS_NS_sys_time.h" so Visual Age C++ sees ACE_OS::gettimeofday()
+          and "ace/OS_NS_unistd.h" so Visual Age C++ sees ACE_OS::sleep().
 
-	* tests/Service_Config_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
-	  Visual Age C++ can see ACE_OS::fprintf().
+        * tests/Service_Config_Test.cpp: Added #include "ace/OS_NS_stdio.h" so
+          Visual Age C++ can see ACE_OS::fprintf().
 
-	* tests/Time_Service_Test.cpp: Added #include "ace/OS_NS_string.h"
-	  so Visual Age C++ sees ACE_OS::strcat().
+        * tests/Time_Service_Test.cpp: Added #include "ace/OS_NS_string.h"
+          so Visual Age C++ sees ACE_OS::strcat().
 
-	* tests/TP_Reactor_Test.cpp:  Added #include "ace/OS_NS_stdio.h" so
-	  Visual Age C++ sees ACE_OS::sprintf() and "ace/OS_NS_string.h" so
-	  Visual Age C++ sees ACE_OS::strlen().
+        * tests/TP_Reactor_Test.cpp:  Added #include "ace/OS_NS_stdio.h" so
+          Visual Age C++ sees ACE_OS::sprintf() and "ace/OS_NS_string.h" so
+          Visual Age C++ sees ACE_OS::strlen().
 
-	* tests/TSS_Test.cpp:
-	* tests/TSS_Test_Errno.h:
-	* tests/Thread_Mutex_Test.cpp: Added #include "ace/Guard_T.h" so Visual
-	  Age C++ can see ACE_Guard stuff and "ace/Thread_Mutex.h" to see the
-	  ACE_Thread_Mutex class.
+        * tests/TSS_Test.cpp:
+        * tests/TSS_Test_Errno.h:
+        * tests/Thread_Mutex_Test.cpp: Added #include "ace/Guard_T.h" so Visual
+          Age C++ can see ACE_Guard stuff and "ace/Thread_Mutex.h" to see the
+          ACE_Thread_Mutex class.
 
 Fri Dec 26 12:30:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/taoexe.mpb:
-	* bin/MakeProjectCreator/config/taolib_with_idl.mpb:
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+        * bin/MakeProjectCreator/config/taolib_with_idl.mpb:
 
-	  We are forcing -Sc to the users. Though this is generally good,
-	  but it breaks some of the tests in TAO that uses the TIE
-	  classes.  Just removing -Sc so that we have the minimal number
-	  of options out here.
+          We are forcing -Sc to the users. Though this is generally good,
+          but it breaks some of the tests in TAO that uses the TIE
+          classes.  Just removing -Sc so that we have the minimal number
+          of options out here.
 
 Fri Dec 26 18:22:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -194,9 +213,9 @@ Fri Dec 26 18:22:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Dec 25 18:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ftorbutils.mpb:
+        * bin/MakeProjectCreator/config/ftorbutils.mpb:
 
-	  Removed the dependancy on CosNaming.
+          Removed the dependancy on CosNaming.
 
 Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -288,21 +307,21 @@ Wed Dec 24 09:54:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 23 17:55:19 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Makefile.am: Added ACE_Test_SOURCES so automake doesn't
-	  set this up needing ACE_Test.c.
+        * tests/Makefile.am: Added ACE_Test_SOURCES so automake doesn't
+          set this up needing ACE_Test.c.
 
 Tue Dec 23 16:52:56 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
 
-	  Reordered printing of make rules so that the standard targets
-	  (all, install, debug, etc.) are emitted into the makefile BEFORE
-	  the targets for each project.  This insures that 'all' remains
-	  the first target in the makefile, and is thus the default target
-	  when make is invoked without a target.
+          Reordered printing of make rules so that the standard targets
+          (all, install, debug, etc.) are emitted into the makefile BEFORE
+          the targets for each project.  This insures that 'all' remains
+          the first target in the makefile, and is thus the default target
+          when make is invoked without a target.
 
-	  This should resolve the problem where builds failed due to what
-	  looked like the IDL compiler not being completely built.
+          This should resolve the problem where builds failed due to what
+          looked like the IDL compiler not being completely built.
 
 Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -326,126 +345,126 @@ Tue Dec 23 20:19:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Dec 23 12:31:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* Kokyu/Dispatcher_Impl.h:
-	  Added export macro, so that the destructor is exported. This fixes
-	  the link errors in the CBuilderX MPC build.
+        * Kokyu/Dispatcher_Impl.h:
+          Added export macro, so that the destructor is exported. This fixes
+          the link errors in the CBuilderX MPC build.
 
 Mon Dec 22 17:46:12 2003  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Don't bother getting a ACE_HAS_TLI_PROTOTYPES
-	  setting if ACE_HAS_XTI. It's not needed. Fix the check for
-	  ACE_HAS_CONFLICTING_XTI_MACROS to only include xti.h, not tliuser.h,
-	  since that's where the errors are. The XTI and TLI parts are now
-	  separate; if the platform has XTI, none of the TLI checks are done.
-	  Made the check for sigaction()'s second argument set (or not)
-	  new config setting, ACE_HAS_SIGACTION_CONSTP2. See below.
+        * configure.ac: Don't bother getting a ACE_HAS_TLI_PROTOTYPES
+          setting if ACE_HAS_XTI. It's not needed. Fix the check for
+          ACE_HAS_CONFLICTING_XTI_MACROS to only include xti.h, not tliuser.h,
+          since that's where the errors are. The XTI and TLI parts are now
+          separate; if the platform has XTI, none of the TLI checks are done.
+          Made the check for sigaction()'s second argument set (or not)
+          new config setting, ACE_HAS_SIGACTION_CONSTP2. See below.
 
-	* m4/config_h.m4: Removed entries for ACE_LACKS_POSIX_PROTOTYPES and
-	  ACE_LACKS_SOME_POSIX_PROTOTYPES. Renamed ACE_HAS_BROKEN_XTI_MACROS
-	  to ACE_HAS_CONFLICTING_XTI_MACROS. Added entries for
-	  ACE_HAS_SIGACTION_CONSTP2. See rationale in ace/README entry, below.
+        * m4/config_h.m4: Removed entries for ACE_LACKS_POSIX_PROTOTYPES and
+          ACE_LACKS_SOME_POSIX_PROTOTYPES. Renamed ACE_HAS_BROKEN_XTI_MACROS
+          to ACE_HAS_CONFLICTING_XTI_MACROS. Added entries for
+          ACE_HAS_SIGACTION_CONSTP2. See rationale in ace/README entry, below.
 
-	* ace/README: Clarified the meanings of ACE_HAS_TLI, ACE_HAS_XTI,
-	  and ACE_HAS_SVR4_TLI. Changed entry for ACE_HAS_BROKEN_XTI_MACROS to
-	  ACE_HAS_CONFLICTING_XTI_MACROS and explained it more (both names were
-	  used previously). Removed entries for ACE_LACKS_POSIX_PROTOTYPES
-	  and ACE_LACKS_SOME_POSIX_PROTOTYPES. These ended up a catch-all for
-	  platforms that had odd, or non-conforming (these days anyway) APIs
-	  for some SysV, signal, or stdio functions. Any reference to
-	  ACE_LACKS_POSIX_PROTOYPES is now gone. If it causes any problems
-	  (very doubtful since the only configs that used it were
-	  SunOS 4) it can be added back in a more explanatory fashion.
-	  Uses of ACE_LACKS_SOME_POSIX_PROTOTYPES are replaced by
-	  more specific settings that autoconf is detecting now anyway.
-	  These are:
-	     ACE_HAS_SIGACTION_CONSTP2: sigaction() 2nd parameter is
-	     const sigaction*, as opposed to non-const.
+        * ace/README: Clarified the meanings of ACE_HAS_TLI, ACE_HAS_XTI,
+          and ACE_HAS_SVR4_TLI. Changed entry for ACE_HAS_BROKEN_XTI_MACROS to
+          ACE_HAS_CONFLICTING_XTI_MACROS and explained it more (both names were
+          used previously). Removed entries for ACE_LACKS_POSIX_PROTOTYPES
+          and ACE_LACKS_SOME_POSIX_PROTOTYPES. These ended up a catch-all for
+          platforms that had odd, or non-conforming (these days anyway) APIs
+          for some SysV, signal, or stdio functions. Any reference to
+          ACE_LACKS_POSIX_PROTOYPES is now gone. If it causes any problems
+          (very doubtful since the only configs that used it were
+          SunOS 4) it can be added back in a more explanatory fashion.
+          Uses of ACE_LACKS_SOME_POSIX_PROTOTYPES are replaced by
+          more specific settings that autoconf is detecting now anyway.
+          These are:
+             ACE_HAS_SIGACTION_CONSTP2: sigaction() 2nd parameter is
+             const sigaction*, as opposed to non-const.
 
-	* ace/config-hpux-11.00.h: Removed #define ACE_HAS_BROKEN_XTI_MACROS.
-	  This is not sued any longer (see README above).
+        * ace/config-hpux-11.00.h: Removed #define ACE_HAS_BROKEN_XTI_MACROS.
+          This is not sued any longer (see README above).
 
-	* ace/config-linux-common.h:
-	* ace/config-integritySCA.h:
-	* ace/config-lynxos.h:
-	* ace/config-qnx-neutrino.h:
-	* ace/config-qnx-rtp.h:
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h: Removed entry for
-	  ACE_LACKS_SOME_POSIX_PROTOTYPES. Applies only for glibc earlier than
-	  2.2. If this breaks something, send details to me.
+        * ace/config-linux-common.h:
+        * ace/config-integritySCA.h:
+        * ace/config-lynxos.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h: Removed entry for
+          ACE_LACKS_SOME_POSIX_PROTOTYPES. Applies only for glibc earlier than
+          2.2. If this breaks something, send details to me.
 
-	* ace/config-rtems.h: Removed ACE_LACKS_POSIX_PROTOTYPES and
-	  ACE_LACKS_SOME_POSIX_PROTOTYPES; added ACE_HAS_SIGACTION_CONSTP2.
+        * ace/config-rtems.h: Removed ACE_LACKS_POSIX_PROTOTYPES and
+          ACE_LACKS_SOME_POSIX_PROTOTYPES; added ACE_HAS_SIGACTION_CONSTP2.
 
-	* ace/config-sco-5.0.0.h:
-	* ace/config-sco-5.0.0-mit-pthread.h:
-	* ace/config-tandem.h: Removed entry for ACE_LACKS_POSIX_PROTOTYPES
-	  (was commented out anyway).
+        * ace/config-sco-5.0.0.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-tandem.h: Removed entry for ACE_LACKS_POSIX_PROTOTYPES
+          (was commented out anyway).
 
-	* ace/config-sunos4-sun3.x.h:
-	* ace/config-sunos4-sun4.1.4.h:
-	* ace/config-sunos4-sun4.x.h: Removed entry for
-	  ACE_LACKS_POSIX_PROTOTYPES. If this breaks a build, please email
-	  shuston@riverace.com with compile errors and PRF.
+        * ace/config-sunos4-sun3.x.h:
+        * ace/config-sunos4-sun4.1.4.h:
+        * ace/config-sunos4-sun4.x.h: Removed entry for
+          ACE_LACKS_POSIX_PROTOTYPES. If this breaks a build, please email
+          shuston@riverace.com with compile errors and PRF.
 
-	* ace/OS_NS_dlfcn.inl: Removed #include "ace/OS.h"; replaced with
-	  #include "ace/OS_NS_fcntl.h" and "ace/OS_NS_unistd.h".
-	  (dlsym): Removed the #if defined (ACE_LACKS_POSIX_PROTOTYPES) - this
-	  is not needed.
+        * ace/OS_NS_dlfcn.inl: Removed #include "ace/OS.h"; replaced with
+          #include "ace/OS_NS_fcntl.h" and "ace/OS_NS_unistd.h".
+          (dlsym): Removed the #if defined (ACE_LACKS_POSIX_PROTOTYPES) - this
+          is not needed.
 
-	* ace/OS_NS_signal.inl (sigaction): const_cast the new sigaction arg
-	  if ACE_HAS_SIGACTION_CONSTP2 is not defined. This takes the place
-	  of either ACE_LACKS_SOME_POSIX_PROTOTYPES or
-	  ACE_LACKS_POSIX_PROTOTYPES.
+        * ace/OS_NS_signal.inl (sigaction): const_cast the new sigaction arg
+          if ACE_HAS_SIGACTION_CONSTP2 is not defined. This takes the place
+          of either ACE_LACKS_SOME_POSIX_PROTOTYPES or
+          ACE_LACKS_POSIX_PROTOTYPES.
 
-	* ace/OS_TLI.h: Rearranged the places and situations that TLI or XTI
-	  headers are included. These wre confused over the years as platforms
-	  were ported to, and the TLI API evolved to XTI. The way this now
-	  works mirrors the way modern platforms work. XTI is the newer and
-	  current API. If XTI is available, ACE_HAS_XTI should be set. If
-	  XTI is not available, but the older TLI is, ACE_HAS_TLI should be
-	  set. ACE_HAS_XTI takes precedence if they're both set. If only TLI
-	  is available, the correct header (tiuser.h) is included if
-	  ACE_HAS_TIUSER_H is set. tiuser.h is a compatibility carryover for
-	  platforms with XTI. If the platform has TLI, not XTI, and no
-	  tiuser.h, this file doesn't include any system headers - this may
-	  be wrong, but I don't have any platforms available to try.
-	  Also, ACE_HAS_SVR4_TLI applies to platforms with TLI (not XTI) and
-	  additional, pre-XTI functionality such as t_getname(). This is
-	  true for older SunOS, but I don't think any modern platforms
-	  should set this. XTI includes all the things that distinguish
-	  ACE_HAS_SVR4_TLI from TLI, so if ACE_HAS_XTI is set, ACE_HAS_SVR4_TLI
-	  is ignored. To summarize, the order of precedence is, XTI, then
-	  TLI, optionally modified by ACE_HAS_SVR4_TLI.
+        * ace/OS_TLI.h: Rearranged the places and situations that TLI or XTI
+          headers are included. These wre confused over the years as platforms
+          were ported to, and the TLI API evolved to XTI. The way this now
+          works mirrors the way modern platforms work. XTI is the newer and
+          current API. If XTI is available, ACE_HAS_XTI should be set. If
+          XTI is not available, but the older TLI is, ACE_HAS_TLI should be
+          set. ACE_HAS_XTI takes precedence if they're both set. If only TLI
+          is available, the correct header (tiuser.h) is included if
+          ACE_HAS_TIUSER_H is set. tiuser.h is a compatibility carryover for
+          platforms with XTI. If the platform has TLI, not XTI, and no
+          tiuser.h, this file doesn't include any system headers - this may
+          be wrong, but I don't have any platforms available to try.
+          Also, ACE_HAS_SVR4_TLI applies to platforms with TLI (not XTI) and
+          additional, pre-XTI functionality such as t_getname(). This is
+          true for older SunOS, but I don't think any modern platforms
+          should set this. XTI includes all the things that distinguish
+          ACE_HAS_SVR4_TLI from TLI, so if ACE_HAS_XTI is set, ACE_HAS_SVR4_TLI
+          is ignored. To summarize, the order of precedence is, XTI, then
+          TLI, optionally modified by ACE_HAS_SVR4_TLI.
 
-	* ace/OS_TLI.inl (t_getname): Add code for calling t_getprotaddr()
-	  if ACE_HAS_XTI. It would be good to add ACE_OS::t_getprotaddr()
-	  since most platforms support XTI these days. But this will do
-	  for now.
+        * ace/OS_TLI.inl (t_getname): Add code for calling t_getprotaddr()
+          if ACE_HAS_XTI. It would be good to add ACE_OS::t_getprotaddr()
+          since most platforms support XTI these days. But this will do
+          for now.
 
-	* ace/TLI.cpp (get_local_addr): Forward this through to
-	  ACE_OS::t_getname(), which can now handle both ACE_HAS_XTI and
-	  ACE_HAS_SVR4_TLI.
-	  (set_option, get_option): Added the XTI code for these.
+        * ace/TLI.cpp (get_local_addr): Forward this through to
+          ACE_OS::t_getname(), which can now handle both ACE_HAS_XTI and
+          ACE_HAS_SVR4_TLI.
+          (set_option, get_option): Added the XTI code for these.
 
-	* ace/TLI_Connector.cpp (complete):
-	* ace/TLI_Stream.cpp (get_remote_addr): Regardless of which flavor of
-	  XTI/TLI is set, call ACE_OS::t_getname() to get the address info.
-	  It now can do both XTI and TLI.
+        * ace/TLI_Connector.cpp (complete):
+        * ace/TLI_Stream.cpp (get_remote_addr): Regardless of which flavor of
+          XTI/TLI is set, call ACE_OS::t_getname() to get the address info.
+          It now can do both XTI and TLI.
 
-	* ace/os_include/os_errno.h: Removed the #defines for LOCALNAME and
-	  REMOTENAME. These are now in ace/OS_TLI.h where they come from.
+        * ace/os_include/os_errno.h: Removed the #defines for LOCALNAME and
+          REMOTENAME. These are now in ace/OS_TLI.h where they come from.
 
-	* ace/config-lite.h: Add a check after including config.h for
-	  ACE_HAS_XTI. XTI is what TLI evolved to, and wherever ACE
-	  wants to provide a TLI function or not, it checks for ACE_HAS_TLI.
-	  Since ACE_HAS_XTI can be set without ACE_HAS_TLI, we set ACE_HAS_TLI
-	  to get the basic functionality-providing checks taken care of.
+        * ace/config-lite.h: Add a check after including config.h for
+          ACE_HAS_XTI. XTI is what TLI evolved to, and wherever ACE
+          wants to provide a TLI function or not, it checks for ACE_HAS_TLI.
+          Since ACE_HAS_XTI can be set without ACE_HAS_TLI, we set ACE_HAS_TLI
+          to get the basic functionality-providing checks taken care of.
 
 Mon Dec 22 17:01:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Makefile.am: Removed comment on -module option for
-	  libTestOutput. Added ACE_Test and TSS_Static_Test.
+        * tests/Makefile.am: Removed comment on -module option for
+          libTestOutput. Added ACE_Test and TSS_Static_Test.
 
 Mon Dec 22 14:08:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
