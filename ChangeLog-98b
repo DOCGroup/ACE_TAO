@@ -1,3 +1,14 @@
+Wed Aug  5 23:12:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Changed
+	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
+
+	  to 
+
+	  PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
+
+	  Thanks to John Mulhern <9107@mn3.lawson.lawson.com> for this.
+
 Wed Aug 05 14:53:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T.cpp (connect_svc_handler): When using this

@@ -319,7 +319,7 @@ ifeq ($(purify),0)
 endif # purify
 
 PURE_CACHE_BASE_DIR = /tmp/purifycache
-PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(CXX)
+PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
 ifdef purify
   #### You might want to adjust the Purify options below.
