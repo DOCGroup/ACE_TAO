@@ -1,3 +1,8 @@
+Tue Nov  7 09:04:15 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast.h:
+          Undefine macro MT_DATA if defined already.
+
 Tue Nov  7 09:00:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile:

@@ -28,6 +28,11 @@
 class ACE_Message_Block;
 class ACE_RMCast_Proxy;
 
+// LynxOS 3.X defines the following macro
+#if defined(MT_DATA)
+#undef MT_DATA
+#endif /* MT_DATA */
+
 //! The RMCast namespace
 /*!
   Several simple data structures and enums are shared by all the
