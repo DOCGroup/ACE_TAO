@@ -1,3 +1,9 @@
+Tue Jan 14 16:13:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/IFR_Service/Makefile.IFR_Service: Added a check for
+	  TAO_IFRService library before going head to actually compile
+	  stuff. 
+
 Tue Jan 14 07:05:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/Makefile:
