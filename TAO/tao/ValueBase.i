@@ -8,232 +8,45 @@ ACE_INLINE void
 CORBA::add_ref (CORBA::ValueBase *val)
 {
   if (val)
-    val->_add_ref ();
+    {
+      val->_add_ref ();
+    }
 }
 
 ACE_INLINE void
 CORBA::remove_ref (CORBA::ValueBase *val)
 {
   if (val)
-    val->_remove_ref ();
+    {
+      val->_remove_ref ();
+    }
 }
 
 // ===========================================================
 
-// constructor
+ACE_INLINE
+void
+CORBA::tao_ValueBase_life::tao_add_ref (CORBA::ValueBase *p)
+{
+  CORBA::add_ref (p);
+}
+
+ACE_INLINE
+void
+CORBA::tao_ValueBase_life::tao_remove_ref (CORBA::ValueBase *p)
+{
+  CORBA::remove_ref (p);
+}
+
+// ===========================================================
+
 ACE_INLINE
 CORBA::ValueBase::ValueBase (void)
 {
 }
 
-// *************************************************************
-// Inline operations for class CORBA::ValueBase_var
-// *************************************************************
-
-ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (void)
-  : ptr_ (0)
-{
-}
-
-ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (CORBA::ValueBase *p)
-  : ptr_ (p)
-{
-}
-
-ACE_INLINE
-CORBA::ValueBase_var::~ValueBase_var (void)
-{
-  CORBA::remove_ref (this->ptr_);
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA::ValueBase_var::ValueBase_var (const CORBA::ValueBase_var &p)
-  : ptr_ (p.ptr_)
-{
-  p.ptr_->_add_ref ();
-}
-
-ACE_INLINE CORBA::ValueBase_var &
-CORBA::ValueBase_var::operator= (CORBA::ValueBase *p)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE CORBA::ValueBase_var &
-CORBA::ValueBase_var::operator= (const CORBA::ValueBase_var &p)
-{
-  if (this != &p)
-    {
-      CORBA::remove_ref (this->ptr_);
-      p.ptr_->_add_ref ();
-      this->ptr_ = p.ptr_;
-    }
-
-  return *this;
-}
-
-ACE_INLINE
-CORBA::ValueBase_var::operator const CORBA::ValueBase *() const // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-CORBA::ValueBase_var::operator CORBA::ValueBase *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::in (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_var::inout (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_var::out (void)
-{
-  CORBA::remove_ref (this->ptr_);
-  this->ptr_ = 0;
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::_retn (void)
-{
-  // Yield ownership of valuebase.
-  CORBA::ValueBase *val = this->ptr_;
-  this->ptr_ = 0;
-  return val;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::tao_duplicate (CORBA::ValueBase *p)
-{
-  p->_add_ref ();
-  return p;
-}
-
-ACE_INLINE void
-CORBA::ValueBase_var::tao_release (CORBA::ValueBase *p)
-{
-  p->_remove_ref ();
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::tao_nil (void)
-{
-  return 0;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::tao_narrow (
-    CORBA::ValueBase *p
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  p->_add_ref ();
-  return CORBA::ValueBase::_downcast (p);
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_var::tao_upcast (void *src)
-{
-  CORBA::ValueBase **tmp =
-    ACE_static_cast (CORBA::ValueBase **, src);
-  return *tmp;
-}
-
-// *************************************************************
-// Inline operations for class CORBA::ValueBase_out
-// *************************************************************
-
-ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (CORBA::ValueBase *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (CORBA::ValueBase_var &p)
-  : ptr_ (p.out ())
-{
-  this->ptr_->_remove_ref ();
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-CORBA::ValueBase_out::ValueBase_out (const CORBA::ValueBase_out &p)
-  : ptr_ (p.ptr_)
-{
-}
-
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (const CORBA::ValueBase_out &p)
-{
-  this->ptr_ = p.ptr_;
-  return *this;
-}
-
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (const CORBA::ValueBase_var &p)
-{
-  p.ptr ()->_add_ref ();
-  this->ptr_ = p.ptr ();
-  return *this;
-}
-
-ACE_INLINE CORBA::ValueBase_out &
-CORBA::ValueBase_out::operator= (CORBA::ValueBase *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE
-CORBA::ValueBase_out::operator CORBA::ValueBase *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *&
-CORBA::ValueBase_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE CORBA::ValueBase *
-CORBA::ValueBase_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
 // ===========================================================
 
-// constructor
 ACE_INLINE
 CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
   : _tao_reference_count_ (1)

@@ -203,6 +203,17 @@ TAO_Unbounded_String_Sequence::freebuf (char* *buffer)
   delete [] buffer;
 }
 
+void
+TAO_Unbounded_String_Sequence::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  TAO_Unbounded_String_Sequence * tmp = 
+    ACE_static_cast (TAO_Unbounded_String_Sequence *,
+                     _tao_void_pointer);
+  delete tmp;
+}
+
 char**
 TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
 {
@@ -493,6 +504,17 @@ TAO_Unbounded_WString_Sequence::freebuf (CORBA::WChar* *buffer)
   delete [] buffer;
 }
 
+void
+TAO_Unbounded_WString_Sequence::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  TAO_Unbounded_WString_Sequence * tmp = 
+    ACE_static_cast (TAO_Unbounded_WString_Sequence *,
+                     _tao_void_pointer);
+  delete tmp;
+}
+
 CORBA::WChar**
 TAO_Unbounded_WString_Sequence::get_buffer (CORBA::Boolean orphan)
 {
@@ -541,11 +563,11 @@ TAO_Unbounded_WString_Sequence::get_buffer (void) const
 void
 TAO_Unbounded_WString_Sequence::_allocate_buffer (CORBA::ULong length)
 {
-  CORBA::WChar* *tmp = TAO_Unbounded_WString_Sequence::allocbuf (length);
+  CORBA::WChar ** tmp = TAO_Unbounded_WString_Sequence::allocbuf (length);
 
   if (this->buffer_ != 0)
     {
-      CORBA::WChar* *old = ACE_reinterpret_cast (CORBA::WChar **,
+      CORBA::WChar ** old = ACE_reinterpret_cast (CORBA::WChar **,
                                                  this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)

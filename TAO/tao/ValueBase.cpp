@@ -41,7 +41,7 @@ CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 void
 CORBA::ValueBase::_tao_any_destructor (void *x)
 {
-  CORBA::ValueBase_ptr tmp = ACE_static_cast (CORBA::ValueBase *, x);
+  CORBA::ValueBase * tmp = ACE_static_cast (CORBA::ValueBase *, x);
   CORBA::remove_ref (tmp);
 }
 

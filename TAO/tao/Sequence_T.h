@@ -920,6 +920,9 @@ public:
   /// Release all the elements.
   static void freebuf (T **);
 
+  static void _tao_any_destructor (void *);
+  typedef T_var _var_type;
+
   // The Base_Sequence functions, please see "tao/Sequence.h"
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -972,6 +975,9 @@ public:
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
   static void freebuf (T ** buffer);
+
+  static void _tao_any_destructor (void *);
+  typedef T_var _var_type;
 
   // The Base_Sequence functions, please see "tao/sequence.h"
   virtual void _allocate_buffer (CORBA::ULong length);
@@ -1384,7 +1390,7 @@ public:
   const T &operator[] (CORBA::ULong) const;
 
   /// Allocate storage for a sequence..
-  static T *allocbuf (CORBA::ULong length);
+  static T * allocbuf (CORBA::ULong length);
 
   /// Free a buffer allocated by allocbuf() and release each element on
   /// it.
@@ -1422,7 +1428,7 @@ public:
    * references), and then freeing the returned buffer itself using
    * <freebuf>.
    */
-  T *get_buffer (CORBA::Boolean orphan = 0);
+  T * get_buffer (CORBA::Boolean orphan = 0);
 
   /**
    * This function allows read-only access to the sequence buffer.
@@ -1430,7 +1436,7 @@ public:
    * yet been allocated.  No direct modification of the returned
    * buffer by the caller is permitted.
    */
-  const T *get_buffer (void) const;
+  const T * get_buffer (void) const;
 
   /**
    * Allows the buffer underlying a sequence to be replaced.  The
@@ -1541,6 +1547,8 @@ public:
    */
   static void freebuf (char ** buffer);
 
+  static void _tao_any_destructor (void *);
+
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -1650,6 +1658,8 @@ public:
    * function will ignore null pointers passed to it.
    */
   static void freebuf (CORBA::WChar ** buffer);
+
+  static void _tao_any_destructor (void *);
 
   // Functions to create, destroy, and adjust the underlying buffer.
   virtual void _allocate_buffer (CORBA::ULong length);

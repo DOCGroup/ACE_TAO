@@ -88,6 +88,10 @@ private:
   T *& ptr_;
 };
 
+#if defined (__ACE_INLINE__)
+#include "tao/Value_VarOut_T.inl"
+#endif /* __ACE_INLINE__ */
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Value_VarOut_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
