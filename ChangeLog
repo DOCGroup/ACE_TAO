@@ -1,95 +1,106 @@
+Wed Apr 16 09:07:26 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Fixed a usage of undefined reference.
+          
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Make sure that idl gets processed before building the precompiled
+          header module.
+
 Wed Apr 16 00:10:37 2003  Ossama Othman  <ossama@uci.edu>
 
-	* ace/CDR_Base.h:
+        * ace/CDR_Base.h:
 
-	  Isolated ACE_CDR::WChar typedef from the ACE_OS::WChar typedef.
-	  Reduces coupling between CDR_Base.h and OS.h.
+          Isolated ACE_CDR::WChar typedef from the ACE_OS::WChar typedef.
+          Reduces coupling between CDR_Base.h and OS.h.
 
-	  No need to include ace/OS.h.
+          No need to include ace/OS.h.
 
-	  Cosmetic improvements.
+          Cosmetic improvements.
 
-	* ace/CDR_Base.cpp:
+        * ace/CDR_Base.cpp:
 
-	  Include ace/OS.h.  Necessitated by above change.
+          Include ace/OS.h.  Necessitated by above change.
 
-	* ace/CDR_Stream.h:
+        * ace/CDR_Stream.h:
 
-	  Include ace/SStringfwd.h instead of ace/SString.h.  Forward
-	  declarations are enough.
+          Include ace/SStringfwd.h instead of ace/SString.h.  Forward
+          declarations are enough.
 
-	* ace/CDR_Stream.i:
+        * ace/CDR_Stream.i:
 
-	  Use the ACE_OS_String scope instead of ACE_OS when calling
-	  string functions.  Allows removal of dependency on OS.h header.
+          Use the ACE_OS_String scope instead of ACE_OS when calling
+          string functions.  Allows removal of dependency on OS.h header.
 
-	* ace/Global_Macros.h:
+        * ace/Global_Macros.h:
 
-	  Moved "ACE_THROW_SPEC" preprocessor macros from OS.h to this
-	  header.  Helps remove OS.h dependencies for some headers.
+          Moved "ACE_THROW_SPEC" preprocessor macros from OS.h to this
+          header.  Helps remove OS.h dependencies for some headers.
 
-	* ace/INET_Addr.cpp (get_host_addr):
+        * ace/INET_Addr.cpp (get_host_addr):
 
-	  Fixed VxWorks unused argument warnings.
+          Fixed VxWorks unused argument warnings.
 
-	* ace/Message_Block.h:
+        * ace/Message_Block.h:
 
-	  Changed all "u_long" typedefs to "unsigned long".  Allows
-	  removal of OS.h include.
+          Changed all "u_long" typedefs to "unsigned long".  Allows
+          removal of OS.h include.
 
-	  Include Default_Constants.h, Global_Macros.h, Time_Value.h and
-	  <stdlib.h>.
+          Include Default_Constants.h, Global_Macros.h, Time_Value.h and
+          <stdlib.h>.
 
-	* ace/Message_Block_T.h:
+        * ace/Message_Block_T.h:
 
-	  Corrected file documentation.
+          Corrected file documentation.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Moved "ACE_THROW_SPEC" and pointer alignment related macros to
-	  smaller appropriate headers.
+          Moved "ACE_THROW_SPEC" and pointer alignment related macros to
+          smaller appropriate headers.
 
-	* ace/OS_Memory.h:
+        * ace/OS_Memory.h:
 
-	  Moved pointer alignment related macros from OS.h to this
-	  header.  Helps reduce dependence on OS.h in some headers.
+          Moved pointer alignment related macros from OS.h to this
+          header.  Helps reduce dependence on OS.h in some headers.
 
-	* ace/SStringfwd.h:
+        * ace/SStringfwd.h:
 
-	  New file containing template forward declaration based
-	  ACE_{C,W}String typedefs.  Headers requiring these typedefs for
-	  forward declarations now need only include this header instead
-	  of SString.h.
+          New file containing template forward declaration based
+          ACE_{C,W}String typedefs.  Headers requiring these typedefs for
+          forward declarations now need only include this header instead
+          of SString.h.
 
-	* ace/SString.h:
+        * ace/SString.h:
 
-	  Moved ACE_{C,W}String typedefs out of this header.  See above
-	  change.
+          Moved ACE_{C,W}String typedefs out of this header.  See above
+          change.
 
-	* ace/String_Base.h:
+        * ace/String_Base.h:
 
-	  Replaced ACE.h include with Global_Macros.h, OS_String.h and
-	  OS_Memory.h.
+          Replaced ACE.h include with Global_Macros.h, OS_String.h and
+          OS_Memory.h.
 
-	* ace/String_Base.i (hash):
-	* ace/String_Base.cpp (hash):
+        * ace/String_Base.i (hash):
+        * ace/String_Base.cpp (hash):
 
-	  Uninlined ACE_String_Base<>::hash method.  Allows removal of
-	  ACE.h include in String_Base.h.
+          Uninlined ACE_String_Base<>::hash method.  Allows removal of
+          ACE.h include in String_Base.h.
 
-	* ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_read):
+        * ace/SSL/SSL_Asynch_Stream.cpp (do_SSL_read):
 
-	  Use of ACE_Message_Block::wr_ptr() when writing data from an
-	  ACE_Message_Block, not rd_ptr().
+          Use of ACE_Message_Block::wr_ptr() when writing data from an
+          ACE_Message_Block, not rd_ptr().
 
-	* ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
+        * ace/SSL/SSL_SOCK_Stream.cpp (send, recv):
 
-	  Corrected problem in the vararg versions of these methods where
-	  "holes" in data read/written occurred in partial reads/writes.
+          Corrected problem in the vararg versions of these methods where
+          "holes" in data read/written occurred in partial reads/writes.
 
-	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+        * ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
 
-	  Improved "const" correctness.
+          Improved "const" correctness.
 
 Wed Apr 16 06:55:53 UTC UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -101,17 +112,17 @@ Wed Apr 16 06:55:53 UTC UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 15 16:06:24 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg_NT_Event_Log.cpp (close): Make sure to check for
-	  this->evlog_handle_ != 0 before calling DeregisterEventSource().
-  	  Thanks to Paxton Mason <PMason@wolve.com> for reporting this.
+        * ace/Log_Msg_NT_Event_Log.cpp (close): Make sure to check for
+          this->evlog_handle_ != 0 before calling DeregisterEventSource().
+          Thanks to Paxton Mason <PMason@wolve.com> for reporting this.
 
-	* ace/Timer_Wheel_T.cpp: Removed the use of a namespace since
-	  this breaks certain compilers (e.g., GCC 2.7-97 on LynxOS).
-  	  Thanks to Olli Savia <ops@iki.fi> for reporting this problem.
+        * ace/Timer_Wheel_T.cpp: Removed the use of a namespace since
+          this breaks certain compilers (e.g., GCC 2.7-97 on LynxOS).
+          Thanks to Olli Savia <ops@iki.fi> for reporting this problem.
 
-	* ace/OS.h: Make sure that things don't go awry on platforms
-	  where clearerr is defined as a macro.  Thanks to Olli Savia
- 	  <ops@iki.fi> for reporting this problem on LynxOS.
+        * ace/OS.h: Make sure that things don't go awry on platforms
+          where clearerr is defined as a macro.  Thanks to Olli Savia
+          <ops@iki.fi> for reporting this problem on LynxOS.
 
 Tue Apr 15 17:53:29 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -130,13 +141,13 @@ Tue Apr 15 17:33:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Apr 15 09:47:22 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu.cpp:
-	* Kokyu/DSRT_Dispatcher_Impl.cpp:
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/svc.conf:
-	* Kokyu/tests/DSRT_MIF/svc.conf.xml:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/DSRT_Dispatcher_Impl.cpp:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * Kokyu/tests/DSRT_MIF/svc.conf:
+        * Kokyu/tests/DSRT_MIF/svc.conf.xml:
 
-	  Service config related changes to Kokyu DSRT framework.
+          Service config related changes to Kokyu DSRT framework.
 
 Tue Apr 15 11:24:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -172,20 +183,20 @@ Tue Apr 15 06:12:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 14 22:37:34 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu.cpp:
-	* Kokyu/DSRT_Dispatcher_Impl.cpp:
-	* Kokyu/DSRT_Dispatcher_Impl.h:
+        * Kokyu/Kokyu.cpp:
+        * Kokyu/DSRT_Dispatcher_Impl.cpp:
+        * Kokyu/DSRT_Dispatcher_Impl.h:
 
-	  Made the dispatcher a service object so that the scheduler type
-	  can be passed as a parameter in svc.conf.
+          Made the dispatcher a service object so that the scheduler type
+          can be passed as a parameter in svc.conf.
 
 Mon Apr 14 15:19:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/tests/DSRT_MIF:
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/Makefile:
+        * Kokyu/tests/DSRT_MIF:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * Kokyu/tests/DSRT_MIF/Makefile:
 
-	  New test added for testing MIF schedule using Kokyu.
+          New test added for testing MIF schedule using Kokyu.
 
 Mon Apr 14 18:35:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -218,11 +229,11 @@ Mon Apr 14 18:28:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 14 12:56:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/DSRT_Dispatcher_Impl.h:
-	* Kokyu/DSRT_Dispatcher_Impl.cpp:
-	* Kokyu/DSRT_Dispatcher_Impl.i:
+        * Kokyu/DSRT_Dispatcher_Impl.h:
+        * Kokyu/DSRT_Dispatcher_Impl.cpp:
+        * Kokyu/DSRT_Dispatcher_Impl.i:
 
-	  Added new files for Dynamic scheduling support.
+          Added new files for Dynamic scheduling support.
 
 Mon Apr 14 17:28:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
