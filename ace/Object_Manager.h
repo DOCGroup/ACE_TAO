@@ -189,6 +189,22 @@ public:
   // Explicitly destroy the singleton instance of the
   // ACE_Object_Manager.
 
+  static int starting_up (void);
+  // Returns 1 before the ACE_Object_Manager has been constructed.
+  // This flag can be used to determine if the program is constructing
+  // static objects.  If no static object spawns any threads, the
+  // program will be single-threaded when this flag returns 1.  (Note
+  // that the program still might construct some static objects when
+  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
+  // defined.)
+
+  static int shutting_down (void);
+  // Returns 1 after the ACE_Object_Manager has been destroyed.  This
+  // flag can be used to determine if the program is in the midst of
+  // destroying static objects.  (Note that the program might destroy
+  // some static objects before this flag can return 1, if
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
+
   static int at_exit (ACE_Cleanup *object, void *param = 0);
   // Register an ACE_Cleanup object for cleanup at process termination.
   // The object is deleted via the ace_cleanup_destroyer ().  If you
