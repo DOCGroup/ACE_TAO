@@ -1,3 +1,16 @@
+Tue Feb 15 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServerC.{h,cpp}:
+        * tao/PortableServer/PortableServer_Functions.{h,cpp}:
+        * tao/PortableServer/PortableServer_WFunctions.{h,cpp}:
+          Move the PortableServer functions out of the generated files and to
+          the new files, one for the string version, one for the wstring
+          versions. Reduces the number of patchin and when these methods are
+          not used there are not linked into the application
+
+        * tao/PortableServer/PortableServer.h:
+          Include the new PortableServer_Functions files
+
 Mon Feb 14 12:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * all files:
