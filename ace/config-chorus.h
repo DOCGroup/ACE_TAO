@@ -23,7 +23,12 @@
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
+# define ACE_NEEDS_WRITEV
+# define ACE_NEEDS_READV
+# define ACE_HAS_BROKEN_READV
 #elif defined (ghs)
+# define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+# define ACE_HAS_TANDEM_SIGNALS
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 #else  /* ! __GNUG__ && ! ghs */
@@ -61,13 +66,6 @@
 
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_LONG_MAP_FAILED
-
-// Platform supports System V IPC (most versions of UNIX, but not Win32)
-//#define ACE_HAS_SYSV_IPC
-
-#define ACE_NEEDS_WRITEV
-#define ACE_NEEDS_READV
-#define ACE_HAS_BROKEN_READV
 
 // Platforms lacks UNIX domain sockets.
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
