@@ -1,12 +1,10 @@
-Mon Jan 12 18:31:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 12 20:19:54 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* Start renaming MSVC 4.2 workspace/makefile names.
+	* ace/SString.i: Replaced all uses of NULL with 0 since NULL
+ 	  causes problems with some lame C++ compilers.
 
-	* apps/Gateway/Peer/Peer4.{mdp,mak}:
-	* apps/Gateway/Gateway/Gateway4.{mdp,mak}: Made them in synch with
- 	  VC 5.0's status.
-
-Mon Jan 12 14:18:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace/SString.i: Moved one of the inline find() methods down
+	  so that GCC doesn't complain anymore.
 
 	* tests/Reactor_Timer_Test.cpp (main): Changed long i to size_t i
 	  to be consistent.
@@ -19,6 +17,14 @@ Mon Jan 12 14:18:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  size_t rather than int.  This may cause a bit of upheaval at
  	  first since we'll need to fix some other types.  But it's the
  	  "Right Thing"[TM] to do.
+
+Mon Jan 12 18:31:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Start renaming MSVC 4.2 workspace/makefile names.
+
+	* apps/Gateway/Peer/Peer4.{mdp,mak}:
+	* apps/Gateway/Gateway/Gateway4.{mdp,mak}: Made them in synch with
+ 	  VC 5.0's status.
 
 Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
