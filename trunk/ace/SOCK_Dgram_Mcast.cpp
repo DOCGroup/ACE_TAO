@@ -379,7 +379,8 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                  int protocol,
                                  ACE_Protocol_Info *protocolinfo,
                                  ACE_SOCK_GROUP g,
-                                 u_long flags)
+                                 u_long flags,
+                                 ACE_QoS_Session *qos_session)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
 
@@ -400,15 +401,30 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                                     protocol_family,
                                     protocol,
                                     reuse_addr,
-									protocolinfo);
+                                    protocolinfo);
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
     return result;
-
+  
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
   else 
     {
+      // Check if the mcast_addr passed into this method is the 
+      // same as the QoS session address.  
+      if (mcast_addr == qos_session->dest_addr ())
+        
+        // Subscribe to the QoS session.
+        if (this->join_qos_session (qos_session) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to join QoS Session\n"),
+                            -1);
+        else
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Dest Addr in the QoS Session does"
+                             " not match the address passed into"
+                             " subscribe\n"),
+                            -1);      
       
       sockaddr_in mult_addr;
       
@@ -423,7 +439,9 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
                              qos_params) == ACE_INVALID_HANDLE)
         return -1;
       else
-        return 0;
+        qos_session->qos (*(qos_params.socket_qos ()));
+      
+      return 0;
     }
 }
 

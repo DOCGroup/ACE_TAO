@@ -106,6 +106,28 @@ ACE_SOCK::open (int type,
   return 0;
 }
 
+// Adds the given session to the list of session objects 
+// joined by this socket.
+
+int 
+ACE_SOCK::join_qos_session (ACE_QoS_Session *qos_session)
+{
+  
+  if (this->qos_session_set ().insert (qos_session) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error in adding a new session to the "
+                       "socket session set\n"),
+                      -1);
+  return 0;
+}
+
+// Returns the QoS session set for this socket.
+ACE_Unbounded_Set <ACE_QoS_Session *>
+ACE_SOCK::qos_session_set (void)
+{
+  return this->qos_session_set_;
+}
+
 // General purpose constructor for performing server ACE_SOCK
 // creation.
 
@@ -157,7 +179,7 @@ ACE_SOCK::open (int type,
   else
     return 0;
 }
-
+      
 ACE_SOCK::ACE_SOCK (int type, 
                     int protocol_family, 
                     int protocol,
@@ -179,3 +201,8 @@ ACE_SOCK::ACE_SOCK (int type,
                 ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Unbounded_Set<ACE_QoS_Session *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Unbounded_Set<ACE_QoS_Session *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

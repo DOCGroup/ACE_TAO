@@ -182,7 +182,9 @@ OTHER_FILES = \
   Name_Space \
   Naming_Context \
   Registry_Name_Space \
-  Remote_Name_Space
+  Remote_Name_Space \
+  QoS_Session_Impl \
+  QoS_Session_Factory
 
 TEMPLATE_FILES = \
            Acceptor \

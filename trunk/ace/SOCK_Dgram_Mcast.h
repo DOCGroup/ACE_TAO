@@ -74,13 +74,17 @@ public:
                  int protocol = 0,
                  ACE_Protocol_Info *protocolinfo = 0,
                  ACE_SOCK_GROUP g = 0,
-                 u_long flags = 0);
+                 u_long flags = 0,
+                 ACE_QoS_Session *qos_session = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network
   // interface device driver is instructed to accept datagrams with
   // <mcast_addr> multicast addresses.  If the socket has already been
   // opened, <subscribe> closes the socket and opens a new socket
-  // bound to the <mcast_addr>.
+  // bound to the <mcast_addr>. The session object specifies the QoS 
+  // session that the socket wants to subscribe to. A socket may 
+  // subscribe to multiple QoS sessions by calling this method multiple
+  // times with different session objects.
   //
   // The <net_if> interface is hardware specific, e.g., use "netstat
   // -i" to find whether your interface is, such as "le0" or something
