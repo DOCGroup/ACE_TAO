@@ -86,17 +86,6 @@ public:
                         size_t len,
                         ACE_Time_Value *s = 0) = 0;
   // Write the contents of the buffer of length len to the connection.
-  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
-  // not clear this this is the best place to specify this.  The actual
-  // timeout values will be kept in the Policies.
-
-  virtual ssize_t send (const iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
-  // Write the contents of iovcnt iovec's to the connection.
-  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
-  // not clear this this is the best place to specify this.  The actual
-  // timeout values will be kept in the Policies.
 
   virtual ssize_t recv (char *buf,
                         size_t len,
@@ -106,27 +95,11 @@ public:
   // not clear this this is the best place to specify this.  The actual
   // timeout values will be kept in the Policies.
 
-  virtual ssize_t recv (char *buf,
-                        size_t len,
-                        int flags,
-                        ACE_Time_Value *s = 0) = 0;
-  // Read len bytes from into buf using flags.
-  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
-  // not clear this this is the best place to specify this.  The actual
-  // timeout values will be kept in the Policies.
-
-  virtual ssize_t recv (iovec *iov,
-                        int iovcnt,
-                        ACE_Time_Value *s = 0) = 0;
-  //  Read received data into the iovec buffers.
-  // @@ The ACE_Time_Value *s is just a place holder for now.  It is
-  // not clear this this is the best place to specify this.  The actual
-  // timeout values will be kept in the Policies.
-
   virtual void start_request (TAO_ORB_Core *orb_core,
                               const TAO_Profile *profile,
                               TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                              CORBA::Environment &ACE_TRY_ENV =
+                                  TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a request.
 
@@ -134,7 +107,8 @@ public:
                              const TAO_Profile *profile,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+                             CORBA::Environment &ACE_TRY_ENV =
+                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
@@ -142,17 +116,14 @@ public:
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_time_wait) = 0;
-  // Default action to be taken for send request.
-
-  // = Get and set methods for the ORB Core.
-
-  // void orb_core (TAO_ORB_Core *orb_core);
-  // Set it.
+  // Depending on the concurrency strategy used by the transport it
+  // may be required to setup state to receive a reply before the
+  // request is sent.
+  // Using this method, instead of send(), allows the transport (and
+  // wait strategy) to take appropiate action.
 
   TAO_ORB_Core *orb_core (void) const;
-  // Get it.
-
-  // = Get and set methods for thr TMS object.
+  // Access the ORB that owns this connection.
 
   TAO_Transport_Mux_Strategy *tms (void) const;
   // Get the TMS used by this Transport object.
@@ -179,14 +150,6 @@ public:
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-
-  // virtual int idle_after_reply (void);
-  // Request is sent and the reply is received. Idle the transport
-  // now.
-
-  // virtual int reply_received (const CORBA::ULong request_id);
-  // Check with the TMS whether the reply has been receieved for the
-  // request with <request_id>.
 
   virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
   // Return the TSS leader follower condition variable used in the
