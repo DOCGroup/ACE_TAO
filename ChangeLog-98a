@@ -34,6 +34,15 @@ Wed Feb 04 22:23:24 1998  David L. Levine  <levine@cs.wustl.edu>
         * Makefile: made ACE-INSTALL a dependency of release and
           cleanrelease so that it is only updated when necessary.
 
+        * ace/OS.{h,i},README (gets): wrapped with !ACE_LACKS_GETS.
+
+        * ace/config-g++-common.h: added ACE_LACKS_GETS for egcs.  It
+          supports ::gets (), but warns about it at link time on Linux.
+          The Solaris gets () man pages recommends using fgets () instead.
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp: replaced use of
+          ACE_OS::gets () with ACE_OS::fgets ().
+
 Wed Feb 04 11:07:46 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Containers.cpp : fixed my "fix" to new_position pointer in
