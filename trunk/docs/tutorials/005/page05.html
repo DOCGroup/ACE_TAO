@@ -1,352 +1,385 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 005</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="Billy Quinn">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
-Creating a MultiThreaded Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
-
-<P>The final piece in our multi-threaded server is the <I>Logging_Handler</I>
-class.&nbsp;As you might guess, this is the part which has been modified most
-from our previous server tutorial to include threads. This is a perfect demonstration
-of the decoupling effect of using the acceptor/connector model, whereby
-the connection oriented code is seperated from the actual processing which
-occurs after the connection has been established. :</P>
-
-<UL>
-<PRE>1. class Logging_Handler : public ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH&gt;
-
-        {
-
-        
-
-        public:
-
-        
-
-2.       Logging_Handler (void) { };
-
-        
-
-3.        virtual void destroy (void)
-
-                { 
-
-4.               if (this-&gt;thread_reactorP-&gt;remove_handler(this,
-
-                     ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-
-5.                     ACE_ERROR_RETURN ((LM_ERROR, &quot;can'(%P|%t) t remove service from reactor\n&quot;), -1);
-
-        
-
-                  // Decrement the handler tracking variable in the reactor to
-
-                  // indicate this service handler has terminated
-
-6.               --thread_reactorP-&gt;counter;
-
-        
-
-7.               this-&gt;peer ().close ();
-
-8.              delete this;
-
-                }
-
-        
-
-9.       static void *run_thread(Logging_Handler *this_)
-
-                {
-
-10.               Reactor_Derived thread_reactor;     
-
-        
-
-11.               this_-&gt;thread_reactorP = &amp;thread_reactor;
-
-12.               if (thread_reactor.register_handler(this_, ACE_Event_Handler::READ_MASK) == -1)
-
-13.                       ACE_ERROR_RETURN ((LM_ERROR,&quot;can'(%P|%t) t register with reactor\n&quot;), -1);
-                  
-
-                  // Increment our handler counter to account for this service handler
-
-14.               ++thread_reactor.counter;
-
-                
-
-15.               while( thread_reactor.counter &gt; 0 )
-
-                  {
-
-                        // If thread_reactor.counter = 0 then we have no more service
-                        // handlers connected to the reactor. We set a timeout value
-                        // of 1 second so that handle_events returns to us every
-                        // second.  This gives us a chance to check the count.  We
-			// need to do this because handle_events will block even
-                        // when there are no connections.  A better method might be
-			// to use ACE_Reactor_Notify but we'll save that for a later
-			// tutorial.
-
-16.                     thread_reactor.handle_events(ACE_Time_Value(1,0));
-
-                  }
-
-                } 
-
-        
-
-17.      virtual int open (void *)
-
-                {
-
-18.               ACE_Thread::spawn(&amp;Logging_Handler::run_thread,this);
-
-19.               return 0;
-
-                }
-
-        
-
-20.       virtual int close (u_long)
-
-                {
-
-21.               this-&gt;destroy ();
-
-22.               return 0;
-
-                }
-
-        
-
-        protected:
-
-        
-
-23.       virtual int handle_input (ACE_HANDLE)
-
-                {
-
-24.               char buf[128];
-
-25.               memset(buf,0,sizeof(buf));
-
-        
-
-26.               switch( this-&gt;peer().recv(buf,sizeof buf) )
-
-                  {
-
-27.               case -1:
-
-28.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) %p bad read\n&quot;, &quot;client logger&quot;), -1);
-
-29.               case 0:
-
-30.                 ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) closing log daemon (fd = %d)\n&quot;, this-&gt;get_handle ()), -1);
-
-31.               default:
-
-32.                 ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) from client : %s&quot;,buf));                                                                                  </PRE>
-
-<PRE>                   }
-
-         
-
-33.               return 0;
-
-                }
-
-        
-
-        
-
-        private:
-
-34.       Reactor_Derived *thread_reactorP;
-
-          
-
-        };
-
-        
-
-</PRE>
-</UL>
+<HR WIDTH="100%">
+
+<P>Now we're finally at <I><A HREF="client_handler.cpp">client_handler.cpp</A></I>
+where we have to write some code.&nbsp; This file has more code than the
+rest of the application all together.
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
+<BR>&nbsp;
+<BR>&nbsp; <FONT FACE="Arial,Helvetica">// $Id$</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>Here's the step-by-step explanation:</P>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In client_handler.h I alluded
+to the fact that we'll mess around with a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Client_Acceptor pointer.&nbsp;
+To do so, we need the Client_Acceptor object</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; declaration.</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<OL>
-<LI>We've apparently decided to be bold and use yet another ACE template
-to create our <I>Logging_Handler</I> object. From the manual, the <I>ACE_Svc_Handler</I>
-template <I>defines the interface for a service that exchanges data with
-its connected peer</I>. The first template argument specifies the kind
-of connection we want to have. As mentioned on the previous page, this
-<B>must</B> be compatible with the data type used to accept the connection.
-As for the second argument, I have no idea. Somebody please explain this
-to me.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; We know that including client_handler.h
+is redundant because</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; client_acceptor.h includes
+it.&nbsp; Still, the sentry prevents double-inclusion</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; from causing problems and
+it's sometimes good to be explicit about what</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we're using.</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Our default constructor does nothing. We've moved anything with failure
-potential into the <TT>open()</TT> function. Should the constructor be virtual?</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; On the other hand, we don't
+directly include any ACE header files here.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "client_acceptor.h"</FONT>
+<BR><FONT FACE="Arial,Helvetica">#include "client_handler.h"</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI><TT>destroy()</TT> is called by our close function which is called when the
-<I>Logging_Handler</I> object needs to be cleaned up due to termination</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our constructor doesn't do
+anything.&nbsp; That's generally a good idea.&nbsp; Unless</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; you want to start throwing
+exceptions, there isn't a really good way to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; indicate that a constructor
+has failed.&nbsp; If I had my way, I'd have a boolean</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; return code from it that
+would cause <I>new</I> to return 0 if I failed.&nbsp; Oh</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; well...</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">Client_Handler::Client_Handler (void)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Unregister the <I>Logging_Handler</I> object (this) from the reactor
-which is associated with this <I>Logging_Handler</I> object. The reactor
-address is gotten by dereferencing the pointer (thread_reactor_P in this case)
-which is the pointer to the local reactor object. We pass in two flags
-to the remove_handler call, because the <I>Logging_Handler</I> was registered
-in read mode and therefore needs to be unregistered in the same manner.
-The flag DONT_CALL prevents the reactor from calling the <TT>destroy</TT> function of the <I>Logging_Handler</I> object, which is the default for unregistering an event handler. We have to use this flag because we would enter an infinite recursive loop due to the fact that the <TT>remove_handler</TT> is located in the <TT>destroy</TT> method and that would recall the <TT>destroy</TT> method by default, which would call the <TT>remove_handler</TT> method again, and so on. This is not good!! - and we would eventually blow the stack therefore causing all kinds of nasty things to happen.</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Our destructor doesn't do
+anything either.&nbsp; That is also by design.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; Remember, we really want
+folks to use destroy() to get rid of us.&nbsp; If that's</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; so, then there's nothing
+left to do when the destructor gets invoked.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">Client_Handler::~Client_Handler (void)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; The much talked about destroy()
+method!&nbsp; The reason I keep going on about</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; this is because it's just
+a Bad Idea (TM) to do real work inside of a</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; destructor.&nbsp;&nbsp; Although
+this method is <I>void</I>, it really should return</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; <I>int</I> so that it can
+tell the caller there was a problem.&nbsp; Even as</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; <I>void</I> you could at
+least throw an exception which you would never want</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to do in a destructor.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">void Client_Handler::destroy (void)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; We probably got
+here because of an error on the stream, so the peer</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; connection is
+probably already closed.&nbsp; Still... there are other ways to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; get here and
+closing a closed peer doesn't hurt.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; this->peer ().close ();</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>If this is called an error has occured while unregistering the <I>Logging_Handler</I>
-object so generate an error.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Tell the reactor
+to forget all about us.&nbsp; Notice that we use the same args</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; here that we
+use in the open() method to register ourselves.&nbsp; In addition,</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; we use the DONT_CALL
+flag to prevent handle_close() being called.&nbsp; Since we</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; likely got here
+due to handle_close(), that could cause a bit of nasty</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; recursion!</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; this->reactor ()->remove_handler
+(this,</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ACE_Event_Handler:: READ_MASK | ACE_Event_Handler::DONT_CALL);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Decrement the counter for the reactor which is associated with this
-<I>Logging_Handler</I>. This indicates that another connection has gone
-away and the reactor's main loop (<TT>handle_events()</TT>) will not loop any more if this was the last connection registered with the reactor.
-Since we will only have one connection per reactor , this is not really
-necessary in this tutorial , but our next tutorial will use this idea for
-multiple connections per reactor.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; This is how we're
+able to tell folks not to use&nbsp; <I>delete</I>.&nbsp; By deleting</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; our own instance,
+we take care of memory leaks after ensuring</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; that the object
+is shut down correctly.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; delete this;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Close the connection to the client. Notice that we use the <I>peer()</I>
-member function generated by the template. We should never need direct
-access to the actual connection object.</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; As mentioned before, the
+open() method is called by the Client_Acceptor when</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; a new client connection has
+been accepted.&nbsp; The Client_Acceptor instance</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; pointer is cast to a void*
+and given to us here.&nbsp; We'll use that to avoid</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; some global data...</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::open (void *_acceptor)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Convert the void*
+to a Client_Acceptor*.&nbsp; You should probably use those</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; fancy new C++
+cast operators but I can never remember how/when to do so.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Since you can
+cast just about anything around a void* without compiler</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; warnings be very
+sure of what you're doing when you do this kind of thing.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; That's where
+the new-style cast operators can save you.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; Client_Acceptor *acceptor = (Client_Acceptor
+*) _acceptor;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Delete the current <I>Logging_Handler</TT> object from memory - This is necessary
-because memory has been dynamically allocated so it will not clean up automatically
-when the scope of this <I>Logging_Handler</I> object runs out.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Our reactor reference
+will be set when we register ourselves but I decided</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to go ahead and
+set it here.&nbsp; No good reason really...</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; this->reactor (acceptor->reactor
+());</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Our thread entry point. This is the function that is called when a
-<I>Logging_Handler</I> spawns off a thread to handle a specific question. Note
-it accepts a pointer to an object of type <I>Logging_Handler</I>. This is necessary
-since the function is static so it is shared among all of the instantiated
-objects of type <I>Logging_Handler</I>, and we need a reference to the object
-we are dealing with at run time.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; We need this
+to store the address of the client that we are now connected</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to.&nbsp; We'll
+use it later to display a debug message.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_INET_Addr addr;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Declare the automatic variable of type <I>Reactor_Derived</I>. The variable is declared automatic so that it is placed on the thread's stack, and is therefore deleted automatically when the thread exits. Since we are running each reactor in a seperate thread, it is **vital** that the reactor is declared within the thread in which it will be demultiplexing events. If this variable is declared outside of the thread it will not respond to any event handlers which are registered within the thread. </LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Our ACE_Svc_Handler
+baseclass gives us the peer() method as a way to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; access our underlying
+ACE_SOCK_Stream.&nbsp; On that object, we can invoke the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; get_remote_addr()
+method to get get an ACE_INET_Addr having our client's</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; address information.
+As with most ACE methods, we'll get back (and return)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; a -1 if there
+was any kind of error.&nbsp; Once we have the ACE_INET_Addr, we</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; can query it
+to find out the clien's host name, TCP/IP address, TCP/IP</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; port value and
+so forth.&nbsp; One word of warning:&nbsp;&nbsp; the get_host_name()</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; method of ACE_INET_Addr
+may return you an empty string if your name server</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; can't resolve
+it.&nbsp; On the other hand, get_host_addr() will always give you</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; the dotted-decimal
+string representing the TCP/IP address.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; if (this->peer ().get_remote_addr
+(addr) == -1)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+-1;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Sets up the pointer to point to our automatic variable thread_reactor.
-By doing this, we have a reference to this specfic thread reactor outside of the <I>run_thread</I>'s scope.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; If we managed
+to get the client's address then we're connected to a real</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and valid client.&nbsp;
+I suppose that in some cases, the client may connect</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; and disconnect
+so quickly that it is invalid by the time we get here. In</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; any case, the
+test above should always be done to ensure that the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; connection is
+worth keeping.</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Register the <I>Logging_Handler</I> object with the local reactor. If a successful registration occurs, the event handler will be placed in a table which the reactor iterates through to check for any data to be processed. The type of data which the reactor will check for on each of the event handlers is based on the flags which are passed into the <TT>register_handler</TT> function for that event handler. Note how the flag
-READ_MASK is passed in to indicate that the <I>Logging_Handler</I> object is expecting
-input of data.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Now, regiser ourselves
+with a reactor and tell that reactor that we want</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; to be notified
+when there is something to read.&nbsp; Remember, we took our</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; reactor value
+from the acceptor which created us in the first place.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Since we're exploring
+a single-threaded implementation, this is the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; correct thing
+to do.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; if (this->reactor ()->register_handler
+(this, ACE_Event_Handler::READ_MASK) == -1)</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
+((LM_ERROR, "(%P|%t) can't register with reactor\n"), -1);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>An error has occurred while registering in the handle (<TT>register_handler</TT>
-returned -1) so register an error using ACE_ERROR_RETURN predefined function
-call to handle error(write standard error,etc.).</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Here, we use
+the ACE_INET_Addr object to print a message with the name of</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; the client we're
+connected to.&nbsp; Again, it is possible that you'll get an</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; empty string
+for the host name if your DNS isn't configured correctly or</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; if there is some
+other reason that a TCP/IP addreess cannot be converted</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; into a host name.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t)
+connected with %s\n", addr.get_host_name ()));</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Increment the counter which is our tracking variable for the number
-of connections that the reactor is handling. As this tutorial has only
-one connection per reactor it is not really necessary here , but the concept
-will be used to handle multiple connections per reactor in the next tutorial.
-</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Always return
+zero on success.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Loop while connections still are registered in the local reactor. The
-counter variable is used to hold the number of registered connections in
-the reactor. As this tutorial spawns a new thread for each connection ,
-each reactor will have only one connection registered with it. In this
-tutorial we could just exit when the connection is terminated, but as we
-will see in the next tutorial, multiple connections per reactor will be
-implemented to allow proper load balancing. </LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; In the open() method, we
+registered with the reactor and requested to be</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; notified when there is data
+to be read.&nbsp; When the reactor sees that activity</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; it will invoke this handle_input()
+method on us.&nbsp; As I mentioned, the _handle</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; parameter isn't useful to
+us but it narrows the list of methods the reactor</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; has to worry about and the
+list of possible virtual functions we would have</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; to override.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::handle_input (ACE_HANDLE
+_handle)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Some compilers
+don't like it when you fail to use a parameter.&nbsp; This macro</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; will keep 'em
+quiet for you.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Call the <TT>handle_events()</TT> function which causes the local reactor to iterate
-through all of its registered logging handlers and check for input. Note
-that we use the <I>ACE_Time_Value</I> class to set a timeout of 1 second. This
-breaks out of blocking mode so that the number of connections alive can
-be checked again . Apparently theres a bug in ACE whereby it blocks on
-a reactor even if no connections are present ?</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Now, we create
+and initialize a buffer for receiving the data.&nbsp; Since this</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; is just a simple
+test app, we'll use a small buffer size.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; char buf[128];</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; memset (buf, 0, sizeof (buf));</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>The <TT>open</TT> function contains all of our initialization logic.
-It is called by the acceptor when a new connection is accepted. If we fail
-to initialize for any reason, we will return an error code so that the
-acceptor can respond correctly. This could not be done in a constructor.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Invoke the process()
+method with a pointer to our data area.&nbsp; We'll let</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; that method worry
+about interfacing with the data.&nbsp; You might choose to go</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; ahead and read
+the data and then pass the result to process().&nbsp; However,</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; application logic
+may require that you read a few bytes to determine what</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; else to read...&nbsp;
+It's best if we push that all into the application-logic</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; level.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; return this->process (buf, sizeof
+(buf));</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Spawn off a thread to handle this <I>Logging_Handler.</I> The name
-of the function called is specifed as the first parameter, which in this
-case is the static function <TT>run_thread()</TT>. The thread then starts running
-at the function <TT>run_thread</TT>. Note also we need a reference to what connection
-handle we are referring to at run time (the variable this).</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; If we return -1 out of handle_input()
+or if the reactor sees other problems</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; with us then handle_close()
+will be called.&nbsp; It uses our destroy() method to</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; shut us down cleanly and
+get rid of our instance.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::handle_close (ACE_HANDLE
+_handle, ACE_Reactor_Mask _mask)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_handle);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; ACE_UNUSED_ARG (_mask);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Return 0 indicating success with the <TT>open</TT> function.</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp; this->destroy ();</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI><TT>close()</TT> is called by the reactor when the <I>Logging_Handler</I> should
-terminate.</LI>
+<P><FONT FACE="Arial,Helvetica">/*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; And, at last, we get to the
+application-logic level.&nbsp; Out of everything</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; we've done so far, this is
+the only thing that really has anything to do</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; with what your application
+will do.&nbsp; In this method we will read and process</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; the client's data.&nbsp;
+In a real appliation, you will probably have a bit more</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; in main() to deal with command
+line options but after that point, all of the</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; action takes place here.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;*/</FONT>
+<BR><FONT FACE="Arial,Helvetica">int Client_Handler::process (char *_rdbuf,
+int _rdbuf_len)</FONT>
+<BR><FONT FACE="Arial,Helvetica">{</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; /*</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; Using the buffer
+provided for us, we read the data from the client. If</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; there is a read
+error (eg -- recv() returns -1) then it's a pretty good</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; bet that the
+connection is gone.&nbsp; Likewise, if we read zero bytes then</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; something wrong
+has happened.&nbsp; The reactor wouldn't have called us if</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; there wasn't
+some kind of read activity but there wouldn't be activity if</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; there were no
+bytes to read...</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Call the <TT>destroy()</TT> function which cleans up the <I>Logging_Handler</I> object (unregisters
-the reactor handles and deletes memory references..etc..)</LI>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; On the other hand,
+if we got some data then we can display it in a&nbsp; debug</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp; message for everyone
+to see.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp; */</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp; switch (this->peer ().recv (_rdbuf,
+_rdbuf_len))</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; {</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; case -1:</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
+((LM_ERROR, "(%P|%t) %p bad read\n", "client"), -1);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; case 0:</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN
+((LM_ERROR, "(%P|%t) closing daemon (fd = %d)\n", this->get_handle ()),
+-1);</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; default:</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ACE_DEBUG
+((LM_DEBUG, "(%P|%t) from client: %s", _rdbuf));</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp; }</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<LI>Return 0 to indicate success so the main reactor can continue running</LI>
-
-<LI><TI>handle_input()</TT> is where you do whatever your application requires
-when data is received from the client system. It is called by the reactor
-when it detects that one of its registered <I>Logging_Handlers </I>has
-some data ready to process.</LI>
-
-<LI>Create a storage space for the received data</LI>
-
-<LI>and make sure it is empty.</LI>
-
-<LI>Receive as much data as we can but don't overrun our buffer. For this
-simple example, we don't get too fancy. In a real application we would
-probably read some number of bytes (4?) and create a number from them.
-We would then use that number to decide how many more bytes to read. The
-number could be a simple byte count or it could be a packet type indicator
-which implies a bytecount.</LI>
-
-<LI>If <TT>recv()</TT> returns <I>-1</I> then there is something bad wrong
-with the connection so</LI>
-
-<LI>we return an <I>-1</I> to the reactor along with a failure message.
-We cannot continue after this.</LI>
-
-<LI>A <I>0</I> return from <TT>recv</TT> is not quite so bad. However, <TT>handle_input</TT>
-wouldn't have been called if there was no data to be read. So, we take
-this to be a sign that the client chose to shutdown the connection.</LI>
-
-<LI>Like the case above, we need to return a <I>-1</I> to the reactor so
-that we can be shutdown. </LI>
-
-<LI>Any other value from <I>recv</I> is taken to indicate the number of
-bytes received so</LI>
-
-<LI>we display the data to the user. In the real world, we could do an
-infinite number of things with the data.</LI>
-
-<LI>Return <I>0</I> if all is well with the receive so that the reactor
-will allow us to continue functioning.</LI>
-
-<LI>Declare the pointer which will store the address of the reactor associated
-with each <I>Logging_Handler</I>. Each <I>Logging_Handler</I> will have one of these.</LI>
-</OL>
-
-<P>Obviously this is a bit more complicated than the rest of the program.
-However, as you have probrably noticed, the application programmer is shielded
-from the underlying network programming details.</P>
+<P><FONT FACE="Arial,Helvetica">&nbsp; return 0;</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<CENTER><P>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Previous
-Page</A>] [<A HREF="page06.html">Continue This Tutorial</A>] </P></CENTER>
+<P>That's the last of the C++&nbsp;code.&nbsp; On the final two pages I'll
+go over the Makefile and a short perl script I wrote to "assist"&nbsp;the
+Makefile.&nbsp; Please... Continue...
+
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page06.html">Continue This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

@@ -1,149 +1,113 @@
 // $Id$
-  
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/Reactor.h"
-#include "ace/Thread.h"
 
-ACE_Reactor * g_reactor;
+/*
+   We try to keep main() very simple.  One of the ways we do that is to push
+   much of the complicated stuff into worker objects.  In this case, we only 
+   need to include the acceptor header in our main source file.  We let it
+   worry about the "real work".     
+ */
+
+#include "client_acceptor.h"
+
+/*
+   As before, we create a simple signal handler that will set our finished
+   flag.  There are, of course, more elegant ways to handle program shutdown 
+   requests but that isn't really our focus right now, so we'll just do the
+   easiest thing.     
+ */
 
 static sig_atomic_t finished = 0;
-	
-class Logging_Handler;
-
-extern "C" void handler (int) { finished = 1; }
-
-class Reactor_Derived : public ACE_Reactor
-{	
-public:
-  Reactor_Derived() : ()
-  {
-    counter = 0;
-  }
-	
-  virtual ~Reactor_Derived()
-  {
-    cout << "*****Calling the reactor destructor*****" << endl;
-  }
-
-private:
-  friend class Logging_Handler;
-	
-  // counter is used to keep track of the number of service handlers
-  // registered with this reactor (Surely theres a better way ;-)
-  int counter;
-};
-
-class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+extern "C" void handler (int)
 {
+  finished = 1;
+}
 
-public:
-
-  Logging_Handler (void) { };
-
-  virtual void destroy (void)
-  { 
-    if (this->thread_reactorP->remove_handler
-        (this,
-         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "can'(%P|%t) t remove service from reactor\n"), -1);
-
-    // Decrement the handler tracking variable in the reactor to
-    // indicate this service handler has terminated
-    --thread_reactorP->counter;
-
-    this->peer ().close ();
-    delete this;
-  }
-
-  static void *run_thread(Logging_Handler *this_)
-  {
-    Reactor_Derived thread_reactor;     
-
-    this_->thread_reactorP = &thread_reactor;
-	  
-    // Increment our handler counter to account for this service handler
-    ++thread_reactor.counter;
-
-    if (thread_reactor.register_handler(this_, ACE_Event_Handler::READ_MASK) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,"can'(%P|%t) t register with reactor\n"), -1);
-	
-    while( thread_reactor.counter > 0 )
-      {
-        // If thread_reactor.counter = 0 then we have no more service
-        // handlers connected to the reactor. We set a timeout value
-        // of 1 second so that the handle_events loop break out every
-        // second to check on the count ( because of it blocking 
-        // even when there are no connections we need to do this)
-        thread_reactor.handle_events(ACE_Time_Value(1,0));
-      }
-  } 
-
-  virtual int open (void *)
-  {
-    ACE_Thread::spawn(&Logging_Handler::run_thread,this);
-    return 0;
-  }
-
-  virtual int close (u_long)
-  {
-    this->destroy ();
-    return 0;
-  }
-
-protected:
-
-  virtual int handle_input (ACE_HANDLE)
-  {
-    char buf[128];
-    memset(buf,0,sizeof(buf));
-
-    switch( this->peer().recv(buf,sizeof buf) )
-      {
-      case -1:
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p bad read\n", "client logger"), -1);
-      case 0:
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) closing log daemon (fd = %d)\n", this->get_handle ()), -1);
-      default:
-        cout << "Received  from client : " << buf;
-      }
-          
-    return 0;
-  }
-
-
-private:
-  Reactor_Derived *thread_reactorP; 
-};
-
-typedef ACE_Acceptor <Logging_Handler, ACE_SOCK_ACCEPTOR> Logging_Acceptor;
+/*
+   A server has to listen for clients at a known TCP/IP port.  The default ACE
+   port is 10002 (at least on my system) and that's good enough for what  we
+   want to do here.  Obviously, a more robust application would take a command
+   line parameter or read from a configuration file or do some other  clever
+   thing.  Just like the signal handler above, though, that's what we want to
+   focus on, so we're taking the easy way out.     
+ */
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
+/*
+   Finally, we get to main.  Some C++ compilers will complain loudly if your
+   function signature doesn't match the prototype.  Even though we're not 
+   going to use the parameters, we still  have to specify them.     
+ */
+
 int main (int argc, char *argv[])
 {
-  g_reactor = new ACE_Reactor;
+/*
+   In our earlier servers, we used a global pointer to get to the reactor. I've 
+   never really liked that idea, so I've moved it into main() this time. When
+   we  get to the Client_Handler object you'll see how we manage to get a
+   pointer back to this reactor.     
+ */
+  ACE_Reactor reactor;
 
-  // Acceptor factory.
-  Logging_Acceptor peer_acceptor;
+  /*
+     The acceptor will take care of letting clients connect to us.  It will
+     also arrange for a  Client_Handler to be created for each new client.
+     Since we're only going to listen at one  TCP/IP port, we only need one
+     acceptor.  If we wanted, though, we could create several of these  and
+     listen at several ports.  (That's what we would do if we wanted to rewrite 
+     inetd for  instance.)     
+   */
+  Client_Acceptor peer_acceptor;
 
-  if (peer_acceptor.open (ACE_INET_Addr (PORT)) == -1)
+  /*
+     Create an ACE_INET_Addr that represents our endpoint of a connection. We
+     then open our acceptor object with that Addr.  Doing so tells the acceptor 
+     where to listen for connections.  Servers generally listen at "well known" 
+     addresses.  If not, there must be some mechanism by which the client is
+     informed of the server's address.
+
+     Note how ACE_ERROR_RETURN is used if we fail to open the acceptor.  This
+     technique is used over and over again in our tutorials.    
+   */
+  if (peer_acceptor.open (ACE_INET_Addr (PORT), &reactor) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
-  else if (g_reactor->register_handler (&peer_acceptor, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
+  /*
+     Here, we know that the open was successful.  If it had failed, we would
+     have exited above.  A nice side-effect of the open() is that we're already
+	 registered with the reactor we provided it.
+   */
 
+  /*
+     Install our signal handler.  You can actually register signal handlers
+     with the reactor.  You might do that when the signal handler is
+     responsible for performing "real" work.  Our simple flag-setter doesn't
+     justify deriving from ACE_Event_Handler and providing a callback function
+     though.    
+   */
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
-  // Run forever, performing logging service.
+  /*
+     Like ACE_ERROR_RETURN, the ACE_DEBUG macro gets used quite a bit.  It's a
+     handy way to generate uniform debug output from your program.    
+   */
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server daemon\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting up server logging daemon\n"));
+  /*
+     This will loop "forever" invoking the handle_events() method of our
+     reactor. handle_events() watches for activity on any registered handlers
+     and invokes their appropriate callbacks when necessary.  Callback-driven
+     programming is a big thing in ACE, you should get used to it. If the
+     signal handler catches something, the finished flag will be set and we'll
+     exit.  Conveniently enough, handle_events() is also interrupted by signals 
+     and will exit back to the while() loop.  (If you want your event loop to
+     not be interrupted by signals, checkout the <i>restart</i> flag on the
+     open() method of ACE_Reactor if you're interested.)    
+   */
+  while (!finished)
+    reactor.handle_events ();
 
-  // Perform logging service until QUIT_HANDLER receives SIGINT.
-  while ( !finished )
-    g_reactor->handle_events ();
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down server logging daemon\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutting down server daemon\n"));
 
   return 0;
 }

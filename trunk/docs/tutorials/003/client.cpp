@@ -1,4 +1,6 @@
+
 // $Id$
+
 
 #include "ace/SOCK_Connector.h"
 
@@ -17,7 +19,9 @@ int main (int argc, char *argv[])
   ACE_INET_Addr addr (server_port, server_host);
 
   if (connector.connect (server, addr) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  }
   
   for (int i = 0; i < max_iterations; i++)
     {
@@ -26,13 +30,19 @@ int main (int argc, char *argv[])
       ::sprintf (buf, "message = %d\n", i + 1);
 
       if (server.send_n ( buf, strlen(buf) ) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+      {
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
+      }
       else
-        ACE_OS::sleep (1);
+      {
+	ACE_OS::sleep (1);
+      }
     }
 
   if (server.close () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
+  }
 
   return 0;
 }

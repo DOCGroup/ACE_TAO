@@ -1,333 +1,123 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 005</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="Billy Quinn">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
-Creating a MultiThreaded Server </FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<UL>
-<P>The solution provided previously proposes a solution to deal with multiple connections per
-thread reactor, which is what we will build on in the next tutorial. In
-conjunction with this , it is beneficial to examine an alternative solution
-to this tutorial's specific purpose, which is to introduce the notion of
-a reactor per thread which will represent a single client connection to the server.
-As in the previous solution , the thread will exit immediately once the
-connection is terminated, so multiple connections per reactor are not implemented. However, the previous solution
-introduced a mechanism that would allow the reactor to handle multiple connections
-, by using the derived reactor object with a counter. It is important to
-note that the following solution does not provide this, but it addresses
-the specific objective of a reactor per thread. It also introduces the
-really cool notion of an active object using a function call (<TT>activate()</TT>)
-to start itself running. This idea will also be built upon in future tutorials.</P>
-</UL>
-
-<UL>
-<PRE>// $Id$
-
-// ============================================================================ // 
-// = FILENAME
-//    Connection_Handler.cpp
-//
-// = DESCRIPTION
-//      This test illustrates how to create multiple threads, each       
-//
-// = AUTHOR
-//    Doug Schmidt
-// 
-// ============================================================================
-             
-             
-1.      #include &quot;ace/Acceptor.h&quot;
-2.      #include &quot;ace/SOCK_Acceptor.h&quot;
-3.      #include &quot;ace/Service_Config.h&quot;
-4.      #include &quot;ace/Thread.h&quot;
-             
-5.      class Connection_Handler : public ACE_Svc_Handler&lt;ACE_SOCK_STREAM, 
-6.      ACE_NULL_SYNCH&gt;
-        {
-        public:
-7.        virtual int open (void *);
-          // Initialize the &lt;Connection_Handler&gt; and make it an Active Object.
-             
-8.        virtual int close (u_long);
-          // Terminate the &lt;Connection_Handler&gt;.
-             
-9.        virtual int svc (void);
-          // Run the &lt;Connection_Handler&gt;'s main event loop.
-             
-        protected:
-10.       virtual int handle_close (ACE_HANDLE, 
-11.                                 ACE_Reactor_Mask);
-          // Signal the Active Object to stop when called.
-             
-12.       virtual int handle_input (ACE_HANDLE); 
-          // Handle input from the client.
-             
-13.       virtual int handle_timeout (const ACE_Time_Value &amp;tv, 
-14.                                   const void *arg);
-          // Handle timeouts.
-             
-15.       virtual int handle_signal (int signum,
-16.                                  siginfo_t *,
-17.                                  ucontext_t *);
-          // Handle timeouts.
-             
-18.       sig_atomic_t finished_;
-          // Keeps track of whether we're done.
-        };
-             
-19.     int 
-20.     Connection_Handler::open (void *)
-        {
-21.       ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) in open()\n&quot;));
-             
-          // Create an Active Object.
-22.       return this-&gt;activate (THR_NEW_LWP);
-        }
-             
-23.     Connection_Handler::close (u_long)
-        {
-24.       ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) in close()\n&quot;));
-             
-          // Shut ourself down.
-25.       this-&gt;destroy ();
-26.       return 0;
-        }
-             
-27.     int 
-28.     Connection_Handler::svc (void)
-        {
-29.       ACE_DEBUG ((LM_DEBUG, &quot;(%P|%t) in svc()\n&quot;));
-             
-30.       this-&gt;finished_ = 0;
-             
-          // Create our own personal Reactor just for this thread.  Note that 
-          // we create this on the stack of the thread since it's only used 
-          // for the duration of this connection!
-             
-31.       ACE_Reactor reactor;
-             
-          // Each &lt;ACE_Svc_Handler&gt; has its own &lt;ACE_Reactor *&gt;.  By default, this 
-          // points to the &lt;Acceptor's&gt; Reactor.  However, we can point it to our 
-          // local Reactor, which is what we do in this case.
-32.       this-&gt;reactor (&amp;reactor);
-             
-          // Register ourselves to handle input in this thread without 
-          // blocking.
-33.       if (this-&gt;reactor ()-&gt;register_handler 
-34.           (this, ACE_Event_Handler::READ_MASK) == -1)
-35.         ACE_ERROR_RETURN ((LM_ERROR, &quot;can' (%P|%t) t register with reactor\n&quot;), -1);
-             
-          // Schedule a timer.
-36.       else if (this-&gt;reactor ()-&gt;schedule_timer 
-37.                (this, 
-38.                 (const void *) this, 
-39.                 ACE_Time_Value (2), 
-40.                 ACE_Time_Value (2)) == -1)
-41.         ACE_ERROR_RETURN ((LM_ERROR, &quot;(%P|%t) can't register with reactor\n&quot;), -1);
-42.       else
-43.         ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) connected with client\n&quot;));
-             
-          // Keep looping until we receive SIGQUIT or the client shutsdown.
-             
-44.       while (this-&gt;finished_ == 0)
-            {
-45.           ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) handling events\n&quot;)); 
-46.           this-&gt;reactor ()-&gt;handle_events ();
-            }
-             
-          // Cancel all pending timeouts.
-47.       ACE_Service_Config::reactor ()-&gt;cancel_timer (this);
-             
-          // Remove ourselves from the Reactor. 
-48.       this-&gt;reactor ()-&gt;remove_handler 
-49.         (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
-             
-          // Zero-out the Reactor field so it isn't accessed later on. 
-50.       this-&gt;reactor (0);
-             
-51.       ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) exiting svc\n&quot;)); 
-52.       return 0;
-        } 
-             
-53.     int 
-54.     Connection_Handler::handle_close (ACE_HANDLE, 
-55.                                       ACE_Reactor_Mask)
-        {
-56.       ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) in handle_close \n&quot;));
-             
-          // Signal the svc() event loop to shut down. 
-57.       this-&gt;finished_ = 1;
-58.       return 0;
-        }
-             
-59.     int 
-60.     Connection_Handler::handle_input (ACE_HANDLE) 
-        {
-61.       char buf[BUFSIZ];
-             
-62.       ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) handle_input\n&quot;));
-             
-63.       switch (this-&gt;peer ().recv (buf, sizeof buf))
-            {
-64.         case -1:
-65.           ACE_ERROR_RETURN ((LM_ERROR, &quot; (%P|%t) %p bad read\n&quot;, &quot;client logger&quot;),
-66.     -1);
-67.         case 0:
-68.           ACE_ERROR_RETURN ((LM_ERROR, 
-69.                              &quot; (%P|%t) closing log daemon (fd = %d)\n&quot;,
-70.     this-&gt;get_handle ()), -1);
-71.         default:
-72.           if (buf[0] == EOF)
-73.             ACE_ERROR_RETURN ((LM_ERROR, 
-74.                                &quot; (%P|%t) closing log daemon (fd = %d)\n&quot;,
-75.     this-&gt;get_handle ()), -1);
-76.           else
-77.             ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) from client: %s&quot;, buf));
-            }
-             
-78.       return 0;
-        }
-             
-79.     int 
-80.     Connection_Handler::handle_signal (int signum,
-81.                                        siginfo_t *,
-82.                                        ucontext_t *)
-        {
-83.       ACE_DEBUG ((LM_DEBUG, &quot;received signal %S\n&quot;, signum)); 
-84.       this-&gt;finished_ = 1;
-85.       return 0;
-        }
-             
-86.     int 
-87.     Connection_Handler::handle_timeout (const ACE_Time_Value &amp;tv, 
-88.                                         const void *arg)
-        {
-89.       ACE_ASSERT (arg == this);
-90.       ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) handling timeout from this = %u\n&quot;, this)); 
-91.       return 0;
-        }
-             
-        // Define an Acceptor for the &lt;Connection_Handler&gt;.
-             
-92.     typedef ACE_Acceptor &lt;Connection_Handler, ACE_SOCK_ACCEPTOR&gt; 
-93.             Connection_Acceptor;
-             
-94.     int 
-95.     main (int argc, char *argv[])
-        {
-96.       ACE_Service_Config daemon (argv[0]);
-             
-97.       u_short port = argc &gt; 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-             
-98.       ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) in main\n&quot;));
-             
-          // Acceptor factory.
-99.       Connection_Acceptor peer_acceptor;
-             
-          // Create an adapter to end the event loop. 
-100.      ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex)
-101.    ACE_Service_Config::end_reactor_event_loop);
-             
-          // Register the signal handler adapter.
-102.      if (daemon.reactor ()-&gt;register_handler (SIGINT, &amp;sa) == -1)
-103.        ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;register_handler&quot;), -1);
-             
-          // Open the Acceptor.
-104.      else if (peer_acceptor.open (ACE_INET_Addr (port),
-105.                                   daemon.reactor ()) == -1)
-106.        ACE_ERROR_RETURN ((LM_ERROR, &quot;%p\n&quot;, &quot;open&quot;), -1);
-             
-107.      ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) starting up connection server\n&quot;));
-             
-          // Perform connection service until we receive SIGINT.
-             
-108.      while (daemon.reactor_event_loop_done () == 0)
-109.        daemon.run_reactor_event_loop ();
-             
-110.      ACE_DEBUG ((LM_DEBUG, &quot; (%P|%t) shutting down connection server\n&quot;));
-             
-111.      return 0;
-        }
-</PRE>
-</UL>
+<P>And last (and probably least) is the <A HREF="fix.Makefile">perl script</A>
+that pulls the dependency stuff out of Makefile and into .depend.
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
+<BR>&nbsp; <FONT FACE="Arial,Helvetica">#!/usr/bin/perl</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>Here's a summary of how this solution works:</P>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# Open the Makefile that has been mangled by 'make depend'</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# and suck it into a perl array.</FONT>
+<BR><FONT FACE="Arial,Helvetica">open(IF,"&lt;Makefile") || die;</FONT>
+<BR><FONT FACE="Arial,Helvetica">@makefile = &lt;IF>;</FONT>
+<BR><FONT FACE="Arial,Helvetica">close(IF);</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<UL>
-<P><TT>Main</TT>() : </P>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# Now open our .depend file and a temporary Makefile.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# We'll split the original Makefile between these two.</FONT>
+<BR><FONT FACE="Arial,Helvetica">open(DF,">.depend") || die;</FONT>
+<BR><FONT FACE="Arial,Helvetica">open(MF,">Makefile.tmp") || die;</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>The <TT>main</TT> function of this active object solution is similar
-to the previously introduced solution in idea, but as you probrably noted
-the implementation is carried out differently. Both solutions use the concept
-of an acceptor listening on a certain port, which instantiate an object
-to handle the processing of data over the connection. However , the solution
-most recently described uses an object of type <I>ACE_Service_Config</I>
-which automatically provides a reactor, and a lot of method calls which
-can be used to control the reactor (for example method call end_reactor_event_loop
-stops the reactor iterating through its registered event handlers). In
-our first solution however, we had to explicitly create a reactor and write
-the function which ran and terminated the reactor. Notice also that the
-acceptor in the first solution had to be explicitly registered with
-our global reactor , whereas this is done transparently in the second solution
-by passing the address of the reactor into the open call of the <I>ACE_Acceptor</I>
-object. </P>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# For each line we read out of the original file...</FONT>
+<BR><FONT FACE="Arial,Helvetica">foreach (@makefile) {</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>Connection handling : </P>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# If we're into the dependency section, write the line</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# into the .depend file.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if( $depend ) {</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+print DF $_;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+else {</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# If we haven't gotten to the dependency section yet</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# then see if the current line is the separator that</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# "make depend" causes to be inserted.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if( m/^\Q# DO NOT DELETE THIS LINE -- g++dep uses it.\E/ ) {</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<P>Two alternative methods have been introduced for handling a connection
-once a request for connection has been received by the <I>ACE_Acceptor</I>
-object. In our first solution, we used the <I>ACE_Thread</I> class to explicitly
-spawn a new thread which instantiates a reactor automatically when the
-thread is initialised. As you probrably remember however , we had to declare
-a static function so that we could pass the address of the <I>Logging_Handler
-</I>object to the function so we had a run time reference to what object was
-calling the thread. In the second solution presented, the use of active
-objects allows us to bypass the programming overhead of spawning the thread by simply
-activating the object when it is ready to run. This is acheived by the call
-to member function <TT>activate</TT> which automatically creates a new
-thread and causes the svc function of
- the <I>Logging_Handler</I> object to be called.
-Since the <I>Logging_Handler</I> object is running in an independent
-thread, we dont have to worry about keeping track of a static thread function,
-which was necessary in the first solution presented. However, as mentioned
-in the introduction, the active object solution is a specific solution
-for a single reactor per thread each having one connection. Unlike the
-first solution, it does not cater for the reactor having more than once
-<I>Logging_Handler</I> objects to iterate through, which is what we will implement
-in future tutorials. (Note that an active object could be used to create the
-multiple-connections per reactor scenario.  It is just this example which
-does not do so.)
-</P>
-</UL>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# If so, change our "mode" and skip this line.</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+++$depend;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+next;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</FONT><FONT FACE="Arial,Helvetica"></FONT>
 
-<OL>
-<OL>
-<OL>
-<OL>
-<OL>
-<OL>
-<P>[<A HREF="../">Tutorial Index</A>] [<A HREF="page06.html">Previous
-Page</A>]</P>
-</OL>
-</OL>
-</OL>
-</OL>
-</OL>
-</OL>
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# Also skip the "include .depend" that we insert.&nbsp; If we</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# don't do this, it is possible to have a bunch of these</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# inserted into the output when we read an unmangled Makefile</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+next if( m/^include .depend/ );</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# Print the non-dependency info to the temporary Makefile</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+print MF $_;</FONT>
+<BR><FONT FACE="Arial,Helvetica">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</FONT>
+<BR><FONT FACE="Arial,Helvetica">}</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica"># Tell our new Makefile to include the
+dependency file</FONT>
+<BR><FONT FACE="Arial,Helvetica">print MF "include .depend\n";</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica"># Close the two output files...</FONT>
+<BR><FONT FACE="Arial,Helvetica">close(DF);</FONT>
+<BR><FONT FACE="Arial,Helvetica">close(MF);</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica"># Unlink (remove) the original Makefile
+and rename our</FONT>
+<BR><FONT FACE="Arial,Helvetica"># temporary file.&nbsp; There's obviously
+room for error checking</FONT>
+<BR><FONT FACE="Arial,Helvetica"># here but we've got the Makefile checked
+into some revision</FONT>
+<BR><FONT FACE="Arial,Helvetica"># control system anyway.&nbsp; Don't we?</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">unlink("Makefile");</FONT>
+<BR><FONT FACE="Arial,Helvetica">rename("Makefile.tmp","Makefile");</FONT><FONT FACE="Arial,Helvetica"></FONT>
+
+<P><FONT FACE="Arial,Helvetica">exit(0);</FONT>
+
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

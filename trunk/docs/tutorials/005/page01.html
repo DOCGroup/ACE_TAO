@@ -1,59 +1,38 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 005</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="Billy Quinn">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 005</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 005</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 005<BR>
-Creating a Multithreaded Server</FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>On the road to a multithreaded server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>In this tutorial, we will build a little on what we learned in the previous
-tutorials and add a few extras. The end result of the tutorial will be
-a multi-threaded server which will handle large volume of connections by
-spawning off seperate threads.</P>
+<P>In this tutorial, we're going to flash-back to the simple server we
+created a while back.&nbsp; We'll create a very simple server where everything
+takes place in one thread.&nbsp; Once we have a solid understanding there,
+we'll move on to the next tutorial where we begin to introduce concurrency
+concepts.
 
-<P>
-<HR WIDTH="100%"></P>
-
-<P>To begin, let's ask ourselves the same thing we did at the beginning
-of tutorial 001:</P>
-
-<UL>
-<P>What do you need to create a server?</P>
-</UL>
-
-<OL>
-<OL>
-<LI>Something which accepts connections from clients</LI>
-
-<LI>Something which handles established connections</LI>
-
-<LI>A main program loop that handles it all</LI>
-</OL>
-</OL>
-
-<P>Previously, we created a solution which addressed each one of these
-questions specifically. However, this solution was based on one thread
-of program flow which does not extract the full potential of a multi-threaded
-operating system like LINUX or Windows95. This tutorial specifically addresses
-this issue and examines how to use multiple threads , each handling a seperate
-connection. We will start by examining a solution which uses the ACE package
-to spawn threads, and then I will introduce an alternative solution based
-on the active object paradigm. <P>
+<P>There are four C++&nbsp;source files in this tutorial:&nbsp; server.cpp,
+client_acceptor.h, client_handler.h and client_handler.cpp.&nbsp; I'll
+talk about each of these in turn with the usual color commentary as we
+go.&nbsp; In addition, I'll briefly discuss the Makefile and a short perl
+script I've added.
 
 <P>
-<HR WIDTH="100%"></P>
-
-<CENTER><P>[<A HREF="..">Tutorial Index</A>] [<A HREF="page02.html">Continue
-This Tutorial</A>] </P></CENTER>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page02.html">Continue
+This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

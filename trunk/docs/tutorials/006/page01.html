@@ -1,234 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <HTML>
 <HEAD>
-   <TITLE>ACE Tutorial 001</TITLE>
-   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
    <META NAME="Author" CONTENT="James CE Johnson">
    <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 006</TITLE>
 </HEAD>
-<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 006</FONT></B></CENTER>
 
-<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 006<BR>
-Creating a Thread Pool Server</FONT></B></P></CENTER>
+<CENTER><B><FONT SIZE=+2>Creating a thread-per-connection server</FONT></B></CENTER>
+
 
 <P>
-<HR WIDTH="100%"></P>
+<HR WIDTH="100%">
 
-<P>As a build up to our final thread pool server , we will examine a number
-of specific topics that will be integrated to form the final product. In
-this section of the tutorial I will expose message queues, specifically
-the <I>ACE_Message_Queue</I> wrapper class that hides the low level details
-of building and manipulating a message queue. As in previous tutorials,
-I will display the appropriate source code, however, I will explain the
-code in sections rather than a line by line introduction. </P>
-
-<P>We begin by looking at a sample message queue program:</P>
-
-<UL>
-<PRE>             
-1.      #include &quot;ace/Thread.h&quot;
-2.      #include &quot;ace/Message_Queue.h&quot;
-3.      #include &quot;ace/Singleton.h&quot;
-        
-        
-5.      typedef ACE_Message_Queue&lt;ACE_MT_SYNCH&gt; Message_Queue; 
-6.      typedef ACE_Singleton&lt;Message_Queue,ACE_Mutex&gt; Safe_Queue;
-        
-        // Declare the thread manager instance - It will track when our
-        // threads exit
-7.      static ACE_Thread_Manager thr_mgr;
-        
-8.      static void *read_queue(void *)
-        {       
-                
-9.              ACE_Thread_Control thread_control (&amp;thr_mgr);
-                // Loop forever , initially declaring an integer variable
-10.             for (int result;;)
-                {
-                        // Delcare our time out value of 4 seconds
-11.                     ACE_Time_Value timeout(ACE_OS::time(0)+4,0);
-        
-                        // Declare the block to hold our message
-12.                     ACE_Message_Block *data_read;
-13.                     result = Safe_Queue::instance()-&gt;dequeue_head(data_read,&amp;timeout);
-14.                     if (result == -1)
-15.                             break;
-16.                     cout &lt;&lt; &quot;Received from queue :&quot; &lt;&lt; data_read-&gt;base()&lt;&lt;endl;             
-17.                     delete data_read;
-                }
-18.             cout &lt;&lt; &quot;The reader thread has timed out&quot; &lt;&lt; endl;
-        }
-        
-19.     static void *write_queue(void *)
-        {
-20.             ACE_Thread_Control thread_control (&amp;thr_mgr);
-21.             char data_write[30];
-        
-22.             for (int i=0;i&lt;5;i++)
-                {
-                
-                        // Place our message into our message array
-23.                     sprintf(data_write,&quot;This is message number %d&quot;,i);
-                        
-24.                     ACE_Message_Block *data_send = new
-25.                             ACE_Message_Block(sizeof(data_write),ACE_Message_Block::MB_DATA,0,data_write);
-                        
-26.                     if (Safe_Queue::instance()-&gt;enqueue_tail(data_send) == -1)
-27.                             ACE_ERROR((LM_ERROR, &quot;(%t) %p\n&quot;, &quot;put_next&quot;));
-28.                     cout &lt;&lt; &quot;Wrote to the queue&quot; &lt;&lt; data_send-&gt;base()&lt;&lt;endl;
-29.                     sleep(2);
-                }
-30.             cout &lt;&lt; &quot;Writer thread has finished&quot; &lt;&lt; endl;
-        }
-        
-31.     int main (int argc,char *argv[])
-        {
-32.             if (thr_mgr.spawn(ACE_THR_FUNC(write_queue),NULL,THR_NEW_LWP|THR_DETACHED) == -1)
-33.                   ACE_ERROR_RETURN((LM_ERROR,&quot;%p\n&quot;,&quot;spawing write thread&quot;),1);
-34.             if (thr_mgr.spawn(ACE_THR_FUNC (read_queue),NULL,THR_NEW_LWP | THR_DETACHED) == -1)
-35.                   ACE_ERROR_RETURN((LM_ERROR,&quot;%p\n&quot;,&quot;spawing read thread&quot;),1);
-        
-                // Wait for the two threads to exit
-36.             thr_mgr.wait();
-                
-37.             return 0;
-        }
-</PRE>
-</UL>
+<P>In this tutorial, we're going to extend Tutorial 5 to create a thread-per-connection
+server.&nbsp; This implementation will create a new thread for each client
+which connects to us.&nbsp; The ACE_Reactor is still used but only for
+accepting new connections.&nbsp; The Client_Handler objects won't be registered
+with the reactor.&nbsp; Instead, they'll be responsible for monitoring
+their peer() directly.
 
 <P>
-<HR></P>
-
-<P>The program given above is a simple example of a message queue implementation
-which has two threads which read and write from an <I>ACE_Message_Queue</I>.
-As both threads are reading and writing from the same queue, the possibility
-exists for a resource conflict, so we use the idea of &quot;Double Checked
-locking&quot;. This is a mechanism which is based on the Singleton idea
-whereby a class has one and only one instantiation and only has one point
-of entry, and is wrapped up in the <I>ACE_Singleton </I>wrapper class .
-This prevents multiple threads initialising the message queue object concurrently,
-which avoids the potential problems associated with this. When either of
-our objects need a reference to the message queue. they call the <TT>instance</TT>
-function which returns a reference to the queue. </P>
-
-<P>Thread Managers : As stated in the manual &quot;<I>allows operations
-on groups of threads atomically</I>&quot;. The <I>ACE_Thread_Manager </I>is
-basically a class that is used to manage multiple threads , allowing a
-program to easily manipulate groups of threads , such as shutting down
-all of the threads registered with the manager. We also introduce the <I>ACE_Thread_Control
-</I>, which is described in the manual as a mechanism &quot;<I>used to
-keep track of a threads activity within its entry point function</I>&quot;.
-The thread control class is important for tasks such as properly exiting
-a thread manager, and can be used for tasks such as setting the threads
-exit status. We use the control in our message queue example so that once
-the thread exits, the thread control destructor automatically takes care
-of deregistering the thread from the thread manager.</P>
-
-<P>As promised, I will now break up the program into sections which I will
-explain ....</P>
-
-<P>Code outside of main :</P>
-
-<UL>
-<P>We start by declaring our header files. As we use threads, message queues,
-and singletons, we include all three of the header files for these concepts.
-We then define a type based on the <I>ACE_Message_Queue</I> template ,
-specifying ACE_MT_SYNCH, which templates the code so that it is thread
-safe. Note that if the queue does not need to be thread safe , the flag
-ACE_NULL_SYNCH can be passed into the template definition. By passing the
-ACE_MT_SYNCH flag into the template, we are creating additional overhead,
-but resource issues are dealt with automatically by the message queue code.
-Another important issue of concurrency is that of the creation of the message
-queue reference. We are implementing multiple threads, so the possibility
-exists that our two threads could try and initialise a message queue object
-concurrently - This is bad - very bad!!!! We therefore use the <I>ACE_Singleton</I>
-wrapper class that provides our one point of entry to the reference (ie
-the <TT>instance</TT>()) function call). This ensures that the message
-queue is created once and only once. The <I>ACE_Singleton </I>wrapper class
-takes two parameters - a type and a locking mechanism. In this instance
-, we need mutual exclusion on the creation of the queue, so we pass it
-an <I>ACE_Mutex</I> type. This demonstrates the flexibility of using templates,
-whereby the ACE_Singleton class can be used by any type of class to ensure
-one point of entry and only one instantiation of itself. We also declare
-our <I>ACE_Thread_Manager</I> outside of main to manage the threads , thereby
-giving global acces to it from out two threads.</P>
-</UL>
-
-<P><TT>main :</TT></P>
-
-<UL>
-<P>Main is our driver program which starts the program running. We use
-the <I>ACE_Thread_Manager </I>global reference to spawn off our reader
-and writer threads and then simply wait for the threads to exit. We use
-the <TT>wait </TT>function call of the thread manager to block until no
-more threads are registered in the thread manager. As stated above , our
-thread control object deregisters the thread from its manager automatically
-when the thread exits. Note that we could also use a timeout value in the
-<TT>wait</TT> call to allow the manager to time-out after a specified time.</P>
-</UL>
-
-<P><TT>read_queue :</TT></P>
-
-<UL>
-<P>The thread which reads off our global message queue. We first declare
-our thread control, which takes care of cleaning up the thread on exit.
-Note we pass it the address of the thread manager this thread is registered
-with - this will be used by the thread control to deregister the thread
-properly and inform the proper thread manager on exit. We then proceed
-to enter an infinite loop , reading off our global message queue. Note
-the use of the <TT>dequeue_head</TT> function call of the message queue
-class - This will block until a message block can be read off the queue
-or a timeout specified expires, upon which the call returns -1. We use
-this timeout mechanism to terminate the reader thread , by passing a timeout
-value of 4 seconds into the <TT>dequeue_head </TT>call, and if a -1 is
-returned we exit the thread. We read our queue into an object of type <I>ACE_Message_Block</I>
-- this is because only objects of type <I>ACE_Message_Block</I> can be
-placed in an <I>ACE_Message_Queue</I>. However, as will be seen in our
-<TT>write_queue</TT> description, we can pass different types of data within
-the <I>ACE_Message_Block</I>.</P>
-</UL>
-
-<P><TT>write_queue :</TT></P>
-
-<UL>
-<P>The thread that writes to the global message queue. Again we declare
-our thread control to clean up properly , which deregisters us from the
-thread manager. We use the sprintf function to copy our message into our
-buffer to send onto the queue, and declare a new message block based on
-this data. Objects of type <I>ACE_Message_Block</I> are the only types
-that can be placed/manipulated in an <I>ACE_Message_Queue</I>. Note however
-that we can pass the data type into the contructor of the <I>ACE_Message_Block,
-</I>thus allowing us the freedom of declaring different message types (eg.
-signals). This is achevieved by using the predefined types in the <I>ACE_Message_Type
-</I>wrapper class. After declaring our message block , it is a matter of
-just putting the message block in the queue by using the <TT>enqueue</TT>
-function call. A -1 will be returned if an error occurs while placing the
-message block on the queue. This whole process will be repeated 5 times
-by using our while loop, upon which time it will exit, and the thread control
-will clean up. Note the use of the sleep(2) call in our writer - this is
-simply to slow down the writer thread so that our screen output will be
-easier to read (our &quot;cout's&quot;..etc...).</P>
-<TT></TT></UL>
-
-<P>Summary :&nbsp; In this tutorial, we examined the <I>ACE_Message_Queue</I>
-class, which provides a number of functions that allow objects of type
-<I>ACE_Message_Block</I> to be inserted and deleted from a message queue
-object. Apparently , you can enqueue at either the head or the tail of
-the queue, but you can only remove objects from the head of the queue.
-In this tutorial we also introduced the notion of the<I> ACE_Thread_Manager</I>
-and <I>ACE_Thread_Control</I> which provide an interface for managing threads
-efficiently, and introduced the <I>ACE_Singleton </I>class to incorporate
-concurrency protection when using a multithreaded program. All of these
-features will be used extensively in future tutorials as we build toward
-our Thread Pool server , and it is important to have at least a basic understanding
-of their operation.</P>
-
-<P>
-<HR WIDTH="100%"></P>
-
-<CENTER><P>[<A HREF="../../Tutorial">Tutorial Index</A>] [<A HREF="page01.html">Previous
-Page</A>] [<A HREF="page03.html">Continue This Tutorial</A>] </P></CENTER>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial
+Index</A>] [<A HREF="page02.html">Continue
+This Tutorial</A>]</CENTER>
 
 </BODY>
 </HTML>

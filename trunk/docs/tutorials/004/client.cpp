@@ -1,32 +1,31 @@
+
 // $Id$
 
 #include "ace/SOCK_Connector.h"
 #include "ace/SString.h"
 
-class Client : private ACE_SOCK_Stream
+class Client : public ACE_SOCK_Stream
 {
+
 public:
-  ACE_SOCK_Stream::close;	// promote to public
+        Client(void);
+        Client( const char * server, u_short port );
 
-  Client(void);
-  Client( const char * server, u_short port );
+        int open( const char * server, u_short port );
 
-  int open( const char * server, u_short port );
+        inline int initialized(void) { return mInitialized; }
+        inline int error(void)       { return mError; }
 
-  inline int initialized(void) { return mInitialized; }
-  inline int error(void)       { return mError; }
-
-  Client & operator<<( ACE_SString & str );
-  Client & operator<<( char * str );
-  Client & operator<<( int  n );
-
-  class Error {};
+        Client & operator<<( ACE_SString & str );
+        Client & operator<<( char * str );
+        Client & operator<<( int  n );
 
 protected:
 
 private:
   unsigned char mInitialized;
   unsigned char mError;
+
 };
 
 Client::Client(void)
@@ -59,50 +58,46 @@ int Client::open( const char * server, u_short port )
 
 Client & Client::operator<<( ACE_SString & str )
 {
-	if( initialized() )
-	{
-		if( error() )
-		{
-			throw Error();
-		}
+        if( initialized() && ! error() )
+        {
+                char * cp = str.rep();
 
-		char * cp = str.rep();
+                mError = 0;
 
-		mError = 0;
+                if( this->send_n(cp,strlen(cp)) == -1 )
+                {
+                        mError = 1;
+                }
+        }
+        else
+        {
+                mError = 1;
+        }
 
-		if( this->send_n(cp,strlen(cp)) == -1 )
-		{
-			mError = 1;
-			throw Error();
-		}
-	}
-	else
-	{
-		mError = 2;
-		throw Error();
-	}
-
-	return *this ;
+        return *this ;
 }
 
 Client & Client::operator<< ( char * str )
 {
-	ACE_SString newStr(str);
+        ACE_SString newStr(str);
 
-	*this << newStr;
+        *this << newStr;
 
-	return *this ;
+        return *this ;
 }
 
 Client & Client::operator<< ( int n )
 {
-	char buf[1024];
-	sprintf(buf,"(%d)\n",n);
-	ACE_SString newStr(buf);
+        // ACE_SString newStr;
+        // newStr = n;
 
-	*this << newStr;
+        char buf[1024];
+        sprintf(buf,"(%d)\n",n);
+        ACE_SString newStr(buf);
 
-	return *this;
+        *this << newStr;
+
+        return *this;
 }
 
 int main (int argc, char *argv[])
@@ -121,14 +116,15 @@ int main (int argc, char *argv[])
   
   for (int i = 0; i < max_iterations; i++)
     {
-      try
+      server << "message = " << i+1;
+
+      if ( server.error() )
       {
-      	server << "message = " << i+1;
-        ACE_OS::sleep (1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
       }
-      catch ( Client::Error & e )
+      else
       {
-	cout << "There was an error sending the data\n";
+        ACE_OS::sleep (1);
       }
     }
 
