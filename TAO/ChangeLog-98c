@@ -1,5 +1,9 @@
 Sun Nov 08 14:55:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/orbconf.h: Please uncomment TAO_HAS_EXCEPTIONS and
+ 	  TAO_USE_EXCEPTIONS once exceptions are working in TAO.  For now,
+ 	  they are not working properly.
+
 	* tao/Object_Table.cpp (find): Fixed the find routine.  It was
  	  considering the is_free_ field in all cases, but this field is
  	  not used when the dynamic hashing mechanism is used.
