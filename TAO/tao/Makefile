@@ -22,6 +22,8 @@ ORBCORE_SRCS = \
 	object \
 	orbobj \
 	poa \
+	poaC \
+	poaS \
 	principa \
 	request \
 	sequence \
@@ -50,6 +52,7 @@ ORBCORE_SRCS = \
 	orb_core \
 	params \
 	server_factory \
+	servant_base \
 	tao_internals \
 	tc_const \
 	Timeprobe
@@ -100,7 +103,7 @@ endif
 ifdef VXWORKS
   override fakesvcconf = 1
 endif
-  
+
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
 endif
