@@ -192,7 +192,7 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 // This is a def for this file only
 #  undef _ACE_HPUX_USE_DCETHREADS
-#endif /* _ACE_HPUX_USE_DCETHREADS
+#endif /* _ACE_HPUX_USE_DCETHREADS */
 
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
