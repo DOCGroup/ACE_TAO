@@ -305,8 +305,10 @@ realclean: clean <%compclean%>
 <%if(idl_files)%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
+<%if(custom_types)%>
 ifneq ($(GENERATED_DIRTY),)
-	-$(RM) $(GENERATED_DIRTY)
+	-$(RM) -r $(GENERATED_DIRTY)
 endif
+<%endif%>
 
 <%marker(bottom)%>
