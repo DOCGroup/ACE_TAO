@@ -1,3 +1,9 @@
+Mon Jul 27 1:26:44 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+      * TAO/tests/Param_Test/var_struct{.h,.cpp}: Committed my
+        changes so far so others can check it out. DII version
+        doesn't work yet.
+
 Mon Jul 27 12:44:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Invocation.cpp (start): Modified the code in
