@@ -111,8 +111,9 @@ private:
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 // Convenient ostream operator.
-ostream& TAO_Export operator<< (ostream &os,
-                                const CORBA_Exception &e);
+extern TAO_Export
+ostream& operator<< (ostream &os,
+                     const CORBA_Exception &e);
 
 #endif // (ACE_LACKS_IOSTREAM_TOTALLY)
 
