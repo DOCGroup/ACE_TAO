@@ -1,3 +1,9 @@
+Thu Oct 22 16:52:21 1998  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Pool_Reactor_Test.(cpp h): Adjusted debug output to
+          learn more about what's happening; added a check to be sure that
+          the correct number of messages are processed by each Svc_Handler.
+
 Thu Oct 22 15:46:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (ACE_TSS_Emulation::tss_base): if storage for
