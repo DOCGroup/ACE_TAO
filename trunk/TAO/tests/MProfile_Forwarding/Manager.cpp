@@ -17,22 +17,22 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'a':
-	first_ior = get_opts.optarg;
-	break;
+        first_ior = get_opts.optarg;
+        break;
       case 'b':
-	second_ior = get_opts.optarg;
-	break;
+        second_ior = get_opts.optarg;
+        break;
       case 'c':
-	third_ior = get_opts.optarg;
-	break;
+        third_ior = get_opts.optarg;
+        break;
       case 'd':
-	ior_output_file = get_opts.optarg;
-	break;
+        ior_output_file = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-a <iorfile>"
+                           "-a <iorfile>"
                            "-b <iorfile>"
                            "-c <iorfile>"
                            "\n",
@@ -179,13 +179,11 @@ Manager::activate_servant (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
-  PortableServer::ServantLocator_var servant_locator_var =
-    this->servant_locator_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
+  this->servant_locator_var_ = this->servant_locator_;
 
   // Set ServantLocator object as the servant Manager of
   // secondPOA.
-  this->new_poa_var_->set_servant_manager (servant_locator_var.in (),
+  this->new_poa_var_->set_servant_manager (this->servant_locator_,
                                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 

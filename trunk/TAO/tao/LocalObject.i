@@ -45,8 +45,14 @@ CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj,
 }
 
 ACE_INLINE
-CORBA::LocalObject::LocalObject ()
+CORBA::LocalObject::LocalObject (void)
   : ACE_NESTED_CLASS (CORBA, Object (0))
+{
+}
+
+ACE_INLINE
+TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
+  //  : CORBA::LocalObject ()
 {
 }
 

@@ -13,18 +13,16 @@ CFG=POA Explicit Activation Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak"\
- CFG="POA Explicit Activation Server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="POA Explicit Activation Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA Explicit Activation Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "POA Explicit Activation Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "POA Explicit Activation Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA Explicit Activation Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -39,7 +37,7 @@ RSC=rc.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ""
+# PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""

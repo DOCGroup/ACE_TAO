@@ -372,31 +372,6 @@ TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &,
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
 
-TAO_Stub *
-TAO_Locality_Constrained_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
-{
-  // Get our default POA.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  // This call might register us with the POA if we are not already
-  // registered and if the POA has the correct policies.
-  CORBA::Object_var object = poa->servant_to_reference (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  // Still return a null stub.  This will signify a locality
-  // constrained object, i.e., one that cannot be exported.
-  return 0;
-}
-
-void
-TAO_Locality_Constrained_ServantBase::_dispatch (CORBA::ServerRequest &,
-                                                 void *,
-                                                 CORBA_Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::BAD_OPERATION ());
-}
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 CORBA::Object_ptr

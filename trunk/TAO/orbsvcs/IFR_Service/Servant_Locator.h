@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class IFR_ServantLocator : public POA_PortableServer::ServantLocator
+class IFR_ServantLocator : public PortableServer::ServantLocator
 {
   // = TITLE
   //    IFR_ServantLocator
@@ -66,4 +66,3 @@ private:
 };
 
 #endif /* IFR_SERVANT_LOCATOR_H */
-

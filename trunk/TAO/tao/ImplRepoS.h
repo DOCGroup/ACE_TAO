@@ -12,7 +12,7 @@
 #include "ace/pre.h"
 
 #include "ImplRepoC.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "tao/Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -67,8 +67,7 @@ POA_FILES = \
   Object_Adapter \
   Key_Adapters \
   POA \
-  POAC \
-  POAS \
+  PortableServerC \
   POAManager \
   Active_Object_Map \
   Servant_Base
@@ -136,7 +135,6 @@ IDL_COMPILER_FILES = \
 ORB_CORE_FILES = \
   Any \
   CurrentC \
-  CurrentS \
   Exception \
   WrongTransactionC \
   Environment \

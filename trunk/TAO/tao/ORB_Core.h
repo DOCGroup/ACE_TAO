@@ -28,7 +28,7 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
@@ -191,6 +191,7 @@ public:
                      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
+
   PortableServer::POA_ptr root_poa_reference (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
       const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
@@ -496,6 +497,10 @@ protected:
                                 CORBA::Environment &ACE_TRY_ENV);
   // Initialize the root POA.
 
+  void destroy_root_poa (CORBA::Boolean wait_for_completion,
+                         CORBA::Environment &ACE_TRY_ENV);
+  // Destroy the RootPOA (if one exists).
+
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
 
@@ -551,9 +556,6 @@ protected:
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
-
-  PortableServer::POA_var root_poa_reference_;
-  // Cached POA reference
 
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.

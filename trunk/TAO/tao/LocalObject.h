@@ -196,7 +196,7 @@ public:
   // Useful for template programming.
 
 protected:
-  LocalObject ();
+  LocalObject (void);
   // Default constructor.  Make it protected to prevent instantiation
   // of this class.
 
@@ -205,8 +205,8 @@ private:
   // = Unimplemented methods
   // constructor
 
-  LocalObject (const CORBA_Object &);
-  LocalObject &operator = (const CORBA_Object &);
+  LocalObject (const LocalObject &);
+  LocalObject &operator = (const LocalObject &);
 };
 
 class TAO_Export CORBA::LocalObject_var
@@ -249,6 +249,33 @@ public:
 
 private:
   CORBA::LocalObject_ptr &ptr_;
+};
+
+class TAO_Export TAO_Local_RefCounted_Object : public virtual CORBA::LocalObject
+{
+  //
+  // This class adds default reference counting to local objects.
+  //
+public:
+
+  virtual void _add_ref (void);
+  // Increment reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement reference count.
+
+protected:
+  TAO_Local_RefCounted_Object (void);
+  // Default constructor.  Make it protected to prevent instantiation
+  // of this class.
+
+private:
+
+  // = Unimplemented methods
+  // constructor
+
+  TAO_Local_RefCounted_Object (const TAO_Local_RefCounted_Object &);
+  TAO_Local_RefCounted_Object &operator = (const TAO_Local_RefCounted_Object &);
 };
 
 #if defined (__ACE_INLINE__)

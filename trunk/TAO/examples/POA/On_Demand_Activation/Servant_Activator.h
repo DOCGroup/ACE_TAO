@@ -18,7 +18,7 @@
 
 #include "tao/corba.h"
 
-class MyFooServantActivator : public POA_PortableServer::ServantActivator
+class MyFooServantActivator : public PortableServer::ServantActivator
 {
 public:
   MyFooServantActivator (CORBA::ORB_ptr orb);

@@ -954,15 +954,12 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
-          PortableServer::POA_var poa = this->poa_->_this (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
           this->poa_->servant_locator_->postinvoke (this->current_context_.object_id (),
-                                                    poa.in (),
+                                                    this->poa_,
                                                     this->operation_,
                                                     this->cookie_,
-                                                    this->servant_,
-                                                    ACE_TRY_ENV);
+                                                    this->servant_
+                                                    TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -1069,7 +1066,18 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
         }
       if (this->poa_->waiting_destruction_)
         {
-          delete this->poa_;
+          ACE_TRY_NEW_ENV
+            {
+              this->poa_->complete_destruction_i (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore exceptions
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
+            }
+          ACE_ENDTRY;
+
           this->poa_ = 0;
         }
     }
@@ -1221,12 +1229,9 @@ TAO_POA_Current_Impl::teardown (void)
 }
 
 PortableServer::POA_ptr
-TAO_POA_Current_Impl::get_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Current_Impl::get_POA (CORBA::Environment &)
 {
-  PortableServer::POA_var result = this->poa_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
-  return result._retn ();
+  return PortableServer::POA::_duplicate (this->poa_);
 }
 
 PortableServer::ObjectId *

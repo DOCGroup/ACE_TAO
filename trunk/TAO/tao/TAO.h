@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 #include "tao/ORB.h"
 
 class TAO_Export TAO_ORB_Manager

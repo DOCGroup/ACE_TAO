@@ -34,7 +34,7 @@
 
 class Controller_impl;
 
-class Thermometer_impl : public virtual POA_CCS::Thermometer 
+class Thermometer_impl : public virtual POA_CCS::Thermometer
 {
 public:
   // CORBA attributes
@@ -50,7 +50,7 @@ public:
     throw (CORBA::SystemException);
   virtual void            remove ()
     throw (CORBA::SystemException);
-    
+
   // Constructor & destructor
   Thermometer_impl (CCS::AssetType anum);
   virtual ~Thermometer_impl ();
@@ -70,8 +70,8 @@ private:
   void operator= (const Thermometer_impl &);
 };
 
-class Thermostat_impl : public virtual POA_CCS::Thermostat, 
-                        public virtual Thermometer_impl 
+class Thermostat_impl : public virtual POA_CCS::Thermostat,
+                        public virtual Thermometer_impl
 {
 public:
   // CORBA operations
@@ -95,7 +95,7 @@ private:
   void operator= (const Thermostat_impl &);
 };
 
-class Controller_impl : public virtual POA_CCS::Controller 
+class Controller_impl : public virtual POA_CCS::Controller
 {
 public:
   // CORBA operations
@@ -151,7 +151,7 @@ private:
 
   // Function object for the find_if algorithm to search for
   // devices by location and model string.
-  class StrFinder 
+  class StrFinder
   {
   public:
     StrFinder (CCS::Controller::SearchCriterion    sc,
@@ -160,7 +160,7 @@ private:
     bool operator () (pair<const CCS::AssetType, Thermometer_impl *> & p) const
     {
       char buf[32];
-      switch  (m_sc) 
+      switch  (m_sc)
         {
         case CCS::Controller::LOCATION:
           ICP_get (p.first, "location", buf, sizeof (buf));
@@ -180,7 +180,7 @@ private:
 };
 
 class DeviceLocator_impl :
-    public virtual POA_PortableServer::ServantLocator 
+    public virtual PortableServer::ServantLocator
 {
 public:
   DeviceLocator_impl (Controller_impl * ctrl);
@@ -207,7 +207,7 @@ private:
   typedef list<Thermometer_impl *>    EvictorQueue;
   typedef map<CCS::AssetType, EvictorQueue::iterator>
   ActiveObjectMap;
-    
+
   static const unsigned int           MAX_EQ_SIZE = 100;
   EvictorQueue                        m_eq;
   ActiveObjectMap                     m_aom;

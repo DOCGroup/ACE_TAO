@@ -26,7 +26,7 @@
 #include "tao/corba.h"
 #include "ace/DLL.h"
 
-class ServantLocator_i : public POA_PortableServer::ServantLocator
+class ServantLocator_i : public PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and

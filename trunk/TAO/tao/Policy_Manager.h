@@ -26,10 +26,18 @@
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/POA_CORBA.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
@@ -184,7 +192,9 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Policy_Manager : public POA_CORBA::PolicyManager
+class TAO_Export TAO_Policy_Manager :
+  public CORBA::PolicyManager,
+  public TAO_Local_RefCounted_Object
 {
 public:
   TAO_Policy_Manager (void);
@@ -314,7 +324,9 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Policy_Current : public POA_CORBA::PolicyCurrent
+class TAO_Export TAO_Policy_Current :
+  public CORBA::PolicyCurrent,
+  public TAO_Local_RefCounted_Object
 {
 public:
   TAO_Policy_Current (void);
