@@ -97,15 +97,15 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 be_interface *
 be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
 {
-  // Generate 'Module::AMH_InterfaceResponseHandler'
-  ACE_CString class_name (node->client_enclosing_scope ());
+  // Generate 'AMH_InterfaceResponseHandler'
+  ACE_CString class_name;
   class_name += "AMH_";
   class_name += node->local_name ();
   class_name += "ResponseHandler";
   
   UTL_ScopedName *utl_class_name =
     new UTL_ScopedName (new Identifier (class_name.c_str ()), 0);
-  
+
   be_interface *response_handler =
     new be_interface (utl_class_name, // name
                       0,          // list of inherited
@@ -218,7 +218,7 @@ be_visitor_amh_pre_proc::create_response_handler_operation (be_operation *node,
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               op_name,
-                                              0,
+                                              1,
                                               0);
   operation->set_name (op_name);
 
@@ -604,7 +604,7 @@ be_visitor_amh_pre_proc::create_raise_operation (be_decl *node,
   be_operation *operation = new be_operation (rt,
                                               AST_Operation::OP_noflags,
                                               op_name,
-                                              0,
+                                              1,
                                               0);
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
@@ -672,7 +672,7 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
     new be_operation (node->field_type (),
                       AST_Operation::OP_noflags,
                       get_name,
-                      0,
+                      1,
                       0);
   operation->set_name (get_name);
   operation->set_defined_in (node->defined_in ());

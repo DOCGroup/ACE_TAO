@@ -1,6 +1,17 @@
+Wed Jan 16 12:57:56 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  The AMH_*ResponseHandler identifier should not include the
+	  Module:: prefix.  The fix is incomplete, as I believe that the
+	  Identifier for the implied be_interface node should have the
+	  enclosing scope identifier, but this change makes the *C.h file
+	  compilable.
+	  Also fixed the operations for the implied AMH_*ResponseHandler,
+	  they were supposed to be 'local' too.
+
 Wed Jan 16 12:22:13 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
 	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
 	  Fixed Fuzz errors for @file
 
@@ -29,34 +40,34 @@ Wed Jan 16 12:02:40 2002  Ossama Othman  <ossama@uci.edu>
 	  from the RSC to the TSC were lost after the TSC was copied back
 	  to the RSC, despite the fact the TSC's slot table was not
 	  modifed.  Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com>
-	  for discovering the problem. 
+	  for discovering the problem.
 
 Wed Jan 16 11:45:23 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name): 
+	* tao/PortableServer/ObjectReferenceTemplate.cpp (adapter_name):
 	  Fixed warnings on Debian_NoInline build.
 
 Wed Jan 16 11:38:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ORT/server.cpp (main): 
-	* orbsvcs/examples/ORT/Object_Factory_i.cpp: 
-	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h: 
-	* orbsvcs/examples/ORT/gateway_server.cpp : 
-	* orbsvcs/examples/ORT/server.cpp : 
-	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp: 
+	* tests/ORT/server.cpp (main):
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp:
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h:
+	* orbsvcs/examples/ORT/gateway_server.cpp :
+	* orbsvcs/examples/ORT/server.cpp :
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp:
 	  Fixed fuzz compile errors.
 
 Wed Jan 16 11:23:04 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ior_corbaloc/README (ftp): 
+	* tests/ior_corbaloc/README (ftp):
 	  Updated the README.
 
-	  Thanks to Gerhard Voss <Gerhard_Voss@t-online.de> for 
+	  Thanks to Gerhard Voss <Gerhard_Voss@t-online.de> for
 	  reporting that it is outdated.
 
 Wed Jan 16 08:37:55 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* utils/nslist/nsdel.cpp: 
+	* utils/nslist/nsdel.cpp:
 	  Fixed compile errors.
 
 Wed Jan 16 08:33:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
