@@ -30,69 +30,9 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/SOCK_Stream.h"
 #include "tao/TAO.h"
-
-#define DATABUF_SIZE 500
-
-#define SPEEDUP_SCALE 5
-#define MAX_RESEND_REQS 10
-#define FBBUF_SIZE (sizeof(AudioFeedBackPara) + \
-                    (MAX_RESEND_REQS - 1) * sizeof(APdescriptor))
-
-
-  class Audio_Global
-  {
-  public:
-    Audio_Global (void);
-    // Default constructor.
-    int CmdRead(char *buf, int psize);
-    void CmdWrite(char *buf, int size);
-    int INITaudio(void);
-    int send_packet(int firstSample, int samples);
-    int SendPacket(void);
-    void ResendPacket(int firstsample, int samples);
-    int PLAYaudio(void);
-    int play_audio (void);
-    int send_audio (void);
-    void on_exit_routine(void);
-
-  public:
-
-    enum audio_state {AUDIO_WAITING = 0,AUDIO_PLAY =1};
-
-    audio_state state;
-    // The state of the audio server.
-
-    int addSamples;
-    unsigned nextTime;
-    int upp;  /* micro-seconds per packet */
-    int delta_sps ; 
-    // The members previously in PLAY audio.
-
-    int bytes_sent ;
-    time_t start_time;
-
-    int conn_tag;
-
-    int serviceSocket;
-    int audioSocket ;
-
-    char audioFile[PATH_SIZE];
-    int fd;
-    AudioParameter audioPara;
-    int totalSamples;
-    int fileSize;
-    unsigned char cmd;
-    int live_source ;
-
-    int databuf_size;
-    int cmdsn;
-    int nextsample;
-    int sps; /* audio play speed given by the client: samples per second */
-    int spslimit;
-    int spp; /* samples per packet */
-    AudioPacket * pktbuf ;
-    AudioFeedBackPara * fbpara ;
-  };
+#include "mpeg_shared/Audio_ControlS.h"
+#include "orbsvcs/CosNamingC.h"
+#include "Globals.h"
 
 class Audio_Sig_Handler 
   : public virtual ACE_Event_Handler
@@ -174,11 +114,11 @@ public:
   // Taking the control,data fd's and rttag.
   int init (int argc,
             char **argv,
-            // ACE_SOCK_Stream& control,
             int rttag,
-            int max_pkt_size);
+            int max_pkt_size,
+            CORBA::Environment &env);
   // inits the Audio_Server
-  int run (void);
+  int run (CORBA::Environment & env);
   // runs the loop.
   int set_peer (void);
   // sets the peer endpoint.
@@ -187,25 +127,28 @@ private:
                   char **argv);
   // Parse the arguments.
 
+  int initialize_orb (int argc,
+                      char **argv,
+                      CORBA::Environment &env);
   TAO_ORB_Manager orb_manager_;
   // The ORB Manager.
 
   Audio_Global *audio_global_;
   // The globals object.
 
-  Audio_Control_Handler *control_handler_;
-  // The audio control handler
+//   Audio_Control_Handler *control_handler_;
+//   // The audio control handler
 
-  Audio_Data_Handler *data_handler_;
-  // The audio data i.e feedback handler.
+//   Audio_Data_Handler *data_handler_;
+//   // The audio data i.e feedback handler.
 
-  Audio_Sig_Handler *sig_handler_;
-  // The signal handler.
+//   Audio_Sig_Handler *sig_handler_;
+//   // The signal handler.
 
-  ACE_SOCK_Stream control;
-  // The control stream.
-  ACE_SOCK_CODgram dgram_;
-  // The data socket.
+//   ACE_SOCK_Stream control;
+//   // The control stream.
+//   ACE_SOCK_CODgram dgram_;
+//   // The data socket.
 };
 
 #endif /*_AUDIO_SERVER_H */

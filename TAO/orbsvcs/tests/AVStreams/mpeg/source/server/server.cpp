@@ -140,19 +140,85 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
       this->destroy ();
       break;
     case CmdINITaudio:
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Received CmdINITaudio\n"));
-      {
-        ACE_Process_Options audio_process_options;
+ //      ACE_DEBUG ((LM_DEBUG,"(%P|%t) Received CmdINITaudio\n"));
+//       {
+//         ACE_Process_Options audio_process_options;
         
-        char command_str[BUFSIZ];
-        sprintf (command_str,"./as -ORBport 0 -f %d",this->peer ().get_handle ());
-        ACE_DEBUG ((LM_DEBUG,"Audio command string %s",command_str));
-        audio_process_options.command_line (command_str);
+//         char command_str[BUFSIZ];
+//         sprintf (command_str,"./as -ORBport 0 -f %d",this->peer ().get_handle ());
+//         ACE_DEBUG ((LM_DEBUG,"Audio command string %s",command_str));
+//         audio_process_options.command_line (command_str);
+        
+//         ACE_Process audio_process;
+        
+//         audio_process.spawn (audio_process_options);
+//       }
+
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Spawning the audio server process\n"));
+        
+        ACE_Process_Options audio_process_options;
+        audio_process_options.command_line ("./as -ORBport 0");
+        // ORBport of 0 makes the audio server pick a port for itself
         
         ACE_Process audio_process;
-        
-        audio_process.spawn (audio_process_options);
+        pid_t child_pid;
+
+        if ((child_pid = audio_process.spawn (audio_process_options)) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) ACE_Process:: spawn failed: %p\n",
+                             "spawn"),
+                            -1);
+        // %% need to close down the orb fd's
+        // in the child process!!
+
+        char sem_str [BUFSIZ];
+
+        // create a unique semaphore name
+        ::sprintf (sem_str,
+                   "%s:%d",
+                   "Audio_Server_Semaphore",
+                   child_pid);
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) semaphore is %s\n",
+                    sem_str));
+        // Create the semaphore
+        ACE_Process_Semaphore semaphore (0, // 0 means that the
+                                            // semaphore is locked initially
+                                         sem_str);
+
+        // %% wait until the child finishes booting
+        if (semaphore.acquire () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) semaphore acquire failed: %p\n",
+                             "acquire"),
+                            -1);
+        // ~~?? remove the semaphore.
+        // Wait until a ACE_SV_Semaphore's value is greater than 0, the
+        // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
+        // DOWN operation.
+        //        ::sleep (5);
+
+        if (semaphore.remove () == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%P|%t) semaphore remove failed: %p\n",
+                               "remove"),
+                              -1);
+
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        // ?? do we need the ack even for audio!
+        int ack = 42;
+        if (this->peer ().send_n (&ack,
+                                  sizeof (ack)) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t), ACK send failed: %p",
+                             "AV_Svc_Handler::handle_connection"),
+                            -1);
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       }
+      // close down the connected socket in the main process
       this->destroy ();
       break;
       // %% need to fork here
@@ -369,6 +435,12 @@ AV_Server_Sig_Handler::int_handler (int sig)
 AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
 {
   TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
+
+//   if (TAO_ORB_Core_instance ()->reactor ()->remove_handler
+//       (this,ACE_Event_Handler::NULL_MASK) == -1)
+//     ACE_ERROR ((LM_ERROR,
+//                 "(%P|%t) remove_handler for sig_handler failed\n"));
+
 }
 
 // AV_Server routines
@@ -527,18 +599,14 @@ AV_Server::~AV_Server (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server: Removing handlers from the Reactor\n"));
   
-  if (TAO_ORB_Core_instance ()->reactor ()->remove_handler 
-      (this->acceptor_.get_handle (),
-       ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) remove_handler for acceptor failed\n"));
-
-  if (TAO_ORB_Core_instance ()->reactor ()->remove_handler
-      (&this->signal_handler_,
-       ACE_Event_Handler::NULL_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) remove_handler for sig_handler failed\n"));
-
+//   if (TAO_ORB_Core_instance ()->reactor ()->handler (this->acceptor_.get_handle (),
+//                                                      ACE_Event_Handler::ACCEPT_MASK) == 0)
+//     if (TAO_ORB_Core_instance ()->reactor ()->remove_handler 
+//         (this->acceptor_.get_handle (),
+//          ACE_Event_Handler::ACCEPT_MASK) == -1)
+//       ACE_ERROR ((LM_ERROR,
+//                   "(%P|%t) remove_handler for acceptor failed\n"));
+  
 }
 
 int

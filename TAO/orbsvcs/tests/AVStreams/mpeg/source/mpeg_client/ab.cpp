@@ -255,7 +255,7 @@ void ABprocess(int dataSocket)
 #endif
 
     //    ACE_DEBUG ((LM_DEBUG,"(%P|%t) ABprocess: Received  %d sized packet\n",len));
-      if (packet->dataBytes <= 0) {
+    if (packet->dataBytes <= 0) {
       fprintf(stderr, "AB Error: pkt->dataBytes %d, len %d\n",
 	      packet->dataBytes,
 	      len);

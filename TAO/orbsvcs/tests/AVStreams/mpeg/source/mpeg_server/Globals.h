@@ -126,6 +126,7 @@
 #include "mpeg_server/server_proto.h"
 #include "mpeg_server/Video_Server.h"
 #include "mpeg_shared/Video_ControlS.h"
+#include "mpeg_shared/Audio_ControlS.h"
 
 class Mpeg_Global
 {
@@ -313,6 +314,73 @@ public:
   static void TimerProcessing(void);
   static void timerHandler (int sig);
 };
+
+#define DATABUF_SIZE 500
+
+#define SPEEDUP_SCALE 5
+#define MAX_RESEND_REQS 10
+#define FBBUF_SIZE (sizeof(AudioFeedBackPara) + \
+                    (MAX_RESEND_REQS - 1) * sizeof(APdescriptor))
+
+
+
+  class Audio_Global
+  {
+  public:
+    Audio_Global (void);
+    // Default constructor.
+    int CmdRead(char *buf, int psize);
+    void CmdWrite(char *buf, int size);
+    int INITaudio(void);
+    int send_packet(int firstSample, int samples);
+    int SendPacket(void);
+    void ResendPacket(int firstsample, int samples);
+    int PLAYaudio(void);
+    int play_audio (void);
+    int send_audio (void);
+    void on_exit_routine(void);
+
+  public:
+
+    enum audio_state {AUDIO_WAITING = 0,AUDIO_PLAY =1};
+
+    audio_state state;
+    // The state of the audio server.
+
+    int addSamples;
+    unsigned nextTime;
+    int upp;  /* micro-seconds per packet */
+    int delta_sps ; 
+    // The members previously in PLAY audio.
+
+    int bytes_sent ;
+    time_t start_time;
+
+    int conn_tag;
+
+    int serviceSocket;
+    int audioSocket ;
+
+    char audioFile[PATH_SIZE];
+    int fd;
+    Audio_Control::AudioParameter audioPara;
+    int totalSamples;
+    int fileSize;
+    unsigned char cmd;
+    int live_source ;
+
+    int databuf_size;
+    int cmdsn;
+    int nextsample;
+    int sps; /* audio play speed given by the client: samples per second */
+    int spslimit;
+    int spp; /* samples per packet */
+    AudioPacket * pktbuf ;
+    AudioFeedBackPara * fbpara ;
+  };
+
+typedef ACE_Singleton <Audio_Global,ACE_SYNCH_MUTEX> AUDIO_GLOBAL;
+
   
 #endif /* define MPEG_GLOBAL_H */
 

@@ -145,10 +145,10 @@ Video_Control_State::stat_stream (CORBA::Char_out ch,
 }
 
 
-CORBA::Boolean 
+void
 Video_Control_State::close (void)
 {
-  return CORBA::B_FALSE;
+  return;
 }
 
 
@@ -231,14 +231,14 @@ Video_Control_Waiting_State::stat_stream (CORBA::Char_out ch,
   return 0;
 }
 
-CORBA::Boolean 
+void
 Video_Control_Waiting_State::close (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Video_Control_Waiting_State::close \n"));
   VIDEO_SINGLETON::instance ()->normalExit = 1;
   TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
-  return CORBA::B_TRUE;
+  return ;
 }
 
 
@@ -449,10 +449,10 @@ Video_Control_Fast_Forward_State::stop (CORBA::Long cmdsn)
   return CORBA::B_TRUE;
 }
 
-CORBA::Boolean
+void
 Video_Control_Fast_Forward_State::close (void)
 {
-  return CORBA::B_TRUE;
+  return;
 }
 
 // ----------------------------------------------------------------------
@@ -474,8 +474,8 @@ Video_Control_Fast_Backward_State::stop (CORBA::Long cmdsn)
   return CORBA::B_TRUE;
 }
 
-CORBA::Boolean
+void
 Video_Control_Fast_Backward_State::close (void)
 {
-  return CORBA::B_TRUE;
+  return;
 }
