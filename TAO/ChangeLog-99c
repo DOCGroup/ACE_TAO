@@ -1,3 +1,9 @@
+Thu Aug 26 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+	  Fixed typo. Thanks to Robert Todd Pack <todd@rwii.com>
+	  for pointing it out.
+
 Thu Aug 26 08:43:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Acceptor_Impl.cpp: added #include "ace/Object_Manager.h",
