@@ -7326,7 +7326,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     MSG msg; \
     HACCEL hAccelTable; \
     if (!InitInstance (hInstance, nCmdShow)) return FALSE; \
-    hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_WINDOZECE); \
+    hAccelTable = LoadAccelerators(hInstance, (LPCTSTR)IDC_FACE); \
     InitSetup(); \
     while (GetMessage(&msg, NULL, 0, 0)) { \
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) { \
