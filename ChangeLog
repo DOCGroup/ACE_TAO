@@ -1,3 +1,18 @@
+Sun Jan  4 08:59:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp:
+	  Changed return type of thread_id functions from int to ACE_thread_t
+
+	* examples/APG/Signals/SigInfo.cpp:
+	  Cygwin doesn't have unix signals, so added #ifdef for the main to
+	  output an debug message that this example is not supported on this
+	  platform when no unix signals are available.
+
+	* examples/APG/Proactor/HA_Proactive_Status.{h,cpp}:
+	  With Cygwin we don't have aio, so added here also a main that
+          outputs not supported when this is not available.
+
 Sun Jan  4 08:28:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/APG/Reactor/Timer_Cancel.cpp:
