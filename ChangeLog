@@ -1,3 +1,10 @@
+Tue Jan  4 18:19:11 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE_export.h: Adjusted ACE_NAMESPACE_INLINE_FUNCTION to include
+	  the extern storage class when inlining for non-Windows. This resolves
+	  some warnings on Solaris/Forte7, and is (hopefully!) the nit
+	  behind the mysterious intermittent compile failures on HP-UX aCC.
+
 Tue Jan  4 17:37:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.h: Corrected t_rcv(), t_rcv_n_i() to be extern ACE_Export,
