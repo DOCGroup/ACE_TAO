@@ -9,8 +9,6 @@
 
 ACE_RCSID(ace, Stats, "$Id$")
 
-#define ACE_STATS_INVALID_VALUE 0xFFFFFFFFu
-
 #if !defined ACE_LACKS_LONGLONG_T
   static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET =
     ACE_UINT64_LITERAL (0x100000000);
@@ -48,7 +46,7 @@ ACE_Stats::sample (const ACE_INT32 value)
       if (number_of_samples_ == 0)
         {
           // That's a lot of samples :-)
-          overflow_ = 1u;
+          overflow_ = EFAULT;
           return -1;
         }
 
@@ -64,53 +62,43 @@ ACE_Stats::sample (const ACE_INT32 value)
     {
       // Probably failed due to running out of memory when trying to
       // enqueue the new value.
-      overflow_ = 1u;
+      overflow_ = errno;
       return -1;
     }
 }
 
 void
-ACE_Stats::mean (ACE_Stats_Value &mean,
+ACE_Stats::mean (ACE_Stats_Value &m,
                  const ACE_UINT32 scale_factor)
 {
   if (number_of_samples_ > 0)
     {
-      if (cached_mean_.precision () < ACE_STATS_INVALID_VALUE)
-        {
-          // Use the cached mean.
-          mean = cached_mean_;
-        }
-      else
-        {
 #if defined ACE_LACKS_LONGLONG_T
-          const ACE_U_LongLong ACE_STATS_INTERNAL_OFFSET (0, 8);
+      const ACE_U_LongLong ACE_STATS_INTERNAL_OFFSET (0, 8);
 #endif /* ACE_LACKS_LONGLONG_T */
 
-          ACE_UINT64 sum = ACE_STATS_INTERNAL_OFFSET;
-          ACE_Unbounded_Queue_Iterator<ACE_INT32> i (samples_);
-          while (! i.done ())
+      ACE_UINT64 sum = ACE_STATS_INTERNAL_OFFSET;
+      ACE_Unbounded_Queue_Iterator<ACE_INT32> i (samples_);
+      while (! i.done ())
+        {
+          ACE_INT32 *sample;
+          if (i.next (sample))
             {
-              ACE_INT32 *sample;
-              if (i.next (sample))
-                {
-                  sum += *sample;
-                  i.advance ();
-                }
+              sum += *sample;
+              i.advance ();
             }
-
-          // sum_ was initialized with ACE_STATS_INTERNAL_OFFSET, so
-          // subtract that off here.
-          quotient (sum - ACE_STATS_INTERNAL_OFFSET,
-                    number_of_samples_ * scale_factor,
-                    mean);
-
-          cached_mean_ = mean;
         }
+
+      // sum_ was initialized with ACE_STATS_INTERNAL_OFFSET, so
+      // subtract that off here.
+      quotient (sum - ACE_STATS_INTERNAL_OFFSET,
+                number_of_samples_ * scale_factor,
+                m);
     }
   else
     {
-      mean.whole (0);
-      mean.fractional (0);
+      m.whole (0);
+      m.fractional (0);
     }
 }
 
@@ -135,7 +123,7 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
       // Calculate the mean, scaled, so that we don't lose its
       // precision.
       ACE_Stats_Value avg (std_dev.precision ());
-      mean (avg, 1);
+      mean (avg, 1u);
       avg.scaled_value (mean_scaled);
 
       // Calculate the summation term, of squared differences from the
@@ -147,20 +135,25 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
           ACE_INT32 *sample;
           if (i.next (sample))
             {
-              // Scale up by field width so that we don't lose the
-              // precision of the mean.
               const ACE_UINT64 original_sum_of_squares = sum_of_squares;
 
-              // And do it carefully . . .
+              // Scale up by field width so that we don't lose the
+              // precision of the mean.  Carefully . . .
               const ACE_UINT64 product (*sample * field);
-              const ACE_INT32 difference =
-                ACE_U64_TO_U32 (product  -  mean_scaled);
-              sum_of_squares += difference * difference;
+              ACE_UINT64 difference = product - mean_scaled;
+              // Do the squaring using 64-bit arithmetic.
+              sum_of_squares += difference *
+#if defined (ACE_LACKS_LONGLONG_T)
+                ACE_U64_TO_U32 (difference);
+#else
+                // The 64-to-32 bit conversion messes things up.
+                difference;
+#endif
               i.advance ();
 
               if (sum_of_squares < original_sum_of_squares)
                 {
-                  overflow_ = 1u;
+                  overflow_ = ENOSPC;
                   return -1;
                 }
             }
@@ -178,6 +171,7 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
       // deviation.  First, scale up . . .
       ACE_UINT64 scaled_variance;
       variance.scaled_value (scaled_variance);
+
       // And scale up, once more, because we'll be taking the square
       // root.
       scaled_variance *= field;
@@ -203,10 +197,6 @@ ACE_Stats::reset (void)
   min_ = 0x7FFFFFFF;
   max_ = -0x8000 * 0x10000;
   samples_.reset ();
-
-  // Set the precision of cached_mean_ to the invalid value.
-  ACE_Stats_Value invalid_stats_value (ACE_STATS_INVALID_VALUE);
-  cached_mean_ = invalid_stats_value;
 }
 
 int
@@ -214,41 +204,40 @@ ACE_Stats::print_summary (const u_int precision,
                           const ACE_UINT32 scale_factor,
                           FILE *file) const
 {
-  if (overflow_)
-    {
-      ACE_OS::fprintf (file,
-                       ASYS_TEXT ("ACE_Stats::print_summary: ")
-                       ASYS_TEXT ("there was overflow, ")
-                       ASYS_TEXT ("insufficient memory?\n"));
-      return -1;
-    }
-  else
+  ASYS_TCHAR mean_string [128];
+  ASYS_TCHAR std_dev_string [128];
+  ASYS_TCHAR min_string [128];
+  ASYS_TCHAR max_string [128];
+  int success = 0;
+
+  for (int tmp_precision = precision;
+       ! overflow_  &&  ! success  &&  tmp_precision >= 0;
+       --tmp_precision)
     {
       // Build a format string, in case the C library doesn't support %*u.
       ASYS_TCHAR format[32];
-      if (precision == 0)
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%d"), precision);
+      if (tmp_precision == 0)
+        ACE_OS::sprintf (format, ASYS_TEXT ("%%d"), tmp_precision);
       else
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), precision);
+        ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), tmp_precision);
 
-      ACE_Stats_Value u (precision);
+      ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
-      ASYS_TCHAR mean_string [128];
       ACE_OS::sprintf (mean_string, format, u.whole (), u.fractional ());
 
-      ACE_Stats_Value sd (precision);
+      ACE_Stats_Value sd (tmp_precision);
       if (((ACE_Stats *) this)->std_dev (sd, scale_factor))
         {
-          ACE_OS::fprintf (file,
-            ASYS_TEXT ("ACE_Stats::print_summary: there was overflow, ")
-            ASYS_TEXT ("retry with smaller precision than %u?\n"),
-            precision);
-          return -1;
+          success = 0;
+          continue;
         }
-      ASYS_TCHAR std_dev_string [128];
+      else
+        {
+          success = 1;
+        }
       ACE_OS::sprintf (std_dev_string, format, sd.whole (), sd.fractional ());
 
-      ACE_Stats_Value minimum (precision), maximum (precision);
+      ACE_Stats_Value minimum (tmp_precision), maximum (tmp_precision);
       if (min_ != 0)
         {
           const ACE_UINT64 m (min_);
@@ -259,26 +248,27 @@ ACE_Stats::print_summary (const u_int precision,
           const ACE_UINT64 m (max_);
           quotient (m, scale_factor, maximum);
         }
-      ASYS_TCHAR min_string [128];
-      ASYS_TCHAR max_string [128];
       ACE_OS::sprintf (min_string, format,
                        minimum.whole (), minimum.fractional ());
       ACE_OS::sprintf (max_string, format,
                        maximum.whole (), maximum.fractional ());
+    }
 
+  if (success == 1)
+    {
       ACE_OS::fprintf (file, ASYS_TEXT ("samples: %u (%s - %s); mean: ")
                        ASYS_TEXT ("%s; std dev: %s\n"),
                        samples (), min_string, max_string,
                        mean_string, std_dev_string);
-
       return 0;
     }
-}
-
-void
-ACE_Stats::dump (void) const
-{
-  print_summary (3u);
+  else
+    {
+      ACE_OS::fprintf (file,
+                       ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
+                       ASYS_TEXT (strerror (overflow_)));
+      return -1;
+    }
 }
 
 void
@@ -294,9 +284,15 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
     {
       const ACE_UINT32 field = quotient.fractional_field ();
 
-      // Fractional = (dividend % divisor) * 10^precision / divisor.
+      // Fractional = (dividend % divisor) * 10^precision / divisor
+
+      // It would be nice to add round-up term:
+      // Fractional = (dividend % divisor) * 10^precision / divisor  +
+      //                10^precision/2 / 10^precision
+      //            = ((dividend % divisor) * 10^precision  +  divisor) /
+      //                divisor
       quotient.fractional (ACE_static_cast (ACE_UINT32,
-       dividend % divisor * field / divisor));
+        dividend % divisor * field / divisor));
     }
   else
     {
