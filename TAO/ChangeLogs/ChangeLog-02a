@@ -1,3 +1,8 @@
+Sun Apr 22 19:54:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TAO.dsp:
+          Update list of files.
+
 Sun Apr 22 19:32:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:

@@ -511,10 +511,6 @@ SOURCE=.\Marshal.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Message_Sent_Callback.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Messaging_ORBInitializer.cpp
 # End Source File
 # Begin Source File
@@ -856,6 +852,10 @@ SOURCE=.\Transport_Descriptor_Interface.cpp
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Timer.cpp
 # End Source File
 # Begin Source File
 
@@ -1291,14 +1291,6 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Message_Sent_Callback.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Message_Sent_Callback.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Messaging_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -1704,6 +1696,10 @@ SOURCE=.\Transport_Descriptor_Interface.h
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Timer.h
 # End Source File
 # Begin Source File
 
