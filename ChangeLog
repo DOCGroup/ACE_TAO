@@ -1,3 +1,7 @@
+Wed Apr 18 02:08:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Synch/proc_sema.dsp:  Fixed release build settings.
+
 Tue Apr 17 12:33:49 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.cpp (open_i): If the caller supplies a
