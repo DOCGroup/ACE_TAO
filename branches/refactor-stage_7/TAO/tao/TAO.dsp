@@ -262,10 +262,6 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
@@ -538,10 +534,6 @@ SOURCE=.\Incoming_Message_Queue.cpp
 # Begin Source File
 
 SOURCE=.\Interceptor_List.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -855,10 +847,6 @@ SOURCE=.\Remote_Invocation.cpp
 # Begin Source File
 
 SOURCE=.\Remote_Object_Proxy_Broker.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Remote_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -1227,10 +1215,6 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ClientRequestInfo.h
 # End Source File
 # Begin Source File
@@ -1528,10 +1512,6 @@ SOURCE=.\Incoming_Message_Queue.h
 # Begin Source File
 
 SOURCE=.\Interceptor_List.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1864,10 +1844,6 @@ SOURCE=.\Remote_Invocation.h
 # Begin Source File
 
 SOURCE=.\Remote_Object_Proxy_Broker.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Remote_Object_Proxy_Impl.h
 # End Source File
 # Begin Source File
 
@@ -2235,10 +2211,6 @@ SOURCE=.\Cleanup_Func_Registry.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\ClientRequestInfo_i.inl
 # End Source File
 # Begin Source File
@@ -2448,10 +2420,6 @@ SOURCE=.\Incoming_Message_Queue.inl
 # Begin Source File
 
 SOURCE=.\Interceptor_List.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File
 

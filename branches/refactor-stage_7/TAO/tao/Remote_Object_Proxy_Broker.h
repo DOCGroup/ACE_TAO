@@ -55,7 +55,7 @@ namespace TAO
       ACE_ENV_ARG_DECL
     );
 
-  virtual CORBA::Object_ptr _get_component (const CORBA::Object_ptr target
+  virtual CORBA::Object_ptr _get_component (CORBA::Object_ptr target
                                             ACE_ENV_ARG_DECL);
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
