@@ -6,27 +6,32 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 ## Makefile.adainset.am 
 
-BUILT_SOURCES = \
+if !BUILD_USES_WCHAR
+
+BUILT_SOURCES += \
   ada.cpp
 
-CLEANFILES = \
+CLEANFILES += \
   ada.cpp \
   ada-stamp
 
 ada.cpp: ada-stamp
 
 ada-stamp: $(srcdir)/ada.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf> $@
+	../src/gperf -a -k1,4,$$ $(srcdir)/ada.gperf> $@
 	@touch $@
 
-noinst_PROGRAMS = aout
+noinst_PROGRAMS += aout
 
 aout_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -37,9 +42,13 @@ aout_SOURCES = \
   test.cpp
 
 aout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.cinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   c.cpp
@@ -51,7 +60,7 @@ CLEANFILES += \
 c.cpp: c-stamp
 
 c-stamp: $(srcdir)/c.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf> $@
+	../src/gperf -a -p -c -l -S1 -o $(srcdir)/c.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += cout
@@ -65,9 +74,13 @@ cout_SOURCES = \
   test.cpp
 
 cout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.cppinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   cpp.cpp
@@ -79,7 +92,7 @@ CLEANFILES += \
 cpp.cpp: cpp-stamp
 
 cpp-stamp: $(srcdir)/cpp.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -D $(srcdir)/cpp.gperf> $@
+	../src/gperf -a -D $(srcdir)/cpp.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += cppout
@@ -93,9 +106,13 @@ cppout_SOURCES = \
   test.cpp
 
 cppout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.iinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   idl.cpp
@@ -107,7 +124,7 @@ CLEANFILES += \
 idl.cpp: idl-stamp
 
 idl-stamp: $(srcdir)/idl.gperf
-	$(top_builddir)/apps/gperf/src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf> $@
+	../src/gperf -m -M -c -C -D -S1 -E -T -a -o -p $(srcdir)/idl.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += iout
@@ -121,9 +138,13 @@ iout_SOURCES = \
   test.cpp
 
 iout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.iinset2.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   idl.cpp
@@ -135,7 +156,7 @@ CLEANFILES += \
 idl.cpp: idl-stamp
 
 idl-stamp: $(srcdir)/idl.gperf
-	$(top_builddir)/apps/gperf/src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf> $@
+	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += iout2
@@ -149,9 +170,13 @@ iout2_SOURCES = \
   test.cpp
 
 iout2_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.m3inset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   modula3.cpp
@@ -163,7 +188,7 @@ CLEANFILES += \
 modula3.cpp: modula3-stamp
 
 modula3-stamp: $(srcdir)/modula3.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf> $@
+	../src/gperf -a -k1,2,$$ $(srcdir)/modula3.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += m3out
@@ -177,9 +202,13 @@ m3out_SOURCES = \
   test.cpp
 
 m3out_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.pinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   pascal.cpp
@@ -191,7 +220,7 @@ CLEANFILES += \
 pascal.cpp: pascal-stamp
 
 pascal-stamp: $(srcdir)/pascal.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf> $@
+	../src/gperf -a -o -S2 -p $(srcdir)/pascal.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += pout
@@ -205,9 +234,13 @@ pout_SOURCES = \
   test.cpp
 
 pout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.preinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   adadefs.cpp
@@ -219,7 +252,7 @@ CLEANFILES += \
 adadefs.cpp: adadefs-stamp
 
 adadefs-stamp: $(srcdir)/adadefs.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf> $@
+	../src/gperf -a -p -D -k1,$$ -s 2 -o $(srcdir)/adadefs.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += preout
@@ -233,9 +266,13 @@ preout_SOURCES = \
   test.cpp
 
 preout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.taoinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   tao.cpp
@@ -247,7 +284,7 @@ CLEANFILES += \
 tao.cpp: tao-stamp
 
 tao-stamp: $(srcdir)/tao.gperf
-	$(top_builddir)/apps/gperf/src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf> $@
+	../src/gperf -c -C -D -E -f 0 -a -o $(srcdir)/tao.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += taoout
@@ -261,9 +298,13 @@ taoout_SOURCES = \
   test.cpp
 
 taoout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Makefile.tinset.am 
+
+if !BUILD_USES_WCHAR
 
 BUILT_SOURCES += \
   corba.cpp
@@ -275,7 +316,7 @@ CLEANFILES += \
 corba.cpp: corba-stamp
 
 corba-stamp: $(srcdir)/corba.gperf
-	$(top_builddir)/apps/gperf/src/gperf -a -o $(srcdir)/corba.gperf> $@
+	../src/gperf -a -o $(srcdir)/corba.gperf> $@
 	@touch $@
 
 noinst_PROGRAMS += tout
@@ -289,10 +330,14 @@ tout_SOURCES = \
   test.cpp
 
 tout_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

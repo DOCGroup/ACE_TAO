@@ -6,16 +6,13 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-includedir = @includedir@/ace/TMCast
-
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
-
 ## Makefile.TMCast.am 
 
 if BUILD_EXCEPTIONS
@@ -29,13 +26,11 @@ libTMCast_la_CPPFLAGS = \
 
 libTMCast_la_SOURCES = \
   Group.cpp \
+  MTQueue.cpp \
   Protocol.cpp
 
-libTMCast_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
-
 libTMCast_la_LIBADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
 
 nobase_include_HEADERS += \
   Export.hpp \
@@ -53,6 +48,8 @@ endif BUILD_EXCEPTIONS
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

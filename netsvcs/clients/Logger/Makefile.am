@@ -6,15 +6,17 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+
+ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 ## Makefile.direct_logging.am 
 noinst_PROGRAMS = direct_logging
 
 direct_logging_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 direct_logging_SOURCES = \
   direct_logging.cpp
@@ -26,9 +28,8 @@ direct_logging_LDADD = \
 noinst_PROGRAMS += indirect_logging
 
 indirect_logging_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 indirect_logging_SOURCES = \
   indirect_logging.cpp
@@ -38,6 +39,8 @@ indirect_logging_LDADD = \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

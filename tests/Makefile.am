@@ -6,24 +6,27 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
+ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
+        HTBP \
         . \
-        RMCast
-
-#	SSL
+        RMCast \
+        SSL
 
 noinst_PROGRAMS =
 ## Makefile.Test_Output.am 
+
+noinst_SCRIPTS = run_test.lst run_test.pl
+
 noinst_LTLIBRARIES = libTest_Output.la
 
 libTest_Output_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DTEST_OUTPUT_BUILD_DLL
 
 libTest_Output_la_SOURCES = \
@@ -40,9 +43,8 @@ noinst_HEADERS = \
 noinst_PROGRAMS += ACE_Init_Test
 
 ACE_Init_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 ACE_Init_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -56,9 +58,8 @@ ACE_Init_Test_LDADD = \
 noinst_PROGRAMS += ACE_Test
 
 ACE_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 ACE_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -71,9 +72,8 @@ ACE_Test_LDADD = \
 noinst_PROGRAMS += ARGV_Test
 
 ARGV_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 ARGV_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -86,9 +86,8 @@ ARGV_Test_LDADD = \
 noinst_PROGRAMS += Aio_Platform_Test
 
 Aio_Platform_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Aio_Platform_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -101,9 +100,8 @@ Aio_Platform_Test_LDADD = \
 noinst_PROGRAMS += Arg_Shifter_Test
 
 Arg_Shifter_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Arg_Shifter_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -116,9 +114,8 @@ Arg_Shifter_Test_LDADD = \
 noinst_PROGRAMS += Atomic_Op_Test
 
 Atomic_Op_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Atomic_Op_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -131,9 +128,8 @@ Atomic_Op_Test_LDADD = \
 noinst_PROGRAMS += Auto_IncDec_Test
 
 Auto_IncDec_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Auto_IncDec_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -146,9 +142,8 @@ Auto_IncDec_Test_LDADD = \
 noinst_PROGRAMS += Barrier_Test
 
 Barrier_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Barrier_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -161,9 +156,8 @@ Barrier_Test_LDADD = \
 noinst_PROGRAMS += Basic_Types_Test
 
 Basic_Types_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Basic_Types_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -176,9 +170,8 @@ Basic_Types_Test_LDADD = \
 noinst_PROGRAMS += Bound_Ptr_Test
 
 Bound_Ptr_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Bound_Ptr_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -192,9 +185,8 @@ Bound_Ptr_Test_LDADD = \
 noinst_PROGRAMS += Buffer_Stream_Test
 
 Buffer_Stream_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Buffer_Stream_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -207,9 +199,8 @@ Buffer_Stream_Test_LDADD = \
 noinst_PROGRAMS += Bug_1576_Regression_Test
 
 Bug_1576_Regression_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Bug_1576_Regression_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -222,9 +213,8 @@ Bug_1576_Regression_Test_LDADD = \
 noinst_PROGRAMS += CDR_Array_Test
 
 CDR_Array_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 CDR_Array_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -237,9 +227,8 @@ CDR_Array_Test_LDADD = \
 noinst_PROGRAMS += CDR_File_Test
 
 CDR_File_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 CDR_File_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -254,9 +243,8 @@ CDR_File_Test_LDADD = \
 noinst_PROGRAMS += CDR_Test
 
 CDR_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 CDR_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -269,9 +257,8 @@ CDR_Test_LDADD = \
 noinst_PROGRAMS += Cache_Map_Manager_Test
 
 Cache_Map_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Cache_Map_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -285,9 +272,8 @@ Cache_Map_Manager_Test_LDADD = \
 noinst_PROGRAMS += Cached_Accept_Conn_Test
 
 Cached_Accept_Conn_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Cached_Accept_Conn_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -301,9 +287,8 @@ Cached_Accept_Conn_Test_LDADD = \
 noinst_PROGRAMS += Cached_Allocator_Test
 
 Cached_Allocator_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Cached_Allocator_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -316,9 +301,8 @@ Cached_Allocator_Test_LDADD = \
 noinst_PROGRAMS += Cached_Conn_Test
 
 Cached_Conn_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Cached_Conn_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -332,9 +316,8 @@ Cached_Conn_Test_LDADD = \
 noinst_PROGRAMS += Capabilities_Test
 
 Capabilities_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Capabilities_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -349,9 +332,8 @@ if BUILD_ACE_CODECS
 noinst_PROGRAMS += Codecs_Test
 
 Codecs_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Codecs_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -366,9 +348,8 @@ endif BUILD_ACE_CODECS
 noinst_PROGRAMS += Collection_Test
 
 Collection_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Collection_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -382,9 +363,8 @@ Collection_Test_LDADD = \
 noinst_PROGRAMS += Config_Test
 
 Config_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Config_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -398,9 +378,8 @@ Config_Test_LDADD = \
 noinst_PROGRAMS += Conn_Test
 
 Conn_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Conn_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -414,9 +393,8 @@ Conn_Test_LDADD = \
 noinst_PROGRAMS += DLL_Test
 
 DLL_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 DLL_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -427,18 +405,17 @@ DLL_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
 ## Makefile.DLL_Test_Lib.am 
-noinst_LTLIBRARIES += $(top_builddir)/lib/libDLL_Test.la
+noinst_LTLIBRARIES += libDLL_Test.la
 
-__top_builddir__lib_libDLL_Test_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+libDLL_Test_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DACE_BUILD_SVC_DLL
 
-__top_builddir__lib_libDLL_Test_la_SOURCES = \
+libDLL_Test_la_SOURCES = \
   DLL_Test_Impl.cpp
 
-__top_builddir__lib_libDLL_Test_la_LIBADD = \
+libDLL_Test_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS += \
@@ -449,9 +426,8 @@ noinst_HEADERS += \
 noinst_PROGRAMS += DLList_Test
 
 DLList_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 DLList_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -464,9 +440,8 @@ DLList_Test_LDADD = \
 noinst_PROGRAMS += Date_Time_Test
 
 Date_Time_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Date_Time_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -479,9 +454,8 @@ Date_Time_Test_LDADD = \
 noinst_PROGRAMS += Dev_Poll_Reactor_Test
 
 Dev_Poll_Reactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Dev_Poll_Reactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -494,9 +468,8 @@ Dev_Poll_Reactor_Test_LDADD = \
 noinst_PROGRAMS += Dirent_Test
 
 Dirent_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Dirent_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -509,9 +482,8 @@ Dirent_Test_LDADD = \
 noinst_PROGRAMS += Dynamic_Priority_Test
 
 Dynamic_Priority_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Dynamic_Priority_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -524,9 +496,8 @@ Dynamic_Priority_Test_LDADD = \
 noinst_PROGRAMS += Enum_Interfaces_Test
 
 Enum_Interfaces_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Enum_Interfaces_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -539,9 +510,8 @@ Enum_Interfaces_Test_LDADD = \
 noinst_PROGRAMS += Env_Value_Test
 
 Env_Value_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Env_Value_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -554,9 +524,8 @@ Env_Value_Test_LDADD = \
 noinst_PROGRAMS += FIFO_Test
 
 FIFO_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 FIFO_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -571,9 +540,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += FlReactor_Test
 
 FlReactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 FlReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -585,18 +553,17 @@ FlReactor_Test_LDADD = \
 endif BUILD_ACE_OTHER
 
 ## Makefile.Framework_Component_DLL.am 
-noinst_LTLIBRARIES += $(top_builddir)/lib/libFramework_Component_DLL.la
+noinst_LTLIBRARIES += libFramework_Component_DLL.la
 
-__top_builddir__lib_libFramework_Component_DLL_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+libFramework_Component_DLL_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DFRAMEWORK_COMPONENT_DLL_BUILD_DLL
 
-__top_builddir__lib_libFramework_Component_DLL_la_SOURCES = \
+libFramework_Component_DLL_la_SOURCES = \
   Framework_Component_DLL.cpp
 
-__top_builddir__lib_libFramework_Component_DLL_la_LIBADD = \
+libFramework_Component_DLL_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS += \
@@ -607,9 +574,8 @@ noinst_HEADERS += \
 noinst_PROGRAMS += Framework_Component_Test
 
 Framework_Component_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Framework_Component_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -623,9 +589,8 @@ Framework_Component_Test_LDADD = \
 noinst_PROGRAMS += Future_Set_Test
 
 Future_Set_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Future_Set_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -638,9 +603,8 @@ Future_Set_Test_LDADD = \
 noinst_PROGRAMS += Future_Test
 
 Future_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Future_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -653,9 +617,8 @@ Future_Test_LDADD = \
 noinst_PROGRAMS += Get_Opt_Test
 
 Get_Opt_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Get_Opt_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -668,9 +631,8 @@ Get_Opt_Test_LDADD = \
 noinst_PROGRAMS += Handle_Set_Test
 
 Handle_Set_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Handle_Set_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -683,9 +645,8 @@ Handle_Set_Test_LDADD = \
 noinst_PROGRAMS += Hash_Map_Bucket_Iterator_Test
 
 Hash_Map_Bucket_Iterator_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Hash_Map_Bucket_Iterator_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -698,9 +659,8 @@ Hash_Map_Bucket_Iterator_Test_LDADD = \
 noinst_PROGRAMS += Hash_Map_Manager_Test
 
 Hash_Map_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Hash_Map_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -713,9 +673,8 @@ Hash_Map_Manager_Test_LDADD = \
 noinst_PROGRAMS += High_Res_Timer_Test
 
 High_Res_Timer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 High_Res_Timer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -728,9 +687,8 @@ High_Res_Timer_Test_LDADD = \
 noinst_PROGRAMS += INET_Addr_Test
 
 INET_Addr_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 INET_Addr_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -743,9 +701,8 @@ INET_Addr_Test_LDADD = \
 noinst_PROGRAMS += INET_Addr_Test_IPV6
 
 INET_Addr_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 INET_Addr_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -758,9 +715,8 @@ INET_Addr_Test_IPV6_LDADD = \
 noinst_PROGRAMS += IOStream_Test
 
 IOStream_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 IOStream_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -773,9 +729,8 @@ IOStream_Test_LDADD = \
 noinst_PROGRAMS += Lazy_Map_Manager_Test
 
 Lazy_Map_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Lazy_Map_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -788,9 +743,8 @@ Lazy_Map_Manager_Test_LDADD = \
 noinst_PROGRAMS += Log_Msg_Test
 
 Log_Msg_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Log_Msg_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -803,9 +757,8 @@ Log_Msg_Test_LDADD = \
 noinst_PROGRAMS += Logging_Strategy_Test
 
 Logging_Strategy_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Logging_Strategy_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -818,9 +771,8 @@ Logging_Strategy_Test_LDADD = \
 noinst_PROGRAMS += MEM_Stream_Test
 
 MEM_Stream_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MEM_Stream_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -834,9 +786,8 @@ MEM_Stream_Test_LDADD = \
 noinst_PROGRAMS += MM_Shared_Memory_Test
 
 MM_Shared_Memory_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MM_Shared_Memory_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -849,9 +800,8 @@ MM_Shared_Memory_Test_LDADD = \
 noinst_PROGRAMS += MT_Reactor_Timer_Test
 
 MT_Reactor_Timer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MT_Reactor_Timer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -865,9 +815,8 @@ MT_Reactor_Timer_Test_LDADD = \
 noinst_PROGRAMS += MT_Reactor_Upcall_Test
 
 MT_Reactor_Upcall_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MT_Reactor_Upcall_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -880,9 +829,8 @@ MT_Reactor_Upcall_Test_LDADD = \
 noinst_PROGRAMS += MT_Reference_Counted_Event_Handler_Test
 
 MT_Reference_Counted_Event_Handler_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MT_Reference_Counted_Event_Handler_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -895,9 +843,8 @@ MT_Reference_Counted_Event_Handler_Test_LDADD = \
 noinst_PROGRAMS += MT_Reference_Counted_Notify_Test
 
 MT_Reference_Counted_Notify_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MT_Reference_Counted_Notify_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -910,9 +857,8 @@ MT_Reference_Counted_Notify_Test_LDADD = \
 noinst_PROGRAMS += MT_SOCK_Test
 
 MT_SOCK_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 MT_SOCK_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -925,9 +871,8 @@ MT_SOCK_Test_LDADD = \
 noinst_PROGRAMS += Malloc_Test
 
 Malloc_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Malloc_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -941,9 +886,8 @@ Malloc_Test_LDADD = \
 noinst_PROGRAMS += Map_Manager_Test
 
 Map_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Map_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -956,9 +900,8 @@ Map_Manager_Test_LDADD = \
 noinst_PROGRAMS += Map_Test
 
 Map_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Map_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -972,9 +915,8 @@ Map_Test_LDADD = \
 noinst_PROGRAMS += Max_Default_Port_Test
 
 Max_Default_Port_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Max_Default_Port_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -988,9 +930,8 @@ Max_Default_Port_Test_LDADD = \
 noinst_PROGRAMS += Max_Default_Port_Test_IPV6
 
 Max_Default_Port_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Max_Default_Port_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1003,9 +944,8 @@ Max_Default_Port_Test_IPV6_LDADD = \
 noinst_PROGRAMS += Mem_Map_Test
 
 Mem_Map_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Mem_Map_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1018,9 +958,8 @@ Mem_Map_Test_LDADD = \
 noinst_PROGRAMS += Message_Block_Test
 
 Message_Block_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Message_Block_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1033,9 +972,8 @@ Message_Block_Test_LDADD = \
 noinst_PROGRAMS += Message_Queue_Notifications_Test
 
 Message_Queue_Notifications_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Message_Queue_Notifications_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1048,9 +986,8 @@ Message_Queue_Notifications_Test_LDADD = \
 noinst_PROGRAMS += Message_Queue_Test
 
 Message_Queue_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Message_Queue_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1063,9 +1000,8 @@ Message_Queue_Test_LDADD = \
 noinst_PROGRAMS += Message_Queue_Test_Ex
 
 Message_Queue_Test_Ex_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Message_Queue_Test_Ex_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1079,9 +1015,8 @@ Message_Queue_Test_Ex_LDADD = \
 noinst_PROGRAMS += Multicast_Test
 
 Multicast_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Multicast_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1094,9 +1029,8 @@ Multicast_Test_LDADD = \
 noinst_PROGRAMS += Multicast_Test_IPV6
 
 Multicast_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Multicast_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1109,9 +1043,8 @@ Multicast_Test_IPV6_LDADD = \
 noinst_PROGRAMS += Multihomed_INET_Addr_Test
 
 Multihomed_INET_Addr_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Multihomed_INET_Addr_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1124,9 +1057,8 @@ Multihomed_INET_Addr_Test_LDADD = \
 noinst_PROGRAMS += Multihomed_INET_Addr_Test_IPV6
 
 Multihomed_INET_Addr_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Multihomed_INET_Addr_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1141,9 +1073,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += Naming_Test
 
 Naming_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Naming_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1158,9 +1089,8 @@ endif BUILD_ACE_OTHER
 noinst_PROGRAMS += Network_Adapters_Test
 
 Network_Adapters_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Network_Adapters_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1174,9 +1104,8 @@ Network_Adapters_Test_LDADD = \
 noinst_PROGRAMS += New_Fail_Test
 
 New_Fail_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 New_Fail_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1189,9 +1118,8 @@ New_Fail_Test_LDADD = \
 noinst_PROGRAMS += NonBlocking_Conn_Test
 
 NonBlocking_Conn_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 NonBlocking_Conn_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1205,9 +1133,8 @@ NonBlocking_Conn_Test_LDADD = \
 noinst_PROGRAMS += Notify_Performance_Test
 
 Notify_Performance_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Notify_Performance_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1220,9 +1147,8 @@ Notify_Performance_Test_LDADD = \
 noinst_PROGRAMS += OS_Test
 
 OS_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 OS_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1235,9 +1161,8 @@ OS_Test_LDADD = \
 noinst_PROGRAMS += Object_Manager_Test
 
 Object_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Object_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1250,9 +1175,8 @@ Object_Manager_Test_LDADD = \
 noinst_PROGRAMS += Obstack_Test
 
 Obstack_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Obstack_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1265,9 +1189,8 @@ Obstack_Test_LDADD = \
 noinst_PROGRAMS += OrdMultiSet_Test
 
 OrdMultiSet_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 OrdMultiSet_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1280,9 +1203,8 @@ OrdMultiSet_Test_LDADD = \
 noinst_PROGRAMS += Pipe_Test
 
 Pipe_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Pipe_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1295,9 +1217,8 @@ Pipe_Test_LDADD = \
 noinst_PROGRAMS += Priority_Buffer_Test
 
 Priority_Buffer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Priority_Buffer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1310,9 +1231,8 @@ Priority_Buffer_Test_LDADD = \
 noinst_PROGRAMS += Priority_Reactor_Test
 
 Priority_Reactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Priority_Reactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1326,9 +1246,8 @@ Priority_Reactor_Test_LDADD = \
 noinst_PROGRAMS += Priority_Task_Test
 
 Priority_Task_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Priority_Task_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1341,9 +1260,8 @@ Priority_Task_Test_LDADD = \
 noinst_PROGRAMS += Proactor_Scatter_Gather_Test
 
 Proactor_Scatter_Gather_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Proactor_Scatter_Gather_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1356,9 +1274,8 @@ Proactor_Scatter_Gather_Test_LDADD = \
 noinst_PROGRAMS += Proactor_Test
 
 Proactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Proactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1372,9 +1289,8 @@ Proactor_Test_LDADD = \
 noinst_PROGRAMS += Proactor_Test_IPV6
 
 Proactor_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Proactor_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1387,9 +1303,8 @@ Proactor_Test_IPV6_LDADD = \
 noinst_PROGRAMS += Proactor_Timer_Test
 
 Proactor_Timer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Proactor_Timer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1402,9 +1317,8 @@ Proactor_Timer_Test_LDADD = \
 noinst_PROGRAMS += Process_Manager_Test
 
 Process_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Process_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1417,9 +1331,8 @@ Process_Manager_Test_LDADD = \
 noinst_PROGRAMS += Process_Mutex_Test
 
 Process_Mutex_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Process_Mutex_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1432,9 +1345,8 @@ Process_Mutex_Test_LDADD = \
 noinst_PROGRAMS += Process_Strategy_Test
 
 Process_Strategy_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Process_Strategy_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1448,9 +1360,8 @@ Process_Strategy_Test_LDADD = \
 noinst_PROGRAMS += RB_Tree_Test
 
 RB_Tree_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 RB_Tree_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1464,9 +1375,8 @@ RB_Tree_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Dispatch_Order_Test
 
 Reactor_Dispatch_Order_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Dispatch_Order_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1479,9 +1389,8 @@ Reactor_Dispatch_Order_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Exceptions_Test
 
 Reactor_Exceptions_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Exceptions_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1494,9 +1403,8 @@ Reactor_Exceptions_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Notification_Queue_Test
 
 Reactor_Notification_Queue_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Notification_Queue_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1509,9 +1417,8 @@ Reactor_Notification_Queue_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Notify_Test
 
 Reactor_Notify_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Notify_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1524,9 +1431,8 @@ Reactor_Notify_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Performance_Test
 
 Reactor_Performance_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Performance_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1540,9 +1446,8 @@ Reactor_Performance_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Registration_Test
 
 Reactor_Registration_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Registration_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1555,9 +1460,8 @@ Reactor_Registration_Test_LDADD = \
 noinst_PROGRAMS += Reactor_Timer_Test
 
 Reactor_Timer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactor_Timer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1570,9 +1474,8 @@ Reactor_Timer_Test_LDADD = \
 noinst_PROGRAMS += Reactors_Test
 
 Reactors_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reactors_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1585,9 +1488,8 @@ Reactors_Test_LDADD = \
 noinst_PROGRAMS += Reader_Writer_Test
 
 Reader_Writer_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reader_Writer_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1600,9 +1502,8 @@ Reader_Writer_Test_LDADD = \
 noinst_PROGRAMS += Recursive_Condition_Bug_Test
 
 Recursive_Condition_Bug_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Recursive_Condition_Bug_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1615,9 +1516,8 @@ Recursive_Condition_Bug_Test_LDADD = \
 noinst_PROGRAMS += Recursive_Condition_Test
 
 Recursive_Condition_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Recursive_Condition_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1630,9 +1530,8 @@ Recursive_Condition_Test_LDADD = \
 noinst_PROGRAMS += Recursive_Mutex_Test
 
 Recursive_Mutex_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Recursive_Mutex_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1645,9 +1544,8 @@ Recursive_Mutex_Test_LDADD = \
 noinst_PROGRAMS += Refcounted_Auto_Ptr_Test
 
 Refcounted_Auto_Ptr_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Refcounted_Auto_Ptr_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1661,9 +1559,8 @@ Refcounted_Auto_Ptr_Test_LDADD = \
 noinst_PROGRAMS += Reference_Counted_Event_Handler_Test
 
 Reference_Counted_Event_Handler_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reference_Counted_Event_Handler_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1676,9 +1573,8 @@ Reference_Counted_Event_Handler_Test_LDADD = \
 noinst_PROGRAMS += Reverse_Lock_Test
 
 Reverse_Lock_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Reverse_Lock_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1691,9 +1587,8 @@ Reverse_Lock_Test_LDADD = \
 noinst_PROGRAMS += SOCK_Connector_Test
 
 SOCK_Connector_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Connector_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1706,9 +1601,8 @@ SOCK_Connector_Test_LDADD = \
 noinst_PROGRAMS += SOCK_Dgram_Bcast_Test
 
 SOCK_Dgram_Bcast_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Dgram_Bcast_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1721,9 +1615,8 @@ SOCK_Dgram_Bcast_Test_LDADD = \
 noinst_PROGRAMS += SOCK_Dgram_Test
 
 SOCK_Dgram_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Dgram_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1732,13 +1625,26 @@ SOCK_Dgram_Test_SOURCES = \
 SOCK_Dgram_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
+## Makefile.SOCK_SEQPACK_SCTP_Test.am 
+noinst_PROGRAMS += SOCK_SEQPACK_SCTP_Test
+
+SOCK_SEQPACK_SCTP_Test_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
+
+SOCK_SEQPACK_SCTP_Test_SOURCES = \
+  $(ACE_ROOT)/tests/Main.cpp \
+  SOCK_SEQPACK_SCTP_Test.cpp
+
+SOCK_SEQPACK_SCTP_Test_LDADD = \
+ libTest_Output.la $(top_builddir)/ace/libACE.la
+
 ## Makefile.SOCK_Send_Recv_Test.am 
 noinst_PROGRAMS += SOCK_Send_Recv_Test
 
 SOCK_Send_Recv_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Send_Recv_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1751,9 +1657,8 @@ SOCK_Send_Recv_Test_LDADD = \
 noinst_PROGRAMS += SOCK_Send_Recv_Test_IPV6
 
 SOCK_Send_Recv_Test_IPV6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Send_Recv_Test_IPV6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1766,9 +1671,8 @@ SOCK_Send_Recv_Test_IPV6_LDADD = \
 noinst_PROGRAMS += SOCK_Test
 
 SOCK_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1781,9 +1685,8 @@ SOCK_Test_LDADD = \
 noinst_PROGRAMS += SOCK_Test_IPv6
 
 SOCK_Test_IPv6_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SOCK_Test_IPv6_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1796,9 +1699,8 @@ SOCK_Test_IPv6_LDADD = \
 noinst_PROGRAMS += SPIPE_Test
 
 SPIPE_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SPIPE_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1811,9 +1713,8 @@ SPIPE_Test_LDADD = \
 noinst_PROGRAMS += SString_Test
 
 SString_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SString_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1826,9 +1727,8 @@ SString_Test_LDADD = \
 noinst_PROGRAMS += SV_Shared_Memory_Test
 
 SV_Shared_Memory_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 SV_Shared_Memory_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1841,9 +1741,8 @@ SV_Shared_Memory_Test_LDADD = \
 noinst_PROGRAMS += Semaphore_Test
 
 Semaphore_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Semaphore_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1853,18 +1752,17 @@ Semaphore_Test_LDADD = \
  libTest_Output.la $(top_builddir)/ace/libACE.la
 
 ## Makefile.Service_Config_DLL.am 
-noinst_LTLIBRARIES += $(top_builddir)/lib/libService_Config_DLL.la
+noinst_LTLIBRARIES += libService_Config_DLL.la
 
-__top_builddir__lib_libService_Config_DLL_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir) \
+libService_Config_DLL_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
   -DSERVICE_CONFIG_DLL_BUILD_DLL
 
-__top_builddir__lib_libService_Config_DLL_la_SOURCES = \
+libService_Config_DLL_la_SOURCES = \
   Service_Config_DLL.cpp
 
-__top_builddir__lib_libService_Config_DLL_la_LIBADD = \
+libService_Config_DLL_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
 noinst_HEADERS += \
@@ -1875,9 +1773,8 @@ noinst_HEADERS += \
 noinst_PROGRAMS += Service_Config_Test
 
 Service_Config_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Service_Config_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1890,9 +1787,8 @@ Service_Config_Test_LDADD = \
 noinst_PROGRAMS += Signal_Test
 
 Signal_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Signal_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1905,9 +1801,8 @@ Signal_Test_LDADD = \
 noinst_PROGRAMS += Sigset_Ops_Test
 
 Sigset_Ops_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Sigset_Ops_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1920,9 +1815,8 @@ Sigset_Ops_Test_LDADD = \
 noinst_PROGRAMS += Simple_Message_Block_Test
 
 Simple_Message_Block_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Simple_Message_Block_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1935,9 +1829,8 @@ Simple_Message_Block_Test_LDADD = \
 noinst_PROGRAMS += Svc_Handler_Test
 
 Svc_Handler_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Svc_Handler_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1950,9 +1843,8 @@ Svc_Handler_Test_LDADD = \
 noinst_PROGRAMS += TP_Reactor_Test
 
 TP_Reactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 TP_Reactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1966,9 +1858,8 @@ TP_Reactor_Test_LDADD = \
 noinst_PROGRAMS += TSS_Static_Test
 
 TSS_Static_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 TSS_Static_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1981,9 +1872,8 @@ TSS_Static_Test_LDADD = \
 noinst_PROGRAMS += TSS_Test
 
 TSS_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 TSS_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -1996,9 +1886,8 @@ TSS_Test_LDADD = \
 noinst_PROGRAMS += Task_Ex_Test
 
 Task_Ex_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Task_Ex_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2012,9 +1901,8 @@ Task_Ex_Test_LDADD = \
 noinst_PROGRAMS += Task_Test
 
 Task_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Task_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2027,9 +1915,8 @@ Task_Test_LDADD = \
 noinst_PROGRAMS += Thread_Manager_Test
 
 Thread_Manager_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Thread_Manager_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2042,9 +1929,8 @@ Thread_Manager_Test_LDADD = \
 noinst_PROGRAMS += Thread_Mutex_Test
 
 Thread_Mutex_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Thread_Mutex_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2059,9 +1945,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += Thread_Pool_Reactor_Resume_Test
 
 Thread_Pool_Reactor_Resume_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Thread_Pool_Reactor_Resume_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2079,9 +1964,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += Thread_Pool_Reactor_Test
 
 Thread_Pool_Reactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Thread_Pool_Reactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2097,9 +1981,8 @@ endif BUILD_ACE_OTHER
 noinst_PROGRAMS += Thread_Pool_Test
 
 Thread_Pool_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Thread_Pool_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2112,9 +1995,8 @@ Thread_Pool_Test_LDADD = \
 noinst_PROGRAMS += Time_Service_Test
 
 Time_Service_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Time_Service_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2127,9 +2009,8 @@ Time_Service_Test_LDADD = \
 noinst_PROGRAMS += Time_Value_Test
 
 Time_Value_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Time_Value_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2142,9 +2023,8 @@ Time_Value_Test_LDADD = \
 noinst_PROGRAMS += Timeprobe_Test
 
 Timeprobe_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Timeprobe_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2157,9 +2037,8 @@ Timeprobe_Test_LDADD = \
 noinst_PROGRAMS += Timer_Cancellation_Test
 
 Timer_Cancellation_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Timer_Cancellation_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2172,9 +2051,8 @@ Timer_Cancellation_Test_LDADD = \
 noinst_PROGRAMS += Timer_Queue_Reference_Counting_Test
 
 Timer_Queue_Reference_Counting_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Timer_Queue_Reference_Counting_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2187,9 +2065,8 @@ Timer_Queue_Reference_Counting_Test_LDADD = \
 noinst_PROGRAMS += Timer_Queue_Test
 
 Timer_Queue_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Timer_Queue_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2204,9 +2081,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += TkReactor_Test
 
 TkReactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 TkReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2221,9 +2097,8 @@ endif BUILD_ACE_OTHER
 noinst_PROGRAMS += Token_Strategy_Test
 
 Token_Strategy_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Token_Strategy_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2238,9 +2113,8 @@ if BUILD_ACE_TOKEN
 noinst_PROGRAMS += Tokens_Test
 
 Tokens_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Tokens_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2255,9 +2129,8 @@ endif BUILD_ACE_TOKEN
 noinst_PROGRAMS += UPIPE_SAP_Test
 
 UPIPE_SAP_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 UPIPE_SAP_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2272,9 +2145,8 @@ if BUILD_ACE_UUID
 noinst_PROGRAMS += UUIDTest
 
 UUIDTest_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 UUIDTest_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2289,9 +2161,8 @@ endif BUILD_ACE_UUID
 noinst_PROGRAMS += Unbounded_Set_Test_Ex
 
 Unbounded_Set_Test_Ex_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Unbounded_Set_Test_Ex_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2305,9 +2176,8 @@ Unbounded_Set_Test_Ex_LDADD = \
 noinst_PROGRAMS += Upgradable_RW_Test
 
 Upgradable_RW_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Upgradable_RW_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2321,9 +2191,8 @@ Upgradable_RW_Test_LDADD = \
 noinst_PROGRAMS += Vector_Test
 
 Vector_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 Vector_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2336,9 +2205,8 @@ Vector_Test_LDADD = \
 noinst_PROGRAMS += WFMO_Reactor_Test
 
 WFMO_Reactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 WFMO_Reactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2353,9 +2221,8 @@ if BUILD_ACE_OTHER
 noinst_PROGRAMS += XtReactor_Test
 
 XtReactor_Test_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
-  -I$(top_srcdir)
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR)
 
 XtReactor_Test_SOURCES = \
   $(ACE_ROOT)/tests/Main.cpp \
@@ -2368,6 +2235,8 @@ endif BUILD_ACE_OTHER
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
