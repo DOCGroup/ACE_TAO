@@ -21,4 +21,15 @@
       <referencedArtifact href="Airframe_Exec.iad"/>
     </primaryArtifact>
   </monolithicImpl>
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>BMClosedED.ior</string>
+      </value>
+    </value>
+  </configProperty>
 </Deployment:ComponentImplementationDescription>

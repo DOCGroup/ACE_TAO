@@ -8,19 +8,19 @@
   <UUID>effd4bd0-6db0-4c50-9bb7-db9decebae1c</UUID>
   <assemblyImpl>
     <instance xmi:id="a_GPS">
-      <name>GPS</name>
+      <name>BMDevice_Instance</name>
       <package href="GPS.cpd"/>
     </instance>
     <instance xmi:id="a_Airframe">
-      <name>RateGen</name>
+      <name>BMClosedED_Instance</name>
       <package href="Airframe.cpd"/>
     </instance>
     <instance xmi:id="a_NavDisplay">
-      <name>NavDisplay</name>
+      <name>BMDisplay_Instance</name>
       <package href="NavDisplay.cpd"/>
     </instance>
     <instance xmi:id="a_Timer">
-      <name>Timer</name>
+      <name>EC_Instance</name>
       <package href="Timer.cpd"/>
     </instance>
     <connection>
@@ -54,6 +54,17 @@
       <internalEndpoint>
         <portName>data_read</portName>
         <instance xmi:idref="a_GPS"/>
+      </internalEndpoint>
+    </connection>
+    <connection>
+      <name>Airframe_NavDisplay</name>
+      <internalEndpoint>
+        <portName>data_ready</portName>
+        <instance xmi:idref="a_NavDisplay"/>
+      </internalEndpoint>
+      <internalEndpoint>
+        <portName>out_avail</portName>
+        <instance xmi:idref="a_Airframe"/>
       </internalEndpoint>
     </connection>
     <connection>

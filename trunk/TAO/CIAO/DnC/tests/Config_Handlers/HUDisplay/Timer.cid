@@ -32,4 +32,15 @@
       </value>
     </value>
   </configProperty>
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>EC.ior</string>
+      </value>
+    </value>
+  </configProperty>
 </Deployment:ComponentImplementationDescription>

@@ -1,3 +1,27 @@
+Thu Jun 17 16:00:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Airframe_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/GPS_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cdp:
+        * DnC/tests/Config_Handlers/HUDisplay/HUDisplay.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/Libraries.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/NavDisplay_Svnt.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer.cid:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Exec.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Stub.iad:
+        * DnC/tests/Config_Handlers/HUDisplay/Timer_Svnt.iad:
+
+          Updated the BasicSP scenario example descriptors.
+
 Thu Jun 17 13:24:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
