@@ -996,7 +996,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
   (const ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
@@ -1078,6 +1078,23 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
           dispatch_set.wr_mask_.sync (this->handler_rep_.max_handlep1 ());
           dispatch_set.ex_mask_.sync (this->handler_rep_.max_handlep1 ());
 #endif /* ACE_WIN32 */
+        }
+      elseif (number_of_active_handles == -1)
+        {
+          // Normally, select() will reset the bits in dispatch_set
+          // so that only those filed descriptors that are ready will
+          // have bits set.  However, when an error occurs, the bit
+          // set remains as it was when the select call was first made.
+          // Thus, we now have a dispatch_set that has every file
+          // descriptor that was originally waited for, which is not
+          // correct.  We must clear all the bit sets because we
+          // have no idea if any of the file descriptors is ready.
+          //
+          // NOTE: We dont have a test case to reproduce this
+          // problem. But pleae dont ignore this and remove it off.
+          dispatch_set.rd_mask_.reset ();
+          dispatch_set.wr_mask_.reset ();
+          dispatch_set.ex_mask_.reset ();
         }
     }
 
