@@ -922,6 +922,30 @@ EC_Driver::parse_args (int &argc, char *argv [])
             }
         }
 
+      else if (ACE_OS::strcmp (arg, "-busyhwm") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              this->busy_hwm_ =
+                ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcmp (arg, "-maxwritedelay") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              this->max_write_delay_ =
+                ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+            }
+        }
+
       else
         {
           arg_shifter.ignore_arg ();
@@ -952,12 +976,16 @@ EC_Driver::print_usage (void)
               "  -supplier_tstart <type>\n"
               "  -supplier_tcount <count>\n"
               "  -supplier_tshift <shift>\n"
+              "  -busy_hwm <value>\n"
+              "  -max_write_delay <value>\n"
               ));
 }
 
 void
-EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes&)
+EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes& attr)
 {
+  attr.busy_hwm = this->busy_hwm_;
+  attr.max_write_delay = this->max_write_delay_;
 }
 
 void

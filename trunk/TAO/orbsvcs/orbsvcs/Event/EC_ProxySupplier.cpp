@@ -218,7 +218,7 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
   this->deactivate (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Notify the event channel...
+  // Notify the event channel....
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
 
   this->_decr_refcnt ();
@@ -259,6 +259,9 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK_RETURN (0);
 
+    if (this->is_connected_i () == 0)
+      return 0;
+
     result =
       this->child_->filter (event, qos_info, ACE_TRY_ENV);
     if (this->refcount_ > 0)
@@ -281,6 +284,9 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK_RETURN (0);
+
+    if (this->is_connected_i () == 0)
+      return 0;
 
     result =
       this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
@@ -433,6 +439,9 @@ TAO_EC_ProxyPushSupplier::can_match (
       const RtecEventComm::EventHeader &header) const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+
+  if (this->is_connected_i () == 0)
+    return 0;
 
   return this->child_->can_match (header);
 }

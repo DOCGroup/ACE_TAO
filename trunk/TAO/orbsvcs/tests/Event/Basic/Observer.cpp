@@ -112,7 +112,15 @@ EC_Master::run (int argc, char* argv[])
           }
       }
 
-    }
+      {
+        for (int i = 0; i != this->n_channels_; ++i)
+          {
+            this->channels_[i]->run_cleanup (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
+      }
+
+   }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "EC_Driver::run");
@@ -173,7 +181,7 @@ EC_Master::parse_args (int &argc, char *argv [])
           arg_shifter.consume_arg ();
           this->seed_ = ACE_OS::atoi (arg_shifter.get_current ());
         }
-      
+
       arg_shifter.ignore_arg ();
     }
   return 0;
@@ -244,6 +252,13 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (i)->event_channel_;
 
+      this->gwys_[i].init (rmt_ec,
+                           this->event_channel_.in (),
+                           RtecScheduler::Scheduler::_nil (),
+                           RtecScheduler::Scheduler::_nil (),
+                           0, 0,
+                           ACE_TRY_ENV);
+
       RtecEventChannelAdmin::Observer_var obs =
         this->gwys_[i]._this (ACE_TRY_ENV);
       ACE_CHECK;
@@ -251,19 +266,26 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
       RtecEventChannelAdmin::Observer_Handle h =
         rmt_ec->append_observer (obs.in (), ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       this->gwys_[i].observer_handle (h);
 
-      this->gwys_[i].init (rmt_ec,
-                           this->event_channel_.in (),
-                           RtecScheduler::Scheduler::_nil (),
-                           RtecScheduler::Scheduler::_nil (),
-                           0, 0,
-                           ACE_TRY_ENV);
       ACE_CHECK;
     }
-  this->EC_Driver::execute_test (ACE_TRY_ENV);
 
+  if (this->allocate_tasks () == -1)
+    return;
+
+  this->activate_tasks (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Observer[%d] (%P|%t) suppliers are active\n",
+                this->id_));
+}
+
+void
+EC_Observer::run_cleanup (CORBA::Environment& ACE_TRY_ENV)
+{
   for (int j = 0; j != this->master_->channel_count (); ++j)
     {
       if (j == this->id_)
@@ -275,7 +297,7 @@ EC_Observer::execute_test (CORBA::Environment& ACE_TRY_ENV)
                                ACE_TRY_ENV);
       ACE_CHECK;
 
-      this->gwys_[j].close (ACE_TRY_ENV);
+      this->gwys_[j].shutdown (ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -300,7 +322,7 @@ EC_Observer::connect_consumer (
       return;
     }
   unsigned int x = ACE_OS::rand_r (this->seed_);
-  if (x < RAND_MAX / 2)
+  if (x < RAND_MAX / 8)
     this->EC_Driver::connect_consumer (consumer_admin, i,
                                        ACE_TRY_ENV);
 }
@@ -311,14 +333,20 @@ EC_Observer::consumer_push (void*,
                             CORBA::Environment& ACE_TRY_ENV)
 {
   unsigned int x = ACE_OS::rand_r (this->seed_);
-  if (x < RAND_MAX / 2)
+  if (x < (RAND_MAX / 64))
     {
+      if (this->verbose ())
+        ACE_DEBUG ((LM_DEBUG,
+                    "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
+
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers (ACE_TRY_ENV);
       ACE_CHECK;
 
-      for (int i = 0; i < this->n_consumers_; ++i)
+      for (int i = 1; i < this->n_consumers_; ++i)
         {
+          ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+
           if (this->consumers_[i]->connected ())
             {
               this->consumers_[i]->disconnect (ACE_TRY_ENV);

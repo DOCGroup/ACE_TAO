@@ -66,8 +66,8 @@ public:
   int supplier_reconnect;
   // Can consumers or suppliers invoke connect_push_* multiple times?
 
-  int consumer_admin_busy_hwm;
-  int consumer_admin_max_write_delay;
+  int busy_hwm;
+  int max_write_delay;
   // Flags for the Consumer Admin
 
   RtecScheduler::Scheduler_ptr scheduler;
@@ -197,6 +197,11 @@ public:
   RtecScheduler::Scheduler_ptr scheduler (void);
   // Obtain the scheduler, the user must release
 
+  int busy_hwm (void) const;
+  int max_write_delay (void) const;
+  // Control the concurrency of the delayed connect/disconnect
+  // operations.
+
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers (CORBA::Environment& env);
@@ -268,6 +273,11 @@ private:
   int consumer_reconnect_;
   int supplier_reconnect_;
   // Consumer/Supplier reconnection flags
+
+  int busy_hwm_;
+  int max_write_delay_;
+  // Control the level of concurrency in the supplier sets with
+  // delayed operations
 };
 
 #if defined (__ACE_INLINE__)

@@ -24,7 +24,9 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     factory_ (factory),
     own_factory_ (own_factory),
     consumer_reconnect_ (attr.consumer_reconnect),
-    supplier_reconnect_ (attr.supplier_reconnect)
+    supplier_reconnect_ (attr.supplier_reconnect),
+    busy_hwm_ (attr.busy_hwm),
+    max_write_delay_ (attr.max_write_delay)
 {
   if (this->factory_ == 0)
     {
@@ -60,10 +62,6 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
 
   this->scheduling_strategy_ =
     this->factory_->create_scheduling_strategy (this);
-
-  this->consumer_admin_->busy_hwm (attr.consumer_admin_busy_hwm);
-  this->consumer_admin_->max_write_delay (attr.consumer_admin_max_write_delay);
-
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)

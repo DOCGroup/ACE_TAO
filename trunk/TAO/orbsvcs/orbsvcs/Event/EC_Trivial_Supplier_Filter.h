@@ -61,6 +61,8 @@ public:
   virtual void shutdown (CORBA::Environment &env);
   virtual void push (const RtecEventComm::EventSet& event,
                      CORBA::Environment &);
+  virtual CORBA::ULong _decr_refcnt (void);
+  virtual CORBA::ULong _incr_refcnt (void);
 
 private:
   TAO_EC_Event_Channel *event_channel_;

@@ -6,8 +6,8 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
                                  PortableServer::POA_ptr c_poa)
   :  consumer_reconnect (0),
      supplier_reconnect (0),
-     consumer_admin_busy_hwm (1),
-     consumer_admin_max_write_delay (1),
+     busy_hwm (1),
+     max_write_delay (1),
      scheduler (RtecScheduler::Scheduler::_nil ()),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
@@ -168,4 +168,16 @@ ACE_INLINE RtecScheduler::Scheduler_ptr
 TAO_EC_Event_Channel::scheduler (void)
 {
   return RtecScheduler::Scheduler::_duplicate (this->scheduler_.in ());
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::busy_hwm (void) const
+{
+  return this->busy_hwm_;
+}
+
+ACE_INLINE int
+TAO_EC_Event_Channel::max_write_delay (void) const
+{
+  return this->max_write_delay_;
 }

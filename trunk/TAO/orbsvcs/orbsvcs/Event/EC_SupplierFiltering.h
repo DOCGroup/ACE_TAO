@@ -109,6 +109,11 @@ public:
                      CORBA::Environment &) = 0;
   // The ProxyPushConsumer delegates on this class to actually send
   // the event.
+
+  virtual CORBA::ULong _incr_refcnt (void) = 0;
+  virtual CORBA::ULong _decr_refcnt (void) = 0;
+  // Increment and decrement the reference count, locking must be
+  // provided by the user.
 };
 
 #if defined (__ACE_INLINE__)
