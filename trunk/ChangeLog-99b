@@ -1,3 +1,11 @@
+Tue Jun  1 23:17:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_cancel.cpp: 
+	* examples/Reactor/Proactor/README: 
+	* examples/Reactor/Proactor/Makefile:
+	Related to ChangeLog : Tue Jun  1 16:48:58 1999  Alexander Babu
+	Arulanthu  <alex@cs.wustl.edu> 
+				
 Tue Jun  1 21:44:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_linux_lxpthread.GNU:
