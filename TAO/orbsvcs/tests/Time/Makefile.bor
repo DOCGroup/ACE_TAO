@@ -1,8 +1,0 @@
-#
-# Makefile for building the time test
-#
-
-MAKEFILES = client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
-
