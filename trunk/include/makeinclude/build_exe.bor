@@ -14,6 +14,11 @@
 # UNICODE - if defined when building a unicode exe
 #
 
+# Check if the BASE_BINDIR variable was explicitly specified.
+!ifdef BASE_BINDIR
+EXPLICIT_BASE_BINDIR = 1
+!endif
+
 !include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
 !include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
 !include <$(ACE_ROOT)\include\makeinclude\compiler.bor>
@@ -23,11 +28,13 @@
 TARGET = $(BINDIR)\$(NAME).exe
 !endif
 !ifdef INSTALL_THIS_TARGET
-# We use a separate CORE_TARGET to copy the executable to the
-# core bin directory. This is so there will be a copy of the
-# exe file left in the local directory for the test scripts
-# to use.
+!ifndef EXPLICIT_BASE_BINDIR
+# Unless the BASE_BINDIR was explicitly specified, we use a separate
+# CORE_TARGET to copy the executable to the core bin directory. This
+# is so there will be a copy of the exe file left in the local
+# directory for the test scripts to use.
 CORE_TARGET = $(CORE_BINDIR)\$(NAME).exe
+!endif
 !endif
 !endif
 
@@ -88,8 +95,8 @@ USE_FULL_PATH = 1
 .cpp.obj:
 	@$(MAKE_OBJDIR)
 !ifdef USE_FULL_PATH
-	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
-	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
 !else
 	$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 !endif
@@ -97,8 +104,8 @@ USE_FULL_PATH = 1
 .c.obj:
 	@$(MAKE_OBJDIR)
 !ifdef USE_FULL_PATH
-	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
-	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$<
+	@for /F "delims=;" %i in ('cd') do @echo $(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
+	@for /F "delims=;" %i in ('cd') do @$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) %i\$(<:.\=)
 !else
 	$(CC) $(COMMON_CFLAGS) $(EXE_CFLAGS) $(CFLAGS) -c -n$(@D) $<
 !endif

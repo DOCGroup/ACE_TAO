@@ -1,3 +1,14 @@
+Mon Sep 30 09:33:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/outputdir.bor:
+          Add support for the 'install', 'dllout' and 'libpaths'
+          MakeProjectCreator settings in generated Borland makefiles.
+
 Mon Sep 30 13:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:

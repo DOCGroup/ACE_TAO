@@ -62,4 +62,5 @@ realclean:
 !ifdef CORE_TARGET
 	-@del $(CORE_TARGET) 2>NUL
 	-@del $(CORE_TARGET:.exe=.tds) 2>NUL
+	-@del $(CORE_TARGET:.dll=.tds) 2>NUL
 !endif
