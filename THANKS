@@ -706,6 +706,7 @@ Peter Mueller <pmueller@decrc.abb.de>
 Raghu Nambiath <raghun@wipinfo.soft.net> 
 Mike Gingell <mgingell@istar.ca>
 David McCann <david.mccann@alcatel.at>
+Ruediger Franke <Ruediger.Franke@decrc.abb.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
