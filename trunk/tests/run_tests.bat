@@ -14,6 +14,7 @@ Message_Queue_Test
 Mutex_Test
 Naming_Test
 Priority_Buffer_Test
+Pipe_Test
 Reactors_Test
 Reactor_Timer_Test
 Reader_Writer_Test
