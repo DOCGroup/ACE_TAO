@@ -67,7 +67,7 @@ CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
   POSIX_Asynch_IO \
-Strategies
+  Strategies
 SOCKETS_FILES = \
   IPC_SAP \
   LSOCK \
@@ -250,6 +250,22 @@ ifndef ACE_COMPONENTS
     Token \
     Other
 endif # ACE_COMPONENTS
+
+ifeq (FOR_TAO,$(ACE_COMPONENTS))
+  #### These ACE components are necessary to support TAO.
+  ACE_COMPONENTS = \
+    OS \
+    Utils \
+    Logging \
+    Threads \
+    Demux \
+    Connection \
+    Sockets \
+    IPC \
+    Svcconf \
+    Streams \
+    Memory
+endif # FOR_TAO
 
 ####
 #### ACE_COMPONENTS support.
