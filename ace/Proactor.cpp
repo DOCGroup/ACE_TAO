@@ -653,8 +653,9 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 #else /* ACE_WIN32 */
 
 ACE_Proactor *
-ACE_Proactor::instance (void)
+ACE_Proactor::instance (size_t threads)
 {
+  ACE_UNUSED_ARG (threads);
   return NULL;
 }
 
@@ -680,6 +681,7 @@ int
 ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 {
   // not implemented
+  ACE_UNUSED_ARG (tv);
   return -1;
 }
 
