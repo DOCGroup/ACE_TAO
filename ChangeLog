@@ -1,3 +1,23 @@
+Mon Jun 14 16:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * apps/Gateway/Gateway/Conrete_Connection_Handlers.cpp:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/JAWS/client/Blobby/blobby.cpp:
+        * apps/drwho/HT_Client.cpp:
+        * apps/drwho/HT_Server.cpp:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+        * apps/drwho/PM_Client.cpp:
+        * apps/drwho/server.cpp:
+          Added missing include for non-inlined builds.
+
 Mon Jun 14 15:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Shared_Memory_Pool_Growth.cpp:
