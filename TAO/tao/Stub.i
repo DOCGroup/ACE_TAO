@@ -134,8 +134,13 @@ TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
 ACE_INLINE TAO_MProfile *
 TAO_Stub::make_profiles (void)
 {
-  // @@ Shouldn't we use ACE_NEW_RETURN here?
-  return new TAO_MProfile (base_profiles_);
+  TAO_MProfile *mp = 0;
+
+  ACE_NEW_RETURN (mp,
+                  TAO_MProfile (base_profiles_),
+                  0);
+
+  return mp;
 }
 
 ACE_INLINE TAO_Profile *

@@ -201,7 +201,7 @@ MT_Client::init (int argc, char **argv,
   ACE_TRY
     {
       char buf[64];
-      ACE_OS::sprintf (buf, "thread_%x", this);
+      ACE_OS::sprintf (buf, "thread_%lx", ACE_reinterpret_cast (long, this));
 
       this->orb_var_ =
         CORBA::ORB_init (this->argc_,
