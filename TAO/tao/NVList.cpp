@@ -275,10 +275,18 @@ CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &ACE_TRY_ENV)
 void
 CORBA_NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                                  int flag,
-                                 int lazy_evaluation,
+                                 int &lazy_evaluation,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!lazy_evaluation)
+  // If the list is empty then using lazy evaluation is the only
+  // choice.
+  // @@ There are other cases where we can use lazy evaluation, for
+  //    example if the list is not empty but the anys own all their
+  //    objects.
+  if (lazy_evaluation == 0 && this->max_ == 0)
+    lazy_evaluation = 1;
+
+  if (lazy_evaluation == 0)
     {
       this->_tao_decode (cdr,
                          flag,
@@ -305,6 +313,17 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
   if (this->incoming_ != 0)
     {
+      if (this->max_ == 0)
+        {
+          // The list is empty aggresively reduce copies and just send 
+          // the CDR stream, we assume that
+          // GIOP_Server_Request::init_reply
+          // has inserted appropiated padding already to make this
+          // operation correct
+          cdr.write_octet_array_mb (this->incoming_->start ());
+          return;
+        }
+
       // Then unmarshal each "in" and "inout" parameter.
       ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
 
@@ -398,6 +417,18 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
                         ACE_TRY_ENV);
       ACE_CHECK;
     }
+}
+
+ptr_arith_t
+CORBA_NVList::_tao_target_alignment (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_,
+                    ACE_CDR::MAX_ALIGNMENT);
+  if (this->incoming_ == 0)
+    return ACE_CDR::MAX_ALIGNMENT;
+
+  const char* rd = this->incoming_->start ()->rd_ptr ();
+  return ptr_arith_t(rd) % ACE_CDR::MAX_ALIGNMENT;
 }
 
 void

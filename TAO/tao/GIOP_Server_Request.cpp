@@ -552,7 +552,96 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
                            *this->outgoing_,
                            this->orb_core_);
 
-  *this->outgoing_ << this->service_info_;
+  if (this->lazy_evaluation_ == 0 || this->params_ == 0)
+    {
+      *this->outgoing_ << this->service_info_;
+    }
+  else
+    {
+      // If lazy evaluation is enabled then we are going to insert an
+      // extra node at the end of the service context list, just to
+      // force the appropiate padding.
+      // But first we take it out any of them..
+      CORBA::ULong count = 0;
+      CORBA::ULong l = this->service_info_.length ();
+      CORBA::ULong i;
+      for (i = 0; i != l; ++i)
+        {
+          if (this->service_info_[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          count++;
+        }
+      // Now increment it to account for the last dummy one...
+      count++;
+
+      // Now marshal the rest of the service context objects
+      *this->outgoing_ << count;
+      for (i = 0; i != l; ++i)
+        {
+          if (this->service_info_[i].context_id == TAO_SVC_CONTEXT_ALIGN)
+            continue;
+          *this->outgoing_ << this->service_info_[i];
+        }
+
+      // @@ Much of this code is GIOP 1.1 specific and should be
+      //    re-thought once GIOP 1.2 is implemented, this is not a big 
+      //    deal because the code is only used in DSI gateways.
+      ptr_arith_t target =
+        this->params_->_tao_target_alignment ();
+
+      // <target> can only have two values: either it is 0 o
+      // ACE_CDR::LONG_ALIGN, because the request payload always
+      // follows the request id.
+      if (target != 0 && target != ACE_CDR::LONG_ALIGN)
+        ACE_THROW (CORBA::MARSHAL ());
+
+      ptr_arith_t current =
+        ptr_arith_t(this->outgoing_->current ()->wr_ptr ())
+        % ACE_CDR::MAX_ALIGNMENT;
+
+      CORBA::ULong pad = 0;
+      if (target == 0)
+        {
+          // We want to generate adequate padding to start the request 
+          // id on a 8 byte boundary, two cases:
+          // - If the dummy tag starts on a 4 byte boundary and the
+          //   dummy sequence has 0 elements then we have:
+          //   4:tag 8:sequence_length 4:sequence_body 4:request_id
+          //   8:payload
+          // - If the dummy tag starts on an 8 byte boundary, with 4
+          //   elements we get:
+          //   8:tag 4:sequence_length 8:sequence_body 4:request_id
+          //   8:payload
+          if (current != 0 && current <= ACE_CDR::LONG_ALIGN)
+            {
+              pad = 4;
+            }
+        }
+      else
+        {
+          // The situation reverses, we want to generate adequate
+          // padding to start the request id on a 4 byte boundary, two
+          // cases:
+          // - If the dummy tag starts on a 4 byte boundary and the
+          //   dummy sequence has 4 elements then we have:
+          //   4:tag 8:sequence_length 4:sequence_body 8:request_id
+          //   4:payload
+          // - If the dummy tag starts on an 8 byte boundary, with 0
+          //   elements we get:
+          //   8:tag 4:sequence_length 8:sequence_body 8:request_id
+          //   4:payload
+          if (current > ACE_CDR::LONG_ALIGN)
+            {
+              pad = 4;
+            }
+        }
+      *this->outgoing_ << CORBA::ULong(TAO_SVC_CONTEXT_ALIGN);
+      *this->outgoing_ << pad;
+      for (CORBA::ULong j = 0; j != pad; ++j)
+        {
+          *this->outgoing_ << ACE_OutputCDR::from_octet(0);
+        }
+    }
   this->outgoing_->write_ulong (this->request_id_);
 
   // Standard exceptions are caught in Connect::handle_input
