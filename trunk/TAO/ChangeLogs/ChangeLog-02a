@@ -1,3 +1,66 @@
+Wed Aug 08 16:14:01 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/default_resource.h (TAO_Default_Resource_Factory):
+
+	  The default resource factory now also inherits from ACE_Cleanup
+	  so that it may be registered for destruction with the
+	  TAO_Singleton_Manager.  This generally only necessary for the
+	  default resource factory since it may be created during ORB
+	  initialization, and it must exist long enough for the ORB
+	  Core to make some calls on it during ORB Core finalization.
+	  Resource factories that are statically or dynamically loaded
+	  (i.e. registered with the Service Repository) before the ORB is
+	  initialized need not inherit from ACE_Cleanup, nor is it
+	  necessary for them to register with the TAO_Singleton_Manager.
+
+	* tao/default_resource.cpp (_make_TAO_Default_Resource_Factory):
+
+	  A custom factory definition is used instead of the commonly used
+	  one created by the ACE_FACTORY_DEFINE macro.  This is necessary
+	  to get around dynamic unloading issues.  The default resource
+	  factory must exist long enough for the ORB to make the a
+	  resource factory reclaim the reactor, for example.  The easiest
+	  (and probably best) way to do that is register the
+	  TAO_Default_Resource_Factory for destruction with the
+	  TAO_Singleton_Manager.  This fixes a segmentation fault (memory
+	  access violation) that occurred when an ORB that was initialized
+	  within a dynamically loaded object (e.g. within an
+	  ACE_Service_Object instance) was finalized/destroyed.
+
+	  (ACE_STATIC_SVC_DEFINE):
+
+	  Do not set the ACE_Service_Type::DELETE_OBJ flag within the
+	  TAO_Default_Resource_Factory-specific declaration/expansion of
+	  this macro.  The "payload" object, i.e. the default resource
+	  factory, is now managed by the TAO_Singleton manager instead of
+	  the Service Repository.
+
+	* tao/DLL_ORB.h (TAO_DLL_ORB):
+
+	  Updated class documentation to mention the fact that this class
+	  is deprecated, and why it should not be used.
+
+	* tao/DLL_ORB.cpp (init):
+
+	  Added debugging message that mentions that the TAO_DLL_ORB class
+	  is deprecated.
+
+	* tao/TAO_Internal.cpp (open_i):
+	* tao/TAO_Singleton_Manager.h (TAO_Singleton_Manager):
+
+	  Updated and corrected class documentation.
+
+	* tests/DLL_ORB/Test_Client_Module.cpp (fini):
+
+	  Explicitly release the reference to the target object.  This is
+	  a bit of a hack.  The ORB Core's lifetime is tied to the
+	  lifetime of an object reference.  We need to wipe out all object
+	  references before we call fini() on the TAO_Singleton_Manager.
+	  This is a tough problem to correct.  Fortunately, this is not a
+	  problem when a resource factory is loaded into the Service
+	  Repository before the ORB is initialized, i.e. when the default
+	  resource factory is not used.
+
 Wed Aug  8 15:03:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/DIOP_Transport.cpp (send_request): There was no
