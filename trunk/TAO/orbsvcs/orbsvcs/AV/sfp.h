@@ -17,21 +17,14 @@
 #if !defined (TAO_AV_SFP_H)
 #define TAO_AV_SFP_H
 
+#include "orbsvcs/orbsvcs_export.h"
 #include "ace/SOCK_Dgram.h"
 #include "orbsvcs/sfpC.h"
-#include "orbsvcs/orbsvcs_export.h"
 
 #define MAGIC_NUMBER_LEN 5
+#define MESSAGE_TYPE_OFFSET 5
 #define TAO_WRITEV_MAX 128
 
-#define DUMP_BUF(BUF,SIZE) \
-{\
-  char *buf = BUF;\
-  ACE_DEBUG ((LM_DEBUG,"========================================\n"));\
-  for (int i=0;i<SIZE;i++)\
-    ACE_DEBUG ((LM_DEBUG,"%d ",buf[i]));\
-  ACE_DEBUG ((LM_DEBUG,"\n========================================\n"));\
-}
 
 #define SFP_MAX_PACKET_SIZE ACE_MAX_DGRAM_SIZE
 //#define SFP_MAX_PACKET_SIZE 100
@@ -74,6 +67,10 @@ public:
   // establshment.
   
   virtual int receive_frame (ACE_Message_Block *frame) =0;
+  // upcall to the application to receive a frame.
+
+  virtual void end_stream (void) = 0;
+  // called when the EndofStream message is received.
 };
 
 class TAO_SFP_Fragment_Node
@@ -96,9 +93,8 @@ public:
      num_fragments_ (0)
     {}
   int last_received_;
-  int num_fragments_;
+  size_t num_fragments_;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
-
 };
 
 typedef ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node> FRAGMENT_SET_ITERATOR;
@@ -140,9 +136,6 @@ public:
   virtual int send_frame (ACE_Message_Block *frame);
   // sends a single frame over UDP.
 
-  virtual ACE_Message_Block* read_simple_frame (void);
-  // receives a single frame from the network.
-
   virtual int end_stream (void);
   // terminates the stream.
 
@@ -154,6 +147,12 @@ public:
 
   virtual ACE_HANDLE get_handle (void) const;
 private:
+
+  ACE_Message_Block* read_simple_frame (void);
+  // receives a single frame from the network.
+
+  int read_frame_header (flowProtocol::frameHeader &frame_header);
+  // reads the frame header from the peek buffer in the datagram.
 
   ACE_Message_Block* read_fragment (void);
   // reads a fragment from the wire.
@@ -180,6 +179,9 @@ private:
   ACE_Message_Block *check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry);
   // checks if all the fragments for this entry has been received and returns the 
   // head of the chain of message blocks for that frame.
+
+  void dump_buf (char *buf,int n);
+  // dumps the buffer to the screen.
 
   CORBA::ORB_ptr orb_;
   // ORB reference.
@@ -226,24 +228,24 @@ private:
   // sequence number of the packet.
 
   flowProtocol::frameHeader frame_header_;
-  size_t frame_header_len_;
+  ssize_t frame_header_len_;
   // frame header to be sent with all frames.
   // length of the frame header.
 
   flowProtocol::fragment fragment_;
-  size_t fragment_len_;
+  ssize_t fragment_len_;
   // fragment header for each fragment.
 
   flowProtocol::Start start_;
-  size_t start_len_;
+  ssize_t start_len_;
   // Start message and its length.
 
   flowProtocol::StartReply start_reply_;
-  size_t start_reply_len_;
+  ssize_t start_reply_len_;
   // StartReply message and its length.
   
   flowProtocol::credit credit_;
-  size_t credit_len_;
+  ssize_t credit_len_;
   CORBA::ULong credit_num_;
   // Credit message and its  length.
 
