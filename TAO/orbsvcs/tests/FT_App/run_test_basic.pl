@@ -24,12 +24,12 @@ unlink $replica2_ior;
 unlink $data_file;
 my($status) = 0;
 
-my($SV1) = new PerlACE::Process ("release/ft_replica", "-o $factory1_ior -t $replica1_ior -q");
-my($SV2) = new PerlACE::Process ("release/ft_replica", "-o $factory2_ior -t $replica2_ior -q");
+my($SV1) = new PerlACE::Process ("release/ft_replica", "-o $factory1_ior -t $replica1_ior -q -ORBInitRef ReplicationManager=NULL");
+my($SV2) = new PerlACE::Process ("release/ft_replica", "-o $factory2_ior -t $replica2_ior -q -ORBInitRef ReplicationManager=NULL");
 my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 #my($CL) = new PerlACE::Process ("release/ft_client", "-f file://$replica1_iogr -c testscript");
 
-print "\nTest: Starting replica 1" . $SV1->CommandLine . "\n" if ($debug);
+print "\nTest: Starting replica 1 " . $SV1->CommandLine . "\n" if ($debug);
 $SV1->Spawn ();
 
 print "waiting for replica 1's IOR\n" if ($debug);
@@ -40,7 +40,7 @@ if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTest: Starting replica 2" . $SV2->CommandLine . "\n" if ($debug);
+print "\nTest: Starting replica 2 " . $SV2->CommandLine . "\n" if ($debug);
 $SV2->Spawn ();
 
 print "waiting for replica 2's IOR\n" if ($debug);
@@ -71,6 +71,7 @@ if ($server != 0) {
     $status = 1;
 }
 
+if ($status == 0) {
 print "Clean up scratch files\n" if ($debug);
 
 unlink $factory1_ior;
@@ -78,5 +79,6 @@ unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $data_file;
+}
 
 exit $status;

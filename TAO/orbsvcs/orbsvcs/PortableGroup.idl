@@ -292,6 +292,19 @@ module PortableGroup
 
   }; // end of FactoryRegistry
 
+
+  const string TAO_UPDATE_OBJECT_GROUP_METHOD_NAME = "tao_update_object_group";
+
+  interface TAO_UpdateObjectGroup {
+    /**
+     *  Pseudo used method to update IOGR in Object Group Members
+     *  TAO specific.  The CORBA spec. doesn't address the issue.
+     */
+    void tao_update_object_group (in PortableGroup::ObjectGroup iogr);
+  };
+
+
+
 }; // end PortableGroup
 
 #endif  /* _PORTABLEGROUP_IDL_ */

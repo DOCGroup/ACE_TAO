@@ -81,9 +81,12 @@ namespace TAO
       ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (ACE_OS::strcmp (op.in (),
-                        "tao_update_object_group") == 0)
+    if (ACE_OS::strcmp (op.in (), 
+      "tao_update_object_group") == 0)
     {
+      ACE_DEBUG ((LM_DEBUG,
+        "FT_ServerRequestInterceptor updating IOGR.\n"
+        ));
       this->update_iogr (ri
                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -147,12 +150,20 @@ namespace TAO
         this->object_group_ref_version_)
       {
         ACE_ERROR ((LM_ERROR,
-                    "TAO-FT (%P|%t) - Wrong version information ",
-                    "within the interceptor \n"));
+                    "TAO-FT (%P|%t) - Wrong version information "
+                    "within the interceptor [%u | %u] \n",
+                    ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
+                    ACE_static_cast( unsigned, this->object_group_ref_version_)
+                    ));
       }
     else if (fgvsc.object_group_ref_version <
              this->object_group_ref_version_)
       {
+        ACE_DEBUG ((LM_DEBUG,
+          "Forwarding request to new IOGR  [%u | %u] \n",
+                    ACE_static_cast( unsigned, fgvsc.object_group_ref_version ),
+                    ACE_static_cast( unsigned, this->object_group_ref_version_)
+                    ));
         // Notice that this is a permanent forward.
         ACE_THROW (PortableInterceptor::ForwardRequest (
                    this->iogr_,
@@ -162,6 +173,12 @@ namespace TAO
              this->object_group_ref_version_) &&
              !this->is_primary_)
       {
+
+        ACE_DEBUG ((LM_DEBUG,
+          "Request arrived at backup replica.  Throwing TRANSIENT.[%u] \n",
+                    ACE_static_cast( unsigned, this->object_group_ref_version_)
+                    ));
+
         ACE_THROW (CORBA::TRANSIENT (
                        CORBA::SystemException::_tao_minor_code (
                        TAO_DEFAULT_MINOR_CODE,

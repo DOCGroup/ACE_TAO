@@ -138,6 +138,13 @@ private:
   virtual void set_state (const FT::State & s)
     ACE_THROW_SPEC ((CORBA::SystemException, FT::InvalidState));
 
+  ////////////////
+  // Implement TAO_UpdateObjectGroup
+
+  virtual void tao_update_object_group ( PortableGroup::ObjectGroup_ptr iogr
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   /////////////////
   // implementation
 private:

@@ -1,3 +1,51 @@
+Wed Oct 29 13:52:36 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Support IOGR in create_object and add_member.
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          unregister during fini.
+
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+          Define factory registration information for FaultDetectorFactory
+
+        * orbsvcs/orbsvcs/FT_Replica.idl:
+          Remove commented out GenericFactory declaration (it's in PortableGroup.idl)
+          
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+          Add debug messages.
+
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Add interface TAO_UpdateObjectGroup for IOGR distribution.
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:\
+          Add a missing string_dup (ouch).
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+          New files used by ReplicationManager to store object group information.
+          Among other things, includes support for distributing updated IOGR via TAO_UpdateObjectGroup interface.
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+          Cosmetic changes.
+
+        * orbsvcs/tests/FT_App/FT_TestReplica.idl:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+          Derive from TAO_UpdateObjectGroup
+          Stub implemntation of TAO_UpdateObjectGroup
+
+        * orbsvcs/tests/FT_App/run_test_basic.pl:
+          Add dummy -ORBInitRef to prevent multicasting for ReplicationManager.
+
+        * utils/catior/catior.cpp:
+          Add partial support for TAG_GROUP and TAG_FT_PRIMARY
+
+        These changes were made in the oci_haft branch.
+
 Tue Oct 28 10:28;20 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:

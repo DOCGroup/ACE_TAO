@@ -616,7 +616,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   }
   else
   {
-    type_id = "";
+    type_id = CORBA::string_dup("");
     ACE_ERROR(( LM_INFO,
       "%s: list_factories_by_role: unknown role %s\n",
       this->identity_.c_str(),

@@ -13,25 +13,6 @@
 
 module FT
 {
-#if 0
-  // Specification of GenericFactory Interface
-  // which ReplicationManager Inherits and Application Objects Implement
-  interface GenericFactory {
-    typedef any FactoryCreationId;
-    Object create_object(in _TypeId type_id,
-                         in Criteria the_criteria,
-                         out FactoryCreationId factory_creation_id)
-      raises (NoFactory,
-              ObjectNotCreated,
-              InvalidCriteria,
-              InvalidProperty,
-              CannotMeetCriteria);
-
-    void delete_object(in FactoryCreationId factory_creation_id)
-      raises (ObjectNotFound);
-  };
-#endif
-
   // Specification of PullMonitorable Interface
   // which Application Objects Inherit
   interface PullMonitorable {

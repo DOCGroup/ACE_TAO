@@ -23,18 +23,18 @@
 
 //@@ Review all these header files and make sure they are all needed
 //   or if some can be replaced with forward declarations.
-#include "orbsvcs/FT_ReplicationManagerS.h"
-#include "orbsvcs/FT_NotifierC.h"
-#include "tao/IORManipulation/IORC.h"
-#include "orbsvcs/PortableGroupC.h"
-#include "orbsvcs/PortableGroup/PG_PropertyManager.h"
-#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
-#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include <orbsvcs/FT_ReplicationManagerS.h>
+#include <orbsvcs/FT_NotifierC.h>
+#include <tao/IORManipulation/IORC.h>
+#include <orbsvcs/PortableGroupC.h>
+#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
+#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
+#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
-#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-#include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
-#include "orbsvcs/CosNamingC.h"
-
+#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
+#include <orbsvcs/FaultTolerance/FT_Service_Activate.h>
+#include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
+#include <orbsvcs/CosNamingC.h>
 
 namespace TAO
 {
@@ -436,8 +436,8 @@ namespace TAO
     * Implementation methods should assume the mutex is
     * locked if necessary.
     */
-    ACE_Mutex internals_;
-    typedef ACE_Guard<ACE_Mutex> InternalGuard;
+    ACE_SYNCH_MUTEX internals_;
+    typedef ACE_Guard<ACE_SYNCH_MUTEX> InternalGuard;
 
     /// The orb
     CORBA::ORB_var orb_;
@@ -465,6 +465,7 @@ namespace TAO
 
     /// The ObjectGroupManager that implements the functionality
     /// necessary for application-controlled object group membership.
+//    TAO::PG_ObjectGroupManager object_group_manager_;
     TAO_PG_ObjectGroupManager object_group_manager_;
 
     /// The PropertyManager that is reponsible for parsing all criteria,
@@ -475,7 +476,9 @@ namespace TAO
     TAO_PG_GenericFactory generic_factory_;
 
 
-
+    /// A container for our object group information
+    TAO::PG_Object_Group_Map object_group_map_;
+  
 
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
