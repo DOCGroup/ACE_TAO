@@ -1,5 +1,10 @@
 Fri Jul 31 21:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Select_Reactor.cpp (open): Changed the code to ignore the
+ 	  return value from ACE::set_handle_limit().  Thanks to Zheng Han
+ 	  <zhan@glenvan.glenayre.com> for reporting this and to Arturo for
+ 	  suggesting the fix.
+
 	* ace/ARGV.cpp: Enhanced the implemenation of string_to_array() so
  	  that it should always work correctly even if there are a large
  	  number of bytes in the original buf string.

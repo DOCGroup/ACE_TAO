@@ -11,7 +11,7 @@ class category.
                 CORBA_Ref.cpp
                 CORBA_Ref.h
                 CORBA_Ref.i
-        [Collections]
+        [Containers]
                 Array.cpp
                 Array.h
                 Array.i
@@ -430,6 +430,9 @@ class category.
                 Message_Queue.cpp
                 Message_Queue.h
                 Message_Queue.i
+                Message_Queue_T.cpp
+                Message_Queue_T.h
+                Message_Queue_T.i
                 Module.cpp
                 Module.h
                 Module.i
@@ -474,7 +477,6 @@ class category.
                         SV_Shared_Memory.h
                         SV_Shared_Memory.i
         [Timers]
-
                 High_Res_Timer.cpp
                 High_Res_Timer.h
                 High_Res_Timer.i
