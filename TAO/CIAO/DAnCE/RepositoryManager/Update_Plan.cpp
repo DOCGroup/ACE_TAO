@@ -24,6 +24,7 @@ namespace CIAO
     // traverse the package configuration structure to get to the
     // BasePackage which consists of assemblies.
     //
+    REF_MAP plan_ref_map;
     CORBA::ULong bp_len =
       pc->basePackage.length ();
 
@@ -54,7 +55,8 @@ namespace CIAO
                 //
                 // traverse the individual assembly.
                 //
-                traverse_assembly (assembly, plan, ref_map, primary_ref_map);
+                traverse_assembly (assembly, plan, ref_map, primary_ref_map,
+                                   plan_ref_map);
               }
           }
       }
@@ -63,7 +65,8 @@ namespace CIAO
   void
   traverse_assembly (ComponentAssemblyDescription &assembly,
                      DeploymentPlan &plan,
-                     REF_MAP &ref_map, REF_MAP &primary_ref_map)
+                     REF_MAP &ref_map, REF_MAP &primary_ref_map,
+                     REF_MAP &plan_ref_map)
   {
     // traverse the assembly (ComponentAssemblyDescription) and
     // processes the instances and the connection within the assembly.
@@ -84,7 +87,8 @@ namespace CIAO
           if (strcmp (plan_name, in_name) == 0)
             {
               traverse_assembly_instance (ins, plan, l,
-                                          ref_map, primary_ref_map);
+                                          ref_map, primary_ref_map,
+                                          plan_ref_map);
             }
         }
       }
@@ -183,7 +187,8 @@ namespace CIAO
                               SubcomponentInstantiationDescription
                               &instance,
                               DeploymentPlan &plan, int l,
-                              REF_MAP &ref_map, REF_MAP &primary_ref_map)
+                              REF_MAP &ref_map, REF_MAP &primary_ref_map,
+                              REF_MAP &plan_ref_map)
   {
     // Each instance has a package.
     //   Each package has an implementation and their correspoding artifacts.
@@ -217,7 +222,8 @@ namespace CIAO
                   mid = impl.referencedImplementation.monolithicImpl[p];
 
                 update_artifacts (mid, plan, plan.instance[l],
-                                ref_map, primary_ref_map, art_ref_map,
+                                  ref_map, primary_ref_map, art_ref_map,
+                                  plan_ref_map,
                                   plan.implementation[impl_length]);
               }
             update_impl_config_property (impl, plan.implementation[impl_length],
@@ -232,8 +238,12 @@ namespace CIAO
                     InstanceDeploymentDescription &instance,
                     REF_MAP &ref_map, REF_MAP &primary_ref_map,
                     ART_REF_MAP &art_ref_map,
+                    REF_MAP &plan_ref_map,
                     MonolithicDeploymentDescription &mdd)
   {
+    ref_map.unbind_all ();
+    primary_ref_map.unbind_all ();
+    art_ref_map.unbind_all ();
     CORBA::ULong prim_art_len = mid.primaryArtifact.length ();
     for (CORBA::ULong q = 0; q < prim_art_len; ++q)
       {
@@ -241,26 +251,44 @@ namespace CIAO
           pack_iad = mid.primaryArtifact[q].referencedArtifact;
         ACE_TString artifact_name = (const char*)mid.primaryArtifact[q].name;
         int arti_len;
+        int plan_arti_len;
         CORBA::ULong art_length (plan.artifact.length ());
 
         if (ref_map.find (artifact_name, arti_len) != 0)
           {
-            plan.artifact.length (art_length + 1);
-            plan.artifact[art_length].name = mid.primaryArtifact[q].name;
-            plan.artifact[art_length].node = instance.node;
-            ref_map.bind (artifact_name, art_length);
-            primary_ref_map.bind (artifact_name, art_length);
-            CORBA::ULong art_ref_len (mdd.artifactRef.length ());
-            mdd.artifactRef.length (art_ref_len + 1);
-            mdd.artifactRef[art_ref_len] = art_length;
-            update_artifact_location (pack_iad,
-                                    plan.artifact[art_length]);
-            update_artifact_property (pack_iad,
-                                      plan.artifact[art_length]);
+            if (plan_ref_map.find (artifact_name, plan_arti_len) != 0)
+              {
+                plan.artifact.length (art_length + 1);
+                plan.artifact[art_length].name = mid.primaryArtifact[q].name;
+                plan.artifact[art_length].node = instance.node;
+                ref_map.bind (artifact_name, art_length);
+                plan_ref_map.bind (artifact_name, art_length);
+                primary_ref_map.bind (artifact_name, art_length);
+                CORBA::ULong art_ref_len (mdd.artifactRef.length ());
+                mdd.artifactRef.length (art_ref_len + 1);
+                mdd.artifactRef[art_ref_len] = art_length;
+                update_artifact_location (pack_iad,
+                                          plan.artifact[art_length]);
+                update_artifact_property (pack_iad,
+                                          plan.artifact[art_length]);
+              }
+            else
+              {
+                art_length = plan_arti_len;
+                ref_map.bind (artifact_name, art_length);
+                primary_ref_map.bind (artifact_name, art_length);
+                CORBA::ULong art_ref_len (mdd.artifactRef.length ());
+                mdd.artifactRef.length (art_ref_len + 1);
+                mdd.artifactRef[art_ref_len] = art_length;
+                update_artifact_location (pack_iad,
+                                          plan.artifact[art_length]);
+                update_artifact_property (pack_iad,
+                                          plan.artifact[art_length]);
+              }
           }
         update_common_artifact_and_art_ref (pack_iad,
                                             primary_ref_map, ref_map,
-                                          art_ref_map, mdd,
+                                            art_ref_map, plan_ref_map, mdd,
                                             plan, instance);
       }
   }
@@ -272,13 +300,14 @@ namespace CIAO
                                       REF_MAP &primary_ref_map,
                                       REF_MAP &ref_map,
                                       ART_REF_MAP &art_ref_map,
-
+                                      REF_MAP &plan_ref_map,
                                       MonolithicDeploymentDescription &mid,
                                       DeploymentPlan &plan,
-
-                                         InstanceDeploymentDescription
-                                         &instance)
+                                      InstanceDeploymentDescription
+                                      &instance)
   {
+    int arti_len;
+    CORBA::ULong new_art_length;
     CORBA::ULong deps_len = pack_iad.dependsOn.length ();
     for (CORBA::ULong g = 0; g < deps_len; ++g)
       {
@@ -302,19 +331,34 @@ namespace CIAO
             ImplementationArtifactDescription
               depends_iad = pack_iad.dependsOn[g].
               referencedArtifact;
-            CORBA::ULong new_art_length (plan.artifact.length ());
-            plan.artifact.length (new_art_length + 1);
-            plan.artifact[new_art_length].name =
-              pack_iad.dependsOn[g].name;
-            plan.artifact[new_art_length].node = instance.node;
-            update_artifact_location (depends_iad,
-                                      plan.artifact
-                                      [new_art_length]);
-            ref_map.bind (
-                          (const char*)plan.artifact[new_art_length].name,
-                          new_art_length);
-            update_impl_art_ref (mid, new_art_length);
-            art_ref_map.bind (new_art_length, new_art_length);
+            if (plan_ref_map.find (dep_name, arti_len) != 0)
+              {
+                new_art_length = plan.artifact.length ();
+                plan.artifact.length (new_art_length + 1);
+                plan.artifact[new_art_length].name =
+                  pack_iad.dependsOn[g].name;
+                plan.artifact[new_art_length].node = instance.node;
+                update_artifact_location (depends_iad,
+                                          plan.artifact
+                                          [new_art_length]);
+                ref_map.bind (
+                              (const char*)plan.artifact[new_art_length].name,
+                              new_art_length);
+                plan_ref_map.bind (
+                              (const char*)plan.artifact[new_art_length].name,
+                              new_art_length);
+                update_impl_art_ref (mid, new_art_length);
+                art_ref_map.bind (new_art_length, new_art_length);
+              }
+            else
+              {
+                new_art_length = arti_len;
+                ref_map.bind (
+                              (const char*)plan.artifact[new_art_length].name,
+                              new_art_length);
+                update_impl_art_ref (mid, new_art_length);
+                art_ref_map.bind (new_art_length, new_art_length);
+              }
           }
       }
   }
