@@ -38,7 +38,8 @@ module CosPropertyService {
   typedef sequence<Property> Properties;  
   typedef sequence<PropertyDef> PropertyDefs;  
   typedef sequence<PropertyMode> PropertyModes;  
-  typedef sequence<TypeCode> PropertyTypes;
+  // @@ sequences of typecodes breaks the TAO IDL Compiler!!!
+  typedef sequence<string> PropertyTypes;
 
   interface PropertyNamesIterator;  
   interface PropertiesIterator;  
@@ -70,19 +71,17 @@ module CosPropertyService {
     read_only_property   
   };
 
-  // @@ this was a `struct' in the original definition, I changed it
-  // to be an `exception'.
   exception PropertyException {    
     ExceptionReason reason;    
     PropertyName failing_property_name;   
   };
-
-  typedef sequence<PropertyException> PropertyExceptions;
+  //@@
+  //  typedef sequence<PropertyException> PropertyExceptions;
 
   exception MultipleExceptions {    
-    PropertyExceptions exceptions;   
+    //  PropertyExceptions exceptions;   
   };
-
+  
   /*****************************************************/ 
   /*  Interface Definitions */ 
   /*****************************************************/  
