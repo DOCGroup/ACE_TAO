@@ -59,6 +59,14 @@ Tue Jul 10 15:56:13 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 	  Fixed warning about virtual function override. Was caught by the
 	  Tru64 compiler.
 
+Tue Jul 10 13:09:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+
+          Corrected a generation of skel_export_macro to
+          stub_export_macro. Thanks to Alexander Rieger 
+          <Alexander.Rieger@inka.de> for tracking this down.
+
 Tue Jul 10 11:51:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
