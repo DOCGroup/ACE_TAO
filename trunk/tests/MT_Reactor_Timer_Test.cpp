@@ -288,7 +288,12 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (time_limit.sec () == 0);
 
   status = other_thread.wait ();
-  ACE_ASSERT (status != -1);
+  if (status == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("%p, errno is %d\n"), "wait ()", errno));
+      ACE_ASSERT (status != -1);
+    }
 
   status = other_thread.verify_results ();
 #else
