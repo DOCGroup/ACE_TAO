@@ -469,9 +469,15 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         CORBA::Char * rhs_v;
         rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
                                                bound);
+
+        // @@@ (JP) On Windows (only), this any does not get the bound
+        // set in its type code when copied from another DynAny. So we
+        // dispense with the to_string here, since the type codes have
+        // already been checked for equivalence above (done with this
+        // DynAny's type_ member, which does have the bound set correctly).
         CORBA::Char * lhs_v;
-        this->any_ >>= CORBA::Any::to_string (lhs_v,
-                                              bound);
+        this->any_ >>= lhs_v;
+
         return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
       }
     case CORBA::tk_wstring:
