@@ -1,3 +1,16 @@
+Fri Aug 13 07:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Pass the def file with -Wl, to the compiler, it is a linker option
+          and with the Cygwin GCC 3.3.3 it seems the compiler thinks the def
+          file is a modula2 file. By marking it as linker option it works
+          without problems again
+
+        * etc/*.doxygen:
+          Set INTERNAL_DOCS to YES, that way we generate documentation for
+          stuff marked with @internal, but doxygen will make sure the
+          documentation says it is for internal use only
+
 Thu Aug 12 21:17:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/taolib.mpb:
