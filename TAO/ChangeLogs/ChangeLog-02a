@@ -1,3 +1,17 @@
+Sat Mar  2 16:27:16 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+	* orbsvcs/examples/CosEC/Simple/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	* orbsvcs/examples/RtEC/Simple/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	  Made changes to include the Messaging library.
+	
 Sat Mar  2 14:53:44 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/EC_Scalability/Makefile:

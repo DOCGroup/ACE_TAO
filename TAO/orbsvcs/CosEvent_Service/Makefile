@@ -10,7 +10,7 @@ SRC = CosEvent_Service.cpp
 
 ES_OBJS=$(SRC:.cpp=.o)
 
-LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_CosEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_Messaging -lTAO_PortableServer -lTAO
 
 BIN_UNCHECKED = CosEvent_Service
 
