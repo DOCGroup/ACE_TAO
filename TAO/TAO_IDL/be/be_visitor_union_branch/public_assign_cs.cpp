@@ -57,9 +57,20 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *n
   // statement because the type of member assigned is based on the value
   // of the discriminant
   os->indent ();
-  *os << "case ";
-  node->gen_label_value (os);
-  *os << ":" << be_nl;
+  for (unsigned long i = 0;
+       i < node->label_list_length ();
+       ++i)
+    {
+      // check if we are printing the default case
+      if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+        *os << "default:" << be_nl;
+      else
+        {
+          *os << "case ";
+          node->gen_label_value (os, i);
+          *os << ":" << be_nl;
+        }
+    }
   *os << "{" << be_idt << "\n";
 
   // first generate the type information
@@ -148,19 +159,11 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "// make a deep copy" << be_nl;
-      *os << "this->u_." << ub->local_name ()
-          << "_  = " << fname
-          << "_dup (u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "// make a deep copy" << be_nl;
+  *os << "this->u_." << ub->local_name ()
+      << "_  = " << fname
+      << "_dup (u.u_."
+      << ub->local_name () << "_);" << be_uidt_nl;
 
   return 0;
 }
@@ -186,18 +189,11 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      // valid label
-      *os << "// set the value" << be_nl
-          << "this->u_." << ub->local_name () << "_ = u.u_."
-          << ub->local_name () << "_;" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  // valid label
+  *os << "// set the value" << be_nl
+      << "this->u_." << ub->local_name () << "_ = u.u_."
+      << ub->local_name () << "_;" << be_uidt_nl;
+
   return 0;
 }
 
@@ -229,18 +225,11 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<" << bt->name ()
-          << "> (" << bt->name () << "::_duplicate (u.u_."
-          << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "this->u_." << ub->local_name ()
+      << "_ = new TAO_Object_Field_T<" << bt->name ()
+      << "> (" << bt->name () << "::_duplicate (u.u_."
+      << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+
   return 0;
 }
 
@@ -272,18 +261,11 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<" << bt->name ()
-          << "> (" << bt->name () << "::_duplicate (u.u_."
-          << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "this->u_." << ub->local_name ()
+      << "_ = new TAO_Object_Field_T<" << bt->name ()
+      << "> (" << bt->name () << "::_duplicate (u.u_."
+      << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+
   return 0;
 }
 
@@ -315,35 +297,27 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
+  switch (node->pt ())
     {
-      switch (node->pt ())
-        {
-        case AST_PredefinedType::PT_pseudo:
-          *os << "this->u_." << ub->local_name () << "_ = "
-              << bt->name () << "::_duplicate (u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
-          break;
-        case AST_PredefinedType::PT_any:
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (*u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
-          break;
-        case AST_PredefinedType::PT_void:
-          break;
-        default:
-          *os << "// set the value" << be_nl
-              << "this->u_." << ub->local_name () << "_ = "
-              << "u.u_." << ub->local_name () << "_;" << be_uidt_nl;
-          break;
-        }
+    case AST_PredefinedType::PT_pseudo:
+      *os << "this->u_." << ub->local_name () << "_ = "
+          << bt->name () << "::_duplicate (u.u_."
+          << ub->local_name () << "_);" << be_uidt_nl;
+      break;
+    case AST_PredefinedType::PT_any:
+      *os << "this->u_." << ub->local_name () << "_ = new "
+          << bt->name () << " (*u.u_."
+          << ub->local_name () << "_);" << be_uidt_nl;
+      break;
+    case AST_PredefinedType::PT_void:
+      break;
+    default:
+      *os << "// set the value" << be_nl
+          << "this->u_." << ub->local_name () << "_ = "
+          << "u.u_." << ub->local_name () << "_;" << be_uidt_nl;
+      break;
+    }
 
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
   return 0;
 }
 
@@ -375,17 +349,10 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "this->u_." << ub->local_name () << "_ = new "
+      << bt->name () << " (*u.u_."
+      << ub->local_name () << "_);" << be_uidt_nl;
+
   return 0;
 }
 
@@ -410,17 +377,10 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "this->u_." << ub->local_name () << "_ = "
-          << "CORBA::string_dup (u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "this->u_." << ub->local_name () << "_ = "
+      << "CORBA::string_dup (u.u_."
+      << ub->local_name () << "_);" << be_uidt_nl;
+
   return 0;
 }
 
@@ -452,25 +412,18 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
+  if (bt->size_type () == be_type::VARIABLE)
     {
-      if (bt->size_type () == be_type::VARIABLE)
-        {
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (*u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "this->u_." << ub->local_name () << "_ = u.u_."
-              << ub->local_name () << "_;" << be_uidt_nl;
-        }
+      *os << "this->u_." << ub->local_name () << "_ = new "
+          << bt->name () << " (*u.u_."
+          << ub->local_name () << "_);" << be_uidt_nl;
     }
   else
     {
-      // default label
-      // XXXASG - TODO
+      *os << "this->u_." << ub->local_name () << "_ = u.u_."
+          << ub->local_name () << "_;" << be_uidt_nl;
     }
+
   return 0;
 }
 
@@ -523,16 +476,9 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
 
   os->indent (); // start from current indentation
   // set the discriminant to the appropriate label
-  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
-    {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
-          << ub->local_name () << "_);" << be_nl;
-    }
-  else
-    {
-      // default label
-      // XXXASG - TODO
-    }
+  *os << "this->u_." << ub->local_name () << "_ = new "
+      << bt->name () << " (*u.u_."
+      << ub->local_name () << "_);" << be_uidt_nl;
+
   return 0;
 }

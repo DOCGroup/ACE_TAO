@@ -267,12 +267,12 @@ be_generator::create_union(AST_ConcreteType *dt,
  * Create a BE_UnionBranch node
  */
 AST_UnionBranch *
-be_generator::create_union_branch(AST_UnionLabel *lab,
+be_generator::create_union_branch(UTL_LabelList *ll,
                                   AST_Type *ft,
                                   UTL_ScopedName *n,
                                   UTL_StrList *p)
 {
-  return (AST_UnionBranch *) new be_union_branch(lab, ft, n, p);
+  return (AST_UnionBranch *) new be_union_branch(ll, ft, n, p);
 }
 
 /*

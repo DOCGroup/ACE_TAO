@@ -33,9 +33,9 @@ be_union_branch::be_union_branch (void)
 {
 }
 
-be_union_branch::be_union_branch (AST_UnionLabel *lab, AST_Type *ft,
+be_union_branch::be_union_branch (UTL_LabelList *ll, AST_Type *ft,
                                   UTL_ScopedName *n, UTL_StrList *p)
-  : AST_UnionBranch (lab, ft, n, p),
+  : AST_UnionBranch (ll, ft, n, p),
     AST_Field (AST_Decl::NT_union_branch, ft, n, p),
     AST_Decl (AST_Decl::NT_union_branch, n, p)
 {
@@ -60,9 +60,9 @@ be_union_branch::compute_size_type (void)
 }
 
 int
-be_union_branch::gen_label_value (TAO_OutStream *os)
+be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 {
-  AST_Expression *e = this->label ()->label_val ();
+  AST_Expression *e = this->label (index)->label_val ();
   if (e->ec () != AST_Expression::EC_symbol)
     {
       // Easy, just a number...
