@@ -281,6 +281,19 @@
 #define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 
+// TAO Naming Service.
+
+// Poa id of the root Naming Context in a Naming server.
+#if !defined (TAO_ROOT_NAMING_CONTEXT)
+#  define TAO_ROOT_NAMING_CONTEXT "NameService"
+#endif /* ! TAO_ROOT_NAMING_CONTEXT */
+
+// The name under which the index of naming contexts is stored in
+// persistent naming service.
+#if !defined (TAO_NAMING_CONTEXT_INDEX)
+#  define TAO_NAMING_CONTEXT_INDEX "Naming_Context_Index"
+#endif /* ! TAO_NAMING_CONTEXT_INDEX */
+
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
 
