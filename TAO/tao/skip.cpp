@@ -28,7 +28,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
                              void *context,
                              CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // status of skip operation
@@ -73,7 +73,7 @@ TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
       // we are not a primitive type
     }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_skipping == CORBA::B_TRUE)
+      && continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -118,7 +118,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
                             void *context,
                             CORBA::Environment  &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -134,7 +134,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
   // Decode the "kind" field of the typecode from the stream.
   continue_skipping = stream->read_ulong (kind);
 
-  if (continue_skipping == CORBA::B_TRUE)
+  if (continue_skipping == 1)
     {
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
@@ -196,7 +196,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
         }
     }
 
-  if (continue_skipping == CORBA::B_TRUE)
+  if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -213,7 +213,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
                                void *context,
                                CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -227,7 +227,7 @@ TAO_Marshal_Principal::skip (CORBA::TypeCode_ptr,
       continue_skipping = stream->skip_bytes (len);
     }
 
-  if (continue_skipping == CORBA::B_TRUE)
+  if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -242,7 +242,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
                           void *context,
                           CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -271,7 +271,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         CORBA::ULong tag;
 
         // get the profile ID tag
-        if ( (continue_skipping = stream->read_ulong (tag)) == CORBA::B_FALSE)
+        if ( (continue_skipping = stream->read_ulong (tag)) == 0)
           continue;
 
         if (tag != TAO_IOP_TAG_INTERNET_IOP)
@@ -290,7 +290,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         // the length of the sequence.
         // Create the decoding stream from the encapsulation in the
         // buffer, and skip the encapsulation.
-        if ( (continue_skipping = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
+        if ( (continue_skipping = stream->read_ulong (encap_len)) == 0)
           continue;
 
         TAO_InputCDR str (*stream, encap_len);
@@ -330,7 +330,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
       }
 
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_skipping == CORBA::B_TRUE)
+      && continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -400,7 +400,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
   CORBA::Long  default_index;
   CORBA::ULong i;
   CORBA::TypeCode_ptr default_tc = 0;
-  CORBA::Boolean discrim_matched = CORBA::B_FALSE;
+  CORBA::Boolean discrim_matched = 0;
 
   // get the discriminator type which will enable us to skip the discriminator
   // value
@@ -439,7 +439,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::Short s;
                                     *member_label >>= s;
                                     if (s == *(CORBA::Short *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_ushort:
@@ -447,7 +447,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::UShort s;
                                     *member_label >>= s;
                                     if (s == *(CORBA::UShort *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_long:
@@ -455,7 +455,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::Long l;
                                     *member_label >>= l;
                                     if (l == *(CORBA::Long *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_ulong:
@@ -463,7 +463,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::ULong l;
                                     *member_label >>= l;
                                     if (l == *(CORBA::ULong *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_enum:
@@ -474,7 +474,7 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                                          ());
                                     (void)stream.decode (discrim_tc, &l, 0, env);
                                     if (l == *(CORBA::Long *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_char:
@@ -482,21 +482,21 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::Char c;
                                     *member_label >>= CORBA::Any::to_char (c);
                                     if (c == *(CORBA::Char *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 case CORBA::tk_wchar:
                                   // @@ ASG TO-DO
                                   if (*(CORBA::WChar *) member_label->value ()
                                       == *(CORBA::WChar *) &discrim_val)
-                                    discrim_matched = CORBA::B_TRUE;
+                                    discrim_matched = 1;
                                   break;
                                 case CORBA::tk_boolean:
                                   {
                                     CORBA::Boolean b;
                                     *member_label >>= CORBA::Any::to_boolean (b);
                                     if (b == *(CORBA::Boolean *) &discrim_val)
-                                      discrim_matched = CORBA::B_TRUE;
+                                      discrim_matched = 1;
                                   }
                                   break;
                                 default:
@@ -567,7 +567,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
                           void *context,
                           CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
@@ -581,7 +581,7 @@ TAO_Marshal_String::skip (CORBA::TypeCode_ptr,
   // but we will accept them when it's clear how to do so.
 
   continue_skipping = stream->skip_string ();
-  if (continue_skipping == CORBA::B_TRUE)
+  if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -598,7 +598,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
                             void *context,
                             CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   // Typecode of the element.
   CORBA::TypeCode_ptr tc2;
@@ -621,7 +621,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 
           if (env.exception () == 0)
             {
-              while (bounds-- && continue_skipping == CORBA::B_TRUE)
+              while (bounds-- && continue_skipping == 1)
                 {
                   continue_skipping = stream->skip (tc2, env);
                 }
@@ -645,7 +645,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
                            void *context,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Typecode of the element.
@@ -661,7 +661,7 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
       tc2 = tc->content_type (env);
       if (env.exception () == 0)
         {
-          while (bounds-- && continue_skipping == CORBA::B_TRUE)
+          while (bounds-- && continue_skipping == 1)
             {
               continue_skipping = stream->skip (tc2, env);
             }
@@ -683,7 +683,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
 {
   // Typecode of the aliased type.
   CORBA::TypeCode_ptr tc2;
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
 
   // Context is the CDR stream.
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
@@ -699,7 +699,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
     }
   //  tc2->_decr_refcnt ();
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_skipping == CORBA::B_TRUE)
+      && continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
@@ -766,7 +766,7 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
                            void *context,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_skipping = CORBA::B_TRUE;
+  CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   CORBA::ULong len;
 
@@ -781,12 +781,12 @@ TAO_Marshal_WString::skip (CORBA::TypeCode_ptr,
   continue_skipping = stream->read_ulong (len);
 
   if (len != 0)
-    while (continue_skipping != CORBA::B_FALSE && len--)
+    while (continue_skipping != 0 && len--)
       {
         continue_skipping = stream->skip_wchar ();
       }
 
-  if (continue_skipping == CORBA::B_TRUE)
+  if (continue_skipping == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {

@@ -88,7 +88,7 @@ TAO_Trader_Base::trading_components (void) const
 CORBA::Boolean
 TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 {
-  int return_value = CORBA::B_FALSE;
+  int return_value = 0;
 
   if (ident == 0)
     return return_value;
@@ -117,9 +117,9 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
-    supports_modifiable_properties_ (CORBA::B_TRUE),
-    supports_dynamic_properties_ (CORBA::B_TRUE),
-    supports_proxy_offers_ (CORBA::B_FALSE),
+    supports_modifiable_properties_ (1),
+    supports_dynamic_properties_ (1),
+    supports_proxy_offers_ (0),
     type_repos_ (CosTrading::TypeRepository::_nil ()),
     service_type_repos_ (CosTradingRepos::ServiceTypeRepository::_nil ())
 {
@@ -133,7 +133,7 @@ CORBA::Boolean
 TAO_Support_Attributes_i::supports_modifiable_properties (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
-                         CORBA::B_FALSE);
+                         0);
   return this->supports_modifiable_properties_;
 }
 
@@ -149,7 +149,7 @@ CORBA::Boolean
 TAO_Support_Attributes_i::supports_dynamic_properties (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
-                         CORBA::B_FALSE);
+                         0);
 
   return this->supports_dynamic_properties_;
 }
@@ -166,7 +166,7 @@ CORBA::Boolean
 TAO_Support_Attributes_i::supports_proxy_offers (void) const
 {
   ACE_READ_GUARD_RETURN (ACE_Lock, ace_mon, this->locker_.lock (),
-                         CORBA::B_FALSE);
+                         0);
 
   return this->supports_proxy_offers_;
 }
@@ -640,9 +640,9 @@ TAO_Trader_Factory::create_trader (int& argc, char** argv)
 
 TAO_Trader_Factory::TAO_Trader_Factory (int& argc, char** argv)
   : conformance_ (TAO_TRADER_LINKED),
-    threadsafe_ (CORBA::B_FALSE),
-    supports_dynamic_properties_ (CORBA::B_TRUE),
-    supports_modifiable_properties_ (CORBA::B_TRUE),
+    threadsafe_ (0),
+    supports_dynamic_properties_ (1),
+    supports_modifiable_properties_ (1),
     def_search_card_ (20),
     max_search_card_ (50),
     def_match_card_ (20),
@@ -728,7 +728,7 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
       if (ACE_OS::strcmp (current_arg, "-TSthreadsafe") == 0)
         {
           arg_shifter.consume_arg ();
-          this->threadsafe_ = CORBA::B_TRUE;
+          this->threadsafe_ = 1;
         }
       else if (ACE_OS::strcmp (current_arg, "-TSconformance") == 0)
         {
@@ -757,9 +757,9 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
               char* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, "true") == 0)
-                this->supports_dynamic_properties_ = CORBA::B_TRUE;
+                this->supports_dynamic_properties_ = 1;
               else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
-                this->supports_dynamic_properties_ = CORBA::B_FALSE;
+                this->supports_dynamic_properties_ = 0;
 
               arg_shifter.consume_arg ();
             }
@@ -773,9 +773,9 @@ TAO_Trader_Factory::parse_args (int& argc, char** argv)
               char* arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, "true") == 0)
-                this->supports_modifiable_properties_ = CORBA::B_TRUE;
+                this->supports_modifiable_properties_ = 1;
               else if (ACE_OS::strcasecmp (arg_str, "false") == 0)
-                this->supports_modifiable_properties_ = CORBA::B_FALSE;
+                this->supports_modifiable_properties_ = 0;
 
               arg_shifter.consume_arg ();
             }

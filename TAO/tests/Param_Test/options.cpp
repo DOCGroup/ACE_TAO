@@ -27,8 +27,8 @@ Options::Options (void)
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
     loop_count_ (1),
-    debug_ (CORBA::B_FALSE),
-    shutdown_ (CORBA::B_FALSE)
+    debug_ (0),
+    shutdown_ (0)
 {
 }
 
@@ -57,7 +57,7 @@ Options::parse_args (int argc, char **argv)
         break;
 
       case 'x':
-        this->shutdown_ = CORBA::B_TRUE;
+        this->shutdown_ = 1;
         break;
 
       case 'n':                 // loop count

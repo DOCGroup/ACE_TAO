@@ -68,7 +68,7 @@ extern char 	*optarg;	// missing on some platforms
 	CORBA_NVList_ptr	nvlist; \
 	CORBA_ ## truetype	scratch = 0; \
 	CORBA_Any		temp_value (_tc_CORBA_ ## truetypename, \
-				    &scratch, CORBA_B_FALSE); \
+				    &scratch, 0); \
  	\
 	req.orb ()->create_list (3, nvlist); \
 	(void) nvlist->add_value (0, temp_value, \
@@ -95,7 +95,7 @@ extern char 	*optarg;	// missing on some platforms
 	CORBA_Any_ptr		any_val; \
  	\
 	any_val = nvlist->item (1)->value (); \
-	any_val->replace (any_val->type (), v2, CORBA_B_TRUE, env); \
+	any_val->replace (any_val->type (), v2, 1, env); \
 	if (env.exception () != 0) { \
 	    dexc (env, "test1_test_" # name "skeleton, val2 replace"); \
 	    return; \
@@ -106,7 +106,7 @@ extern char 	*optarg;	// missing on some platforms
 	*v1 = (CORBA_ ## truetype) OPERATION (v1copy); \
  	\
 	any_val = new CORBA_Any (_tc_CORBA_ ## truetypename, \
-		retval, CORBA_B_TRUE); \
+		retval, 1); \
 	req.result (any_val, env); \
 	if (env.exception () != 0) { \
 	    dexc (env, "test1_test_" # name "skeleton, result"); \
@@ -269,7 +269,7 @@ _test1_test_throw (CORBA_ServerRequest &req,
       test1_x1		*x;
 
       x = new test1_x1 (value);
-      any = new CORBA_Any (_tc_test1_x1, x, CORBA_B_TRUE);
+      any = new CORBA_Any (_tc_test1_x1, x, 1);
 
     }
   else if (value & 0x01)
@@ -277,7 +277,7 @@ _test1_test_throw (CORBA_ServerRequest &req,
       test1_x2		*x;
 
       x = new test1_x2 (CORBA_Object::_nil (), value);
-      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      any = new CORBA_Any (_tc_test1_x2, x, 1);
 
     } 
   else
@@ -286,7 +286,7 @@ _test1_test_throw (CORBA_ServerRequest &req,
       test1_x2		*x;
 
       x = new test1_x2 (req.oa()->target (), value);
-      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      any = new CORBA_Any (_tc_test1_x2, x, 1);
 #else
       //
       // XXX right now, we don't have a target() operation on the
@@ -533,14 +533,14 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
 
   for (;;) {
     if (idle == -1)
-      oa_ptr->get_request (CORBA_B_FALSE, 0, env);
+      oa_ptr->get_request (0, 0, env);
     else
       {
 	timeval		tv;
 
 	tv.tv_sec = idle;
 	tv.tv_usec = 0;
-	oa_ptr->get_request (CORBA_B_FALSE, &tv, env);
+	oa_ptr->get_request (0, &tv, env);
       }
 
     CORBA_Exception_ptr	xp;

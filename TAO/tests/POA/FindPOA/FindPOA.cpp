@@ -75,7 +75,7 @@ main (int argc, char **argv)
   ACE_CString name = "firstPOA";
   PortableServer::POA_var first_poa =
     root_poa->find_POA (name.c_str (),
-                        CORBA::B_TRUE,
+                        1,
                         env);
   if (env.exception () != 0)
     {
@@ -90,7 +90,7 @@ main (int argc, char **argv)
   name += "secondPOA";
   PortableServer::POA_var second_poa =
     root_poa->find_POA (name.c_str (),
-                        CORBA::B_TRUE,
+                        1,
                         env);
   if (env.exception () != 0)
     {
@@ -115,7 +115,7 @@ main (int argc, char **argv)
 
   PortableServer::POA_var fifth_poa =
     root_poa->find_POA (name.c_str (),
-                        CORBA::B_TRUE,
+                        1,
                         env);
   if (env.exception () != 0)
     {
@@ -166,8 +166,8 @@ main (int argc, char **argv)
 
   // This should destroy all its children
 
-  root_poa->destroy (CORBA::B_TRUE,
-                     CORBA::B_TRUE,
+  root_poa->destroy (1,
+                     1,
                      env);
   if (env.exception () != 0)
     {

@@ -82,9 +82,9 @@ DatabaseImpl::Entry::_is_a (CORBA::ServerRequest_ptr request,
   if (!ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") ||
       !ACE_OS::strcmp (value, "IDL:Database/Entry:1.0") ||
       !ACE_OS::strcmp (value, CORBA::_tc_Object->id (env)))
-    result = CORBA::B_TRUE;
+    result = 1;
   else
-    result = CORBA::B_FALSE;
+    result = 0;
   
   CORBA::Any result_any;
   CORBA::Any::from_boolean from_boolean (result);

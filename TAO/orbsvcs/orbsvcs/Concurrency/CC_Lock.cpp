@@ -71,17 +71,17 @@ CC_Lock::try_lock (CORBA::Environment &_env)
       if (errno == EBUSY)
         {
           lock_held_--;
-          return CORBA::B_FALSE;
+          return 0;
         }
       else
         TAO_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO),
-                          CORBA::B_FALSE);
+                          0);
     }
   ACE_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
               lock_held_));
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void
@@ -179,11 +179,11 @@ CC_Lock::dump(void)
 //        IW  X  X  X
 //
 CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
-  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE},
-  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE},
-  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_TRUE}};
+  {1, 0, 1, 1, 0},
+  {0, 0, 0, 0, 0},
+  {1, 0, 0, 1, 0},
+  {1, 0, 1, 1, 1},
+  {0, 0, 0, 1, 1}};
 
 // CC_LockModeterator
 
@@ -228,9 +228,9 @@ CORBA::Boolean
 CC_LockModeIterator::IsDone(void)
 {
   if(current_==CosConcurrencyControl::write)
-    return CORBA::B_TRUE;
+    return 1;
   else
-    return CORBA::B_FALSE;
+    return 0;
 }
 
 CosConcurrencyControl::lock_mode

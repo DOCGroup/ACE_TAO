@@ -145,8 +145,8 @@ main (int argc, char *argv[])
       if (orb->run () == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
-      root_poa->destroy (CORBA::B_TRUE, 
-			 CORBA::B_TRUE, 
+      root_poa->destroy (1, 
+			 1, 
 			 TAO_TRY_ENV);
       TAO_CHECK_ENV
     }

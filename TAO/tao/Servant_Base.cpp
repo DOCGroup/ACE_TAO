@@ -61,9 +61,9 @@ TAO_ServantBase::_is_a (const char* logical_type_id,
 {
   if (ACE_OS::strcmp (logical_type_id, CORBA::_tc_Object->id (env)) == 0)
     {
-      return CORBA::B_TRUE;
+      return 1;
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 int
@@ -140,7 +140,7 @@ TAO_DynamicImplementation::_this (CORBA::Environment &env)
     return CORBA::Object::_nil ();
 
   // Create a object
-  return new CORBA::Object (stub, this, CORBA::B_TRUE);
+  return new CORBA::Object (stub, this, 1);
 }
 
 const char *

@@ -147,15 +147,15 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (_tc_Coffee,
                      this->in_courier,
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (_tc_Coffee,
                         this->inout_courier,
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (_tc_Coffee,
                       this->out_courier,
-                      CORBA::B_FALSE);
+                      0);
 
   // Add parameters.
   param_list->add_value ("o1",
@@ -176,7 +176,7 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
   // Add return value.
   retval->item (0, env)->value ()->replace (_tc_Coffee,
                                             this->ret_courier,
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
 
   return 0;

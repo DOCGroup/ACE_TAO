@@ -100,7 +100,7 @@ Marshal::Marshal_Union& Marshal::Marshal_Union::operator=(const Marshal::Marshal
 Marshal::AnySeq::AnySeq (CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Any [this->_maximum];
@@ -121,7 +121,7 @@ Marshal::AnySeq::AnySeq (CORBA_ULong max, CORBA_ULong length,
 Marshal::AnySeq::~AnySeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -200,7 +200,7 @@ static const CORBA_Long _oc_Marshal_Struct [] = {
 static CORBA_TypeCode _tc__tc_Marshal_Struct (tk_struct, 
 					      sizeof _oc_Marshal_Struct, 
 					      (unsigned char *) &_oc_Marshal_Struct,
-					      CORBA_B_FALSE);
+					      0);
 CORBA_TypeCode_ptr Marshal::_tc_Marshal_Struct = &_tc__tc_Marshal_Struct;
 
 
@@ -222,7 +222,7 @@ static const CORBA_Long _oc_discrim [] = {
 static CORBA_TypeCode _tc__tc_discrim (tk_enum, 
 				       sizeof _oc_discrim, 
 				       (unsigned char *) &_oc_discrim,
-				       CORBA_B_FALSE);
+				       0);
 
 CORBA_TypeCode_ptr Marshal::_tc_discrim = &_tc__tc_discrim;
 
@@ -321,7 +321,7 @@ static const CORBA_Long _oc_Marshal_Union [] =
 static CORBA_TypeCode _tc__tc_Marshal_Union (tk_union, 
 					     sizeof _oc_Marshal_Union, 
 					     (unsigned char *) &_oc_Marshal_Union,
-					     CORBA_B_FALSE);
+					     0);
 
 CORBA_TypeCode_ptr Marshal::_tc_Marshal_Union = &_tc__tc_Marshal_Union;
 
@@ -336,7 +336,7 @@ static CORBA_TypeCode _tc__tc_AnySeq (tk_sequence,
 					      _oc_AnySeq, 
 					      (unsigned char *)
 					      &_oc_AnySeq,
-					      CORBA_B_FALSE);
+					      0);
 
 CORBA_TypeCode_ptr Marshal::_tc_AnySeq = &_tc__tc_AnySeq; 
 
@@ -350,7 +350,7 @@ static const TAO_Param_Data marshal_test_short_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_short_calldata = {
   "test_short",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_short_paramdata [0], //
   0, 0
@@ -377,7 +377,7 @@ static const TAO_Param_Data marshal_test_long_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_long_calldata = {
   "test_long",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_long_paramdata [0], //
   0, 0
@@ -404,7 +404,7 @@ static const TAO_Param_Data marshal_test_octet_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_octet_calldata = {
   "test_octet",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_octet_paramdata [0], //
   0, 0
@@ -431,7 +431,7 @@ static const TAO_Param_Data marshal_test_char_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_char_calldata = {
   "test_char",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_char_paramdata [0], //
   0, 0
@@ -458,7 +458,7 @@ static const TAO_Param_Data marshal_test_double_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_double_calldata = {
   "test_double",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_double_paramdata [0], //
   0, 0
@@ -485,7 +485,7 @@ static const TAO_Param_Data marshal_test_struct_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_struct_calldata = {
   "test_struct",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_struct_paramdata [0], //
   0, 0
@@ -513,7 +513,7 @@ static const TAO_Param_Data marshal_test_union_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_union_calldata = {
   "test_union",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_union_paramdata [0], //
   0, 0
@@ -541,7 +541,7 @@ static const TAO_Param_Data marshal_test_any_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_any_calldata = {
   "test_any",  // op_name
-  CORBA_B_TRUE,  // twoway, although it returns void
+  1,  // twoway, although it returns void
   3,             // param count
   & marshal_test_any_paramdata[0], //
   0, 0
@@ -568,7 +568,7 @@ static const TAO_Param_Data marshal_test_sequence_paramdata [] = {
 
 static const TAO_Call_Data marshal_test_sequence_calldata = {
   "test_sequence",  // opname
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
   &marshal_test_sequence_paramdata [0],
   0, 0

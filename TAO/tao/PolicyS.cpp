@@ -182,9 +182,9 @@ CORBA::Boolean POA_CORBA::Policy::_is_a (
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Policy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-      return CORBA::B_TRUE;
+      return 1;
     else
-      return CORBA::B_FALSE;
+      return 0;
 }
 
 void* POA_CORBA::Policy::_downcast (
@@ -221,8 +221,8 @@ POA_CORBA::_tao_collocated_Policy::_tao_collocated_Policy (
     POA_CORBA::Policy_ptr  servant,
     STUB_Object *stub
   )
-  : CORBA_Policy (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
+  : CORBA_Policy (stub, servant, 1),
+    CORBA_Object (stub, servant, 1),
     servant_ (servant)
 {
 }

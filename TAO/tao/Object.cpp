@@ -52,7 +52,7 @@ CORBA_Object::_get_interface (CORBA::Environment &env)
   static const TAO_Call_Data Object_get_interface_calldata =
   {
     "_interface",
-    CORBA::B_TRUE,
+    1,
     1,
     &Object_get_interface_params [0],
     0, 0
@@ -94,7 +94,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   static const TAO_Call_Data Object_is_a_calldata =
   {
-    "_is_a", CORBA::B_TRUE,
+    "_is_a", 1,
     2, &Object_is_a_params [0],
     0, 0
   };
@@ -122,14 +122,14 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   if ( ACE_static_cast(const char *, this->_stubobj ()->type_id) != 0
       && ACE_OS::strcmp ((char *) type_id, (char *) this->_stubobj ()->type_id) == 0)
-    return CORBA::B_TRUE;
+    return 1;
 
   // Our local knowledge about this type is insufficient to say
   // whether this reference is to an object of a type which "is_a"
   // subtype of the type whose ID is passed as a parameter.  The
   // implementation always knows the answer to that question, however!
 
-  CORBA::Boolean retval = CORBA::B_FALSE;
+  CORBA::Boolean retval = 0;
 
   void* _tao_arguments[2];
   void** _tao_current_arg = _tao_arguments;
@@ -179,12 +179,12 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
 
   static const TAO_Call_Data Object_non_existent_calldata =
   {
-    "_non_existent", CORBA::B_TRUE,
+    "_non_existent", 1,
     1, &Object_non_existent_params [0],
     0, 0
   };
 
-  CORBA::Boolean retval = CORBA::B_FALSE;
+  CORBA::Boolean retval = 0;
 
   void* _tao_arguments[1];
   void** _tao_current_arg = _tao_arguments;
@@ -200,10 +200,10 @@ CORBA_Object::_non_existent (CORBA::Environment &env)
       if (CORBA::OBJECT_NOT_EXIST::_narrow (x) != 0)
 	{
 	  env.clear ();
-	  return CORBA::B_TRUE;
+	  return 1;
 	}
     }
-  return CORBA::B_FALSE;
+  return 0;
 }
 
 // Quickly hash an object reference's representation data.  Used to
@@ -229,7 +229,7 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
   if (other_obj == this)
     {
       env.clear ();
-      return CORBA::B_TRUE;
+      return 1;
     }
 
   return this->_stubobj ()->is_equivalent (other_obj, env);

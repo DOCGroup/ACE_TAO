@@ -101,15 +101,15 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
 {
   CORBA::Any in_arg (CORBA::_tc_TypeCode, 
                      &this->in_, 
-                     CORBA::B_FALSE);
+                     0);
 
   CORBA::Any inout_arg (CORBA::_tc_TypeCode, 
                         &this->inout_,
-                        CORBA::B_FALSE);
+                        0);
 
   CORBA::Any out_arg (CORBA::_tc_TypeCode, 
                       &this->out_, 
-                      CORBA::B_FALSE);
+                      0);
 
   // add parameters
   param_list->add_value ("s1",
@@ -130,7 +130,7 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
   // add return value
   retval->item (0, env)->value ()->replace (CORBA::_tc_TypeCode,
                                             &this->ret_,
-                                            CORBA::B_FALSE, // does not own
+                                            0, // does not own
                                             env);
   return 0;
 }

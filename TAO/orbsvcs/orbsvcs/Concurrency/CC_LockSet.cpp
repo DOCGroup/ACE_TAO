@@ -81,10 +81,10 @@ CORBA::Boolean CC_LockSet::compatible (CC_LockModeEnum mr)
 {
   for (size_t i = CC_IR; i <= CC_W; i++)
     if (this->lock_[i] > 0)
-      if (this->compatible_[i][mr] == CORBA::B_FALSE)
-        return CORBA::B_FALSE;
+      if (this->compatible_[i][mr] == 0)
+        return 0;
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // Locks the lock in the desired mode. Blocks until success.
@@ -119,9 +119,9 @@ CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
               "CC_LockSet::try_lock\n"));
 
   if (this->try_lock_i (lm) == 0)
-    return CORBA::B_FALSE;
+    return 0;
   else
-    return CORBA::B_TRUE;
+    return 1;
 }
 
 // Converts the enum from the spec to the internally (ordered)
@@ -178,7 +178,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
 
           lock_queue_.dequeue_head (lock_on_queue);
 
-          if (compatible (lock_on_queue) == CORBA::B_TRUE)
+          if (compatible (lock_on_queue) == 1)
             {
               if (semaphore_.release () == -1)
                 TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
@@ -240,7 +240,7 @@ CC_LockSet::lock_i (CC_LockModeEnum lm)
   // If the lock is not compatible with the locks we hold allready or
   // there is lock requests in the queue we cannot grant the lock and
   // thus we queue the request. Otherwise update the lock count.
-  if (compatible (lm) == CORBA::B_FALSE || lock_queue_.size () > 0)
+  if (compatible (lm) == 0 || lock_queue_.size () > 0)
     {
       // Put the lock mode in the queue
       lock_queue_.enqueue_tail (lm);
@@ -260,7 +260,7 @@ CC_LockSet::try_lock_i (CC_LockModeEnum lm)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mlock_, 1);
   // If the lock we try is compatible with the locks we hold we just
   // opdates the count. Otherwise we return false.
-  if (compatible (lm) == CORBA::B_FALSE)
+  if (compatible (lm) == 0)
     {
       this->dump ();
       return 0;
@@ -285,7 +285,7 @@ CC_LockSet::change_mode_i (CC_LockModeEnum lm_held,
 
   lock_[lm_held]--;
 
-  if (compatible (lm_new) == CORBA::B_TRUE)
+  if (compatible (lm_new) == 1)
     {
       lock_[lm_new]++;
       this->dump ();
@@ -324,11 +324,11 @@ CC_LockSet::dump (void)
 }
 
 CORBA::Boolean CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE},
-  {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
-  {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE}};
+  {1, 1, 1, 1, 0},
+  {1, 1, 1, 0, 0},
+  {1, 1, 0, 0, 0},
+  {1, 0, 0, 1, 0},
+  {0, 0, 0, 0, 0}};
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<CC_LockModeEnum>;

@@ -134,7 +134,7 @@ main (int    argc, char   *argv[])
       return 1;
     }
 
-  if (CORBA_is_nil (objref) == CORBA_B_TRUE)
+  if (CORBA_is_nil (objref) == 1)
     ACE_ERROR_RETURN((LM_ERROR, "%s:  must identify non-null target objref\n", argv [0]), 1);
 
   // Narrow the CORBA_Object reference to the stub object, checking
@@ -309,7 +309,7 @@ main (int    argc, char   *argv[])
        
     arg.o = 3; arg.l = 5; arg.s = -7;
        
-    CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, CORBA_B_FALSE);
+    CORBA_Any	tmp_arg (TC_Cubit_Many, &arg, 0);
        
     req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
     if (env.exception () != 0) {
@@ -319,7 +319,7 @@ main (int    argc, char   *argv[])
     }
        
     req->result ()->value ()
-      ->replace (TC_Cubit_Many, 0, CORBA_B_TRUE, env);
+      ->replace (TC_Cubit_Many, 0, 1, env);
     if (env.exception () != 0) {
       print_exception (env.exception (), "DII request result type");
       CORBA_release (req);
@@ -470,7 +470,7 @@ cube_union_dii (unsigned          &call_count,
    u.cm.s = -7;
    u.cm.o = 3;
 
-   CORBA_Any	tmp_arg (TC_Cubit_oneof, &u, CORBA_B_FALSE);
+   CORBA_Any	tmp_arg (TC_Cubit_oneof, &u, 0);
    
    req->arguments ()->add_value (0, tmp_arg, CORBA_ARG_IN, env);
    if (env.exception () != 0) {
@@ -480,7 +480,7 @@ cube_union_dii (unsigned          &call_count,
       return;
    }
 	
-   req->result ()->value ()->replace (TC_Cubit_oneof, 0, CORBA_B_TRUE, env);
+   req->result ()->value ()->replace (TC_Cubit_oneof, 0, 1, env);
    if (env.exception () != 0) {
       error_count++;
       print_exception (env.exception (), "cube_union_dii result type");

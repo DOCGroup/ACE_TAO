@@ -43,8 +43,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
-CORBA::Boolean CORBA::B_FALSE = 0;
-CORBA::Boolean CORBA::B_TRUE = 1;
 
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)
@@ -76,9 +74,9 @@ CORBA::string_dup (const CORBA::Char *str)
 
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
-    open_called_ (CORBA::B_FALSE),
+    open_called_ (0),
     shutdown_lock_ (0),
-    should_shutdown_ (CORBA::B_FALSE),
+    should_shutdown_ (0),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
     event_service_ (CORBA_Object::_nil ()),
@@ -128,15 +126,15 @@ int
 CORBA_ORB::open (void)
 {
   // Double check pattern
-  if (this->open_called_ == CORBA::B_TRUE)
+  if (this->open_called_ == 1)
     return 1;
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
   
-  if (this->open_called_ == CORBA::B_TRUE)
+  if (this->open_called_ == 1)
     return 1;
 
-  this->open_called_ = CORBA::B_TRUE;
+  this->open_called_ = 1;
 
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
   TAO_Server_Strategy_Factory *f = ocp->server_factory ();

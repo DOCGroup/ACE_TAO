@@ -104,7 +104,7 @@ main (int argc, char **argv)
   int message_length = ACE_OS::strlen (message) + 1;
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
   ACE_OS::strcpy ((char *) buffer, message);
-  File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, CORBA::B_TRUE);
+  File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
 
   // write the message to the file
   fd->write (data_sent, env);

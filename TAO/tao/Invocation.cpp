@@ -244,7 +244,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 			     this->out_stream_,
 			     this->orb_core_);
 
-  if (bt != CORBA::B_TRUE)
+  if (bt != 1)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       return;
@@ -498,7 +498,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &env)
 {
   TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (CORBA::B_TRUE, env);
+    TAO_GIOP_Invocation::invoke (1, env);
   if (env.exception () != 0)
     return retval;
 
@@ -659,7 +659,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Pull the exception ID out of the marshaling buffer.
         {
-          if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
+          if (this->inp_stream_.read_string (buf) == 0)
             {
               TAO_GIOP::send_error (this->data_->handler ());
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -753,7 +753,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::Environment &env)
 {
   TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (CORBA::B_TRUE, env);
+    TAO_GIOP_Invocation::invoke (1, env);
   if (env.exception () != 0)
     return retval;
 
@@ -914,7 +914,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
         // Pull the exception ID out of the marshaling buffer.
         {
-          if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
+          if (this->inp_stream_.read_string (buf) == 0)
             {
               TAO_GIOP::send_error (this->data_->handler ());
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -1024,7 +1024,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
   // Send Request, return on error or if we're done
 
   if (this->data_->handler ()->send_request (this->out_stream_,
-                                           CORBA::B_TRUE) == -1)
+                                           1) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.

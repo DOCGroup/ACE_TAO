@@ -108,8 +108,8 @@ main (int argc, char *const *argv)
   CORBA_Environment env;
   CORBA_ORB_ptr     orb_ptr;
   CORBA_BOA_ptr          oa_ptr;
-  CORBA_Boolean     do_fork = CORBA_B_FALSE;
-  CORBA_Boolean     do_threads = CORBA_B_FALSE;
+  CORBA_Boolean     do_fork = 0;
+  CORBA_Boolean     do_threads = 0;
   CORBA_String      key = (CORBA_String) "key0";
   char                *oa_name = "ROA";
   char                *orb_name = "internet";

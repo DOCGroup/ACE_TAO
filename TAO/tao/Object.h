@@ -118,7 +118,7 @@ public:
 
   CORBA_Object (STUB_Object *p = 0,
                 TAO_ServantBase *servant = 0,
-                CORBA::Boolean collocated = CORBA::B_FALSE);
+                CORBA::Boolean collocated = 0);
   // constructor
 
   virtual ~CORBA_Object (void);

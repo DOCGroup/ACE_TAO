@@ -47,14 +47,14 @@ ttcp_sequence::ShortSeq::ShortSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::ShortSeq::ShortSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Short[this->_maximum];
@@ -75,7 +75,7 @@ ttcp_sequence::ShortSeq::ShortSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::ShortSeq::~ShortSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -122,14 +122,14 @@ ttcp_sequence::LongSeq::LongSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::LongSeq::LongSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Long[this->_maximum];
@@ -150,7 +150,7 @@ ttcp_sequence::LongSeq::LongSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::LongSeq::~LongSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -197,14 +197,14 @@ ttcp_sequence::DoubleSeq::DoubleSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::DoubleSeq::DoubleSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Double[this->_maximum];
@@ -225,7 +225,7 @@ ttcp_sequence::DoubleSeq::DoubleSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::DoubleSeq::~DoubleSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -272,14 +272,14 @@ ttcp_sequence::CharSeq::CharSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::CharSeq::CharSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Char[this->_maximum];
@@ -300,7 +300,7 @@ ttcp_sequence::CharSeq::CharSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::CharSeq::~CharSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -347,14 +347,14 @@ ttcp_sequence::OctetSeq::OctetSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::OctetSeq::OctetSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new CORBA_Octet[this->_maximum];
@@ -375,7 +375,7 @@ ttcp_sequence::OctetSeq::OctetSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::OctetSeq::~OctetSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -423,14 +423,14 @@ ttcp_sequence::StructSeq::StructSeq()
   : _maximum(0),
     _length(0),
     _buffer(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
 }
 
 ttcp_sequence::StructSeq::StructSeq(CORBA_ULong max)
   : _maximum(max),
     _length(0),
-    _release(CORBA_B_FALSE)
+    _release(0)
 {
   if (this->_maximum > 0){
     this->_buffer = new PerfStruct[this->_maximum];
@@ -451,7 +451,7 @@ ttcp_sequence::StructSeq::StructSeq(CORBA_ULong max, CORBA_ULong length,
 ttcp_sequence::StructSeq::~StructSeq()
 {
   this->_maximum = this->_length = 0;
-  if (this->_release != CORBA_B_FALSE)
+  if (this->_release != 0)
     delete this->_buffer;
 }
 
@@ -538,7 +538,7 @@ static const CORBA_Long _oc_PerfStruct [] = {
 static CORBA_TypeCode _tc__tc_PerfStruct(tk_struct, 
 					  sizeof _oc_PerfStruct, 
 					  (unsigned char *) &_oc_PerfStruct,
-					  CORBA_B_FALSE);
+					  0);
 CORBA_TypeCode_ptr _tc_PerfStruct = &_tc__tc_PerfStruct;
 
 // Typecodes for all the sequences
@@ -587,7 +587,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_StructSeq(tk_sequence,
 						      _oc_ttcp_sequence_StructSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_StructSeq,
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_StructSeq = &_tc__tc_ttcp_sequence_StructSeq; 
 
 // ShortSeq
@@ -601,7 +601,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_ShortSeq(tk_sequence,
 						      _oc_ttcp_sequence_ShortSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_ShortSeq, 
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_ShortSeq = &_tc__tc_ttcp_sequence_ShortSeq; 
 
 // LongSeq
@@ -615,7 +615,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_LongSeq(tk_sequence,
 						      _oc_ttcp_sequence_LongSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_LongSeq, 
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_LongSeq = &_tc__tc_ttcp_sequence_LongSeq; 
 
 // DoubleSeq
@@ -629,7 +629,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_DoubleSeq(tk_sequence,
 						      _oc_ttcp_sequence_DoubleSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_DoubleSeq, 
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_DoubleSeq = &_tc__tc_ttcp_sequence_DoubleSeq;
 
 // CharSeq
@@ -643,7 +643,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_CharSeq(tk_sequence,
 						      _oc_ttcp_sequence_CharSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_CharSeq, 
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_CharSeq = &_tc__tc_ttcp_sequence_CharSeq;
 
 //OctetSeq
@@ -657,7 +657,7 @@ static CORBA_TypeCode _tc__tc_ttcp_sequence_OctetSeq(tk_sequence,
 						      _oc_ttcp_sequence_OctetSeq, 
 						      (unsigned char *)
 						      &_oc_ttcp_sequence_OctetSeq, 
-						      CORBA_B_FALSE);
+						      0);
 CORBA_TypeCode_ptr ttcp_sequence::_tc_OctetSeq = &_tc__tc_ttcp_sequence_OctetSeq;
 
 
@@ -681,10 +681,10 @@ static const TAO_Param_Data ttcp_sequence_sendShortSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendShortSeq_TAO_Call_Data = {
   "sendShortSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendShortSeq_params [0],
@@ -725,10 +725,10 @@ static const TAO_Param_Data ttcp_sequence_sendLongSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendLongSeq_TAO_Call_Data = {
   "sendLongSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendLongSeq_params [0],
@@ -769,10 +769,10 @@ static const TAO_Param_Data ttcp_sequence_sendDoubleSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendDoubleSeq_TAO_Call_Data = {
   "sendDoubleSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendDoubleSeq_params [0],
@@ -813,10 +813,10 @@ static const TAO_Param_Data ttcp_sequence_sendCharSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendCharSeq_TAO_Call_Data = {
   "sendCharSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendCharSeq_params [0],
@@ -857,10 +857,10 @@ static const TAO_Param_Data ttcp_sequence_sendOctetSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendOctetSeq_TAO_Call_Data = {
   "sendOctetSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendOctetSeq_params [0],
@@ -901,10 +901,10 @@ static const TAO_Param_Data ttcp_sequence_sendStructSeq_params [] = {
 static const TAO_Call_Data ttcp_sequence_sendStructSeq_TAO_Call_Data = {
   "sendStructSeq",  // opname
 #ifndef ONEWAY
-  CORBA_B_TRUE,   // twoway
+  1,   // twoway
   2,               // param count
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   1,
 #endif
   &ttcp_sequence_sendStructSeq_params [0],
@@ -941,11 +941,11 @@ static const TAO_Param_Data ttcp_sequence_start_timer_params [] = {
 static const TAO_Call_Data ttcp_sequence_start_timer_TAO_Call_Data = {
   "start_timer", 
 #ifndef ONEWAY
-  CORBA_B_TRUE,  // twoway
+  1,  // twoway
   1,
   &ttcp_sequence_start_timer_params [0],
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   0,
   0,
 #endif
@@ -981,11 +981,11 @@ static const TAO_Param_Data ttcp_sequence_stop_timer_params [] = {
 static const TAO_Call_Data ttcp_sequence_stop_timer_TAO_Call_Data = {
   "stop_timer", 
 #ifndef ONEWAY
-  CORBA_B_TRUE,
+  1,
   1,
   &ttcp_sequence_stop_timer_params[0],
 #else
-  CORBA_B_FALSE,  // oneway
+  0,  // oneway
   0,
   0,
 #endif

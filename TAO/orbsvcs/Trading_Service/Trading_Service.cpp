@@ -32,8 +32,8 @@ Trading_Shutdown::handle_signal (int signum, siginfo_t* sinfo, ucontext_t* ucon)
 }
 
 Trading_Service::Trading_Service (void)
-  : federate_ (CORBA::B_FALSE),
-    bootstrapper_ (CORBA::B_FALSE)
+  : federate_ (0),
+    bootstrapper_ (0)
 {
   char* trader_name =
     CORBA::string_alloc (MAXHOSTNAMELEN + 10);
@@ -162,7 +162,7 @@ Trading_Service::init_multicast_server (void)
                 "The multicast server setup is done.\n"));
 
   // Other trader instances will bootstrap to us.
-  this->bootstrapper_ = CORBA::B_TRUE;
+  this->bootstrapper_ = 1;
   
 #endif /* ACE_HAS_IP_MULTICAST */
   return 0;
@@ -355,7 +355,7 @@ Trading_Service::parse_args (int& argc, char *argv[])
       if (ACE_OS::strcmp (current_arg, "-TSfederate") == 0)
         {
           arg_shifter.consume_arg ();
-          this->federate_ = CORBA::B_TRUE;
+          this->federate_ = 1;
         }
       else
         arg_shifter.ignore_arg ();

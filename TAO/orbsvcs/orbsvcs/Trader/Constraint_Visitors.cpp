@@ -553,7 +553,7 @@ sequence_does_contain (CORBA::Any* sequence,
   // sequence. 
 
   CORBA::Environment env;
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  CORBA::Boolean return_value = 0;
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type =
     TAO_Sequence_Extracter_Base::sequence_type (type.in (), env);
@@ -949,7 +949,7 @@ visit_in (TAO_Binary_Constraint* binary_in)
   if (right_type == TAO_SEQUENCE)
     {
       CORBA::Environment env;
-      CORBA::Boolean types_match = CORBA::B_FALSE;
+      CORBA::Boolean types_match = 0;
       CORBA::TCKind seq_type =
         TAO_Sequence_Extracter_Base::sequence_type (prop_type, env);
       TAO_CHECK_ENV_RETURN (env, return_value);

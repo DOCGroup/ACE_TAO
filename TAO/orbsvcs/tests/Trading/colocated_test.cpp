@@ -17,11 +17,11 @@ parse_args (int argc, char *argv[],
   int opt;
   ACE_Get_Opt get_opt (argc, argv, "fq");
 
-  verbose = CORBA::B_TRUE;
+  verbose = 1;
   while ((opt = get_opt ()) != EOF)
     {
       if (opt == 'q')
-        verbose = CORBA::B_FALSE;
+        verbose = 0;
     }
 }
 
@@ -35,7 +35,7 @@ main (int argc, char** argv)
       TAO_CHECK_ENV
 
       // Command line argument interpretation.
-      CORBA::Boolean verbose = CORBA::B_FALSE;
+      CORBA::Boolean verbose = 0;
       ::parse_args (argc, argv, verbose);
         
       // Initialize ORB.

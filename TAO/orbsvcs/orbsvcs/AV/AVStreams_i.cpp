@@ -383,7 +383,7 @@ TAO_Server_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                      "(%P|%t) Calling TAO_Server_StreamEndPoint::connect"
                      " is not compatible with the spec!"
                      "\n"),
-                    CORBA::B_FALSE);
+                    0);
 }
 
 // Called by our peer endpoint, requesting us to establish
@@ -516,7 +516,7 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                  flow_spec,
                                  env);
 
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env,0);
 
   // Make the upcall to the app
   return this->handle_postconnect (flow_spec);
@@ -582,7 +582,7 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
                                           the_spec,
                                           env);
 
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env,0);
   // Make the upcall to the app
   return this->handle_connection_requested (the_spec,
                                             env);
@@ -626,7 +626,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                                                                               env);
 
   TAO_CHECK_ENV_RETURN (env,
-                        CORBA::B_FALSE);
+                        0);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) TAO_VDev::set_peer: my peer is %s\n",
@@ -639,7 +639,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                          env);
 
   TAO_CHECK_ENV_RETURN (env,
-                        CORBA::B_FALSE);
+                        0);
 
   this->streamctrl_ = the_ctrl;
   this->peer_ = the_peer_dev;
@@ -648,7 +648,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   CORBA::String media_ctrl_ior;
   anyptr = this->peer_->get_property_value ("Related_MediaCtrl",
                                             env);
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_TRUE);
+  TAO_CHECK_ENV_RETURN (env,1);
 
   if (anyptr != 0)
     {
@@ -659,11 +659,11 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   CORBA::Object_ptr media_ctrl_obj =
     TAO_ORB_Core_instance ()->orb ()->string_to_object
     (media_ctrl_ior,env);
-  TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env, 0);
 
   CORBA::Boolean result =
     this->set_media_ctrl (media_ctrl_obj,env);
-  TAO_CHECK_ENV_RETURN (env,CORBA::B_FALSE);
+  TAO_CHECK_ENV_RETURN (env,0);
 
   return result;
 }
@@ -672,7 +672,7 @@ CORBA::Boolean
 TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
                           CORBA::Environment &env)
 {
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 // @@ Need to throw not-supported exception here

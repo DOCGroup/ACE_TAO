@@ -27,7 +27,7 @@ Client_StreamEndPoint::handle_close (void)
 CORBA::Boolean
 Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
-  //  return CORBA::B_TRUE;
+  //  return 1;
   the_spec.length (0);
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
   return 0;
@@ -39,7 +39,7 @@ Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 CORBA::Boolean
 Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spec)
 {
-  //  return CORBA::B_TRUE;
+  //  return 1;
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_postconnect called \n"));
   return 0;
 }
@@ -121,7 +121,7 @@ ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
               "(%P|%t) client flow spec is %s\n",
               client_address_string));
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 CORBA::Boolean
@@ -129,7 +129,7 @@ ttcp_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spec
 {
   ACE_DEBUG ((LM_DEBUG,"ttcp_Client_StreamEndPoint::handle_postconnect \n"));
   this->client_->set_stream (this->peer ());
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 int

@@ -94,7 +94,7 @@ Any_Test_Client::run ()
       navigation_.completion_time = 5;
       navigation_.computation_time = 6;
 
-      data.replace (_tc_Navigation, &navigation_, CORBA::B_FALSE, TAO_TRY_ENV);
+      data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
 
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Navigation\n")); 
       //any_test_ptr_->try_an_any (data, TAO_TRY_ENV);
@@ -133,7 +133,7 @@ Any_Test_Client::run ()
       weapons_.completion_time = 5;
       weapons_.computation_time = 6;
       
-      data.replace (_tc_Weapons, &weapons_, CORBA::B_FALSE, TAO_TRY_ENV);
+      data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       ACE_DEBUG ((LM_DEBUG,"Starting test with Any: Weapons\n")); 

@@ -55,14 +55,14 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     acceptor_ (0),
     poa_current_ (0),
     resource_factory_ (0),
-    resource_factory_from_service_config_ (CORBA::B_FALSE),
+    resource_factory_from_service_config_ (0),
     client_factory_ (0),
-    client_factory_from_service_config_ (CORBA::B_FALSE),
+    client_factory_from_service_config_ (0),
     server_factory_ (0),
-    server_factory_from_service_config_ (CORBA::B_FALSE),
-    opt_for_collocation_ (CORBA::B_TRUE),
+    server_factory_from_service_config_ (0),
+    opt_for_collocation_ (1),
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
-    arl_same_port_connect_ (CORBA::B_FALSE),
+    arl_same_port_connect_ (0),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0),
     default_environment_ (0),
@@ -130,7 +130,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
                               TAO_DEFAULT_SERVER_PORT);
   CORBA::String_var host = CORBA::string_dup ("");
   CORBA::UShort port = defport;
-  CORBA::Boolean use_ior = CORBA::B_TRUE;
+  CORBA::Boolean use_ior = 1;
   int cdr_tradeoff = TAO_DEFAULT_CDR_MEMCPY_TRADEOFF;
 
   int iiop_lite = 0;
@@ -307,7 +307,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
             {
               char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "URL") == 0)
-                use_ior = CORBA::B_FALSE;
+                use_ior = 0;
 
               arg_shifter.consume_arg ();
             }
@@ -322,9 +322,9 @@ TAO_ORB_Core::init (int& argc, char** argv)
             {
               char *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "YES") == 0)
-                this->opt_for_collocation_ = CORBA::B_TRUE;
+                this->opt_for_collocation_ = 1;
               else if (ACE_OS::strcasecmp (opt, "NO") == 0)
-                this->opt_for_collocation_ = CORBA::B_FALSE;
+                this->opt_for_collocation_ = 0;
 
               arg_shifter.consume_arg ();
             }
@@ -381,7 +381,7 @@ TAO_ORB_Core::init (int& argc, char** argv)
           if (arg_shifter.is_parameter_next ())
             {
               if (ACE_OS::strcasecmp (arg_shifter.get_current (), "yes") == 0)
-                this->arl_same_port_connect_ = CORBA::B_TRUE;
+                this->arl_same_port_connect_ = 1;
               arg_shifter.consume_arg ();
             }
         }
@@ -709,7 +709,7 @@ TAO_ORB_Core::resource_factory (void)
       // Look in the service repository for an instance.
       this->resource_factory_ =
         ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
-      this->resource_factory_from_service_config_ = CORBA::B_TRUE;
+      this->resource_factory_from_service_config_ = 1;
     }
 
   if (this->resource_factory_ == 0)
@@ -727,7 +727,7 @@ TAO_ORB_Core::resource_factory (void)
                       0);
 
       this->resource_factory_from_service_config_ =
-        CORBA::B_FALSE;
+        0;
       this->resource_factory_->resource_source (TAO_Resource_Factory::TAO_GLOBAL);
 
       // At this point we need to register this with the
@@ -746,7 +746,7 @@ TAO_ORB_Core::client_factory (void)
       this->client_factory_ =
         ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
       this->client_factory_from_service_config_ =
-        CORBA::B_TRUE;
+        1;
     }
 
   if (this->client_factory_ == 0)
@@ -763,7 +763,7 @@ TAO_ORB_Core::client_factory (void)
                       TAO_Default_Client_Strategy_Factory,
                       0);
 
-      this->client_factory_from_service_config_ = CORBA::B_FALSE;
+      this->client_factory_from_service_config_ = 0;
       // At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
@@ -780,7 +780,7 @@ TAO_ORB_Core::server_factory (void)
       this->server_factory_ =
         ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance
           ("Server_Strategy_Factory");
-      this->server_factory_from_service_config_ = CORBA::B_TRUE;
+      this->server_factory_from_service_config_ = 1;
     }
 
   // If the <server_factory_> isn't found it's usually because the ORB
@@ -798,7 +798,7 @@ TAO_ORB_Core::server_factory (void)
                       TAO_Default_Server_Strategy_Factory,
                       0);
 
-      this->server_factory_from_service_config_ = CORBA::B_FALSE;
+      this->server_factory_from_service_config_ = 0;
       // At this point we need to register this with the
       // <Service_Repository> to get it cleaned up properly.  But, for
       // now we let it leak.

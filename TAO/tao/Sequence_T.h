@@ -73,7 +73,7 @@ public:
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
 
   // = orbos/98-01-11 proposed extensions.
-  T *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
+  T *get_buffer (CORBA::Boolean orphan = 0);
   // Allows read-write access to the underlying buffer.  If <orphan>
   // is FALSE the sequence returns a pointer to its buffer, allocating
   // one if it has not yet done so.  The number of elements in the
@@ -110,7 +110,7 @@ public:
   void replace (CORBA::ULong max,
                 CORBA::ULong length,
                 T *data,
-                CORBA::Boolean release = CORBA::B_FALSE);
+                CORBA::Boolean release = 0);
   // Allows the buffer underlying a sequence to be replaced.  The
   // parameters to <replace> are identical in type, order, and purpose
   // to those for the <T *data> constructor for the sequence.
@@ -167,7 +167,7 @@ public:
   // deallocate the buffer
 
   // = orbos/98-01-11 proposed extensions.
-  T *get_buffer (CORBA::Boolean orphan = CORBA::B_FALSE);
+  T *get_buffer (CORBA::Boolean orphan = 0);
   // Allows read-write access to the underlying buffer.  If <orphan>
   // is FALSE the sequence returns a pointer to its buffer, allocating
   // one if it has not yet done so.  The size of the returned buffer
@@ -206,7 +206,7 @@ public:
   void replace (CORBA::ULong max,
                 CORBA::ULong length,
                 T *data,
-                CORBA::Boolean release = CORBA::B_FALSE);
+                CORBA::Boolean release = 0);
   // Allows the buffer underlying a sequence to be replaced.  The
   // parameters to <replace> are identical in type, order, and purpose
   // to those for the <T *data> constructor for the sequence.

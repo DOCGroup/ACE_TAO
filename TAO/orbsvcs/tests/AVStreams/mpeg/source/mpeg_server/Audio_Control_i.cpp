@@ -38,7 +38,7 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
   this->audio_global_->audioFile [i] = 0;
 
   if (Mpeg_Global::session_num > Mpeg_Global::session_limit || para.version != VERSION) 
-    return CORBA::B_FALSE; // failure
+    return 0; // failure
 
   memcpy(&(this->audio_global_->audioPara), &para.para, sizeof(this->audio_global_->audioPara));
   /*
@@ -53,9 +53,9 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
       {
 //         ACE_ERROR_RETURN ((LM_ERROR,
 //                            "(%p|%t) Audio_Control_i::init_audio () failed\n"),
-//                           CORBA::B_FALSE);
+//                           0);
         cerr << "init_audio failed in line " << __LINE__ << endl;
-        return CORBA::B_FALSE;
+        return 0;
 
       }
   }
@@ -106,13 +106,13 @@ Audio_Control_i::init_audio (const Audio_Control::INITaudioPara & para,
   reply.live = this->audio_global_->live_source;
   reply.format = AUDIO_RAW;
   
-  return CORBA::B_TRUE;
+  return 1;
  failure:
   {
    
     fprintf(stderr, "AS error: failed initializing audio file.\n");
     
-    return CORBA::B_FALSE;
+    return 0;
   }
 
 }                 
@@ -184,14 +184,14 @@ Audio_Control_i::set_peer (char *&peer,
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer: server port = %d\n",server_data_addr.get_port_number ()));
   ACE_NEW_RETURN (peer,
                   char [BUFSIZ],
-                  CORBA::B_FALSE);
+                  0);
   server_data_addr.set (server_data_addr.get_port_number (),
                         server_data_addr.get_host_name ());
   server_data_addr.addr_to_string (peer,
                                    BUFSIZ);
 
 
-  return CORBA::B_TRUE;
+  return 1;
 }
 
 void

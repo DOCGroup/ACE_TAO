@@ -140,7 +140,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
   *os << ", sizeof (_oc_" <<  node->flatname ()
       << "), (char *) &_oc_" << node->flatname ()
-      << ", CORBA::B_FALSE);" << be_nl;
+      << ", 0);" << be_nl;
 
   // is our enclosing scope a module? We need this check because for
   // platforms that support namespaces, the typecode must be declared

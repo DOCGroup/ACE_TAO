@@ -304,7 +304,7 @@ template <class SEQ_TYPE> CORBA::Boolean
 TAO_Sequence_Extracter<SEQ_TYPE>::
 extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
 {
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  CORBA::Boolean return_value = 0;
 
   TAO_TRY
     {
@@ -341,7 +341,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
                                                         1,
                                                         TAO_TRY_ENV);
                   TAO_CHECK_ENV;
-                  return_value = CORBA::B_TRUE;
+                  return_value = 1;
                 }
               else
                 delete seq;
@@ -349,7 +349,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
           else 
             {
               seq = (SEQ_TYPE*) any_value.value ();
-              return_value = CORBA::B_TRUE;
+              return_value = 1;
             }
         }
     }
@@ -368,14 +368,14 @@ template <class SEQ, class OPERAND_TYPE> CORBA::Boolean
 TAO_find (const SEQ& sequence, const OPERAND_TYPE element)
 {
   int length = sequence.length();
-  CORBA::Boolean return_value = CORBA::B_FALSE;
+  CORBA::Boolean return_value = 0;
 
   for (int i = 0; i < length; i++)
     {
       OPERAND_TYPE sequence_element = sequence[i];
       if (sequence_element == element)
 	{	  
-	  return_value = CORBA::B_TRUE;
+	  return_value = 1;
 	  break;
 	}
     }

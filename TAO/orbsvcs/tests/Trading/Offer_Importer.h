@@ -25,7 +25,7 @@ class TAO_Offer_Importer
 public:
 
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
-                      CORBA::Boolean verbose = CORBA::B_TRUE);
+                      CORBA::Boolean verbose = 1);
 
   void perform_queries (CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,

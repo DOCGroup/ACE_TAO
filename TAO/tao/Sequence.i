@@ -21,7 +21,7 @@ TAO_Base_Sequence::TAO_Base_Sequence (void)
   : maximum_ (0),
     length_ (0),
     buffer_ (0),
-    release_ (CORBA::B_FALSE)
+    release_ (0)
 {
 }
 
@@ -43,7 +43,7 @@ TAO_Base_Sequence::TAO_Base_Sequence (CORBA::ULong maximum,
   : maximum_ (maximum),
     length_ (0),
     buffer_ (data),
-    release_ (CORBA::B_TRUE)
+    release_ (1)
 {
 }
 
@@ -51,7 +51,7 @@ ACE_INLINE
 TAO_Base_Sequence::TAO_Base_Sequence (const TAO_Base_Sequence &rhs)
   : maximum_ (rhs.maximum_),
     length_ (rhs.length_),
-    release_ (CORBA::B_TRUE)
+    release_ (1)
 {
 }
 
@@ -66,7 +66,7 @@ TAO_Base_Sequence::operator= (const TAO_Base_Sequence &rhs)
 {
   this->maximum_ = rhs.maximum_;
   this->length_ = rhs.length_;
-  this->release_ = CORBA::B_TRUE;
+  this->release_ = 1;
   return *this;
 }
 
@@ -114,7 +114,7 @@ TAO_Unbounded_Base_Sequence::length (CORBA::ULong length)
     {
       this->_allocate_buffer (length);
       this->maximum_ = length;
-      this->release_ = CORBA::B_TRUE;
+      this->release_ = 1;
     }
   else if (length < this->length_)
     {
@@ -294,7 +294,7 @@ ACE_INLINE CORBA::Octet *
 TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
 {
   CORBA::Octet *result = 0;
-  if (orphan == CORBA::B_FALSE)
+  if (orphan == 0)
     {
       // We retain ownership.
 
@@ -310,7 +310,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
             ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
         }
     }
-  else if (this->mb_ != 0) // (orphan == CORBA::B_TRUE)
+  else if (this->mb_ != 0) // (orphan == 1)
     {
       // We must create a copy anyway:
       //   the user is supposed to call freebuf() to release the
@@ -323,7 +323,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
       ACE_OS::memcpy (result, this->buffer_, this->length_);
     }
-  else if (this->release_ != CORBA::B_FALSE)
+  else if (this->release_ != 0)
     {
       // We set the state back to default and relinquish
       // ownership.
@@ -331,7 +331,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
       this->maximum_ = 0;
       this->length_ = 0;
       this->buffer_ = 0;
-      this->release_ = CORBA::B_FALSE;
+      this->release_ = 0;
     }
   /* else
      // Oops, it's not our buffer to relinquish...
@@ -371,7 +371,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::replace (CORBA::ULong length,
   this->buffer_ = this->mb_->rd_ptr ();
   this->maximum_ = length;
   this->length_ = length;
-  this->release_ = CORBA::B_FALSE;
+  this->release_ = 0;
 }
 
 #endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
