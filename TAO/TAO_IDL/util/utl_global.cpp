@@ -139,7 +139,7 @@ IDL_GlobalData::IDL_GlobalData()
                char [strlen (ace_root) + strlen ("/bin/gperf") + 1]);
 #if defined (ACE_WIN32)
       ACE_OS::sprintf (this->perfect_hasher_,
-                       "%s\bin\gperf",
+                       "%s\\bin\\gperf",
                        ace_root);
 #else /* Not ACE_WIN32 */
       ACE_OS::sprintf (this->perfect_hasher_,
