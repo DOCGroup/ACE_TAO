@@ -56,17 +56,22 @@ from the file named in the ``svc.conf'' file.  The ``svc.conf'' file
 itself contains documentation about the load line.  It supports the
 following command-line arguments:
 
-        -p port         Start JAWS on the specified port
-        -n num_threads  Use num_threads as the maximum number of threads
-        -s strategy     Use one of following strategies:          
-                        0 -> single threaded concurrent synchronous
-                        1 -> thread per request
-                        2 -> thread pool
+        -p port         Start JAWS on the specified port.
+        -n num_threads  Use num_threads as the maximum number of threads.
+        -t thr_strategy Use one of the following strategies:
+                        POOL        -> thread pool
+                        PER_REQUEST -> thread-per-request
+                        THROTTLE    -> thread-per-request with throttling
+        -i io_strategy  Use one of the following strategies:
+                        SYNCH   -> synchronous I/O
+                        ASYNCH  -> asynchronous I/O
+        -b backlog      Backlog value for listen ().
 
 2b. General Information
 
 	By default, JAWS will used port 5432 with 5 threads and apply
-the synchronous thread pool strategy.
+the synchronous thread pool strategy.  Unless set, the default backlog
+value is equal the value of the maximum number of threads.
 
 	JAWS also responds to several environment variables.  This is
 a temporary feature which will be replaced by a more general

@@ -1,3 +1,21 @@
+Wed Jul  2 00:23:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* HTTP_Server.{h,cpp}: Changed parsing of options to use
+	  mnemonic names rather than numbers.  Added a new thread
+	  strategy, THROTTLE.  This is thread-per-request until some
+	  maximum number.  Unfortunately, it does not become thread-pool
+	  at this point... yet :-).  Added a new option to pass in a
+	  backlog value.
+
+	* svc.conf: adjusted to account for the changed options.
+
+	* README: changed to explain new svc.conf options.
+
+	* JAWS_File.cpp: Changed it so that when the file is added to the
+	  cache, it is also acquired.  When it is removed from the cache,
+	  it is released.  This is so that the reference count is at least
+	  one while the file is in the cache.
+
 Tue Jul  1 19:13:44 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* JAWS_File.cpp (JAWS_File): Changes the creation method of a
