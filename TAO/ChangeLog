@@ -1,3 +1,23 @@
+Wed Aug 27 17:37:44 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc 
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.cpp 
+        * tests/Portable_Interceptors/Bug_1559/Client_ORBInitializer.h 
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.cpp 
+        * tests/Portable_Interceptors/Bug_1559/Server_ORBInitializer.h 
+        * tests/Portable_Interceptors/Bug_1559/client.cpp 
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp 
+        * tests/Portable_Interceptors/Bug_1559/interceptors.h 
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl 
+        * tests/Portable_Interceptors/Bug_1559/server.cpp 
+        * tests/Portable_Interceptors/Bug_1559/test.idl 
+        * tests/Portable_Interceptors/Bug_1559/test_i.cpp 
+        * tests/Portable_Interceptors/Bug_1559/test_i.h 
+
+          Added test for portable interceptors. The test verifies that
+          service context manipulation works when a LOCATION_FORWARD is
+          received by a client (Bugzilla 1559).
+
 Wed Aug 27 15:13:45 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/ORB_init/Portspan/simpleI.cpp (test):
@@ -50,6 +70,7 @@ Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Fixed warning about potential use of an uninitialized variable.
 
+>>>>>>> 1.2448
 Wed Aug 27 14:11:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTSched.dsp:
