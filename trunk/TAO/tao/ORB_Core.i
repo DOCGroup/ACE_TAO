@@ -144,18 +144,6 @@ TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
   return retv;
 }
 
-ACE_INLINE ACE_Allocator*
-TAO_ORB_Core::output_cdr_dblock_allocator (void)
-{
-  return &this->output_cdr_dblock_allocator_;
-}
-
-ACE_INLINE ACE_Allocator*
-TAO_ORB_Core::output_cdr_buffer_allocator (void)
-{
-  return &this->output_cdr_buffer_allocator_;
-}
-
 ACE_INLINE CORBA_Environment*
 TAO_ORB_Core::default_environment (void) const
 {

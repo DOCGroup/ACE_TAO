@@ -1,3 +1,14 @@
+Wed Mar 31 09:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+	  Moved the output CDR allocators from the ORB_Core into the
+	  resource factory.  Even though this resources can always be TSS
+	  the ORB_Core is not used is a single thread anymore.
+	  Changes similar to this may be required as the ORB-thread
+	  relationship is decoupled.
+
 Wed Mar 31 06:58:28 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp (multicast_to_service): Fixed a couple mistakes in
