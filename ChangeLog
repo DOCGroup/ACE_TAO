@@ -1,3 +1,10 @@
+Wed Jan  5 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.inl (readdir_r):
+          For readdir_r we also have multiple versions on Solaris. Changed
+          the detection which version to use. Tested on Solaris 8, hopefully
+          fixes also the problems on Solaris 10
+
 Wed Jan  5 09:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.inl (sigwait):
