@@ -4,17 +4,6 @@ Mon Mar  3 17:23:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Fixed existing and added missing emulated exception support.
 
-Mon Mar  3 14:50:31 2003  Ossama Othman  <ossama@uci.edu>
-
-	* tao/DynamicInterface/Request.h:
-
-	  Explicitly qualify the TAO_Dynamic_Adapter_Impl friend
-	  declaration with a global scope qualifier in an attempt to work
-	  around a problem where some compilers assume that the friend
-	  declaration refers to a class in the local scope or current
-	  namespace.
-
-
 Mon Mar  3 14:36:53 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Exception.h:
@@ -89,7 +78,7 @@ Mon Mar  3 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
 
           Fixed the lhs of a constant assignment for octets and
-          enums to use the typedef name, if there is one. Thanks 
+          enums to use the typedef name, if there is one. Thanks
           to George Varsamis <gv@prismtechnologies.com> for
           reporting the problem.
 
@@ -97,7 +86,7 @@ Sun  Mar 2 15:10:02 3003 Pradeep Gore <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Admin.h:
 	  Removed extra ";" on line 85 that is foxing the BCB compiler.
-	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for spotting this.	
+	  Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for spotting this.
 
 Sun Mar  2 10:04:54 2003  Ossama Othman  <ossama@uci.edu>
 
