@@ -138,6 +138,10 @@ Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver (void)
 {
 }
 
+Reactor_Timer_Queue_Test_Driver::~Reactor_Timer_Queue_Test_Driver (void)
+{
+}
+
 int
 Reactor_Timer_Queue_Test_Driver::display_menu (void)
 {
