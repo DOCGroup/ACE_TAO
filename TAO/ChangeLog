@@ -1,3 +1,12 @@
+Wed Aug 13 14:41:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp (equal):
+
+          Added typedef stripping to handled aliased types. Thanks to
+          Stephan Frenzel <stephan.frenzel@realtech.de> for reporting
+          the problem with typedefs of strings. Also separated the
+          code paths for bounded and unbounded (w)strings.
+
 Wed Aug 13 19:28:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
