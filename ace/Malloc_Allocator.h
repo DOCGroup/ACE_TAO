@@ -1,14 +1,14 @@
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
  *  @file   Malloc_Allocator.h
  *
  *  $Id$
- *
+ * 
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
-
 
 #ifndef MALLOC_ALLOCATOR_H
 #define MALLOC_ALLOCATOR_H
@@ -60,21 +60,25 @@ struct ACE_Export ACE_Malloc_Stats
  * @brief Defines a class that provided a simple implementation of
  * memory allocation.
  *
- * This class uses the new/delete operators to allocate and free
- * up memory.  Please note that the only methods that are
- * supported are malloc and free. All other methods are no-ops.
- * If you require this functionality, please use:
- * ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
- * MUTEX> > This will allow you to use the added functionality
- * of bind/find/etc. while using the new/delete operators.
+ * This class uses the new/delete operators to allocate and free up
+ * memory.  Please note that the only methods that are supported are
+ * <malloc>, <calloc>, and <free>. All other methods are no-ops that
+ * return -1 and set <errno> to <ENOTSUP>.  If you require this
+ * functionality, please use: ACE_Allocator_Adapter <ACE_Malloc
+ * <ACE_LOCAL_MEMORY_POOL, MUTEX> >, which will allow you to use the
+ * added functionality of bind/find/etc. while using the new/delete
+ * operators.  
  */
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
 public:
+  /// These methods are defined.
   virtual void *malloc (size_t nbytes);
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
   virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
   virtual void free (void *ptr);
+
+  /// These methods are no-ops.
   virtual int remove (void);
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
   virtual int trybind (const char *name, void *&pointer);
