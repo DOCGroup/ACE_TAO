@@ -1778,7 +1778,7 @@ ACE::get_ip_interfaces (size_t &count,
 #define IPADDR_NAME_ID TEXT("IPAddress")
 #define PERIOD_STR TEXT(".")
 #define BLANK_STR TEXT(" ")
-#define INVALID_TCPIP_DEVICE_ADDR "0.0.0.0"
+#define INVALID_TCPIP_DEVICE_ADDR TEXT("0.0.0.0")
 
   const int MAX_STRING_SZ = 4096;
 
