@@ -49,7 +49,8 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request
       else
         {
           // Populate the NVList from the parameter information.
-          this->typed_event_channel_->create_operation_list (oper_params, list);
+          this->typed_event_channel_->create_operation_list (oper_params, list
+                                                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           
           // Get the operation arguments. This ahould demarshal correctly.
@@ -60,7 +61,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request
           TAO_CEC_TypedEvent typed_event (list, request->operation () );
 
           // Pass the TypedEvent to the TypedProxyPushConsumer
-          this->typed_pp_consumer_->invoke (typed_event);
+          this->typed_pp_consumer_->invoke (typed_event ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
