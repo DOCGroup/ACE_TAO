@@ -1,3 +1,8 @@
+Fri Oct 17 15:43:04 1997    <nw1@CHA-CHA>
+
+	* tao/connect.h: Added template instantiation supression directive
+ 	  for Win32.  VC was complaining about duplicate symbols definition.
+
 Thu Oct 16 23:48:04 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.12, released Thu Oct 16 23:48:04 1997.
