@@ -26,7 +26,7 @@ public:
 
   void activate (void)
   {
-    ACE_Time_Value tv (4, 20000);
+    ACE_Time_Value tv (150, 0);
     this->reactor()->schedule_timer (this, 0, tv, tv);
   }
 
@@ -116,7 +116,7 @@ main (int argc, char *argv[])
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Echo(orb.in(), 10000),
+                        Echo(orb.in(), 1000 / serverthreads),
                         1);
         impl = tmp;
       }
