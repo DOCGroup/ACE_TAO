@@ -371,7 +371,7 @@ AdminProperties::test_max_queue_length (ACE_ENV_SINGLE_ARG_DECL)
 
   if (received_count > this->max_queue_length_ + 1)
     {
-      ACE_DEBUG ((LM_ERROR, "MaxQueueLength exceeded, try increasing consumer delay (currently = %d)\n",
+      ACE_DEBUG ((LM_ERROR, "Error: MaxQueueLength exceeded, try increasing consumer delay (currently = %d)\n",
                   this->consumer_delay_.sec ()));
 
       if (this->reject_new_events_ == 1 && was_rejected_ == 0)

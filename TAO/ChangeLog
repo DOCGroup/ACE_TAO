@@ -1,3 +1,19 @@
+Fri Dec 13 17:37:25 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+	  Added the "Error" word in the debug message so
+	  that it shows up red in the scoreboard on run error.
+	
+	* orbsvcs/tests/Notify/Basic/run_test.pl:
+	  AdminProperties test is run conditionally - skipped when the
+	  Notification is in Reactive mode, because the Reactive mode does
+	  not support any queues to test the MaxQueueLength Admin
+	  Property. In the MT mode, it uses the adminproperties.conf  
+
+	* orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+	  The Notify output is no longer parsed, as the debug messages
+	  have changed.
+	
 Fri Dec 13 12:52:31 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
