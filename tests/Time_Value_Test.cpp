@@ -53,7 +53,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-#if defined (ACE_HAS_STHREADS)
+#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
 static
 u_long
 check_ace_u_longlong (const ASYS_TCHAR *const name,
@@ -178,7 +178,7 @@ test_ace_u_longlong (void)
 
   return errors;
 }
-#endif /* ACE_HAS_STHREADS */
+#endif /* sun && ! ACE_LACKS_LONGLONG_T */
 
 
 int
@@ -208,10 +208,10 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (tv6 == tv1);
   ACE_ASSERT (tv5 == tv7);
 
-#if defined (ACE_HAS_STHREADS)
+#if defined (sun) && !defined (ACE_LACKS_LONGLONG_T)
   if (test_ace_u_longlong () != 0)
     ++ret;
-#endif /* ACE_HAS_STHREADS */
+#endif /* sun && ! ACE_LACKS_LONGLONG_T */
 
   ACE_END_TEST;
   return ret;
