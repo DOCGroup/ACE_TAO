@@ -1,3 +1,30 @@
+Fri Mar 29 13:40:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS.h:
+          Minor fix for WinCE IDC name.
+
+        * apps/FaCE/ACE.ico:
+        * apps/FaCE/ACE_Racer.bmp:
+        * apps/FaCE/CE_ARGV.CPP
+        * apps/FaCE/CE_ARGV.H
+        * apps/FaCE/CE_Screen_Output.cpp:
+        * apps/FaCE/CE_Screen_Output.h:
+        * apps/FaCE/FaCE.cpp:
+        * apps/FaCE/FaCE.h:
+        * apps/FaCE/FACE.ico:
+        * apps/FaCE/FaCE.rc:
+        * apps/FaCE/FaCE.vcp:
+        * apps/FaCE/FaCE.vcw:
+        * apps/FaCE/FaCENOACE.vcp:
+        * apps/FaCE/FaCENOACE.vcw:
+        * apps/FaCE/License.txt:
+        * apps/FaCE/Main.cpp:
+        * apps/FaCE/newres.h:
+        * apps/FaCE/ReadMe.txt:
+        * apps/FaCE/resource.h
+        * apps/FaCE/TAO.BMP:
+          A new front-end framework utility/plug-in for ACE on WinCE.
+
 Fri Mar 29 11:33:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ace/ace_dll.vcp:
