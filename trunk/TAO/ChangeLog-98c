@@ -1,5 +1,23 @@
 Mon Oct 20 10:51:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/stub.i: Created new file with inline methods for
+ 	STUB_Object.
+	
+	* tao/stub.h: Moved inline method definitions into a new
+ 	file--stub.i.
+
+	* tao/orbobj.cpp (BOA_init): Eliminated dead code and unused
+ 	variable.
+
+	* tao/except.cpp (print_exception): Eliminated unused argument
+ 	warning detected by gcc.
+
+	* tao/corba.h: Re-ordered inclusion of Orb_Core.i to eliminate
+ 	'function used before declared inline' errors detected by gcc.
+
+	* tao/{Orb_Core,boa,corbacom,orb,orbobj,svrrqst}.*: Renamed BOA to
+ 	POA.
+
 	* docs/releasenotes*: Moved releasenotes.html into a directory
  	named "releasenotes" so that the various status pages can live
  	independently.  Currently only the ORB Core's status page is

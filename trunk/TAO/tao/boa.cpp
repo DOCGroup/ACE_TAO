@@ -3,7 +3,7 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// BOA initialisation -- both anonymous and (for system bootstrapping) 
+// POA initialisation -- both anonymous and (for system bootstrapping) 
 // named BOAs.
 //
 // XXX at this time, there's a strong linkage between this code and
@@ -34,11 +34,11 @@ DEFINE_GUID (IID_BOA,
 #  include "boa.i"
 #endif
 
-// CORBA_BOA::init() is used in get_boa() and get_named_boa() in order
+// CORBA_POA::init() is used in get_boa() and get_named_boa() in order
 // to initialize the OA.  It was originally part of ROA, and may no
 // longer be useful.
-CORBA::BOA_ptr
-CORBA_BOA::init (CORBA::ORB_ptr parent,
+CORBA::POA_ptr
+CORBA_POA::init (CORBA::ORB_ptr parent,
                  ACE_INET_Addr &,
                  CORBA::Environment &env)
 {
@@ -51,14 +51,14 @@ CORBA_BOA::init (CORBA::ORB_ptr parent,
       return 0;
     }
 
-  CORBA::BOA_ptr rp;
-  ACE_NEW_RETURN (rp, CORBA_BOA (parent, env), 0);
+  CORBA::POA_ptr rp;
+  ACE_NEW_RETURN (rp, CORBA_POA (parent, env), 0);
   p->root_poa (rp);
 
   return rp;
 }
 
-CORBA_BOA::CORBA_BOA (CORBA::ORB_ptr owning_orb,
+CORBA_POA::CORBA_POA (CORBA::ORB_ptr owning_orb,
                       CORBA::Environment &)
   : do_exit_ (CORBA::B_FALSE), 
     orb_ (owning_orb),
@@ -76,14 +76,14 @@ CORBA_BOA::CORBA_BOA (CORBA::ORB_ptr owning_orb,
     p->root_poa (this);
 }
 
-CORBA_BOA::~CORBA_BOA (void)
+CORBA_POA::~CORBA_POA (void)
 {
 }
 
 // Create an objref
 
 CORBA::Object_ptr
-CORBA_BOA::create (CORBA::OctetSeq &key,
+CORBA_POA::create (CORBA::OctetSeq &key,
              CORBA::String type_id,
              CORBA::Environment &env)
 {
@@ -126,7 +126,7 @@ CORBA_BOA::create (CORBA::OctetSeq &key,
 // Return the key fed into an object at creation time.
 
 CORBA::OctetSeq *
-CORBA_BOA::get_key (CORBA::Object_ptr,
+CORBA_POA::get_key (CORBA::Object_ptr,
                     CORBA::Environment &env)
 {
   // XXX implement me ! ... must have been created by this OA.
@@ -136,7 +136,7 @@ CORBA_BOA::get_key (CORBA::Object_ptr,
 
 // Used by method code to ask the OA to shut down.
 void
-CORBA_BOA::please_shutdown (CORBA::Environment &env)
+CORBA_POA::please_shutdown (CORBA::Environment &env)
 {
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
 
@@ -146,7 +146,7 @@ CORBA_BOA::please_shutdown (CORBA::Environment &env)
 
 // Used by non-method code to tell the OA to shut down.
 void
-CORBA_BOA::clean_shutdown (CORBA::Environment &env)
+CORBA_POA::clean_shutdown (CORBA::Environment &env)
 {
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, boa_mon, lock_));
 
@@ -162,9 +162,9 @@ CORBA_BOA::clean_shutdown (CORBA::Environment &env)
   // Here we need to tell all the endpoints to shut down...
 }
 
-// For BOA -- BOA operations for which we provide the vtable entry
+// For POA -- POA operations for which we provide the vtable entry
 void
-CORBA_BOA::register_dir (dsi_handler handler,
+CORBA_POA::register_dir (dsi_handler handler,
                          void *ctx,
                          CORBA::Environment &env)
 {
@@ -180,10 +180,10 @@ CORBA_BOA::register_dir (dsi_handler handler,
   env.clear ();
 }
 
-// A "Named BOA" is used in bootstrapping some part of the ORB since
+// A "Named POA" is used in bootstrapping some part of the ORB since
 // it's name-to-address binding is managed by the OS.  Examples of
 // such bindings are /etc/services (for TCP) and /etc/rpc (for ONC
-// RPC) .  The name of a BOA is only guaranteed to be unique within
+// RPC) .  The name of a POA is only guaranteed to be unique within
 // the domain of a single system, as a rule; two hosts would have
 // distinct "king" BOAs.
 //
@@ -192,13 +192,13 @@ CORBA_BOA::register_dir (dsi_handler handler,
 // more formal underlying name service that can be dynamically updated
 // while not compromising system security.
 //
-// The address family used by the BOA is found from the ORB passed in.
+// The address family used by the POA is found from the ORB passed in.
 //
 // XXX the coupling could stand to be looser here, so this module did
 // not know specifically about the Internet ORB !!
 
-CORBA::BOA_ptr
-CORBA_BOA::get_named_boa (CORBA::ORB_ptr orb,
+CORBA::POA_ptr
+CORBA_POA::get_named_boa (CORBA::ORB_ptr orb,
                           CORBA::String name,
                           CORBA::Environment &env) 
 {
@@ -210,21 +210,21 @@ CORBA_BOA::get_named_boa (CORBA::ORB_ptr orb,
 
     if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
       {
-        CORBA::BOA_ptr tcp_oa;
+        CORBA::POA_ptr tcp_oa;
 
         internet->Release ();
 
-        // BOA initialization with name specified; it'll come from
+        // POA initialization with name specified; it'll come from
         // /etc/services if it's not a port number.
 
         ACE_INET_Addr boa_name (name, (ACE_UINT32) INADDR_ANY);
 
-        tcp_oa = CORBA::BOA::init (orb, boa_name, env);
+        tcp_oa = CORBA::POA::init (orb, boa_name, env);
 
         if (env.exception () != 0) 
           return 0;
         else
-          return tcp_oa;		// derives from BOA
+          return tcp_oa;		// derives from POA
       }
   }
 
@@ -234,12 +234,12 @@ CORBA_BOA::get_named_boa (CORBA::ORB_ptr orb,
   return 0;
 }
 
-// An "Anonymous" BOA is used more routinely.  The name used doesn't
+// An "Anonymous" POA is used more routinely.  The name used doesn't
 // matter to anyone; it is only used to create object references with
-// a short lifespan, namely that of the process acquiring this BOA.
+// a short lifespan, namely that of the process acquiring this POA.
 
-CORBA::BOA_ptr
-CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
+CORBA::POA_ptr
+CORBA_POA::get_boa (CORBA::ORB_ptr orb,
 		    CORBA::Environment &env) 
 {
   env.clear ();
@@ -250,7 +250,7 @@ CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
 
     if (orb->QueryInterface (IID_IIOP_ORB, (void **) &internet) == NOERROR) 
       {
-        CORBA::BOA_ptr tcp_oa;
+        CORBA::POA_ptr tcp_oa;
 
         internet->Release ();
 
@@ -258,12 +258,12 @@ CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
 
         ACE_INET_Addr anonymous ((u_short) 0, (ACE_UINT32) INADDR_ANY);
 
-        tcp_oa = CORBA::BOA::init (orb, anonymous, env);
+        tcp_oa = CORBA::POA::init (orb, anonymous, env);
 
         if (env.exception () != 0) 
           return 0;
         else
-          return tcp_oa;		// derives from BOA
+          return tcp_oa;		// derives from POA
       }
   }
 
@@ -273,7 +273,7 @@ CORBA_BOA::get_boa (CORBA::ORB_ptr orb,
   return 0;
 }
 
-void CORBA_BOA::dispatch (CORBA::OctetSeq &key,
+void CORBA_POA::dispatch (CORBA::OctetSeq &key,
 			  CORBA::ServerRequest &req,
 			  void *context,
 			  CORBA::Environment &env) 
@@ -309,21 +309,21 @@ void CORBA_BOA::dispatch (CORBA::OctetSeq &key,
 }
 
 int
-CORBA_BOA::find (const CORBA::OctetSeq &key,
+CORBA_POA::find (const CORBA::OctetSeq &key,
 		 CORBA::Object_ptr &obj)
 {
   return objtable_->find (key, obj);
 }
 
 int
-CORBA_BOA::bind (const CORBA::OctetSeq &key, 
+CORBA_POA::bind (const CORBA::OctetSeq &key, 
 		 CORBA::Object_ptr obj)
 {
   return objtable_->bind (key, obj);
 }
 
 void
-CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
+CORBA_POA::handle_request (TAO_GIOP_RequestHeader hdr,
                            CDR &request_body,
                            CDR &response,
                            TAO_Dispatch_Context *some_info,
@@ -432,14 +432,14 @@ CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
 
 // IUnknown calls
 ULONG __stdcall
-CORBA_BOA::AddRef (void)
+CORBA_POA::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
   return ++refcount_;
 }
 
 ULONG __stdcall
-CORBA_BOA::Release (void)
+CORBA_POA::Release (void)
 {
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, boa_mon, com_lock_, 0));
@@ -453,7 +453,7 @@ CORBA_BOA::Release (void)
 }
 
 HRESULT __stdcall
-CORBA_BOA::QueryInterface (REFIID riid,
+CORBA_POA::QueryInterface (REFIID riid,
                            void **ppv)
 {
   *ppv = 0;

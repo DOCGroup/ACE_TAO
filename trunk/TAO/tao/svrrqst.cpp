@@ -216,7 +216,7 @@ IIOP_ServerRequest::orb (void)
   return orb_;
 }
 
-CORBA::BOA_ptr __stdcall
+CORBA::POA_ptr __stdcall
 IIOP_ServerRequest::oa (void)
 {
   return boa_;

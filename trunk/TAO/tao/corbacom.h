@@ -56,8 +56,8 @@ class CORBA_Any_out;
 class CORBA_TypeCode;
 //typedef class CORBA_TypeCode *CORBA_TypeCode_ptr;
 
-class CORBA_BOA;
-//typedef class CORBA_BOA *CORBA_BOA_ptr;
+class CORBA_POA;
+//typedef class CORBA_POA *CORBA_BOA_ptr;
 
 class CORBA_Exception;
 //typedef class CORBA_Exception *CORBA_Exception_ptr;
@@ -135,15 +135,6 @@ struct CDR;
 
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags; 
-
-#if 0
-#if !defined(TAO_NEEDS_FULL_SEQUENCE_TEMPLATE)
-#  include "tao/sequence.h"
-#else
-template <class T>
-struct CORBA_SEQUENCE;
-#endif
-#endif
 
 template <class T>
 struct CORBA_SEQUENCE 
@@ -416,11 +407,7 @@ public:
   typedef CORBA_Any_out     Any_out;
   typedef Any               *Any_ptr;
 
-  typedef CORBA_BOA BOA;
-  typedef BOA *BOA_ptr;
-  // These will go away when we have a POA, but we can write good code
-  // now.
-  typedef BOA POA;
+  typedef CORBA_POA POA;
   typedef POA *POA_ptr;
 
   typedef CORBA_Environment Environment;
@@ -516,7 +503,7 @@ public:
 #undef SYSEX
 
   // = all the CORBA::is_nil methods
-  static Boolean is_nil (BOA_ptr);
+  static Boolean is_nil (POA_ptr);
   static Boolean is_nil (Object_ptr);
   static Boolean is_nil (Environment_ptr);
   static Boolean is_nil (NamedValue_ptr);
@@ -529,7 +516,7 @@ public:
   static Boolean is_nil (ServerRequest_ptr req);
   
   // = all the CORBA release methods
-  static void release (BOA_ptr);
+  static void release (POA_ptr);
   static void release (Object_ptr);
   static void release (Environment_ptr);
   static void release (NamedValue_ptr);

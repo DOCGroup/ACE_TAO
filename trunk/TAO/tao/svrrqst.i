@@ -1,7 +1,7 @@
 ACE_INLINE
 IIOP_ServerRequest::IIOP_ServerRequest(CDR *msg,
                                        CORBA::ORB_ptr the_orb,
-                                       CORBA::BOA_ptr the_boa)
+                                       CORBA::POA_ptr the_boa)
   : incoming_ (msg),
     params_ (0), 
     retval_ (0),

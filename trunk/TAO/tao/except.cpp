@@ -429,7 +429,7 @@ CORBA::Environment::exception_type (void) const
 void ACE_Svc_Export
 print_exception (const CORBA::Exception *x,
 		 const char *info,
-		 FILE *stream)
+		 FILE *)
 {
   CORBA::String id = x->id ();
 

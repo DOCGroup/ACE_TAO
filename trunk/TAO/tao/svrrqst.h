@@ -68,11 +68,11 @@ public:
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
   //
-  // XXX should not be not assuming all OAs implement the BOA API !!
+  // XXX should not be not assuming all OAs implement the POA API !!
   virtual CORBA::Principal_ptr __stdcall	caller (void) = 0;
   virtual CORBA::Object_ptr __stdcall target (void) = 0;
   virtual CORBA::String __stdcall op_name (void) = 0;
-  virtual CORBA::BOA_ptr __stdcall oa (void) = 0;
+  virtual CORBA::POA_ptr __stdcall oa (void) = 0;
   virtual CORBA::ORB_ptr __stdcall orb (void) = 0;
 };
 
@@ -83,7 +83,7 @@ public:
 
   IIOP_ServerRequest (CDR *msg,
 		      CORBA::ORB_ptr the_orb,
-		      CORBA::BOA_ptr the_boa);
+		      CORBA::POA_ptr the_boa);
 
   virtual ~IIOP_ServerRequest (void);
 
@@ -104,7 +104,7 @@ public:
   CORBA::Principal_ptr __stdcall	caller (void);
   CORBA::Object_ptr __stdcall target (void);
   CORBA::ORB_ptr __stdcall orb (void);
-  CORBA::BOA_ptr __stdcall oa (void);
+  CORBA::POA_ptr __stdcall oa (void);
 
   // Stuff required for COM IUnknown support
 
@@ -133,7 +133,7 @@ private:
 
   CORBA::ORB_ptr orb_;
 
-  CORBA::BOA_ptr boa_;
+  CORBA::POA_ptr boa_;
 };
 
 #endif /* TAO_SVRRQST_H */

@@ -112,11 +112,13 @@
 #    define do_undef_on_ACE_INLINE
 #  endif
 
+#include "tao/Orb_Core.i"
 #include "tao/corbacom.i"
 #include "tao/sequence.i"
 #include "tao/typecode.i"
 #include "tao/any.i"
 #include "tao/cdr.i"
+#include "tao/stub.i"
 #include "tao/object.i"
 #include "tao/orbobj.i"
 #include "tao/marshal.i"
@@ -140,7 +142,6 @@
 #include "tao/connect.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"
-#include "tao/Orb_Core.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (__ACE_INLINE__)
