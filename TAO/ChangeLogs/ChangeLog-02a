@@ -1,3 +1,12 @@
+Tue Apr  2 13:41:38 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* tao/Acceptor_Registry.cpp:
+	* tao/Connector_Registry.cpp:
+	* tao/default_resource.cpp:
+	  Wrapped calls to ACE_CString::c_str() in ACE_TEXT_CHAR_TO_TCHAR,
+	  changed ACE_TEXT to ACE_LIB_TEXT, and added missing ACE_LIB_TEXT 
+	  in ACE_DEBUG/ACE_ERROR calls.
+
 Mon Apr  1 18:05:22 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Concurrency/Concurrency_Utils.cpp:
