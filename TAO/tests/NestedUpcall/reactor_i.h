@@ -1,33 +1,27 @@
 // -*- c++ -*-
-//
 // $Id$
-//
 
-#if !defined(REACTOR_I_H)
+#if !defined (REACTOR_I_H)
 #  define REACTOR_I_H
 
 #include "ReactorS.h"
 
-// Forward decls
-class Reactor_i;
-
-typedef Reactor_i *Reactor_i_ptr; // why necessary?
-
 class Reactor_i : public POA_Reactor
 {
+  // = TITLE
+  //     Implement the <Reactor> IDL interface.
 public:
   Reactor_i (void);
-  // CTOR
+  // Constructor.
 
   virtual ~Reactor_i (void);
-  // DTOR
+  // Destructor.
 
   virtual CORBA::Long register_handler(EventHandler_ptr eh,
                                        CORBA::Environment &env);
-  // register (with nothing...it's an example!)
+  // Register (with nothing...it's an example!)
 
   virtual void set_value (CORBA::Environment &env);
-  
 };
 
 #endif /* REACTOR_I_H */

@@ -22,7 +22,7 @@
 
 CORBA::String_var remote_reactor_key = 0;
 
-// Completely arbitrary constant that ought to be big enough
+// Completely arbitrary constant that ought to be big enough.
 #define MAX_IOR_SIZE 4096
 
 int
@@ -41,22 +41,30 @@ parse_args (int argc_, char* argv_[])
         break;
       case 'f':
         {
-          FILE* ior_file_ = ACE_OS::fopen (get_opts.optarg,"r");
+          FILE *ior_file_ = 
+            ACE_OS::fopen (get_opts.optarg,"r");
+
           if (ior_file_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to open %s for writing: %p\n",
                                get_opts.optarg, "open"), -1);
+
           result = ACE_OS::fgets (temp_buf, MAX_IOR_SIZE, ior_file_);
-          if ( result == 0 )
+          if (result == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to read ior from file %s: %p\n",
-                               get_opts.optarg, "fgets"), -1);
-          remote_reactor_key = CORBA::string_copy (temp_buf);
+                               get_opts.optarg,
+                               "fgets"),
+                              -1);
+
+          remote_reactor_key =
+            CORBA::string_copy (temp_buf);
           ACE_OS::fclose (ior_file_);
         }
 	break;
       case 'k':
-        remote_reactor_key = CORBA::string_copy (get_opts.optarg);
+        remote_reactor_key =
+          CORBA::string_copy (get_opts.optarg);
         break;
       case '?':
       default:
@@ -77,65 +85,73 @@ parse_args (int argc_, char* argv_[])
 int
 main (int argc, char *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB::_nil ();
-  
   TAO_TRY
     {
-      orb = CORBA::ORB_init (argc, argv, "client", TAO_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            "client",
+                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Initialize the object adapter
+      // Initialize the object adapter.
       CORBA::Object_var poa_object =
-	orb->resolve_initial_references("RootPOA");
+	orb->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the POA.\n"),
 			  1);
 
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
+	PortableServer::POA::_narrow (poa_object.in (),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       parse_args (argc, argv);
 
-      if (remote_reactor_key.in() == 0)
+      if (remote_reactor_key.in () == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: no remote Reactor key specified\n"),
                           -1);
 
       CORBA::Object_var reactor_object =
-        orb->string_to_object (remote_reactor_key.in (), TAO_TRY_ENV);
+        orb->string_to_object (remote_reactor_key.in (),
+                               TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      Reactor_var remote_reactor = Reactor::_narrow (reactor_object.in(), TAO_TRY_ENV);
+      Reactor_var remote_reactor = Reactor::_narrow (reactor_object.in (),
+                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (CORBA::is_nil (remote_reactor.in()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%s: invalid Reactor key <%s>\n",
-                             argv[0], remote_reactor_key.in()), -1);
-        }
+      if (CORBA::is_nil (remote_reactor.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%s: invalid Reactor key <%s>\n",
+                           argv[0], remote_reactor_key.in ()), -1);
 
       // Create an EventHandler servant to hand to the other side...
       auto_ptr<EventHandler_i> eh_impl (new EventHandler_i);
       EventHandler_var eh = eh_impl->_this (TAO_TRY_ENV);
 
+      // @@ Chris, can you please replace this call to open () with a
+      // call to orb->run (&ACE_Time_Value::zero)?  This is "less
+      // non-standard" if you know what I mean!
+
       // Make sure the ORB is listening...  Now I understand why Orbix
-      // has a nonstandard impl_is_ready() on servants...that lets the
-      // ORB Core know that it can listen for requests.  Woudl be nice
-      // if the spec gave us a standard way to do this.
+      // has a nonstandard impl_is_ready () on servants...that lets
+      // the ORB Core know that it can listen for requests.  Woudl be
+      // nice if the spec gave us a standard way to do this.
       if (orb->open () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: %p\n",
                            argv[0], "unable to get the ORB Core to listen"),
                           -1);
       
-      // Now, after all that, we can invoke an operation on the remote side
+      // Now, after all that, we can invoke an operation on the remote
+      // side.
       CORBA::Long r = remote_reactor->register_handler (eh, TAO_TRY_ENV);
       
       // We ought to have a result!
-      ACE_DEBUG ((LM_DEBUG, "%s: received %d as return from register_handler()\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s: received %d as return from register_handler ()\n",
                   argv[0], r));
 
       remote_reactor->set_value (TAO_TRY_ENV);
