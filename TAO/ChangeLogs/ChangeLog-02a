@@ -1,3 +1,15 @@
+Wed Nov 29 09:00:22 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/lib/Makefile:
+          Reverted my change to this file.  While trying to fix the
+          gcc-2.7.2 builds I broke all the other platforms <sigh>.
+          Fortunately there is no need to disable this directory under
+          gcc-2.7.2, it compiles just fine, so even though the library
+          would not be usable in those platforms (because the tests fail to
+          link), we can just ignore the problem in this Makefile, until I
+          can figure out how to disable a library compilation under
+          old versions of gcc, without breaking other platforms.
+
 Tue Nov 28 15:56:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Load_Balancing/Makefile:
@@ -6,11 +18,11 @@ Tue Nov 28 15:56:01 2000  Carlos O'Ryan  <coryan@uci.edu>
         * examples/POA/Generic_Servant/Makefile:
         * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
         * tests/Exposed_Policies/Makefile:
-	  Don't use override with TAO_IDLFLAGS because sometimes they are
-	  set globally, for example to set the location of gperf.
+          Don't use override with TAO_IDLFLAGS because sometimes they are
+          set globally, for example to set the location of gperf.
 
         * TAO_IDL/Makefile.BE:
-	  Update dependencies
+          Update dependencies
 
         * orbsvcs/CosEvent_Service/Makefile:
         * orbsvcs/examples/CosEC/Factory/Makefile:
@@ -26,136 +38,136 @@ Tue Nov 28 15:56:01 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/tests/Event/Basic/Makefile:
         * orbsvcs/tests/Event/Performance/Makefile:
         * orbsvcs/tests/Event/lib/Makefile:
-	  The RT event service and the CosEvent service fail to compiler
-	  under gcc-2.7.2, thus their tests and examples should be
-	  disabled too.
+          The RT event service and the CosEvent service fail to compiler
+          under gcc-2.7.2, thus their tests and examples should be
+          disabled too.
 
 Tue Nov 28 12:03:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/MessagingC.i:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
 
-	  Renamed <setup_collocation> to <_tao_setup_collocation> to
-	  reflect the chages made in the generated code.
+          Renamed <setup_collocation> to <_tao_setup_collocation> to
+          reflect the chages made in the generated code.
 
 Tue Nov 28 00:29:40 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Count the number of addrs in each "-ORBEndpoint" option.  The
-	  sum of those values should be the maximum number of acceptors
-	  the acceptor registry should allocate space for.  Previously,
-	  a single addr was assumed to exist in each -ORBEndpoint option.
-	  This fixes a segmentation fault that was occuring when multiple
-	  addrs were specified in a single "-ORBEndpoint" command line
-	  ORB option.
-	  Reported by Jeff Greif <jgreif@befree.com>.
+          Count the number of addrs in each "-ORBEndpoint" option.  The
+          sum of those values should be the maximum number of acceptors
+          the acceptor registry should allocate space for.  Previously,
+          a single addr was assumed to exist in each -ORBEndpoint option.
+          This fixes a segmentation fault that was occuring when multiple
+          addrs were specified in a single "-ORBEndpoint" command line
+          ORB option.
+          Reported by Jeff Greif <jgreif@befree.com>.
 
 Mon Nov 27 17:24:14 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/client.cpp:
-	  Removed 'cout' debug statements.
+        * performance-tests/Latency/client.cpp:
+          Removed 'cout' debug statements.
 
 Mon Nov 27 15:44:55 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp:
-	  removed template instantiation declaration of
-	  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-	  and ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> - already
-	  declared in ace/System_Time.cpp
+        * examples/POA/DSI/Database_i.cpp:
+          removed template instantiation declaration of
+          ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
+          and ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> - already
+          declared in ace/System_Time.cpp
 
-	* examples/Load_Balancing/Load_Balancer_i.cpp:
-	  removed template instantiation declaration of
-	  ACE_Equal_To<ACE_CString> and ACE_Hash<ACE_CString> - already
-	  declared in ace/Capabilities.cpp
+        * examples/Load_Balancing/Load_Balancer_i.cpp:
+          removed template instantiation declaration of
+          ACE_Equal_To<ACE_CString> and ACE_Hash<ACE_CString> - already
+          declared in ace/Capabilities.cpp
 
-	* TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
-	  Reworked the template instantiation code.
+        * TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+          Reworked the template instantiation code.
 
 Mon Nov 27 13:16:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (parse_string_count_helper):
-	  Correctly allocated the memory for the end_point.
+        * tao/CORBALOC_Parser.cpp (parse_string_count_helper):
+          Correctly allocated the memory for the end_point.
 
-	* tests/InterOp-Naming/run_test.pl:
-	  Updated the perl script in accordance with the recent change for
-	  the syntax of corbaloc: URLs.
+        * tests/InterOp-Naming/run_test.pl:
+          Updated the perl script in accordance with the recent change for
+          the syntax of corbaloc: URLs.
 
-	* tests/InterOp-Naming/README:
-	  Cosmetic changes.
+        * tests/InterOp-Naming/README:
+          Cosmetic changes.
 
 Mon Nov 27 13:07:29 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
 
-	  Removed trailing whitespace.
+          Removed trailing whitespace.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open, open_default):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open, open_default):
 
-  	  Renamed "open_i" method to "ssliop_open_i" to avoid ambiguities
-	  with the virtual "open_i" method in the TAO_IIOP_SSL_Acceptor
-	  base class.  This fixes warnings emanating from Borland compiler
-	  builds.
+          Renamed "open_i" method to "ssliop_open_i" to avoid ambiguities
+          with the virtual "open_i" method in the TAO_IIOP_SSL_Acceptor
+          base class.  This fixes warnings emanating from Borland compiler
+          builds.
 
 Mon Nov 27 13:05:59 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
 
-	  Renamed name of generated member function from
-	  <setup_collocation> to <_tao_setup_collocation>.
+          Renamed name of generated member function from
+          <setup_collocation> to <_tao_setup_collocation>.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  Same as above, plus fixed "typo bug" in the fragment of
-	  code that generate the code for _tao_setup_collocation
-	  for not nested interface.
+          Same as above, plus fixed "typo bug" in the fragment of
+          code that generate the code for _tao_setup_collocation
+          for not nested interface.
 
 Mon Nov 27 12:33:23 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/Trading_Service/Trading_Service.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	  Removed auto_ptr and ACE_Auto_Basic_Ptr from Trading_Service.cpp
-	  and added it back to Trading_Loader.cpp.
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+          Removed auto_ptr and ACE_Auto_Basic_Ptr from Trading_Service.cpp
+          and added it back to Trading_Loader.cpp.
 
 Sun Nov 26 19:47:25 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp (start): Reset the reply_received field in
-	  the reply dispatcher  to 0. This piece of code that did this
-	  reset was removed when changes were made to Invocation
-	  classes. The reset is important when the Invocation classes
-	  signals a restart. On restart we dont create a new Invocation
-	  object and we reuse the state that was left by the previous
-	  invocation. All this is fine. But the reply_received field needs
-	  to be reset in the intermediate period.  If not stale values
-	  would be passed on to the next invocation and making tests like
-	  Forwarding fail.
+        * tao/Invocation.cpp (start): Reset the reply_received field in
+          the reply dispatcher  to 0. This piece of code that did this
+          reset was removed when changes were made to Invocation
+          classes. The reset is important when the Invocation classes
+          signals a restart. On restart we dont create a new Invocation
+          object and we reuse the state that was left by the previous
+          invocation. All this is fine. But the reply_received field needs
+          to be reset in the intermediate period.  If not stale values
+          would be passed on to the next invocation and making tests like
+          Forwarding fail.
 
 Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* tests/Connection_Purging/Connection_Purging.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
+        * tests/Connection_Purging/Connection_Purging.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
 
-	  Removed extraneous explicit template instantiation declarations causing
-	  "multiply defined" warnings on VxWorks and LynxOS.
+          Removed extraneous explicit template instantiation declarations causing
+          "multiply defined" warnings on VxWorks and LynxOS.
 
 Sun Nov 26 16:52:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Bind_Dispatcher_Guard.i:
-	* tao/Bind_Dispatcher_Guard.h: Return the reference to the status_
-	  in the status () method.
+        * tao/Bind_Dispatcher_Guard.i:
+        * tao/Bind_Dispatcher_Guard.h: Return the reference to the status_
+          in the status () method.
 
-	* tao/Invocation.cpp (invoke_i): If there is an error and if the
-	  connection is closed, we set the status in the
-	  Bind_Dispatcher_Guard to -1. This should fix a problem that
-	  caused the client ORB to dump a core if the server shutsdown
-	  suddenly.
+        * tao/Invocation.cpp (invoke_i): If there is an error and if the
+          connection is closed, we set the status in the
+          Bind_Dispatcher_Guard to -1. This should fix a problem that
+          caused the client ORB to dump a core if the server shutsdown
+          suddenly.
 
 Sun Nov 26 13:34:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
