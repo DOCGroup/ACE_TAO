@@ -1,3 +1,14 @@
+Tue Feb 10 15:51:50 UTC 2004  Craig Rodrigues <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_linux.GNU:
+	  Even if the user overrides PLATFORM_SCTP_CPPFLAGS in
+	  platform_macros.GNU, either ACE_HAS_OPENSS7_SCTP or
+	  ACE_HAS_LKSCTP *must* be added to PLATFORM_SCTP_CPPFLAGS, otherwise
+	  wrong code will get compiled.  Also, for sctp=lksctp, do
+	  not hardcode PLATFORM_SCTP_LIBS to /usr/local/lib/libsctp.a.
+`	  Instead set PLATFORM_SCTP_LDFLAGS to -L/usr/local/lib
+	  and set PLATFORM_SCTP_LIBS to -lsctp.
+
 Tue Feb 10 08:45:10 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
