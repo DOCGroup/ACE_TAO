@@ -40,6 +40,9 @@ Fri Jun 19 07:25:41 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/NestedUpcall/client.cpp: removed unused static
           max_sequence_length.
 
+        * tests/Param_Test/tests.cpp: removed or commented out some
+          unused variables.
+
 Thu Jun 18 18:33:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/GIOP.cpp:
