@@ -19,7 +19,7 @@
 #ifndef CONCRETE_CLASSES_H
 #define CONCRETE_CLASSES_H
 
-#include "Repository_i.h"
+#include "ComponentRepository_i.h"
 #include "PrimitiveDef_i.h"
 #include "StringDef_i.h"
 #include "WstringDef_i.h"
