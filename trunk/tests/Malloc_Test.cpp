@@ -188,14 +188,29 @@ print (const char *process_name,
 static int
 parent (Test_Data *data)
 {
+  MALLOC *myalloc = myallocator ();
+
   {
-    ACE_GUARD_RETURN (ACE_Process_Mutex, guard, myallocator ()->mutex (), -1);
+    ACE_GUARD_RETURN (ACE_Process_Mutex, guard, myalloc->mutex (), -1);
     print ("parent", data);
   }
 
   // Sleep for a 200 msecs so that the child will have a chance to spin!
   ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));
-  int result = myallocator ()->bind ("bar", data);
+
+  char *small_buf[1024];
+  int cntr;
+
+  for (cntr = 0 ; cntr < 1024; ++cntr)
+    small_buf[cntr] = (char *) myalloc->malloc (1);
+  char *big_buf = (char *) myalloc->malloc (1024 * 4069);
+
+  int result = myalloc->bind ("bar", data);
+
+  myalloc->free (big_buf);
+  for (cntr = 0 ; cntr < 1024; ++cntr)
+    myalloc->free (small_buf[cntr]);
+
   ACE_ASSERT (result != -1);
   return 0;
 }

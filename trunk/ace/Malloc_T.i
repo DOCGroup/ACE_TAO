@@ -3,7 +3,7 @@
 
 // Malloc_T.i
 
-template <class T> ACE_INLINE T * 
+template <class T> ACE_INLINE T *
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
   // This should be done using a single reinterpret_cast, but Sun/CC
@@ -13,7 +13,7 @@ ACE_Cached_Mem_Pool_Node<T>::addr (void)
 }
 
 template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *
-ACE_Cached_Mem_Pool_Node<T>::get_next (void) 
+ACE_Cached_Mem_Pool_Node<T>::get_next (void)
 {
   return this->next_;
 }
@@ -44,22 +44,22 @@ ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 
 template <class MALLOC> ACE_INLINE void *
 ACE_Allocator_Adapter<MALLOC>::malloc (size_t nbytes)
-{ 
+{
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::malloc");
   return this->allocator_.malloc (nbytes);
 }
 
 template <class MALLOC> ACE_INLINE void *
-ACE_Allocator_Adapter<MALLOC>::calloc (size_t nbytes, 
-				       char initial_value)
-{ 
+ACE_Allocator_Adapter<MALLOC>::calloc (size_t nbytes,
+                                       char initial_value)
+{
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::malloc");
   return this->allocator_.calloc (nbytes, initial_value);
 }
 
 template <class MALLOC> ACE_INLINE MALLOC &
 ACE_Allocator_Adapter<MALLOC>::alloc (void)
-{ 
+{
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::allocator");
   return this->allocator_;
 }
@@ -79,25 +79,25 @@ ACE_Allocator_Adapter<MALLOC>::remove (void)
 }
 
 template <class MALLOC> ACE_INLINE int
-ACE_Allocator_Adapter<MALLOC>::trybind (const char *name, 
-					void *&pointer)
+ACE_Allocator_Adapter<MALLOC>::trybind (const char *name,
+                                        void *&pointer)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::trybind");
   return this->allocator_.trybind (name, pointer);
 }
 
 template <class MALLOC> ACE_INLINE int
-ACE_Allocator_Adapter<MALLOC>::bind (const char *name, 
-				     void *pointer,
-				     int duplicates)
+ACE_Allocator_Adapter<MALLOC>::bind (const char *name,
+                                     void *pointer,
+                                     int duplicates)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::bind");
   return this->allocator_.bind (name, pointer, duplicates);
 }
 
 template <class MALLOC> ACE_INLINE int
-ACE_Allocator_Adapter<MALLOC>::find (const char *name, 
-				     void *&pointer)
+ACE_Allocator_Adapter<MALLOC>::find (const char *name,
+                                     void *&pointer)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::find");
   return this->allocator_.find (name, pointer);
@@ -197,4 +197,12 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE ACE_LOCK &
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::mutex (void)
 {
   return this->lock_;
+}
+
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE void
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::init_malloc_header_ptr (void* ptr)
+{
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+  new (ptr) ACE_MALLOC_HEADER_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 }
