@@ -11,7 +11,9 @@
 # HP-UX 11 supports both 32-bit and 64-bit builds, regardless of which
 # architecture the build is done on.  This file is set up to build native
 # to the machine it's running on.  To cross-build for another platform, add
-# the appropriate +DA switch to CCFLAGS.
+# the appropriate +DA switch to CCFLAGS.  Note that if you do this, and want to
+# shut up the "At least one PA 2.0 object file detected..." messages, you
+# should also add -Wl,+vnocompatwarnings.
 
 debug = 1
 threads = 1
