@@ -1,3 +1,9 @@
+Thu Sep 25 05:51:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FT_ORB.bor: Added FT_ServerRequest_Interceptor
+	  to the borland makefile. This should fix problems in the daily
+	  builds. 
+
 Wed Sep 24 22:32:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FT_ORB.dsp: Added FT_ServerRequest_Interceptor
