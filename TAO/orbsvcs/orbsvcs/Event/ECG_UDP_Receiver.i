@@ -90,7 +90,7 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::get_addr() called but "
                   "nil Address Server was supplied during "
-                  "initialization through init()."));
+                  "initialization through init().\n"));
 
       ACE_THROW (CORBA::INTERNAL ());
     }

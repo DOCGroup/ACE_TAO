@@ -37,7 +37,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
     {
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::init(): "
-                  "<lcl_ec> argument is nil."));
+                  "<lcl_ec> argument is nil.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -58,7 +58,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub
     {
       ACE_ERROR ((LM_ERROR,
                   "Error initializing TAO_ECG_UDP_Receiver: "
-                  "init() hasn't been called before connect()."));
+                  "init() hasn't been called before connect().\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -66,7 +66,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub
     {
       ACE_ERROR ((LM_ERROR,
                   "TAO_ECG_UDP_Receiver::connect(): "
-                  "0-length publications argument."));
+                  "0-length publications argument.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -188,7 +188,7 @@ TAO_ECG_Event_CDR_Decoder::decode (TAO_InputCDR &cdr)
   if (!(cdr >> this->events))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error decoding events cdr."),
+                         "Error decoding events cdr.\n"),
                         -1);
     }
   return 0;
@@ -207,7 +207,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
           ACE_ERROR ((LM_ERROR,
                       "TAO_ECG_UDP_Receiver::handle_input() "
                       "called but the Receiver is not connected "
-                      "to an event channel. Shutting down the Receiver."));
+                      "to an event channel. Shutting down the Receiver.\n"));
           this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -226,7 +226,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       if (result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                            "Error receiving multicasted events."),
+                            "Error receiving multicasted events.\n"),
                             0);
         }
 
@@ -238,7 +238,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
     {
       ACE_DEBUG ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "
-                  "ECG_UDP_Receiver::handle_input: %s",
+                  "ECG_UDP_Receiver::handle_input: %s\n",
                   ACE_ANY_EXCEPTION._info ().c_str ()));
     }
   ACE_ENDTRY;

@@ -72,7 +72,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
                   ACE_ERROR ((LM_ERROR,
                                          "Unsupported <-ECGService> option "
                                          "value: <%s>. Ignoring this option "
-                                         "- using defaults instead.",
+                                         "- using defaults instead.\n",
                             opt));
                   result = -1;
                 }
@@ -98,7 +98,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
                   ACE_ERROR ((LM_ERROR,
                                   "Unsupported <-ECGAddressServer> "
                                   "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.",
+                                  "option - using defaults instead.\n",
                               opt));
                   result = -1;
                 }
@@ -136,7 +136,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
                   ACE_ERROR ((LM_ERROR,
                                   "Unsupported <-ECGHandler> "
                                   "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.",
+                                  "option - using defaults instead.\n",
                               opt));
                   result = -1;
                 }
@@ -197,7 +197,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
           arg_shifter.ignore_arg ();
           ACE_DEBUG ((LM_WARNING,
                              "Ignoring <%s> option "
-                             "during initialization.",
+                             "during initialization.\n",
                       arg));
           result = -1;
         }
@@ -247,7 +247,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
     {
       ACE_DEBUG ((LM_ERROR,
                       "Configurations for mcast handler and "
-                      "address server do not match."));
+                      "address server do not match.\n"));
       return -1;
     }
 
@@ -258,7 +258,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
     {
       ACE_DEBUG ((LM_ERROR,
                       "Address server initializaton "
-                      "argument not specified."));
+                      "argument not specified.\n"));
       return -1;
     }
 
@@ -266,7 +266,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
       && this->ip_multicast_loop_ != 1)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "IP MULTICAST LOOP option must have a boolean value."));
+                  "IP MULTICAST LOOP option must have a boolean value.\n"));
       return -1;
     }
 
@@ -274,7 +274,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
       && this->non_blocking_ != 1)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "NON BLOCKING flag must have a boolean value."));
+                  "NON BLOCKING flag must have a boolean value.\n"));
       return -1;
     }
 
@@ -306,7 +306,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
     {
       ACE_ERROR ((LM_ERROR,
                              "Cannot open dgram "
-                             "for sending mcast messages."));
+                             "for sending mcast messages.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
     }
 
@@ -325,7 +325,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
         {
           ACE_ERROR ((LM_ERROR,
                       "Error setting TTL option on dgram "
-                      "for sending mcast messages."));
+                      "for sending mcast messages.\n"));
           return TAO_ECG_Refcounted_Endpoint ();
         }
     }
@@ -337,7 +337,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "Error setting MULTICAST_LOOP option "
-                  "on dgram for sending mcast messages."));
+                  "on dgram for sending mcast messages.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
     }
 
@@ -345,7 +345,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
       && dgram.enable(ACE_NONBLOCK) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error setting NON BLOCKING option."));
+                  "Error setting NON BLOCKING option.\n"));
       return TAO_ECG_Refcounted_Endpoint ();
     }
 
@@ -405,7 +405,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot create address server: "
-                  "unknown address server type specified."));
+                  "unknown address server type specified.\n"));
       return 0;
     }
 }
@@ -465,7 +465,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR using address server argument "
-                      "in ACE_INET_Addr.set ()."));
+                      "in ACE_INET_Addr.set ().\n"));
           return TAO_ECG_Refcounted_Handler ();
         }
       if (h->open (ipaddr) != 0)
@@ -476,7 +476,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot create handler: unknown "
-                  "handler type specified."));
+                  "handler type specified.\n"));
       return handler;
     }
 
@@ -578,14 +578,14 @@ TAO_ECG_Mcast_Gateway::verify_args (CORBA::ORB_ptr orb,
     {
       ACE_ERROR ((LM_ERROR,
                   "Nil event channel argument passed to "
-                  "TAO_ECG_Mcast_Gateway::run()."));
+                  "TAO_ECG_Mcast_Gateway::run().\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
   if (CORBA::is_nil (orb))
     {
       ACE_ERROR ((LM_ERROR,
                   "Nil orb argument passed to "
-                  "TAO_ECG_Mcast_Gateway::run()."));
+                  "TAO_ECG_Mcast_Gateway::run().\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 }
@@ -610,7 +610,7 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
   if (!address_server_servant.in ())
     {
       ACE_DEBUG ((LM_ERROR,
-                  "Unable to create address server."));
+                  "Unable to create address server.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 

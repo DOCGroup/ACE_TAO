@@ -185,7 +185,7 @@ run_one_test (interop::WChar_Passer_ptr server,
         interop::wstructseq_var wsList =
           server->wstructseq_from_server(data_set ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN(0);
-        CORBA::Boolean result = 1;
+        int result = 1;
 
         for (CORBA::ULong i = 0; i < wsList->length(); i++)
           result &= ref.match_wstring (data_set,

@@ -22,7 +22,7 @@ TAO_ECG_CDR_Message_Sender::init (
       || endpoint_rptr->dgram ().get_handle () == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, "TAO_ECG_CDR_Message_Sender::init(): "
-                            "nil or unitialized endpoint argument."));
+                            "nil or unitialized endpoint argument.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -38,7 +38,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   if (this->endpoint_rptr_.get () == 0)
     {
       ACE_ERROR ((LM_ERROR, "Attempt to invoke send_message() "
-                            "on non-initialized sender object."));
+                            "on non-initialized sender object.\n"));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -256,7 +256,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
   if (n > 0 && size_t(n) != expected_n)
     {
       ACE_DEBUG ((LM_ERROR, ("Sent only %d out of %d bytes "
-                              "for mcast fragment."),
+                              "for mcast fragment.\n"),
                   n,
                   expected_n));
     }
@@ -265,18 +265,18 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
     {
       if (errno == EWOULDBLOCK)
         {
-          ACE_DEBUG ((LM_ERROR, "Send of mcast fragment failed (%m)."));
+          ACE_DEBUG ((LM_ERROR, "Send of mcast fragment failed (%m).\n"));
           // @@ TODO Use a Event Channel specific exception
           ACE_THROW (CORBA::COMM_FAILURE ());
         }
       else
         {
-          ACE_DEBUG ((LM_WARNING, "Send of mcast fragment blocked (%m)."));
+          ACE_DEBUG ((LM_WARNING, "Send of mcast fragment blocked (%m).\n"));
         }
     }
   else if (n == 0)
     {
-      ACE_DEBUG ((LM_WARNING, "EOF on send of mcast fragment (%m)."));
+      ACE_DEBUG ((LM_WARNING, "EOF on send of mcast fragment (%m).\n"));
     }
 }
 
