@@ -33,7 +33,7 @@ MyFooServant::~MyFooServant (void)
 PortableServer::POA_ptr
 MyFooServant::_default_POA (CORBA::Environment &/*env*/)
 {
-  return PortableServer::POA::_duplicate (this->poa_.in());
+  return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 // Return this->value
