@@ -1,3 +1,26 @@
+Tue Jul 14 11:48:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.{h,cpp} (arl_same_port_connect):  Added the new
+	  member function to ORB_Core to check if we want the client to
+	  initiate a connection using the same local port number as
+	  server's.  
+
+	* tao/Invocation.cpp (start): Added code to specify the following:
+	
+	  This change is only for ARL only and to enable the feature, you
+	  must add
+	
+	     #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+
+	  to your $ACE_ROOT/ace/config.h.  Add the command line option
+	  
+	     -ORBarlsameportconnect yes
+
+	  when starting the client.
+
+	  *** This is not for the general audience of TAO.  Don't use
+	  it. *** 
+
 Tue Jul 14 11:34:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/IIOP_Object.cpp (do_static_call): commented out unused
