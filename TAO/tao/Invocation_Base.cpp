@@ -37,7 +37,6 @@ namespace TAO
     , req_info_ (this)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
-    ACE_UNUSED_ARG (response_expected);
   }
 
   Invocation_Base::~Invocation_Base (void)
