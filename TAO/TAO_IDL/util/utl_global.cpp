@@ -130,7 +130,13 @@ IDL_GlobalData::IDL_GlobalData()
     // the perfect hasher and at that time, we can switch over to some
     // other scheme. 
     {
+#if !defined (ACE_WIN32)
       ACE_DEBUG ((LM_WARNING, "Warning:Env variable <ACE_ROOT> is not set\n"));
+      // This error message confuses MSDEV and take it as a real
+      // warning.  Since we don't use gperf with Win32 at all now and
+      // the ACE_ROOT, more likely than not, is not defined on Win32,
+      // we might as well disable the warning.
+#endif /* ACE_WIN32 */
       this->perfect_hasher_ = 0;
     }
   else
