@@ -1,3 +1,31 @@
+Wed May 19 00:20:08 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent_Utilities.{h,cpp}:
+	* orbsvcs/orbsvcs/CosEC_Utility_Methods_T.{h,cpp}:
+	  Added these files to provide utility base classes and
+	  useful methods for implementing CosEC applications.
+
+	* orbsvcs/orbsvcs/Makefile:
+	  added CosEvent_Utilities and CosEC_Utility_Methods_T
+	  to the CosEvent section.
+
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i{h,cpp}:
+	  Removed these files - All the functionality of this implementation
+	  has been moved to the <CosEC_ServantBase> class defined in
+	  orbsvcs/orbsvcs/CosEvent_Utilities.h
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
+	  modified to use the <CosEC_ServantBase> class.
+
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp
+          Added an extra debug message in the <create> method.
+
+	* orbsvcs/examples/CosEC/Factory/Makefile
+          removed FactoryCosEventChannel_i.
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.{h,cpp}:
+          All redone now to use the <CosEC_ServantBase> class.
+
 Tue May 18 22:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Resource_Factory.h:
@@ -5,7 +33,7 @@ Tue May 18 22:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/default_resource.h:
 	* tao/default_resource.i:
 	* tao/default_resource.cpp:
-	* docs/Options.html: 
+	* docs/Options.html:
 	  The default resource factory can select any of the "exotic" ACE
 	  reactors (XtReactor, FlReactor, WFMO_Reactor, Msg_WFMO_Reactor)
 	  as well as the regular Select reactor (with or without locking).
@@ -22,7 +50,7 @@ Tue May 18 22:19:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/FL_Cube/test_i.h:
 	* tests/FL_Cube/test_i.i:
 	  A small example that illustrates how TAO can work with the
-	  FlReactor.  A simple server displays a cube using the FL toolkit 
+	  FlReactor.  A simple server displays a cube using the FL toolkit
 	  for the GUI elements and OpenGL for the graphics, its CORBA
 	  interface lets the client control the viewpoint for the cube.
 	  A simple client uses GUI elements to let the user control the
