@@ -5,6 +5,8 @@
 #include "ace/OS_NS_string.h"
 #include "NodeManager/NodeDaemonC.h"
 
+//#include "Config_Handlers/DnC_Dump.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -55,6 +57,9 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
+
+      //Deployment::DnC_Dump::dump (this->plan_);
+
       // (1) Call get_plan_info() method to get the total number
       //     of child plans and list of NodeManager names, and
       // (2) Check the validity of the global deployment plan.
