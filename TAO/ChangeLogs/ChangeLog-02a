@@ -1,3 +1,8 @@
+Sat Aug 26 22:58:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependencies for the Makefiles in
+	  $TAO_ROOT/orbsvcs and $TAO_ROOT/utils
+
 Sat Aug 26 22:54:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependencies for the Makefiles in
