@@ -15,7 +15,8 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (ACE_ENV_SINGLE_ARG_DECL)
+  void method (const ::test::octets &payload
+               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL)
@@ -36,7 +37,8 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (const ::test::octets &
+                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
