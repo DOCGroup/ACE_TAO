@@ -52,7 +52,7 @@ class SFP_Encoder
 
  private:
 
-  CDR *encoder_;
+  TAO_OutputCDR *encoder_;
   // Use the TAO CDR encoder to encode everything
   
   CORBA::ORB_var orb_;
@@ -86,7 +86,7 @@ protected:
   // buffer. Returns 0 on success, -1 on failure
 
 private:
-  CDR *decoder_;
+  TAO_InputCDR *decoder_;
   // Use the TAO CDR encoder to encode everything
   
   CORBA::ORB_var orb_;
