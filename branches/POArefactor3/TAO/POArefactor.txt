@@ -1,3 +1,9 @@
+Tue Feb 15 13:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed handling of ort_adapter, made some errors when merging the
+          changes Ossama made last month
+
 Tue Feb 15 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PortableServerC.{h,cpp}:
