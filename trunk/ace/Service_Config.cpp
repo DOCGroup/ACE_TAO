@@ -831,9 +831,9 @@ ACE_Service_Config::close_singletons (void)
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
   ACE_Reactor::close_singleton ();
-#if !defined (ACE_HAS_WINCE)
+#if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
   ACE_Proactor::close_singleton ();
-#endif /* !ACE_HAS_WINCE */
+#endif /* (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS))) */
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   ACE_Thread_Manager::close_singleton ();
 #endif /* ! ACE_THREAD_MANAGER_LACKS_STATICS */
