@@ -15,7 +15,7 @@ option
     {
         target type ( TargetType ) TargetName
         {
-           source type (cpp) "DLL_Test.cpp"
+           source type (cpp) "DLL_Test_Impl.cpp"
            source platformLinkLibs
         }
 if $__TOS_AIX__ {

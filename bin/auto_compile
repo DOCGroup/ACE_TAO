@@ -48,6 +48,7 @@ $LOG_DESTINATION='bugzilla'.'@cs.wustl.edu';
 
 $dont_build_tao = 0;
 $dont_run = 0;
+$makefile_suffix = "";
 $pre_realclean = 0;
 $post_realclean = 0;
 $report_success = 0;
@@ -114,6 +115,9 @@ while ($#ARGV >= 0) {
     $sendreport = 1;
   } elsif ($ARGV[0] eq "-notao") {
     $dont_build_tao = 1;
+  } elsif ($ARGV[0] eq "-make_type") {
+    shift;
+    $makefile_suffix = $ARGV[0];
   } else {
     print "Ignoring option $ARGV[0]\n";
   }
@@ -366,7 +370,7 @@ print LOG "================ ace/config.h ================\n";
 
 print LOG "================ include/makeinclude/platform_macros.GNU ================\n";
 open (CONFIG, "build/$BUILD/include/makeinclude/platform_macros.GNU")
-  || mydie "cannot open include/makeinclude/platform_macros.GNU";
+  || mydie "cannot open include/makeinclude/platform_macros.GNU" if ($makefile_suffix eq "");
 while (<CONFIG>) {
   chop;
   print LOG $_, "\n";
@@ -390,6 +394,10 @@ chdir('build/' . $BUILD)
     || mydie "cannot chdir to $BUILD";
 
 @failures = ();
+
+if ($makefile_suffix ne "") {
+  $MAKEFLAGS = "-f Makefile.$makefile_suffix";
+}
 
 print LOG "#################### Compiler\n";
 
