@@ -268,12 +268,12 @@ ACE_UUID_Generator::init (void)
     {
       // Generate random node. This is pretty bad, but until ACE has a
       // strong prng, this is what we can do.
-      nodeID [0] = static_cast<u_char>(ACE_OS::rand());
-      nodeID [1] = static_cast<u_char>(ACE_OS::rand());
-      nodeID [2] = static_cast<u_char>(ACE_OS::rand());
-      nodeID [3] = static_cast<u_char>(ACE_OS::rand());
-      nodeID [4] = static_cast<u_char>(ACE_OS::rand());
-      nodeID [5] = static_cast<u_char>(ACE_OS::rand());
+      nodeID [0] = ACE_static_cast (u_char, ACE_OS::rand());
+      nodeID [1] = ACE_static_cast (u_char, ACE_OS::rand());
+      nodeID [2] = ACE_static_cast (u_char, ACE_OS::rand());
+      nodeID [3] = ACE_static_cast (u_char, ACE_OS::rand());
+      nodeID [4] = ACE_static_cast (u_char, ACE_OS::rand());
+      nodeID [5] = ACE_static_cast (u_char, ACE_OS::rand());
     }
  
   { 
