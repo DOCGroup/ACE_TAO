@@ -1,3 +1,9 @@
+Tue May 15 10:14:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS.i (mmap): Added an extra check for an empty
+	  string. Thanks to Edan Ayal <edana@bandwiz.com> for reporting
+	  this problem and suggesting an easy fix.
+
 Mon May 14 22:38:06 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.16 released.
