@@ -1,3 +1,46 @@
+Thu Jun 11 21:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+	* tao/Connect.cpp: Added send_error, which does proper system exception handling
+	  and marshalling.
+
+	* tao/Connect.h: Added the request_id as parameter to handle_message and
+	  handle_locate
+
+	* tao/GIOP.cpp: Changed the forwarding. A method named location_forward has been
+	  introduced. It changes the IIOP_Profile of the object reference in copying the IIOP_Profile
+	  from the object where the requests should go to, now.
+
+	* tao/GIOP.h: Added the TAO_GIOP_Invocation::location_forward (CORBA::Environment &env);
+
+	* tao/IIOP_ORB.cpp: The IIOP_Object pointer is now released in each case, not only
+	  in the error case. This was necessary, because the control was given to the caller
+	  and the ref_count was to high.
+
+	* tao/IIOP_Object.cpp: Implemented the copy operator on IIOP_Profile, which is needed
+	  by the above mentioned location_forward method.
+
+	* tao/IIOP_Object.h: Removed old forward profile things and changed the copy operator
+
+	* tao/IIOP_Object.i: Removed old forward profile stuff.
+
+	* tao/Server_Request.cpp: Changed the exception handling. We have now a special
+	  case of the forward_request exception. This exception contains an object reference
+	  to a object at the new location.
+
+	* tao/Server_Request.h: Added  "CORBA::ULong request_id (void)" to query the request_id and 
+	  added a member "CORBA::Object_var forward_location_".
+
+	* tao/Server_Request.i: added ACE_INLINE CORBA::ULong IIOP_ServerRequest::request_id (void)
+
+	* docs/releasenotes/index.html: Added a reference to location forwarding.
+	
+	* docs/forwarding.html: Documentation about location forwarding.
+
+Thu Jun 11 21:09:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/Quoter_Impl.cpp (Quoter_Factory_Impl ctor):
+          dereference quoter_ior in ACE_DEBUG statement.
+
 Thu Jun 11 18:22:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB_Core.cpp: Added template instantiations for Write_Guard

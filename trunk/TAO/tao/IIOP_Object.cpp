@@ -204,6 +204,19 @@ IIOP::Profile::Profile (const ACE_INET_Addr &addr,
   (void) this->set (addr, key);
 }
 
+
+IIOP::Profile 
+&IIOP::Profile::operator = (const IIOP::Profile &src)
+{
+  this->set (src.host,
+             src.port,
+             src.object_key,
+             &src.object_addr_);
+  return *this;
+}
+
+
+
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
 //
@@ -360,8 +373,7 @@ IIOP_Object::IIOP_Object (const char *host,
                           char *repository_id)
   : STUB_Object (repository_id),
     profile (host, port, objkey),
-    refcount_ (1),
-    fwd_profile_ (0)
+    refcount_ (1)
 {
 }
 
@@ -371,8 +383,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
                           const char *objkey)
   : STUB_Object (repository_id),
     profile (addr, objkey),
-    refcount_ (1),
-    fwd_profile_ (0)
+    refcount_ (1)
 {
 }
 
@@ -848,3 +859,4 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
       assert (status == TAO_GIOP_LOCATION_FORWARD);
     }
 }
+

@@ -337,6 +337,11 @@ private:
 
   TAO_Client_Connection_Handler *handler_;
   // The handler for the client's connection.
+
+  
+  TAO_GIOP_ReplyStatusType
+    TAO_GIOP_Invocation::location_forward (CORBA::Environment &env);
+  // do the location forwarding, which means exchanging the profile
 };
 
 class TAO_Export TAO_GIOP

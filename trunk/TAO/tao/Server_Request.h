@@ -264,6 +264,11 @@ public:
   TAO_HRESULT  QueryInterface (REFIID riid,
                                void **ppv);
 
+  // To handle System Exceptions at the lowest level,
+  // a method returning the request_id_ is needed.
+
+  CORBA::ULong request_id (void);
+
 private:
 #if !defined (TAO_COPY_OPNAME)
   char* operation_;
@@ -271,6 +276,8 @@ private:
   CORBA::String_var operation_;
 #endif
   // Operation name.
+
+  CORBA::Object_var forward_location_;
 
   TAO_InputCDR *incoming_;
   // Incoming stream.

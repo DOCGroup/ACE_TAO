@@ -297,18 +297,32 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
   if (this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
+  {
+    // Try to narrow to ForwardRequest
+    PortableServer::ForwardRequest_ptr forward_request =
+        PortableServer::ForwardRequest::_narrow ((CORBA::Exception *) value.value ());
+      
+    // If narrowing of exception succeeded
+    if (forward_request != 0)
     {
-      this->exception_ = new CORBA::Any;
-      this->exception_->replace (value.type (), value.value (), 1, env);
+	    this->forward_location_ = forward_request->forward_reference;
+	  }
 
-      // @@ This cast is not safe, but we haven't implemented the >>=
-      // and <<= operators for base exceptions (yet).
-      CORBA_Exception* x = (CORBA_Exception*)value.value ();
-      if (CORBA_UserException::_narrow (x) != 0)
-	this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+    // Normal exception
+    else
+	  {
+	    this->exception_ = new CORBA::Any;
+	    this->exception_->replace (value.type (), value.value (), 1, env);
+	  
+	    // @@ This cast is not safe, but we haven't implemented the >>=
+	    // and <<= operators for base exceptions (yet).
+	    CORBA_Exception* x = (CORBA_Exception*)value.value ();
+	    if (CORBA_UserException::_narrow (x) != 0)
+        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
       else
-	this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-    }
+        this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+	  }
+  }
 }
 
 // Extension
@@ -434,15 +448,25 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
                            env);
   this->outgoing_->write_ulong (this->request_id_);
 
-  // Standard exceptions only.
-  if (env.exception () != 0)
-    {
-      CORBA::Environment env2;
-      CORBA::Exception *x = env.exception ();
-      CORBA::TypeCode_ptr except_tc = x->_type ();
+  // Standard exceptions are caught in Connect::handle_input
 
-      this->outgoing_->write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
-      (void) this->outgoing_->encode (except_tc, x, 0, env2);
+  // Forward exception only.
+  if (!CORBA::is_nil (this->forward_location_.in ()))
+    {
+      this->outgoing_->write_ulong (TAO_GIOP_LOCATION_FORWARD);
+
+      CORBA::Object_ptr object_ptr = this->forward_location_.in ();
+      (void) this->outgoing_->encode (CORBA::_tc_Object,
+				      &object_ptr, 
+				      0, 
+				      env);
+
+      // If encoding went fine
+      if (env.exception () != 0)
+        {
+          dexc (env, "ServerRequest::marshal - forwarding parameter encode failed");
+          return;
+        }        
     }
 
   // Any exception at all.
@@ -487,7 +511,8 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
   const void *value;
 
   // only if there wasn't any exception, we proceed
-  if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION)
+  if (this->exception_type_ == TAO_GIOP_NO_EXCEPTION &&
+      CORBA::is_nil (this->forward_location_.in ()))
     {
       // ... then send any return value ...
       if (this->retval_)

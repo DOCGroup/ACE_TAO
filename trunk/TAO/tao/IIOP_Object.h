@@ -90,6 +90,9 @@ public:
     ACE_INET_Addr &object_addr (void);
     // Returns the <ACE_INET_Addr> for this profile.
 
+    Profile &operator = (const Profile &src);
+    // copy operator
+
   private:
     int set (const char *host,
              const CORBA::UShort port,
@@ -115,9 +118,6 @@ public:
     int set (const ACE_INET_Addr &addr,
              const TAO_opaque &object_key);
     // Called by client or server.
-
-    Profile &operator = (const Profile &src);
-    // Disallow copy constructor.
 
     ACE_INET_Addr object_addr_;
     // Cached instance of <ACE_INET_Addr> for use in making
@@ -177,26 +177,7 @@ public:
   // IIOP engine does not need to worry about such issues since it
   // only supports one protocol -- the problem won't show up.
   // "Multiprotocol ORBs" will need to solve that problem though.  ]
-
-  // = Thread-safe accessors for the forwarding profile
-  IIOP::Profile *fwd_profile (void);
-  // THREAD-SAFE.  Returns the current forwarding profile.
-
-  IIOP::Profile *fwd_profile (IIOP::Profile *new_profile);
-  // THREAD-SAFE.  Sets a new value for the forwarding profile and
-  // returns the current value.
-
-  // = Non-thread-safe accessors for the forwarding profile
-  ACE_SYNCH_MUTEX &fwd_profile_lock (void);
-  // Gives reference to the lock guarding the forwarding profile.
-
-  IIOP::Profile *fwd_profile_i (void);
-  // THREAD-SAFE.  Returns the current forwarding profile.
-
-  IIOP::Profile *fwd_profile_i (IIOP::Profile *new_profile);
-  // THREAD-SAFE.  Sets a new value for the forwarding profile and
-  // returns the current value.
-
+  
   // = Construction
   IIOP_Object (char *repository_id);
   // Construct from a repository (type) ID.
@@ -236,16 +217,6 @@ private:
 
   u_int refcount_;
   // Number of outstanding references to this object.
-
-  ACE_SYNCH_MUTEX fwd_profile_lock_;
-  // This lock covers the mutable info in all IIOP objref data,
-  // namely the forwarded-to objref.  It must be held when a client
-  // thread is reading or modifying that data, to prevent one from
-  // overwriting data the other's reading or writing.
-
-  IIOP::Profile *fwd_profile_;
-  // This is a pointer to a profile used if the object is not
-  // collocated in the current process.
 
   ~IIOP_Object (void);
   // Destructor is to be called only through Release()

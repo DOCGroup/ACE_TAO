@@ -70,3 +70,9 @@ IIOP_ServerRequest::service_info (void) const
 {
   return this->service_info_;
 }
+
+ACE_INLINE CORBA::ULong 
+IIOP_ServerRequest::request_id (void)
+{
+  return this->request_id_;
+}

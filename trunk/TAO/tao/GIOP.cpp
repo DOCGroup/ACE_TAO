@@ -633,23 +633,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // connection.
   ACE_INET_Addr *server_addr_p = 0;
 
-  {
-    // Begin a new scope so we keep this lock only as long as
-    // necessary
-#if 0 /* Keep this around for when forwarding might be implemented (if ever) */
-    ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock ()));
-#endif
-    if (data_->fwd_profile_i () != 0)
-      {
-        key = &data_->fwd_profile_i ()->object_key;
-        server_addr_p = &data_->fwd_profile_i ()->object_addr ();
-      }
-    else
-      {
-        key = &data_->profile.object_key;
-        server_addr_p = &data_->profile.object_addr ();
-      }
-  }
+  key = &data_->profile.object_key;
+  server_addr_p = &data_->profile.object_addr ();
 
   if (server_addr_p == 0)
     {
@@ -874,19 +859,21 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // resource being reclaimed might also have been the process,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
+      // @@ Michael
+      /* 
       {
-#if 0 /* Keep this around in case forwarding is ever implemented */
-        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
-#endif
+
+        // Keep this around in case forwarding is ever implemented 
+        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));     
 
         IIOP::Profile *old = data_->fwd_profile_i (0);
         delete old;
 
-        this->handler_->close ();
-        this->handler_ = 0;
-        return TAO_GIOP_LOCATION_FORWARD;
-      }
-
+      */
+      this->handler_->close ();
+      this->handler_ = 0;
+      return TAO_GIOP_LOCATION_FORWARD;
+      
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
@@ -1074,54 +1061,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-      {
-        CORBA::Object_ptr obj;
-        IIOP_Object *obj2;
-
-        // Unmarshal the object we _should_ be calling.  We know that
-        // one of the facets of this object will be an IIOP invocation
-        // profile.
-
-        if (this->inp_stream_.decode (CORBA::_tc_Object,
-                                      &obj, 0,
-                                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-            || obj->QueryInterface (IID_IIOP_Object,
-                                    (void **) &obj2) != TAO_NOERROR)
-          {
-            dexc (env, "invoke, location forward");
-            TAO_GIOP::send_error (this->handler_);
-            return TAO_GIOP_SYSTEM_EXCEPTION;
-          }
-        CORBA::release (obj);
-
-        // Make a copy of the IIOP profile in the forwarded objref,
-        // reusing memory where practical.  Then delete the forwarded
-        // objref, retaining only its profile.
-        //
-        // @@ add and use a "forward count", to prevent loss of data
-        // in forwarding chains during concurrent calls -- only a
-        // forward that's a response to the current fwd_profile should
-        // be recorded here. (This is just an optimization, and is not
-        // related to correctness.)
-
-#if 0 /* Keep this around in case forwarding is ever implemented. */
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
-#endif
-
-        IIOP::Profile *old = data_->fwd_profile_i (new IIOP::Profile (obj2->profile));
-        delete old;
-
-        obj2->Release ();
-
-        env.clear ();
-
-        // Make sure a new connection is used next time.
-        this->handler_->close ();
-        this->handler_ = 0;
-        // We may not need to do this since TAO_GIOP_Invocations
-        // get created on a per-call basis. For now we'll play it safe.
-      }
-    break;
+      return (this->location_forward (env));   
     }
 
   // All standard exceptions from here on in the call path know for
@@ -1131,6 +1071,76 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   return (TAO_GIOP_ReplyStatusType) reply_status;
 }
+
+// Handle the GIOP Reply with status = LOCATION_FORWARD
+// Replace the IIOP Profile. The call is then automatically
+// reinvoked by the IIOP_Object::do_static_call method.
+
+TAO_GIOP_ReplyStatusType
+TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
+{
+  // It can be assumed that the GIOP header and the reply header
+  // are already handled. Further it can be assumed that the 
+  // reply body contains and object reference to the new object.
+  // This object pointer will be now extracted.
+
+  // @@ Memory leak examination: Michael
+  CORBA::Object_ptr object_ptr = 0;
+  //CORBA::Object_ptr object_ptr = object_var.inout();
+
+  if (this->inp_stream_.decode (CORBA::_tc_Object,
+                                &(object_ptr),   
+                                0,
+                                env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+  {
+    dexc (env, "invoke, location forward (decode)");
+    TAO_GIOP::send_error (this->handler_);
+    return TAO_GIOP_SYSTEM_EXCEPTION;
+  }
+
+  // The object pointer has to be changed to a IIOP_Object pointer
+  // in order to extract the profile.
+
+  IIOP_Object *iIOP_Object_ptr = 0;
+
+  if (object_ptr->QueryInterface (IID_IIOP_Object,
+                                  (void **) &iIOP_Object_ptr) != TAO_NOERROR)
+  {
+    dexc (env, "invoke, location forward (QueryInterface)");
+    TAO_GIOP::send_error (this->handler_);
+    return TAO_GIOP_SYSTEM_EXCEPTION;
+  }
+
+  // The object is no longer needed, because we have now the IIOP_Object
+  CORBA::release (object_ptr);
+  CORBA::release (object_ptr);
+
+  // Make a copy of the IIOP profile in the forwarded objref,
+  // reusing memory where practical.  Then delete the forwarded
+  // objref, retaining only its profile.
+  //
+  // @@ add and use a "forward count", to prevent loss of data
+  // in forwarding chains during concurrent calls -- only a
+  // forward that's a response to the current fwd_profile should
+  // be recorded here. (This is just an optimization, and is not
+  // related to correctness.)
+
+  // a copy operator for IIOP::Profile is defined, so don't worry
+  data_->profile = iIOP_Object_ptr->profile;
+
+
+  // Release the IIOP_Object
+  iIOP_Object_ptr->Release ();
+
+  env.clear ();
+
+
+  // We may not need to do this since TAO_GIOP_Invocations
+  // get created on a per-call basis. For now we'll play it safe.   
+
+  return TAO_GIOP_LOCATION_FORWARD;
+}
+
 
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
@@ -1225,18 +1235,20 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
       // resource being reclaimed might also have been the process,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
+      // @@ Michael
+      /*
       {
-#if 0 /* Keep this around in case forwarding is ever implemented */
+         // Keep this around in case forwarding is ever implemented 
         ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
-#endif
+
 
         IIOP::Profile *old = data_->fwd_profile_i (0);
         delete old;
+      */
 
-        this->handler_->close ();
-        this->handler_ = 0;
-        return TAO_GIOP_LOCATION_FORWARD;
-      }
+      this->handler_->close ();
+      this->handler_ = 0;
+      return TAO_GIOP_LOCATION_FORWARD;
 
     case TAO_GIOP::Request:
     case TAO_GIOP::CancelRequest:
@@ -1457,54 +1469,7 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-      {
-        CORBA::Object_ptr obj;
-        IIOP_Object *obj2;
-
-        // Unmarshal the object we _should_ be calling.  We know that
-        // one of the facets of this object will be an IIOP invocation
-        // profile.
-
-        if (this->inp_stream_.decode (CORBA::_tc_Object,
-                                      &obj, 0,
-                                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-            || obj->QueryInterface (IID_IIOP_Object,
-                                    (void **) &obj2) != TAO_NOERROR)
-          {
-            dexc (env, "invoke, location forward");
-            TAO_GIOP::send_error (this->handler_);
-            return TAO_GIOP_SYSTEM_EXCEPTION;
-          }
-        CORBA::release (obj);
-
-        // Make a copy of the IIOP profile in the forwarded objref,
-        // reusing memory where practical.  Then delete the forwarded
-        // objref, retaining only its profile.
-        //
-        // @@ add and use a "forward count", to prevent loss of data
-        // in forwarding chains during concurrent calls -- only a
-        // forward that's a response to the current fwd_profile should
-        // be recorded here. (This is just an optimization, and is not
-        // related to correctness.)
-
-#if 0 /* Keep this around in case forwarding is ever implemented. */
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION);
-#endif
-
-        IIOP::Profile *old = data_->fwd_profile_i (new IIOP::Profile (obj2->profile));
-        delete old;
-
-        obj2->Release ();
-
-        env.clear ();
-
-        // Make sure a new connection is used next time.
-        this->handler_->close ();
-        this->handler_ = 0;
-        // We may not need to do this since TAO_GIOP_Invocations
-        // get created on a per-call basis. For now we'll play it safe.
-      }
-    break;
+        return (this->location_forward (env));
     }
 
   // All standard exceptions from here on in the call path know for
