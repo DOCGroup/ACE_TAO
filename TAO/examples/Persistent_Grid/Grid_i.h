@@ -34,12 +34,8 @@ public:
   Grid_Factory_i (void);
   // Constructor.
 
-  Grid_Factory_i (Grid_Factory_i &);
-  // Copy constructor to fool g++
-
   ~Grid_Factory_i (void);
   // Destructor.
-
 
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short
