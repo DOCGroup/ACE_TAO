@@ -28,7 +28,7 @@ sub completion_command {
   my($types) = shift;
   my($str)   = "complete $name " .
                "'c/-/(global include type template relative " .
-               "ti static noreldefs notoplevel feature_file" .
+               "ti static noreldefs notoplevel feature_file " .
                "value_template value_project)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";

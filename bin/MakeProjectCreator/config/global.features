@@ -20,3 +20,5 @@ rapi          = 0
 fl_reactor    = 0
 repo          = 0
 minimum_corba = 0
+java          = 0
+qt            = 0
