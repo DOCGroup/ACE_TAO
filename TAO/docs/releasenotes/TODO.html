@@ -29,13 +29,19 @@
 
     <OL>
       <LI><P>Implement an Implementation Repository for TAO.
-	  <BR>[STATUS] Darrell is working on this.
+	  <BR>[ASSIGNED TO:] Darrell.
 	</P>
       </LI>
 
       <LI><P>Support the thread pool reactor in the ORB.
-	  <BR>[STATUS] Nanbor is working on this.
+	  <BR>[ASSIGNED TO:] Nanbor.
 	</P>
+      </LI>
+
+      <LI><P>Add support for multiple Profiles in the ORB (completing
+          the IIOP 1.0 support)
+          <BR>[ASSIGNED TO:] Fred
+        </P>
       </LI>
 
     </OL>
@@ -344,11 +350,11 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI>Add support for multiple Profiles in the ORB (completing the
-	IIOP 1.0 support)
+      <LI>Support IIOP 1.1 in the ORB
       <P></LI>
 
-      <LI>Support IIOP 1.1 in the ORB
+      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
+	preserve end-to-end QoS.
       <P></LI>
 
       <LI>Support IIOP 1.2 in the ORB
@@ -357,10 +363,6 @@ class POA_Foo {
       <LI>Support GIOP 1.1 in the ORB (fragments)
       <P></LI>
 
-      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
-	preserve end-to-end QoS.
-      <P></LI>
-      
       <LI>The size of pre-allocated buffer for the outgoing CDR
 	streams is defined at compilation time; but if we use an
 	efficient enough allocator we could make its size configurable
@@ -774,6 +776,13 @@ class POA_Foo {
 </PRE>
         It may be necessary to have a multi-pass code generator to
         solve this problem.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>Sometimes the Event Channel dead-locks during
+          shutdown. According to Ulf Jährig &lt;jaehrig@desys.com&gt>;, an
+          easy way to reproduce the problem is to run the
+          EC_Throughput test under windows NT.
         </P>
       </LI>
 
