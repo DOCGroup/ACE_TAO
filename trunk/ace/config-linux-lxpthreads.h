@@ -1,34 +1,29 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for Linux
-// platforms using GNU C++ and the MIT threads package.
+/* The following configuration file is designed to work for Linux
+   platforms using GNU C++ and Xavier Leroy's pthreads package.  For
+   more information you should check out his Web site:
 
-/*	JCEJ 12/22/96
+   http://pauillac.inria.fr/~xleroy/linuxthreads/
 
-	This is a slightly modified version of config-linux-pthreads
-	made to work with Xavier Leroy's pthreads package.  For more
-	information you should check out his Web site:
-		http://pauillac.inria.fr/~xleroy/linuxthreads/
+   The version I have installed and working is an RPM*
+   based on Xavier's 0.5 release. I don't know where
+   the tarball of 0.5 can be found, but I suspect that
+   Xavier's site has it...
 
-	The version I have installed and working is an RPM*
-	based on Xavier's 0.5 release. I don't know where
-	the tarball of 0.5 can be found, but I suspect that
-	Xavier's site has it...
+	* RPM == Redhat Package Management 
+	
+	My system is a Caldera-based distribution with many upgraded
+	packages.  If you don't use RPM, there is a program (rpm2cpio)
+	which will extract the files for "normal consumption".
 
-	* RPM == Redhat Package Management
-	My system is a Caldera-based distribution with many
-	upgraded packages.  If you don't use RPM, there is
-	a program (rpm2cpio) which will extract the files
-	for "normal consumption".
+	You may also want to check out the "ACE On Linux" pages at:
 
-	You may also want to check out the "ACE On Linux"
-	pages at:
 		http://users.deltanet.com/users/slg/ACE/
 
-	(They were a little out of date when I last was
-	there however.)
- */
+	(They were a little out of date when I last was there
+	however.) */
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
