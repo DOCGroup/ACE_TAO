@@ -359,11 +359,7 @@ namespace CIAO
     _ASpec ();
 
     /// ID to implementation map.
-    ACE_Hash_Map_Manager_Ex<ACE_CString,
-                            ACE_CString,
-                            ACE_Hash<ACE_CString>,
-                            ACE_Equal_To<ACE_CString>,
-                            ACE_Null_Mutex> componentfiles_;
+    ID_IMPL_MAP componentfiles_;
 
     /// Partitioning data
     Assembly_Placement::Container partitioning_;

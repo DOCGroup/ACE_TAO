@@ -141,7 +141,7 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);
 
-  this->orb_->shutdown ();
+  this->orb_->shutdown (0);
 }
 
 
@@ -191,6 +191,7 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
 
   CIAO::Assembly_Builder_Visitor builder (this->orb_.in (),
                                           this->assembly_context_,
+                                          this->assembly_spec_->componentfiles_,
                                           this->deployment_config_);
   int build_result = this->assembly_spec_->partitioning_.accept (builder);
 
@@ -213,6 +214,39 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
     return;                     // Nothing to do here.
 
   // @@ At least we should remove home and kill the component server.
+  // Remove all components:
+  {
+    CIAO::Assembly_Context::COMP_MAP::ITERATOR
+      iter (this->assembly_context_.instantiated_components_);
+
+    while (!iter.done ())
+      {
+        CIAO::Assembly_Context::COMP_MAP::ENTRY *entry;
+        iter.next (entry);
+
+        entry->int_id_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+
+        iter.advance ();
+      }
+  }
+
+  // Remove all server
+  {
+    CIAO::Assembly_Context::SERVER_QUEUE::ITERATOR
+      iter (this->assembly_context_.component_servers_);
+
+    while (!iter.done ())
+      {
+        Components::Deployment::ComponentServer_var *entry;
+        iter.next (entry);
+
+        (*entry)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
+
+        iter.advance ();
+      }
+  }
 
   this->state_ = ::Components::Deployment::INACTIVE;
 }
