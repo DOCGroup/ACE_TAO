@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// be/be_codegen.cpp:597
+
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_T_H_
 
@@ -33,8 +37,9 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_Messaging
 {
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-
+  // TAO_IDL - Generated from
+  // be/be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  ReplyHandler_tie : public ReplyHandler
@@ -76,11 +81,15 @@ TAO_NAMESPACE  POA_Messaging
     ReplyHandler_tie (const ReplyHandler_tie &);
     void operator= (const ReplyHandler_tie &);
   };
-#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 #endif /* ACE_HAS_USING_KEYWORD */
+
+
+// TAO_IDL - Generated from 
+// be/be_codegen.cpp:1135
+
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS_T.i"

@@ -19,18 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_ci.cpp:68
 
-// TAO_IDL - Generated from 
-// be/be_codegen.cpp:770
-
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_T_CPP_
-#define _TAO_IDL_ORIG_MESSAGINGS_T_CPP_
-
-#include "MessagingS_T.h"
-
-#if !defined (__ACE_INLINE__)
-#include "MessagingS_T.i"
-#endif /* !defined INLINE */
+#if !defined (_MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_)
+#define _MESSAGING_RELATIVEROUNDTRIPTIMEOUTPOLICY___CI_
 
 
-#endif /* ifndef */
+#endif /* end #if !defined */
+
