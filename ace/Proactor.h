@@ -54,7 +54,7 @@ public:
 
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> 
+                            ACE_SYNCH_RECURSIVE_MUTEX>
           TIMER_QUEUE;
 
   ACE_Proactor_Handle_Timeout_Upcall (void);
@@ -107,35 +107,35 @@ public:
   // on these typedefs to see if we can capitalize them?
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> 
+                            ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Queue;
   typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
                                      ACE_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX> 
+                                     ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Queue_Iterator;
   typedef ACE_Timer_List_T<ACE_Handler *,
                            ACE_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX> 
+                           ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_List;
   typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
                                     ACE_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX> 
+                                    ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_List_Iterator;
   typedef ACE_Timer_Heap_T<ACE_Handler *,
                            ACE_Proactor_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX> 
+                           ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Heap;
   typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
                                     ACE_Proactor_Handle_Timeout_Upcall,
-                                    ACE_SYNCH_RECURSIVE_MUTEX> 
+                                    ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Heap_Iterator;
   typedef ACE_Timer_Wheel_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
-                            ACE_SYNCH_RECURSIVE_MUTEX> 
+                            ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Wheel;
   typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
                                      ACE_Proactor_Handle_Timeout_Upcall,
-                                     ACE_SYNCH_RECURSIVE_MUTEX> 
+                                     ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Wheel_Iterator;
 
   ACE_Proactor (size_t number_of_threads = 0,
@@ -148,7 +148,7 @@ public:
 
   static ACE_Proactor *instance (size_t threads = 0);
   // Get pointer to a process-wide <ACE_Proactor>.  <threads> should
-  // be part of another method.  
+  // be part of another method.
 
   static ACE_Proactor *instance (ACE_Proactor *);
   // Set pointer to a process-wide <ACE_Proactor> and return existing
@@ -262,6 +262,7 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle.
 
+#if defined (ACE_HAS_AIO_CALLS)
   int insert_to_aiocb_list (aiocb *aiocb_ptr,
                             ACE_Asynch_Result *result);
   // @@ Alex, is it possible to "hide" this better, i.e., so it's not
@@ -276,6 +277,7 @@ public:
   // @@ Can array be full? That means, the aio issue is successful,
   // but there are already AIO_LIST_AIO_MAX of calls pending. I will
   // have to go for something other than arrays then.
+#endif /* ACE_HAS_AIO_CALLS */
 
 protected:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -353,7 +355,7 @@ protected:
 
   size_t number_of_threads_;
   // This number is passed to the <CreatIOCompletionPort> system
-  // call. 
+  // call.
 
   Timer_Queue *timer_queue_;
   // Timer Queue.
