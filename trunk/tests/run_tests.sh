@@ -104,6 +104,7 @@ run Timeprobe_Test                      # tests ACE_Timeprobes
 run Time_Value_Test                     # tests Time_Value
 run High_Res_Timer_Test                 # tests High_Res_Timer
 run SString_Test                        # tests ACE_CString and ACE_SString
+run Collection_Test                     # tests ACE Collection classes
 test $chorus || test $LynxOS || run Naming_Test # tests ACE_Naming_Context, ACE_WString
 
 run Handle_Set_Test                     # tests ACE_Handle_Set

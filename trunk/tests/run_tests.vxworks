@@ -71,6 +71,10 @@ ld < SString_Test
 write 2, "SString_Test ", 13
 ace_main; unld "SString_Test"
 
+ld < Collection_Test
+write 2, "Collection_Test ", 16
+ace_main; unld "Collection_Test"
+
 ld < Handle_Set_Test
 write 2, "Handle_Set_Test ", 16
 ace_main; unld "Handle_Set_Test"
