@@ -754,10 +754,6 @@ server::test_lanes_bands_server_declared_poa (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char **argv)
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -766,6 +762,10 @@ main (int argc, char **argv)
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"

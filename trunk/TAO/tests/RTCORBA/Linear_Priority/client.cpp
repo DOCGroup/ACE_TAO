@@ -162,9 +162,6 @@ Worker_Thread::svc (void)
 int
 main (int argc, char **argv)
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
 
   ACE_TRY_NEW_ENV
     {
@@ -179,6 +176,10 @@ main (int argc, char **argv)
         parse_args (argc, argv);
       if (result != 0)
         return result;
+        
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in ());
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"

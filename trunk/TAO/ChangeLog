@@ -1,3 +1,67 @@
+Mon Feb 10 17:12:30 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/check_supported_priorities.cpp: Changed the
+	  function to take in a ORB pointer. The function now queries the
+	  ORB to get the scheduling policy in place before checking the
+	  priority levels. Using SCHED_OTHER as it was done before doesnt
+	  work well on Linux and it was broken.
+
+	* tests/RTCORBA/Banded_Connections/client.cpp:
+	* tests/RTCORBA/Banded_Connections/server.cpp:
+	* tests/RTCORBA/Client_Propagated/client.cpp:
+	* tests/RTCORBA/Client_Propagated/server.cpp:
+	* tests/RTCORBA/Collocation/Collocation.cpp:
+	* tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+	* tests/RTCORBA/Explicit_Binding/client.cpp:
+	* tests/RTCORBA/Explicit_Binding/server.cpp:
+	* tests/RTCORBA/Linear_Priority/client.cpp:
+	* tests/RTCORBA/Linear_Priority/server.cpp:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+	* tests/RTCORBA/ORB_init/ORB_init.cpp:
+	* tests/RTCORBA/Persistent_IOR/client.cpp:
+	* tests/RTCORBA/Persistent_IOR/server.cpp:
+	* tests/RTCORBA/Policy_Combinations/client.cpp:
+	* tests/RTCORBA/Policy_Combinations/server.cpp:
+	* tests/RTCORBA/Private_Connection/client.cpp:
+	* tests/RTCORBA/Private_Connection/server.cpp:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/client.cpp:
+	* tests/RTCORBA/Profile_And_Endpoint_Selection/server.cpp:
+	* tests/RTCORBA/RTMutex/server.cpp:
+	* tests/RTCORBA/Server_Declared/client.cpp:
+	* tests/RTCORBA/Server_Declared/server.cpp:
+	* tests/RTCORBA/Server_Protocol/client.cpp:
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* tests/RTCORBA/Thread_Pool/client.cpp:
+	* tests/RTCORBA/Thread_Pool/server.cpp: We now do a check on
+	  supported priorities after the ORB is initialized. 
+	
+	* tests/RTCORBA/Banded_Connections/svc.conf:
+	* tests/RTCORBA/Explicit_Binding/svc.conf:	
+	* tests/RTCORBA/Linear_Priority/svc.conf:
+	* tests/RTCORBA/Policy_Combinations/svc.conf: Added scheduling
+	  policy to all the configurations.
+	
+	* tests/RTCORBA/Client_Propagated/svc.conf:
+	* tests/RTCORBA/Collocation/svc.conf:
+	* tests/RTCORBA/Destroy_Thread_Pool/svc.conf:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+	* tests/RTCORBA/ORB_init/svc.conf:
+	* tests/RTCORBA/Persistent_IOR/svc.conf:
+	* tests/RTCORBA/Policies/svc.conf:
+	* tests/RTCORBA/Private_Connection/svc.conf:
+	* tests/RTCORBA/RTMutex/svc.conf:
+	* tests/RTCORBA/Server_Declared/svc.conf:
+	* tests/RTCORBA/Server_Protocol/svc.conf:
+	* tests/RTCORBA/Thread_Pool/svc.conf: New files added with
+	  scheduling information. This is not perfect for all cases, but a
+	  good starting point for the bug reports that showed up about
+	  RTCORBA on Linux. 
+
+	  We need to relook into stressing these tests after 1.3.1 using
+	  multiple scheduling policies. We have very less time to within
+	  the short timeframe available.  
+
 Mon Feb 10 19:28:43 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor:

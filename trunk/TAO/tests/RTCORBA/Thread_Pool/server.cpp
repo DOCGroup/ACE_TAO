@@ -161,10 +161,6 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
 int
 main (int argc, char *argv[])
 {
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities ();
-
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -173,6 +169,10 @@ main (int argc, char *argv[])
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
