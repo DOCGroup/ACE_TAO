@@ -1,3 +1,10 @@
+Fri Dec 19 01:26:00 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Process_Mutex.cpp:
+        * ace/RW_Process_Mutex.cpp:
+        * ace/Thread_Mutex.cpp:
+          Added #include ace/Malloc_T.h.
+
 Fri Dec 19 00:46:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Null_Mutex.h:

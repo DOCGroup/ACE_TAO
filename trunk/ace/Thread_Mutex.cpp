@@ -19,6 +19,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
+#include "ace/Malloc_T.h"
 
 ACE_RCSID(ace, Thread_Mutex, "$Id$")
 
