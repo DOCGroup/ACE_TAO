@@ -1,3 +1,11 @@
+Fri Apr 16 13:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp
+          examples/Simulator/Event_Supplier/Logging_Sup.cpp
+          examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+	  changed a number of instances of ORBSVCS_Time::zero
+	  to ORBSVCS_Time::zero ()
+
 Fri Apr 16 09:39:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/NestedUpcall/Triangle_Test/Makefile:

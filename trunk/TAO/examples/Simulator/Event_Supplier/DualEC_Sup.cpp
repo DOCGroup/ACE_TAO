@@ -109,12 +109,12 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   // Initialize the high priority RT_Info data
   rt_info_nav_hi_.entry_point = "DUALEC_NAV_HI";
   rt_info_nav_hi_.criticality = RtecScheduler::VERY_HIGH_CRITICALITY;
-  rt_info_nav_hi_.worst_case_execution_time = ORBSVCS_Time::zero;
-  rt_info_nav_hi_.typical_execution_time = ORBSVCS_Time::zero;
-  rt_info_nav_hi_.cached_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.worst_case_execution_time = ORBSVCS_Time::zero ();
+  rt_info_nav_hi_.typical_execution_time = ORBSVCS_Time::zero ();
+  rt_info_nav_hi_.cached_execution_time = ORBSVCS_Time::zero ();
   rt_info_nav_hi_.period = 2500000;
   rt_info_nav_hi_.importance = RtecScheduler::VERY_HIGH_IMPORTANCE;
-  rt_info_nav_hi_.quantum = ORBSVCS_Time::zero;
+  rt_info_nav_hi_.quantum = ORBSVCS_Time::zero ();
   rt_info_nav_hi_.threads = 1;
   rt_info_nav_hi_.info_type = RtecScheduler::OPERATION;
   rt_info_weap_hi_ = rt_info_nav_hi_;
@@ -125,12 +125,12 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
   // Initialize the low priority RT_Info data
   rt_info_nav_lo_.entry_point = "DUALEC_NAV_LO";
   rt_info_nav_lo_.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  rt_info_nav_lo_.worst_case_execution_time = ORBSVCS_Time::zero;
-  rt_info_nav_lo_.typical_execution_time = ORBSVCS_Time::zero;
-  rt_info_nav_lo_.cached_execution_time = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.worst_case_execution_time = ORBSVCS_Time::zero ();
+  rt_info_nav_lo_.typical_execution_time = ORBSVCS_Time::zero ();
+  rt_info_nav_lo_.cached_execution_time = ORBSVCS_Time::zero ();
   rt_info_nav_lo_.period = 10000000;
   rt_info_nav_lo_.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  rt_info_nav_lo_.quantum = ORBSVCS_Time::zero;
+  rt_info_nav_lo_.quantum = ORBSVCS_Time::zero ();
   rt_info_nav_lo_.threads = 1;
   rt_info_nav_lo_.info_type = RtecScheduler::OPERATION;
   rt_info_weap_lo_ = rt_info_nav_lo_;
@@ -932,9 +932,9 @@ DualEC_Supplier::load_schedule_data ()
                       weap->weapon5_status = 0;
                       weap->utilization =       0.0;
                       weap->overhead =          0.0;
-                      weap->arrival_time =      ORBSVCS_Time::zero;
-                      weap->completion_time  =  ORBSVCS_Time::zero;
-                      weap->computation_time =  ORBSVCS_Time::zero;
+                      weap->arrival_time =      ORBSVCS_Time::zero ();
+                      weap->completion_time  =  ORBSVCS_Time::zero ();
+                      weap->computation_time =  ORBSVCS_Time::zero ();
                       weap->update_data =       update_data_;
 
                       // Insert the data into the queue.
@@ -963,9 +963,9 @@ DualEC_Supplier::load_schedule_data ()
                       nav->pitch = this->nav_pitch_;
                       nav->utilization =       0.0;
                       nav->overhead =          0.0;
-                      nav->arrival_time =      ORBSVCS_Time::zero;
-                      nav->completion_time =   ORBSVCS_Time::zero;
-                      nav->computation_time =  ORBSVCS_Time::zero;
+                      nav->arrival_time =      ORBSVCS_Time::zero ();
+                      nav->completion_time =   ORBSVCS_Time::zero ();
+                      nav->computation_time =  ORBSVCS_Time::zero ();
                       nav->update_data =       this->update_data_;
                       nav->utilization = (double) (20.0 + ACE_OS::rand() % 10);
                       nav->overhead = (double) (ACE_OS::rand() % 10);
