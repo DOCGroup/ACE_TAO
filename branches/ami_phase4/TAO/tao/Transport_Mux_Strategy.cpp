@@ -5,7 +5,8 @@
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 
-TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (void)
+TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (TAO_Transport *transport)
+  : transport_ (transport)
 {
 }
 
@@ -13,13 +14,24 @@ TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy (void)
 {
 }
 
+
+int
+TAO_Transport_Mux_Strategy::bind_dispatcher (CORBA::ULong,
+                                             TAO_Reply_Dispatcher *rd)
+{
+  // Help the Reply dispatcher to obtain leader follower condition
+  // variable.
+  return rd->leader_follower_condition_variable (this->transport_);
+}
+
 // *********************************************************************
 
-TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_ORB_Core *orb_core)
-  : request_id_generator_ (0),
+TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
+  : TAO_Transport_Mux_Strategy (transport),
+    request_id_generator_ (0),
     request_id_ (0),
     rd_ (0),
-    message_state_ (orb_core)
+    message_state_ (transport->orb_core ())
 {
 }
 
@@ -51,6 +63,9 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   // If there was a previous reply, cleanup its state first.
   if (this->message_state_.message_size != 0)
     this->message_state_.reset ();
+
+  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
+                                                      rd);
 
   return 0;
 }
@@ -102,17 +117,17 @@ TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Exclusive_TMS::idle_after_send (TAO_Transport *)
+TAO_Exclusive_TMS::idle_after_send (void)
 {
   // No op.
   return 0;
 }
   
 int
-TAO_Exclusive_TMS::idle_after_reply (TAO_Transport *transport)
+TAO_Exclusive_TMS::idle_after_reply (void)
 {
-  if (transport != 0)
-    return transport->idle ();
+  if (this->transport_ != 0)
+    return this->transport_->idle ();
 
   return 0;
 }
@@ -146,9 +161,10 @@ TAO_Exclusive_TMS::reply_received (const CORBA::ULong request_id)
  
 // *********************************************************************
 
-TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_ORB_Core *orb_core)
-  : request_id_generator_ (0),
-    orb_core_ (orb_core),
+TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
+  : TAO_Transport_Mux_Strategy (transport),
+    request_id_generator_ (0),
+    orb_core_ (transport->orb_core ()),
     message_state_ (0)
 {
 }
@@ -185,6 +201,10 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 
       return -1;
     }
+
+  return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
+                                                      rd);
+
   return 0;
 }
 
@@ -235,7 +255,8 @@ TAO_Muxed_TMS::get_message_state (void)
     {
       // Create the next message state.
       ACE_NEW_RETURN (this->message_state_,
-                      TAO_GIOP_Message_State (this->orb_core_),
+                      TAO_GIOP_Message_State
+                      (this->transport_->orb_core ()),
                       0);
     }
   
@@ -250,16 +271,16 @@ TAO_Muxed_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 }
 
 int
-TAO_Muxed_TMS::idle_after_send (TAO_Transport *transport)
+TAO_Muxed_TMS::idle_after_send (void)
 {
-  if (transport != 0)
-    return transport->idle ();
+  if (this->transport_ != 0)
+    return this->transport_->idle ();
   
   return 0;
 }
   
 int
-TAO_Muxed_TMS::idle_after_reply (TAO_Transport *)
+TAO_Muxed_TMS::idle_after_reply (void)
 {
   return 0;
 }

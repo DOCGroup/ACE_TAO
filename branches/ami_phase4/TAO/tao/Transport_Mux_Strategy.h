@@ -43,7 +43,7 @@ class TAO_Export TAO_Transport_Mux_Strategy
   //
   
 public:
-  TAO_Transport_Mux_Strategy (void);
+  TAO_Transport_Mux_Strategy (TAO_Transport *transport);
   // Base class constructor.
 
   virtual ~TAO_Transport_Mux_Strategy (void);
@@ -57,8 +57,9 @@ public:
   //   pairs.
 
   virtual int bind_dispatcher (CORBA::ULong request_id,
-                               TAO_Reply_Dispatcher *rd) = 0;
-  // Bind the dispatcher with the request id.
+                               TAO_Reply_Dispatcher *rd);
+  // Bind the dispatcher with the request id. Commonalities in the
+  // derived class implementations is kept here.  
   
   virtual int dispatch_reply (CORBA::ULong request_id,
                               CORBA::ULong reply_status,
@@ -78,11 +79,11 @@ public:
   virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
   // Destroy a CDR stream.
 
-  virtual int idle_after_send (TAO_Transport *) = 0;
+  virtual int idle_after_send (void) = 0;
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
   
-  virtual int idle_after_reply (TAO_Transport *) = 0;
+  virtual int idle_after_reply (void) = 0;
   // Request is sent and the reply is received. Idle the transport
   // now. 
 
@@ -90,6 +91,10 @@ public:
   // Check whether the reply has been receieved for the request with
   // <request_id>. Return 0 if no, 1 on yes and -1 if the request_id
   // is invalid or there are some errors.
+
+protected:
+  TAO_Transport *transport_;
+  // Cache the transport reference.
 };
 
 // *********************************************************************
@@ -104,7 +109,7 @@ class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
   //
 
 public:
-  TAO_Exclusive_TMS (TAO_ORB_Core *orb_core);
+  TAO_Exclusive_TMS (TAO_Transport *transport);
   // Constructor.
 
   virtual ~TAO_Exclusive_TMS (void);
@@ -132,14 +137,14 @@ public:
   virtual void destroy_message_state (TAO_GIOP_Message_State *);
   // No op in this strategy.
 
-  virtual int idle_after_send (TAO_Transport *transport);
+  virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
   
-  virtual int idle_after_reply (TAO_Transport *transport);
+  virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now. 
-  
+
   virtual int reply_received (const CORBA::ULong request_id);
   // Check whether the reply has been receieved for the request with
   // <request_id>. Return 0 if no, 1 on yes and -1 if the request_id
@@ -172,7 +177,7 @@ class TAO_Export TAO_Muxed_TMS : public  TAO_Transport_Mux_Strategy
   //
 
 public:
-  TAO_Muxed_TMS (TAO_ORB_Core *orb_core);
+  TAO_Muxed_TMS (TAO_Transport *transport);
   // Constructor.
 
   virtual ~TAO_Muxed_TMS (void);
@@ -200,11 +205,11 @@ public:
   virtual void destroy_message_state (TAO_GIOP_Message_State *);
   // No op in this strategy.
 
-  virtual int idle_after_send (TAO_Transport *transport);
+  virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
   
-  virtual int idle_after_reply (TAO_Transport *transport);
+  virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
   // now. 
 

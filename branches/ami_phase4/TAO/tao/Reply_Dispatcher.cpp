@@ -25,10 +25,11 @@ TAO_Reply_Dispatcher::message_state (void) const
   return 0;
 }
 
-void
+int
 TAO_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *)
 {
   // no-op.
+  return 0;
 }
 
 // *********************************************************************
@@ -92,6 +93,11 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   
       (void) this->leader_follower_condition_variable_->signal ();
     }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%P | %t):TAO_Synch_Reply_Dispatcher::dispatch_reply:cond variable 0\n"));
+    }
   
   return 1;
 }
@@ -114,11 +120,12 @@ TAO_Synch_Reply_Dispatcher::reply_received (void)
   return reply_received_;
 }
 
-void
+int
 TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *transport)
 {
   this->leader_follower_condition_variable_ =
     transport->leader_follower_condition_variable ();
+  return 0;
 }
 
 // *********************************************************************

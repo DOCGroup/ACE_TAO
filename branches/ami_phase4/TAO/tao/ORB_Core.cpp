@@ -1317,6 +1317,7 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
       ACE_NEW_RETURN (tss->leader_follower_condition_variable_,
                       ACE_SYNCH_CONDITION (this->leader_follower ().lock ()),
                       0);
+      tss->owns_resources_ = 1;
     }
   
   return tss->leader_follower_condition_variable_;

@@ -161,7 +161,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create TMS now.
-  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (orb_core);
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy (this);
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -243,13 +243,13 @@ TAO_Transport::register_handler (void)
 int
 TAO_Transport::idle_after_send (void)
 {
-  return this->tms ()->idle_after_send (this);
+  return this->tms ()->idle_after_send ();
 }  
 
 int
 TAO_Transport::idle_after_reply (void)
 {
-  return this->tms ()->idle_after_reply (this);
+  return this->tms ()->idle_after_reply ();
 }
 
 int
