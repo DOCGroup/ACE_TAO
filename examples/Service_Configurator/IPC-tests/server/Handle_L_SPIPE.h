@@ -15,6 +15,7 @@
 
 #include "ace/Service_Types.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
