@@ -1,3 +1,10 @@
+Wed Aug 11 22:37:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/NodeManager/Node_Daemon.cpp:
+	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
+
+	  Fixed fuzz errors.
+
 Wed Aug 11 22:15:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc:

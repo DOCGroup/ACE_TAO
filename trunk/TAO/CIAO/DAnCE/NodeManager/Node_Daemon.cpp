@@ -111,14 +111,17 @@ write_IOR(const char* ior)
   return 0;
 }
 
-int
+bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeDaemon_ptr obj)
+                  CIAO::NodeDaemon_ptr obj
+                  ACE_ENV_ARG_DECL)
 {
   // Naming Service related operations
   CORBA::Object_var naming_context_object =
-    orb->resolve_initial_references ("NameService");
+    orb->resolve_initial_references ("NameService"
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   CosNaming::NamingContext_var naming_context =
     CosNaming::NamingContext::_narrow (naming_context_object.in ());
@@ -126,13 +129,12 @@ register_with_ns (const char * name_context,
   // Initialize the Naming Sequence
   CosNaming::Name name (1);
   name.length (1);
-  // Register the name with the NS
-  name[0].id = CORBA::string_dup (name_context);
+  name[0].id = name_context;
 
   // Register the servant with the Naming Service
   naming_context->bind (name, obj);
 
-  return 0;
+  return true;
 }
 
 int
@@ -141,6 +143,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize orb
+      // @@TODO: Add error checking. There is absoluteley none.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
@@ -195,30 +198,39 @@ main (int argc, char *argv[])
                       spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
+
       // Implicit activation
+      CIAO::NodeDaemon_var daemon =
+        daemon_servant->_this ();
 
-      CIAO::NodeDaemon_var daemon = daemon_servant->_this ();
-
-      CORBA::String_var str = orb->object_to_string (daemon.in ()
-                                                     ACE_ENV_ARG_PARAMETER);
+      CORBA::String_var str =
+        orb->object_to_string (daemon.in ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind ("NodeManager", str.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind ("NodeManager",
+                     str.in ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (write_to_ior_)
         write_IOR (str.in ());
       else if (register_with_ns_)
         {
-          char name [100];
+          char name [MAXHOSTNAMELEN + 1];
           if (ACE_OS::hostname (name, 100) == -1)
             {
-              ACE_DEBUG ((LM_DEBUG, "gethostname call failed! \n"));
+              ACE_ERROR ((LM_ERROR,
+                          "gethostname call failed! \n"));
               exit (1);
             }
 
           // Register this name with the Naming Service
-          register_with_ns (name, orb.in (), daemon.in ());
+          (void) register_with_ns (name,
+                                   orb.in (),
+                                   daemon.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
 
       ACE_DEBUG ((LM_INFO, "CIAO_NodeDaemon IOR: %s\n", str.in ()));
