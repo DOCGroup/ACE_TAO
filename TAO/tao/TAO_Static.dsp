@@ -359,6 +359,10 @@ SOURCE=.\GIOP_Message_State.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Version.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
@@ -1131,6 +1135,10 @@ SOURCE=.\GIOP_Message_State.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOP_Message_Version.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOP_Utils.i
 # End Source File
 # Begin Source File
@@ -1792,6 +1800,10 @@ SOURCE=.\GIOP_Message_Reactive_Handler.cpp
 # Begin Source File
 
 SOURCE=.\GIOP_Message_State.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Version.cpp
 # End Source File
 # Begin Source File
 
