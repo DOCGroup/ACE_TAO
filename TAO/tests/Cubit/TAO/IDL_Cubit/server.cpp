@@ -32,5 +32,6 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
+  ACE_TIMEPROBE_PRINT;
   return 0;
 }
