@@ -133,7 +133,7 @@ InputName=NavWeap
 
 BuildCmds= \
 	xcopy ..\$(InputName).idl \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl \
+	..\..\..\..\..\bin\tao_idl $(InputName).idl \
 	
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
