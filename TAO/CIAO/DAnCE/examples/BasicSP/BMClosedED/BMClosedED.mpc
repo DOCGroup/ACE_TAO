@@ -4,14 +4,14 @@
 
 project(BMClosedED_DnC_stub): ciao_client_dnc {
   after += BasicSP_DnC_stub
-  sharedname = BMClosedED_stub
+  sharedname = BMClosedED_DnC_stub
   idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export -Wb,stub_export_include=BMClosedED_stub_export.h -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export -Wb,skel_export_include=BMClosedED_svnt_export.h
   dynamicflags   = BMCLOSEDED_STUB_BUILD_DLL
 
   IDL_Files {
     BMClosedED.idl
   }
-  
+
   Source_Files {
     BMClosedEDC.cpp
   }
@@ -19,8 +19,8 @@ project(BMClosedED_DnC_stub): ciao_client_dnc {
 
 project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
   after += BasicSP_DnC_svnt BMClosedED_DnC_stub
-  sharedname  = BMClosedED_svnt
-  libs    += BMClosedED_stub BasicSP_stub BasicSP_svnt
+  sharedname  = BMClosedED_DnC_svnt
+  libs    += BMClosedED_DnC_stub BasicSP_DnC_stub BasicSP_DnC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_SVNT_Export -Wb,export_include=BMClosedED_svnt_export.h
   dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
@@ -43,8 +43,8 @@ project(BMClosedED_DnC_svnt) : ciao_servant_dnc {
 
 project(BMClosedED_DnC_exec) : ciao_component_dnc {
   after   += BMClosedED_DnC_svnt
-  sharedname = BMClosedED_exec
-  libs      += BMClosedED_stub BMClosedED_svnt BasicSP_stub BasicSP_svnt
+  sharedname = BMClosedED_DnC_exec
+  libs      += BMClosedED_DnC_stub BMClosedED_DnC_svnt BasicSP_DnC_stub BasicSP_DnC_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export -Wb,export_include=BMClosedED_exec_export.h
   dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
@@ -58,4 +58,3 @@ project(BMClosedED_DnC_exec) : ciao_component_dnc {
     BMClosedED_exec.cpp
   }
 }
-
