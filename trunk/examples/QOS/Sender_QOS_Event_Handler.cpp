@@ -22,7 +22,7 @@ ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (void)
 }
 
 // Constructor.
-ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast &dgram_mcast)
+ACE_QOS_Event_Handler::ACE_QOS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast)
   : dgram_mcast_ (dgram_mcast)
 {
 }
@@ -96,7 +96,7 @@ ACE_QOS_Event_Handler::handle_qos (ACE_HANDLE)
   ACE_OVERLAPPED ace_overlapped;
 
   iovec iov;
-  iov.iov_base = (void *) "Hello";
+  iov.iov_base = (char *) "Hello";
   iov.iov_len = 5;
 
   // For some really weird reason if I do not define the following
