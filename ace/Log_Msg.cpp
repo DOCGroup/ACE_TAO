@@ -45,10 +45,10 @@ static ACE_FIFO_Send_Msg message_queue_;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
-#if !defined(VXWORKS)
+#if !defined (VXWORKS) && defined (ACE_MT_SAFE)
 static int key_created_ = 0;
 static ACE_thread_key_t key_;
-#endif /* VXWORKS */
+#endif /* !VXWORKS && ACE_MT_SAFE */
 
 // This is only needed here because we can't afford to call
 // ACE_LOG_MSG->instance() from within ACE_Log_Msg::instance() or else

@@ -211,6 +211,9 @@ struct Timer_Queues
   // Name of the Queue that we're testing.
 };
 
+// New Timer_Queue implementations should be added to the end of this
+// table.
+
 static Timer_Queues timer_queues[] =
 {
   { 0, "ACE_Timer_Heap (preallocated)" },
