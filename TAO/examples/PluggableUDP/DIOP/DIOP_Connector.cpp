@@ -77,8 +77,11 @@ TAO_DIOP_Connector::close (void)
 
   while (!iter.done ())
     {
+      // @@ Frank
+      /*
       TAO_DIOP_Connection_Handler *svc_handler = (*iter).int_id_;
-// @@ Frank      svc_handler->decrement ();
+      svc_handler->decrement ();
+      */
 
       // Delete the addr
       delete (*iter).ext_id_;
@@ -98,7 +101,7 @@ TAO_DIOP_Connector::close (void)
 int
 TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
                              TAO_Transport *&transport,
-                             ACE_Time_Value *max_wait_time,
+                             ACE_Time_Value */*max_wait_time*/,
                              CORBA::Environment &)
 {
   TAO_Endpoint *endpoint = desc->endpoint ();
@@ -132,9 +135,9 @@ TAO_DIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
       return -1;
     }
 
-  int result = 0;
+  // @@ Frank: int result = 0;
   TAO_DIOP_Connection_Handler *svc_handler = 0;
-  TAO_Connection_Handler *conn_handler = 0;
+  // @@ Frank:   TAO_Connection_Handler *conn_handler = 0;
 
   // @@ Michael -- UDP Additions ----------------------------
 
