@@ -61,7 +61,7 @@ ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 {
-  ACE_TRACE ("ACE_Malloc_T<MALLOC>::print_stats");
+  ACE_TRACE ("ACE_Allocator_Adaptor<MALLOC>::print_stats");
   this->allocator_.print_stats ();
 }
 #endif /* ACE_HAS_MALLOC_STATS */

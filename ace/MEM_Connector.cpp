@@ -102,7 +102,9 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   if (ACE::recv (new_handle, buf, buf_len) == -1)
     return -1;
 
-  if (new_stream.create_shm_malloc (buf) == -1)
+  ACE_MEM_SAP::MALLOC_OPTIONS options;
+
+  if (new_stream.create_shm_malloc (buf, &options) == -1)
     return -1;
 
   return 0;

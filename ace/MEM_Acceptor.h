@@ -44,6 +44,9 @@ public:
   ACE_MEM_Acceptor (void);
   // Default constructor.
 
+  ~ACE_MEM_Acceptor (void);
+  // destructor.
+
   ACE_MEM_Acceptor (const u_short local_port,
                     int reuse_addr = 0,
                     int backlog = ACE_DEFAULT_BACKLOG,
@@ -64,7 +67,7 @@ public:
               u_short * = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
-              int reset_new_handle = 0) const;
+              int reset_new_handle = 0);
   // Accept a new data transfer connection.
 
   int shared_accept_finish (ACE_MEM_Stream new_stream,
@@ -72,6 +75,19 @@ public:
                             int reset_new_handle) const;
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
+
+  const ASYS_TCHAR *mmap_prefix (void) const;
+  void mmap_prefix (ASYS_TCHAR *prefix);
+  // Accessor/mutator of mmap filename prefix.  By default, the
+  // <mmap_prefix_> is not set and the mmap filename is
+  // ${(TMP|TEMP)}//ACE_MEM_Acceptor_(port-number)_(&stream),
+  // otherwise, it is <mmap_prefix_>_(port-number)_(&stream),
+  // <mmap_prefix_> should include _absolute_ path so the connector
+  // within the same host can located the mmap file.
+  // Example:  /tmp/mmapfile
+
+  ACE_MEM_SAP::MALLOC_OPTIONS& malloc_options (void);
+  // Accessor to the mmap options.
 
   // = Meta-type info
   typedef u_short PEER_ADDR;
@@ -112,6 +128,11 @@ protected:
               ACE_Time_Value *timeout = 0,
               int restart = 1,
               int reset_new_handle = 0) const;
+
+private:
+  ASYS_TCHAR *mmap_prefix_;
+
+  ACE_MEM_SAP::MALLOC_OPTIONS malloc_options_;
 };
 
 #if defined (__ACE_INLINE__)
