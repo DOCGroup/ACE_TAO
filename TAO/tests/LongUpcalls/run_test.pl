@@ -54,7 +54,7 @@ if (PerlACE::waitforfile_timed ($iorfile, 30) == -1) {
     exit 1;
 }
 
-$client = $BCL->SpawnWaitKill (240);
+$client = $BCL->SpawnWaitKill (30);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
