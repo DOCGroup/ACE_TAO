@@ -122,26 +122,13 @@ ACE_EventChannel::timer_module (void) const
 
 // Makes a temporary Event_var and appends it to the <dest>.
 ACE_INLINE void
-operator += (ACE_CORBA_Sequence<ACE_ES_Event_Container_var> &dest,
-	     ACE_ES_Event_Container *item)
+operator += (TAO_EC_Event_Array &dest,
+	     const TAO_EC_Event &item)
 {
-  int length = dest.length ();
-  dest.length (length + 1);
+  int length = dest.size ();
+  dest.size (length + 1);
   dest[length] = item;
 }
-
-/*
-// Makes a temporary Event_var and appends it to the <dest>.
-ACE_INLINE void
-operator += (ACE_CORBA_Sequence<RtecEventComm::Event_var> &dest,
-	     RtecEventComm::Event *item)
-{
-  //  RtecEventComm::Event_var event (item);
-  int length = dest.length ();
-  dest.length (length + 1);
-  dest[length] = item;
-}
-*/
 
 ACE_INLINE int
 operator == (const RtecEventComm::Event &event1,
@@ -208,30 +195,28 @@ ACE_ES_Disjunction_Group::set_deadline_timeout (ACE_ES_Consumer_Rep_Timeout *cr)
 }
 
 ACE_INLINE void
-ACE_ES_Disjunction_Group::add_events (Event_Set *outbox,
-				      Event_Set *pending_events,
-				      u_long &pending_flags)
+ACE_ES_Disjunction_Group::add_events (TAO_EC_Event_Array *outbox,
+				      TAO_EC_Event_Array *,
+				      u_long &)
 {
-  ACE_UNUSED_ARG (pending_events);
-  ACE_UNUSED_ARG (pending_flags);
-
   // Append the act.
-  if (act_ != 0)
-    *outbox += act_;
+  if (!this->act_.empty ())
+    *outbox += this->act_;
 }
 
 ACE_INLINE void
 ACE_ES_Disjunction_Group::set_act (RtecEventComm::Event &act)
 {
-  ACE_ES_Event_Container *temp = new ACE_ES_Event_Container (act);
-  if (temp == 0)
+  TAO_EC_Event_Set* set = TAO_EC_Event_Set::_create (act);
+  if (set == 0)
     {
+      // @@ throw an exception...
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Disjunction_Group::set_act"));
       return;
     }
 
-  act_ = temp;
-  temp->_release ();
+  this->act_ = TAO_EC_Event (set, 0);
+  TAO_EC_Event_Set::_release (set);
 }
 
 // ************************************************************
@@ -435,10 +420,10 @@ ACE_RTU_Manager::priority (RtecScheduler::OS_Priority p)
 // ************************************************************
 
 ACE_INLINE
-ACE_ES_Consumer_Rep_Timeout::ACE_ES_Consumer_Rep_Timeout (void) :
-  timer_id_ (0),
-  preemption_priority_ (ACE_Scheduler_MIN_PREEMPTION_PRIORITY),
-  timeout_event_ ()
+ACE_ES_Consumer_Rep_Timeout::ACE_ES_Consumer_Rep_Timeout (void)
+  : timer_id_ (0),
+    preemption_priority_ (ACE_Scheduler_MIN_PREEMPTION_PRIORITY),
+    timeout_event_ ()
 {
 }
 
@@ -446,15 +431,16 @@ ACE_INLINE void
 ACE_ES_Consumer_Rep_Timeout::init (ACE_ES_Consumer_Correlation *correlation,
 				   RtecEventChannelAdmin::Dependency &dep)
 {
-  ACE_ES_Event_Container *temp = new ACE_ES_Event_Container (dep.event);
+  TAO_EC_Event_Set *temp = TAO_EC_Event_Set::_create (dep.event);
+  // @@ TODO throw an exception
   if (temp == 0)
     {
       ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_ES_Consumer_Rep_Timeout::init"));
       return;
     }
 
-  timeout_event_ = temp;
-  temp->_release ();
+  this->timeout_event_ = TAO_EC_Event (temp, 0);
+  TAO_EC_Event_Set::_release (temp);
 
   ACE_ES_Consumer_Rep::init (correlation, dep);
 }
@@ -632,13 +618,13 @@ ACE_ES_Conjunction_Group::should_forward (u_long pending_flags)
 }
 
 ACE_INLINE void
-ACE_ES_Conjunction_Group::add_events (Event_Set *outbox,
-				      Event_Set *pending_events,
+ACE_ES_Conjunction_Group::add_events (TAO_EC_Event_Array *outbox,
+				      TAO_EC_Event_Array *pending_events,
 				      u_long &pending_flags)
 {
   // Append the act first.
-  if (act_ != 0)
-    *outbox += act_;
+  if (!this->act_.empty ())
+    *outbox += this->act_;
 
   u_long fv = forward_value_;
   int x = 0;
@@ -649,18 +635,29 @@ ACE_ES_Conjunction_Group::add_events (Event_Set *outbox,
       if (ACE_BIT_ENABLED (forward_value_, ACE_INT2BIT[x]))
 	{
 	  // Step through each of the pending events.
-	  Event_Set &pending = pending_events[x];
-	  for (CORBA::ULong y=0; y < pending.length (); y++)
+	  TAO_EC_Event_Array &pending = pending_events[x];
+
+          size_t outbox_end = 0;
+          if (outbox != 0)
+            {
+              outbox_end = outbox->size ();
+              outbox->size (outbox_end + pending.size ());
+            }
+	  for (CORBA::ULong i = 0; i < pending.size (); ++i)
 	    {
+              if (pending[i].empty ())
+                continue;
+
 	      // Add the pending event to the outbox.
 	      if (outbox != 0)
-		*outbox += pending[y];
+                outbox->set (pending[i], outbox_end++);
+
 	      // Remove the event from the pending events array.
-	      pending[y] = 0;
+	      pending[i].clear ();
 	    }
 
 	  // Reset the array length.
-	  pending.length (0);
+	  pending.size (0);
 	  // Since we just emptied the events for this type, clear the
 	  // x^th bit in pending flags.
 	  ACE_CLR_BITS (pending_flags, ACE_INT2BIT[x]);

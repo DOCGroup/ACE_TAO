@@ -42,25 +42,62 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Dispatching_Modules_Timeprobe_Description,
 
 // ************************************************************
 
+ACE_ES_Dispatch_Request::
+ACE_ES_Dispatch_Request (ACE_Push_Consumer_Proxy *consumer,
+                         const TAO_EC_Event &event,
+                         RtecScheduler::handle_t rt_info)
+  : priority_ (0),
+    rt_info_ (rt_info),
+    dispatching_module_ (0),
+    use_single_event_ (0),
+    consumer_ (consumer),
+    event_set_ (1)
+{
+  this->event_set_.set (event, 0);
+}
+
 void
 ACE_ES_Dispatch_Request::make_copy (RtecEventComm::EventSet &dest) const
 {
   if (use_single_event_)
     {
-      dest.length (1);
-      dest[0] = single_event_;
+      // The RtecEventComm::EventSet will hold a pointer to the
+      // buffer, without owning it, thus it is not removed!
+      // @@ TODO Check what happens in the collocated case.
+      dest.replace (1, 1,
+                    ACE_const_cast(RtecEventComm::Event*,
+                                   &this->single_event_.event ()),
+                    0);
+    }
+  else if (this->event_set_.size () == 1)
+    {
+      dest.replace (1, 1,
+                    ACE_const_cast(RtecEventComm::Event*,
+                                   &this->event_set_[0].event ()),
+                    0);
     }
   else
     {
-      dest.length (event_set_.length ());
+      dest.length (this->event_set_.size ());
 
-      for (CORBA::ULong index=0; index < event_set_.length (); index++)
+      int c = 0;
+      for (CORBA::ULong i = 0; i < this->event_set_.size (); ++i)
         {
-          RtecEventComm::Event &dest_event = dest[index];
-          ACE_ES_Event_Container_var &source_event_var = ((ACE_ES_Event_Container_var &) event_set_[index]);
-          dest_event = *(source_event_var.operator->());
+          if (this->event_set_[i].empty ())
+            continue;
+          dest[c] = this->event_set_[i].event ();
+          c++;
         }
+      dest.length (c);
     }
+}
+
+void
+ACE_ES_Dispatch_Request::append_event (const TAO_EC_Event& event)
+{
+  size_t size = this->event_set_.size ();
+  if (this->event_set_.size (size + 1) == 0)
+    this->event_set_.set (event, size);
 }
 
 int
@@ -672,12 +709,7 @@ ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> >;
-template void operator+=(ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> > &, ACE_CORBA_var<ACE_ES_Event_Container> const &);
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> >
-#pragma instantiate void operator+=(ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> > &, ACE_CORBA_var<ACE_ES_Event_Container> const &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
