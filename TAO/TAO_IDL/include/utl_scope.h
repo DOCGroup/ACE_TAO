@@ -190,7 +190,7 @@ protected:
   // defined elsewhere were referenced in this scope
 
   // Add to decls. Node represents a local declaration
-  // The new decl e is inserted before ex if ex is not 0
+  // The new decl e is inserted after ex if ex is not 0
   void                          add_to_scope(AST_Decl *e,
                                              AST_Decl *ex = 0);
 
@@ -199,7 +199,7 @@ protected:
 
   // Add to referenced nodes set.
   // If ex is not 0 'e' will be inserted at the position
-  // before ex, which is already in the list.
+  // after ex, which is already in the list.
   void                          add_to_referenced(AST_Decl *e,
                                                   idl_bool recursive,
                                                   Identifier *id,

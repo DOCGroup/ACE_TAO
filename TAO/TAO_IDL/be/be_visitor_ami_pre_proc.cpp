@@ -95,9 +95,41 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 
       be_valuetype *excep_holder = this->create_exception_holder (node);
 
+
+      be_interface *reply_handler = this->create_reply_handler (node,
+                                                                excep_holder);
+      if (reply_handler)
+        {
+          reply_handler->set_defined_in (node->defined_in ());
+
+          // Insert the ami handler after the node, the 
+          // exception holder will be placed between these two later.
+          module->be_add_interface (reply_handler, node);
+
+          // Remember from whom we were cloned
+          reply_handler->original_interface (node);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "creating the reply handler failed\n"),
+                            -1);
+        }
+
+      // Set the proper strategy
+      be_interface_strategy *old_strategy = 
+        node->set_strategy (new be_interface_ami_strategy (node));
+      if (old_strategy)
+        delete old_strategy;
+
       if (excep_holder)
         {
           excep_holder->set_defined_in (node->defined_in ());
+          // Insert the exception holder after the original node,
+          // this way we ensure that it is *before* the 
+          // ami handler, which is the way we want to have it.
           module->be_add_interface (excep_holder, node);
           module->set_has_nested_valuetype ();
           // Remember from whom we were cloned
@@ -118,24 +150,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
         }
 
 
-      be_interface *reply_handler = this->create_reply_handler (node,
-                                                                excep_holder);
-      if (reply_handler)
-        {
-          reply_handler->set_defined_in (node->defined_in ());
-          module->be_add_interface (reply_handler, node);
-          // Remember from whom we were cloned
-          reply_handler->original_interface (node);
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_interface - "
-                             "creating the reply handler failed\n"),
-                            -1);
-        }
-
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -153,6 +167,10 @@ int
 be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::visit_operation\n"));
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    // We do nothing for oneways!
+    return 0;
 
   be_operation *sendc_marshaling = 
     this->create_sendc_operation (node, 
@@ -229,6 +247,7 @@ be_valuetype *
 be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_exception_holder\n"));
+
   // Create a virtual module named "Messaging" and an valuetype "ExceptionHolder"
   // from which we inherit.
   UTL_ScopedName *inherit_name = 
@@ -323,7 +342,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                 }
 
             }
-          else
+          else  
             {
               this->create_raise_operation (op,
                                             excep_holder,
@@ -468,6 +487,20 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
                                                  be_valuetype *excep_holder,
                                                  Operation_Kind operation_kind)
 {
+  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_raise_operation\n"));
+
+  be_operation *orig_op = 0;
+  if (operation_kind == NORMAL)
+    {
+      orig_op = be_operation::narrow_from_decl (node);
+      if (orig_op)
+        {
+          if (orig_op->flags () == AST_Operation::OP_oneway)
+            // We do nothing for oneways!
+            return 0;
+        }
+    }
+  
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
@@ -506,7 +539,6 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
 
   if (operation_kind == NORMAL)
     {
-      be_operation *orig_op = be_operation::narrow_from_decl (node);
       if (orig_op)
         {
           // Copy the exceptions.
@@ -536,6 +568,11 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                                                   int for_arguments)
 {
   ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_sendc_operation\n"));
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    // We do nothing for oneways!
+    return 0;
+  
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
@@ -652,11 +689,14 @@ int
 be_visitor_ami_pre_proc::create_reply_handler_operation (be_operation *node,
                                                          be_interface *reply_handler)
 {
+  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler_operation\n"));
   if (!node)
     return -1;
 
+  if (node->flags () == AST_Operation::OP_oneway)
+    // We do nothing for oneways!
+    return 0;
 
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_reply_handler_operation\n"));
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
@@ -766,9 +806,15 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                                  be_interface *reply_handler,
                                                  be_valuetype *excep_holder)
 {
+  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_excep_operation\n"));
+
   if (!node)
     return -1;
-  ACE_DEBUG ((LM_DEBUG, "be_visitor_ami_pre_proc::create_excep_operation\n"));
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    // We do nothing for oneways!
+    return 0;
+
   // Create the return type, which is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
@@ -845,26 +891,40 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
         delete si;
       }
-        
+
+      AST_Decl **elements = new AST_Decl *[number_of_elements];
+      
+      {
+        int position = 0;
+        // initialize an iterator to iterate thru our scope
+        UTL_ScopeActiveIterator *si;
+        ACE_NEW_RETURN (si,
+                        UTL_ScopeActiveIterator (node,
+                                                 UTL_Scope::IK_decls),
+                        -1);
+
+        while (!si->is_done ())
+          {
+            elements[position++] = si->item ();
+            si->next ();
+          }
+        delete si;
+      }
+
+
       ACE_DEBUG ((LM_DEBUG, 
                   "be_visitor_ami_pre_proc::visit_scope - %d elements\n",
                   number_of_elements));
 
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
       int elem_number = 0;
       
       // continue until each element is visited
       while (elem_number < number_of_elements)
         {
-          AST_Decl *d = si->item ();
+          AST_Decl *d = elements[elem_number];
           if (!d)
             {
-              delete si;
+              delete [] elements;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "bad node in this scope\n"), -1);
@@ -886,16 +946,14 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           // Send the visitor.
           if (bd == 0 ||  bd->accept (this) == -1)
             {
-              delete si;
+              delete [] elements;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "codegen for scope failed\n"), -1);
 
             }
-
-          si->next ();
         } // end of while loop
-      delete si;
+      delete [] elements;
     } // end of if
 
   return 0;
