@@ -292,7 +292,7 @@ main (int argc, char* argv[])
       if (thread_pool_id == -1) {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot spawn thread pool\n"), 1);
       }
-      sleep (1); // simple solution ensures ready thread pool
+      ACE_OS::sleep (1); // simple solution ensures ready thread pool
 
       for (int i = 0; i < data_items; i++)
         {
@@ -300,9 +300,9 @@ main (int argc, char* argv[])
           ACE_TRY_CHECK;
         }
 
-      sleep (2); // simple solution ensures ready receivers
+      ACE_OS::sleep (2); // simple solution ensures ready receivers
       terminate_threads = true; // terminate thread pool
-      sleep (1); // simple solution ensures terminated thread pool
+      ACE_OS::sleep (1); // simple solution ensures terminated thread pool
       the_ace_manager.cancel_grp (thread_pool_id); // cancel any threads still alive
       the_ace_manager.close ();
 
