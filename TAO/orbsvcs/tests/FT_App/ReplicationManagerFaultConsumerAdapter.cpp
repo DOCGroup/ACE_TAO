@@ -287,27 +287,27 @@ int ReplicationManagerFaultConsumerAdapter::init (
         value <<= domain_id;
         encoder.add(::FT::FT_DOMAIN_ID, value);
 
-        FT::Location object_location;
+        PortableGroup::Location object_location;
         object_location.length(2);
         object_location[0].id = CORBA::string_dup("test");
         object_location[1].id = CORBA::string_dup("Location_A");
         value <<= object_location;
         encoder.add(::FT::FT_LOCATION, value);
 
-        FT::TypeId_var object_type = CORBA::string_dup (
+        PortableGroup::TypeId_var object_type = CORBA::string_dup (
           "IDL:org.omg/CosNaming/NamingContextExt:1.0");
         value <<= object_type;
         encoder.add(::FT::FT_TYPE_ID, value);
 
-        FT::ObjectGroupId group_id =
-          ACE_static_cast (FT::ObjectGroupId, 6191982);
+        PortableGroup::ObjectGroupId group_id =
+          ACE_static_cast (PortableGroup::ObjectGroupId, 6191982);
         value <<= group_id;
         encoder.add(::FT::FT_GROUP_ID, value);
 
         // allocate and populate the criteria
-        FT::Criteria_var criteria;
+        PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
-          FT::Criteria);
+          PortableGroup::Criteria);
         if (criteria.ptr() == 0)
         {
           ACE_ERROR_RETURN ((
@@ -319,7 +319,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
         else
         {
           encoder.encode(criteria);
-          FT::GenericFactory::FactoryCreationId_var factory_creation_id;
+          PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           this->factory_->create_object (
             type_id.in(),

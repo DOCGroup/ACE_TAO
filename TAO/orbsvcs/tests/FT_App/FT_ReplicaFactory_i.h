@@ -113,8 +113,8 @@ public:
   // CORBA interface GenericFactory methods
   virtual CORBA::Object_ptr create_object (
     const char * type_id,
-    const FT::Criteria & the_criteria,
-    FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
     ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
@@ -127,7 +127,7 @@ public:
   ));
 
   virtual void delete_object (
-    const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
     ACE_ENV_ARG_DECL_WITH_DEFAULTS
   )
   ACE_THROW_SPEC ((
@@ -257,7 +257,7 @@ private:
   StringVec roles_;
 
   /**
-   * the FT::Location within the domain
+   * the PortableGroup::Location within the domain
    */
   const char * location_;
 

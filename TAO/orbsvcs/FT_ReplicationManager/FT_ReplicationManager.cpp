@@ -455,7 +455,7 @@ TAO::FT_ReplicationManager::get_fault_notifier (
   if (CORBA::is_nil (this->fault_notifier_.in ()))
   {
     ACE_THROW_RETURN ( FT::InterfaceNotFound () , FT::FaultNotifier::_nil ());
-  }     
+  }
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in ());
 }
 
@@ -693,9 +693,9 @@ TAO::FT_ReplicationManager::add_member (
     // our own object group collection
     // @@ TODO: if this fails, we're out of synch with the OGM
     // @@ unified object group management will fix this someday.
-    group->add_member ( 
-      the_location, 
-      member 
+    group->add_member (
+      the_location,
+      member
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
     result = group->reference ();
@@ -858,9 +858,9 @@ TAO::FT_ReplicationManager::create_object (
 
   TAO::PG_Object_Group * objectGroup
     = TAO::PG_Object_Group::create (
-      this->orb_.in (), 
+      this->orb_.in (),
       obj.in (),
-      type_id, 
+      type_id,
       the_criteria
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());

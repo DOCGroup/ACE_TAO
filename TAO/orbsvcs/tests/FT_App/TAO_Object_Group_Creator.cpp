@@ -171,9 +171,9 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         encoder.add (PortableGroup::role_criterion, value);
 
         // allocate and populate the criteria
-        FT::Criteria_var criteria;
+        PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
-          FT::Criteria);
+          PortableGroup::Criteria);
         if (criteria.ptr() == 0)
         {
           ACE_ERROR((LM_ERROR,
@@ -184,7 +184,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         else
         {
           encoder.encode(criteria);
-          FT::GenericFactory::FactoryCreationId_var factory_creation_id;
+          PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           info.the_factory->create_object (
             type_id,

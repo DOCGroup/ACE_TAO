@@ -269,14 +269,14 @@ int FT_ReplicaFactory_i::idle (int & result)
 
 
 
-int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
   // ugly but effective
   TAO_debug_level++;
 
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -601,8 +601,8 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
 
 CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     const char * type_id,
-    const FT::Criteria & the_criteria,
-    FT::GenericFactory::FactoryCreationId_out factory_creation_id
+    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -696,7 +696,7 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
 }
 
 void FT_ReplicaFactory_i::delete_object (
-    const FT::GenericFactory::FactoryCreationId & factory_creation_id
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((

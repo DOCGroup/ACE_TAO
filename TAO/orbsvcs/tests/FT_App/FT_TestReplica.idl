@@ -96,7 +96,7 @@ module FT_TEST
     attribute long counter;
   };
 
-  interface ReplicaFactory : ::FT::GenericFactory, ::FT::PullMonitorable
+  interface ReplicaFactory : ::PortableGroup::GenericFactory, ::FT::PullMonitorable
   {
     /**
      * die a clean death.
