@@ -1031,7 +1031,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // These numbers are assigned by the OpenGroup, a database is
 // available at
 //
-// ftp://ftp.opengroup.orb/pub/codeset_registry/
+// ftp://ftp.opengroup.org/pub/code_set_registry/
 //
 #define TAO_CODESET_ID_ISO8859_1 0x00010001U
 #define TAO_CODESET_ID_UNICODE   0x00010109U

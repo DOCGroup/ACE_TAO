@@ -1,21 +1,33 @@
+Sat Sep 23 10:29:14 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Adapter.h:
+        * tao/Adapter.cpp:
+          Include "tao/Exception.h" in the header file, this is needed to
+          compile with gcc 2.96 snapshots as well as with the IRIXI
+          compiler. Thanks to Craig Rodrigues <crodrigu@bbn.com> for
+          providing the patches.
+
+        * tao/corbafwd.h:
+          Fixed some comments.
+
 Sat Sep 23 11:30:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	  Made changes to the tests to make things simpler.
+        * orbsvcs/tests/FaultTolerance/IOGR/Client_i.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+          Made changes to the tests to make things simpler.
 
 Sat Sep 23 11:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
-	  some fixes for static_lib builds.
+        * tao/ORB_Core.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
+          some fixes for static_lib builds.
 
 Sat Sep 23 08:15:02 2000  Carlos O'Ryan  <coryan@uci.edu>
 

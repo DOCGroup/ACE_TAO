@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "tao/Exception.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

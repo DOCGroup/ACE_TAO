@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Adapter.h"
-#include "tao/Exception.h"
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Core.h"
