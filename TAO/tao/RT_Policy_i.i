@@ -15,4 +15,10 @@ TAO_ClientProtocolPolicy::protocols_rep (void)
   return protocols_;
 }
 
+ACE_INLINE RTCORBA::PriorityModel
+TAO_PriorityModelPolicy::get_priority_model (void)
+{
+  return this->priority_model_;
+}
+
 #endif /* TAO_HAS_RT_CORBA == 1 */

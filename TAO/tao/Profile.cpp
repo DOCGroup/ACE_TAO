@@ -40,6 +40,8 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // each CORBA::Policy into a CORBA::PolicyValue
   for (size_t i = 0; i < policy_list->length (); i++)
     {
+      // @@ Angelo, avoid unnecessary memory allocations like the one below -
+      // they are very expensive!
       ACE_NEW (pv_ptr, Messaging::PolicyValue);
       pv_ptr->ptype = (*policy_list)[i]->policy_type ();
 
