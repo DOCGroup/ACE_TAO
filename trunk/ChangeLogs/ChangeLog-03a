@@ -1,6 +1,12 @@
+Wed Nov 13 17:29:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.h (cancel_uncompleted): Filled in
+          description of the 'set' parameter. Thanks to Craig
+          Rodrigues for noticing its omission.
+
 Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-        * ace/Lib_Find.cpp (ldname): MacOS X prepends and underscore to
+        * ace/Lib_Find.cpp (ldname): MacOS X prepends an underscore to
 	  symbols in shared libaries.  
 	
         * ace/config-macosx.h:
