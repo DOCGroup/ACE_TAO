@@ -24,7 +24,8 @@ $is_release = 0;
              'tao_iortable',
              'tao_esf',
              'tao_rtevent',
-             'tao_implrepo');
+             'tao_implrepo',
+	     'tao_strategies');
 
 # Modify defaults using the command line arguments
 &parse_args ();
