@@ -50,7 +50,7 @@ TAO_DynUnion_i::TAO_DynUnion_i (const CORBA_Any& any)
           // Initialize the typecode holder
           this->type_ = any.type ();
 
-          this->set_from_any (any, 
+          this->set_from_any (any,
                               ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -187,7 +187,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
                                                    ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (!ACE_OS::strcmp (member_name, 
+      if (!ACE_OS::strcmp (member_name,
                            temp))
         {
           // No sense doing anything if we're just "resetting" to the
@@ -196,7 +196,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
             return;
           else
             {
-              CORBA_TypeCode_var member_type = 
+              CORBA_TypeCode_var member_type =
                 this->type_->member_type (i,
                                           ACE_TRY_ENV);
               ACE_CHECK;
@@ -206,7 +206,7 @@ TAO_DynUnion_i::member_name (const char* member_name,
                                               ACE_TRY_ENV);
               ACE_CHECK;
 
-              CORBA_Any_ptr disc_any = 
+              CORBA_Any_ptr disc_any =
                 this->type_->member_label (i,
                                            ACE_TRY_ENV);
               ACE_CHECK;
@@ -272,7 +272,7 @@ TAO_DynUnion_i::copy (CORBA::Environment &ACE_TRY_ENV)
   CORBA_Any_ptr a = this->to_any (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
-  CORBA_DynAny_ptr retval = 
+  CORBA_DynAny_ptr retval =
     TAO_DynAny_i::create_dyn_any (*a,
                                   ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
@@ -321,7 +321,7 @@ TAO_DynUnion_i::to_any (CORBA::Environment& ACE_TRY_ENV)
   if (this->member_.in () == 0
       || this->discriminator_.in () == 0)
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 
@@ -1554,7 +1554,7 @@ TAO_DynUnion_i::get_boolean (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1580,7 +1580,7 @@ TAO_DynUnion_i::get_octet (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1606,7 +1606,7 @@ TAO_DynUnion_i::get_char (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1632,7 +1632,7 @@ TAO_DynUnion_i::get_short (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1658,7 +1658,7 @@ TAO_DynUnion_i::get_long (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1684,7 +1684,7 @@ TAO_DynUnion_i::get_ushort(CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1710,7 +1710,7 @@ TAO_DynUnion_i::get_ulong (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1736,7 +1736,7 @@ TAO_DynUnion_i::get_float (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1762,15 +1762,15 @@ TAO_DynUnion_i::get_double (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
 
-CORBA::String
+char *
 TAO_DynUnion_i::get_string (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::String retval = 0;
+  char * retval = 0;
 
   CORBA_TypeCode_ptr tc = this->member_->type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
@@ -1788,7 +1788,7 @@ TAO_DynUnion_i::get_string (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1814,7 +1814,7 @@ TAO_DynUnion_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1840,7 +1840,7 @@ TAO_DynUnion_i::get_reference (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1870,7 +1870,7 @@ TAO_DynUnion_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         retval);
     }
 }
@@ -1896,7 +1896,7 @@ TAO_DynUnion_i::get_ulonglong (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1922,7 +1922,7 @@ TAO_DynUnion_i::get_wchar (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -1948,7 +1948,7 @@ TAO_DynUnion_i::get_any (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      ACE_THROW_RETURN (CORBA_DynAny::Invalid (), 
+      ACE_THROW_RETURN (CORBA_DynAny::Invalid (),
                         0);
     }
 }
@@ -2109,7 +2109,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any& any,
 
   TAO_InputCDR cdr (mb);
 
-  CORBA_TypeCode_ptr disc_tc = 
+  CORBA_TypeCode_ptr disc_tc =
     any.type ()->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK;
 

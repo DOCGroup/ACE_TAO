@@ -39,7 +39,7 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &ACE_TRY_ENV)
                          ("No initialization member found.\n"),
                       0);
 
-  *any_ptr >>= sequence_ptr;  
+  *any_ptr >>= sequence_ptr;
 
   return sequence_ptr;
 }
@@ -47,7 +47,7 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &ACE_TRY_ENV)
 char *
 Criteria_Evaluator::getFilter (CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::String string;
+  char* string;
   CORBA::Any value;
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
@@ -85,4 +85,3 @@ Criteria_Evaluator::getCriteriaMember (const char *member_name)
 
   return 0;
 }
-

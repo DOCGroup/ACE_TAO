@@ -78,7 +78,7 @@ Test_DynSequence::run_test (void)
       fa1->seek (1,
                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::String out_str1 = fa1->get_string (ACE_TRY_ENV);
+      char* out_str1 = fa1->get_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (!ACE_OS::strcmp (out_str1, data.m_string1))
         ACE_DEBUG ((LM_DEBUG,
@@ -137,7 +137,7 @@ Test_DynSequence::run_test (void)
       CORBA::AnySeq* as_out = ftc1->get_elements (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any out_any2 = (*as_out)[2];
-      CORBA::String out_str2;
+      char* out_str2;
       out_any2 >>= CORBA::Any::to_string (out_str2, 0);
       if (ACE_OS::strcmp (out_str2, data.m_string1))
         ++this->error_count_;

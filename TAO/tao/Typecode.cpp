@@ -830,7 +830,7 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  // The checks below indicate that we are in the first 
+  // The checks below indicate that we are in the first
   // recursion of a recursive struct.
   if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
     return 1;
@@ -936,7 +936,7 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  // The checks below indicate that we are in the first 
+  // The checks below indicate that we are in the first
   // recursion of a recursive union.
   if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
     return 1;
@@ -1236,7 +1236,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &ACE_TRY_ENV) const
           return this->private_state_->tc_id_;
 
         this->private_state_->tc_id_known_ = 1;
-        this->private_state_->tc_id_ = (CORBA::String) (buffer_
+        this->private_state_->tc_id_ = (char*) (buffer_
                                                  + 4    // skip byte order flag
                                                         // and padding
                                                  + 4);  // skip (strlen + 1)
@@ -1289,11 +1289,11 @@ CORBA_TypeCode::private_name (CORBA::Environment &ACE_TRY_ENV) const
             return this->private_state_->tc_name_;
           }
         else
-          ACE_THROW_RETURN (CORBA::INTERNAL (), (CORBA::String)0);
+          ACE_THROW_RETURN (CORBA::INTERNAL (), (char*)0);
       }
     // No other typecodes ever have type IDs.
     default:
-      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), (CORBA::String)0);
+      ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), (char*)0);
     }
   ACE_NOTREACHED (return 0);
 }

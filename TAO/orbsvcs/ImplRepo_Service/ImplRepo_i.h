@@ -87,7 +87,7 @@ public:
                                 CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::AlreadyRegistered));
-  // Adds the server to the repository and registers the startup information about 
+  // Adds the server to the repository and registers the startup information about
   // the server <server>.
 
   virtual void reregister_server (const char *server,
@@ -108,8 +108,8 @@ public:
                      ImplementationRepository::Administration::NotFound));
   // Attempts to gracefully shut down the server, if that fails, will try
   // to do it ungracefully.
-  
-  virtual ImplementationRepository::Address * 
+
+  virtual ImplementationRepository::Address *
     server_is_running (const char * server,
                        const ImplementationRepository::Address &addr,
                        ImplementationRepository::ServerObject_ptr server_object,
@@ -142,14 +142,14 @@ public:
 
   // = Other methods
 
-  int init (int argc, char **argv, 
+  int init (int argc, char **argv,
             CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Initialize the Server state - parsing arguments and waiting.
 
   int run (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Runs the orb.
 
-  CORBA::String get_forward_host (const char *server);
+  char* get_forward_host (const char *server);
   // Returns the host of the server that needs to be forwarded to.
 
   CORBA::UShort get_forward_port (const char *server);

@@ -242,7 +242,7 @@ TAO_UIOP_Profile::operator= (const TAO_UIOP_Profile &src)
   return *this;
 }
 
-CORBA::String
+char *
 TAO_UIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
@@ -261,7 +261,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* object key separator */ +
                   ACE_OS::strlen (key.in ()));
 
-  CORBA::String buf = CORBA::string_alloc (buflen);
+  char * buf = CORBA::string_alloc (buflen);
 
   static const char digits [] = "0123456789";
 

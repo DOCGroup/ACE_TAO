@@ -41,7 +41,7 @@ void mes (const char* s)
 
 // does the formatting for the desired units in which the result is to be
 // displayed
-CORBA::String
+char*
 outfmt (CORBA::Double b)
 {
   static CORBA::Char obuf[50];
@@ -175,34 +175,34 @@ FillPattern (register CORBA::Char *cp, register CORBA::Long bufLen, CORBA::ULong
        SeqPtr [i].msgs.length (numUpdates);
 
        for (int j = 0; j < numUpdates; ++j)
-	 {
-	   SeqPtr [i].msgs[j].oumh (RtiObjectUpdateMessageHeader ());
-	   RtiObjectUpdateMessageHeader & oumh = SeqPtr [i].msgs[j].oumh ();
-	   oumh.updateLength = 2001; // redundant
-	   oumh.updateTag = 2002;
-	   oumh.objectHandle = 2003;
-	   oumh.timestamp = 3.14159;
-	   oumh.eventRetractionHandle = 2004;
-	   oumh.classHandle = 2005;
-	   oumh.sendingFederateHandle = 2006;
-	   oumh.userTag = CORBA::string_dup ("beefcake!");
-	   oumh.regionData.length(0);
-	   oumh.transportationHandle = 1;
-	   oumh.orderingHandle = 1;
-	   oumh.messagePayload.length (numAttrs);
+         {
+           SeqPtr [i].msgs[j].oumh (RtiObjectUpdateMessageHeader ());
+           RtiObjectUpdateMessageHeader & oumh = SeqPtr [i].msgs[j].oumh ();
+           oumh.updateLength = 2001; // redundant
+           oumh.updateTag = 2002;
+           oumh.objectHandle = 2003;
+           oumh.timestamp = 3.14159;
+           oumh.eventRetractionHandle = 2004;
+           oumh.classHandle = 2005;
+           oumh.sendingFederateHandle = 2006;
+           oumh.userTag = CORBA::string_dup ("beefcake!");
+           oumh.regionData.length(0);
+           oumh.transportationHandle = 1;
+           oumh.orderingHandle = 1;
+           oumh.messagePayload.length (numAttrs);
 
-	   for (int k = 0; k < numAttrs; ++k)
-	     {
-	       oumh.messagePayload[k] = HandleValuePair ();
-	       HandleValuePair &hvp = oumh.messagePayload[k];
-	       hvp.handle = k * k;
-	       char *d1 = "somedata";
-	       hvp.data.length (ACE_OS::strlen (d1)+1);
-	       ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
-	     }
-	   num -= sizeof (SeqPtr [i]);
-	   printf ("SIZE OF RTIPACKET IS %d", sizeof (SeqPtr [i]));
-	 }
+           for (int k = 0; k < numAttrs; ++k)
+             {
+               oumh.messagePayload[k] = HandleValuePair ();
+               HandleValuePair &hvp = oumh.messagePayload[k];
+               hvp.handle = k * k;
+               char *d1 = "somedata";
+               hvp.data.length (ACE_OS::strlen (d1)+1);
+               ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
+             }
+           num -= sizeof (SeqPtr [i]);
+           printf ("SIZE OF RTIPACKET IS %d", sizeof (SeqPtr [i]));
+         }
 
        fill in the RtiPacket
      }
@@ -396,7 +396,7 @@ prusage (char *outp)
             break;
 
           case 'S':
-	    ACE_OS::sprintf (outp, "%f ", et.system_time);
+            ACE_OS::sprintf (outp, "%f ", et.system_time);
             END (outp);
             break;
 
@@ -406,11 +406,11 @@ prusage (char *outp)
             break;
 
           case 'P':
-	    ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
-	    END (outp);
+            ACE_OS::sprintf (outp, "%d%%", (int) (t * 100 / ((ms ? ms : 1))));
+            END (outp);
             break;
 
-	    /*possible thing to add in is the equivalent for case X, D, K, M, F, and R for prusage_t*/
+            /*possible thing to add in is the equivalent for case X, D, K, M, F, and R for prusage_t*/
 #if !defined(SYSV)
 #   if defined (ACE_HAS_PRUSAGE_T)
           case 'W':
@@ -420,7 +420,7 @@ prusage (char *outp)
             break;
 
           case 'X':
-	    // ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
+            // ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
             //END (outp);
             break;
 
@@ -432,23 +432,23 @@ prusage (char *outp)
 
           case 'K':
             //ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-	    //        (rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t);
+            //        (rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t);
             //END (outp);
             break;
 
           case 'M':
-	    /* ACE_OS::sprintf (outp, "%d", rusage.ru_maxrss / 2);
+            /* ACE_OS::sprintf (outp, "%d", rusage.ru_maxrss / 2);
             END (outp);*/
             break;
 
           case 'F':
-	    /*
+            /*
             ACE_OS::sprintf (outp, "%d", rusage.ru_majflt);
-	    END (outp);*/
+            END (outp);*/
             break;
 
           case 'R':
-	    /*ACE_OS::sprintf (outp, "%d", rusage.ru_minflt);
+            /*ACE_OS::sprintf (outp, "%d", rusage.ru_minflt);
             END (outp);*/
             break;
 
@@ -462,18 +462,18 @@ prusage (char *outp)
             END (outp);
             break;
           case 'C':
-	    ACE_OS::sprintf (outp, "%d+%d", rusage.pr_vctx, rusage.pr_ictx);
+            ACE_OS::sprintf (outp, "%d+%d", rusage.pr_vctx, rusage.pr_ictx);
             END (outp);
             break;
 #   elif defined (ACE_HAS_GETRUSAGE)
-	  case 'W':
+          case 'W':
             i = rusage.ru_nswap;;
             ACE_OS::sprintf (outp, "%d", i);
             END (outp);
             break;
 
           case 'X':
-	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (int) ((rusage.ru_ixrss) / t));
+            ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (int) ((rusage.ru_ixrss) / t));
             END (outp);
             break;
 
@@ -485,22 +485,22 @@ prusage (char *outp)
 
           case 'K':
             ACE_OS::sprintf (outp, "%d", t == 0 ? 0 :
-	            (int) ((rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t));
+                    (int) ((rusage.ru_ixrss + rusage.ru_isrss + rusage.ru_idrss) / t));
             END (outp);
             break;
 
           case 'M':
-	    ACE_OS::sprintf (outp, "%ld", rusage.ru_maxrss / 2);
+            ACE_OS::sprintf (outp, "%ld", rusage.ru_maxrss / 2);
             END (outp);
             break;
 
           case 'F':
             ACE_OS::sprintf (outp, "%ld", rusage.ru_majflt);
-	    END (outp);
+            END (outp);
             break;
 
           case 'R':
-	    ACE_OS::sprintf (outp, "%ld", rusage.ru_minflt);
+            ACE_OS::sprintf (outp, "%ld", rusage.ru_minflt);
             END (outp);
             break;
 
@@ -514,8 +514,8 @@ prusage (char *outp)
             END (outp);
             break;
 
-	  case 'C':
-	    ACE_OS::sprintf (outp, "%ld+%ld",
+          case 'C':
+            ACE_OS::sprintf (outp, "%ld+%ld",
                              rusage.ru_nvcsw, rusage.ru_nivcsw);
             END (outp);
             break;

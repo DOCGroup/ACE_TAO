@@ -2094,7 +2094,7 @@ CORBA_Any::dump (const CORBA::Any &any_value)
         }
       case CORBA::tk_string:
         {
-          CORBA::String str;
+          char* str;
           any_value >>= str;
           ACE_DEBUG ((LM_DEBUG,
                       "String %s\n",

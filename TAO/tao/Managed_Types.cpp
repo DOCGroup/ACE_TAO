@@ -48,4 +48,3 @@ TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
   *this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
-

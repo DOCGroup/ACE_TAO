@@ -53,7 +53,7 @@ CORBA::Long verbose = 0;        // 0=print basic info, 1=print cpu
 CORBA::Char fmt = 'K';          // output
                                 // format:k=kilobits,K=kilobytes, m = megabits,
                                 // M = megabytes, g = gigabits, G = gigabytes
-CORBA::String title = 0;        // title of file to gather statistics
+char* title = 0;        // title of file to gather statistics
 char stats[128];                // gathering the statistics
 unsigned long srcDataSize;      // Total amount of source data
 unsigned long nbytes;           // bytes on net
@@ -86,59 +86,59 @@ main (int argc, char *argv[])
   while ((c = get_opt ()) != -1)
     {
       switch (c)
-	{
-	case 'i':
-	  ior = ACE_OS::strdup (get_opt.optarg);
-	  break;
-	case 'L':
-	  title = ACE_OS::strdup (get_opt.optarg);
-	  break;
-	case 'd':
-	  TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
-	  if (TAO_debug_level > 10)
-	    TAO_debug_level = 10;
-	  break;
-	case 'l':
-	  buflen = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'v':
-	  verbose = 1;
-	  break;
-	case 'm':
-	  fmt = *get_opt.optarg;
-	  break;
-	case 'S':       /* total source data to send. */
-	  srcDataSize = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'q':       /* Send sequence of desired data type */
-	  switch(*get_opt.optarg){
-	  case 's':
-	    dt = SEND_SHORT;
-	    break;
-	  case 'l':
-	    dt = SEND_LONG;
-	    break;
-	  case 'd':
-	    dt = SEND_DOUBLE;
-	    break;
-	  case 'c':
-	    dt = SEND_CHAR;
-	    break;
-	  case 'o':
-	    dt = SEND_OCTET;
-	    break;
-	  case 'S':
-	    dt = SEND_STRUCT;
-	    break;
-	  case 'C':
-	    dt = SEND_COMPOSITE;
-	    break;
-	  }
-	  break;
+        {
+        case 'i':
+          ior = ACE_OS::strdup (get_opt.optarg);
+          break;
+        case 'L':
+          title = ACE_OS::strdup (get_opt.optarg);
+          break;
+        case 'd':
+          TAO_debug_level = ACE_OS::atoi (get_opt.optarg);
+          if (TAO_debug_level > 10)
+            TAO_debug_level = 10;
+          break;
+        case 'l':
+          buflen = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'v':
+          verbose = 1;
+          break;
+        case 'm':
+          fmt = *get_opt.optarg;
+          break;
+        case 'S':       /* total source data to send. */
+          srcDataSize = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'q':       /* Send sequence of desired data type */
+          switch(*get_opt.optarg){
+          case 's':
+            dt = SEND_SHORT;
+            break;
+          case 'l':
+            dt = SEND_LONG;
+            break;
+          case 'd':
+            dt = SEND_DOUBLE;
+            break;
+          case 'c':
+            dt = SEND_CHAR;
+            break;
+          case 'o':
+            dt = SEND_OCTET;
+            break;
+          case 'S':
+            dt = SEND_STRUCT;
+            break;
+          case 'C':
+            dt = SEND_COMPOSITE;
+            break;
+          }
+          break;
         case 'f':
           ior = read_ior (get_opt.optarg);
           break;
-	default:
+        default:
           return print_usage ();
         }
     }
@@ -149,7 +149,7 @@ main (int argc, char *argv[])
       //
       // Transmitter
       //
-      
+
       // get a handle to the ORB
       orb_ptr = CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -163,7 +163,7 @@ main (int argc, char *argv[])
       if (!CORBA::is_nil (objref))
         {
           // if it is a valid obj ref, narrow it to a ttcp_sequence
-          // CORBA object 
+          // CORBA object
           ttcp_seq = ttcp_sequence::_narrow (objref, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -179,7 +179,7 @@ main (int argc, char *argv[])
               // Prepare the Message to be sent
               //
 
-              
+
               // first allocate a buffer of the desired size and alignment
               errno = 0;
               if ((buf = (char *) ACE_OS::malloc (buflen)) == (char *) NULL)

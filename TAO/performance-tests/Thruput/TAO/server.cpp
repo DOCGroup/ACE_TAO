@@ -72,7 +72,7 @@ main (int argc, char **argv)
   CORBA::Object_var obj_var;
   const char *oa_name = "RootPOA"; // name of our OA
   const char *orb_name = "internet"; // name of our ORB
-  CORBA::String      str; // for stringified representation of the object reference
+  char* str; // for stringified representation of the object reference
   FILE *ior_file = 0;
 
   // initialize the underlying ORB and get a handle to it
@@ -146,7 +146,7 @@ main (int argc, char **argv)
               break;
             }
         }
-      
+
       //
       // Receiver
       //
@@ -177,7 +177,7 @@ main (int argc, char **argv)
         {
           ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
         }
-      
+
       if (ior_file != 0)
         {
           // write ior to a file
@@ -190,7 +190,7 @@ main (int argc, char **argv)
       quantify_clear_data();
       quantify_start_recording_data();
 #endif /* ACE_HAS_QUANTIFY */
-      
+
       // Handle requests for this object until we're killed, or one of the
       // methods asks us to exit.
       if (orb_var->run () == -1)

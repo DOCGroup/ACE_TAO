@@ -624,7 +624,7 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
                             CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
-  CORBA::String str = *(CORBA::String *) data;
+  char * str = *(char**) data;
 
   // Verify string satisfies bounds requirements.  We're not so
   // permissive as to send messages violating the interface spec

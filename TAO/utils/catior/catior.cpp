@@ -23,7 +23,7 @@
 #include "tao/UIOP_Profile.h"
 
 static CORBA::Boolean
-catiiop (CORBA::String string,
+catiiop (char* string,
          CORBA::Environment &ACE_TRY_ENV)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
@@ -66,7 +66,7 @@ catiiop (CORBA::String string,
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  CORBA::String hostname;
+  char* hostname;
   char *cp = ACE_OS::strchr (string, ':');
 
   if (cp == 0)
@@ -124,7 +124,7 @@ cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream);
 
 static CORBA::Boolean
-catior (CORBA::String str,
+catior (char* str,
         CORBA::Environment &env)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
@@ -175,7 +175,7 @@ catior (CORBA::String str,
 
   // First, read the type hint. This will be the type_id encoded in an
   // object reference.
-  CORBA::String type_hint;
+  char* type_hint;
 
   continue_decoding = stream.decode (CORBA::_tc_string,
                                      &type_hint,
@@ -275,7 +275,7 @@ catior (CORBA::String str,
 // : interface_marker
 
 static CORBA::Boolean
-catpoop (CORBA::String string,
+catpoop (char* string,
         CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
@@ -295,7 +295,7 @@ catpoop (CORBA::String string,
     }
 
   // Read the hostname.
-  CORBA::String hostname = CORBA::string_alloc (1 + cp - string);
+  char* hostname = CORBA::string_alloc (1 + cp - string);
 
   for (cp = hostname;
        *string != ':';
@@ -313,7 +313,7 @@ catpoop (CORBA::String string,
   //  read the server name
   cp = ACE_OS::strchr (string, ':');
 
-  CORBA::String server_name = CORBA::string_alloc (1 + cp - string);
+  char* server_name = CORBA::string_alloc (1 + cp - string);
 
   for (cp = server_name;
        *string != ':';
@@ -332,7 +332,7 @@ catpoop (CORBA::String string,
   // Read the Orbix specific marker.
   cp = ACE_OS::strchr (string, ':');
 
-  CORBA::String marker = CORBA::string_alloc (1 + cp - string);
+  char* marker = CORBA::string_alloc (1 + cp - string);
 
   for (cp = marker;
        *string != ':';
@@ -350,7 +350,7 @@ catpoop (CORBA::String string,
   cp = ACE_OS::strchr (string, ':');
 
   // Read the IR_host.
-  CORBA::String IR_host = CORBA::string_alloc (1 + cp - string);
+  char* IR_host = CORBA::string_alloc (1 + cp - string);
 
   for (cp = IR_host;
        *string != ':';
@@ -368,7 +368,7 @@ catpoop (CORBA::String string,
   // Read the IR_server
   cp = ACE_OS::strchr (string, ':');
 
-  CORBA::String IR_server = CORBA::string_alloc (1 + cp - string);
+  char* IR_server = CORBA::string_alloc (1 + cp - string);
 
   for (cp = IR_server;
        *string != ':';
@@ -443,7 +443,7 @@ main (int argc, char *argv[])
                         "\nhere is the IOR\n%s\n\n",
                         aString.rep ()));
 
-            CORBA::String str;
+            char* str;
             if (aString.find ("IOR:") == 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
@@ -532,7 +532,7 @@ cat_octet_seq (const char *object_name,
               object_name));
 
   CORBA::Octet anOctet;
-  CORBA::String objKey = CORBA::string_alloc (length + 1);
+  char* objKey = CORBA::string_alloc (length + 1);
 
   short counter = -1;
 
@@ -652,7 +652,7 @@ cat_iiop_profile (TAO_InputCDR& stream)
 
   // Get host and port.
   CORBA::UShort port_number;
-  CORBA::String hostname;
+  char* hostname;
   if ((str >> hostname) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,

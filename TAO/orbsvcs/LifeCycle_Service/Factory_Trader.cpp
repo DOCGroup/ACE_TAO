@@ -162,7 +162,7 @@ Factory_Trader::_cxx_export (const char * name,
 
 
 CORBA::Object_ptr
-Factory_Trader::query (const CORBA::String constraint)
+Factory_Trader::query (const char* constraint)
 {
   ACE_TRY_NEW_ENV
     {

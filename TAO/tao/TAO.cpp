@@ -175,7 +175,7 @@ TAO_ORB_Manager::activate_poa_manager (CORBA_Environment &ACE_TRY_ENV)
 
 // Activate servant in the POA.
 
-CORBA::String
+char *
 TAO_ORB_Manager::activate (PortableServer::Servant servant,
                            CORBA_Environment &ACE_TRY_ENV)
 {
@@ -217,7 +217,7 @@ TAO_ORB_Manager::deactivate (const char *id,
 
 // Activate the object with the object_name under the child POA.
 
-CORBA::String
+char *
 TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
                                            PortableServer::Servant servant,
                                            CORBA_Environment& ACE_TRY_ENV)
@@ -241,7 +241,7 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::String str =
+  char * str =
     this->orb_->object_to_string (obj.in (),
                                   ACE_TRY_ENV);
 
