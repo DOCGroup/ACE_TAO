@@ -78,7 +78,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_cdr_op_ci::"
+                         "(%N:%l) be_visitor_structure_cdr_op_cs::"
                          "visit_structure - "
                          "codegen for scope failed\n"), 
                         -1);
@@ -124,7 +124,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_structure_cdr_op_ci"
+                             "(%N:%l) be_visitor_structure_cdr_op_cs"
                              "::visit_structure - "
                              "codegen for scope failed\n"), 
                             -1);
