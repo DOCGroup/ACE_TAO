@@ -422,11 +422,7 @@ public:
   //
   // NOTE:  those are IDL extensions, not yet standard.
 
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-  typedef short WChar;
-#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-  typedef wchar_t WChar;
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  typedef ACE_UINT16 WChar;
   typedef WChar *WString;
 
   typedef WChar &WChar_out; // out type for WChar
