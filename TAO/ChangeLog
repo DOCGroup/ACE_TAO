@@ -20,8 +20,8 @@ Mon Feb 24 08:44:39 2003  Ossama Othman  <ossama@uci.edu>
 
 Mon Feb 24 15:35:23 2003  Edward Scott  <eas@prismtechnologies.com>
 
-	* tao/DynamicAny/DynUnion_i.h: 
-	* tao/DynamicAny/DynStruct_i.h: 
+	* tao/DynamicAny/DynUnion_i.h:
+	* tao/DynamicAny/DynStruct_i.h:
 
 	  Fixed incorrect environment macro usage. Thanks to
 	  vince@mounts.cc for reporting the problem.
