@@ -1,3 +1,14 @@
+Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
+	  1528. Please see 
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1528
+
+	  for the motivation. This checkin just removes the call to find
+	  () on the map. It just changes the state of the map entry to
+	  idle after holding a lock.
+
 Wed Jun 11 15:08:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Profile.cpp:
