@@ -1,3 +1,8 @@
+Sun Mar 14 12:16:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+          Changed member initialization order to fix MinGW warning.
+
 Sun Mar 14 12:12:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/WFMO_Reactor/Exceptions.cpp:
