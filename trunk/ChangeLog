@@ -1,9 +1,15 @@
+Wed Feb  2 08:46:51 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added an include of $(CIAO_ROOT)/rules.ciao.GNU if 'ciao' is set.
+
 Tue Feb 01 16:12:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  A typo that created problems during tar ball creation. Removed
-	  updates to the *version.mpb's too.
+          A typo that created problems during tar ball creation. Removed
+          updates to the *version.mpb's too.
 
 Tue Feb  1 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -15,19 +21,19 @@ Tue Feb  1 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Feb 1 14:33:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* test/OS_Test.cpp:
+        * test/OS_Test.cpp:
 
-	  Excluded rename test for VxWorks since this is only supported for a restricted
+          Excluded rename test for VxWorks since this is only supported for a restricted
           set of filesystem drivers.
 
 Tue Feb 1 14:30:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/OS_NS_time.inl:
+        * ace/OS_NS_time.inl:
 
-	  Moved buflen check in ctime_r() to more global scope. This way
-	  we always get required behaviour even if OS *with* buflen arg
-	  behaves badly (i.e. VxWorks). 
-	
+          Moved buflen check in ctime_r() to more global scope. This way
+          we always get required behaviour even if OS *with* buflen arg
+          behaves badly (i.e. VxWorks).
+
 Tue Feb  1 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ace.mpc:
@@ -53,9 +59,9 @@ Tue Feb  1 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Feb 1 12:42:37 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/Dirent_Test.cpp:
+        * tests/Dirent_Test.cpp:
 
-	  Fixed directory recursion test for VxWorks where chdir() only
+          Fixed directory recursion test for VxWorks where chdir() only
           accepts full paths.
 
 Tue Feb  1 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -68,18 +74,18 @@ Tue Feb  1 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan 31 20:48:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Proactor_Test.cpp (TestData):
-	* tests/Proactor_Test_IPV6.cpp (TestData):
+        * tests/Proactor_Test.cpp (TestData):
+        * tests/Proactor_Test_IPV6.cpp (TestData):
 
-	  Name the nested/local structure declared in this class to
-	  workaround MSVC++ complaints about required compiler generated
-	  default constructors for unnamed classes.
+          Name the nested/local structure declared in this class to
+          workaround MSVC++ complaints about required compiler generated
+          default constructors for unnamed classes.
 
 Mon Jan 31 13:37:48 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Acceptor.cpp (handle_close): Fixed the code so that it
-	  closes down properly.  Thanks to Kobi Cohen-Arazi
- 	  <kobi dot cohenarazi at gmail dot com> for this fix.
+        * ace/Acceptor.cpp (handle_close): Fixed the code so that it
+          closes down properly.  Thanks to Kobi Cohen-Arazi
+          <kobi dot cohenarazi at gmail dot com> for this fix.
 
 Mon Jan 31 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -134,10 +140,10 @@ Mon Jan 31 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan 30 08:46:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Filecache.cpp:
+        * ace/Filecache.cpp:
 
-	  Added missing "template<>" to explicit class member
-	  specializations, as required by the C++ standard.
+          Added missing "template<>" to explicit class member
+          specializations, as required by the C++ standard.
 
 Sun Jan 30 13:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -183,25 +189,25 @@ Sun Jan 30 13:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Jan 29 23:55:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Misc/test_read_buffer.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i:
-	* examples/Web_Crawler/URL.h:
+        * examples/Misc/test_read_buffer.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i:
+        * examples/Web_Crawler/URL.h:
 
-	  Added missing header include directives that are necessary due
-	  to inter-header dependency reductions in ACE.
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
 
 Sat Jan 29 23:44:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
 
-	  Added missing "ace/OS_NS_unistd.h" include directives.  Fixes
-	  compile-time errors related to missing function prototypes.
+          Added missing "ace/OS_NS_unistd.h" include directives.  Fixes
+          compile-time errors related to missing function prototypes.
 
 Sat Jan 29 11:12:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/OS/Process/process.cpp:
+        * examples/OS/Process/process.cpp:
 
         Fixed compile errors due to (now) missing includes because of include
         reductions done to Service_Config.h and Svc_Handler.h.
@@ -237,85 +243,85 @@ Sat Jan 29 16:12:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 Sat Jan 29 00:39:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Change --with-{acexml,qos,rmcast,ssl} to --enable-{acexml,qos,
-	  rmcast,ssl} to be consistant with standard autoconf conventions.
-	  This also paves the way for a *new* --with-ssl flag to point to
-	  the openssl install directory.
+          Change --with-{acexml,qos,rmcast,ssl} to --enable-{acexml,qos,
+          rmcast,ssl} to be consistant with standard autoconf conventions.
+          This also paves the way for a *new* --with-ssl flag to point to
+          the openssl install directory.
 
 Fri Jan 28 20:30:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Configuration.h:
+        * ace/Configuration.h:
 
-	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
-	  declarations of ACE's string types are enough.  Reduces
-	  interheader dependencies and also reduces ACE's footprint
-	  slightly.
+          Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+          declarations of ACE's string types are enough.  Reduces
+          interheader dependencies and also reduces ACE's footprint
+          slightly.
 
-	* ace/Configuration.cpp:
-	* ace/Local_Name_Space.cpp
-	* ace/Remote_Name_Space.cpp:
-	* ace/Service_Config.cpp:
+        * ace/Configuration.cpp:
+        * ace/Local_Name_Space.cpp
+        * ace/Remote_Name_Space.cpp:
+        * ace/Service_Config.cpp:
 
-	  Include "ace/SString.h" since to pull in complete ACE string
-	  class declarations, since the corresponding header only has
-	  forward declarations of those string classes.
+          Include "ace/SString.h" since to pull in complete ACE string
+          class declarations, since the corresponding header only has
+          forward declarations of those string classes.
 
-	* ace/Filecache.cpp:
-	* ace/Filecache.h:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
 
-	  Removed alternatives to C++ template specializations in these
-	  files.  All platforms supported by ACE support standard C++
-	  explicit/full specialization of classes and their members.
+          Removed alternatives to C++ template specializations in these
+          files.  All platforms supported by ACE support standard C++
+          explicit/full specialization of classes and their members.
 
-	* ace/Local_Name_Space.h:
-	* ace/Remote_Name_Space.h:
+        * ace/Local_Name_Space.h:
+        * ace/Remote_Name_Space.h:
 
-	  Forward declare ACE_NS_WString instead of including
-	  "ace/SString.h".  The former is all that is needed.
+          Forward declare ACE_NS_WString instead of including
+          "ace/SString.h".  The former is all that is needed.
 
-	* ace/Name_Proxy.h:
+        * ace/Name_Proxy.h:
 
-	  Include "ace/Event_Handler.h" to pull in complete
-	  ACE_Event_Handler class declaration.  Necessitated by include
-	  directive reductions in ace/Service_Config.h.
+          Include "ace/Event_Handler.h" to pull in complete
+          ACE_Event_Handler class declaration.  Necessitated by include
+          directive reductions in ace/Service_Config.h.
 
-	* ace/Process.h:
-	* ace/Time_Request_Reply.h:
-	* ace/Token_Collection.h:
+        * ace/Process.h:
+        * ace/Time_Request_Reply.h:
+        * ace/Token_Collection.h:
 
-	  Removed "ace/SString.h" include directive.  It isn't needed.
+          Removed "ace/SString.h" include directive.  It isn't needed.
 
-	* ace/Service_Config.h:
+        * ace/Service_Config.h:
 
-	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
-	  declarations of ACE's string types are enough.  Reduces
-	  interheader dependencies and also reduces ACE's footprint
-	  slightly.
+          Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+          declarations of ACE's string types are enough.  Reduces
+          interheader dependencies and also reduces ACE's footprint
+          slightly.
 
-	  Forward declare ACE_XML_Svc_Conf class instead of include
-	  "ace/XML_Svc_Conf.h".  The former is all that is needed.
+          Forward declare ACE_XML_Svc_Conf class instead of include
+          "ace/XML_Svc_Conf.h".  The former is all that is needed.
 
-	  Removed "ace/Reactor.h" and "ace/Svc_Conf_Tokens.h" include
-	  directives.  They haven't been needed for quite some time.
+          Removed "ace/Reactor.h" and "ace/Svc_Conf_Tokens.h" include
+          directives.  They haven't been needed for quite some time.
 
-	* ace/Svc_Handler.h:
+        * ace/Svc_Handler.h:
 
-	  No need to include "ace/Service_Config.h".  "ace/Reactor.h" is
-	  enough.
+          No need to include "ace/Service_Config.h".  "ace/Reactor.h" is
+          enough.
 
-	* netsvcs/clients/Naming/Client/Client_Test.cpp:
-	* netsvcs/clients/Naming/Client/main.cpp:
-	* protocols/ace/HTBP/HTBP_Channel.cpp:
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
 
-	  Include "ace/Reactor.h" to pull in complete ACE_Reactor class
-	  declaration.
+          Include "ace/Reactor.h" to pull in complete ACE_Reactor class
+          declaration.
 
 Fri Jan 28 16:02:28 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Fixed compile diagnostics.
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp: Fixed compile diagnostics.
 
 Fri Jan 28 20:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -384,16 +390,16 @@ Fri Jan 28 05:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan 27 18:28:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Proactor_Test.{h cpp}:
-	* tests/Proactor_Test_IPV6.cpp: Rearranged the pieces of this test to
-	  allow the Acceptor and Connector objects to be destroyed during the
-	  test and still have all the stats kept accurately. This is to enable
-	  testing of some Proactor improvements that are coming.
+        * tests/Proactor_Test.{h cpp}:
+        * tests/Proactor_Test_IPV6.cpp: Rearranged the pieces of this test to
+          allow the Acceptor and Connector objects to be destroyed during the
+          test and still have all the stats kept accurately. This is to enable
+          testing of some Proactor improvements that are coming.
 
-	* tests/Proactor_Scatter_Gather_Test.cpp:
-	* tests/TP_Reactor_Test.cpp: Be careful to use the same address family
-	  when forming the listen and connect addresses. This allows things to
-	  work regardless of IPv4/IPv6 use.
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/TP_Reactor_Test.cpp: Be careful to use the same address family
+          when forming the listen and connect addresses. This allows things to
+          work regardless of IPv4/IPv6 use.
 
 Thu Jan 27 18:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -438,7 +444,7 @@ Tue Jan 25 21:05:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Reactor_Registration_Test.cpp:
 
-	Revoked earlier change because it's erroneous:-(
+        Revoked earlier change because it's erroneous:-(
 
 Tue Jan 25 19:41:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -485,18 +491,18 @@ Tue Jan 25 14:15:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Mon Jan 24 23:10:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Process_Manager.cpp (terminate):
-	* ace/Signal.cpp (remove_handler, register_handler):
-	* ace/Thread_Manager.cpp (spawn_i):
+        * ace/Process_Manager.cpp (terminate):
+        * ace/Signal.cpp (remove_handler, register_handler):
+        * ace/Thread_Manager.cpp (spawn_i):
 
-	  Fixed "control reaches end of non-void function" warnings
-	  exhibited by the latest GNU G++ 4.0 CVS snapshot.
+          Fixed "control reaches end of non-void function" warnings
+          exhibited by the latest GNU G++ 4.0 CVS snapshot.
 
 Mon Jan 24 17:00:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Fix thinko in pkgsrc *.pc file generation.
+          Fix thinko in pkgsrc *.pc file generation.
 
 Mon Jan 24 18:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -511,8 +517,8 @@ Mon Jan 24 18:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Mon Jan 24 07:49:21 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_socket.inl (setsockopt): Fixed a mistake in the
-	  comment, where it should say "Windows always set
+        * ace/OS_NS_sys_socket.inl (setsockopt): Fixed a mistake in the
+          comment, where it should say "Windows always set
           SO_REUSEADDR=1."  Thanks to  YiQing Xiong
           <xjaguar at 126 dot com> for reporting this.
 
@@ -537,24 +543,24 @@ Sun Jan 23 21:34:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Sun Jan 23 19:17:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Create new ACE_WITH_{GL,FL,QT,TK} autoconf macros which will be
-	  used for finding OpenGL, FL/TK, Qt and Tk libraries and setting
-	  compiler and linker flags.
+          Create new ACE_WITH_{GL,FL,QT,TK} autoconf macros which will be
+          used for finding OpenGL, FL/TK, Qt and Tk libraries and setting
+          compiler and linker flags.
 
 Sun Jan 23 15:45:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Split --enable-{fl,qt,tk,xt}-reactor processing into separate
-	  autoconf macros.
+          Split --enable-{fl,qt,tk,xt}-reactor processing into separate
+          autoconf macros.
 
 Sun Jan 23 15:07:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Omit .cvsignore files.
+          Omit .cvsignore files.
 
 Sun Jan 23 18:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -611,7 +617,7 @@ Sun Jan 23 12:39:20 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ace_flreactor.mpc:
         * ace/ace.mpc:
 
-	  Added missing Id strings.
+          Added missing Id strings.
 
 Sun Jan 23 02:22:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -730,7 +736,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/FlReactor.cpp (Module):
 
           Removed factory methods for loading reactor from shared
-	  library.
+          library.
 
         * bin/MakeProjectCreator/config/global.features (Module):
 
@@ -752,8 +758,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
         * ACE-INSTALL.html (Module):
 
-	  Modified base projects to enable FlReactor compilation for
-	  Windows.
+          Modified base projects to enable FlReactor compilation for
+          Windows.
 
         Mon Dec 13 01:39:12 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -762,14 +768,14 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_fl.mpb (Module):
 
           Removed nice feature inheritance and reentered a workaround
-	  related with "verbatim" section bug in MPC.
+          related with "verbatim" section bug in MPC.
 
         Mon Dec 13 00:36:44 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
 
           Removed explicite dependencies of TAO_Strategies on
-	  TAO_TkReactor.
+          TAO_TkReactor.
 
         * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
 
@@ -788,8 +794,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/TkReactor.h (Module):
         * ace/TkReactor.cpp (Module):
 
-	  Removed ACE_HAS_TK macros. Created factory method TkReactor in
-	  dll.
+          Removed ACE_HAS_TK macros. Created factory method TkReactor in
+          dll.
 
         Sun Dec 12 22:53:48 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -800,7 +806,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
 
           Removed explicite dependence of TAO_Strategies on
-	  TAO_FlReactor.
+          TAO_FlReactor.
 
         * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
 
@@ -817,7 +823,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/FlReactor.cpp (Module):
 
           Removed ACE_HAS_FL macros. Created factory method for
-	  instantinating FlReactor from dll.
+          instantinating FlReactor from dll.
 
         Sun Dec 12 02:14:51 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -828,7 +834,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * tests/tests.mpc (Module):
 
           Introduced new dependencies on ace_flreactor and ace_tkreactor
-	  for specific reactors tests.
+          for specific reactors tests.
 
         * include/makeinclude/platform_sunos5_sunc++.GNU (Module):
 
@@ -837,8 +843,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * include/makeinclude/wrapper_macros.GNU (Module):
 
           Modified documentation about features. Removed rules for an
-	  unknown gtk_reactor. Modified statements related with new naming
-	  schema and feature definitions.
+          unknown gtk_reactor. Modified statements related with new naming
+          schema and feature definitions.
 
         * bin/MakeProjectCreator/config/global.features (Module):
 
@@ -847,13 +853,13 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/strategies.mpb (Module):
 
           Created temporary dependence on tao_tk(fl)reactors. To be
-	  removed when TAO is separated from Tk and Fl Reactors.
+          removed when TAO is separated from Tk and Fl Reactors.
 
         * bin/MakeProjectCreator/config/tao_flreactor.mpb (Module):
         * bin/MakeProjectCreator/config/tao_tkreactor.mpb (Module):
 
           Created dummy projects to tao_*reactors. Will be handy when TAO
-	  is separated from Tk and Fl Reactors.
+          is separated from Tk and Fl Reactors.
 
         * bin/MakeProjectCreator/config/tao_xtreactor.mpb (Module):
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb (Module):
@@ -878,9 +884,9 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_athena.mpb (Module):
 
           Replaced ace_with_* features by * features to unify naming
-	  schema. Removed unnecessary definitions
-	  (includes,flags,libraries). Introduced unified derivation
-	  schema.
+          schema. Removed unnecessary definitions
+          (includes,flags,libraries). Introduced unified derivation
+          schema.
 
         * ace/ace_xtreactor.mpc (Module):
         * ace/ace_tkreactor.mpc (Module):
@@ -898,7 +904,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ACE_FlReactor_export.h (Module):
 
           Created export macros for these GUI reactors. Will be handy in
-	  future.
+          future.
 
         * ACE-INSTALL.html (Module):
 
@@ -929,7 +935,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * include/makeinclude/wrapper_macros.GNU (Module):
 
           Replace qt_rector variables by qt, as MPC currently uses qt
-	  feature.
+          feature.
 
         Fri Dec 10 01:04:52 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -954,7 +960,7 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/XtReactor.h (Module):
 
           Removed ACE_HAS_XT macros and applied export macros for
-	  ACE_XtReactor.
+          ACE_XtReactor.
 
         * ace/README (Module):
 
@@ -963,22 +969,22 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ACE_XtReactor_export.h (Module):
 
           Create export macros for XtReactor. Please, do not ask if anyone
-	  needs these macros under Windows. Probably no, but they are
-	  present here to remain consistent with the rest of ACE.
+          needs these macros under Windows. Probably no, but they are
+          present here to remain consistent with the rest of ACE.
 
         * tests/tests.mpc (Module):
 
           Created two project XtReactor_Tests for Athena widgets and
-	  Motif. Removed XtReactor_Test.
+          Motif. Removed XtReactor_Test.
 
         * tests/XtReactor_Test.cpp (Module):
         * tests/XtMotifReactor_Test.cpp (Module):
         * tests/XtAthenaReactor_Test.cpp (Module):
 
           XtReactor_Test was splitted into separate test for Athena
-	  widgets and Motif, hence they depend on distinct
-	  libraries. Removed ACE_HAS_XT and ACE_LACKS_MOTIF macros, as
-	  they are not needed now.
+          widgets and Motif, hence they depend on distinct
+          libraries. Removed ACE_HAS_XT and ACE_LACKS_MOTIF macros, as
+          they are not needed now.
 
         * examples/Misc/test_XtReactor2.cpp (Module):
         * examples/Misc/test_XtReactor1.cpp (Module):
@@ -993,12 +999,12 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/ace_xtreactor.mpb (Module):
 
           Created base projects for applications using ACE/TAO_XtReactor
-	  libraries.
+          libraries.
 
         * bin/MakeProjectCreator/config/global.features (Module):
 
           By default ace_with_x11, ace_withxt, ace_with_motif,
-	  ace_with_athena features are not avalaible.
+          ace_with_athena features are not avalaible.
 
         * bin/MakeProjectCreator/config/ace_xt.mpb (Module):
         * bin/MakeProjectCreator/config/ace_x11.mpb (Module):
@@ -1025,8 +1031,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ACE_QtReactor_export.h (Module):
 
           Change QtReactor_export.h into ACE_QtReactor_export.h to avoid
-	  possible, though not very probably name conflict and remain
-	  consistent with TAO_QtReact_export.
+          possible, though not very probably name conflict and remain
+          consistent with TAO_QtReact_export.
 
         Tue Dec  7 00:23:54 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -1044,12 +1050,12 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * include/makeinclude/platform_linux.GNU (Module):
 
           Removed unnecessary ACE_HAS_QT and make options regarding
-	  qt. All those things are now set up by MPC.
+          qt. All those things are now set up by MPC.
 
         * tests/tests.mpc (Module):
 
           Removed explicit dependency on qt. It is ensured now by qt base
-	  project.
+          project.
 
         * tests/QtReactor_Test.h (Module):
         * tests/QtReactor_Test.cpp (Module):
@@ -1059,32 +1065,32 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * bin/MakeProjectCreator/config/tao_qtreactor.mpb (Module):
 
           Removed tao_qtreactor as it seems to be redundant with qt=1. I'm
-	  not sure if this.
+          not sure if this.
 
         * bin/MakeProjectCreator/config/ace_qt.mpb (Module):
 
-	  Removed ace_qtreactor as it seems to be redundant with qt=1. I'm
-	  not sure if this.
+          Removed ace_qtreactor as it seems to be redundant with qt=1. I'm
+          not sure if this.
 
         * ace/config-win32-msvc.h (Module):
 
-	  Removed sections related with ACE_HAS_QT and QT_DLL
-	  definition. It is manged now by MPC.
+          Removed sections related with ACE_HAS_QT and QT_DLL
+          definition. It is manged now by MPC.
 
         * ace/config-doxygen.h (Module):
 
-	  Removed ACE_HAS_QT as it is ACE_QtReactor compiles now alway if
-	  qt option is set.
+          Removed ACE_HAS_QT as it is ACE_QtReactor compiles now alway if
+          qt option is set.
 
         * ace/README (Module):
 
-	  Removed paragraph on ACE_HAS_QT.
+          Removed paragraph on ACE_HAS_QT.
 
         * ace/QtReactor.h (Module):
         * ace/QtReactor.cpp (Module):
 
-	  Removed code compiled conditionally on ACE_HAS_QT
-	  predicate. Compilation is now managed by MPC.
+          Removed code compiled conditionally on ACE_HAS_QT
+          predicate. Compilation is now managed by MPC.
 
         Sat Dec  4 17:03:38 2004  Marek Brudka  <mbrudka@aster.pl>
 
@@ -1149,8 +1155,8 @@ Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
         * ace/ace.mpc (Modified):
 
          Initial changes related with the separation of reactors into
-	  distinct libraries.  Many thanks to Raphael Bossek
-	  <raphael.bossek@gmx.de> for this patch.
+          distinct libraries.  Many thanks to Raphael Bossek
+          <raphael.bossek@gmx.de> for this patch.
 
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 

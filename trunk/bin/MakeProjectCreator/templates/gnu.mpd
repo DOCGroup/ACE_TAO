@@ -143,6 +143,9 @@ ACELIB =
 tao_dont_use_idl_make_rule = 1
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
+<%if(ciao)%>
+include $(CIAO_ROOT)/rules.ciao.GNU
+<%endif%>
 <%if(version)%>
 
 ifeq ($(versioned_so),1)
