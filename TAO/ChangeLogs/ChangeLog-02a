@@ -1,3 +1,101 @@
+Tue Apr 11 14:35:57 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Changed the RTEC and the CosEC to use the components defined in
+	  the ESF directory.  In this pass i basically moved the classes
+	  from orbsvcs/Event/EC_* to orbsvcs/ESF/ESF_*
+	  But I also added components that simplify the implementation of
+	  the Consumer and Supplier admin classes.
+	  This new mini-framework is desgined to facilitate the task of
+	  implementing event services, such as the Real-time Event
+	  Service, the COS Event Service or the Notification Service.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+	  Fixed minor problems with the generic event service framework
+	  components.
+
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i:
+	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+	  Add new iteration strategy to the framework.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.i:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Supplier_Filter.h:
+	  Use the new components to implement the ConsumerAdmin and
+	  SupplierAdmin interfaces.
+	  Reuse the code in the framework for the collections.
+
+	* orbsvcs/orbsvcs/Event/EC_Command.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.i:
+	* orbsvcs/orbsvcs/Event/EC_Command.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
+	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.h:
+	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.i:
+	* orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.h:
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.i:
+	* orbsvcs/orbsvcs/Event/EC_Proxy_Collection.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Worker.h:
+	* orbsvcs/orbsvcs/Event/EC_Worker.i:
+	* orbsvcs/orbsvcs/Event/EC_Worker.cpp:
+	  Removed, they are implemented in the ESF directory.
+
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	  Updated dependencies
+
 Tue Apr 11 16:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/orbconf.h: Commented out AMI aupport as default thus

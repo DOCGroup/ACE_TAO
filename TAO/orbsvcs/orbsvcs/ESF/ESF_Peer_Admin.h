@@ -27,7 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template<class EVENT_CHANNEL, class PROXY, class PEER>
-class TAO_ESF_Peer_Admin : TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY>
+class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY>
 {
   // = TITLE
   //   ESF_Peer_Admin

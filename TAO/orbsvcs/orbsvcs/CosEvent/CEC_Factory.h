@@ -39,14 +39,14 @@ class TAO_CEC_ProxyPushConsumer;
 class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_ProxyPushSupplier;
 class TAO_CEC_ProxyPullSupplier;
-template<class PROXY> class TAO_EC_Proxy_Collection;
+template<class PROXY> class TAO_ESF_Proxy_Collection;
 class TAO_CEC_ConsumerControl;
 class TAO_CEC_SupplierControl;
 
-typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushConsumer> TAO_CEC_ProxyPushConsumer_Collection;
-typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullConsumer_Collection;
-typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
-typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer> TAO_CEC_ProxyPushConsumer_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullConsumer_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
 
 class TAO_Event_Export TAO_CEC_Factory : public ACE_Service_Object
 {

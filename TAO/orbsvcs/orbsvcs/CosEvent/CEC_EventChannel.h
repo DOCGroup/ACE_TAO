@@ -134,37 +134,33 @@ public:
   // Access the supplier control strategy.
 
   // = The factory methods, they delegate on the CEC_Factory.
-  TAO_CEC_ProxyPushSupplier* create_proxy_push_supplier (void);
-  void destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*);
+  void create_proxy (TAO_CEC_ProxyPushSupplier*&);
+  void destroy_proxy (TAO_CEC_ProxyPushSupplier*);
   // Create and destroy a ProxyPushSupplier
 
-  TAO_CEC_ProxyPullSupplier* create_proxy_pull_supplier (void);
-  void destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier*);
+  void create_proxy (TAO_CEC_ProxyPullSupplier*&);
+  void destroy_proxy (TAO_CEC_ProxyPullSupplier*);
   // Create and destroy a ProxyPullSupplier
 
-  TAO_CEC_ProxyPushConsumer* create_proxy_push_consumer (void);
-  void destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*);
+  void create_proxy (TAO_CEC_ProxyPushConsumer*&);
+  void destroy_proxy (TAO_CEC_ProxyPushConsumer*);
   // Create and destroy a ProxyPushConsumer
 
-  TAO_CEC_ProxyPullConsumer* create_proxy_pull_consumer (void);
-  void destroy_proxy_pull_consumer (TAO_CEC_ProxyPullConsumer*);
+  void create_proxy (TAO_CEC_ProxyPullConsumer*&);
+  void destroy_proxy (TAO_CEC_ProxyPullConsumer*);
   // Create and destroy a ProxyPushConsumer
 
-  TAO_CEC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (void);
-  void destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*);
-  TAO_CEC_ProxyPullSupplier_Collection*
-      create_proxy_pull_supplier_collection (void);
-  void destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPullSupplier_Collection*);
+  void create_proxy_collection (TAO_CEC_ProxyPushSupplier_Collection*&);
+  void destroy_proxy_collection (TAO_CEC_ProxyPushSupplier_Collection*);
+  void create_proxy_collection (TAO_CEC_ProxyPullSupplier_Collection*&);
+  void destroy_proxy_collection (TAO_CEC_ProxyPullSupplier_Collection*);
   // Create and destroy a the collections used to store
   // Proxy*Suppliers
 
-  TAO_CEC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (void);
-  void destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*);
-  TAO_CEC_ProxyPullConsumer_Collection*
-      create_proxy_pull_consumer_collection (void);
-  void destroy_proxy_pull_consumer_collection (TAO_CEC_ProxyPullConsumer_Collection*);
+  void create_proxy_collection (TAO_CEC_ProxyPushConsumer_Collection*&);
+  void destroy_proxy_collection (TAO_CEC_ProxyPushConsumer_Collection*);
+  void create_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*&);
+  void destroy_proxy_collection (TAO_CEC_ProxyPullConsumer_Collection*);
   // Create and destroy a the collections used to store
   // Proxy*Consumers
 

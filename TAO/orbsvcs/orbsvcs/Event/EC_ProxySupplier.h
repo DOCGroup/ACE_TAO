@@ -62,11 +62,20 @@ class TAO_RTEvent_Export TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelA
   //   is properly configured, we need to explore this...
   //
 public:
+  typedef RtecEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
+  typedef RtecEventChannelAdmin::ProxyPushSupplier_var _var_type;
+
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel);
   // constructor...
 
   virtual ~TAO_EC_ProxyPushSupplier (void);
   // destructor...
+
+  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (());
+  // Activate in the POA
+
+  virtual void deactivate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (());
+  // Deactivate from the POA
 
   CORBA::Boolean is_connected (void) const;
   // Return 0 if no consumer is connected...
@@ -174,9 +183,6 @@ protected:
 
   void cleanup_i (void);
   // Release the child and the consumer
-
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
-  // Deactivate from the POA
 
 private:
   TAO_EC_Event_Channel* event_channel_;

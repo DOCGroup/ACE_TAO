@@ -5,8 +5,10 @@
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_Scheduling_Strategy.h"
-#include "EC_Proxy_Collection.h"
 #include "EC_QOS_Info.h"
+
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -21,8 +23,7 @@ TAO_EC_Per_Supplier_Filter::
      consumer_ (0),
      refcnt_ (1)
 {
-  this->collection_ =
-    this->event_channel_->create_proxy_push_supplier_collection ();
+  this->event_channel_->create_proxy_collection (this->collection_);
   // @@
   // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
   // @@ this->collection_->max_write_delay (
@@ -32,7 +33,7 @@ TAO_EC_Per_Supplier_Filter::
 
 TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
 {
-  this->event_channel_->destroy_proxy_push_supplier_collection (this->collection_);
+  this->event_channel_->destroy_proxy_collection (this->collection_);
   this->collection_ = 0;
 }
 

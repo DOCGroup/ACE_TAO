@@ -27,7 +27,7 @@ TAO_ESF_Proxy_Admin<EC,P>::~TAO_ESF_Proxy_Admin (void)
 }
 
 template<class EC, class PROXY> ACE_TYPENAME PROXY::_ptr_type
-TAO_ESF_Proxy_Admin<EC,PROXY>::obtain (CORBA::Environment &)
+TAO_ESF_Proxy_Admin<EC,PROXY>::obtain (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   PROXY* proxy;

@@ -47,14 +47,14 @@ class TAO_EC_SupplierAdmin;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ObserverStrategy;
-template<class PROXY> class TAO_EC_Proxy_Collection;
+template<class PROXY> class TAO_ESF_Proxy_Collection;
 class TAO_EC_Timeout_Generator;
 class TAO_EC_Scheduling_Strategy;
 class TAO_EC_ConsumerControl;
 class TAO_EC_SupplierControl;
 
-typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushConsumer> TAO_EC_ProxyPushConsumer_Collection;
-typedef TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSupplier_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushConsumer> TAO_EC_ProxyPushConsumer_Collection;
+typedef TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushSupplier> TAO_EC_ProxyPushSupplier_Collection;
 
 class TAO_RTEvent_Export TAO_EC_Factory : public ACE_Service_Object
 {

@@ -214,6 +214,24 @@ TAO_EC_ProxyPushConsumer::cleanup_i (void)
   this->filter_ = 0;
 }
 
+RtecEventChannelAdmin::ProxyPushConsumer_ptr
+TAO_EC_ProxyPushConsumer::activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (())
+{
+  RtecEventChannelAdmin::ProxyPushConsumer_var result;
+  ACE_TRY
+    {
+      result =
+        this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions...
+    }
+  ACE_ENDTRY;
+  return result._retn ();
+}
+
 void
 TAO_EC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -256,7 +274,7 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt (void)
   }
 
   // Notify the event channel
-  this->event_channel_->destroy_proxy_push_consumer (this);
+  this->event_channel_->destroy_proxy (this);
   return 0;
 }
 
@@ -295,14 +313,17 @@ TAO_EC_ProxyPushConsumer::connect_push_supplier (
           // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
           ACE_CHECK;
 
-          this->event_channel_->disconnected (this, ACE_TRY_ENV);
+          this->event_channel_->reconnected (this, ACE_TRY_ENV);
           ACE_CHECK;
         }
 
-        // What if a second thread connected us after this?
+        // A separate thread could have connected siomultaneously,
+        // this is probably an application error, handle it as
+        // gracefully as possible
         if (this->is_connected_i ())
-          return;
+          return; // @@ Should we throw
       }
+
     this->supplier_ =
       RtecEventComm::PushSupplier::_duplicate (push_supplier);
     this->qos_ = qos;
@@ -362,7 +383,7 @@ TAO_EC_ProxyPushConsumer::push (const RtecEventComm::EventSet& event,
     if (this->refcount_ != 0)
       return;
   }
-  this->event_channel_->destroy_proxy_push_consumer (this);
+  this->event_channel_->destroy_proxy (this);
 }
 
 void

@@ -26,7 +26,7 @@
 #define TAO_EC_OBSERVERSTRATEGY_H
 #include "ace/pre.h"
 
-#include "EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -252,7 +252,7 @@ protected:
 
 // ****************************************************************
 
-class TAO_EC_Accumulate_Supplier_Headers : public TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
+class TAO_EC_Accumulate_Supplier_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
   TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
@@ -267,7 +267,7 @@ private:
 
 // ****************************************************************
 
-class TAO_EC_Accumulate_Consumer_Headers : public TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+class TAO_EC_Accumulate_Consumer_Headers : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
   TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);

@@ -12,25 +12,21 @@
 ACE_RCSID(Event, EC_SupplierAdmin, "$Id$")
 
 TAO_EC_SupplierAdmin::TAO_EC_SupplierAdmin (TAO_EC_Event_Channel *ec)
-  :  event_channel_ (ec)
+  : TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier> (ec)
 {
-  this->collection_ =
-    this->event_channel_->create_proxy_push_consumer_collection ();
-
-  // @@
-  // @@ this->collection_->busy_hwm (this->event_channel_->busy_hwm ());
-  // @@ this->collection_->max_write_delay (
-  // @@           this->event_channel_->max_write_delay ()
-  // @@ );
-
   this->default_POA_ =
     this->event_channel_->supplier_poa ();
 }
 
 TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin (void)
 {
-  this->event_channel_->destroy_proxy_push_consumer_collection (this->collection_);
-  this->collection_ = 0;
+}
+
+RtecEventChannelAdmin::ProxyPushConsumer_ptr
+TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->obtain (ACE_TRY_ENV);
 }
 
 PortableServer::POA_ptr
@@ -39,139 +35,24 @@ TAO_EC_SupplierAdmin::_default_POA (CORBA::Environment&)
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
-void
-TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_EC_Connect_Supplier worker (supplier);
-  this->collection_->for_each (&worker, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::reconnected (TAO_EC_ProxyPushSupplier *supplier,
-                                   CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_EC_Reconnect_Supplier worker (supplier);
-  this->collection_->for_each (&worker, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_EC_Disconnect_Supplier worker (supplier);
-  this->collection_->for_each (&worker, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushConsumer * /*consumer*/,
-                                 CORBA::Environment &/*ACE_TRY_ENV*/)
-{
-  // this->collection_->connected (consumer, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::reconnected (TAO_EC_ProxyPushConsumer *consumer,
-                                   CORBA::Environment &ACE_TRY_ENV)
-{
-  this->collection_->reconnected (consumer, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  this->collection_->disconnected (consumer, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_SupplierAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_EC_Shutdown_Consumer worker;
-
-  this->collection_->for_each (&worker, ACE_TRY_ENV);
-  this->collection_->shutdown (ACE_TRY_ENV);
-}
-
-RtecEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_EC_ProxyPushConsumer* consumer =
-    this->event_channel_->create_proxy_push_consumer ();
-
-  PortableServer::ServantBase_var holder = consumer;
-
-  RtecEventChannelAdmin::ProxyPushConsumer_var result =
-    consumer->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (RtecEventChannelAdmin::ProxyPushConsumer::_nil ());
-
-  this->collection_->connected (consumer, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (RtecEventChannelAdmin::ProxyPushConsumer::_nil ());
-  
-  return result._retn ();
-}
-
-// ****************************************************************
-
-void
-TAO_EC_Connect_Supplier::work (TAO_EC_ProxyPushConsumer *consumer,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  consumer->connected (this->supplier_, ACE_TRY_ENV);
-  ACE_CHECK;
-  this->supplier_->connected (consumer, ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-// ****************************************************************
-
-void
-TAO_EC_Reconnect_Supplier::work (TAO_EC_ProxyPushConsumer *consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
-{
-  consumer->reconnected (this->supplier_, ACE_TRY_ENV);
-  ACE_CHECK;
-  this->supplier_->reconnected (consumer, ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-// ****************************************************************
-
-void
-TAO_EC_Disconnect_Supplier::work (TAO_EC_ProxyPushConsumer *consumer,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  consumer->disconnected (this->supplier_, ACE_TRY_ENV);
-  ACE_CHECK;
-  this->supplier_->disconnected (consumer, ACE_TRY_ENV);
-  ACE_CHECK;
-}
-
-// ****************************************************************
-
-void
-TAO_EC_Shutdown_Consumer::work (TAO_EC_ProxyPushConsumer *consumer,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_TRY
-    {
-      consumer->shutdown (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore exceptions
-    }
-  ACE_ENDTRY;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_EC_Worker<TAO_EC_ProxyPushConsumer>;
+template class TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
+template class TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer>;
+template class TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>;
+template class TAO_ESF_Shutdown_Proxy<TAO_EC_ProxyPushConsumer>;
+template class TAO_ESF_Peer_Connected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
+template class TAO_ESF_Peer_Reconnected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
+template class TAO_ESF_Peer_Disconnected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_EC_Worker<TAO_EC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Proxy_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_EC_ProxyPushConsumer>
+#pragma instantiate TAO_ESF_Peer_Connected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Peer_Reconnected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
+#pragma instantiate TAO_ESF_Peer_Disconnected<TAO_EC_ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

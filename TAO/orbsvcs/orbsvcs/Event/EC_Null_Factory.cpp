@@ -10,11 +10,11 @@
 #include "EC_ProxySupplier.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
-#include "EC_Concrete_Proxy_Set.h"
-#include "EC_Proxy_Collection.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_ConsumerControl.h"
 #include "EC_SupplierControl.h"
+#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "orbsvcs/ESF/ESF_Immediate_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Null_Factory.i"
@@ -155,9 +155,9 @@ TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Null_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel *)
 {
   // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>::Iterator TAO_EC_Consumer_List_Iterator;
-  return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushConsumer,
-      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>::Iterator TAO_EC_Consumer_List_Iterator;
+  return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_ESF_Proxy_List<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_Null_Mutex> ();
 }
@@ -172,9 +172,9 @@ TAO_EC_ProxyPushSupplier_Collection*
 TAO_EC_Null_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Channel *)
 {
   // This typedef is a workaround for a SunCC 4.2 bug
-  typedef TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>::Iterator TAO_EC_Supplier_List_Iterator;
-  return new TAO_EC_Immediate_Changes<TAO_EC_ProxyPushSupplier,
-      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+  typedef TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>::Iterator TAO_EC_Supplier_List_Iterator;
+  return new TAO_ESF_Immediate_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_ESF_Proxy_List<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_Null_Mutex> ();
 }
