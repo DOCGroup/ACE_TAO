@@ -1,3 +1,14 @@
+Mon Dec 24 23:53:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Muxed_TMS.cpp: Removed a template instantiation of
+	  ACE_Equal_To <ACE_UINT16>. They have now been added in Functor.h
+	  as template specializations. 
+
+	* tao/DynamicInterface/Context.h
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/PortableServer/Servant_Base.h: Added #include of
+	  Atomic_Op.h. 
+
 Mon Dec 24 16:16:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/examples/RtEC/Schedule/Schedule.dsw:

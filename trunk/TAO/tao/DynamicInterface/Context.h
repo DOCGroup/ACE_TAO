@@ -24,6 +24,7 @@
 #include "dynamicinterface_export.h"
 #include "tao/corbafwd.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

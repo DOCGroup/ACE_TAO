@@ -166,7 +166,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
                                                 ACE_Hash<CORBA::ULong>,
                                                 ACE_Equal_To<CORBA::ULong>,
                                                 ACE_Null_Mutex>;
-template class ACE_Equal_To <CORBA::ULong>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager_Ex <CORBA::ULong, TAO_Reply_Dispatcher *, ACE_Hash <CORBA::ULong>, ACE_Equal_To <CORBA::ULong>, ACE_Null_Mutex>
@@ -178,7 +177,5 @@ template class ACE_Equal_To <CORBA::ULong>;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Equal_To <CORBA::ULong>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
