@@ -17,16 +17,6 @@
     // Sun C++ 4.2 (and beyond) supports template specialization.
 #    define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
-
-    // ACE_HAS_EXCEPTIONS precludes -noex in
-    // include/makeinclude/platform_macros.GNU.  But beware, we have
-    // seen problems with exception handling on multiprocessor
-    // UltraSparcs:  threaded executables core dump when threads exit.
-    // This problem does not seem to appear on single-processor UltraSparcs.
-    // And, it is solved with the application of patch
-    //   104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
-    // to Sun C++ 4.2.
-#    define ACE_HAS_EXCEPTIONS
 #  endif
 #endif /* __SUNPRO_CC */
 
@@ -35,6 +25,20 @@
 // be sure that the #define of __ACE_INLINE__ below is not commented out.
 #  define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
+
+// ACE_HAS_EXCEPTIONS precludes -noex in
+// include/makeinclude/platform_macros.GNU.  But beware, we have
+// seen problems with exception handling on multiprocessor
+// UltraSparcs:  threaded executables core dump when threads exit.
+// This problem does not seem to appear on single-processor UltraSparcs.
+// And, it is solved with the application of patch
+//   104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
+// to Sun C++ 4.2.
+// To provide optimum performance, ACE_HAS_EXCEPTIONS is disabled by
+// default.  It can be enabled by adding "exceptions=1" to the "make"
+// invocation.  See include/makeinclude/platform_sunos5_sunc++.GNU
+// for details.
+// #define ACE_HAS_EXCEPTIONS
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
