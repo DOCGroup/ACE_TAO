@@ -102,7 +102,7 @@ Network_Handler::handle_input (ACE_HANDLE handle)
 
 int
 Network_Handler::handle_close (ACE_HANDLE handle,
-                               ACE_Reactor_Mask close_mask)
+                               ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Handler::handle_close handle = %d\n", handle));
 
@@ -184,7 +184,7 @@ Network_Listener::handle_input (ACE_HANDLE handle)
 
 int
 Network_Listener::handle_close (ACE_HANDLE handle,
-                                ACE_Reactor_Mask close_mask)
+                                ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Network_Listener::handle_close handle = %d\n", handle));
 
@@ -194,7 +194,7 @@ Network_Listener::handle_close (ACE_HANDLE handle,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Network_Listener listener;
 

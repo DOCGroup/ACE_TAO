@@ -63,7 +63,7 @@ Event_Handler::~Event_Handler (void)
 }
 
 int
-Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ::FindNextChangeNotification (this->handle_);
   if (stop_test)
@@ -72,8 +72,8 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Event_Handler::handle_close (ACE_HANDLE handle,
-                             ACE_Reactor_Mask close_mask)
+Event_Handler::handle_close (ACE_HANDLE,
+                             ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   ::FindCloseChangeNotification (this->handle_);
@@ -100,7 +100,7 @@ worker (void)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Reactor reactor;
   Event_Handler handler (reactor);

@@ -1,3 +1,15 @@
+Tue Apr 23 10:03:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Makefile.bor:
+          Added WFMO_Reactor directory
+
+        * examples/Reactor/WFMO_Reactor/Makefile.bor:
+          Added this BCB makefile
+
+        * examples/Reactor/WFMO_Reactor/*.cpp
+          Fixed several unused argument warnings that appeared with bcb.
+          Made all files compiling when doing a wchar build.
+
 Tue Apr 23 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Base_Thread_Adapter.h:

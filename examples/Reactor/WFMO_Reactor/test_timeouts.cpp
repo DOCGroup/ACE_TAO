@@ -54,7 +54,7 @@ private:
 };
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Timeout_Handler handler;
 

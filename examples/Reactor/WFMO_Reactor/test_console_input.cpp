@@ -42,7 +42,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 }
 
 int
-Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
+Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TCHAR buffer[BUFSIZ];
   int result = ACE_OS::read (ACE_STDIN, buffer, sizeof buffer);
@@ -63,15 +63,15 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Event_Handler::handle_close (ACE_HANDLE handle,
-                             ACE_Reactor_Mask close_mask)
+Event_Handler::handle_close (ACE_HANDLE,
+                             ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Event_Handler removed from Reactor\n"));
   return 0;
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Reactor reactor;
   Event_Handler handler (reactor);

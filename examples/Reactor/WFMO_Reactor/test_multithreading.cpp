@@ -51,9 +51,9 @@ print_usage_and_die (void)
 
 // Parse the command-line arguments and set options.
 static void
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:h:s:i:e:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:h:s:i:e:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -149,7 +149,7 @@ Task_Handler::~Task_Handler (void)
 
 
 int
-Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
+Task_Handler::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 {
   // When signaled, print message, remove self, and add self
   // This will force Reactor to update its internal handle tables
@@ -174,7 +174,7 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 
 int
 Task_Handler::handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask)
+                            ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %d\n",
               handle));
@@ -182,7 +182,7 @@ Task_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-Task_Handler::handle_timeout (const ACE_Time_Value &tv,
+Task_Handler::handle_timeout (const ACE_Time_Value &,
                               const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n",
@@ -197,7 +197,7 @@ Task_Handler::signal (size_t index)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   parse_args (argc, argv);
   Task_Handler task (number_of_handles,
