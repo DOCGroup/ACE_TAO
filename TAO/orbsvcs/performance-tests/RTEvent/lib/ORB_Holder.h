@@ -28,7 +28,7 @@ public:
   /// Constructor
   ORB_Holder (int &argc, char *argv[],
               const char *orb_id = 0
-              ACE_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Destructor
   /**

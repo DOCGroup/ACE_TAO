@@ -47,6 +47,8 @@ Send_Task::stop (void)
 int
 Send_Task::svc (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   if (this->barrier_ == 0)
     return -1;
 
