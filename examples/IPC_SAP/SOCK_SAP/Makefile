@@ -15,11 +15,13 @@ BIN   = CPP-inclient \
 	CPP-inserver \
 	CPP-inserver-fancy \
 	CPP-inserver-poll \
+	CPP-memclinet \
+	CPP-memserver \
 	CPP-unserver \
 	FD-unclient \
 	FD-unserver \
 	C-inclient \
-	C-inserver 
+	C-inserver
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 
