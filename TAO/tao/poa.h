@@ -56,7 +56,8 @@ class TAO_POA_Manager;
 class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
 {
 public:
-  TAO_Thread_Policy (PortableServer::ThreadPolicyValue value);
+  TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
+                     PortableServer::POA_ptr poa);
 
   TAO_Thread_Policy (const TAO_Thread_Policy &new_policy);
 
@@ -66,14 +67,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::ThreadPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Lifespan_Policy : public POA_PortableServer::LifespanPolicy
 {
 public:
-  TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value);
+  TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue value,
+                       PortableServer::POA_ptr poa);
 
   TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs);
 
@@ -83,14 +89,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::LifespanPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Id_Uniqueness_Policy : public POA_PortableServer::IdUniquenessPolicy
 {
 public:
-  TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value);
+  TAO_Id_Uniqueness_Policy (PortableServer::IdUniquenessPolicyValue value,
+                            PortableServer::POA_ptr poa);
 
   TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs);
 
@@ -100,14 +111,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::IdUniquenessPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Id_Assignment_Policy : public POA_PortableServer::IdAssignmentPolicy
 {
 public:
-  TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value);
+  TAO_Id_Assignment_Policy (PortableServer::IdAssignmentPolicyValue value,
+                            PortableServer::POA_ptr poa);
 
   TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs);
 
@@ -117,14 +133,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::IdAssignmentPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Implicit_Activation_Policy : public POA_PortableServer::ImplicitActivationPolicy
 {
 public:
-  TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value);
+  TAO_Implicit_Activation_Policy (PortableServer::ImplicitActivationPolicyValue value,
+                                  PortableServer::POA_ptr poa);
 
   TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs);
 
@@ -134,14 +155,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::ImplicitActivationPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Servant_Retention_Policy : public POA_PortableServer::ServantRetentionPolicy
 {
 public:
-  TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value);
+  TAO_Servant_Retention_Policy (PortableServer::ServantRetentionPolicyValue value,
+                                PortableServer::POA_ptr poa);
 
   TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs);
 
@@ -151,14 +177,19 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::ServantRetentionPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_Request_Processing_Policy : public POA_PortableServer::RequestProcessingPolicy
 {
 public:
-  TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value);
+  TAO_Request_Processing_Policy (PortableServer::RequestProcessingPolicyValue value,
+                                 PortableServer::POA_ptr poa);
 
   TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs);
 
@@ -168,8 +199,12 @@ public:
 
   virtual void destroy (CORBA::Environment &env);
 
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);  
+
 protected:
   PortableServer::RequestProcessingPolicyValue value_;
+
+  PortableServer::POA_var poa_;
 };
 
 class TAO_Export TAO_POA_Policies
