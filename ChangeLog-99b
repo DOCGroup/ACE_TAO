@@ -1,28 +1,34 @@
+Fri May 21 12:56:38 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: fixed to
+          build without threads:  #ifdef ACE_MT_SAFE is insufficient.
+          Must also check if it is 0.
+
 Fri May 21 12:45:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Map_Manager.i:
-	  Fixed minor error in previous commit.  Thanks to Irfan for
-	  helping out with this.
+        * ace/Map_Manager.i:
+          Fixed minor error in previous commit.  Thanks to Irfan for
+          helping out with this.
 
 Fri May 21 11:27:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Map_Manager.h (class ACE_Map_Iterator_Base): Changed the
-	  ACE_Map_Manager reference to a pointer.  This way there is no
-	  problem in reinitializing <map_man_>, and hence the compiler
-	  will not have a problem in providing us a default assignment
-	  operator.  Thanks to Knut Johannessen <knutj@funcom.com> for
-	  pointing out this problem.
+        * ace/Map_Manager.h (class ACE_Map_Iterator_Base): Changed the
+          ACE_Map_Manager reference to a pointer.  This way there is no
+          problem in reinitializing <map_man_>, and hence the compiler
+          will not have a problem in providing us a default assignment
+          operator.  Thanks to Knut Johannessen <knutj@funcom.com> for
+          pointing out this problem.
 
-	* ace/Process: A nifty ACE::fork was added several months ago
-	  which offers the option to avoid zombies, but it is not used in
-	  ACE_Process::spawn.
+        * ace/Process: A nifty ACE::fork was added several months ago
+          which offers the option to avoid zombies, but it is not used in
+          ACE_Process::spawn.
 
-	  Mark L. Boriack <mboriack@sito.saic.com> provided patches which
-	  adds an <avoid_zombies_> data member to ACE_Process_Options,
-	  appropriate accessor functions, and changes the ACE_OS::fork
-	  call to ACE::fork in ACE_Process::spawn, making use of the
-	  option.  The default behavior is left unchanged, i.e., you get
-	  zombies.  Thanks Mark.
+          Mark L. Boriack <mboriack@sito.saic.com> provided patches which
+          adds an <avoid_zombies_> data member to ACE_Process_Options,
+          appropriate accessor functions, and changes the ACE_OS::fork
+          call to ACE::fork in ACE_Process::spawn, making use of the
+          option.  The default behavior is left unchanged, i.e., you get
+          zombies.  Thanks Mark.
 
 Fri May 21 10:34:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
