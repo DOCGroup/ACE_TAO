@@ -36,7 +36,7 @@ class JAWS_Asynch_IO_Handler_Factory;
 class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 
-class JAWS_Abstract_IO_Handler
+class JAWS_Export JAWS_Abstract_IO_Handler
   // = TITLE
   //
   //     This class defines the abstract interface for an I/O handler
@@ -121,7 +121,7 @@ public:
 
 };
 
-class JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
+class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
@@ -178,7 +178,7 @@ protected:
   // The reference to the handler's factory.
 };
 
-class JAWS_IO_Handler_Factory
+class JAWS_Export JAWS_IO_Handler_Factory
 #if defined (ACE_WIN32)
  : public ACE_Service_Handler
 #endif
@@ -196,7 +196,7 @@ public:
   // the protocol
 };
 
-class JAWS_Synch_IO_Handler : protected JAWS_IO_Handler
+class JAWS_Export JAWS_Synch_IO_Handler : protected JAWS_IO_Handler
 {
 friend class JAWS_Synch_IO;
 friend class JAWS_Synch_IO_Handler_Factory;
@@ -207,7 +207,7 @@ public:
 
 };
 
-class JAWS_Synch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
+class JAWS_Export JAWS_Synch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
 public:
   JAWS_IO_Handler *create_io_handler (void);
@@ -225,7 +225,7 @@ typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 // This only works on Win32
 #if defined (ACE_WIN32)
 
-class JAWS_Asynch_Handler : public ACE_Handler
+class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler
 {
 public:
   JAWS_Asynch_Handler (JAWS_IO_Handler *);
@@ -258,7 +258,7 @@ private:
   JAWS_IO_Handler *ioh_;
 };
 
-class JAWS_Asynch_IO_Handler : protected JAWS_IO_Handler
+class JAWS_Export JAWS_Asynch_IO_Handler : protected JAWS_IO_Handler
 {
 friend class JAWS_Asynch_IO;
 friend class JAWS_Asynch_IO_Handler_Factory;
@@ -273,7 +273,7 @@ private:
   JAWS_Asynch_Handler handler_;
 };
 
-class JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
+class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
 public:
   JAWS_IO_Handler *create_io_handler (void);

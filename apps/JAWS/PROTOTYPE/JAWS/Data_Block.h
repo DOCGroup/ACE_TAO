@@ -14,7 +14,7 @@ class JAWS_Dispatch_Policy;
 class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 
-class JAWS_Data_Block : public ACE_Message_Block
+class JAWS_Export JAWS_Data_Block : public ACE_Message_Block
 // = TITLE
 //   Defines the communication unit between pipeline components
 {
