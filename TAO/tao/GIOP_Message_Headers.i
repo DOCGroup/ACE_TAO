@@ -1,10 +1,12 @@
+// -*- C++ -*-
 //$Id$
 
 ACE_INLINE
 TAO_GIOP_Locate_Request_Header::TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg)
   : request_id_ (0),
-    addressing_disposition_ (0),
-    target_address_ (),
+    object_key_ (),
+    profile_ (),
+    addr_info_ (),
     incoming_ (&msg)
 {
 }
@@ -21,30 +23,31 @@ TAO_GIOP_Locate_Request_Header::request_id (void)
   return this->request_id_;
 }
 
-ACE_INLINE void
-TAO_GIOP_Locate_Request_Header::addressing_disposition (CORBA::Short
-                                                      add)
+ACE_INLINE const TAO_ObjectKey &
+TAO_GIOP_Locate_Request_Header::object_key (void) const
 {
-  this->addressing_disposition_ = add;
+  return object_key_;
 }
 
-ACE_INLINE CORBA::Short
-TAO_GIOP_Locate_Request_Header::addressing_disposition (void)
+ACE_INLINE TAO_ObjectKey &
+TAO_GIOP_Locate_Request_Header::object_key (void)
 {
-  return this->addressing_disposition_;
+  return this->object_key_;
 }
 
-ACE_INLINE const GIOP::TargetAddress &
-TAO_GIOP_Locate_Request_Header::target_address (void) const
+ACE_INLINE IOP::TaggedProfile&
+TAO_GIOP_Locate_Request_Header::tagged_profile (void)
 {
-  return this->target_address_;
+  return this->profile_;
 }
 
-ACE_INLINE GIOP::TargetAddress &
-TAO_GIOP_Locate_Request_Header::target_address (void)
+
+ACE_INLINE GIOP::IORAddressingInfo &
+TAO_GIOP_Locate_Request_Header::addressing_info (void)
 {
-  return this->target_address_;
+  return this->addr_info_;
 }
+
 
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Header::incoming_stream (void)
@@ -52,11 +55,3 @@ TAO_GIOP_Locate_Request_Header::incoming_stream (void)
   return *this->incoming_;
 }
 
-/*TAO_ObjectKey &
-TAO_GIOP_Locate_Request_Header::object_key_ref (void)
-{
-  // Not a good idea, need to check here..
-  return this->target_address_.object_key ();
-  // For the rest do the checeks here
-}
-*/

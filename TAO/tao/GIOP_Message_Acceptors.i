@@ -70,10 +70,16 @@ set_state (CORBA::Octet def_major,
       switch (def_minor)
         {
         case 0:
-          this->accept_state_ = &this->implementations_.version_10;
+          this->accept_state_ = 
+            &this->implementations_.version_10;
           break;
         case 1:
-          this->accept_state_ = &this->implementations_.version_11;
+          this->accept_state_ = 
+            &this->implementations_.version_11;
+          break;
+        case 2:
+          this->accept_state_ = 
+            &this->implementations_.version_12;
           break;
         default:
           break;

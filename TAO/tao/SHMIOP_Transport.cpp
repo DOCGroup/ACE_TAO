@@ -136,6 +136,7 @@ TAO_SHMIOP_Client_Transport::
 
 TAO_SHMIOP_Client_Transport::~TAO_SHMIOP_Client_Transport (void)
 {
+  delete this->client_mesg_factory_;
 }
 
 TAO_SHMIOP_Client_Connection_Handler *
@@ -333,10 +334,15 @@ TAO_SHMIOP_Client_Transport::messaging_init (CORBA::Octet major,
                                0);
               break;
             case 1:
-          ACE_NEW_RETURN  (this->client_mesg_factory_,
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
                            TAO_GIOP_Message_Connector_11,
                            0);
-          break;
+              break;
+            case 2:
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_12,
+                               0);
+              break;
             default:
               if (TAO_debug_level > 0)
                 {

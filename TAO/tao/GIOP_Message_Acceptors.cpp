@@ -342,14 +342,14 @@ TAO_GIOP_Message_Acceptors::
 #if (TAO_NO_IOR_TABLE == 0)
 
       const CORBA::Octet *object_key =
-        locate_request.target_address ().object_key ().get_buffer ();
+        locate_request.object_key ().get_buffer ();
 
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         {
           CORBA::ULong len =
-            locate_request.target_address ().object_key ().length ();
+            locate_request.object_key ().length ();
 
           ACE_CString object_id (ACE_reinterpret_cast (const char *,
                                                        object_key),
@@ -395,9 +395,9 @@ TAO_GIOP_Message_Acceptors::
 
       // This could be tricky if the target_address does not have the
       // object key. Till then .. Bala
-      TAO_ObjectKey tmp_key (locate_request.target_address ().object_key ().length (),
-                             locate_request.target_address ().object_key ().length (),
-                             locate_request.target_address ().object_key ().get_buffer (),
+      TAO_ObjectKey tmp_key (locate_request.object_key ().length (),
+                             locate_request.object_key ().length (),
+                             locate_request.object_key ().get_buffer (),
                              0);
 
       // Set it to an error state

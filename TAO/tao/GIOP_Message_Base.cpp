@@ -349,8 +349,17 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
           ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
           // @@ Only works if ServiceContextList is empty....
-          id = ACE_reinterpret_cast (CORBA::ULong *,
-                                     (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4));
+          if (this->minor_version () < 2)
+            {
+              id = ACE_reinterpret_cast (CORBA::ULong *,
+                                         (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4));
+
+            }
+          else
+            {
+              id = ACE_reinterpret_cast (CORBA::ULong *,
+                                         (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN));
+            }
         }
 
       // Print.
