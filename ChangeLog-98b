@@ -1,29 +1,34 @@
+Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Svc_Handler.cpp (new): cleaned up the ACE_ASSERT check
+          for ACE_Dynamic::instance () not being null.
+
 Thu Sep 17 09:23:01 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* ace/FIFO_Send_Msg.cpp: 
-	  Fixed variable declaration, "struct ACE_IO_Vector_Base" is not
-	  the same as "ACE_IO_Vector_Base".
+        * ace/FIFO_Send_Msg.cpp:
+          Fixed variable declaration, "struct ACE_IO_Vector_Base" is not
+          the same as "ACE_IO_Vector_Base".
 
-	* ace/OS.i: 
-	  Fixed the ACE_OS::rand_r() signature for Win32.
+        * ace/OS.i:
+          Fixed the ACE_OS::rand_r() signature for Win32.
 
-	* ace/SOCK_Dgram_Mcast.cpp: 
-	  Fixed some problems with the Win32 implementation of
-	  unsubscribe().
+        * ace/SOCK_Dgram_Mcast.cpp:
+          Fixed some problems with the Win32 implementation of
+          unsubscribe().
 
 Thu Sep 17 08:41:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_malloc.cpp: 
-	  Fixed soem problems with my changes to rand_r()
+        * examples/Shared_Malloc/test_malloc.cpp:
+          Fixed soem problems with my changes to rand_r()
 
-	* ace/Containers.i: 
-	  Resurrected this file to avoid problems with dependencies in
-	  TAO.
+        * ace/Containers.i:
+          Resurrected this file to avoid problems with dependencies in
+          TAO.
 
 Thu Sep 17 08:41:24 1998  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_gcc.GNU: Added -L. to LDFLAGS.
-	  Thanks to Anne Blankert <anne@geodan.nl> for this fix.
+        * include/makeinclude/platform_hpux_gcc.GNU: Added -L. to LDFLAGS.
+          Thanks to Anne Blankert <anne@geodan.nl> for this fix.
 
 Thu Sep 17 07:31:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
