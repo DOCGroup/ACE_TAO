@@ -80,13 +80,16 @@ ifndef TAO_ORBSVCS
       endif #interceptors
     endif #ami
 
-
     TAO_ORBSVCS += ImplRepo
 
   endif # minimum_corba
 
   ifeq ($(ssl),1)
-    TAO_ORBSVCS += Security SSLIOP
+    ifeq ($(corba_messaging),1)
+      ifeq ($(interceptors),1)
+        TAO_ORBSVCS += Security SSLIOP
+      endif # interceptors
+      endif #corba_messaging
   endif # ssl
 
   TAO_ORBSVCS += Notify 

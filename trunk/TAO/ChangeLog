@@ -1,3 +1,8 @@
+Wed Dec 18 14:46:53 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS): Build SSL only when
+	  corba_messaging and interceptors are infact turned on.
+
 Wed Dec 18 08:22:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
