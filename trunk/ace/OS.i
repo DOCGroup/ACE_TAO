@@ -3310,7 +3310,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
     rw->ref_count_ = 0;
   else
     return -1; // @@ ACE_ASSERT (!"count should not be 0!\n");
-  
+
 
   int result;
   int error = 0;
@@ -3375,6 +3375,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   if (result != -1 || errno == EBUSY)
     ACE_OS::mutex_unlock (&rw->lock_);
 #else
+  ACE_UNUSED_ARG (rw);
   errno = EBUSY;
   return -1;
 #endif /* 0 */
