@@ -101,7 +101,7 @@ pace_dup (PACE_HANDLE fildes)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 PACE_HANDLE
-pace_dup2 (PACE_HANDLE fildes, int fildes2)
+pace_dup2 (PACE_HANDLE fildes, PACE_HANDLE fildes2)
 {
   PACE_HANDLE retval = (void*)0;
   PACE_UNUSED_ARG (fildes);
