@@ -119,6 +119,10 @@
 // Default size of the ACE Map_Manager.
 #define ACE_DEFAULT_MAP_SIZE 1024
 
+// Defaults for ACE Timer Wheel
+#define ACE_DEFAULT_TIMER_WHEEL_SIZE 1024
+#define ACE_DEFAULT_TIMER_WHEEL_RESOLUTION 1000
+
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
