@@ -448,12 +448,6 @@ public:
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
-  // = New Things from the POA Specification
-  //
-  // Of all of these operations, only <run> is currently implemented.
-  // Others require clarification of design or more implementation
-  // than is currently available.
-
   CORBA::Boolean work_pending (void);
   // Returns an indication of whether the ORB needs to perform some
   // work.
