@@ -103,13 +103,17 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               //              *os << bt->name () << "_ptr retval;"; // callee
               //              allocates
-              // some stupid problems arising out of casting to the bt->name type
-              *os << "CORBA::Object_ptr retval;" << nl; // callee allocates
+              // some stupid problems arising out of casting to the
+	      // bt->name type
+
+	      // @@ Andy: this is the fix for the objref value...
+              *os << "CORBA::Object_ptr *retval ="
+		" new CORBA::Object_ptr;" << nl;
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
-              *os << "retval"; // assign to retval
+              *os << "*retval"; // assign to retval
             }
             break;
           case TAO_CodeGen::TAO_OPERATION_CH:
@@ -547,11 +551,14 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             break;
           case TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS:
             {
+#if 0
+	      // @@ Andy: this is the fix for the objref value...
               if (type->size_type () == be_decl::VARIABLE)
                 {
                   *os << "retval";
                 }
               else
+#endif
                 {
                   *os << "*retval";
                 }

@@ -648,6 +648,8 @@ be_operation::gen_server_skeletons (void)
       // not a void type
       switch (rt->node_type ())
         {
+#if 0
+	  // @ Andy: this is the fix for the objref OUT params
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
           {
@@ -656,6 +658,7 @@ be_operation::gen_server_skeletons (void)
             *ss << "_tao_server_request.result (result, _tao_environment);" << nl;
           }
           break;
+#endif
         default:
           {
             *ss << "result = new CORBA::Any (" << rt->tc_name () <<
