@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 
@@ -18,9 +17,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_module.h"
 
@@ -76,7 +75,7 @@ be_visitor_module_sh::visit_module (be_module *node)
         }
 
       os->decr_indent ();
-      *os << "};\n\n";
+      *os << "}\nTAO_NAMESPACE_CLOSE\n\n";
     }
   return 0;
 

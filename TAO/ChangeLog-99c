@@ -1,7 +1,21 @@
+Thu Aug 12 20:55:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/orbconf.h: added TAO_NAMESPACE_CLOSE.  It must now
+          be used with TAO_NAMESPACE.  Removed trailing ; from
+          TAO_NAMESPACE_END with ACE_HAS_USING_KEYWORD. [Bug 218]
+
+        * TAO_IDL/be/be_visitor_module/module_ch.cpp,
+          TAO_IDL/be/be_visitor_module/module_sh.cpp,
+          TAO_IDL/be/be_visitor_valuetype/obv_module.cpp,
+          tao/CONV_FRAME[CS].h,tao/IO[PR][CS].h,
+          tao/Messaging[CS].h,tao/POA[CS].h,tao/PollableS.h,
+          tao/TimeBaseC.h,tao/corbafwd.h: added TAO_NAMESPACE_CLOSE
+          corresponding to each TAO_NAMESPACE.
+
 Thu Aug 12 20:50:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Makefile:
-	  Added missing '\'
+        * Makefile:
+          Added missing '\'
 
 Thu Aug 12 19:54:19 1999  David L. Levine  <levine@cs.wustl.edu>
 

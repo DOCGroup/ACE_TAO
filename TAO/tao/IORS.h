@@ -195,7 +195,8 @@ TAO_NAMESPACE  POA_TAO_IOP
     TAO_IOR_Manipulation_ptr servant_;
   };
 
-};
+}
+TAO_NAMESPACE_CLOSE
 
 #endif /* end #if !defined */
 

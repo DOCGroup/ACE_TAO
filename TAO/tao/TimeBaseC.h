@@ -128,7 +128,8 @@ TAO_NAMESPACE  TimeBase
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IntervalT;
 
 
-}; // module TimeBase
+}
+TAO_NAMESPACE_CLOSE // module TimeBase
 
 void TAO_Export operator<<= (CORBA::Any &, const TimeBase::UtcT &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, TimeBase::UtcT*); // noncopying version

@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 // ================================================================
@@ -33,7 +32,8 @@
 
 TAO_NAMESPACE  POA_CONV_FRAME
 {
-};
+}
+TAO_NAMESPACE_CLOSE
 
 #include "CONV_FRAMES_T.h"
 
