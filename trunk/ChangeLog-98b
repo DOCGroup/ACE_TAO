@@ -1,3 +1,7 @@
+Wed Jul 22 15:39:38 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/config-sunos5.6-sunc++-4.x.h: Defined ACE_HAS_AIO_CALLS.
+
 Wed Jul 22 11:45:44 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * tests/Aio_Platform_Test.cpp: Added <aio_> calls test for
