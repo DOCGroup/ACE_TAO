@@ -1,3 +1,17 @@
+Mon Jul 22 21:42:20 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          The recent change to the regular expression for string literals
+          in the TAO IDL compiler lexer has caused the SunCC preprocessor
+          to leave an extra char at the end. The action code for string
+          literals was changed to chop off one extra char only if __SUNPRO_CC
+          is defined. Thanks to Marvin Wolfthal <maw@weichi.com> and
+          Jaiganesh Balasubramanian <jai@doc.ece.uci.edu> for reporting
+          the problem with string constants when some version of SunCC
+          is used.
+
 Mon Jul 22 17:46:19 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h
