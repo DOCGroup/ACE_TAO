@@ -15,7 +15,7 @@ Simple_Server_i::test_method (CORBA::Long x,
                               Structure_out the_out_structure,
                               char *&name,
                               CORBA::Environment&)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Structure *tmp;
   ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
@@ -57,7 +57,7 @@ Simple_Server_i::raise_system_exception (CORBA::Environment &ACE_TRY_ENV)
 
 void
 Simple_Server_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }

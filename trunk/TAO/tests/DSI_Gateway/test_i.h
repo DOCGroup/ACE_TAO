@@ -36,7 +36,7 @@ public:
                            Structure_out the_out_structure,
                            char *&name,
                            CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void raise_user_exception (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -46,7 +46,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
