@@ -6,16 +6,17 @@ Tue Oct 28 12:39:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  warning. The fix is to use .in () on a Typecode_var while
 	  passing the pointer to another object.
 
-Tue Oct 28 12:02:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+Tue Oct 28 12:02:47 2003  Balachandran Natarajan <bala@dre.vanderbilt.edu>
+                          Jeff Parssons  <parsons@dre.vanderbilt.edu>
 
-	This checkin is the revamping of the invocation code path
+	This checkin is aimed at revamping the invocation code path
 	including the generated code. The design is outlined in the
         bugzilla. Please see 
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1369
 
 	This checkin only concentrates on the stub path. During the work
-	we tried addressing the following problems
+	we tried addressing the following additional problems
 
 	- Header inclusions. Now IDL compiler generates just enough
 	  headers for the applications. There is no need to include
@@ -38,7 +39,7 @@ Tue Oct 28 12:02:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  skeleton side. 
 
 	More gory details of the changes can be found in
-	$TAO_ROOT/ChangeLogs/ChangeLog-03d. The doucmentation for all the
+	$TAO_ROOT/ChangeLogs/ChangeLog-03d. The documentation for all the
 	new interfaces are not complete yet. We will do them as we
 	cleanup the scoreboard.
 
