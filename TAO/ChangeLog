@@ -1,3 +1,8 @@
+Mon Dec  1 18:13:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Removed template files, they don't need to build on their own
+
 Mon Dec  1 11:27:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTScheduling/VoidData/test_client.cpp (main):
