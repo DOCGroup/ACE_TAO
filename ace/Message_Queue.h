@@ -249,10 +249,10 @@ protected:
   size_t enqueue_waiters_;
   // Number of threads waiting to enqueue a <Message_Block>.
 #else
-  ACE_SYNCH_CONDITION_T notempty_cond_;
+  ACE_SYNCH_CONDITION_T not_empty_cond_;
   // Used to make threads sleep until the queue is no longer empty.
 
-  ACE_SYNCH_CONDITION_T notfull_cond_;
+  ACE_SYNCH_CONDITION_T not_full_cond_;
   // Used to make threads sleep until the queue is no longer full.
 #endif /* ACE_LACKS_COND_T */
 };
