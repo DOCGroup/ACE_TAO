@@ -77,15 +77,20 @@ TAO_DIOP_Transport::send_i (iovec *iov, int iovcnt,
                             const ACE_Time_Value *)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
+
+  ssize_t bytes_to_send = 0;
+  for (int i = 0; i < iovcnt; i++)
+     bytes_to_send += iov[i].iov_len;
+
   ssize_t retval = this->connection_handler_->dgram ().send (iov,
                                                              iovcnt,
                                                              addr);
-  if (retval > 0)
-    bytes_transferred = retval;
-
   // @@ Michael:
   // Always return a positive number of bytes sent, as we do
   // not handle sending errors in DIOP.
+
+  bytes_transferred = bytes_to_send;
+
   return 1;
 }
 
