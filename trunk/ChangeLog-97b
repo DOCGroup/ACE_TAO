@@ -13,6 +13,11 @@ Thu Sep 04 08:48:13 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/Threads/thread_specific.cpp (worker): use
 	  ACE_OS::printf () instead of printf (), and print out the
 	  ACE_hthread_t instead of the ACE_thread_t.
+
+	* examples/IPC_SAP/SPIPE_SAP/client.cpp,consumer_msg.cpp,
+	  consumer_read.cpp,producer_msg.cpp,producer_read.cpp,server.cpp:
+	  moved #include of shared.h inside ACE_HAS_STREAM_PIPES protection
+	  to avoid compilation warnings on unsupported platforms.
 	
 	* examples/Reactor/Ntalker/ntalker.cpp (main): removed unused "argc".
 
