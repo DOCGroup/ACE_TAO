@@ -1,3 +1,9 @@
+Mon Jan 28 12:30:38 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  The code was generating a TAO_ENV_ARG_PARAMETER in the header
+	  file.  BIG mistake, I should have generated a TAO_ENV_ARG_DECL.
+
 Mon Jan 28 14:25:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.dsp:
@@ -75,7 +81,7 @@ Mon Jan 28 12:23:39 2002  Carlos O'Ryan  <coryan@uci.edu>
 	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
 	  Removed extra argument in the generate_shared_section() helper,
 	  the argument is no longer needed.
-	  
+
 
 	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
 	  Fixed problem in UTL_ScopeActiveIterator, a bogus si.next() was
