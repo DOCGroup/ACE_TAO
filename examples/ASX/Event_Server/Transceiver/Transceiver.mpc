@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*) : acelib {
-  sharedname = Transceiver
-  Source_Files {
-    transceiver.cpp
-  }
-}
