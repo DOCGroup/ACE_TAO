@@ -1,3 +1,9 @@
+Tue Jun 27 11:11:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp: Remove more output which triggers false fails
+          in test scripts. Thanks to David Levine for his patience and help
+          with this.
+
 Tue Jun 27 09:23:01 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
