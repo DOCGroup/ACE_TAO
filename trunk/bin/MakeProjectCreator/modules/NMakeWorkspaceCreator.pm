@@ -56,23 +56,30 @@ sub write_project_targets {
   foreach my $project (@$list) {
     my($dir)    = dirname($project);
     my($chdir)  = 0;
-    my($back)   = 1;
+    my($back)   = '';
 
     ## If the directory isn't '.' then we need
     ## to figure out how to get back to our starting point
     if ($dir ne '.') {
       $chdir = 1;
+      my($count)  = 0;
       my($length) = length($dir);
       for(my $i = 0; $i < $length; $i++) {
         if (substr($dir, $i, 1) eq '/') {
-          $back++;
+          $count++;
         }
+      }
+      if ($dir =~ /^\.\.\//) {
+        $back = ('../' x $count) . basename($self->getcwd());
+      }
+      else {
+        $back = ('../' x ($count + 1));
       }
     }
 
     print $fh ($chdir ? "\tcd $dir$crlf" : '') .
               "\t\$(MAKE) /f " . basename($project) . " $target$crlf" .
-              ($chdir ? "\tcd " . ('../' x $back) . $crlf : '');
+              ($chdir ? "\tcd $back$crlf" : '');
   }
 }
 
