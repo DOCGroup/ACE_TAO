@@ -1,3 +1,10 @@
+Mon Feb 26 06:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tao/Asynch_Reply_Dispatcher.cpp:
+          Compilers were complaining about a unused argument. I fixed it
+          by removing the name of the argument; this should take care of it.
+          Thanks to Bala for pointing that out.
+
 Mon Feb 26 03:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tao/Asynch_Timeout_Handler.cpp:
