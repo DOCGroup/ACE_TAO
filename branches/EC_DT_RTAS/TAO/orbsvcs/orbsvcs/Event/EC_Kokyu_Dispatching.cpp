@@ -124,7 +124,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() ENTER\n"));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() ENTER\n"));
 
   if (this->dispatcher_.get () == 0)
     this->setup_lanes ();
@@ -142,47 +142,66 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                          consumer,
                                          event, this->allocator_);
 
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info handle: %i\n",qos_info.rt_info));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info handle: %i\n",qos_info.rt_info));
   //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() Event type: %i\n",event[0].header.type));
 
   // Convert TAO_EC_QOS_Info to QoSDescriptor
   RtecScheduler::RT_Info *rt_info =
     this->scheduler_->get(qos_info.rt_info);
 
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info period: %i00nsec\n",
-             rt_info->period));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() RT_Info period: %i00nsec\n",rt_info->period));
 
   Kokyu::QoSDescriptor qosd;
   qosd.preemption_priority_ = rt_info->preemption_priority;
-  //TODO: Set QoSDescriptor period?
   //RT_Info period is in 100nsec, so convert to msec and set
   long msec_period = rt_info->period/10000; //1/10000 msec per nsec
   qosd.period_.msec(msec_period);
   qosd.deadline_.msec(msec_period); //assume deadline same as period
   qosd.deadline_ += ACE_OS::gettimeofday(); //deadline should be absolute!
+  if (event.length() > 0) {
+    //Not sure what the task_id is for, but we'll treat it as the event
+    //type.  Unfortunately, we can only handle one type, but I don't
+    //think the EC handles more than one anyway, so it should be OK.
+    qosd.task_id_ = event[0].header.type;
+  } //else we have nothing to set the task_id_ from; hopefully the consumer ignores empty event sets!
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
+  //Ugh, trivial and ugly conversion between RtecScheduler and Kokyu enums
+  switch (rt_info->importance)
+    {
+    case RtecScheduler::VERY_LOW_IMPORTANCE:
+      qosd.importance_ = Kokyu::VERY_LOW_IMPORTANCE;
+      break;
+    case RtecScheduler::LOW_IMPORTANCE:
+      qosd.importance_ = Kokyu::LOW_IMPORTANCE;
+      break;
+    case RtecScheduler::MEDIUM_IMPORTANCE:
+      qosd.importance_ = Kokyu::MEDIUM_IMPORTANCE;
+      break;
+    case RtecScheduler::HIGH_IMPORTANCE:
+      qosd.importance_ = Kokyu::HIGH_IMPORTANCE;
+      break;
+    case RtecScheduler::VERY_HIGH_IMPORTANCE:
+      qosd.importance_ = Kokyu::VERY_HIGH_IMPORTANCE;
+      break;
+    }
 
   //set event deadlines!
   for(CORBA::ULong i=0; i<event.length(); ++i)
     {
       ORBSVCS_Time::Time_Value_to_TimeT(event[i].header.deadline,
                                         qosd.deadline_);
-      ACE_DEBUG((LM_DEBUG,"EC_Kokyu_Dispatching (%P|%t) push_nocopy() Event[%d] deadline is %i\n",i,event[i].header.deadline));
+      //ACE_DEBUG((LM_DEBUG,"EC_Kokyu_Dispatching (%P|%t) push_nocopy() Event[%d] deadline is %i\n",i,event[i].header.deadline));
     }
 
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor period: %isec %iusec\n",
-             qosd.period_.sec(),
-             qosd.period_.usec()));
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor deadline: %isec %iusec\n",
-             qosd.deadline_.sec(),
-             qosd.deadline_.usec()));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor period: %isec %iusec\n",qosd.period_.sec(),qosd.period_.usec()));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_nocopy() QoSDescriptor deadline: %isec %iusec\n",qosd.deadline_.sec(),qosd.deadline_.usec()));
 
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() before dispatcher->dispatch()\n"));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() before dispatcher->dispatch()\n"));
   this->dispatcher_->dispatch(cmd,qosd);
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() after dispatcher->dispatch()\n"));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() after dispatcher->dispatch()\n"));
 
-  ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() LEAVE\n"));
+  //ACE_DEBUG((LM_DEBUG, "EC_Kokyu_Dispatching (%P|%t) push_no_copy() LEAVE\n"));
 }
 
 // ****************************************************************
