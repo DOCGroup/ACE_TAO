@@ -198,11 +198,13 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 
   this->allocator_ = alloc;
 
-  // If we need to grow buffer, then remove the existing buffer.
-  if (this->total_size_ < size)
-    return this->resize_i (size);
-  else
-    return 0;
+  // This assertion is here to help track a situation that shouldn't happen
+  ACE_ASSERT (size != 0);
+
+  // Calling this->close_i () to ensure we release previous allocated
+  // memory before allocating new one.
+  this->close_i ();
+  return this->resize_i (size);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
