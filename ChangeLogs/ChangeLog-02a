@@ -1,5 +1,23 @@
 Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Makefile: Refactored some stuff to improve the
+	  ACE subsetting as follows:
+  
+          . Moved Malloc_Instantiations.cpp from libACEUtils to the
+	    component libACE_Memory.
+
+	  . Moved Handle_Set.* to libACE_Utils to satisfy ACE.*
+
+	  . Moved Dynamic_Service_Base to libACE_Svcconf
+
+	  . Build a new component libACE_Timer with :
+	    Timer_Wheel.*,Timer_Queue.*,Timer_List.*,Timer_Heap.*,Timer_Hash.*
+	    Timeprobe.* Time_Request_Reply.* System_Time.* Profile_Timer.*
+	    High_Res_Timer.* 
+  
+          Thanks to Thomas Groth <groth.th@nord-com.net> for these
+ 	  suggestions.
+	
 	* docs/ACE-guidelines.html: Updated the discussion of using
 	  open() rather than constructors.  Thanks to Stan Pinte
  	  <spinte@latinia.com> for motivating this.

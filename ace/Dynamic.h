@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_DYNAMIC_H
 #define ACE_DYNAMIC_H
 #include "ace/pre.h"

@@ -1,3 +1,13 @@
+Tue Apr 24 17:51:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/tutorials/Quoter/On_Demand_Activation/index.html: Fixed a 
+	  couple of misplaced links.  Thanks to Edan Ayal
+ 	  <edanayal@yahoo.com> for reporting this.
+	
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_i.cpp (get_stock): 
+	  Renamed two misleading local variables named liked members.
+  	  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting this.
+
 Tue Apr 24 15:38:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/GIOP_Message_Base.cpp:
