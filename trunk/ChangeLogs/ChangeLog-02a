@@ -1,5 +1,12 @@
 Sat Feb  2 07:45:51 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Select_Reactor_T.cpp: Fixed work_pending() so that it takes
+	  into account pending timers that need to be expired.  Thanks to
+ 	  Russ Noseworthy for reporting this.
+	
+	* ace/Select_Reactor_T.cpp: Simplified the logic for calculating
+	  timeouts in wait_for_multiple_events().
+
 	* ace/Process.{h,i,cpp}: When using ACE_Process_Options with the
 	  inherit_environment set to off, i.e., ACE_Process_Options opts
  	  (0), ACE_Process::spawn() was improperly setting the environment
