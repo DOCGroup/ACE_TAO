@@ -1,3 +1,42 @@
+Tue Aug 17 15:48:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        
+          Changed the logic of the check for 'mixed parentage'
+          (abstract & concrete) in an interface, to return true not
+          only if an interface has an immediate abstract parent (as
+          before) but also if there is an abstract interface 
+          anywhere in its ancestry. This is necessary for skeletons-side
+          code generation, since abstract interfaces have no operations
+          generated on the skeleton side for children to inherit, the
+          operations must be regenerated in each child.
+          
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_ss.cpp:
+        
+          For the gen_abstract_ops_helper() static method in each of the
+          above visitors, changed the logic to do nothing unless the
+          base interface passed to the method is abstract. The check
+          has been moved here from its former location in the method
+          call so operations inherited from distance abstract ancestors
+          can be found and regenerated. Thanks to Markus Stenberg
+          <markus.stenberg@conformiq.com> for sending in an example that
+          uncovered the bug.
+        
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:       
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be_include/be_valuetype.h:
+        
+          Removed unused code.
+
 Tue Aug 17 11:40:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root.cpp:

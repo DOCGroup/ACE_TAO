@@ -134,12 +134,6 @@ public:
   // Helper method passed to the template method to generate code for
   // adding abstract supported interfaces to the inheritance list.
 
-  static int gen_abstract_init_helper (be_interface *node,
-                                       be_interface *base,
-                                       TAO_OutStream *os);
-  // Helper method to initialize the val_ member of the generated
-  // C++ class for each abstract interface that we support.
-
   static int gen_skel_helper (be_interface *node,
                               be_interface *base,
                               TAO_OutStream *os);

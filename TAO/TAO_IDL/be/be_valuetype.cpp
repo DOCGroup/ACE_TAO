@@ -755,7 +755,7 @@ be_valuetype::traverse_supports_list_graphs (
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_valuetype::"
-                             "traverse_supports_graph_list - "
+                             "traverse_supports_list_graphs - "
                              "error generating entries\n"),
                             -1);
         }
@@ -809,29 +809,7 @@ be_valuetype::abstract_supports_helper (be_interface *,
   *os << "," << be_nl
       << "public virtual "
       << base->name ();
-/*
-  if (base->is_nested ())
-    {
-      UTL_Scope *parent_scope = base->defined_in ();
-      AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
 
-      *os << "ACE_NESTED_CLASS ("
-          << parent_decl->name () << ", "
-          << base->local_name () << ")";
-    }
-  else
-    {
-      *os << base->local_name ();
-    }
-*/
-  return 0;
-}
-
-int
-be_valuetype::gen_abstract_init_helper (be_interface *,
-                                        be_interface *,
-                                        TAO_OutStream *)
-{
   return 0;
 }
 

@@ -116,10 +116,13 @@ be_visitor_interface::visit_scope (be_scope *node)
       return 0;
     }
 
+  // 'abstract_paths_only' arg is FALSE here because we want to traverse
+  // through concrete parents to get to all the abstract ones. The helper
+  // will do nothing unless the base interface passed to it is abstract.
   int status =
     intf->traverse_inheritance_graph (helper,
                                       this->ctx_->stream (),
-                                      I_TRUE);
+                                      I_FALSE);
 
   if (status == -1)
     {
