@@ -126,6 +126,9 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
+  size_t avail_chunks (const size_t size) const;
+  // Returns a count of the number of available chunks.
+
   ALLOCATOR &alloc (void);
   // Returns the underlying allocator.
 

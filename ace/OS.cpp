@@ -963,6 +963,26 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 #endif /* ACE_HAS_THREADS */
 }
 
+int
+ACE_OS::thr_win32_tls_table_lock (void)
+{
+#if defined (ACE_WIN32)
+  return ACE_TSS_Cleanup::lock_.acquire ();
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE_OS::thr_win32_tls_table_release (void)
+{
+#if defined (ACE_WIN32)
+  return ACE_TSS_Cleanup::lock_.release ();
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+}
+
 int 
 ACE_OS::thr_keycreate (ACE_thread_key_t *key, 
 		       void (*dest) (void *),
@@ -1239,3 +1259,10 @@ ACE_OS::socket_fini (void)
 int sys_nerr = ERRMAX + 1;
 
 #endif /* VXWORKS */
+
+#if !defined (ACE_HAS_SIGINFO_T)
+siginfo_t::siginfo_t (ACE_HANDLE handle)
+  : si_handle_ (handle) 
+{
+}
+#endif /* ACE_HAS_SIGINFO_T */

@@ -1774,7 +1774,13 @@ typedef LPCTSTR ACE_DL_TYPE;
 #endif /* ACE_HAS_CHARPTR_DL */
 
 #if !defined (ACE_HAS_SIGINFO_T)
-typedef int siginfo_t;
+struct siginfo_t
+{
+  siginfo_t (ACE_HANDLE handle);
+
+  ACE_HANDLE si_handle_;
+  // Win32 HANDLE that has become signaled.
+};
 #endif /* ACE_HAS_SIGINFO_T */
 
 #if !defined (ACE_HAS_UCONTEXT_T)
@@ -2182,7 +2188,7 @@ public:
   static long strtol (const char *s, char **ptr, int base);
 
 #if defined (ACE_HAS_UNICODE)
-  // = A set of wrappers for non-UNICODE string operations.
+  // = A set of wrappers for UNICODE string operations.
   static wchar_t *strcat (wchar_t *s, const wchar_t *t);
   static wchar_t *strchr (const wchar_t *s, int c);
   static wchar_t *strrchr (const wchar_t *s, int c);
@@ -2252,6 +2258,8 @@ public:
   static int thr_join (ACE_thread_t waiter_id, ACE_thread_t *thr_id, void **status); 
   static int thr_keyfree (ACE_thread_key_t key);
   static int thr_key_detach (void *inst);
+  static int thr_win32_tls_table_lock(void);
+  static int thr_win32_tls_table_release(void);
   static int thr_keycreate (ACE_thread_key_t *key, void (*dest)(void *), void *inst = 0);
   static int thr_key_used (ACE_thread_key_t key);
   static int thr_kill (ACE_thread_t thr_id, int signum);
