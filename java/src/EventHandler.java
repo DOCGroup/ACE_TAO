@@ -11,6 +11,8 @@
  *************************************************/
 package ACE.Reactor;
 
+import ACE.ASX.TimeValue;
+
 /**
  * <hr>
  * <h2>SYNOPSIS</h2>
