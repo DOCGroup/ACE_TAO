@@ -55,6 +55,9 @@ public:
             int protocol = 0,
             int reuse_addr = 0);
 
+  // = Meta-type info.
+  typedef ACE_INET_Addr PEER_ADDR;
+
   /// Dump the state of an object.
   void dump (void) const;
 

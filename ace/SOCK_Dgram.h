@@ -188,6 +188,9 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
+  // = Meta-type info.
+  typedef ACE_INET_Addr PEER_ADDR;
+
   /// Dump the state of an object.
   void dump (void) const;
 
