@@ -1,66 +1,72 @@
+Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_chorus_ghs.GNU: fixed location of
+          libedgenoe.a, so that a symlink in $(GHS_DIR) is no longer necessary.
+          Thanks to Steve Kay for reporting this.
+
 Tue Jan 12 08:44:11 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* ace/Acceptor.cpp (handle_close):
+        * ace/Acceptor.cpp (handle_close):
 
-	  Since the reactor_ data member is made private, we need to use
-	  its accessor method to retrieve it.
+          Since the reactor_ data member is made private, we need to use
+          its accessor method to retrieve it.
 
 Tue Jan 12 02:12:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_DES_NO_FREE,ACE_DES_FREE): These two macros
-	  shouldn't be treated differently no matter
-	  ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR is defined or not.
-	  Otherwise, virtual destructor won't work in one of the original
-	  definitions.
+        * ace/OS.h (ACE_DES_NO_FREE,ACE_DES_FREE): These two macros
+          shouldn't be treated differently no matter
+          ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR is defined or not.
+          Otherwise, virtual destructor won't work in one of the original
+          definitions.
 
-	  There shouldn't be different different definitions for calling
-	  template destructor explicitly either.  However, we need to find
-	  that out.  The meaning of ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
-	  seems to be reversed.  That needs to be fixed also.
+          There shouldn't be different different definitions for calling
+          template destructor explicitly either.  However, we need to find
+          that out.  The meaning of ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+          seems to be reversed.  That needs to be fixed also.
 
 Tue Jan 12 00:18:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Event_Handler.h: Moved the priority_ and reactor_ data
- 	  members into the private section of the class since these can
- 	  always be accessed via their accessor methods.  Thanks to Mike
- 	  Goldman <whig@by.net> for reporting this.
+        * ace/Event_Handler.h: Moved the priority_ and reactor_ data
+          members into the private section of the class since these can
+       always be accessed via their accessor methods.  Thanks to Mike
+          Goldman <whig@by.net> for reporting this.
 
 Mon Jan 11 15:30:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.{h,i} (get_process_attributes,get_thread_attributes):
-	  Removed the constness from the return value to avoid Intel C++
-	  warnings.  Thanks to Karel Zuiderveld
-	  <kzuiderveld@vitalimages.com> for reporting this.
+        * ace/Process.{h,i} (get_process_attributes,get_thread_attributes):
+          Removed the constness from the return value to avoid Intel C++
+          warnings.  Thanks to Karel Zuiderveld
+          <kzuiderveld@vitalimages.com> for reporting this.
 
-	* bin/ADDIDL.DSM: A VB script to add new IDL files into DevStudio
-	  projects.   Thanks to Peter <weatp@syntron.com> for contributing
-	  this nice tool.
+        * bin/ADDIDL.DSM: A VB script to add new IDL files into DevStudio
+          projects.   Thanks to Peter <weatp@syntron.com> for contributing
+          this nice tool.
 
 Mon Jan 11 12:54:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_IO: Added const qualifiers to all the send*() and
- 	  recv*() methods that take ACE_Time_Value values.  Thanks to Jody
- 	  Hagins <jody@atdesk.com> for reporting this.
+        * ace/SOCK_IO: Added const qualifiers to all the send*() and
+          recv*() methods that take ACE_Time_Value values.  Thanks to Jody
+          Hagins <jody@atdesk.com> for reporting this.
 
-	* ace/SOCK_IO: Added a new send_n() method that uses the new
- 	  ACE::sendv_n() method!
+        * ace/SOCK_IO: Added a new send_n() method that uses the new
+          ACE::sendv_n() method!
 
-	* ace/ACE: Added a new sendv_n() and writev_n() method that sends
- 	  all the bytes in the iovec!
+        * ace/ACE: Added a new sendv_n() and writev_n() method that sends
+          all the bytes in the iovec!
 
-	* ace/ACE.h (ACE): Added default values of 0 for ACE::writev() and
-	  ACE::readv().
+        * ace/ACE.h (ACE): Added default values of 0 for ACE::writev() and
+          ACE::readv().
 
-	* examples/NT_Service: Tidied up the formatting to conform to the
- 	  ACE programming guidelines.
+        * examples/NT_Service: Tidied up the formatting to conform to the
+          ACE programming guidelines.
 
 Mon Jan 11 10:23:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added ACE_LACKS_READDIR_R.
-	* ace/config-freebsd.h: Added ACE_LACKS_READDIR_R,
-	  ACE_HAS_NONCONST_MSGSND, ACE_LACKS_MALLOC_H.  ACE_HAS_SIGINFO_T
-	  only applies to 3.0 and above.  Thanks to Ivan Pascal
-	  <pascal@info.tsu.ru> for reporting the change.
+        * ace/config-freebsd-pthread.h: Added ACE_LACKS_READDIR_R.
+        * ace/config-freebsd.h: Added ACE_LACKS_READDIR_R,
+          ACE_HAS_NONCONST_MSGSND, ACE_LACKS_MALLOC_H.  ACE_HAS_SIGINFO_T
+          only applies to 3.0 and above.  Thanks to Ivan Pascal
+          <pascal@info.tsu.ru> for reporting the change.
 
 Sun Jan 10 21:52:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
