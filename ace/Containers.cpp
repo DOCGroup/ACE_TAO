@@ -634,8 +634,7 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
 ACE_ALLOC_HOOK_DEFINE(ACE_Double_Linked_List_Iterator)
 
 template <class T>
-ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator
-(ACE_Double_Linked_List<T> &dll)
+ACE_Double_Linked_List_Iterator<T>::ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> &dll)
   : dllist_ (dll)
 {
   this->current_ = dll.head_->next_;  // Initialize head ptr.
@@ -671,13 +670,13 @@ ACE_Double_Linked_List_Iterator<T>::next (void) const
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::advance (void)
 {
-  return (this->do_advance () ? 1 : 0);
+  return this->do_advance () ? 1 : 0;
 }
 
 template <class T> int
 ACE_Double_Linked_List_Iterator<T>::done (void) const
 {
-  return (this->not_done () ? 0 : 1);
+  return this->not_done () ? 0 : 1;
 }
 
 template <class T> void
@@ -738,7 +737,7 @@ ACE_Double_Linked_List<T>::~ACE_Double_Linked_List (void)
 template <class T> int
 ACE_Double_Linked_List<T>::is_empty (void) const
 {
-  return (this->size () ? 0 : 1);
+  return this->size () ? 0 : 1;
 }
 
 template <class T> int
@@ -799,10 +798,13 @@ ACE_Double_Linked_List<T>::get (T *&item, size_t index)
 {
   ACE_Double_Linked_List_Iterator<T> iter (*this);
 
-  for (size_t i = 0; i < index && !iter.done (); i++, iter.advance ())
-    ;
+  for (size_t i = 0;
+       i < index && !iter.done ();
+       i++)
+    iter.advance ();
 
-  return ((item = iter.next ()) ? 0 : 1);
+  item = iter.next ();
+  return item ? 0 : 1;
 }
 
 template <class T> size_t
@@ -821,14 +823,16 @@ ACE_Double_Linked_List<T>::dump (void) const
 template <class T> T *
 ACE_Double_Linked_List<T>::find (const T &item)
 {
-  ACE_Double_Linked_List_Iterator<T> iter (*this);
-
-  for (;!iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<T> iter (*this);
+       !iter.done ();
+       iter.advance ())
     {
       T *temp = iter.next ();
+
       if (*temp == item)
         return temp;
     }
+
   return 0;
 }
 
@@ -836,6 +840,7 @@ template <class T> int
 ACE_Double_Linked_List<T>::remove (const T &item)
 {
   T *temp = this->find (item);
+
   if (temp != 0)
       return this->remove (temp);
   else
@@ -863,9 +868,9 @@ ACE_Double_Linked_List<T>::delete_nodes (void)
 template <class T> void
 ACE_Double_Linked_List<T>::copy_nodes (ACE_Double_Linked_List<T> &c)
 {
-  ACE_Double_Linked_List_Iterator<T> iter (c);
-
-  for (; !iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<T> iter (c);
+       !iter.done ();
+       iter.advance ())
     this->insert_head (new T (*iter.next ()));
 }
 
@@ -882,6 +887,7 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
 {
   if (old_item == 0)
     old_item = this->head_;
+
   if (before)
     old_item = old_item->prev_;
 
@@ -896,8 +902,10 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
 {
   // Notice that you have to ensure that item is an element of this
   // list.  We can't do much checking here.
+
   if (item == this->head_ || this->size () == 0)      // Can't remove head
     return -1;
+
   (item->prev_->next_ = item->next_)->prev_ = item->prev_;
   this->size_--;
   return 0;

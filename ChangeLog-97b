@@ -1,13 +1,7 @@
-Tue Nov 04 03:50:57 1997    <irfan@TWOSTEP>
+Tue Nov  4 04:08:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Addr.i (operator == && operator !=): Comparison of
- 	  sap.addr_type_ should be with this->addr_type_ and not with 0.
-
-Tue Nov 04 02:56:46 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.3.36, released Tue Nov 04 02:56:46 1997.
-
-Tue Nov  4 01:47:23 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+	* ace/Containers.cpp (insert_head): Added some minor stylistic
+	  fixes.
 
 	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor): 
           Changed
@@ -31,6 +25,11 @@ Tue Nov  4 01:47:23 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
           ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
 
 	  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+Tue Nov 04 03:50:57 1997    <irfan@TWOSTEP>
+
+	* ace/Addr.i (operator == && operator !=): Comparison of
+ 	  sap.addr_type_ should be with this->addr_type_ and not with 0.
 
 Mon Nov  3 23:18:33 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
