@@ -182,12 +182,13 @@ include $(TAO_ROOT)/taoconfig.mk
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
-
+<%if(macros)%>
+CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
+<%endif%>
 <%if(zzip)%>
 CPPFLAGS     += -I$(ZZIP_ROOT)/include
 CPPFLAGS     += <%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
 <%endif%>
-
 <%if(idlpreprocessor)%>
 ifeq ($(TAO_IDL_PREPROCESSOR),)
   CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"

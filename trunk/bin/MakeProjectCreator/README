@@ -114,7 +114,7 @@ pch_source	Specifies the precompiled source file name
 ssl             Specifies that the project will use ssl
 tao		Specifies that the project will use TAO
 version         Specifies the version number for the library or executable
-
+macros          These values will be passed as macros to the compiler.
 libpaths	Specifies 1 or more locations to find libraries
 includes	Specifies 1 or more locations to find include files
 libs		Specifies 1 or more libraries to link into the exe or library

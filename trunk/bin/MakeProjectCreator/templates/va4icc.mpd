@@ -3,7 +3,7 @@
 
 if $__TOS_WIN__ {
         option PlatformOptions =
-<%foreach(defines common_defines)%>
+<%foreach(defines common_defines macros)%>
                 define ("<%define%>", "1"),
 <%endfor%>
 <%if(zzip)%>

@@ -15,8 +15,8 @@ NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endi
 <%if(zzip)%>
 !endif
 <%endif%>
-
 <%if(idl_files)%>
+
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 <%endif%>
 
@@ -51,7 +51,6 @@ LIBFILES = \
 	<%lit_lib%>.lib \
 <%endfor%>
 	$(EXTERNAL_LIBS)
-
 <%if(idl_files)%>
 
 IDLFILES = \
@@ -59,7 +58,6 @@ IDLFILES = \
 	$(IDLDIR)\<%basenoextension(idl_file)%>.idl<%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-
 <%if(resource_files)%>
 
 RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.res<%endfor%>
@@ -74,6 +72,9 @@ DLL_FLAGS =<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
 !endif
 
 CFLAGS = \
+<%foreach(macros)%>
+	-D<%macro%> \
+<%endfor%>
 <%foreach(includes)%>
 	-I<%include%> \
 <%endfor%>

@@ -28,7 +28,7 @@
 				InlineFunctionExpansion="<%inline("2")%>"
 <%endif%>
 				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%><%if(zzip)%>,$(ZZIP_ROOT)\include<%endif%>"
-				PreprocessorDefinitions="<%if(type_is_dynamic)%><%foreach(dllflags)%><%dllflag%>;<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%><%zzip_define%>;<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%><%libflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines)%><%define%><%fornotlast(";")%><%endfor%>"
+				PreprocessorDefinitions="<%if(type_is_dynamic)%><%foreach(dllflags)%><%dllflag%>;<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%><%zzip_define%>;<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%><%libflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines macros)%><%define%><%fornotlast(";")%><%endfor%>"
 <%if(!debug)%>
 				StringPooling="<%string_pooling("TRUE")%>"
 <%endif%>
@@ -89,7 +89,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="<%foreach(defines)%><%define%><%fornotlast(";")%><%endfor%>"
+				PreprocessorDefinitions="<%foreach(defines macros)%><%define%><%fornotlast(";")%><%endfor%>"
 				Culture="<%culture("1033")%>"
 				AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%>"/>
 			<Tool
