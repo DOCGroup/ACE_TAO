@@ -2415,7 +2415,13 @@ extern "C" {
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+#if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
+extern "C" {
+#endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
 # include /**/ <dlfcn.h>
+#if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
+}
+#endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
 #if !defined (RTLD_LAZY)
 #define RTLD_LAZY 1
