@@ -120,8 +120,6 @@
 // Compiler/platform supports strerror ().
 #define ACE_HAS_STRERROR
 
-#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -130,12 +128,6 @@
 
 // Compiler/platform supports SVR4 gettimeofday() prototype.
 #define ACE_HAS_SVR4_GETTIMEOFDAY
-
-// Compiler/platform supports SVR4 signal typedef.
-// If enabled, this define causes this warning, I think:
-//     OS.i:591: warning: passing `unsigned
-//     int *' to argument 1 of `rand_r(unsigned int)' lacks a cast
-// #define ACE_HAS_SVR4_SIGNAL_T
 
 // Platform lacks pthread_sigaction
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
