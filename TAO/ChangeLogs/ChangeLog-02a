@@ -8,7 +8,7 @@ Mon Oct 23 21:39:22 2000  Ossama Othman  <ossama@uci.edu>
 	  RT CORBA policy factories from being registered.  This fixes a
 	  seg fault.
 
-	* tao/Stub.cpp (TAO_Stub):
+	* tao/Stub.cpp (~TAO_Stub):
 
 	  Fixed a typo where TAO_HAS_RTCORBA was used instead of
 	  TAO_HAS_RT_CORBA.  This fixes a problem where the destroy()
