@@ -1,3 +1,10 @@
+Thu Apr  9 22:53:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: We now use the
+	ACE_Static_Allocator_Base to define a static allocator for the
+	Dynamic Operation Hash Table. Using this approach will finally
+	solve the seg faults in the static destructors.
+
 Thu Apr  9 20:15:41 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (init): Added code to
@@ -15,13 +22,13 @@ Thu Apr  9 19:25:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java,
 		  orbsvcs/tests/Simulator/DOVEMIB/DOVEMIB.cpp.
-		  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: 
+		  orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
 		  Had to conform to the new RtecScheduler.set ( ..) method,
 		  some parameters were added.
 
 Thu Apr  9 15:55:44 1998  Michael Kircher <mk1@cs.wustl.edu>
 
-        * docs/releasenotes/index.html: Enhanced description of the DOVE 
+        * docs/releasenotes/index.html: Enhanced description of the DOVE
           demo.
 
 Thu Apr  9 14:22:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>

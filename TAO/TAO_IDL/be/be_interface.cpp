@@ -94,7 +94,7 @@ be_interface::compute_coll_name (void)
     }
   delete i;
 
-  ACE_NEW (this->full_coll_name_, 
+  ACE_NEW (this->full_coll_name_,
            char[namelen+1]);
   this->full_coll_name_[0] = 0; // null terminate the string...
 
@@ -1616,10 +1616,19 @@ be_interface::gen_operation_table (void)
 
   // XXXASG - this code should be based on using different strategies for
   // demux - for next release
-  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable " <<
-    "(" << this->flatname () << "_operations, " << this->skel_count_ << ", " <<
-    2*this->skel_count_ << ");"
-      << nl;
+  *ss << "static const CORBA::Long _tao_" << this->flatname ()
+      << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
+      << " TAO_Skeleton>) * (" << (3*this->skel_count_)
+      << ");" << be_nl;
+  *ss << "static char _tao_" << this->flatname () << "_optable_pool "
+      << "[_tao_" << this->flatname () << "_optable_size];" << be_nl;
+  *ss << "static ACE_Static_Allocator_Base _tao_" << this->flatname ()
+      << "_allocator (_tao_" << this->flatname () << "_optable_pool, "
+      << "_tao_" << this->flatname () << "_optable_size);" << be_nl;
+  *ss << "TAO_Dynamic_Hash_OpTable tao_" << this->flatname () << "_optable "
+      << "(" << this->flatname () << "_operations, " << this->skel_count_
+      << ", " << 2*this->skel_count_ << ", &_tao_" << this->flatname ()
+      << "_allocator);" << be_nl;
   return 0;
 }
 
