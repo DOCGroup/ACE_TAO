@@ -147,7 +147,7 @@ If you use the GNU GCC C++ compiler please note the following:
 	  singleton instance, there could be one instance per object
 	  (.o) file that "sees" the template.  Therefore, we strongly
 	  encourage you to add the -fno-implicit-templates option
-	  to CXXFLAGS in include/makeinclude/platform_macros.GNU.
+	  to CCFLAGS in include/makeinclude/platform_macros.GNU.
 
 	  The disadvantage of this approach is that you must then
 	  add template specializations for all templates that your
