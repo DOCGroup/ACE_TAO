@@ -1,3 +1,8 @@
+Thu Mar 24 07:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
+          Fixed emulated exception problem
+
 Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
 
         * tao/Any_Basic_Impl.h
