@@ -1,3 +1,8 @@
+Thu Jan 17 18:51:09 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Name_Space.cpp (operator =): Fixed a memory leak.  Thanks
+	  to Ian Cahoon <icahoon@cisco.com> for reporting this.
+
 Thu Jan 17 12:13:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.h (private_key, verify_private_key):
