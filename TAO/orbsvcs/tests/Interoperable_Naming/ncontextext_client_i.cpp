@@ -215,16 +215,17 @@ NContextExt_Client_i::run (TAO_ENV_SINGLE_ARG_DECL)
       // the LocateReply or LOCATION_FORWARD reply by an agent listening
       // at that address
       //
-      CORBA::String_var address = CORBA::string_dup ("myhost.555xyz.com:9999");
+      CORBA::String_var address =
+        CORBA::string_dup (":myhost.555xyz.com:9999");
 
       // Since we are just testing the functionality of the to_url
       // function, use a random object name.
-      //
       CORBA::String_var obj_name = get_name ();
 
-      CORBA::String_var url_string = this->naming_context_->to_url (address.in (),
-                                                                    obj_name.in()
-                                                                    TAO_ENV_ARG_PARAMETER);
+      CORBA::String_var url_string =
+        this->naming_context_->to_url (address.in (),
+                                       obj_name.in()
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (OuterBlock);
 
       if (this->view_ == 0)
