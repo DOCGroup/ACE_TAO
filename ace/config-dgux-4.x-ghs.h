@@ -18,7 +18,7 @@
 #define ACE_LACKS_STRCASECMP
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -143,14 +143,13 @@
 #define ACE_HAS_PTHREADS_STD
 #define _POSIX4_DRAFT_SOURCE
 // Well, here are some from the standard they don't have...
-#define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 // The default thread stacksize on DG/UX 4.x is 4096.  This needs to be bumped
 // up to do anything real in ACE.
-#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536 
+#define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 
 // Need to #include <sched.h>
 #define ACE_LACKS_SCHED_H
