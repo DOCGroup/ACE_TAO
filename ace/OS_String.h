@@ -127,11 +127,11 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   static long strtol (const char *s, char **ptr, int base);
-  static u_long strtoul (const char *s, char **ptr, int base);
+  static unsigned long strtoul (const char *s, char **ptr, int base);
   static double strtod (const char *s, char **endptr);
 #if defined (ACE_HAS_WCHAR)
   static long strtol (const wchar_t *s, wchar_t **ptr, int base);
-  static u_long strtoul (const wchar_t *s, wchar_t **ptr, int base);
+  static unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
   static double strtod (const wchar_t *s, wchar_t **endptr);
 #endif /* ACE_HAS_WCHAR */
 
