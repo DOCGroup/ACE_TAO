@@ -120,15 +120,23 @@ public:
   virtual void reset (int reset_flag = 1) = 0;
   // Reset the messaging object
 
+  /// @@ Bala: Documentation
+  virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
+
+  /// @@Bala: Documentation please...
+  virtual int is_message_complete (ACE_Message_Block &message_block) = 0;
+
   /// Parse the request message, make an upcall and send the reply back
   /// to the "request initiator"
   virtual int process_request_message (TAO_Transport *transport,
-                                       TAO_ORB_Core *orb_core) = 0;
+                                       TAO_ORB_Core *orb_core,
+                                       ACE_Message_Block &m) = 0;
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
-      TAO_Pluggable_Reply_Params &reply_info) = 0;
+      TAO_Pluggable_Reply_Params &reply_info,
+      ACE_Message_Block &m) = 0;
 
   /// Generate a reply message with the exception <ex>.
   virtual int generate_exception_reply (

@@ -16,7 +16,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
+//#include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Transport.i"
@@ -32,6 +32,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+#if 0
   if (flag)
     {
       // Use the lite version of the protocol
@@ -39,6 +40,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
+#endif
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -87,6 +89,7 @@ TAO_IIOP_Transport::recv_i (char *buf,
 }
 
 
+#if 0
 int
 TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
                                           int block)
@@ -120,12 +123,13 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
   // See we use the reactor semantics again
   while (result > 0)
     {
-      result = this->process_message ();
+      //      result = this->process_message ();
     }
 
   return result;
 }
 
+#endif
 
 int
 TAO_IIOP_Transport::register_handler_i (void)
@@ -261,6 +265,16 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
+
+
+
+#if 0
+int
+TAO_IIOP_Transport::process_message (ACE_Message_Block &message_block)
+{
+  // Call the messaging object to process the read data
+}
+
 int
 TAO_IIOP_Transport::process_message (void)
 {
@@ -384,7 +398,7 @@ TAO_IIOP_Transport::process_message (void)
 
   return 1;
 }
-
+#endif /*if 0 */
 
 void
 TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)

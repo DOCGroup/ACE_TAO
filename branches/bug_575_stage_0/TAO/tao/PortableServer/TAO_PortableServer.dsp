@@ -176,6 +176,10 @@ SOURCE=.\Direct_Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ImplRepo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ImplRepoC.cpp
 # End Source File
 # Begin Source File
@@ -277,6 +281,10 @@ SOURCE=.\Default_Servant_Dispatcher.h
 # Begin Source File
 
 SOURCE=.\Direct_Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ImplRepo_i.h
 # End Source File
 # Begin Source File
 

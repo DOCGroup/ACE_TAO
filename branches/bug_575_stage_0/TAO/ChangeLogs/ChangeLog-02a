@@ -1,7 +1,57 @@
+Thu Jun 01 13:39:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* tao/Transport.h:  Added the following methods -- handle_input_i
+	  (), process_parsed_message (). The handle_input_i () creates a
+	  buffer on the stack. It uses the buffer to read the
+	  messages. Any errors in read () or dealt here directly. The read
+	  message is then parsed and processed by the GIOP classes. Moved
+	  most of the code for processing here as they seem to be common
+	  between different transport protocols. Once we have received a
+	  full message, we just resume the handler and go ahead with
+	  processing the message.
+
+	* tao/IIOP_Connection_Handler.cpp (handle_input ()): Calls
+	  handle_input_i () on the transport.
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.cpp:  The svc_i () calls the
+	  handle_input_i () on the transport instead of the same call on
+	  the connection handler. This way we should be able to share the
+	  same code among different protocol objects.
+
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.cpp: Much of the message parsing and
+	  state information is stored here.
+
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/Pluggable_Messaging.h: made some changes to suit the
+	  above. But more changes could come in, to suit different
+	  protocols. We may want to change the interfaces in
+	  Pluggable_Messaging to give a much cleaner interface to the
+	  world.
+
+	* tao/Wait_On_Read.cpp: Used the handle_input_i () on the
+	  transport for processing the incoming data.
+
+	* tao/TAO.dsp:
+	* tao/PortableServer/TAO_PortableServer.dsp: Added new files and
+	  removed files from GIOP_Lite in the first round.
+
+	* tao/GIOP_Message_Reactive_Handler.cpp:
+	* tao/GIOP_Message_Reactive_Handler.h: Looks like these files
+	  would be removed during the final merge.
+
+	The above checkins works for simple two way calls. The
+	BiDirectional_NestedUpcall test works with the TP_Reactor. This
+	works on Win32.
+
+
 Thu May 24 12:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h: Added some design forces for the input data
-	  path.  
+	  path.
 ------  On my branch--------
 Thu May 24 10:30:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -77,7 +127,7 @@ Wed May 23 21:27:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
           there, since an exact match causes the lexer to return
           a token of the wrong type, leading to a 'syntax error'
           message. Case-insensitive checking has now been added,
-          just before the node is added to the AST, and it is 
+          just before the node is added to the AST, and it is
           turned off by a check of the new 'escaped' flag in class
           Identifier. Note that a case-sensitive match with a C++
           keyword will, as defined by the spec, cause '_cxx_' to
@@ -322,8 +372,8 @@ Tue May 22 21:21:10 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  Service and IFR implementation to
  	  TAO_Trading_Loader::init_multicast_server() that checks for the
  	  multicast endpoint.  Thanks to Mike Pyle
- 	  <mike.pyle@burning-glass.com> for this fix.	
-  
+ 	  <mike.pyle@burning-glass.com> for this fix.
+
 Mon May 21 18:43:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tests/QtTests: Fixed the Makefile so that it handles the
