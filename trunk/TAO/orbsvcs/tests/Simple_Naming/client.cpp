@@ -141,15 +141,15 @@ CosNaming_Client::init (int argc, char **argv)
 
   TAO_TRY
     {
-      // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
-	return -1;
-
       // Initialize ORB.
       this->orbmgr_.init (argc,
                           argv,
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+        return -1;
 
       return this->naming_client_.init (this->orbmgr_.orb ());
     }
