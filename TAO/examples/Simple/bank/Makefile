@@ -18,25 +18,27 @@ IDL_SRC	= BankC.cpp BankS.cpp
 
 PROG_SRCS = \
 	client.cpp \
-	Client_i.cpp \
 	server.cpp \
-	Server_i.cpp \
 	Account_i.cpp \
 	AccountManager_i.cpp \
+	Bank_Client_i.cpp\
+	../Simple_util.cpp
+	
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = \
 		BankC.o \
 		BankS.o \
-		Client_i.o \
-		client.o
+		client.o \
+		../Simple_util.o \
+		Bank_Client_i.o
 SIMPLE_SVR_OBJS = \
 		BankC.o \
 		BankS.o \
 		Account_i.o \
 		AccountManager_i.o \
-		Server_i.o \
+		../Simple_util.o \
 		server.o
 
 BIN = server \
