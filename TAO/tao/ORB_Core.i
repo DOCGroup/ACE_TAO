@@ -109,26 +109,7 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   return retval;
 }
 
-ACE_INLINE void
-TAO_ORB_Core::service_context_list (
-    TAO_Stub *&stub,
-    IOP::ServiceContextList &service_list,
-    CORBA::Boolean restart,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ We look at the services if they are loaded. But if more
-  // services offer this feature we may want to keep expanding the
-  // 'if' conditions with a check for whether a service returned a
-  // valid Policy object.
-  if (this->ft_service_.service_callback ())
-    {
-      this->ft_service_.service_callback ()->service_context_list (stub,
-                                                                   service_list,
-                                                                   restart,
-                                                                   ACE_TRY_ENV);
-      ACE_CHECK;
-    }
-}
+
 
 ACE_INLINE void
 TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)

@@ -1431,6 +1431,27 @@ TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
 }
 
 
+void
+TAO_ORB_Core::service_context_list (
+    TAO_Stub *&stub,
+    IOP::ServiceContextList &service_list,
+    CORBA::Boolean restart,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@ We look at the services if they are loaded. But if more
+  // services offer this feature we may want to keep expanding the
+  // 'if' conditions with a check for whether a service returned a
+  // valid Policy object.
+  if (this->ft_service_.service_callback ())
+    {
+      this->ft_service_.service_callback ()->service_context_list (stub,
+                                                                   service_list,
+                                                                   restart,
+                                                                   ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
 
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
@@ -1957,6 +1978,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
   return result;
 }
+
 
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
