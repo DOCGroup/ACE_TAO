@@ -21,80 +21,63 @@ addition of a timeout to the recv() call so that we can exit somewhat gracefully
 if the server doesn't like what we have to say.
 
 <P>
-<HR WIDTH="100%"><TT></TT>
+<HR WIDTH="100%"><PRE>
 
-<P><TT>#include "ace/SOCK_Dgram.h"</TT>
-<BR><TT>#include "ace/INET_Addr.h"</TT><TT></TT>
+<font color=red>// $Id$</font>
 
-<P><TT>static const u_short PORT = ACE_DEFAULT_SERVER_PORT;</TT><TT></TT>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Dgram.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/INET_Addr.h</font>"
 
-<P><TT>int main (int argc, char *argv[])</TT>
-<BR><TT>{</TT>
-<BR><TT>&nbsp; ACE_INET_Addr local ((u_short) 0);</TT>
-<BR><TT>&nbsp; ACE_INET_Addr remote (PORT, argc > 1 ? argv[1] : "localhost");</TT>
-<BR><TT>&nbsp; ACE_SOCK_Dgram dgram;</TT><TT></TT>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-<P><TT>&nbsp; if (dgram.open (local) == -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+int main (int argc, char *argv[])
+{
+  ACE_INET_Addr local ((u_short) 0);
+  ACE_INET_Addr remote (PORT, argc > 1 ? argv[1] : "<font color=green>localhost</font>");
+  ACE_SOCK_Dgram dgram;
 
-<P><TT>&nbsp; char buf[512];</TT><TT></TT>
+  if (dgram.open (local) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
+  }
 
-<P><TT>&nbsp; /*</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; In order to conform to the "protocol"
-requried by the server,</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; we allow the user to specify a signature.&nbsp;
-A default matching</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; the server's default is also available.</TT>
-<BR><TT>&nbsp;&nbsp; */</TT>
-<BR><TT>&nbsp; sprintf (buf, argc > 2 ? argv[2] : "Hello World!");</TT><TT></TT>
+  char buf[512];
 
-<P><TT>&nbsp; if (dgram.send (buf, strlen (buf) + 1, remote) == -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+  <font color=red>/*
+     In order to conform to the "<font color=green>protocol</font>" required by the server,
+     we allow the user to specify a signature.  A default matching
+     the server's default is also available.
+   */</font>
+  sprintf (buf, argc > 2 ? argv[2] : "<font color=green>Hello World!</font>");
 
-<P><TT>&nbsp; /*</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; Because we may have sent a signature that
-the server doesn't</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; honor, we have to have some way to get
-out of the recv().</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; Most ACE objects that have potential for
-infinite blocking</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; give you the option of providing a timeout.&nbsp;
-recv() is no</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; exception.&nbsp; Here, we construct an
-ACE_Time_Value representing</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; two seconds and no micro-seconds.&nbsp;
-If recv() fails to get</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; a response within the two seconds, it
-will return -1.</TT>
-<BR><TT>&nbsp;&nbsp; */</TT>
-<BR><TT>&nbsp; ACE_Time_Value timeout (2, 0);</TT>
-<BR><TT>&nbsp; if (dgram.recv (buf, sizeof (buf), remote, 0, &amp;timeout)
-== -1)</TT>
-<BR><TT>&nbsp; {</TT>
-<BR><TT>&nbsp;&nbsp;&nbsp; ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"),
--1);</TT>
-<BR><TT>&nbsp; }</TT><TT></TT>
+  if (dgram.send (buf, strlen (buf) + 1, remote) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>send</font>"), -1);
+  }
 
-<P><TT>&nbsp; ACE_DEBUG ((LM_DEBUG, "(%P|%t) The server said (%s)\n", buf));</TT><TT></TT>
+  <font color=red>/*
+     Because we may have sent a signature that the server doesn't
+     honor, we have to have some way to get out of the recv().
+     Most ACE objects that have potential for infinite blocking
+     give you the option of providing a timeout.  recv() is no
+     exception.  Here, we construct an ACE_Time_Value representing
+     two seconds and no micro-seconds.  If recv() fails to get
+     a response within the two seconds, it will return -1.
+   */</font>
+  ACE_Time_Value timeout (2, 0);
+  if (dgram.recv (buf, sizeof (buf), remote, 0, &timeout) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>recv</font>"), -1);
+  }
 
-<P><TT>&nbsp; return (0);</TT>
-<BR><TT>}</TT>
+  ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) The server said (%s)\n</font>", buf));
 
-<P>
+  return (0);
+}
+</PRE>
 <HR WIDTH="100%">
 
 <P>On the next page, we see that the directed_client gets similar upgrades.
 
-<P>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue
-This Tutorial</A>]</CENTER>
-
-</BODY>
-</HTML>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>

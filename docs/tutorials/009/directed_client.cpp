@@ -20,7 +20,7 @@ int main (int argc, char *argv[])
   char buf[512];
 
   /*
-     In order to conform to the "protocol" requried by the server,
+     In order to conform to the "protocol" required by the server,
      we allow the user to specify a signature.  A default matching
      the server's default is also available.
    */
