@@ -1,3 +1,10 @@
+Wed Dec 18 19:57:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.7.h: Added ACE_HAS_SNPRINTF. I have verified
+          that it's available from Solaris 7 on. If someone can determine
+          it's available earlier, please move the definition to one of the
+          earlier-version config-sunos5.*.h files.
+
 Wed Dec 18 18:59:41 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.mpc:
