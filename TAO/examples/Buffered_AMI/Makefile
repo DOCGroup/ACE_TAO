@@ -351,7 +351,6 @@ realclean: clean
   $(TAO_ROOT)/tao/Messaging/MessagingS_T.cpp \
   $(TAO_ROOT)/tao/Messaging/MessagingS.i \
   testC.h testC.i testS_T.h testS_T.i testS_T.cpp testS.i \
-  $(TAO_ROOT)/tao/TAOA.h \
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
