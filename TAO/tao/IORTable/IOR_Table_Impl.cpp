@@ -1,5 +1,11 @@
-// $Id$
-
+/**
+ * @file IOR_Table_Impl.cpp
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ *
+ */
 #include "IOR_Table_Impl.h"
 
 ACE_RCSID(IORTable, IOR_Table_Impl, "$Id$")

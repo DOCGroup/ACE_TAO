@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// =========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IORTable.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    IORTable.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IORTABLE_H
 #define TAO_IORTABLE_H
@@ -29,8 +26,8 @@
 class TAO_IORTable_Export TAO_IORTable_Initializer
 {
 public:
+  /// Used to force the initialization of the ORB code.
   static int init (void);
-  // Used to force the initialization of the ORB code.
 };
 
 #if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
