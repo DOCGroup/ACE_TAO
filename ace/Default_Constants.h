@@ -213,8 +213,21 @@
 #   define ACE_LOCALHOST ACE_LIB_TEXT ("localhost")
 # endif
 
+// This specification for an IPv6 localhost should work on all platforms
+// supporting IPv6
+# if defined (ACE_HAS_IPV6)
+#   if !defined (ACE_IPV6_LOCALHOST)
+#     define ACE_IPV6_LOCALHOST ACE_LIB_TEXT ("::1")
+#   endif /* ACE_IPV6_LOCALHOST*/
+#endif /* ACE_HAS_IPV6 */
+
+
 # if !defined (ACE_DEFAULT_SERVER_HOST)
-#   define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
+#   if defined (ACE_HAS_IPV6)
+#     define ACE_DEFAULT_SERVER_HOST ACE_IPV6_LOCALHOST
+#   else /*ACE_HAS_IPV6*/
+#     define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
+#   endif /*ACE_HAS_IPV6*/
 # endif /* ACE_DEFAULT_SERVER_HOST */
 
 // Default shared memory key
