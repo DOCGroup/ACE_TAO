@@ -411,6 +411,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::run_test (void)
 
   test_tree_insertion ();
   test_post_insertion_iteration ();
+  test_partial_iteration();
   test_tree_deletion ();
   test_post_deletion_iteration ();
 }
@@ -444,8 +445,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion (v
       ACE_ASSERT (deprecated_tree_.find (key_array_ [k]) != 0
                   && *deprecated_tree_.find (key_array_ [k]) ==
                      item_array_ [k]);
-    }
-
+   }
 }
 
 // Tests forward and reverse iteration after insertion in both trees.
@@ -498,6 +498,34 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
   ACE_ASSERT (stable_rev_iter_.done () == 1);
   ACE_ASSERT (deprecated_fwd_iter_.done () == 1);
   ACE_ASSERT (deprecated_rev_iter_.done () == 1);
+
+}
+
+template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration(void)
+{
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node;
+
+  stable_tree_.find(key_array_ [2], tree_node);
+  part_rev_iter_ = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (stable_tree_, tree_node);
+  for (int i=2; i >= 0 ; --i)
+    {
+      INT_ID item;
+ 
+      item = (*part_rev_iter_).item ();
+      ACE_DEBUG((LM_DEBUG, ACE_LIB_TEXT("item=[%d]\n"), item));
+      part_rev_iter_--;
+    }
+
+  part_fwd_iter_ = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (key_array_ [5], stable_tree_);
+  for (int i = 5; i < entry_count_; ++i)
+    {
+      INT_ID item;
+
+      item = (*part_fwd_iter_).item ();
+      ACE_DEBUG((LM_DEBUG, ACE_LIB_TEXT("item=[%d]\n"), item));
+      part_fwd_iter_--;
+    }
 }
 
 // Tests stable and deprecated deletion interfaces.
@@ -540,6 +568,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
 
       item = (*stable_fwd_iter_).item ();
       ACE_ASSERT (item == item_array_ [i]);
+      
 
       item = (*stable_rev_iter_).item ();
       ACE_ASSERT (item == item_array_ [entry_count_ - i]);

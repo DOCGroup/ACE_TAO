@@ -65,6 +65,9 @@ private:
   // Tests forward and reverse iteration after insertion in both
   // trees.
 
+  void test_partial_iteration(void);
+  //Tests forward and reverse partial iteration
+
   void test_tree_deletion (void);
   // Tests stable and deprecated deletion interfaces.
 
@@ -77,6 +80,10 @@ private:
 
   ITERATOR stable_fwd_iter_;
   // Forward iterator for tree for testing stable interface.
+ 
+  ITERATOR part_fwd_iter_;
+ 
+  REVERSE_ITERATOR part_rev_iter_;
 
   REVERSE_ITERATOR stable_rev_iter_;
   // Forward iterator for tree for testing stable interface.
