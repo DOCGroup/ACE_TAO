@@ -238,9 +238,9 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         is assumed to be a port number, with the IP address being INADDR_ANY.
   </TR>
   <TR>
-    <TD><CODE>-ORBCollocation</CODE> <EM>yes/global/per-orb/no</EM></TD>
+    <TD><CODE>-ORBCollocation</CODE> <EM>global/per-orb/no</EM></TD>
     <TD><a name="-ORBCollocation"></a>Specifies the use of collocation
-        object optimization.  If <em>global</em> or <em>yes</em> is
+        object optimization.  If <em>global</em> is
         specified, objects in the same process will be treated as collocated.
         If <em>per-orb</em> is specified, only objects in the same ORB are
         treated as collocated.  When <em>no</em> is specified, no objects are
@@ -368,6 +368,13 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         PERSISTENT policy, that the Implementation Repository should be used for
         notification of startup and shutdown and Object References should be changed
         to use the Implementation Repository also.
+    </TD>
+  </TR>
+
+  <TR>
+    <TD><CODE>-ORBLogFile</CODE> <EM>log file name</EM></TD>
+    <TD><A name=-ORBLogFile></A>Causes all ACE_DEBUG and ACE_ERROR
+        output to be redirected to the specified file.
     </TD>
   </TR>
 
@@ -546,9 +553,9 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TD><CODE>-ORBConnectionCacheLock</CODE> <EM>locktype</EM></TD>
   <TD><a name="-ORBConnectionCacheLock"></a>
       Specify the type of lock to be used by the Connection
-      Cache. Possible values for lock type are thread, which specifies
+      Cache. Possible values for lock type are <code>thread</code>, which specifies
       that an inter-thread mutex is used to guarantee exclusive
-      access, and null, which specifies that no locking be
+      access, and <code>null</code>, which specifies that no locking be
       performed. The default is thread.
   </TD>
 </TR>
