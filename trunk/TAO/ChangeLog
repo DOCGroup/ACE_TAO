@@ -1,3 +1,11 @@
+Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	  Do not use naked delete for reference counted objects.  This
+	  fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1313
+
 Wed Sep 25 17:58:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
