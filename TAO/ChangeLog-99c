@@ -1,3 +1,13 @@
+Thu Oct 21 12:07:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/QtTests/test_i.cpp (send_val): 
+	* tests/QtTests/test_i.h: Made similar changes that could lead to
+	  an error in platforms like IRIX. The changes were nothing, but
+	  addition of the THROW_SPEC to the signature of the methods in
+	  the implementation class. This example has been tested sofar
+	  only on Linux as we have the libraries for Qt only on that
+	  platform. 
+
 Thu Oct 21 11:52:50 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/timer.h: 
