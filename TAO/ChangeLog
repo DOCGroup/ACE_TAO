@@ -1,3 +1,11 @@
+Mon Aug  4 21:02:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Bug_1551_Regression/Hello.h:
+          Changed ACE_Thread_Mutex::ACE_Thread_Mutex to TAO_SYNCH_MUTEX.
+
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
+          Added #include ACE.
+
 Mon Aug  4 11:48:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/Makefile:

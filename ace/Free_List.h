@@ -22,6 +22,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
+#include "ace/os_include/os_stddef.h"
 
 /**
  * @class ACE_Free_List
