@@ -91,7 +91,6 @@ public:
 #endif // end #if !defined
 
   typedef _tao_seq_Octet ObjectKey;
-  typedef _tao_seq_Octet_ptr ObjectKey_ptr;
   typedef _tao_seq_Octet_var ObjectKey_var;
   typedef _tao_seq_Octet_out ObjectKey_out;
 
