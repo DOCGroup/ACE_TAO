@@ -1,3 +1,11 @@
+Tue Jul 21 23:09:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Synch-Benchmarks/{Synch_Tests,synch_driver}.dsp:
+	  Updated proejct source files and renamed debug version dll.
+	
+	* performance-tests/Synch-Benchmarks/Performance_Test.cpp: Added
+	  ACE_Svc_Export directive.
+
 Tue Jul 21 20:17:31 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE_Library.{mdp mak}: Removed ..\STL from include directories.
