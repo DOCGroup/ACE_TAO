@@ -27,14 +27,12 @@ template class ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNEC
 template class ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>;
 
-/*
-// TODO: Where are they needed? If not used needs to be removed.
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>;
 template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-*/
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
@@ -44,15 +42,13 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connec
 #pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>
 
-/*
- * Where are they needed?
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Connection_Handler*>
-*/
+
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
