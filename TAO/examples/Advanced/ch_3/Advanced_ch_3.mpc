@@ -2,7 +2,7 @@
 // $Id$
 
 project(*client) : taoexe, portableserver {
-  requires += exceptions
+  requires += exceptions corba_messaging
   source_files {
     client.cpp
   }
