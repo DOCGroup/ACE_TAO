@@ -9,7 +9,7 @@ module IOP
   typedef unsigned long ProfileId;
   const ProfileId TAG_INTERNET_IOP = 0;
   const ProfileId TAG_MULTIPLE_COMPONENTS = 0;
-  
+
   struct TaggedProfile {
     ProfileId       tag;
     sequence<octet> profile_data;
@@ -67,6 +67,13 @@ module IOP
   const ServiceId INVOCATION_POLICIES = 7;
   // const ServiceId FORWARDED_IDENTITY = 8;
   const ServiceId UnknownExceptionInfo = 9;
+
+  // The following are defined in the ptc/99-05-03:
+  // Real-Time CORBA Joint Revised Submission May 28, 1999
+  // Numbers are still to be assigned by OMG.  Values 100 and 101 are
+  // used until then.
+  const ServiceId RTCorbaPriority = 10;
+  const ServiceId RTCorbaPriorityRange = 11;
 };
 
 #pragma prefix ""
