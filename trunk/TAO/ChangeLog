@@ -1,3 +1,18 @@
+Fri Mar  7 07:17:02 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Updated this mpc file to reflect the current state.
+
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+          Added libraries that this library needs.
+
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+
+          Added these mpc files.
+
 Fri Mar  7 06:08:16 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Param_Test/svc.conf: Added native wchar codeset id to
@@ -5,33 +20,33 @@ Fri Mar  7 06:08:16 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Mar  6 11:35:10 2003  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
 
-	  Removed duplicate declarations and definitions of the
-	  CORBA::_tc_{Visibility,ValueModifier} TypeCodes.  They are
-	  already declared in tao/corbafwd.h, and set in
-	  tao/IFR_Client/IFR_Client_Adapter_Impl.cpp.  Fixes "multiple
-	  definition" errors in static builds.
+          Removed duplicate declarations and definitions of the
+          CORBA::_tc_{Visibility,ValueModifier} TypeCodes.  They are
+          already declared in tao/corbafwd.h, and set in
+          tao/IFR_Client/IFR_Client_Adapter_Impl.cpp.  Fixes "multiple
+          definition" errors in static builds.
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
 
-	  Removed duplicate declarations and definitions of the
-	  CORBA::_tc_{Identifier,RepositoryId,ValueModifier} TypeCodes.
-	  They are already declared and defined in
-	  tao/IFR_Client/IFR_BaseC.*. Fixes "multiple definition" errors
-	  in static builds.
+          Removed duplicate declarations and definitions of the
+          CORBA::_tc_{Identifier,RepositoryId,ValueModifier} TypeCodes.
+          They are already declared and defined in
+          tao/IFR_Client/IFR_BaseC.*. Fixes "multiple definition" errors
+          in static builds.
 
 Thu Mar 06 12:26:36 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
-	  Added missing ACE_TYPENAME on line 34.
+        * orbsvcs/orbsvcs/Notify/Default_Factory.cpp:
+          Added missing ACE_TYPENAME on line 34.
 
 Thu Mar  6 11:03:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp: Fix the generation
-	  of environment checking code following the call to
+          of environment checking code following the call to
           TAO_[In|Out]putCDR::throw_stub_exception() so it doesn't break
           on non-native exception builds.
 
