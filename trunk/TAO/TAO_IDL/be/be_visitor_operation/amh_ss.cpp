@@ -331,8 +331,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl
-      << "void * _tao_servant, " << be_nl
-      << "void * /* context */ " << be_nl
+      << "void * /* context */," << be_nl
+      << "void * _tao_servant" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
