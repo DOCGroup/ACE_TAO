@@ -114,11 +114,11 @@ TAO_ORBInitializer_Registry::instance (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>;
-template class ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr>;
+template class ACE_Array_Base<PortableInterceptor::ORBInitializer_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Array_Base<PortableInterceptor::ORBInitializer_ptr>
+#pragma instantiate ACE_Array_Base<PortableInterceptor::ORBInitializer_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
