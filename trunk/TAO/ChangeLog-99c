@@ -1,3 +1,10 @@
+Tue May 11 16:46:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Object.{h,cpp}:
+	  Added the second form of create_request(). It has two
+	  additional args - an exception list and a context list,
+	  which are both unused in this implementation.
+
 Tue May 11 16:03:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:

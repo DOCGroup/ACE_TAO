@@ -268,7 +268,32 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
   // is a no-no.
   if (ctx)
     {
-      TAO_THROW(CORBA::NO_IMPLEMENT ());
+      TAO_THROW (CORBA::NO_IMPLEMENT ());
+    }
+  request = new CORBA::Request (this, 
+                                operation, 
+                                arg_list, 
+                                result, 
+                                req_flags,
+                                TAO_IN_ENV);
+}
+
+void
+CORBA_Object::_create_request2 (CORBA::Context_ptr ctx,
+                                const CORBA::Char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::ExceptionList_ptr,
+                                CORBA::ContextList_ptr,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags,
+                                CORBA::Environment &TAO_IN_ENV)
+{
+  // Since we don't really support Context, anything but a null pointer
+  // is a no-no.
+  if (ctx)
+    {
+      TAO_THROW (CORBA::NO_IMPLEMENT ());
     }
   request = new CORBA::Request (this, 
                                 operation, 
