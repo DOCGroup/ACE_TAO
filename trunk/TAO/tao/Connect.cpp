@@ -877,7 +877,6 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
   if (this->calling_thread_ == ACE_Thread::self ())
     {
       // we are now a leader getting its response
-      // or a follower faking the handle_input
       
       this->input_available_ = 1;
       
@@ -909,6 +908,10 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
       // We should wake suspend the thread before we wake him up.
       // resume_handler is called in TAO_GIOP_Invocation::invoke
       
+      // @@ TODO (Michael): We might be able to optimize this in
+      // doing the suspend_handler as last thing, but I am not sure 
+      // if a race condition would occur.
+
       if (orb_Core_ptr->leader_follower_lock ().acquire () == -1)
 	      ACE_ERROR_RETURN ((LM_ERROR,
 			                    "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
