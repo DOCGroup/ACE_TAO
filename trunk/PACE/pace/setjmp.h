@@ -66,10 +66,6 @@ extern "C" {
   PACE_INLINE void pace_siglongjmp (pace_sigjmp_buf env, int val);
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/setjmp.inl"
