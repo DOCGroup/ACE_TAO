@@ -209,7 +209,7 @@ class TAO_Default_Proxy_Factory
 public:
  TAO_Default_Proxy_Factory (int register_proxy_factory);
  {
-   // Unless told dont register. By default registration is done.
+   // Unless told don't register. By default registration is done.
    // This comes in handy while creating the TAO_Proxy_Factory_Adapter
    // instance since we want either the user to set the factory. Only
    // if that doesnt happen will the TAO_Default_Proxy_Factory be set
@@ -380,10 +380,10 @@ created from then on will be the default one.
 
 <Hr><P>
 <h3><a name="Options">Usage Options</a></h3>
-<p> To use this feature in TAO, one must set the following options:
-(1) TAO_HAS_SMART_PROXIES has to be defined in $TAO_ROOT/tao/orbconf.h
-and (2) Generate smart proxy classes using the IDL compiler option of
--Gsp and (3) Build TAO/tao with smart_proxies=1 flag.
+<p> To use this feature in TAO, one must do the following:
+(1) Generate smart proxy classes using the IDL compiler option of
+-Gsp and (2) Link client and server to the TAO_SmartProxies library, in 
+$ACE_ROOT/TAO/tao/SmartProxies.
 A new smart proxy option has been added to the design: one-shot or
 permanent versus per-object smart proxy.  The one-shot smart proxy
 option denotes that the smart proxy factory is registered permanently
@@ -415,8 +415,8 @@ contributing the implementation inheritance feature.
 <Hr><P>
 <p><h3>Last Update</h3></3>
 
-<p> Date: 31Mar2000</p>
-<p> By: <a href="mailto:kirthika@cs.wustl.edu">Kirthika Parameswaran</a></p>
+<p> Date: 02Jul2001</p>
+<p> By: <a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a></p>
 
 </BODY>
 </HTML>
