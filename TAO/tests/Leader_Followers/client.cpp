@@ -18,6 +18,8 @@
 #include "ace/Task.h"
 #include "testC.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Leader_Followers, client, "$Id$")
 
   // Name of file contains ior.

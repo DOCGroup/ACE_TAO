@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "tao/RT_Policy_i.h"
 
+#include "tao/Strategies/advanced_resource.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test

@@ -317,8 +317,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
     <TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary
         object reference for an initial service. The IOR could be in any
-        one of the following formats : OMG IOR, URL, iioploc (including
-        uioploc) or file. iioploc is a multiple end-point IOR understood by
+        one of the following formats : OMG IOR, URL, corbaloc (including
+        uioploc) or file. corbaloc is a multiple end-point IOR understood by
         the string_to_object () method and used as a boot-strapping
         mechanism by the resolve_initial_references () method. The mappings
         specified through this argument override the orb-install-time
@@ -336,7 +336,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         slash '/' ('|' for UIOP pluggable protocol) and a simple
         object key, forms a new URL to identify an initial object
         reference. The URL prefix format currently supported is
-        iioploc.
+        corbaloc.
     </TD>
   </TR>
 
@@ -402,42 +402,17 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TR>
     <TD><CODE>-ORBReactorType</CODE> <EM>which</EM></TD>
     <TD><a name="-ORBReactorType"></a>Specify what kind of reactor does the
-        ORB use, the options are:
+        ORB use, the default option is:
         <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
           <TR><TH><em>which</em></TH><TH>Reactor</TH>
         </TR>
-        <TR><TD><CODE>select_mt<CODE></TD><TD>Use the
-            <CODE>ACE_Select_Reactor</CODE> with the usual
-            locking mechanism for this platform</TD>
-      </TR>
-      <TR><TD><CODE>select_st<CODE></TD><TD>Use the
-          <CODE>ACE_Select_Reactor</CODE> with null locks
-      </TD>
-    </TR>
-    <TR><TD><CODE>fl<CODE></TD><TD>Use the
-        <CODE>ACE_FlReactor</CODE> only available if ACE
-        was compiled with support for the FL toolkit
-    </TD>
-  </TR>
-</TR>
-<TR><TD><CODE>wfmo<CODE></TD>
-<TD>Use the
-    <CODE>ACE_WFMO_Reactor</CODE> only available on
-    Win32 platforms.
-</TD>
-</TR>
-<TR><TD><CODE>msg_wfmo<CODE></TD><TD>Use the
-    <CODE>ACE_Msg_WFMO_Reactor</CODE> only available on
-    Win32 platforms.
-</TD>
-</TR>
-<TR><TD><CODE>tp<CODE></TD><TD>Use the
+		<TR><TD><CODE>tp<CODE></TD><TD>Use the
     <CODE>ACE_TP_Reactor</CODE>, a select based
     thread-pool reactor.
 </TD>
 </TR>
 </TABLE>
-The default is <code>select_mt</code></TD>
+</TD>
 </TR>
   <TR>
     <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
@@ -452,9 +427,8 @@ The default is <code>select_mt</code></TD>
   <TD><CODE>-ORBProtocolFactory</CODE> <EM>factory</EM></TD>
   <TD><a name="-ORBProtocolFactory"></a>
       Specify which pluggable protocol factory to load.  By default,
-      the factories for the IIOP, UIOP and, SHMIOP protocols
-      (<code>IIOP_Factory</code>, <code>UIOP_Factory</code> and,
-      <code>SHMIOP_Factory</code> respectively) are loaded.
+      only the factory for the IIOP protocol
+      (<code>IIOP_Factory</code> is loaded.
       <p>
       For example, if some protocol called <em><code>Foo</code></em> whose
       factory was called <em><code>Foo_Factory</code></em> was available,
@@ -462,7 +436,7 @@ The default is <code>select_mt</code></TD>
       <code>-ORBProtocolFactory Foo_Factory</code> in the service
       configurator file. The
       <em><code>Foo</code></em> pluggable protocol would then be available
-      for use.
+      for use.		
   </TD>
 </TR>
 <TR>

@@ -201,10 +201,10 @@ $ server -ORBInitRef NameService=file://ns.ior
       between the hosts, or that the user will copy the file across
       the network.  If we know what host and port the Naming Service
       is using to accept IIOP requests then we can use the
-      <CODE>iioploc:</CODE> scheme:
+      <CODE>corbaloc:</CODE> scheme:
     </P>
 <PRE>
-$ server -ORBInitRef NameService=iioploc://ace.cs.wustl.edu:12345/NameService
+$ server -ORBInitRef NameService=corbaloc:iiop:ace.cs.wustl.edu:12345/NameService
 </PRE>
     <P>In fact, controlling the host and port of any TAO program,
       including the Naming Service is easy, just use the
@@ -254,7 +254,7 @@ $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -f name_service.dat
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Sat Nov 27 15:47:01 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sun Nov 28 23:31:04 CST 1999
+Last modified: Wed Nov 15 16:22:13 PST 2000
 <!-- hhmts end -->
   </body>
 </html>

@@ -375,6 +375,9 @@ public:
   TAO_Server_Strategy_Factory *server_factory (void);
   //@}
 
+  /// Sets the value of TAO_ORB_Core::resource_factory_
+  static void set_resource_factory (const char *resource_factory_name);
+  
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
   int is_collocated (const TAO_MProfile& mprofile);
@@ -476,9 +479,7 @@ public:
                                 int&,
                                 ACE_Time_Value&);
 
-  // @@ Priyanka: this should be a private member!
-  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
-  static Timeout_Hook timeout_hook_;
+  static void set_timeout_hook (Timeout_Hook hook);
 
   /// Access to the RoundtripTimeoutPolicy policy set on the thread or
   /// on the ORB.  In this method, we do not consider the stub since
@@ -487,8 +488,6 @@ public:
   CORBA::Policy *default_relative_roundtrip_timeout (void) const;
   CORBA::Policy *stubless_relative_roundtrip_timeout (void);
   //@}
-
-  static void set_timeout_hook (Timeout_Hook hook);
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -880,6 +879,9 @@ private:
                                               TAO_ORB_Core *other_orb,
                                               const TAO_MProfile &mprofile);
 
+  /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
+  static Timeout_Hook timeout_hook_;
+
 protected:
 
   /// Synchronize internal state...
@@ -947,6 +949,11 @@ protected:
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
 
+  // Name of the resource factory that needs to be instantiated.
+  // The default value is "Resource_Factory". If TAO_Strategies is
+  // linked, the set_resource_factory will be called to set the value
+  // to be "Advanced_Resource_Factory".
+  static const char *resource_factory_name_;
 
   // @@ This is not needed since the default resource factory
   //    is staticaly added to the service configurator.

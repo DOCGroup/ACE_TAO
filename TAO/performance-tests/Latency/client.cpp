@@ -7,6 +7,8 @@
 #include "ace/Sched_Params.h"
 #include "testC.h"
 
+//#include "tao/Strategies/advanced_resource.h"
+
 ACE_RCSID(Latency, client, "$Id$")
 
 const char *ior = "file://test.ior";
@@ -164,7 +166,6 @@ main (int argc, char *argv[])
       for (int j = 0; j != nthreads; ++j)
         {
           client[j].accumulate_into (throughput);
-
           char buf[64];
           ACE_OS::sprintf (buf, "Thread[%d]", j);
           client[j].dump_stats (buf, gsf);

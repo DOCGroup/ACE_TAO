@@ -150,16 +150,20 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 
             if (ACE_OS::strcasecmp (name,
                                     "lru") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::LRU;
+              this->connection_caching_type_ =
+                TAO_Resource_Factory::LRU;
             else if (ACE_OS::strcasecmp (name,
                                          "lfu") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::LFU;
+              this->connection_caching_type_ =
+                TAO_Resource_Factory::LFU;
             else if (ACE_OS::strcasecmp (name,
                                          "fifo") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::FIFO;
+              this->connection_caching_type_ =
+                TAO_Resource_Factory::FIFO;
             else if (ACE_OS::strcasecmp (name,
                                          "null") == 0)
-              this->connection_caching_type_ = TAO_Resource_Factory::NOOP;
+              this->connection_caching_type_ =
+                  TAO_Resource_Factory::NOOP;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO_Default_Factory - unknown argument")
