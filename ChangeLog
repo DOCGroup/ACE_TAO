@@ -11,6 +11,8 @@ Mon Mar 20 17:54:15 2000  Darrell Brunsch <brunsch@uci.edu>
           me that it doesn't work on Win95, and <torsten_pf@geocities.com> 
           for pointing out this doesn't work on Win98 either.
 
+          [BUG 499]
+
 Mon Mar 20 12:45:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux_lxpthread.GNU:
