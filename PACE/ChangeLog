@@ -1,3 +1,13 @@
+Mon Jun 26 12:24:36 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/pace/posix/TODO:
+
+	  Updated.
+
+	* pace/pace/win32/*.[h,inl,cpp] README TODO:
+
+	  Added to repository.
+
 Mon Jun 26 11:03:00 2000 John Heitmann <jwh1@cs.wustl.edu>
 
         * pace/pace/posix/pwd.inl
