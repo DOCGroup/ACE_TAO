@@ -1,36 +1,41 @@
+Tue Jun 09 14:35:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Tokens_Test.cpp,UPIPE_SAP_Test.cpp: only need the
+          template instantiations with Borland C++.
+
 Tue Jun 09 12:50:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ACE_Library.mak: Added Stats.cpp.
+        * ace/ACE_Library.mak: Added Stats.cpp.
 
 Tue Jun 09 11:51:17 1998 Chris Gill  <cdgill@tango.cs.wustl.edu>
 
-	* tests/MM_Shared_Memory_Test: added a null pointer check so
-	  test complains rather than crashing when shared allocator fails.
+        * tests/MM_Shared_Memory_Test: added a null pointer check so
+          test complains rather than crashing when shared allocator fails.
 
 Mon Jun  8 21:03:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp (any_ready): Fixed a more unrighteous bug
- 	  where we were assigning the values in the wait_set_ rather than
- 	  the ready_set_.  Thanks to Stefan Ericsson
- 	  <Stefan.Ericsson@osd.uab.ericsson.se> for reporting this bug.
+        * ace/Select_Reactor.cpp (any_ready): Fixed a more unrighteous bug
+          where we were assigning the values in the wait_set_ rather than
+          the ready_set_.  Thanks to Stefan Ericsson
+          <Stefan.Ericsson@osd.uab.ericsson.se> for reporting this bug.
 
 Mon Jun  8 19:15:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h:
-	* ace/Malloc_Base.h (ACE_Allocator): Moved the definition of
-	  abstract class ACE_Allocator from Malloc.h to a new file called
-	  Malloc_Base.h to resolve a circular dependency among a bunch of
-	  header files when compiling with UNICODE and inline enabled.
+        * ace/Malloc.h:
+        * ace/Malloc_Base.h (ACE_Allocator): Moved the definition of
+          abstract class ACE_Allocator from Malloc.h to a new file called
+          Malloc_Base.h to resolve a circular dependency among a bunch of
+          header files when compiling with UNICODE and inline enabled.
 
-	* ace/SString.i: Changed to include "ace/Malloc_Base.h" to avoid
-	  circular inclusion.
+        * ace/SString.i: Changed to include "ace/Malloc_Base.h" to avoid
+          circular inclusion.
 
 Mon Jun 08 18:35:23 1998  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Added some updated HP-UX info (and a pointer to
-	  Riverace's HP-UX hints page) and removed the warning to not use
-	  MSVC 5.0 SP3 - per results from ace-users discussions last week,
-	  SP3 is getting used successfully.
+        * ACE-INSTALL.html: Added some updated HP-UX info (and a pointer to
+          Riverace's HP-UX hints page) and removed the warning to not use
+          MSVC 5.0 SP3 - per results from ace-users discussions last week,
+          SP3 is getting used successfully.
 
 Mon Jun 08 13:22:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
