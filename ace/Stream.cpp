@@ -110,6 +110,93 @@ ACE_Stream<ACE_SYNCH_USE>::top (ACE_Module<ACE_SYNCH_USE> *&m)
     }
 }
 
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::insert (const ACE_TCHAR *prev_name,
+                                   ACE_Module<ACE_SYNCH_USE> *mod)
+{
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::insert");
+
+  for (ACE_Module<ACE_SYNCH_USE> *prev_mod = this->stream_head_;
+       prev_mod != 0;
+       prev_mod = prev_mod->next ())
+    if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
+      {
+        ACE_Module<ACE_SYNCH_USE> *next_mod = prev_mod->next ();
+        ACE_Task<ACE_SYNCH_USE> *m_reader = mod->reader ();
+        ACE_Task<ACE_SYNCH_USE> *m_writer = mod->writer ();
+
+        next_mod->reader ()->next (m_reader);
+        m_writer->next (next_mod->writer ());
+
+        prev_mod->next (mod);
+        prev_mod->writer ()->next (m_writer);
+        m_reader->next (prev_mod->reader ());
+
+        mod->next (next_mod);
+
+        if (m_reader->open (mod->arg ()) == -1)
+          return -1;
+
+        if (m_writer->open (mod->arg ()) == -1)
+          return -1;
+
+        return 0;
+      }
+
+  return -1;
+}
+
+template <ACE_SYNCH_DECL> int
+ACE_Stream<ACE_SYNCH_USE>::replace (const ACE_TCHAR *replace_name,
+                                    ACE_Module<ACE_SYNCH_USE> *mod,
+                                    int flags)
+{
+  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::replace");
+  ACE_Module<ACE_SYNCH_USE> *prev_mod = 0;
+
+  for (ACE_Module<ACE_SYNCH_USE> *rep_mod = this->stream_head_;
+       rep_mod != 0;
+       rep_mod = rep_mod->next ())
+    if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
+      {
+        if (prev_mod == 0) // Do you want to replace <stream_head_>?
+          return -1;       // Might be modified?
+        else
+          {
+            ACE_Module<ACE_SYNCH_USE> *next_mod = rep_mod->next ();
+            ACE_Task<ACE_SYNCH_USE> *m_reader = mod->reader ();
+            ACE_Task<ACE_SYNCH_USE> *m_writer = mod->writer ();
+
+            next_mod->reader ()->next (m_reader);
+            m_writer->next (next_mod->writer ());
+
+            prev_mod->next (mod);
+            prev_mod->writer ()->next (m_writer);
+            m_reader->next (prev_mod->reader ());
+
+            mod->next (next_mod);
+
+            if (m_reader->open (mod->arg ()) == -1)
+              return -1;
+
+            if (m_writer->open (mod->arg ()) == -1)
+              return -1;
+          }
+
+        if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
+          {
+            rep_mod->close (flags);
+            delete rep_mod;
+          }
+
+        return 0;
+      }
+    else
+      prev_mod = rep_mod;
+
+  return -1;
+}
+
 // Remove the "top" ACE_Module in a ACE_Stream, skipping over the
 // stream_head.
 
