@@ -3,6 +3,7 @@
 #include "client.h"
 
 
+
 ACE_RCSID(benchmark, client, "$Id$")
 
 Client_StreamEndPoint::Client_StreamEndPoint (void)
@@ -109,15 +110,41 @@ ttcp_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
   if (this->acceptor_.acceptor ().get_local_addr (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)acceptor get local addr failed %p"),0);
 
+
   char client_address_string [BUFSIZ];
+
   ::sprintf (client_address_string,
              "%s:%d",
              local_addr.get_host_name (),
-             //             "mambo-atm.cs.wustl.edu",
              local_addr.get_port_number ());
-  the_spec.length (1);
-  the_spec [0] = CORBA::string_dup (client_address_string);
 
+  ACE_INET_Addr addr (client_address_string);
+
+
+  char *flowname_;
+  ACE_NEW_RETURN (flowname_,
+                  char [BUFSIZ],
+                  0);
+  ACE_OS::sprintf (flowname_,
+                   "Data_%s",
+                   "TCP");
+
+  char flow_protocol_str [BUFSIZ];
+  ACE_OS::strcpy (flow_protocol_str,"");
+
+  TAO_Forward_FlowSpec_Entry entry (flowname_,
+                                    "IN",
+                                    "USER_DEFINED",
+                                    flow_protocol_str,
+                                    "TCP",
+                                    &addr);
+
+  entry.set_local_addr (&addr);
+  
+  the_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+  the_spec.length (1);
+  
+  
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
               client_address_string));
@@ -209,6 +236,8 @@ Globals::parse_args (int argc,
 int
 Client::svc (void)
 {
+
+  printf ("Within the SVC method\n");
   // Now start pumping data.
   ACE_High_Res_Timer timer;
   ACE_Time_Value tv1,tv2;
@@ -265,6 +294,8 @@ Client::svc (void)
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+
       if (this->bind_to_server () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Error binding to the naming service\n"),
@@ -282,12 +313,32 @@ Client::svc (void)
       AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
       // Bind the client and server mmdevices.
 
+      ACE_INET_Addr addr ("danzon:5000");
+
+      char* flowname_;
+      ACE_NEW_RETURN (flowname_,
+                      char [BUFSIZ],
+                      0);
+      ACE_OS::sprintf (flowname_,
+                       "Data_%s",
+                       "TCP");
+      TAO_Forward_FlowSpec_Entry entry (flowname_,
+                                        "IN",
+                                        "USER_DEFINED",
+                                        "",
+                                        "TCP",
+                                        &addr);
+
+      AVStreams::flowSpec flow_spec (1);
+      flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+      flow_spec.length (1);
+
       timer.start ();
       this->streamctrl_.bind_devs
         (this->client_mmdevice_->_this (),
          this->server_mmdevice_.in (),
          the_qos.inout (),
-         the_flows.in (),
+         flow_spec,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
