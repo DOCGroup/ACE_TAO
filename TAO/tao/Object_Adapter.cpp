@@ -511,9 +511,6 @@ PortableServer::Servant
 TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
-
   PortableServer::ObjectId id;
   TAO_POA *poa = 0;
 
