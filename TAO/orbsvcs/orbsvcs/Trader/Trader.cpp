@@ -105,30 +105,33 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
 #include "Trader_T.h"
 
 TAO_Trader_Factory::TAO_TRADER*
-TAO_Trader_Factory::TAO_create_linked_trader (void)
+TAO_Trader_Factory::create_linked_trader (void)
 {
-  TAO_TRADER::Trader_Components linked_trader =
-    (TAO_TRADER::Trader_Components)
-    (TAO_TRADER::LOOKUP |
-     TAO_TRADER::REGISTER |
-     TAO_TRADER::ADMIN |
-     TAO_TRADER::LINK);
-  return new TAO_TRADER (linked_trader);
+  typedef TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>  NULL_TRADER;
+  
+  NULL_TRADER::Trader_Components linked_trader =
+    (NULL_TRADER::Trader_Components)
+    (NULL_TRADER::LOOKUP |
+     NULL_TRADER::REGISTER |
+     NULL_TRADER::ADMIN |
+     NULL_TRADER::LINK);
+  return new NULL_TRADER (linked_trader);
 }
 
 #ifdef ACE_HAS_THREADS
-
-TAO_Trader_Factory::TAO_MT_TRADER*
-TAO_Trader_Factory::TAO_MT_create_linked_trader (void)
+/*
+TAO_Trader_Factory::TAO_TRADER*
+TAO_Trader_Factory::create_MT_linked_trader (void)
 {
-  TAO_MT_TRADER::Trader_Components linked_trader =
-    (TAO_MT_TRADER::Trader_Components)
-    (TAO_MT_TRADER::LOOKUP |
-     TAO_MT_TRADER::REGISTER |
-     TAO_MT_TRADER::ADMIN |
-     TAO_MT_TRADER::LINK);
-  return new TAO_MT_TRADER (linked_trader);
+  typedef TAO_Trader<ACE_Thread_Mutex, ACE_RW_Mutex>  MT_TRADER;
+  MT_TRADER::Trader_Components linked_trader =
+    (MT_TRADER::Trader_Components)
+    (MT_TRADER::LOOKUP |
+     MT_TRADER::REGISTER |
+     MT_TRADER::ADMIN |
+     MT_TRADER::LINK);
+  return new MT_TRADER (linked_trader);
 }
-
+*/
 #endif /* ACE_HAS_THREADS */
 

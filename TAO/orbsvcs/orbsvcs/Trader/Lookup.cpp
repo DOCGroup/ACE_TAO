@@ -203,6 +203,7 @@ perform_lookup (const char* type,
   TYPE_STRUCT type_struct (rep->fully_describe_type (type, env));
   TAO_CHECK_ENV_RETURN (env,);
   TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
+  TAO_CHECK_ENV_RETURN (env,);
   TAO_Constraint_Validator validator (type_struct.ptr ());
   TAO_Constraint_Interpreter constr_inter (validator, constraint, env);
   TAO_CHECK_ENV_RETURN (env,);
@@ -261,6 +262,8 @@ lookup_one_type (const char* type,
 		 TAO_Preference_Interpreter& pref_inter,
 		 TAO_Offer_Filter& offer_filter)
 {
+  ACE_DEBUG ((LM_DEBUG, "TAO_Lookup: Performing query for %s\n", type));
+  
   // Retrieve an iterator over the offers for a given type.
   auto_ptr<LOCAL_OFFER_ITER>
     offer_iter (service_type_map.get_offers (type));
@@ -325,16 +328,17 @@ lookup_all_subtypes (const char* type,
   // been located and their offers considered, or we've exhausted the
   // cardinality constraints.
 
-  string type_string (type);
   TYPE_LIST sub_types, unconsidered_types;
   CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes sst;
   TYPE_NAME_SEQ all_types (service_type_map.list_all_types ());
   
   // All types save the supertype are initially unconsidered.
-  sub_types.push_back (type_string);
+  sub_types.push_back ((char *) type);
   for (int i = all_types->length () - 1; i >= 0; i--)
-    unconsidered_types.push_back (string (all_types[i]));
-  unconsidered_types.remove (type_string);
+    {
+      if (ACE_OS::strcmp (type, all_types[i]) != 0)
+	unconsidered_types.push_back ((char *) (const char *) all_types[i]);
+    }
 
   // Iterate over the remaining subtypes to locate their subtypes.
   // We could meet our cardinality constraints prior searching all
@@ -342,7 +346,7 @@ lookup_all_subtypes (const char* type,
   while (! sub_types.empty () && offer_filter.ok_to_consider_more ())  
   {
     // For each potential supertype, iterate over the remaining types.
-    const char* super_type = sub_types.front ().data ();
+    const char* super_type = sub_types.front ();
     sub_types.pop_front ();
     for (int j = unconsidered_types.size () - 1;
 	 j >= 0 && offer_filter.ok_to_consider_more ();
@@ -350,12 +354,14 @@ lookup_all_subtypes (const char* type,
       {
 	TYPE_STRUCT type_struct;
 	CORBA::Boolean is_sub_type = 0;
-	string type_name = unconsidered_types.front ();
+	const char* type_name = unconsidered_types.front ();
 	unconsidered_types.pop_front ();
 	
 	TAO_TRY
 	  {
-	    type_struct = rep->describe_type (type_name.data (), TAO_TRY_ENV);
+	    // Obtain a description of the prospective type.
+	    type_struct = rep->describe_type (type_name, TAO_TRY_ENV);
+	    TAO_CHECK_ENV;
 	  }
 	TAO_CATCHANY
 	  {
@@ -363,27 +369,29 @@ lookup_all_subtypes (const char* type,
 	  }
 	TAO_ENDTRY;
 
-	// Determine if the prospective type is a subtype of the given one.
+	// Determine if the prospective type is a subtype of the current
+	// one -- that is, has the current one as its supertype.
 	for (int k = type_struct->super_types.length () - 1;
 	     k >= 0 &&
-	       ACE_OS::strcmp (type_struct->super_types[k], super_type);
+	       ACE_OS::strcmp ((const char *) type_struct->super_types[k],
+			       super_type);
 	     k--)
 	  ;
 
 	// If this type isn't a subtype, return it to the queue for
 	// later consideration.
 	if (k < 0)
-	  unconsidered_types.push_back (type_name);
+	  unconsidered_types.push_back ((char *) type_name);
 	else
 	  {
 	    // Otherwise, perform a constraint match on the type, and
 	    // add it to the queue of potential supertypes.
-	    this->lookup_one_type (type_name.data (),
+	    this->lookup_one_type (type_name,
 				   service_type_map,
 				   constr_inter,
 				   pref_inter,
 				   offer_filter);
-	    sub_types.push_back (type_name);
+	    sub_types.push_back ((char *) type_name);
 	  }
       }
   }
@@ -502,8 +510,8 @@ TAO_Lookup<TRADER>::duplicate_stem_id (TAO_Policies& policies,
   TAO_CHECK_ENV_RETURN (_env, return_value);
 
   // If the stem_id was provided and is a duplicate, return true.
-  if ((! request_id.ptr () == 0) &&
-      (this->request_ids_.insert (request_id)).second)
+  if ((request_id.ptr () != 0) &&
+      (this->request_ids_.insert (request_id)).second == 0)
     return_value = CORBA::B_TRUE;
 
   return return_value;

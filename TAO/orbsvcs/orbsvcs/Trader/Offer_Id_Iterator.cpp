@@ -70,41 +70,51 @@ TAO_Offer_Id_Iterator::next_n(CORBA::ULong n,
 			      CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
-  // Calculate the number of Ids to be returned in this . 
+  // Calculate the number of Ids to be returned in this.
   int items_left = this->ids_.size(),
     difference = items_left - n,
     returnable_items = (difference >= 0) ? n : items_left;
-
+  CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);
+    
   if (returnable_items == 0)
-    _ids = new CosTrading::OfferIdSeq;
+    {
+      ACE_NEW_RETURN (_ids, CosTrading::OfferIdSeq, return_value);
+    }
   else
     {
       // Allocate space for the returned OfferIds.
       CosTrading::OfferId* id_buf =
 	CosTrading::OfferIdSeq::allocbuf (returnable_items);
-      
-      // Copy in those ids!
-      for (int i = 0; i < returnable_items; i++)
-	{
-	  char* offer_id = this->ids_.front ();
-	  id_buf[i] = offer_id;
-	  this->ids_.pop ();
+
+      if (id_buf != 0)
+	{      
+	  // Copy in those ids!
+	  for (int i = 0; i < returnable_items; i++)
+	    {
+	      char* offer_id = this->ids_.front ();
+	      id_buf[i] = offer_id;
+	      this->ids_.pop ();
+	    }
+	  
+	  // Place them into an OfferIdSeq.
+	  ACE_NEW_RETURN (_ids,
+			  CosTrading::OfferIdSeq (returnable_items,
+						  returnable_items,
+						  id_buf,
+						  1),
+			  return_value);
 	}
-      
-      // Place them into an OfferIdSeq.
-      _ids = new CosTrading::OfferIdSeq (returnable_items,
-					 returnable_items,
-					 id_buf,
-					 1);
+      else
+	ACE_NEW_RETURN (_ids, CosTrading::OfferIdSeq, return_value);
     }
 
   // Return true only if there are items left to be returned in
   // subsequent calls.
-  return (CORBA::Boolean)(difference > 0);
+  return return_value;
 }
 
 void
-TAO_Offer_Id_Iterator::insert_id(const char* new_id)
+TAO_Offer_Id_Iterator::insert_id(CosTrading::OfferId new_id)
 {
-  this->ids_.push (CORBA::string_dup (new_id));
+  this->ids_.push (new_id);
 }

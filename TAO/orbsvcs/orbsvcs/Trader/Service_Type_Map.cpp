@@ -260,7 +260,7 @@ TAO_Service_Type_Map<LOCK_TYPE>::retrieve_all_offer_ids (void)
 	   offer_iter++)
 	{
 	  HUGE_NUMBER offer_index = (*offer_iter).first;
-	  CosTrading::OfferId_var offer_id = 
+	  CosTrading::OfferId offer_id = 
 	    this->generate_offer_id (service_type, offer_index); 
 
 	  id_iterator->insert_id (offer_id);
