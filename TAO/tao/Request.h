@@ -247,6 +247,10 @@ private:
   CORBA_Request_ptr &ptr_;
 };
 
+#if defined (__ACE_INLINE__)
+# include "tao/Request.i"
+#endif /* __ACE_INLINE__ */
+
 // Make sure you instantiate this in Request.cpp
 class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
 {
@@ -384,10 +388,6 @@ private:
   // assignment from T_var not allowed
   void operator= (const CORBA_ORB_RequestSeq_var &);
 };
-
-#if defined (__ACE_INLINE__)
-# include "tao/Request.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
