@@ -548,7 +548,7 @@ Key_List::output_switch (void)
           int i = 0;
 
           printf ("              %s%s *resword; %s\n\n",
-                  option[CONST] ? "const " : "",
+                  option[CONSTANT] ? "const " : "",
                   pointer_and_type_enabled ? struct_tag : "char",
                   option[LENTABLE] && !option[DUP] ? "int key_len;" : "");
           if (total_switches == 1)
@@ -676,7 +676,7 @@ Key_List::output_keylength_table (void)
   if (!option[DUP] && !option[SWITCH])
     {
       printf ("\n%sstatic %sunsigned %s lengthtable[] =\n%s%s{\n    ",
-              indent, option[CONST] ? "const " : "",
+              indent, option[CONSTANT] ? "const " : "",
               max_key_len <= UCHAR_MAX ? "char" : (max_key_len <= USHRT_MAX ? "short" : "long"),
               indent, indent);
 
@@ -708,7 +708,7 @@ Key_List::output_keyword_table (void)
 
   printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
           indent,
-          option[CONST] ? "const " : "",
+          option[CONSTANT] ? "const " : "",
           struct_tag,
           indent,
           indent);
@@ -803,7 +803,7 @@ Key_List::output_hash_function (void)
   printf (option[ANSI]
           ? "%s (const char *str, int len)\n{\n  static %sunsigned %s asso_values[] =\n    {"
           : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n  static %sunsigned %s asso_values[] =\n    {",
-          option.get_hash_name (), option[CONST] ? "const " : "",
+          option.get_hash_name (), option[CONSTANT] ? "const " : "",
           max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
 
   for (count = 0; count < ALPHA_SIZE; ++count)
@@ -1048,7 +1048,7 @@ Key_List::output_lookup_array (void)
 
       char *indent = option[GLOBAL] ? "" : "  ";
 
-      printf ("%sstatic %s%s lookup[] =\n%s%s{\n      ", indent, option[CONST] ? "const " : "",
+      printf ("%sstatic %s%s lookup[] =\n%s%s{\n      ", indent, option[CONSTANT] ? "const " : "",
               max <= SCHAR_MAX ? "char" : (max <= USHRT_MAX ? "short" : "int"),
               indent, indent);
 
@@ -1100,7 +1100,7 @@ Key_List::output_lookup_function (void)
       else
 	{
 	  printf ("            {\n"
-		  "              %schar *s = wordlist[index]", option[CONST] ? "const " : "");
+		  "              %schar *s = wordlist[index]", option[CONSTANT] ? "const " : "");
 	  if (array_type != default_array_type)
 	    printf (".%s", option.get_key_name ());
 
@@ -1118,8 +1118,8 @@ Key_List::output_lookup_function (void)
               "              %s%s*base = &wordlist[-lookup[offset]];\n"
               "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
-              option[CONST] ? "const " : "", struct_tag,
-              option[CONST] ? "const " : "", struct_tag);
+              option[CONSTANT] ? "const " : "", struct_tag,
+              option[CONSTANT] ? "const " : "", struct_tag);
       if (array_type != default_array_type)
         {
           if (option[COMP])
@@ -1146,7 +1146,7 @@ Key_List::output_lookup_function (void)
 	printf ("          return %swordlist[key]", option[TYPE] && option[POINTER] ? "&" : "");
       else
 	{
-	  printf ("          %schar *s = wordlist[key]", option[CONST] ? "const " : "");
+	  printf ("          %schar *s = wordlist[key]", option[CONSTANT] ? "const " : "");
 
 	  if (array_type != default_array_type)
 	    printf (".%s", option.get_key_name ());
@@ -1253,7 +1253,7 @@ Key_List::output (void)
 	    "  static %s%s%s (const char *str, int len);\n};\n\n",
 	    option.get_class_name (),
             option.get_hash_name (),
-            option[CONST] ? "const " : "",
+            option[CONSTANT] ? "const " : "",
 	    return_type,
             option.get_function_name ());
 
@@ -1278,7 +1278,7 @@ Key_List::output (void)
   if (option[INLINE])		// Use the inline keyword to remove function overhead.
     printf ("inline\n");
 
-  printf ("%s%s\n", option[CONST] ? "const " : "", return_type);
+  printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
   if (option[CPLUSPLUS])
     printf ("%s::", option.get_class_name ());
 

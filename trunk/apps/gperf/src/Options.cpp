@@ -150,7 +150,7 @@ Options::~Options (void)
                        "\nRANDOM is......: %s\nDEFAULTCHARS is: %s\nSWITCH is......: %s"
                        "\nPOINTER is.....: %s\nNOLENGTH is....: %s\nLENTABLE is....: %s"
                        "\nDUP is.........: %s\nFAST is........: %s\nCOMP is.....: %s"
-                       "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONST is....: %s"
+                       "\nNOTYPE is......: %s\nGLOBAL is......: %s\nCONSTANT is....: %s"
                        "\nCPLUSPLUS is...: %s\nC is...........: %s\nENUM is.....: %s"
                        "\nSTRCASECMP is...: %s\nOPTIMIZE is...........: %s"
                        "\niterations = %d\nlookup function name = %s\nhash function name = %s"
@@ -172,7 +172,7 @@ Options::~Options (void)
                        ACE_BIT_ENABLED (option_word, COMP) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, NOTYPE) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, GLOBAL) ? "enabled" : "disabled",
-                       ACE_BIT_ENABLED (option_word, CONST) ? "enabled" : "disabled",
+                       ACE_BIT_ENABLED (option_word, CONSTANT) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, CPLUSPLUS) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, C) ? "enabled" : "disabled",
                        ACE_BIT_ENABLED (option_word, ENUM) ? "enabled" : "disabled",
@@ -225,7 +225,7 @@ Options::operator() (int argc, char *argv[])
           }
         case 'C':               // Make the generated tables readonly (const).
           {
-            ACE_SET_BITS (option_word, CONST);
+            ACE_SET_BITS (option_word, CONSTANT);
             break;
           }
         case 'd':               // Enable debugging option.
