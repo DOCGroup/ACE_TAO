@@ -1,3 +1,30 @@
+Thu Mar 10 14:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/ClientRequestInfo.h:
+        * tao/CodecFactory.h:
+        * tao/CodecFactory_ORBInitializer.h:
+        * tao/FloatSeqS.h:
+        * tao/PICurrent.h:
+        * tao/PICurrent_ORBInitializer.h:
+        * tao/Policy_Manager.h:
+        * tao/orb_typesS.h:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/IORManipulation/IORManipulation.h:
+        * tao/RTScheduling/RTScheduler_Initializer.h:
+        * tao/RTScheduling/RTScheduler_includeC.h:
+        * tao/Strategies/sciop_endpoints.h:
+        * tao/Strategies/uiop_endpoints.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+          Removed checks for _MSC_VER >= 1200, just check for _MSC_VER
+
 Thu Mar 10 14:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Twoways/Coordinator.h:
