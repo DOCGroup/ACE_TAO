@@ -298,6 +298,12 @@ public:
   int gen_operation_table (void);
   // Generate the operation table including entries for inherited interfaces.
 
+  int gen_operation_table (const char *flat_name,
+                           const char *skeleton_class_name);
+  // Like the previous version, but receive the class "flat name" and
+  // skeleton names as arguments.  Useful in the generation of closely
+  // related classes, such as the AMH skeleton.
+
   int gen_optable_entries (be_interface *);
   // generate the operation table entries.
 
@@ -327,34 +333,34 @@ private:
   // Output the header (type declaration and %%) to the gperf's input
   // file.
 
-  int gen_gperf_things (void);
+  int gen_gperf_things (const char *flat_name);
   // Run GPERF and get the correct lookup and other operations
   // depending on which strategy we are using. Returns 0 on sucess, -1
   // on error.
 
-  void gen_perfect_hash_class_definition (void);
+  void gen_perfect_hash_class_definition (const char *flat_name);
   // Outputs the class definition for the perfect hashing. This class
   // will inherit from the TAO_Perfect_Hash_OpTable.
 
-  void gen_binary_search_class_definition (void);
+  void gen_binary_search_class_definition (const char *flat_name);
   // Outputs the class definition for the binary search . This class
   // will inherit from the TAO_Binary_Search_OpTable.
 
-  void gen_linear_search_class_definition (void);
+  void gen_linear_search_class_definition (const char *flat_name);
   // Outputs the class defintion for the linear search. This class
   // will inherit from the TAO_Linear_Search.
 
-  int gen_gperf_lookup_methods (void);
+  int gen_gperf_lookup_methods (const char *flat_name);
   // This calls the GPERF program and gets the correct operation
   // lookup methods for the current OpLookup strategy.
 
-  void gen_perfect_hash_instance (void);
+  void gen_perfect_hash_instance (const char *flat_name);
   // Create an instance of this perfect hash table.
 
-  void gen_binary_search_instance (void);
+  void gen_binary_search_instance (const char *flat_name);
   // Create an instance of the binary search optable.
 
-  void gen_linear_search_instance (void);
+  void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
   int skel_count_;
