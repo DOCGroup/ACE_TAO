@@ -8,7 +8,7 @@
 // packet.  Note that we assume that the client sends the login names
 // in sorted order, so we don't bother sorting them!
 
-BS_Server::BS_Server (char *packet)
+BS_Server::BS_Server (const char *packet)
 {
   char *buf_ptr = packet + MAXUSERIDNAMELEN;
 
@@ -49,12 +49,12 @@ BS_Server::BS_Server (char *packet)
 // up because the whod files tend to cluster userids together. */
 
 Protocol_Record *
-BS_Server::insert (char *key_name, int max_len)
+BS_Server::insert (const char *key_name, int max_len)
 {
   static char last_lookup[MAXHOSTNAMELEN];
   static int mid = 0;
   static int result = 0;
-  Protocol_Record **buffer = this->sorted_record;
+  Protocol_Record **buffer = this->sorted_record_;
 
   // First check the cache...
   if (ACE_OS::strncmp (last_lookup, key_name, max_len) == 0)
@@ -67,7 +67,7 @@ BS_Server::insert (char *key_name, int max_len)
       // Store this away in the cache for the next iteration.
       ACE_OS::strncpy (last_lookup, key_name, max_len);
 
-      int hi = this->count - 1;
+      int hi = this->count_ - 1;
       int lo = 0;
       int cmp;
 

@@ -77,7 +77,7 @@ Options::set_options (int argc, char *argv[])
   int add_default_hosts = 1;
 
   Options::program_name = argv[0];
-  Get_Opt getopt (argc, argv, "?aA:bdF:f:hH:Llp:rRsSt:w:");
+  ACE_Get_Opt getopt (argc, argv, "?aA:bdF:f:hH:Llp:rRsSt:w:");
   
   while ((c = getopt ()) != -1)
     {

@@ -33,7 +33,8 @@ public:
   virtual int process (void);
 
 protected:
-  virtual char *handle_protocol_entries (char *bp, Drwho_Node *hp);
+  virtual char *handle_protocol_entries (char *bp,
+                                         Drwho_Node *hp);
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
 };
 

@@ -10,7 +10,7 @@ BS_Client::BS_Client (void)
 
   if (this->count_ < 0)
     ACE_ERROR ((LM_ERROR,
-                "%p\n"n,
+                "%p\n",
                 Options::program_name));
   else
     {
@@ -41,7 +41,7 @@ BS_Client::BS_Client (void)
 // binary search.
 
 Protocol_Record *
-BS_Client::insert (char *key_name, int)
+BS_Client::insert (const char *key_name, int)
 {
 #if 0
   Protocol_Record *pr = (Protocol_Record *) 

@@ -3,7 +3,7 @@
 #include "global.h"
 #include "SL_Server.h"
 
-SL_Server::SL_Server (char *usr_name)
+SL_Server::SL_Server (const char *usr_name)
   : Single_Lookup (usr_name)
 {
 }
@@ -11,12 +11,12 @@ SL_Server::SL_Server (char *usr_name)
 Protocol_Record *
 SL_Server::get_each_entry (void)
 {
-  Protocol_Record *frp = Single_Lookup::get_each_entry ();
-  return frp->get_drwho_list () == 0 ? 0 : frp;
+  Protocol_Record *prp = Single_Lookup::get_each_entry ();
+  return prp->get_drwho_list () == 0 ? 0 : prp;
 }
 
 Protocol_Record *
-SL_Server::insert (char *key_name, int max_len)
+SL_Server::insert (const char *key_name, int max_len)
 {
   return ACE_OS::strncmp (key_name,
                           this->frp->get_login (),

@@ -25,9 +25,9 @@ class Single_Lookup : public Search_Struct
   // = DESCRIPTION
   //   Provides the client's single user lookup table abstraction.
 public:
-  Single_Lookup (char *usr_name);
+  Single_Lookup (const char *usr_name);
   virtual ~Single_Lookup (void);
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
   virtual Protocol_Record *get_next_entry (void);
   virtual Protocol_Record *get_each_entry (void);

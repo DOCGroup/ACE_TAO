@@ -41,7 +41,8 @@ PMC_All::decode (char *packet, int &packet_length)
                   packet_length));
 
       ACE_OS::write (ACE_STDERR, packet, packet_length);
-      ACE_DEBUB ((LM_DEBUG, "\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n"));
     }
   char 	*cp = packet;
   int remote_users = 0;
@@ -57,7 +58,7 @@ PMC_All::decode (char *packet, int &packet_length)
       // Skip over the LOGIN_NAME. 
 
       char *login_name = cp;
-      char *real_name  = cp = ACE::strend (cp);
+      char *real_name = cp = ACE::strend (cp);
 
       for (cp = ACE::strend (cp); 
 	   *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';

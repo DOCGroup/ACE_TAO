@@ -17,7 +17,7 @@ HT_Client::insert (const char *key_name, int max_len)
        *frpp != 0
          && ACE_OS::strncmp ((*frpp)->get_login (),
                              key_name, max_len) != 0;
-       frpp = &(*frpp)->next)
+       frpp = &(*frpp)->next_)
     continue;
 
   if (*frpp == 0)

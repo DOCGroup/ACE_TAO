@@ -46,7 +46,7 @@ CM_Server::receive (int)
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
 
   ssize_t n = recvfrom (this->sokfd_,
-                        this->recv_packet,
+                        this->recv_packet_,
                         UDP_PACKET_SIZE,
                         0,
                         (sockaddr *) &this->sin_,
@@ -59,7 +59,7 @@ CM_Server::receive (int)
                 "receiving from client host %s\n",
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
 
-  if (this->demux (this->recv_packet, n) < 0)
+  if (this->demux (this->recv_packet_, n) < 0)
     return -1;
 
   return 1;
@@ -70,7 +70,7 @@ CM_Server::send (void)
 {
   int  packet_length = 0;
   
-  if (this->mux (this->send_packet,
+  if (this->mux (this->send_packet_,
                  packet_length) < 0)
     return -1;
 
@@ -80,7 +80,7 @@ CM_Server::send (void)
                 ACE_OS::inet_ntoa (this->sin_.sin_addr)));
 
   if (sendto (this->sokfd_,
-              this->send_packet,
+              this->send_packet_,
               packet_length,
               0,
               (sockaddr *) &this->sin_,

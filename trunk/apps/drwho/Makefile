@@ -8,6 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
+BIN = drwho-client drwho-server
+
 SHARED-SRC = Protocol_Manager \
 	     Drwho_Node \
 	     Rwho_DB_Manager \
@@ -18,12 +20,22 @@ SHARED-SRC = Protocol_Manager \
 	     Hash_Table \
 	     Binary_Search \
 	     Search_Struct \
-	     Single_Lookup 
-
-SHARED-OBJ = $(addsuffix .o,$(SHARED-SRC))
-
-CLIENT-SRC = PM_Client \
+	     Single_Lookup \
+	     SML_Server \
+	     SM_Server \
+	     PMS_Usr \
+	     SL_Server \
+	     PMS_Flo \
+	     PM_Server \
+	     HT_Server \
+	     BS_Server \
+	     PMS_All \
+	     PMS_Ruser \
+	     SMR_Server \
 	     CM_Client \
+	     SM_Client \
+	     SMR_Client \
+	     PM_Client \
 	     HT_Client \
 	     BS_Client \
 	     PMC_All \
@@ -31,23 +43,18 @@ CLIENT-SRC = PM_Client \
 	     PMC_Usr \
 	     SL_Client \
 	     PMC_Ruser \
-	     SM_Client \
 	     SMR_Client \
-	     SML_Client 
+	     SML_Client \
+	     CM_Server 
+
+SHARED-OBJ = $(addsuffix .o,$(SHARED-SRC))
+
+CLIENT-SRC = client
+
 CLIENT-OBJ = $(addsuffix .o,$(CLIENT-SRC))
 
-SERVER-SRC = PM_Server \
-	     CM_Server \
-	     HT_Server \
-	     BS_Server \
-	     PMS_All \
-	     PMS_Flo \
-	     PMS_Usr \
-	     SL_Server \
-	     PMS_Ruser \
-	     SM_Server \
-	     SMR_Server \
-	     SMR_Client 
+SERVER-SRC = server
+
 SERVER-OBJ = $(addsuffix .o,$(SERVER-SRC))
 
 LSRC = client.cpp server.cpp \
@@ -55,7 +62,6 @@ LSRC = client.cpp server.cpp \
        $(addsuffix .cpp,$(CLIENT-SRC)) \
        $(addsuffix .cpp,$(SERVER-SRC))
 
-BIN   	= drwho-client drwho-server
 BUILD   = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN    = $(BIN:%=%$(VAR))

@@ -6,10 +6,10 @@
 int
 SML_Client::receive (int)
 {
-  if (sml_server.mux (this->recv_packet, this->packet_length) < 0)
+  if (sml_server.mux (this->recv_packet_, this->packet_length) < 0)
     return -1;
 
-  if (this->demux (this->recv_packet, this->packet_length) < 0)
+  if (this->demux (this->recv_packet_, this->packet_length) < 0)
     return -1;
 
   return 1;
@@ -18,10 +18,10 @@ SML_Client::receive (int)
 int
 SML_Client::send (void)
 {
-  if (this->mux (this->send_packet, this->packet_length) < 0)
+  if (this->mux (this->send_packet_, this->packet_length) < 0)
     return -1;
 
-  if (sml_server.demux (this->send_packet, this->packet_length) < 0)
+  if (sml_server.demux (this->send_packet_, this->packet_length) < 0)
     return -1;
 
   return 1;

@@ -29,7 +29,7 @@ public:
   virtual ~Search_Struct (void);
   virtual int n_elems (void);
 
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
   virtual Protocol_Record *get_next_entry (void) = 0;
   virtual Protocol_Record *get_each_entry (void) = 0;

@@ -7,7 +7,7 @@
 // that we do our own memory allocation here...
 
 Protocol_Record *
-HT_Server::insert (char *key_name, int max_len)
+HT_Server::insert (const char *key_name, int max_len)
 {
   Protocol_Record **frpp = 0;
 
@@ -15,7 +15,7 @@ HT_Server::insert (char *key_name, int max_len)
 
   for (frpp = &this->hash_table[ACE::hash_pjw (key_name)];
        *frpp != 0 && strncmp ((*frpp)->get_login (), key_name, max_len) != 0;
-       frpp = &(*frpp)->next)
+       frpp = &(*frpp)->next_)
     continue;
 
   if (*frpp == 0)
@@ -29,7 +29,7 @@ HT_Server::insert (char *key_name, int max_len)
                                                      max_len),
                                        *frpp),
                       0);
-      this->count++;
+      this->count_++;
     }
 
   return *frpp;

@@ -5,7 +5,7 @@
 
 // Static initialization. 
 
-Drwho_Node Protocol_Record::drwho_node;
+Drwho_Node Protocol_Record::drwho_node_;
 
 Protocol_Record::~Protocol_Record (void)
 {
@@ -17,7 +17,7 @@ Protocol_Record::~Protocol_Record (void)
        np != 0; )
     {
       Drwho_Node *t = np;
-      np = np->next;
+      np = np->next_;
       delete t;
     }
 }
@@ -33,7 +33,7 @@ Protocol_Record::Protocol_Record (void)
 
 Protocol_Record::Protocol_Record (int)
   : is_active_ (0),
-    drwho_list_ (&Protocol_Record::drwho_node),
+    drwho_list_ (&Protocol_Record::drwho_node_),
     key_name1_ (0),
     key_name2_ (0),
     next_ (0)
@@ -84,7 +84,7 @@ Protocol_Record::set_host (const char *str)
 char *
 Protocol_Record::set_real (const char *str)
 {
-  this->key_name2_ = str
+  this->key_name2_ = str;
   return str;
 }
 

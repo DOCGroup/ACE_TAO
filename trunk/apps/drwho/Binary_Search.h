@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#if defined (_BINARY_SEARCH_H)
+#if !defined (_BINARY_SEARCH_H)
 #define _BINARY_SEARCH_H
 
 #include "Search_Struct.h"
@@ -47,7 +47,7 @@ public:
   // we skip over entries that don't have any hosts associated with
   // them.
 
-  virtual Protocol_Record *insert (char *key_name,
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
   // This function is used to merge the <key_name> from server
   // <host_name> into the sorted list of userids kept on the client's

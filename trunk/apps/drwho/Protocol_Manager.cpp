@@ -13,7 +13,7 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
 {
   for (Drwho_Node **temp = &head;
        *temp != 0;
-       temp = &(*temp)->next)
+       temp = &(*temp)->next_)
     if (ACE_OS::strcmp (key_name,
                         (*temp)->get_login_name ()) == 0)
       break;
@@ -26,8 +26,8 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
     {
       Drwho_Node *t = *temp;
       
-      *temp = (*temp)->next;
-      t->next = head;
+      *temp = (*temp)->next_;
+      t->next_ = head;
 
       head = t;
     }

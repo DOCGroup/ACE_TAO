@@ -76,7 +76,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
-                                         frp->drwho_list);
+                                         frp->drwho_list_);
   int length = ACE_OS::strlen (frp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
@@ -117,7 +117,7 @@ PMC_Ruser::process (void)
   char *(Drwho_Node::*get_name)(void);
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    get_name = &Drwho_Node::get_login_name:
+    get_name = &Drwho_Node::get_login_name;
   else
     get_name = &Drwho_Node::get_real_name;
 
@@ -151,7 +151,7 @@ PMC_Ruser::process (void)
             ACE_DEBUG ((LM_DEBUG,
                         "*"));
 
-          np = np->next;
+          np = np->next_;
 	  if (np == 0)
 	    break;
 	  else if (Options::get_opt (Options::PRINT_LOGIN_NAME))

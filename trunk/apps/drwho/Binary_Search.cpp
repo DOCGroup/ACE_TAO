@@ -56,7 +56,7 @@ Binary_Search::get_each_entry (void)
   for (;
        this->current_index_ < this->count_;
        this->current_index_++)
-    if (this->protocol_record_[this->current_index_].drwho_list != 0)
+    if (this->protocol_record_[this->current_index_].drwho_list_ != 0)
       return &this->protocol_record_[this->current_index_++];
 
   this->current_index_ = -1;

@@ -33,7 +33,7 @@ public:
   int get_next_user (Protocol_Record &protocol_record);
 
 private:
-  Dirent rwho_dir;
+  ACE_Dirent rwho_dir;
   whod host_data;
   int number_of_users;
   int current_user;

@@ -80,8 +80,8 @@ PMC_Usr::process (void)
     {
       // First try to get a login session that is active... 
       
-      for (; np != 0; np = np->next)
-	if (np->active_count > 0)
+      for (; np != 0; np = np->next_)
+	if (np->active_count_ > 0)
 	  {
 	    ACE_DEBUG ((LM_DEBUG,
                         "%s ",
@@ -93,8 +93,8 @@ PMC_Usr::process (void)
       
       for (np = frp->get_drwho_list ();
            np != 0;
-           np = np->next)
-	if (np->active_count == 0)
+           np = np->next_)
+	if (np->active_count_ == 0)
 	  {
 	    ACE_DEBUG ((LM_DEBUG,
                         "%s ",

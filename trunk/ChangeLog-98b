@@ -1,5 +1,8 @@
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Dirent.cpp: Renamed the methods to be more "abstract" by
+ 	  removing the "dir" suffixes.
+
 	* ACE-INSTALL.html: Fixed a broken link.  Thanks to Tom Shields
  	  <Shields@MarsHotel.CMPU.NET> for reporting this.
 

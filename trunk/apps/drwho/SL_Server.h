@@ -25,8 +25,8 @@ class SL_Server : public Single_Lookup
   //   Provides the server's single user lookup table abstraction. 
 
 public:
-  SL_Server (char *packet);
-  virtual Protocol_Record *insert (char *key_name,
+  SL_Server (const char *packet);
+  virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN);
   virtual Protocol_Record *get_each_entry (void);
 };
