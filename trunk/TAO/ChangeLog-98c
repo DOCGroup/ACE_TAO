@@ -1,3 +1,9 @@
+Mon Sep  7 20:39:06 1998  Balachandran Natarajan  <bala@cumbia.cs.wustl.edu>
+
+	* tests/Simple/grid: Added the first implementation of the Grid
+ 	  example.  This example is loosely modeled on the Grid demo that
+ 	  is distributed with Orbix.
+
 Mon Sep  7 19:45:15 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/README:
