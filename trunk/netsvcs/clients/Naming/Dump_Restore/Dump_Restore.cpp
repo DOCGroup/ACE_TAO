@@ -3,6 +3,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
+#include "ace/streams.h"  /* Because dump () uses ofstream. */
 #include "Dump_Restore.h"
 
 ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
@@ -37,8 +38,8 @@ Dump_Restore::Dump_Restore (int argc, char *argv[])
   this->display_menu ();
 
   if (ACE_Event_Handler::register_stdin_handler (this,
-						 ACE_Reactor::instance (),
-						 ACE_Thread_Manager::instance ()) == -1)
+                                                 ACE_Reactor::instance (),
+                                                 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
 }
 
@@ -125,7 +126,7 @@ Dump_Restore::display_menu (void)
   ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, "Name Service Main Menu\n"));
   ACE_DEBUG ((LM_DEBUG, "----------------------\n"));
-  
+
   // Check if using local name space or remote name space
   if (ACE_OS::strcmp (this->name_options_->nameserver_host (), "localhost") == 0)
     {
