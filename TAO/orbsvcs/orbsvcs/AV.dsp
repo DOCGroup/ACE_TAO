@@ -188,7 +188,7 @@ SOURCE=.\AV\MCast.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\AV\md5.c
+SOURCE=.\AV\md5c.c
 # End Source File
 # Begin Source File
 

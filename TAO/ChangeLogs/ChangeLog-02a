@@ -1,3 +1,15 @@
+Tue Nov 13 18:01:57 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV.dsp: Added md5c.c 
+	* orbsvcs/orbsvcs/AV_Static.dsp: Added md5c.c 
+	* orbsvcs/orbsvcs/AV/md5c.c: Add a CVS Id tag.
+	* orbsvcs/orbsvcs/AV/RTCP.cpp:
+	  Fix comments in TAO_AV_RTCP_Flow_Factory::make_protocol_object().
+	  Do not return void in TAO_AV_RTCP_Object::ts_offset().
+
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp: Fixed comment.
+	     
+
 Tue Nov 13 14:31:44 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV.dsp: (updated)
