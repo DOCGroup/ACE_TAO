@@ -5,7 +5,6 @@
 //
 // ORB:         CORBA_Object operations
 
-#include "ace/Dynamic_Service.h"
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -18,6 +17,8 @@
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #include "tao/InterfaceC.h"
 #endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
@@ -354,7 +355,7 @@ CORBA_Object::_request (const char *operation,
     }
   else
     {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                         0);
     }
 }
@@ -659,11 +660,9 @@ TAO_Object_Proxy_Broker * (*_TAO_collocation_Object_Proxy_Broker_Factory_functio
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
-template class ACE_Dynamic_Service<TAO_Request_Factory_Base>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
-#pragma instantiate ACE_Dynamic_Service<TAO_Request_Factory_Base>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

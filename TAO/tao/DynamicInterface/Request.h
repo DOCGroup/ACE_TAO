@@ -123,8 +123,8 @@ public:
   void handle_response (TAO_InputCDR &incoming,
                         CORBA::ULong reply_status,
                         CORBA::Environment &ACE_TRY_ENV =
-                          CORBA::Environment::default_environment ());   
-                          
+                          CORBA::Environment::default_environment ());
+
   // Pseudo object methods.
   static CORBA_Request* _duplicate (CORBA_Request*);
   static CORBA_Request* _nil (void);
@@ -278,12 +278,8 @@ private:
   CORBA_Request_ptr &ptr_;
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/Request.i"
-#endif /* __ACE_INLINE__ */
-
 // Make sure you instantiate this in Request.cpp
-class TAO_DynamicInterface_Export CORBA_ORB_RequestSeq 
+class TAO_DynamicInterface_Export CORBA_ORB_RequestSeq
   : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request, CORBA_Request_var>
 {
 public:
