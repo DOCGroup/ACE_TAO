@@ -20,7 +20,7 @@ TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
 
 TAO_Object_Ref_Table::~TAO_Object_Ref_Table (void)
 {
-  this->destroy ();
+  //  this->destroy ();
 
   this->table_.close ();  // Only call close() in this destructor!
 }
