@@ -1,3 +1,10 @@
+Mon Dec 07 14:11:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/README: added entries for ACE_LACKS_IOSTREAMS_TOTALLY
+          and ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS.  Thanks to
+          Ossama Othman  <othman@astrosun.tn.cornell.edu> for reminding
+          me to do this.
+
 Mon Dec 07 09:27:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Stats.cpp (std_dev): added comments to not reformat

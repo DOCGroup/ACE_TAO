@@ -169,6 +169,8 @@ ACE_HAS_BROKEN_NAMESPACES               Compiler/platform doesn't
 ACE_HAS_BROKEN_BITSHIFT                 Compiler has integer overflow
                                         problem with bit-shift
                                         operations.
+ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS Compiler can't handle const char *
+                                        as rvalue in conditional operator.
 ACE_HAS_BROKEN_CONVERSIONS              Compiler can't handle calls
                                         like foo->operator T *()
 ACE_HAS_BROKEN_CTIME                    Compiler/platform uses macro
@@ -666,6 +668,8 @@ ACE_LACKS_GETPGID                       Platform lacks getpgid() call
 ACE_LACKS_GETSERVBYNAME                 Platforms lacks
                                         getservbyname() (e.g., VxWorks
                                         and Chorus).
+ACE_LACKS_IOSTREAMS_TOTALLY             Iostreams are not supported
+                                        adequately on the given platform.
 ACE_LACKS_IOSTREAM_FX                   iostream header does not
                                         declare ipfx (), opfx (),
                                         etc.
