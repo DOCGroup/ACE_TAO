@@ -112,21 +112,21 @@ public:
   virtual const char *full_strategized_proxy_broker_name (void) = 0;
   // retrieve the fully qualified name of the strategized proxy broker
   // implementation.
-  
+
   virtual const char *client_scope (void) = 0;
-  // Return the scope that encloses the client related 
+  // Return the scope that encloses the client related
   // interface.
 
   virtual const char *flat_client_scope (void) = 0;
-  // Return the "flat" version of the scope 
+  // Return the "flat" version of the scope
   //that encloses the interface.
-  
+
   virtual const char *server_scope (void) = 0;
-  // Return the scope that encloses the server related 
+  // Return the scope that encloses the server related
   // interface.
 
   virtual const char *flat_server_scope (void) = 0;
-  // Return the "flat" version of the scope 
+  // Return the "flat" version of the scope
   //that encloses the interface.
 
 
@@ -283,19 +283,19 @@ public:
   // implementation.
 
   virtual const char *client_scope (void);
-  // Return the scope that encloses the client related 
+  // Return the scope that encloses the client related
   // interface.
 
   virtual const char *flat_client_scope (void);
-  // Return the "flat" version of the scope 
+  // Return the "flat" version of the scope
   //that encloses the interface.
-  
+
   virtual const char *server_scope (void);
-  // Return the scope that encloses the server related 
+  // Return the scope that encloses the server related
   // interface.
 
   virtual const char *flat_server_scope (void);
-  // Return the "flat" version of the scope 
+  // Return the "flat" version of the scope
   //that encloses the interface.
 
 
@@ -358,7 +358,7 @@ protected:
 
   char *client_scope_;
   char *flat_client_scope_;
-  
+
   char *server_scope_;
   char *flat_server_scope_;
 };

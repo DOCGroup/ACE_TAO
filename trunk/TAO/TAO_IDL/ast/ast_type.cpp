@@ -81,7 +81,7 @@ AST_Type::AST_Type (void)
 
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
-  : AST_Decl (nt, 
+  : AST_Decl (nt,
               n),
     ifr_added_ (0),
     ifr_fwd_added_ (0)
@@ -109,25 +109,25 @@ AST_Type::is_defined (void)
   return 1;
 }
 
-idl_bool 
+idl_bool
 AST_Type::ifr_added (void)
 {
   return this->ifr_added_;
 }
 
-void 
+void
 AST_Type::ifr_added (idl_bool val)
 {
   this->ifr_added_ = val;
 }
 
-idl_bool 
+idl_bool
 AST_Type::ifr_fwd_added (void)
 {
   return this->ifr_fwd_added_;
 }
 
-void 
+void
 AST_Type::ifr_fwd_added (idl_bool val)
 {
   this->ifr_fwd_added_ = val;

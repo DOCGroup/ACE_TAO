@@ -36,15 +36,15 @@ be_operation::be_operation (AST_Type *rt,
                             UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Operation (rt, 
-                   fl, 
-                   n, 
-                   local, 
+  : AST_Operation (rt,
+                   fl,
+                   n,
+                   local,
                    abstract),
-    AST_Decl (AST_Decl::NT_op, 
+    AST_Decl (AST_Decl::NT_op,
               n),
     UTL_Scope (AST_Decl::NT_op),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
   ACE_NEW (this->strategy_,
@@ -77,8 +77,8 @@ be_argument *
 be_operation::add_argument_to_scope (be_argument *arg)
 {
   this->add_to_scope (arg);
-  this->add_to_referenced (arg, 
-                           0, 
+  this->add_to_referenced (arg,
+                           0,
                            0);
   return arg;
 }
@@ -96,7 +96,7 @@ be_operation::compute_size_type (void)
       // If there are elements in this scope,
       // instantiate a scope iterator.
       ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
+                      UTL_ScopeActiveIterator (this,
                                                UTL_Scope::IK_decls),
                       -1);
 

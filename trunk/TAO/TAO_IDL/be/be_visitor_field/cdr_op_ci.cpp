@@ -87,7 +87,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -110,23 +110,23 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
         {
           be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        node->full_name ());
     }
 
@@ -165,7 +165,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
 
-      // Set the node to be the node being visited. The scope is 
+      // Set the node to be the node being visited. The scope is
       // still the same.
       ctx.node (node);
 
@@ -178,7 +178,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_array - "
-                             "Bad visitor\n"), 
+                             "Bad visitor\n"),
                             -1);
         }
 
@@ -187,7 +187,7 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
                              "visit_array - "
-                             "codegen failed\n"), 
+                             "codegen failed\n"),
                             -1);
         }
 
@@ -211,7 +211,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_array - "
-                         "cannot retrieve field node\n"), 
+                         "cannot retrieve field node\n"),
                         -1);
     }
 
@@ -233,7 +233,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_enum - "
-                         "bad sub state\n"), 
+                         "bad sub state\n"),
                         -1);
     }
 
@@ -245,7 +245,7 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
       // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
 
-      // Set the node to be the node being visited. The scope 
+      // Set the node to be the node being visited. The scope
       // is still the same.
       ctx.node (node);
 
@@ -743,7 +743,7 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
 
 
       // Set the node to be the node being visited. The scope is
-      // still the same.   
+      // still the same.
       ctx.node (node);
 
       // Generate the inline code for union.
@@ -855,23 +855,23 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, 
-                       "%s", 
+      ACE_OS::sprintf (fname,
+                       "%s",
                        node->full_name ());
     }
 

@@ -105,7 +105,7 @@ protected:
   //     In this case we don't need to bother about factory.
   //
   // (2) There are no (operations or initializers) (i.e. only state
-  //     members) then we need a concrete type-specific factory 
+  //     members) then we need a concrete type-specific factory
   //     class whose create_for_unmarshal creates OBV_ class.
   //
   // (3) There is at least one operation and at least one initializer.

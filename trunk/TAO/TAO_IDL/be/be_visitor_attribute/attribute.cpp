@@ -118,7 +118,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_DIRECT_COLLOCATED_SS);
       break;
-      
+
     case TAO_CodeGen::TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_BASE_PROXY_IMPL_CH);
       break;
@@ -217,9 +217,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Create the set method.
 
   // the return type  is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"), 
+                            new UTL_ScopedName (new Identifier ("void"),
                                                 0));
   // argument type is the same as the attribute type
   be_argument *arg = new be_argument (AST_Argument::dir_IN,

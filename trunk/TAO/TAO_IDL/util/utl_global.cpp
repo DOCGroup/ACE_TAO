@@ -157,7 +157,7 @@ IDL_GlobalData::IDL_GlobalData (void)
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
-{  
+{
 }
 
 // Get or set scopes stack
@@ -867,7 +867,7 @@ IDL_GlobalData::destroy (void)
 void
 IDL_GlobalData::append_idl_flag (const char *s)
 {
-  idl_flags_ += " " + ACE_CString (s);     
+  idl_flags_ += " " + ACE_CString (s);
 }
 
 const char *

@@ -192,7 +192,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
       if (!node->is_local ())
         *os << "void "
-            << node->name () 
+            << node->name ()
             << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
             << "{" << be_idt_nl
             << node->local_name () << " *tmp = ACE_static_cast ("

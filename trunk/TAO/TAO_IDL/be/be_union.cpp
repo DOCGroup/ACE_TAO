@@ -36,18 +36,18 @@ be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
                     idl_bool local,
                     idl_bool abstract)
-  : AST_Union (dt, 
-               n, 
-               local, 
+  : AST_Union (dt,
+               n,
+               local,
                abstract),
-    AST_Structure (AST_Decl::NT_union, 
-                   n, 
-                   local, 
+    AST_Structure (AST_Decl::NT_union,
+                   n,
+                   local,
                    abstract),
-    AST_Decl (AST_Decl::NT_union, 
+    AST_Decl (AST_Decl::NT_union,
               n),
     UTL_Scope (AST_Decl::NT_union),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
   // Always the case.
@@ -88,7 +88,7 @@ be_union::gen_var_defn (char *)
   *ch << namebuf << " (" << this->local_name () << " *);" << be_nl;
 
   // Copy constructor.
-  *ch << namebuf << " (const " << namebuf 
+  *ch << namebuf << " (const " << namebuf
       << " &);" << be_nl;
 
   // Fixed-size types only.
@@ -154,9 +154,9 @@ be_union::gen_var_defn (char *)
       *ch << this->local_name () << " *_retn (void);" << be_nl;
     }
 
-  // Generate an additional member function that 
+  // Generate an additional member function that
   // returns the underlying pointer.
-  *ch << this->local_name () << " *ptr (void) const;" 
+  *ch << this->local_name () << " *ptr (void) const;"
       << be_uidt_nl << be_nl;
 
   // Generate the private section
@@ -224,7 +224,7 @@ be_union::gen_var_impl (char *,
   // Copy constructor.
   ci->indent ();
   *ci << "ACE_INLINE" << be_nl;
-  *ci << fname << "::" << lname << " (const ::" << fname 
+  *ci << fname << "::" << lname << " (const ::" << fname
       << " &p) // copy constructor" << be_nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -290,7 +290,7 @@ be_union::gen_var_impl (char *,
       << "else" << be_idt_nl
       << "{" << be_idt_nl
       << this->local_name () << " *deep_copy =" << be_idt_nl
-      << "new " << this->local_name () << " (*p.ptr_);" 
+      << "new " << this->local_name () << " (*p.ptr_);"
       << be_uidt_nl << be_nl
       << "if (deep_copy != 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -517,7 +517,7 @@ be_union::gen_out_defn (char *)
   // -> and any other extra operators.
 
   // Assignment.
-  *ch << namebuf << " &operator= (" << this->local_name () 
+  *ch << namebuf << " &operator= (" << this->local_name ()
       << " *);" << be_nl;
 
   // operator ().
@@ -533,7 +533,7 @@ be_union::gen_out_defn (char *)
   *ch << "private:" << be_idt_nl;
   *ch << this->local_name () << " *&ptr_;" << be_nl;
   *ch << "// assignment from T_var not allowed." << be_nl;
-  *ch << "void operator= (const " << this->local_name () 
+  *ch << "void operator= (const " << this->local_name ()
       << "_var &);" << be_uidt_nl;
   *ch << "};" << be_nl << be_nl;
 

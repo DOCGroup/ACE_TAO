@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -69,7 +69,7 @@ ACE_RCSID(utl_tmpl, utl_list, "$Id$")
 template<class L, class T>
 UTL_List<L, T>::UTL_List(T *c, L *l)
 	: pd_car_data(c),
-	  pd_cdr_data(l) 
+	  pd_cdr_data(l)
 {
 }
 

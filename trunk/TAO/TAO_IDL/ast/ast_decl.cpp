@@ -411,7 +411,7 @@ AST_Decl::compute_repoID (void)
                        "%s",
                        "IDL:");
 
-      ACE_OS::strcat (this->repoID_, 
+      ACE_OS::strcat (this->repoID_,
                       this->prefix_);
 
       // Add the "/" only if there is a prefix.
@@ -437,7 +437,7 @@ AST_Decl::compute_repoID (void)
             }
 
           // Print the identifier.
-          ACE_OS::strcat (this->repoID_, 
+          ACE_OS::strcat (this->repoID_,
                           j.item ()->get_string ());
 
           if (first)
@@ -465,7 +465,7 @@ AST_Decl::compute_repoID (void)
         }
       else
         {
-          ACE_OS::strcat (this->repoID_, 
+          ACE_OS::strcat (this->repoID_,
                           ":1.0");
         }
     }

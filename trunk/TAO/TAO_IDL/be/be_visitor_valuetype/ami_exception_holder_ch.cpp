@@ -70,7 +70,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (be_valuetype *nod
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ami_exception_holder_cs::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

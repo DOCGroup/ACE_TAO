@@ -128,7 +128,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
 
   // constructor
   *os << "ACE_INLINE" << be_nl
-      << full_class_name << "::" << class_name << " (const " 
+      << full_class_name << "::" << class_name << " (const "
       << class_name << " &rhs)" << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
@@ -151,7 +151,7 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
 
   // operator=
   *os << "ACE_INLINE " << full_class_name << "& " << be_nl
-      << full_class_name << "::operator= (const " 
+      << full_class_name << "::operator= (const "
       << class_name << " &rhs)" << be_nl
       << "{" << be_idt_nl
       << "if (this == &rhs)" << be_idt_nl

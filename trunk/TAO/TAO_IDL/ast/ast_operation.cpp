@@ -96,7 +96,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Decl(AST_Decl::NT_op, 
+  : AST_Decl(AST_Decl::NT_op,
              n),
     UTL_Scope(AST_Decl::NT_op),
     COMMON_Base (local,

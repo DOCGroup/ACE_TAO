@@ -32,7 +32,7 @@ public:
   // Constructors.
   be_expression (UTL_ScopedName *n);
 
-  be_expression (AST_Expression *b, 
+  be_expression (AST_Expression *b,
                  AST_Expression::ExprType t);
 
   be_expression (AST_Expression::ExprComb c,
@@ -41,7 +41,7 @@ public:
 
   be_expression (long l);
 
-  be_expression (long l, 
+  be_expression (long l,
                  AST_Expression::ExprType t);
 
   be_expression (unsigned long l);

@@ -79,7 +79,7 @@ ScopeAsDecl (UTL_Scope *s)
 {
   if (s == 0) return 0;
 
-  switch (s->scope_node_type ()) 
+  switch (s->scope_node_type ())
   {
     case AST_Decl::NT_module:
       return AST_Module::narrow_from_scope (s);
@@ -112,7 +112,7 @@ DeclAsScope (AST_Decl *d)
 {
    if (d == 0) return 0;
 
-   switch (d->node_type ()) 
+   switch (d->node_type ())
    {
      case AST_Decl::NT_interface_fwd:
         /*

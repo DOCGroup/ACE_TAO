@@ -55,7 +55,7 @@ be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_union_branch - "
                          "Bad union_branch type\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -67,7 +67,7 @@ be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_union_branch - "
                          "codegen for union_branch type failed\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -100,7 +100,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_array - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -127,7 +127,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_array - "
                              "Bad visitor\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -137,7 +137,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_array - "
                              "codegen failed\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -190,7 +190,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_enum - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -215,7 +215,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_enum - "
                              "Bad visitor\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -225,7 +225,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_enum - "
                              "codegen failed\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -268,7 +268,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_interface - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -308,7 +308,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_interface_fwd - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -351,7 +351,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_valuetype - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -392,7 +392,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_valuetype_fwd - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -435,7 +435,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_predefined_type - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -493,7 +493,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_sequence - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -518,7 +518,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_sequence - "
                              "Bad visitor\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -528,7 +528,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_sequence - "
                              "codegen failed\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -540,9 +540,9 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
       // implementation-specific name.
       *os << "\n#if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
           << be_nl
-          << "typedef " << bt->nested_type_name (bu) 
+          << "typedef " << bt->nested_type_name (bu)
           << " _" << ub->local_name () << "_seq;\n";
-      *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */" 
+      *os << "#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */"
           << be_nl << be_nl;
     }
 
@@ -570,7 +570,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_string - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -625,7 +625,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_structure - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -651,7 +651,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_structure - "
                              "Bad visitor\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -661,7 +661,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_structure - "
                              "codegen failed\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -694,7 +694,7 @@ be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
                          "(%N:%l) be_visitor_union_branch_spec_ch::"
                          "visit_typedef - "
                          "Bad primitive type\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -726,7 +726,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_union - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -751,7 +751,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_union - "
                              "Bad visitor\n"
-                             ), 
+                             ),
                             -1);
         }
 
@@ -761,7 +761,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_union - "
                              "codegen failed\n"
-                             ), 
+                             ),
                             -1);
         }
 

@@ -17,7 +17,7 @@ be_visitor_operation_direct_proxy_impl_ss::~be_visitor_operation_direct_proxy_im
 }
 
 
-int 
+int
 be_visitor_operation_direct_proxy_impl_ss::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -112,7 +112,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (be_operation *node)
       *os << "return ";
     }
 
-  *os << "ACE_reinterpret_cast (" 
+  *os << "ACE_reinterpret_cast ("
       << be_idt << be_idt_nl //idt = 3
       << intf->full_skel_name () << "_ptr,"
       << be_nl
@@ -131,7 +131,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (be_operation *node)
 
 
 
-int 
+int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (be_visitor_context &ctx,
 						       be_operation *node)
 {
@@ -155,7 +155,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (be_visitor_context &ctx,
 
   // end the upcall
   *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt <<  be_uidt_nl; 
+      << ");" << be_uidt << be_uidt <<  be_uidt_nl;
   return 0;
 }
 

@@ -12,12 +12,12 @@
 //
 // = DESCRIPTION
 //    Concrete visitor for the Valuetype node.
-//    This one provides code generation for valuetype factory 
+//    This one provides code generation for valuetype factory
 //    in the (client) source.
 //
 // = AUTHOR
 //    Boris Kolpackov <bosk@ipmce.ru>
-//    
+//
 //
 // ============================================================================
 
@@ -32,7 +32,7 @@ class be_visitor_valuetype_init_cs : public be_visitor_valuetype_init
   //   be_visitor_valuetype_init_cs
   //
   // = DESCRIPTION
-  //   This is a concrete visitor to generate valuetype factory in 
+  //   This is a concrete visitor to generate valuetype factory in
   //   the client header
   //
   //

@@ -31,10 +31,10 @@ be_predefined_type::be_predefined_type (void)
 
 be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
                                         UTL_ScopedName *n)
-  : AST_PredefinedType (t, 
+  : AST_PredefinedType (t,
                         n),
-    AST_Decl (AST_Decl::NT_pre_defined, 
-              n, 
+    AST_Decl (AST_Decl::NT_pre_defined,
+              n,
               I_TRUE)
 {
   // Generate a new Scoped Name for us such that we belong to the CORBA
@@ -222,7 +222,7 @@ be_predefined_type::compute_tc_name (void)
     case AST_PredefinedType::PT_pseudo:
       {
         char tcname [100];
-        ACE_OS::sprintf (tcname, 
+        ACE_OS::sprintf (tcname,
                          "_tc_%s",
                          this->name ()->last_component ()->get_string ());
 
@@ -234,7 +234,7 @@ be_predefined_type::compute_tc_name (void)
       ACE_ERROR ((LM_WARNING, "Unknown or invalid predefined type"));
       break;
     }
-      
+
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
                            0));

@@ -28,7 +28,7 @@ class be_visitor;
 
 // Representation of "native" IDL type added by the POA spec.
 
-class be_native : public virtual AST_Native, 
+class be_native : public virtual AST_Native,
                   public virtual be_type
 {
 public:

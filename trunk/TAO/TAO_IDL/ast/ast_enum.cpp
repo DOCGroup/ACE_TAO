@@ -80,10 +80,10 @@ AST_Enum::AST_Enum (void)
 AST_Enum::AST_Enum (UTL_ScopedName *n,
                     idl_bool local,
                     idl_bool abstract)
- : AST_Decl (AST_Decl::NT_enum, 
+ : AST_Decl (AST_Decl::NT_enum,
              n),
 	 UTL_Scope (AST_Decl::NT_enum),
-   COMMON_Base (local, 
+   COMMON_Base (local,
                 abstract),
          pd_enum_counter (0),
    member_count_ (-1)

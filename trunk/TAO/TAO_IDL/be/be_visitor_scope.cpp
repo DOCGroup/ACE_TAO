@@ -69,7 +69,7 @@ be_visitor_scope::visit_scope (be_scope *node)
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -85,13 +85,13 @@ be_visitor_scope::visit_scope (be_scope *node)
           this->ctx_->node (bd);
           this->elem_number_++;
 
-          // Do any pre processing using the next item info. 
+          // Do any pre processing using the next item info.
           if (this->pre_process (bd) == -1)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "pre processing failed\n"), 
+                                 "pre processing failed\n"),
                                 -1);
             }
 
@@ -101,7 +101,7 @@ be_visitor_scope::visit_scope (be_scope *node)
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), 
+                                 "codegen for scope failed\n"),
                                 -1);
 
             }
@@ -112,7 +112,7 @@ be_visitor_scope::visit_scope (be_scope *node)
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "post processing failed\n"), 
+                                 "post processing failed\n"),
                                 -1);
             }
 
@@ -161,7 +161,7 @@ be_visitor_scope::next_elem (be_decl *elem,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_scope::next_elem - "
-                         "bad scope\n"), 
+                         "bad scope\n"),
                         -1);
 
     }
@@ -188,7 +188,7 @@ be_visitor_scope::next_elem (be_decl *elem,
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::next_elem - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -212,7 +212,7 @@ be_visitor_scope::next_elem (be_decl *elem,
                   delete si;
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "(%N:%l) be_visitor_scope::next_elem - "
-                                     "bad node in this scope\n"), 
+                                     "bad node in this scope\n"),
                                     -1);
 
                 }
@@ -238,7 +238,7 @@ idl_bool
 be_visitor_scope::last_node (be_decl *bd)
 {
   be_decl *next = 0;
-  (void) this->next_elem (bd, 
+  (void) this->next_elem (bd,
                           next);
 
   if (next != 0)
@@ -271,7 +271,7 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
         }
 
       be_decl *next_next = 0;
-      this->next_elem (next, 
+      this->next_elem (next,
                        next_next);
 
       next = next_next;

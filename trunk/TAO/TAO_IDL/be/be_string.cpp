@@ -42,7 +42,7 @@ be_string::be_string (AST_Expression *v)
   this->size_type (be_decl::VARIABLE);
 }
 
-be_string::be_string (AST_Expression *v, 
+be_string::be_string (AST_Expression *v,
                       long wide)
   : AST_String (v, wide),
     AST_Decl (wide == (long) sizeof (char)

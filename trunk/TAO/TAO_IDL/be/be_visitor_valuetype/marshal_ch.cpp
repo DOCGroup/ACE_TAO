@@ -67,7 +67,7 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -87,7 +87,7 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "(%N:%l) be_visitor_valuetype_marshal_ch::"
                                      "visit_valuetype - "
-                                     "codegen for scope failed\n"), 
+                                     "codegen for scope failed\n"),
                                     -1);
                 }
             }

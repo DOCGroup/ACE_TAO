@@ -86,18 +86,18 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           << ": public virtual "
           << node->full_name ();
 
-      // STEP 1a (about which previous implementer forgot ): 
+      // STEP 1a (about which previous implementer forgot ):
       // Generate inheritance from corresponding OBV_ classes.
 
 //------>>>
-      
+
       // Here we need to be careful. There are few cases to consider:
       //
       // (1) We have VT with concrete factory and no inhereted VT with
       //     concrete factory then we need to mix-in RefCounter
       //
-      // (2) We have VT with concerete factory and inheretence from 
-      //     another (not abstract or empty abstract <would like to 
+      // (2) We have VT with concerete factory and inheretence from
+      //     another (not abstract or empty abstract <would like to
       //     know how to go there>) then its OBV_ already has mix-in
       // (3) The rest. Don't need to bother about anything, just inherit
       //     whatever there is.
@@ -107,18 +107,18 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       idl_bool inherited_from_value = 0;
       for (; i < node->n_inherits (); ++i)
         {
-          AST_Interface *inherited = 
+          AST_Interface *inherited =
             AST_Interface::narrow_from_decl(node->inherits ()[i]);
-        
+
           // we need only concrete valuetypes
-          if (!inherited->is_valuetype () 
+          if (!inherited->is_valuetype ()
               || inherited->is_abstract ())
             {
               continue;
             }
-        
+
           *os << "," << be_nl;
-        
+
           // dump the scoped name.
           *os << "  public virtual OBV_";
           *os << inherited->full_name();
@@ -128,13 +128,13 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       if (obv_need_ref_counter (node))
         {
           *os << "," << be_nl;
-        
+
           // dump the scoped name.
           *os << "  public virtual CORBA_DefaultValueRefCountBase";
         }
-        
-      *os << be_uidt_nl;          
-      
+
+      *os << be_uidt_nl;
+
 //------>>>
 
       // STEP 2: Generate the body ==

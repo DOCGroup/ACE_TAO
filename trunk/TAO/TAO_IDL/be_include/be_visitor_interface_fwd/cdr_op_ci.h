@@ -15,7 +15,7 @@
 //    Concrete visitor for the interface_fwd class
 //    This one provides code generation for the CDR operators
 //    (actually just their declarations) for the interface forward
-//    declaration in the client inline. 
+//    declaration in the client inline.
 //
 // = AUTHOR
 //    Aniruddha Gokhale & Carlos O'Ryan

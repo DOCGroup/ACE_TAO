@@ -217,9 +217,9 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
 
   // the set method.
   // the return type  is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"), 
+                            new UTL_ScopedName (new Identifier ("void"),
                                                 0));
   // argument type is the same as the attribute type
   be_argument *arg = new be_argument (AST_Argument::dir_IN,
@@ -869,7 +869,7 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
 
 
   idl_bool have_factory = 0;
-  
+
   // Try only our own scope
   if (node->nmembers () > 0)
     {
@@ -881,13 +881,13 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
       for (; !si.is_done (); si.next())
         {
           AST_Decl *d = si.item ();
-      
+
           if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_valuetype_init::"
                                  "determine_factory_style"
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 factory_style);
 
             }
@@ -919,11 +919,11 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
   return factory_style;
 }
 
-idl_bool 
+idl_bool
 be_visitor_valuetype::have_operation(be_valuetype* node)
 {
   // Check whatever scope we get for operations/attributes
-  
+
   if (node == 0)
     {
       return 0;
@@ -935,7 +935,7 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
   // -its own
   // -derived (abstract VT | VT | abstract iface | iface)
   //
-  
+
   // First try our own scope
   if (node->nmembers () > 0)
     {
@@ -947,13 +947,13 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
       for (; !si.is_done (); si.next())
         {
           AST_Decl *d = si.item ();
-      
+
             if (!d)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_valuetype_init::"
                                  "has_operation"
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 0);
 
             }
@@ -981,7 +981,7 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
             {
               continue;
             }
-      
+
         } // end of for loop
     } // end of if
 
@@ -1053,11 +1053,11 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
             }
         }
     }  // end of for loop
-  
+
   return 1;
 }
 
-idl_bool 
+idl_bool
 be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
@@ -1096,6 +1096,6 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
             }
         }
     }  // end of for loop
-  
+
   return 0;
 }

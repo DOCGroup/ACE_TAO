@@ -55,7 +55,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       // Forward declaration.
       *os << "class " << node->local_name () << ";" << be_nl;
-  
+
       os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
       *os << "typedef " << node->local_name ()
@@ -72,7 +72,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_valuetype_ch::"
                              "visit_valuetype - "
-                             "codegen for _var failed\n"), 
+                             "codegen for _var failed\n"),
                             -1);
         }
 
@@ -91,14 +91,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
         }
 
       // generate the endif macro.
-      os->gen_endif ();  
+      os->gen_endif ();
     }
 
   if (node->imported ())
     {
       return 0;
     }
-      
+
   // Now the valuetype definition itself.
   os->gen_ifdef_macro (node->flat_name ());
 
@@ -123,7 +123,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
 
-          if (!inherited->is_valuetype () 
+          if (!inherited->is_valuetype ()
               && !inherited->is_abstract ())
             {
               continue;
@@ -155,7 +155,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           if (inherited->is_nested ())
             {
               // Inherited node is used in the scope of "node" node.
-              scope = 
+              scope =
                 be_scope::narrow_from_scope (node->defined_in ())->decl ();
             }
 
@@ -222,7 +222,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ch::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -267,7 +267,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "CORBA::Boolean "
           << "_tao_marshal_state (TAO_OutputCDR &);" << be_nl
           << "CORBA::Boolean "
-          << "_tao_unmarshal_state (TAO_InputCDR &);" 
+          << "_tao_unmarshal_state (TAO_InputCDR &);"
           << be_uidt_nl << be_nl;
       *os << "private:" << be_idt_nl;
       this->gen_pd (node);

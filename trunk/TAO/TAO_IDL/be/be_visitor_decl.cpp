@@ -44,7 +44,7 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
                                           TAO_CodeGen::CG_STATE cg_state)
 {
   be_typedef *tdef = be_typedef::narrow_from_decl (bt);
-  
+
   if (!tdef)
     {
       be_visitor_context ctx (*this->ctx_);
@@ -76,5 +76,5 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
       delete visitor;
     }
 
-  return 0; 
+  return 0;
 }

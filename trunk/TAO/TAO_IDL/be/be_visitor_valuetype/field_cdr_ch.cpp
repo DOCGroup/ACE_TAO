@@ -238,8 +238,8 @@ be_visitor_valuetype_field_cdr_ch::visit_typedef (be_typedef *node)
 {
   // save the node for use in code generation and
   // indicate that the field of the field node
-  // is a typedefed quantity  
-  this->ctx_->alias (node);    
+  // is a typedefed quantity
+  this->ctx_->alias (node);
 
   // make a decision based on the primitive base type
   be_type *bt = node->primitive_base_type ();

@@ -688,7 +688,7 @@ AST_Factory *
 UTL_Scope::add_factory (AST_Factory *f)
 {
   //We don't invite any new types so there is nothing actually to add
-  if (f == 0) 
+  if (f == 0)
     {
       return 0;
     }
@@ -1685,7 +1685,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
   // The name of any scope except the unnamed scope formed by an operation
   // may not be redefined immediately within (and the root scope has no name).
   // As well as OBV factory construct.
-  if (nt != AST_Decl::NT_root 
+  if (nt != AST_Decl::NT_root
       && nt != AST_Decl::NT_op
       && nt != AST_Decl::NT_factory)
     {

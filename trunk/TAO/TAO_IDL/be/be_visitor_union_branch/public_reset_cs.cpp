@@ -85,7 +85,7 @@ visit_union_branch (be_union_branch *node)
       else
         *os << be_nl;
     }
-  
+
   if (bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

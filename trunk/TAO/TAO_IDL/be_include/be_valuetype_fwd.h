@@ -37,7 +37,7 @@ public:
   be_valuetype_fwd (void);
   // Default constructor.
 
-  be_valuetype_fwd (AST_Interface *dummy, 
+  be_valuetype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
   // Constructor.
 

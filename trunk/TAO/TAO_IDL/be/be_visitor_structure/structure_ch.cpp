@@ -65,7 +65,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
       if (!node->is_local ())
         {
-          *os << "static void _tao_any_destructor (void*);" 
+          *os << "static void _tao_any_destructor (void*);"
               << be_nl << be_nl;
         }
 
@@ -75,7 +75,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_ch::"
                              "visit_structure - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 
@@ -88,11 +88,11 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_ch::"
                              "visit_structure - "
-                             "codegen for _var failed\n"), 
+                             "codegen for _var failed\n"),
                             -1);
         }
 
-      // A class is generated for an out defn only for a variable 
+      // A class is generated for an out defn only for a variable
       // length struct.
       if (node->size_type () == be_decl::VARIABLE)
         {
@@ -101,13 +101,13 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_structure_ch::"
                                  "visit_structure - "
-                                 "codegen for _out failed\n"), 
+                                 "codegen for _out failed\n"),
                                 -1);
             }
         }
       else
         {
-          *os << "typedef " << node->local_name () << " &" 
+          *os << "typedef " << node->local_name () << " &"
               << node->local_name () << "_out;" << be_nl << be_nl;
         }
 
@@ -124,7 +124,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
                                  "(%N:%l) be_visitor_structure_ch::"
                                  "visit_structure - "
                                  "TypeCode declaration failed\n"
-                                 ), 
+                                 ),
                                 -1);
             }
         }

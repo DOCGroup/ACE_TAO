@@ -39,14 +39,14 @@ be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
                           idl_bool local,
                           idl_bool abstract)
-  : AST_Sequence (v, 
-                  t, 
-                  t->is_local () || local, 
+  : AST_Sequence (v,
+                  t,
+                  t->is_local () || local,
                   abstract),
     AST_Decl (AST_Decl::NT_sequence,
               0,
               I_TRUE),
-    COMMON_Base (t->is_local () || local, 
+    COMMON_Base (t->is_local () || local,
                  abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
@@ -65,8 +65,8 @@ be_sequence::gen_name (void)
   be_type *bt = 0; // Base type.
 
   // Reset the buffer.
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   // Retrieve the base type.
@@ -107,14 +107,14 @@ be_sequence::gen_name (void)
       UTL_Scope *parent = this->defined_in ();
       seq->set_defined_in (parent);
       parent->add_sequence (seq);
-      ACE_OS::sprintf (namebuf, 
-                       "_tao_seq_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "_tao_seq_%s",
                        seq->gen_name ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, 
-                       "_tao_seq_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "_tao_seq_%s",
                        bt->local_name ()->get_string ());
     }
 
@@ -248,7 +248,7 @@ be_sequence::managed_type (void)
           break;
         case AST_Decl::NT_pre_defined:
           {
-            be_predefined_type *bpd = 
+            be_predefined_type *bpd =
               be_predefined_type::narrow_from_decl (prim_type);
 
             if (bpd->pt () == AST_PredefinedType::PT_pseudo)
@@ -310,8 +310,8 @@ const char *
 be_sequence::instance_name ()
 {
   static char namebuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   be_type *bt = 0;
@@ -407,7 +407,7 @@ be_sequence::instance_name ()
           be_predefined_type *predef =
             be_predefined_type::narrow_from_decl (prim_type);
 
-          if (predef != 0 
+          if (predef != 0
               && predef->pt() == AST_PredefinedType::PT_octet)
             {
               ACE_OS::sprintf (namebuf,

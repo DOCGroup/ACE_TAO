@@ -29,15 +29,15 @@ be_field::be_field (void)
 {
 }
 
-be_field::be_field (AST_Type *ft, 
-                    UTL_ScopedName *n, 
+be_field::be_field (AST_Type *ft,
+                    UTL_ScopedName *n,
                     Visibility vis)
-  : AST_Field (ft, 
-               n, 
+  : AST_Field (ft,
+               n,
                vis),
-    AST_Decl (AST_Decl::NT_field, 
+    AST_Decl (AST_Decl::NT_field,
               n),
-    COMMON_Base (ft->is_local (), 
+    COMMON_Base (ft->is_local (),
                  ft->is_abstract ())
 {
 }

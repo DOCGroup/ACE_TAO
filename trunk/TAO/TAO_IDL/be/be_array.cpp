@@ -35,15 +35,15 @@ be_array::be_array (UTL_ScopedName *n,
                     UTL_ExprList *dims,
                     idl_bool local,
                     idl_bool abstract)
-  : AST_Array (n, 
-               ndims, 
-               dims, 
-               local, 
+  : AST_Array (n,
+               ndims,
+               dims,
+               local,
                abstract),
-    AST_Decl (AST_Decl::NT_array, 
-              n, 
+    AST_Decl (AST_Decl::NT_array,
+              n,
               I_TRUE),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     tao_name_ (0)
 {
@@ -191,7 +191,7 @@ be_array::create_name (void)
 // Code generation
 
 int
-be_array::gen_dimensions (TAO_OutStream *os, 
+be_array::gen_dimensions (TAO_OutStream *os,
                           unsigned short slice)
 {
    // Loop index.

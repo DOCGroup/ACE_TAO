@@ -45,7 +45,7 @@ be_visitor_valuetype_init_ci::visit_valuetype (be_valuetype *)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init_ci::visit_factory (be_factory *)
 {
   return 0;

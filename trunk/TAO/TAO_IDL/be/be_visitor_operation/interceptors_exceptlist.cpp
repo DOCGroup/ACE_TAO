@@ -94,12 +94,12 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
               LM_ERROR,
               "(%N:%l) be_visitor_operation_interceptors_exceptlist"
               "gen_exceptlist - "
-              "be_exception::narrow_from_decl failed\n"), 
+              "be_exception::narrow_from_decl failed\n"),
             -1
           );
 
-        }      
-        
+        }
+
       *os << excp->tc_name ();
 
       ei.next ();

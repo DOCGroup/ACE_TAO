@@ -34,14 +34,14 @@ be_exception::be_exception (void)
 be_exception::be_exception (UTL_ScopedName *n,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_except, 
+  : AST_Decl (AST_Decl::NT_except,
               n),
-    AST_Structure (AST_Decl::NT_except, 
-                   n, 
-                   local, 
+    AST_Structure (AST_Decl::NT_except,
+                   n,
+                   local,
                    abstract),
     UTL_Scope (AST_Decl::NT_except),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
   // Always the case.

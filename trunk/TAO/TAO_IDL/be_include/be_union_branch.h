@@ -36,12 +36,12 @@ public:
   be_union_branch (void);
   // default constructor.
 
-  be_union_branch (UTL_LabelList *ll, 
-                   AST_Type *ft, 
+  be_union_branch (UTL_LabelList *ll,
+                   AST_Type *ft,
                    UTL_ScopedName *n);
   // Constructor.
 
-  int gen_label_value (TAO_OutStream *os, 
+  int gen_label_value (TAO_OutStream *os,
                        unsigned long index = 0);
   // Generate the label value (as in a switch/case statement).
 

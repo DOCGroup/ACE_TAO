@@ -104,7 +104,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << bt->name () << "_ptr _tao_retval = tao_" 
+      *os << bt->name () << "_ptr _tao_retval = tao_"
           << node->flat_name () << "_nil ();" << be_nl;
     }
 
@@ -137,7 +137,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_interface_fwd (
     }
   else
     {
-      *os << bt->name () << "_ptr _tao_retval = tao_" 
+      *os << bt->name () << "_ptr _tao_retval = tao_"
           << node->flat_name () << "_nil ();" << be_nl;
     }
 
@@ -213,7 +213,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << bt->name () << "_ptr _tao_retval = " 
+      *os << bt->name () << "_ptr _tao_retval = "
           << bt->name () << "::_nil ();" << be_nl;
       *os << bt->name () << "_var _tao_safe_retval (_tao_retval);";
       break;
@@ -223,11 +223,11 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
     case AST_PredefinedType::PT_void:
       break;
     case AST_PredefinedType::PT_longdouble:
-      *os << bt->name () 
+      *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONG_DOUBLE_INITIALIZER;";
       break;
     case AST_PredefinedType::PT_longlong:
-      *os << bt->name () 
+      *os << bt->name ()
           << " _tao_retval = ACE_CDR_LONGLONG_INITIALIZER;";
       break;
     default:

@@ -214,59 +214,59 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (this->ctx_->tdef ())
     {
       // Typedefed array.
-      *os << storage_class << node->nested_type_name (scope, "_slice") 
+      *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *";
       *os << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-      *os << storage_class << "void " 
-          << node->nested_type_name (scope, "_free") 
+      *os << storage_class << "void "
+          << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
-      *os << node->nested_type_name (scope, "_slice") 
-          << " *_tao_slice " << be_uidt_nl 
+      *os << node->nested_type_name (scope, "_slice")
+          << " *_tao_slice " << be_uidt_nl
           << ");" << be_uidt_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
-      *os << node->nested_type_name (scope, "_dup") 
+      *os << node->nested_type_name (scope, "_dup")
           << " (" << be_idt << be_idt_nl
           << "const ";
-      *os << node->nested_type_name (scope, "_slice") 
+      *os << node->nested_type_name (scope, "_slice")
           << " *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << storage_class << "void " 
-          << node->nested_type_name (scope, "_copy") 
+      *os << storage_class << "void "
+          << node->nested_type_name (scope, "_copy")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice") << " *_tao_to," << be_nl
           << "const ";
-      *os << node->nested_type_name (scope, "_slice") 
+      *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt_nl;
     }
   else
     {
       // Anonymous array.
-      *os << storage_class << node->nested_type_name (scope, "_slice", "_") 
+      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *";
-      *os << node->nested_type_name (scope, "_alloc", "_") 
+      *os << node->nested_type_name (scope, "_alloc", "_")
           << " (void);" << be_nl;
       *os << storage_class << "void "
-          << node->nested_type_name (scope, "_free", "_") 
+          << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;
-      *os << node->nested_type_name (scope, "_slice", "_") 
+      *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
-      *os << storage_class << node->nested_type_name (scope, "_slice", "_") 
+      *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *";
-      *os << node->nested_type_name (scope, "_dup", "_") 
+      *os << node->nested_type_name (scope, "_dup", "_")
           << " (" << be_idt << be_idt_nl
           << "const ";
-      *os << node->nested_type_name (scope, "_slice", "_") 
+      *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
       *os << storage_class << "void "
-          << node->nested_type_name (scope, "_copy", "_") 
+          << node->nested_type_name (scope, "_copy", "_")
           << " (" << be_idt << be_idt_nl;
-      *os << node->nested_type_name (scope, "_slice", "_") 
+      *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_to," << be_nl
           << "const ";
-      *os << node->nested_type_name (scope, "_slice", "_") 
+      *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt_nl;
     }
@@ -288,30 +288,30 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   char namebuf [NAMEBUFSIZE];
   char varnamebuf [NAMEBUFSIZE];
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (varnamebuf, 
-                  '\0', 
+  ACE_OS::memset (varnamebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->tdef ())
     {
       // Typedefed array.
-      ACE_OS::sprintf (namebuf, 
-                       "%s", 
+      ACE_OS::sprintf (namebuf,
+                       "%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (varnamebuf, 
-                       "%s_var", 
+      ACE_OS::sprintf (varnamebuf,
+                       "%s_var",
                        node->local_name ()->get_string ());
     }
   else
     {
-      ACE_OS::sprintf (namebuf, 
-                       "_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "_%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (varnamebuf, 
-                       "_%s_var", 
+      ACE_OS::sprintf (varnamebuf,
+                       "_%s_var",
                        node->local_name ()->get_string ());
     }
 
@@ -385,7 +385,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   *os << namebuf << "_slice *&out (void);" << be_nl;
   *os << namebuf << "_slice *_retn (void);" << be_nl;
 
-  // Generate an additional member function that returns the 
+  // Generate an additional member function that returns the
   // underlying pointer.
   *os << namebuf << "_slice *ptr (void) const;" << be_uidt_nl;
 
@@ -405,30 +405,30 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   char namebuf [NAMEBUFSIZE];
   char outnamebuf [NAMEBUFSIZE];
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (outnamebuf, 
-                  '\0', 
+  ACE_OS::memset (outnamebuf,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->tdef ())
     {
-      ACE_OS::sprintf (namebuf, 
-                       "%s", 
+      ACE_OS::sprintf (namebuf,
+                       "%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (outnamebuf, 
-                       "%s_out", 
+      ACE_OS::sprintf (outnamebuf,
+                       "%s_out",
                        node->local_name ()->get_string ());
     }
   else
     {
       // Anonymous array.
-      ACE_OS::sprintf (namebuf, 
-                       "_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "_%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (outnamebuf, 
-                       "_%s_out", 
+      ACE_OS::sprintf (outnamebuf,
+                       "_%s_out",
                        node->local_name ()->get_string ());
     }
 
@@ -482,29 +482,29 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   char namebuf [NAMEBUFSIZE];
   char foranyname [NAMEBUFSIZE];
 
-  ACE_OS::memset (namebuf, 
-                  '\0', 
+  ACE_OS::memset (namebuf,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::memset (foranyname, 
-                  '\0', 
+  ACE_OS::memset (foranyname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->tdef ())
     {
-      ACE_OS::sprintf (namebuf, 
-                       "%s", 
+      ACE_OS::sprintf (namebuf,
+                       "%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (foranyname, 
-                       "%s_forany", 
+      ACE_OS::sprintf (foranyname,
+                       "%s_forany",
                        node->local_name ()->get_string ());
     }
   else
     {
       // Anonymous array case.
-      ACE_OS::sprintf (namebuf, 
-                       "_%s", 
+      ACE_OS::sprintf (namebuf,
+                       "_%s",
                        node->local_name ()->get_string ());
-      ACE_OS::sprintf (foranyname, 
+      ACE_OS::sprintf (foranyname,
                        "_%s_forany",
                        node->local_name ()->get_string ());
     }
@@ -521,7 +521,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // Default constuctor.
   *os << foranyname << " (void);" << be_nl;
   // Constuctor from pointer to slice.
-  *os << foranyname << " (" << be_idt << be_idt_nl 
+  *os << foranyname << " (" << be_idt << be_idt_nl
       << namebuf << "_slice *," << be_nl
       << "CORBA::Boolean nocopy = 0" << be_uidt_nl
       << ");" << be_uidt_nl;
@@ -537,7 +537,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   *os << foranyname << " &operator= (" << namebuf << "_slice *);"
       << be_nl;
   // assignment from _var
-  *os << foranyname << " &operator= (const " << foranyname << " &);" 
+  *os << foranyname << " &operator= (const " << foranyname << " &);"
       << be_nl << be_nl;
 
   // Other extra types (cast operators, [] operator, and others)
@@ -559,7 +559,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   *os << namebuf << "_slice *&out (void);" << be_nl;
   *os << namebuf << "_slice *_retn (void);" << be_nl;
 
-  // Generate an additional member function that returns the 
+  // Generate an additional member function that returns the
   // underlying pointer.
   *os << namebuf << "_slice *ptr (void) const;" << be_nl;
 

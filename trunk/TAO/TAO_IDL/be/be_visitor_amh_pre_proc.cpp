@@ -35,7 +35,7 @@ be_visitor_amh_pre_proc::visit_root (be_root *node)
                        "(%N:%l) be_visitor_amh_pre_proc::"
                        "visit_root - visit scope failed\n"),
                       -1);
-  
+
   return 0;
 }
 
@@ -49,7 +49,7 @@ be_visitor_amh_pre_proc::visit_module (be_module *node)
                        "(%N:%l) be_visitor_amh_pre_proc::"
                        "visit_module - visit scope failed\n"),
                       -1);
-  
+
   return 0;
 }
 
@@ -60,7 +60,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 {
   if (!node->imported () && !node->is_local ())
     {
-      AST_Module *module = 
+      AST_Module *module =
         AST_Module::narrow_from_scope (node->defined_in ());
 
       if (!module)
@@ -68,16 +68,17 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                            "(%N:%l) be_visitor_amh_pre_proc::"
                            "visit_interface - module is null\n"),
                           -1);
-      
+
+	  // Create the AMH-skeleton node
       be_interface *amh_class = this->create_amh_class (node);
-      
+
       if (amh_class)
         {
           amh_class->set_defined_in (node->defined_in ());
-          
+
           // Insert the new amh class after the node
           module->be_add_interface (amh_class, node);
-          
+
           // Remember from whom we were cloned
           amh_class->original_interface (node);
         }
@@ -89,7 +90,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                              "creating the amh_class failed\n"),
                             -1);
         }
-      
+
       // Since this is server side only, don't generate the client stuff.
       // We do this by pretending that all this stuff has already been
       // generated.
@@ -101,14 +102,14 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       amh_class->cli_stub_cdr_op_gen (1);
       amh_class->cli_inline_cdr_op_gen (1);
       amh_class->cli_inline_gen (1);
-      
+
       // Set the proper strategy
       be_interface_strategy *old_strategy =
         amh_class->set_strategy (new be_interface_amh_strategy (amh_class));
-      
+
       if (old_strategy)
         delete old_strategy;
-      
+/*
       be_valuetype *excep_holder = this->create_exception_holder (node);
       if (excep_holder)
         {
@@ -116,10 +117,12 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
           // Insert the exception holder after the original node,
           // this way we ensure that it is *before* the
           // ami handler, which is the way we want to have it.
-          module->be_add_interface (excep_holder, node);
-          module->set_has_nested_valuetype ();
+          //module->be_add_interface (excep_holder, node);
+          module->be_add_interface (excep_holder, amh_class);
+		  module->set_has_nested_valuetype ();
           // Remember from whom we were cloned
           excep_holder->original_interface (node);
+*/
           /*
           // Set the strategy
           be_interface_strategy *old_strategy =
@@ -129,7 +132,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
           if (old_strategy)
           delete old_strategy;
           */
-        }
+/*        }
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,31 +141,32 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                              "creating the exception holder failed\n"),
                             -1);
         }
-      
-      be_interface *response_handler = 
-        this->create_response_handler (node, excep_holder);
-      if (response_handler)
+*/
+
+	  // Create the Server side ResponseHandler class
+      be_interface *response_handler_s = this->create_skeleton_response_handler (node); //, excep_holder);
+      if (response_handler_s)
         {
-          response_handler->set_defined_in (node->defined_in ());
-          
+          response_handler_s->set_defined_in (node->defined_in ());
+
           // Insert the ami handler after the node, the
           // exception holder will be placed between these two later.
-          module->be_add_interface (response_handler, node);
-          
+          module->be_add_interface (response_handler_s, amh_class);
+
           // Remember from whom we were cloned
-          response_handler->original_interface (node);
-          
+          response_handler_s->original_interface (node);
+
           // Since this is server side only, don't generate the client stuff.
           // We do this by pretending that all this stuff has already been
           // generated.
-          response_handler->cli_hdr_gen (1);
-          response_handler->cli_stub_gen (1);
-          response_handler->cli_hdr_any_op_gen (1);
-          response_handler->cli_stub_any_op_gen (1);
-          response_handler->cli_hdr_cdr_op_gen (1);
-          response_handler->cli_stub_cdr_op_gen (1);
-          response_handler->cli_inline_cdr_op_gen (1);
-          response_handler->cli_inline_gen (1);
+          response_handler_s->cli_hdr_gen (1);
+          response_handler_s->cli_stub_gen (1);
+          response_handler_s->cli_hdr_any_op_gen (1);
+          response_handler_s->cli_stub_any_op_gen (1);
+          response_handler_s->cli_hdr_cdr_op_gen (1);
+          response_handler_s->cli_stub_cdr_op_gen (1);
+          response_handler_s->cli_inline_cdr_op_gen (1);
+          response_handler_s->cli_inline_gen (1);
         }
       else
         {
@@ -172,16 +176,54 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                              "creating the response handler failed\n"),
                             -1);
         }
-      
-      /*
+
+	  // Create the Client side ResponseHandler class
+      be_interface *response_handler_c = this->create_client_response_handler (node); //, excep_holder);
+      if (response_handler_c)
+        {
+          response_handler_c->set_defined_in (node->defined_in ());
+
+          // Insert the ami handler after the node, the
+          // exception holder will be placed between these two later.
+          module->be_add_interface (response_handler_c, amh_class);
+
+          // Remember from whom we were cloned
+          response_handler_c->original_interface (node);
+
+          // Since this is client side only, don't generate the server side stuff.
+          // We do this by pretending that all this stuff has already been
+          // generated.
+          response_handler_c->srv_hdr_gen (1);
+          response_handler_c->srv_skel_gen (1);
+          response_handler_c->srv_inline_gen (1);
+		  // We need to generate only client header; so we do not generate any of the
+		  // other client stuff
+          response_handler_s->cli_stub_gen (1);
+          response_handler_s->cli_hdr_any_op_gen (1);
+          response_handler_s->cli_stub_any_op_gen (1);
+          response_handler_s->cli_hdr_cdr_op_gen (1);
+          response_handler_s->cli_stub_cdr_op_gen (1);
+          response_handler_s->cli_inline_cdr_op_gen (1);
+          response_handler_s->cli_inline_gen (1);
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_pre_proc::"
+                             "visit_interface - "
+                             "creating the response handler failed\n"),
+                            -1);
+        }
+
+		/*
       // Set the proper strategy
       be_interface_strategy *old_strategy =
       node->set_strategy (new be_interface_ami_strategy (node,
       response_handler));
-      
+
       if (old_strategy)
       delete old_strategy;
-      
+
       */
       if (this->visit_scope (node) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -189,7 +231,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                            "visit_interface - visit scope failed\n"),
                           -1);
     }
-  
+
   return 0;
 }
 
@@ -201,31 +243,31 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
   // We do nothing for oneways!
   if (node->flags () == AST_Operation::OP_oneway)
     return 0;
-  
+
   // Set the proper strategy
   be_operation_strategy *old_strategy =
     node->set_strategy (new be_operation_amh_strategy (node));
-  
+
   if (old_strategy)
     delete old_strategy;
-  
+
   /*  be_operation *sendc_marshaling =
       this->create_sendc_operation (node,
       0); // for arguments = FALSE
-      
+
       be_operation *sendc_arguments =
       this->create_sendc_operation (node,
       1); // for arguments = TRUE
-      
+
       if (sendc_marshaling && sendc_arguments)
       {
       sendc_marshaling->set_defined_in (node->defined_in ());
-      
+
       sendc_arguments->set_defined_in (node->defined_in ());
-      
+
       // We do not copy the exceptions because the exceptions
       // are delivered by the excep methods.
-      
+
       // Set the proper strategy, and store the specialized
       // marshaling and arguments operations in it.
       be_operation_strategy *old_strategy =
@@ -247,34 +289,34 @@ be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
   // Temporarily generate the set operation.
   be_operation *set_operation =
     this->generate_set_operation (node);
-  
+
   this->visit_operation (set_operation);
-  
+
   // Retrieve the strategy set by the visit operation
   be_operation_strategy *set_operation_strategy =
     set_operation->set_strategy (
         new be_operation_default_strategy (set_operation)
       );
-  
+
   // Assign it to the attribute as set_operation strategy
   if (set_operation_strategy)
     delete node->set_set_strategy (set_operation_strategy);
-  
+
   // Temporerily generate the get operation.
   be_operation *get_operation =
     this->generate_get_operation (node);
-  
+
   this->visit_operation (get_operation);
-  
+
   be_operation_strategy *get_operation_strategy =
     get_operation->set_strategy (
         new be_operation_default_strategy (get_operation)
       );
-  
+
   if (get_operation_strategy)
     delete node->set_get_strategy (get_operation_strategy);
-  
-  
+
+
   return 0;
 }
 
@@ -283,56 +325,60 @@ be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
-  
+
   // Create a virtual module named "Messaging" and a valuetype
   // "ExceptionHolder" from which we inherit.
   UTL_ScopedName *inherit_name =
     new UTL_ScopedName (new Identifier ("Messaging"),
                         0);
-  
+
   inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder"),
                                            0));
-  
+
   be_valuetype *inherit_vt = new be_valuetype (inherit_name,
                                                0,
                                                0,
                                                0);
   inherit_vt->set_name (inherit_name);
-  
-  be_module *msg = 
+
+//  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging"),
+//                                                      0),
+//                                  0);
+
+  be_module *msg =
     new be_module (new UTL_ScopedName (new Identifier ("Messaging"),
                                        0));
 
   // Notice the valuetype "ExceptionHolder" that it is defined in the
   // "Messaging" module
   inherit_vt->set_defined_in (msg);
-  
+
   // Create the excpetion holder name
   ACE_CString excep_holder_local_name;
   this->generate_name (excep_holder_local_name,
                        "AMH_",
                        node->name ()->last_component ()->get_string(),
                        "");
-  
-  UTL_ScopedName *excep_holder_name = 
+
+  UTL_ScopedName *excep_holder_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   excep_holder_name->last_component ()->replace_string (
                                             excep_holder_local_name.rep ()
                                           );
-  
+
   AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
   p_intf[0] = ACE_static_cast (AST_Interface *, inherit_vt);
-  
-  be_valuetype *excep_holder = 
+
+  be_valuetype *excep_holder =
       new be_valuetype (excep_holder_name,  // name
                         p_intf,             // list of inherited
                         1,                  // number of inherited
                         0);                 // set abstract
   excep_holder->set_name (excep_holder_name);
-  
+
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
-  
+
   if (node->nmembers () > 0)
     {
       // initialize an iterator to iterate thru our scope
@@ -354,29 +400,29 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                  "visit_interface - "
                                  "bad node in this scope\n"),
                                 0);
-              
+
             }
 
           be_decl *op = be_decl::narrow_from_decl (d);
-          
+
           if (d->node_type () == AST_Decl::NT_attr)
             {
               AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
-              
+
               if (!attribute)
                 return 0;
-              
+
               this->create_raise_operation (op,
                                             excep_holder,
                                             GET_OPERATION);
-              
+
               if (!attribute->readonly ())
                 {
                   this->create_raise_operation (op,
                                                 excep_holder,
                                                 SET_OPERATION);
                 }
-              
+
             }
           else
             {
@@ -403,7 +449,7 @@ be_visitor_amh_pre_proc::create_amh_class (be_interface *node)
                        node->name ()->last_component ()->get_string(),
                        "");
 
-  UTL_ScopedName *amh_class_name = 
+  UTL_ScopedName *amh_class_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   amh_class_name->last_component ()->replace_string (
                                          amh_class_local_name.rep ()
@@ -454,7 +500,7 @@ be_visitor_amh_pre_proc::create_amh_class (be_interface *node)
               if (!attribute)
                 return 0;
 
-              /*              
+              /*
               be_operation *get_operation = this->generate_get_operation (attribute);
 
               this->create_response_handler_operation (get_operation,
@@ -515,7 +561,7 @@ be_visitor_amh_pre_proc::create_amh_class (be_interface *node)
   node->name ()->last_component ()->get_string(),
   "ResponseHandler");
 
-  UTL_ScopedName *rh_class_name = 
+  UTL_ScopedName *rh_class_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   rh_class_name->last_component ()->replace_string (
                                         rh_class_local_name.rep ()
@@ -551,7 +597,7 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
     return 0;
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
                             new UTL_ScopedName (new Identifier ("void"),
                                                 0));
@@ -560,7 +606,7 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
       node->name ()->last_component ()->get_string ()
     );
 
-  UTL_ScopedName *op_name = 
+  UTL_ScopedName *op_name =
     ACE_static_cast (UTL_ScopedName *, amh_class->name ()-> copy ());
   op_name->nconc (new UTL_ScopedName (new Identifier (original_op_name.rep ()),
                                       0));
@@ -576,7 +622,7 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
 
   ACE_CString new_op_name = ACE_CString ("reply_") + original_op_name;
 
-  UTL_ScopedName *rtop_name = 
+  UTL_ScopedName *rtop_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()-> copy ());
   op_name->last_component ()->replace_string (new_op_name.rep ());
 
@@ -672,10 +718,8 @@ be_visitor_amh_pre_proc::create_amh_operation (be_operation *node,
 
 
 be_interface *
-be_visitor_amh_pre_proc::create_response_handler (
-    be_interface *node,
-    be_valuetype * /*excep_holder*/
-  )
+be_visitor_amh_pre_proc::create_skeleton_response_handler (be_interface *node)
+                                                  //, be_valuetype * /*excep_holder*/)
 {
   // Generate 'Stock::AMH_QuoterResponseHandler'
   ACE_CString class_name (node->client_enclosing_scope ());
@@ -685,7 +729,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   UTL_ScopedName *inherit_name =
     new UTL_ScopedName (new Identifier (class_name.rep ()),
                         0);
-  be_interface *inherit_intf = 
+  be_interface *inherit_intf =
     new be_interface (inherit_name,
                       0,  // inherited interfaces
                       0,  // number of inherited interfaces
@@ -700,13 +744,13 @@ be_visitor_amh_pre_proc::create_response_handler (
   UTL_ScopedName *tao_inherit_name =
     new UTL_ScopedName (new Identifier (tao_rh_name.rep ()),
                         0);
-  be_interface *tao_inherit_intf = 
+  be_interface *tao_inherit_intf =
     new be_interface (tao_inherit_name,
                       0,  // inherited interfaces
                       0,  // number of inherited interfaces
                       0,  // ancestors
                       0,  // number of ancestors
-                      1,  // not local
+                      1,  // local
                       0); // not abstract
   tao_inherit_intf->set_name (tao_inherit_name);
 
@@ -719,7 +763,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                        node->name ()->last_component ()->get_string(),
                        "ResponseHandler");
 
-  UTL_ScopedName *response_handler_name = 
+  UTL_ScopedName *response_handler_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
   response_handler_name->last_component ()->replace_string (
       response_handler_local_name.rep ()
@@ -735,11 +779,21 @@ be_visitor_amh_pre_proc::create_response_handler (
                       2,                  // number of inherited
                       p_intf,             // list of ancestors
                       1,                  // number of ancestors
-                      0,                  // non-local
+                      1,                  // local
                       0);                 // non-abstract
   response_handler->set_name (response_handler_name);
 
-  // Now our customized valuetype is created, we have to
+  add_rh_node_members (node, response_handler);
+
+  return response_handler;
+
+}
+
+int
+be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
+											 be_interface *response_handler)
+{
+	// Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
 
   if (node->nmembers () > 0)
@@ -775,7 +829,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                   return 0;
                 }
 /*
-              be_operation *get_operation = 
+              be_operation *get_operation =
                 this->generate_get_operation (attribute);
               this->create_response_handler_operation (get_operation,
                                                        response_handler);
@@ -805,7 +859,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                   this->create_response_handler_operation (operation,
                                                            response_handler);
 
-                  /*                  
+                  /*
                   this->create_excep_operation (be_operation::narrow_from_decl (d),
                                                 response_handler,
                                                 excep_holder);
@@ -819,10 +873,38 @@ be_visitor_amh_pre_proc::create_response_handler (
 
       delete si;
     } // end of if
-
-  return response_handler;
+  return 1;
 }
 
+
+be_interface *
+be_visitor_amh_pre_proc::create_client_response_handler (be_interface *node)
+{
+  // Generate 'AMH_QuoterResponseHandler'
+  // Create the response handler name
+  ACE_CString rh_local_name;
+  this->generate_name (rh_local_name,
+                       "AMH_",
+                       node->name ()->last_component ()->get_string(),
+                       "ResponseHandler");
+
+  UTL_ScopedName *rh_class_name = ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
+  rh_class_name->last_component ()->replace_string (rh_local_name.rep ());
+
+  be_interface *rh_class =
+    new be_interface (rh_class_name, // name
+                      0,              // list of inherited
+                      0,              // number of inherited
+                      0,              // list of ancestors
+                      0,              // number of ancestors
+                      1,              // local
+                      1);             // abstract
+  rh_class->set_name (rh_class_name);
+
+  add_rh_node_members (node, rh_class);
+
+  return rh_class;
+}
 
 int
 be_visitor_amh_pre_proc::create_raise_operation (be_decl *node,
@@ -842,7 +924,7 @@ be_visitor_amh_pre_proc::create_raise_operation (be_decl *node,
     }
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
                             new UTL_ScopedName (new Identifier ("void"),
                                                 0));
@@ -924,7 +1006,7 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
     }
 
   // Create the return type, which is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
                             new UTL_ScopedName (new Identifier ("void"),
                                                 0));
@@ -933,9 +1015,9 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
       node->name ()->last_component ()->get_string ()
     );
 
-  UTL_ScopedName *op_name = 
+  UTL_ScopedName *op_name =
     ACE_static_cast (UTL_ScopedName *, response_handler->name ()-> copy ());
-  op_name->nconc (new UTL_ScopedName (new Identifier (original_op_name.rep ()), 
+  op_name->nconc (new UTL_ScopedName (new Identifier (original_op_name.rep ()),
                                       0));
 
   // Create the operation
@@ -952,10 +1034,10 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
     {
 
       // Create the argument
-      be_argument *arg = 
+      be_argument *arg =
         new be_argument (AST_Argument::dir_IN,
                          node->return_type (),
-                         new UTL_ScopedName (new Identifier ("return_value"), 
+                         new UTL_ScopedName (new Identifier ("return_value"),
                                              0));
 
       // Add the response handler to the argument list
@@ -1229,9 +1311,9 @@ be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
   set_name->last_component ()->replace_string (new_op_name.rep ());
 
   // the return type  is "void"
-  be_predefined_type *rt = 
+  be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"), 
+                            new UTL_ScopedName (new Identifier ("void"),
                                                 0));
 
   // argument type is the same as the attribute type

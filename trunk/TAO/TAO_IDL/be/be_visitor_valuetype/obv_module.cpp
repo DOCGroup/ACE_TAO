@@ -148,7 +148,7 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
 
    // Do addtional "extra" code generation if necessary
   if (node->has_extra_code_generation (ctx.state ()))
-    {   
+    {
       // Change the state depending on the kind of node strategy
       ctx.state (node->next_state (ctx.state (), 1));
 
@@ -174,6 +174,6 @@ be_visitor_obv_module::visit_valuetype (be_valuetype *node)
       delete visitor;
       visitor = 0;
     }
- 
+
   return 0;
 }

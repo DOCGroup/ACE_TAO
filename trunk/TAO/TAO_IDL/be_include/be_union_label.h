@@ -13,7 +13,7 @@ public:
   be_union_label (void);
   // Default constructor.
 
-  be_union_label (AST_UnionLabel::UnionLabel ul, 
+  be_union_label (AST_UnionLabel::UnionLabel ul,
                   AST_Expression *v);
   // Constructor.
 

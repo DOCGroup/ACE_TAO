@@ -30,13 +30,13 @@ be_factory::be_factory (void)
 }
 
 be_factory::be_factory (UTL_ScopedName *n)
-    : 
+    :
     AST_Factory (n),
-                   
-    AST_Decl (AST_Decl::NT_factory, 
+
+    AST_Decl (AST_Decl::NT_factory,
               n),
     UTL_Scope (AST_Decl::NT_factory),
-    COMMON_Base (1, 
+    COMMON_Base (1,
                  0) //@@ Always local, never abstract
 {
 }

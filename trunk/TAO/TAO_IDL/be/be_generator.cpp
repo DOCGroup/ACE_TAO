@@ -233,8 +233,8 @@ be_generator::create_valuetype (UTL_ScopedName *n,
 {
   be_valuetype *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_valuetype (n, 
-                                ih, 
+                  be_valuetype (n,
+                                ih,
                                 nih),
                   0);
 
@@ -246,8 +246,8 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n)
 {
   be_valuetype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_valuetype_fwd (this->create_valuetype (n, 
-                                                            0, 
+                  be_valuetype_fwd (this->create_valuetype (n,
+                                                            0,
                                                             -1),
                                     n),
                   0);
@@ -292,8 +292,8 @@ be_generator::create_enum (UTL_ScopedName *n,
 {
   be_enum *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_enum (n, 
-                           local, 
+                  be_enum (n,
+                           local,
                            abstract),
                   0);
 
@@ -326,8 +326,8 @@ be_generator::create_field (AST_Type *ft,
 {
   be_field *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_field (ft, 
-                            n, 
+                  be_field (ft,
+                            n,
                             vis),
                   0);
 
@@ -341,8 +341,8 @@ be_generator::create_argument (AST_Argument::Direction d,
 {
   be_argument *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_argument (d, 
-                               ft, 
+                  be_argument (d,
+                               ft,
                                n),
                   0);
 
@@ -392,8 +392,8 @@ be_generator::create_union_branch (UTL_LabelList *ll,
 {
   be_union_branch *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_union_branch (ll, 
-                                   ft, 
+                  be_union_branch (ll,
+                                   ft,
                                    n),
                   0);
 
@@ -406,7 +406,7 @@ be_generator::create_union_label (AST_UnionLabel::UnionLabel ul,
 {
   be_union_label *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_union_label (ul, 
+                  be_union_label (ul,
                                   lv),
                   0);
 
@@ -420,8 +420,8 @@ be_generator::create_constant (AST_Expression::ExprType et,
 {
   be_constant *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_constant (et, 
-                               ev, 
+                  be_constant (et,
+                               ev,
                                n),
                   0);
 
@@ -440,12 +440,12 @@ be_generator::create_expr (UTL_ScopedName *n)
 }
 
 AST_Expression *
-be_generator::create_expr (AST_Expression *b, 
+be_generator::create_expr (AST_Expression *b,
                            AST_Expression::ExprType t)
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_expression (b, 
+                  be_expression (b,
                                  t),
                   0);
 
@@ -459,7 +459,7 @@ be_generator::create_expr (AST_Expression::ExprComb c,
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_expression (c, 
+                  be_expression (c,
                                  v1,
                                  v2),
                   0);
@@ -479,12 +479,12 @@ be_generator::create_expr (long l)
 }
 
 AST_Expression *
-be_generator::create_expr (long l, 
+be_generator::create_expr (long l,
                            AST_Expression::ExprType t)
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_expression (l, 
+                  be_expression (l,
                                  t),
                   0);
 
@@ -563,7 +563,7 @@ be_generator::create_enum_val (unsigned long v,
 {
   be_enum_val *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_enum_val (v, 
+                  be_enum_val (v,
                                n),
                   0);
 
@@ -637,9 +637,9 @@ be_generator::create_typedef (AST_Type *bt,
 {
   be_typedef *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_typedef (bt, 
-                              n, 
-                              local, 
+                  be_typedef (bt,
+                              n,
+                              local,
                               abstract),
                   0);
 

@@ -97,7 +97,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
                          "NULL visitor.\n"
                          ),  -1);
     }
-  
+
   if (visitor->visit_valuetype(node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

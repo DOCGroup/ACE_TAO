@@ -53,11 +53,11 @@ public:
   virtual int gen_pre_skel_info (be_operation *node);
   // generate any pre skeleton code info
 
-  virtual int gen_demarshal_params (be_operation *node, 
+  virtual int gen_demarshal_params (be_operation *node,
                                     be_type *bt);
   // generate code for demarshaling incoming parameters
 
-  virtual int gen_marshal_params (be_operation *node, 
+  virtual int gen_marshal_params (be_operation *node,
                                   be_type *bt);
   // generate code for marshaling outgoing parameters
 

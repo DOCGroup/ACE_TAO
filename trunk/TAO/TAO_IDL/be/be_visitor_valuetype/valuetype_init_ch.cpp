@@ -53,7 +53,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   //     In this case we don't need to bother about factory.
   //
   // (2) There are no (operations or initializers) (i.e. only state
-  //     members) then we need a concrete type-specific factory 
+  //     members) then we need a concrete type-specific factory
   //     class whose create_for_unmarshal creates OBV_ class.
   //
   // (3) There is at least one operation and at least one initializer.
@@ -65,7 +65,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       return 0; // bail out
     }
-  
+
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   // Generate the ifdef macro for the _init class.
@@ -125,7 +125,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   os << "// TAO-specific extensions"
      << be_uidt_nl
      << "public:" << be_idt_nl;
-  
+
   os << "virtual const char* tao_repository_id (void);\n";
 
   if(factory_style == FS_ABSTRACT_FACTORY)
@@ -133,7 +133,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       // protected ctor
       os << be_uidt_nl
          << "protected:" << be_idt_nl;
-    
+
       os << node->local_name () << "_init ();";
 
     }
@@ -146,7 +146,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-int 
+int
 be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 {
 

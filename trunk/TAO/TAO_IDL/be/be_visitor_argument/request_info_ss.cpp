@@ -53,15 +53,15 @@ int be_visitor_args_request_info_ss::visit_argument (be_argument *node)
                          "Bad argument type\n"),
                         -1);
     }
-      
+
   os->indent ();
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_SS:
       {
         // Generate the memberlist definition for the constructor.
-        *os << node->local_name () << "_ " << "("<< node->local_name () 
-            <<")"; 
+        *os << node->local_name () << "_ " << "("<< node->local_name ()
+            <<")";
         break;
       }
     case TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_SS:
@@ -79,7 +79,7 @@ int be_visitor_args_request_info_ss::visit_argument (be_argument *node)
                                "Bad argument type\n"),
                               -1);
           }
-        
+
         // Different types have different mappings when used as in/out or
         // inout parameters. Let this visitor deal with the type
         if (bt->accept (this) == -1)

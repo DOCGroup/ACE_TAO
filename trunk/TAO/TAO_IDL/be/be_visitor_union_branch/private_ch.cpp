@@ -55,7 +55,7 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
                          "Bad union_branch type\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -67,7 +67,7 @@ be_visitor_union_branch_private_ch::visit_union_branch (be_union_branch *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union_branch - "
                          "codegen for union_branch type failed\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -99,7 +99,7 @@ be_visitor_union_branch_private_ch::visit_array (be_array *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_array - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -145,13 +145,13 @@ be_visitor_union_branch_private_ch::visit_enum (be_enum *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_enum - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << bt->nested_type_name (bu) << " " << ub->local_name () 
+  *os << bt->nested_type_name (bu) << " " << ub->local_name ()
       << "_;" << be_nl;
 
   return 0;
@@ -180,7 +180,7 @@ be_visitor_union_branch_private_ch::visit_interface (be_interface *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_interface - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -215,7 +215,7 @@ be_visitor_union_branch_private_ch::visit_interface_fwd (be_interface_fwd *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_interface_fwd - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -252,7 +252,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_predefined_type - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -275,12 +275,12 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
     {
       // Cannot have an object inside of a union. In addition, an Any is a
       // variable data type.
-      *os << bt->nested_type_name (bu) << " *" << ub->local_name () 
+      *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
           << "_;" << be_nl;
     }
   else
     {
-      *os << bt->nested_type_name (bu) << " " << ub->local_name () 
+      *os << bt->nested_type_name (bu) << " " << ub->local_name ()
           << "_;" << be_nl;
     }
 
@@ -310,7 +310,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_sequence - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -318,7 +318,7 @@ be_visitor_union_branch_private_ch::visit_sequence (be_sequence *node)
 
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
-  *os << bt->nested_type_name (bu) << " *" << ub->local_name () 
+  *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
       << "_;" << be_nl;
 
   return 0;
@@ -336,7 +336,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_string - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -377,7 +377,7 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_structure - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -387,12 +387,12 @@ be_visitor_union_branch_private_ch::visit_structure (be_structure *node)
   if (node->size_type () == be_decl::VARIABLE
       || node->has_constructor ())
     {
-      *os << bt->nested_type_name (bu) << " *" << ub->local_name () 
+      *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
           << "_;" << be_nl;
     }
   else
     {
-      *os << bt->nested_type_name (bu) << " " << ub->local_name () 
+      *os << bt->nested_type_name (bu) << " " << ub->local_name ()
           << "_;" << be_nl;
     }
 
@@ -413,7 +413,7 @@ be_visitor_union_branch_private_ch::visit_typedef (be_typedef *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_typedef - "
                          "Bad primitive type\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -444,7 +444,7 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
                          "(%N:%l) be_visitor_union_branch_private_ch::"
                          "visit_union - "
                          "bad context information\n"
-                         ), 
+                         ),
                         -1);
     }
 
@@ -452,7 +452,7 @@ be_visitor_union_branch_private_ch::visit_union (be_union *node)
 
   // C++ doesn't allow object instances inside unions, so we need a
   // pointer.
-  *os << bt->nested_type_name (bu) << " *" << ub->local_name () 
+  *os << bt->nested_type_name (bu) << " *" << ub->local_name ()
       << "_;" << be_nl;
 
   return 0;

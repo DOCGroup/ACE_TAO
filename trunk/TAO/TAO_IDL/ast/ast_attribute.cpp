@@ -86,12 +86,12 @@ AST_Attribute::AST_Attribute (idl_bool ro,
                               UTL_ScopedName *n,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Field (AST_Decl::NT_attr, 
-               ft, 
+  : AST_Field (AST_Decl::NT_attr,
+               ft,
                n),
-    AST_Decl (AST_Decl::NT_attr, 
+    AST_Decl (AST_Decl::NT_attr,
               n),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract),
     pd_readonly (ro)
 {

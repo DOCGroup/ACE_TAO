@@ -81,14 +81,14 @@ AST_Exception::AST_Exception (void)
 AST_Exception::AST_Exception(UTL_ScopedName *n,
                              idl_bool local,
                              idl_bool abstract)
-  : AST_Structure (AST_Decl::NT_except, 
-                   n, 
-                   local, 
+  : AST_Structure (AST_Decl::NT_except,
+                   n,
+                   local,
                    abstract),
     UTL_Scope (AST_Decl::NT_except),
-    AST_Decl (AST_Decl::NT_except, 
+    AST_Decl (AST_Decl::NT_except,
               n),
-    COMMON_Base (local, 
+    COMMON_Base (local,
                  abstract)
 {
 }
