@@ -27,14 +27,23 @@
 #include "ace/Synch.h"
 #include "ace/Object_Manager.h"
 
+#include <openssl/x509.h>
+#include <openssl/err.h>
+
 #define ACE_DEFAULT_CERTIFICATE_FILE "certificate.pem"
 #define ACE_DEFAULT_KEY_FILE "key.pem"
+
+#define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
+#define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
+#define ACE_SSL_CERT_FILE_ENV "SSL_CERT_FILE"
+#define ACE_SSL_CERT_DIR_ENV  "SSL_CERT_DIR"
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
 ACE_SSL_Context::ACE_SSL_Context ()
   : context_ (0),
-    mode_ (-1)
+    mode_ (-1),
+    default_verify_mode_ (SSL_VERIFY_NONE)
 {
   ACE_SSL_Context::ssl_library_init ();
 }
@@ -133,10 +142,22 @@ ACE_SSL_Context::set_mode (int mode)
   this->context_ = ::SSL_CTX_new (method);
   this->mode_ = mode;
 
+  const char *cert_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+  if (cert_file == 0)
+    cert_file = ACE_DEFAULT_SSL_CERT_FILE;
+  const char *cert_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
+  if (cert_dir == 0)
+    cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
+  
+  ::SSL_CTX_load_verify_locations (this->context_,
+                                   cert_file,
+                                   cert_dir);
+  ERR_print_errors_fp (stderr);
+
   if (this->certificate_.type () != -1
       && ::SSL_CTX_use_certificate_file (this->context_,
                                          this->certificate_.file_name (),
-                                         this->certificate_.type ()) <= 0) 
+                                         this->certificate_.type ()) <= 0)
     {
       // ERR_print_errors_fp (stderr);
       return -1;
@@ -149,7 +170,7 @@ ACE_SSL_Context::set_mode (int mode)
       // ERR_print_errors_fp (stderr);
       return -1;
     }
-  
+
   if (!::SSL_CTX_check_private_key (this->context_))
     {
       // ACE_ERROR ((LM_ERROR, "Mismatch in key/certificate\n"));

@@ -56,7 +56,6 @@ TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Handler_Base *handler,
 
 TAO_SSLIOP_Transport::~TAO_SSLIOP_Transport (void)
 {
-  this->flush_buffered_messages ();
 }
 
 TAO_SSLIOP_Handler_Base *&
@@ -307,7 +306,7 @@ TAO_SSLIOP_Client_Transport::register_handler (void)
 ssize_t
 TAO_SSLIOP_Transport::send (TAO_Stub *stub,
 			    const ACE_Message_Block *message_block,
-			    ACE_Time_Value *max_wait_time)
+			    const ACE_Time_Value *max_wait_time)
 {
   if (stub == 0)
     {
@@ -327,7 +326,7 @@ TAO_SSLIOP_Transport::send (TAO_Stub *stub,
 
 ssize_t
 TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
-			    ACE_Time_Value *max_wait_time)
+			    const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
@@ -396,7 +395,7 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_SSLIOP_Transport::send (const u_char *buf,
 			    size_t len,
-			    ACE_Time_Value *)
+			    const ACE_Time_Value *)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
@@ -406,7 +405,7 @@ TAO_SSLIOP_Transport::send (const u_char *buf,
 ssize_t
 TAO_SSLIOP_Transport::recv (char *buf,
 			    size_t len,
-			    ACE_Time_Value *max_wait_time)
+			    const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
