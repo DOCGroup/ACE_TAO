@@ -51,7 +51,7 @@ do_priority_inversion_test (Task_State &ts)
   ACE_Sched_Priority priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
-#if 1
+#if 0
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
   util_thread.activate (THR_BOUND,
