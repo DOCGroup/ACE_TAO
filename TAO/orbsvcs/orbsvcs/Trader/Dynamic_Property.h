@@ -20,7 +20,17 @@
 
 #include <map>
 #include <string>
-#include "CosTradingS.h"
+
+#if defined (OS_NO_NAMESPACE)
+#define queue foobar
+#endif /* OS_NO_NAMESPACE */
+
+#include "orbsvcs/CosTradingS.h"
+
+#if defined (OS_NO_NAMESPACE)
+#undef queue
+#endif /* OS_NO_NAMESPACE */
+
 
 class TAO_DP_Evaluation_Handler
 {
@@ -28,7 +38,7 @@ public:
 
   virtual CORBA::Any* evalDP(const CORBA::Any& extra_info,
 			     CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTradingDynamic::DPEvalFailure) = 0;
+    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure)) = 0;
   
 };
 
@@ -46,7 +56,7 @@ public:
 
   TAO_Dynamic_Property(const char* name = "Dynamic Property");
   
-  CosTradingDynamic::DynamicProp_ptr
+  CosTradingDynamic::DynamicProp*
     register_handler(const char* name,
 		     CORBA::TypeCode_ptr returned_type,
 		     const CORBA::Any& extra_info,
@@ -63,8 +73,8 @@ public:
 			     CORBA::TypeCode_ptr returned_type,
 			     const CORBA::Any& extra_info,
 			     CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException,
-		    CosTradingDynamic::DPEvalFailure);
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTradingDynamic::DPEvalFailure));
   // Point of demultiplexing.  
   
 private:

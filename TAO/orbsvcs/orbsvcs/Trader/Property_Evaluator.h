@@ -23,17 +23,14 @@
 
 #if defined (OS_NO_NAMESPACE)
 #define queue uncouth
-#define map foobar
 #endif /* OS_NO_NAMESPACE */
 
-#include "ace/OS.h"
+#include "orbsvcs/CosTradingC.h"
 
 #if defined  (OS_NO_NAMESPACE)
-#undef map
 #undef queue
 #endif /* OS_NO_NAMESPACE */
 
-#include "CosTradingC.h"
 
 class TAO_Property_Evaluator
 //
@@ -65,7 +62,7 @@ public:
   // 0 when the index is out of bounds.
   
   CORBA::Any* property_value(int index, CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTradingDynamic::DPEvalFailure);
+    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // Returns value of the property whose index is <index>. If the
   // property at that index is dynamic and the trader supports dynamic 
   // properties, then the property_value method will obtain the value
@@ -111,8 +108,8 @@ public:
   TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq& properties,
 				  CORBA::Environment& _env,
 				  CORBA::Boolean supports_dp = 1)
-    TAO_THROW_SPEC (CosTrading::DuplicatePropertyName,
-		    CosTrading::IllegalPropertyName);
+    TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,
+		     CosTrading::IllegalPropertyName));
   
   TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 				 CORBA::Boolean supports_dp = 1);
@@ -127,7 +124,7 @@ public:
   
   CORBA::Any* property_value(const char* property_name,
 			     CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTradingDynamic::DPEvalFailure);
+    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
   // This method is identical to its counterpart in
   // TAO_Property_Evaluator, except property_value first discovers the 
   // index through a string matching lookup.

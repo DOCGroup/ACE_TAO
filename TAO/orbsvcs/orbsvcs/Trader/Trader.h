@@ -20,18 +20,9 @@
 #define TAO_TRADER_H
 
 // ACE includes
-#if defined (OS_NO_NAMESPACE)
-#define map foobar
-#endif /* OS_NO_NAMESPACE */
-
-#include "CosTradingS.h"
 #include "Trader_Base.h"
 #include "Monitor.h"
 #include "Service_Type_Map.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef map
-#endif /* OS_NO_NAMESPACE */
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
@@ -44,13 +35,14 @@ class TAO_Trader : public TAO_Trader_Base
   //     TAO_Trader contains all the components that together represent
   //     a single trader.  Based on its constructor arguments, 
   //     TAO_Trader creates instances of appropriate interface 
-  //     implementations as well as instances of objects common to more than one 
-  //     interface (offers, attributes, etc.).  TAO_Trader also enforces
-  //     the proper order on all initializations.  TAO_Trader acts like
-  //	 a "glue" class that creates appropriate components, holds everything 
-  //     together, and enforces order.
-  //     TAO_Trader is parametrized by two types of locks: one for its service 
-  //     service offers, one for its state (configuration).
+  //     implementations as well as instances of objects common to
+  //     more than one interface (offers, attributes, etc.).
+  //     TAO_Trader also enforces the proper order on all
+  //     initializations.  TAO_Trader acts like a "glue" class that
+  //     creates appropriate components, holds everything together,
+  //     and enforces order. TAO_Trader is parameterized by two types
+  //     of locks: one for its service service offers, one for its
+  //     state (configuration). 
 {    
 public:
 
@@ -67,6 +59,7 @@ public:
 
   typedef TAO_Service_Type_Map<MAP_LOCK_TYPE> SERVICE_TYPE_MAP;
   typedef SERVICE_TYPE_MAP::Local_Offer_Iterator LOCAL_OFFER_ITER;
+  typedef MAP_LOCK_TYPE LOCK_TYPE;
   
   TAO_Trader (Trader_Components components = LOOKUP);
   // Constructor which based on its arguments will create 
@@ -80,10 +73,12 @@ public:
   SERVICE_TYPE_MAP& service_type_map (void);
   // Accessor for the structure with all the service offers.
 
-  TAO_Lock &lock (void);
+  ACE_Lock &lock (void);
   // returns the trader
   
 protected:
+
+  typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
   
   SERVICE_TYPE_MAP service_type_map_; 
   // A monitor (i.e. an STL map + a lock) serving as a storage for
@@ -92,8 +87,12 @@ protected:
   // a counter + a map (a monitor) of offers for that service type.  A map of offers for 
   // a service type (an internal map) is  a mapping from a number ids to offers.
 
-  TAO_Lock_Adapter<TRADER_LOCK_TYPE> lock_;
+  ACE_Lock_Adapter<TRADER_LOCK_TYPE> lock_;
   // lock that guards the state of the trader (its configuration).
+
+  enum { LOOKUP_IF, REGISTER_IF, ADMIN_IF, PROXY_IF, LINK_IF };
+  
+  PortableServer::ServantBase* ifs_[5];
 };
 
 

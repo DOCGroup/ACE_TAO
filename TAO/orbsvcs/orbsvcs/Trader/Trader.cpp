@@ -28,29 +28,74 @@
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::TAO_Trader (Trader_Components components)
 {
-  typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
+  CORBA::Environment env;
+  for (int i = LOOKUP_IF; i <= LINK_IF; i++)
+    this->ifs_[i] = 0;
   
-  if (ACE_BIT_ENABLED (components, ADMIN))
-    this->trading_components ().admin_if (new TAO_Admin<TRADER_SELF> (*this));   
   if (ACE_BIT_ENABLED (components, LOOKUP))
-    this->trading_components ().lookup_if (new TAO_Lookup<TRADER_SELF> (*this));
-  if (ACE_BIT_ENABLED (components, REGISTER))
-    this->trading_components ().register_if (new TAO_Register<TRADER_SELF> (*this));
-  if (ACE_BIT_ENABLED (components, LINK))
-    this->trading_components ().link_if (new TAO_Link<TRADER_SELF> (*this));
-  if (ACE_BIT_ENABLED (components, PROXY))
-    this->trading_components ().proxy_if (new TAO_Proxy<TRADER_SELF> (*this));
+    {
+      TAO_Lookup<TRADER_SELF>* lookup = new TAO_Lookup<TRADER_SELF> (*this);
+      this->trading_components ().lookup_if (lookup->_this (env));
+      this->ifs_[LOOKUP_IF] = lookup;
+    }
+  else if (ACE_BIT_ENABLED (components, REGISTER))
+    {
+      TAO_Register<TRADER_SELF>* reg = new TAO_Register<TRADER_SELF> (*this);
+      this->trading_components ().register_if (reg->_this (env));
+      this->ifs_[REGISTER_IF] = reg;
+    }
+  else if (ACE_BIT_ENABLED (components, ADMIN))
+    {
+      TAO_Admin<TRADER_SELF>* admin = new TAO_Admin<TRADER_SELF> (*this);
+      this->trading_components ().admin_if (admin->_this (env));
+      this->ifs_[ADMIN_IF] = admin;
+    }
+  else if (ACE_BIT_ENABLED (components, PROXY))
+    {
+      TAO_Proxy<TRADER_SELF>* proxy = new TAO_Proxy<TRADER_SELF> (*this);
+      this->trading_components ().proxy_if (proxy->_this (env));
+      this->ifs_[PROXY_IF] = proxy;
+    }
+  else if (ACE_BIT_ENABLED (components, LINK))
+    {
+      TAO_Link<TRADER_SELF, MAP_LOCK_TYPE>* link =
+	new TAO_Link<TRADER_SELF, MAP_LOCK_TYPE> (*this);
+      this->trading_components ().link_if (link->_this (env));
+      this->ifs_[LINK_IF] = link;
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 {
-  CORBA::release (this->trading_components ().lookup_if ());
-  CORBA::release (this->trading_components ().register_if ());
-  CORBA::release (this->trading_components ().link_if ());
-  CORBA::release (this->trading_components ().proxy_if ());
-  CORBA::release (this->trading_components ().admin_if ());
-  CORBA::release (this->support_attributes ().type_repos ());
+  // Remove Trading Components from POA
+  //
+  // Note that there is no real error checking here as we can't do
+  // much about errors here anyway
+  //
+
+  for (int i = LOOKUP_IF; i <= LINK_IF; i++)
+    {
+      if (this->ifs_[i] != 0)
+	{
+	  TAO_TRY
+	    {
+	      PortableServer::POA_var poa =
+		this->ifs_[i]->_default_POA (TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
+	      PortableServer::ObjectId_var id =
+		poa->servant_to_id (this->ifs_[i], TAO_TRY_ENV);
+	      TAO_CHECK_ENV;
+	      poa->deactivate_object (id.in (), TAO_TRY_ENV);
+	    }
+	  TAO_CATCHANY
+	    {      
+	    }
+	  TAO_ENDTRY;
+	  
+	  delete this->ifs_[i];	  
+	}
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -60,10 +105,10 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::service_type_map (void)
   return this->service_type_map_;
 }
 
-template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> TAO_Lock &
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> ACE_Lock &
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
 {
   return this->lock_;
 }
-  
+
 #endif /* TAO_TRADER_C */

@@ -40,8 +40,8 @@ TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
 
 CORBA::ULong 
 TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& _env) 
-  TAO_THROW_SPEC(CORBA::SystemException, 
-		 CosTrading::UnknownMaxLeft)
+  TAO_THROW_SPEC((CORBA::SystemException, 
+		 CosTrading::UnknownMaxLeft))
 {
   return this->offers_.size ();
 }
@@ -50,7 +50,7 @@ CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n, 
 				       OfferSeq_out offers,
 				       CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException)
+  TAO_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
 

@@ -21,8 +21,10 @@
 #include "Proxy.h"
 
 template <class TRADER>  
-TAO_Proxy<TRADER>::TAO_Proxy (const TRADER &trader)
-  : trader_ (trader)
+TAO_Proxy<TRADER>::TAO_Proxy (TRADER &trader)
+  : trader_ (trader),
+    TAO_Trader_Components <POA_CosTrading::Proxy> (trader.trading_components ()),
+    TAO_Support_Attributes <POA_CosTrading::Proxy> (trader.support_attributes ())
 {
 }
 
@@ -39,7 +41,7 @@ TAO_Proxy<TRADER>::export_proxy (CosTrading::Lookup_ptr target,
 				 const char * recipe, 
 				 const CosTrading::PolicySeq& policies_to_pass_on,
 				 CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalServiceType, 
 		  CosTrading::UnknownServiceType, 
 		  CosTrading::InvalidLookupRef, 
@@ -49,95 +51,43 @@ TAO_Proxy<TRADER>::export_proxy (CosTrading::Lookup_ptr target,
 		  CosTrading::MissingMandatoryProperty, 
 		  CosTrading::Proxy::IllegalRecipe, 
 		  CosTrading::DuplicatePropertyName, 
-		  CosTrading::DuplicatePolicyName)
+		  CosTrading::DuplicatePolicyName))
 {
-  TAO_THROW (CORBA::SystemException ());
+  TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), 0);
 }
 
 template <class TRADER> void
 TAO_Proxy<TRADER>::withdraw_proxy (const char *id,
 				   CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalOfferId, 
 		  CosTrading::UnknownOfferId, 
-		  CosTrading::Proxy::NotProxyOfferId)
+		  CosTrading::Proxy::NotProxyOfferId))
 {
-  TAO_THROW (CORBA::SystemException ());
+  TAO_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_NO));
 }
 
 template <class TRADER> CosTrading::Proxy::ProxyInfo *
 TAO_Proxy<TRADER>::describe_proxy (const char *id,
 				   CORBA::Environment& _env) 
-  TAO_THROW_SPEC (CORBA::SystemException,
+  TAO_THROW_SPEC ((CORBA::SystemException,
 		  CosTrading::IllegalOfferId, 
 		  CosTrading::UnknownOfferId, 
-		  CosTrading::Proxy::NotProxyOfferId)
+		  CosTrading::Proxy::NotProxyOfferId))
 {
-  TAO_THROW (CORBA::SystemException ());
+  TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), 0);
 }
 
-template <class TRADER>
-CosTrading::Lookup_ptr
-TAO_Proxy<TRADER>::lookup_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
+template <class TRADER> void
+TAO_Proxy<TRADER>::list_proxies (CORBA::ULong how_many,
+				 CosTrading::OfferIdSeq*& ids,
+				 CosTrading::OfferIdIterator_ptr& id_itr,
+				 CORBA::Environment& _env)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		   CosTrading::NotImplemented))
 {
-  return CosTrading::Lookup::_duplicate (this->trader_.trading_components ().lookup_if ());
+  TAO_THROW (CORBA::UNKNOWN (CORBA::COMPLETED_NO));
 }
 
-template <class TRADER>
-CosTrading::Register_ptr
-TAO_Proxy<TRADER>::register_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Register::_duplicate (this->trader_.trading_components ().register_if ());
-}
-
-template <class TRADER>
-CosTrading::Link_ptr
-TAO_Proxy<TRADER>::link_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Link::_duplicate (this->trader_.trading_components ().link_if ());
-}
-
-template <class TRADER>
-CosTrading::Proxy_ptr
-TAO_Proxy<TRADER>::proxy_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Proxy::_duplicate (this->trader_.trading_components ().proxy_if ());
-}
-
-template <class TRADER>
-CosTrading::Proxy_ptr
-TAO_Proxy<TRADER>::admin_if (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return CosTrading::Admin::_duplicate (this->trader_.trading_components ().admin_if ());
-}
-
-template <class TRADER>
-CORBA::Boolean 
-TAO_Proxy<TRADER>::supports_modifiable_properties (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_modifiable_properties ();
-}
-  
-template <class TRADER>
-CORBA::Boolean 
-TAO_Proxy<TRADER>::supports_dynamic_properties (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_dynamic_properties ();
-}
-
-template <class TRADER>
-CORBA::Boolean 
-TAO_Proxy<TRADER>::supports_proxy_offers (CORBA::Environment& _env)
-  TAO_THROW_SPEC (CORBA::SystemException)
-{
-  return this->trader_.support_attributes ().supports_proxy_offers ();
-}
 
 #endif /* TAO_PROXY_C */

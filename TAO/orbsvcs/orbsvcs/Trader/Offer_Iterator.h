@@ -18,7 +18,6 @@
 #ifndef TAO_OFFER_ITERATOR_H
 #define TAO_OFFER_ITERATOR_H
 
-#include "CosTradingS.h"
 #include "Property_Filter.h"
 
 class TAO_Export TAO_Offer_Iterator :
@@ -45,7 +44,7 @@ public:
   virtual ~TAO_Offer_Iterator (void);
   
   virtual void destroy (CORBA::Environment& _env)  
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // BEGIN SPEC
   // The destroy operation destroys the iterator. No further
   // operations can be invoked on an iterator after it has been
@@ -58,8 +57,8 @@ public:
   // iterate over. 
 
   virtual CORBA::ULong max_left (CORBA::Environment &env) = 0
-    TAO_THROW_SPEC (CORBA::SystemException,
-		    CosTrading::UnknownMaxLeft);
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		    CosTrading::UnknownMaxLeft));
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers
@@ -72,7 +71,7 @@ public:
   virtual CORBA::Boolean next_n (CORBA::ULong n,
 				 CosTrading::OfferSeq_out offers,
 				 CORBA::Environment &env) = 0
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // BEGIN SPEC
   // The next_n operation returns a set of service offers in the
   // output parameter "offers." The operation returns n service offers

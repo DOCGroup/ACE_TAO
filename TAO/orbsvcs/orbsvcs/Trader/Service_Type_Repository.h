@@ -20,22 +20,9 @@
 
 #include <list>
 #include "Trader_Base.h"
-
-// ACE includes
-#if defined (OS_NO_NAMESPACE)
-#define map foobar
-#endif /* OS_NO_NAMESPACE */
-
-#include "CosTradingS.h"
 #include "Monitor.h"
-#include "ace/OS.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef map
-#endif /* OS_NO_NAMESPACE */
 
 typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-
 
 template <class MAP_LOCK_TYPE>
 class TAO_Service_Type_Repository :
@@ -60,7 +47,7 @@ public:
 	      const SERVICE_TYPE_REPOS::PropStructSeq& props,
 	      const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
 	      CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType, 
 		    SERVICE_TYPE_REPOS::ServiceTypeExists, 
 		    SERVICE_TYPE_REPOS::InterfaceTypeMismatch, 
@@ -68,7 +55,7 @@ public:
 		    CosTrading::DuplicatePropertyName, 
 		    SERVICE_TYPE_REPOS::ValueTypeRedefinition, 
 		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::DuplicateServiceTypeName);
+		    SERVICE_TYPE_REPOS::DuplicateServiceTypeName));
 
   // BEGIN SPEC
   // The add_type operation enables the creation of new service types
@@ -116,10 +103,10 @@ public:
 
   virtual void remove_type (const char * name,
 			    CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType, 
 		    CosTrading::UnknownServiceType, 
-		    SERVICE_TYPE_REPOS::HasSubTypes);
+		    SERVICE_TYPE_REPOS::HasSubTypes));
 
   // BEGIN SPEC
   // The remove_type operation removes the named type from the service
@@ -134,7 +121,7 @@ public:
   virtual SERVICE_TYPE_REPOS::ServiceTypeNameSeq* 
     list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
 		CORBA::Environment& _env)
-    TAO_THROW_SPEC (CORBA::SystemException);
+    TAO_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC
   // The list_types operation permits a client to obtain the names of
@@ -150,9 +137,9 @@ public:
   virtual SERVICE_TYPE_REPOS::TypeStruct*
     describe_type (const char * name,
 		   CORBA::Environment& _env) 
-    TAO_THROW_SPEC (CORBA::SystemException,
+    TAO_THROW_SPEC ((CORBA::SystemException,
 		    CosTrading::IllegalServiceType, 
-		    CosTrading::UnknownServiceType);
+		    CosTrading::UnknownServiceType));
   // BEGIN SPEC
   // The describe_type operation permits a client to obtain the
   // details for a particular service type. ° If "name" is malformed,
@@ -164,9 +151,9 @@ public:
   virtual SERVICE_TYPE_REPOS::TypeStruct* 
     fully_describe_type (const char * name,
 			 CORBA::Environment& _env) 
-    throw (CORBA::SystemException, 
-	   CosTrading::IllegalServiceType, 
-	   CosTrading::UnknownServiceType);
+    TAO_THROW_SPEC ((CORBA::SystemException, 
+		    CosTrading::IllegalServiceType, 
+		    CosTrading::UnknownServiceType));
   // BEGIN SPEC
   // The fully_describe_type operation permits a client to obtain the
   // details for a particular service type. The property sequence
@@ -181,10 +168,10 @@ public:
 
   virtual void mask_type (const char * name,
 			  CORBA::Environment& _env) 
-    throw (CORBA::SystemException,
-	   CosTrading::IllegalServiceType, 
-	   CosTrading::UnknownServiceType, 
-	   SERVICE_TYPE_REPOS::AlreadyMasked);
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		    CosTrading::IllegalServiceType, 
+		    CosTrading::UnknownServiceType, 
+		    SERVICE_TYPE_REPOS::AlreadyMasked));
   // BEGIN SPEC
   // The mask_type operation permits the deprecation of a particular
   // type (i.e., after being masked, exporters will no longer be able
@@ -200,10 +187,10 @@ public:
        
   virtual void unmask_type (const char * name,
 			    CORBA::Environment& _env) 
-    throw (CORBA::SystemException, 
-	   CosTrading::IllegalServiceType, 
-	   CosTrading::UnknownServiceType, 
-	   SERVICE_TYPE_REPOS::NotMasked);
+    TAO_THROW_SPEC ((CORBA::SystemException, 
+		    CosTrading::IllegalServiceType, 
+		    CosTrading::UnknownServiceType, 
+		    SERVICE_TYPE_REPOS::NotMasked));
   // BEGIN SPEC
   // The unmask_type undeprecates a type (i.e., after being unmasked,
   // exporters will be able to resume advertisement of offers of that
@@ -218,11 +205,11 @@ public:
   static const char * NAME;
 
 private:
-
-  typedef list<string> TYPE_LIST;
   
   struct Type_Info {
     // storage structure for information pertinent to the type.
+
+    typedef list<string> TYPE_LIST;
 
     SERVICE_TYPE_REPOS::TypeStruct type_info_; 
     // standard type info.
@@ -240,7 +227,7 @@ private:
   typedef TAO_Monitor
     <
     TYPE_MAP,
-    TAO_Null_Mutex
+    MAP_LOCK_TYPE
     > SERVICE_TYPE_MAP;
   
   typedef map
@@ -257,35 +244,29 @@ private:
     less < string >
     > SUPER_TYPE_MAP;
 
-  void validate_properties (SERVICE_TYPE_REPOS::PropStructSeq& props,
-			    PROP_MAP& prop_map
-			    CORBA::Environment& _env) const
-    TAO_THROW_SPEC (CosTrading::IllegalPropertyName,
-	   CosTrading::DuplicatePropertyName);
+  void validate_properties (const SERVICE_TYPE_REPOS::PropStructSeq& props,
+			    PROP_MAP& prop_map,
+			    CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
+		     CosTrading::DuplicatePropertyName));
   // Confirm that the properties in props have valid names, and aren't
   // duplicated. Cram those properties into the prop_map.
   
-  void validate_supertypes (SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
-			    SUPER_TYPE_MAP& super_map
+  void validate_supertypes (const SERVICE_TYPE_REPOS::ServiceTypeNameSeq& super_types,
+			    SUPER_TYPE_MAP& super_map,
 			    CORBA::Environment& _env)
-    TAO_THROW_SPEC (CosTrading::IllegalServiceType,
+    TAO_THROW_SPEC ((CosTrading::IllegalServiceType,
 		    CosTrading::UnknownServiceType,
-		    CosTrading::DuplicatePropertyName);   
+		    CosTrading::DuplicatePropertyName));   
   // Confirm that the each super type exists, and cram them into super_map. 
   
   void validate_inheritance (PROP_MAP& prop_map,
-			     SUPER_TYPE_MAP& super_map
-			     CORBA::Environment& _env) const
-    TAO_THROW_SPEC (SERVICE_TYPE_REPOS::ValueTypeRedefinition);
+			     SUPER_TYPE_MAP& super_map,
+			     CORBA::Environment& _env)
+    TAO_THROW_SPEC ((SERVICE_TYPE_REPOS::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.
-
-  void value_type_redef (const SERVICE_TYPE_REPOS::PropStruct& prop1,
-			 const SERVICE_TYPE_REPOS::PropStruct& prop2,
-			 CORBA::Environment& _env) const
-    TAO_THROW_SPEC (SERVICE_TYPE_REPOS::ValueTypeRedefinition);
-  // Construct a ValueTypeRedefinition exception and throw it.
-
+  
   void update_type_map (const char* name,
 			SERVICE_TYPE_REPOS::TypeStruct& type,
 			PROP_MAP& prop_map,
