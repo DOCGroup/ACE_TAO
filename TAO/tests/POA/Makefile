@@ -10,20 +10,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Generic_Servant \
-	Adapter_Activator \
-	DSI \
-	Default_Servant \
-	Explicit_Activation \
-	FindPOA \
-	Forwarding \
-	Loader \
-	NewPOA \
-	On_Demand_Activation \
-	On_Demand_Loading \
-	RootPOA \
-	Reference_Counted_Servant \
-	TIE
+DIRS  = Destruction \
+	Identity
 
 # The following test hasn't been updated yet
 # Demux_Test

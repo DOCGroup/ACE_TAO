@@ -634,7 +634,8 @@ protected:
 
   PortableServer::Servant locate_servant_i (const char *operation,
                                             const PortableServer::ObjectId &id,
-                                            TAO_POA_Current_Impl *poa_current_impl,
+                                            TAO_Object_Adapter::Servant_Upcall &servant_upcall,
+                                            TAO_POA_Current_Impl &poa_current_impl,
                                             CORBA_Environment &ACE_TRY_ENV);
 
   const TAO_Creation_Time &creation_time (void);
@@ -733,6 +734,8 @@ protected:
   ACE_SYNCH_CONDITION outstanding_requests_condition_;
 
   CORBA::Boolean wait_for_completion_pending_;
+
+  CORBA::Boolean waiting_destruction_;
 };
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)

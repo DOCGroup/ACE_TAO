@@ -2,14 +2,14 @@
 
 // ==================================================
 // = LIBRARY
-//    TAO/examples/POA/Identity
+//    TAO/test/POA/Identity
 //
 // = FILENAME
 //    Identity.cpp
 //
 // = DESCRIPTION
-//    This program demonstrates how to move between id, reference, and
-//    servants.
+//    This program demonstrates and tests how to move between id,
+//    reference, and servants.
 //
 // = AUTHOR
 //    Irfan Pyarali

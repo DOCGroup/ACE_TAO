@@ -64,7 +64,8 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     etherealize_objects_ (1),
     outstanding_requests_ (0),
     outstanding_requests_condition_ (thread_lock),
-    wait_for_completion_pending_ (0)
+    wait_for_completion_pending_ (0),
+    waiting_destruction_ (0)
 {
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -431,8 +432,17 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Commit suicide
-  delete this;
+  // If there are no outstanding requests.
+  if (this->outstanding_requests_ == 0)
+    {
+      // Commit suicide
+      delete this;
+    }
+  else
+    {
+      // Mark that we are ready for destruction.
+      this->waiting_destruction_ = 1;
+    }
 }
 
 int
@@ -1646,11 +1656,12 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
 PortableServer::Servant
 TAO_POA::locate_servant_i (const char *operation,
                            const PortableServer::ObjectId &system_id,
-                           TAO_POA_Current_Impl *poa_current_impl,
+                           TAO_Object_Adapter::Servant_Upcall &servant_upcall,
+                           TAO_POA_Current_Impl &poa_current_impl,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               poa_current_impl->object_id_) != 0)
+                                                               poa_current_impl.object_id_) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -1664,14 +1675,14 @@ TAO_POA::locate_servant_i (const char *operation,
     {
       PortableServer::Servant servant = 0;
       int result = this->active_object_map ().find_servant_using_system_id_and_user_id (system_id,
-                                                                                        poa_current_impl->object_id (),
+                                                                                        poa_current_impl.object_id (),
                                                                                         servant,
-                                                                                        poa_current_impl->active_object_map_entry_);
+                                                                                        servant_upcall.active_object_map_entry_);
 
       if (result == 0)
         {
           // Increment the reference count.
-          ++poa_current_impl->active_object_map_entry ()->reference_count_;
+          ++servant_upcall.active_object_map_entry ()->reference_count_;
 
           // Success
           return servant;
@@ -1762,7 +1773,7 @@ TAO_POA::locate_servant_i (const char *operation,
             // Invocations of incarnate on the servant manager are serialized.
             // Invocations of etherealize on the servant manager are serialized.
             // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-            servant = this->servant_activator_->incarnate (poa_current_impl->object_id (),
+            servant = this->servant_activator_->incarnate (poa_current_impl.object_id (),
                                                            poa.in (),
                                                            ACE_TRY_ENV);
             ACE_CHECK_RETURN (0);
@@ -1789,9 +1800,9 @@ TAO_POA::locate_servant_i (const char *operation,
           // ObjectId value will be delivered directly to that servant
           // without invoking the servant manager.
           int result = this->active_object_map ().rebind_using_user_id_and_system_id (servant,
-                                                                                      poa_current_impl->object_id (),
+                                                                                      poa_current_impl.object_id (),
                                                                                       system_id,
-                                                                                      poa_current_impl->active_object_map_entry_);
+                                                                                      servant_upcall.active_object_map_entry_);
           if (result != 0)
             {
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1800,7 +1811,7 @@ TAO_POA::locate_servant_i (const char *operation,
           else
             {
               // Increment the reference count.
-              ++poa_current_impl->active_object_map_entry ()->reference_count_;
+              ++servant_upcall.active_object_map_entry ()->reference_count_;
 
               // Success
               return servant;
@@ -1831,7 +1842,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // process the request, and postinvoke the object.
           //
           PortableServer::ServantLocator::Cookie cookie;
-          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current_impl->object_id (),
+          PortableServer::Servant servant = this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                                                                poa.in (),
                                                                                operation,
                                                                                cookie,
@@ -1842,7 +1853,10 @@ TAO_POA::locate_servant_i (const char *operation,
             return 0;
 
           // Remember the cookie
-          poa_current_impl->locator_cookie (cookie);
+          servant_upcall.locator_cookie (cookie);
+
+          // Remember operation name.
+          servant_upcall.operation (operation);
 
           // Success
           return servant;
@@ -1945,6 +1959,8 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
       // Skip past the timestamp
       starting_at += TAO_Creation_Time::creation_time_length ();
     }
+#else
+  ACE_UNUSED_ARG (poa_creation_time);
 #endif /* POA_NO_TIMESTAMP */
 
   // Calculate the size of the POA name.

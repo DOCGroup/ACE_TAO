@@ -240,18 +240,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA Identity"=.\POA\Identity\Identity.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "POA Loader Server"=.\POA\Loader\server.dsp - Package Owner=<4>
 
 Package=<5>
