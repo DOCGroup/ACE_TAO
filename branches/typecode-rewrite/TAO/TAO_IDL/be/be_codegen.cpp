@@ -1577,7 +1577,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/SystemException.h");
     }
 
-
   // Includes whatever Any template classes that may be needed.
   this->gen_any_file_includes ();
 
@@ -1994,8 +1993,13 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 //   this->gen_standard_include (stream,
 //                               "tao/TypeCode.h");
 
+
+
   this->gen_standard_include (stream,
                               "tao/Null_RefCount_Policy.h");
+
+  this->gen_standard_include (stream,
+                              "tao/TypeCode_Constants.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
