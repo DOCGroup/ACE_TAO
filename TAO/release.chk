@@ -25,7 +25,7 @@ Legend:
 [110x0 ]   IDL_Cubit compiles
         [1x1x0x] svr runs
         [1x1x1x] clnt runs
-[  x x ] POA/FindPOA compiles
+[1 x x ] POA/FindPOA compiles
 [1 x x ] POA/NewPOA compiles
 [1 x x ] POA/RootPOA compiles
 [1x1x1x]   Param_Test compiles
