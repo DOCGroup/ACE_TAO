@@ -177,8 +177,8 @@ private:
   class WChar_extractor : public DU_Extractor_base
   {
   public:
-    CORBA::Boolean check_match (const CORBA_Any& inside_any,
-                                const CORBA_Any& outside_any);
+    CORBA::Boolean check_match (CORBA_Any& inside_any,
+                                CORBA_Any& outside_any);
   private:
     CORBA::WChar arg_index_;
     CORBA::WChar member_index_;
@@ -187,8 +187,8 @@ private:
   class Enum_extractor : public DU_Extractor_base
   {
   public:
-    CORBA::Boolean check_match (const CORBA_Any& inside_any,
-                                const CORBA_Any& outside_any);
+    CORBA::Boolean check_match (CORBA_Any& inside_any,
+                                CORBA_Any& outside_any);
   private:
     CORBA::ULong arg_index_;
     CORBA::ULong member_index_;
