@@ -1,3 +1,12 @@
+Wed Aug  2 18:00:28 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/NT_Naming_Service.bor (CFLAGS):
+	* orbsvcs/Naming_Service/Naming_Service.bor: Updated the CFLAGS
+	  and LIBFILES macro. These macros now include the
+	  $(TAO_SVC_UTILS_CFLAGS) and $(TAO_SVC_UTILS_LIB) for proper
+	  linking of the NameService executable. Thanks to Chris Able
+	  <cable@scires.com> for this patch.
+
 Wed Aug  2 17:47:59 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosNotification.bor:
