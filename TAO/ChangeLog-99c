@@ -1,3 +1,12 @@
+Sat Nov  6 15:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/orbconf.h:
+
+	  Added SecurityCurrent, TransactionCurrent and DynAnyFactory
+	  object ID macros to the list of object ID macros.  The
+	  corresponding services/components haven't been implemented yet.
+	  The object IDs were added for the sake of being complete.
+
 Fri Nov  5 14:53:23 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Clarified that the timeout values for
