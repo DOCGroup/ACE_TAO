@@ -2536,7 +2536,7 @@ IR_NativeDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_InterfaceDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_InterfaceDef **buf = 0;
     
@@ -2549,7 +2549,7 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::freebuf (IR_InterfaceDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::freebuf (IR_InterfaceDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -2557,18 +2557,18 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_InterfaceDef* *value,
     CORBA::Boolean release)
@@ -2577,7 +2577,7 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::_TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq(const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -2596,8 +2596,8 @@ IR_NativeDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -2632,7 +2632,7 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_InterfaceDef,IR_InterfaceDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -2641,7 +2641,7 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_InterfaceDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_InterfaceDef **result = 0;
     if (orphan == 0)
@@ -2675,7 +2675,7 @@ IR_NativeDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_InterfaceDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_InterfaceDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_InterfaceDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -3040,7 +3040,7 @@ IR_ValueDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_ValueDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_ValueDef **buf = 0;
     
@@ -3053,7 +3053,7 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::freebuf (IR_ValueDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::freebuf (IR_ValueDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -3061,18 +3061,18 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ValueDef* *value,
     CORBA::Boolean release)
@@ -3081,7 +3081,7 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::_TAO_Unbounded_Object_Sequence_IR_ValueDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -3100,8 +3100,8 @@ IR_ValueDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -3136,7 +3136,7 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_ValueDef,IR_ValueDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -3145,7 +3145,7 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_ValueDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ValueDef **result = 0;
     if (orphan == 0)
@@ -3179,7 +3179,7 @@ IR_ValueDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ValueDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ValueDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ValueDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -3711,7 +3711,7 @@ IR_ComponentDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_ComponentDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_ComponentDef **buf = 0;
     
@@ -3724,7 +3724,7 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (IR_ComponentDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (IR_ComponentDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -3732,18 +3732,18 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ComponentDef* *value,
     CORBA::Boolean release)
@@ -3752,7 +3752,7 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -3771,8 +3771,8 @@ IR_ComponentDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -3807,7 +3807,7 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_ComponentDef,IR_ComponentDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -3816,7 +3816,7 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_ComponentDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ComponentDef **result = 0;
     if (orphan == 0)
@@ -3850,7 +3850,7 @@ IR_ComponentDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ComponentDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ComponentDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -4215,7 +4215,7 @@ IR_ProvidesDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_ProvidesDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_ProvidesDef **buf = 0;
     
@@ -4228,7 +4228,7 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (IR_ProvidesDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (IR_ProvidesDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -4236,18 +4236,18 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ProvidesDef* *value,
     CORBA::Boolean release)
@@ -4256,7 +4256,7 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -4275,8 +4275,8 @@ IR_ProvidesDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -4311,7 +4311,7 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_ProvidesDef,IR_ProvidesDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -4320,7 +4320,7 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_ProvidesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ProvidesDef **result = 0;
     if (orphan == 0)
@@ -4354,7 +4354,7 @@ IR_ProvidesDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ProvidesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ProvidesDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -4719,7 +4719,7 @@ IR_UsesDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_UsesDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_UsesDef **buf = 0;
     
@@ -4732,7 +4732,7 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (IR_UsesDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (IR_UsesDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -4740,18 +4740,18 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_UsesDef* *value,
     CORBA::Boolean release)
@@ -4760,7 +4760,7 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -4779,8 +4779,8 @@ IR_UsesDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -4815,7 +4815,7 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_UsesDef,IR_UsesDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -4824,7 +4824,7 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_UsesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_UsesDef **result = 0;
     if (orphan == 0)
@@ -4858,7 +4858,7 @@ IR_UsesDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_UsesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_UsesDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -5223,7 +5223,7 @@ IR_HomeDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_HomeDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_HomeDef **buf = 0;
     
@@ -5236,7 +5236,7 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (IR_HomeDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (IR_HomeDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -5244,18 +5244,18 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_HomeDef* *value,
     CORBA::Boolean release)
@@ -5264,7 +5264,7 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq(const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq(const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -5283,8 +5283,8 @@ IR_HomeDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -5319,7 +5319,7 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_HomeDef,IR_HomeDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -5328,7 +5328,7 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_HomeDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_HomeDef **result = 0;
     if (orphan == 0)
@@ -5362,7 +5362,7 @@ IR_HomeDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_HomeDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_HomeDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -5894,7 +5894,7 @@ IR_EmitsDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_EmitsDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_EmitsDef **buf = 0;
     
@@ -5907,7 +5907,7 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (IR_EmitsDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (IR_EmitsDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -5915,18 +5915,18 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_EmitsDef* *value,
     CORBA::Boolean release)
@@ -5935,7 +5935,7 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq(const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq(const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -5954,8 +5954,8 @@ IR_EmitsDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -5990,7 +5990,7 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_EmitsDef,IR_EmitsDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -5999,7 +5999,7 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_EmitsDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_EmitsDef **result = 0;
     if (orphan == 0)
@@ -6033,7 +6033,7 @@ IR_EmitsDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_EmitsDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_EmitsDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -6398,7 +6398,7 @@ IR_PublishesDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_PublishesDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_PublishesDef **buf = 0;
     
@@ -6411,7 +6411,7 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (IR_PublishesDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (IR_PublishesDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -6419,18 +6419,18 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_PublishesDef* *value,
     CORBA::Boolean release)
@@ -6439,7 +6439,7 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -6458,8 +6458,8 @@ IR_PublishesDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -6494,7 +6494,7 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_PublishesDef,IR_PublishesDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -6503,7 +6503,7 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_PublishesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_PublishesDef **result = 0;
     if (orphan == 0)
@@ -6537,7 +6537,7 @@ IR_PublishesDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_PublishesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_PublishesDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -6902,7 +6902,7 @@ IR_ConsumesDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_ConsumesDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_ConsumesDef **buf = 0;
     
@@ -6915,7 +6915,7 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (IR_ConsumesDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (IR_ConsumesDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -6923,18 +6923,18 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ConsumesDef* *value,
     CORBA::Boolean release)
@@ -6943,7 +6943,7 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -6962,8 +6962,8 @@ IR_ConsumesDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -6998,7 +6998,7 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_ConsumesDef,IR_ConsumesDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -7007,7 +7007,7 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_ConsumesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ConsumesDef **result = 0;
     if (orphan == 0)
@@ -7041,7 +7041,7 @@ IR_ConsumesDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ConsumesDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ConsumesDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -7406,7 +7406,7 @@ IR_FactoryDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_FactoryDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_FactoryDef **buf = 0;
     
@@ -7419,7 +7419,7 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (IR_FactoryDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (IR_FactoryDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -7427,18 +7427,18 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_FactoryDef* *value,
     CORBA::Boolean release)
@@ -7447,7 +7447,7 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -7466,8 +7466,8 @@ IR_FactoryDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -7502,7 +7502,7 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_FactoryDef,IR_FactoryDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -7511,7 +7511,7 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_FactoryDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_FactoryDef **result = 0;
     if (orphan == 0)
@@ -7545,7 +7545,7 @@ IR_FactoryDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_FactoryDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_FactoryDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -7910,7 +7910,7 @@ IR_FinderDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_FinderDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_FinderDef **buf = 0;
     
@@ -7923,7 +7923,7 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (IR_FinderDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (IR_FinderDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -7931,18 +7931,18 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_FinderDef* *value,
     CORBA::Boolean release)
@@ -7951,7 +7951,7 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq(const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -7970,8 +7970,8 @@ IR_FinderDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -8006,7 +8006,7 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_FinderDef,IR_FinderDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -8015,7 +8015,7 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_FinderDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_FinderDef **result = 0;
     if (orphan == 0)
@@ -8049,7 +8049,7 @@ IR_FinderDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_FinderDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_FinderDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -8414,7 +8414,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_Contained **
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_Contained **buf = 0;
     
@@ -8427,7 +8427,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::freebuf (IR_Contained **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::freebuf (IR_Contained **buffer)
   {
     if (buffer == 0)
       return;
@@ -8435,18 +8435,18 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_Contained* *value,
     CORBA::Boolean release)
@@ -8455,7 +8455,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq(const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::_TAO_Unbounded_Object_Sequence_IR_ContainedSeq(const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -8474,8 +8474,8 @@ IR_PrimaryKeyDef_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ContainedSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -8510,7 +8510,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_Contained,IR_Contained_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -8519,7 +8519,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE IR_Contained* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_Contained **result = 0;
     if (orphan == 0)
@@ -8553,7 +8553,7 @@ IR_PrimaryKeyDef_out::operator-> (void)
   }
   
   ACE_INLINE const IR_Contained* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ContainedSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_Contained ** ACE_CAST_CONST, this->buffer_);
   }
@@ -8929,7 +8929,7 @@ IR_StructMember_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_StructMember *
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_StructMember *retval = 0;
@@ -8937,25 +8937,25 @@ IR_StructMember_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (IR_StructMember *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (IR_StructMember *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_StructMember *data,
     CORBA::Boolean release)
@@ -8964,7 +8964,7 @@ IR_StructMember_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::_TAO_Unbounded_Sequence_IR_StructMemberSeq (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -8984,8 +8984,8 @@ IR_StructMember_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_StructMemberSeq &
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_StructMemberSeq &
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_StructMemberSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -9017,7 +9017,7 @@ IR_StructMember_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_StructMember &
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -9026,7 +9026,7 @@ IR_StructMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_StructMember &
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -9037,7 +9037,7 @@ IR_StructMember_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_StructMember *
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_StructMember *result = 0;
     if (orphan == 0)
@@ -9071,13 +9071,13 @@ IR_StructMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_StructMember *
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_StructMember * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_StructMemberSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_StructMemberSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_StructMember *data,
   CORBA::Boolean release)
@@ -9469,7 +9469,7 @@ IR_Initializer_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_Initializer *
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_Initializer *retval = 0;
@@ -9477,25 +9477,25 @@ IR_Initializer_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (IR_Initializer *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (IR_Initializer *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_Initializer *data,
     CORBA::Boolean release)
@@ -9504,7 +9504,7 @@ IR_Initializer_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::_TAO_Unbounded_Sequence_IR_InitializerSeq (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -9524,8 +9524,8 @@ IR_Initializer_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_InitializerSeq &
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_InitializerSeq &
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator= (const _TAO_Unbounded_Sequence_IR_InitializerSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -9557,7 +9557,7 @@ IR_Initializer_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_Initializer &
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -9566,7 +9566,7 @@ IR_Initializer_out::operator-> (void)
   }
   
   ACE_INLINE const IR_Initializer &
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -9577,7 +9577,7 @@ IR_Initializer_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_Initializer *
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_Initializer *result = 0;
     if (orphan == 0)
@@ -9611,13 +9611,13 @@ IR_Initializer_out::operator-> (void)
   }
   
   ACE_INLINE const IR_Initializer *
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_Initializer * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_InitializerSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_InitializerSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_Initializer *data,
   CORBA::Boolean release)
@@ -10009,7 +10009,7 @@ IR_UnionMember_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_UnionMember *
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_UnionMember *retval = 0;
@@ -10017,25 +10017,25 @@ IR_UnionMember_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (IR_UnionMember *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (IR_UnionMember *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_UnionMember *data,
     CORBA::Boolean release)
@@ -10044,7 +10044,7 @@ IR_UnionMember_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::_TAO_Unbounded_Sequence_IR_UnionMemberSeq (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -10064,8 +10064,8 @@ IR_UnionMember_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq &
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_UnionMemberSeq &
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_UnionMemberSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -10097,7 +10097,7 @@ IR_UnionMember_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_UnionMember &
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -10106,7 +10106,7 @@ IR_UnionMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_UnionMember &
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -10117,7 +10117,7 @@ IR_UnionMember_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_UnionMember *
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_UnionMember *result = 0;
     if (orphan == 0)
@@ -10151,13 +10151,13 @@ IR_UnionMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_UnionMember *
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_UnionMember * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_UnionMemberSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_UnionMemberSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_UnionMember *data,
   CORBA::Boolean release)
@@ -13140,7 +13140,7 @@ IR_ExceptionDescription_out::operator-> (void)
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   
   ACE_INLINE IR_ExceptionDef **
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (CORBA::ULong nelems)
   {
     IR_ExceptionDef **buf = 0;
     
@@ -13153,7 +13153,7 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE void 
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::freebuf (IR_ExceptionDef **buffer)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::freebuf (IR_ExceptionDef **buffer)
   {
     if (buffer == 0)
       return;
@@ -13161,18 +13161,18 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (void)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (void)
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ExceptionDef* *value,
     CORBA::Boolean release)
@@ -13181,7 +13181,7 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::_TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq(const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
   {
     if (rhs.buffer_ != 0)
@@ -13200,8 +13200,8 @@ IR_ExceptionDescription_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator= (const _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq &rhs)
   {
     if (this == &rhs)
       return *this;
@@ -13236,7 +13236,7 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE TAO_Object_Manager<IR_ExceptionDef,IR_ExceptionDef_var>
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator[] (CORBA::ULong index) const
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::operator[] (CORBA::ULong index) const
   // read-write accessor
   {
     ACE_ASSERT (index < this->maximum_);
@@ -13245,7 +13245,7 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE IR_ExceptionDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ExceptionDef **result = 0;
     if (orphan == 0)
@@ -13279,7 +13279,7 @@ IR_ExceptionDescription_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ExceptionDef* *
-  IR__TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (void) const
+  _TAO_Unbounded_Object_Sequence_IR_ExceptionDefSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ExceptionDef ** ACE_CAST_CONST, this->buffer_);
   }
@@ -13478,7 +13478,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   
   // = Static operations.
   ACE_INLINE IR_ExceptionDescription *
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_ExceptionDescription *retval = 0;
@@ -13486,25 +13486,25 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (IR_ExceptionDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (IR_ExceptionDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ExceptionDescription *data,
     CORBA::Boolean release)
@@ -13513,7 +13513,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::_TAO_Unbounded_Sequence_IR_ExcDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -13533,8 +13533,8 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -13566,7 +13566,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE IR_ExceptionDescription &
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -13575,7 +13575,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_ExceptionDescription &
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -13586,7 +13586,7 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_ExceptionDescription *
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ExceptionDescription *result = 0;
     if (orphan == 0)
@@ -13620,13 +13620,13 @@ IR_ExceptionDefSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_ExceptionDescription *
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ExceptionDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_ExceptionDescription *data,
   CORBA::Boolean release)
@@ -14361,7 +14361,7 @@ IR_ParameterDescription_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_ParameterDescription *
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_ParameterDescription *retval = 0;
@@ -14369,25 +14369,25 @@ IR_ParameterDescription_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (IR_ParameterDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (IR_ParameterDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ParameterDescription *data,
     CORBA::Boolean release)
@@ -14396,7 +14396,7 @@ IR_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::_TAO_Unbounded_Sequence_IR_ParDescriptionSeq (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -14416,8 +14416,8 @@ IR_ParameterDescription_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq &
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_ParDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -14449,7 +14449,7 @@ IR_ParameterDescription_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_ParameterDescription &
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -14458,7 +14458,7 @@ IR_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ParameterDescription &
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -14469,7 +14469,7 @@ IR_ParameterDescription_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_ParameterDescription *
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ParameterDescription *result = 0;
     if (orphan == 0)
@@ -14503,13 +14503,13 @@ IR_ParameterDescription_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ParameterDescription *
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ParameterDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_ParDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_ParameterDescription *data,
   CORBA::Boolean release)
@@ -15444,7 +15444,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   
   // = Static operations.
   ACE_INLINE IR_OperationDescription *
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_OperationDescription *retval = 0;
@@ -15452,25 +15452,25 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (IR_OperationDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (IR_OperationDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_OperationDescription *data,
     CORBA::Boolean release)
@@ -15479,7 +15479,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::_TAO_Unbounded_Sequence_IR_OpDescriptionSeq (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -15499,8 +15499,8 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq &
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_OpDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -15532,7 +15532,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE IR_OperationDescription &
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -15541,7 +15541,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_OperationDescription &
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -15552,7 +15552,7 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_OperationDescription *
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_OperationDescription *result = 0;
     if (orphan == 0)
@@ -15586,13 +15586,13 @@ IR_RepositoryIdSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_OperationDescription *
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_OperationDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_OpDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_OperationDescription *data,
   CORBA::Boolean release)
@@ -15808,7 +15808,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   
   // = Static operations.
   ACE_INLINE IR_AttributeDescription *
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_AttributeDescription *retval = 0;
@@ -15816,25 +15816,25 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (IR_AttributeDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (IR_AttributeDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_AttributeDescription *data,
     CORBA::Boolean release)
@@ -15843,7 +15843,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::_TAO_Unbounded_Sequence_IR_AttrDescriptionSeq (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -15863,8 +15863,8 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator= (const _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -15896,7 +15896,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE IR_AttributeDescription &
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -15905,7 +15905,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_AttributeDescription &
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -15916,7 +15916,7 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_AttributeDescription *
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_AttributeDescription *result = 0;
     if (orphan == 0)
@@ -15950,13 +15950,13 @@ IR_OpDescriptionSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_AttributeDescription *
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_AttributeDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_AttributeDescription *data,
   CORBA::Boolean release)
@@ -16524,7 +16524,7 @@ IR_ValueMember_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_ValueMember *
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_ValueMember *retval = 0;
@@ -16532,25 +16532,25 @@ IR_ValueMember_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (IR_ValueMember *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (IR_ValueMember *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ValueMember *data,
     CORBA::Boolean release)
@@ -16559,7 +16559,7 @@ IR_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::_TAO_Unbounded_Sequence_IR_ValueMemberSeq (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -16579,8 +16579,8 @@ IR_ValueMember_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq &
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ValueMemberSeq &
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator= (const _TAO_Unbounded_Sequence_IR_ValueMemberSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -16612,7 +16612,7 @@ IR_ValueMember_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_ValueMember &
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -16621,7 +16621,7 @@ IR_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ValueMember &
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -16632,7 +16632,7 @@ IR_ValueMember_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_ValueMember *
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ValueMember *result = 0;
     if (orphan == 0)
@@ -16666,13 +16666,13 @@ IR_ValueMember_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ValueMember *
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ValueMember * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_ValueMemberSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ValueMemberSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_ValueMember *data,
   CORBA::Boolean release)
@@ -17583,7 +17583,7 @@ IR_UsesDescription_out::operator-> (void)
   
   // = Static operations.
   ACE_INLINE IR_ProvidesDescription *
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_ProvidesDescription *retval = 0;
@@ -17591,25 +17591,25 @@ IR_UsesDescription_out::operator-> (void)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (IR_ProvidesDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (IR_ProvidesDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_ProvidesDescription *data,
     CORBA::Boolean release)
@@ -17618,7 +17618,7 @@ IR_UsesDescription_out::operator-> (void)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -17638,8 +17638,8 @@ IR_UsesDescription_out::operator-> (void)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq &
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_ProvidesDescSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -17671,7 +17671,7 @@ IR_UsesDescription_out::operator-> (void)
   
   // = Accessors.
   ACE_INLINE IR_ProvidesDescription &
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -17680,7 +17680,7 @@ IR_UsesDescription_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ProvidesDescription &
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -17691,7 +17691,7 @@ IR_UsesDescription_out::operator-> (void)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_ProvidesDescription *
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_ProvidesDescription *result = 0;
     if (orphan == 0)
@@ -17725,13 +17725,13 @@ IR_UsesDescription_out::operator-> (void)
   }
   
   ACE_INLINE const IR_ProvidesDescription *
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_ProvidesDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_ProvidesDescSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_ProvidesDescription *data,
   CORBA::Boolean release)
@@ -17947,7 +17947,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   
   // = Static operations.
   ACE_INLINE IR_UsesDescription *
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (CORBA::ULong size)
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     IR_UsesDescription *retval = 0;
@@ -17955,25 +17955,25 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
     return retval;
   }
   
-  ACE_INLINE void IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (IR_UsesDescription *buffer)
+  ACE_INLINE void _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (IR_UsesDescription *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (void) // Default constructor.
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (void) // Default constructor.
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (maximum))
   {
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum,
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (CORBA::ULong maximum,
     CORBA::ULong length,
     IR_UsesDescription *data,
     CORBA::Boolean release)
@@ -17982,7 +17982,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::_TAO_Unbounded_Sequence_IR_UsesDescSeq (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
@@ -18002,8 +18002,8 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
     }
   }
   
-  ACE_INLINE IR__TAO_Unbounded_Sequence_IR_UsesDescSeq &
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
+  ACE_INLINE _TAO_Unbounded_Sequence_IR_UsesDescSeq &
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator= (const _TAO_Unbounded_Sequence_IR_UsesDescSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
@@ -18035,7 +18035,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   
   // = Accessors.
   ACE_INLINE IR_UsesDescription &
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i)
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -18044,7 +18044,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_UsesDescription &
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i) const
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
@@ -18055,7 +18055,7 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
   
   ACE_INLINE IR_UsesDescription *
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (CORBA::Boolean orphan)
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (CORBA::Boolean orphan)
   {
     IR_UsesDescription *result = 0;
     if (orphan == 0)
@@ -18089,13 +18089,13 @@ IR_ProvidesDescSeq_out::operator[] (CORBA::ULong index)
   }
   
   ACE_INLINE const IR_UsesDescription *
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (void) const
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const IR_UsesDescription * ACE_CAST_CONST, this->buffer_);
   }
   
   ACE_INLINE void
-  IR__TAO_Unbounded_Sequence_IR_UsesDescSeq::replace (CORBA::ULong max,
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
   IR_UsesDescription *data,
   CORBA::Boolean release)
