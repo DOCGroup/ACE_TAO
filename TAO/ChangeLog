@@ -1,3 +1,15 @@
+Wed Oct 15 08:27:12 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added RTCosScheduling so that it is also build.
+
+        * orbsvcs/orbsvcs/RTCosScheduling.bor:
+          Fixed error in this BCB makefile
+
+        * orbsvcs/orbsvcs/RTCosScheduling.idl:
+        * orbsvcs/tests/RTCosScheduling/testSched.idl:
+          Fixed fuzz error abount incorrect file tag.
+
 Wed Oct 15 08:21:33 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
