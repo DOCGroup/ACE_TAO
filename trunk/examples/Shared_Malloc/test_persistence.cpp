@@ -294,14 +294,14 @@ GUI_Handler::delete_employee (const char *name)
 }
 
 void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc > 1)
     ACE_OS::strcpy (backing_store, argv[1]);
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
