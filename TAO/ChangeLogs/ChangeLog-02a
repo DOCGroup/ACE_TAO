@@ -1,3 +1,8 @@
+Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cache_Entries.h:
+          Doxygen-ized some of the comments
+
 Sun Apr 21 10:07:25 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* TAO_IDL/tao_idl_static.dsp: Add user32.lib and advapi32.lib to link line.
@@ -69,7 +74,7 @@ Fri Apr 19 16:43:34 2002  Dmitry Goldshtain <dmitry@goldshtain.com>
 
 	  - ServerRequestInterceptor::receive_request_service_contexts()
 		- ServerRequestInfo::set_slot()  -- set RSC
-		- RSC->TSC shallow copy 
+		- RSC->TSC shallow copy
 	  - servant implementation invokes method on another server
 		- TSC->RSC shallow copy
 		- ClientRequestInterceptor::send_request()
@@ -82,7 +87,7 @@ Fri Apr 19 16:43:34 2002  Dmitry Goldshtain <dmitry@goldshtain.com>
 	  fix.
 
 Fri Apr 19 13:30:00 2002  Dan Troesser <troesser_d@ociweb.com>
-  
+
         * docs/Options.html
 	  Corrected documentation for ORBReactorRegistry.  It is no longer
  	  supported.
@@ -136,7 +141,7 @@ Thu Apr 18 15:03:56 2002  Ossama Othman  <ossama@uci.edu>
 
 Thu Apr 18 14:07:44 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Table.h: 	
+	* tao/ORB_Table.h:
 	* tao/ORBInitializer_Registry.h (TAO_ORBInitializer_Registry):
 
 	  Export the internally used singleton via the "friend"
@@ -192,12 +197,12 @@ Thu Apr 18 10:51:52 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Thu Apr 18 10:57:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed the 
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h: Removed the
 	  declaration of connect (), that is not needed anymore.
 
 Thu Apr 18 08:49:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
 	  Updated Dependencies.
 
 Thu Apr 18 08:09:06 2002  Ossama Othman  <ossama@uci.edu>
@@ -218,8 +223,8 @@ Thu Apr 18 08:02:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Wed Apr 17 17:30:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
-	* tao/GIOP_Message_Base.cpp: Fixed warnings with g++ builds. 
-	
+	* tao/GIOP_Message_Base.cpp: Fixed warnings with g++ builds.
+
 Wed Apr 17 15:25:08 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Makefile (DIRS):
@@ -358,7 +363,7 @@ Wed Apr 17 12:25:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  buffer, reuse the one that has already been created when the
 	  request is cobbled up in a CDR. Changed the signature of the
 	  send_reply_exception () to take an OutputCDR argument instead of
-	  a pointer to the ORB_Core. 
+	  a pointer to the ORB_Core.
 
 	* tao/Transport_Connector.cpp:
 	* tao/Transport_Connector.h: Added a new method to set and
@@ -367,7 +372,7 @@ Wed Apr 17 12:25:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  addresses, like ACE_INET_Addr for IIOP from host and port
 	  information, in the endpoint encapsulation during IOR decode
 	  time. We lazily evaluate it during invocation.
-	
+
 	* tao/IIOP_Connector.cpp
 	* tao/IIOP_Connector.h:
 	* tao/Strategies/DIOP_Connector.cpp
@@ -480,7 +485,7 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 	  (relative_roundtrip_timeout, sync_scope, buffering_constraint):
 
 	  Corrected technically incorrect initialization of a
-	  CORBA::Policy_var to zero.  
+	  CORBA::Policy_var to zero.
 
 	  Corrected return types.  "CORBA::Policy_ptr" not
 	  "CORBA::Policy *".
@@ -540,7 +545,7 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 	  is the correct type.
 
 	  Corrected technically incorrect initialization of a
-	  CORBA::Policy_var to zero.  
+	  CORBA::Policy_var to zero.
 
 	  Added missing ACE_ENV_SINGLE_ARG_PARAMETER to
 	  Messaging::SyncScopePolicy::synchronization() call.  Removes an
@@ -553,7 +558,7 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 	  Policy_var's out() accessor.
 
 Tue Apr 16 14:02:14 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
-	
+
 	* orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
 	* orbsvcs/IFR_Service/AliasDef_i.h:
 	* orbsvcs/IFR_Service/ArrayDef_i.h:
@@ -656,14 +661,14 @@ Tue Apr 16 11:12:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 Tue Apr 16 07:26:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object): 
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object):
 	  Added the ":" to the "-r" option.  Thanks to Bharathi
  	  Kangatharan <bharathi.kangatharan@baesystems.com> for reporting
  	  this.
 
 Tue Apr 16 09:31:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Security/Big_Request/Makefile: 
+	* orbsvcs/tests/Security/Big_Request/Makefile:
 	  Updated dependencies.
 
 Tue Apr 16 00:48:52 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
@@ -683,8 +688,8 @@ Mon Apr 15 23:13:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Transport_Connector.cpp: Changed the name of the method
 	  make_connect () as make_connection (), since the latter
 	  indicated what it was doing.
-	  
-	* tao/IIOP_Connector.cpp (make_connection): 
+
+	* tao/IIOP_Connector.cpp (make_connection):
 	* tao/IIOP_Connector.h:
 	* tao/Strategies/SHMIOP_Connector.h:
 	* tao/Strategies/SHMIOP_Connector.cpp:
@@ -711,7 +716,7 @@ Mon Apr 15 22:19:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  design implemented these problem shouldnt show up.
 
 	  Thanks to Andy Guy <andrew.guy@monis.com> for reporting this
-	  problem. 
+	  problem.
 
 Mon Apr 15 16:58:40 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -939,15 +944,15 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/UIOP_Connector.h: Changed the #include's of
 	  Pluggable.h to Transport_Acceptor.h or Transport_Connector.h, as
 	  the case may be
-		
+
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Generator_Parser_12.cpp:
 	* tao/GIOP_Message_State.cpp:
 	* tao/Pluggable_Messaging.cpp: Removed #include's of Pluggable.h
-	  since they are not needed.  
+	  since they are not needed.
 
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Removed a few
-	  unnecessary #includes. 
+	  unnecessary #includes.
 
 	* tao/Makefile:
 	* tao/DynamicInterface/Makefile:
@@ -955,18 +960,18 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/PortableServer/Makefile:
 	* tao/RTCORBA/Makefile:
 	* tao/RTPortableServer/Makefile:
-	* tao/Strategies/Makefile: Updated dependencies. 
+	* tao/Strategies/Makefile: Updated dependencies.
 
 	* tao/IIOP_Connector.h:
 	* tao/IIOP_Connector.cpp: Removed the method preconnects () and
-	  template instantiations needed for them. 
-	
+	  template instantiations needed for them.
+
 	* tao/Connector_Registry.cpp:
-	* tao/Connector_Registry.h: 
+	* tao/Connector_Registry.h:
 	* tao/params.cpp:
 	* tao/params.h:
 	* tao/params.i:
-	* tao/ORB_Core.cpp:Removed references necessary for preconnects. 
+	* tao/ORB_Core.cpp:Removed references necessary for preconnects.
 
 
 Sun Apr 14 10:35:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -981,14 +986,14 @@ Sun Apr 14 10:31:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp: Applied
 	  the fix in "Tue Feb 19 07:45:05 2002  Balachandran Natarajan
-	  <bala@cs.wustl.edu>" for other protocols. 
-	
+	  <bala@cs.wustl.edu>" for other protocols.
+
 Thu Apr 11 22:07:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* tao/TAO_IDL/driver/drv_preproc.cpp:  
+	* tao/TAO_IDL/driver/drv_preproc.cpp:
 	* tao/examples/IFR_Service/drv_preproc.cpp:
 	  Changed ACE_Log_Record::MAXLOGMSGLEN to ACE_MAXLOGMSGLEN.
-	
+
 Thu Apr 11 11:18:56 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MT_BiDir/server.dsp (RSC): Fixed it yet again.
@@ -1045,7 +1050,7 @@ Wed Apr 10 14:26:05 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Apr 10 15:07:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MT_BiDir/client.dsp (BuildCmds): 
+	* tests/MT_BiDir/client.dsp (BuildCmds):
 	* tests/MT_BiDir/server.dsp: Fixed the path for release builds.
 
 Tue Apr  9 12:50:32 2002  Chris Cleeland  <cleeland_c@ociweb.com>
