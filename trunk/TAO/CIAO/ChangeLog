@@ -14,6 +14,9 @@ Mon Feb  2 20:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Changed the order of inheritance to get the libraries in the
 	  right order.
 
+          All these should fix a problem reported by Diego Sevilla Ruiz 
+          and as always thanks to him for reporting it.
+
 Sat Jan 31 18:26:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/XML_Helpers/RTConfiguration.idl:
