@@ -395,10 +395,11 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 int
 ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 {
-  ACE_TRACE ("ACE_Service_Config::process_directives");
+  ACE_TRACE ("ACE_Service_Config::process_directive");
 
   if (ACE::debug ())
-    ACE_DEBUG ((LM_DEBUG, "Service_Config::process_directive - %s\n",
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("Service_Config::process_directive - %s\n"),
                 directive));
 
   ACE_UNUSED_ARG (directive);
