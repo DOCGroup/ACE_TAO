@@ -94,6 +94,11 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SIGINFO_T
 #endif /* __FreeBSD_version >= 300000 */
 
+#if (__FreeBSD_version >= 320000)
+#define ACE_HAS_TIME_R
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#endif /* __FreeBSD_version >= 320000 */
+
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_UCONTEXT_H

@@ -596,6 +596,10 @@ ACE_HAS_THR_C_DEST                      The pthread_keycreate()
 ACE_HAS_THR_C_FUNC                      The pthread_create() routine
                                         *must* take extern C
                                         functions.
+ACE_HAS_TIME_R                          Platform supports *time_r()
+                                        (e.g., gmtime_r()), but not
+                                        other reentrant APIs.  Compare
+                                        with ACE_HAS_REENTRANT_FUNCTIONS.
 ACE_HAS_TIMEZONE_GETTIMEOFDAY           Platform/compiler supports
                                         timezone * as second parameter
                                         to gettimeofday()
