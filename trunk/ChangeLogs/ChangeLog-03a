@@ -1,3 +1,9 @@
+Tue Oct 24 09:27:04 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/Test_and_Set.cpp: 
+	  Removed the repeated inclusion of the header file.
+	  Thanks to Darrell.
+
 Tue Oct 24 03:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 	* ace/Basic_Types.h:
