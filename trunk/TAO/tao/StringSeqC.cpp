@@ -26,12 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "StringSeqC.h"
 #include "tao/Typecode.h"
-#include "CDR.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -42,15 +41,16 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
+
+// TAO_IDL - Generated from 
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
 #define _CORBA_STRINGSEQ_CS_
@@ -97,28 +97,28 @@ void CORBA::StringSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_StringSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5374),
-  ACE_NTOHL (0x72696e67),
-  ACE_NTOHL (0x5365713a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f5374), 
+  ACE_NTOHL (0x72696e67), 
+  ACE_NTOHL (0x5365713a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/StringSeq:1.0
     10,
-  ACE_NTOHL (0x53747269),
-  ACE_NTOHL (0x6e675365),
+  ACE_NTOHL (0x53747269), 
+  ACE_NTOHL (0x6e675365), 
   ACE_NTOHL (0x71000000),  // name = StringSeq
     CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string,
+    CORBA::tk_string, 
     0U, // string length
     0U,
 
@@ -138,8 +138,8 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_StringSeq;
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// TAO_IDL - Generated from 
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
 #define _CORBA_WSTRINGSEQ_CS_
@@ -186,18 +186,18 @@ void CORBA::WStringSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_WStringSeq[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5753),
-  ACE_NTOHL (0x7472696e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f5753), 
+  ACE_NTOHL (0x7472696e), 
   ACE_NTOHL (0x67536571), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/WStringSeq:1.0
@@ -229,7 +229,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_CPP_
 #define _TAO_CDR_OP_CORBA_StringSeq_CPP_
@@ -302,7 +302,7 @@ return 0;
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_CPP_
 #define _TAO_CDR_OP_CORBA_WStringSeq_CPP_
@@ -375,7 +375,7 @@ return 0;
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

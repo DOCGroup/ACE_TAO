@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:323
+// be\be_codegen.cpp:323
 
 
 #include "ULongSeqC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +50,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_ULONGSEQ_CS_)
 #define _CORBA_ULONGSEQ_CS_
@@ -103,7 +103,7 @@ void CORBA::ULongSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ULongSeq[] =
 {
@@ -145,7 +145,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_CORBA_ULongSeq_CPP_
 #define _TAO_CDR_OP_CORBA_ULongSeq_CPP_
@@ -203,7 +203,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ULongSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1712
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
