@@ -1,3 +1,17 @@
+Thu Mar  1 15:48:10 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Fuzz was being a bit to eager with the class matching in
+          the TRACE test.  It was having problems with something like:
+
+          char *foo::bar ()
+
+          since it thought the class was "char *foo" instead of just
+          "foo". 
+
+          But it is feeling muuuuuuch better now.
+
 Thu Mar  1 13:18:07 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
