@@ -1,3 +1,11 @@
+Wed Mar 31 00:14:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* * examples/POA/DSI/Database_i.cpp
+          examples/POA/DSI/server.cpp
+          examples/POA/DSI/client.cpp
+          MAde some cosmetic changes to the ACETRY macros
+          defined inside
+
 Tue Mar 30 18:30:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html: Added a paragraph describing the relation and
