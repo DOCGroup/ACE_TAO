@@ -13,6 +13,14 @@ int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
 #if defined (ACE_LACKS_INET_ATON)
+#  if defined (ACE_WIN32)
+  // Windows Server 2003 changed the behavior of a zero-length input
+  // string to inet_addr(). It used to return 0 (INADDR_ANY) but now
+  // returns -1 (INADDR_NONE). It will return INADDR_ANY for a 1-space
+  // string, though, as do previous versions of Windows.
+  if (host_name == 0 || host_name[0] == '\0')
+    host_name = " ";
+#  endif /* ACE_WIN32 */
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
 
   if (ip_addr == INADDR_NONE

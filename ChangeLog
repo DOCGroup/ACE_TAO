@@ -1,3 +1,10 @@
+Fri Mar 11 18:05:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_arpa_inet.cpp (inet_aton): Windows Server 2003 changed
+	  the behavior of inet_addr() when given a zero-length name. Change
+	  zero-length names to " " (1 space) to restore the old behavior and
+	  match other platforms' behavior.
+
 Fri Mar  11 18:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
