@@ -6,6 +6,20 @@ Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  this produced a memory leak at shutdown, because there is a list
 	  with the standard exceptions typecodes.
 	  A similar problem ocurred with the CORBA::_tc_* exceptions.
+	  NOTE: Purify-4.0.1 on Solaris 2.5 gets confused by these fixes
+	  and reports bogus FNH and memory leak problems. The bug is
+	  trigger by an interaction with TAO's use of the Service
+	  Configurator to dynamically load libTAO, apparently when using
+	  Purify the library static constructors are called two times; the
+	  problem does not ocurr when *not* using purify or when not
+	  loading the library. To test the latter just run a TAO test
+	  (like $TAO_ROOT/tests/Param_Test) with and without the option
+	  "-ORBsvcconf /dev/null".  Verifying the purify confusion
+	  requires more work, try stopping in one of the static
+	  constructors (like TypeCodes), then set a breakpoint for the
+	  same constructor at the same address and continue the program,
+	  when TAO loads the library you will see the constructor executed
+	  again; this will *not* happen when running without purify.
 
 	* tao/Object_Table.h: 
 	* tao/Object_Table.cpp: 
