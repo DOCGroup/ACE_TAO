@@ -1,6 +1,7 @@
 Thu Jul  6 00:16:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp:
+	* tao/Strategies/TAO_Strategies.dsp:
 	* tao/Strategies/TAO_Strategies_Static.dsp: Added the new files
 	  and removed old ones.
 
