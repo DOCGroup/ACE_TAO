@@ -10,6 +10,8 @@ Sun Apr 06 13:54:56 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
 	  reporting this.
 
+	* ace/Set.cpp(ACE_Set_Node ctor): commented out unused arg MS_SUCKS.
+
 Sat Apr  5 13:12:37 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/MM_Shared_Memory_Test.cpp: Removed the use of dynamic
