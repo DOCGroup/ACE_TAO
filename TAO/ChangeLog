@@ -206,7 +206,7 @@ Fri Dec 26 22:39:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
 
-          Made changes to the remove_member () methos to delete the object
+          Made changes to the remove_member () methods to delete the object
           group entry from the location_map When a member of the object
           group is removed.
 
