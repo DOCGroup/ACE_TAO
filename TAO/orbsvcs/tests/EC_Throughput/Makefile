@@ -19,15 +19,6 @@ SRC = $(addsuffix .cpp, $(BIN)) \
 
 BIN2 = ECT_Supplier ECT_Consumer ECT_Throughput
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
-  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
-  endif # Naming
-endif # RTOLDEvent
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -35,6 +26,18 @@ endif # RTOLDEvent
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTOLDEvent,$(findstring RTOLDEvent,$(TAO_ORBSVCS)))
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+      BIN = $(BIN2)
+    endif # ACE_HAS_GNUG_PRE_2_8
+  endif # Naming
+endif # RTOLDEvent
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

@@ -20,13 +20,6 @@ BIN2 =  \
 	Shutdown \
 	Random
 
-#### If the orbsvcs library wasn't built with all components, don't
-#### try to build certain tests.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # NativeCosEvent
-
 PSRC=$(addsuffix .cpp,$(BIN2))
 LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
@@ -40,6 +33,16 @@ CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+#### If the orbsvcs library wasn't built with all components, don't
+#### try to build certain tests.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
+  ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    BIN = $(BIN2)
+  endif # ACE_HAS_GNUG_PRE_2_8
+endif # NativeCosEvent
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU

@@ -7,7 +7,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-override TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1
 LDLIBS = -lTAO_PortableServer -lTAO
 
 IDL_FILES = Load_Balancer Identity
