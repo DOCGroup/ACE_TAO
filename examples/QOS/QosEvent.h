@@ -3,21 +3,11 @@
 #ifndef QOSEVENT_H
 #define QOSEVENT_H
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <qos.h>
-#include <qossp.h>
-#include <stdio.h>
-
-
 #define MY_DEFPORT (5001)
-
-
 
 // Application specific define - there is NO specific invalid send priority.
 // This value is simply used to indicate whether or not to even set priority.
 #define INVALID_SEND_PRIORITY 255
-
 
 // application specific define - there is no "default" QOS template in GQoS,
 // only for this particular application does "default" have meaning.
@@ -28,11 +18,10 @@
 
 typedef struct _SP_OPTIONS
 {
-  int  iProtocol;             // protocol to use
-  BOOL bQos;                  // enable QOS
-  BOOL bMulticast;            // enable multicasting
+  int iProtocol;             // protocol to use
+  int bQos;                  // enable QOS
+  int bMulticast;            // enable multicasting
 } SP_OPTIONS;
-
 
 typedef enum 
 {
@@ -47,48 +36,47 @@ typedef enum
 
 typedef struct _QOS_OPTIONS
 {
-  BOOL    bReceiver;          // act as receiver if TRUE
-  BOOL    bWaitToSend;        // sender must wait for RESV before sending
-  BOOL    bConfirmResv;       // have receiver request RESV confirmation
-  BOOL    bQueryBufferSize;   // have WSAioctl return size of buffer needed 
+  int    bReceiver;          // act as receiver if TRUE
+  int    bWaitToSend;        // sender must wait for RESV before sending
+  int    bConfirmResv;       // have receiver request RESV confirmation
+  int    bQueryBufferSize;   // have WSAioctl return size of buffer needed 
                                 //      when using SIO_GET_QOS (behaviour not
                                 //      avail on Win98).
-  BOOL    bMustSetQosInAccept;// Will be set for Win98 only.  Win98 currently
+  int    bMustSetQosInAccept;// Will be set for Win98 only.  Win98 currently
                                 //      needs valid qos structure to be set in
                                 //      wsaaccept condition func in lpSQos is valid
-  BOOL    bDisableSignalling; // If TRUE do not emit RSVP signalling, just use 
+  int    bDisableSignalling; // If TRUE do not emit RSVP signalling, just use 
                                 //      traffic control
-  BOOL    bAlternateQos;      // Alternate between enabling and disabling QOS on 
+  int    bAlternateQos;      // Alternate between enabling and disabling QOS on 
                                 //      a socket every N sends
-  UCHAR   SendPriority;       // create QOS_OBJECT_PRIORITY structure, and
+  unsigned int   SendPriority;       // create QOS_OBJECT_PRIORITY structure, and
                                 //  set valid priority 0-7
-  BOOL    bSetDestaddr;       // TRUE if unconnected UDP and QOS is used (not multicast)
-  BOOL    bProviderSpecific;  // TRUE if a provider-specific object must be set
-  BOOL    bFineGrainErrorAvail;   // TRUE if Win2000beta3 availability of
-  //   fine grain errors on SIO_SET_QOS
-  BOOL    bQosabilityIoctls;   // TRUE if Win2000beta3 qosablity ioctls 
-  BOOL    bFixTemplate;       // TRUE if Win98 to divide ToeknRate and PeakBandwidth
+  int    bSetDestaddr;       // TRUE if unconnected UDP and QOS is used (not multicast)
+  int    bProviderSpecific;  // TRUE if a provider-specific object must be set
+  int    bFineGrainErrorAvail;   // TRUE if Win2000beta3 availability of fine grain errors on SIO_SET_QOS
+  int    bQosabilityIoctls;   // TRUE if Win2000beta3 qosablity ioctls 
+  int    bFixTemplate;       // TRUE if Win98 to divide ToeknRate and PeakBandwidth
                                 //   by 8 when using WSAGetQOSByName 
-  QOS_IOCTL_SET qosIoctlSet;  // when to set QOS
-  CHAR    szTemplate[64];     // qos template
+  QOS_IOCTL_SET  qosIoctlSet;  // when to set QOS
+  char    szTemplate[64];     // qos template
 } QOS_OPTIONS;
 
 
 
-extern FLOWSPEC default_notraffic;
-extern FLOWSPEC default_g711;
+extern ACE_Flow_Spec default_notraffic;
+extern ACE_Flow_Spec default_g711;
 
 
 typedef struct _OPTIONS
 {
-  CHAR            szHostname[64];
+  char            szHostname[64];
   unsigned short  port;
   int             nRepeat;
-  CHAR            fillchar;
+  char            fillchar;
   int             nBufSize;
-  CHAR *          buf;
-  DWORD           dwSleep;
-  DWORD           dwTotalClients;
+  char *          buf;
+  u_long          dwSleep;
+  u_long          dwTotalClients;
   QOS_OPTIONS     qosOptions;
   SP_OPTIONS      spOptions;
 } OPTIONS;
@@ -111,30 +99,31 @@ OPTIONS default_options =
   {IPPROTO_TCP, FALSE, FALSE}
 };
 
-FLOWSPEC default_notraffic =
-{
-  QOS_NOT_SPECIFIED,
-  QOS_NOT_SPECIFIED,
-  QOS_NOT_SPECIFIED,
-  QOS_NOT_SPECIFIED,
-  QOS_NOT_SPECIFIED,
-  SERVICETYPE_NOTRAFFIC,
-  QOS_NOT_SPECIFIED,
-  QOS_NOT_SPECIFIED
-};
+ACE_Flow_Spec default_notraffic (
+								 QOS_NOT_SPECIFIED,
+								 QOS_NOT_SPECIFIED,
+								 QOS_NOT_SPECIFIED,
+								 QOS_NOT_SPECIFIED,
+								 QOS_NOT_SPECIFIED,
+								 SERVICETYPE_NOTRAFFIC,
+								 QOS_NOT_SPECIFIED,
+								 QOS_NOT_SPECIFIED,
+								 25,
+								 1);
     
 
-FLOWSPEC default_g711 =
-{
-  9200,
-  708,
-  18400,
-  0,
-  0,
-  SERVICETYPE_CONTROLLEDLOAD,
-  368,
-  368
-};
+ACE_Flow_Spec default_g711 (
+							9200,
+							708,
+							18400,
+							0,
+							0,
+							SERVICETYPE_CONTROLLEDLOAD,
+							368,
+							368,
+							25,
+							1);
+
 /*
 
 FLOWSPEC default_g711 =
@@ -173,41 +162,10 @@ extern SOCKADDR_IN g_destaddr;
     
 #endif
 
-
-
-extern BOOL FindServiceProvider(
+extern int FindServiceProvider(
                                 int iProtocol,
-                                BOOL bQos,
-                                BOOL bMulticast,
-                                WSAPROTOCOL_INFO *pProtocolInfo);
-
-extern VOID Receiver(
-                     OPTIONS *pOptions, 
-                     WSAPROTOCOL_INFO *pProtocolInfo);
-
-extern VOID Sender(
-                   OPTIONS *pOptions, 
-                   WSAPROTOCOL_INFO *pProtocolInfo);
-
-extern BOOL SetQos(
-                   SOCKET sd, 
-                   QOS_OPTIONS *pQosOptions, 
-                   BOOL bSetQos, 
-                   QOS *pQos, 
-                   DWORD *cbQosLen);
-
-extern BOOL GetQos(
-                   SOCKET sd, 
-                   BOOL bQueryBufferSize,
-                   QOS *pQos);
-
-extern void PrintQos(
-                     QOS *qos, 
-                     CHAR *lpszIndent);
-
-extern BOOL ChkQosSend(
-                       SOCKET sd);
-
-
+                                int bQos,
+                                int bMulticast,
+                                ACE_Protocol_Info *pProtocolInfo);
 
 #endif
