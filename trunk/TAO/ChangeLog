@@ -1,3 +1,10 @@
+Fri Oct  1 23:06:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+
+	  Pass the environment variable while calling get_cached_policies
+	  (). This should fix compile errors in our minimum builds.
+
 Fri Oct  1 19:48:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
