@@ -134,10 +134,14 @@ TAO_NS_Builder::build_event_channel (TAO_NS_EventChannelFactory* ecf, const CosN
 
   PortableServer::ServantBase_var servant_var (ec);
 
+  TAO_NS_AdminProperties* admin_properties = 0;
+
   // set the admin properties.
-  ACE_NEW_THROW_EX (ec->admin_properties_,
+  ACE_NEW_THROW_EX (admin_properties,
                     TAO_NS_AdminProperties (),
                     CORBA::NO_MEMORY ());
+
+  ec->admin_properties_ = admin_properties;
 
   //  set the parent -
   ec->parent_ = ecf;

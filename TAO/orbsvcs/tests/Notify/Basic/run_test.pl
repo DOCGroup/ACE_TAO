@@ -25,6 +25,7 @@ $status = 0;
    "MultiTypes",
    "Filter",
    "Updates",
+   "Sequence"
   );
 
 @default_test_configs =

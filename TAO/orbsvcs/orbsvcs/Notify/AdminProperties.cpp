@@ -59,10 +59,12 @@ TAO_NS_AdminProperties::queue_full (void)
 
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>;
 template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>;
+template class ACE_Refcounted_Auto_Ptr<TAO_NS_AdminProperties, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>
 #pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>
+#pragma ACE_Refcounted_Auto_Ptr<TAO_NS_AdminProperties, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

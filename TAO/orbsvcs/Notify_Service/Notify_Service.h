@@ -22,6 +22,7 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "../orbsvcs/Notify/Service.h"
+#include "../orbsvcs/Notify/CosNotify_Initializer.h"
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
@@ -131,7 +132,7 @@ protected:
 #else
   CosNaming::NamingContextExt_var naming_;
 #endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
-  
+
   // A naming context.
 
   Worker worker_;

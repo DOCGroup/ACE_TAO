@@ -100,7 +100,8 @@ OBJFILES = \
         $(OBJDIR)\Method_Request_Updates.obj \
         $(OBJDIR)\Timer_Queue.obj \
         $(OBJDIR)\Timer_Reactor.obj \
-        $(OBJDIR)\Batch_Buffering_Strategy.obj
+        $(OBJDIR)\Batch_Buffering_Strategy.obj \
+        $(OBJDIR)\CosNotify_Initializer.obj
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 

@@ -330,15 +330,6 @@ TAO_NS_Notify_Service::remove (TAO_NS_EventChannelFactory* /*ecf*/ ACE_ENV_ARG_D
   // NOP.
 }
 
-
-/*********************************************************************************************************************/
-
-TAO_NS_Cos_Notification_Service_Initializer::TAO_NS_Cos_Notification_Service_Initializer (void)
-{
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_NS_Notify_Service);
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_TAO_Notify_Default_EMO_Factory_OLD);
-}
-
 /*********************************************************************************************************************/
 
 ACE_STATIC_SVC_DEFINE (TAO_Notify_Default_EMO_Factory_OLD,

@@ -242,6 +242,9 @@ int main (int argc, char* argv[])
 
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
+
+          ACE_DEBUG ((LM_DEBUG, "Supplier sending %d events...\n", max_events));
+
           if (!CORBA::is_nil (admin.in ()))
             {
               create_suppliers (admin.in (), client.root_poa () ACE_ENV_ARG_PARAMETER);
