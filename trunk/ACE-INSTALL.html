@@ -636,7 +636,6 @@ If you use the GNU GCC g++ compiler please note the following:
   <LI>On VxWorks only, g++ (thru version 2.7.2, at least, distributed
       with Tornado 1.0.1/VxWorks 5.3.1), -fno-implicit-templates is
       broken.  In addition, -O2 is not supported on some targets.<P>
-
 </UL>
 
 
@@ -981,12 +980,15 @@ for these notes):<p>
       <A
       HREF="bin/ace_ld">$ACE_ROOT/bin/ace_ld</A>,
       which is called from the Makefiles, replacing
-      the traditional <code>ld</code> step.  You must have Perl installed
-      to use <code>ace_ld</code>. <P>
-
+      the traditional <code>ld</code> step.  You must have perl installed
+      to use <code>ace_ld</code>.  If perl is not on your path, you'll
+      have to set <code>PERL_PATH</code>, either in your
+      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+      or in your environment.<P>
   <LI>Wind River provides GCC/G++ cross-compilers for the
       supported target platforms.  The executables are named cc&lt;target&gt;
-      and g++&lt;target&gt;; for example, ccppc and g++cpp for PowerPC targets.
+      and g++&lt;target&gt;; for example, ccppc and g++cpp for PowerPC
+      targets.<p>
 </UL>
 
 You'll have to let ACE know the target type at compile time.  There

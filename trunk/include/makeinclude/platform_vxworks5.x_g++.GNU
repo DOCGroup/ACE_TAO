@@ -4,10 +4,9 @@
 #### Notes:
 #### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
 ####    variables be set.  If the target CPU is not a PPC604, then your CPU
-####    environment variable must be set.  On Windows hosts, you'll also need
-####    to set your PERL_PATH environment variable to perl.exe, if perl
-####    is on your path.  If perl is not on your path, you'll need to set
-####    it to the full path to perl.
+####    environment variable must be set.  If perl is not on your path,
+####    you'll also need to set your PERL_PATH environment variable to
+####    the full path to perl.
 #### 2) If you have problems with munch output not being compilable
 ####    because it contains identifiers with ".", e.g., ".cpp", in them:
 ####    add a global variable or function to that .cpp file.  See
@@ -39,6 +38,7 @@ ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
   PATH := $(PATH):$(HOST_DIR)/bin
 endif # PATH
 
+PERL_PATH = perl
 
 #### BEGIN target CPU-specific settings
 
