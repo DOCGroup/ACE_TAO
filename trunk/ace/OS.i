@@ -6649,6 +6649,11 @@ ACE_OS::dlerror (void)
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 #elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
+#elif defined (ACE_WIN32)
+  static char buf[128];
+  FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buf,
+                 sizeof buf, NULL);
+  return buf;
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -6660,7 +6665,11 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
   // ACE_TRACE ("ACE_OS::dlopen");
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
+#if defined (ACE_HAS_SGIDLADD)
+  ACE_OSCALL (::sgidladd (filename, mode), void *, 0, handle);
+#else
   ACE_OSCALL (::dlopen (filename, mode), void *, 0, handle);
+#endif /* ACE_HAS_SGIDLADD */
 #if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
     {
