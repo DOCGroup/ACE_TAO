@@ -30,6 +30,8 @@ $dot_path = '/usr/local/bin';
              ,'tao_iortable'
              ,'tao_esf'
              ,'tao_rtevent'
+             ,'tao_cosevent'
+             ,'tao_cosnotification'
              ,'tao_implrepo'
              ,'tao_strategies'
              ,'tao_smartproxies'
