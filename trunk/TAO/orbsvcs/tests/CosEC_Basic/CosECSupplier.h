@@ -58,6 +58,4 @@ private:
   // We talk to the EC using this proxy.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif // COSECSUPPLIER_H_
+#endif /* COSECSUPPLIER_H_ */

@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //   Defines a simple Push Consumer.
-/
+//
 // ============================================================================
 
 #ifndef COSECCONSUMER_H_
@@ -40,7 +40,7 @@ public:
   // Disconnect from the EC.
 
   void connect (CORBA::Environment &TAO_TRY_ENV);
-  // @@ Pradeep, please add a comment here.
+  // Connect the CosECConsumer to the EventChannel.
 
   void disconnect (CORBA::Environment &TAO_TRY_ENV);
   // Disconnect from the supplier, but do not forget about it or close
@@ -61,6 +61,4 @@ private:
   // We talk to the EC using this proxy.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif // COSECCONSUMER_H_
+#endif /* COSECCONSUMER_H_ */

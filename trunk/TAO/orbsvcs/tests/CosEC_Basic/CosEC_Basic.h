@@ -46,55 +46,49 @@ public:
   ~CosEC_Basic (void);
   // Destructor.
 
-  // @@ Pradeep, please just call this "init".
-  int initEC (int argc, char *argv []);
+  int init (int argc, char *argv []);
   // Starts up an ORB, a Rtec and the CosEC.
 
-  // @@ Pradeep, please just call this "run".
-  void runtest (void);
+  void run (void);
   // Connects a consumer and a supplier to the CosEC and sends 1 event
   // across.
 
-  // @@ Pradeep, please call this "shutdown".
-  void finish (void);
+  void shutdown (void);
   // Closes down the Rtec and CosEC.
 
 private:
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
-  // @@ Pradeep, ALL data members should be suffixed with '_'.
-  TAO_Reactive_Module_Factory module_factory;
+  TAO_Reactive_Module_Factory module_factory_;
   // The Module_Factory required by the Rtec.
 
-  ACE_Config_Scheduler scheduler_impl;
+  ACE_Config_Scheduler scheduler_impl_;
   // Scheduler used by the Rtec.
 
-  ACE_EventChannel ec_impl;
+  ACE_EventChannel ec_impl_;
   // The servant object of the Rtec.
 
-  RtecEventChannelAdmin::EventChannel_var rtec;
+  RtecEventChannelAdmin::EventChannel_var rtec_;
   // Reference to the Rtec returned after activating it in the ORB.
 
-  ACE_ConsumerQOS_Factory consumer_qos;
+  ACE_ConsumerQOS_Factory consumer_qos_;
   // The Consumer QOS.
 
-  ACE_SupplierQOS_Factory supplier_qos;
+  ACE_SupplierQOS_Factory supplier_qos_;
   // The Supplier QOS.
 
-  EventChannel_i ec_i;
+  EventChannel_i ec_i_;
   // The servant object of the COS Event Channel.
 
-  CosEventChannelAdmin::EventChannel_ptr cos_ec;
+  CosEventChannelAdmin::EventChannel_ptr cos_ec_;
   // Reference to the CosEC returned after activating it in the ORB.
 
-  CosECConsumer consumer;
+  CosECConsumer consumer_;
   // The Cos Consumer that will receive the event.
 
-  CosECSupplier supplier;
+  CosECSupplier supplier_;
   // The Cos Supplier that will supply the event.
 };
 
-// @@ Pradeep, please don't use // here, but use /* ... */ instead.
-// Please fix all uses of this in your code since it's not portable.
-#endif // COSECBASIC_H
+#endif /* COSECBASIC_H */

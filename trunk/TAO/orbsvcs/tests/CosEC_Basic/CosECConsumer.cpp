@@ -63,7 +63,20 @@ CosECConsumer::push (const CORBA::Any &data,
 }
 
 void
-CosECConsumer::disconnect_push_consumer (CORBA::Environment& )
+CosECConsumer::disconnect_push_consumer (CORBA::Environment &TAO_TRY_ENV)
 {
-  // @@ Pradeep, please fill in here.
+  // Deactivate this object.
+
+  PortableServer::POA_var poa =
+    this->_default_POA (TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this,
+                        TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
+
+  poa->deactivate_object (id.in (),
+                          TAO_TRY_ENV);
+  TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
 }
