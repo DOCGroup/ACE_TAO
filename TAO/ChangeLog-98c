@@ -1,3 +1,8 @@
+Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/iiopobj.h,stub.h (operator =): added return type to avoid
+          compiler warning, and wrapped in ACE_UNIMPLEMENTED_FUNC.
+
 Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/SchedEntry.cpp
