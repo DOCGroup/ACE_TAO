@@ -127,16 +127,16 @@ main (int argc, char *argv[])
 
       client->activate ();
       */
-      
+
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (true,  // ethernalize objects
- 					               false, // wait for completion
-						             ACE_TRY_ENV);
+      root_poa->destroy (1,  // ethernalize objects
+                         0, // wait for completion
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_TRY_ENV);

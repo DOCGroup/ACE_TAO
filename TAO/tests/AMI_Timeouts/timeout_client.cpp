@@ -18,13 +18,13 @@ TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
                               AMI_TimeoutObjHandler_ptr replyHandlerObject,
                               TimeoutHandler_i *timeoutHandler_i,
                               unsigned long timeToWait)
-: orb_(CORBA::ORB::_duplicate (orb))
-  , timeoutObject_(TimeoutObj::_duplicate (timeoutObject))
-  , replyHandlerObject_(AMI_TimeoutObjHandler::_duplicate (replyHandlerObject))
-  , timeoutHandler_i_(timeoutHandler_i)
+: orb_ (CORBA::ORB::_duplicate (orb))
+  , timeoutObject_ (TimeoutObj::_duplicate (timeoutObject))
+  , replyHandlerObject_ (AMI_TimeoutObjHandler::_duplicate (replyHandlerObject))
+  , timeoutHandler_i_ (timeoutHandler_i)
   , local_reply_excep_counter_ (0)
-  , INVOKE_SYNCH(false)
-  , INVOKE_ASYNCH(true)
+  , INVOKE_SYNCH (0)
+  , INVOKE_ASYNCH (1)
   , timeToWait_ (timeToWait)
 {
 
@@ -67,7 +67,7 @@ TimeoutClient::svc ()
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (false, ACE_TRY_ENV);
+      orb_->shutdown (0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -110,7 +110,7 @@ TimeoutClient::initialize ()
 
 
 void
-TimeoutClient::send (bool async,
+TimeoutClient::send (CORBA::Boolean async,
                      unsigned long local_timeout,
                      unsigned long remote_sleep)
 {

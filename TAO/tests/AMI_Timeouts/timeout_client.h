@@ -23,7 +23,7 @@
 #include "timeoutC.h"
 #include "timeout_i.h"
 
-class TimeoutClient 
+class TimeoutClient
 : public ACE_Task_Base
 {
 public:
@@ -44,7 +44,7 @@ private:
   virtual int svc (void );
 
   // Wrapps complex invocations logic.
-  void send (bool async,
+  void send (CORBA::Boolean async,
              unsigned long local_timeout,
              unsigned long remote_sleep);
 
@@ -75,9 +75,9 @@ private:
   // Count test local exceptions
   unsigned short local_reply_excep_counter_;
 
-  const bool INVOKE_SYNCH;
+  const CORBA::Boolean INVOKE_SYNCH;
 
-  const bool INVOKE_ASYNCH;
+  const CORBA::Boolean INVOKE_ASYNCH;
 
   unsigned int timeToWait_;
 };
