@@ -17,6 +17,7 @@
 #include "ace/Singleton.h"
 #include "tao/orbconf.h"
 #include "tao/debug.h"
+#include "activity_export.h"
 
 /**
  * @class Base_Time
@@ -24,7 +25,7 @@
  * @brief maintains readings recorded by tasks.
  *
  */
-class Base_Time
+class activity_Export Base_Time
 {
  public:
   Base_Time (void);
@@ -39,7 +40,7 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @brief maintains readings recorded by tasks.
  *
  */
-class Task_Stats
+class activity_Export Task_Stats
 {
  public:
   /// Constructor

@@ -22,6 +22,7 @@ class POA_Holder;
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
+#include "activity_export.h"
 
 class Activity;
 class ACE_Arg_Shifter;
@@ -36,7 +37,7 @@ typedef Job_i** JOB_LIST;
  * @brief A service object that creates Tasks, Jobs, POAs.
  *
  */
-class Builder : public ACE_Service_Object
+class activity_Export Builder : public ACE_Service_Object
 {
  public:
   /// = Initialization and termination
@@ -73,8 +74,8 @@ class Builder : public ACE_Service_Object
   JOB_LIST job_list_;
 };
 
-ACE_STATIC_SVC_DECLARE (Builder)
+ACE_STATIC_SVC_DECLARE_EXPORT (activity, Builder)
 
-ACE_SVC_FACTORY_DECLARE (Builder)
+ACE_FACTORY_DECLARE (activity, Builder)
 
 #endif /* BUILDER_H */

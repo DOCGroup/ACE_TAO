@@ -16,6 +16,7 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Task.h"
 #include "JobC.h"
+#include "activity_export.h"
 
 class ACE_Barrier;
 class ACE_Arg_Shifter;
@@ -27,7 +28,7 @@ class Task_Stats;
  * @brief Periodic_Task executes jobs.
  *
  */
-class Periodic_Task : public ACE_Task <ACE_SYNCH>
+class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
   /// = Initialization and termination code.
