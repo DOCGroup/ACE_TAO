@@ -123,7 +123,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::open (void *)
   if (this->reactor ()
       && this->reactor ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p"),
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("unable to register client handler")), -1);
   return 0;
 }
