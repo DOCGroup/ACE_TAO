@@ -1,3 +1,7 @@
+Tue Dec 25 19:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependencies that were left behind from the last one. 
+
 Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Makefile: 
