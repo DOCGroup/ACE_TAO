@@ -162,7 +162,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats");
-  ACE_GUARD (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_);
+  ACE_GUARD (ACE_LOCK, ace_mon, *this->lock_);
 
   if (this->cb_ptr_ == 0)
     return;
@@ -191,7 +191,7 @@ template<ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::free (void *ptr)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::free");
-  ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  ACE_GUARD (ACE_LOCK, ace_mon, *this->lock_);
 
   this->shared_free (ptr);
 }
@@ -207,7 +207,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   size_t rounded_bytes = 0;
   int first_time = 0;
@@ -280,11 +280,16 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name)
-  : memory_pool_ (pool_name),
-    lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name,
-                                               ACE_DIRECTORY_SEPARATOR_CHAR))
+  : memory_pool_ (pool_name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
+  if (pool_name == 0)
+    ACE_NEW (this->lock_, ACE_LOCK (pool_name));  // Want the ctor with char*
+  else
+    ACE_NEW (this->lock_, ACE_LOCK (ACE::basename (pool_name,
+                                                   ACE_DIRECTORY_SEPARATOR_CHAR)));
+  this->delete_lock_ = 1;
+
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -295,11 +300,39 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_TCHAR *lock_name,
                                                               const ACE_MEM_POOL_OPTIONS *options)
-  : memory_pool_ (pool_name, options),
-    lock_ (lock_name != 0 ? lock_name : ACE::basename (pool_name,
-                                                       ACE_DIRECTORY_SEPARATOR_CHAR))
+  : memory_pool_ (pool_name, options)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
+  if (lock_name != 0)
+    ACE_NEW (this->lock_, ACE_LOCK (lock_name));
+  else
+    ACE_NEW (this->lock_, ACE_LOCK (ACE::basename (pool_name,
+                                                   ACE_DIRECTORY_SEPARATOR_CHAR)));
+  this->delete_lock_ = 1;
+
+  if (this->open () == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+}
+
+
+template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
+                                                              const ACE_MEM_POOL_OPTIONS *options,
+                                                              ACE_LOCK *lock)
+  : memory_pool_ (pool_name, options),
+    lock_ (lock)
+{
+  ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
+
+  if (lock == 0)
+    {
+      errno = EINVAL;
+      return;
+    }
+  this->delete_lock_ = 0;
+
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -312,10 +345,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                                                           const ACE_TCHAR *lock_name,
                                                           const void *options)
   : memory_pool_ (pool_name,
-                  (const ACE_MEM_POOL_OPTIONS *) options),
-    lock_ (lock_name)
+                  (const ACE_MEM_POOL_OPTIONS *) options)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
+
+  ACE_NEW (this->lock_, ACE_LOCK (lock_name));
+  this->delete_lock_ = 1;
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
@@ -328,6 +363,11 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T (void)
 {
   ACE_TRACE ("ACE_Malloc_T<MEM_POOL>::~ACE_Malloc_T<MEM_POOL>");
+  if (this->delete_lock_)
+    {
+      delete this->lock_;
+      this->lock_ = 0;
+    }
 }
 
 // Clean up the resources allocated by ACE_Malloc_T.
@@ -344,7 +384,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 #endif /* ACE_HAS_MALLOC_STATS */
 
   // Remove the ACE_LOCK.
-  this->lock_.remove ();
+  if (this->delete_lock_)
+    this->lock_->remove ();
 
   // Give the memory pool a chance to release its resources.
   result = this->memory_pool_.release ();
@@ -488,7 +529,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::malloc (size_t nbytes)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::malloc");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, 0);
 
   return this->shared_malloc (nbytes);
 }
@@ -641,7 +682,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
                                                          void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   NAME_NODE *node = (NAME_NODE *) this->shared_find (name);
 
@@ -660,7 +701,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind (const char *name,
                                                       int duplicates)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   if (duplicates == 0 && this->shared_find (name) != 0)
     // If we're not allowing duplicates, then if the name is already
@@ -678,7 +719,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find");
 
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   NAME_NODE *node = (NAME_NODE *) this->shared_find (name);
 
@@ -702,7 +743,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ssize_t
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks (size_t size) const
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   if (this->cb_ptr_ == 0)
     return -1;
@@ -728,7 +769,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find");
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   return this->shared_find (name) == 0 ? -1 : 0;
 }
@@ -737,7 +778,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind");
-  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   if (this->cb_ptr_ == 0)
     return -1;
@@ -798,7 +839,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
                                                                                       const char *name)
   : malloc_ (malloc),
     curr_ (0),
-    guard_ (malloc_.lock_),
+    guard_ (*malloc_.lock_),
     name_ (name != 0 ? ACE_OS::strdup (name) : 0)
 {
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_Iterator_T");
@@ -891,7 +932,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
                                                                                       const char *name)
   : malloc_ (malloc),
     curr_ (0),
-    guard_ (malloc_.lock_),
+    guard_ (*malloc_.lock_),
     name_ (name != 0 ? ACE_OS::strdup (name) : 0)
 {
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_Iterator");
