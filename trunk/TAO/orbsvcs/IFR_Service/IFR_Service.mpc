@@ -38,7 +38,7 @@ project(TAO_IFR_BE) : taolib, core, ifr_client, crosscompile, minimum_corba {
 }
 
 
-project(TAO_IFR_EXE) : aceexe, core, tao_output, crosscompile, minimum_corba {
+project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
