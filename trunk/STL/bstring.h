@@ -2495,11 +2495,7 @@ operator>> (istream& i, basic_string<charT>& s) _THROW_ALLOC_LENGTH
 
 #if ! defined (ghs)
 // GreenHills 1.8.8 doesn't like this template specialization . . .
-#if defined (__BORLANDC__) // VSB
 template class basic_string<char>;
-#else
-template basic_string<char>;
-#endif
 #endif /* ghs */
 /* static */
 template<class TYPE> 
