@@ -145,7 +145,7 @@ public:
   ssize_t send (const void *buf,
                 size_t n,
                 const ACE_Addr &addr,
-                int flags = 0,
+                int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
   // Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
@@ -153,7 +153,7 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
-                int flags = 0,
+                int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
   // Receive an <n> byte <buf> from the datagram socket (uses
