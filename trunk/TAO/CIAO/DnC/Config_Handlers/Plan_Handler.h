@@ -85,13 +85,13 @@ namespace CIAO
       /// Process the label attribute
       void process_label (const XMLCh* label,
                           Deployment::DeploymentPlan& plan);
-
+      /*
       /// process component interface description
       void process_ccd_element (DOMNode* node,
                                 DOMDocument* doc,
                                 DOMNodeIterator* iter,
                                 Deployment::DeploymentPlan& plan);
-
+      */
       /// process artifact deployment description
       void process_add_element (DOMNode* node,
                                 DOMDocument* doc,
@@ -135,8 +135,7 @@ namespace CIAO
                                     Deployment::DeploymentPlan& plan);
 
       /// process cid
-      void process_ccd (DOMDocument* doc,
-                        DOMNodeIterator* iter,
+      void process_ccd (DOMNodeIterator* iter,
                         Deployment::ComponentInterfaceDescription& cid);
 
       /// process pspr
@@ -236,12 +235,13 @@ namespace CIAO
                                        DOMNodeIterator* iter,
                                        int value,
                                        Deployment::MonolithicDeploymentDescription& mdd);
-
+      /*
       /// process the cid element with HREF attribute
       void process_attributes_for_ccd (DOMNamedNodeMap* named_node_map,
                                        DOMDocument* doc,
                                        DOMNodeIterator* iter,
                                        Deployment::ComponentInterfaceDescription& cid);
+      */
 
       /// process the cid element with HREF attribute
       void process_attributes_for_property (DOMNamedNodeMap* named_node_map,

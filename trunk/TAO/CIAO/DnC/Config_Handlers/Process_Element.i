@@ -102,16 +102,11 @@ process_sequential_element (DOMNode* node,
       // the number of attributes the element have
       int length = named_node_map->getLength();
       // if there is no other attribute but 'version'
-      if (length == 1)
-        {
-          // call directly the static process_ method
-          (*func) (iter, seq[i]);
-        }
-      else if (length > 1)
-        {
-          // Check the xmi::id & href attributes
-          process_element_attributes(named_node_map, doc, iter, i, seq[i], func, id_map);
-        }
+
+      if (length == 1) // call directly the static process_ method
+        (*func) (iter, seq[i]);
+      else             // Check the xmi::id & href attributes
+        process_element_attributes(named_node_map, doc, iter, i, seq[i], func, id_map);
     }
 }
 
@@ -181,10 +176,40 @@ process_reference(DOMNode* node,
   bool result = (node_name == XStr (ACE_TEXT (name)));
 
   if (result == true)
-    {
       process_refs (node, seq, index, idref_map);
-    }
 
   return result;
 }
 
+/*
+ *  Process function for non-sequential elements
+ */
+
+template<typename DATA, typename OBJECT, typename ELEMENT, typename FUNCTION>
+inline bool
+process_element(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
+                XStr& node_name, const char* name,
+                ELEMENT& elem, OBJECT* obj, FUNCTION func,
+                REF_MAP& id_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+
+          Process_Member_Function<OBJECT, DATA>
+            pf(obj, func);
+
+          if (length == 1)
+              pf(iter, elem);
+          else
+              process_element_attributes(named_node_map, doc, iter, 0, elem, &pf, id_map);
+        }
+    }
+
+  return result;
+}
