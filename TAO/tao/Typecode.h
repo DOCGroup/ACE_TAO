@@ -36,6 +36,7 @@
 #include "tao/TC_Constants_Forward.h"
 #include "tao/OBV_Constants.h"
 #include "tao/CORBA_methods.h"
+#include "tao/Sequence_T.h"
 
 // Forward declarations.
 class TAO_InputCDR;
@@ -687,6 +688,15 @@ namespace TAO
 }  // End TAO namespace
 
 // --------------------------------------------------------------
+
+// Workaround for a Visual Studio .NET bug where this class is not
+// properly imported by an application if typedef'd or subclassed,
+// resulting in 'multiply defined' link errors. The export macro
+// here forces an explicit import by the application. Please see
+// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+  template class TAO_Export TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
                                       const CORBA::TypeCode *x);
