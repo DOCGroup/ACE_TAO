@@ -7128,7 +7128,9 @@ int ferror (FILE *fp);
 int isatty (ACE_HANDLE h);
 ACE_HANDLE fileno (FILE *fp);
 int fflush (FILE *fp);
+#   if defined (UNDER_CE) && (UNDER_CE < 211)
 void exit (int status);
+#   endif /* UNDER_CE && UNDER_CE < 211 */
 int fprintf (FILE *fp, char *format, const char *msg); // not a general purpose
                                                  // fprintf at all.
 int printf (const char *format, ...);
@@ -8076,6 +8078,7 @@ private:
   static ACE_CE_Bridge *default_text_bridge_;
   // A pointer to the default ACE_CE_BRIDGE obj.
 };
+
 # endif /* ACE_HAS_WINCE */
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)

@@ -145,19 +145,19 @@
 
 // @@ Followings are used to keep existing programs happy.
 
-#define  FILE  void             // Try to map FILE* to HANDLE
 #define ostream FILE
 #if !defined (BUFSIZ)
 #  define BUFSIZ   1024
 #endif /* BUFSIZ */
 
+#if defined (UNDER_CE) && (UNDER_CE < 211)
 #define EOF  -1
+#endif /* UNDER_CE && UNDER_CE < 211 */
 
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
-#define stderr 0
 
-#if defined (ACE_WINCE_VERSION) && (ACE_WINCE_VERSION >= 0201)
+#if defined (UNDER_CE) && (UNDER_CE > 200)
 #define EMFILE WSAEMFILE
 #define EINTR  WSAEINTR
 #define EACCES ERROR_ACCESS_DENIED
@@ -172,14 +172,22 @@ typedef long off_t;
 #define ENOMEM ERROR_OUTOFMEMORY
 #define ENODEV ERROR_BAD_DEVICE
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
-#endif /* UNDER_CE && UNDER_CE == 2.01 */
+#endif /* UNDER_CE && UNDER_CE > 201 */
 
+#if defined (UNDER_CE) && (UNDER_CE < 211)
+#define  FILE  void             // Try to map FILE* to HANDLE
 #define SEEK_SET FILE_BEGIN
 #define SEEK_CUR FILE_CURRENT
 #define SEEK_END FILE_END
-
+#define stderr 0
 #define stdin 0
 #define stdout 0
+#endif /* UNDER_CE && UNDER_CE < 211 */
+
+#if defined (UNDER_CE) && (UNDER_CE >= 211)
+#define ACE_HAS_WINCE_BROKEN_ERRNO
+#define _MAX_FNAME 255
+#endif /* UNDER_CE && UNDER_CE >= 211 */
 
 #define ACE_HAS_STRDUP_EMULATION
 
