@@ -1,3 +1,9 @@
+Tue Sep 15 10:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
+	  Disabled generation of << and >> operators for InputCDR and
+	  OutputCDR.
+
 Tue Sep 15 10:08:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO-INSTALL.html (NOTE): Revised adding IDL files into your MSVC
