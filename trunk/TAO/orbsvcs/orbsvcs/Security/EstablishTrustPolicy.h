@@ -73,7 +73,7 @@ public:
 protected:
 
   /// Constructor
-  TAO_EstablishTrustPolicy (Security::EstablishTrust establish_trust);
+  TAO_EstablishTrustPolicy (const Security::EstablishTrust &trust);
 
   /// Destructor
   /**
