@@ -1628,13 +1628,17 @@ union_type :
 	   * Done with this union. Pop its scope from the scopes stack
 	   */
 	  $$ =
-	     AST_Union::narrow_from_scope(
-				idl_global->scopes()->top_non_null());
-	  UTL_StrList *p = $$->pragmas ();
-	  if (p != 0)
-	     p = (UTL_StrList*)p->copy ();
-	  idl_global->set_pragmas (p);
-	  idl_global->scopes()->pop();
+	     AST_Union::narrow_from_scope (
+                 idl_global->scopes()->top_non_null()
+               );
+          if ($$ != 0)
+            {
+	      UTL_StrList *p = $$->pragmas ();
+	      if (p != 0)
+	         p = (UTL_StrList*)p->copy ();
+	      idl_global->set_pragmas (p);
+	      idl_global->scopes()->pop();
+            }
 	}
 	;
 
