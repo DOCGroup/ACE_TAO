@@ -1,7 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_server {
+project : ciao_component {
+  after += CIAO_Server
+  libs  += CIAO_Server
 
   Define_Custom(CIDL) {
     automatic         = 0
