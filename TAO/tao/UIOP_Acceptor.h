@@ -82,6 +82,7 @@ public:
   typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
+  typedef TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
 
 private:
   int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
@@ -97,6 +98,7 @@ private:
 
   TAO_UIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
+  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
   TAO_GIOP_Version version_;
