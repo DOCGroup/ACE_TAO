@@ -33,7 +33,8 @@ be_interface::be_interface (void)
   : full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
-    local_coll_name_ (0)
+    local_coll_name_ (0),
+    in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -47,7 +48,8 @@ be_interface::be_interface (UTL_ScopedName *n, AST_Interface **ih, long nih,
     full_skel_name_ (0),
     skel_count_ (0),
     full_coll_name_ (0),
-    local_coll_name_ (0)
+    local_coll_name_ (0),
+    in_mult_inheritance_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -238,6 +240,32 @@ be_interface::full_skel_name (void)
     compute_fullskelname ();
 
   return this->full_skel_name_;
+}
+
+// Am I in some kind of a multiple inheritance
+int be_interface::in_mult_inheritance (void)
+{
+  if (this->in_mult_inheritance_ == -1)
+    {
+      // compute once for all
+      // determine if we are in some form of a multiple inheritance
+      if (this->traverse_inheritance_graph
+          (be_interface::in_mult_inheritance_helper, 0) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_interface::in_mult_inheritance "
+                             "error determining mult inheritance\n"),
+                            -1);
+        }
+    }
+
+  return this->in_mult_inheritance_;
+}
+
+void be_interface::in_mult_inheritance (int mi)
+{
+  if (this->in_mult_inheritance_ == -1)
+    this->in_mult_inheritance_ = mi;
 }
 
 // generate the var definition
@@ -890,7 +918,7 @@ be_interface::gen_operation_table (void)
                              "visit_interface-",
                              "gperf_input.tmp file open failed"),
                             -1);
-        
+
         // Add the gperf input header.
         gen_gperf_input_header (ss);
 
@@ -900,7 +928,7 @@ be_interface::gen_operation_table (void)
                              "(%N:%l) be_interface::gen_operation_table - "
                              "inheritance graph traversal failed\n"),
                             -1);
-        
+
         // Generate the skeleton for the is_a method.
         ss->indent ();
         *ss << "_is_a" << ",\t&" << this->full_skel_name () << "::_is_a_skel\n";
@@ -908,7 +936,7 @@ be_interface::gen_operation_table (void)
 
         // Input to the gperf is ready. Run gperf and get things done.
         gen_perfect_hash_optable ();
-        
+
         // Cleanup the temp file. Delete the stream, remove the file
         // and delete the filename ptr.
         cleanup_gperf_temp_file ();
@@ -1086,7 +1114,7 @@ be_interface::gen_optable_entries (be_interface *derived)
 // template method that traverses the inheritance graph in a breadth-first
 // style. The actual work on each element in the inheritance graph is carried
 // out by the function passed as argument
-int 
+int
 be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
                                               TAO_OutStream *os)
 {
@@ -1334,14 +1362,14 @@ be_interface::gen_perfect_hash_methods (void)
   process_options.set_handles (input, output);
 
   // Set the command line for the gperf program.
-  
+
   // Form the absolute pathname.
   char *ace_root = ACE_OS::getenv ("ACE_ROOT");
   if (ace_root == NULL)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:%p:Env variable 'ACE_ROOT' not found. Can't locate GPERF Program\n"), 
+                       "Error:%p:Env variable 'ACE_ROOT' not found. Can't locate GPERF Program\n"),
                       -1);
-  
+
   process_options.command_line ("%s/bin/gperf"
                                 " "
                                 "-m -M -J -c -C"
@@ -1363,16 +1391,16 @@ be_interface::gen_perfect_hash_methods (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt spawn a process for gperf program\n"),
                       -1);
-  
+
   // Wait for gperf to complete.
   if (process_manager.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Error on wait'ing for completion of gperf program.\n"),
                       -1);
-  
+
   // Adjust the file offset to the EOF for the server skeleton file.
   ACE_OS::fseek (cg->server_skeletons ()->file (), 0, SEEK_END);
-  
+
   return 0;
 }
 
@@ -1405,10 +1433,10 @@ be_interface::cleanup_gperf_temp_file (void)
   TAO_OutStream *ss = cg->gperf_input_stream ();
   if (ss != 0)
     delete ss;
-  
+
   // Delete the temp file.
   ACE_OS::unlink (cg->gperf_input_filename ());
-    
+
   // Delete the filename ptr.
   char *fname = cg->gperf_input_filename ();
   if (fname != 0)
@@ -1618,6 +1646,32 @@ be_interface::copy_ctor_helper (be_interface *derived,
       *os << "  " << base->full_skel_name () << " (rhs)," << be_nl;
     }
 
+  return 0;
+}
+
+int
+be_interface::in_mult_inheritance_helper (be_interface *derived,
+                                          be_interface *base,
+                                          TAO_OutStream *)
+{
+  switch (derived->n_inherits ())
+    {
+    case 0:
+      // no parent
+      derived->in_mult_inheritance (0);
+      break;
+    case 1:
+      if (derived == base)
+        // prevent indefinite recursion
+        derived->in_mult_inheritance (-1);
+      else
+        // one parent. We have the same characteristics as our base
+        derived->in_mult_inheritance (base->in_mult_inheritance ());
+      break;
+    default:
+      // direct multiple inheritance
+      derived->in_mult_inheritance (1);
+    }
   return 0;
 }
 

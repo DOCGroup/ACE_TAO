@@ -1,6 +1,23 @@
+Wed Jul 22 08:56:34 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h
+	  TAO_IDL/be/be_interface.cpp:
+
+	Added a data member (called in_mult_inheritance_) and
+	corresponding set/get methods for determining if an
+	interface node is involved in some form of multiple inheritance
+	either directly or indirectly thru its ancestors. We make use of
+	the template method "traverse_inheritance_graph" by passing a new
+	helper method called "in_mult_inheritance_helper".
+
+	* TAO_IDL/be_visitor_interface/{interface_sh, interface_si}.cpp:
+	Added code to generate the inline method on the skeleton class
+	that indicates if we are directly or indirectly involved in some
+	form of multiple inheritance.
+
 Wed Jul 22 00:29:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Invocation.cpp: 
+	* tao/Invocation.cpp:
 	  Fixed problem in TIMEPROBE initialization.
 
 Tue Jul 21 22:05:15 1998  David L. Levine  <levine@cs.wustl.edu>

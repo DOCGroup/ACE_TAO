@@ -108,6 +108,15 @@ public:
   const char *relative_coll_name (const char *other_class_name);
   // relative name for collocated class.
 
+  int in_mult_inheritance (void);
+  // am I in some form of multiple inheritance
+  // -1 => error
+  // 0 => no
+  // 1 => yes
+
+  void in_mult_inheritance (int mi);
+  // set a new value
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
@@ -150,6 +159,12 @@ public:
   // helper method passed to the template method to invoke ctors of all the
   // base classes.
 
+  static int in_mult_inheritance_helper (be_interface *,
+                                         be_interface *,
+                                         TAO_OutStream *os);
+  // helper method to determine if the interface node is involved in some kind
+  // of multiple inheritance or not. Required on the skeleton side
+
   void compute_fullskelname (void);
   // compute the fully scoped skel class name
 
@@ -185,19 +200,26 @@ private:
 
   void gen_perfect_hash_instance ();
   // Create an instance of this perfect hash table.
-  
+
   void cleanup_gperf_temp_file ();
   // Delete the stream and filename for this temp file and also remove
   // the temperary gperf's input file from the disk.
-  
-  char *full_skel_name_; 
+
+  char *full_skel_name_;
   // Fully scoped skeleton name.
 
   int skel_count_;
   // Number of static skeletons in the operation table.
 
   char *full_coll_name_;
+  // full collocated name
+
   char *local_coll_name_;
+  // local collocated name
+
+  int in_mult_inheritance_;
+  // am I directly or indirectly involved in a multiple inheritance. If the
+  // value is -1 => not computed yet.
 };
 
 #endif  // if !defined
