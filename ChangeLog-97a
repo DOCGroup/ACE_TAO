@@ -1,3 +1,9 @@
+Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (activate_svc_handler): Fixed the logic so
+ 	  that a value is always returned.  Thanks to David Levine for
+ 	  noticing this.
+
 Sun May 18 07:25:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* examples/Threads/tss2.cpp: added ACE_TSS<TSS_Data> template
