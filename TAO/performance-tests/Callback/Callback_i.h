@@ -24,7 +24,7 @@ public:
   void response (Test::TimeStamp,
                  const Test::Payload &,
                  CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
 private:

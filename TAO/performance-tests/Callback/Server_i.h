@@ -19,7 +19,7 @@ public:
   //@{
   void set_callback (Test::Callback_ptr callback,
                      CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void request (Test::TimeStamp,
                 const Test::Payload &,
@@ -27,7 +27,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   //@}
 
 private:
