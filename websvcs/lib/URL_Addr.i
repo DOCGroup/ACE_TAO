@@ -4,7 +4,8 @@
 
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
-  :  url_ (address.url_ == 0 ? 0 : ACE_OS::strdup (address.url_))
+  :  ACE_Addr (),
+     url_ (address.url_ == 0 ? 0 : ACE_OS::strdup (address.url_))
 {
 }
 
@@ -30,7 +31,7 @@ ACE_URL_Addr::set_url (LPTSTR url)
   this->url_ = url;
 }
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_URL_Addr::hash (void) const
 {
   return ACE::hash_pjw (this->url_);

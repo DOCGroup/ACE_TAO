@@ -268,8 +268,8 @@ struct
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
 } alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {
-  { NULL, ASYS_TEXT ("Default") },
-  { &mem_allocator, ASYS_TEXT ("Cached Memory") }
+  { NULL, ASYS_TEXT ("Default"), {0,0,0} },
+  { &mem_allocator, ASYS_TEXT ("Cached Memory"), {0,0,0} }
 };
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

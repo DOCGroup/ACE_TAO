@@ -1,3 +1,10 @@
+Tue Jun 22 13:07:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Message_Block_Test.cpp:
+	* websvcs/lib/URL_Addr.i:
+	* websvcs/lib/URL_Addr.cpp:
+	  Removed more g++ -W warnings
+
 Tue Jun 22 11:12:42 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added System Resource Requirements
