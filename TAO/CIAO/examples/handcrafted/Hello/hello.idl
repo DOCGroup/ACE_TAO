@@ -9,6 +9,7 @@ interface Hello
   string sayhello (in string username);
 };
 
+#if 0
 component HelloWorld supports Hello
 {
   // The name of this greeting machine.
@@ -18,5 +19,35 @@ component HelloWorld supports Hello
 
 home HelloHome manages HelloWorld
 {
-  // No explicit home operation.
+  factory init (in string name);
 };
+#else
+
+interface HelloWorld :
+  ::Components::CCMObject,
+  Hello
+{
+  attribute string helloname;
+};
+
+interface HelloHomeExplicit
+// : ::Components::CCMHome
+{
+  HelloWorld init (in string name);
+};
+
+interface HelloHomeImplicit
+// : ::Components::KeylessCCMHome
+{
+  HelloWorld create ()
+    //    raises (CreateFailure)
+    ;
+};
+
+interface HelloHome
+  : HelloHomeExplicit,
+    HelloHomeImplicit
+{
+};
+
+#endif
