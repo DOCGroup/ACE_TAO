@@ -315,7 +315,7 @@ TAO_SCIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   // Add the handler to Cache
   int retval =
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                             base_transport);
+                                                                             transport);
 
   // Failure in adding to cache.
   if (retval != 0)

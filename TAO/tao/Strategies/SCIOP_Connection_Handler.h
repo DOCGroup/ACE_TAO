@@ -122,6 +122,10 @@ public:
   virtual int open_handler (void *);
   //@}
 
+  /// Called by the <Strategy_Acceptor> when the handler is completely
+  /// connected.  Argument is unused.
+  virtual int open (void *);
+
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0);
