@@ -33,8 +33,8 @@ static void *
 test (void *args)
 {
   ACE_Thread_Mutex *mutex = (ACE_Thread_Mutex *) args;
-  if (! mutex) /* null */;  // To suppress ghs warning about unused
-                            // local variable "mutex".
+  ACE_UNUSED_ARG (mutex);       // To suppress ghs warning about unused
+                                // local variable "mutex".
   ACE_OS::srand (ACE_OS::time (0));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
