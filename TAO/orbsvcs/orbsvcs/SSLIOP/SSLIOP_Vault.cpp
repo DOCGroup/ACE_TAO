@@ -13,16 +13,42 @@ TAO_SSLIOP_Vault::~TAO_SSLIOP_Vault (void)
 {
 }
 
+Security::AuthenticationMethodList *
+TAO_SSLIOP_Vault::get_supported_authen_methods (
+    const char * /* mechanism */
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
+                    0);
+}
+
+Security::OIDList *
+TAO_SSLIOP_Vault::supported_mech_oids (TAO_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
+                    0);
+}
+
 Security::AuthenticationStatus
 TAO_SSLIOP_Vault::acquire_credentials (
-    Security::AuthenticationMethod method,
-    const char * mechanism,
-    const char * security_name,
-    const CORBA::Any & auth_data,
-    const Security::AttributeList & privileges,
-    SecurityLevel2::Credentials_out creds,
-    CORBA::Any_out continuation_data,
-    CORBA::Any_out auth_specific_data
+    Security::AuthenticationMethod /* method */,
+    const char * /* mechanism */,
+    const char * /* security_name */,
+    const CORBA::Any & /* auth_data */,
+    const Security::AttributeList & /* privileges */,
+    SecurityLevel2::Credentials_out /* creds */,
+    CORBA::Any_out /* continuation_data */,
+    CORBA::Any_out /* auth_specific_data */
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -36,10 +62,10 @@ TAO_SSLIOP_Vault::acquire_credentials (
 
 Security::AuthenticationStatus
 TAO_SSLIOP_Vault::continue_credentials_acquisition (
-    const CORBA::Any & response_data,
-    SecurityLevel2::Credentials_ptr creds,
-    CORBA::Any_out continuation_data,
-    CORBA::Any_out auth_specific_data
+    const CORBA::Any & /* response_data */,
+    SecurityLevel2::Credentials_ptr /* creds */,
+    CORBA::Any_out /* continuation_data */,
+    CORBA::Any_out /* auth_specific_data */
     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
