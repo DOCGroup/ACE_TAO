@@ -4,13 +4,13 @@
 #include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
-#define ACE_TIMER_QUEUE_ADAPTERS_C
+# define ACE_TIMER_QUEUE_ADAPTERS_C
 
 ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_Adapters.i"
-#endif /* __ACE_INLINE__ */
+# if !defined (__ACE_INLINE__)
+#  include "ace/Timer_Queue_Adapters.i"
+# endif /* __ACE_INLINE__ */
 
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
@@ -205,15 +205,33 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
   this->thr_id_ = ACE_Thread::self ();
 
   // Thread cancellation point, if ACE supports it.
-#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+# if !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_PTHREAD_CLEANUP_PUSH (&this->condition_.mutex ());
-#endif /* ACE_LACKS_PTHREAD_CANCEL */
+# endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   while (this->active_)
     {
+# if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+
+      // Temporarily suspend ownership of the timer queue mutex in
+      // order to dispatch deferred execution commands.  These commands
+      // are to be treated as executing in a context "external" to the
+      // timer queue adapter, and thus must compete separately for this lock.
+      mutex_.release ();
+      this->dispatch_commands ();
+
+      // Re-acquire ownership of the timer queue mutex in order
+      // to restore the "internal" timer queue adapter context
+      mutex_.acquire ();
+
+
+# endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
       // If the queue is empty, sleep until there is a change on it.
       if (this->timer_queue_.is_empty ())
-        this->condition_.wait ();
+        {
+          this->condition_.wait ();
+        }
       else
         {
           // Compute the remaining time, being careful not to sleep
@@ -230,12 +248,62 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
     }
 
    // Thread cancellation point, if ACE supports it.
-#if !defined (ACE_LACKS_PTHREAD_CANCEL)
+# if !defined (ACE_LACKS_PTHREAD_CANCEL)
   ACE_PTHREAD_CLEANUP_POP (0);
-#endif /* ACE_LACKS_PTHREAD_CANCEL */
+# endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("terminating dispatching thread\n")));
   return 0;
 }
+
+
+# if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
+
+// Enqueues a command object for execution just before waiting on the next
+// timer event. This allows deferred execution of commands that cannot
+// be performed in the timer event handler context, such as registering 
+// or cancelling timers on platforms where the timer queue mutex is not
+// recursive.
+
+template<class TQ> int
+ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd, 
+                                                     COMMAND_ENQUEUE_POSITION pos)
+{  
+  // Serialize access to the command queue.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, 
+                    this->command_mutex_, -1);
+
+  if (pos == ACE_Thread_Timer_Queue_Adapter<TQ>::TAIL)
+    {
+      return command_queue_.enqueue_tail (cmd);
+    }
+  else
+    {
+      return command_queue_.enqueue_head (cmd);
+    }
+}
+
+
+// Dispatches all command objects enqueued in the most 
+// recent event handler context.
+
+template<class TQ> int
+ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
+{
+  // Serialize access to the command queue.
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, 
+                    this->command_mutex_, -1);
+
+  // loop through the enqueued commands
+  ACE_Command_Base *cmd = 0;
+  while (command_queue_.dequeue_head (cmd) == 0)
+    if (cmd)
+      {
+        cmd->execute ();
+        delete cmd;
+      }
+}
+
+# endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_C*/
