@@ -1,3 +1,15 @@
+Thu Nov  2 12:03:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Dynamic_Adapter.cpp:
+
+	  Moved the #endif of TAO_HAS_MINIMUM_CORBA to the end of
+	  the file, after the explicit template instantiations.
+
+	* tao/DynamicInterface/TAO_DynamicInterface.dsp:
+
+	  Fixed a typo in the project settings for the release
+	  version.
+
 Wed Nov  1 10:14:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
