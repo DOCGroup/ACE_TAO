@@ -742,6 +742,11 @@ Cubit_Client::cube_long_sequence (int,
       // gets in the way.
       input[0] = 4;
 
+#if (ACE_HAS_PURIFY == 1)
+      for(int i=1;i<l;i++)
+        input[i]=11;
+#endif /* ACE_HAS_PURIFY == 1 */
+
       Cubit::long_seq_var output;
       Cubit::long_seq_out vout (output);
 
@@ -810,6 +815,11 @@ Cubit_Client::cube_octet_sequence (int,
       // results for longer sequences, i.e. more than just marshalling
       // gets in the way.
       input[0] = 4;
+
+#if (ACE_HAS_PURIFY == 1)
+      for(int i=1;i<l;i++)
+        input[i]=10;
+#endif /* ACE_HAS_PURIFY == 1 */
 
       Cubit::octet_seq_var output;
       Cubit::octet_seq_out vout (output);
@@ -882,6 +892,16 @@ Cubit_Client::cube_many_sequence (int,
       in.l = 4;
       in.s = 5;
       in.o = 6;
+
+#if (ACE_HAS_PURIFY == 1)
+      for(int i=1;i<l;i++)
+        {
+          Cubit::Many &inb = input[i];
+          inb.l=7;
+          inb.s=8;
+          inb.o=9;
+        }
+#endif /* ACE_HAS_PURIFY == 1 */
 
       Cubit::many_seq_var output;
       Cubit::many_seq_out vout (output);
@@ -957,7 +977,13 @@ Cubit_Client::cube_rti_data (int,
 
       for (int j = 0; j < numUpdates; ++j)
         {
+#if (ACE_HAS_PURIFY == 1)
+          Cubit::RtiObjectUpdateMessageHeader o;
+          ACE_OS::memset (&o, 0, sizeof(Cubit::RtiObjectUpdateMessageHeader));
+          input.msgs[j].oumh (o);
+#else
           input.msgs[j].oumh (Cubit::RtiObjectUpdateMessageHeader ());
+#endif /* ACE_HAS_PURIFY == 1 */
           Cubit::RtiObjectUpdateMessageHeader & oumh = input.msgs[j].oumh ();
           oumh.updateLength = 2001; // redundant
           oumh.updateTag = 2002;
@@ -974,7 +1000,13 @@ Cubit_Client::cube_rti_data (int,
 
           for (int k = 0; k < numAttrs; ++k)
             {
+#if (ACE_HAS_PURIFY == 1)
+              Cubit::HandleValuePair h;
+              ACE_OS::memset (&h, 0, sizeof(Cubit::HandleValuePair));
+              oumh.messagePayload[k] = h;
+#else
               oumh.messagePayload[k] = Cubit::HandleValuePair ();
+#endif /* ACE_HAS_PURIFY == 1 */
               Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
               hvp.handle = k * k;
               const char *d1 = "somedata";
