@@ -79,7 +79,7 @@ public:
    * connection requests at the designated <local_addr>.  <flags>
    * indicates how <SVC_HANDLER>'s should be initialized prior to
    * being activated.  Right now, the only flag that is processed is
-   * <ACE_NONBLOCK>, which enabled non-blocking I/O on the
+   * <ACE_NONBLOCK>, which enables non-blocking I/O on the
    * <SVC_HANDLER> when it is opened.  If <use_select> is non-zero
    * then <select> is used to determine when to break out of the
    * <accept> loop.  <reuse_addr> is passed down to the
