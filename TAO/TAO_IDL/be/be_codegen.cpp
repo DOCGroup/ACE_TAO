@@ -1156,7 +1156,7 @@ TAO_CodeGen::end_server_template_header (void)
   *this->server_template_header_
       << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
-      << "#\npragma implementation (\""
+      << "\n#pragma implementation (\""
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
