@@ -1,3 +1,13 @@
+Mon Jul 29 14:47:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Config.cpp (process_directives_i):
+
+	  In addition to the thread-safe yyerrno variable, check the
+	  global ace_yyerrno variable when determining if errors have
+	  occurred when processing Service Configurator directives.
+	  Thanks to Doug for tracking down the problem and suggesting a
+	  fix.
+
 Mon Jul 29 17:30:27 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Get_Opt.h (ctor): Changed documented name of the skip_argv0
