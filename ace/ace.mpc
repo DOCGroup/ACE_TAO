@@ -5,7 +5,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE
   dynamicflags = ACE_BUILD_DLL ACE_OS_BUILD_DLL
-  include_dir  = ace
 
   // This mpc file could be greatly simplified by putting the separate components
   // in subdirectories.

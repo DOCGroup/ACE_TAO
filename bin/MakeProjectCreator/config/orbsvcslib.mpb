@@ -6,5 +6,4 @@ project : taolib_with_idl, orbsvcs_output {
   idlflags   += -I$(TAO_ROOT)/orbsvcs
   compname    = --orbsvcs
   tagname     = TAO_ORBSVCS
-  include_dir = orbsvcs
 }
