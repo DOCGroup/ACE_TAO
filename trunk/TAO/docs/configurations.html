@@ -13,18 +13,25 @@
 <h3>
 Configuring TAO's Components</h3></center>
 
-<h3>
-Overview</h3>
-As described in the <a href="Options.html">options</a> documentation, various
-components in TAO can be customized by specifying options for those components.
-This document illustrates how to combine these options in order to affect
-ORB behavior and performance, particularly its <a href="http://www.cs.wustl.edu/~schmidt/CACM-arch.ps.gz">concurrency
-model</a>.
-<p>TAO configures itself using the <a href="http://www.cs.wustl.edu/~schmidt/O-Service-Configurator.ps.gz">ACE
+<h3> Overview</h3>
+
+<p> As described in the <a href="Options.html">options</a>
+documentation, various components in TAO can be customized by
+specifying options for those components.  This document illustrates
+how to combine these options in order to affect ORB behavior and
+performance, particularly its <a
+href="http://www.cs.wustl.edu/~schmidt/CACM-arch.ps.gz">concurrency
+model</a>.  </p>
+
+<p> TAO configures itself using the <a
+href="http://www.cs.wustl.edu/~schmidt/O-Service-Configurator.ps.gz">ACE
 Service Configurator</a> framework. Thus, options are specified in the
-familiar <tt>svc.conf</tt> file (if you want to use a different file name,
-use the <tt><a href="Options.html#svcfonf">-ORBsvcconf</a></tt> option).
-<br>
+familiar <tt>svc.conf</tt> file (if you want to use a different file
+name, use the <tt><a href="Options.html#svcfonf">-ORBsvcconf</a></tt>
+option).  You can also setup default configurations for your programs.
+Please see <b><a href="#programming">Programming Considerations</a>
+for more detailed discussion on this.</p>
+
 <hr>
 <h3>
 Roadmap</h3>
@@ -119,6 +126,9 @@ Each configuration has the following information:</li>
 </tr>
 </table>
 </ul>
+
+<li>
+<b><a href="#programming">Programming considerations</a></b>
 
 <li>
 <b><a href="#homogenous">Configuration for homogenous systems</a></b></li>
@@ -554,6 +564,89 @@ Multiple threads, ORB-per-thread, thread-pool model.<a NAME="multiorb-tpool"></a
 <td>Describes what task is undertaken for each thread.</td>
 </tr>
 </table>
+</ul>
+
+<hr>
+<h3>
+Programming Considerations<a NAME="programming"></a></h3>
+
+<ul>
+  There are several different ways to pass option flags into TAO's
+  components.
+
+  <li><p>The plain vanilla approach is do nothing.  All TAO components
+      use their default settings as described in <a
+      href="Options.html">this document</a>.</p>
+
+  <li><p>The most common use case is to use a file called
+      <code>svc.conf</code>.  On most platforms, TAO programs
+      automatically search and read in the file.  The disadvantage of
+      this approach is you always need a <code>svc.conf</code> file if
+      you want to do use non-default configuration.</p>
+
+  <li><p>You can use <code>-ORBsvcconf <em>filename</em></code> to use
+      a config file that is not called <code>svc.conf</code>.
+      Specifying <code>-ORBsvcconf</code> exclude the reading of
+      default <code>svc.conf</code> file.</p>
+
+  <li><p>If you don't want the application users to worry about
+      setting up or knowing about <code>svc.conf</code> files, you can
+      call <code>TAO_Internal::default_svc_conf_entries()</code>
+      before calling the first <code>ORB_init()</code> in your program
+      to set up the default svc.conf entries.  In this case, if a TAO
+      application cannot find a svc.conf file, it will configure TAO's
+      components using the default settings.  You can still use a
+      <code>svc.conf</code> file or use <code>-ORBsvcconf</code>
+      option to tune up the program</p>.
+
+  <li><p>TAO programs evaluate the configuration settings in the following
+      order,</p>
+
+      <ul>
+        <li>File specified in <code>-ORBsvcconf</code> file, if one
+            exist.  Otherwise, the <code>svc.conf</code> in the
+            start-up directory will be evaluated, if one exist.
+        <li>Default entries set by
+            <code>TAO_Internal::default_svc_conf_entries()</code>, if
+            ones exist.
+        <li>Default configuration as specified in <a
+            href="Options.html">this document</a>.
+      </ul>
+
+      <p>Notice that the first encountered component settings are
+      always the ones take effect.  For example, if you set the entries
+      for <code>Resource_Factory</code> and
+      <code>Server_Strategy_Factory</code> using
+      <code>TAO_Internal::default_svc_conf_entries()</code> in a
+      program and you also have a file called <code>svc.conf</code>
+      which has an entry for <code>Resource_Factory</code>.  This
+      program will use the entry for <code>Resource_Factory</code> in
+      the <code>svc.conf</code> file, the entry for
+      <code>Server_Strategy_Factory</code> set in the program, and the
+      in-stock <code>Client_Strategy_Factory</code> that TAO defines.
+
+  <li><p>Some platforms do not support reading of <code>svc.conf</code>
+      files or you would rather not to use the feature.  In this case,
+      you must define <code>TAO_PLATFORM_SVC_CONF_FILE_NOTSUP</code>
+      in your ACE <code>config.h</code> file and recompile TAO
+      library.  In this case, a TAO program will not try to search for
+      the default <code>svc.conf</code> file.  However, if platform
+      support, you can still use <code>-ORBsvcconf</code> to change
+      the program behavior temporarily.</p>
+
+      <p>On these platform, you can alter the in-stock settings for
+      TAO components by defining the following macros in your
+      <code>config.h</code> file:</p>
+
+      <ul>
+        <li><code>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</code>
+        <li><code>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</code>
+        <li><code>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</code>
+      </ul>
+
+      <p>See <a href="../tao/orbconf.h"><code>orbconf.h</code></a> for
+      an example.
+
 </ul>
 
 <hr>

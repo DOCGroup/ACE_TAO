@@ -1,24 +1,41 @@
+Thu Apr 01 02:45:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/configurations.html:
+	* TAO/tao/ORB_Core.{h,cpp}:
+	* TAO/tao/TAO_Internal.{h,i,cpp}:
+	* TAO/tao/default_client.{h,cpp}:
+	* TAO/tao/default_server.{h,cpp}:
+	  TAO is now build with static services enabled.  You can use TAO
+	  components as either static or dynamic services (wrt. Service
+	  Configurator.)  There are many ways to set up the svc.conf
+	  entries.  All these are documented in
+
+	    http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/configurations.html#programming
+
+	* Changed all svc.conf file to use TAO components as static
+	  services.
+
 Wed Mar 31 23:32:13 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Purified the INS changes in the following files. Also minimised data
 	copying.
-	
-	* tao/IOR_LookupTable.cpp: 
-	* tao/IOR_LookupTable.h: Passed params by reference for the add () 
+
+	* tao/IOR_LookupTable.cpp:
+	* tao/IOR_LookupTable.h: Passed params by reference for the add ()
 	  and find ().
 	* tao/Connect.cpp: Removed data copying.
-	* tao/ORB_Core.cpp: Changed the add_to_ior_table () to fix some memory 
+	* tao/ORB_Core.cpp: Changed the add_to_ior_table () to fix some memory
 	  leaks.
 	* tao/ORB.cpp: Fixed memory leaks in resolve_initial_references ()
-	  and iioploc_string_to_object (). Changed the add/find IOR APIs 
+	  and iioploc_string_to_object (). Changed the add/find IOR APIs
 	  to take params by reference for minimal copying.
 	* tao/ORB.h: Changed the signatures of the add/find IOR APIs.
 
 Wed Mar 31 14:09:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Explicit_Activation/server.cpp: 
+	* examples/POA/Explicit_Activation/server.cpp:
 	Made some cosmetic changes to the ACETRY macros
-        defined inside	
+        defined inside
 
 Wed Mar 31 09:02:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
