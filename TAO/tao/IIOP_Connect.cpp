@@ -207,7 +207,7 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
   // Inheriting the ORB_Core tss stuff from the parent thread.
   this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
 
-  if (TAO_orbdebug)
+  if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) IIOP_Server_Connection_Handler::svc begin\n"));
 
@@ -235,11 +235,15 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
           result = 0;
         }
       current_timeout = timeout;
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,
+		    "TAO (%P|%t) IIOP_Server_Connection_Handler::svc - "
+		    "loop <%d>\n", current_timeout.msec ()));
     }
 
-  if (TAO_orbdebug)
+  if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "(%P|%t) TAO_IIOP_Server_Connection_Handler::svc end\n"));
+                 "TAO (%P|%t) IIOP_Server_Connection_Handler::svc end\n"));
 
   return result;
 }

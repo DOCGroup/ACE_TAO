@@ -1,3 +1,25 @@
+Fri Aug 06 13:20:23 1999  Carlos O'Ryan  <coryan@JIG>
+
+	* tao/ORB_Core.cpp:
+	* tao/default_server.cpp:
+	  The thread per connection timeouts where not properly
+	  initialized by default. Thanks to <alex@cfx.com> for reporting
+	  this problem.
+
+	* tao/IIOP_Connect.cpp:
+	  Added some debugging messages.
+
+	* performance-tests/Latency/Latency.dsw:
+	* performance-tests/Latency/st_client.dsp:
+	* performance-tests/Latency/st_server.dsp:
+	  Added missing project files.
+
+	* performance-tests/Latency/st_client.cpp:
+	  Added option to pace the requests.
+
+	* tao/orbconf.h:
+	  Fixed a comment
+
 Fri Aug 06 11:03:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Concurrency_Service/Makefile,
