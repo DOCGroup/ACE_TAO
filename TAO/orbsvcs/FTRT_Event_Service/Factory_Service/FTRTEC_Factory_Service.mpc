@@ -1,0 +1,10 @@
+project(FTRTEC_Factory_Service): orbsvcsexe, ftorbutils, notify {
+  exename   = ftrtec_factory_service
+  includes += $(TAO_ROOT)/orbsvcs
+  libs += TAO_FaultTolerance
+
+  specific(gnuace) {
+   lit_libs += TAO_Strategies
+  }
+}
+
