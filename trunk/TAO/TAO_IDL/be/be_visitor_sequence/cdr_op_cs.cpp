@@ -316,8 +316,13 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         {
         case TAO_CodeGen::TAO_CDR_INPUT:
           {
-            *os << "if (ACE_BIT_DISABLED (strm.start ()->flags (),"
+            *os << "if (ACE_BIT_DISABLED (strm.start ()->flags ()," << be_nl
                 << "ACE_Message_Block::DONT_DELETE))" << be_nl
+                << "{" << be_idt_nl
+                <<  "TAO_ORB_Core* orb_core = strm.orb_core ();" << be_nl
+                << "if (orb_core != 0 &&" << be_nl
+                << "strm.orb_core ()->resource_factory ()->" << be_nl
+                << "input_cdr_allocator_type_locked () == 1)" << be_nl
                 << "{" << be_idt_nl
                 << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
                 << "  ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, "
@@ -328,11 +333,10 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
                 << "_tao_seq_len);" << be_nl
                 << "strm.skip_bytes (_tao_seq_len);" << be_nl
                 << "return 1;" << be_uidt_nl
+                << "}" << be_uidt_nl
                 << "}" << be_nl
-                << "else" << be_idt_nl
                 << "return strm.read_octet_array ("
-                << "_tao_sequence.get_buffer (), _tao_seq_len);"
-                << be_uidt_nl;
+                << "_tao_sequence.get_buffer (), _tao_seq_len);";
           }
           break;
         case TAO_CodeGen::TAO_CDR_OUTPUT:

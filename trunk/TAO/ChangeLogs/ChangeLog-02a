@@ -1,11 +1,34 @@
+Thu May  3 11:55:42 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	These are a set of changes for enabling lock free CDR input
+	stream allocators in TAO as default. (see my previous changes on
+	Tue Apr 10 17:25:18 2001)
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	   Modified the TAO_CodeGen::TAO_CDR_INPUT case to perform octet
+	   sequence optimization only if its safe. This check was absent
+	   previously, forcing us to always use locked input cdr allocators.
+	* tao/IOPC.cpp:
+	* tao/MessagingC.cpp:
+	* tao/Services.cpp:
+	* tao/PortableServer/PortableServerC.cpp:
+	  Files affected by the IDL compiler changes had to be redone.
+	* tao/diffs/IOPC.cpp.diff:
+	* tao/diffs/MessagingC.cpp.diff:
+	* tao/diffs/PortableServerC.cpp.diff:
+	* tao/diffs/OctetSeqC.cpp.diff:
+	  Regenerated the diff files. Note that i have added
+	OctetSeqC.cpp.diff. This should be used to patch the IDL generated
+	stub file instead of OctetSeq.diff.
+
 Thu May  3 10:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Wait_Strategy.h: Removed some comments that were not
-	  applicable anymore.  
+	  applicable anymore.
 
 Wed May  2 22:39:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.  
+	* tao/ORB_Core.cpp: Fixed a couple of unused variable warnings.
 
 Wed May  2 20:26:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -31,11 +54,11 @@ Wed May  2 16:52:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	      the thread may very well create the connections). We want
 	      the connections to be reused by other threads and so we
 	      cannot destroy the connections when the threads go
-	      away. 
+	      away.
 
 	  The above two reasons motivated adding new methods that dish out
-	  memory from the global pool alone,  even if the ORB has been 
-	  configured to use TSS. 
+	  memory from the global pool alone,  even if the ORB has been
+	  configured to use TSS.
 
 	* tao/GIOP_Message_Base.cpp: Changes for bug id 871. We were
 	  trying to use a constructor for an InputCDR stream that made a
@@ -48,8 +71,8 @@ Wed May  2 16:52:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  by the Reply_Dispatcher only uses this very same  data block to
 	  pass it onto the stubs. So this should give us a neat path with
 	  no-copies to the stubs. But there is one release that can be
-	  removed which will be done in the next cycle. 
-	  
+	  removed which will be done in the next cycle.
+
 	* tao/GIOP_Message_Handler.cpp:
 	* tao/GIOP_Message_Handler.h:
 	* tao/GIOP_Message_Handler.inl: Added a new method
