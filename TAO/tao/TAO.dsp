@@ -488,6 +488,10 @@ SOURCE=.\GIOPC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Client_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1473,6 +1477,14 @@ SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IFR_Client_Adapter.h
 # End Source File
 # Begin Source File
@@ -2405,6 +2417,14 @@ SOURCE=.\GIOPC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Acceptor.i
 # End Source File
 # Begin Source File
@@ -2919,6 +2939,11 @@ SOURCE=.\Fixed_Size_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Fixed_Size_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOPS_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

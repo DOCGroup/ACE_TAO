@@ -1,3 +1,11 @@
+Tue Sep  2 11:46:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+          
+          Added GIOPS*.* generated files to the project, for easier access
+          in the MSVC editor. The files are empty so they don't add
+          anything to the build.
+
 Tue Sep  2 10:48:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any.h:
