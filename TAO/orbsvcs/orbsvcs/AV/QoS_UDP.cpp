@@ -240,9 +240,8 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
 int
 TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "TAO_AV_UDP_QoS_Flow_Handler::change_qos\n"));
 
   ACE_QoS_Manager qos_manager =
     this->get_socket ()->qos_manager ();
@@ -291,7 +290,6 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
   FillQoSParams (qos_params, 
 		 0, 
 		 ace_qos);
-
   
   int result = this->qos_session_->qos (this->get_socket (),
 					&qos_manager,
@@ -649,10 +647,22 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   this->entry_ = entry;
   this->flow_protocol_factory_ = factory;
   this->flowname_ = entry->flowname ();
+  char buf [BUFSIZ];
+  ACE_OS::hostname (buf,
+		    BUFSIZ);
+  ACE_CString addr (buf);
+  addr += ":8000";
   ACE_INET_Addr *address;
   ACE_NEW_RETURN (address,
-                  ACE_INET_Addr ("0"),
+                  ACE_INET_Addr (addr.c_str ()),
                   -1);
+
+  address->addr_to_string (buf,
+			   BUFSIZ);
+  ACE_DEBUG ((LM_DEBUG,
+	      "ADDRESS IS %s\n",
+	      buf));
+
   int result = this->open_i (address);
   if (result < 0)
     return result;
@@ -663,14 +673,39 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
+<<<<<<< QoS_UDP.cpp
+  ACE_DECLARE_NEW_CORBA_ENV;
+  int result = 0;
+=======
   ACE_DECLARE_NEW_CORBA_ENV;
   int result = -1;
+>>>>>>> 1.2
   //  TAO_AV_Callback *callback = 0;  
   //   this->endpoint_->get_callback (this->flowname_.c_str (),
   //                                  callback);
   ACE_INET_Addr *local_addr;
 
+  ACE_QoS_Params qos_params;
+
+  ACE_Flow_Spec *ace_flow_spec = 0;
+
+  ACE_QoS* ace_qos = 0;
+
+  FillQoSParams (qos_params, 
+		 0, 
+		 ace_qos);
+  
+      
   AVStreams::QoS qos;
+<<<<<<< QoS_UDP.cpp
+  int qos_available = this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
+							    qos);
+
+  TAO_AV_UDP_QoS_Flow_Handler* handler;
+  ACE_NEW_RETURN (handler,
+		  TAO_AV_UDP_QoS_Flow_Handler,
+		  -1);
+=======
   this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
 					qos);
   
@@ -683,10 +718,13 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   ACE_NEW_RETURN (handler,
                   TAO_AV_UDP_QoS_Flow_Handler,
                   -1);
+>>>>>>> 1.2
   
   TAO_AV_Flow_Handler *flow_handler = 0;
   flow_handler = handler;
   
+<<<<<<< QoS_UDP.cpp
+=======
   handler->translate (qos.QoSParams, 
 		      ace_flow_spec);
   
@@ -719,14 +757,8 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       else
         ACE_DEBUG ((LM_DEBUG,
                     "Filled up the Receiver QoS parameters\n"));
+>>>>>>> 1.2
       
-    }
-  
-  ACE_QoS_Params qos_params;
-  FillQoSParams (qos_params, 
-		 0, 
-		 ace_qos);
-
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
   
@@ -790,21 +822,64 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
       // This is a receiver
       this->qos_session_->flags (ACE_QoS_Session::ACE_QOS_RECEIVER);
     }
+
+  if (qos_available == 0)
+    { 
   
-  this->qos_manager_
-    = handler->get_socket ()->qos_manager ();
+      handler->translate (qos.QoSParams, 
+			  ace_flow_spec);
+      
+      
+      ACE_NEW_RETURN (ace_qos,
+		      ACE_QoS,
+		      -1);
+      
+      Fill_ACE_QoS fill_ace_qos;
+      
+      if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
+	{
+	  if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
+						    ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex sender qos\n"),
+			      -1);
+	  else
+	    ACE_DEBUG ((LM_DEBUG,
+			"Filled up the Sender QoS parameters\n"));
+	}
+      else if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
+	{
+	  if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
+						      ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex receiver qos\n"),
+			      -1);
+	  else
+	    ACE_DEBUG ((LM_DEBUG,
+			"Filled up the Receiver QoS parameters\n"));
+	  
+	}
+      
+
   
-  // Set the QoS for the session. Replaces the ioctl () call that
-  // was being made previously.
-  if (this->qos_session_->qos (handler->get_socket (),
-			       &this->qos_manager_,
-			       *ace_qos) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to set QoS\n"),
-                      -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "Setting QOS succeeds.\n"));
+      this->qos_manager_
+	= handler->get_socket ()->qos_manager ();
+      
+      // Set the QoS for the session. Replaces the ioctl () call that
+      // was being made previously.
+      if (this->qos_session_->qos (handler->get_socket (),
+				   &this->qos_manager_,
+				   *ace_qos) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Unable to set QoS\n"),
+			  -1);
+      else
+	ACE_DEBUG ((LM_DEBUG,
+		    "Setting QOS succeeds.\n"));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "It reached here \n"));
   
   //  ACE_Time_Value era (10);
   //this->adaptor ().flowspec_entry (this->entry_);
@@ -823,6 +898,26 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                         flow_handler,
                                                         flow_handler->transport ());
   flow_handler->protocol_object (object);
+<<<<<<< QoS_UDP.cpp
+  AVStreams::Negotiator_ptr negotiator;
+  
+  ACE_TRY_EX (negotiator)
+    {
+      CORBA::Any_ptr negotiator_any =
+	this->endpoint_->get_property_value ("Negotiator",
+					     ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (negotiator);
+      
+      *negotiator_any >>= negotiator;
+      handler->negotiator (negotiator);
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Negotiator Not Found \n"));
+    }
+  ACE_ENDTRY;
+=======
   AVStreams::Negotiator_ptr negotiator;
   
   CORBA::Any_ptr negotiator_any =
@@ -832,22 +927,35 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   
   *negotiator_any >>= negotiator;
   handler->negotiator (negotiator);
+>>>>>>> 1.2
   //  callback->protocol_object (object);
-//   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
-//                                         object);
+  //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
+  //                                         object);
   this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
   this->entry_->protocol_object (object);
-
+  
   char buf[BUFSIZ];
   local_addr->addr_to_string (buf,BUFSIZ);
   if (TAO_debug_level > 0) 
     ACE_DEBUG ((LM_DEBUG,
 		"TAO_AV_UDP_QoS_ACCEPTOR::open:%s \n",
                 buf));
+  
+  result = handler->get_socket ()->get_local_addr (*local_addr);
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
+  local_addr->set (local_addr->get_port_number (),
+		   local_addr->get_host_name ());
+  
+  local_addr->addr_to_string (buf,
+			      BUFSIZ);
+  ACE_DEBUG ((LM_DEBUG,
+	      "REMOTE ADDRESS IS %s\n",
+	      buf));
 
   this->entry_->set_local_addr (local_addr);
   this->entry_->handler (flow_handler);
-
+  
   // call activate svc handler.
   return this->activate_svc_handler (handler);
 }
@@ -885,55 +993,55 @@ TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
   return 0;
 }
 
-int
-TAO_AV_UDP_QoS_Connector::translate (CosPropertyService::Properties &qos_params,
-				     ACE_Flow_Spec *ace_flow_spec)
-{
-  for (unsigned int i = 0;
-       i < qos_params.length ();
-       i++)
-    {
-      if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
-        {
-          CORBA::Short type;
-          qos_params [i].property_value >>= type;
-          ace_flow_spec->service_type (type);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
-        { 
-          CORBA::ULong tok_rate;
-          qos_params [i].property_value >>= tok_rate;
-          ace_flow_spec->token_rate (tok_rate);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Rate") == 0)
-        {
-          CORBA::ULong tok_buck_size;
-          qos_params [i].property_value >>= tok_buck_size;
-          ace_flow_spec->token_bucket_size (tok_buck_size);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)   
-        {
-          CORBA::ULong peak_bw;
-          qos_params [i].property_value >>= peak_bw;
-          ace_flow_spec->peak_bandwidth (peak_bw);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
-        {
-          CORBA::ULong lat;
-          qos_params [i].property_value >>= lat;
-          ace_flow_spec->latency (lat);
-        }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
-        {
-          CORBA::ULong delay_var;
-          qos_params [i].property_value >>= delay_var;
-          ace_flow_spec->delay_variation (delay_var);
-        }
+//  int
+//  TAO_AV_UDP_QoS_Connector::translate (CosPropertyService::Properties &qos_params,
+//  				     ACE_Flow_Spec *ace_flow_spec)
+//  {
+//    for (unsigned int i = 0;
+//         i < qos_params.length ();
+//         i++)
+//      {
+//        if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
+//          {
+//            CORBA::Short type;
+//            qos_params [i].property_value >>= type;
+//            ace_flow_spec->service_type (type);
+//          }
+//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
+//          { 
+//            CORBA::ULong tok_rate;
+//            qos_params [i].property_value >>= tok_rate;
+//            ace_flow_spec->token_rate (tok_rate);
+//          }
+//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Rate") == 0)
+//          {
+//            CORBA::ULong tok_buck_size;
+//            qos_params [i].property_value >>= tok_buck_size;
+//            ace_flow_spec->token_bucket_size (tok_buck_size);
+//          }
+//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)   
+//          {
+//            CORBA::ULong peak_bw;
+//            qos_params [i].property_value >>= peak_bw;
+//            ace_flow_spec->peak_bandwidth (peak_bw);
+//          }
+//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
+//          {
+//            CORBA::ULong lat;
+//            qos_params [i].property_value >>= lat;
+//            ace_flow_spec->latency (lat);
+//          }
+//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
+//          {
+//            CORBA::ULong delay_var;
+//            qos_params [i].property_value >>= delay_var;
+//            ace_flow_spec->delay_variation (delay_var);
+//          }
 
-    }
+//      }
   
-  return 0;
-}
+//    return 0;
+//  }
 
 
 int
@@ -950,56 +1058,35 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
 //                   ACE_INET_Addr ("0"),
 //                   -1);
 
-    Fill_ACE_QoS fill_ace_qos;
+
+  TAO_AV_Flow_Handler *flow_handler = 0;
   
-  AVStreams::QoS qos;
-  this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
-					qos);
-  ACE_Flow_Spec *ace_flow_spec;
-  ACE_NEW_RETURN (ace_flow_spec,
-                  ACE_Flow_Spec,
+  TAO_AV_UDP_QoS_Flow_Handler *handler;
+  ACE_NEW_RETURN (handler,
+                  TAO_AV_UDP_QoS_Flow_Handler,
                   -1);
   
-  this->translate (qos.QoSParams, 
-		   ace_flow_spec);
-
-  ACE_QoS* ace_qos;
   
-  ACE_NEW_RETURN (ace_qos,
-                  ACE_QoS,
-                  -1);
-
-  if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
-    {
-      if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
-                                                  ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex receiver qos\n"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Filled up the Receiver QoS parameters\n"));
-    }
-  else if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
-    {
-      if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
-                                                ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex sender qos\n"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Filled up the Sender QoS parameters\n"));
-    }
+  flow_handler = handler;
   
   ACE_QoS_Params qos_params;
+
+  ACE_Flow_Spec *ace_flow_spec = 0;
+
+  ACE_QoS* ace_qos;
+
   FillQoSParams (qos_params, 
 		 0, 
 		 ace_qos);
+      
+  AVStreams::QoS qos;
+  int qos_available = this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
+							    qos);
+
   
   ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,
                                                entry->address ());
-  TAO_AV_Flow_Handler *flow_handler = 0;
+
 
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
@@ -1029,14 +1116,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     ACE_DEBUG ((LM_DEBUG,
                 "QoS session opened successfully\n"));
   
-  TAO_AV_UDP_QoS_Flow_Handler *handler;
-  ACE_NEW_RETURN (handler,
-                  TAO_AV_UDP_QoS_Flow_Handler,
-                  -1);
-
-  handler->qos_session (this->qos_session_);
-
-  flow_handler = handler;
   
   result = handler->get_socket ()->subscribe (*inet_addr,
                                               qos_params,
@@ -1055,6 +1134,8 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_QOS_UDP_MCast_Acceptor::subscribe failed\n"),-1);
   // Now disable Multicast loopback.
   // @@Should we make this a policy?
+  
+  handler->qos_session (this->qos_session_);
   
   ACE_INET_Addr *local_addr;
 
@@ -1076,19 +1157,59 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   
   this->qos_manager_ = 
     handler->get_socket ()->qos_manager ();
-  
-  // Set the QoS for the session. Replaces the ioctl () call that
-  // was being made previously.
-  if (this->qos_session_->qos (handler->get_socket (),
-			       &this->qos_manager_,
-			       *ace_qos) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to set QoS\n"),
-                      -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "Setting QOS succeeds.\n"));
 
+  if (qos_available == 0)
+    {
+      ACE_NEW_RETURN (ace_flow_spec,
+		      ACE_Flow_Spec,
+		      -1);
+      
+      handler->translate (qos.QoSParams, 
+		       ace_flow_spec);
+      
+      ACE_QoS* ace_qos;
+      
+      ACE_NEW_RETURN (ace_qos,
+		      ACE_QoS,
+		      -1);
+      
+      Fill_ACE_QoS fill_ace_qos;
+      
+      if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
+	{
+	  if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
+						      ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex receiver qos\n"),
+			      -1);
+	  else
+	    ACE_DEBUG ((LM_DEBUG,
+			"Filled up the Receiver QoS parameters\n"));
+	}
+      else if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
+	{
+	  if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
+						    ace_flow_spec) !=0)
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Unable to fill simplex sender qos\n"),
+			      -1);
+	  else
+	    ACE_DEBUG ((LM_DEBUG,
+			"Filled up the Sender QoS parameters\n"));
+	}
+  
+      // Set the QoS for the session. Replaces the ioctl () call that
+      // was being made previously.
+      if (this->qos_session_->qos (handler->get_socket (),
+				   &this->qos_manager_,
+				   *ace_qos) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to set QoS\n"),
+			  -1);
+      else
+	ACE_DEBUG ((LM_DEBUG,
+		    "Setting QOS succeeds.\n"));
+    }
   
   TAO_AV_Protocol_Object *object =
     this->flow_protocol_factory_->make_protocol_object (this->entry_,
