@@ -157,8 +157,7 @@ private:
   typedef TRADER::SERVICE_TYPE_MAP SERVICE_TYPE_MAP;
   typedef pair<CosTrading::OfferId, CosTrading::Offer*> OFFER;
   typedef deque<OFFER> LOOKUP_OFFER_LIST;
-  typedef deque<char*> TYPE_LIST;
-
+  
   TAO_Offer_Iterator*
     create_offer_iterator (const char *type,
 			   const TAO_Property_Filter& filter);
@@ -172,6 +171,7 @@ private:
 		       CosTradingRepos::ServiceTypeRepository_ptr rep,
 		       TAO_Policies& policies,
 		       LOOKUP_OFFER_LIST& ordered_offers,
+		       PolicyNameSeq_out returned_limits_applied,
 		       CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
 		    CosTrading::Lookup::IllegalPreference,
@@ -189,6 +189,7 @@ private:
   // submitted to each phase. 
 
   void lookup_all_subtypes (const char* type,
+			    SERVICE_TYPE_REPOS::IncarnationNumber& inc_num,
 			    SERVICE_TYPE_MAP& service_type_map,
 			    CosTradingRepos::ServiceTypeRepository_ptr rep,
 			    TAO_Constraint_Interpreter& constr_inter,

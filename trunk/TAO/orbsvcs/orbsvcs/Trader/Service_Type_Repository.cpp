@@ -190,42 +190,34 @@ list_types (const SERVICE_TYPE_REPOS::SpecifiedServiceTypes& which_types,
 			 ace_mon, 
 			 *this->lock_,
 			 (SERVICE_TYPE_REPOS::ServiceTypeNameSeq*) 0);
-  
-  SERVICE_TYPE_REPOS::ServiceTypeNameSeq_ptr result =
-    new SERVICE_TYPE_REPOS::ServiceTypeNameSeq ();
-  
+
   CORBA::ULong i = 0;
+  SERVICE_TYPE_REPOS::IncarnationNumber num;
+  CORBA::ULong length = this->type_map_.size ();
+  CosTrading::ServiceTypeName* types =
+    SERVICE_TYPE_REPOS::ServiceTypeNameSeq::allocbuf (length);
+
+  if (types == 0)
+    return 0;
   
   if (which_types._d () == SERVICE_TYPE_REPOS::all)
     {
-      result->length (this->type_map_.size ());
-      for (SERVICE_TYPE_MAP::iterator itr = this->type_map_.begin ();
-	   itr != this->type_map_.end ();
-	   itr++, i++)
-	(*result)[i] = CORBA::string_dup ((*itr).first.c_str ());
+      num.high = 0;
+      num.low = 0;
     }
   else
-    {
-      SERVICE_TYPE_REPOS::IncarnationNumber num =
-	which_types.incarnation ();
+    num = which_types.incarnation ();
 
-      if (num > incarnation_)
-	result->length (0);
-      else
-	result->length (this->type_map_.size ());
-      
-      for (SERVICE_TYPE_MAP::iterator itr = this->type_map_.begin ();
-	   itr != this->type_map_.end ();
-	   itr++, i++)
-	{
-	  if (num < (*itr).second.type_info_.incarnation)
-	    (*result)[i] = CORBA::string_dup ((*itr).first.c_str ());
-	}
-      
-      result->length (i);
+  for (SERVICE_TYPE_MAP::iterator itr = this->type_map_.begin ();
+       itr != this->type_map_.end ();
+       itr++)
+    {
+      if (num < (*itr).second.type_info_.incarnation)
+	types[i++] = CORBA::string_dup ((*itr).first.c_str ());
     }
   
-  return result;
+  return new SERVICE_TYPE_REPOS::
+    ServiceTypeNameSeq (length, i, types, CORBA::B_TRUE);
 }
 
            
@@ -505,24 +497,3 @@ update_type_map (const char* name,
   this->type_map_[name] = type;
 
 }
-
-int
-operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
-{
-  if (l.high < r.high)
-    return 1;
-  else if (l.high == r.high) 
-    return (l.low < r.low);
-  else
-    return 0;
-}
-
-
-int
-operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r)
-{
-  return (r < l);
-}
-

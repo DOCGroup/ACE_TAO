@@ -22,8 +22,6 @@
 #include "Trader.h"
 #include "Monitor.h"
 
-typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-
 class TAO_Service_Type_Repository :
   public POA_CosTradingRepos::ServiceTypeRepository
   //
@@ -289,14 +287,6 @@ private:
 
 // This are temporary functions, until the format of the incarnation number
 // will be changed in the spec.
-
-int
-operator> (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
-
-int
-operator< (const SERVICE_TYPE_REPOS::IncarnationNumber &l,
-	   const SERVICE_TYPE_REPOS::IncarnationNumber &r);
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Service_Type_Repository.cpp"

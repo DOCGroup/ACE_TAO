@@ -200,13 +200,15 @@ lookup_offer (const char* type, HUGE_NUMBER id)
   CosTrading::Offer* return_value = 0;
   SERVICE_TYPE_MAP::iterator type_iter =
     this->type_map_.find (string (type));
-
+  
   if (type_iter != this->type_map_.end ())
     {
       OFFER_MAP::iterator offer_iter;
       OFFER_MAP_PLUS_COUNTER& mc = (*type_iter).second;
       OFFER_MAP &offer_map = mc.first;
 
+      ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map.lock (), 0);
+      
       offer_iter = offer_map.find (id);
       if (offer_iter != offer_map.end ())
 	return_value = &((*offer_iter).second);

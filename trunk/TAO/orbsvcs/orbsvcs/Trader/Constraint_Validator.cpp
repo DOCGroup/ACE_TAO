@@ -398,9 +398,7 @@ int
 TAO_Constraint_Validator::
 visit_property(TAO_Property_Constraint* literal)
 {
-  // Ensure that the property actually exists in the service type.
-  string prop_map(literal->name());
-  return (this->type_map_.find(prop_map) != this->type_map_.end()) ? 0 : -1;
+  return 0;
 }
 
 CORBA::TypeCode*

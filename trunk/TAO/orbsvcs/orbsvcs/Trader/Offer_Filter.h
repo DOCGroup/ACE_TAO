@@ -67,15 +67,30 @@ public:
   void matched_offer (void);
   // Signal that the Lookup method has matched an offer; decrement the 
   // match_card.
+
+  // = Return the limits applied.  
+  CosTrading::PolicyNameSeq* limits_applied (void);
+  // BEGIN SPEC
+  // If any cardinality or other limits were applied by one or more
+  // traders in responding to a particular query, then the
+  // "limits_applied" parameter will contain the names of the policies
+  // which limited the query. The sequence of names returned in
+  // "limits_applied" from any federated or proxy queries must be
+  // concatenated onto the names of limits applied locally and
+  // returned. 
+  // END SPEC
   
 private:
 
-  typedef set<string, less<string> > PROP_NAMES;
-
-  PROP_NAMES mod_props_;
-  // The set of the name of modifiable properties.
+  typedef set<string, less<string> > NAMES;
   
-  CORBA::ULong search_card_, match_card_;
+  NAMES mod_props_;
+  // The set of the name of modifiable properties.
+
+  NAMES limits_;
+  // Cardinality and property limitations applied.
+  
+  CORBA::ULong search_card_, match_card_, return_card_;
   // Keep track of the cardinalities.
   
   CORBA::Boolean dp_;
