@@ -66,7 +66,7 @@ UUID::from_string (const char  *string_rep)
         return false;
       }
 
-      rep_.uuid[offset++] = static_cast<unsigned char>(r);
+      rep_.uuid[offset++] = static_cast<unsigned char> (r);
       string_rep += 2;
     }
 
@@ -130,7 +130,7 @@ UUID::create (unsigned char *buffer)
 
   // Days in years
   static ACE_UINT64 SecondsToJan1970 =
-    (static_cast<ACE_UINT64>(365)*(1970-1583) // Days in years
+    (static_cast<ACE_UINT64> (365)*(1970-1583) // Days in years
     + (1970-1583)/4 // Leap days
     - 3  // Allow for 1700, 1800, 1900 not leap years
     + 31  // Days in December 1583
@@ -154,7 +154,7 @@ UUID::create (unsigned char *buffer)
   buffer[7] = (unsigned char) (((timestamp >> 56) & 0x0f) + 0x10);
 
   ACE_UINT16  clockSequence = static_cast<
-    ACE_UINT16>(ACE_OS::rand_r(seed) & 0x2ff);
+    ACE_UINT16> (ACE_OS::rand_r(seed) & 0x2ff);
 
   buffer[8] = (unsigned char) ((clockSequence >> 8) & 0x1f);
   buffer[9] = (unsigned char) (clockSequence & 0x1f);

@@ -30,5 +30,5 @@ ACE_INLINE u_long
 TAO::CosSchedulingInvocation_Hash_key::operator () (
   const COS_SCHEDULING_INVOCATION_KEY &key) const
 {
-  return static_cast<u_long>(key);
+  return static_cast<u_long> (key);
 }

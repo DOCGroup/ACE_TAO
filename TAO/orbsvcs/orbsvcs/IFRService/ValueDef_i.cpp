@@ -260,7 +260,7 @@ TAO_ValueDef_i::supported_interfaces_i (
                                   "def_kind",
                                   kind
                                 );
-      def_kind = static_cast<CORBA::DefinitionKind>(kind);
+      def_kind = static_cast<CORBA::DefinitionKind> (kind);
       
       if (def_kind == CORBA::dk_Interface)
         {
@@ -685,7 +685,7 @@ TAO_ValueDef_i::is_abstract_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_abstract",
                                              is_it);
-  return static_cast<CORBA::Boolean>(is_it);
+  return static_cast<CORBA::Boolean> (is_it);
 }
 
 void
@@ -710,7 +710,7 @@ TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
                               "is_abstract",
-                              static_cast<CORBA::ULong>(is_abstract));
+                              static_cast<CORBA::ULong> (is_abstract));
 }
 
 CORBA::Boolean
@@ -733,7 +733,7 @@ TAO_ValueDef_i::is_custom_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_custom",
                                              is_it);
-  return static_cast<CORBA::Boolean>(is_it);
+  return static_cast<CORBA::Boolean> (is_it);
 }
 
 void
@@ -758,7 +758,7 @@ TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
                               "is_custom",
-                              static_cast<CORBA::ULong>(is_custom));
+                              static_cast<CORBA::ULong> (is_custom));
 }
 
 CORBA::Boolean
@@ -781,7 +781,7 @@ TAO_ValueDef_i::is_truncatable_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_truncatable",
                                              is_it);
-  return static_cast<CORBA::Boolean>(is_it);
+  return static_cast<CORBA::Boolean> (is_it);
 }
 
 void
@@ -806,7 +806,7 @@ TAO_ValueDef_i::is_truncatable_i (CORBA::Boolean is_truncatable
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
                               "is_truncatable",
-                              static_cast<CORBA::ULong>(is_truncatable));
+                              static_cast<CORBA::ULong> (is_truncatable));
 }
 
 CORBA::Boolean
@@ -939,11 +939,11 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_abstract",
                                              val);
-  fv_desc->is_abstract = static_cast<CORBA::Boolean>(val);
+  fv_desc->is_abstract = static_cast<CORBA::Boolean> (val);
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_custom",
                                              val);
-  fv_desc->is_custom = static_cast<CORBA::Boolean>(val);
+  fv_desc->is_custom = static_cast<CORBA::Boolean> (val);
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "container_id",
                                             holder);
@@ -1012,7 +1012,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
           this->repo_->config ()->get_integer_value (op_key,
                                                      "mode",
                                                      val);
-          fv_desc->operations[i].mode = static_cast<CORBA::OperationMode>(val);
+          fv_desc->operations[i].mode = static_cast<CORBA::OperationMode> (val);
           CORBA::TCKind kind = 
             fv_desc->operations[i].result->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
@@ -1089,7 +1089,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
                                                              "mode",
                                                              val);
                   fv_desc->operations[i].parameters[j].mode = 
-                    static_cast<CORBA::ParameterMode>(val);
+                    static_cast<CORBA::ParameterMode> (val);
                 }
             }
 
@@ -1198,7 +1198,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      "mode",
                                                      val);
           fv_desc->attributes[i].mode =
-            static_cast<CORBA::AttributeMode>(val);
+            static_cast<CORBA::AttributeMode> (val);
           this->repo_->config ()->get_string_value (attr_key,
                                                     "type_path",
                                                     holder);
@@ -1269,7 +1269,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
                                                      "access",
                                                      val);
           fv_desc->members[i].access =
-            static_cast<CORBA::Visibility>(val);
+            static_cast<CORBA::Visibility> (val);
 
           // Use type path for 'type' and 'type_def',
 
@@ -1389,7 +1389,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "is_truncatable",
                                              val);
-  fv_desc->is_truncatable = static_cast<CORBA::Boolean>(val);
+  fv_desc->is_truncatable = static_cast<CORBA::Boolean> (val);
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_value",
                                             holder);
@@ -1811,11 +1811,11 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
   
   CORBA::ULong tmp = this->is_abstract_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  desc.is_abstract = static_cast<CORBA::Boolean>(tmp);
+  desc.is_abstract = static_cast<CORBA::Boolean> (tmp);
                                      
   tmp = this->is_custom_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  desc.is_custom = static_cast<CORBA::Boolean>(tmp);
+  desc.is_custom = static_cast<CORBA::Boolean> (tmp);
     
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -1842,7 +1842,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
   
   tmp = this->is_truncatable_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  desc.is_truncatable = static_cast<CORBA::Boolean>(tmp);
+  desc.is_truncatable = static_cast<CORBA::Boolean> (tmp);
                                         
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_value",

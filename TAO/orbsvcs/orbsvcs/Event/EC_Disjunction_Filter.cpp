@@ -49,7 +49,7 @@ TAO_EC_Disjunction_Filter::end (void) const
 int
 TAO_EC_Disjunction_Filter::size (void) const
 {
-  return static_cast<int>(this->n_);
+  return static_cast<int> (this->n_);
 }
 
 int

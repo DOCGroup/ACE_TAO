@@ -81,7 +81,7 @@ TAO_Notify_PushConsumer::get_ior (ACE_CString & iorstr) const
   {
     CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    iorstr = static_cast<const char *>(ior.in ());
+    iorstr = static_cast<const char *> (ior.in ());
     result = true;
   }
   ACE_CATCHANY
@@ -96,7 +96,7 @@ void
 TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consumer
     ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_PushConsumer* tmp = dynamic_cast<TAO_Notify_PushConsumer*>(old_consumer);
+  TAO_Notify_PushConsumer* tmp = dynamic_cast<TAO_Notify_PushConsumer*> (old_consumer);
   ACE_ASSERT(tmp != 0);
   this->init(tmp->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

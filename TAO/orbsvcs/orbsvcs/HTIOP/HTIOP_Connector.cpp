@@ -312,7 +312,7 @@ TAO::HTIOP::Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
 {
   TAO::HTIOP::Connection_Handler* handler=
-    dynamic_cast<TAO::HTIOP::Connection_Handler*>(svc_handler);
+    dynamic_cast<TAO::HTIOP::Connection_Handler*> (svc_handler);
 
   if (handler)
     {

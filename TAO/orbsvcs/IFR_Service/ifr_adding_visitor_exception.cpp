@@ -42,7 +42,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 
   AST_Exception *e = AST_Exception::narrow_from_scope (node);
 
-  CORBA::ULong nfields = static_cast<CORBA::ULong>(e->nfields ());
+  CORBA::ULong nfields = static_cast<CORBA::ULong> (e->nfields ());
 
   this->members_.length (nfields);
 
@@ -333,7 +333,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
         {
-          CORBA::ULong member_count = static_cast<CORBA::ULong>(node->member_count ());
+          CORBA::ULong member_count = static_cast<CORBA::ULong> (node->member_count ());
 
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);

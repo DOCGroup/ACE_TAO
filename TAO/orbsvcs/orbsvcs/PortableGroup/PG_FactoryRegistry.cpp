@@ -348,7 +348,7 @@ void TAO::PG_FactoryRegistry::register_factory (
           ACE_ERROR(( LM_ERROR,
                       "%s: Attempt to register duplicate location %s for role: %s\n" ,
                       this->identity_.c_str(),
-                      static_cast<const char *>(info.the_location[0].id),
+                      static_cast<const char *> (info.the_location[0].id),
           role));
       ACE_THROW (PortableGroup::MemberAlreadyPresent() );
     }
@@ -367,7 +367,7 @@ void TAO::PG_FactoryRegistry::register_factory (
       this->identity_.c_str(),
       ACE_static_cast(int,length + 1),
       role,
-      static_cast<const char *>(factory_info.the_location[0].id)
+      static_cast<const char *> (factory_info.the_location[0].id)
     ));
 
   METHOD_RETURN(TAO::PG_FactoryRegistry::register_factory);
@@ -399,7 +399,7 @@ void TAO::PG_FactoryRegistry::unregister_factory (
           "%s: Unregistering  factory %s@%s\n",
             this->identity_.c_str(),
             role,
-            static_cast<const char *>(location[0].id)
+            static_cast<const char *> (location[0].id)
           ));
         if (length > 1)
         {
@@ -548,9 +548,9 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
         ACE_ERROR((LM_INFO,
           "%s: Unregister_factory_by_location: Removing: [%d] %s@%s\n",
           this->identity_.c_str(),
-          static_cast<int>(nInfo),
+          static_cast<int> (nInfo),
           role.c_str(),
-          static_cast<const char *>(location[0].id)
+          static_cast<const char *> (location[0].id)
           ));
         found = 1;
         if (length > 1)

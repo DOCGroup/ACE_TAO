@@ -131,7 +131,7 @@ ECM_Driver::run (int argc, char* argv[])
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
-                               static_cast<long>(ACE_OS::getpid ()));
+                               static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pid);
             }
         }
@@ -443,7 +443,7 @@ ECM_Driver::parse_config_file (void)
       if (this->skip_blanks (cfg, "reading federation port number"))
         return -1;
       fscanf (cfg, "%d", &port);
-      CORBA::UShort mcast_port = static_cast<CORBA::UShort>(port);
+      CORBA::UShort mcast_port = static_cast<CORBA::UShort> (port);
 
       int ns, nc;
       if (this->skip_blanks (cfg, "reading supplier count"))

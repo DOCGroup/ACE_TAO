@@ -54,7 +54,7 @@ TAO_Query_Only_Offer_Iterator::max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException,
                  CosTrading::UnknownMaxLeft))
 {
-  return static_cast<CORBA::ULong>(this->offers_.size ());
+  return static_cast<CORBA::ULong> (this->offers_.size ());
 }
 
 CORBA::Boolean
@@ -65,7 +65,7 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
 {
   offers = new CosTrading::OfferSeq;
 
-  CORBA::ULong sequence_size = static_cast<CORBA::ULong>(this->offers_.size ());
+  CORBA::ULong sequence_size = static_cast<CORBA::ULong> (this->offers_.size ());
   CORBA::ULong offers_in_sequence = (n < sequence_size) ? n : sequence_size;
   offers->length (offers_in_sequence);
 
@@ -237,7 +237,7 @@ TAO_Offer_Id_Iterator::max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::UnknownMaxLeft))
 {
-  return static_cast<CORBA::ULong>(this->ids_.size ());
+  return static_cast<CORBA::ULong> (this->ids_.size ());
 }
 
 void
@@ -266,7 +266,7 @@ TAO_Offer_Id_Iterator::next_n (CORBA::ULong n,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Calculate the number of Ids to be returned in this.
-  CORBA::ULong items_left = static_cast<CORBA::ULong>(this->ids_.size());
+  CORBA::ULong items_left = static_cast<CORBA::ULong> (this->ids_.size());
   int difference = items_left - n;
   CORBA::ULong returnable_items = (difference >= 0) ? n : items_left;
   CORBA::Boolean return_value = (CORBA::Boolean) (difference > 0);

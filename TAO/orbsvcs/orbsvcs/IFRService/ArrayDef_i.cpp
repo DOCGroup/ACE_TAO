@@ -108,7 +108,7 @@ TAO_ArrayDef_i::length_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "length",
                                              length);
 
-  return static_cast<CORBA::ULong>(length);
+  return static_cast<CORBA::ULong> (length);
 }
 
 void

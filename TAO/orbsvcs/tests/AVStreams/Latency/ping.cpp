@@ -329,7 +329,7 @@ Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
 
   ACE_hrtime_t buf[2];
 
-  ACE_Message_Block mb (reinterpret_cast<char*>(buf),
+  ACE_Message_Block mb (reinterpret_cast<char*> (buf),
                         sizeof(buf));
 
   buf[0] = stamp;

@@ -110,7 +110,7 @@ TAO_SequenceDef_i::bound_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                                              "bound",
                                              bound);
 
-  return static_cast<CORBA::ULong>(bound);
+  return static_cast<CORBA::ULong> (bound);
 }
 
 void

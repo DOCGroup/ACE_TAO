@@ -19,7 +19,7 @@ TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     {
       ACE_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
-                            *static_cast<CORBA::Environment*>(arg));
+                            *static_cast<CORBA::Environment*> (arg));
       this->target_->connected_i (this->object_
                                   ACE_ENV_ARG_PARAMETER);
     }
@@ -41,7 +41,7 @@ TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     {
       ACE_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
-                             *static_cast<CORBA::Environment*>(arg));
+                             *static_cast<CORBA::Environment*> (arg));
       this->target_->reconnected_i (this->object_
                                     ACE_ENV_ARG_PARAMETER);
     }
@@ -62,7 +62,7 @@ TAO_ESF_Disconnected_Command<Target,Object>::execute (void* arg)
   if (arg != 0)
     {
       ACE_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
-                             *static_cast<CORBA::Environment*>(arg));
+                             *static_cast<CORBA::Environment*> (arg));
       this->target_->disconnected_i (this->object_
                                      ACE_ENV_ARG_PARAMETER);
     }
@@ -83,7 +83,7 @@ TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
   if (arg != 0)
     {
       ACE_ENV_EMIT_CODE (CORBA::Environment &ACE_TRY_ENV =
-                             *static_cast<CORBA::Environment*>(arg));
+                             *static_cast<CORBA::Environment*> (arg));
       this->target_->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
   else

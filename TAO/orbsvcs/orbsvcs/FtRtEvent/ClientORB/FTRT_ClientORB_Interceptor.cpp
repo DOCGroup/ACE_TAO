@@ -123,7 +123,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
 
 
   const char * buf =
-    reinterpret_cast<const char *>(service_context->context_data.get_buffer ());
+    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
 
   TAO_InputCDR cdr (buf,
     service_context->context_data.length ());

@@ -28,6 +28,6 @@ void ProxyConsumerStateWorker::work(TAO_EC_ProxyPushConsumer* object
             ACE_ENV_ARG_DECL_NOT_USED)
 {
   TAO_FTEC_ProxyPushConsumer* proxy =
-    static_cast<TAO_FTEC_ProxyPushConsumer*>(object);
+    static_cast<TAO_FTEC_ProxyPushConsumer*> (object);
   proxy->get_state(consumerStates_[index_++]);
 }

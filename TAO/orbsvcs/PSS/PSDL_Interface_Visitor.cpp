@@ -1900,7 +1900,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
   *ps_si << "(ptrdiff_t,";   ps_si->nl ();
   *ps_si << "&" << this->interface_name_ << "::_tao_class_id))";   ps_si->nl ();
-  *ps_si << "retv = reinterpret_cast<void*>(this);";
+  *ps_si << "retv = reinterpret_cast<void*> (this);";
   ps_si->decr_indent (0);
   ps_si->nl ();
 
@@ -1913,7 +1913,7 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   *ps_si << "retv = ACE_reinterpret_cast (void *,";
   ps_si->incr_indent (0);
   ps_si->nl ();
-  *ps_si << "static_cast<CORBA::Object_ptr>(this));";
+  *ps_si << "static_cast<CORBA::Object_ptr> (this));";
 
   ps_si->decr_indent (0);
   ps_si->decr_indent (0);

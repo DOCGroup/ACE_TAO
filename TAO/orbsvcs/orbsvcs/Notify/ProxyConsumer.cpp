@@ -48,7 +48,7 @@ TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent * topology_parent AC
 {
   TAO_Notify_Proxy::initialize (topology_parent ACE_ENV_ARG_PARAMETER);
 
-  this->supplier_admin_ = dynamic_cast<TAO_Notify_SupplierAdmin *>(topology_parent);
+  this->supplier_admin_ = dynamic_cast<TAO_Notify_SupplierAdmin *> (topology_parent);
   ACE_ASSERT(this->supplier_admin_ != 0);
 
   this->supplier_admin_->_incr_refcnt ();

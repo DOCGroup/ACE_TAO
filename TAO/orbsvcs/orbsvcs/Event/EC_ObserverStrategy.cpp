@@ -147,7 +147,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
   ACE_CHECK_RETURN (0);
 
-  int size = static_cast<int>(this->observers_.current_size ());
+  int size = static_cast<int> (this->observers_.current_size ());
   RtecEventChannelAdmin::Observer_var *tmp;
   ACE_NEW_RETURN (tmp,
                   RtecEventChannelAdmin::Observer_var[size],
@@ -288,7 +288,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
   dep.length (ACE_static_cast (CORBA::ULong, headers.current_size () + 1));
 
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
-  dep[0].event.header.source = static_cast<CORBA::ULong>(headers.current_size ());
+  dep[0].event.header.source = static_cast<CORBA::ULong> (headers.current_size ());
   dep[0].event.header.creation_time = ORBSVCS_Time::zero ();
   dep[0].rt_info = 0;
 
@@ -311,7 +311,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  qos.publications.length (static_cast<CORBA::ULong>(headers.current_size ()));
+  qos.publications.length (static_cast<CORBA::ULong> (headers.current_size ()));
 
   CORBA::ULong count = 0;
   for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)

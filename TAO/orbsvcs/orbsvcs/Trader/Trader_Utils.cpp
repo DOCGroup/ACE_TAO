@@ -156,7 +156,7 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
               if (this->poltable_[i] == 0)
                 {
                   occupying_policy =
-                    static_cast<TAO_Policies::POLICY_TYPE>(i);
+                    static_cast<TAO_Policies::POLICY_TYPE> (i);
                   break;
                 }
             }
@@ -1070,7 +1070,7 @@ TAO_Offer_Modifier (const char* type_name,
   for (i = 0; i < props_length; i++)
     {
       TAO_String_Hash_Key prop_name =
-        static_cast<const char*>(prop_seq[i].name);
+        static_cast<const char*> (prop_seq[i].name);
       this->props_.bind (prop_name, &prop_seq[i]);
     }
 }
@@ -1102,7 +1102,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes
 
   for (i = 0; i < length; i++)
     {
-      const char* dname = static_cast<const char*>(deletes[i]);
+      const char* dname = static_cast<const char*> (deletes[i]);
       if (! TAO_Trader_Base::is_valid_property_name (dname))
         ACE_THROW (CosTrading::IllegalPropertyName (dname));
       else
@@ -1121,7 +1121,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes
   for (i = 0; i < length; i++)
     {
       TAO_String_Hash_Key prop_name =
-        static_cast<const char *>(deletes[i]);
+        static_cast<const char *> (deletes[i]);
       this->props_.unbind (prop_name);
     }
 }
@@ -1207,7 +1207,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
       TAO_String_Hash_Key prop_name = modifies[i].name.in ();
 
       CosTrading::Property* prop =
-        const_cast<CosTrading::Property*>(&modifies[i]);
+        const_cast<CosTrading::Property*> (&modifies[i]);
       if (this->props_.bind (prop_name, prop, entry) == 1)
         // We need to rebind here.
         entry->int_id_ = prop;
@@ -1215,7 +1215,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   CORBA::ULong num_modified = 0,
     original_length = this->offer_->properties.length (),
-    total_length = static_cast<CORBA::ULong>(this->props_.current_size ());
+    total_length = static_cast<CORBA::ULong> (this->props_.current_size ());
 
   // Scrap the existing property sequence and begin a new one
   CosTrading::PropertySeq prop_seq (total_length);
@@ -1406,7 +1406,7 @@ CosTrading::PolicyNameSeq*
 TAO_Offer_Filter::limits_applied (void)
 {
   int i = 0;
-  CORBA::ULong size = static_cast<CORBA::ULong>(this->limits_.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong> (this->limits_.size ());
   CosTrading::PolicyName* temp =
     CosTrading::PolicyNameSeq::allocbuf (size);
 
@@ -1475,7 +1475,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
   Prop_Queue prop_queue;
   CosTrading::PropertySeq& s_props = source->properties;
   CosTrading::PropertySeq& d_props = destination.properties;
-  CORBA::ULong length = static_cast<CORBA::ULong>(s_props.length ()),
+  CORBA::ULong length = static_cast<CORBA::ULong> (s_props.length ()),
                elem = 0;
 
   destination.reference = CORBA::Object::_duplicate (source->reference.in ());
@@ -1498,7 +1498,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
       // Shove the matched properties into the destination property
       // sequence.
-      length = static_cast<CORBA::ULong>(prop_queue.size ());
+      length = static_cast<CORBA::ULong> (prop_queue.size ());
       d_props.length (length);
       for (Prop_Queue::ITERATOR prop_iter (prop_queue);
            ! prop_iter.done ();

@@ -98,7 +98,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
     CORBA::String_var key_str;
     // Unlike POA Current, this implementation cannot be cached.
     TAO_POA_Current* tao_current =
-      dynamic_cast<TAO_POA_Current*>(this->poa_current_var_.in ());
+      dynamic_cast<TAO_POA_Current*> (this->poa_current_var_.in ());
     ACE_ASSERT(tao_current != 0);
     TAO_POA_Current_Impl* impl = tao_current->implementation ();
     TAO::ObjectKey::encode_sequence_to_string (key_str.out(), impl->object_key ());

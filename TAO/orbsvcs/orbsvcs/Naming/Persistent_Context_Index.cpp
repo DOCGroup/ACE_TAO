@@ -75,7 +75,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
   else
     {
       // Populate memory with data.
-      counter = reinterpret_cast<ACE_UINT32 *>(ptr);
+      counter = reinterpret_cast<ACE_UINT32 *> (ptr);
       *counter = 0;
       char * poa_id_ptr = ptr + counter_len;
       ACE_OS::strcpy (poa_id_ptr, poa_id);
@@ -125,7 +125,7 @@ TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 {
   delete allocator_;
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      const_cast<ACE_TCHAR *>(index_file_)));
+                                      const_cast<ACE_TCHAR *> (index_file_)));
 }
 
 ACE_Allocator*

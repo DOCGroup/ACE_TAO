@@ -167,7 +167,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
 
           if (expr_type == TAO_FIRST
               || (expr_type == TAO_WITH
-                  && ! static_cast<CORBA::Boolean>(pref_info.value_)))
+                  && ! static_cast<CORBA::Boolean> (pref_info.value_)))
             this->offers_.enqueue_tail (pref_info);
           else
             this->offers_.enqueue_head (pref_info);

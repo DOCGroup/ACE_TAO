@@ -101,14 +101,14 @@ Notify_Sequence_Push_Consumer::push_structured_events (
                   else
                     {
                       if (current >
-                          static_cast<CORBA::Short>(previous))
+                          static_cast<CORBA::Short> (previous))
                         {
                           this->done_ = 1;
                           ACE_ERROR ((LM_ERROR,
                                       ACE_TEXT ("ERROR: Priority Ordering failed\n")));
                         }
                     }
-                  previous = static_cast<long>(current);
+                  previous = static_cast<long> (current);
                 }
             }
           else if (this->order_policy_ == CosNotification::DeadlineOrder)
@@ -125,7 +125,7 @@ Notify_Sequence_Push_Consumer::push_structured_events (
                   else
                     {
                       if (current <
-                          static_cast<TimeBase::TimeT>(previous))
+                          static_cast<TimeBase::TimeT> (previous))
                         {
                           this->done_ = 1;
                           ACE_ERROR ((LM_ERROR,
@@ -133,7 +133,7 @@ Notify_Sequence_Push_Consumer::push_structured_events (
                         }
                     }
 # if defined (ACE_CONFIG_WIN32_H)
-                  previous = static_cast<long>(current);
+                  previous = static_cast<long> (current);
 # else
                   // Convert ACE_ULong_Long to 32-bit integer
                   previous = (current / 1);
@@ -164,14 +164,14 @@ Notify_Sequence_Push_Consumer::push_structured_events (
                   else
                     {
                       if (current <
-                          static_cast<CORBA::ULong>(previous))
+                          static_cast<CORBA::ULong> (previous))
                         {
                           this->done_ = 1;
                           ACE_ERROR ((LM_ERROR,
                                       ACE_TEXT ("ERROR: FIFO Ordering failed.\n")));
                         }
                     }
-                  previous = static_cast<long>(current);
+                  previous = static_cast<long> (current);
                 }
             }
         }

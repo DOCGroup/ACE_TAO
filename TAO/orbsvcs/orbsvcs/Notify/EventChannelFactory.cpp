@@ -371,7 +371,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
       ACE_TEXT ("(%P|%t) EventChannelFactory reload channel %d\n")
-      , static_cast<int>(id)
+      , static_cast<int> (id)
       ));
 
     TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();

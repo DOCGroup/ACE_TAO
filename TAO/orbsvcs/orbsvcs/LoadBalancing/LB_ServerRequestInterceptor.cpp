@@ -62,7 +62,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // standard interpretive marshaling via a CDR encapsulation
           // Codec for efficiency reasons.
           const char * buf =
-            reinterpret_cast<const char *>(service_context->context_data.get_buffer ());
+            reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
           TAO_InputCDR cdr (buf,
                             service_context->context_data.length ());
 
@@ -70,7 +70,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             ACE_THROW (CORBA::BAD_PARAM ());
 
-          cdr.reset_byte_order (static_cast<int>(byte_order));
+          cdr.reset_byte_order (static_cast<int> (byte_order));
 
           CORBA::Object_var object_group;
           if (cdr >> object_group.out ())

@@ -839,8 +839,8 @@ int
 ACE_MUF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 {
   return ACE_MUF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **>(arg1),
-                      ** static_cast<Dispatch_Entry **>(arg2));
+           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
+                      ** static_cast<Dispatch_Entry **> (arg2));
 }
 
 
@@ -975,8 +975,8 @@ int
 ACE_RMS_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 {
   return ACE_RMS_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **>(arg1),
-                      ** static_cast<Dispatch_Entry **>(arg2));
+           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
+                      ** static_cast<Dispatch_Entry **> (arg2));
 }
 
 
@@ -1119,8 +1119,8 @@ int
 ACE_MLF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 {
   return ACE_MLF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **>(arg1),
-                      ** static_cast<Dispatch_Entry **>(arg2));
+           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
+                      ** static_cast<Dispatch_Entry **> (arg2));
 }
 
 
@@ -1246,8 +1246,8 @@ int
 ACE_EDF_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 {
   return ACE_EDF_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **>(arg1),
-                      ** static_cast<Dispatch_Entry **>(arg2));
+           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
+                      ** static_cast<Dispatch_Entry **> (arg2));
 }
 
 // = Provides the dispatching queue type for the given dispatch entry.
@@ -1371,8 +1371,8 @@ int
 ACE_Criticality_Scheduler_Strategy::sort_function (void *arg1, void *arg2)
 {
   return ACE_Criticality_Scheduler_Strategy::instance ()->
-           sort_comp (** static_cast<Dispatch_Entry **>(arg1),
-                      ** static_cast<Dispatch_Entry **>(arg2));
+           sort_comp (** static_cast<Dispatch_Entry **> (arg1),
+                      ** static_cast<Dispatch_Entry **> (arg2));
 }
 
 

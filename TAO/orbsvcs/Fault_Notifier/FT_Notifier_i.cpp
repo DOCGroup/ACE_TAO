@@ -685,7 +685,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::disconnect_consumer);
 
-  size_t index = static_cast<size_t>(connection);
+  size_t index = static_cast<size_t> (connection);
   if (index < this->proxy_infos_.size())
   {
     ProxyInfo & info = this->proxy_infos_[index];
@@ -736,8 +736,8 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
     {
       ACE_ERROR((LM_ERROR,
         "FaultNotifier (%P|%t) quit on idle: connects %d, disconnects %d\n",
-        static_cast<unsigned int>(this->consumer_connects_),
-        static_cast<unsigned int>(this->consumer_disconnects_)
+        static_cast<unsigned int> (this->consumer_connects_),
+        static_cast<unsigned int> (this->consumer_disconnects_)
         ));
       this->poa_->deactivate_object (this->object_id_.in ()
                    ACE_ENV_ARG_PARAMETER);

@@ -711,7 +711,7 @@ ACE_DynScheduler::schedule (
   else
   {
     // save the total number of registered RT_Infos
-    tasks (static_cast<u_int>(rt_info_entries_.size ()));
+    tasks (static_cast<u_int> (rt_info_entries_.size ()));
   }
 
   // set up the task entry data structures
@@ -1279,7 +1279,7 @@ ACE_DynScheduler::calculate_utilization_params (void)
         ACE_static_cast (double,
           ACE_UINT64_DBLCAST_ADAPTER (ordered_dispatch_entries_ [i]->
             task_entry ().rt_info ()->worst_case_execution_time)) /
-        static_cast<double>(ordered_dispatch_entries_ [i]->
+        static_cast<double> (ordered_dispatch_entries_ [i]->
             task_entry ().effective_period ());
     }
   }
@@ -1317,7 +1317,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::setup_task_entries (void)
 {
   // store number of tasks, based on registrations
-  tasks (static_cast<u_int>(rt_info_entries_.size ()));
+  tasks (static_cast<u_int> (rt_info_entries_.size ()));
 
   // bail out if there are no tasks registered
   if (tasks () <= 0)
@@ -1725,7 +1725,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
 ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
-  dispatch_entry_count_ = static_cast<u_int>(dispatch_entries_->size ());
+  dispatch_entry_count_ = static_cast<u_int> (dispatch_entries_->size ());
 
   ACE_NEW_RETURN (ordered_dispatch_entries_,
                   Dispatch_Entry * [dispatch_entry_count_],
@@ -1870,10 +1870,10 @@ ACE_DynScheduler::create_timeline ()
       // have to change when TimeBase.idl is finalized.
       const TimeBase::TimeT arrival =
         ordered_dispatch_entries_[i]->arrival () +
-        static_cast<ACE_UINT32>(current_frame_offset);
+        static_cast<ACE_UINT32> (current_frame_offset);
       const TimeBase::TimeT deadline=
         ordered_dispatch_entries_[i]->deadline () +
-        static_cast<ACE_UINT32>(current_frame_offset);
+        static_cast<ACE_UINT32> (current_frame_offset);
 
       ACE_NEW_RETURN (
         new_dispatch_entry,
@@ -2331,8 +2331,8 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
             file, "%-11s  %9f  %9f  %8u  %8u  %11u  %11u\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
-                        static_cast<double>(ACE_UINT64_DBLCAST_ADAPTER(current_accumulated_execution)) /
-                        static_cast<double>(ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
+                        static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(current_accumulated_execution)) /
+                        static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(current_completion)),
             0.0,
             ACE_U64_TO_U32 (current_entry->arrival ()),
             ACE_U64_TO_U32 (current_entry->deadline ()),
