@@ -1,3 +1,48 @@
+Thu Aug 28 10:19:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl: This class will now store a
+	  pointer to a list of inconsistent policies. This is used by
+	  _validate_connection () in RTCORBA.  Provided an accessor and a
+	  initialization method for the policy list. 
+
+	  Please see the documentation for more details about this. 
+
+	  Changed the try_connect () call to take a transport descriptor
+	  instead of anedpoint.
+	
+	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint): Create
+	  a transport property descriptor to pass to try_connect () call. 
+
+	* tao/Remote_Invocation.cpp (target_spec_init): Call the hooks
+	  registered with the orb_core. This is used by the external
+	  services like RTCORBA to add service contexts tothe outgoing
+	  message. 
+
+	* tao/Synch_Invocation.cpp: Cosmetic fix.
+
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:  The connect () call now takes in a
+	  transport decsriptor instead of an endpoint.
+
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+	* tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+	* tao/RTCORBA/RT_Endpoint_Utils.cpp:
+	* tao/RTCORBA/RT_Endpoint_Utils.h:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h: 
+	  Changes necessiated by the changes that have been done so
+	  far. Almost all the methods that take TAO_GIOP_Invocation as one
+	  of its arguments, has an overloaded method in the same class
+	  that takes in TAO::Profile_Transport_Resolver. This is necessary
+	  for us to retire the Invocation classes. 
+
+        * tao/RTScheduling/RTSchedulerC.h:
+	* tao/RTPortableServer/RTPortableServerC.h: Fixed compile errors
+	  that were caused by changes in the number of template arguments
+	  for TAO_Objref_Var_T and TAO_Objref_Out_T.  
+
 Wed Aug 27 15:34:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_attribute.cpp:

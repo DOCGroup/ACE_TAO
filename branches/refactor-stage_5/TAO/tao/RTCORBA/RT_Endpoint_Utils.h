@@ -29,6 +29,11 @@
 
 class TAO_GIOP_Invocation;
 
+namespace TAO
+{
+  class Profile_Transport_Resolver;
+};
+
 /**
  * @class RT_Endpoint_Utils
  *
@@ -41,7 +46,13 @@ public:
   static CORBA::Policy *priority_bands_policy (TAO_GIOP_Invocation *invocation
                                                ACE_ENV_ARG_DECL);
 
+  static CORBA::Policy *priority_bands_policy (TAO::Profile_Transport_Resolver &r
+                                               ACE_ENV_ARG_DECL);
+
   static CORBA::Policy *client_protocol_policy (TAO_GIOP_Invocation *invocation
+                                                ACE_ENV_ARG_DECL);
+
+  static CORBA::Policy *client_protocol_policy (TAO::Profile_Transport_Resolver &r
                                                 ACE_ENV_ARG_DECL);
 
 private:

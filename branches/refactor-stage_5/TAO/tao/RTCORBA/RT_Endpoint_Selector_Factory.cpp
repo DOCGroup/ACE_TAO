@@ -33,6 +33,12 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *
   return this->rt_invocation_endpoint_selector_;
 }
 
+TAO_Invocation_Endpoint_Selector *
+RT_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  return this->rt_invocation_endpoint_selector_;
+}
+
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (RT_Endpoint_Selector_Factory,

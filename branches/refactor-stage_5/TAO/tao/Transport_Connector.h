@@ -101,7 +101,7 @@ public:
    * Call is very similar to the previous one but with a timeout.
    */
   virtual TAO_Transport* connect (TAO::Profile_Transport_Resolver *r,
-                                  TAO_Endpoint *ep,
+                                  TAO_Transport_Descriptor_Interface *desc,
                                   ACE_Time_Value *timeout
                                   ACE_ENV_ARG_DECL);
 

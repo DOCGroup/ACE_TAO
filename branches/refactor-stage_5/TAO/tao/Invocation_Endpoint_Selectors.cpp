@@ -79,8 +79,10 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 
       for (size_t i = 0; i < endpoint_count; ++i)
         {
+          TAO_Base_Transport_Property desc (ep);
+
           bool retval =
-            r->try_connect (ep,
+            r->try_connect (&desc,
                             max_wait_time
                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
