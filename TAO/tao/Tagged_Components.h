@@ -93,9 +93,11 @@ public:
   int decode (TAO_InputCDR& cdr);
 
   /**
-   * Read/Write access to the underlying MutipleComponentProfile.
+   * Read/Write access to the underlying
+   * MutipleComponentProfile. Added by request from Chris Hafey
+   * <chris@stentorsoft.com>
    */
-  IOP::MultipleComponentProfile *components (void);
+  IOP::MultipleComponentProfile &components (void);
 
 private:
   /// Helper method to implement set_code_sets()
@@ -113,9 +115,6 @@ private:
   /// Helper methods to implement set_component()
   int get_known_component_i (IOP::TaggedComponent& component) const;
   int get_component_i (IOP::TaggedComponent& component) const;
-
-  /// Helper method to create <this->components_>
-  int create_components_i (void);
 
   /// Is <tag> a well-known component?
   int known_tag (IOP::ComponentId tag) const;
@@ -135,7 +134,7 @@ private:
 
   /// The rest of the components, to be compliant we cannot drop a
   /// bunch of them.
-  IOP::MultipleComponentProfile *components_;
+  IOP::MultipleComponentProfile components_;
 
   // A flag for each component...
   CORBA::Octet orb_type_set_;

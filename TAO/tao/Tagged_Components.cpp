@@ -120,7 +120,6 @@ TAO_Tagged_Components::set_known_component_i (
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
-
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return;
@@ -131,6 +130,7 @@ TAO_Tagged_Components::set_known_component_i (
       CORBA::ULong orb_type;
       if ((cdr >> orb_type) == 0)
         return;
+
       this->orb_type_ = orb_type;
       this->orb_type_set_ = 1;
     }
@@ -153,23 +153,11 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropiate action.
-
-  if (this->components_ == 0)
+  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
-      int retval =
-        this->create_components_i ();
-
-      if (retval == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%P|%t) TAO - TAO_Tagged_Components::set_components_i ",
-                    "create_components_i failed \n"));
-    }
-
-  for (CORBA::ULong i = 0; i != this->components_->length (); ++i)
-    {
-      if (component.tag == (*this->components_)[i].tag)
+      if (component.tag == this->components_[i].tag)
         {
-          (*this->components_)[i] = component;
+          this->components_[i] = component;
           return;
         }
     }
@@ -179,24 +167,14 @@ TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 void
 TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
 {
-  if (this->components_ == 0)
+  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
-      int retval =
-        this->create_components_i ();
-
-      if (retval == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%P|%t) TAO - TAO_Tagged_Components::set_component_i ",
-                    "create_components_i failed \n"));
-    }
-  for (CORBA::ULong i = 0; i != this->components_->length (); ++i)
-    {
-      if (component.tag == (*this->components_)[i].tag)
+      if (component.tag == this->components_[i].tag)
         {
           CORBA::ULong max = component.component_data.maximum ();
           CORBA::ULong len = component.component_data.length ();
           CORBA::Octet* buf = component.component_data.get_buffer (1);
-          (*this->components_)[i].component_data.replace (max, len, buf, 1);
+          this->components_[i].component_data.replace (max, len, buf, 1);
           return;
         }
     }
@@ -206,72 +184,35 @@ TAO_Tagged_Components::set_component_i (IOP::TaggedComponent& component)
 void
 TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
 {
-  if (this->components_ == 0)
-    {
-      int retval =
-        this->create_components_i ();
-
-      if (retval == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%P|%t) TAO - TAO_Tagged_Components::add_component_i ",
-                    "create_components_i failed \n"));
-    }
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong l = this->components_->length ();
-  this->components_->length (l + 1);
-  (*this->components_)[l].tag = component.tag;
+  CORBA::ULong l = this->components_.length ();
+  this->components_.length (l + 1);
+  this->components_[l].tag = component.tag;
   CORBA::ULong max = component.component_data.maximum ();
   CORBA::ULong len = component.component_data.length ();
   CORBA::Octet* buf = component.component_data.get_buffer (1);
-  (*this->components_)[l].component_data.replace (max, len, buf, 1);
+  this->components_[l].component_data.replace (max, len, buf, 1);
 }
 
 void
 TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
 {
-  if (this->components_ == 0)
-    {
-      int retval =
-        this->create_components_i ();
-
-      if (retval == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%P|%t) TAO - TAO_Tagged_Components::add_components_i ",
-                    "create_components_i () failed \n"));
-    }
-
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropiate action.
-  CORBA::ULong l = this->components_->length ();
-  this->components_->length (l + 1);
-  (*this->components_)[l] = component;
-}
-
-int
-TAO_Tagged_Components::create_components_i (void)
-{
-  // @@ NOTE: Very bad way to allocate data. Exceptions??
-  ACE_NEW_RETURN (this->components_,
-                  IOP::MultipleComponentProfile,
-                  -1);
-
-  return 0;
+  CORBA::ULong l = this->components_.length ();
+  this->components_.length (l + 1);
+  this->components_[l] = component;
 }
 
 int
 TAO_Tagged_Components::get_component (IOP::TaggedComponent& component) const
 {
-  if (this->components_ == 0)
-    return 0;
-
-  for (CORBA::ULong i = 0;
-       i != this->components_->length ();
-       ++i)
+  for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
-      if (component.tag == (*this->components_)[i].tag)
+      if (component.tag == this->components_[i].tag)
         {
-          component = (*this->components_)[i];
+          component = this->components_[i];
           return 1;
         }
     }
@@ -283,10 +224,7 @@ TAO_Tagged_Components::get_component (IOP::TaggedComponent& component) const
 int
 TAO_Tagged_Components::encode (TAO_OutputCDR& cdr) const
 {
-  if (this->components_ == 0)
-    return 1;
-
-  return (cdr << *this->components_);
+  return (cdr << this->components_);
 }
 
 int
@@ -296,25 +234,14 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
   this->orb_type_set_ = 0;
   this->code_sets_set_ = 0;
 
-  if (this->components_ == 0)
-    {
-      int retval =
-        this->create_components_i ();
-
-      if (retval == -1)
-        ACE_ERROR ((LM_DEBUG,
-                    "(%P|%t) TAO - TAO_Tagged_Components::decode ",
-                    "create_components_i failed \n"));
-
-    }
-  if ((cdr >> *this->components_) == 0)
+  if ((cdr >> this->components_) == 0)
     return 0;
 
-  CORBA::ULong l = this->components_->length ();
+  CORBA::ULong l = this->components_.length ();
   for (CORBA::ULong i = 0; i != l; ++i)
     {
       const IOP::TaggedComponent &component =
-        (*this->components_)[i];
+        this->components_[i];
       if (this->known_tag (component.tag))
         this->set_known_component_i (component);
     }
