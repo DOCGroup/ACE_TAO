@@ -174,7 +174,11 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list,
         AVStreams::MMDevice::_narrow (obj.in ());
 
       // Add this receiver to the receiver map.
-      this->receivers_.bind (receiver_name,
+      ACE_CString flowname =
+        this->sender_name_ +
+        "_" +
+        receiver_name;
+      this->receivers_.bind (flowname,
                              receiver_device);
     }
 }
@@ -190,10 +194,7 @@ Connection_Manager::connect_to_receivers (CORBA::Environment &ACE_TRY_ENV)
       // Initialize the QoS
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
-      ACE_CString flowname;
-      flowname =
-        this->sender_name_ +
-        "_" +
+      ACE_CString flowname =
         (*iterator).ext_id_;
 
       // Create the forward flow specification to describe the flow.
@@ -364,8 +365,7 @@ Connection_Manager::connect_to_sender (CORBA::Environment &ACE_TRY_ENV)
   if (CORBA::is_nil (this->sender_.in ()))
     return;
 
-  ACE_CString flowname;
-  flowname =
+  ACE_CString flowname =
     this->sender_name_ +
     "_" +
     this->receiver_name_;
