@@ -7,7 +7,7 @@ Fri Aug 16 14:22:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadMonitor.bor (CFLAGS, LIBFILES):
 
-	  Added Messaging, CosNaming and flags and libraries to address
+	  Added Messaging and CosNaming flags and libraries to address
 	  some build errors.
 
 Fri Aug 16 11:36:39 2002  Ossama Othman  <ossama@uci.edu>
