@@ -269,7 +269,7 @@ InputPath=.\UDP.idl
 InputName=UDP
 
 BuildCmds= \
-	..\..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 -Sp -Sd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -308,7 +308,7 @@ InputPath=.\UDP.idl
 InputName=UDP
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\..\bin\tao_idl -Ge 1 -Sp -Sd $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
