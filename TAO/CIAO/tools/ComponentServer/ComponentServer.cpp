@@ -15,6 +15,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
 
 char *ior_file_name_ = 0;
 char *callback_ior_ = 0;
