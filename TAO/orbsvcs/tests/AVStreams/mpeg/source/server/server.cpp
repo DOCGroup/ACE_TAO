@@ -4,7 +4,7 @@
 #include "ace/Process.h"
 
 int AV_Server::done_;
-pid_t AV_Server::current_pid_;
+pid_t AV_Server::current_pid_ = -1;
 
 // Initialize the svc_handler, and the acceptor. 
 
@@ -116,6 +116,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
               break;
           }
 
+        AV_Server::current_pid_ = -1;
         if (semaphore.remove () == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) semaphore remove failed: %p\n",
@@ -163,9 +164,11 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         // ORBport of 0 makes the audio server pick a port for itself
         
         ACE_Process audio_process;
-        pid_t child_pid;
+        
+        AV_Server::done_ = 0;
 
-        if ((child_pid = audio_process.spawn (audio_process_options)) == -1)
+        if ((AV_Server::current_pid_
+             = audio_process.spawn (audio_process_options)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) ACE_Process:: spawn failed: %p\n",
                              "spawn"),
@@ -179,7 +182,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         ::sprintf (sem_str,
                    "%s:%d",
                    "Audio_Server_Semaphore",
-                   child_pid);
+                   AV_Server::current_pid_);
 
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) semaphore is %s\n",
@@ -190,17 +193,32 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                                          sem_str);
 
         // %% wait until the child finishes booting
-        if (semaphore.acquire () == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) semaphore acquire failed: %p\n",
-                             "acquire"),
-                            -1);
+        while (AV_Server::done_ == 0)
+          {
+            if (semaphore.acquire () == -1)
+              {
+                if (errno != EINTR)
+                  {
+                    ACE_DEBUG ((LM_DEBUG,"Semaphore acquire failed\n"));
+                    return -1;
+                  }
+                //                  break;
+              }
+            else
+              break;
+          }
+//         if (semaphore.acquire () == -1)
+//           ACE_ERROR_RETURN ((LM_ERROR,
+//                              "(%P|%t) semaphore acquire failed: %p\n",
+//                              "acquire"),
+//                             -1);
         // ~~?? remove the semaphore.
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
         //        ::sleep (5);
 
+        AV_Server::current_pid_ = -1;
         if (semaphore.remove () == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) semaphore remove failed: %p\n",
@@ -360,7 +378,7 @@ AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
 
   switch (signum)
     {
@@ -377,9 +395,7 @@ AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       this->int_handler (signum);
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, 
-		  "(%P|%t) %S: not handled, returning to program\n", 
-                  signum));
+      //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %S: not handled, returning to program\n", signum));
       break;
     }
   return 0;
@@ -392,7 +408,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
   int pid;
   int status;
   
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) AV_Server: Reaping the children\n"));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) AV_Server: Reaping the children\n"));
   // reap the children
   while ((pid = ACE_OS::waitpid (-1, 
                                  &status, 
@@ -400,7 +416,8 @@ AV_Server_Sig_Handler::clear_child (int sig)
   {
     if (pid == AV_Server::current_pid_)
       {
-        ACE_DEBUG ((LM_DEBUG,"(%P|%t) The child currently being waited for has died.\n"));
+        cerr << "The child currently being waited for has died\n";
+        //        ACE_DEBUG ((LM_DEBUG,"(%P|%t) The child currently being waited for has died.\n"));
         AV_Server::done_ = 1;
       }
 
@@ -410,10 +427,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
     if (status == 0) 
       continue;
     
-    ACE_DEBUG ((LM_DEBUG, 
-                "(%P|%t) AV_Server: child %d (status %d)\n", 
-                pid, 
-                status));
+    //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) AV_Server: child %d (status %d)\n", pid, status));
   }
   return;
 }
