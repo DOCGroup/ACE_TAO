@@ -5,17 +5,42 @@
 #
 #----------------------------------------------------------------------------
 
+#---------------
+#   STL (start)
+#---------------
+
+include $(STL_ROOT)/config/local.cfg
+
+CC_INCLUDES += -I$(STD)
+CC_INCLUDES += -pta
+
+CPPFLAGS += \
+	-I$(TOOLKIT) \
+	$(CC_INCLUDES) \
+	$(CC_FLAGS) \
+	$(CC_DEFINES) \
+	$(CC_EH) \
+	$(CC_MT)
+
+ifndef exceptions
+CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
+else
+CPPFLAGS += -DOS_STL_ASSERT
+endif
+
+LDFLAGS += -L$(STL_ROOT)/lib
+
+#---------------
+#   STL (end)
+#---------------
+
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lorbsvcs -lTAO
+LDLIBS     = -lorbsvcs -lospace -lTAO -lrpcsvc
 
-PROG_SRCS =  main.cpp
-
-LSRC = $(PROG_SRCS)
-
-AVStreams_SERVER_OBJS = server.o
+AVStreams_SERVER_OBJS = server.o Machine_Properties.o Property_Exporter.o
 AVStreams_CLIENT_OBJS = client.o
 
 COSPROPERTY_OBJS = main.o
@@ -44,7 +69,7 @@ LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
 server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
