@@ -66,48 +66,54 @@ CORBA_Request::exceptions (void)
 }
 
 // Return the <Environment> for this request.
-ACE_INLINE CORBA::Environment *
+/*ACE_INLINE CORBA::Environment *
 CORBA_Request::env (void) 
 {
   return &env_; 
 }
-
+*/
 // The argument manipulation helper functions
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (void)
 {
-  return this->args_->add_element (CORBA::ARG_IN, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_element (CORBA::ARG_IN, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_in_arg (const CORBA::Char *name)
 {
-  return this->args_->add_item (name, CORBA::ARG_IN, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_item (name, CORBA::ARG_IN, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (void)
 {
-  return this->args_->add_element (CORBA::ARG_INOUT, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_element (CORBA::ARG_INOUT, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_inout_arg (const CORBA::Char *name)
 {
-  return this->args_->add_item (name, CORBA::ARG_INOUT, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_item (name, CORBA::ARG_INOUT, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (void)
 {
-  return this->args_->add_element (CORBA::ARG_OUT, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_element (CORBA::ARG_OUT, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE CORBA_Any &
 CORBA_Request::add_out_arg (const CORBA::Char *name)
 {
-  return this->args_->add_item (name, CORBA::ARG_OUT, this->env_)->any_;
+  ACE_DECLARE_NEW_CORBA_ENV;
+  return this->args_->add_item (name, CORBA::ARG_OUT, ACE_TRY_ENV)->any_;
 }
 
 ACE_INLINE void
