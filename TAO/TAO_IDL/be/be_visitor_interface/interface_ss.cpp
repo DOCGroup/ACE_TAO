@@ -89,11 +89,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "void *servant = ACE_reinterpret_cast (void*, obj->_servant ());" << be_nl
         << "if (servant != 0)" << be_idt_nl
         << "return new " << node->full_coll_name (be_interface::DIRECT)
-        << " (ACE_reinterpret_cast (" << node->full_skel_name () << "*, servant)"
-        << ", stub);" << be_uidt << be_uidt_nl << "}" << be_uidt_nl;
+        << " (ACE_reinterpret_cast (" << node->full_skel_name ()
+        << "*, servant), stub);" << be_uidt << be_uidt_nl
+        << "}" << be_uidt_nl;
 
-  *os << "break;" << be_uidt_nl << "default:" << be_idt_nl << "break;" << be_uidt_nl
-        << "}" << be_uidt_nl << "return 0;" << be_uidt_nl << "}\n\n";
+  *os << "break;" << be_uidt_nl
+      << "default:" << be_idt_nl
+      << "break;" << be_uidt_nl
+        << "}" << be_uidt_nl
+      << "return 0;" << be_uidt_nl
+      << "}\n\n";
 
   *os << "int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer"
@@ -106,11 +111,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "_Stub_Factory;" << be_uidt_nl << be_nl
       << "return 0;" << be_uidt_nl << "}\n\n";
 
-  *os << "int _TAO_collocation_POA_" << node->flatname ()
+  *os << "static int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
       << "_TAO_collocation_POA_" << node->flatname ()
-      << "_Stub_Factory_Initializer (ACE_reinterpret_cast (long, _TAO_collocation_POA_"
-      << node->flatname () << "_Stub_Factory_Initializer));" << be_uidt_nl;
+      << "_Stub_Factory_Initializer (ACE_reinterpret_cast "
+      << "(long, _TAO_collocation_POA_"
+      << node->flatname () << "_Stub_Factory_Initializer));"
+      << be_uidt_nl;
 
   os->incr_indent (0);
 
