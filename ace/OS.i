@@ -11802,6 +11802,8 @@ ACE_OS::stat (const wchar_t *file, struct stat *stp)
       stp->st_size = fdata.nFileSizeLow;
       stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime);
       stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime);
+	  if (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+	    stp->st_mode &= !S_IFREG;
     }
   return 0;
 #   elif defined (__BORLANDC__)  && (__BORLANDC__ <= 0x540)
@@ -12383,8 +12385,20 @@ ACE_OS::opendir (const char *filename)
     }
 
 #  else /* ! defined (ACE_PSOS) */
+#if defined (ACE_WIN32)
+  DIR *dir;
+  ACE_NEW_RETURN (dir, DIR, 0);
+  ACE_NEW_RETURN (dir->directory_name_,
+                  char[ACE_OS::strlen (filename)],
+				  0);
+  ACE_OS::strcpy (dir->directory_name_, filename);
+  dir->current_handle_ = INVALID_HANDLE_VALUE;
+  dir->started_reading_ = 0;
+  return dir;  
+#else
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (char *, filename));
+#endif /* defined (ACE_WIN32) */
 #  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (filename);
@@ -12407,7 +12421,14 @@ ACE_OS::closedir (DIR *d)
   if (result != 0)
     errno = result;
 #  else /* ! defined (ACE_PSOS) */
+#    if defined (ACE_WIN32)
+  if (d->current_handle_ != INVALID_HANDLE_VALUE)
+    ::FindClose (d->current_handle_);
+  d->current_handle_ = INVALID_HANDLE_VALUE;
+  d->started_reading_ = 0;
+#    else /* defined (ACE_WIN32) */
   ::closedir (d);
+#    endif /* defined (ACE_WIN32) */
 #  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (d);
@@ -12442,7 +12463,51 @@ ACE_OS::readdir (DIR *d)
     }
 
 #  else /* ! defined (ACE_PSOS) */
+#    if defined (ACE_WIN32)
+  if (!d->started_reading_)
+    {
+	  d->current_handle_ = ::FindFirstFile (d->directory_name_,
+                                            &(d->fdata_));
+
+      if (d->current_handle_ != INVALID_HANDLE_VALUE
+	      && d->fdata_.dwFileAttributes !=  FILE_ATTRIBUTE_DIRECTORY)
+	    {
+          ::FindClose (d->current_handle_);
+          d->current_handle_ = INVALID_HANDLE_VALUE;
+	    }
+	  else // Skip "." and ".."
+	    {
+		  int retval = 1;
+		  while (*(d->fdata_.cFileName) == '.'
+		         && retval
+				 && d->current_handle_ != INVALID_HANDLE_VALUE)
+			{
+			  retval = ::FindNextFile (d->current_handle_, &(d->fdata_));
+			}
+	      if (retval == 0)
+	        d->current_handle_ = INVALID_HANDLE_VALUE;
+		}
+
+	  d->started_reading_ = 1;
+	}
+  else
+    {
+      int retval = ::FindNextFile (d->current_handle_,
+                                   &(d->fdata_));
+	  if (retval == 0)
+	    d->current_handle_ = INVALID_HANDLE_VALUE;
+    }
+
+  if (d->current_handle_ != INVALID_HANDLE_VALUE)
+    { 
+      d->dirent_.d_name = d->fdata_.cFileName;
+      return &(d->dirent_);
+	}
+  else
+    return 0;
+#    else /* defined (ACE_WIN32) */
   return ::readdir (d);
+#    endif /* defined (ACE_WIN32) */
 #  endif /* ! defined (ACE_PSOS) */
 #else
   ACE_UNUSED_ARG (d);

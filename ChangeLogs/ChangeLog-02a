@@ -1,3 +1,21 @@
+Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* Dirent.cpp,
+	* Dirent.h: Renamed ACE_LACKS_INLINE_FUNCTIONS into __ACE_INLINE__ which
+	  is the correct way of handling inlining differences.
+
+	* ace/OS.h,
+	  ace/OS.i: Win32 does not support <dirent> a set of functions to
+	  retrieve the content of a directory. However, the Win32 functions
+	  FindFirstFile and FindNextFile provide similar behavior. This change
+	  added an emulation of dirent based on these functions. Changes were
+	  made to ACE_OS::opendir, ACE_OS::readdir, and ACE_OS::closedir.
+ 
+	* ace/config-win32-common.h: Added the defines ACE_HAS_DIRENT,
+	  ACE_LACKS_TELLDIR, ACE_LACKS_SEEKDIR, ACE_LACKS_REWINDDIR and
+	  ACE_LACKS_READDIR_R.
+	  This was necessary to enable the above mentioned <dirent> emulation.
+	  
 Mon Mar 27 17:27:40 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
