@@ -20,9 +20,9 @@ ACE_Registry_ImpExp::~ACE_Registry_ImpExp (void)
 {
 }
 
-// Imports the configuration database from filename.  
+// Imports the configuration database from filename.
 // No existing data is removed.
-int 
+int
 ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 {
   ACE_ASSERT (filename != NULL); // Cannot have a NULL filename
@@ -135,7 +135,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           // processing a file in the old format.
           // Try and process the line as such and if it fails,
           // return an error
-          int rc; 
+          int rc;
           if ((rc = process_previous_line_format (buffer, section)) != 0)
             {
               ACE_OS::fclose (in);
@@ -154,7 +154,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   return 0;
 }
 
-// This method exports the entire configuration database to <filename>.  
+// This method exports the entire configuration database to <filename>.
 // Once the file is opened this method calls 'export_section' passing
 // the root section.
 int
@@ -165,7 +165,7 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
   if (out)
-    {   
+    {
       result = this->export_section (config_.root_section (),
                                      ACE_LIB_TEXT (""),
                                      out);
@@ -178,7 +178,7 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
 // to the file specified.  Called by export_config when exporting
 // the entire configuration object.
 
-int 
+int
 ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                                      const ACE_TString& path,
                                      FILE* out)
@@ -231,7 +231,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
 #ifdef _WIN32
             case ACE_Configuration::INVALID:
               break;  // JDO added break.  Otherwise INVALID is processed
-              // like BINARY. If that's correct, please remove the 
+              // like BINARY. If that's correct, please remove the
               // break and these comments
 #endif
             case ACE_Configuration::BINARY:
@@ -290,7 +290,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
 //
 // This method read the line format origionally used in ACE 5.1
 //
-int 
+int
 ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
                                                    ACE_Configuration_Section_Key& section)
 {
@@ -335,7 +335,7 @@ ACE_Ini_ImpExp::~ACE_Ini_ImpExp (void)
 }
 
 // Method to read file and populate object.
-int 
+int
 ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
 {
   ACE_ASSERT (fileName != NULL); // Cannot have a NULL filename
@@ -349,9 +349,9 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
   while (ACE_OS::fgets (buffer, sizeof buffer, in))
     {
       // Check for a comment and blank line
-      if (buffer[0] == ACE_LIB_TEXT (';')  || 
-          buffer[0] == ACE_LIB_TEXT ('#')  || 
-          buffer[0] == ACE_LIB_TEXT ('\r') || 
+      if (buffer[0] == ACE_LIB_TEXT (';')  ||
+          buffer[0] == ACE_LIB_TEXT ('#')  ||
+          buffer[0] == ACE_LIB_TEXT ('\r') ||
           buffer[0] == ACE_LIB_TEXT ('\n'))
         continue;
 
@@ -382,7 +382,14 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
           ACE_TCHAR *end = (ACE_TCHAR *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
 
           // locate equal sign after name and retrieve value
-          const ACE_TCHAR *value = ACE_OS::strrchr (name, ACE_LIB_TEXT ('='));
+          //
+          // This used to be strrchr. I don't know if there was a reason that a
+          // reverse search was done but it was not acting as expected. If there
+          // was an equals sign in the value it would cut off the first part of
+          // the value. This happened even if the value was quoted.
+          // -Glen Coakley
+          //
+          const ACE_TCHAR *value = ACE_OS::strchr (name, ACE_LIB_TEXT ('='));
           if (value)
             {
               value++;  // jump over equal sign
@@ -423,7 +430,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
   return 0;
 }
 
-// This method exports the entire configuration database to <filename>.  
+// This method exports the entire configuration database to <filename>.
 // Once the file is opened this method calls 'export_section' passing
 // the root section.
 int
@@ -434,18 +441,18 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
 
   FILE* out = ACE_OS::fopen (filename, ACE_LIB_TEXT ("w"));
   if (out)
-    {   
+    {
       result = this->export_section (config_.root_section (), ACE_LIB_TEXT (""), out);
       ACE_OS::fclose (out);
     }
   return result;
 }
 
-// Method provided by derived classes in order to write one section to the 
-// file specified.  Called by export_config when exporting the entire 
+// Method provided by derived classes in order to write one section to the
+// file specified.  Called by export_config when exporting the entire
 // configuration objet
 
-int 
+int
 ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                                 const ACE_TString& path,
                                 FILE* out)
@@ -504,7 +511,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 #ifdef _WIN32
             case ACE_Configuration::INVALID:
               break;  // JDO added break.  Otherwise INVALID is processed
-              // like BINARY. If that's correct, please remove the 
+              // like BINARY. If that's correct, please remove the
               // break and these comments
 #endif
             case ACE_Configuration::BINARY:
