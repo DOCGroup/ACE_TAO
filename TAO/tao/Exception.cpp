@@ -311,17 +311,11 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
   const char* name = "UnknownUserException";
   const char* field_name = "exception";
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
-      || stream.encode (CORBA::_tc_string,
-			&interface_id, 0,
-			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (CORBA::_tc_string,
-			&name, 0,
-			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.write_ulong (1L) != 1
-      || stream.encode (CORBA::_tc_string,
-			&field_name, 0,
-			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
+      || stream.write_string (interface_id) == 0
+      || stream.write_string (name) == 0
+      || stream.write_ulong (1L) == 0
+      || stream.write_string (field_name) == 0
       || stream.encode (CORBA::_tc_TypeCode,
 			&CORBA::_tc_any, 0,
 			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -369,26 +363,18 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // exceptions?
   assert (ACE_OS::strlen (full_id) <= sizeof full_id);
 
-  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != 1
-      || stream.encode (CORBA::_tc_string,
-                       &strptr, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (CORBA::_tc_string,
-                       &name, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) == 0
+      || stream.write_string (strptr) == 0
+      || stream.write_string (name) == 0
       || stream.write_ulong (2L) != 1
-      || stream.encode (CORBA::_tc_string,
-                       &minor, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.write_string (minor) == 0
       || stream.encode (CORBA::_tc_TypeCode,
                        &CORBA::_tc_ulong, 0,
                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.encode (CORBA::_tc_string,
-                       &completed, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE
+      || stream.write_string (completed) == 0
       || stream.encode (CORBA::_tc_TypeCode,
-                       &TC_completion_status, 0,
-                       TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        &TC_completion_status, 0,
+                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;

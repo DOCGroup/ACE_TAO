@@ -127,7 +127,7 @@ public:
   // Return the object key as an out parameter.  Caller should release
   // return value when finished with it.
 
-  virtual STUB_Object *_stubobj (void);
+  virtual STUB_Object *_stubobj (void) const;
   // get the underlying stub object
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
@@ -231,6 +231,12 @@ public:
   virtual CORBA_Object* _upcast (void) = 0;
   virtual void _release (void) = 0;
 };
+
+extern TAO_Export CORBA::Boolean
+operator<< (TAO_OutputCDR&, const CORBA_Object*);
+
+extern TAO_Export CORBA::Boolean
+operator>> (TAO_InputCDR&, CORBA_Object*&);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"

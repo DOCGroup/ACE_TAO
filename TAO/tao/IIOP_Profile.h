@@ -32,11 +32,11 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
   // = TITLE
   //   This class defines the protocol specific attributes required
-  //   for locating ORBs over a TCP/IP network.  
+  //   for locating ORBs over a TCP/IP network.
   //
   // = DESCRIPTION
   //   This class defines the IIOP profile as specified in the CORBA
-  //   specification.  
+  //   specification.
 public:
   // = Currently, TAO supports IIOP 1.0.
   enum
@@ -108,7 +108,7 @@ public:
   ~TAO_IIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
-  CORBA::ULong tag (void);
+  CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.  for
   // example we are TAO_IOP_TAG_INTERNET_IOP.
 
@@ -132,8 +132,7 @@ public:
   const TAO_opaque& body (void) const;
   // Create IIOP_Profile Object from marshalled data.
 
-  CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
-                                           CORBA::Environment &env);
+  virtual int encode (TAO_OutputCDR &stream) const;
   // Encode this profile in a stream, i.e. marshal it.
 
   const TAO_ObjectKey &object_key (void) const;

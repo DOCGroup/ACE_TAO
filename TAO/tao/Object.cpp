@@ -10,6 +10,11 @@
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
 #include "tao/varout.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/GIOP.h"
+#include "tao/ORB_Core.h"
+#include "tao/Invocation.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
@@ -43,42 +48,97 @@ CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
 }
 
 CORBA::InterfaceDef_ptr
-CORBA_Object::_get_interface (CORBA::Environment &env)
+CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 {
-  static const TAO_Param_Data Object_get_interface_params [] =
+  // @@ TODO this method will require some modifications once the
+  // interface repository is implemented. The modifications are
+  // documented with @@ comments.
+
+  // @@ this should use the _nil() method...
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
+
+  STUB_Object *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
+
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_interface",
+      TAO_ORB_Core_instance ()
+    );
+  
+
+  // If we get forwarded we have to return to this point:
+_tao_start_again:
+
+  ACE_TRY_EX (_tao_START_FAILED)
+    {
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_START_FAILED);
+    }
+  ACE_CATCH (CORBA_SystemException, ex)
+    {
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
+
+  TAO_GIOP_ReplyStatusType _invoke_status;
+  ACE_TRY_EX (_tao_INVOKE_FAILED)
+    {
+      _invoke_status =
+        _tao_call.invoke (0, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
+    }
+  ACE_CATCH (CORBA_SystemException, ex)
+    {
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
+
+  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
   {
-    { CORBA::_tc_Object, PARAM_RETURN, 0 }
-    // XXX should be tc_InterfaceDef
-  };
+    istub->set_valid_profile ();
+    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+#if 0
+    // @@ The extraction operation (>>) for InterfaceDef will be
+    // defined, and thus this code will work. Right now we raise a
+    // MARSHAL exception....
+    if (!(
+          (_tao_in >> _tao_retval)
+      ))
+#endif
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
 
-  static const TAO_Call_Data Object_get_interface_calldata =
+  }
+  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
   {
-    "_interface",
-    1,
-    1,
-    &Object_get_interface_params [0],
-    0, 0
-  };
+    if (istub->next_profile ())
+    {
+      ACE_TRY_ENV.clear ();
+      goto _tao_start_again;
+    }
+    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
 
-  CORBA::InterfaceDef_ptr retval = 0;
+  }
+  else
+  {
+    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
 
-  // NOTE: If istub->type_id is nonzero, we could try asking a "local"
-  // interface repository and avoid costly network I/O.  (It's wrong
-  // to have different data associated with the same interface ID in
-  // different repositories; the interface is the interface, it
-  // doesn't change!)
-  //
-  // We need to be prepared to ask the object itself for this
-  // information though, since there's no guarantee that any local
-  // interface repository will really have records of this particular
-  // interface.
-  void* _tao_arguments[1];
-  void** _tao_current_arg = _tao_arguments;
-  *_tao_current_arg = &retval; _tao_current_arg++;
-  this->_stubobj ()->do_static_call (env,
-				     &Object_get_interface_calldata,
-				     _tao_arguments);
-  return retval;
+  }
+  return _tao_retval;
 }
 
 // IS_A ... ask the object if it's an instance of the type whose
@@ -86,25 +146,11 @@ CORBA_Object::_get_interface (CORBA::Environment &env)
 
 CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
-                     CORBA::Environment &env)
+                     CORBA::Environment &ACE_TRY_ENV)
 {
-  static const TAO_Param_Data Object_is_a_params [] =
-  {
-    { CORBA::_tc_boolean, PARAM_RETURN, 0 },
-    { CORBA::_tc_string, PARAM_IN, 0 }
-  };
-
-  static const TAO_Call_Data Object_is_a_calldata =
-  {
-    "_is_a", 1,
-    2, &Object_is_a_params [0],
-    0, 0
-  };
-
   // If the object is collocated then try locally....
   if (this->is_collocated_ && this->servant_ != 0)
-    return this->servant_->_is_a (type_id, env);
-
+    return this->servant_->_is_a (type_id, ACE_TRY_ENV);
 
   // NOTE: if istub->type_id is nonzero and we have local knowledge of
   // it, we can answer this question without a costly remote call.
@@ -126,21 +172,91 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
       && ACE_OS::strcmp ((char *) type_id, (char *) this->_stubobj ()->type_id) == 0)
     return 1;
 
-  // Our local knowledge about this type is insufficient to say
-  // whether this reference is to an object of a type which "is_a"
-  // subtype of the type whose ID is passed as a parameter.  The
-  // implementation always knows the answer to that question, however!
+  CORBA::Boolean _tao_retval = 0;
 
-  CORBA::Boolean retval = 0;
+  STUB_Object *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
-  void* _tao_arguments[2];
-  void** _tao_current_arg = _tao_arguments;
-  *_tao_current_arg = &retval; _tao_current_arg++;
-  *_tao_current_arg = &type_id; _tao_current_arg++;
-  this->_stubobj ()->do_static_call (env,
-				     &Object_is_a_calldata,
-				     _tao_arguments);
-  return retval;
+
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_is_a",
+      TAO_ORB_Core_instance ()
+    );
+
+
+  // If we get forwarded we have to return to this point:
+_tao_start_again:
+
+  ACE_TRY_EX (_tao_START_FAILED)
+    {
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_START_FAILED);
+    }
+  ACE_CATCH (CORBA_SystemException, ex)
+    {
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
+
+  TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+  if (!(
+        (_tao_out << type_id)
+    ))
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+
+  TAO_GIOP_ReplyStatusType _invoke_status;
+  ACE_TRY_EX (_tao_INVOKE_FAILED)
+    {
+      _invoke_status =
+        _tao_call.invoke (0, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
+    }
+  ACE_CATCH (CORBA_SystemException, ex)
+    {
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
+
+  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
+  {
+    istub->set_valid_profile ();
+    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+    if (!(
+          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+      ))
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+
+  }
+  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
+  {
+    if (istub->next_profile ())
+    {
+      ACE_TRY_ENV.clear ();
+      goto _tao_start_again;
+    }
+    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
+
+  }
+  else
+  {
+    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
+
+  }
+  return _tao_retval;
 }
 
 const char*
@@ -172,42 +288,87 @@ CORBA_Object::_get_implementation (CORBA::Environment &)
 // the latter case, return FALSE.
 
 CORBA::Boolean
-CORBA_Object::_non_existent (CORBA::Environment &env)
+CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
-  static const TAO_Param_Data Object_non_existent_params [] =
-  {
-    { CORBA::_tc_boolean, PARAM_RETURN, 0 }
-  };
+    CORBA::Boolean _tao_retval = 0;
 
-  static const TAO_Call_Data Object_non_existent_calldata =
-  {
-    "_non_existent", 1,
-    1, &Object_non_existent_params [0],
-    0, 0
-  };
+  STUB_Object *istub = this->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (CORBA::COMPLETED_NO), _tao_retval);
 
-  CORBA::Boolean retval = 0;
+  
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "_non_existent",
+      TAO_ORB_Core_instance ()
+    );
+  
 
-  void* _tao_arguments[1];
-  void** _tao_current_arg = _tao_arguments;
-  *_tao_current_arg = &retval; _tao_current_arg++;
+  // If we get forwarded we have to return to this point:
+_tao_start_again:
 
-  TAO_TRY_VAR (env)
+  ACE_TRY_EX (_tao_START_FAILED)
     {
-      this->_stubobj ()->do_static_call (env,
-                                         &Object_non_existent_calldata,
-                                         _tao_arguments);
-      TAO_CHECK_ENV;
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_START_FAILED);
     }
-  TAO_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+  ACE_CATCH (CORBA_SystemException, ex)
     {
-      ACE_UNUSED_ARG (ex);
-      env.clear ();
-      return 1;
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
 
-  return 0;
+  TAO_GIOP_ReplyStatusType _invoke_status;
+  ACE_TRY_EX (_tao_INVOKE_FAILED)
+    {
+      _invoke_status =
+        _tao_call.invoke (0, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (_tao_INVOKE_FAILED);
+    }
+  ACE_CATCH (CORBA_SystemException, ex)
+    {
+      if (istub->next_profile_retry ())
+      {
+        ACE_TRY_ENV.clear ();
+        goto _tao_start_again;
+      }
+      ACE_RETHROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (_tao_retval);
+
+  if (_invoke_status == TAO_GIOP_NO_EXCEPTION)
+  {
+    istub->set_valid_profile ();
+    TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+    if (!(
+          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
+      ))
+      ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), _tao_retval);
+
+  }
+  else if (_invoke_status == TAO_GIOP_LOCATION_FORWARD)
+  {
+    if (istub->next_profile ())
+    {
+      ACE_TRY_ENV.clear ();
+      goto _tao_start_again;
+    }
+    ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), _tao_retval);
+
+  }
+  else
+  {
+    ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_MAYBE), _tao_retval);
+
+  }
+  return _tao_retval;
 }
 
 // Quickly hash an object reference's representation data.  Used to
@@ -252,7 +413,7 @@ CORBA::Object::_key (CORBA::Environment &env)
 
 
 // @@ This doesn't seemed to be used anyplace! It should go away!! FRED
-void 
+void
 CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 {
   if ( this->_stubobj () )
@@ -281,6 +442,189 @@ CORBA_Object::_request (const CORBA::Char *operation,
   return new CORBA::Request (this, operation);
 }
 
+// ****************************************************************
+
+CORBA::Boolean
+operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
+{
+  if (x == 0)
+    {
+      // NIL objrefs ... marshal as empty type hint, no elements.
+      cdr.write_ulong (1);
+      cdr.write_char ('\0');
+      cdr.write_ulong (0);
+      return cdr.good_bit ();
+    }
+
+  STUB_Object *stubobj = x->_stubobj ();
+
+  if (stubobj == 0)
+    return 0;
+
+  // STRING, a type ID hint
+  if ((cdr << stubobj->type_id) == 0)
+    return 0;
+
+  const TAO_MProfile& mprofile =
+    stubobj->get_base_profiles ();
+
+  CORBA::ULong profile_count = mprofile.profile_count ();
+  if ((cdr << profile_count) == 0)
+    return 0;
+
+  // @@ The MProfile should be locked during this iteration, is there
+  // anyway to achieve that?
+  for (CORBA::ULong i = 0; i < profile_count; ++i)
+    {
+      const TAO_Profile* p = mprofile.get_profile (i);
+      if (p->encode (cdr) == 0)
+        return 0;
+    }
+  return cdr.good_bit ();
+}
+
+CORBA::Boolean
+operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
+{
+  CORBA::String_var type_hint;
+
+  if ((cdr >> type_hint.inout ()) == 0)
+    return 0;
+
+  CORBA::ULong profile_count;
+  if ((cdr >> profile_count) == 0)
+    return 0;
+
+  if (profile_count == 0)
+    {
+      x = CORBA::Object::_nil ();
+      return cdr.good_bit ();
+    }
+
+  // get a profile container to store all profiles in the IOR.
+  auto_ptr<TAO_MProfile> mp (new TAO_MProfile (profile_count));
+
+  while (profile_count-- != 0 && cdr.good_bit ())
+    {
+      CORBA::ULong tag;
+
+      // If there is an error we abort
+      if ((cdr >> tag) == 0)
+        continue;
+
+      // @@ For now we just take IIOP_Profiles,  FRED
+      // @@ fred: this is something that we *must* handle correctly,
+      //    the TAO_Profile class must be concrete (or we must have a
+      //    TAO_Generic_Profile class), any profile we don't anything
+      //    about should be converted in one of those
+      //    TAO_Generic_Profiles.
+      //    Also: the right component to decide if we can handle a
+      //    profile or not is the connector registry.
+      //                   Carlos.
+      //
+      if (tag != TAO_IOP_TAG_INTERNET_IOP)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "unknown profile tag %d skipping\n", tag));
+          cdr.skip_string ();
+          continue;
+        }
+
+      // OK, we've got an IIOP profile.  It's going to be
+      // encapsulated ProfileData.  Create a new decoding stream and
+      // context for it, and tell the "parent" stream that this data
+      // isn't part of it any more.
+
+      // ProfileData is encoded as a sequence of octet. So first get
+      // the length of the sequence.
+      CORBA::ULong encap_len;
+      if ((cdr >> encap_len) == 0)
+        continue;
+
+      // Create the decoding stream from the encapsulation in the
+      // buffer, and skip the encapsulation.
+      TAO_InputCDR str (cdr, encap_len);
+
+      if (str.good_bit () == 0
+          || cdr.skip_bytes (encap_len) == 0)
+        continue;
+
+      // get the default IIOP Profile and fill in the blanks
+      // with str.
+      // @@ use an auto_ptr<> here!
+      TAO_IIOP_Profile *pfile;
+      ACE_NEW_RETURN (pfile, TAO_IIOP_Profile, 0);
+
+      int r = 0;
+      ACE_TRY_NEW_ENV
+        {
+          CORBA::Boolean continue_decoding;
+          r = pfile->parse (str, continue_decoding, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "IIOP_Profile::parse raised exception!"
+                      " Shouldn't happen\n"));
+          ACE_TRY_ENV.print_exception ("IIOP_Profile::parse");
+          pfile->_decr_refcnt ();
+          return 0;
+        }
+      ACE_ENDTRY;
+
+      switch (r)
+        {
+          case -1:
+            pfile->_decr_refcnt ();
+            return 0;
+          case 0:
+            pfile->_decr_refcnt ();
+            break;
+          case 1:
+          default:
+            mp->give_profile (pfile);
+            // all other return values indicate success
+            // we do not decrement reference count on profile since we
+            // are giving it to the MProfile!
+            break;
+        } // switch
+
+    } // while loop
+
+  // make sure we got some profiles!
+  if (mp->profile_count () == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
+                  TAO_IIOP_Profile::DEF_IIOP_MAJOR,
+                  TAO_IIOP_Profile::DEF_IIOP_MINOR));
+      return 0;
+    }
+
+  // Ownership of type_hint is given to STUB_Object
+  // STUB_Object will make a copy of mp!
+  STUB_Object *objdata;
+  ACE_NEW_RETURN (objdata, STUB_Object (type_hint._retn (),
+                                        mp.get ()), 0);
+
+  if (objdata == 0)
+    return 0;
+
+  // Create a new CORBA_Object and give it the STUB_Object just
+  // created.
+  TAO_ServantBase *servant =
+    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
+
+  ACE_NEW_RETURN (x, CORBA_Object (objdata, servant, servant != 0), 0);
+
+  // the corba proxy would have already incremented the reference count on
+  // the objdata. So we decrement it here by 1 so that the objdata is now
+  // fully owned by the corba_proxy that was created.
+  // objdata->_decr_refcnt ();
+
+  return cdr.good_bit ();
+}
 
 // ****************************************************************
 
@@ -291,9 +635,13 @@ TAO_Object_Field::~TAO_Object_Field (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Field_T<CORBA_Object>;
+template class auto_ptr<TAO_MProfile>;
+template class ACE_Auto_Ptr<TAO_MProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Field_T<CORBA_Object>
+#pragma instantiate auto_ptr<TAO_MProfile>;
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -52,7 +52,7 @@ CORBA::is_nil (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE STUB_Object *
-CORBA_Object::_stubobj (void)
+CORBA_Object::_stubobj (void) const
 {
   return this->protocol_proxy_;
 }
