@@ -1,3 +1,9 @@
+Sat Apr 26 08:25:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+	* performance-tests/SCTP/SOCK_STREAM_clt.cpp: Fixed compile
+	  errors. 
+
 Sat Apr 26 10:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Exceptions_Test.cpp:
