@@ -7,6 +7,7 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 
@@ -34,7 +35,8 @@ namespace TAO
       if (CORBA::is_nil (imr.in ()))
           return;
 
-      ImplementationRepository::Administration_var imr_locator
+      ImplementationRepository::Administration_var imr_locator;
+
       {
         // ATTENTION: Trick locking here, see class header for details
         TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
