@@ -4730,9 +4730,9 @@ public:
 #endif /* ACE_MT_SAFE */
   }
 
-  void operator= (int error)
+  int operator= (int error)
   {
-    this->error_ = error;
+    return this->error_ = error;
   }
 
 private:
