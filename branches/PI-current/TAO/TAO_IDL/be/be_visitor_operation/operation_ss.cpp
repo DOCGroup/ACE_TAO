@@ -181,11 +181,14 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Fish out the interceptor and do preinvoke
-  *os << "#if defined (TAO_HAS_INTERCEPTOR)" << be_nl
+  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << "TAO_ServerRequestInterceptor_Adapter" << be_idt_nl
       << "_tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));" << be_uidt_nl
       << "ACE_CHECK;" << be_nl
-      << "PortableInterceptor::Cookies _tao_cookies;\n" << be_nl
+      << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
+      << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
+      << "_tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n"
+      << be_nl << "ACE_CHECK;\n" << be_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "_tao_vfr.preinvoke (_tao_server_request.request_id (), ";
@@ -194,7 +197,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   else
     *os << "1";
   *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), "
+      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "TAO_INTERCEPTOR_CHECK;\n";
   if (node->flags () == AST_Operation::OP_oneway
@@ -204,7 +207,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
           << "ACE_UNUSED_ARG (_tao_server_request);\n";
     }
 
-  *os << "#endif /* TAO_HAS_INTERCEPTOR */\n\n";
+  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
 
   // do pre upcall processing if any
   ctx = *this->ctx_;
@@ -253,14 +256,14 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
-  *os << "#if defined (TAO_HAS_INTERCEPTOR)" << be_nl
+  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << "_tao_vfr.postinvoke (_tao_server_request.request_id (), ";
   if (node->flags () == AST_Operation::OP_oneway)
     *os << "0";
   else
     *os << "1";
   *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), "
+      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -278,7 +281,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl
       << "ACE_CHECK;\n"
-      << "#endif /* TAO_HAS_INTERCEPTOR */\n\n";
+      << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
 
   // do any post processing for the arguments
   ctx = *this->ctx_;

@@ -21,6 +21,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (TAO_HAS_INTERCEPTORS)
+
 TAO_NAMESPACE  POA_PortableInterceptor
 {
   class Cookie;
@@ -201,6 +203,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -212,6 +215,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -259,6 +263,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -270,6 +275,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -328,6 +334,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -339,6 +346,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -386,6 +394,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -397,6 +406,7 @@ TAO_NAMESPACE  POA_PortableInterceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         PortableInterceptor::Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -423,6 +433,8 @@ TAO_NAMESPACE  POA_PortableInterceptor
 
 }
 TAO_NAMESPACE_CLOSE
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #if defined(_MSC_VER)
 #pragma warning(default:4250)

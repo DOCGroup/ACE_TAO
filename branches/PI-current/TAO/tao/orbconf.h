@@ -373,6 +373,11 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 # if !defined (TAO_HAS_REMOTE_POLICIES)
 #  define TAO_HAS_REMOTE_POLICIES 0
 # endif /* TAO_HAS_REMOTE_POLICIES */
+#else
+
+// Interceptors is supported by default if we are not building
+// for MinimumCORBA.
+#define TAO_HAS_INTERCEPTORS
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

@@ -9,6 +9,8 @@
 
 #include "tao/InterceptorS.h"
 
+#if defined (TAO_HAS_INTERCEPTORS)
+
 // skeleton constructor
 POA_PortableInterceptor::Cookie::Cookie (void)
 {
@@ -289,6 +291,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
     CORBA::Object_ptr objref,
     const char * operation_name,
     IOP::ServiceContextList & sc,
+    CORBA::NVList_ptr & arguments,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -299,6 +302,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
       objref,
       operation_name,
       sc,
+      arguments,
       ck,
       ACE_TRY_ENV
     );
@@ -311,6 +315,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
     CORBA::Object_ptr objref,
     const char * operation_name,
     IOP::ServiceContextList & sc,
+    CORBA::NVList_ptr & arguments,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -321,6 +326,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::p
       objref,
       operation_name,
       sc,
+      arguments,
       ck,
       ACE_TRY_ENV
     );
@@ -441,6 +447,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
     CORBA::Object_ptr objref,
     const char * operation_name,
     IOP::ServiceContextList & sc,
+    CORBA::NVList_ptr & arguments,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -451,6 +458,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
       objref,
       operation_name,
       sc,
+      arguments,
       ck,
       ACE_TRY_ENV
     );
@@ -463,6 +471,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
     CORBA::Object_ptr objref,
     const char * operation_name,
     IOP::ServiceContextList & sc,
+    CORBA::NVList_ptr & arguments,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -473,6 +482,7 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::p
       objref,
       operation_name,
       sc,
+      arguments,
       ck,
       ACE_TRY_ENV
     );
@@ -498,3 +508,5 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::e
     );
 
 }
+
+#endif /* TAO_HAS_INTERCEPTORS */

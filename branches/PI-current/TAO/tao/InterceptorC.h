@@ -10,14 +10,13 @@
 #ifndef _TAO_IDL_INTERCEPTORC_H_
 #define _TAO_IDL_INTERCEPTORC_H_
 
-#define TAO_HAS_INTERCEPTOR
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOPC.h"
-#include "Any.h"
+#include "tao/orbconf.h"
+#include "tao/IOPC.h"
+#include "tao/Any.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -33,6 +32,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (TAO_HAS_INTERCEPTORS)
 TAO_NAMESPACE  PortableInterceptor
 {
 
@@ -507,6 +507,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -518,6 +519,7 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -652,6 +654,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -663,6 +666,7 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
         CORBA::Object_ptr objref,
         const char * operation_name,
         IOP::ServiceContextList & sc,
+        CORBA::NVList_ptr & arguments,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -721,6 +725,8 @@ CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::
 // Any operators for interface PortableInterceptor::ClientRequestInterceptor
 void TAO_Export operator<<= (CORBA::Any &, PortableInterceptor::ClientRequestInterceptor_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, PortableInterceptor::ClientRequestInterceptor *&);
+
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #ifndef __ACE_INLINE__
 
