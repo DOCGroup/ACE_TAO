@@ -300,7 +300,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
     {
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_RETURN (impl,
-                      TAO::Unknown_IDL_Type (tc,
+                      TAO::Unknown_IDL_Type (tc.in (),
                                              0,
                                              cdr.byte_order ()),
                       0);
