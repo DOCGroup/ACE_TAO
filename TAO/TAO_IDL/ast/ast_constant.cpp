@@ -164,8 +164,12 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     ifr_added_ (0)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
-  // literal to a float constant.
-  if (t == AST_Expression::EV_float)
+  // literal to a float constant. Must also check that the input
+  // expression is of type double (indicates that we are being
+  // assigned from a literal). If v is of type float, it may be
+  // a constant-to-constant assignment - in any case the danger
+  // of truncation would not apply.
+  if (t == AST_Expression::EV_float && v->ev ()->et == AST_Expression::EV_double)
     {
       AST_Expression::AST_ExprValue *ev = 
         this->pd_constant_value->ev ();

@@ -1,3 +1,14 @@
+Sat Jul 12 11:08:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_constant.cpp:
+
+	  To a previous fix to prevent a truncation error on MSVC when
+	  assigning a float constant from a literal in the constructor, added
+	  an additional check to make sure we are not assigning from
+	  another float constant, or from a literal decimal coerced to a
+	  float. Thanks to Erik Johannes <erik_posting_email@yahoo.com> for
+	  reporting the problem assigning one float constant to another.
+
 Fri Jul 11 18:41:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
