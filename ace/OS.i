@@ -8567,18 +8567,19 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # else  /* ! ACE_LACKS_LONGLONG_T */
   return now;
 # endif /* ! ACE_LACKS_LONGLONG_T */
-// #elif defined (linux) && defined (__alpha)
-// NOTE: the following don't seem to work on Linux.  Use ::gettimeofday
-//       instead.
-//   ACE_hrtime_t now;
-//
-//   // The following statement is based on code published by:
-//   // Mosberger, David, "How to Make Your Applications Fly, Part 1",
-//   // Linux Journal Issue 42, October 1997, page 50.
-//   // It reads the high-res tick counter directly into memory variable "now".
-//   asm volatile ("rpcc %0" : "=r" (now) : : "memory");
-//
-//   return now;
+#elif defined (linux) && defined (ACE_HAS_ALPHA_TIMER)
+// NOTE: For unknown reasons, rpcc must load to a 32-bit int on
+//       alphas.  This severely limits the range of high-res times
+//       that can be returned.
+  ACE_UINT32 now;
+
+  // The following statement is based on code published by:
+  // Mosberger, David, "How to Make Your Applications Fly, Part 1",
+  // Linux Journal Issue 42, October 1997, page 50.
+  // It reads the high-res tick counter directly into memory variable "now".
+  asm volatile ("rpcc %0" : "=r" (now) : : "memory");
+
+  return now;
 #elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM) && !defined (ACE_HAS_WINCE)
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
