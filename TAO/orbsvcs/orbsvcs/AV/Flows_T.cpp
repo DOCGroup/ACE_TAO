@@ -193,6 +193,7 @@ TAO_FDev<T_Producer, T_Consumer>::bind (AVStreams::FDev_ptr peer_device,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -211,6 +212,7 @@ TAO_FDev<T_Producer, T_Consumer>::bind_mcast (AVStreams::FDev_ptr first_peer,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (is_met);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
   return 0;
 }
 
