@@ -50,6 +50,4 @@
 
 . test non-gperf generated code
 
-. test direct collocation generated code
-
-. test Collocation_Opportunities after talking to Irfan
+. AMI -- exceptions interceptor test needs modifications.

@@ -128,7 +128,14 @@ namespace TAO
             ACE_CHECK;
 
             if (status == TAO_INVOKE_RESTART)
-              effective_target = coll_inv.steal_forwarded_reference ();
+              {
+                effective_target = coll_inv.steal_forwarded_reference ();
+
+                this->object_forwarded (effective_target,
+                                        stub
+                                        ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+              }
           }
 
         if (TAO_debug_level > 2 &&
@@ -201,6 +208,7 @@ namespace TAO
 
     return stub;
   }
+
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
@@ -282,7 +290,14 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (status == TAO_INVOKE_RESTART)
-      effective_target = synch.steal_forwarded_reference ();
+      {
+        effective_target = synch.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target,
+                                r.stub ()
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      }
 
     return status;
   }
@@ -317,8 +332,49 @@ namespace TAO
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (s == TAO_INVOKE_RESTART)
-      effective_target = synch.steal_forwarded_reference ();
+      {
+        effective_target = synch.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target,
+                                r.stub ()
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      }
 
     return s;
+  }
+
+  void
+  Invocation_Adapter::object_forwarded (CORBA::Object *&effective_target,
+                                        TAO_Stub *stub
+                                        ACE_ENV_ARG_DECL)
+  {
+    // The object pointer has to be changed to a TAO_Stub pointer
+    // in order to obtain the profiles.
+    TAO_Stub *stubobj =
+      effective_target->_stubobj ();
+
+    if (stubobj == 0)
+      ACE_THROW (CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO));
+
+
+    // Reset the profile in the stubs
+    stub->add_forward_profiles (stubobj->base_profiles ());
+
+    if (stub->next_profile () == 0)
+      ACE_THROW_RETURN (CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO),
+                        TAO_INVOKE_FAILURE);
+
+
+
+    return;
   }
 } // End namespace TAO

@@ -1621,7 +1621,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_enum:
@@ -1639,7 +1638,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_sequence:
@@ -1657,7 +1655,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_struct:
@@ -1675,7 +1672,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_union:
@@ -1693,7 +1689,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_fixed:
@@ -1715,7 +1710,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
   }
