@@ -27,6 +27,9 @@ TAO_EC_Reactive_SupplierControl::
     adapter_ (this),
     event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+    , timer_id_ (-1)
+#endif /* TAO_HAS_CORBA_MESSAGING != 0*/
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
@@ -124,11 +127,11 @@ TAO_EC_Reactive_SupplierControl::activate (void)
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        long id = this->reactor_->schedule_timer (&this->adapter_,
-                                                  0,
-                                                  this->rate_,
-                                                  this->rate_);
-        if (id == -1)
+        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+                                                    0,
+                                                    this->rate_,
+                                                    this->rate_);
+        if (timer_id_ == -1)
           return -1;
       }
     }

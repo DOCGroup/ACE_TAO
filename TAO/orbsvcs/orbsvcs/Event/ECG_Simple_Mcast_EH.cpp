@@ -35,14 +35,14 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open mcast handler: "
                        "error using specified address %s "
-                       "in ACE_INET.set ().",
+                       "in ACE_INET.set ().\n",
                        mcast_addr),
                       -1);
 
   if (this->dgram_.subscribe (mcast_group, 1, net_if) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                       "Unable to open mcast handler: error "
-                      "subscribing to %s",
+                      "subscribing to %s\n",
                        mcast_addr),
                       -1);
 
@@ -55,7 +55,7 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
     {
       this->dgram_.close ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Cannot register handler with reactor."),
+                         "Cannot register handler with reactor.\n"),
                         -1);
     }
 
@@ -78,13 +78,13 @@ TAO_ECG_Simple_Mcast_EH::shutdown (void)
   if (result != 0)
     ACE_ERROR ((LM_ERROR,
                 "Unable to deregister handler from reactor "
-                "on shutdown."));
+                "on shutdown.\n"));
 
   result = this->dgram_.close ();
   if (result != 0)
     ACE_ERROR ((LM_ERROR,
                 "Unable to close mcast receiving dgram "
-                "on shutdown."));
+                "on shutdown.\n"));
 
   this->receiver_ = 0;
 

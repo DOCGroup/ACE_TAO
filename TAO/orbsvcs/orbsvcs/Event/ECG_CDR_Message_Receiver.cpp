@@ -267,21 +267,21 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       if (errno == EWOULDBLOCK)
         return 0;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m)."),
+      ACE_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m).\n"),
                         -1);
     }
 
   if (n == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
-                                  "read 0 bytes from socket."),
+                                  "read 0 bytes from socket.\n"),
                         0);
     }
 
   if (n < TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Trying to read mcast fragment: "
-                                   "# of bytes read < mcast header size."),
+                                   "# of bytes read < mcast header size.\n"),
                          -1);
     }
 
@@ -379,19 +379,19 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
   if (request == 0)
     {
       ACE_DEBUG ((LM_WARNING, "Received mcast request with sequence"
-                              "below currently expected range."));
+                              "below currently expected range.\n"));
       return 0;
     }
   if (*request == &Request_Completed_)
     {
       ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
-                           "(Request already complete)."));
+                           "(Request already complete).\n"));
       return 0;
     }
   if (*request != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Inconsistent fragments for "
-                                   "mcast request."),
+                                   "mcast request.\n"),
                          -1);
     }
 
@@ -418,13 +418,13 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
   if (request == 0)
     {
       ACE_DEBUG ((LM_WARNING, "Received mcast request with sequence "
-                              "below currently expected range."));
+                              "below currently expected range.\n"));
       return 0;
     }
   if (*request == &Request_Completed_)
     {
       ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
-                           "(Request already complete)."));
+                           "(Request already complete).\n"));
       return 0;
     }
   if (*request == 0)
@@ -447,14 +447,14 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                                      header.fragment_count) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Received invalid mcast fragment."),
+                         "Received invalid mcast fragment.\n"),
                         -1);
     }
 
   // Check whether this fragment was already received.
   if ((*request)->test_received (header.fragment_id) == 1)
     {
-      ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment."));
+      ACE_DEBUG ((LM_INFO, "Received duplicate mcast fragment.\n"));
       return 0;
     }
 
@@ -502,7 +502,7 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
           || this->request_map_.bind (from, requests, entry) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "Unable to create hash map "
-                                       "entry for a new request."),
+                                       "entry for a new request.\n"),
                             0);
         }
       requests_aptr.release ();
@@ -521,7 +521,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
   if(this->byte_order != 0 && this->byte_order != 1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Reading mcast packet header: byte "
-                                   "order is neither 0 nor 1, it is %d.",
+                                   "order is neither 0 nor 1, it is %d.\n",
                          this->byte_order),
                         -1);
     }
@@ -538,7 +538,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
       || a != 'A' || b != 'B' || c != 'C')
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Error reading magic bytes "
-                                   "in mcast packet header."),
+                                   "in mcast packet header.\n"),
                         -1);
     }
 
@@ -550,7 +550,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
       || !header_cdr.read_ulong (this->fragment_count))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                        "Error decoding mcast packet header."),
+                        "Error decoding mcast packet header.\n"),
                         -1);
     }
 
@@ -582,7 +582,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         "Invalid mcast fragment: "
-                        "inconsistent header fields."),
+                        "inconsistent header fields.\n"),
                         -1);
     }
 
