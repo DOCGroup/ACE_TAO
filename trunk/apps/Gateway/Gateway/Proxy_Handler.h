@@ -125,7 +125,7 @@ protected:
   // Indicates which role the proxy plays ('S' == Supplier and 'C' ==
   // Consumer).
 
-  ACE_Event_Channel &event_channel_;
+  ACE_Event_Channel *event_channel_;
   // Reference to the <ACE_Event_Channel> that we use to forward all
   // the events from Consumers and Suppliers.
 };

@@ -210,7 +210,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 				       0,
 				       0,
 				       0,
-				       this->event_channel_.options ().locking_strategy_),
+				       this->event_channel_->options ().locking_strategy_),
 		    -1);
 
   Event *event = (Event *) this->msg_frag_->rd_ptr ();
@@ -319,7 +319,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
 						this->msg_frag_,
 						0,
 						0,
-						this->event_channel_.options ().locking_strategy_);
+						this->event_channel_->options ().locking_strategy_);
 	  if (forward_addr == 0)
 	    {
 	      this->msg_frag_ = this->msg_frag_->release ();
@@ -341,7 +341,7 @@ Supplier_Proxy::recv (ACE_Message_Block *&forward_addr)
       this->total_bytes (data_received + header_received);
       ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
 		  event->header_.supplier_id_, event->header_.len_, data_received + header_received));
-      if (this->event_channel_.options ().verbose_)
+      if (this->event_channel_->options ().verbose_)
 	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
 
       // Encode before returning so that we can set things out in
@@ -392,7 +392,7 @@ Supplier_Proxy::handle_input (ACE_HANDLE)
 int
 Supplier_Proxy::forward (ACE_Message_Block *forward_addr)
 {
-  return this->event_channel_.put (forward_addr);
+  return this->event_channel_->put (forward_addr);
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -433,7 +433,7 @@ Thr_Consumer_Proxy::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_.complete_proxy_connection (this) == -1)
+  else if (this->event_channel_->complete_proxy_connection (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
 
   // Register ourselves to receive input events (which indicate that
@@ -504,7 +504,7 @@ Thr_Consumer_Proxy::svc (void)
 
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
-	   this->event_channel_.initiate_proxy_connection (this) == -1; )
+	   this->event_channel_->initiate_proxy_connection (this) == -1; )
 	{
 	  ACE_Time_Value tv (this->timeout ());
 
@@ -532,7 +532,7 @@ Thr_Supplier_Proxy::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
 
   // Call back to the <Event_Channel> to complete our initialization.
-  else if (this->event_channel_.complete_proxy_connection (this) == -1)
+  else if (this->event_channel_->complete_proxy_connection (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_proxy_connection"), -1);
 
   // Reactivate message queue.  If it was active then this is the
@@ -582,7 +582,7 @@ Thr_Supplier_Proxy::svc (void)
 
       for (this->timeout (1);
 	   // Default is to reconnect synchronously.
-	   this->event_channel_.initiate_proxy_connection (this) == -1; )
+	   this->event_channel_->initiate_proxy_connection (this) == -1; )
 	{
 	  ACE_Time_Value tv (this->timeout ());
 	  ACE_ERROR ((LM_ERROR, 

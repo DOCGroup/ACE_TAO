@@ -1,15 +1,7 @@
-Wed Apr 09 22:06:23 1997    <harrison@samba.cs.wustl.edu>
-
-	* Memory_Pool.h: Modified ACE_MMAP_Memory_Pool and
-	  ACE_MMAP_Memory_Pool_Options to include the new guess_on_fault
- 	  option.  This is only for platforms that can not report which
- 	  address caused a segmentation fault (via signal or exception).
-  	  When guess_on_fault is set (via ACE_MMAP_Memory_Pool_Options),
- 	  ACE_MMAP_Memory_Pool::handle_signal calls
- 	  ACE_MMAP_Memory_Pool::remap "guessing" that the segmentation
- 	  fault was caused by an access to memory not yet mapped.
-
 Wed Apr  9 21:11:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Proxy_Handler.h: Changed ACE_Event_Channel
+ 	  & to ACE_Event_Channel * to keep the compiler happy.
 
 	* examples/Connection/non_blocking/CPP-connector.h: Added a
  	  do-nothing default constructor to keep ACE_Connector happy.
@@ -96,6 +88,17 @@ Wed Apr  9 21:11:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/OS.i: Fixed a typo in the new condition variable
  	  implementation for Win32.  Thanks to Norbert Rapp
  	  <norbert.rapp@nexus-informatics.de> for reporting this.
+
+Wed Apr 09 22:06:23 1997    <harrison@samba.cs.wustl.edu>
+
+	* Memory_Pool.h: Modified ACE_MMAP_Memory_Pool and
+	  ACE_MMAP_Memory_Pool_Options to include the new guess_on_fault
+ 	  option.  This is only for platforms that can not report which
+ 	  address caused a segmentation fault (via signal or exception).
+  	  When guess_on_fault is set (via ACE_MMAP_Memory_Pool_Options),
+ 	  ACE_MMAP_Memory_Pool::handle_signal calls
+ 	  ACE_MMAP_Memory_Pool::remap "guessing" that the segmentation
+ 	  fault was caused by an access to memory not yet mapped.
 
 Wed Apr 09 16:46:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
