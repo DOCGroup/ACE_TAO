@@ -259,7 +259,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TSS_Resources.cpp
     TypeCode.cpp
     Typecode_typesC.cpp
-    Typecode_Constants.cpp
+    TypeCode_Constants.cpp
     TypeCodeFactory_Adapter.cpp
     ULongLongSeqA.cpp
     ULongLongSeqC.cpp

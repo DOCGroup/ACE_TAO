@@ -270,7 +270,7 @@ libTAO_la_SOURCES = \
   Transport_Timer.cpp \
   TypeCode.cpp \
   TypeCodeFactory_Adapter.cpp \
-  Typecode_Constants.cpp \
+  TypeCode_Constants.cpp \
   Typecode_typesC.cpp \
   ULongLongSeqA.cpp \
   ULongLongSeqC.cpp \
