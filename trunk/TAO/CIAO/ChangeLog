@@ -1,9 +1,14 @@
+Tue Jun  1 18:13:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/NodeApplication_Impl.cpp:
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Updated these two files to fix the bug related to nil ();
+
 Tue Jun  1 18:09:19 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeDaemon.mpc
 
           Modify this to fix linking errors for missing library.
-
 
 Tue Jun  1 17:52:29 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
@@ -39,6 +44,7 @@ Tue Jun  1 15:30:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
           Made changes to fix some testing errors
 
+>>>>>>> 1.587
 Tue Jun  1 15:08:23 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/NodeManager/NodeApplicationManager_Impl.h:
