@@ -7,17 +7,21 @@
 LIB     = libACEXML.a
 SHLIB   = libACEXML.$(SOEXT)
 
-FILES   =  CharStream \
+FILES   =  Attributes_Def_Builder \
+	   AttributesImpl \
+	   CharStream \
+	   DefaultHandler \
+	   DTD_Manager \
+	   Element_Def_Builder \
 	   Env \
 	   Exception \
 	   FileCharStream \
-	   Transcode \
 	   InputSource \
-	   SAXExceptions \
-	   AttributesImpl \
-	   DefaultHandler \
 	   LocatorImpl \
 	   NamespaceSupport \
+	   SAXExceptions \
+	   Transcode \
+	   Validator \
 	   XMLFilterImpl
 
 DEFS    = $(addsuffix .h,$(FILES))

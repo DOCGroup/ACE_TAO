@@ -1868,7 +1868,6 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
 int
 ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
 {
-  int level = 1;
   this->get ();                 // consume the '('
 
   ACEXML_Char nextch;
@@ -1904,6 +1903,8 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
           this->skip_whitespace_count ();
 
           ACEXML_Char *name = this->read_name ();
+          // @@ name will be used in the Validator later.
+          ACE_UNUSED_ARG (name);
           ++subelement_number;
           // @@ Install Mixed element name into the validator.
           this->skip_whitespace_count (&nextch);
@@ -1949,7 +1950,7 @@ ACEXML_Parser::parse_child (int skip_open_paren,
       {
       case '(':
         this->parse_child (0, xmlenv);
-        if (xmlenv.exception != 0)
+        if (xmlenv.exception () != 0)
           return -1;
         break;
       default:
