@@ -1997,6 +1997,10 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                               "tao/Alias_TypeCode.h");
 
   this->gen_cond_file_include (idl_global->enum_seen_,
+                               "tao/TypeCode_Non_Default_Case.h",
+                               stream);
+
+  this->gen_cond_file_include (idl_global->enum_seen_,
                                "tao/Enum_TypeCode.h",
                                stream);
 
