@@ -1,3 +1,11 @@
+Mon Nov 11 19:15:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/AMI/AMI.dsw:
+	* tests/Portable_Interceptors/AMI/client.dsp:
+	* tests/Portable_Interceptors/AMI/server.dsp:
+
+	  New MSVC++ project files for this test.
+
 Mon Nov 11 18:03:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* docs/interceptors.html:
