@@ -52,7 +52,7 @@ using std::strftime;
 #     endif /* ACE_PSOS_DIAB_MIPS */
 #   else
 #     include /**/ <memory.h>
-#   endif /* VXWORKS */
+#   endif /* ACE_LACKS_MEMORY_H */
 # endif /* ACE_HAS_GNU_CSTRING_H */
 
 // The following are #defines and #includes that must be visible for
