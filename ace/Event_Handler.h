@@ -151,6 +151,24 @@ protected:
   ACE_Proactor *proactor_;
 };
 
+struct ACE_Export ACE_Notification_Buffer
+  // = TITLE
+  //     Simple wrapper for passing <ACE_Event_Handler *>s and
+  //     <ACE_Reactor_Mask>s between threads.
+{
+  ACE_Notification_Buffer (void);
+
+  ACE_Notification_Buffer (ACE_Event_Handler *eh,
+			   ACE_Reactor_Mask mask);
+
+  ACE_Event_Handler *eh_;
+  // Pointer to the Event_Handler that will be dispatched 
+  // by the main event loop.
+  
+  ACE_Reactor_Mask mask_;
+  // Mask that indicates which method to call.
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Event_Handler.i"
 #endif /* __ACE_INLINE__ */

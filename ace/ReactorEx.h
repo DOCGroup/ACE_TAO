@@ -17,9 +17,9 @@
 #if !defined (ACE_ReactorEx_H)
 #define ACE_ReactorEx_H
 
-#include "ace/Timer_Queue.h"
 #include "ace/Time_Value.h"
 #include "ace/Event_Handler.h"
+#include "ace/Message_Queue.h"
 #include "ace/Token.h"
 
 #if defined (ACE_MT_SAFE)
@@ -72,18 +72,33 @@ public:
   ~ACE_ReactorEx_Notify (void);
   // Destroys a handle.
 
-  int notify (void);
-  // Signals a handle.
+  int notify (ACE_Event_Handler *eh = 0,
+	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK);
+  // Special trick to unblock WaitForMultipleObjects() when updates
+  // occur in somewhere other than the main <ACE_ReactorEx> thread.
+  // All we do is enqueue <eh> and <mask> onto the <ACE_Message_Queue>
+  // and wakeup the ReactorEx by signaling its <ACE_Event> handle.
 
 private:
+  struct 
+  {
+    ACE_Event_Handler *eh_;
+    ACE_Reactor_Mask mask_;
+  };
+
   virtual ACE_HANDLE get_handle (void) const;
   // Returns a handle.
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Does nothing with a handle.
+  // Does with a handle.
 
-  ACE_HANDLE handle_;
+  ACE_Auto_Event notify_event_;
   // A handle.
+
+  ACE_Message_Queue<ACE_MT_SYNCH> message_queue_;
+  // Message queue that keeps track of pending <ACE_Event_Handlers>.
+  // This queue must be thread-safe because it can be called by
+  // multiple threads of control.
 };
 
 class ACE_Export ACE_ReactorEx
@@ -140,9 +155,10 @@ public:
   // -mask- == ACE_Event_Handler::DONT_CALL then the -handle_close-
   // method of the -eh- is not invoked.
 
-  virtual int notify (void);
-  // Wakeup ACE_ReactorEx if currently blocked
-  // WaitForMultipleObjects.
+  int notify (ACE_Event_Handler * = 0, 
+	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK);
+  // Wakeup <ACE_ReactorEx> if currently blocked in
+  // WaitForMultipleObjects().
 
   // = Timer management. 
   virtual int schedule_timer (ACE_Event_Handler *eh,
@@ -219,7 +235,9 @@ class ACE_Export ACE_ReactorEx
 public:
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
-  virtual int notify (void) { return 0; }
+  int notify (ACE_Event_Handler * = 0,
+	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK)
+  { return 0; }
 };
 
 #endif /* ACE_WIN32 */
