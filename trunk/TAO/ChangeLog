@@ -1,3 +1,8 @@
+Wed Nov 26 14:13:22 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
+	  Added missing const qualifier
+
 Wed Nov 26 14:05:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/Naming_Service/Naming_Service.bor:
