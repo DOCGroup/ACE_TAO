@@ -28,7 +28,7 @@ class Basic_Replication_Strategy : public Replication_Strategy
 {
 public:
   /**
-   * @param mt Specifies whether multithreaded ORB is used. 
+   * @param mt Specifies whether multithreaded ORB is used.
    */
   Basic_Replication_Strategy(bool mt);
   ~Basic_Replication_Strategy();

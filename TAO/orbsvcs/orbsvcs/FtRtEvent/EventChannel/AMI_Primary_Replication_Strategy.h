@@ -33,7 +33,7 @@ class AMI_Primary_Replication_Strategy : public Replication_Strategy
 {
 public:
   /**
-   * @param mt Specifies whether multithreaded ORB is used. 
+   * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Primary_Replication_Strategy(bool mt);
   virtual ~AMI_Primary_Replication_Strategy();

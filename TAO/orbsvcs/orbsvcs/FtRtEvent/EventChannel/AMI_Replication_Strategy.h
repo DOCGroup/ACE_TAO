@@ -32,7 +32,7 @@ class AMI_Replication_Strategy: public Replication_Strategy
 {
 public:
   /**
-   * @param mt Specifies whether multithreaded ORB is used. 
+   * @param mt Specifies whether multithreaded ORB is used.
    */
   AMI_Replication_Strategy(bool mt);
   ~AMI_Replication_Strategy();
