@@ -10,8 +10,10 @@
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
+#include "ECT_Scheduler_Info.h"
 #include "ECT_Throughput.h"
 
 ACE_RCSID(EC_Throughput, ECT_Throughput, "$Id$")
@@ -146,10 +148,19 @@ ECT_Throughput::run (int argc, char* argv[])
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
+#if 1
       ACE_Config_Scheduler scheduler_impl;
+#else
+      ACE_Runtime_Scheduler scheduler_impl (
+	runtime_configs_size,
+        runtime_configs,
+        runtime_infos_size,
+        runtime_infos);
+#endif
       RtecScheduler::Scheduler_var scheduler =
         scheduler_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
 
       CORBA::String_var str =
         this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
