@@ -27,9 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM))
+#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
 #include "ace/SV_Semaphore_Complex.h"
-#endif /* !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)) */
+#endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
 
 // Forward declarations.
 class ACE_Time_Value;
@@ -396,10 +396,10 @@ public:
   // Returns -1 on failure.  If we "failed" because someone else
   // already had the lock, <errno> is set to <EBUSY>.
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   const ACE_sema_t &lock (void) const;
   // Return the underlying lock.
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -408,12 +408,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   ACE_Semaphore lock_;
 #else
   ACE_SV_Semaphore_Complex lock_;
   // We need this to get the right semantics...
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 };
 
 class ACE_Export ACE_Null_Semaphore
@@ -660,10 +660,10 @@ public:
   // failure.  If we "failed" because someone else already had the
   // lock, <errno> is set to <EBUSY>.
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   const ACE_mutex_t &lock (void) const;
   // Return the underlying mutex.
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 
   void dump (void) const;
   // Dump the state of an object.
@@ -672,7 +672,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   ACE_Mutex lock_;
 #else
   ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
@@ -684,7 +684,7 @@ private:
 
   ACE_SV_Semaphore_Complex lock_;
   // We need this to get the right semantics...
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 };
 
 class ACE_Export ACE_RW_Process_Mutex
