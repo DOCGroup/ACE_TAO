@@ -1008,24 +1008,6 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 
 // =======================================================================
 
-// Specializations for CORBA::Any
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Any>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::Any>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// =======================================================================
-
 // Specializations of the create_empty method for long long and long double.
 
 template<>
@@ -1286,7 +1268,6 @@ template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
 template class TAO::Any_Impl_T<CORBA::AbstractBase>;
 template class TAO::Any_Impl_T<CORBA::ValueBase>;
-template class TAO::Any_Impl_T<CORBA::Any>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -1343,6 +1324,5 @@ template class TAO::Any_Impl_T<CORBA::Any>;
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
 #pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
 #pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
-#pragma instantiate TAO::Any_Impl_T<CORBA::Any>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
