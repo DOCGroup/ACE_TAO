@@ -1,3 +1,8 @@
+Fri May 29 13:00:35 1998   Michael Kircher <mk1@cs.wustl.edu>
+
+        * tests/Quoter/Factory_Trader.cpp: CosTradingC.h is only
+	  parsed when the trading service is available.
+
 Fri May 29 11:02:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/orbconf.h: Removed an unnecessary OR condition for the

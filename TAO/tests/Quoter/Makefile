@@ -45,6 +45,9 @@ endif # trader
 
 BIN = client server Factory_Finder Generic_Factory Life_Cycle_Service
 
+# The following lines tell the souce code that the trading
+# service is available.
+
 ifdef trader
 
 CPPFLAGS += -DTRADER_AVAILABLE

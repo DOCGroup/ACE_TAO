@@ -11,6 +11,7 @@
 //   the functionality provided is used. This class serves
 //   as Wrapper around the Trading Service and provides 
 //   smaller interfaces.
+//   TRADER_AVAILABLE is defined via compiler switch in the Makefile
 //
 // = AUTHOR
 //   Michael Kircher  (mk1@cs.wustl.edu)
@@ -18,7 +19,9 @@
 // ============================================================================
 
 #include "Factory_Trader.h"
+#ifdef TRADER_AVAILABLE
 #include "orbsvcs/CosTradingC.h"
+#endif // TRADER_AVAILABLE
  
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.
