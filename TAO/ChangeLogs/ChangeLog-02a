@@ -1,3 +1,8 @@
+Mon Aug 14 10:44:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ChangeLog: 
+	  Corrected some formatting.
+
 Mon Aug 14 11:03:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Exposed_Policies/server.cpp:
@@ -53,43 +58,43 @@ Mon Aug 14 08:25:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Sun Aug 13 09:23:02 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IOR_LookupTable.cpp (find_ior): 
-		 Added the function del_ior () to remove the object name
-        from the table.
+          Added the function del_ior () to remove the object name
+          from the table. Thanks to JM Strauss <jms97@club-internet.fr>
+	  for reporting the errors that cropped up because of not committing
+	  these files. 
 	
 Sun Aug 13 09:07:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
-	          Added the function del_ior () to remove the object name
-	from the table.
+	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable): 
+	  Added the function del_ior () to remove the object name
+	  from the table.
 
 Sat Aug 12 10:26:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * tao/ORB.h:
-	          Remove unused argc_ and argv_ fields.  The argv_
-	declaration was baking builds on NT.
+        * tao/ORB.h: 
+	  Remove unused argc_ and argv_ fields.  The argv_
+	  declaration was baking builds on NT.
 
 Sat Aug 12 10:21:09 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * tao/Object_Loader.h (TAO_Object_Loader): Changed the
-	signature of create_object so that argc and argv can also be passed.
+        * tao/Object_Loader.h (TAO_Object_Loader): 
+	  Changed the signature of create_object so that argc and argv can
+	  also be passed.
 
 Sat Aug 12 09:34:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * tao/ORB.h (CORBA_ORB):
-	        Added the signature of _tao_del_from_IOR_table.
-	
+        * tao/ORB.h (CORBA_ORB): 
+  	  Added the signature of _tao_del_from_IOR_table.
+		
 Fri Aug 11 12:03:41 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
-
+	
         * orbsvcs/orbsvcs/Makefile.CosNaming :
-        * orbsvcs/orbsvcs/Makefile.CosEvent :
+        * orbsvcs/orbsvcs/Makefile.CosEvent  : 
+	  Modified to add the new files CEC_Event_Loader.* and Naming_Loader.*
 
-                Modified to add the new files CEC_Event_Loader.* and
-        Naming_Loader.*
-
-        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
-                Moved the initialization code to
-        TAO_CEC_Event_Loader::init () and calling the same from here to
-        avoid code repetition.
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp: 
+	  Moved the initialization code to TAO_CEC_Event_Loader::init () and
+	  calling the same from here to avoid code repetition.
 
 Fri Aug 11 11:40:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -97,64 +102,57 @@ Fri Aug 11 11:40:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * orbsvcs/tests/tests_svc_loader/Makefile:
 
         * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
-
-                A generic client program which is added to test the
-        successful (un)loading of the services. Takes a object refernce as
-        a command line parameter and checks for its existency and prints
-        out a debug statement to indicate the same.
+          A generic client program which is added to test the
+          successful (un)loading of the services. Takes a object refernce as
+          a command line parameter and checks for its existency and prints
+          out a debug statement to indicate the same.
 
         * orbsvcs/TAO_Service/Makefile:
         * orbsvcs/TAO_Service/README:
-        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/TAO_Service/TAO_Service.cpp: 
+	  Added a generic server which allows us to test the successful 
+	  (un)loading of the services.
 
-                Added a generic server which allows us to test the
-        successful (un)loading of the services.
-
-        * orbsvcs/TAO_Service/svc.conf:
-
-                Sample svc.conf file which has commented entries to
-        (un)load both Naming Service and Event Service.
-
+        * orbsvcs/TAO_Service/svc.conf: 
+	  Sample svc.conf file which has commented entries to (un)load 
+	  both Naming Service and Event Service.
+	
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
-        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp: 
+	  This class helps (un)load the Event Service dynamically using
+	  the service config file.
+	
 
-                This class helps (un)load the Event Service dynamically
-        using the service config file.
-
-        * tao/ORB.cpp (_tao_del_from_IOR_table):
-
-                A new function
-        int _tao_del_from_IOR_table (const ACE_CString &object_id) is
-        added to remove a mapping ObjectID->IOR from the table.
-
+        * tao/ORB.cpp (_tao_del_from_IOR_table): 
+	  A new function 
+	  int _tao_del_from_IOR_table (const ACE_CString &object_id) is
+          added to remove a mapping ObjectID->IOR from the table.
+	
         * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
         * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
-
-                This class helps (un)load the Naming Service dynamically
-        through the service config file. Has code for initilizing and
-        removing the Naming Service.
+          This class helps (un)load the Naming Service dynamically
+          through the service config file. Has code for initilizing and
+          removing the Naming Service.
 
         * orbsvcs/Naming_Service/Naming_Service.h :
         * orbsvcs/Naming_Service/Naming_Service.cpp:
-
-                Moved the initialization of POA and the creation of
-        policies needed to start the Naming Service to a function called
-        init_with_orb () in Naming_Utils.cpp. The command line arguments
-        are parsed to find '-t' option. If one exists, it is removed from
-        the list of command line arguments and the new argv [] is passed
-        to init_with_orb () to avoid repetition of parsing for the same
-        and to avoid confusion.
+          Moved the initialization of POA and the creation of
+          policies needed to start the Naming Service to a function called
+          init_with_orb () in Naming_Utils.cpp. The command line arguments
+          are parsed to find '-t' option. If one exists, it is removed from
+          the list of command line arguments and the new argv [] is passed
+          to init_with_orb () to avoid repetition of parsing for the same
+          and to avoid confusion.
 
         * orbsvcs/orbsvcs/Naming/Naming_Utils.h :
         * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-
-                Added a new function call
-        init_with_orb (int argc, char *argv [], CORBA::ORB_ptr orb)
-        which initializes the POA using the ORB pointer passed and does
-        the other needful before calling the init () function call.
-        In the fini () method, the entry in the IOR table which is added
-        when the naming service is loaded is also removed by calling the
-        _tao_del_from_IOR_table ()
+          Added a new function call
+          init_with_orb (int argc, char *argv [], CORBA::ORB_ptr orb)
+          which initializes the POA using the ORB pointer passed and does
+          the other needful before calling the init () function call.
+          In the fini () method, the entry in the IOR table which is added
+          when the naming service is loaded is also removed by calling the
+          _tao_del_from_IOR_table ()
 
 Fri Aug 11 09:51:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
