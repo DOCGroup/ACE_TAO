@@ -3,16 +3,16 @@
 // ============================================================================
 //
 // = LIBRARY
-//    examples/DLL_ORB/Misc
+//    examples/Simple/time-date
 //
 // = FILENAME
-//    main.cpp
+//    server.cpp
 //
 // = DESCRIPTION
 //   This directory contains an example that illustrates how the ACE
 //   Service Configurator can dynamically configure an ORB from a
-//   svc.config file.  
-//
+//   svc.conf file.  
+//g
 // = AUTHOR
 //    Doug Schmidt <schmidt@cs.wustl.edu>
 //

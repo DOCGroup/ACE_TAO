@@ -29,15 +29,21 @@ class TAO_Export TAO_Internal
   //    see this class.
 {
 public:
-  static int open_services (int& argc, char** argv, int ignore_default_svc_conf = 0);
+  static int open_services (int &argc,
+                            char **argv,
+                            int ignore_default_svc_conf_file = 0,
+                            int skip_service_config_open = 0);
   // Initialize the ACE Service Configurator.  This is a one-shot
   // method, i.e., it can be called multiple times but it will only do
   // its work once.  It does, however, track the number of times it's
   // called (see <open_services>).  It is fully thread-safe.  Return 0
   // if successful, -1 with errno set if failure.  You can provide
-  // your program a set of default svc.conf entries by setting
-  // <ignore_default_svc_conf> to non-zero and use
-  // default_svc_conf_entries() before calling open_services().
+  // your program a set of default <svc.conf> entries by setting
+  // <ignore_default_svc_conf_file> to non-zero and use
+  // <default_svc_conf_entries> before calling <open_services>.  In
+  // addition, you can <skip_service_config_open> altogether, which is
+  // important if the ORB is linked in via the
+  // <ACE_Service_Configuator>, which is non-reentrant.
 
   static int close_services (void);
   // The complement to <open_services>, this will perform appropriate

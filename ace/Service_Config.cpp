@@ -60,6 +60,9 @@ LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 // The ACE_Service_Manager static service object is now defined by the
 // ACE_Object_Manager, in Object_Manager.cpp.
 
+// Are we initialized already?
+int ACE_Service_Config::is_initialized_ = 0;
+
 // List of statically configured services.
 
 ACE_STATIC_SVCS *ACE_Service_Config::static_svcs_ = 0;
@@ -527,20 +530,26 @@ ACE_Service_Config::load_static_svcs (void)
 int
 ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                             LPCTSTR logger_key,
-                            int ignore_default_svc_conf)
+                            int ignore_default_svc_conf_file)
 {
   int retval = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
+  if (ACE_Service_Config::is_initialized_ != 0)
+    // Guard against reentrant processing!
+    return 0;
+  else
+    ACE_Service_Config::is_initialized_++;
+
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
     return -1;
 
-  if ( !ignore_default_svc_conf &&
-       ACE_Service_Config::svc_conf_file_queue_->is_empty ()
+  if (!ignore_default_svc_conf_file
+      && ACE_Service_Config::svc_conf_file_queue_->is_empty ()
       // Load the default "svc.conf" entry here if there weren't
       // overriding -f arguments in <parse_args>.
       && ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
-      (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+           (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%p\n"),
                        "enqueue_tail"),
@@ -716,6 +725,10 @@ int
 ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
+
+  ACE_Service_Config::is_initialized_--;
+  if (ACE_Service_Config::is_initialized_ > 0)
+    return 0;
 
   // Delete the service repository. All the objects inside the service
   // repository have already been finalized .

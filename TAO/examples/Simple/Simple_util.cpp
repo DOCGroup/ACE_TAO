@@ -1,4 +1,5 @@
 //$Id$
+
 #ifndef SIMPLE_UTIL_C
 #define SIMPLE_UTIL_C
 # include "Simple_util.h"
@@ -241,8 +242,8 @@ Server<Servant>::register_name (void)
 
 // Constructor.
 
-template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::Client (void)
+template <class INTERFACE_OBJECT, class Var>
+Client<INTERFACE_OBJECT, Var>::Client (void)
   : ior_ (0)
 {
   //no-op
@@ -250,8 +251,8 @@ Client<InterfaceObj, Var>::Client (void)
 
 // Reads the Server ior from a file
 
-template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::read_ior (char *filename)
+template <class INTERFACE_OBJECT, class Var> int
+Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -280,8 +281,8 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 
 // Parses the command line arguments and returns an error status.
 
-template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::parse_args (void)
+template <class INTERFACE_OBJECT, class Var> int
+Client<INTERFACE_OBJECT, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:nk:x");
   int c = 0;
@@ -316,14 +317,14 @@ Client<InterfaceObj, Var>::parse_args (void)
   return 0;
 }
 
-template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::~Client (void)
+template <class INTERFACE_OBJECT, class Var>
+Client<INTERFACE_OBJECT, Var>::~Client (void)
 {
   ACE_OS::free (this->ior_);
 }
 
-template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::init (const char *name,
+template <class INTERFACE_OBJECT, class Var> int
+Client<INTERFACE_OBJECT, Var>::init (const char *name,
                                  int argc,
                                  char **argv)
 {
@@ -358,7 +359,7 @@ Client<InterfaceObj, Var>::init (const char *name,
                                "invalid ior <%s>\n",
                                this->ior_),
                               -1);
-          this->server_ = InterfaceObj::_narrow (server_object.in (),
+          this->server_ = INTERFACE_OBJECT::_narrow (server_object.in (),
                                                  ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
@@ -392,14 +393,14 @@ Client<InterfaceObj, Var>::init (const char *name,
 }
 
 
-template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
+template <class INTERFACE_OBJECT, class Var> int
+Client<INTERFACE_OBJECT, Var>::obtain_initial_references (CORBA::Environment &ACE_TRY_ENV)
 {
 
   ACE_TRY
     {
       // Initialize the naming services.
-      if (namingClient.init (orb_.in ()) != 0)
+      if (naming_client.init (orb_.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
@@ -411,11 +412,11 @@ Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TR
       CORBA::string_dup (this->name_);
 
       CORBA::Object_var obj =
-        namingClient->resolve (server_name,
-                              ACE_TRY_ENV);
+        naming_client->resolve (server_name,
+                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->server_ = InterfaceObj::_narrow (obj.in (),
+      this->server_ = INTERFACE_OBJECT::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -429,18 +430,18 @@ Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TR
   return 0;
 }
 
-template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::shutdown (void )
+template <class INTERFACE_OBJECT, class Var> int
+Client<INTERFACE_OBJECT, Var>::shutdown (void)
 {
   // Returns the shutdwon flag
   return shutdown_;
 }
 
-template <class InterfaceObj, class Var> void
-Client<InterfaceObj, Var>::shutdown (int flag)
+template <class INTERFACE_OBJECT, class Var> void
+Client<INTERFACE_OBJECT, Var>::shutdown (int flag)
 {
   // Fills the flag
   shutdown_ = flag;
 }
 
-#endif
+#endif /* SIMPLE_UTIL_C */
