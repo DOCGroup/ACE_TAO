@@ -1,3 +1,32 @@
+Wed Aug 13 14:03:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
+          Changed signature reconnec_consumer_ec method for emulated exception
+          builds.
+
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp:
+          When closing the client proxies, also close the connection to the
+          consumer ec.
+
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * docs/ec_options.html:
+          Added a new reconnect control. This can be configured in the IIOP
+          Gateway. In case of a connection loss, this control will poll on a
+          configurable interval for the consumer ec. When the consumer ec is
+          reachable again, the gateway will connect itself again and then
+          forward the events again. When the consumer ec uses a persistent IOR
+          than also after a restart of the system the gateway will reconnect
+          to the consumer ec again and continue forwarding events.
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Cleanup policies after they are set.
+
 Wed Aug 13 10:08:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}:
