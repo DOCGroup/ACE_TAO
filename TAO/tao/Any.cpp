@@ -172,7 +172,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (src.any_owns_data_)
     {
       this->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
-                                                   src.value_);
+                                                 src.cdr_);
     }
   else
     {

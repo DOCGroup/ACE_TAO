@@ -1570,16 +1570,88 @@ Test_Any::opname (void) const
   return this->opname_;
 }
 
+static const CORBA::TypeCode_ptr any_table [] =
+{
+  // primitive parameterless typecodes
+  CORBA::_tc_short,
+  // typecode with a simple parameter
+  CORBA::_tc_string,
+  // complex typecodes
+  _tc_Param_Test,
+  Param_Test::_tc_StrSeq,
+  Param_Test::_tc_StructSeq,
+  Param_Test::_tc_Nested_Struct
+};
+
 int
 Test_Any::init_parameters (Param_Test_ptr objref,
                            CORBA::Environment &env)
 {
+  Generator *gen = GENERATOR::instance (); // value generator
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
+
+  index = 1;
+  switch (index)
+    {
+    case 0:
+      {
+        CORBA::Short s;
+        s = gen->gen_short ();
+        this->in_ <<= s;
+        this->inout_ <<= s;
+      }
+      break;
+    case 1:
+      {
+        char *str = gen->gen_string ();
+        this->in_ <<= str;
+        this->inout_ <<= str;
+      }
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    }
   return 0;
 }
 
 int
 Test_Any::reset_parameters (void)
 {
+  Generator *gen = GENERATOR::instance (); // value generator
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
+
+  switch (index)
+    {
+    case 0:
+      {
+        CORBA::Short s;
+        s = gen->gen_short ();
+        this->in_ <<= s;
+        this->inout_ <<= s;
+      }
+      break;
+    case 1:
+      {
+        char *str = gen->gen_string ();
+        this->in_ <<= str;
+        this->inout_ <<= str;
+      }
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    }
   return 0;
 }
 
@@ -1587,13 +1659,18 @@ int
 Test_Any::run_sii_test (Param_Test_ptr objref,
                           CORBA::Environment &env)
 {
-  return 0;
+  CORBA::Any_out out (this->out_.out ());
+  this->ret_ = objref->test_any (this->in_,
+                                 this->inout_,
+                                 out,
+                                 env);
+  return (env.exception () ? -1:0);
 }
 
 int
 Test_Any::add_args (CORBA::NVList_ptr &param_list,
-                      CORBA::NVList_ptr &retval,
-                      CORBA::Environment &env)
+                    CORBA::NVList_ptr &retval,
+                    CORBA::Environment &env)
 {
   return 0;
 }
@@ -1601,7 +1678,42 @@ Test_Any::add_args (CORBA::NVList_ptr &param_list,
 CORBA::Boolean
 Test_Any::check_validity (void)
 {
-  return 0;
+  CORBA::Environment env;
+  CORBA::Short short_in, short_inout, short_out, short_ret;
+  char *str_in, *str_inout, *str_out, *str_ret;
+
+  if ((this->in_ >>= short_in) &&
+      (this->inout_ >>= short_inout) &&
+      (this->out_.in () >>= short_out) &&
+      (this->ret_.in () >>= short_ret))
+    {
+      if ((short_in == short_inout) &&
+          (short_in == short_out) &&
+          (short_in == short_ret))
+        return 1;
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "mismatch of short values\n"));
+          return 0;
+        }
+    }
+  else if ((this->in_ >>= str_in) &&
+           (this->inout_ >>= str_inout) &&
+           (this->out_.in () >>= str_out) &&
+           (this->ret_.in () >>= str_ret))
+    {
+      if (!ACE_OS::strcmp (str_in, str_inout) &&
+          !ACE_OS::strcmp (str_in, str_out) &&
+          !ACE_OS::strcmp (str_in, str_ret))
+        return 1;
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "mismatch of string values\n"));
+          return 0;
+        }
+    }
+  else
+    return 0;
 }
 
 CORBA::Boolean
