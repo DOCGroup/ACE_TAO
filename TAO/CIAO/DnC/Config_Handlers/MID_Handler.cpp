@@ -8,6 +8,8 @@
 #include "Requirement_Handler.h"
 #include "NIA_Handler.h"
 #include "MID_Handler.h"
+#include "IR_Handler.h"
+#include "Process_Element.h"
 
 #include <iostream>
 
@@ -42,13 +44,15 @@ namespace CIAO
         this->iter_->release();
     }
 
-    void MID_Handler::process_MonolithicImplementationDescription (::Deployment::MonolithicImplementationDescription &mid)
+    void MID_Handler::process_MonolithicImplementationDescription
+      (::Deployment::MonolithicImplementationDescription &mid)
     {
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
            node = this->iter_->nextNode())
         {
           XStr name (node->getNodeName());
+
           if (name == XStr (ACE_TEXT ("execParameter")))
             {
               this->process_exec_parameter_element (node,
@@ -67,9 +71,16 @@ namespace CIAO
                   mid.deployRequirement.length (i + 1);
                   if (length == 1)
                     {
+                      IR_Handler ir_handler (iter_, false);
+                      ir_handler.process_ImplementationRequirement
+                        (mid.deployRequirement[i]);
+//                      nia_handler.process_NamedImplementationArtifact
+//                        (mid.primaryArtifact[i]);
+/*
                       Requirement_Handler::process_Requirement
                          (this->iter_,
                           mid.deployRequirement[i]);
+*/
                     }
                   else if (length > 1)
                     {
@@ -338,7 +349,7 @@ namespace CIAO
         DOMDocument* doc,
         DOMNodeIterator* iter,
         int value,
-        Deployment::Requirement& mid_req)
+        Deployment::ImplementationRequirement& mid_req)
     {
       int length = named_node_map->getLength ();
 
@@ -353,9 +364,14 @@ namespace CIAO
           if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
             {
               id_map_.bind (aceattrnodevalue, value);
+              IR_Handler ir_handler (iter, false);
+              ir_handler.process_ImplementationRequirement
+                (mid_req);
+/*
               Requirement_Handler::process_Requirement
                   (iter,
                    mid_req);
+*/
             }
           else if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
@@ -396,9 +412,14 @@ namespace CIAO
                                                0,
                                                true);
               href_iter->nextNode ();
+              IR_Handler ir_handler (iter_, false);
+              ir_handler.process_ImplementationRequirement
+                (mid_req);
+/*
               Requirement_Handler::process_Requirement
                   (href_iter,
                    mid_req);
+*/
             }
         }
 

@@ -118,12 +118,12 @@ namespace CIAO
         {
           for (y = 0; y < cad.externalProperty[x].delegatesTo.length (); ++y)
             {
-              ref_value = cad.externalProperty[x].delegatesTo[y].instance;
+              ref_value = cad.externalProperty[x].delegatesTo[y].instanceRef;
               if (idref_map_.find (ref_value, ref_name) == 0)
                 {
                   if (id_map_.find (ref_name, value) == 0)
                     {
-                      cad.externalProperty[x].delegatesTo[y].instance= value;
+                      cad.externalProperty[x].delegatesTo[y].instanceRef = value;
                     }
                 }
             }
@@ -908,7 +908,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("instance")))
             {
-              spe.instance = 0;
+              spe.instanceRef = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
@@ -1019,7 +1019,7 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("instance")))
             {
-              spr.instance = 0;
+              spr.instanceRef = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();

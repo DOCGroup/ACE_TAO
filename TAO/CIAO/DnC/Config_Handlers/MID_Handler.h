@@ -84,7 +84,7 @@ namespace CIAO
         DOMDocument* doc,
         DOMNodeIterator* iter,
         int value,
-        Deployment::Requirement& req);
+        Deployment::ImplementationRequirement& req);
 
       /// process attributes for NIA
       void process_attributes_for_nia (DOMNamedNodeMap* nm,
