@@ -49,6 +49,25 @@ extern "C"
 {
 #endif /* __cplusplus */
 
+# if defined (ACE_HAS_PHARLAP_RT)
+#   define ACE_IPPROTO_TCP SOL_SOCKET
+# else
+#   define ACE_IPPROTO_TCP IPPROTO_TCP
+# endif /* ACE_HAS_PHARLAP_RT */
+
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
+  // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
+  // is defined, assume that the ip_mreq struct is also defined
+  // (presumably in netinet/in.h).
+  struct ip_mreq
+  {
+    /// IP multicast address of group
+    struct in_addr imr_multiaddr;
+    /// Local IP address of interface
+    struct in_addr imr_interface;
+  };
+# endif /* ! ACE_HAS_IP_MULTICAST  &&  ACE_LACKS_IP_ADD_MEMBERSHIP */
+
 #if !defined (IPPORT_RESERVED)
 #  define IPPORT_RESERVED       1024
 #endif /* !IPPORT_RESERVED */
@@ -79,6 +98,35 @@ extern "C"
 #if !defined (INET6_ADDRSTRLEN)
 #  define INET6_ADDRSTRLEN 46
 #endif /* INET6_ADDRSTRLEN */
+
+# if !defined (IP_DROP_MEMBERSHIP)
+#   define IP_DROP_MEMBERSHIP 0
+# endif /* IP_DROP_MEMBERSHIP */
+
+# if !defined (IP_ADD_MEMBERSHIP)
+#   define IP_ADD_MEMBERSHIP 0
+#   define ACE_LACKS_IP_ADD_MEMBERSHIP
+# endif /* IP_ADD_MEMBERSHIP */
+
+# if !defined (IP_DEFAULT_MULTICAST_TTL)
+#   define IP_DEFAULT_MULTICAST_TTL 0
+# endif /* IP_DEFAULT_MULTICAST_TTL */
+
+# if !defined (IP_DEFAULT_MULTICAST_LOOP)
+#   define IP_DEFAULT_MULTICAST_LOOP 0
+# endif /* IP_DEFAULT_MULTICAST_LOOP */
+
+# if !defined (IP_MULTICAST_IF)
+#   define IP_MULTICAST_IF 0
+#endif /* IP_MULTICAST_IF */
+
+# if !defined (IP_MULTICAST_TTL)
+#   define IP_MULTICAST_TTL 1
+#endif /* IP_MULTICAST_TTL */
+
+# if !defined (IP_MAX_MEMBERSHIPS)
+#   define IP_MAX_MEMBERSHIPS 0
+# endif /* IP_MAX_MEMBERSHIP */
 
 #ifdef __cplusplus
 }

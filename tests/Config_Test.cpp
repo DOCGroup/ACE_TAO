@@ -22,6 +22,8 @@
 #include "test_config.h"
 #include "Config_Test.h"
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(tests, Config_Test, "$Id$")
 

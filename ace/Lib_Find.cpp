@@ -2,7 +2,17 @@
 
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_fcntl.h"
+
+#if defined (ACE_WIN32)
+#  include "ace/OS_NS_strings.h"
+#endif /* ACE_WIN32 */
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 
@@ -112,7 +122,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
 #if defined (ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
   size_t len_searchfilename = ACE_OS::strlen (searchfilename);
   if (! got_suffix)
-    ACE_OS_String::strcpy (searchfilename + len_searchfilename,
+    ACE_OS::strcpy (searchfilename + len_searchfilename,
                            decorator);
 
   for (int tag = 1; tag >= 0; tag --)

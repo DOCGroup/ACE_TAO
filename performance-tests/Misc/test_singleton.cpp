@@ -27,9 +27,10 @@
 // for the lock.  If there were multiple threads contending for the lock,
 // the Mutex_Singleton performance would get increasing worse...
 
+#include "ace/OS_main.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Log_Msg.h"
 
 #include "test_singleton.h"

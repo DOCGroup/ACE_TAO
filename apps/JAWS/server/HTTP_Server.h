@@ -30,6 +30,9 @@
 #include "ace/Asynch_IO.h"
 #include "ace/svc_export.h"
 #include "HTTP_Handler.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 // Forward declaration.
 class ACE_Proactor;

@@ -9,6 +9,8 @@
 #include "ace/MEM_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/OS_NS_stdio.h"
+
 ACE_RCSID(ace, MEM_Acceptor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Acceptor)

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Connection_Handler_Connector.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(Gateway, Connection_Handler_Connector, "$Id$")
 

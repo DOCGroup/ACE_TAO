@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "Options.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Shared_Malloc, Options, "$Id$")
 

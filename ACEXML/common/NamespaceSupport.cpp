@@ -2,6 +2,10 @@
 
 #include "ACEXML/common/NamespaceSupport.h"
 
+#if !defined (__ACEXML_INLINE__)
+# include "ACEXML/common/NamespaceSupport.i"
+#endif /* __ACEXML_INLINE__ */
+
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
@@ -12,10 +16,6 @@ static const ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
 
 static const ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
-
-#if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/NamespaceSupport.i"
-#endif /* __ACEXML_INLINE__ */
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack (void)
   : head_ (0)
@@ -87,7 +87,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
 
   // Unless predefined by w3.org(?) NS prefix can never start with
   // "xml".
-  if (ACE_OS_String::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
+  if (ACE_OS::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
     return -1;
 
   ACEXML_String ns_prefix (prefix, 0, 0);
@@ -220,7 +220,7 @@ ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
                                       const ACEXML_Char *&name,
                                       int is_attribute) const
 {
-  int qlen = ACE_static_cast (int, ACE_OS_String::strlen (qName));
+  int qlen = ACE_static_cast (int, ACE_OS::strlen (qName));
   int len = -1;
   for (int i = 0; i < qlen; ++i)
     if (qName [i] == ':')

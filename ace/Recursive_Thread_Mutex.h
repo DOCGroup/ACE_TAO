@@ -27,7 +27,7 @@
 #else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 
 /**
  * @class ACE_Recursive_Thread_Mutex

@@ -6,6 +6,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (tao, 
            UIPMC_Endpoint, 

@@ -7,6 +7,7 @@
 #include "tao/Object_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Policies, Manipulation, "$Id$")
 

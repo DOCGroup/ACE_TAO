@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 

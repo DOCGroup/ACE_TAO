@@ -34,11 +34,22 @@
 #  include /**/ <types.h>
 #endif /* ACE_HAS_WINCE */
 
+# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+using std::time_t;
+# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
+
+# if defined (ACE_LACKS_FLOATING_POINT)
+typedef ACE_UINT32 ACE_timer_t;
+# else
+typedef double ACE_timer_t;
+# endif /* ACE_LACKS_FLOATING_POINT */
 
 // todo: don't forget to clean this up!  ;-)
 #if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))

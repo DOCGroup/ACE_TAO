@@ -314,7 +314,7 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
   if (s == 0)
     return;
 
-  this->len_ = this->buf_len_ = ACE_OS_String::strlen (s);
+  this->len_ = this->buf_len_ = ACE_OS::strlen (s);
 
   if (this->buf_len_ == 0)
     return;

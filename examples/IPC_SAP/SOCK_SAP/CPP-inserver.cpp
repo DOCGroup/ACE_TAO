@@ -9,6 +9,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
+#include "ace/OS_NS_sys_select.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
 

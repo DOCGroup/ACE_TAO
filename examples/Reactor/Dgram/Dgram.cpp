@@ -24,6 +24,7 @@
 //    give the name "peer1" as the final argument to one and
 //    only one of the programs so that the test will work properly.
 
+#include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/Process.h"
 #include "ace/SOCK_Dgram.h"

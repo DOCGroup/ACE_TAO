@@ -45,9 +45,13 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if !defined (ACE_WIN32) && !defined (INTEGRITY)
+# if defined (INTEGRITY)
+#   define ACE_MAX_USERID 32
+# elif defined (ACE_WIN32)
+#   define ACE_MAX_USERID 32
+# else
 #  define ACE_MAX_USERID L_cuserid
-#endif /*!ACE_WIN32*/
+#endif /* INTEGRITY */
 
 // this is a nasty hack to get around problems with the
 // pSOS definition of BUFSIZ as the config table entry

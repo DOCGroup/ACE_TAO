@@ -18,6 +18,7 @@
 
 #include "ace/Reactor.h"
 #include "asnmp/transaction.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(asnmp, transaction, "$Id$")
 

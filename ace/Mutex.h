@@ -22,7 +22,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_fcntl.h"
+
+# if !defined (ACE_DEFAULT_MUTEX_A)
+#   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
+# endif /* ACE_DEFAULT_MUTEX_A */
+
+# if defined (ACE_HAS_WCHAR)
+#   define ACE_DEFAULT_MUTEX_W ACE_TEXT_WIDE(ACE_DEFAULT_MUTEX_A)
+# endif /* ACE_HAS_WCHAR */
+
+# define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
 
 class ACE_Time_Value;
 

@@ -6,6 +6,7 @@
 #include "Flat_File_Persistence.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_stat.h"
 
 TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file,
                                               const char * mode)

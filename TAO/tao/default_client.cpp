@@ -18,6 +18,8 @@
 # include "tao/default_client.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS_NS_strings.h"
+
 ACE_RCSID (tao,
            default_client,
            "$Id$")

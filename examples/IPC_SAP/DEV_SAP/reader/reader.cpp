@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/DEV_Addr.h"
 #include "ace/DEV_Connector.h"
 #include "ace/DEV_IO.h"

@@ -28,7 +28,7 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/OS.h"
+#include "ace/os_include/os_aio.h"
 
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Unbounded_Queue.h"

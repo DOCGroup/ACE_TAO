@@ -4,7 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
@@ -51,12 +51,12 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
     iovec iov[3];
     iov[0].iov_base = ACE_const_cast (char *, st->name ());
     iov[0].iov_len =
-      ACE_OS_String::strlen (st->name ()) * sizeof (ACE_TCHAR);
+      ACE_OS::strlen (st->name ()) * sizeof (ACE_TCHAR);
     const ACE_TCHAR *state = st->active () ?
            ACE_TEXT (" (active) ") : ACE_TEXT (" (paused) ");
     iov[1].iov_base = ACE_const_cast (char *, state);
     iov[1].iov_len =
-      ACE_OS_String::strlen (state) * sizeof (ACE_TCHAR);
+      ACE_OS::strlen (state) * sizeof (ACE_TCHAR);
     ACE_TCHAR *report = 0;   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
     iov[2].iov_base = ACE_static_cast (char *, report);
@@ -79,13 +79,13 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf
     (buf, ACE_TEXT ("%hu"), local_addr.get_port_number ());
-  ACE_OS_String::strcat
+  ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # lists services in daemon\n"));
   if (*bufferp == 0)
     *bufferp = ACE::strnew (buf);
   else
-    ACE_OS_String::strncpy (*bufferp, buf, length);
-  return ACE_OS_String::strlen (*bufferp);
+    ACE_OS::strncpy (*bufferp, buf, length);
+  return ACE_OS::strlen (*bufferp);
 }
 
 

@@ -18,6 +18,7 @@
 #define _COMM_MANAGER_H
 
 #include "global.h"
+#include "ace/os_include/netinet/os_in.h"
 
 class Comm_Manager
 {

@@ -2,7 +2,7 @@
 
 // Test the ACE_Get_Opt class.
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 

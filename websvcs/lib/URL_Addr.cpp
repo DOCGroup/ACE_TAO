@@ -6,6 +6,9 @@
 #include "URL_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdio.h"
+
 ACE_RCSID(ace, URL_Addr, "$Id$")
 
 static ACE_TCHAR http[] = ACE_TEXT ("http:");

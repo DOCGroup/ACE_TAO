@@ -1,4 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-// This is a placeholder.
+ACE_INLINE
+ACE_Cleanup::ACE_Cleanup (void)
+{
+}

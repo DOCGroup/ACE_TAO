@@ -16,7 +16,8 @@
 #define ACE_OBJECT_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+#include "ace/Object_Manager_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,15 +36,19 @@ class ACE_Sig_Set;
 
   // This is included because Svc_conf_l.cpp needs it and I don't want to 
   // have to change it right now.  :-(
-  // The worst thing about this, is that it still includes OS.h, but since we
-  // have to include it above anyway, it doesn't make a difference right now.
   // dhinton.
   #include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
+// only used by ACE_OS_Object_Manager::ctor
+# if defined (ACE_WIN32)
+// Default WIN32 structured exception handler.
+int ACE_SEH_Default_Exception_Selector (void *);
+int ACE_SEH_Default_Exception_Handler (void *);
+# endif /* ACE_WIN32 */
+
 class ACE_Cleanup_Info_Node;
 template <class T> class ACE_Cleanup_Adapter;
-
 
 // Configuration parameters.
 #if !defined (ACE_MAX_MANAGED_OBJECTS)
@@ -57,7 +62,6 @@ template <class T> class ACE_Cleanup_Adapter;
 #if !defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS)
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
-
 
 /**
  * @class ACE_Object_Manager

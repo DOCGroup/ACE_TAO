@@ -7,12 +7,14 @@
    !defined (ACE_HAS_PHARLAP) && !defined (ACE_HAS_WINCE)
 
 #include "ace/NT_Service.h"
-#include "ace/Log_Msg.h"
-#include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/NT_Service.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/Service_Object.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 

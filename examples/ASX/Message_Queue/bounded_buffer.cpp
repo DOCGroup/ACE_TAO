@@ -6,6 +6,8 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Message_Queue, bounded_buffer, "$Id$")
 

@@ -9,6 +9,8 @@
 
 #include "ace/Env_Value_T.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_Client.cpp,v 1.31 1999/08/04 07:15:14 nanbor Exp")
 

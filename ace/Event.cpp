@@ -6,6 +6,8 @@
 #include "ace/Event.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(ace, Event, "$Id$")
 
 ACE_Event::ACE_Event (int manual_reset,

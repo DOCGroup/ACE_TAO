@@ -9,14 +9,14 @@ ACE_RCSID (ace,
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/Object_Manager.h"
-#include "ace/Process_Mutex.h"
-
 #if !defined (__ACE_INLINE__)
 #include "ace/PI_Malloc.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Object_Manager.h"
+#include "ace/Process_Mutex.h"
 #include "ace/Synch_T.h"
+#include "ace/OS_NS_string.h"
 
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const

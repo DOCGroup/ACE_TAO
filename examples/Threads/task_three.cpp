@@ -11,6 +11,7 @@
 //      ACE_LOG_MSG->msg_ostream (out_stream);
 //    }
 
+#include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"

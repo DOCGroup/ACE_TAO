@@ -7,7 +7,7 @@
 //
 // This examples points the cool iterators in ACE_Registry
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 

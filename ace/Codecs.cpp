@@ -1,6 +1,7 @@
-#include "ace/OS.h"
 #include "ace/Codecs.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_ctype.h"
 
 ACE_RCSID (ace,
            Codecs,
@@ -99,7 +100,7 @@ ACE_Base64::length (const ACE_Byte* input)
   ACE_Byte* ptr = ACE_const_cast (ACE_Byte*, input);
   while (*ptr != 0 &&
          (member_[*(ptr)] == 1 || *ptr == pad_
-          || ACE_OS_String::ace_isspace (*ptr)))
+          || ACE_OS::ace_isspace (*ptr)))
     ptr++;
   size_t len = ptr - input;
   len = ((len + 3) / 4) * 3 + 1 ;
@@ -122,7 +123,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
   ACE_Byte* ptr = ACE_const_cast (ACE_Byte*, input);
   while (*ptr != 0 &&
          (member_[*(ptr)] == 1 || *ptr == pad_
-          || ACE_OS_String::ace_isspace (*ptr)))
+          || ACE_OS::ace_isspace (*ptr)))
     ptr++;
   size_t input_len = ptr - input;
 

@@ -36,13 +36,39 @@
 #  include /**/ <inetLib.h>
 #endif /* VXWORKS */
 
+/**
+ * In some environments it is useful to swap the bytes on write, for
+ * instance: a fast server can be feeding a lot of slow clients that
+ * happen to have the wrong byte order.
+ * Because this is a rarely used feature we disable it by default to
+ * minimize footprint.
+ * This macro enables the functionality, but we still need a way to
+ * activate it on a per-connection basis.
+ */
+// #define ACE_ENABLE_SWAP_ON_WRITE
+
+/**
+ * In some environements we never need to swap bytes when reading, for
+ * instance embebbed systems (such as avionics) or homogenous
+ * networks.
+ * Setting this macro disables the capabilities to demarshall streams
+ * in the wrong byte order.
+ */
+// #define ACE_DISABLE_SWAP_ON_READ
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
 
-// @todo move the ACE_HTONL, etc macros here
+#if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
+   // Work around a lack of ANSI prototypes for these functions on VxWorks.
+   unsigned long  inet_addr (const char *);
+   char           *inet_ntoa (const struct in_addr);
+   struct in_addr inet_makeaddr (const int, const int);
+   unsigned long  inet_network (const char *);
+#endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
 
 #ifdef __cplusplus
 }

@@ -20,7 +20,7 @@
 #ifndef _GLOBAL_H
 #define _GLOBAL_H
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
