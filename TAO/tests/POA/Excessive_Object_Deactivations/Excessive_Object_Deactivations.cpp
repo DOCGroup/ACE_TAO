@@ -213,14 +213,14 @@ main (int argc, char **argv)
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      test_object_deactivation (root_poa,
+      test_object_deactivation (root_poa.in (),
                                 id.in (),
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       id = PortableServer::string_to_ObjectId ("good id");
 
-      test_object_deactivation (child_poa,
+      test_object_deactivation (child_poa.in (),
                                 id.in (),
                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
