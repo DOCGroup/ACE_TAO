@@ -192,38 +192,40 @@ struct value_sequence_tester
 
   void add_all(boost::unit_test_framework::test_suite * ts)
   {
+    boost::shared_ptr<value_sequence_tester> shared_this(self_);
+
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_default_constructor,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_copy_constructor_from_default,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_index_accessor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_index_modifier,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_index_checking,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_copy_constructor_values,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_assignment_from_default,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_assignment_values,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_exception_in_copy_constructor,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &value_sequence_tester::test_exception_in_assignment,
-                shared_from_this()));
+                shared_this));
   }
 
   static boost::shared_ptr<value_sequence_tester> allocate()
@@ -237,11 +239,6 @@ struct value_sequence_tester
 
 private:
   value_sequence_tester() {}
-
-  boost::shared_ptr<value_sequence_tester> shared_from_this()
-  {
-    return boost::shared_ptr<value_sequence_tester>(self_);
-  }
 
   boost::weak_ptr<value_sequence_tester> self_;
 };
