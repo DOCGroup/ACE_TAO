@@ -83,6 +83,8 @@ AST_Sequence::AST_Sequence (void)
  : pd_max_size (0),
    pd_base_type (0)
 {
+  // A sequence data type is always VARIABLE.
+  this->size_type (AST_Type::VARIABLE);
 }
 
 AST_Sequence::AST_Sequence (AST_Expression *ms,
@@ -108,6 +110,9 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     {
       this->unbounded_ = I_FALSE;
     }
+
+  // A sequence data type is always VARIABLE.
+  this->size_type (AST_Type::VARIABLE);
 }
 
 AST_Sequence::~AST_Sequence (void)

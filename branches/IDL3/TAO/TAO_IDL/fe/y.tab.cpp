@@ -49,6 +49,7 @@ int tao_yylex (void);
 extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
 extern int tao_yyleng;
+AST_Decl *tao_enum_constant_decl = 0;
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 /* Force the pretty debugging code to compile.*/
 #define TAO_YYDEBUG 1
@@ -2034,11 +2035,8 @@ case 56:
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           /*
-           * Done with this value type - pop it off the scopes stack
+           * Done with this valuetype - pop it off the scopes stack
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
 break;
@@ -2099,11 +2097,8 @@ case 60:
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           /*
-           * Done with this interface - pop it off the scopes stack.
+           * Done with this valuetype - pop it off the scopes stack.
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
 break;
@@ -2561,7 +2556,9 @@ case 116:
           if (tao_yyvsp[0].exval != 0 && s != 0) 
             {
               AST_Expression::AST_ExprValue *result = 
-                tao_yyvsp[0].exval->coerce (tao_yyvsp[-6].etval);
+                tao_yyvsp[0].exval->check_and_coerce (tao_yyvsp[-6].etval,
+                                                      tao_enum_constant_decl);
+              tao_enum_constant_decl = 0;
 
               if (result == 0)
                 {
@@ -2622,6 +2619,8 @@ case 125:
 
           if (s != 0  && d != 0) 
             {
+              tao_enum_constant_decl = d;
+              
               /*
                * Look through typedefs.
                */
@@ -3119,6 +3118,10 @@ case 174:
           if (d == 0)
             {
               idl_global->err ()->lookup_error (tao_yyvsp[0].idlist);
+            }
+          else
+            {
+              d->last_referenced_as (tao_yyvsp[0].idlist);
             }
 
           tao_yyval.dcval = d;
@@ -5176,9 +5179,6 @@ case 379:
           /*
            * Done with this component - pop it off the scopes stack.
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
 break;

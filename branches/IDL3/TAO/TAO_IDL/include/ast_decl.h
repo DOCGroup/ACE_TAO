@@ -275,37 +275,8 @@ public:
   idl_bool is_nested (void);
   // Determines if we are inside of a nested scope or not.
 
-  // Boolean methods to test if code was already generated.
-  idl_bool cli_hdr_gen (void);
-  idl_bool cli_stub_gen (void);
-  idl_bool cli_inline_gen (void);
-  idl_bool srv_hdr_gen (void);
-  idl_bool impl_hdr_gen (void);
-  idl_bool srv_skel_gen (void);
-  idl_bool impl_skel_gen (void);
-  idl_bool srv_inline_gen (void);
-  idl_bool cli_hdr_any_op_gen (void);
-  idl_bool cli_stub_any_op_gen (void);
-  idl_bool cli_hdr_cdr_op_gen (void);
-  idl_bool cli_stub_cdr_op_gen (void);
-  idl_bool cli_inline_cdr_op_gen (void);
-  idl_bool cli_inline_cdr_decl_gen (void);
-
-  // Set the flag indicating that code generation is done.
-  void cli_hdr_gen (idl_bool);
-  void cli_stub_gen (idl_bool);
-  void cli_inline_gen (idl_bool);
-  void srv_hdr_gen (idl_bool);
-  void impl_hdr_gen (idl_bool);
-  void srv_skel_gen (idl_bool);
-  void impl_skel_gen (idl_bool);
-  void srv_inline_gen (idl_bool);
-  void cli_hdr_any_op_gen (idl_bool);
-  void cli_stub_any_op_gen (idl_bool);
-  void cli_hdr_cdr_op_gen (idl_bool);
-  void cli_stub_cdr_op_gen (idl_bool);
-  void cli_inline_cdr_op_gen (idl_bool);
-  void cli_inline_cdr_decl_gen (idl_bool);
+  UTL_ScopedName *last_referenced_as (void) const;
+  void last_referenced_as (UTL_ScopedName *n);
 
 protected:
   // These are not private because they're used by
@@ -370,27 +341,14 @@ private:
   idl_bool typeid_set_;
   // Has our repo id been set by a typeId declaration?
 
-  // Variables that indicate if the code generation for that node is already
-  // been done. This way we avoid regenerating same code.
-  idl_bool cli_hdr_gen_;
-  idl_bool cli_stub_gen_;
-  idl_bool cli_inline_gen_;
-  idl_bool srv_hdr_gen_;
-  idl_bool impl_hdr_gen_;
-  idl_bool srv_skel_gen_;
-  idl_bool impl_skel_gen_;
-  idl_bool srv_inline_gen_;
-  idl_bool cli_hdr_any_op_gen_;
-  idl_bool cli_stub_any_op_gen_;
-  idl_bool cli_hdr_cdr_op_gen_;
-  idl_bool cli_stub_cdr_op_gen_;
-  idl_bool cli_inline_cdr_op_gen_;
-  idl_bool cli_inline_cdr_decl_gen_;
-
   char *flat_name_;
   // Flattened fully scoped name.
-  // Operations
 
+  UTL_ScopedName *last_referenced_as_;
+  // Temporary holder of the most recent way we were reference.
+  // The top level component of this is added to pd_name_referenced.
+
+private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 

@@ -21,6 +21,7 @@
 // ============================================================================
 
 #include "be_interface.h"
+#include "be_valuetype.h"
 #include "be_interface_strategy.h"
 #include "be_attribute.h"
 #include "be_operation.h"
@@ -842,7 +843,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   *cs << "return val;" << be_uidt_nl;
   *cs << "}" << be_nl << be_nl;
 
-  // Hooks for the global static functions used by non-defined interfaces.
+  // Hooks for the flat name global functions used by references to 
+  // non-defined interfaces.
   *cs << "::" << interface_full_name
       << "_ptr" << be_nl
       << fname << "::tao_duplicate ("
@@ -1145,7 +1147,8 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface * /* derived_interface */,
 {
   // Generate entries for the derived class using the properties of its
   // ancestors.
-  return base_interface->gen_optable_entries (this->skeleton_name_, os);
+  be_interface *bi = be_interface::narrow_from_decl (base_interface);
+  return bi->gen_optable_entries (this->skeleton_name_, os);
 }
 
 int
@@ -1608,7 +1611,7 @@ be_interface::traverse_inheritance_graph (
   // Do until queue is empty.
   while (!this->insert_queue.is_empty ())
     {
-      be_interface *bi;  // element inside the queue
+      AST_Interface *intf;  // element inside the queue
 
       // Use breadth-first strategy i.e., first generate entries for ourselves,
       // followed by nodes that we immediately inherit from, and so on. In the
@@ -1617,7 +1620,7 @@ be_interface::traverse_inheritance_graph (
       // a diamond-like inheritance graph.
 
       // Dequeue the element at the head of the queue.
-      if (this->insert_queue.dequeue_head (bi))
+      if (this->insert_queue.dequeue_head (intf))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1626,13 +1629,15 @@ be_interface::traverse_inheritance_graph (
         }
 
       // Insert the dequeued element in the del_queue.
-      if (this->del_queue.enqueue_tail (bi) == -1)
+      if (this->del_queue.enqueue_tail (intf) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
                              "enqueue_head failed\n"),
                             -1);
         }
+
+      be_interface *bi = be_interface::narrow_from_decl (intf);
 
       // Use the helper method to generate code for ourself using the
       // properties of the element dequeued. For the first iteration, the
@@ -1645,18 +1650,19 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
+      long i;
+
       // Now check if the dequeued element has any ancestors. If yes, insert
       // them inside the queue making sure that there are no duplicates.
-      for (long i = 0; i < bi->n_inherits (); i++)
+      for (i = 0; i < bi->n_inherits (); ++i)
         {
           // Retrieve the next parent from which the dequeued element inherits.
-          be_interface *parent =
-            be_interface::narrow_from_decl (bi->inherits ()[i]);
+          AST_Interface *parent = bi->inherits ()[i];
 
           if (parent == 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_interface::gen_server_skeletons -"
+                                 "(%N:%l) be_interface::traverse_graph -"
                                  " bad inherited interface\n"),
                                 -1);
             }
@@ -1666,71 +1672,7 @@ be_interface::traverse_inheritance_graph (
               continue;
             }
 
-          // Now insert this node at the tail of the queue, but make sure that
-          // it doesn't already exist in the queue.
-          int found = 0;
-
-          // Initialize an iterator to search the queue for duplicates.
-          for (ACE_Unbounded_Queue_Iterator<be_interface*> q_iter (
-                   this->insert_queue
-                 );
-               !q_iter.done ();
-               (void) q_iter.advance ())
-            {
-              // Queue element.
-              be_interface **temp;
-
-              (void) q_iter.next (temp);
-
-              if (!ACE_OS::strcmp (parent->full_name (),
-                                   (*temp)->full_name ()))
-                {
-                  // We exist in this queue and cannot be inserted.
-                  found = 1;
-                }
-
-              if (found)
-                {
-                  break;
-                }
-            }
-
-          // Initialize an iterator to search the del_queue for duplicates.
-          for (ACE_Unbounded_Queue_Iterator<be_interface*> del_q_iter (
-                   this->del_queue
-                 );
-               !found && !del_q_iter.done ();
-               (void) del_q_iter.advance ())
-            {
-              // Queue element.
-              be_interface **temp;
-
-              (void) del_q_iter.next (temp);
-
-              if (!ACE_OS::strcmp (parent->full_name (),
-                                   (*temp)->full_name ()))
-                {
-                  // We exist in this del_queue and cannot be inserted.
-                  found = 1;
-                }
-
-              if (found)
-                {
-                  break;
-                }
-            }
-
-          if (!found)
-            {
-              // Insert the parent in the queue.
-              if (this->insert_queue.enqueue_tail (parent) == -1)
-                {
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_interface::gen_server_skeletons - "
-                                 "enqueue op failed\n"),
-                                -1);
-                }
-            }
+          (void) this->insert_non_dup (parent);
         } // end of for loop
     } // end of while queue not empty
 
@@ -2106,7 +2048,6 @@ be_interface::gen_linear_search_instance (const char *flat_name)
       << "tao_" << flat_name << "_optable"
       << ";\n" << be_nl;
 }
-
 
 int
 be_interface::is_a_helper (be_interface * /*derived*/,

@@ -97,49 +97,73 @@ int be_visitor_root::visit_root (be_root *node)
 
       if (size > 0)
         {
-          *os << "// TAO_IDL - Generated from "
-              << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
         }
 
       for (index = 0; index < size; ++index)
         {
           be_global->non_defined_interfaces.dequeue_head (ifwd);
 
-          *os << "// External declarations for undefined interface" << be_nl
-              << "// " << ifwd->full_name () << be_nl;
+          if (ifwd->is_valuetype ())
+            {
+              *os << "// External declarations for undefined valuetype" 
+                  << be_nl
+                  << "// " << ifwd->full_name () << be_nl;
 
-          *os << be_global->stub_export_macro () << be_nl
-              << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name ()
-              << "_duplicate ("
-              << be_idt << be_idt_nl
-              << ifwd->full_name  () << "_ptr" << be_uidt_nl
-              << ");" << be_uidt_nl
-              << be_global->stub_export_macro () << be_nl
-              << "void" << be_nl
-              << "tao_" << ifwd->flat_name ()
-              << "_release (" << be_idt << be_idt_nl
-              << ifwd->full_name () << "_ptr" << be_uidt_nl
-              << ");" << be_uidt_nl
-              << be_global->stub_export_macro () << be_nl
-              << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name ()
-              << "_nil (" << be_idt << be_idt_nl
-              << "void" << be_uidt_nl
-              << ");" << be_uidt_nl
-              << be_global->stub_export_macro () << be_nl
-              << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name ()
-              << "_narrow (" << be_idt << be_idt_nl
-              << "CORBA::Object *" << be_nl
-              << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
-              << ");" << be_uidt_nl
-              << be_global->stub_export_macro () << be_nl
-              << "CORBA::Object *" << be_nl
-              << "tao_" << ifwd->flat_name ()
-              << "_upcast (" << be_idt << be_idt_nl
-              << "void *" << be_uidt_nl
-              << ");" << be_uidt_nl << be_nl;
+              *os << be_global->stub_export_macro () << be_nl
+                  << "void" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_add_ref ("
+                  << be_idt << be_idt_nl
+                  << ifwd->full_name () << " *" << be_uidt_nl
+                  << ");" << be_uidt_nl
+                  << be_global->stub_export_macro () << be_nl
+                  << "void" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_remove_ref (" << be_idt << be_idt_nl
+                  << ifwd->full_name () << " *" << be_uidt_nl
+                  << ");" << be_uidt_nl << be_nl;
+            }
+          else
+            {
+              *os << "// External declarations for undefined interface" 
+                  << be_nl
+                  << "// " << ifwd->full_name () << be_nl;
+
+              *os << be_global->stub_export_macro () << be_nl
+                  << ifwd->full_name () << "_ptr" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_duplicate ("
+                  << be_idt << be_idt_nl
+                  << ifwd->full_name  () << "_ptr" << be_uidt_nl
+                  << ");" << be_uidt_nl
+                  << be_global->stub_export_macro () << be_nl
+                  << "void" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_release (" << be_idt << be_idt_nl
+                  << ifwd->full_name () << "_ptr" << be_uidt_nl
+                  << ");" << be_uidt_nl
+                  << be_global->stub_export_macro () << be_nl
+                  << ifwd->full_name () << "_ptr" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_nil (" << be_idt << be_idt_nl
+                  << "void" << be_uidt_nl
+                  << ");" << be_uidt_nl
+                  << be_global->stub_export_macro () << be_nl
+                  << ifwd->full_name () << "_ptr" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_narrow (" << be_idt << be_idt_nl
+                  << "CORBA::Object *" << be_nl
+                  << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+                  << ");" << be_uidt_nl
+                  << be_global->stub_export_macro () << be_nl
+                  << "CORBA::Object *" << be_nl
+                  << "tao_" << ifwd->flat_name ()
+                  << "_upcast (" << be_idt << be_idt_nl
+                  << "void *" << be_uidt_nl
+                  << ");" << be_uidt_nl << be_nl;
+            }
         }
 
       size = be_global->mixed_parentage_interfaces.size ();

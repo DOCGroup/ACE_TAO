@@ -42,7 +42,6 @@ public:
 
   virtual int visit_operation (be_operation *node);
   // visit operation. We provide code for this method in the derived class
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_IS_CPP_ */

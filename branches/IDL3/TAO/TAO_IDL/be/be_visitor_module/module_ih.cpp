@@ -41,7 +41,7 @@ be_visitor_module_ih::visit_module (be_module *node)
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_module_sh::"
+                             "(%N:%l) be_visitor_module_ih::"
                              "visit_module - "
                              "codegen for scope failed\n"), 
                             -1);

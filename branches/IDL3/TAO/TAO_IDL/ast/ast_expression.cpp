@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_scope.h"
 #include "utl_string.h"
+#include "nr_extern.h"
 
 ACE_RCSID (ast, 
            ast_expression, 
@@ -1550,6 +1551,62 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
   return 0;
 }
 
+// Integer literals may not be assigned to floating point constants,
+// and vice versa.
+static idl_bool 
+incompatible_types (AST_Expression::ExprType t1, 
+                    AST_Expression::ExprType t2)
+{
+  switch (t1)
+  {
+    case AST_Expression::EV_short:
+    case AST_Expression::EV_ushort:
+    case AST_Expression::EV_long:
+    case AST_Expression::EV_ulong:
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+    case AST_Expression::EV_octet:
+    case AST_Expression::EV_bool:
+      switch (t2)
+      {
+        case AST_Expression::EV_short:
+        case AST_Expression::EV_ushort:
+        case AST_Expression::EV_long:
+        case AST_Expression::EV_ulong:
+        case AST_Expression::EV_longlong:
+        case AST_Expression::EV_ulonglong:
+        case AST_Expression::EV_octet:
+        case AST_Expression::EV_bool:
+          return 0;
+        default:
+          return 1;
+      }
+    case AST_Expression::EV_float:
+    case AST_Expression::EV_double:
+    case AST_Expression::EV_longdouble:
+      switch (t2)
+      {
+        case AST_Expression::EV_float:
+        case AST_Expression::EV_double:
+        case AST_Expression::EV_longdouble:
+          return 0;
+        default:
+          return 1;
+      }  
+    case AST_Expression::EV_char:
+    case AST_Expression::EV_wchar:
+    case AST_Expression::EV_string:
+    case AST_Expression::EV_wstring:
+    case AST_Expression::EV_enum:
+    case AST_Expression::EV_any:
+    case AST_Expression::EV_object:
+    case AST_Expression::EV_void:
+    case AST_Expression::EV_none:
+    default:
+      return 0;
+  }
+}
+
 // Evaluate the expression wrt the evaluation kind requested. Supported
 // evaluation kinds are
 // - EK_const:          The expression must evaluate to a constant
@@ -1602,29 +1659,30 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
     {
       return 0;
     }
-
+// @@@ (JP) See comment below.
+/*
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
 
   if (this->pd_v1->ev () == 0)
     {
       return 0;
     }
-
+*/
   this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
 
   if (this->pd_v1->ev () == 0)
     {
       return 0;
     }
-
+/*
   this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
   if (this->pd_v2->ev () == 0)
     {
       return 0;
     }
-
-  this->pd_v2->set_ev (this->pd_v2->coerce(EV_double));
+*/
+  this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
 
   if (pd_v2->ev () == 0)
     {
@@ -1667,12 +1725,21 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
         }
 
       retval->u.dval =
-        this->pd_v1->ev  ()->u.dval / this->pd_v2->ev  ()->u.dval;
+        this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
       break;
     default:
       return 0;
     }
 
+  // @@@ (JP) CORBA 2.6 and earlier say that in a constant expression,
+  // each subexpression must fall within the range of the assigned type.
+  // However, this may be hard for the compiler in some cases (must
+  // evaluate all grouping possibilities). So there is an outstanding
+  // issue, #1139, and the best guess is that it will ultimately be
+  // decided that only the final value must fall within the range of
+  // the assigned type. So I've commented out the checks above, and
+  // added this final evaluation below. (02-06-25).
+//  return eval_kind (retval, ek);
   return retval;
 }
 
@@ -1939,6 +2006,64 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
     }
 
   return c->constant_value ()->eval_internal (ek);
+}
+
+idl_bool
+AST_Expression::type_mismatch (AST_Expression::ExprType t)
+{
+  if (this->pd_ev != 0)
+    {
+      return incompatible_types (this->pd_ev->et, t);
+    }
+
+  idl_bool v1_mismatch = 0;
+  idl_bool v2_mismatch = 0;
+
+  if (this->pd_v1 != 0)
+    {
+      v1_mismatch = this->pd_v1->type_mismatch (t);
+    }
+
+  if (this->pd_v2 != 0)
+    {
+      v2_mismatch = this->pd_v2->type_mismatch (t);
+    }
+
+  return v1_mismatch | v2_mismatch;
+}
+
+// Coerce "this" to the ExprType required. Returns a copy of the
+// original ExprValue with the coercion applied, if successful, or
+// 0 if failed.
+AST_Expression::AST_ExprValue *
+AST_Expression::check_and_coerce (AST_Expression::ExprType t,
+                                  AST_Decl *d)
+{
+  if (d != 0)
+    { 
+      AST_Decl *enum_val =
+        idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n,
+                                                               1);
+
+      if (enum_val != 0)
+        {
+          AST_Decl *enum_decl = ScopeAsDecl (enum_val->defined_in ());
+
+          if (d != enum_decl)
+            {
+              idl_global->err ()->incompatible_type_error (this);
+              return 0;
+            }
+        }
+    }
+
+  if (this->type_mismatch (t))
+    {
+      idl_global->err ()->incompatible_type_error (this);
+      return 0;
+    }
+
+  return this->coerce (t);
 }
 
 // Coerce "this" to the ExprType required. Returns a copy of the

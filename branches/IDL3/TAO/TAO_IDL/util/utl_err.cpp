@@ -158,6 +158,8 @@ error_string (UTL_Error::ErrorCode c)
       return "abstract type expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
+    case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
+      return "incompatible types in constant assignment: ";
     case UTL_Error::EIDL_NAME_CASE_ERROR:
       return "identifier spellings differ only in case: ";
     case UTL_Error::EIDL_NAME_CASE_WARNING:
@@ -906,6 +908,19 @@ UTL_Error::eval_error (AST_Expression *v)
   idl_error_header (EIDL_EVAL_ERROR,
                     v->line (),
                     v->file_name ());
+  v->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report an error while evaluating an expression.
+void
+UTL_Error::incompatible_type_error (AST_Expression *v)
+{
+  idl_error_header (EIDL_INCOMPATIBLE_TYPE,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));

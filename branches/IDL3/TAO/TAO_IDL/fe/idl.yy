@@ -117,6 +117,7 @@ int yylex (void);
 extern "C" int yywrap (void);
 extern char yytext[];
 extern int yyleng;
+AST_Decl *tao_enum_constant_decl = 0;
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 // Force the pretty debugging code to compile.
 #define YYDEBUG 1
@@ -734,9 +735,6 @@ value_concrete_decl :
           /*
            * Done with this value type - pop it off the scopes stack
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
         ;
@@ -797,11 +795,8 @@ value_abs_decl :
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           /*
-           * Done with this interface - pop it off the scopes stack.
+           * Done with this valuetype - pop it off the scopes stack.
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
         ;
@@ -1281,7 +1276,9 @@ const_dcl :
           if ($9 != 0 && s != 0) 
             {
               AST_Expression::AST_ExprValue *result = 
-                $9->coerce ($3);
+                $9->check_and_coerce ($3,
+                                      tao_enum_constant_decl);
+              tao_enum_constant_decl = 0;
 
               if (result == 0)
                 {
@@ -1348,6 +1345,8 @@ const_type
 
           if (s != 0  && d != 0) 
             {
+              tao_enum_constant_decl = d;
+
               /*
                * Look through typedefs.
                */
@@ -1809,7 +1808,7 @@ type_declarator :
 
                   if (d == 0)
                     {
-                        continue;
+                      continue;
                     }
 
                   AST_Type * tp = d->compose ($1);
@@ -1866,6 +1865,11 @@ simple_type_spec
             {
               idl_global->err ()->lookup_error ($1);
             }
+          else
+            {
+              d->last_referenced_as ($1);
+            }
+
 
           $$ = d;
         }
@@ -4045,9 +4049,6 @@ component_decl :
           /*
            * Done with this component - pop it off the scopes stack.
            */
-          UTL_Scope* s = idl_global->scopes ().top ();
-          AST_Interface* m = AST_Interface::narrow_from_scope (s);
-          m->inherited_name_clash ();
           idl_global->scopes ().pop ();
         }
         ;

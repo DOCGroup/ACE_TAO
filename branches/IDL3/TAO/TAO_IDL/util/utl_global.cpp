@@ -557,7 +557,6 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
       else
         {
           // Adding more storage.
-
           char** old_included_idl_files =
             this->included_idl_files_;
           size_t n_old_allocated_idl_files =
@@ -565,8 +564,12 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
           this->n_allocated_idl_files_ += INCREMENT;
           ACE_NEW (this->included_idl_files_,
                    char *[this->n_allocated_idl_files_]);
-          for (size_t i = 0; i < n_old_allocated_idl_files; i++)
-            this->included_idl_files_ [i] = old_included_idl_files [i];
+
+          for (size_t i = 0; i < n_old_allocated_idl_files; ++i)
+            {
+              this->included_idl_files_ [i] = old_included_idl_files [i];
+            }
+
           delete [] old_included_idl_files;
         }
     }

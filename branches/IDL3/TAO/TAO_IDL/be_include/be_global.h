@@ -421,7 +421,7 @@ private:
   // Implementation's hdr file name ending. Default is "I.h".
   char* implementation_hdr_ending_;
 
- // Implementation's skeleton file name ending. Default is "I.cpp".
+  // Implementation's skeleton file name ending. Default is "I.cpp".
   char* implementation_skel_ending_;
 
   //Implementaion class prefix

@@ -41,6 +41,19 @@ ACE_RCSID (be,
 
 // Default Constructor
 be_decl::be_decl (void)
+  : cli_hdr_gen_ (I_FALSE),
+    cli_stub_gen_ (I_FALSE),
+    cli_inline_gen_ (I_FALSE),
+    srv_hdr_gen_ (I_FALSE),
+    impl_hdr_gen_ (I_FALSE),
+    srv_skel_gen_ (I_FALSE),
+    impl_skel_gen_ (I_FALSE),
+    srv_inline_gen_ (I_FALSE),
+    cli_hdr_any_op_gen_ (I_FALSE),
+    cli_stub_any_op_gen_ (I_FALSE),
+    cli_hdr_cdr_op_gen_ (I_FALSE),
+    cli_stub_cdr_op_gen_ (I_FALSE),
+    cli_inline_cdr_op_gen_ (I_FALSE)
 {
 }
 
@@ -48,7 +61,20 @@ be_decl::be_decl (void)
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
   : AST_Decl (type,
-              n)
+              n),
+    cli_hdr_gen_ (I_FALSE),
+    cli_stub_gen_ (I_FALSE),
+    cli_inline_gen_ (I_FALSE),
+    srv_hdr_gen_ (I_FALSE),
+    impl_hdr_gen_ (I_FALSE),
+    srv_skel_gen_ (I_FALSE),
+    impl_skel_gen_ (I_FALSE),
+    srv_inline_gen_ (I_FALSE),
+    cli_hdr_any_op_gen_ (I_FALSE),
+    cli_stub_any_op_gen_ (I_FALSE),
+    cli_hdr_cdr_op_gen_ (I_FALSE),
+    cli_stub_cdr_op_gen_ (I_FALSE),
+    cli_inline_cdr_op_gen_ (I_FALSE)
 {
 }
 
@@ -223,6 +249,171 @@ be_decl::scope (void)
      default:
         return (be_scope *)0;
    }
+}
+
+// Boolean methods to test if code was already generated.
+idl_bool
+be_decl::cli_hdr_gen (void)
+{
+  return this->cli_hdr_gen_;
+}
+
+idl_bool
+be_decl::cli_stub_gen (void)
+{
+  return this->cli_stub_gen_;
+}
+
+idl_bool
+be_decl::cli_hdr_any_op_gen (void)
+{
+  return this->cli_hdr_any_op_gen_;
+}
+
+idl_bool
+be_decl::cli_stub_any_op_gen (void)
+{
+  return this->cli_stub_any_op_gen_;
+}
+
+idl_bool
+be_decl::cli_hdr_cdr_op_gen (void)
+{
+  return this->cli_hdr_cdr_op_gen_;
+}
+
+idl_bool
+be_decl::cli_stub_cdr_op_gen (void)
+{
+  return this->cli_stub_cdr_op_gen_;
+}
+
+idl_bool
+be_decl::cli_inline_cdr_op_gen (void)
+{
+  return this->cli_inline_cdr_op_gen_;
+}
+
+idl_bool
+be_decl::cli_inline_cdr_decl_gen (void)
+{
+  return this->cli_inline_cdr_decl_gen_;
+}
+
+idl_bool
+be_decl::cli_inline_gen (void)
+{
+  return this->cli_inline_gen_;
+}
+
+idl_bool
+be_decl::srv_hdr_gen (void)
+{
+  return this->srv_hdr_gen_;
+}
+
+idl_bool
+be_decl::impl_hdr_gen (void)
+{
+  return this->impl_hdr_gen_;
+}
+
+idl_bool
+be_decl::srv_skel_gen (void)
+{
+  return this->srv_skel_gen_;
+}
+
+idl_bool
+be_decl::impl_skel_gen (void)
+{
+  return this->impl_skel_gen_;
+}
+
+idl_bool
+be_decl::srv_inline_gen (void)
+{
+  return this->srv_inline_gen_;
+}
+
+// Set the flag indicating that code generation is done.
+void
+be_decl::cli_hdr_gen (idl_bool val)
+{
+  this->cli_hdr_gen_ = val;
+}
+
+void
+be_decl::cli_stub_gen (idl_bool val)
+{
+  this->cli_stub_gen_ = val;
+}
+
+void
+be_decl::cli_hdr_any_op_gen (idl_bool val)
+{
+  this->cli_hdr_any_op_gen_ = val;
+}
+
+void
+be_decl::cli_stub_any_op_gen (idl_bool val)
+{
+  this->cli_stub_any_op_gen_ = val;
+}
+
+void
+be_decl::cli_hdr_cdr_op_gen (idl_bool val)
+{
+  this->cli_hdr_cdr_op_gen_ = val;
+}
+
+void
+be_decl::cli_stub_cdr_op_gen (idl_bool val)
+{
+  this->cli_stub_cdr_op_gen_ = val;
+}
+
+void
+be_decl::cli_inline_cdr_op_gen (idl_bool val)
+{
+  this->cli_inline_cdr_op_gen_ = val;
+}
+
+void
+be_decl::cli_inline_cdr_decl_gen (idl_bool val)
+{
+  this->cli_inline_cdr_decl_gen_ = val;
+}
+
+void
+be_decl::cli_inline_gen (idl_bool val)
+{
+  this->cli_inline_gen_ = val;
+}
+
+void
+be_decl::srv_hdr_gen (idl_bool val)
+{
+  this->srv_hdr_gen_ = val;
+}
+
+void
+be_decl::impl_hdr_gen (idl_bool val)
+{
+  this->impl_hdr_gen_ = val;
+}
+
+
+void
+be_decl::srv_skel_gen (idl_bool val)
+{
+  this->srv_skel_gen_ = val;
+}
+
+void
+be_decl::srv_inline_gen (idl_bool val)
+{
+  this->srv_inline_gen_ = val;
 }
 
 int

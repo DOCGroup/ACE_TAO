@@ -74,18 +74,10 @@ be_visitor_operation_is::visit_operation (be_operation *node)
     {
       // If derived class/
       classname = intf->flat_name ();
-
     }
   else
     {
-      ACE_CString str(node->flat_name ());
-
-      int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
-
-      int fnmlength = ACE_OS::strlen (node->flat_name ());
-      fnmlength--;
-
-      classname = str.substr (0, (fnmlength-lnmlength)).rep ();
+      classname = ScopeAsDecl (node->defined_in ())->flat_name ();
     }
 
   // STEP 2: generate the operation name
@@ -107,8 +99,8 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os <<be_idt_nl << "{"<<be_idt_nl;
-  *os << "//Add your implementation here"<<be_uidt_nl;
+  *os << be_idt_nl << "{" << be_idt_nl;
+  *os << "// Add your implementation here" << be_uidt_nl;
   *os << "}" << be_nl << be_uidt_nl;
 
   return 0;

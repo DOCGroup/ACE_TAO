@@ -121,6 +121,7 @@ public:
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
+    EIDL_INCOMPATIBLE_TYPE,     // Assign floating pt. to integer or vice versa
     EIDL_AMBIGUOUS,             // Ambiguous name definition
     EIDL_DECL_NOT_DEFINED,      // Forward declared but never defined
     EIDL_FWD_DECL_LOOKUP,       // Tried to lookup in fwd declared intf
@@ -231,6 +232,9 @@ public:
 
   // Report an error while evaluating an expression (division by zero, etc.)
   void eval_error (AST_Expression *d);
+
+  // Report incompatible types in constant assignment
+  void incompatible_type_error (AST_Expression *d);
 
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union

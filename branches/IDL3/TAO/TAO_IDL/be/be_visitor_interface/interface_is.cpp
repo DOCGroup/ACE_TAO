@@ -130,7 +130,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_sh_ss::"
+                         "be_visitor_interface_is::"
                          "visit_interface - "
                          "traversal of inhertance graph failed\n"),
                         -1);
@@ -146,7 +146,6 @@ be_visitor_interface_is::method_helper (be_interface *derived,
 					                              be_interface *node,
 					                              TAO_OutStream *os)
 {
-
   if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
     {
       be_visitor_context ctx;

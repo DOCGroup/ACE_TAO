@@ -837,6 +837,13 @@ AST_Union::compute_default_index (void)
           // Get the next AST decl node.
           d = si.item ();
 
+          // If an enum is declared in our scope, its members are
+          // added to our scope as well, to detect clashes.
+          if (d->node_type () == AST_Decl::NT_enum_val)
+            {
+              continue;
+            }
+
           if (!d->imported ())
             {
               ub = AST_UnionBranch::narrow_from_decl (d);
@@ -923,6 +930,16 @@ AST_Union::fe_add_union_branch (AST_UnionBranch *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   this->fields_.enqueue_tail (t);
 
@@ -1140,6 +1157,12 @@ AST_Union::compute_size_type (void)
     {
       // Get the next AST decl node.
       AST_Decl *d = si.item ();
+
+      if (d->node_type () == AST_Decl::NT_enum_val)
+        {
+          continue;
+        }
+
       AST_Field *f = AST_Field::narrow_from_decl (d);
 
       if (f != 0)

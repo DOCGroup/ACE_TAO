@@ -109,11 +109,18 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // so that, if the uninitialized union is inserted into an Any,
   // the Any destructor's call to deep_free() will work properly.
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+  be_union_branch *ub = 0;
 
-  // Just get the union's first member.
-  AST_Decl *d = si.item ();
+  // In case we have some bogus enum values from an enum declared 
+  // in our scope.
+  while (ub == 0)
+    {
+      // Just get the union's first member.
+      AST_Decl *d = si.item ();
 
-  be_union_branch *ub = be_union_branch::narrow_from_decl (d);
+      ub = be_union_branch::narrow_from_decl (d);
+      si.next ();
+    }
 
   // Get the first label in its list.
   AST_UnionLabel *ul = ub->label (0);

@@ -331,7 +331,6 @@ BE_GlobalData::be_get_implementation_skel_fname (int base_name_only)
                                      base_name_only);
 }
 
-
 const char *
 BE_GlobalData::be_get_server_template_hdr_fname (int base_name_only)
 {
@@ -345,20 +344,11 @@ BE_GlobalData::be_get_server_skeleton_fname ()
   return be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
-/*
-const char *
-BE_GlobalData::be_get_implementation_hdr_fname ()
-{
-  return be_get_implementation_hdr (idl_global->stripped_filename ());
-}
-*/
-
 const char *
 BE_GlobalData::be_get_implementation_skeleton_fname ()
 {
   return be_get_implementation_skel (idl_global->stripped_filename ());
 }
-
 
 const char *
 BE_GlobalData::be_get_server_template_skeleton_fname (int base_name_only)
@@ -538,7 +528,6 @@ BE_GlobalData::implementation_skel_ending (const char* s)
   this->implementation_skel_ending_ = ACE::strnew (s);
 }
 
-
 void
 BE_GlobalData::impl_class_prefix (const char* s)
 {
@@ -565,7 +554,6 @@ BE_GlobalData::implementation_hdr_ending (void) const
   return this->implementation_hdr_ending_;
 }
 
-
 const char*
 BE_GlobalData::impl_class_suffix (void) const
 {
@@ -577,8 +565,6 @@ BE_GlobalData::implementation_skel_ending (void) const
 {
   return this->implementation_skel_ending_;
 }
-
-
 
 void
 BE_GlobalData::server_template_hdr_ending (const char* s)

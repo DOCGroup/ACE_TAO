@@ -1595,16 +1595,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                   id = e->head ();
                 }
 
-              // If we have stripped e to the last component, then
-              // add it - the last component of a scoped name is
-              // the only one that counts as a reference in a scope.
-              if (id == e->last_component ())
-                {
-                  add_to_referenced (d,
-                                     I_FALSE,
-                                     id);
-                }
-
               AST_Type *t = AST_Type::narrow_from_decl (d);
 
               // Are we a type, rather than an identifier?
@@ -1618,15 +1608,23 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                       if (s != 0)
                         {
                           AST_Decl *parent = ScopeAsDecl (s);
+                          AST_Decl::NodeType nt = parent->node_type ();
 
-                          // If the scope we are defined in is itself inside
-                          // an interface or valuetype, then we should also
-                          // be exported to the interface (or valuetype) scope.
-                          if (parent->node_type () == AST_Decl::NT_interface)
+                          // If the scope we are defined in is itself
+                          // inside a module, then we should also
+                          // be exported to the enclosing scope,
+                          // recursive until we get to the enclosing
+                          // module (or root) scope. (CORBA 2.6 3.15.3).
+                          while (nt != AST_Decl::NT_module
+                                 && nt != AST_Decl::NT_root)
                             {
                               s->add_to_referenced (d,
                                                     I_FALSE,
                                                     d->local_name ());
+
+                              s = parent->defined_in ();
+                              parent = ScopeAsDecl (s);
+                              nt = parent->node_type ();
                             }
                         }
                     }
@@ -1705,7 +1703,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   // Special case for forward declared interfaces in the
   // scope in which they're defined. Cannot add before full
   // definition is seen.
-  if (e->node_type() == AST_Decl::NT_interface)
+  if (e->node_type () == AST_Decl::NT_interface)
     {
       itf = AST_Interface::narrow_from_decl(e);
 

@@ -165,6 +165,17 @@ AST_Component::ast_accept (ast_visitor *visitor)
   return visitor->visit_component (this);
 }
 
+idl_bool
+AST_Component::redef_clash (void)
+{
+  if (this->AST_Interface::redef_clash ())
+    {
+      return 1;
+    }
+
+  return 0;
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Component, AST_Interface)
 IMPL_NARROW_FROM_DECL(AST_Component)

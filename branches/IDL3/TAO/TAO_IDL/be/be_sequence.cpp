@@ -37,7 +37,6 @@ be_sequence::be_sequence (void)
   : mt_ (be_sequence::MNG_UNKNOWN)
 {
   // Always the case.
-  this->size_type (AST_Type::VARIABLE);
   this->has_constructor (I_TRUE);
 }
 
@@ -68,9 +67,6 @@ be_sequence::be_sequence (AST_Expression *v,
                  abstract),
     mt_ (be_sequence::MNG_UNKNOWN)
 {
-  // A sequence data type is always VARIABLE.
-  this->size_type (AST_Type::VARIABLE);
-
   // Always the case.
   this->has_constructor (I_TRUE);
 }
