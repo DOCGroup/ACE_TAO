@@ -40,8 +40,16 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 // Default number of clients/servers.
+#if defined (ACE_HAS_PHARLAP)
+// PharLap is, by default, resource contrained. Test for something that works
+// on the default configuration.
+static int n_servers = 2;
+static int n_clients = 4;
+#else
 static int n_servers = 4;
 static int n_clients = 10;
+#endif /* ACE_HAS_PHARLAP */
+
 static int n_client_iterations = 2;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
