@@ -23,6 +23,8 @@
 #include "ace/Get_Opt.h"
 #include <math.h>
 
+ACE_RCSID(UDP, udp_test, "$Id$")
+
 // Global variables (evil).
 static const u_short DEFPORT = 5050;
 static const int MAXPKTSZ = 65536;

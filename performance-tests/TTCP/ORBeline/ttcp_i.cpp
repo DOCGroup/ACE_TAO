@@ -1,12 +1,8 @@
-/*
 // $Id$
 
+/*
  *    T T C P . C
- *
  */
-#ifndef lint
-static char RCSid[] = "ttcp.c $Revision$";
-#endif
 
 /* #define BSD43 */
 /* #define BSD42 */
@@ -46,6 +42,8 @@ struct rusage
 #else
 #include <sys/resource.h>
 #endif
+
+ACE_RCSID(ORBeline, ttcp_i, "$Id$")
 
 void err (char *s);
 void mes (char *s);

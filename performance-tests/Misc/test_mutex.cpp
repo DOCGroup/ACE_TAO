@@ -1,6 +1,6 @@
-// This test program illustrates the performance difference between
 // $Id$
 
+// This test program illustrates the performance difference between
 // three versions of wrappers for thread mutexes.  These three
 // versions exercise various combinations of the following classes:
 // 
@@ -50,6 +50,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS.h"
+
+ACE_RCSID(Misc, test_mutex, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

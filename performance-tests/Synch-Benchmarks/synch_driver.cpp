@@ -1,6 +1,6 @@
-// Driver program that measures the performance of synchronization
 // $Id$
 
+// Driver program that measures the performance of synchronization
 // mechanisms provided by ACE and the underlying OS.
 
 #include "ace/Service_Config.h"
@@ -8,6 +8,8 @@
 #include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark_Performance.h"
+
+ACE_RCSID(Synch_Benchmarks, synch_driver, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 int
