@@ -1,3 +1,10 @@
+Mon Sep 27 12:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+        * DAnCE/Config_Handlers/Config_Handlers.mpc:
+          Instead of adding all xerces stuff to the project itself, inherit
+          from the new xerces base project
+
 Mon Sep 27 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeDaemon.mpc:
