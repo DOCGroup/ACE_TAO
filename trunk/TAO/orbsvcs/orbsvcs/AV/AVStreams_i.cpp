@@ -21,6 +21,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "AVStreams_i.i"
@@ -2103,27 +2104,36 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
 {
   CORBA::Any_var vdev_any = this->get_property_value ("Related_VDev"
                                                       ACE_ENV_ARG_PARAMETER);
-  CORBA::Any_var mc_str_any;
-  CORBA::Object_var mc_obj;
+  
   AVStreams::VDev_ptr vdev;
-  // TODO: what if a real AVStreams::MediaControl is used ??
-  Null_MediaCtrl_var media_ctrl;
-  const char *media_ctrl_str;
+
   vdev_any.in() >>= vdev;
-  mc_str_any = vdev->get_property_value ("Related_MediaCtrl"
+  CORBA::Any_var mc_any = vdev->get_property_value ("Related_MediaCtrl"
                                          ACE_ENV_ARG_PARAMETER);
-  mc_str_any.in() >>= media_ctrl_str;
-  mc_obj = TAO_AV_CORE::instance()->orb()->string_to_object (media_ctrl_str
-                                                             ACE_ENV_ARG_PARAMETER);
-  media_ctrl = Null_MediaCtrl::_narrow (mc_obj.in());
+
+  // The Related_MediaCtrl property was inserted as a CORBA::Object, so we
+  // must extract it as the same type.
+  CORBA::Object_var obj;
+  mc_any.in() >>= CORBA::Any::to_object( obj.out() );
+
+  AVStreams::MediaControl_var media_ctrl = 
+	  AVStreams::MediaControl::_narrow( obj.in() );
 
   // deactivate the associated vdev and media ctrl
-  PortableServer::ServantBase_var vdev_servant =
-      TAO_AV_CORE::instance()->poa()->reference_to_servant (vdev);
-  TAO_AV_Core::deactivate_servant (vdev_servant.in());
-  PortableServer::ServantBase_var mc_servant =
-      TAO_AV_CORE::instance()->poa()->reference_to_servant (media_ctrl.in());
-  TAO_AV_Core::deactivate_servant (mc_servant.in());
+
+  if ( !CORBA::is_nil( vdev ) )
+  {		  
+    PortableServer::ServantBase_var vdev_servant =
+        TAO_AV_CORE::instance()->poa()->reference_to_servant ( vdev );
+    TAO_AV_Core::deactivate_servant (vdev_servant.in());
+  }
+
+  if ( !CORBA::is_nil ( media_ctrl.in () ) )
+  {
+    PortableServer::ServantBase_var mc_servant =
+        TAO_AV_CORE::instance()->poa()->reference_to_servant (media_ctrl.in());
+    TAO_AV_Core::deactivate_servant (mc_servant.in());
+  }
 
   int result = TAO_AV_Core::deactivate_servant (this);
   if (result < 0)
@@ -3104,19 +3114,11 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   ACE_TRY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) TAO_VDev::set_peer: called"));
+        ACE_DEBUG ((LM_DEBUG, "(%P|%t) TAO_VDev::set_peer: called\n"));
 
-      CORBA::String_var ior = TAO_ORB_Core_instance ()->orb ()->object_to_string (the_peer_dev
-                                                                                  ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
-
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_VDev::set_peer: my peer is %s\n",
-                  ior.in ()));
 
       CORBA::Any anyval;
-      anyval <<= ior.in ();
+      anyval <<= the_peer_dev;
       this->define_property ("Related_VDev",
                              anyval
                              ACE_ENV_ARG_PARAMETER);
@@ -3127,18 +3129,13 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       this->peer_ = AVStreams::VDev::_duplicate (the_peer_dev);
 
       CORBA::Any_var anyptr;
-      const char *media_ctrl_ior;
       anyptr = this->peer_->get_property_value ("Related_MediaCtrl"
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      anyptr.in () >>= media_ctrl_ior;
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t)The Media Control IOR is %s\n",
-                    media_ctrl_ior));
-      CORBA::Object_ptr media_ctrl_obj =
-        TAO_ORB_Core_instance ()->orb ()->string_to_object
-        (media_ctrl_ior ACE_ENV_ARG_PARAMETER);
+      CORBA::Object_ptr media_ctrl_obj = 0;
+
+      anyptr.in () >>= CORBA::Any::to_object(media_ctrl_obj);
       ACE_TRY_CHECK;
 
       result = this->set_media_ctrl (media_ctrl_obj ACE_ENV_ARG_PARAMETER);
@@ -3579,10 +3576,6 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
                    AVStreams::QoSRequestFailed,
                    AVStreams::noSuchFlow))
 {
-  CORBA::String_var str_ctrl_ior =
-       TAO_ORB_Core_instance ()->orb ()->object_to_string (streamctrl ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
   AVStreams::StreamEndPoint_A_ptr sep_a = 0;
   AVStreams::StreamEndPoint_var sep;
   ACE_TRY
@@ -3591,6 +3584,8 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
       ACE_TRY_CHECK;
       sep_a = AVStreams::StreamEndPoint_A::_narrow (sep.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_ASSERT( !CORBA::is_nil( sep_a ) );
     }
   ACE_CATCHANY
     {
@@ -3598,7 +3593,7 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
       return sep_a;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (sep_a);
+
   return sep_a;
 }
 
@@ -3627,6 +3622,8 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr streamctrl,
       ACE_TRY_CHECK;
       sep_b = AVStreams::StreamEndPoint_B::_narrow (sep.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_ASSERT ( !CORBA::is_nil( sep_b ) );
     }
   ACE_CATCHANY
     {

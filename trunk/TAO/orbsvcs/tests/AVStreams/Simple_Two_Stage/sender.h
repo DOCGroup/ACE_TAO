@@ -106,7 +106,7 @@ private:
   ACE_CString protocol_;
   // Selected protocol - default is UDP
 
-  int frame_rate_;
+  double frame_rate_;
   // Rate at which the data will be sent.
 
   ACE_Message_Block mb_;

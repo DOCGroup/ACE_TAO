@@ -884,10 +884,11 @@ public:
                      AVStreams::noSuchFlow,
                      AVStreams::QoSRequestFailed));
 
-  /// Destructor
+protected:
+  /// Destructor for a servant should be protected or private.
+  /// Use _remove_ref() to delete this servant.
   virtual ~TAO_VDev (void);
 
-protected:
   /// hook called after set_peer is done to set the media ctrl of the peer vdev.
   virtual CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
