@@ -1,3 +1,8 @@
+Wed Mar 11 17:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/tao_util: Changed the name of root_poa_ to poa_ since it
+ 	  doesn't have to be a root POA.
+
 Wed Mar 11 14:37:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/Makefile: Included be_visitor_exception.cpp and ran make
