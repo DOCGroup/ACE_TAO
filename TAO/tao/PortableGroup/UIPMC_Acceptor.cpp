@@ -87,6 +87,9 @@ TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 int
 TAO_UIPMC_Acceptor::close (void)
 {
+/*
+  // @@ Frank: Commented out since it seems like the reactor always is the one to 
+  //    remove the connection handler.
   if (this->connection_handler_)
     {
       // Remove the connection handler from the reactor in the case
@@ -103,6 +106,7 @@ TAO_UIPMC_Acceptor::close (void)
         }
       this->connection_handler_ = 0;
     }
+  */
   return 0;
 }
 
@@ -211,6 +215,12 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr)
     {
       this->orb_core_->reactor ()->register_handler (this->connection_handler_,
                                                      ACE_Event_Handler::READ_MASK);
+
+      // Add the connection handler to cache
+      this->connection_handler_->add_transport_to_cache ();
+
+      // Set the flag in the Connection Handler and in the Wait Strategy
+      this->connection_handler_->transport ()->wait_strategy ()->is_registered (1);
     }
 
   // Set the port for each addr.  If there is more than one network

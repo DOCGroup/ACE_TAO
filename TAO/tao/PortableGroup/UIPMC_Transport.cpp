@@ -377,7 +377,7 @@ TAO_UIPMC_Transport::recv_i (char *buf,
 
   // Trim off the header for now.
   n -= MIOP_HEADER_SIZE;
-  ACE_OS::memcpy (buf, buf + MIOP_HEADER_SIZE, n);
+  ACE_OS::memmove (buf, buf + MIOP_HEADER_SIZE, n);
 
   return n;
 }
