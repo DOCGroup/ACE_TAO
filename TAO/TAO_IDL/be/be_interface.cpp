@@ -788,22 +788,22 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Generate the skeleton for the is_a method.
         *os << "{\"_is_a\", &" << skeleton_class_name
-            << "::_is_a_skel, 0, 0}," << be_nl;
+            << "::_is_a_skel, 0}," << be_nl;
 
         this->skel_count_++;
 
         *os << "{\"_non_existent\", &" << skeleton_class_name
-            << "::_non_existent_skel, 0, 0}," << be_nl;
+            << "::_non_existent_skel, 0}," << be_nl;
 
         this->skel_count_++;
 
         *os << "{\"_component\", &" << skeleton_class_name
-            << "::_component_skel, 0, 0}," << be_nl;
+            << "::_component_skel, 0}," << be_nl;
 
         this->skel_count_++;
 
         *os << "{\"_interface\", &" << skeleton_class_name
-            << "::_interface_skel, 0, 0}" << be_uidt_nl;
+            << "::_interface_skel, 0}" << be_uidt_nl;
 
         this->skel_count_++;
 
@@ -941,24 +941,24 @@ be_interface::gen_operation_table (const char *flat_name,
 
         *os << "_is_a,&"
             << skeleton_class_name
-            << "::_is_a_skel, 0, 0" << be_nl;
+            << "::_is_a_skel, 0" << be_nl;
 
         this->skel_count_++;
 
         *os << "_non_existent,&"
             << skeleton_class_name
-            << "::_non_existent_skel, 0, 0" << be_nl;
+            << "::_non_existent_skel, 0" << be_nl;
 
         this->skel_count_++;
 
         *os << "_component,&"
             << skeleton_class_name
-            << "::_component_skel, 0, 0" << be_nl;
+            << "::_component_skel, 0" << be_nl;
         this->skel_count_++;
 
         *os << "_interface,&"
             << skeleton_class_name
-            << "::_interface_skel, 0, 0" << be_nl;
+            << "::_interface_skel, 0" << be_nl;
 
         this->skel_count_++;
 
@@ -1017,10 +1017,9 @@ be_interface::convert_parent_ops (be_visitor *visitor)
 void
 be_interface::gen_gperf_input_header (TAO_OutStream *os)
 {
-  *os << "class TAO_operation_db_entry {\n"
-      << "public:\n"
-      << "\tchar *opname_;" << "\n"
-      << "\tTAO_Skeleton skel_ptr_;" << "\n"
+  *os << "struct TAO_operation_db_entry {\n"
+      << "\tchar * opname;" << "\n"
+      << "\tTAO_Skeleton skel_ptr;" << "\n"
       << "};" << "\n"
       << "%%"
       << "\n";
@@ -1055,18 +1054,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::"
                   << d->local_name () << "_skel,";
 
-              if (be_global->gen_thru_poa_collocation ())
-                {
-                  *os << " &"
-                      << derived_interface->full_thru_poa_proxy_impl_name ()
-                      << "::" << d->local_name ();
-                }
-              else
-                {
-                  *os << " 0";
-                }
+//               if (be_global->gen_thru_poa_collocation ())
+//                 {
+//                   *os << " &"
+//                       << derived_interface->full_thru_poa_proxy_impl_name ()
+//                       << "::" << d->local_name ();
+//                 }
+//               else
+//                 {
+//                   *os << " 0";
+//                 }
 
-              *os << ",";
+//               *os << ",";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1097,18 +1096,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << "\", &" << full_skeleton_name
                   << "::_get_" << d->local_name () << "_skel,";
 
-              if (be_global->gen_thru_poa_collocation ())
-                {
-                  *os << " &"
-                      << derived_interface->full_thru_poa_proxy_impl_name ()
-                      << "::_get_" << d->local_name ();
-                }
-              else
-                {
-                  *os << " 0";
-                }
+//               if (be_global->gen_thru_poa_collocation ())
+//                 {
+//                   *os << " &"
+//                       << derived_interface->full_thru_poa_proxy_impl_name ()
+//                       << "::_get_" << d->local_name ();
+//                 }
+//               else
+//                 {
+//                   *os << " 0";
+//                 }
 
-              *os << ",";
+//               *os << ",";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1132,18 +1131,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                       << "\", &" << full_skeleton_name
                       << "::_set_" << d->local_name () << "_skel,";
 
-                  if (be_global->gen_thru_poa_collocation ())
-                    {
-                      *os << " &"
-                          << derived_interface->full_thru_poa_proxy_impl_name ()
-                          << "::_set_" << d->local_name ();
-                    }
-                  else
-                    {
-                      *os << " 0";
-                    }
+//                   if (be_global->gen_thru_poa_collocation ())
+//                     {
+//                       *os << " &"
+//                           << derived_interface->full_thru_poa_proxy_impl_name ()
+//                           << "::_set_" << d->local_name ();
+//                     }
+//                   else
+//                     {
+//                       *os << " 0";
+//                     }
 
-                  *os << ",";
+//                   *os << ",";
 
                   if (be_global->gen_direct_collocation ())
                     {
@@ -1190,18 +1189,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::"
                   << d->local_name () << "_skel,";
 
-              if (be_global->gen_thru_poa_collocation ())
-                {
-                  *os << " &"
-                      << derived_interface->full_thru_poa_proxy_impl_name ();
-                  *os << "::" << d->local_name ();
-                }
-              else
-                {
-                  *os << " 0";
-                }
+//               if (be_global->gen_thru_poa_collocation ())
+//                 {
+//                   *os << " &"
+//                       << derived_interface->full_thru_poa_proxy_impl_name ();
+//                   *os << "::" << d->local_name ();
+//                 }
+//               else
+//                 {
+//                   *os << " 0";
+//                 }
 
-              *os << ",";
+//               *os << ",";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1233,18 +1232,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   << full_skeleton_name << "::_get_"
                   << d->local_name () << "_skel,";
 
-              if (be_global->gen_thru_poa_collocation ())
-                {
-                  *os << " &"
-                      << derived_interface->full_thru_poa_proxy_impl_name ()
-                      << "::_get_" << d->local_name ();
-                }
-              else
-                {
-                  *os << " 0";
-                }
+//               if (be_global->gen_thru_poa_collocation ())
+//                 {
+//                   *os << " &"
+//                       << derived_interface->full_thru_poa_proxy_impl_name ()
+//                       << "::_get_" << d->local_name ();
+//                 }
+//               else
+//                 {
+//                   *os << " 0";
+//                 }
 
-              *os << ",";
+//               *os << ",";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1268,18 +1267,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                       << full_skeleton_name << "::_set_"
                       << d->local_name () << "_skel,";
 
-                  if (be_global->gen_thru_poa_collocation ())
-                    {
-                      *os << " &"
-                          << derived_interface->full_thru_poa_proxy_impl_name ()
-                          << "::_set_" << d->local_name ();
-                    }
-                  else
-                    {
-                      *os << " 0";
-                    }
+//                   if (be_global->gen_thru_poa_collocation ())
+//                     {
+//                       *os << " &"
+//                           << derived_interface->full_thru_poa_proxy_impl_name ()
+//                           << "::_set_" << d->local_name ();
+//                     }
+//                   else
+//                     {
+//                       *os << " 0";
+//                     }
 
-                  *os << ",";
+//                   *os << ",";
 
                   if (be_global->gen_direct_collocation ())
                     {
@@ -1358,23 +1357,23 @@ be_interface::analyze_parentage (void)
     {
       return;
     }
-  
+
   this->has_mixed_parentage_ = 0;
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
       be_interface *parent =
         be_interface::narrow_from_decl (this->pd_inherits[i]);
-    
+
       if (parent->is_abstract () || parent->has_mixed_parentage ())
         {
           this->has_mixed_parentage_ = 1;
           break;
         }
     }
-    
+
   AST_Decl::NodeType nt = this->node_type ();
-  idl_bool can_be_mixed = nt == AST_Decl::NT_interface 
+  idl_bool can_be_mixed = nt == AST_Decl::NT_interface
                           || nt == AST_Decl::NT_component
                           || nt == AST_Decl::NT_home;
 
@@ -1741,11 +1740,11 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     " "
                                     "-D -E -T -f 0"
                                     " "
-                                    "-F 0,0,0"
+                                    "-F 0,0"
                                     " "
                                     "-a -o -t -p -K"
                                     " "
-                                    "opname_ -L C++"
+                                    "opname -L C++"
                                     " "
                                     "-Z TAO_%s_Perfect_Hash_OpTable"
                                     " "
@@ -1768,7 +1767,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     " "
                                     "-a -o -t -p -K"
                                     " "
-                                    "opname_ -L C++"
+                                    "opname -L C++"
                                     " "
                                     "-Z TAO_%s_Binary_Search_OpTable"
                                     " "
@@ -1777,7 +1776,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     flat_name);
       break;
 
-      // Linear search methods from GPERF. Everything and the -z flag.
+      // Linear search methods from GPERF. Everything and the -Z flag.
     case BE_GlobalData::TAO_LINEAR_SEARCH:
       process_options.command_line ("%s"
                                     " "
@@ -1787,11 +1786,11 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                                     " "
                                     "-D -E -T -f 0"
                                     " "
-                                    "-F 0,0,0"
+                                    "-F 0,0"
                                     " "
                                     "-a -o -t -p -K"
                                     " "
-                                    "opname_ -L C++"
+                                    "opname -L C++"
                                     " "
                                     "-Z TAO_%s_Linear_Search_OpTable"
                                     " "
@@ -1892,28 +1891,6 @@ be_interface::is_a_helper (be_interface * /*derived*/,
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") ||" << be_uidt_nl;
-
-  return 0;
-}
-
-int
-be_interface::downcast_helper (be_interface * /* derived */,
-                               be_interface *base,
-                               TAO_OutStream *os)
-{
-  // Abstract interfaces have no code generated on the skeleton side.
-  if (base->is_abstract ())
-    {
-      return 0;
-    }
-
-  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
-      << "                    \""
-      << base->repoID () << "\") == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return static_cast<"
-      << base->full_skel_name () << "_ptr> (this);" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
 
   return 0;
 }
@@ -2247,16 +2224,16 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
         {
           op = be_operation::narrow_from_decl (d);
 
-          if (be_global->gen_thru_poa_collocation ())
-            {
-              be_interface::gen_collocated_skel_body (derived,
-                                                      ancestor,
-                                                      d,
-                                                      "",
-                                                      I_FALSE,
-                                                      op->exceptions (),
-                                                      os);
-            }
+//           if (be_global->gen_thru_poa_collocation ())
+//             {
+//               be_interface::gen_collocated_skel_body (derived,
+//                                                       ancestor,
+//                                                       d,
+//                                                       "",
+//                                                       I_FALSE,
+//                                                       op->exceptions (),
+//                                                       os);
+//             }
 
           if (be_global->gen_direct_collocation ())
             {
@@ -2278,18 +2255,18 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
               return -1;
             }
 
-          if (be_global->gen_thru_poa_collocation ())
-            {
-              be_interface::gen_collocated_skel_body (
-                  derived,
-                  ancestor,
-                  d,
-                  "_get_",
-                  I_FALSE,
-                  attr->get_get_exceptions (),
-                  os
-                );
-            }
+//           if (be_global->gen_thru_poa_collocation ())
+//             {
+//               be_interface::gen_collocated_skel_body (
+//                   derived,
+//                   ancestor,
+//                   d,
+//                   "_get_",
+//                   I_FALSE,
+//                   attr->get_get_exceptions (),
+//                   os
+//                 );
+//             }
 
           if (be_global->gen_direct_collocation ())
             {
@@ -2306,18 +2283,18 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
 
           if (!attr->readonly ())
             {
-              if (be_global->gen_thru_poa_collocation ())
-                {
-                  be_interface::gen_collocated_skel_body (
-                      derived,
-                      ancestor,
-                      d,
-                      "_set_",
-                      I_FALSE,
-                      attr->get_set_exceptions (),
-                      os
-                    );
-                }
+//               if (be_global->gen_thru_poa_collocation ())
+//                 {
+//                   be_interface::gen_collocated_skel_body (
+//                       derived,
+//                       ancestor,
+//                       d,
+//                       "_set_",
+//                       I_FALSE,
+//                       attr->get_set_exceptions (),
+//                       os
+//                     );
+//                 }
 
               if (be_global->gen_direct_collocation ())
                 {

@@ -3,21 +3,21 @@
 // $Id$
 
 ACE_INLINE TAO_ORB_Core *
-TAO_ServerRequest::orb_core (void)
+TAO_ServerRequest::orb_core (void) const
 {
   return this->orb_core_;
 }
 
-ACE_INLINE TAO_InputCDR &
-TAO_ServerRequest::incoming (void)
+ACE_INLINE TAO_InputCDR *
+TAO_ServerRequest::incoming (void) const
 {
-  return *this->incoming_;
+  return this->incoming_;
 }
 
-ACE_INLINE TAO_OutputCDR &
-TAO_ServerRequest::outgoing (void)
+ACE_INLINE TAO_OutputCDR *
+TAO_ServerRequest::outgoing (void) const
 {
-  return *this->outgoing_;
+  return this->outgoing_;
 }
 
 ACE_INLINE const char *
@@ -166,6 +166,12 @@ ACE_INLINE void
 TAO_ServerRequest::is_dsi (void)
 {
   this->is_dsi_ = 1;
+}
+
+ACE_INLINE TAO_Operation_Details const *
+TAO_ServerRequest::operation_details (void) const
+{
+  return this->operation_details_;
 }
 
 ACE_INLINE void

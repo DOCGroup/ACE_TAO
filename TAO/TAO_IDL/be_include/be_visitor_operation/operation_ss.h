@@ -1,6 +1,6 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -53,17 +53,13 @@ public:
   virtual int gen_pre_skel_info (be_operation *node);
   // generate any pre skeleton code info
 
-  virtual int gen_demarshal_params (be_operation *node,
-                                    be_type *bt);
-  // generate code for demarshaling incoming parameters
+  /// Generate the skeleton operation body.
+  int gen_skel_operation_body (be_operation * node,
+                               be_type * return_type);
 
-  virtual int gen_marshal_params (be_operation *node,
-                                  be_type *bt);
-  // generate code for marshaling outgoing parameters
-
-  // = helper
-  virtual int post_process (be_decl *);
-  // stuff to output after every member of the scope is handled
+  /// Generate the skeleton operation argument list.
+  void gen_skel_body_arglist (be_operation * node,
+                              TAO_OutStream * os);
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SS_H_ */

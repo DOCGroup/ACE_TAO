@@ -92,7 +92,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
-  this->params_->_tao_incoming_cdr (this->orb_server_request_.incoming (),
+  this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
                                     CORBA::ARG_IN | CORBA::ARG_INOUT,
                                     this->lazy_evaluation_
                                     ACE_ENV_ARG_PARAMETER);

@@ -68,7 +68,6 @@
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"
 #include "be_visitor_interface/ami_interface_ch.cpp"
-#include "be_visitor_interface/interceptors_ss.cpp"
 
 // Proxy Brokers
 #include "be_visitor_interface/strategized_proxy_broker_sh.cpp"
@@ -88,6 +87,6 @@
 #include "be_visitor_interface/amh_rh_ss.cpp"
 #include "be_visitor_interface/amh_rh_sh.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_interface, 
+ACE_RCSID (be,
+           be_visitor_interface,
            "$Id$")

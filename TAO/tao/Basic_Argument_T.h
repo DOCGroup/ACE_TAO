@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -66,7 +66,7 @@ namespace TAO
     S & arg (void);
 
   private:
-    mutable S & x_;
+    S & x_;
   };
 
   /**

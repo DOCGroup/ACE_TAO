@@ -7,7 +7,7 @@
  *  $Id$
  *
  *   This file contains a helper class to simplify the support of
- *   interceptors in tao_idl generated skeletons.
+ *   interceptors in TAO_IDL generated skeletons.
  *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
@@ -34,97 +34,100 @@
 #include "tao/Basic_Types.h"
 #include "tao/Interceptor_List.h"
 
-class TAO_ServerRequestInfo;
+class TAO_ServerRequest;
 
-/**
- * @class TAO_ServerRequestInterceptor_Adapter
- *
- * @brief TAO_ServerRequestInterceptor_Adapter
- *
- * A convenient helper class to invoke registered server request
- * interceptor(s) in tao_idl generated code.
- */
-class TAO_PortableServer_Export TAO_ServerRequestInterceptor_Adapter
+
+namespace TAO
 {
-
-public:
-  TAO_ServerRequestInterceptor_Adapter (
-    TAO_ServerRequestInterceptor_List::TYPE &interceptors,
-    size_t &stack_size);
-
-  ~TAO_ServerRequestInterceptor_Adapter (void);
+  class ServerRequestInfo;
 
   /**
-   * @name PortableInterceptor Client Side Interception Points
+   * @class ServerRequestInterceptor_Adapter
    *
-   * Each of these methods corresponds to a client side interception
-   * point.
+   * @brief ServerRequestInterceptor_Adapter
    *
+   * A convenient helper class to invoke registered server request
+   * interceptor(s).
    */
-  //@{
+  class ServerRequestInterceptor_Adapter
+  {
+  public:
+
+    /// Constructor.
+    ServerRequestInterceptor_Adapter (TAO_ServerRequest & server_request);
+
+    /**
+     * @name PortableInterceptor Client Side Interception Points
+     *
+     * Each of these methods corresponds to a client side interception
+     * point.
+     */
+    //@{
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-  /// This method implements the "starting" server side interception
-  /// point. It will be used as the first interception point and it is
-  /// proprietary to TAO.
-  /// @@ Will go away once Bug 1369 is fixed
-  void tao_ft_interception_point (
-    TAO_ServerRequestInfo *ri ,
-    CORBA::OctetSeq_out oc
-    ACE_ENV_ARG_DECL);
+    /// This method implements the "starting" server side interception
+    /// point. It will be used as the first interception point and it is
+    /// proprietary to TAO.
+    /// @@ Will go away once Bug 1369 is fixed
+    void tao_ft_interception_point (TAO::ServerRequestInfo * ri ,
+                                    CORBA::OctetSeq_out oc
+                                    ACE_ENV_ARG_DECL);
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
-  /// This method implements the "intermediate" server side interception
-  /// point if the above #ifdef is set to 1 and a starting intercetion
-  /// point if it is not set to 1.
-  /// @@ NOTE: This method should have been the "starting"
-  /// interception point according to the interceptor spec. This will
-  /// be fixed once Bug 1369 is completely done.
-  void receive_request_service_contexts (
-    TAO_ServerRequestInfo * ri
-    ACE_ENV_ARG_DECL);
+    /// This method implements the "intermediate" server side
+    /// interception point if the above #ifdef is set to 1 and a
+    /// starting intercetion point if it is not set to 1.
+    ///
+    /// @note This method should have been the "starting" interception
+    ///       point according to the interceptor spec. This will be
+    ///       fixed once Bug 1369 is completely done.
+    void receive_request_service_contexts (TAO::ServerRequestInfo * ri
+                                           ACE_ENV_ARG_DECL);
 
-  /// This method an "intermediate" server side interception point.
-  void receive_request (TAO_ServerRequestInfo * ri
-                        ACE_ENV_ARG_DECL);
+    /// This method an "intermediate" server side interception point.
+    void receive_request (TAO::ServerRequestInfo * ri
+                          ACE_ENV_ARG_DECL);
 
-  /// This method implements one of the "ending" server side
-  /// interception points.
-  void send_reply (TAO_ServerRequestInfo * ri
-                   ACE_ENV_ARG_DECL);
+    /// This method implements one of the "ending" server side
+    /// interception points.
+    void send_reply (TAO::ServerRequestInfo * ri
+                     ACE_ENV_ARG_DECL);
 
-  /// This method implements one of the "ending" server side
-  /// interception points.
-  void send_exception (TAO_ServerRequestInfo * ri
-                       ACE_ENV_ARG_DECL);
+    /// This method implements one of the "ending" server side
+    /// interception points.
+    void send_exception (TAO::ServerRequestInfo * ri
+                         ACE_ENV_ARG_DECL);
 
-  /// This method implements one of the "ending" server side
-  /// interception points.
-  void send_other (TAO_ServerRequestInfo * ri
-                   ACE_ENV_ARG_DECL);
-  //@}
+    /// This method implements one of the "ending" server side
+    /// interception points.
+    void send_other (TAO::ServerRequestInfo * ri
+                     ACE_ENV_ARG_DECL);
+    //@}
 
-  /// Returns true if a LOCATION_FORWARD was generated, and false
-  /// otherwise.
-  CORBA::Boolean location_forwarded (void) const;
+    /// Returns true if a LOCATION_FORWARD was generated, and false
+    /// otherwise.
+    bool location_forwarded (void) const;
 
-private:
+  private:
 
-  /// Reference to the list of registered interceptors.
-  TAO_ServerRequestInterceptor_List::TYPE & interceptors_;
+    /// Reference to the list of registered interceptors.
+    TAO_ServerRequestInterceptor_List::TYPE & interceptors_;
 
-  /// Cache the length of the interceptor list so that we don't have
-  /// to compute it at each stage of the current interception.
-  const size_t len_;
+    /// Cache the length of the interceptor list so that we don't have
+    /// to compute it at each stage of the current interception.
+    size_t const len_;
 
-  /// The number of interceptors "pushed" onto the logical flow
-  /// stack.  This is used when unwinding the flow stack.
-  size_t & stack_size_;
+    /// The number of interceptors "pushed" onto the logical flow
+    /// stack.  This is used when unwinding the flow stack.
+    size_t & stack_size_;
 
-  /// True if a PortableInterceptor::ForwardRequest exception was
-  /// thrown.
-  CORBA::Boolean location_forwarded_;
+    /// True if a PortableInterceptor::ForwardRequest exception was
+    /// thrown.
+    bool location_forwarded_;
 
-};
+  };
+
+}  // End namespace TAO
+
 
 #if defined (__ACE_INLINE__)
 # include "ServerInterceptorAdapter.inl"

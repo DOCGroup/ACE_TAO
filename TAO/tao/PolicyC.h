@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be/be_codegen.cpp:153
 
 #ifndef _TAO_IDL_ORIG_POLICYC_H_
 #define _TAO_IDL_ORIG_POLICYC_H_
@@ -73,7 +73,7 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from 
-// be\be_visitor_root/root_ch.cpp:62
+// be/be_visitor_root/root_ch.cpp:62
 
 namespace TAO
 {
@@ -84,49 +84,49 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:379
+  // be/be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyErrorCode;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyErrorCode;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyErrorCode BAD_POLICY = 0;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyErrorCode UNSUPPORTED_POLICY = 1;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyErrorCode BAD_POLICY_TYPE = 2;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyErrorCode BAD_POLICY_VALUE = 3;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
+  // be/be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::PolicyErrorCode UNSUPPORTED_POLICY_VALUE = 4;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be/be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_POLICYERROR_CH_)
 #define _CORBA_POLICYERROR_CH_
@@ -164,27 +164,27 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ctor.cpp:66
+    // be/be_visitor_exception/exception_ctor.cpp:66
     
     PolicyError (
         ACE_NESTED_CLASS (CORBA, PolicyErrorCode) _tao_reason
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be/be_visitor_exception/exception_ch.cpp:127
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyError;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyError;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_exception/exception_ch.cpp:51
+  // be/be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_INVALIDPOLICIES_CH_)
 #define _CORBA_INVALIDPOLICIES_CH_
@@ -222,27 +222,27 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ctor.cpp:66
+    // be/be_visitor_exception/exception_ctor.cpp:66
     
     InvalidPolicies (
         const ACE_NESTED_CLASS (CORBA, UShortSeq) & _tao_indices
       );
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:127
+    // be/be_visitor_exception/exception_ch.cpp:127
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidPolicies;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_InvalidPolicies;
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be/be_interface.cpp:598
 
 #if !defined (_CORBA_POLICY__VAR_OUT_CH_)
 #define _CORBA_POLICY__VAR_OUT_CH_
@@ -265,7 +265,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLICY_CH_)
 #define _CORBA_POLICY_CH_
@@ -280,6 +280,8 @@ namespace CORBA
     
     // The static operations.
     static Policy_ptr _duplicate (Policy_ptr obj);
+    
+    static void _tao_release (Policy_ptr obj);
     
     static Policy_ptr _narrow (
         CORBA::Object_ptr obj
@@ -299,7 +301,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::PolicyType policy_type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -309,7 +311,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -319,7 +321,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -329,7 +331,7 @@ namespace CORBA
       ));
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be/be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -384,12 +386,12 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Policy;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Policy;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be/be_interface.cpp:598
 
 #if !defined (_CORBA_POLICYMANAGER__VAR_OUT_CH_)
 #define _CORBA_POLICYMANAGER__VAR_OUT_CH_
@@ -412,7 +414,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLICYMANAGER_CH_)
 #define _CORBA_POLICYMANAGER_CH_
@@ -426,6 +428,8 @@ namespace CORBA
     
     // The static operations.
     static PolicyManager_ptr _duplicate (PolicyManager_ptr obj);
+    
+    static void _tao_release (PolicyManager_ptr obj);
     
     static PolicyManager_ptr _narrow (
         CORBA::Object_ptr obj
@@ -445,7 +449,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::PolicyList * get_policy_overrides (
         const ::CORBA::PolicyTypeSeq & ts
@@ -456,7 +460,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_operation/operation_ch.cpp:46
+    // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_policy_overrides (
         const ::CORBA::PolicyList & policies,
@@ -469,7 +473,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be/be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -495,12 +499,12 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyManager;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyManager;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be/be_interface.cpp:598
 
 #if !defined (_CORBA_POLICYCURRENT__VAR_OUT_CH_)
 #define _CORBA_POLICYCURRENT__VAR_OUT_CH_
@@ -523,7 +527,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLICYCURRENT_CH_)
 #define _CORBA_POLICYCURRENT_CH_
@@ -538,6 +542,8 @@ namespace CORBA
     
     // The static operations.
     static PolicyCurrent_ptr _duplicate (PolicyCurrent_ptr obj);
+    
+    static void _tao_release (PolicyCurrent_ptr obj);
     
     static PolicyCurrent_ptr _narrow (
         CORBA::Object_ptr obj
@@ -557,7 +563,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be/be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -583,19 +589,19 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be/be_visitor_typecode/typecode_decl.cpp:44
   
-  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyCurrent;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_PolicyCurrent;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // Proxy Broker Factory function pointer declarations.
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:120
+// be/be_visitor_root/root.cpp:230
 
 extern TAO_Export
 TAO::Collocation_Proxy_Broker *
@@ -604,7 +610,7 @@ TAO::Collocation_Proxy_Broker *
   );
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:59
+// be/be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -613,7 +619,7 @@ namespace TAO
 #if !defined (_CORBA_POLICY__TRAITS_CH_)
 #define _CORBA_POLICY__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::Policy>
   {
     static ::CORBA::Policy_ptr duplicate (
@@ -634,7 +640,7 @@ namespace TAO
 #if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
 #define _CORBA_POLICYCURRENT__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
   {
     static ::CORBA::PolicyCurrent_ptr duplicate (
@@ -655,7 +661,7 @@ namespace TAO
 #if !defined (_CORBA_POLICYMANAGER__TRAITS_CH_)
 #define _CORBA_POLICYMANAGER__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_Export Objref_Traits< ::CORBA::PolicyManager>
   {
     static ::CORBA::PolicyManager_ptr duplicate (
@@ -675,7 +681,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
+// be/be_visitor_exception/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::PolicyError &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyError*); // noncopying version
@@ -683,7 +689,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyError *&
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::PolicyError *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
+// be/be_visitor_exception/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::InvalidPolicies &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, CORBA::InvalidPolicies*); // noncopying version
@@ -691,46 +697,46 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InvalidPolicie
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InvalidPolicies *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyManager_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyManager_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be/be_visitor_interface/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr); // copying
 TAO_Export void operator<<= (CORBA::Any &, CORBA::PolicyCurrent_ptr *); // non-copying
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PolicyCurrent_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_ch.cpp:52
+// be/be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyError &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyError &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/cdr_op_ch.cpp:52
+// be/be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InvalidPolicies &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InvalidPolicies &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/cdr_op_ch.cpp:55
+// be/be_visitor_interface/cdr_op_ch.cpp:55
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Policy_ptr );
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be/be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "PolicyC.inl"

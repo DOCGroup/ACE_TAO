@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_POLICY___CI_)
 #define _CORBA_POLICY___CI_

@@ -129,7 +129,7 @@ namespace TAO
   TAO_Stub *
   Invocation_Adapter::get_stub (ACE_ENV_SINGLE_ARG_DECL) const
   {
-    TAO_Stub *stub =
+    TAO_Stub * const stub =
       this->target_->_stubobj ();
 
     if (stub == 0)

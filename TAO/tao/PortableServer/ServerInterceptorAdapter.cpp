@@ -8,23 +8,31 @@ ACE_RCSID (PortableServer,
            ServerInterceptorAdapter,
            "$Id$")
 
-#if !defined (__ACE_INLINE__)
+#ifndef __ACE_INLINE__
 # include "ServerInterceptorAdapter.inl"
-#endif /* __ACE_INLINE__ */
+#endif /* !__ACE_INLINE__ */
 
 #include "ServerRequestInfo.h"
 #include "PICurrent_Guard.h"
 
+#include "tao/TAO_Server_Request.h"
+#include "tao/ORB_Core.h"
 
-TAO_ServerRequestInterceptor_Adapter::~TAO_ServerRequestInterceptor_Adapter (void)
+
+TAO::ServerRequestInterceptor_Adapter::ServerRequestInterceptor_Adapter (
+  TAO_ServerRequest & server_request)
+  : interceptors_ (server_request.orb_core ()->server_request_interceptors ())
+  , len_ (interceptors_.size ())
+  , stack_size_ (server_request.interceptor_count ())
+  , location_forwarded_ (false)
 {
 }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
-TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
-    TAO_ServerRequestInfo *ri,
-    CORBA::OctetSeq_out oc
+TAO::ServerRequestInterceptor_Adapter::tao_ft_interception_point (
+  TAO::ServerRequestInfo * ri,
+  CORBA::OctetSeq_out oc
   ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" server side
@@ -36,8 +44,8 @@ TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
       // used to make the copy also occur if an exception is thrown.
-      TAO::PICurrent_Guard pi_guard (ri->server_request (),
-                                     false /* Copy RSC to TSC */);
+      TAO::PICurrent_Guard const pi_guard (ri->server_request (),
+                                           false /* Copy RSC to TSC */);
 
       oc = 0;
 
@@ -70,16 +78,15 @@ TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
 }
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-receive_request_service_contexts (
-  TAO_ServerRequestInfo *ri
+TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
+  TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "intermediate" server side
@@ -96,6 +103,7 @@ receive_request_service_contexts (
       // internal error that must be corrected.
       ACE_THROW (CORBA::INTERNAL ());
     }
+
   ACE_TRY
     {
       for (size_t i = 0 ; i < this->stack_size_; ++i)
@@ -113,7 +121,7 @@ receive_request_service_contexts (
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -125,9 +133,8 @@ receive_request_service_contexts (
 /// messing around things in the same function, which is harder to
 /// read and could make the code buggier.
 void
-TAO_ServerRequestInterceptor_Adapter::
-receive_request_service_contexts (
-  TAO_ServerRequestInfo *ri
+TAO::ServerRequestInterceptor_Adapter::receive_request_service_contexts (
+  TAO::ServerRequestInfo * ri
   ACE_ENV_ARG_DECL)
 {
 
@@ -140,8 +147,8 @@ receive_request_service_contexts (
       // current (TSC) upon leaving this scope, i.e. just after the
       // receive_request_service_contexts() completes.  A "guard" is
       // used to make the copy also occur if an exception is thrown.
-      TAO::PICurrent_Guard pi_guard (ri->server_request (),
-                                     false /* Copy RSC to TSC */);
+      TAO::PICurrent_Guard const pi_guard (ri->server_request (),
+                                           false /* Copy RSC to TSC */);
 
       for (size_t i = 0 ; i < this->len_; ++i)
         {
@@ -162,7 +169,7 @@ receive_request_service_contexts (
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -171,9 +178,9 @@ receive_request_service_contexts (
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-receive_request (TAO_ServerRequestInfo *ri
-                 ACE_ENV_ARG_DECL)
+TAO::ServerRequestInterceptor_Adapter::receive_request (
+  TAO::ServerRequestInfo * ri
+  ACE_ENV_ARG_DECL)
 {
   // This method implements an "intermediate" server side interception
   // point.  Interceptors are invoked in the same order they were
@@ -212,7 +219,7 @@ receive_request (TAO_ServerRequestInfo *ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -220,9 +227,9 @@ receive_request (TAO_ServerRequestInfo *ri
 }
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-send_reply (TAO_ServerRequestInfo *ri
-            ACE_ENV_ARG_DECL)
+TAO::ServerRequestInterceptor_Adapter::send_reply (
+  TAO::ServerRequestInfo * ri
+  ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -232,7 +239,7 @@ send_reply (TAO_ServerRequestInfo *ri
   // interception point.
 
   // Unwind the stack.
-  const size_t len = this->stack_size_;
+  size_t const len = this->stack_size_;
   for (size_t i = 0; i < len; ++i)
     {
       // Pop the interceptor off of the flow stack before it is
@@ -253,9 +260,9 @@ send_reply (TAO_ServerRequestInfo *ri
 }
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-send_exception (TAO_ServerRequestInfo *ri
-                ACE_ENV_ARG_DECL)
+TAO::ServerRequestInterceptor_Adapter::send_exception (
+  TAO::ServerRequestInfo *ri
+  ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -267,7 +274,7 @@ send_exception (TAO_ServerRequestInfo *ri
   ACE_TRY
     {
       // Unwind the flow stack.
-      const size_t len = this->stack_size_;
+      size_t const len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
@@ -289,7 +296,7 @@ send_exception (TAO_ServerRequestInfo *ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_CATCHANY
     {
@@ -324,9 +331,9 @@ send_exception (TAO_ServerRequestInfo *ri
 }
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-send_other (TAO_ServerRequestInfo *ri
-            ACE_ENV_ARG_DECL)
+TAO::ServerRequestInterceptor_Adapter::send_other (
+  TAO::ServerRequestInfo * ri
+  ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
@@ -338,7 +345,7 @@ send_other (TAO_ServerRequestInfo *ri
   ACE_TRY
     {
       // Unwind the flow stack.
-      const size_t len = this->stack_size_;
+      size_t const len = this->stack_size_;
       for (size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
@@ -360,7 +367,7 @@ send_other (TAO_ServerRequestInfo *ri
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->location_forwarded_ = 1;
+      this->location_forwarded_ = true;
     }
   ACE_ENDTRY;
   ACE_CHECK;

@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/tie_si.cpp:96
+// be/be_visitor_interface/tie_si.cpp:96
 
 template <class T> ACE_INLINE
 POA_CORBA::Policy_tie<T>::Policy_tie (T &t)
@@ -120,7 +120,7 @@ POA_CORBA::Policy_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA::Policy_tie<T>::policy_type  (
@@ -136,7 +136,7 @@ CORBA::PolicyType POA_CORBA::Policy_tie<T>::policy_type  (
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::Policy_tie<T>::copy  (
@@ -152,7 +152,7 @@ template <class T> ACE_INLINE
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_operation/tie_si.cpp:68
+// be/be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
 void POA_CORBA::Policy_tie<T>::destroy  (

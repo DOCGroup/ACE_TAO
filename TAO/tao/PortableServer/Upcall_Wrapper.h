@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,6 +6,7 @@
  *
  *  $Id$
  *
+ *  @author Ossama Othman
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
@@ -18,52 +19,105 @@
 
 #include "portableserver_export.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#ifndef ACE_LACKS_PRAGMA_ONCE
 # pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#endif /* !ACE_LACKS_PRAGMA_ONCE */
 
-#include "ServerInterceptorAdapter.h"
-#include "tao/SArgument_T.h"
-#include "tao/TAO_Server_Request.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
-/**
- * @class TAO_Upcall_Wrapper
- *
- * @brief Wraps the activities of the _skel operations.
- *
- */
-class TAO_PortableServer_Export TAO_Upcall_Wrapper
+
+class TAO_ServantBase;
+class TAO_ServerRequest;
+class TAO_InputCDR;
+class TAO_OutputCDR;
+
+namespace PortableServer
 {
-public:
-  TAO_Upcall_Wrapper (TAO::SArgument * _tao_arguments,
-                      size_t nargs,
-                      TAO::SArgument * _tao_retval,
-                      TAO_ServerRequest * _tao_server_request,
-                      void * _tao_servant_upcall)
-    : arglist_ (_tao_arguments),
-      nargs_ (nargs),
-      retval (_tao_retval),
-      tao_server_request (_tao_server_request),
-      servant_upcall_ (_tao_servant_upcall)
-  {}
+  typedef ::TAO_ServantBase ServantBase;
+}
 
-  virtual ~TAO_Upcall_Wrapper (void);
 
-  void pre_upcall (void)
+namespace TAO
+{
+  class Argument;
+  class Upcall_Command;
+
+  /**
+   * @class Upcall_Wrapper
+   *
+   * @brief Wraps the activities of the _skel operations.
+   *
+   */
+  class TAO_PortableServer_Export Upcall_Wrapper
   {
-  }
+  public:
 
-  void post_upcall (void)
-  {
-  }
+    /**
+     * @note The TAO::Argument corresponding to the return value is
+     *       always the first element in the array, regardless of
+     *       whether or not the return type is void.
+     */
 
-private:
-  TAO::SArgument * arglist_;
-  size_t nargs_;
-  TAO::SArgument * retval_;
-  TAO_ServerRequest * tao_server_request_;
-  void * servant_upcall_;
-};
+    /// Perform the upcall.
+    /**
+     * @param server_request Object containing server side messaging
+     *                       operations (e.g. CDR reply construction, etc).
+     * @param args           Operation argument list.
+     * @param nargs          Number of arguments in the operation
+     *                       argument list.
+     * @param command        @c Command object that performs the
+     *                       actual upcall into the servant.
+     *
+     * @param servant_upcall Object containing information for POA
+     *                       that dispatched the servant.
+     * @param servant        The servant handling the upcall.
+     * @param exceptions     Array of user exceptions the operation
+     *                       may raise.
+     * @param nexceptions    The number of exceptions in the operation
+     *                       user exception array.
+     */
+    void upcall (TAO_ServerRequest & server_request,
+                 TAO::Argument * const args[],
+                 size_t nargs,
+                 TAO::Upcall_Command & command
+
+#if TAO_HAS_INTERCEPTORS == 1
+                 , void * servant_upcall
+                 , CORBA::TypeCode_ptr const exceptions[]
+                 , size_t nexceptions
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+                 ACE_ENV_ARG_DECL);
+
+  private:
+
+
+    /// Perform pre-upcall operations.
+    /**
+     * Perform pre-upcall operations, including operation @c IN and
+     * @c INOUT argument demarshaling.
+     */
+    void pre_upcall (TAO_InputCDR & cdr,
+                     TAO::Argument * const * args,
+                     size_t nargs
+                     ACE_ENV_ARG_DECL);
+
+    /// Perform post-upcall operations.
+    /**
+     * Perform post-upcall operations, including operation @c INOUT
+     * and @c OUT argument marshaling.
+     */
+    void post_upcall (TAO_OutputCDR & cdr,
+                      TAO::Argument * const * args,
+                      size_t nargs
+                      ACE_ENV_ARG_DECL);
+
+  };
+
+}  // End namespace TAO
+
 
 #include /**/ "ace/post.h"
 

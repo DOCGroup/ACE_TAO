@@ -44,6 +44,8 @@ namespace CORBA
   typedef ORB *ORB_ptr;
 }
 
+class TAO_Operation_Details;
+
 /**
  * @class TAO_ServerRequest
  *
@@ -88,6 +90,11 @@ public:
                      TAO_ORB_Core *orb_core,
                      int &parse_error);
 
+  /// Constructor used by thru-POA collocated invocation path.
+  TAO_ServerRequest (TAO_ORB_Core * orb_core,
+                     TAO_Operation_Details const & details,
+                     CORBA::Object_ptr target);
+
   /// Destructor.
   virtual ~TAO_ServerRequest (void);
 
@@ -111,16 +118,16 @@ public:
   CORBA::ORB_ptr orb (void);
 
   /// Return the ORB core pointer member.
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core (void) const;
 
   /// Start a Reply message.
   void init_reply (void);
 
   /// Retrieve the incoming stream.
-  TAO_InputCDR &incoming (void);
+  TAO_InputCDR * incoming (void) const;
 
   /// Retrieve the outgoing stream.
-  TAO_OutputCDR &outgoing (void);
+  TAO_OutputCDR * outgoing (void) const;
 
   /// Is the response expected?
   CORBA::Boolean response_expected (void) const;
@@ -204,6 +211,9 @@ public:
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
+  // Get the operation details for the current request.
+  TAO_Operation_Details const * operation_details (void) const;
+
   /// Get/Set operations for the argument_flag
   void argument_flag (CORBA::Boolean flag);
   CORBA::Boolean argument_flag (void);
@@ -270,6 +280,9 @@ private:
   /// 0: anything else
   CORBA::Boolean sync_with_server_;
 
+  /// Did we get passed to a CORBA::ServerRequest?
+  CORBA::Boolean is_dsi_;
+
   //  TAO_GIOP_ReplyStatusType exception_type_;
   /// Exception type (will be NO_EXCEPTION in the majority of the cases).
   CORBA::ULong exception_type_;
@@ -291,11 +304,10 @@ private:
   /// Identifies the requester.
   CORBA::OctetSeq_var requesting_principal_;
 
-  /// Did we get passed to a CORBA::ServerRequest?
-  CORBA::Boolean is_dsi_;
-
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_;
+
+  TAO_Operation_Details const * const operation_details_;
 
   /**
    * An argument flag to indicate whether there is any data that is
