@@ -57,7 +57,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
                              PortableServer::POA_ptr poa,
                              const char * /* operation */,
                              PortableServer::ServantLocator::Cookie &cookie,
-                             CORBA::Environment &env)
+                             CORBA::Environment &ACE_TRY_ENV)
 {
   PortableServer::Servant servant =
     (*servant_supplier_) (oid,
@@ -72,9 +72,8 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
       return servant;
     }
   else
-    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
-                          env,
-                          0);
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+                      0);
 }
 
 // Since the servant gets invoked per operation, the servant has to be

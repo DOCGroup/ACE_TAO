@@ -56,7 +56,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                PortableServer::POA_ptr poa,
-                               CORBA::Environment &env)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Obtain the servant else exception.
   PortableServer::Servant servant =
@@ -66,9 +66,8 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
   if (servant != 0)
     return servant;
   else
-    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
-                          env,
-                          0);
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+                      0);
 }
 
 // This is the method invoked when the object is deactivated or the
