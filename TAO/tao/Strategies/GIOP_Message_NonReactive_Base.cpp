@@ -30,8 +30,8 @@ TAO_GIOP_Message_NonReactive_Base::read_message (TAO_Transport *transport,
 
 
   // Error in the message that was received
-  if (retval == -1)
-    return -1;
+  if (retval <= 0)
+    return retval;
 
   // Get the message state
   TAO_GIOP_Message_State &state =
@@ -46,14 +46,13 @@ TAO_GIOP_Message_NonReactive_Base::read_message (TAO_Transport *transport,
       TAO_InputCDR &cdr =
         this->message_handler_.input_cdr ();
 
-      char *buf = cdr.rd_ptr ();
+      char *base = cdr.start ()->base ();
 
-      buf -= TAO_GIOP_MESSAGE_HEADER_LEN;
       size_t len = cdr.length () + TAO_GIOP_MESSAGE_HEADER_LEN;
 
       this->dump_msg ("Recv",
                       ACE_reinterpret_cast (u_char *,
-                                            buf),
+                                            base),
                       len);
 
     }
