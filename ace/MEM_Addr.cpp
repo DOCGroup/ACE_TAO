@@ -16,14 +16,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Addr)
 // Transform the current address into string format.
 
 ACE_MEM_Addr::ACE_MEM_Addr (void)
-  : ACE_Addr (AF_INET, sizeof ACE_MEM_Addr)
+  : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   // ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
   this->initialize_local (0);
 }
 
 ACE_MEM_Addr::ACE_MEM_Addr (const ACE_MEM_Addr &sa)
-  : ACE_Addr (AF_INET, sizeof ACE_MEM_Addr)
+  : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
   this->external_.set (sa.external_);
@@ -31,7 +31,7 @@ ACE_MEM_Addr::ACE_MEM_Addr (const ACE_MEM_Addr &sa)
 }
 
 ACE_MEM_Addr::ACE_MEM_Addr (const ASYS_TCHAR port_number[])
-  : ACE_Addr (AF_INET, sizeof ACE_MEM_Addr)
+  : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
   u_short pn
@@ -43,7 +43,7 @@ ACE_MEM_Addr::ACE_MEM_Addr (const ASYS_TCHAR port_number[])
 }
 
 ACE_MEM_Addr::ACE_MEM_Addr (u_short port_number)
-  : ACE_Addr (AF_INET, sizeof ACE_MEM_Addr)
+  : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
   this->initialize_local (port_number);
