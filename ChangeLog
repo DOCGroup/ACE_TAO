@@ -1,13 +1,21 @@
+Sun Jul 18 09:08:42 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+
+	  Added new PolicyFactory list to the test run list.
+
 Sun Jul 18 00:26:19 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ace/QtReactor.h
 	* ace/QtReactor.cpp
-	Changed QtReactor constructors to follow the way plain ACE_Select_Reactor
-	is constructed.
+	Changed QtReactor constructors to follow the way plain
+	ACE_Select_Reactor is constructed.
+
 	* tests/QtReactor.cpp
 	* tests/QtReactor.h
-	Reduced number of socket handlers for QNX NTO as Qt@NTO is compiled with
-	small FD_SETSIZE
+	Reduced number of socket handlers for QNX NTO as Qt@NTO is
+	compiled with small FD_SETSIZE.
+
 	* ace/config-qnx-rtp-62x.h
 	Decreased FD_SETSIZE to 1000 to better follow QNX NTO limits.
 
@@ -36,22 +44,25 @@ Sat Jul 17 01:34:44 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* ace/README (ACE_HAS_QT):
 	Create section on ACE_HAS_QT and ACE_QTREACTOR_CLEAR_PENDING_EVENTS.
+
 	* ace/QtReactor.cpp:
 	* ace/QtReactor.h:
 	Introduced ACE_QTREACTOR_CLEAR_PENDING_EVENTS switch to disable
 	calling ACE_Event_Handler::handle_* for handles without activity,
 	espacially for ACE_Acceptor::handle_input. see ace/README.
+
 	* test/QtReactor_Test.cpp:
 	* test/QtReactor_Test.cpp:
 	Fixed bug related with bad interpretation of
 	ACE_Acceptor::make_svc_handler. Modified some ACE_DEBUG.
 
-
 Fri Jul 16 16:37:31 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ChangeLog: "Do not look at lazer pointer with remaining eye".  Thanks to
-	  Russ Noseworthy <j.russell.noseworthy@objectsciences.com> for
- 	  this deep thought ;-)
+	* ChangeLog: "Do not look at lazer pointer with remaining eye".
+
+	  Thanks to Russ Noseworthy
+	  <j.russell.noseworthy@objectsciences.com> for this deep thought
+	  ;-)
 
 Fri Jul 16 07:27:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
