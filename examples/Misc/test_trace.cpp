@@ -80,9 +80,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc > 2)
     ACE_Trace::set_nesting_indent (ACE_OS::atoi (argv[2]));
 
-  ACE_Trace _ (ACE_TEXT("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"),
-               __LINE__,
-               ACE_TEXT(__FILE__));
+  ACE_Trace trace (ACE_TEXT("int ACE_TMAIN (int argc, ACE_TCHAR *argv[])"),
+                   __LINE__,
+                   ACE_TEXT(__FILE__));
 
   // The following won't work on MVS OpenEdition...
   ACE_Sig_Action sig1 ((ACE_SignalHandler) ACE_Trace::start_tracing,

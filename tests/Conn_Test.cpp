@@ -704,7 +704,7 @@ spawn_threads (ACCEPTOR *acceptor,
 {
   int status = 0;
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
   ACE_NEW_RETURN (server_name,
@@ -736,11 +736,11 @@ spawn_threads (ACCEPTOR *acceptor,
     }
 
   ACE_TCHAR *client_name = ACE_TEXT ("Conn client");
-#endif /* VXWORKS */
+#endif /* VXWORKS && !ACE_HAS_PTHREADS*/
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        server_name,
 #endif /* VXWORKS */
        n_servers,
@@ -767,7 +767,7 @@ spawn_threads (ACCEPTOR *acceptor,
       ((ACE_THR_FUNC) client,
        (void *) server_addr,
        THR_NEW_LWP
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
        , &client_name
 #endif /* VXWORKS */
        ) == -1)
@@ -792,7 +792,7 @@ spawn_threads (ACCEPTOR *acceptor,
       status = -1;
     }
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && !defined (ACE_HAS_PTHREADS)
   for (i = 0; i < n_servers; ++i)
     {
       delete [] server_name[i];
