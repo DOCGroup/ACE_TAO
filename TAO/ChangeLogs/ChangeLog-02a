@@ -1,3 +1,17 @@
+Thu May 23 13:34:35 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Nested_Upcall_Crash/Makefile:
+	* tests/Nested_Upcall_Crash/Test.idl:
+	* tests/Nested_Upcall_Crash/Client_Peer.h:
+	* tests/Nested_Upcall_Crash/Client_Peer.cpp:
+	* tests/Nested_Upcall_Crash/Server_Peer.h:
+	* tests/Nested_Upcall_Crash/Server_Peer.cpp:
+	* tests/Nested_Upcall_Crash/client.cpp:
+	* tests/Nested_Upcall_Crash/scavenger.cpp:
+	* tests/Nested_Upcall_Crash/server.cpp:
+	  Commit new regression test for
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1202
+
 Thu May 23 12:02:19 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
