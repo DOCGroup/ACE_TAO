@@ -1,3 +1,35 @@
+Fri Oct 15 17:17:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Sync_Strategies.cpp (timer_check): We now support the
+	  timeout feature of BufferingConstraint policy.
+
+	* tao/Pluggable.h (TAO_Transport): The base class now holds on to
+	  a timeout value <buffering_timeout_value_> and a timer id
+	  <buffering_timer_id_>.  These are used to implement automatic
+	  timed flushing of buffered oneways.
+
+	* tao/IIOP_Transport.cpp (event_handler):
+	* tao/UIOP_Transport.cpp (event_handler):
+
+	  This method provides a way to gain access to the underlying
+	  event handler used by the reactor.
+
+	* tao/UIOP_Connect.cpp (handle_timeout):
+	* tao/IIOP_Connect.cpp (handle_timeout):
+
+	  This new method is called when the buffering timer expires.
+	  Flush the buffered messages when this happens.
+
+	* examples/Buffered_Oneways/client.cpp: Added testing for the
+	  implicit buffering timeout feature.
+
+	* examples/Buffered_Oneways/run_test.pl: Now checks for:
+
+	  (a) Flushing based on implicit message counts
+	  (b) Flushing based on implicit message bytes
+	  (c) Flushing based on implicit timeout
+	  (d) Explicit queue flushing (and server shutdown)
+
 Thu Oct 14 22:19:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/GIOP.cpp (send_reply_exception): A format code was missing

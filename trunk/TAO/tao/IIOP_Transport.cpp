@@ -83,6 +83,12 @@ TAO_IIOP_Transport::handle (void)
   return this->handler_->get_handle ();
 }
 
+ACE_Event_Handler *
+TAO_IIOP_Transport::event_handler (void)
+{
+  return this->handler_;
+}
+
 // ****************************************************************
 
 TAO_IIOP_Server_Transport::
@@ -356,11 +362,11 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
           if (iovcnt == IOV_MAX)
             {
               if (max_wait_time == 0)
-                n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+                n = this->handler_->peer ().sendv_n (iov,
                                                      iovcnt);
               else
                 n = ACE::writev (this->handler_->peer ().get_handle (),
-                                 (const iovec*) iov,
+                                 iov,
                                  iovcnt,
                                  max_wait_time);
 
@@ -376,7 +382,7 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->peer ().sendv_n ((const iovec *) iov,
+      n = this->handler_->peer ().sendv_n (iov,
                                            iovcnt);
       if (n < 1)
         return n;

@@ -115,7 +115,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
 #if defined (TCP_NODELAY)
-  int nodelay = 
+  int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
 
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
@@ -238,9 +238,9 @@ TAO_IIOP_Server_Connection_Handler::svc (void)
         }
       current_timeout = timeout;
       if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "TAO (%P|%t) IIOP_Server_Connection_Handler::svc - "
-		    "loop <%d>\n", current_timeout.msec ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) IIOP_Server_Connection_Handler::svc - "
+                    "loop <%d>\n", current_timeout.msec ()));
     }
 
   if (TAO_debug_level > 0)
@@ -375,7 +375,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
 #endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
 #if defined (TCP_NODELAY)
-  int nodelay = 
+  int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
@@ -418,11 +418,22 @@ TAO_IIOP_Client_Connection_Handler::close (u_long)
 
   return 0;
 }
+
 int
 TAO_IIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Call the waiter to handle the input.
   return this->transport ()->wait_strategy ()->handle_input ();
+}
+
+int
+TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
+                                                    const void *arg)
+{
+  // Called when buffering timer expires.
+  this->transport ()->flush_buffered_messages ();
+
+  return 0;
 }
 
 int
