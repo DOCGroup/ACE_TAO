@@ -3,7 +3,6 @@
 // $Id$
 
 #include "tao/Interceptor_List.h"
-#include "tao/IORInterceptor_Adapter.h"
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Core.h"
 
@@ -13,8 +12,8 @@
 # include "tao/Interceptor_List.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Interceptor_List, 
+ACE_RCSID (tao,
+           Interceptor_List,
            "$Id$")
 
 // ****************************************************************
@@ -67,7 +66,7 @@ TAO_Interceptor_List::add_interceptor_i (
               CORBA::String_var existing_name =
                 this->interceptor (i)->name ();
 
-              if (ACE_OS_String::strcmp (existing_name.in (), 
+              if (ACE_OS_String::strcmp (existing_name.in (),
                                          name.in ()) == 0)
                 {
                   ACE_THROW_RETURN
@@ -195,84 +194,6 @@ TAO_ServerRequestInterceptor_List::add_interceptor (
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-// -------------------------------------------------------------------
-
-TAO_IORInterceptor_List::TAO_IORInterceptor_List (void)
-  : interceptors_ ()
-{
-}
-
-TAO_IORInterceptor_List::~TAO_IORInterceptor_List (void)
-{
-  size_t len = this->interceptors_.size ();
-
-  TAO_IORInterceptor_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
-        TAO_ORB_Core::iorinterceptor_adapter_name ()
-      );
-
-  if (adapter != 0)
-    {
-      for (size_t i = 0; i < len; ++i)
-        {
-          adapter->tao_iorinterceptor_release (this->interceptors_[i]);
-        }
-    }
-}
-
-size_t
-TAO_IORInterceptor_List::length (void)
-{
-  return this->interceptors_.size ();
-}
-
-void
-TAO_IORInterceptor_List::length (size_t len)
-{
-  this->interceptors_.size (len);
-}
-
-PortableInterceptor::Interceptor_ptr
-TAO_IORInterceptor_List::interceptor (size_t index)
-{
-  TAO_IORInterceptor_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
-        TAO_ORB_Core::iorinterceptor_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        PortableInterceptor::Interceptor::_nil ());
-    }
-
-  return adapter->tao_iorinterceptor (this->interceptors_,
-                                      index);
-}
-
-void
-TAO_IORInterceptor_List::add_interceptor (
-  PortableInterceptor::IORInterceptor_ptr interceptor
-  ACE_ENV_ARG_DECL)
-{
-  TAO_IORInterceptor_Adapter *adapter =
-    ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
-        TAO_ORB_Core::iorinterceptor_adapter_name ()
-      );
-
-  if (adapter == 0)
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-
-  adapter->tao_add_iorinterceptor (this,
-                                   this->interceptors_,
-                                   interceptor
-                                   ACE_ENV_ARG_PARAMETER);
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 # if TAO_HAS_INTERCEPTORS == 1
@@ -281,8 +202,6 @@ template class ACE_Array_Base<PortableInterceptor::ClientRequestInterceptor_ptr>
 template class ACE_Array_Base<PortableInterceptor::ServerRequestInterceptor_ptr>;
 
 # endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-template class ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -293,7 +212,4 @@ template class ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>;
 
 # endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#pragma instantiate ACE_Array_Base<PortableInterceptor::IORInterceptor_ptr>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

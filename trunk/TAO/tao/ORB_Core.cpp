@@ -186,7 +186,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     client_request_interceptors_ (),
     server_request_interceptors_ (),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    ior_interceptors_ (),
+    ior_interceptor_adapter_ (0),
     parser_registry_ (),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
@@ -2012,41 +2012,12 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-      TAO_IORInterceptor_List::TYPE &ior_interceptors =
-        this->ior_interceptors_.interceptors ();
-
-      len = ior_interceptors.size ();
-      ilen = len;
-
-      TAO_IORInterceptor_Adapter *adapter =
-        ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
-            TAO_ORB_Core::iorinterceptor_adapter_name ()
-          );
-
-      if (adapter == 0)
+      if (this->ior_interceptor_adapter_ != 0)
         {
-          ACE_TRY_THROW (CORBA::INTERNAL ());
+          this->ior_interceptor_adapter_->destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+          ACE_CHECK;
         }
 
-      for (size_t k = 0; k < len; ++k)
-        {
-          // Destroy the interceptors in reverse order in case the array
-          // list is only partially destroyed and another invocation
-          // occurs afterwards.
-          --ilen;
-
-          adapter->tao_iorinterceptor_destroy (ior_interceptors,
-                                               ilen
-                                               ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // Since Interceptor::destroy() can throw an exception, decrease
-          // the size of the interceptor array incrementally since some
-          // interceptors may not have been destroyed yet.  Note that this
-          // size reduction is fast since no memory is actually
-          // deallocated.
-          ior_interceptors.size (ilen);
-        }
     }
   ACE_CATCHALL
     {
@@ -2767,6 +2738,53 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
+
+void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::IORInterceptor_ptr interceptor
+   ACE_ENV_ARG_DECL)
+{
+  if (this->ior_interceptor_adapter ())
+    {
+      this->ior_interceptor_adapter_->add_interceptor (interceptor
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    ACE_TRY_THROW (CORBA::INTERNAL ());
+}
+
+TAO_IORInterceptor_List *
+TAO_ORB_Core::ior_interceptor_list (void)
+{
+  if (this->ior_interceptor_adapter ())
+    {
+      return this->ior_interceptor_adapter_->interceptor_list ();
+    }
+
+  return 0;
+}
+
+TAO_IORInterceptor_Adapter *
+TAO_ORB_Core::ior_interceptor_adapter (void)
+{
+  if (this->ior_interceptor_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        ace_mon,
+                        this->lock_,
+                        0);
+      if (this->ior_interceptor_adapter_ == 0)
+        {
+          this->ior_interceptor_adapter_=
+          ACE_Dynamic_Service<TAO_IORInterceptor_Adapter>::instance (
+              TAO_ORB_Core::iorinterceptor_adapter_name ()
+              );
+
+        }
+    }
+  return this->ior_interceptor_adapter_;
+}
 
 // ****************************************************************
 

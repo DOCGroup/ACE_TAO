@@ -82,7 +82,8 @@ class TAO_POA_PortableGroup_Hooks;
 class TAO_Request_Dispatcher;
 
 class TAO_Codeset_Manager;
-
+class TAO_IORInterceptor_List;
+class TAO_IORInterceptor_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -904,8 +905,13 @@ public:
     PortableInterceptor::IORInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
+#if 0
+  /// NOTE: Removed during subsetting.
   /// Return the array of IOR interceptors specific to this ORB.
-  TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
+  TAO_IORInterceptor_List::TYPE &ior_interceptors (void);
+#endif /**/
+
+  TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
 
   /// Return the underlying transport cache
@@ -1032,6 +1038,9 @@ private:
   /// applied on objects in the <other_orb>
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
+
+  TAO_IORInterceptor_Adapter *ior_interceptor_adapter (void);
+
 protected:
 
   /// Synchronize internal state...
@@ -1251,8 +1260,8 @@ protected:
   TAO_ServerRequestInterceptor_List server_request_interceptors_;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /// IOR interceptor registry.
-  TAO_IORInterceptor_List ior_interceptors_;
+  /// IORInterceptor adapter factory.
+  TAO_IORInterceptor_Adapter *ior_interceptor_adapter_;
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;

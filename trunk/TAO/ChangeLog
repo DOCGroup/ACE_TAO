@@ -1,3 +1,67 @@
+Fri May 23 06:03:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  This checkin cleans up things that were not properly done during
+	  IORInterceptor strategizing. There were multiple problems but
+	  they just showed up as a failure in the DLL_ORB test in our
+	  daily builds. 
+
+	  The focal point of the problem TAO_IORInterceptor_List class
+	  which was left in the main tao library. This class used all
+	  sorts of mechanisms to access the IORInterceptor libray which
+	  lead to shutdown probelms if the ORB was dynamically loaded.  
+
+	  The following changes basically moved the class to its own
+	  library and resolves the problems seen. 
+
+	* tao/IORInterceptor_Adapter.h: Completely changed the interface
+	  of the adapter class. It now houses the following pure virtual
+	  methods
+	  - add_interceptor (), 
+	  - destroy_interceptors (), and
+	  - interceptor_list () which provide a nice interface for the ORB
+	  to interact with the IORInterceptor in the library.
+	
+	* tao/Interceptor_List.cpp: 
+	* tao/Interceptor_List.h:
+	* tao/Interceptor_List.inl: Removed the TAO_IORInterceptor_List 
+	  class from the file.
+
+	* tao/ORB_Core.h: The ORB_Core will not store the list of IOR
+	  interceptors, but store a pointer to the Adapter class
+	  instead. The accessor for the IORInterceptor_List::TYPE has been
+	  removed but replaced with an accessor that returns a pointer
+	  IORInterceptor_List and a pointer to the adapter class.
+	  
+	* tao/ORB_Core.cpp: Added implementation for the new accessor
+	  methods included. Methods add_interceptor () and
+	  destroy_interceptors () just turns around and invokes the
+	  adapter classes for getting their work done.
+
+	* tao/ORB_Core.i: Moved the add_interceptor () call to the .cpp
+	  file since it has a conditional statement.
+	
+	* tao/IORInterceptor/IORInterceptor_List.cpp:
+	* tao/IORInterceptor/IORInterceptor_List.h:
+	* tao/IORInterceptor/IORInterceptor_List.inl: The class
+	  TAO_IORInterceptor_List has been placed in this file. 
+	
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h: The actual
+	  implementation for the adapter classes. 
+
+	* tao/IORInterceptor/Makefile.bor:
+	* tao/IORInterceptor/Makefile: Added the new file for
+	  compilation. 
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POAManager.cpp: They now use the new method
+	  on the ORB_Core to access the underlying registered IOR
+	  interceptors.
+
+	* tao/Refcounted_ObjectKey.cpp:
+	* tao/Refcounted_ObjectKey.inl: Moved the decr_refcount () to the
+	  cpp file. 
+	
 Fri May 23 06:17:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_handler.h:
@@ -66,7 +130,10 @@ Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TAO.dsp:
 	* tao/Makefile.tao:
-	* tao/Makefile.bor: Added the new files for building.
+	* tao/Makefile.bor: Added the new files for building. 
+
+	  Thanks to Ira Burton <imburton@micron.com> for reporting the
+	  problem. 
 
 Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
