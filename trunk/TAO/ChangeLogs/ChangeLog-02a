@@ -1,3 +1,15 @@
+Tue Oct 10 13:11:09 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
+	* tests/Object_Loader/driver.dsp:
+
+	  Made some other project setting to fix lining errors.
+
+	* tao/PortableServer/Makefile.bor:
+
+	  Fixed typo i.e. renamed RT_PortableServerC.obj
+	  to RTPortableServerC.obj.
+
 Tue Oct 10 07:20:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile : Fixed a pre GNU 2.8 problem for FT
