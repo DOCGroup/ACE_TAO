@@ -1,7 +1,11 @@
-Sat Jan 26 13:57:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+Sat Jan 26 14:40:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * include/makeinclude/ace_flags.bor:
+          Added compiler and linker flags for new XML library
 
         * XML/common/Makefile.bor:
-          Added first BCB makefile for the new XML library. Another few
+        * XML/parser/parser.Makefile.bor
+          Added BCB makefiles for the new XML library. Another few
           must be created before the XML parser is completely build with
           BCB
 
