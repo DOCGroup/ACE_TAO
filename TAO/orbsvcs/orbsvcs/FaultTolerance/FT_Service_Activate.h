@@ -25,12 +25,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Services_Activate.h"
+#include "ace/Service_Config.h"
+#include "tao/ORB_Core.h"
+#include "tao/Service_Callbacks.h"
 
 // Forward declarations
-class TAO_Service_Callbacks;
-class TAO_ORB_Core;
-class TAO_FT_Service_Callbacks;
-
 class TAO_FT_Export TAO_FT_Service_Activate : public TAO_Services_Activate
 {
   // = TITLE
@@ -54,17 +53,34 @@ public:
   // This method cannot throw any exception, but it can return a nil
   // object to indicate an error condition.
 
+  static int Initializer (void);
+  // Used to force the initialization.
 
 private:
   TAO_ORB_Core *orb_core_;
   // Our copy of the ORB Core pointer
-
-  TAO_FT_Service_Callbacks *ft_service_callback_;
-  // A pointer to the callback that we will create for use and hand it
-  // over to the ORB.
 };
 
+ACE_STATIC_SVC_DECLARE (TAO_FT_Service_Activate)
 ACE_FACTORY_DECLARE (TAO_FT, TAO_FT_Service_Activate)
+
+#if defined(ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
+
+typedef int (*TAO_Module_Initializer) (void);
+
+static TAO_Module_Initializer
+TAO_FT_Requires_Service_Activate = &TAO_FT_Service_Activate::Initializer;
+
+#else
+
+static int
+TAO_FT_Requires_Service_Activate = TAO_FT_Service_Activate::Initializer ();
+
+#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+
+#define TAO_FT_SERVICE_SAFE_INCLUDE
+#include "FT_IOGR_Property.h"
+#undef TAO_FT_SERVICE_SAFE_INCLUDE
 
 #include "ace/post.h"
 #endif /*TAO_FT_ACTIVATE_H*/

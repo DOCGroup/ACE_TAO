@@ -1254,6 +1254,9 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->ior_table_);
 
+  if (ft_service_callbacks_ != 0)
+    delete ft_service_callbacks_;
+
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -1375,7 +1378,7 @@ TAO_ORB_Core::services_callbacks_init (void)
   if (this->ft_service_callbacks_ == 0)
     {
       TAO_Services_Activate *service =
-        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("TAO_FT_Service_Activate");
+        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("FT_Service_Activate");
 
       // Activate the callback
       if (service)
