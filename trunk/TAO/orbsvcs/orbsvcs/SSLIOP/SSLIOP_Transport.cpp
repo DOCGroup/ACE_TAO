@@ -463,7 +463,7 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_SSLIOP_Transport::send (const u_char *buf,
 			    size_t len,
-			    const ACE_Time_Value *)
+			    const ACE_Time_Value * /* max_wait_time */)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
@@ -475,7 +475,7 @@ TAO_SSLIOP_Transport::send (const u_char *buf,
 ssize_t
 TAO_SSLIOP_Transport::recv (char *buf,
 			    size_t len,
-			    const ACE_Time_Value * max_wait_time)
+			    const ACE_Time_Value * /* max_wait_time */)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
