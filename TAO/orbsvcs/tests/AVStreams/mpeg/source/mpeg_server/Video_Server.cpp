@@ -212,7 +212,7 @@ CORBA::Boolean
 Video_Control_Handler::init_video (const Video_Control::INITvideoPara &para,
                              CORBA::Environment&)
 {
-  //this->state_->init_video (para);
+  this->state_->init_video (para);
   return 0;
 }
 
@@ -222,7 +222,7 @@ Video_Control_Handler::stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size,
                               CORBA::Environment&)
 {
-  //this->state_->stat_stream (ch,size);
+  this->state_->stat_stream (ch,size);
   return 0;
 }
 
@@ -230,7 +230,7 @@ Video_Control_Handler::stat_stream (CORBA::Char_out ch,
 CORBA::Boolean 
 Video_Control_Handler::close (CORBA::Environment&)
 {
-  //this->state_->close ();
+  this->state_->close ();
   return 0;
 }
 
@@ -238,7 +238,7 @@ Video_Control_Handler::close (CORBA::Environment&)
 CORBA::Boolean 
 Video_Control_Handler::stat_sent (CORBA::Environment&)
 {
-  //this->state_->stat_sent ();
+  this->state_->stat_sent ();
   return 0;
 }
 
@@ -247,7 +247,7 @@ CORBA::Boolean
 Video_Control_Handler::fast_forward (const Video_Control::FFpara &para,
                                CORBA::Environment&)
 {
-  //this->state_->fast_forward (para);
+  this->state_->fast_forward (para);
   return 0;
 }
 
@@ -256,7 +256,7 @@ CORBA::Boolean
 Video_Control_Handler::fast_backward (const Video_Control::FFpara &para,
                                 CORBA::Environment&)
 {
-  //this->state_->fast_backward (para);
+  this->state_->fast_backward (para);
   return 0;
 }
 
@@ -265,7 +265,7 @@ CORBA::Boolean
 Video_Control_Handler::step (const Video_Control::STEPpara &para,
                        CORBA::Environment&)
 {
-  //this->state_->step (para);
+  this->state_->step (para);
   return 0;
 }
 
@@ -275,7 +275,7 @@ Video_Control_Handler::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts,
                        CORBA::Environment&)
 {
-  //this->state_->play (para,vts);
+  this->state_->play (para,vts);
   return 0;
 }
 
@@ -284,7 +284,7 @@ CORBA::Boolean
 Video_Control_Handler::position (const Video_Control::POSITIONpara &para,
                            CORBA::Environment&)
 {
-  //this->state_->position (para);
+  this->state_->position (para);
   return 0;
 }
 
@@ -293,7 +293,7 @@ CORBA::Boolean
 Video_Control_Handler::speed (const Video_Control::SPEEDpara &para,
                         CORBA::Environment&)
 {
-  //this->state_->speed (para);
+  this->state_->speed (para);
   return 0;
 }
 
@@ -303,7 +303,7 @@ CORBA::Boolean
 Video_Control_Handler::stop (CORBA::Long cmdsn,
                        CORBA::Environment&)
 {
-  //this->state_->stop (cmdsn);
+  this->state_->stop (cmdsn);
   return 0;
 }
 

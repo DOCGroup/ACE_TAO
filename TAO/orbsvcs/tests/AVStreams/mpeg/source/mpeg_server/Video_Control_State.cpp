@@ -228,6 +228,8 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts)
                        
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t)Video_Control_Waiting_State::play () called \n"));
   return 0;
 }
 
