@@ -188,10 +188,14 @@
 // socket.h from LynxOS 4.0.x defines SOCK_MAXADDRLEN.  Versions
 // of socket.h found on earlier releases of LynxOS do not define it.
 #include <socket.h>
-# if _POSIX_VERSION >= 199506L && defined (SOCK_MAXADDRLEN)
+#if _POSIX_VERSION >= 199506L && defined (SOCK_MAXADDRLEN)
 
 // "changes signedness" error (OS.i and many other files)
-#define ACE_HAS_SOCKLEN_T
+# define ACE_HAS_SOCKLEN_T
+
+// LSOCK.cpp uses a macro from param.h, not included
+# define ALIGNBYTES (sizeof(int) - 1)
+# define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 
 #endif /* _POSIX_VERSION && SOCK_MAXADDRLEN */
 
