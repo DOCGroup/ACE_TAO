@@ -138,28 +138,28 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (size_t size)
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
-begin (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::begin (void)
 {
   return ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> (*this);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
-end (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::end (void)
 {
   return ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> (*this, 1);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
-rbegin (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rbegin (void)
 {
   return ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> (*this);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
-rend (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rend (void)
 {
   return ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> (*this, 1);
 }
@@ -628,7 +628,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
   return this->map_man_->search_structure_ == 0
     // Note that this->next_ is never negative at this point...
     || ACE_static_cast(size_t, this->next_) >= this->map_man_->cur_size_
-    || ACE_static_case(size_t, this->next_) <= -1;
+    || ACE_static_cast(size_t, this->next_) <= -1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
