@@ -28,15 +28,7 @@
 #   define ACE_LACKS_MEMORY_H
     // Sun C++ 5.0 supports the `using' and `typename' keywords.
 #   define ACE_HAS_TYPENAME_KEYWORD
-    /* Explicit instantiation requires the -instances=explicit
-       CCFLAG.  It seems to work for the most part, except for:
-       1) Static data members get instantiated multiple times.
-       2) In TAO, the TAO_Unbounded_Sequence vtbl can't be found.
-       With CC 5.0, those problems may be fixed.  And, this is necessary
-       to work around problems with automatic template instantiation. */
-#   if (__SUNPRO_CC <= 0x500)
-#      define ACE_TEMPLATES_REQUIRE_SOURCE
-#   endif /* __SUNPRO_CC <= 0x500 */
+#   define ACE_TEMPLATES_REQUIRE_SOURCE
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)

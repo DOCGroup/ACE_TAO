@@ -1,6 +1,13 @@
 // $Id$
 
+#ifndef ACE_OBSTACK_T_C
+#define ACE_OBSTACK_T_C
+
 #include "ace/Obstack_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Obstack_T.i"
@@ -161,3 +168,5 @@ ACE_Obstack_T<CHAR>::release (void)
   this->curr_ = this->head_;
   this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
+
+#endif /* ACE_OBSTACK_T_C */

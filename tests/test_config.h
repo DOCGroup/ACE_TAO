@@ -311,12 +311,6 @@ randomize (int array[], size_t size)
 
 typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-   // This shouldn't be done in a header!  But, we don't have any other
-   // need for a .cpp file to link into all tests.
-   ace_file_stream* ace_file_stream::singleton_ = 0;
-#endif
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
