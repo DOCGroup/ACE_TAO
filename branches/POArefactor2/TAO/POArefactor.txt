@@ -1,3 +1,14 @@
+Thu Nov 25 15:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/POA_Policy_Set.{h,i}:
+          Added get_policy, to retrieve the policy for a given type
+
+        * tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/IORInterceptor/IORInfo.cpp:
+          Instead of getting the complete policy set, call get_policy on the
+          POA
+
 Thu Nov 25 12:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*Strategy*.{h,cpp}:
