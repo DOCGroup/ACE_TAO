@@ -11,7 +11,7 @@ ACE_RCSID(tao, Invocation, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Invocation_Timeprobe_Description[] =
+  static const char *TAO_Invocation_Timeprobe_Description[] =
 {
   "GIOP_Invocation::start - enter",
   "GIOP_Invocation::start - leave",
@@ -57,8 +57,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
   : data_ (data),
     opname_ (operation),
     my_request_id_ (0),
-    out_stream_ (buffer, sizeof buffer), /* CDR::DEFAULT_BUFSIZE */
-    handler_ (0)
+    out_stream_ (buffer, sizeof buffer) /* CDR::DEFAULT_BUFSIZE */
 {
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
@@ -80,8 +79,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
 
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
-  if (this->handler_ != 0)
-    this->handler_->idle ();
+  if (this->data_->handler () != 0)
+    this->data_->handler ()->idle ();
 }
 
 // The public API involves creating an invocation, starting it, filling
@@ -92,7 +91,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 void
 TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                             TAO_GIOP::Message_Type message_type,
-                                            CORBA::Environment &env)
+                            CORBA::Environment &env)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_START_ENTER);
 
@@ -152,10 +151,6 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       return;
     }
 
-  this->handler_ = 0;
-  // Must reset handler, otherwise, <ACE_Cached_Connect_Strategy> will
-  // complain.
-
   // Establish the connection and get back a
   // <Client_Connection_Handler>.
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
@@ -166,7 +161,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
       // Set the local port number to use.
 
-      if (con->connect (this->handler_,
+      if (con->connect (this->data_->handler (),
                         *server_addr_p,
                         0,
                         local_addr,
@@ -192,7 +187,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     }
   else
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-    if (con->connect (this->handler_,
+    if (con->connect (this->data_->handler (),
                       *server_addr_p) == -1)
       {
         // Give users a clue to the problem.
@@ -286,9 +281,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     default:
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
-  }
+    }
   if (!this->out_stream_.good_bit ())
-     env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_REQUEST_HDR);
 }
@@ -303,12 +298,12 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
   // Send Request, return on error or if we're done
 
-  if (this->handler_->send_request (this->out_stream_,
-                                    is_roundtrip) == -1)
+  if (this->data_->handler ()->send_request (this->out_stream_,
+                                           is_roundtrip) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
-      this->handler_ = 0;
+      this->data_->reset_handler ();
 
       //
       // @@ highly desirable to know whether we wrote _any_ data; if
@@ -357,8 +352,8 @@ TAO_GIOP_Invocation::close_connection (void)
     // resets the flag of the first call locate request to true
   }
 
-  this->handler_->close ();
-  this->handler_ = 0;
+  this->data_->handler ()->close ();
+  this->data_->reset_handler ();
   return TAO_GIOP_LOCATION_FORWARD;
 }
 
@@ -384,7 +379,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                          env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       dexc (env, "invoke, location forward (decode)");
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -396,7 +391,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   if (iiopobj == 0)
     {
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -473,11 +468,11 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_SVC_HANDLER *handler = this->handler_;
+  TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -508,7 +503,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -544,7 +539,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   if (!this->inp_stream_.good_bit ())
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -553,7 +548,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -589,7 +584,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
         {
           if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
             {
-              TAO_GIOP::send_error (this->handler_);
+              TAO_GIOP::send_error (this->data_->handler ());
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
               return TAO_GIOP_SYSTEM_EXCEPTION;
             }
@@ -619,7 +614,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
             if (env.exception () != 0)
               {
                 dexc (env, "invoke (), get exception ID");
-                TAO_GIOP::send_error (this->handler_);
+                TAO_GIOP::send_error (this->data_->handler ());
                 return TAO_GIOP_SYSTEM_EXCEPTION;
               }
 
@@ -632,7 +627,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                 if (env.exception () != 0)
                   {
                     dexc (env, "invoke (), get exception size");
-                    TAO_GIOP::send_error (this->handler_);
+                    TAO_GIOP::send_error (this->data_->handler ());
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
 
@@ -650,7 +645,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                     ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
                                 (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
                                 buf));
-                    TAO_GIOP::send_error (this->handler_);
+                    TAO_GIOP::send_error (this->data_->handler ());
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
                 env.exception (exception);
@@ -739,11 +734,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_SVC_HANDLER *handler = this->handler_;
+  TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -774,7 +769,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
@@ -809,7 +804,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
@@ -819,7 +814,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -855,7 +850,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         {
           if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
             {
-              TAO_GIOP::send_error (this->handler_);
+              TAO_GIOP::send_error (this->data_->handler ());
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
               return TAO_GIOP_SYSTEM_EXCEPTION;
             }
@@ -883,7 +878,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                 if (env.exception () != 0)
                   {
                     dexc (env, "invoke (), get exception ID");
-                    TAO_GIOP::send_error (this->handler_);
+                    TAO_GIOP::send_error (this->data_->handler ());
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
 
@@ -895,7 +890,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                     if (env.exception () != 0)
                       {
                         dexc (env, "invoke (), get exception size");
-                        TAO_GIOP::send_error (this->handler_);
+                        TAO_GIOP::send_error (this->data_->handler ());
                         return TAO_GIOP_SYSTEM_EXCEPTION;
                       }
 
@@ -924,7 +919,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                 if (env.exception () != 0)
                   {
                     dexc (env, "invoke (), get exception ID");
-                    TAO_GIOP::send_error (this->handler_);
+                    TAO_GIOP::send_error (this->data_->handler ());
                     return TAO_GIOP_SYSTEM_EXCEPTION;
                   }
 
@@ -966,7 +961,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
             ACE_DEBUG ((LM_ERROR, "(%P|%t) invoke, unmarshal %s exception %s\n",
                         (reply_status == TAO_GIOP_USER_EXCEPTION) ? "user" : "system",
                         buf));
-            TAO_GIOP::send_error (this->handler_);
+            TAO_GIOP::send_error (this->data_->handler ());
             return TAO_GIOP_SYSTEM_EXCEPTION;
           }
         env.exception (exception);
@@ -976,7 +971,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
     // NOTREACHED
 
     case TAO_GIOP_LOCATION_FORWARD:
-        return (this->location_forward (this->inp_stream_, env));
+      return (this->location_forward (this->inp_stream_, env));
     }
 
   // All standard exceptions from here on in the call path know for
@@ -999,21 +994,21 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
 
-  if (this->handler_->send_request (this->out_stream_,
-                                    CORBA::B_TRUE) == -1)
+  if (this->data_->handler ()->send_request (this->out_stream_,
+                                           CORBA::B_TRUE) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
-      this->handler_ = 0;
+      this->data_->reset_handler ();
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
-  TAO_SVC_HANDLER *handler = this->handler_;
+  TAO_SVC_HANDLER *handler = this->data_->handler ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
                                                      this->inp_stream_);
 
-  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->handler_);
+  TAO_ORB_Core_instance ()->reactor ()->resume_handler (this->data_->handler ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -1031,16 +1026,16 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       if (!this->inp_stream_.read_ulong (request_id)
           || request_id != this->my_request_id_
           || !this->inp_stream_.read_ulong (locate_status))
-      {
-        TAO_GIOP::send_error (this->handler_);
-        env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) bad Response header\n"));
+        {
+          TAO_GIOP::send_error (this->data_->handler ());
+          env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) bad Response header\n"));
 
-        return TAO_GIOP_SYSTEM_EXCEPTION;
-      }
+          return TAO_GIOP_SYSTEM_EXCEPTION;
+        }
       switch (locate_status)
-      {
+        {
         case TAO_GIOP_UNKNOWN_OBJECT:
           env.exception (new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_YES));
           return TAO_GIOP_SYSTEM_EXCEPTION;
@@ -1051,7 +1046,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
         case TAO_GIOP_OBJECT_FORWARD:
           return (this->location_forward (this->inp_stream_, env));
           /* not reached */
-      }
+        }
       /* not reached */
     case TAO_GIOP::Reply:
     case TAO_GIOP::Request:
@@ -1072,7 +1067,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-      TAO_GIOP::send_error (this->handler_);
+      TAO_GIOP::send_error (this->data_->handler ());
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
 
