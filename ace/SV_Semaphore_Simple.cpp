@@ -1,4 +1,3 @@
-// SV_Semaphore_Simple.cpp
 // $Id$
 
 /* -*- C++ -*- */
@@ -22,8 +21,8 @@ ACE_SV_Semaphore_Simple::dump (void) const
 
 int
 ACE_SV_Semaphore_Simple::control (int cmd,
-				  int value,
-				  u_short semnum) const
+                                  int value,
+                                  u_short semnum) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
   if (this->internal_id_ == -1)
@@ -35,7 +34,7 @@ ACE_SV_Semaphore_Simple::control (int cmd,
       semctl_arg.val = value;
       return ACE_OS::semctl (this->internal_id_,
                              semnum,
-			     cmd,
+                             cmd,
                              semctl_arg);
     }
 }
@@ -74,15 +73,15 @@ ACE_SV_Semaphore_Simple::op (int val, u_short n, int flags) const
 
 int
 ACE_SV_Semaphore_Simple::open (key_t k,
-			       int flags,
-			       int initial_value,
-			       u_short n,
-			       int perms)
+                               int flags,
+                               int initial_value,
+                               u_short n,
+                               int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
   union semun ivalue;
 
-  if (k == IPC_PRIVATE || k == ACE_INVALID_SEM_KEY)
+  if (k == IPC_PRIVATE || k == ACE_static_cast (key_t, ACE_INVALID_SEM_KEY))
     return -1;
 
   ivalue.val = initial_value;
@@ -97,16 +96,16 @@ ACE_SV_Semaphore_Simple::open (key_t k,
   if (ACE_BIT_ENABLED (flags, IPC_CREAT))
     for (int i = 0; i < n; i++)
       if (ACE_OS::semctl (this->internal_id_, i, SETVAL, ivalue) == -1)
-	return -1;
+        return -1;
 
   return 0;
 }
 
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
-						  int flags,
-						  int initial_value,
-						  u_short n,
-						  int perms)
+                                                  int flags,
+                                                  int initial_value,
+                                                  u_short n,
+                                                  int perms)
   : key_ (k)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
@@ -129,7 +128,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
   if (name == 0)
     {
       errno = EINVAL;
-      return ACE_INVALID_SEM_KEY;
+      return ACE_static_cast (key_t, ACE_INVALID_SEM_KEY);
     }
 
   // Basically "hash" the values in the <name>.  This won't
@@ -143,10 +142,10 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 
 int
 ACE_SV_Semaphore_Simple::open (const char *name,
-			       int flags,
-			       int initial_value,
-			       u_short n,
-			       int perms)
+                               int flags,
+                               int initial_value,
+                               u_short n,
+                               int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open");
 
@@ -161,15 +160,15 @@ ACE_SV_Semaphore_Simple::open (const char *name,
 }
 
 ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
-						  int flags,
-						  int initial_value,
-						  u_short n,
-						  int perms)
+                                                  int flags,
+                                                  int initial_value,
+                                                  u_short n,
+                                                  int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
   if (this->open (name, flags, initial_value, n, perms) == -1)
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
-		ASYS_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
+                ASYS_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
 ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
