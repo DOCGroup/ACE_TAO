@@ -5,14 +5,13 @@
 
 #include "tao/Fixed_Size_Argument_T.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/Fixed_Size_Argument_T.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Fixed_Size_Argument_T,
            "$Id$")
-
-template<typename S>
-TAO::In_Fixed_Size_Argument_T<S>::In_Fixed_Size_Argument_T (S const & x)
-  : x_ (&x)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -37,11 +36,6 @@ TAO::In_Fixed_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 }
 
 // ===========================================================
-
-template<typename S>
-TAO::Inout_Fixed_Size_Argument_T<S>::Inout_Fixed_Size_Argument_T (S & x)
-  : x_ (&x)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -75,11 +69,6 @@ TAO::Inout_Fixed_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 // ==============================================================
 
 template<typename S>
-TAO::Out_Fixed_Size_Argument_T<S>::Out_Fixed_Size_Argument_T (S & x)
-  : x_ (x)
-{}
-
-template<typename S>
 CORBA::Boolean
 TAO::Out_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 {
@@ -87,11 +76,6 @@ TAO::Out_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 }
 
 // ============================================================
-
-template<typename S>
-TAO::Ret_Fixed_Size_Argument_T<S>::Ret_Fixed_Size_Argument_T (void)
-{
-}
 
 template<typename S>
 CORBA::Boolean
@@ -113,20 +97,6 @@ TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 {
   S * tmp = &this->x_;
   return any >>= tmp;
-}
-
-template<typename S>
-S
-TAO::Ret_Fixed_Size_Argument_T<S>::excp (void)
-{
-  return this->x_;
-}
-
-template<typename S>
-S
-TAO::Ret_Fixed_Size_Argument_T<S>::retn (void)
-{
-  return this->x_;
 }
 
 // ============================================================
@@ -157,18 +127,7 @@ TAO::In_Fixed_Size_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
   return any >>= this->x_;
 }
 
-template<typename S>
-const S &
-TAO::In_Fixed_Size_SArgument_T<S>::arg (void) const
-{
-  return *this->x_;
-}
-
 // ===========================================================
-
-template<typename S>
-TAO::Inout_Fixed_Size_SArgument_T<S>::Inout_Fixed_Size_SArgument_T (void)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -199,18 +158,7 @@ TAO::Inout_Fixed_Size_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
   return any >>= this->x_;
 }
 
-template<typename S>
-S &
-TAO::Inout_Fixed_Size_SArgument_T<S>::arg (void)
-{
-  return *this->x_;
-}
-
 // ==============================================================
-
-template<typename S>
-TAO::Out_Fixed_Size_SArgument_T<S>::Out_Fixed_Size_SArgument_T (void)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -219,19 +167,7 @@ TAO::Out_Fixed_Size_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
   return cdr << this->x_;
 }
 
-template<typename S>
-S &
-TAO::Out_Fixed_Size_SArgument_T<S>::arg (void)
-{
-  return this->x_;
-}
-
 // ============================================================
-
-template<typename S>
-TAO::Ret_Fixed_Size_SArgument_T<S>::Ret_Fixed_Size_SArgument_T (void)
-{
-}
 
 template<typename S>
 CORBA::Boolean
@@ -252,13 +188,6 @@ CORBA::Boolean
 TAO::Ret_Fixed_Size_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
 {
   return any >>= this->x_;
-}
-
-template<typename S>
-S &
-TAO::Ret_Fixed_Size_SArgument_T<S>::arg (void)
-{
-  return *this->x_;
 }
 
 #endif /* TAO_FIXED_SIZE_ARGUMENT_T_C */

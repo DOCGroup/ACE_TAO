@@ -5,16 +5,13 @@
 
 #include "tao/BD_String_Argument_T.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/BD_String_Argument_T.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            BD_String_Argument_T,
            "$Id$")
-
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::In_BD_String_Argument_T (
-    const S * x
-  )
-  : x_ (x)
-{}
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 CORBA::Boolean
@@ -45,12 +42,6 @@ TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_replace (
 }
 
 // ===========================================================
-
-template<typename S, typename to_S, typename from_S, size_t BOUND>
-TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::
-Inout_BD_String_Argument_T (S *& x)
-  : x_ (x)
-{}
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 CORBA::Boolean
@@ -97,16 +88,6 @@ template<typename S,
          typename to_S, 
          typename from_S, 
          size_t BOUND>
-TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::
-Out_BD_String_Argument_T (S_out x)
-  : x_ (x.ptr ())
-{}
-
-template<typename S, 
-         typename S_out, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
 CORBA::Boolean
 TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
     TAO_InputCDR & cdr
@@ -116,16 +97,6 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
 }
 
 // ============================================================
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::
-Ret_BD_String_Argument_T (void)
-{
-}
 
 template<typename S, 
          typename S_var, 
@@ -165,38 +136,7 @@ interceptor_replace (CORBA::Any & any)
   return any >>= to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-S *
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::excp (void)
-{
-  return this->x_.ptr ();
-}
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-S *
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::retn (void)
-{
-  return this->x_._retn ();
-}
-
 // ============================================================
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-In_BD_String_SArgument_T (void)
-{}
 
 template<typename S, 
          typename S_var, 
@@ -237,27 +177,7 @@ interceptor_replace (CORBA::Any & any)
   return any >>= to_S (this->x_.out (), BOUND);
 }
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-const S *
-TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void) const
-{
-  return this->x_.in ();
-}
-
 // ===========================================================
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-Inout_BD_String_SArgument_T (void)
-{}
 
 template<typename S, 
          typename S_var, 
@@ -310,27 +230,7 @@ interceptor_replace (CORBA::Any & any)
   return any >>= to_S (this->x_.in (), BOUND);
 }
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-S *&
-TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
-{
-  return this->x_.inout ();
-}
-
 // ==============================================================
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-Out_BD_String_SArgument_T (void)
-{}
 
 template<typename S, 
          typename S_var, 
@@ -345,28 +245,7 @@ TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
   return cdr << from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-S *&
-TAO::Out_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
-{
-  return this->x_.out ();
-}
-
 // ============================================================
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-Ret_BD_String_SArgument_T (void)
-{
-}
 
 template<typename S, 
          typename S_var, 
@@ -403,17 +282,6 @@ TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
 interceptor_replace (CORBA::Any & any)
 {
   return any >>= to_S (this->x_.out (), BOUND);
-}
-
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
-         size_t BOUND>
-S *&
-TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::arg (void)
-{
-  return this->x_.out ();
 }
 
 #endif /* TAO_BD_STRING_ARGUMENT_T_C */

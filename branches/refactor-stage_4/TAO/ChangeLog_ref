@@ -1,3 +1,51 @@
+Fri Jul 11 08:19:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BD_String_Argument_T.inl:
+        * tao/Basic_Argument_T.inl:
+        * tao/Fixed_Array_Argument_T.inl:
+        * tao/Fixed_Size_Argument_T.inl:
+        * tao/Object_Argument_T.inl:
+        * tao/Special_Basic_Argument_T.inl:
+        * tao/UB_String_Argument_T.inl:
+        * tao/Var_Array_Argument_T.inl:
+        * tao/Var_Size_Argument_T.inl:
+
+	  New files, containing all constructors and
+	  non-virtual functions.
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.h:
+        * tao/Fixed_Size_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Object_Argument_T.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/Var_Array_Argument_T.h:
+        * tao/Var_Size_Argument_T.cpp:
+        * tao/Var_Size_Argument_T.h:
+
+	  Modified these files accordingly from the changes
+	  above.
+
+        * tao/TAO.dsp:
+
+	  Added new files to the project.
+
+        * tao/corba.h:
+
+	  Removed includes of the above header files, since
+	  the IDL compiler now generates the necessary 
+	  includes for whatever types are used in operation
+	  signatures.
+
 Thu Jul 10 16:05:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Size_Argument_T.cpp:

@@ -5,14 +5,13 @@
 
 #include "tao/Var_Size_Argument_T.h"
 
+#if !defined (__ACE_INLINE__)
+#include "tao/Var_Size_Argument_T.inl"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID (tao,
            Var_Size_Argument_T,
            "$Id$")
-
-template<typename S>
-TAO::In_Var_Size_Argument_T<S>::In_Var_Size_Argument_T (S const & x)
-  : x_ (&x)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -37,11 +36,6 @@ TAO::In_Var_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 }
 
 // ===========================================================
-
-template<typename S>
-TAO::Inout_Var_Size_Argument_T<S>::Inout_Var_Size_Argument_T (S & x)
-  : x_ (&x)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -75,12 +69,6 @@ TAO::Inout_Var_Size_Argument_T<S>::interceptor_replace (CORBA::Any & any)
 // ==============================================================
 
 template<typename S, typename S_out>
-TAO::Out_Var_Size_Argument_T<S,S_out>::Out_Var_Size_Argument_T (S_out x)
-  : x_ (x.ptr ())
-{
-}
-
-template<typename S, typename S_out>
 CORBA::Boolean
 TAO::Out_Var_Size_Argument_T<S,S_out>::demarshal (TAO_InputCDR & cdr)
 {
@@ -91,11 +79,6 @@ TAO::Out_Var_Size_Argument_T<S,S_out>::demarshal (TAO_InputCDR & cdr)
 }
 
 // ============================================================
-
-template<typename S, typename S_var>
-TAO::Ret_Var_Size_Argument_T<S,S_var>::Ret_Var_Size_Argument_T (void)
-{
-}
 
 template<typename S, typename S_var>
 CORBA::Boolean
@@ -123,25 +106,7 @@ TAO::Ret_Var_Size_Argument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
   return any >>= this->x_.out ();
 }
 
-template<typename S, typename S_var>
-S *
-TAO::Ret_Var_Size_Argument_T<S,S_var>::excp (void)
-{
-  return this->x_.ptr ();
-}
-
-template<typename S, typename S_var>
-S *
-TAO::Ret_Var_Size_Argument_T<S,S_var>::retn (void)
-{
-  return this->x_._retn ();
-}
-
 // ============================================================
-
-template<typename S>
-TAO::In_Var_Size_SArgument_T<S>::In_Var_Size_SArgument_T (void)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -165,18 +130,7 @@ TAO::In_Var_Size_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
   return any >>= this->x_;
 }
 
-template<typename S>
-const S &
-TAO::In_Var_Size_SArgument_T<S>::arg (void) const
-{
-  return *this->x_;
-}
-
 // ===========================================================
-
-template<typename S>
-TAO::Inout_Var_Size_SArgument_T<S>::Inout_Var_Size_SArgument_T (void)
-{}
 
 template<typename S>
 CORBA::Boolean
@@ -207,18 +161,7 @@ TAO::Inout_Var_Size_SArgument_T<S>::interceptor_replace (CORBA::Any & any)
   return any >>= this->x_;
 }
 
-template<typename S>
-S &
-TAO::Inout_Var_Size_SArgument_T<S>::arg (void)
-{
-  return *this->x_;
-}
-
 // ==============================================================
-
-template<typename S, typename S_var>
-TAO::Out_Var_Size_SArgument_T<S,S_var>::Out_Var_Size_SArgument_T (void)
-{}
 
 template<typename S, typename S_var>
 CORBA::Boolean
@@ -227,19 +170,7 @@ TAO::Out_Var_Size_SArgument_T<S,S_var>::marshal (TAO_OutputCDR &cdr)
   return cdr << this->x_.in ();
 }
 
-template<typename S, typename S_var>
-S *&
-TAO::Out_Var_Size_SArgument_T<S,S_var>::arg (void)
-{
-  return this->x_.out ();
-}
-
 // ============================================================
-
-template<typename S, typename S_var>
-TAO::Ret_Var_Size_SArgument_T<S,S_var>::Ret_Var_Size_SArgument_T (void)
-{
-}
 
 template<typename S, typename S_var>
 CORBA::Boolean
@@ -260,13 +191,6 @@ CORBA::Boolean
 TAO::Ret_Var_Size_SArgument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
 {
   return any >>= this->x_.out ();
-}
-
-template<typename S, typename S_var>
-S *&
-TAO::Ret_Var_Size_SArgument_T<S,S_var>::arg (void)
-{
-  return this->x_.out ();
 }
 
 #endif /* TAO_VAR_SIZE_ARGUMENT_T_C */

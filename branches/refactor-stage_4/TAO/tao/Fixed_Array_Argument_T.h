@@ -247,9 +247,9 @@ namespace TAO
   };
 };
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#if defined (__ACE_INLINE__)
+#include "tao/Fixed_Array_Argument_T.inl"
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Fixed_Array_Argument_T.cpp"

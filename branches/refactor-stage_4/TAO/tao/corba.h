@@ -79,17 +79,6 @@
 #include "tao/Array_VarOut_T.h"
 #include "tao/VarOut_T.h"
 
-// Template arg helper classes.
-#include "tao/Basic_Argument_T.h"
-#include "tao/BD_String_Argument_T.h"
-#include "tao/Fixed_Array_Argument_T.h"
-#include "tao/Fixed_Size_Argument_T.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Special_Basic_Argument_T.h"
-#include "tao/UB_String_Argument_T.h"
-#include "tao/Var_Array_Argument_T.h"
-#include "tao/Var_Size_Argument_T.h"
-
 #include "tao/Remote_Object_Proxy_Impl.h"
 
 #include "tao/StringSeqC.h"
