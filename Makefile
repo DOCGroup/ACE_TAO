@@ -198,7 +198,7 @@ REL                = beta
 ZIP_FILES          =
 
 #### The release target creates the ACE (only) kit.
-release: $(APPLY_NEW_TAG
+release: $(APPLY_NEW_TAG)
 	@$(ACE_ROOT)/bin/make_release -k ace $(ACE_TAG) \
          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
