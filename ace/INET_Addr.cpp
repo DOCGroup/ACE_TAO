@@ -253,13 +253,13 @@ ACE_INET_Addr::set (u_short port_number,
   for (res = res0; res != 0; res = res->ai_next)
     {
       if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
-	{
+        {
           this->set_type (res->ai_family);
-	  this->set_addr (res->ai_addr, res->ai_addrlen);
-	  this->set_port_number (port_number, encode);
-	  ret = 0;
-	  break;
-	}
+          this->set_addr (res->ai_addr, res->ai_addrlen);
+          this->set_port_number (port_number, encode);
+          ret = 0;
+          break;
+        }
     }
   freeaddrinfo (res0);
   return ret;
@@ -384,6 +384,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
                  host_name,
+                 1,
                  address_family) == -1)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
     ACE_ERROR ((LM_ERROR,
@@ -407,6 +408,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
                  host_name,
+                 1,
                  address_family) == -1)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
     ACE_ERROR ((LM_ERROR,
@@ -469,6 +471,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
   if (this->set (port_number, inet_address) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -540,15 +543,16 @@ ACE_INET_Addr::get_host_name (char hostname[],
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
-  if (
 #if defined (ACE_HAS_IPV6)
-      0 == memcmp (this->ip_addr_pointer (),
-                   (void*)&in6addr_any,
-                   this->ip_addr_size ())
+  if ((this->get_type () == PF_INET6 &&
+       0 == memcmp (this->ip_addr_pointer (),
+                    (void*)&in6addr_any,
+                    this->ip_addr_size ())) ||
+      this->get_type () == PF_INET &&
+      this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY)
 #else
-      this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY
+  if (this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY)
 #endif
-      )
     {
       if (ACE_OS::hostname (hostname, len) == -1)
         return -1;
@@ -663,9 +667,9 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
     this->inet_addr_.in6_.sin6_port = port_number;
-#else
-  this->inet_addr_.in4_.sin_port = port_number;
+  else
 #endif /* ACE_HAS_IPV6 */
+  this->inet_addr_.in4_.sin_port = port_number;
 }
 
 int ACE_INET_Addr::set_address (const char *ip_addr,

@@ -252,15 +252,13 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
       if (local_sap == ACE_Addr::sap_any)
         {
           local_inet_addr.sin_port = 0;
-          local_inet_addr.sin_addr.s_addr = htonl (INADDR_ANY);
         }
       else
         local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
                                                  local_sap.get_addr ());
       if (local_inet_addr.sin_port == 0)
         {
-          if (ACE::bind_port (this->get_handle (),
-                              local_inet_addr.sin_addr.s_addr) == -1)
+          if (ACE::bind_port (this->get_handle ()) == -1)
             error = 1;
         }
       else if (ACE_OS::bind (this->get_handle (),
