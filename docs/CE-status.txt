@@ -2,10 +2,6 @@
 
 [Current difficulties]
 
-  [ACE_ASSERT]
-     This macro fails to print out the assertion error and causes
-     Access Violation itself.
-
   [Non-static object manager problem]
      CE uses non-static object manager.  However, there seems to be
      another global object manager hanging somewhere and it gets
