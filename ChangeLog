@@ -1,16 +1,23 @@
+Tue Jan 25 14:41:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+
+        Added a necessary includefile which make things compile better
+        when ACE_HAS_STREAM_PIPES is defined.
+
 Tue Jan 25 14:15:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/Reference_Counted_Event_Handler_Test.cpp:
-	* tests/Reactor_Registration_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
 
-	Tidied up resource management (i.e. close pipes in eventhandler
+        Tidied up resource management (i.e. close pipes in eventhandler
         destructors) since VxWorks does not automatically release those
         when a dynamically loaded app module is finished.
 
-	* tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
 
-	Tidied up resource management and fixed handling superfluous output
-	event (like OpenBSD and Lynx).
+        Tidied up resource management and fixed handling superfluous output
+        event (like OpenBSD and Lynx).
 
 Mon Jan 24 23:10:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
