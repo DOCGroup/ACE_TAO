@@ -83,7 +83,7 @@ int
 TAO_UIOP_Connector::close (void)
 {
   // Zap the creation strategy that we created earlier.
-  delete this->base_connector_->creation_strategy ();
+  delete this->base_connector_.creation_strategy ();
 
   return this->base_connector_.close ();
 }
