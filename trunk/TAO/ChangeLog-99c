@@ -1,3 +1,23 @@
+Thu Jun 24 18:27:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CDR_Interpreter.h:
+	* tao/CDR_Interpreter.cpp:
+	* tao/DynAny_i.h:
+	* tao/DynAny_i.cpp:
+	* tao/DynArray_i.h:
+	* tao/DynArray_i.cpp:
+	* tao/DynSequence_i.h:
+	* tao/DynSequence_i.cpp:
+	* tao/DynEnum_i.h:
+	* tao/DynEnum_i.cpp:
+	* tao/DynStruct_i.h:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.h:
+	* tao/DynUnion_i.cpp:
+	  Fixed much of the ACE_TRY stuff. There are still some
+	  ACE_CHECK-related things to add and some code to
+	  rearrange.
+
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB.h (CORBA_ORB): Made the method
