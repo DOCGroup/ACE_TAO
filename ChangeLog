@@ -1,3 +1,9 @@
+Wed Sep 19 16:56:02 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h (THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM): Added
+	  definitions for THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM on
+	  platforms that do not support threads.
+
 Wed Sep 19 16:54:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Containers_T.cpp:
