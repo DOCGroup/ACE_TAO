@@ -1,3 +1,9 @@
+Sun May 11 17:36:59 1997    <harrison@samba.cs.wustl.edu>
+
+	* tests/{Pipe_Test.cpp, Process_Mutex_Test.cpp,
+	  Time_Service_Test.cpp, Token_Service_Test.cpp}:  Updated these
+	  files to use the new ACE_Process API.
+
 Sun May 11 14:40:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE_Process.cpp (ACE_Process_Options ctor): reordered
