@@ -31,7 +31,7 @@ else  # ! CROSS-COMPILE
 
 MKLIST = Makefile.IFR_Service Makefile.tao_ifr
 
-all debug profile optimize install deinstall clean realclean clobber depend:
+idl_stubs all debug profile optimize install deinstall clean realclean clobber depend:
 ifeq (Windows,$(findstring Windows,$(OS)))
 	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
 else  # ! Windows
@@ -48,7 +48,5 @@ endif # ! CROSS-COMPILE
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

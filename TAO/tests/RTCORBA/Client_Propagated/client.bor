@@ -8,7 +8,9 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
-	$(OBJDIR)\client.obj
+	$(OBJDIR)\client.obj \
+	$(OBJDIR)\interceptors.obj \
+	$(OBJDIR)\Client_ORBInitializer.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
