@@ -1,3 +1,10 @@
+Thu Aug 12 10:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Oneways/server.cpp:
+        * tests/Big_Oneways/Session_Control.cpp:
+          Added a few more debug lines to the shutdown process, so that we
+          can see how far we get when this test fails.
+
 Thu Aug 12 09:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Client_Task.cpp:
