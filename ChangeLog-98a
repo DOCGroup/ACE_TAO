@@ -1,3 +1,11 @@
+Mon Dec 01 16:13:06 1997    <irfan@TWOSTEP>
+
+	* ace/config-win32-common.h: Added back ACE_LACKS_ACE_IOSTREAM to
+ 	  the config file. The test is not compiling.
+
+	* tests/run_tests.bat: Look for "Win32 structured exception" in
+ 	  the log files.
+
 Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Log_Msg.cpp, ace/Log_Msg.h, ace/Log_Record.cpp,
