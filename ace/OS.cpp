@@ -1910,11 +1910,12 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 
       new_log->restart (this->restart_);
       new_log->trace_depth (this->trace_depth_);
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-      new_log->seh_except_selector (this->seh_except_selector_);
-      new_log->seh_except_handler (this->seh_except_handler_);
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     }
+
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  new_log->seh_except_selector (this->seh_except_selector_);
+  new_log->seh_except_handler (this->seh_except_handler_);
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   // @@ Now the TSS Log_Mesg has been created, cache my thread
   // descriptor in.
@@ -2009,79 +2010,78 @@ ACE_Thread_Adapter::invoke (void)
 #endif /* ! ACE_PSOS */
         }
 
-      ACE_SEH_FINALLY
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+      ACE_SEH_EXCEPT (ACE_LOG_MSG->seh_except_selector ()(
+                          (void *) GetExceptionInformation ()))
         {
+          ACE_LOG_MSG->seh_except_handler ()(0);
+        }
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+    }
+
+  ACE_SEH_FINALLY
+    {
 // If we changed this to 1, change the respective if in Task::svc_run to 0
 #if 0
-          // Call the <Task->close> hook.
-          if (func == ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
-                                            ACE_Task_Base::svc_run))
-            {
-              ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
-              ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
+      // Call the <Task->close> hook.
+      if (func == ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
+                                        ACE_Task_Base::svc_run))
+        {
+          ACE_Task_Base *task_ptr = (ACE_Task_Base *) arg;
+          ACE_Thread_Manager *thr_mgr_ptr = task_ptr->thr_mgr ();
 
-              // This calls the Task->close () hook.
-              task_ptr->cleanup (task_ptr, 0);
+          // This calls the Task->close () hook.
+          task_ptr->cleanup (task_ptr, 0);
 
-              // This prevents a second invocation of the cleanup code
-              // (called later by <ACE_Thread_Manager::exit>.
-              thr_mgr_ptr->at_exit (task_ptr, 0, 0);
-            }
+          // This prevents a second invocation of the cleanup code
+          // (called later by <ACE_Thread_Manager::exit>.
+          thr_mgr_ptr->at_exit (task_ptr, 0, 0);
+        }
 #endif
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-          int using_afx = -1;
-          if (thr_desc)
-            using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
+      int using_afx = -1;
+      if (thr_desc)
+        using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
           // Call TSS destructors.
-          ACE_OS::cleanup_tss (0 /* not main thread */);
+      ACE_OS::cleanup_tss (0 /* not main thread */);
 
 # if defined (ACE_WIN32)
-          // Exit the thread.  Allow CWinThread-destructor to be
-          // invoked from AfxEndThread.  _endthreadex will be called
-          // from AfxEndThread so don't exit the thread now if we are
-          // running an MFC thread.
+      // Exit the thread.  Allow CWinThread-destructor to be
+      // invoked from AfxEndThread.  _endthreadex will be called
+      // from AfxEndThread so don't exit the thread now if we are
+      // running an MFC thread.
 #   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-          if (using_afx != -1)
-            {
-              if (using_afx)
-                ::AfxEndThread ((DWORD)status);
-              else
-                ::_endthreadex ((DWORD) status);
-            }
+      if (using_afx != -1)
+        {
+          if (using_afx)
+            ::AfxEndThread ((DWORD)status);
           else
-            {
-              // Not spawned by ACE_Thread_Manager, use the old buggy
-              // version.  You should seriously consider using
-              // ACE_Thread_Manager to spawn threads.  The following
-              // code is know to cause some problem.
-              CWinThread *pThread = ::AfxGetThread ();
+            ::_endthreadex ((DWORD) status);
+        }
+      else
+        {
+          // Not spawned by ACE_Thread_Manager, use the old buggy
+          // version.  You should seriously consider using
+          // ACE_Thread_Manager to spawn threads.  The following
+          // code is know to cause some problem.
+          CWinThread *pThread = ::AfxGetThread ();
 
-              if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-                ::_endthreadex ((DWORD) status);
-              else
-                ::AfxEndThread ((DWORD)status);
-            }
+          if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+            ::_endthreadex ((DWORD) status);
+          else
+            ::AfxEndThread ((DWORD)status);
+        }
 #   else
-          ::_endthreadex ((DWORD) status);
+      ::_endthreadex ((DWORD) status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
-
-
 # endif /* ACE_WIN32 */
-
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
-          return status;
-        }
+      return status;
     }
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_SEH_EXCEPT (ACE_LOG_MSG->seh_except_selector ()(0))
-    {
-      ACE_LOG_MSG->seh_except_handler ()(0);
-    }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   ACE_NOTREACHED (return status);
 }
@@ -2207,10 +2207,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+    ACE_NEW_RETURN (thread_args,
+                    ACE_Thread_Adapter (func, args,
+                                        (ACE_THR_C_FUNC) ace_thread_adapter,
+                                        0,
+                                        0,
+                                        ACE_LOG_MSG->seh_except_selector(),
+                                        ACE_LOG_MSG->seh_except_handler()),
+                    -1);
+# else
     ACE_NEW_RETURN (thread_args,
                     ACE_Thread_Adapter (func, args,
                                         (ACE_THR_C_FUNC) ace_thread_adapter),
                     -1);
+
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   else
     thread_args = thread_adapter;
 
