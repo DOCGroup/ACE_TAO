@@ -101,9 +101,15 @@ Cubit_Task::initialize_orb (void)
       int argc = args.argc ();
       char **argv = args.argv ();
 
+      char orb_name[BUFSIZ];
+      ACE_OS::sprintf (orb_name,
+                       "ORB %d",
+                       this->task_id_);
+
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
                                              "persistent_poa",
+                                             orb_name,
                                              TAO_TRY_ENV) == -1)
         return -1;
 
