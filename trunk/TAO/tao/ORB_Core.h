@@ -215,7 +215,6 @@ public:
 class TAO_Export TAO_ORB_Core
 {
   friend class TAO_ORB_Core_Auto_Ptr;
-  friend class TAO_ORB_Table;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
