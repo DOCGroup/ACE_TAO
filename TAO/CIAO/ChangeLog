@@ -1,3 +1,12 @@
+Tue Sep 21 13:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/value_factory_registration.html:
+        
+          New documentation file, describing the behavior of the CIDL
+          compiler with respect to automatic generation of code to
+          register valuetype factories for eventtypes referenced by
+          'consumes' declarations in a component.
+
 Tue Sep 21 13:04:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantGenerator.cpp:
