@@ -522,7 +522,7 @@ IDL_GlobalData::add_to_included_idl_files (char* file_name)
           
           old_included_idl_files = this->included_idl_files_;
           n_old_allocated_idl_files = this->n_allocated_idl_files_;
-          this->n_included_idl_files_ += INCREMENT;
+          this->n_allocated_idl_files_ += INCREMENT;
           ACE_NEW (this->included_idl_files_,
                    char *[this->n_allocated_idl_files_]);
           for (size_t i = 0; i < n_old_allocated_idl_files; i++)

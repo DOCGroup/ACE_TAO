@@ -1,3 +1,12 @@
+Sat Jan 16 11:49:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp (add_to_included_idl_files): 
+	  Change line 515 from: this->n_included_idl_files_ += INCREMENT;
+	  to: this->n_allocated_idl_files_ += INCREMENT; 
+	  so that tao_idl won't crash when including 64 or more files.
+	  Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
+	  for reporting this.
+
 Fri Jan 15 19:11:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time/Time_Client_i.cpp:	
