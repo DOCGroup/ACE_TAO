@@ -8,29 +8,17 @@ ACE_RCSID(IFR_Service, ifr_visitor, "$Id$")
 ifr_visitor::ifr_visitor (void)
   : lock_ (0)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  // Create the appropriate lock.
+  if (be_global->enable_locking ())
     {
-      // Create the appropriate lock.
-      if (be_global->enable_locking ())
-        {
-          ACE_NEW_THROW_EX (this->lock_,
-                            ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
-                            CORBA::NO_MEMORY ());
-        }
-      else
-        {
-          ACE_NEW_THROW_EX (this->lock_,
-                            ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                            CORBA::NO_MEMORY ());
-        }
+      ACE_NEW (this->lock_,
+               ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("ifr_visitor"));
+      ACE_NEW (this->lock_,
+               ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
     }
-  ACE_ENDTRY;
 }
 
 ifr_visitor::~ifr_visitor (void)
