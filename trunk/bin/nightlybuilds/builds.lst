@@ -158,3 +158,8 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine_Core
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Full
+
+[WU_Debian_Minimum_static]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Minimum/
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?charanga_Minimum
