@@ -198,7 +198,7 @@ int
 Watermark_Test::producer (void)
 {
   int i = watermark_iterations;
-  
+
   for (int hwm = this->hwm_;
        hwm >= 0 ;
        hwm -= this->len_)
@@ -316,7 +316,7 @@ Watermark_Test::svc (void)
 int
 main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test.cpp"));
+  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("Starting message queue reactive notification test...\n")));
