@@ -12,7 +12,6 @@ DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
 LIBS            += -lsocket -ldl -lgen -lnsl -lthread -lw
-PIC             =
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
