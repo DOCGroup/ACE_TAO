@@ -30,11 +30,11 @@ be_decl::be_decl (void)
     srv_skel_gen_ (I_FALSE),
     srv_inline_gen_ (I_FALSE),
     seq_names_ (NULL),
-    encap_len_ (-1),
     fullname_ (0),
     flatname_ (0),
     repoID_ (0),
-    size_type_ (be_decl::FIXED) // everybody is fixed size to start with
+    size_type_ (be_decl::FIXED), // everybody is fixed size to start with
+    encap_len_ (-1)
 {
 }
 
@@ -158,6 +158,7 @@ be_decl::compute_fullname (void)
       delete i;
 
       this->fullname_ = new char [namelen+1];
+      this->fullname_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
