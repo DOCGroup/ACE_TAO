@@ -104,7 +104,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      
       for (; i < node->n_inherits (); ++i)
         {
           AST_Interface *inherited =
