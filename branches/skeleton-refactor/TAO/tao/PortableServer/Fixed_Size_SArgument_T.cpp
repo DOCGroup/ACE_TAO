@@ -1,22 +1,22 @@
 // $Id$
 
-#ifndef TAO_FIXED_SIZE_SARGUMENT_T_C
-#define TAO_FIXED_SIZE_SARGUMENT_T_C
+#ifndef TAO_FIXED_SIZE_SARGUMENT_T_CPP
+#define TAO_FIXED_SIZE_SARGUMENT_T_CPP
 
 #include "tao/Fixed_Size_SArgument_T.h"
-#include "tao/Dynamic_ParameterC.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+# include "tao/Dynamic_ParameterC.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Fixed_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Fixed_Size_SArgument_T,
-           "$Id$")
 
 template<typename S>
 CORBA::Boolean
-TAO::In_Fixed_Size_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
+TAO::In_Fixed_Size_SArgument_T<S>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> *this->x_;
 }

@@ -267,14 +267,14 @@ protected:
 
   /// Underlying request object that contains much of the information
   /// encapsulated by this TAO_ServerRequestInfo class.
-  TAO_ServerRequest &server_request_;
+  TAO_ServerRequest & server_request_;
 
   /// Pointer to the Servant_Upcall object that contains the object
   /// ID, among other things.
-  TAO_Object_Adapter::Servant_Upcall *servant_upcall_;
+  TAO_Object_Adapter::Servant_Upcall * const servant_upcall_;
 
   /// Pointer to the caught exception.
-  CORBA::Exception *caught_exception_;
+  CORBA::Exception * caught_exception_;
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           operation_interceptors_ss, 
+ACE_RCSID (be_visitor_operation,
+           operation_interceptors_ss,
            "$Id$")
 
 // ******************************************************
@@ -76,7 +76,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
   // Generate the ServerRequestInfo object per operation to
   // be used by the interecptors.
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "class TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -443,7 +443,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   // Generate the ServerRequestInfo object definition per operation
   // to be used by the interceptors.
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "TAO_ServerRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -771,7 +771,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::result()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "CORBA::Any * " << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
@@ -821,7 +821,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
       if (this->void_return_type (bt))
         {
           // Return an Any with tk_void TypeCode.
-          *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
+          *os << "static CORBA::Boolean const tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
@@ -832,7 +832,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
       else
         {
-          *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
+          *os << "static CORBA::Boolean const tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
@@ -877,7 +877,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_most_derived_interface()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "char *" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
@@ -925,7 +925,7 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
   // -----------------------------------------------------------------
   // PortableInterceptor::ServerRequestInfo::target_is_a()
   // -----------------------------------------------------------------
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "CORBA::Boolean" << be_nl;
 
   *os << "TAO_ServerRequestInfo_"<< node->flat_name ();
