@@ -195,6 +195,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &msg,
   // One thing which me must be careful of is that responses are sent
   // with a single write so that they're not accidentally interleaved
   // over the transport (as could happen using TCP).
+
   this->handle_request (req, msg, response, 0, env);
 
   CORBA::string_free (req.operation);

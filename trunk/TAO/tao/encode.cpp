@@ -361,15 +361,23 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       u_int hostlen;
 
       hostlen = ACE_OS::strlen ((char *) profile->host);
-      stream->write_ulong (1                              // byte order
-                         + 3                            // version + pad byte
-                         + 4                            // sizeof (strlen)
-                         + hostlen + 1                  // strlen + null
-                         + (~hostlen & 01)              // optional pad byte
-                         + 2                            // port
-                         + (hostlen & 02)               // optional pad short
-                         + 4                            // sizeof (key length)
-                         + profile->object_key.length ()); // key length
+      CORBA::ULong encap_len = 
+	1                              // byte order
+	+ 1                            // version major
+	+ 1                            // version minor
+	+ 1                            // pad byte
+	+ 4                            // sizeof (strlen)
+	+ hostlen + 1                  // strlen + null
+	+ (~hostlen & 01)              // optional pad byte
+	+ 2                            // port
+	+ ( hostlen & 02)              // optional pad short
+	+ 4                            // sizeof (key length)
+	+ profile->object_key.length (); // key length.
+      stream->write_ulong (encap_len);
+
+#if 0
+      size_t current_len = stream->length ();
+#endif
 
       // CHAR describing byte order, starting the encapsulation
 
@@ -387,6 +395,18 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
       // OCTET SEQUENCE for object key
       stream->encode (&TC_opaque, &profile->object_key, 0, env);
+
+#if 0
+      // This is good for debugging the computation of the key
+      // length.
+      size_t final_len = stream->length ();
+      ACE_DEBUG ((LM_DEBUG, "ObjRef::encode: "
+		  "stored_len = %d, "
+		  "real_len = %d\n",
+		  encap_len,
+		  final_len - current_len));
+#endif /* 0 */
+
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
 }
@@ -683,40 +703,20 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
                             void *context,
                             CORBA::Environment &env)
 {
-#if 0
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
-#endif /* 0 */
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::String str = *(CORBA::String *) data;
 
-  // Be nice to programmers: treat nulls as empty strings not
-  // errors. (OMG-IDL supports languages that don't use the C/C++
-  // notion of null v. empty strings; nulls aren't part of the OMG-IDL
-  // string model.)
-  if (str != 0)
-    {
-      // Verify string satisfies bounds requirements.  We're not so
-      // permissive as to send messages violating the interface spec
-      // by having excessively long strings!
-      CORBA::ULong bounds = tc->length (env);
+  // Verify string satisfies bounds requirements.  We're not so
+  // permissive as to send messages violating the interface spec
+  // by having excessively long strings!
+  CORBA::ULong bounds = tc->length (env);
 
-      if (env.exception () == 0)
-        {
-	  if (stream->write_string (str))
-	    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-	  else
-	    return CORBA::TypeCode::TRAVERSE_STOP;
-        }
-      else
-        return CORBA::TypeCode::TRAVERSE_STOP;
-    }
-  else
+  if (env.exception () == 0)
     {
-      // empty string
-      stream->write_ulong (1);
-      stream->write_char (0);
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+      if (stream->write_string (str))
+	return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
+  return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
 // encode sequence
@@ -1290,48 +1290,30 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
   CORBA::WChar *str = *(CORBA::WChar **) data;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  // Be nice to programmers: treat nulls as empty strings not
-  // errors. (OMG-IDL supports languages that don't use the
-  // C/C++ notion of null v. empty strings; nulls aren't part of
-  // the OMG-IDL string model.)
-  if (str != 0)
+  // Verify string satisfies bounds requirements.  We're not so
+  // permissive as to send messages violating the interface spec
+  // by having excessively long strings!
+  CORBA::ULong bounds = tc->length (env);
+
+  if (env.exception () == 0)
     {
-      // Verify string satisfies bounds requirements.  We're not so
-      // permissive as to send messages violating the interface spec
-      // by having excessively long strings!
-      CORBA::ULong bounds = tc->length (env);
+      // get the actual length of the string
+      CORBA::ULong len = ACE_OS::wslen ((CORBA::WChar *) str);
 
-      if (env.exception () == 0)
-        {
-          // get the actual length of the string
-          CORBA::ULong len = ACE_OS::wslen ((CORBA::WChar *) str);
+      // if it is an unbounded string or if the length is less than the
+      // bounds for an unbounded string
+      if ((bounds == 0) || (len <= bounds))
+	{
+	  // Encode the string, followed by a NUL character.
 
-          // if it is an unbounded string or if the length is less than the
-          // bounds for an unbounded string
-          if ((bounds == 0) || (len <= bounds))
-            {
+	  for (continue_encoding = stream->write_ulong (len + 1);
+	       continue_encoding != CORBA::B_FALSE && *str;
+	       continue_encoding = stream->write_wchar (*str++))
+	    continue;
 
-              // Encode the string, followed by a NUL character.
-
-              for (continue_encoding = stream->write_ulong (len + 1);
-                   continue_encoding != CORBA::B_FALSE && *str;
-                   continue_encoding = stream->write_wchar (*str++))
-                continue;
-
-              stream->write_wchar (0);
-              return CORBA::TypeCode::TRAVERSE_CONTINUE;
-            }
-          else
-            return CORBA::TypeCode::TRAVERSE_STOP;
-        }
-      else
-        return CORBA::TypeCode::TRAVERSE_STOP;
+	  stream->write_wchar (0);
+	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+	}
     }
-  else
-    {
-      // empty string
-      stream->write_ulong (1);
-      stream->write_wchar (0);
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
-    }
+  return CORBA::TypeCode::TRAVERSE_STOP;
 }

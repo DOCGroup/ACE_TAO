@@ -150,10 +150,13 @@ ior_string_to_object (CORBA::String str,
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  char *buffer;
-  ACE_NEW_RETURN (buffer,
-                  char [1 + ACE_OS::strlen ((char *) str) / 2],
+  size_t bufsize =
+    1 + ACE_OS::strlen ((char *) str) / 2 + CDR::MAX_ALIGNMENT;
+  char *non_aligned_buffer;
+  ACE_NEW_RETURN (non_aligned_buffer,
+                  char [bufsize],
                   CORBA_Object::_nil ());
+  char *buffer = ptr_align_binary (non_aligned_buffer, CDR::MAX_ALIGNMENT);
 
   char *tmp = (char *) str;
   size_t len = 0;
@@ -174,7 +177,7 @@ ior_string_to_object (CORBA::String str,
 
   if (tmp [0] && !isspace (tmp [0]))
     {
-      delete [] buffer;
+      delete [] non_aligned_buffer;
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
       return 0;
     }
@@ -190,7 +193,7 @@ ior_string_to_object (CORBA::String str,
 		     env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     objref = 0;
 
-  delete [] buffer;
+  delete [] non_aligned_buffer;
   return objref;
 }
 

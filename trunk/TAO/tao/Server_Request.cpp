@@ -141,7 +141,12 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
         { // not preallocated
           ACE_NEW (value, char [tc->size (env)]);
 
+	  if (env.exception () != 0)
+	    return;
+
           any->replace (tc, value, CORBA::B_TRUE, env);
+	  if (env.exception () != 0)
+	    return;
 
           // Decrement the refcount of "tc".
           //
@@ -159,6 +164,16 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
 
       // Then just unmarshal the value.
       (void) incoming_->decode (tc, value, 0, env);
+      if (env.exception () != 0)
+	{
+	  const char* param_name = nv->name ();
+	  if (param_name == 0)
+	    param_name = "(no name given)";
+	  ACE_ERROR ((LM_ERROR,
+		      "IIOP_ServerRequest::arguments - problem while"
+		      " decoding parameter %d <%s>\n", i, param_name));
+	  return;
+	}
     }
 
   // If any data is left over, it'd be context values ... else error.
@@ -167,8 +182,9 @@ IIOP_ServerRequest::arguments (CORBA::NVList_ptr &list,
   // @@ (TAO) support for Contexts??
   if (incoming_->length () != 0)
     {
-      dmsg1 ("params (), %d bytes remaining (error)",
-             incoming_->length ());
+      ACE_ERROR ((LM_ERROR,
+		  "IIOP_ServerRequest::arguments - "
+		  "%d bytes left in buffer\n", incoming_->length ()));
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
