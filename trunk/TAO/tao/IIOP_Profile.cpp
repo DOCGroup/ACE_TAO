@@ -19,7 +19,7 @@ ACE_RCSID(tao, IIOP_Profile, "$Id$")
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-static const char *prefix_ = "iiop:";
+static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter = '/';
 
@@ -399,6 +399,8 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                                       this->object_key ());
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
+                  3 /* "loc" */ +
+                  1 /* colon separator */ +
                   2 /* double-slash separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
@@ -415,7 +417,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s//%c.%c@%s:%d%c%s",
+                   "%sloc://%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
