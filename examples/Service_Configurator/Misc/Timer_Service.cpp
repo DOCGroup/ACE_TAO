@@ -1,20 +1,19 @@
 #include "Timer_Service.h"
 // $Id$
 
-
 int
 Timer_Service::init (int argc, char *argv[])
 {
-  char *prog = argc > 0 ? argv[0] : "Timer_Service";
   int interval = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
+
   if (argc > 2)
     ACE_Trace::start_tracing ();
   else
     ACE_Trace::stop_tracing ();
 
-  ACE_DEBUG ((LM_DEBUG, "in Timer_Service::init, argv[0] = %s, argc == %d\n", 
+  ACE_DEBUG ((LM_DEBUG, 
+	      "in Timer_Service::init, argv[0] = %s, argc == %d\n", 
 	      argv[0], argc));
-
 
   ACE_Service_Config::reactor ()->schedule_timer 
     (this, 0, ACE_Time_Value (1), ACE_Time_Value (interval));
@@ -25,7 +24,8 @@ int
 Timer_Service::handle_timeout (const ACE_Time_Value &tv,
 			       const void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "in Timer_Service::handle_timeout sec = %d, usec = %d\n",
+  ACE_DEBUG ((LM_DEBUG, 
+	      "in Timer_Service::handle_timeout sec = %d, usec = %d\n",
 	      tv.sec (), tv.usec ()));
   return 0;
 }

@@ -9,71 +9,118 @@ THE ADAPTIVE COMMUNICATION ENVIRONMENT (ACE)
 
 An Object-Oriented Network Programming Toolkit
 
-OVERVIEW OF ACE
+Overview of ACE
 
-The ADAPTIVE Communication Environment (ACE) is a freely available
-object-oriented network programming toolkit targeted for developers of
-high-performance concurrent network applications and services.  ACE
-encapsulates the following user-level UNIX and Win32 (Windows NT and
-Windows '95) OS facilities via portable, type-secure, C++ interfaces:
+The ADAPTIVE Communication Environment (ACE) is an object-oriented
+toolkit that implements strategic and tactical design patterns to
+simplify the development of concurrent, event-driven communication
+software.  ACE provides a rich set of reusable C++ wrappers, class
+categories, and frameworks that perform common communication software
+tasks across a range of operating system platforms.  The communication
+software tasks provided by ACE include event demultiplexing and event
+handler dispatching, connection establishment, interprocess
+communication, shared memory management, message routing, dynamic
+(re)configuration of distributed services, multi-threading, and
+concurrency control.
+
+ACE is targeted for developers of high-performance concurrent network
+applications and services.  The primary goal of ACE is to simplify the
+development of concurrent OO communication software that utilizes
+interprocess communication, event demultiplexing, explicit dynamic
+linking, and concurrency.  In addition, ACE automates communication
+software configuration and reconfiguration by dynamically linking
+services into applications at run-time and executing these services on
+one or more processes or threads.
+
+ACE has been ported to a wide range of uni-processor and multi-process
+OS platforms including Win32 (i.e., WinNT and Win95), most versions of
+UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux, and
+SCO), VxWorks, and MVS OpenEdition.  It is currently used in
+commercial products by dozens of companies including Ericsson,
+Bellcore, Siemens, Motorola, and Kodak.
+
+The remainder of this document outlines the structure and participants
+of the layers in this diagram.
+
+C++ Wrappers for OS Interfaces
+
+The lower-level portions of ACE provide a set of portable and
+type-secure C++ wrappers that encapsulate the following C language OS
+interfaces:
 
         . IPC mechanisms 
-                -- Internet- and UNIX-domain sockets, TLI, Named Pipes
-                   (for UNIX and Win32) and STREAM pipes
+                -- e.g., Internet- and UNIX-domain sockets, TLI, Named
+		   Pipes (for UNIX and Win32) and STREAM pipes;
 
-        . Event multiplexing
-                -- select(), poll(), and Win32 WaitForMultipleObjects
-		   and I/O completion ports
+        . Event demultiplexing
+                -- e.g., select(), poll(), and Win32
+		   WaitForMultipleObjects and I/O completion ports;
 
         . Multi-threading and synchronization
-                -- Solaris threads, POSIX Pthreads, and Win32 threads
+                -- e.g., Solaris threads, POSIX Pthreads, and Win32
+		   threads;  
 
         . Explicit dynamic linking
-                -- dlopen/dlsym on UNIX and LoadLibrary/GetProc on Win32
+                -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
+		   on Win32;
 
         . Memory-mapped files and shared memory management
-		-- BSD mmap(), SYSV shared memory, and Win32 shared memory.
+		-- e.g., BSD mmap(), SYSV shared memory, and Win32
+		   shared memory;
 
         . System V IPC 
-                -- shared memory, semaphores, message queues
+                -- e.g., shared memory, semaphores, message queues.
 
-        . Sun RPC 
-                -- GNU rpc++, written by Michael Lipp
+The OS Adaptation Layer shields the upper levels of ACE from platform
+dependencies associated with the underlying OS interfaces.
 
-In addition, ACE contains a higher-level network programming framework
-that integrates and enhances the lower-level C++ wrappers.  This
-framework supports the dynamic configuration of concurrent network
-daemons composed of application services.  This framework contains the
+Frameworks and Class Categories
+
+ACE also contains a higher-level network programming framework that
+integrates and enhances the lower-level C++ wrappers.  This framework
+supports the dynamic configuration of concurrent distributed services
+into applications.  The framework portion of ACE contains the
 following class categories:
 
         . The Reactor
-		-- Supports both Reactive and Proactive I/O
+		-- Supports both Reactive and Proactive I/O;
 
         . The Service Configurator
-		-- Support dynamic configuration of objects
+		-- Support dynamic (re)configuration of objects;
 
         . The ADAPTIVE Service Executive
 		-- A user-level implementation of System V STREAMS,
-		   which supports modular integration of 
-		   hierarchically-related communicaion services.
+		   that supports modular integration of
+		   hierarchically-related communicaion services;
 
-	. Shared malloc 
-		-- A component for managing dynamically allocation
-		   shared and local memory
+	. Concurrency
+		-- Various types of higher-level concurrency
+		   control and synchronization patterns (such as
+		   Polymorphic Futures and Active Objects);
 
-	. Concurrency services 
-		-- e.g., various forms of higher-level concurrency control 
-		   and synchronization mechanisms 
-
-	. Network services 
-		-- e.g., distributed lock service, distributed naming
-		   service, distributed logging service, distributed
-		   routing service, and distributed time service
+	. Shared Malloc
+		-- Components for managing dynamically allocation
+		   of shared and local memory;
 
 	. CORBA integration 
 		-- Integrates ACE with CORBA implementations 
-		   (such as single-threaded and multi-threaded Orbix)
+		   (such as single-threaded and multi-threaded
+		   Orbix and Visibroker for C++).
 
+Distributed Services and Components
+
+Finally, ACE provides a standard library of distributed services that
+are packaged as components.  These service components play two roles
+in ACE:
+
+	1. They provide reusable components for common distributed
+	   system tasks such as logging, naming, locking, and time 
+	   synchronization.
+
+	2. They illustrate how to utilize ACE features such as the
+	   Reactor, Service Configurator, Service Initialization,
+	   Concurrency, and IPC components.
+	   
 ACE is currently being used in many commercial products including the
 Bellcore Q.port ATM signaling software product, the Ericsson EOS
 family of telecom switch monitoring applications, the Motorola Iridium
@@ -605,6 +652,9 @@ Ari Erev <Ari_Erev@comverse.com>
 Hamutal Yanay <Hamutal_Yanay@hub.comverse.com>
 Vital Aza <va3@cs.wustl.edu>
 Alex Villazon <villazon@cui.unige.ch>
+David Artus <david.artus@sbil.co.uk>
+Todd Barkalow <todd_barkalow@stortek.com>
+Alexander Smundak <sasha@migration.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive

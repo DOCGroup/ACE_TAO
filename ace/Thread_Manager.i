@@ -80,7 +80,7 @@ ACE_Thread_Control::thr_mgr (ACE_Thread_Manager *tm)
 
 // Return the unique ID of the thread.
 
-ACE_INLINE ACE_hthread_t
+ACE_INLINE ACE_thread_t
 ACE_Thread_Manager::thr_self (void)
 {
   ACE_TRACE ("ACE_Thread_Manager::thr_self");

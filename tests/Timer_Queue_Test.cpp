@@ -26,7 +26,8 @@
 class Example_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg)
+  virtual int handle_timeout (const ACE_Time_Value &,
+			      const void *arg)
   {
     ACE_ASSERT ((int) arg == 42);
     return 0;
@@ -34,7 +35,7 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST;
 

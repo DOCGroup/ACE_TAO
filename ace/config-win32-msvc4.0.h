@@ -68,7 +68,7 @@
 //define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Compiler doesn't support static data member templates.
-// #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Version 1.1 of WinSock
 #define ACE_WSOCK_VERSION 1, 1

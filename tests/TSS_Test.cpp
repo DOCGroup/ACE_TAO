@@ -188,16 +188,16 @@ handler (int signum)
 }
 
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_START_TEST;
   
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
-  int threads = ACE_MAX_THREADS;
-
-  signal (SIGINT, ACE_SignalHandler (handler));
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   
 #if defined (ACE_HAS_THREADS)
+  int threads = ACE_MAX_THREADS;
+
   if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
 					       ACE_THR_FUNC (&worker), 
 					       (void *) iterations,

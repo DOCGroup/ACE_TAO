@@ -10,9 +10,10 @@ public:
     : count_ (0) 
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg)
+  virtual int handle_timeout (const ACE_Time_Value &, const void *arg)
   {
-    ACE_DEBUG ((LM_DEBUG, "yow, the time has come and gone %d times %d, Horatio!\n", 
+    ACE_DEBUG ((LM_DEBUG, 
+		"yow, the time has come and gone %d times %d, Horatio!\n", 
 		this->count_++, int (arg)));
     return 0;
   }

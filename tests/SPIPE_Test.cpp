@@ -37,7 +37,7 @@ static char *pipe_name = "acepipe";
 static ACE_Thread_Manager thr_mgr;
 
 static void *
-client (void *dummy)
+client (void *)
 {
 #if defined (ACE_WIN32)
   ACE_Thread_Control thread_control (&thr_mgr);  // Insert thread into thr_mgr
@@ -66,7 +66,7 @@ client (void *dummy)
 }
 
 static void *
-server (void *dummy)
+server (void *)
 {
 #if defined (ACE_WIN32)
   ACE_Thread_Control thread_control (&thr_mgr);  // Insert thread into thr_mgr

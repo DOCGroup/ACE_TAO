@@ -1,3 +1,66 @@
+<<<<<<< ChangeLog-96b
+Sat Nov  9 11:23:13 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.i: Fixed a bug in ACE_Thread_Mutex_Guard.
+	  The call:
+
+	  this->owner_ == block ? this->lock_.acquire () : this->lock_.tryacquire ();
+
+	  should be
+
+	  this->owner_ = block ? this->lock_.acquire () : this->lock_.tryacquire ();
+
+	  Thanks to Alexander Smundak <sasha@migration.com> for reporting
+ 	  this.
+
+Fri Nov  8 20:04:26 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc.h: Fixed a typo on line 176 that reads:
+
+	  #include "ace/Sync_T.h"
+
+	  It should read:
+
+	  #include "ace/Synch_T.h" 
+
+	  Thanks to Todd Barkalow <todd_barkalow@stortek.com> for
+	  reporting this.
+
+Wed Nov  6 00:38:02 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Pipe: Added the const qualifier to the following methods:
+	
+	  ACE_HANDLE ACE_Pipe::read_handle (void) const;
+	  ACE_HANDLE ACE_Pipe::write_handle (void) const;
+
+	  Thanks to Luca for reporting this.
+
+	* ace/config-win32-msvc4.0.h: Redefined
+ 	  ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES since it looks like
+ 	  MSVC++ 4.0 still doesn't work.  Maybe this is fixed in 4.2?
+
+Tue Nov  5 03:09:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Strategies.cpp: I'd forgotten to update one of the
+ 	  accept(*svc_handler) calls to use the new
+ 	  accept(svc_handler->peer()) syntax.
+
+	* netsvcs/lib/Server_Logging_Handler.cpp: Added a cast to
+	  (COUNTER) 0 when initializing ::request_count_ to avoid problems
+ 	  on Win32.  Thanks to Luca for pointing this out.
+
+	* ace/Thread_Manager: Added a new thr_self() method that return
+ 	  the unique ID of the thread.  This is not strictly necessary
+ 	  (because a thread can always just call <ACE_Thread::thr_self>).
+  	  However, we put it here to be complete.  Thanks to Hamutal Yanay
+ 	  <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
+	* ace/OS.cpp (thr_create): I was accidentally closing down
+ 	  ::CloseHandle (thr_handle) (where thr_handle is a HANDLE *) when
+ 	  I should have been doing a ::CloseHandle (handle) instead.
+  	  Thanks to Luca for finding this!
+
+=======
 Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue: Added forward and reverse iterators to
@@ -34,7 +97,30 @@ Fri Nov  1 03:53:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  available implementation of STL from HP.  Currently,
  	  ACE_Registry uses these STL classes.
 
+>>>>>>> 4.14
 Fri Nov  1 00:25:01 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/CORBA_Handler.cpp (process_events): There was a very subtle
+ 	  race condition in the ACE_MT_CORBA_Handler.  process_events()
+ 	  accessed the singleton directly without taking the mutex. At
+ 	  startup the process_event thread is kicked off from the
+ 	  constructor and the instance_ is set. Hence the race.  The
+ 	  solution is to attempt to take the mutex before accessing the
+ 	  instance.  Thanks to David Artus <david.artus@sbil.co.uk> for
+ 	  reporting the problem and providing the fix.
+
+	* ace/Log_Msg.cpp (log): Improved the performance of the Log_Msg
+ 	  mechanism by not doing any parsing of the format string if the
+ 	  user has disabled this priority.
+
+	* ace/Reactor.cpp: Added a chance for the open() method of the
+ 	  Notification_Pipe failing.  Thanks to Luca for pointing this
+ 	  out.
+
+	* ace/Reactor.cpp (handle_events): Added a change to the semantics
+ 	  of the ACE_Reactor so that it doesn't fall out of the event loop
+ 	  when signals arrive that it handles.  Thanks to Stuart Powell
+ 	  <stuartp@in.ot.com.au> for this fix.
 
 	* ace/Service_Repository.cpp (remove): Fixed a bug with
  	  Service_Record::remove() that was failing if there were only two

@@ -94,8 +94,15 @@ Handle_L_CODgram::handle_input (ACE_HANDLE)
 
   ACE_OS::puts ("----------------------------------------");
 
-  for (ssize_t n; n = ACE_OS::read (handle, buf, sizeof buf); )
-    ACE_OS::write (ACE_STDOUT, buf, n);
+  for (;;)
+    {
+      ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+
+      if (n <= 0)
+	break;
+
+      ACE_OS::write (ACE_STDOUT, buf, n);
+    }
 
   ACE_OS::puts ("----------------------------------------");
 

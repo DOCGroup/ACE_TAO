@@ -14,7 +14,8 @@ BIN    	= pingpong \
 	  test_event_handler_t \
 	  test_handle_set \
 	  test_reactors \
-	  test_signals \
+	  test_signals_1 \
+	  test_signals_2 \
 	  test_time_value \
 	  test_timer_queue
 

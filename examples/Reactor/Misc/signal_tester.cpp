@@ -157,8 +157,8 @@ STDIN_Handler::STDIN_Handler (void)
 }
 
 int 
-STDIN_Handler::handle_timeout (const ACE_Time_Value &tv, 
-			       const void *arg)
+STDIN_Handler::handle_timeout (const ACE_Time_Value &tv,
+			       const void *)
 {
   ACE_DEBUG ((LM_DEBUG, "timeout occurred at %d sec, %d usec\n",
 	      tv.sec (), tv.usec ()));

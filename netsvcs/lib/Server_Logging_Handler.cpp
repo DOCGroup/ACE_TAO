@@ -55,7 +55,7 @@ protected:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1>
-COUNTER ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::request_count_ = 0L;
+COUNTER ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::request_count_ = (COUNTER) 0;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 typedef ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>
@@ -163,8 +163,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::ACE_Server_
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1> int
 ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logging_record (void)
 {
-  ssize_t n;
-  size_t  len;
+  size_t len;
   // Lock used to serialize access to std output 
   // (this should be in the class, but the SunC++ compiler is broken...)
   static ACE_SYNCH_MUTEX lock;
@@ -176,7 +175,9 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
   // handle this is painful, and we leave it as an exercise
   // for the reader ;-).
 
-  switch (n = this->peer ().recv (&len, sizeof len))
+  ssize_t n = this->peer ().recv (&len, sizeof len);
+
+  switch (n)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
@@ -207,7 +208,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
 	  {
 	    // Serialize output, if necessary (i.e., if we are running
 	    // in separate threads).
-	    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock, -1);
+	    // ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, lock, -1);
 
 	    lp.print (this->host_name_, 0, stderr);
 	  }

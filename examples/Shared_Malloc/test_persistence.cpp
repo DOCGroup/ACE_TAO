@@ -51,7 +51,7 @@ public:
       return stream;
     }
   
-  void *operator new (size_t size)
+  void *operator new (size_t)
     {
       return shmem_manager->malloc (sizeof (Employee));
     }
