@@ -1,3 +1,11 @@
+Fri Jun 16 15:33:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Connectors.cpp (write_request_header): 
+	* tao/GIOP_Message_Accept_State.cpp: Adjusted the padding of the
+	  request header to generate right GIOP 1.2 messages. This should
+	  solve the interoperability problem that was reported by "Hamed
+	  Azizadah" <Azizadah@ix.netcom.com>.
+
 Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* The following changes fix the [BUGID:175] and [BUGID:266] bugs.
