@@ -372,7 +372,7 @@ ACE_ReactorEx::register_handler (ACE_Event_Handler *event_handler,
 }
 
 ACE_INLINE int
-ACE_ReactorEx::register_handler (ACE_Event_Handler *eh,
+ACE_ReactorEx::register_handler (ACE_Event_Handler *event_handler,
 				 ACE_Reactor_Mask mask)
 {
   // This GUARD is necessary since we are updating shared state.
@@ -380,13 +380,13 @@ ACE_ReactorEx::register_handler (ACE_Event_Handler *eh,
   
   return this->register_handler_i (ACE_INVALID_HANDLE,
 				   ACE_INVALID_HANDLE,
-				   eh, 
+				   event_handler, 
 				   mask);
 }
 
 ACE_INLINE int
 ACE_ReactorEx::register_handler (ACE_HANDLE io_handle, 
-				 ACE_Event_Handler *eh,
+				 ACE_Event_Handler *event_handler,
 				 ACE_Reactor_Mask mask)
 {
   // This GUARD is necessary since we are updating shared state.
@@ -394,7 +394,7 @@ ACE_ReactorEx::register_handler (ACE_HANDLE io_handle,
   
   return this->register_handler_i (ACE_INVALID_HANDLE,
 				   io_handle,
-				   eh, 
+				   event_handler, 
 				   mask);
 }
 
@@ -432,6 +432,40 @@ ACE_ReactorEx::register_handler (const ACE_Handle_Set &handles,
   return 0;    
 }
 
+ACE_INLINE int 
+ACE_ReactorEx::schedule_wakeup (ACE_HANDLE io_handle,
+				ACE_Reactor_Mask masks_to_be_added)
+{
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+  
+  return this->schedule_wakeup_i (io_handle, masks_to_be_added);
+}
+
+ACE_INLINE int 
+ACE_ReactorEx::schedule_wakeup (ACE_Event_Handler *event_handler,
+				ACE_Reactor_Mask masks_to_be_added)
+{
+  // This GUARD is necessary since we are updating shared state.
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
+  
+  return this->schedule_wakeup_i (event_handler->get_handle (), masks_to_be_added);
+}
+
+ACE_INLINE int 
+ACE_ReactorEx::remove_handler (ACE_Event_Handler *event_handler,
+			       ACE_Reactor_Mask mask)
+{
+  return this->handler_rep_.unbind (event_handler->get_handle (), mask);
+}
+
+ACE_INLINE int 
+ACE_ReactorEx::remove_handler (ACE_HANDLE handle,
+			       ACE_Reactor_Mask mask)
+{
+  return this->handler_rep_.unbind (handle, mask);
+}
+
 ACE_INLINE int
 ACE_ReactorEx::remove_handler (const ACE_Handle_Set &handles,
 			       ACE_Reactor_Mask mask)
@@ -454,17 +488,17 @@ ACE_ReactorEx::remove_handler (const ACE_Handle_Set &handles,
 }
 
 ACE_INLINE int 
-ACE_ReactorEx::remove_handler (ACE_Event_Handler *eh,
-			       ACE_Reactor_Mask mask)
+ACE_ReactorEx::cancel_wakeup (ACE_HANDLE io_handle,
+			      ACE_Reactor_Mask masks_to_be_removed)
 {
-  return this->handler_rep_.unbind (eh->get_handle (), mask);
+  return this->remove_handler (io_handle, masks_to_be_removed);
 }
 
 ACE_INLINE int 
-ACE_ReactorEx::remove_handler (ACE_HANDLE handle,
-			       ACE_Reactor_Mask mask)
+ACE_ReactorEx::cancel_wakeup (ACE_Event_Handler *event_handler,
+			      ACE_Reactor_Mask masks_to_be_removed)
 {
-  return this->handler_rep_.unbind (handle, mask);
+  return this->remove_handler (event_handler, masks_to_be_removed);
 }
 
 ACE_INLINE int
@@ -484,9 +518,9 @@ ACE_ReactorEx::suspend_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_ReactorEx::suspend_handler (ACE_Event_Handler *eh)
+ACE_ReactorEx::suspend_handler (ACE_Event_Handler *event_handler)
 {
-  return this->suspend_handler (eh->get_handle ());
+  return this->suspend_handler (event_handler->get_handle ());
 }
 
 ACE_INLINE int
@@ -549,9 +583,9 @@ ACE_ReactorEx::resume_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_ReactorEx::resume_handler (ACE_Event_Handler *eh)
+ACE_ReactorEx::resume_handler (ACE_Event_Handler *event_handler)
 {
-  return this->resume_handler (eh->get_handle ());
+  return this->resume_handler (event_handler->get_handle ());
 }
 
 ACE_INLINE int
@@ -688,11 +722,11 @@ ACE_ReactorEx::wakeup_all_threads (void)
 }
 
 ACE_INLINE int 
-ACE_ReactorEx::notify (ACE_Event_Handler *eh,
+ACE_ReactorEx::notify (ACE_Event_Handler *event_handler,
 		       ACE_Reactor_Mask mask,
 		       ACE_Time_Value *timeout)
 {
-  return this->notify_handler_.notify (eh, mask, timeout);
+  return this->notify_handler_.notify (event_handler, mask, timeout);
 }
 
 #endif /* ACE_WIN32 */
