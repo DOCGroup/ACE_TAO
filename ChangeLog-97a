@@ -1,3 +1,8 @@
+Wed Apr 23 03:15:11 1997  James C Hu  <jxh@polka.cs.wustl.edu>
+
+	* apps/JAWS/server/README: Updated to add some clarity and more
+	  useful information.
+
 Wed Apr 23 00:02:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp: Finished updating this program
