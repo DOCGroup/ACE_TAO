@@ -216,9 +216,16 @@ private:
                         TAO_default_environment ())
     ACE_THROW_SPEC ((
         CORBA::SystemException,
+        ImplementationRepository::Administration::NotFound,
         ImplementationRepository::Administration::CannotActivate
       ));
   // This method starts the server process.
+
+  int ready_check (const char *server)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::NotFound));
+  // This method will continuously ping a server and either return when it
+  // responds to the ping or return -1 if it times out.
 
   IORTable::Locator_var locator_;
   // The locator interface for the IORTable

@@ -1,3 +1,16 @@
+Wed Sep 20 16:54:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        
+          Addressed some comments that Carlos added to the code (about
+          throw specs)
+
+          Also checked in some code that fixes/reorganizes the logic used
+          to wait for a server to finish starting up.  Added a method,
+          ready_check, which contains this new logic.  [Bug 605][Bug 606]
+          
+
 Wed Sep 20 14:50:29 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.cpp (invoke):
