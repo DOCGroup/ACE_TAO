@@ -1,3 +1,9 @@
+Thu Apr 03 13:31:17 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+	  Included the RT_Notification project.
+	
 Tue Apr 2 11:06:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/RT_lib:

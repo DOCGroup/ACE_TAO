@@ -366,6 +366,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RT_Notification DLL"=.\RT_Notification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNotification
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "SSLIOP"=.\SSLIOP.dsp - Package Owner=<4>
 
 Package=<5>
