@@ -1,3 +1,31 @@
+Fri Jan 19 12:15:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+
+          Changed generation of node's full name to node's
+          local name when occurring in the body of the
+          _var assignment operator from another _var. This
+          error turned up compiling cide generated from
+          nested_scopes.idl in IDL_Test.
+
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/be/be_array.cpp:
+
+          Cosmetic changes.
+
+        * TAO_IDL/ast/ast_expression.cpp:
+
+          Changed behavior of coerce() function to always
+          return a new ExprValue. Formerly, if the
+          ExprType already matched, the original ExprValue
+          was returned. This led to cases where a node's
+          ExprValue member (an array dim, for example)
+          could be modified unintentionally. Thanks to
+          JEAN-FRANCOIS DAUNE <Daune@IBA.be> for reporting
+          this bug and sending in an example IDL file.
+
 Fri Jan 19 08:55:45 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Leader_Follower.cpp:
