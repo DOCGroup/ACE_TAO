@@ -25,6 +25,7 @@
 #include "tao/DynAnyC.h"
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
+#include "tao/varout.h"
 #include "tao/POA_CORBA.h"
 
 #if !defined (__ACE_INLINE__)
