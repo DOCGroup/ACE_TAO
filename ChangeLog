@@ -1,5 +1,15 @@
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Synch.cpp: Fixed the ACE_recursive_mutex_state::reset() method
+	  so that it sets m.LockCount to 0.  Thanks to Davide Pasetto
+ 	  <dipo@sis.it> for reporting this.
+	
+	* ace/Synch.cpp: Fixed the implementation of
+	  ACE_Condition<ACE_Recursive_Thread_Mutex> so that it works
+ 	  properly on Windows, where the recursive mutex count is
+ 	  incremented by the OS.  Thanks to Davide Pasetto <dipo@sis.it>
+ 	  for reporting this.
+
         * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
 	* examples/C++NPv2/Client_Logging_Daemon.cpp: Changed "blocks"
 	  parameter to "chunk" to be consistent with the terminology in

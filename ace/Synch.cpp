@@ -877,6 +877,7 @@ ACE_recursive_mutex_state::reset (ACE_recursive_thread_mutex_t &m)
   // On Windows NT && 2000 the recursive mutex is a CriticalSection. 
   m.RecursionCount = 0;
   m.OwningThread = 0;
+  m.LockCount = 0;
   return 0;
 #else
   m.nesting_level_ = 0;
@@ -979,10 +980,18 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex, 
-                                             const ACE_Time_Value *abstime)
+                                                 const ACE_Time_Value *abstime)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, mutex, -1);
   ACE_recursive_mutex_state mutex_state_holder (mutex);
+
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // Windows automagically increments the count by one in
+  // <ACE_OS::cond_*wait()>.
+  const int mutex_released = 1;
+#else 
+  const int mutex_released = 0;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 
   do 
     {
@@ -999,7 +1008,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
       if (result == -1)
         return result;
     }
-  while (mutex.get_nesting_level () > 0);
+  while (mutex.get_nesting_level () > mutex_released);
 
   return 0;
 }
