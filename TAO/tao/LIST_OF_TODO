@@ -1,0 +1,16 @@
+- Fragmentation
+- GIOP Lite
+- test for Muli-threaded client & server (muxing tests)
+- test LongUpCalls
+- Remove the allocation of data blocks in Reply_Params. (seems to
+  create problems)
+- AMI tests
+- run purify quantify
+- DSI_Gateway tests
+- In the Longupcalls change the readme and put a new run_test.pl
+- Go through the code again & again...
+- Put tms_->close_connection () wherever we get -1 as a retval. Remove
+  that from recv_i ()  of pther protocols..
+- Optimize outgoing CDR's, I mean get it on stack..
+- Dont we want a cached transport on the server side...
+- Multi-threaded Single_Read test..
