@@ -565,6 +565,7 @@ parse_args (int argc, char *argv[])
                            " [-p <port>]"
                            " [-h <my_hostname>]"
                            " [-t <num_objects>]"
+                           " [-f <ior_file>]"
                            "\n", argv [0]),
                           1);
       }
@@ -614,6 +615,7 @@ initialize (int argc, char **argv)
                         " [-p port]"
                         " [-h my_hostname]"
                         " [-t num_objects]"
+                        " [-f <ior_file>]"
                         "\n", argv [0]),
                        1);
 

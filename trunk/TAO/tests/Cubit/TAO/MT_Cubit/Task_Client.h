@@ -159,6 +159,10 @@ public:
 
   char *ior_file_;
   // Name of the filename that the server used to store the iors.
+
+  u_int use_sysbench_;
+  // flag that  indicates that we are going to use the sysBench() call
+  // to time calls.  This only applies to the CHORUS ClassiX OS.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
@@ -194,9 +198,6 @@ private:
   void put_latency (double *jitter,
                     double latency,
                     u_int);
-  // Records the latencies in the <Task_State>.
-
-  void put_ave_latency (int latency, u_int);
   // Records the latencies in the <Task_State>.
 
   int parse_args (int, char **);

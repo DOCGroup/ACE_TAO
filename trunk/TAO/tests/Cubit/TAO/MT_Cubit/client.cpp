@@ -48,6 +48,7 @@ do_priority_inversion_test (Task_State &ts)
 
   Util_Thread util_thread (&ts, &thr_mgr);
 
+  // The minimum priority thread is the utilization thread.
   ACE_Sched_Priority priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
@@ -71,9 +72,12 @@ do_priority_inversion_test (Task_State &ts)
                 "activate failed",
                 priority));
 
-  priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
+  // Drop the priority, so that the priority of clients will increase
+  // with increasing client number.
+  for (int i = 0; i < ts.thread_count_; i++)
+    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+                                                    priority,
+                                                    ACE_SCOPE_THREAD);
 
   ACE_DEBUG ((LM_DEBUG,
               "Creating %d clients with low priority of %d\n",
@@ -82,13 +86,8 @@ do_priority_inversion_test (Task_State &ts)
 
   for (u_int i = 0; i < ts.thread_count_ - 1; i++)
     {
-      // The first thread starts at min + 1, since the minimum
-      // priority thread is the utilization thread.
-
-      // Get the next lower priority.
-      priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                      priority,
-                                                      ACE_SCOPE_THREAD);
+      // The first thread starts at the lowest priority of all the low
+      // priority clients.      
       if (low_priority_client.activate (THR_BOUND,
                                         1,
                                         1,
@@ -97,6 +96,11 @@ do_priority_inversion_test (Task_State &ts)
                     "%p; priority is %d\n",
                     "activate failed",
                     priority));
+
+      // Get the next higher priority.
+      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
+						  priority,
+						  ACE_SCOPE_THREAD);
     }
 
   // Wait for all the threads to exit (except the utilization thread).
@@ -113,6 +117,36 @@ do_priority_inversion_test (Task_State &ts)
                   "Low priority client latency : %u usec\n",
                   high_priority_client.get_high_priority_latency (),
                   low_priority_client.get_low_priority_latency ());
+
+  // output the latency values to a file, tab separated, to import it
+  // to Excel to calculate jitter, in the mean time we come up with
+  // the sqrt() function.
+  FILE *latency_file_handle = 0;
+  char latency_file[BUFSIZ];
+  char buffer[BUFSIZ];
+  
+  sprintf (latency_file, 
+	   "cb%d%s%d.txt", 
+	   ACE_OS::getpid (),
+	   ts.use_sysbench_ == 1? "SB": "__",
+	   ts.thread_count_);
+  printf("--->Output file for latency data is \"%s\"\n",latency_file);
+  
+  latency_file_handle = fopen (latency_file, "w");
+  
+  for (u_int j = 0; j < ts.start_count_; j ++)
+    {
+      sprintf(buffer, "%s #%d", j==0? "High Priority": "Low Priority", j);
+      for (u_int i = 0; i < ts.loop_count_; i ++)
+	{
+	  sprintf(buffer+strlen(buffer), "\t%u\n", ts.global_jitter_array_[j][i]);
+	  fputs (buffer, latency_file_handle);
+	  buffer[0]=0;
+	}
+    }
+  
+  ACE_OS::fclose (latency_file_handle);
+  
 #else /* !defined (CHORUS) */
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
