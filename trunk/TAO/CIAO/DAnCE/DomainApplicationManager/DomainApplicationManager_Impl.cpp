@@ -95,7 +95,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           // corresponding child plan as input, which returns a
           // NodeApplicationManager object reference.
           Deployment::ApplicationManager_var tmp_app_manager =
-            my_node_manager->preparePlan (artifacts.child_plan_
+            my_node_manager->preparePlan (artifacts.child_plan_.in ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -394,7 +394,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ACE_TRY_CHECK;
 
           // Cache the returned set of connections into the list.
-          this->add_connections (retn_connections);
+          this->add_connections (retn_connections.in ());
 
           // Cache the returned NodeApplication object reference into
           // the hash table.
@@ -443,7 +443,7 @@ finishLaunch (::CORBA::Boolean start
 
           // Get the Connections variable.
           Deployment::Connections * my_connections =
-            this->get_outgoing_connections ((entry->int_id_).child_plan_);
+            this->get_outgoing_connections ((entry->int_id_).child_plan_.in ());
 
           if (my_connections == 0)
             ACE_THROW (Deployment::StartError ());
