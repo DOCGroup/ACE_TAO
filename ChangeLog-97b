@@ -1,39 +1,45 @@
+Mon Oct 27 22:17:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Thread_Manager.cpp (exit): don't use the cache when finding
+          the thread ID.  The cache is in the ACE_Log_Msg instance, and
+          it might have been deleted already.
+
 Mon Oct 27 20:33:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.30, released Mon Oct 27 20:33:07 1997.
 
 Mon Oct 27 18:03:06 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ACE-INSTALL.html (HREF): Added NT/Alpha to supporting platforms
-	  list.  Added hyperlink to ACE newsgroup.  Added hyperlink to
-	  FreeBSD homepage.  Minor changes to Win32 intstallation guide.
+        * ACE-INSTALL.html (HREF): Added NT/Alpha to supporting platforms
+          list.  Added hyperlink to ACE newsgroup.  Added hyperlink to
+          FreeBSD homepage.  Minor changes to Win32 intstallation guide.
 
 Mon Oct 27 17:50:16 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU (PRELIB):
- 	  Changed PRELIB in platform_sco5.0.0-mit-pthread.GNU,
- 	  platform_sco5.0.0-fsu-pthread.GNU to @true, so we can generate
- 	  the TAO_IDL compiler.  Thanks to Arturo Montes
- 	  <mitosys@colomsat.net.co> for reporting this.
+        * include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU (PRELIB):
+          Changed PRELIB in platform_sco5.0.0-mit-pthread.GNU,
+          platform_sco5.0.0-fsu-pthread.GNU to @true, so we can generate
+          the TAO_IDL compiler.  Thanks to Arturo Montes
+          <mitosys@colomsat.net.co> for reporting this.
 
 Mon Oct 27 14:26:10 1997    <irfan@TWOSTEP>
 
-	* ace/Synch_T (ACE_TSS): When ACE does not have thread specific
- 	  storage, ACE_TSS will be a simple pointer holder. Previously, it
- 	  had a instance as a member, now it has a pointer to an instance.
+        * ace/Synch_T (ACE_TSS): When ACE does not have thread specific
+          storage, ACE_TSS will be a simple pointer holder. Previously, it
+          had a instance as a member, now it has a pointer to an instance.
 
-	* ace/WFMO_Reactor.cpp (update_state): Fixed a bug in the
- 	  WFMO_Reactor.  wakeup_all_threads() used to be an internal
- 	  method that was called when changes were made to the state of
- 	  the reactor.  When wakeup_all_threads() became public, there was
- 	  no code in place to handle explicit user wakeups.  In
- 	  particular, the wakeup_all_threads event was never reset.
-  	  Thanks to Evgeny Beskrovny <evgeny_beskrovny@icomverse.com> for
- 	  pointing out this bug.
+        * ace/WFMO_Reactor.cpp (update_state): Fixed a bug in the
+          WFMO_Reactor.  wakeup_all_threads() used to be an internal
+          method that was called when changes were made to the state of
+          the reactor.  When wakeup_all_threads() became public, there was
+          no code in place to handle explicit user wakeups.  In
+          particular, the wakeup_all_threads event was never reset.
+          Thanks to Evgeny Beskrovny <evgeny_beskrovny@icomverse.com> for
+          pointing out this bug.
 
-	* ace/OS.i (ACE_FAIL_RETURN): Added mapping from
- 	  ERROR_PATH_NOT_FOUND to ENOENT.  Thanks to David Brackman
- 	  <dbrackma@OhioEE.com> for suggesting this.
+        * ace/OS.i (ACE_FAIL_RETURN): Added mapping from
+          ERROR_PATH_NOT_FOUND to ENOENT.  Thanks to David Brackman
+          <dbrackma@OhioEE.com> for suggesting this.
 
 Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
