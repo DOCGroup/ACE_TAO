@@ -1,3 +1,14 @@
+Tue May 27 17:37:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+	* orbsvcs/orbsvcs/IFRService/tmplinst.cpp: Fixed a explicit
+	  template instantiation problem in our daily builds. The problem
+	  was that some of the instantiated templates also had a
+	  specialization which the compiler couldn't see. The fix
+	  essentially moved the explicit template instantiations after the
+	  specialization so that the compiler doesn't get confused when
+	  using explicit template instantiations. 
+
 Tue May 27 15:17:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:

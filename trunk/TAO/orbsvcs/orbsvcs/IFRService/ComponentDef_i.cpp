@@ -11,8 +11,8 @@
 #include "ExtAttributeDef_i.h"
 #include "IFR_Service_Utils.h"
 
-ACE_RCSID (IFRService, 
-           ComponentDef_i, 
+ACE_RCSID (IFRService,
+           ComponentDef_i,
            "$Id$")
 
 // Specialization.
@@ -29,14 +29,14 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
   config->get_integer_value (key,
                              "is_multiple",
                              is_multiple);
-  desc_seq[index].is_multiple = 
+  desc_seq[index].is_multiple =
     ACE_static_cast (CORBA::Boolean,
                      is_multiple);
 }
 
 // Specialization.
 template<>
-void 
+void
 TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
     CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
     ACE_TString &holder,
@@ -60,6 +60,18 @@ TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
                              is_multiple);
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>;
+template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>;
+template class TAO_Port_Utils<CORBA::ComponentIR::UsesDef>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>
+#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::UsesDef>
+
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
 // ==============================================================
 
 TAO_ComponentDef_i::TAO_ComponentDef_i (
@@ -365,7 +377,7 @@ TAO_ComponentDef_i::supported_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::ULong count = 0;
   ACE_Configuration_Section_Key supported_key;
-  int status = 
+  int status =
     this->repo_->config ()->open_section (this->section_key_,
                                           "supported",
                                           0,
@@ -387,7 +399,7 @@ TAO_ComponentDef_i::supported_interfaces_i (ACE_ENV_SINGLE_ARG_DECL)
           this->repo_->config ()->get_string_value (supported_key,
                                                     stringified,
                                                     path);
-          tmp = 
+          tmp =
             TAO_IFR_Service_Utils::path_to_ir_object (path,
                                                       this->repo_
                                                       ACE_ENV_ARG_PARAMETER);
@@ -443,7 +455,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      supported_path = 
+      supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
             supported_interfaces[i].in ()
           );
@@ -533,10 +545,10 @@ TAO_ComponentDef_i::base_component_i (
                                             "base_component");
       return;
     }
-    
-  const char *base_path = 
+
+  const char *base_path =
     TAO_IFR_Service_Utils::reference_to_path (base_component);
-      
+
   // Get the servant's key into the temporary key holder, because
   // the name clash checker for base valuetypes is static, and has
   // no other way to know about a specific key.
@@ -552,7 +564,7 @@ TAO_ComponentDef_i::base_component_i (
                                       CORBA::dk_Component
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-          
+
   this->repo_->config ()->set_string_value (
                               this->section_key_,
                               "base_component",
@@ -592,7 +604,7 @@ TAO_ComponentDef_i::create_provides_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     TAO_Port_Utils<
         CORBA::ComponentIR::ProvidesDef
       >::create_entry (id,
@@ -638,7 +650,7 @@ TAO_ComponentDef_i::create_uses_i (const char *id,
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     TAO_Port_Utils<
         CORBA::ComponentIR::UsesDef
       >::create_entry (id,
@@ -681,7 +693,7 @@ TAO_ComponentDef_i::create_emits_i (const char *id,
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     TAO_Port_Utils<
         CORBA::ComponentIR::EmitsDef
       >::create_entry (id,
@@ -724,7 +736,7 @@ TAO_ComponentDef_i::create_publishes_i (const char *id,
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     TAO_Port_Utils<
         CORBA::ComponentIR::PublishesDef
       >::create_entry (id,
@@ -767,7 +779,7 @@ TAO_ComponentDef_i::create_consumes_i (const char *id,
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 
+  return
     TAO_Port_Utils<
         CORBA::ComponentIR::ConsumesDef
       >::create_entry (id,
@@ -800,7 +812,6 @@ TAO_ComponentDef_i::name_clash (const char *name)
       return 1;
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
-
