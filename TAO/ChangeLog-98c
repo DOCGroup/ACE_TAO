@@ -1,5 +1,13 @@
 Tue Dec 08 15:10:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp (initialize_orb): 
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (init_orb):
+	  Hard-coded the orb initialization code to use the new
+	  <open_services> function to setup resources when compiling
+	  static linked versions on NT.  Notice when building
+	  static-linked version on NT, the svc.conf file is not used and
+	  the configurations is hard-coded in these two files.
+
 	* tao/TAO_Internal.{h,cpp} (open_services): Added a new
 	  <open_services> method that simply takes the arguments for
 	  TAO_Resource_Factory, TAO_Default_Client_Strategy_Factory and
