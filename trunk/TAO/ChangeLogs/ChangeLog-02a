@@ -1,3 +1,14 @@
+Fri Dec 14 16:12:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+
+          Removed generation of the argless version of the
+          private _reset() method. It never gets called. It
+          also contained a 'memcpy' that should have been a
+          'memset', which was pointed out by Oliver Kellogg
+          <Oliver.Kellogg@t-online.de>.
+
 Fri Dec 14 12:18:51 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBALOC_Parser.h (parse_string_count_helper):
