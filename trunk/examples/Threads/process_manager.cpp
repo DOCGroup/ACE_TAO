@@ -87,7 +87,6 @@ exithook (void)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) later...\n"));
 }
 
-static int n_processes = ACE_DEFAULT_THREADS;
 static int n_iterations = 100000;
 static int child = 0;
 
@@ -95,16 +94,13 @@ static int child = 0;
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "p:i:cu");
+  ACE_Get_Opt get_opt (argc, argv, "i:cu");
 
   int c; 
 
   while ((c = get_opt ()) != -1)
     switch (c)
     {
-    case 'p':
-      n_processes = ACE_OS::atoi (get_opt.optarg);
-      break;
     case 'i':
       n_iterations = ACE_OS::atoi (get_opt.optarg);
       break;
@@ -126,8 +122,6 @@ main (int argc, char *argv[])
   ACE_Service_Config daemon;
 
   daemon.open (argv[0]);
-
-  ACE_UNUSED_ARG (n_processes);
 
   atexit (exithook);
 

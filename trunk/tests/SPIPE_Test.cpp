@@ -101,10 +101,13 @@ server (void *)
   return 0;
 }
 
-static void
-spawn (void)
+int
+main (int, char *[])
 {
-#if !defined (ACE_WIN32) && !defined (VXWORKS)
+  ACE_START_TEST ("SPIPE_Test");
+
+#if defined (ACE_HAS_STREAM_PIPES)
+#if !defined (ACE_LACKS_EXEC)
   switch (ACE_OS::fork ())
     {
     case -1:
@@ -127,20 +130,6 @@ spawn (void)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
   thr_mgr.wait ();
 #else
-  ACE_ERROR ((LM_ERROR, "only one thread may be run in a process on this platform\n%a", 1));
-#endif /* ACE_HAS_THREADS */	
-}
-
-int
-main (int, char *[])
-{
-  ACE_START_TEST ("SPIPE_Test");
-
-#if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
-  spawn ();
-#else
-  if (spawn) /* null */;  // To avoid compiler about unused function spawn ().
-
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
 #endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS) */
