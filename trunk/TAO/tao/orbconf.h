@@ -179,7 +179,7 @@
 
 // Default MINIMUM_CONNECTION_CACHING_STRATEGY settings
 #if !defined (TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY)
-#  if (TAO_HAS_MINIMUM_CORBA == 1) 
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
 #    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 1
 #  else
 #    define TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY 0
@@ -402,7 +402,11 @@ enum MCAST_SERVICEID
 #endif  /* !TAO_HAS_UIOP */
 
 #if !defined (TAO_HAS_SHMIOP)
-# define TAO_HAS_SHMIOP 1
+# if (TAO_HAS_MINIMUM_CORBA==1)
+#   define TAO_HAS_SHMIOP 0
+# else
+#   define TAO_HAS_SHMIOP 1
+# endif /* TAO_HAS_MINIMUM_CORBA */
 #endif /* TAO_HAS_SHMIOP */
 
 // RT_CORBA support is enabled by default if TAO is not configured for

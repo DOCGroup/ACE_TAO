@@ -1,3 +1,9 @@
+Tue Apr 11 23:33:16 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h: Disabled SHMIOP by default if
+	  TAO_HAS_MINIMUM_CORBA is enabled, it is enabled by default
+	  otherwise.
+
 Tue Apr 11 20:58:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
@@ -53,7 +59,7 @@ Tue Apr 11 20:58:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Apr 11 21:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (TAO_GIOP_Message_Lite): 
+	* tao/GIOP_Message_Lite.cpp (TAO_GIOP_Message_Lite):
 	* tao/GIOP_Message_Lite.h:
 	* tao/GIOP_Message_Acceptors.{h,cpp,i}: Fixed a pending problem
 	  with multi-threaded servers dumping a core during shutdown. The
@@ -61,7 +67,7 @@ Tue Apr 11 21:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  indirectly, and were getting destroyed long after the TSS
 	  resources are destroyed by the ORB. So, these classes allocate
 	  their own resources instead of depending on the ORB_Core.
-			
+
 Tue Apr 11 17:57:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/OctetSeq/test.idl:
