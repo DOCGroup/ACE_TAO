@@ -1,23 +1,35 @@
+Sun Oct 04 22:07:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-fsu-pthread.h,config-hpux-10.x.h,config-lynxos.h,
+          config-mit-pthread.h,config-mvs.h,config-osf1-3.2.h,
+          config-osf1-4.0.h,config-sco-5.0.0-mit-pthread.h,config-tandem.h,
+          README: removed ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR, because it's
+          no longer used.  Thanks to Ossama for reporting this.
+
+        * ace/config-tandem.h,README: removed ACE_HAS_PTHREAD_YIELD_VOIDPTR,
+          because it's no longer used.  It was commented out in
+          config-tandem.h, anyways.  Thanks to Ossama for reporting this.
+
 Sun Oct  4 20:00:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: 
-	  Fixed the regular expression to detect compile errors.
- 	  The user can pass extra arguments to GNU make, the arguments are
-	  given as the script is invoked.
+        * bin/auto_compile:
+          Fixed the regular expression to detect compile errors.
+          The user can pass extra arguments to GNU make, the arguments are
+          given as the script is invoked.
 
 Sun Oct  4 14:30:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (handle_events): Made sure we never suspend
-	  the <notify_handler_> without holding the <token_>.  Otherwise,
-	  depend on how an OS schedules ready threads, we may have a
-	  Reactor that could never be woken up.  This leads to a very
-	  delicate race condition when other threads which need to modify
-	  Reactor's state get block on the token (because they couldn't
-	  wake up the reactor).  These threads later block the
-	  nofify_handler thread when it's ready to resume
-	  <notify_handler_.>
-	  (notify_handle): Since we don't suspend the <notify_handler_>,
-	  there's no need to resume it here.
+        * ace/TP_Reactor.cpp (handle_events): Made sure we never suspend
+          the <notify_handler_> without holding the <token_>.  Otherwise,
+          depend on how an OS schedules ready threads, we may have a
+          Reactor that could never be woken up.  This leads to a very
+          delicate race condition when other threads which need to modify
+          Reactor's state get block on the token (because they couldn't
+          wake up the reactor).  These threads later block the
+          nofify_handler thread when it's ready to resume
+          <notify_handler_.>
+          (notify_handle): Since we don't suspend the <notify_handler_>,
+          there's no need to resume it here.
 
 Sat Oct  3 13:11:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
