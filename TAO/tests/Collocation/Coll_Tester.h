@@ -29,6 +29,8 @@ class Collocation_Test
 public:
   Collocation_Test (void);
 
+  void shutdown (CORBA::Environment &ACE_TRY_ENV);
+
   int init (int argc, char *argv[], CORBA::Environment &);
   // Initializing the Collocation_Test object.
 

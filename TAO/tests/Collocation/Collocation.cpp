@@ -8,14 +8,17 @@ ACE_RCSID(Collocation, main, "$Id$")
 
 int main (int argc, char *argv[])
 {
-  Collocation_Test coll_test;
-
   ACE_TRY_NEW_ENV
     {
+      Collocation_Test coll_test;
+
       coll_test.init (argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       coll_test.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      coll_test.shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
