@@ -1,3 +1,13 @@
+Mon May 18 12:24:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-sunos5*.h: Removed the ACE_LACKS_RWLOCK_T stuff since
+ 	  it's unnecessary.  Thanks to Chris Lahey for reminding me of
+ 	  this...
+
+  	* ace/config-sunos5.6.h: Added an #define for
+ 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
+ 	  <abird@nextware.co.kr> for reporting this.
+
 Mon May 18 12:31:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Service_Config.{h,i,cpp}: Added an accessor debug() for
@@ -6,12 +16,6 @@ Mon May 18 12:31:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: Checks Service_Config's debug flag before
 	  outputting debug messages.
-
-Mon May 18 08:34:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/config-sunos5.6.h: Added an #define for
- 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
- 	  <abird@nextware.co.kr> for reporting this.
 
 Sun May 17 23:14:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
