@@ -72,7 +72,7 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
   cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
-  send_msg.msg_iov = (iovec *) iov;
+  send_msg.msg_iov = const_cast <iovec *> (iov);
   send_msg.msg_iovlen = n;
   send_msg.msg_name = 0;
   send_msg.msg_namelen = 0;

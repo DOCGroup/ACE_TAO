@@ -249,7 +249,7 @@ ACE_Event_Handler::reference_counting_policy (void)
 ACE_THR_FUNC_RETURN
 ACE_Event_Handler::read_adapter (void *args)
 {
-  ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;
+  ACE_Event_Handler *this_ptr = static_cast<ACE_Event_Handler *> (args);
 
   ACE_HANDLE handle = this_ptr->get_handle ();
   if (handle == ACE_INVALID_HANDLE)
@@ -275,7 +275,7 @@ ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
   ACE_UNUSED_ARG (reactor);
 
   eh->reactor (reactor);
-  return thr_mgr->spawn (&read_adapter, (void *) eh, flags);
+  return thr_mgr->spawn (&read_adapter, static_cast<void *> (eh), flags);
 #else
   // Keep compilers happy.
   ACE_UNUSED_ARG (flags);

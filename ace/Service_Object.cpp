@@ -61,7 +61,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
 
   this->fini ();
 
-  delete [] (ACE_TCHAR *) this->name_;
+  delete [] const_cast <ACE_TCHAR *> (this->name_);
 }
 
 int
