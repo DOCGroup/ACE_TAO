@@ -2734,7 +2734,7 @@ typedef char TCHAR;
 
 #define ACE_SEH_TRY if (1)
 #define ACE_SEH_EXCEPT(X) while (0)
-#define ACE_SEH_FINALLY while (0)
+#define ACE_SEH_FINALLY if (1)
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"
