@@ -716,7 +716,7 @@ nobase_include_HEADERS += \
   Fixed_Array_SArgument_T.inl \
   Fixed_Size_Argument_T.inl \
   Fixed_Size_SArgument_T.inl \
-  FloatSeqC.i \
+  FloatSeqC.inl \
   GIOPC.i \
   GIOPS.i \
   GIOPS_T.i \
