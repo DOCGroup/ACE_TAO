@@ -6,7 +6,7 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 #include "Property_Handler.h"
 #include "CompIntrDesc_Handler.h"
@@ -31,17 +31,22 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
         {
         }
       else if
-        (process_string(this->iter_, node_name, "label", ccd.label));
+        (CIAO::Config_Handler::Utils::process_string
+              (this->iter_, node_name, "label", ccd.label));
       else if
-        (process_string(this->iter_, node_name, "UUID", ccd.UUID));
+        (CIAO::Config_Handler::Utils::process_string
+              (this->iter_, node_name, "UUID", ccd.UUID));
       else if
-        (process_string(this->iter_, node_name, "specificType", 
+        (CIAO::Config_Handler::Utils::process_string
+              (this->iter_, node_name, "specificType", 
                         ccd.specificType));
       else if
-        (process_string_seq(this->iter_, node_name, "supportedType", 
+        (CIAO::Config_Handler::Utils::process_string_seq
+              (this->iter_, node_name, "supportedType", 
                             ccd.supportedType));
       else if
-        (process_string_seq(this->iter_, node_name, "idlFile", ccd.idlFile));
+        (CIAO::Config_Handler::Utils::process_string_seq
+              (this->iter_, node_name, "idlFile", ccd.idlFile));
       else if
         (process_sequence_common<Deployment::Property>
            (this->doc_, this->iter_, node,
@@ -89,7 +94,8 @@ void CompIntrDesc_Handler::process_comp_property (DOMNodeIterator* iter,
                (ACE_TEXT ("Deployment:ComponentPropertyDescription")))
         {
         }
-      else if (process_string(iter, node_name, "name", property.name));
+      else if (CIAO::Config_Handler::Utils::process_string
+                  (iter, node_name, "name", property.name));
       else if (node_name == XStr (ACE_TEXT ("type")))
         {
           int argc = 0;
@@ -120,22 +126,27 @@ void CompIntrDesc_Handler::process_port (DOMNodeIterator* iter,
                (ACE_TEXT ("Deployment:ComponentPortDescription")))
         {
         }
-      else if (process_string(iter, node_name, "name", port.name));
+      else if (CIAO::Config_Handler::Utils::process_string
+                   (iter, node_name, "name", port.name));
       else if
-        (process_string(iter, node_name, "specificType", port.specificType));
+        (CIAO::Config_Handler::Utils::process_string
+                   (iter, node_name, "specificType", port.specificType));
       else if
-        (process_string_seq(iter, node_name, "supportedType", 
-                            port.supportedType));
+        (CIAO::Config_Handler::Utils::process_string_seq
+                   (iter, node_name, "supportedType", port.supportedType));
       else if
-        (process_boolean(iter, node_name, "provider", port.provider));
+        (CIAO::Config_Handler::Utils::process_boolean
+                   (iter, node_name, "provider", port.provider));
       else if
-        (process_boolean(iter, node_name, "exclusiveProvider", 
+        (CIAO::Config_Handler::Utils::process_boolean
+                   (iter, node_name, "exclusiveProvider", 
                          port.exclusiveProvider));
       else if
-        (process_boolean(iter, node_name, "exclusiveUser", 
-                         port.exclusiveUser));
+        (CIAO::Config_Handler::Utils::process_boolean
+                  (iter, node_name, "exclusiveUser", port.exclusiveUser));
       else if
-        (process_boolean(iter, node_name, "optional", port.optional));
+        (CIAO::Config_Handler::Utils::process_boolean
+                 (iter, node_name, "optional", port.optional));
       else if (node_name == XStr(ACE_TEXT("kind")))
         {
           CPK_Handler::process_CCMComponentPortKind (iter, port.kind);

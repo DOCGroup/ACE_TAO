@@ -1,3 +1,33 @@
+Thu Jul  1 12:02:05 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/CPR_Handler.cpp:
+        * DnC/Config_Handlers/Cap_Handler.cpp:
+        * DnC/Config_Handlers/CompImplDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompIntrDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/IAD_Handler.cpp:
+        * DnC/Config_Handlers/IR_Handler.cpp:
+        * DnC/Config_Handlers/NIA_Handler.cpp:
+        * DnC/Config_Handlers/PCI_Handler.cpp:
+        * DnC/Config_Handlers/PC_Handler.cpp:
+        * DnC/Config_Handlers/Plan_Handler.cpp:
+        * DnC/Config_Handlers/Process_Basic_Type.h:
+        * DnC/Config_Handlers/Process_Basic_Type.i:
+        * DnC/Config_Handlers/Process_Element_T.cpp:
+        * DnC/Config_Handlers/TPD_Handler.cpp:
+        * DnC/Config_Handlers/Utils.cpp:
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/Config_Handlers/Process_Basic_Type.h:
+        * DnC/Config_Handlers/Process_Basic_Type.i:
+
+          Moved the code in Process_Basic_Type.h and
+          Process_Basic_Type.i to Utils.h and Utils.cpp,
+          as all the utility functions are defined
+          in that file.
+
 Thu Jul  1 11:37:14 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/todo.html:

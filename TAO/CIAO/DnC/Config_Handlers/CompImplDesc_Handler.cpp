@@ -11,7 +11,7 @@
 #include "Cap_Handler.h"
 #include "CompIntrDesc_Handler.h"
 #include "CompImplDesc_Handler.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 #include <iostream>
 
@@ -36,9 +36,11 @@ void CompImplDesc_Handler::process_ComponentImplementationDescription
         {
         }
       else if
-        (process_string (this->iter_, node_name, "label", cid.label));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "label", cid.label));
       else if
-        (process_string (this->iter_, node_name, "UUID", cid.UUID));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "UUID", cid.UUID));
       else if
         (process_element_remote<Deployment::ComponentInterfaceDescription, 
                                 CompIntrDesc_Handler>

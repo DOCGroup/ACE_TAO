@@ -10,6 +10,7 @@ project (Config_Handlers) : ciao_deployment_stub {
   libs     += xerces-c CIAO_DnC_Server TAO_IFR_Client
 
   Source_Files {
+    Utils.cpp
     Any_Handler.cpp
     Basic_Handler.cpp
     CAD_Handler.cpp
@@ -41,7 +42,6 @@ project (Config_Handlers) : ciao_deployment_stub {
     SP_Handler.cpp
     SPK_Handler.cpp
     TPD_Handler.cpp
-    Utils.cpp
     XercesString.cpp
   }
 }

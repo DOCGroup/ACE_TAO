@@ -14,7 +14,7 @@
 #include "Utils.h"
 #include <iostream>
 #include "string.h"
-#include "Process_Basic_Type.h"
+#include "Utils.h"
 #include "Process_Element.h"
 
 BEGIN_DEPLOYMENT_NAMESPACE
@@ -34,9 +34,11 @@ CAP_Handler::process_Capability (Deployment::Capability &cap)
         {
         }
       else if
-        (process_string (this->iter_, node_name, "name", cap.name));
+        (CIAO::Config_Handler::Utils::process_string 
+              (this->iter_, node_name, "name", cap.name));
       else if
-        (process_string_seq (this->iter_, node_name, "resourceType", 
+        (CIAO::Config_Handler::Utils::process_string_seq 
+              (this->iter_, node_name, "resourceType", 
                              cap.resourceType));
       else if
         (process_sequence_common<Deployment::SatisfierProperty>

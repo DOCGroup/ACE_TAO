@@ -108,6 +108,95 @@ CIAO::Config_Handler::Utils::parse_octet (DOMNodeIterator * iter)
   return Utils::parse_char (iter);
 }
 
+bool
+CIAO::Config_Handler::Utils::process_string (DOMNodeIterator* iter,
+                const XStr& node_name, const char* name,
+                TAO_String_Manager& var)
+{
+  bool result = (node_name == XStr(ACE_TEXT (name)));
+  if (result == true)
+    {
+      DOMNode* node = iter->nextNode();
+      const XMLCh* text = ACE_reinterpret_cast(DOMText*, node)->getNodeValue
+();
+      if (text)
+        var = XMLString::transcode (text);
+    }
+  return result;
+}
+
+bool
+CIAO::Config_Handler::Utils::process_string_seq (DOMNodeIterator* iter,
+                    const XStr& node_name, const char* name,
+                    CORBA::StringSeq& seq)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      DOMNode* node = iter->nextNode ();
+      const XMLCh* text = ACE_reinterpret_cast
+                            (DOMText*, node)->getNodeValue ();
+
+      if (text)
+        {
+          CORBA::ULong i (seq.length ());
+          seq.length (i + 1);
+          seq[i] = XMLString::transcode (text);
+        }
+    }
+
+  return result;
+}
+
+bool
+CIAO::Config_Handler::Utils::process_ulong (DOMNodeIterator* iter,
+               const XStr& node_name, const char* name,
+               CORBA::ULong& var)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      DOMNode* node = iter->nextNode ();
+      const XMLCh* text = ACE_reinterpret_cast
+                            (DOMText*, node)->getNodeValue ();
+
+      if (text)
+        {
+          CORBA::String_var temp = XMLString::transcode (text);
+          var = ACE_static_cast (CORBA::ULong, ACE_OS::strtol (temp.in (),
+                                 0, 10));
+        }
+    }
+
+  return result;
+}
+
+bool
+CIAO::Config_Handler::Utils::process_boolean (DOMNodeIterator* iter,
+                 const XStr& node_name, const char* name,
+                 CORBA::Boolean& var)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+
+  if (result == true)
+    {
+      DOMNode* node = iter->nextNode ();
+      const XMLCh* text = ACE_reinterpret_cast
+                            (DOMText*, node)->getNodeValue ();
+
+      if (text)
+        {
+          CORBA::String_var temp = XMLString::transcode (text);
+          var = ACE_static_cast (CORBA::Boolean, ACE_OS::strtol (temp.in (),
+                                 0, 10));
+        }
+    }
+
+  return result;
+}
+
 DOMDocument*
 CIAO::Config_Handler::Utils::create_document (const char * url)
 {

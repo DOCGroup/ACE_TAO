@@ -17,6 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handler_export.h"
+#include "DeploymentC.h"
 
 #include "tao/Basic_Types.h"
 #include "XercesString.h"
@@ -86,6 +87,25 @@ namespace CIAO {
 
       static DOMBuilder* create_parser ();
       // Create a parser from the URL
+
+      static bool process_string (DOMNodeIterator* iter, const XStr& node_name, 
+                                  const char* name, TAO_String_Manager& var);
+      // process strings
+
+      static bool process_string_seq (DOMNodeIterator* iter, 
+                                      const XStr& node_name, 
+                                      const char* name, CORBA::StringSeq& seq);
+      // process string sequence
+
+      static bool process_boolean (DOMNodeIterator* iter, 
+                                   const XStr& node_name, 
+                                   const char* name, CORBA::Boolean& var);
+      // process strings
+
+      static bool process_ulong (DOMNodeIterator* iter, const XStr& node_name, 
+                                 const char* name, CORBA::ULong& var);
+      // process ulong
+
 
       static DOMNodeIterator * parse_href_tag (XMLURL xml_url,
                                                DOMDocument * doc);
