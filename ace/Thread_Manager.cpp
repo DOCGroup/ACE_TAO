@@ -500,8 +500,6 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
 ACE_Thread_Exit::~ACE_Thread_Exit (void)
 {
   ACE_TRACE ("ACE_Thread_Exit::~ACE_Thread_Exit");
-
-  ACE_Thread_Exit::is_constructed_ = 0;
 }
 
 // Run the entry point for thread spawned under the control of the

@@ -6582,6 +6582,10 @@ ACE_OS_Object_Manager::fini (void)
 #   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
+
+      ACE_Thread_Exit::is_constructed_ = 0;
+      // All TSS objects have been destroyed.  Reset this flag so
+      // ACE_Thread_Exit singleton can be created again.
     }
 
   delete default_mask_;

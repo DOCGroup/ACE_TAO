@@ -4840,6 +4840,9 @@ public:
   // singleton.
 
 private:
+  friend class ACE_OS_Object_Manager;
+  // Allow OS_Object_Manager to reset the status of <is_constructed_>.
+
   ACE_Thread_Control thread_control_;
   // Automatically add/remove the thread from the
   // <ACE_Thread_Manager>.
