@@ -58,9 +58,9 @@ be_exception *EXCEPS[N_EXCEPS];
 be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     module_id_ ("Components"),
-    cookie_ (0),
     connection_ (0),
     connections_ (0),
+    cookie_ (0),
     already_connected_ (0),
     invalid_connection_ (0),
     no_connection_ (0),
