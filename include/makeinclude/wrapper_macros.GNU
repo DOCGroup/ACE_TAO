@@ -443,7 +443,7 @@ ifneq ($(inline),0)
 endif
   CFLAGS+= -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
   LDFLAGS+= -L$(ACE_ROOT)/PACE/pace/
-  ACELIB=-lACE /project/danzon/john/ACE_wrappers/build/sun7g++/PACE/pace/libPACE.a
+  ACELIB=-lACE -lPACE
   include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
 endif # pace
 
