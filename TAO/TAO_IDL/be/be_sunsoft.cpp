@@ -74,8 +74,10 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%ld", ev->u.ulval);
           break;
         case AST_Expression::EV_longlong:
+          this->TAO_OutStream::print ("%ld", ev->u.llval);
           break;
         case AST_Expression::EV_ulonglong:
+          this->TAO_OutStream::print ("%ld", ev->u.ullval);
           break;
         case AST_Expression::EV_float:
           this->TAO_OutStream::print ("%f", ev->u.fval);
@@ -87,8 +89,8 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           break;
         case AST_Expression::EV_char:
           if (isprint (ev->u.cval))
-	    this->TAO_OutStream::print ("'%c'", ev->u.cval);
-	  else if (iscntrl (ev->u.cval))
+	          this->TAO_OutStream::print ("'%c'", ev->u.cval);
+	        else if (iscntrl (ev->u.cval))
             switch (ev->u.cval) 
               {
                 case '\n':
@@ -115,10 +117,11 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
- 	  else
-	    this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
+ 	        else
+	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
+          this->TAO_OutStream::print ("%ld", ev->u.wcval);
           break;
         case AST_Expression::EV_octet:
           this->TAO_OutStream::print ("%d", ev->u.oval);
