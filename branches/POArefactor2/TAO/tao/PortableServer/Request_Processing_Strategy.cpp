@@ -474,16 +474,28 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
+      // This operation sets the default servant manager associated with the
+      // POA. This operation may only be invoked once after a POA has been
+      // created. Attempting to set the servant manager after one has already
+      // been set will result in the BAD_INV_ORDER system exception with
+      // standard minor code 6 being raised (see 11.3.9.12 of the corba spec)
+      if (!CORBA::is_nil (this->servant_activator_.in ()))
+        {
+          ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6,
+                                           CORBA::COMPLETED_NO));
+        }
+
       this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr
                                                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      // @bala Shouldn't we use an extra variable, in case a set_servant_manager
-      // wit a wrong type, we set this wrong type and after that throw the exception
-      // shouldn't we keep the servant_activator_ valid?
+      // If the argument is nil, or does not support the required interface,
+      // then the OBJ_ADAPTER system exception with standard minor code 4 is
+      // raised.
       if (CORBA::is_nil (this->servant_activator_.in ()))
         {
-          ACE_THROW (PortableServer::POA::WrongPolicy ());
+          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
+                                         CORBA::COMPLETED_NO));
         }
     }
 
@@ -690,16 +702,28 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableServer::POA::WrongPolicy))
     {
+      // This operation sets the default servant manager associated with the
+      // POA. This operation may only be invoked once after a POA has been
+      // created. Attempting to set the servant manager after one has already
+      // been set will result in the BAD_INV_ORDER system exception with
+      // standard minor code 6 being raised (see 11.3.9.12 of the corba spec)
+      if (!CORBA::is_nil (this->servant_locator_.in ()))
+        {
+          ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 6,
+                                           CORBA::COMPLETED_NO));
+        }
+
       this->servant_locator_ = PortableServer::ServantLocator::_narrow (imgr
                                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      // @bala Shouldn't we use an extra variable, in case a set_servant_manager
-      // wit a wrong type, we set this wrong type and after that throw the exception
-      // shouldn't we keep the servant_activator_ valid?
+      // If the argument is nil, or does not support the required interface,
+      // then the OBJ_ADAPTER system exception with standard minor code 4 is
+      // raised.
       if (CORBA::is_nil (this->servant_locator_.in ()))
         {
-          ACE_THROW (PortableServer::POA::WrongPolicy ());
+          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
+                                         CORBA::COMPLETED_NO));
         }
     }
 
