@@ -22,6 +22,20 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
 {
 }
 
+void
+TAO_Buffering_Constraint_Policy::_add_ref (void)
+{
+  this->_incr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
+void
+TAO_Buffering_Constraint_Policy::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+  // This is a TAO specific implementation.
+}
+
 CORBA::PolicyType
 TAO_Buffering_Constraint_Policy::policy_type (CORBA_Environment &)
 {
