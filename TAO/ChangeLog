@@ -1,9 +1,8 @@
 Fri Dec 27 14:41:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/ior_corbaloc: Moved the test from tests/ior_corbaloc to
-	  examples. 
-	  
-
+	  examples. Moving the test to examples directory would help us to
+	  run the test in our daily builds.
 
 Fri Dec 27 07:56:31 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
