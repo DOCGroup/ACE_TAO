@@ -34,9 +34,9 @@ ACE_RCSID(tao, deep_free, "$Id$")
 
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
-	   const void *source,
-	   const void *dest,
-	   CORBA::Environment &env)
+           const void *source,
+           const void *dest,
+           CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
 
@@ -75,7 +75,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
       retval = TAO_Marshal_Struct::deep_free (param, source, dest, env);
 
       // @@ It's likely that other types will need their top-level
-      // memory freed as well. --- Carlos (and Seth). 
+      // memory freed as well. --- Carlos (and Seth).
       // delete source;
       break;
     case CORBA::tk_union:
@@ -109,9 +109,9 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
 // deep copy for primitives
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
-				  const void *,
-				  const void *,
-				  CORBA::Environment &env)
+                                  const void *,
+                                  const void *,
+                                  CORBA::Environment &env)
 {
   CORBA::TCKind my_kind;
 
@@ -120,37 +120,37 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
       my_kind = tc->kind (env);
 
       if (env.exception () == 0)
-	{
-	  switch (my_kind)
-	    {
-	    case CORBA::tk_null:
-	    case CORBA::tk_void:
-	    case CORBA::tk_char:
-	    case CORBA::tk_octet:
-	    case CORBA::tk_short:
-	    case CORBA::tk_ushort:
-	    case CORBA::tk_wchar:
-	    case CORBA::tk_long:
-	    case CORBA::tk_ulong:
-	    case CORBA::tk_float:
-	    case CORBA::tk_enum:
-	    case CORBA::tk_longlong:
-	    case CORBA::tk_ulonglong:
-	    case CORBA::tk_double:
-	    case CORBA::tk_longdouble:
-	    case CORBA::tk_boolean:
-	      return CORBA::TypeCode::TRAVERSE_CONTINUE;
-	    default:
-	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE));
-	      dmsg ("TAO_Marshal_Primitive::deep_free detected error");
-	      return CORBA::TypeCode::TRAVERSE_STOP;
-	    }
-	}
+        {
+          switch (my_kind)
+            {
+            case CORBA::tk_null:
+            case CORBA::tk_void:
+            case CORBA::tk_char:
+            case CORBA::tk_octet:
+            case CORBA::tk_short:
+            case CORBA::tk_ushort:
+            case CORBA::tk_wchar:
+            case CORBA::tk_long:
+            case CORBA::tk_ulong:
+            case CORBA::tk_float:
+            case CORBA::tk_enum:
+            case CORBA::tk_longlong:
+            case CORBA::tk_ulonglong:
+            case CORBA::tk_double:
+            case CORBA::tk_longdouble:
+            case CORBA::tk_boolean:
+              return CORBA::TypeCode::TRAVERSE_CONTINUE;
+            default:
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_MAYBE));
+              dmsg ("TAO_Marshal_Primitive::deep_free detected error");
+              return CORBA::TypeCode::TRAVERSE_STOP;
+            }
+        }
       else
-	{
-	  dmsg ("TAO_Marshal_Primitive::deep_free detected error");
-	  return CORBA::TypeCode::TRAVERSE_STOP;
-	}
+        {
+          dmsg ("TAO_Marshal_Primitive::deep_free detected error");
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
     }
   else
     {
@@ -218,12 +218,13 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
                           break;
 
                         case CORBA::tk_objref:
-			  {
-			    TAO_Object_Field* field = 
-			      ACE_static_cast (TAO_Object_Field*,source);
-			    field->_release ();
-			    retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-			  }
+                          {
+                            TAO_Object_Field* field =
+                              ACE_reinterpret_cast (TAO_Object_Field *,
+                                ACE_const_cast (void *, source));
+                            field->_release ();
+                            retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
+                          }
                           break;
 
                         case CORBA::tk_struct:
@@ -293,9 +294,9 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 // deep_free for union
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
-			      const void *data,
-			      const void *data2,
-			      CORBA::Environment &env)
+                              const void *data,
+                              const void *data2,
+                              CORBA::Environment &env)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr discrim_tc;
@@ -316,125 +317,125 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
       // deep_free the discriminator value
       retval = DEEP_FREE (discrim_tc, data, data2, env);
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-	{
-	  discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
-	  if (env.exception () == 0)
-	    {
-	      discrim_val = data; // save the pointer to the discriminator
-				  // value
-	      // move the pointer to point to the actual value
-	      data = (char *)data + discrim_size_with_pad;
-	      data2 = (char *)data2 + discrim_size_with_pad;
-	      // now get ready to marshal the actual union value
-	      default_index = tc->default_index (env);
-	      if (env.exception () == 0)
-		{
-		  member_count = tc->member_count (env);
-		  if (env.exception () == 0)
-		    {
-		      // check which label value matches with the discriminator
-		      // value. Accordingly, marshal the corresponding
-		      // member_type. If none match, check if default exists
-		      // and marshal accordingly. Otherwise it is an error.
-		      for (i = 0; member_count-- != 0; i++)
-			{
-			  member_label = tc->member_label (i, env);
-			  if (env.exception () == 0)
-			    {
-			      // do the matching
-			      CORBA::TypeCode_var type = member_label->type ();
-			      switch (type->kind (env))
-				{
-				case CORBA::tk_short:
-				case CORBA::tk_ushort:
-				  if (*(CORBA::Short *)member_label->value () ==
-				      *(CORBA::Short *)discrim_val)
-				    discrim_matched = CORBA::B_TRUE;
-				  break;
-				case CORBA::tk_long:
-				case CORBA::tk_ulong:
-				case CORBA::tk_enum:
-				  if (*(CORBA::ULong *)member_label->value () ==
-				      *(CORBA::ULong *)discrim_val)
-				      discrim_matched = CORBA::B_TRUE;
-				  break;
-				case CORBA::tk_char:
-				  if (*(CORBA::Char *)member_label->value () ==
-				      *(CORBA::Char *)discrim_val)
-				    discrim_matched = CORBA::B_TRUE;
-				  break;
-				case CORBA::tk_wchar:
-				  if (*(CORBA::WChar *)member_label->value () ==
-				      *(CORBA::WChar *)discrim_val)
-				    discrim_matched = CORBA::B_TRUE;
-				  break;
-				case CORBA::tk_boolean:
-				  if (*(CORBA::Boolean *)member_label->value () ==
-				      *(CORBA::Boolean *)discrim_val)
-				    discrim_matched = CORBA::B_TRUE;
-				  break;
-				default:
-				  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-				  return CORBA::TypeCode::TRAVERSE_STOP;
-				}// end of switch
+        {
+          discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
+          if (env.exception () == 0)
+            {
+              discrim_val = data; // save the pointer to the discriminator
+                                  // value
+              // move the pointer to point to the actual value
+              data = (char *)data + discrim_size_with_pad;
+              data2 = (char *)data2 + discrim_size_with_pad;
+              // now get ready to marshal the actual union value
+              default_index = tc->default_index (env);
+              if (env.exception () == 0)
+                {
+                  member_count = tc->member_count (env);
+                  if (env.exception () == 0)
+                    {
+                      // check which label value matches with the discriminator
+                      // value. Accordingly, marshal the corresponding
+                      // member_type. If none match, check if default exists
+                      // and marshal accordingly. Otherwise it is an error.
+                      for (i = 0; member_count-- != 0; i++)
+                        {
+                          member_label = tc->member_label (i, env);
+                          if (env.exception () == 0)
+                            {
+                              // do the matching
+                              CORBA::TypeCode_var type = member_label->type ();
+                              switch (type->kind (env))
+                                {
+                                case CORBA::tk_short:
+                                case CORBA::tk_ushort:
+                                  if (*(CORBA::Short *)member_label->value () ==
+                                      *(CORBA::Short *)discrim_val)
+                                    discrim_matched = CORBA::B_TRUE;
+                                  break;
+                                case CORBA::tk_long:
+                                case CORBA::tk_ulong:
+                                case CORBA::tk_enum:
+                                  if (*(CORBA::ULong *)member_label->value () ==
+                                      *(CORBA::ULong *)discrim_val)
+                                      discrim_matched = CORBA::B_TRUE;
+                                  break;
+                                case CORBA::tk_char:
+                                  if (*(CORBA::Char *)member_label->value () ==
+                                      *(CORBA::Char *)discrim_val)
+                                    discrim_matched = CORBA::B_TRUE;
+                                  break;
+                                case CORBA::tk_wchar:
+                                  if (*(CORBA::WChar *)member_label->value () ==
+                                      *(CORBA::WChar *)discrim_val)
+                                    discrim_matched = CORBA::B_TRUE;
+                                  break;
+                                case CORBA::tk_boolean:
+                                  if (*(CORBA::Boolean *)member_label->value () ==
+                                      *(CORBA::Boolean *)discrim_val)
+                                    discrim_matched = CORBA::B_TRUE;
+                                  break;
+                                default:
+                                  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                                  return CORBA::TypeCode::TRAVERSE_STOP;
+                                }// end of switch
 
-			      // get the member typecode
-			      member_tc = tc->member_type (i, env);
-			      if (env.exception () == 0)
-				{
-				  if (default_index >= 0 && default_index-- == 0)
-				    {
-				      // have we reached the default label?, if so,
-				      // save a handle to the typecode for the default
-				      default_tc = member_tc;
-				    }
-				  if (discrim_matched)
-				    // marshal according to the matched typecode
-				    return DEEP_FREE (member_tc, data,
-						      data2, env);
-				}
-			      else
-				{
-				  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-				  return CORBA::TypeCode::TRAVERSE_STOP;
-				}
+                              // get the member typecode
+                              member_tc = tc->member_type (i, env);
+                              if (env.exception () == 0)
+                                {
+                                  if (default_index >= 0 && default_index-- == 0)
+                                    {
+                                      // have we reached the default label?, if so,
+                                      // save a handle to the typecode for the default
+                                      default_tc = member_tc;
+                                    }
+                                  if (discrim_matched)
+                                    // marshal according to the matched typecode
+                                    return DEEP_FREE (member_tc, data,
+                                                      data2, env);
+                                }
+                              else
+                                {
+                                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                                  return CORBA::TypeCode::TRAVERSE_STOP;
+                                }
 
-			    }
-			  else
-			    {
-			      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-			      return CORBA::TypeCode::TRAVERSE_STOP;
-			    }
-			} // end of while
-		      // we are here only if there was no match
-		      if (default_tc)
-			return DEEP_FREE (default_tc, data, data2, env);
-		      else
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		    }
-		  else
-		    {
-		      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-		      return CORBA::TypeCode::TRAVERSE_STOP;
-		    }
-		}
-	      else
-		{
-		  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-		  return CORBA::TypeCode::TRAVERSE_STOP;
-		}
-	    }
-	  else
-	    {
-	      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-	      return CORBA::TypeCode::TRAVERSE_STOP;
-	    }
-	}
+                            }
+                          else
+                            {
+                              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                              return CORBA::TypeCode::TRAVERSE_STOP;
+                            }
+                        } // end of while
+                      // we are here only if there was no match
+                      if (default_tc)
+                        return DEEP_FREE (default_tc, data, data2, env);
+                      else
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                    }
+                  else
+                    {
+                      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                      return CORBA::TypeCode::TRAVERSE_STOP;
+                    }
+                }
+              else
+                {
+                  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+                  return CORBA::TypeCode::TRAVERSE_STOP;
+                }
+            }
+          else
+            {
+              env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+              return CORBA::TypeCode::TRAVERSE_STOP;
+            }
+        }
       else
-	{
-	  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-	  return CORBA::TypeCode::TRAVERSE_STOP;
-	}
+        {
+          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+          return CORBA::TypeCode::TRAVERSE_STOP;
+        }
     }
   else
     {
@@ -457,7 +458,7 @@ TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
   if (tc)
     {
       TAO_Base_Sequence *src =
-	ACE_reinterpret_cast(TAO_Base_Sequence*,ACE_const_cast(void*,source));
+        ACE_reinterpret_cast(TAO_Base_Sequence*,ACE_const_cast(void*,source));
 
       src->_deallocate_buffer ();
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -474,7 +475,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
 {
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
-  CORBA::TypeCode_ptr	tc2;  // typecode of the element
+  CORBA::TypeCode_ptr   tc2;  // typecode of the element
   size_t  size; // size of element
   CORBA::ULong  bounds;
 
@@ -512,7 +513,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
                     case CORBA::tk_longdouble:
                     case CORBA::tk_wchar:
                     case CORBA::tk_enum:
-                      //		      CORBA::release (tc2);
+                      //                      CORBA::release (tc2);
                       return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
                       // handle all aggregate types here
@@ -604,7 +605,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
                       retval = CORBA::TypeCode::TRAVERSE_STOP;
                       break;
                     } // end of switch
-                  //		  CORBA::release (tc2);
+                  //              CORBA::release (tc2);
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                     return CORBA::TypeCode::TRAVERSE_CONTINUE;
                   else
@@ -616,7 +617,7 @@ TAO_Marshal_Array::deep_free (CORBA::TypeCode_ptr  tc,
                     }
                 } // no exception computing size
               else
-                //		  CORBA::release (tc2);
+                //                CORBA::release (tc2);
                 return CORBA::TypeCode::TRAVERSE_STOP;
             }
           else // exception computing content type
@@ -640,7 +641,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
                               const void *dest,
                               CORBA::Environment &env)
 {
-  CORBA::TypeCode_ptr	tc2;  // typecode of the aliased type
+  CORBA::TypeCode_ptr   tc2;  // typecode of the aliased type
   CORBA::TypeCode::traverse_status   retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE; // status of encode operation
 
@@ -670,7 +671,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
             case CORBA::tk_octet:
             case CORBA::tk_longdouble:
             case CORBA::tk_wchar:
-              //	      CORBA::release (tc2);
+              //              CORBA::release (tc2);
               return CORBA::TypeCode::TRAVERSE_CONTINUE;
             case CORBA::tk_any:
               retval = TAO_Marshal_Any::deep_free (tc2, source, dest, env);
@@ -712,7 +713,7 @@ TAO_Marshal_Alias::deep_free (CORBA::TypeCode_ptr  tc,
               // anything else is an error
               retval = CORBA::TypeCode::TRAVERSE_STOP;
             }
-          //	  CORBA::release (tc2);
+          //      CORBA::release (tc2);
           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
             return CORBA::TypeCode::TRAVERSE_CONTINUE;
           else
