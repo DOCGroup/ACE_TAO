@@ -11,16 +11,12 @@ ACE_SOCK_Stream &
 Mem_Map_Stream::stream (void)
 {
   return svc_handler_->peer ();
-  // return this->stream_;
 }
 
 ssize_t
 Mem_Map_Stream::send_n (const void *buf, size_t size, ACE_Time_Value *tv)
 {
   return svc_handler_->peer ().send_n (buf, size, 0, tv);
-  //return this->stream_.send_n (buf, size, 0, tv);
-   // Needed for persistent connections.
-  //  svc_handler_->idle ();
 }
 
 int
@@ -41,8 +37,6 @@ Mem_Map_Stream::get_char (void)
 int
 Mem_Map_Stream::rewind (void)
 {
-  //this->mem_map_.map ();// KIRTHIKA
- 
   this->recv_pos_ =
     ACE_reinterpret_cast (char *,
                           this->mem_map_.addr ());
@@ -145,18 +139,15 @@ int
 Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
                       const ACE_INET_Addr &addr)
 {
-  svc_handler_ = 0; // Check whether this stopping me form checking autopurging!
-  //Kirthika Apr22 1615
+  svc_handler_ = 0; 
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Mem_Map_Stream :: open ()\n"));
   // Connect to the server at <addr>. If the handler has to be 
-  // connected to the server again, the Cachind strategy takes care
+  // connected to the server again, the Caching strategy takes care
   // and uses the same connection.
   if (connector->connect (svc_handler_,
-                               addr) == -1)
+                          addr) == -1)
     {
-      cout <<"CONNECT ERROR"<<errno<<endl;
+
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
                          "Connect failed",
@@ -199,18 +190,11 @@ Mem_Map_Stream::grow_file_and_remap (void)
   // Copy the next chunk of bytes from the socket into the temporary
   // file.
   ACE_Time_Value tv (*OPTIONS::instance ()->timeout ());
-  /*ssize_t n = this->stream_.recv (buf,
-                                  sizeof buf,
-                                  &tv);*/
   
   ssize_t n = this->svc_handler_->peer ().recv_n (buf,
                                                   sizeof buf,
                                                   0,
                                                   &tv);
-  /*ACE_DEBUG ((LM_DEBUG,
-              "Recv: %d \n %s\n",
-              n, buf));
-  */
   if (n == -1)
     {
       if (OPTIONS::instance ()->debug ())
@@ -249,16 +233,11 @@ Mem_Map_Stream::grow_file_and_remap (void)
                           this->mem_map_.addr ())
     + this->mem_map_.size ();
 
-  // this->svc_handler_->idle ();//KIRTHIKA
-
   return 0;
 }
 
 Mem_Map_Stream::~Mem_Map_Stream (void)
 {
-
-  ACE_DEBUG ((LM_DEBUG, "~MEM_MAP:\n"));
-
   // Remove the mapping and the file.
   this->mem_map_.remove ();
 }

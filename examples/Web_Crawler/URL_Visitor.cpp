@@ -50,7 +50,6 @@ HTTP_Header_Processing_Strategy::HTTP_Header_Processing_Strategy (URL &url,
 int
 HTTP_Header_Processing_Strategy::execute (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "HEADER\n"));
   // Set the get() position.Necessary since later a peek is done.
   if (this->url_.stream ().get_char () == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,17 +65,12 @@ HTTP_Header_Processing_Strategy::execute (void)
     {
       if (i == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "LINE:%s", line.c_str ()));
           // Assuming that the status-no is a space away.
           int status_index = line.find ("HTTP", 0);
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
-          // DONE ONLY FOR TEMP USE AS OF NOW THE HTTP_SERVER DOESNT SEND AN HEADER.
-          // ACE_CString status_buf ("200");
-          // status.set (status_buf.c_str (), 1);
-
-          ACE_DEBUG ((LM_DEBUG, "STATUS %s\n", status.c_str ()));
-          URL_Status *url_status = 0;
+                  
+           URL_Status *url_status = 0;
           ACE_NEW_RETURN (url_status,
                           URL_Status,
                           0);
@@ -237,7 +231,6 @@ URL_Validation_Visitation_Strategy_Factory::destroy (void)
 
 URL_Validation_Visitor::URL_Validation_Visitor (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "URL_Validation_Visitor_Factory::Strategy Con created\n"));
   ACE_NEW (this->strat_connector_,
            STRAT_CONNECTOR(0,
                            &creation_strategy_,
@@ -253,6 +246,8 @@ URL_Validation_Visitor::URL_Validation_Visitor (void)
 
 URL_Validation_Visitor::~URL_Validation_Visitor (void)
 {
+  delete this->strat_connector_;
+  this->strat_connector_ = 0;
 }
 
 URL_Validation_Visitor::URL_CACHE &
@@ -288,12 +283,11 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 { 
   // Since this is HTTP 1.1 we'll need to establish a connection
   // only once. Trying for relative paths.
-  // if (this->url_addr ().get_hostname () != url_hostname)
-  // {
+
   if (url.stream ().open (this->strat_connector_, 
                           url.url_addr ()) == -1)
     return 0;
-      // }
+
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
   int result = url.send_request ();
@@ -337,13 +331,6 @@ int
 URL_Validation_Visitor::visit (HTTP_URL &http_url)
 {
   int result = this->in_cache (http_url.url_addr ());
-  /*  if (result == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Invalid URL:%s (cached)\n",
-                  http_url.url_addr().addr_to_string (0))); 
-      return 0;
-      }*/
   if (result == 0)
     {
       Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
@@ -383,7 +370,6 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
                            "%p\n","url_cache.bind"),
                           -1);
 
-      // ACE_DEBUG ((LM_DEBUG, "header_processing result %d\n", phs_result));
       // Since it is invalid dont go further.
       if (phs_result == -1)
         return 0;
@@ -411,7 +397,7 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
                            "%p\n",
                            "body execute"),
                           -1);
-      // http_url.stream().svc_handler ()->idle ();//KIRTHIKA
+
     }
   return 0;
 }
@@ -480,28 +466,22 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
 {
   // See if we can get connected and send the GET request via the
   // <HTTP_URL>.
-  while (1) //KIRTHIKA
+  while (1)
     {
       int retval = url.send_request ();
       if (retval != -1)
         break;
 
-      /*  ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "send_request"),
-                         0);*/
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an
   // HTTP URL.
-  // else
-  // {
-      URL_Visitation_Strategy_Factory *vs;
-      ACE_NEW_RETURN (vs,
-                      URL_Download_Visitation_Strategy_Factory (&url),
-                      0);
-      return vs;
-      // }
+  URL_Visitation_Strategy_Factory *vs;
+  ACE_NEW_RETURN (vs,
+                  URL_Download_Visitation_Strategy_Factory (&url),
+                  0);
+  return vs;
+ 
 }
 
 int
@@ -546,12 +526,12 @@ URL_Download_Visitor::visit (HTTP_URL &http_url)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Strategy_Connector<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>, ACE_SOCK_CONNECTOR>;
+template class ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_LRU_Mutex>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH>;
+template class ACE_Strategy_Connector<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH>, ACE_SOCK_CONNECTOR>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
-template class ACE_NOOP_Creation_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> >;
-template class ACE_NOOP_Concurrency_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> >;
+template class ACE_NOOP_Creation_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH> >;
+template class ACE_NOOP_Concurrency_Strategy<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_LRU_SYNCH> >;
 template class ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
@@ -563,9 +543,11 @@ template class ACE_Hash_Map_Manager_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_UR
 template class ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int> >;
 template class ACE_Connect_Strategy<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>, ACE_SOCK_Connector>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
-template class ACE_Optimal_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  >;
-template class ACE_Optimal_Cache_Map_Reverse_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  >;
-template class ACE_Optimal_Cache_Map_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  >;
+template class ACE_Hash_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  > ;
+template class ACE_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  >;
+template class ACE_Cache_Map_Reverse_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> ,ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  > ;
+template class ACE_Cache_Map_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>  , ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  > ;
+template class ACE_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *,int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>   >;
 template class ACE_Hash_Map_Entry<ACE_URL_Addr, URL_Status>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
 template class ACE_Recycling_Strategy<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> > ;
@@ -573,6 +555,9 @@ template class ACE_Connector<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>, A
 template class ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> > *, ACE_RW_Thread_Mutex>;
 template class ACE_Svc_Tuple<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> >;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>;
+template class ACE_Default_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >;
+template class ACE_Svc_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >;
+template class ACE_Caching_Strategy_Utility<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -591,9 +576,11 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int> >;
 #pragma instantiate ACE_Connect_Strategy<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>, ACE_SOCK_Connector>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>;
-#pragma instantiate ACE_Optimal_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  > 
-#pragma instantiate ACE_Optimal_Cache_Map_Reverse_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  > 
-#pragma instantiate ACE_Optimal_Cache_Map_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >  > 
+#pragma instantiate ACE_Hash_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  > 
+#pragma instantiate ACE_Cache_Map_Manager<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>, ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >, int  >
+#pragma instantiate ACE_Cache_Map_Reverse_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Reverse_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> ,ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>  >, int  > 
+#pragma instantiate ACE_Cache_Map_Iterator<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Hash_Map_Iterator_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>  , ACE_LRU_Caching_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>  >, int  > 
+#pragma instantiate ACE_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *,int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>   >
 #pragma instantiate ACE_Hash_Map_Entry<ACE_URL_Addr, URL_Status>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>
 #pragma instantiate ACE_Recycling_Strategy<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> > 
@@ -601,4 +588,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> > *, ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Svc_Tuple<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> >
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_URL_Addr, URL_Status, ACE_Hash<ACE_URL_Addr>, ACE_Equal_To<ACE_URL_Addr>, ACE_Null_Mutex>
+#pragma instantiate ACE_Default_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >
+#pragma instantiate ACE_Svc_Cleanup_Strategy<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>,ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex> >
+#pragma instantiate ACE_Caching_Strategy_Utility<ACE_Hash_Map_Manager_Ex<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>, ACE_Pair<ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> *, int>, ACE_Hash<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Equal_To<ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> >, ACE_Null_Mutex>, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
