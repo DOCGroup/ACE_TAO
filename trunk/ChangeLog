@@ -1,3 +1,13 @@
+Thu Feb  6 19:30:18 2003  Steve Huston  <shuston@riverace.com>
+
+        * tests/SString_Test.cpp: Added a test for wide-string compares of
+          equal-length strings that differ in the last character.
+
+        * ace/String_Base.i (compare): When memcmp()-ing to compare, take
+          the size of CHAR into account when calculating byte length. Thanks
+          to Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
+          for this fix.
+
 Thu Feb  6 16:06:29 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/config-tru64.h: Added a guard around the
