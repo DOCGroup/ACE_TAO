@@ -25,7 +25,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
    local_addr_ (0),
    transport_ (0),
    handler_ (0),
-   protocol_object_ (0)
+   protocol_object_ (0),
+   is_multicast_ (0)
 {
 }
 
@@ -49,10 +50,12 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    local_addr_ (0),
    transport_ (0),
    handler_ (0),
-   protocol_object_ (0)
+   protocol_object_ (0),
+   is_multicast_ (0)
 {
   this->set_protocol ();
   this->set_direction (this->direction_str_);
+  this->parse_flow_protocol_string (this->flow_protocol_);
 }
 
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
@@ -73,7 +76,8 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
    local_addr_ (0),
    transport_ (0),
    handler_ (0),
-   protocol_object_ (0)
+   protocol_object_ (0),
+   is_multicast_ (0)
 {
   ACE_CString cstring(this->address_str_,0,0);
   int colon_pos = cstring.find (':');
@@ -141,6 +145,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s\n",buf));
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
+          this->is_multicast_ = 1;
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_UDP:
@@ -194,20 +199,23 @@ TAO_FlowSpec_Entry::parse_address (char *address)
                             -1);
             this->address_ = inet_addr;
             if (IN_CLASSD (inet_addr->get_ip_address ()))
-              switch (this->protocol_)
-                {
-                case TAO_AV_Core::TAO_AV_UDP:
-                  this->protocol_ = TAO_AV_Core::TAO_AV_UDP_MCAST;
-                  break;
-                case TAO_AV_Core::TAO_AV_RTP_UDP:
-                  this->protocol_ = TAO_AV_Core::TAO_AV_RTP_UDP_MCAST;
-                  break;
-                case TAO_AV_Core::TAO_AV_SFP_UDP:
-                  this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP_MCAST;
-                  break;
-                default:
-                  break;
-                }
+              {
+                this->is_multicast_ = 1;
+                switch (this->protocol_)
+                  {
+                  case TAO_AV_Core::TAO_AV_UDP:
+                    this->protocol_ = TAO_AV_Core::TAO_AV_UDP_MCAST;
+                    break;
+                  case TAO_AV_Core::TAO_AV_RTP_UDP:
+                    this->protocol_ = TAO_AV_Core::TAO_AV_RTP_UDP_MCAST;
+                    break;
+                  case TAO_AV_Core::TAO_AV_SFP_UDP:
+                    this->protocol_ = TAO_AV_Core::TAO_AV_SFP_UDP_MCAST;
+                    break;
+                  default:
+                    break;
+                  }
+              }
           }
           break;
         default:
@@ -297,12 +305,12 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
   if (tokenizer [TAO_AV_FORMAT] != 0)
     this->format_ = tokenizer [TAO_AV_FORMAT];
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
-    if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
-      return -1;
-
   if (tokenizer [TAO_AV_ADDRESS] != 0)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS]) < 0)
+      return -1;
+
+  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
+    if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
 
   return 0;
@@ -439,12 +447,12 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
   TAO_Tokenizer tokenizer (flowSpec_entry,'\\');
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
 
-  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
-    if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
-      return -1;
-
   if (tokenizer [TAO_AV_ADDRESS] != 0)
     if (this->parse_address (tokenizer [TAO_AV_ADDRESS]) < 0)
+      return -1;
+
+  if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
+    if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
 
   if (tokenizer [TAO_AV_DIRECTION] != 0)

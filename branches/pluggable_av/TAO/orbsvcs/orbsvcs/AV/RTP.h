@@ -53,6 +53,7 @@
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
 
+#include "Protocol_Factory.h"
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 
@@ -126,128 +127,14 @@
 #include "Policy.h"
 #include "FlowSpec_Entry.h"
 #include "MCast.h"
-#include "RTCP.h"
 //------------------------------------------------------------
 // TAO_AV_RTP_UDP
 //------------------------------------------------------------
 
-class TAO_AV_RTP_UDP_Acceptor
-  :public TAO_AV_UDP_Acceptor
-{
-public:
-  TAO_AV_RTP_UDP_Acceptor (void);
-  virtual ~TAO_AV_RTP_UDP_Acceptor (void);
-  virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core,
-                    TAO_FlowSpec_Entry *entry);
-  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core,
-                            TAO_FlowSpec_Entry *entry);
-protected:
-  ACE_Hash_Map_Manager <TAO_String_Hash_Key,TAO_AV_RTCP_UDP_Flow_Handler*,ACE_Null_Mutex> rtcp_map_;
-  int make_rtp_handler_;
-  ACE_Reactor *reactor_;
-};
-
-class TAO_AV_RTP_UDP_Connector
-  :public TAO_AV_UDP_Connector
-{
-public:
-  TAO_AV_RTP_UDP_Connector (void);
-  virtual ~TAO_AV_RTP_UDP_Connector (void);
-  virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
-  virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport);
-protected:
-  int make_rtp_handler_;
-  ACE_Reactor *reactor_;
-};
-
-class TAO_AV_RTP_UDP_Protocol_Factory
-  :public TAO_AV_UDP_Protocol_Factory
-{
-public:
-  virtual int match_protocol (TAO_AV_Core::Protocol protocol);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
-};
 
 class TAO_AV_SourceManager;
 class TAO_AV_RTCP_UDP_Flow_Handler;
 class TAO_AV_RTP_State;
-class TAO_AV_RTP_UDP_Flow_Handler
-  :public TAO_AV_UDP_Flow_Handler
-{
-public:
-  TAO_AV_RTP_UDP_Flow_Handler (TAO_AV_Callback *callback);
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual void rtcp_handler (TAO_AV_RTCP_UDP_Flow_Handler *handler);
-protected:
-  TAO_AV_SourceManager *source_manager_;
-  TAO_AV_RTCP_UDP_Flow_Handler *rtcp_handler_;
-  TAO_AV_RTP_State *state_;
-};
-
-class TAO_AV_UDP_MCast_Flow_Handler;
-//------------------------------------------------------------
-// TAO_AV_RTP_UDP_MCast
-//------------------------------------------------------------
-
-class TAO_AV_RTP_UDP_MCast_Acceptor
-  :public TAO_AV_UDP_MCast_Acceptor
-{
-public:
-  TAO_AV_RTP_UDP_MCast_Acceptor (void);
-  virtual ~TAO_AV_RTP_UDP_MCast_Acceptor (void);
-  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-  virtual int open (TAO_Base_StreamEndPoint *endpoint,
-                    TAO_AV_Core *av_core,
-                    TAO_FlowSpec_Entry *entry);
-  virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
-                            TAO_AV_Core *av_core,
-                            TAO_FlowSpec_Entry *entry);
-protected:
-  int make_rtp_handler_;
-  ACE_Reactor *reactor_;
-};
-
-
-class TAO_AV_RTP_UDP_MCast_Connector
-  :public TAO_AV_UDP_MCast_Connector
-{
-public:
-  TAO_AV_RTP_UDP_MCast_Connector (void);
-  virtual ~TAO_AV_RTP_UDP_MCast_Connector (void);
-  virtual int make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler);
-  virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport);
-protected:
-  int make_rtp_handler_;
-  ACE_Reactor *reactor_;
-};
-
-class TAO_AV_RTP_UDP_MCast_Protocol_Factory
-  :public TAO_AV_UDP_MCast_Protocol_Factory
-{
-public:
-  virtual int match_protocol (TAO_AV_Core::Protocol protocol);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
-};
-
-class TAO_AV_RTP_UDP_MCast_Flow_Handler
-  :public TAO_AV_UDP_MCast_Flow_Handler
-{
-public:
-  TAO_AV_RTP_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback);
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual void rtcp_handler (TAO_AV_RTCP_UDP_MCast_Flow_Handler *handler);
-protected:
-  TAO_AV_SourceManager *source_manager_;
-  TAO_AV_RTCP_UDP_MCast_Flow_Handler *rtcp_handler_;
-  TAO_AV_RTP_State *state_;
-};
 
 //------------------------------------------------------------
 // TAO_AV_RTP
@@ -346,13 +233,8 @@ public:
     ACE_UINT16 blkno;
   };
 
-
-  static int handle_input (TAO_AV_Transport *transport,
-                           ACE_Message_Block *&data,
-                           TAO_AV_frame_info *&frame_info,
-                           ACE_Addr &addr,
-                           TAO_AV_SourceManager *source_manager,
-                           TAO_AV_RTP_State *state);
+  static int handle_input (ACE_Message_Block *&data,
+                           TAO_AV_frame_info *&frame_info);
 
   static  int write_header (rtphdr &header,
                             int format,
@@ -361,31 +243,20 @@ public:
                             ACE_UINT32 ssrc,
                             CORBA::Boolean boundary_marker);
 
-  static int send_frame (TAO_AV_Transport *transport,
-                         rtphdr &header,
-                         ACE_Message_Block *frame);
-
-  static int send_frame (TAO_AV_Transport *transport,
-                         rtphdr &header,
-                         const iovec *iov,
-                         int iovcnt);
-
-  static int demux (rtphdr* rh,
-                     ACE_Message_Block *data,
-                     ACE_UINT32 addr,
-                     TAO_AV_SourceManager *sm,
-                     TAO_AV_RTP_State *state);
 };
 
 
-
-class TAO_AV_RTP_Object
-  :public TAO_AV_Protocol_Object
+class TAO_AV_RTP_Object : public TAO_AV_Protocol_Object
 {
 public:
   TAO_AV_RTP_Object (TAO_AV_Callback *callback,
-                     TAO_AV_Transport *transport = 0);
+                     TAO_AV_Transport *transport);
 
+  virtual ~TAO_AV_RTP_Object (void);
+
+  virtual int start (void);
+  virtual int stop (void);
+  virtual int handle_input (void);
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
 
@@ -393,12 +264,32 @@ public:
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = 0);
 
-  int end_stream (void);
+  virtual int destroy (void);
   virtual int set_policies (const PolicyList &policy_list);
+  virtual void control_object (TAO_AV_Protocol_Object *object);
 protected:
   ACE_UINT16 sequence_num_;
   int format_;
   CORBA::ULong ssrc_;
+  TAO_AV_Protocol_Object *control_object_;
 };
+
+class TAO_ORBSVCS_Export TAO_AV_RTP_Flow_Factory : public TAO_AV_Flow_Protocol_Factory
+{
+public:
+  TAO_AV_RTP_Flow_Factory (void);
+  virtual ~TAO_AV_RTP_Flow_Factory (void);
+  virtual int init (int argc, char *argv[]);
+  // Initialization hook.
+  virtual int match_protocol (const char *flow_string);
+  virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                        TAO_Base_StreamEndPoint *endpoint,
+                                                        TAO_AV_Flow_Handler *handler,
+                                                        TAO_AV_Transport *transport);
+  virtual const char*control_flow_factory (void);
+};
+
+ACE_STATIC_SVC_DECLARE (TAO_AV_RTP_Flow_Factory)
+ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_AV_RTP_Flow_Factory)
 
 #endif /* TAO_AV_RTP_H */

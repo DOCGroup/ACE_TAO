@@ -62,36 +62,67 @@ TAO_AV_Core::acceptor_registry (void)
 }
 
 ACE_INLINE
-TAO_AV_ProtocolFactorySet *
-TAO_AV_Core::protocol_factories (void)
+TAO_AV_TransportFactorySet *
+TAO_AV_Core::transport_factories (void)
 {
-  return &this->protocol_factories_;
+  return &this->transport_factories_;
+}
+
+ACE_INLINE
+TAO_AV_Flow_ProtocolFactorySet*
+TAO_AV_Core::flow_protocol_factories (void)
+{
+  return &this->flow_protocol_factories_;
 }
 
 //------------------------------------------------------------
-// TAO_AV_Protocol_Item
+// TAO_AV_Transport_Item
 //------------------------------------------------------------
 ACE_INLINE
 const ACE_CString &
-TAO_AV_Protocol_Item::protocol_name (void)
+TAO_AV_Transport_Item::name (void)
 {
   return this->name_;
 }
 
 ACE_INLINE
-TAO_AV_Protocol_Factory *
-TAO_AV_Protocol_Item::factory (void)
+TAO_AV_Transport_Factory *
+TAO_AV_Transport_Item::factory (void)
 {
   return this->factory_;
 }
 
 ACE_INLINE
 void
-TAO_AV_Protocol_Item::factory (TAO_AV_Protocol_Factory *factory)
+TAO_AV_Transport_Item::factory (TAO_AV_Transport_Factory *factory)
 {
   this->factory_ = factory;
 }
 
+
+//------------------------------------------------------------
+// TAO_AV_Flow_Protocol_Item
+//------------------------------------------------------------
+ACE_INLINE
+const ACE_CString &
+TAO_AV_Flow_Protocol_Item::name (void)
+{
+  return this->name_;
+}
+
+ACE_INLINE
+TAO_AV_Flow_Protocol_Factory *
+TAO_AV_Flow_Protocol_Item::factory (void)
+{
+  return this->factory_;
+}
+
+ACE_INLINE
+void
+TAO_AV_Flow_Protocol_Item::factory (TAO_AV_Flow_Protocol_Factory *factory)
+{
+  this->factory_ = factory;
+}
 
 //------------------------------------------------------------
 // TAO_AV_Connector_Registry
@@ -126,23 +157,6 @@ TAO_AV_AcceptorSetItor
 TAO_AV_Acceptor_Registry::end (void)
 {
   return this->acceptors_.end ();
-}
-
-//----------------------------------------------------------------------
-// TAO_AV_UDP_Flow_Handler
-//----------------------------------------------------------------------
-ACE_INLINE
-const ACE_SOCK_Dgram *
-TAO_AV_UDP_Flow_Handler::get_socket (void) const
-{
-  return &this->sock_dgram_;
-}
-
-ACE_INLINE
-int
-TAO_AV_UDP_Flow_Handler::open (ACE_Addr &address)
-{
-  return this->sock_dgram_.open (address);
 }
 
 //------------------------------------------------------------

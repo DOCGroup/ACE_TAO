@@ -48,6 +48,10 @@
 
 #include "FlowSpec_Entry.h"
 
+#if defined(sun) || defined(__osf__)
+extern "C" int gethostname(char* name, int len);
+#endif
+
 #define FLOWSPEC_MAX 5
 // for the Hash_Map helper classes.
 
@@ -508,18 +512,12 @@ public:
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 
+  virtual int get_control_callback (const char *flowname,
+                                    TAO_AV_Callback *&callback);
+
   virtual int set_protocol_object (const char *flowname,
                                    TAO_AV_Protocol_Object *object);
 
-  virtual int set_rtcp_info (const char *flowname,
-                             TAO_AV_SourceManager *source_manager,
-                             TAO_AV_RTP_State *state);
-
-  virtual int get_rtp_source (TAO_AV_Source *&source,
-                              const char *flowname,
-                              ACE_UINT32 srcid,
-                              ACE_UINT32 ssrc,
-                              ACE_UINT32 addr);
   virtual void set_handler (const char *flowname,
                             TAO_AV_Flow_Handler *handler);
 };
@@ -697,8 +695,8 @@ protected:
   AVStreams::StreamEndPoint_var peer_sep_;
   AVStreams::SFPStatus *sfp_status_;
   AVStreams::StreamCtrl_var streamctrl_;
-  TAO_Forward_FlowSpec_Entry forward_entries_ [FLOWSPEC_MAX];
-  TAO_Reverse_FlowSpec_Entry reverse_entries_ [FLOWSPEC_MAX];
+//   TAO_Forward_FlowSpec_Entry forward_entries_ [FLOWSPEC_MAX];
+//   TAO_Reverse_FlowSpec_Entry reverse_entries_ [FLOWSPEC_MAX];
 };
 
 
@@ -1252,6 +1250,20 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::failedToConnect,
                      AVStreams::FPError,
+                     AVStreams::QoSRequestFailed)) = 0;
+  // This should be implemented in both the FlowProducer and consumer and hence is
+  // pure virtual since we need to know the role of the flowendpoint to create appropriate
+  // protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
+
+  virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
+                                            AVStreams::QoS & the_qos,
+                                            const char * address,
+                                            const char * use_flow_protocol,
+                                            CORBA::Environment &env =
+                                            CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToConnect,
+                     AVStreams::FPError,
                      AVStreams::QoSRequestFailed));
   // connect to the peer endpoint.
 
@@ -1261,6 +1273,21 @@ public:
                                char *& flowProtocol,
                                CORBA::Environment &env =
                                CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToListen,
+                     AVStreams::FPError,
+                     AVStreams::QoSRequestFailed)) = 0;
+  // This should be implemented in both the FlowProducer and consumer and hence is
+  // pure virtual since we need to know the role of the flowendpoint to create appropriate
+  // protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
+
+  virtual char * go_to_listen_i (TAO_FlowSpec_Entry::Role role,
+                                 AVStreams::QoS & the_qos,
+                                 CORBA::Boolean is_mcast,
+                                 AVStreams::FlowEndPoint_ptr peer,
+                                 char *& flowProtocol,
+                                 CORBA::Environment &env =
+                                 CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::failedToListen,
                      AVStreams::FPError,
@@ -1293,8 +1320,7 @@ protected:
   CORBA::String_var format_;
   CORBA::String_var flowname_;
   CosPropertyService::Properties dev_params_;
-  TAO_AV_Protocol_Object *protocol_object_;
-  TAO_AV_Flow_Handler *handler_;
+  TAO_AV_FlowSpecSet flow_spec_set_;
   CORBA::String_var reverse_channel_;
 };
 
@@ -1329,6 +1355,27 @@ public:
                       CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // start this flow, to be overridden by the application.
+
+  virtual char * go_to_listen (AVStreams::QoS & the_qos,
+                               CORBA::Boolean is_mcast,
+                               AVStreams::FlowEndPoint_ptr peer,
+                               char *& flowProtocol,
+                               CORBA::Environment &env =
+                               CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToListen,
+                     AVStreams::FPError,
+                     AVStreams::QoSRequestFailed));
+
+  virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
+                                          const char * address,
+                                          const char * use_flow_protocol,
+                                          CORBA::Environment &env =
+                                          CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToConnect,
+                     AVStreams::FPError,
+                     AVStreams::QoSRequestFailed));
 
   virtual char * connect_mcast (AVStreams::QoS & the_qos,
                                 CORBA::Boolean_out is_met,
@@ -1383,6 +1430,27 @@ public:
                       CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // start this flow, to be overridden by the application.
+
+  virtual char * go_to_listen (AVStreams::QoS & the_qos,
+                               CORBA::Boolean is_mcast,
+                               AVStreams::FlowEndPoint_ptr peer,
+                               char *& flowProtocol,
+                               CORBA::Environment &env =
+                               CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToListen,
+                     AVStreams::FPError,
+                     AVStreams::QoSRequestFailed));
+
+  virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
+                                          const char * address,
+                                          const char * use_flow_protocol,
+                                          CORBA::Environment &env =
+                                          CORBA::Environment::default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     AVStreams::failedToConnect,
+                     AVStreams::FPError,
+                     AVStreams::QoSRequestFailed));
 };
 
 

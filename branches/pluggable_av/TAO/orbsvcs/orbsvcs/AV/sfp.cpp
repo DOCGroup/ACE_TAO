@@ -988,391 +988,391 @@ TAO_SFP_Base::dump_buf (char *buffer,int size)
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"\n========================================\n"));
 }
 
-//------------------------------------------------------------
-//TAO_SFP_UDP_Protocol_Factory
-//------------------------------------------------------------
+// //------------------------------------------------------------
+// //TAO_SFP_UDP_Protocol_Factory
+// //------------------------------------------------------------
 
-TAO_SFP_UDP_Protocol_Factory::TAO_SFP_UDP_Protocol_Factory (void)
-{
-}
+// TAO_SFP_UDP_Protocol_Factory::TAO_SFP_UDP_Protocol_Factory (void)
+// {
+// }
 
-TAO_SFP_UDP_Protocol_Factory::~TAO_SFP_UDP_Protocol_Factory (void)
-{
-}
+// TAO_SFP_UDP_Protocol_Factory::~TAO_SFP_UDP_Protocol_Factory (void)
+// {
+// }
 
-TAO_AV_Acceptor *
-TAO_SFP_UDP_Protocol_Factory::make_acceptor (void)
-{
-  TAO_SFP_UDP_Acceptor *acceptor = 0;
-  ACE_NEW_RETURN (acceptor,
-                  TAO_SFP_UDP_Acceptor,
-                  0);
-  return acceptor;
-}
+// TAO_AV_Acceptor *
+// TAO_SFP_UDP_Protocol_Factory::make_acceptor (void)
+// {
+//   TAO_SFP_UDP_Acceptor *acceptor = 0;
+//   ACE_NEW_RETURN (acceptor,
+//                   TAO_SFP_UDP_Acceptor,
+//                   0);
+//   return acceptor;
+// }
 
-TAO_AV_Connector *
-TAO_SFP_UDP_Protocol_Factory::make_connector (void)
-{
-  TAO_SFP_UDP_Connector *connector = 0;
-  ACE_NEW_RETURN (connector,
-                  TAO_SFP_UDP_Connector,
-                  0);
-  return connector;
-}
+// TAO_AV_Connector *
+// TAO_SFP_UDP_Protocol_Factory::make_connector (void)
+// {
+//   TAO_SFP_UDP_Connector *connector = 0;
+//   ACE_NEW_RETURN (connector,
+//                   TAO_SFP_UDP_Connector,
+//                   0);
+//   return connector;
+// }
 
-int
-TAO_SFP_UDP_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
-{
-  return (protocol == TAO_AV_Core::TAO_AV_SFP_UDP);
-}
+// int
+// TAO_SFP_UDP_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
+// {
+//   return (protocol == TAO_AV_Core::TAO_AV_SFP_UDP);
+// }
 
-//
-// TAO_SFP_UDP_Acceptor
-TAO_SFP_UDP_Acceptor::TAO_SFP_UDP_Acceptor (void)
-{
-}
+// //
+// // TAO_SFP_UDP_Acceptor
+// TAO_SFP_UDP_Acceptor::TAO_SFP_UDP_Acceptor (void)
+// {
+// }
 
-TAO_SFP_UDP_Acceptor::~TAO_SFP_UDP_Acceptor (void)
-{
-}
+// TAO_SFP_UDP_Acceptor::~TAO_SFP_UDP_Acceptor (void)
+// {
+// }
 
-int
-TAO_SFP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
-{
-  // @@ We should actually look at the entry and find out if we're a
-  // sink or a source and create the appropriate handler
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Acceptor::make_svc_handler\n"));
-  TAO_SFP_BASE::instance ();
-  TAO_SFP_Object *object;
-  TAO_AV_Callback *callback;
-  this->endpoint_->get_callback (this->entry_->flowname (),callback);
-  ACE_NEW_RETURN (object,
-                  TAO_SFP_Object (callback),
-                  -1);
-  ACE_NEW_RETURN (handler,
-                  TAO_SFP_UDP_Sender_Handler (callback,
-                                              object),
-                  -1);
-  callback->transport (handler->transport ());
-  callback->protocol_object (object);
-  object->transport (handler->transport ());
-  this->endpoint_->set_protocol_object (this->entry_->flowname (),
-                                        object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),handler);
-  this->entry_->protocol_object (object);
-  return 0;
-}
-//------------------------------------------------------------
-// TAO_SFP_UDP_Connector
-//------------------------------------------------------------
-TAO_SFP_UDP_Connector::TAO_SFP_UDP_Connector (void)
-{
-}
+// int
+// TAO_SFP_UDP_Acceptor::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
+// {
+//   // @@ We should actually look at the entry and find out if we're a
+//   // sink or a source and create the appropriate handler
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Acceptor::make_svc_handler\n"));
+//   TAO_SFP_BASE::instance ();
+//   TAO_SFP_Object *object;
+//   TAO_AV_Callback *callback;
+//   this->endpoint_->get_callback (this->entry_->flowname (),callback);
+//   ACE_NEW_RETURN (object,
+//                   TAO_SFP_Object (callback),
+//                   -1);
+//   ACE_NEW_RETURN (handler,
+//                   TAO_SFP_UDP_Sender_Handler (callback,
+//                                               object),
+//                   -1);
+//   callback->transport (handler->transport ());
+//   callback->protocol_object (object);
+//   object->transport (handler->transport ());
+//   this->endpoint_->set_protocol_object (this->entry_->flowname (),
+//                                         object);
+//   this->endpoint_->set_handler (this->flowname_.c_str (),handler);
+//   this->entry_->protocol_object (object);
+//   return 0;
+// }
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_Connector
+// //------------------------------------------------------------
+// TAO_SFP_UDP_Connector::TAO_SFP_UDP_Connector (void)
+// {
+// }
 
-TAO_SFP_UDP_Connector::~TAO_SFP_UDP_Connector (void)
-{
-}
+// TAO_SFP_UDP_Connector::~TAO_SFP_UDP_Connector (void)
+// {
+// }
 
-int
-TAO_SFP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
-{
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Connector::make_svc_handler\n"));
-  TAO_SFP_BASE::instance ();
-  // @@ We should actually look at the entry and find out if we're a
-  // sink or a source and create the appropriate handler
-  TAO_AV_Callback *callback = 0;
-  this->endpoint_->get_callback (this->entry_->flowname (),
-                                 callback);
-  ACE_NEW_RETURN (handler,
-                  TAO_SFP_UDP_Receiver_Handler (callback),
-                  -1);
-  TAO_SFP_Object *object;
-  ACE_NEW_RETURN (object,
-                  TAO_SFP_Object (callback),
-                  -1);
-  callback->transport (handler->transport ());
-  callback->protocol_object (object);
-  object->transport (handler->transport ());
-  this->endpoint_->set_protocol_object (this->entry_->flowname (),
-                                        object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),handler);
-  this->entry_->protocol_object (object);
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
+// {
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Connector::make_svc_handler\n"));
+//   TAO_SFP_BASE::instance ();
+//   // @@ We should actually look at the entry and find out if we're a
+//   // sink or a source and create the appropriate handler
+//   TAO_AV_Callback *callback = 0;
+//   this->endpoint_->get_callback (this->entry_->flowname (),
+//                                  callback);
+//   ACE_NEW_RETURN (handler,
+//                   TAO_SFP_UDP_Receiver_Handler (callback),
+//                   -1);
+//   TAO_SFP_Object *object;
+//   ACE_NEW_RETURN (object,
+//                   TAO_SFP_Object (callback),
+//                   -1);
+//   callback->transport (handler->transport ());
+//   callback->protocol_object (object);
+//   object->transport (handler->transport ());
+//   this->endpoint_->set_protocol_object (this->entry_->flowname (),
+//                                         object);
+//   this->endpoint_->set_handler (this->flowname_.c_str (),handler);
+//   this->entry_->protocol_object (object);
+//   return 0;
+// }
 
-//------------------------------------------------------------
-// TAO_SFP_UDP_Sender_Handler
-//------------------------------------------------------------
-TAO_SFP_UDP_Sender_Handler::TAO_SFP_UDP_Sender_Handler (TAO_AV_Callback *callback,
-                                                        TAO_SFP_Object *object)
-  :TAO_AV_Flow_Handler (callback),
-   TAO_AV_UDP_Flow_Handler (callback),
-   sfp_object_ (object)
-{
-}
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_Sender_Handler
+// //------------------------------------------------------------
+// TAO_SFP_UDP_Sender_Handler::TAO_SFP_UDP_Sender_Handler (TAO_AV_Callback *callback,
+//                                                         TAO_SFP_Object *object)
+//   :TAO_AV_Flow_Handler (callback),
+//    TAO_AV_UDP_Flow_Handler (callback),
+//    sfp_object_ (object)
+// {
+// }
 
-int
-TAO_SFP_UDP_Sender_Handler::handle_input (ACE_HANDLE /*fd*/)
-{
-  return -1;
-}
+// int
+// TAO_SFP_UDP_Sender_Handler::handle_input (ACE_HANDLE /*fd*/)
+// {
+//   return -1;
+// }
 
-int
-TAO_SFP_UDP_Sender_Handler::handle_close (ACE_HANDLE /*fd*/,
-                                          ACE_Reactor_Mask)
-{
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Sender_Handler::handle_close (ACE_HANDLE /*fd*/,
+//                                           ACE_Reactor_Mask)
+// {
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_Sender_Handler::start (TAO_FlowSpec_Entry::Role role)
-{
-  // @@once somehow we figure out that the stream is established we
-  // can start sending the frames.
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Sender_Handler::start\n"));
-  TAO_AV_Flow_Handler::start (role);
-  this->sfp_object_->start ();
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Sender_Handler::start (TAO_FlowSpec_Entry::Role role)
+// {
+//   // @@once somehow we figure out that the stream is established we
+//   // can start sending the frames.
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Sender_Handler::start\n"));
+//   TAO_AV_Flow_Handler::start (role);
+//   this->sfp_object_->start ();
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_Sender_Handler::stop (TAO_FlowSpec_Entry::Role role)
-{
-  TAO_AV_Flow_Handler::stop (role);
-  this->sfp_object_->stop ();
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Sender_Handler::stop (TAO_FlowSpec_Entry::Role role)
+// {
+//   TAO_AV_Flow_Handler::stop (role);
+//   this->sfp_object_->stop ();
+//   return 0;
+// }
 
-//------------------------------------------------------------
-// TAO_SFP_UDP_Receiver_Handler
-//------------------------------------------------------------
-TAO_SFP_UDP_Receiver_Handler::TAO_SFP_UDP_Receiver_Handler (TAO_AV_Callback *callback)
-  :TAO_AV_Flow_Handler (callback),
-   TAO_AV_UDP_Flow_Handler (callback)
-{
-}
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_Receiver_Handler
+// //------------------------------------------------------------
+// TAO_SFP_UDP_Receiver_Handler::TAO_SFP_UDP_Receiver_Handler (TAO_AV_Callback *callback)
+//   :TAO_AV_Flow_Handler (callback),
+//    TAO_AV_UDP_Flow_Handler (callback)
+// {
+// }
 
-int
-TAO_SFP_UDP_Receiver_Handler::handle_input (ACE_HANDLE /*fd*/)
-{
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Receiver_Handler::handle_input\n"));
-  // This is the entry point for receiving data.
-  TAO_AV_frame_info *frame_info = 0;
-  int result = TAO_SFP_Base::handle_input (this->transport_,
-                                           this->state_,
-                                           frame_info);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"ERROR in TAO_SFP_UDP_Receiver_Handler::handle_input"),result);
-  if (this->state_.frame_header_.message_type == flowProtocol::EndofStream_Msg)
-    this->callback_->handle_end_stream ();
-  if (this->state_.is_complete ())
-    {
-      this->callback_->receive_frame (this->state_.frame_block_,
-                                      frame_info);
-      this->state_.reset ();
-    }
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Receiver_Handler::handle_input (ACE_HANDLE /*fd*/)
+// {
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_Receiver_Handler::handle_input\n"));
+//   // This is the entry point for receiving data.
+//   TAO_AV_frame_info *frame_info = 0;
+//   int result = TAO_SFP_Base::handle_input (this->transport_,
+//                                            this->state_,
+//                                            frame_info);
+//   if (result < 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,"ERROR in TAO_SFP_UDP_Receiver_Handler::handle_input"),result);
+//   if (this->state_.frame_header_.message_type == flowProtocol::EndofStream_Msg)
+//     this->callback_->handle_end_stream ();
+//   if (this->state_.is_complete ())
+//     {
+//       this->callback_->receive_frame (this->state_.frame_block_,
+//                                       frame_info);
+//       this->state_.reset ();
+//     }
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_Receiver_Handler::handle_close (ACE_HANDLE /*fd*/,
-                                            ACE_Reactor_Mask /*mask*/)
-{
-  return 0;
-}
+// int
+// TAO_SFP_UDP_Receiver_Handler::handle_close (ACE_HANDLE /*fd*/,
+//                                             ACE_Reactor_Mask /*mask*/)
+// {
+//   return 0;
+// }
 
-//------------------------------------------------------------
-//TAO_SFP_UDP_MCast_Protocol_Factory
-//------------------------------------------------------------
+// //------------------------------------------------------------
+// //TAO_SFP_UDP_MCast_Protocol_Factory
+// //------------------------------------------------------------
 
-TAO_SFP_UDP_MCast_Protocol_Factory::TAO_SFP_UDP_MCast_Protocol_Factory (void)
-{
-}
+// TAO_SFP_UDP_MCast_Protocol_Factory::TAO_SFP_UDP_MCast_Protocol_Factory (void)
+// {
+// }
 
-TAO_SFP_UDP_MCast_Protocol_Factory::~TAO_SFP_UDP_MCast_Protocol_Factory (void)
-{
-}
+// TAO_SFP_UDP_MCast_Protocol_Factory::~TAO_SFP_UDP_MCast_Protocol_Factory (void)
+// {
+// }
 
-TAO_AV_Acceptor *
-TAO_SFP_UDP_MCast_Protocol_Factory::make_acceptor (void)
-{
-  TAO_SFP_UDP_MCast_Acceptor *acceptor = 0;
-  ACE_NEW_RETURN (acceptor,
-                  TAO_SFP_UDP_MCast_Acceptor,
-                  0);
-  return acceptor;
-}
+// TAO_AV_Acceptor *
+// TAO_SFP_UDP_MCast_Protocol_Factory::make_acceptor (void)
+// {
+//   TAO_SFP_UDP_MCast_Acceptor *acceptor = 0;
+//   ACE_NEW_RETURN (acceptor,
+//                   TAO_SFP_UDP_MCast_Acceptor,
+//                   0);
+//   return acceptor;
+// }
 
-TAO_AV_Connector *
-TAO_SFP_UDP_MCast_Protocol_Factory::make_connector (void)
-{
-  TAO_SFP_UDP_MCast_Connector *connector = 0;
-  ACE_NEW_RETURN (connector,
-                  TAO_SFP_UDP_MCast_Connector,
-                  0);
-  return connector;
-}
+// TAO_AV_Connector *
+// TAO_SFP_UDP_MCast_Protocol_Factory::make_connector (void)
+// {
+//   TAO_SFP_UDP_MCast_Connector *connector = 0;
+//   ACE_NEW_RETURN (connector,
+//                   TAO_SFP_UDP_MCast_Connector,
+//                   0);
+//   return connector;
+// }
 
-int
-TAO_SFP_UDP_MCast_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
-{
-  return (protocol == TAO_AV_Core::TAO_AV_SFP_UDP_MCAST);
-}
+// int
+// TAO_SFP_UDP_MCast_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
+// {
+//   return (protocol == TAO_AV_Core::TAO_AV_SFP_UDP_MCAST);
+// }
 
-//
-// TAO_SFP_UDP_MCast_Acceptor
-TAO_SFP_UDP_MCast_Acceptor::TAO_SFP_UDP_MCast_Acceptor (void)
-{
-}
+// //
+// // TAO_SFP_UDP_MCast_Acceptor
+// TAO_SFP_UDP_MCast_Acceptor::TAO_SFP_UDP_MCast_Acceptor (void)
+// {
+// }
 
-TAO_SFP_UDP_MCast_Acceptor::~TAO_SFP_UDP_MCast_Acceptor (void)
-{
-}
+// TAO_SFP_UDP_MCast_Acceptor::~TAO_SFP_UDP_MCast_Acceptor (void)
+// {
+// }
 
-int
-TAO_SFP_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
-{
-  // @@ We should actually look at the entry and find out if we're a
-  // sink or a source and create the appropriate handler
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Acceptor::make_svc_handler\n"));
-  TAO_SFP_BASE::instance ();
-  TAO_SFP_Object *object;
-  TAO_AV_Callback *callback;
-  this->endpoint_->get_callback (this->entry_->flowname (),callback);
-  ACE_NEW_RETURN (object,
-                  TAO_SFP_Object (callback),
-                  -1);
-  ACE_NEW_RETURN (handler,
-                  TAO_SFP_UDP_MCast_Sender_Handler (callback,
-                                                    object),
-                  -1);
-  callback->transport (handler->transport ());
-  callback->protocol_object (object);
-  object->transport (handler->transport ());
-  this->endpoint_->set_protocol_object (this->entry_->flowname (),
-                                        object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),handler);
-  this->entry_->protocol_object (object);
-  return 0;
-}
-//------------------------------------------------------------
-// TAO_SFP_UDP_MCast_Connector
-//------------------------------------------------------------
-TAO_SFP_UDP_MCast_Connector::TAO_SFP_UDP_MCast_Connector (void)
-{
-}
+// int
+// TAO_SFP_UDP_MCast_Acceptor::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
+// {
+//   // @@ We should actually look at the entry and find out if we're a
+//   // sink or a source and create the appropriate handler
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Acceptor::make_svc_handler\n"));
+//   TAO_SFP_BASE::instance ();
+//   TAO_SFP_Object *object;
+//   TAO_AV_Callback *callback;
+//   this->endpoint_->get_callback (this->entry_->flowname (),callback);
+//   ACE_NEW_RETURN (object,
+//                   TAO_SFP_Object (callback),
+//                   -1);
+//   ACE_NEW_RETURN (handler,
+//                   TAO_SFP_UDP_MCast_Sender_Handler (callback,
+//                                                     object),
+//                   -1);
+//   callback->transport (handler->transport ());
+//   callback->protocol_object (object);
+//   object->transport (handler->transport ());
+//   this->endpoint_->set_protocol_object (this->entry_->flowname (),
+//                                         object);
+//   this->endpoint_->set_handler (this->flowname_.c_str (),handler);
+//   this->entry_->protocol_object (object);
+//   return 0;
+// }
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_MCast_Connector
+// //------------------------------------------------------------
+// TAO_SFP_UDP_MCast_Connector::TAO_SFP_UDP_MCast_Connector (void)
+// {
+// }
 
-TAO_SFP_UDP_MCast_Connector::~TAO_SFP_UDP_MCast_Connector (void)
-{
-}
+// TAO_SFP_UDP_MCast_Connector::~TAO_SFP_UDP_MCast_Connector (void)
+// {
+// }
 
-int
-TAO_SFP_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
-{
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Connector::make_svc_handler\n"));
-  TAO_SFP_BASE::instance ();
-  // @@ We should actually look at the entry and find out if we're a
-  // sink or a source and create the appropriate handler
-  TAO_AV_Callback *callback = 0;
-  this->endpoint_->get_callback (this->entry_->flowname (),
-                                 callback);
-  ACE_NEW_RETURN (handler,
-                  TAO_SFP_UDP_MCast_Receiver_Handler (callback),
-                  -1);
-  TAO_SFP_Object *object;
-  ACE_NEW_RETURN (object,
-                  TAO_SFP_Object (callback),
-                  -1);
-  callback->transport (handler->transport ());
-  callback->protocol_object (object);
-  object->transport (handler->transport ());
-  this->endpoint_->set_protocol_object (this->entry_->flowname (),
-                                        object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),handler);
-  this->entry_->protocol_object (object);
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Connector::make_svc_handler (TAO_AV_UDP_MCast_Flow_Handler *&handler)
+// {
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Connector::make_svc_handler\n"));
+//   TAO_SFP_BASE::instance ();
+//   // @@ We should actually look at the entry and find out if we're a
+//   // sink or a source and create the appropriate handler
+//   TAO_AV_Callback *callback = 0;
+//   this->endpoint_->get_callback (this->entry_->flowname (),
+//                                  callback);
+//   ACE_NEW_RETURN (handler,
+//                   TAO_SFP_UDP_MCast_Receiver_Handler (callback),
+//                   -1);
+//   TAO_SFP_Object *object;
+//   ACE_NEW_RETURN (object,
+//                   TAO_SFP_Object (callback),
+//                   -1);
+//   callback->transport (handler->transport ());
+//   callback->protocol_object (object);
+//   object->transport (handler->transport ());
+//   this->endpoint_->set_protocol_object (this->entry_->flowname (),
+//                                         object);
+//   this->endpoint_->set_handler (this->flowname_.c_str (),handler);
+//   this->entry_->protocol_object (object);
+//   return 0;
+// }
 
-//------------------------------------------------------------
-// TAO_SFP_UDP_MCast_Sender_Handler
-//------------------------------------------------------------
-TAO_SFP_UDP_MCast_Sender_Handler::TAO_SFP_UDP_MCast_Sender_Handler (TAO_AV_Callback *callback,
-                                                                    TAO_SFP_Object *object)
-  :TAO_AV_Flow_Handler (callback),
-   TAO_AV_UDP_MCast_Flow_Handler (callback),
-   sfp_object_ (object)
-{
-}
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_MCast_Sender_Handler
+// //------------------------------------------------------------
+// TAO_SFP_UDP_MCast_Sender_Handler::TAO_SFP_UDP_MCast_Sender_Handler (TAO_AV_Callback *callback,
+//                                                                     TAO_SFP_Object *object)
+//   :TAO_AV_Flow_Handler (callback),
+//    TAO_AV_UDP_MCast_Flow_Handler (callback),
+//    sfp_object_ (object)
+// {
+// }
 
-int
-TAO_SFP_UDP_MCast_Sender_Handler::handle_input (ACE_HANDLE /*fd*/)
-{
-  return -1;
-}
+// int
+// TAO_SFP_UDP_MCast_Sender_Handler::handle_input (ACE_HANDLE /*fd*/)
+// {
+//   return -1;
+// }
 
-int
-TAO_SFP_UDP_MCast_Sender_Handler::handle_close (ACE_HANDLE /*fd*/,
-                                          ACE_Reactor_Mask)
-{
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Sender_Handler::handle_close (ACE_HANDLE /*fd*/,
+//                                           ACE_Reactor_Mask)
+// {
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_MCast_Sender_Handler::start (TAO_FlowSpec_Entry::Role role)
-{
-  // @@once somehow we figure out that the stream is established we
-  // can start sending the frames.
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Sender_Handler::start\n"));
-  TAO_AV_Flow_Handler::start (role);
-  this->sfp_object_->start ();
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Sender_Handler::start (TAO_FlowSpec_Entry::Role role)
+// {
+//   // @@once somehow we figure out that the stream is established we
+//   // can start sending the frames.
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Sender_Handler::start\n"));
+//   TAO_AV_Flow_Handler::start (role);
+//   this->sfp_object_->start ();
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_MCast_Sender_Handler::stop (TAO_FlowSpec_Entry::Role role)
-{
-  TAO_AV_Flow_Handler::stop (role);
-  this->sfp_object_->stop ();
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Sender_Handler::stop (TAO_FlowSpec_Entry::Role role)
+// {
+//   TAO_AV_Flow_Handler::stop (role);
+//   this->sfp_object_->stop ();
+//   return 0;
+// }
 
-//------------------------------------------------------------
-// TAO_SFP_UDP_MCast_Receiver_Handler
-//------------------------------------------------------------
-TAO_SFP_UDP_MCast_Receiver_Handler::TAO_SFP_UDP_MCast_Receiver_Handler (TAO_AV_Callback *callback)
-  :TAO_AV_Flow_Handler (callback),
-   TAO_AV_UDP_MCast_Flow_Handler (callback)
-{
-}
+// //------------------------------------------------------------
+// // TAO_SFP_UDP_MCast_Receiver_Handler
+// //------------------------------------------------------------
+// TAO_SFP_UDP_MCast_Receiver_Handler::TAO_SFP_UDP_MCast_Receiver_Handler (TAO_AV_Callback *callback)
+//   :TAO_AV_Flow_Handler (callback),
+//    TAO_AV_UDP_MCast_Flow_Handler (callback)
+// {
+// }
 
-int
-TAO_SFP_UDP_MCast_Receiver_Handler::handle_input (ACE_HANDLE /*fd*/)
-{
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Receiver_Handler::handle_input\n"));
-  TAO_AV_frame_info *frame_info = 0;
-  // This is the entry point for receiving data.
-  int result = TAO_SFP_Base::handle_input (this->transport_,
-                                           this->state_,
-                                           frame_info);
-  if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"ERROR in TAO_SFP_UDP_MCast_Receiver_Handler::handle_input"),result);
-  if (this->state_.frame_header_.message_type == flowProtocol::EndofStream_Msg)
-    this->callback_->handle_end_stream ();
-  if (this->state_.is_complete ())
-    {
-      this->callback_->receive_frame (this->state_.frame_block_,
-                                      frame_info);
-      this->state_.reset ();
-    }
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Receiver_Handler::handle_input (ACE_HANDLE /*fd*/)
+// {
+//   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_UDP_MCast_Receiver_Handler::handle_input\n"));
+//   TAO_AV_frame_info *frame_info = 0;
+//   // This is the entry point for receiving data.
+//   int result = TAO_SFP_Base::handle_input (this->transport_,
+//                                            this->state_,
+//                                            frame_info);
+//   if (result < 0)
+//     ACE_ERROR_RETURN ((LM_ERROR,"ERROR in TAO_SFP_UDP_MCast_Receiver_Handler::handle_input"),result);
+//   if (this->state_.frame_header_.message_type == flowProtocol::EndofStream_Msg)
+//     this->callback_->handle_end_stream ();
+//   if (this->state_.is_complete ())
+//     {
+//       this->callback_->receive_frame (this->state_.frame_block_,
+//                                       frame_info);
+//       this->state_.reset ();
+//     }
+//   return 0;
+// }
 
-int
-TAO_SFP_UDP_MCast_Receiver_Handler::handle_close (ACE_HANDLE /*fd*/,
-                                            ACE_Reactor_Mask /*mask*/)
-{
-  return 0;
-}
+// int
+// TAO_SFP_UDP_MCast_Receiver_Handler::handle_close (ACE_HANDLE /*fd*/,
+//                                             ACE_Reactor_Mask /*mask*/)
+// {
+//   return 0;
+// }
 
 
 //------------------------------------------------------------
@@ -1420,7 +1420,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
   CORBA::Octet flags = TAO_ENCAP_BYTE_ORDER;
   if (this->transport_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP_Object::send_frame: transport is null\n"),-1);
-   if (this->credit_ > 0)
+   if (this->current_credit_ > 0)
     {
       // if we have enough credit then we send.
       int total_length = 0;
@@ -1553,13 +1553,16 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
             }
           // Increment the sequence_num after sending the message.
           this->sequence_num_++;
+          // Also reduce the number of credits.
+          this->credit--;
         }
     }
   else
     {
-      // flow controlled so wait.
+      // flow controlled so wait. 
+      // A greater than 0 value indicates that flow control is being exercised.
+      return 1;
     }
-
    return 0;
 }
 
@@ -1612,6 +1615,80 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
   last_mb_orig_len = last_len;
   last_mb_current_len = current_len;
   return fragment_mb;
+}
+
+// TAO_SFP_Consumer_Object
+int
+TAO_SFP_Consumer_Object::handle_input (void)
+{
+  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_SFP_Consumer_Object::handle_input\n"));
+  // This is the entry point for receiving data.
+  TAO_AV_frame_info *frame_info = 0;
+  int result = TAO_SFP_Base::handle_input (this->transport_,
+                                           this->state_,
+                                           frame_info);
+  if (result < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,"ERROR in TAO_SFP_Consumer_Object::handle_input"),result);
+  if (this->state_.frame_header_.message_type == flowProtocol::EndofStream_Msg)
+    this->callback_->handle_end_stream ();
+  if (this->state_.is_complete ())
+    {
+      this->callback_->receive_frame (this->state_.frame_block_,
+                                      frame_info);
+      this->state_.reset ();
+    }
+  return 0;
+}
+
+TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (void)
+  :credit_sequence_num_ (0)
+{
+}
+
+int
+TAO_SFP_Producer_Object::handle_input (void)
+{
+  // A producer can only receive credit messages.
+  int result;
+  flowProtocol::MsgType msg_type;
+  result = TAO_SFP_Base::peek_message_type (transport,
+                                            msg_type);
+  if (result < 0)
+    return result;
+  switch (msg_type)
+    {
+    case flowProtocol::Credit_Msg:
+      {
+        flowProtocol::credit credit;
+        result = TAO_SFP_Base::read_credit_message (transport,
+                                                    credit,
+                                                    this->state_.cdr);
+        if (result < 0)
+          return result;
+      if (!this->credit_sequence_num_)
+        this->credit_sequence_num_ = credit.cred_num;
+      else
+        {
+          // check that the sequence number is above the last sequence number
+          // else its a duplicate credit message so we can ignore it.
+          if (credit.cred_num <= this->credit_sequence_num_)
+            return 0;
+          else      // Update our credit now.
+            this->current_credit_ = this->max_credit_;
+        }
+      }
+      break;
+    default:
+      {
+        ACE_Message_Block mb (2*this->transport_->mtu ());
+
+      // Ignore the rest of the message by just reading.
+        this->transport_->recv (mb.rd_ptr (),
+                                mb.size ());
+        break;
+      }
+    }
+  return 0;
 }
 
 //------------------------------------------------------------

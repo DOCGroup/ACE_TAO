@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Policy.h"
+#include "FlowSpec_Entry.h"
 
 TAO_AV_Policy::TAO_AV_Policy (TAO_AV_Policy::PolicyType type)
   :type_ (type)
@@ -66,57 +67,22 @@ TAO_AV_Policy_Manager::create_policy (TAO_AV_Policy::PolicyType type,
   return policy;
 }
 
-TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
-                                                TAO_AV_Transport *transport)
-  :transport_ (transport),
-   callback_ (callback)
-{
-}
-
-TAO_AV_Protocol_Object::~TAO_AV_Protocol_Object (void)
-{
-  //no-op
-}
-
-int
-TAO_AV_Protocol_Object::start (void)
-{
-  return this->callback_->handle_start ();
-}
-
-int
-TAO_AV_Protocol_Object::stop (void)
-{
-  return this->callback_->handle_stop ();
-}
-
-// int
-// TAO_AV_Protocol_Object::send_frame (const iovec *iov,
-//                                     int iovcnt,
-//                                     TAO_AV_frame_info *frame_info)
-// {
-//   ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Protocol_Object::send_frame\n"),-1);
-// }
-
-int
-TAO_AV_Protocol_Object::set_policies (const PolicyList &policy_list)
-{
-  this->policy_list_ = policy_list;
-  return 0;
-}
-
-PolicyList
-TAO_AV_Protocol_Object::get_policies (void)
-{
-  return this->policy_list_;
-}
-
 // TAO_AV_Callback
 
 TAO_AV_Callback::TAO_AV_Callback (void)
-  :transport_ (0),
-   protocol_object_ (0)
+  //  :transport_ (0),
+   :protocol_object_ (0)
 {
+}
+
+int
+TAO_AV_Callback::open (TAO_AV_Protocol_Object *object,
+                       TAO_AV_Flow_Handler *handler)
+{
+  this->protocol_object_ = object;
+  this->handler_ = handler;
+  handler->callback (this);
+  return 0;
 }
 
 int
@@ -135,14 +101,22 @@ TAO_AV_Callback::handle_stop (void)
 
 int
 TAO_AV_Callback::receive_frame (ACE_Message_Block */*frame*/,
-                                TAO_AV_frame_info *)
+                                TAO_AV_frame_info *,
+                                const ACE_Addr &)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::receive_frame\n"));
   return -1;
 }
 
 int
-TAO_AV_Callback::handle_end_stream (void)
+TAO_AV_Callback::receive_control_frame (ACE_Message_Block *,
+                                        const ACE_Addr& )
+{
+  return 0;
+}
+
+int
+TAO_AV_Callback::handle_destroy (void)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_end_stream\n"));
   return -1;
@@ -162,24 +136,17 @@ TAO_AV_Callback::handle_timeout (void *arg)
   return 0;
 }
 
-// int
-// TAO_AV_Callback::get_frame (ACE_Message_Block *&frame,
-//                             TAO_AV_frame_info *&frame_info)
+// TAO_AV_Transport*
+// TAO_AV_Callback::transport (void)
 // {
-//   return -1;
+//   return this->transport_;
 // }
 
-TAO_AV_Transport*
-TAO_AV_Callback::transport (void)
-{
-  return this->transport_;
-}
-
-void
-TAO_AV_Callback::transport (TAO_AV_Transport *transport)
-{
-  this->transport_ = transport;
-}
+// void
+// TAO_AV_Callback::transport (TAO_AV_Transport *transport)
+// {
+//   this->transport_ = transport;
+// }
 
 TAO_AV_Protocol_Object*
 TAO_AV_Callback::protocol_object (void)
@@ -187,10 +154,16 @@ TAO_AV_Callback::protocol_object (void)
   return this->protocol_object_;
 }
 
-void
-TAO_AV_Callback::protocol_object (TAO_AV_Protocol_Object *object)
+// void
+// TAO_AV_Callback::protocol_object (TAO_AV_Protocol_Object *object)
+// {
+//   this->protocol_object_ = object;
+// }
+
+int
+TAO_AV_Callback::schedule_timer (void)
 {
-  this->protocol_object_ = object;
+  return this->handler_->schedule_timer ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

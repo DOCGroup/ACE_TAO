@@ -130,7 +130,6 @@ public:
 protected:
   char* stats (char* cp) const;
 
-
   // @@Naga:My additions
   int active_;
   char *name_;
@@ -177,14 +176,12 @@ protected:
 int sdes_atoi (const char* s);
 char* onestat (char* cp, const char* name, u_long v);
 class TAO_Base_StreamEndPoint;
-class TAO_AV_RTCP_Flow_Handler;
+class TAO_AV_RTCP_Callback;
 
 class TAO_AV_SourceManager
 {
 public:
-  TAO_AV_SourceManager (const char *flowname,
-                        TAO_Base_StreamEndPoint *endpoint,
-                        TAO_AV_RTCP_Flow_Handler *handler);
+  TAO_AV_SourceManager (TAO_AV_RTCP_Callback *callback);
   void init (ACE_UINT32 localid, ACE_UINT32 localaddr);
   TAO_AV_Source* lookup (ACE_UINT32 srcid, ACE_UINT32 ssrc, ACE_UINT32 addr);
   TAO_AV_Source* demux (ACE_UINT32 srcid, ACE_UINT32 addr, ACE_UINT16 seq);
@@ -218,10 +215,7 @@ protected:
   TAO_AV_Source* localsrc_;
   TAO_AV_Source* hashtab_[TAO_AV_SOURCE_HASH];
 
-  // flow members.
-  CORBA::String_var flowname_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_RTCP_Flow_Handler *handler_;
+  TAO_AV_RTCP_Callback *callback_;
 };
 
 #if defined (__ACE_INLINE__)

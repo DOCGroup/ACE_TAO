@@ -33,14 +33,9 @@
  */
 
 // $Id$
-#include "RTP.h"
 #include "RTCP.h"
 #include "media-timer.h"
 #include "ntp-time.h"
-
-// static hash map of rtcp handlers for all the flows.
-TAO_AV_RTCP::RTCP_MCast_Map TAO_AV_RTCP::rtcp_mcast_map_;
-TAO_AV_RTCP::RTCP_UDP_Map TAO_AV_RTCP::rtcp_udp_map_;
 
 // TAO_AV_RTP_State
 TAO_AV_RTP_State::TAO_AV_RTP_State (void)
@@ -322,10 +317,10 @@ TAO_AV_RTCP::parse_bye (rtcphdr* rh,
  */
 void
 TAO_AV_RTCP::send_report (int bye,
-                          TAO_AV_Transport *transport,
+                          TAO_AV_Protocol_Object *protocol_object,
                           TAO_AV_SourceManager *source_manager,
                           TAO_AV_RTP_State *state,
-                          TAO_AV_RTCP_Flow_Handler *handler)
+                          TAO_AV_RTCP_Callback *callback)
 {
   if (source_manager->localsrc () == 0)
     return;
@@ -417,7 +412,9 @@ TAO_AV_RTCP::send_report (int bye,
   else
     len += build_sdes ( (rtcphdr*)rr, s,state);
 
-  transport->send ((char *)state->pktbuf_, len);
+  ACE_Message_Block mb ((char *)state->pktbuf_, len);
+  mb.wr_ptr (len);
+  protocol_object->send_frame (&mb);
 
   state->rtcp_avg_size_ += RTCP_SIZE_GAIN * (double (len + 28) - state->rtcp_avg_size_);
 
@@ -444,37 +441,29 @@ TAO_AV_RTCP::send_report (int bye,
   if (rint < RTCP_MIN_RPT_TIME * 1000.)
     rint = RTCP_MIN_RPT_TIME * 1000.;
   state->rint_ = rint;
-  handler->schedule (int (fmod (double (ACE_OS::rand ()), rint) + rint * .5 + .5));
+  callback->schedule (int (fmod (double (ACE_OS::rand ()), rint) + rint * .5 + .5));
 
   source_manager->CheckActiveSources (rint);
 }
 
 int
-TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
+TAO_AV_RTCP::handle_input (ACE_Message_Block *data,
+                           const ACE_Addr &peer_address,
                            rtcphdr &header,
                            TAO_AV_SourceManager *source_manager,
                            TAO_AV_RTP_State *state)
 {
-  ACE_Message_Block *data;
-  size_t bufsiz = 2*transport->mtu ();
-  ACE_NEW_RETURN (data,
-                  ACE_Message_Block (bufsiz),
-                  -1);
-  int cc = transport->recv (data->rd_ptr (),bufsiz);
-  if (cc == 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
-  if (cc < 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+  int cc = data->length ();
   int size_phdr = ACE_static_cast (int, sizeof (rtcphdr));
   if (cc < size_phdr)
     {
       state->nrunt_++;
       ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:invalid header\n"),-1);
     }
-  ACE_Addr *peer_addr = 0;
-  peer_addr = transport->get_peer_addr ();
-  if (peer_addr == 0)
+  if (peer_address == ACE_Addr::sap_any)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:get_peer_addr failed\n"),-1);
+  // @@ We need to be careful of this.
+  u_long addr = peer_address.hash ();
   header = * (rtcphdr*) (data->rd_ptr ());
   rtcphdr *rh = (rtcphdr *)data->rd_ptr ();
   /*
@@ -505,19 +494,6 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
   double tmp = ACE_static_cast (double, result);
   tmp *= RTCP_SIZE_GAIN;
   state->rtcp_avg_size_ += ACE_static_cast (int, tmp);
-  ACE_UINT32 addr = 0;
-  switch (peer_addr->get_type ())
-    {
-    case AF_INET:
-      {
-        ACE_INET_Addr *inet_addr =
-          ACE_static_cast (ACE_INET_Addr *,peer_addr);
-        addr = inet_addr->get_ip_address ();
-      }
-      break;
-    default:
-      break;
-    }
   /*
    * First record in compound packet must be the ssrc of the
    * sender of the packet.  Pull it out here so we can use
@@ -586,30 +562,186 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   return (srcid);
 }
 
-// TAO_AV_RTCP_Flow_Handler
-TAO_AV_RTCP_Flow_Handler::TAO_AV_RTCP_Flow_Handler (ACE_Reactor *reactor,
-                                                    TAO_Base_StreamEndPoint *endpoint,
-                                                    const char *flowname)
-  :reactor_ (reactor),
-   endpoint_ (endpoint),
-   flowname_ (flowname)
+
+// TAO_AV_RTCP_Flow_Factory
+TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory (void)
 {
-  ACE_NEW (this->source_manager_,
-           TAO_AV_SourceManager (flowname,
-                                 endpoint,
-                                 this));
 }
 
-TAO_AV_RTCP_Flow_Handler::~TAO_AV_RTCP_Flow_Handler (void)
+TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory (void)
 {
-  delete this->source_manager_;
+}
+
+int
+TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
+{
+  if (ACE_OS::strncasecmp (flow_string,"RTCP",4) == 0)
+    return 1;
+  return 0;
+}
+
+int
+TAO_AV_RTCP_Flow_Factory::init (int /* argc */,
+                                char * /* argv */ [])
+{
+  return 0;
+}
+
+TAO_AV_Protocol_Object* 
+TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
+                                                TAO_Base_StreamEndPoint *endpoint,
+                                                TAO_AV_Flow_Handler *handler,
+                                                TAO_AV_Transport *transport)
+{
+  TAO_AV_Callback *callback = 0;
+  endpoint->get_control_callback (entry->flowname (),
+                                  callback);
+  if (callback == 0)
+    ACE_NEW_RETURN (callback,
+                    TAO_AV_RTCP_Callback,
+                    0);
+  TAO_AV_Protocol_Object *object = 0;
+  ACE_NEW_RETURN (object,
+                  TAO_AV_RTCP_Object (callback,
+                                      transport),
+                  0);
+  callback->open (object,
+                  handler);
+  return object;
+}
+
+// TAO_AV_RTCP_Object
+int
+TAO_AV_RTCP_Object::handle_input (void)
+{
+  ACE_Message_Block *data;
+  size_t bufsiz = 2*this->transport_->mtu ();
+  ACE_NEW_RETURN (data,
+                  ACE_Message_Block (bufsiz),
+                  -1);
+  int n = this->transport_->recv (data->rd_ptr (),bufsiz);
+  if (n == 0)
+    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
+  if (n < 0)
+    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+  data->wr_ptr (n);
+  this->callback_->receive_control_frame (data);
+  return 0;
+}
+
+int
+TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
+                                TAO_AV_frame_info *frame_info)
+{
+  return this->transport_->send (frame);
+}
+
+int
+TAO_AV_RTCP_Object::send_frame (const iovec *iov,
+                               int iovcnt,
+                               TAO_AV_frame_info *frame_info)
+{
+  return this->transport_->send (iov,
+                                 iovcnt);
+}
+
+TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *callback,
+                                        TAO_AV_Transport *transport)
+  :TAO_AV_Protocol_Object (callback,transport)
+{
+}
+
+TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object (void)
+{
+}
+
+int
+TAO_AV_RTCP_Object::destroy (void)
+{
+  this->callback_->handle_destroy ();
+  return 0;
+}
+
+int
+TAO_AV_RTCP_Object::set_policies (const PolicyList &policy_list)
+{
+  return -1;
+}
+
+int
+TAO_AV_RTCP_Object::start (void)
+{
+  return this->callback_->handle_start ();
+}
+
+int
+TAO_AV_RTCP_Object::stop (void)
+{
+  return this->callback_->handle_stop ();
+}
+
+int
+TAO_AV_RTCP_Object::handle_control_input (ACE_Message_Block *frame,
+                                          const ACE_Addr &peer_address)
+{
+  frame->rd_ptr ((size_t)0);
+  // Since the rd_ptr would have been moved ahead.
+  return this->callback_->receive_frame (frame,
+                                         0,
+                                         peer_address);
+}
+
+// TAO_AV_RTCP_Callback
+TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback (void)
+{
+  ACE_NEW (source_manager_,
+           TAO_AV_SourceManager (this));
+
+  ACE_NEW (this->state_,
+           TAO_AV_RTP_State);
+}
+
+TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback (void)
+{
+}
+
+TAO_AV_SourceManager*
+TAO_AV_RTCP_Callback::source_manager (void)
+{
+  return this->source_manager_;
+}
+
+TAO_AV_RTP_State*
+TAO_AV_RTCP_Callback::state (void)
+{
+  return this->state_;
+}
+
+int
+TAO_AV_RTCP_Callback::get_rtp_source (TAO_AV_Source *&source,
+                                      ACE_UINT32 srcid,
+                                      ACE_UINT32 ssrc,
+                                      ACE_UINT32 addr)
+{
+  ACE_NEW_RETURN (source,
+                  TAO_AV_Source (srcid,
+                                 ssrc,
+                                 addr),
+                  -1);
+  return 0;
 }
 
 void
-TAO_AV_RTCP_Flow_Handler::init (void)
+TAO_AV_RTCP_Callback::schedule (int ms)
 {
-  // Schedule a timer.
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_Flow_Handler::schedule\n"));
+  this->timeout_ = ms;
+}
+
+
+int
+TAO_AV_RTCP_Callback::handle_start (void)
+{
+  // 
   /*
    * schedule a timer for our first report using half the
    * min rtcp interval.  This gives us some time before
@@ -619,128 +751,172 @@ TAO_AV_RTCP_Flow_Handler::init (void)
    * conservative (it assumes everyone else is generating
    * SRs instead of RRs).
    */
-  double rint = this->state_.rtcp_avg_size_ * this->state_.rtcp_inv_bw_;
+  double rint = this->state_->rtcp_avg_size_ * this->state_->rtcp_inv_bw_;
   if (rint < RTCP_MIN_RPT_TIME / 2. * 1000.)
     rint = RTCP_MIN_RPT_TIME / 2. * 1000.;
-  this->state_.rint_ = rint;
-  int msec = int(fmod(double(ACE_OS::rand ()), rint) + rint * .5 + .5);
-  this->schedule (msec);
+  this->state_->rint_ = rint;
+  this->timeout_ = int(fmod(double(ACE_OS::rand ()), rint) + rint * .5 + .5);
+  return 0;
+}
+
+int
+TAO_AV_RTCP_Callback::handle_stop (void)
+{
+  return 0;
+}
+
+int
+TAO_AV_RTCP_Callback::handle_timeout (void *arg)
+{
+  // Here we do the send_report.
+  TAO_AV_RTCP::send_report (0,
+                            this->protocol_object_,
+                            this->source_manager_,
+                            this->state_,
+                            this);
+  return 0;
 }
 
 void
-TAO_AV_RTCP_Flow_Handler::schedule (int sched)
+TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
+                                   void *&arg)
 {
-  ACE_Time_Value delta (0,sched*ACE_ONE_SECOND_IN_MSECS);
-  int result = this->reactor_->schedule_timer (this->event_handler (),
-                                               0,
-                                               delta);
-  if (result < 0)
-    ACE_ERROR ((LM_ERROR,"TAO_AV_RTCP_Flow_Handler::schedule_timer failed\n"));
-}
-
-TAO_AV_SourceManager*
-TAO_AV_RTCP_Flow_Handler::source_manager (void)
-{
-  return this->source_manager_;
-}
-
-TAO_AV_RTP_State*
-TAO_AV_RTCP_Flow_Handler::state (void)
-{
-  return &this->state_;
-}
-
-//------------------------------------------------------------
-//TAO_AV_RTCP_UDP_Flow_Handler
-//------------------------------------------------------------
-
-TAO_AV_RTCP_UDP_Flow_Handler::TAO_AV_RTCP_UDP_Flow_Handler (ACE_Reactor *reactor,
-                                                            TAO_Base_StreamEndPoint *endpoint,
-                                                            const char *flowname)
-  :TAO_AV_Flow_Handler (0),
-   TAO_AV_UDP_Flow_Handler (0),
-   TAO_AV_RTCP_Flow_Handler (reactor,endpoint,flowname)
-{
-}
-
-TAO_AV_RTCP_UDP_Flow_Handler::~TAO_AV_RTCP_UDP_Flow_Handler (void)
-{
-}
-
-ACE_Event_Handler*
-TAO_AV_RTCP_UDP_Flow_Handler::event_handler (void)
-{
-  return this;
+  // Here we do the RTCP timeout calculation.
+  ACE_NEW (tv,
+           ACE_Time_Value (0,this->timeout_*ACE_ONE_SECOND_IN_MSECS));
 }
 
 int
-TAO_AV_RTCP_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
+TAO_AV_RTCP_Callback::handle_destroy (void)
 {
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_input"));
-  TAO_AV_RTCP::rtcphdr rtcp_header;
-  int result = TAO_AV_RTCP::handle_input (this->transport_,
-                                          rtcp_header,
-                                          this->source_manager_,
-                                          &this->state_);
-  if (result < 0)
-    return result;
-  return 0;
-}
-
-int
-TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
-                                              const void */*arg*/)
-{
-  if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_RTCP_UDP_Flow_Handler::handle_timeout"));
-  TAO_AV_RTCP::send_report (0,
-                            this->transport_,
+  // Here we do the send_bye.
+  TAO_AV_RTCP::send_report (1,
+                            this->protocol_object_,
                             this->source_manager_,
-                            &this->state_,
+                            this->state_,
                             this);
   return 0;
 }
 
-// TAO_AV_RTCP_UDP_MCast_Flow_Handler
-TAO_AV_RTCP_UDP_MCast_Flow_Handler::TAO_AV_RTCP_UDP_MCast_Flow_Handler (ACE_Reactor *reactor,
-                                                                        TAO_Base_StreamEndPoint *endpoint,
-                                                                        const char *flowname)
-  :TAO_AV_Flow_Handler (0),
-   TAO_AV_UDP_MCast_Flow_Handler (0),
-   TAO_AV_RTCP_Flow_Handler (reactor,endpoint,flowname)
+int
+TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
+                                     TAO_AV_frame_info *,
+                                     const ACE_Addr &peer_address)
 {
+  TAO_AV_RTP::rtphdr *rh = (TAO_AV_RTP::rtphdr *)frame->rd_ptr ();
+  frame->rd_ptr (sizeof (TAO_AV_RTP::rtphdr));
+  this->demux (rh,
+               frame,
+               peer_address);
+  return 0;
 }
 
-TAO_AV_RTCP_UDP_MCast_Flow_Handler::~TAO_AV_RTCP_UDP_MCast_Flow_Handler (void)
-{
-}
-
-ACE_Event_Handler*
-TAO_AV_RTCP_UDP_MCast_Flow_Handler::event_handler (void)
-{
-  return this;
-}
 
 int
-TAO_AV_RTCP_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
+TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *frame,
+                                             const ACE_Addr &peer_address)
 {
-  TAO_AV_RTCP::rtcphdr rtcp_header;
-  int result = TAO_AV_RTCP::handle_input (this->transport_,
-                                          rtcp_header,
+  // Here we do the processing of the RTCP frames.
+  TAO_AV_RTCP::rtcphdr header;
+  int result = TAO_AV_RTCP::handle_input (frame,
+                                          peer_address,
+                                          header,
                                           this->source_manager_,
-                                          &this->state_);
+                                          this->state_);
   if (result < 0)
-    return result;
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTCP::handle_input failed\n"),-1);
   return 0;
 }
 
 int
-TAO_AV_RTCP_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
-                                                    const void */*arg*/)
+TAO_AV_RTCP_Callback::demux (TAO_AV_RTP::rtphdr* rh,
+                             ACE_Message_Block *data,
+                             const ACE_Addr &address)
 {
-  TAO_AV_RTCP::send_report (0,
-                            this->transport_,
-                            this->source_manager_,
-                            &this->state_,
-                            this);
+  char *bp = data->rd_ptr ();
+  int cc = data->length ();
+  if (cc < 0)
+    {
+      ++this->state_->nrunt_;
+      return -1;
+    }
+  ACE_UINT32 srcid = rh->rh_ssrc;
+  int flags = ntohs (rh->rh_flags);
+  if ( (flags & RTP_X) != 0)
+    {
+      /*
+       * the minimal-control audio/video profile
+       * explicitly forbids extensions
+       */
+      ++this->state_->badext_;
+      return -1;
+    }
+
+  // @@Naga:Maybe the framework itself could check for formats making use of
+  // the property service to query the formats supported for this flow.
+  /*
+   * Check for illegal payload types.  Most likely this is
+   * a session packet arriving on the data port.
+   */
+//   int fmt = flags & 0x7f;
+//   if (!check_format (fmt))
+//     {
+//       ++state->badfmt_;
+//       return;
+//     }
+
+  u_long addr = address.hash ();
+  ACE_UINT16 seqno = ntohs (rh->rh_seqno);
+  TAO_AV_Source* s = this->source_manager_->demux (srcid, addr, seqno);
+  if (s == 0)
+    /*
+     * Takes a pair of validated packets before we will
+     * believe the source.  This prevents a runaway
+     * allocation of Source data structures for a
+     * stream of garbage packets.
+     */
+    return -1;
+
+  ACE_Time_Value now = ACE_OS::gettimeofday ();
+  s->lts_data (now);
+  s->sts_data (rh->rh_ts);
+
+  int cnt = (flags >> 8) & 0xf;
+  if (cnt > 0)
+    {
+      u_char* nh = (u_char*)rh + (cnt << 2);
+      while (--cnt >= 0)
+        {
+          ACE_UINT32 csrc = * (ACE_UINT32*)bp;
+          bp += 4;
+          TAO_AV_Source* cs = this->source_manager_->lookup (csrc, srcid, addr);
+          cs->lts_data (now);
+          cs->action ();
+        }
+      /*XXX move header up so it's contiguous with data*/
+      TAO_AV_RTP::rtphdr hdr = *rh;
+      rh = (TAO_AV_RTP::rtphdr*)nh;
+      *rh = hdr;
+    }
+  else
+    s->action ();
+
   return 0;
+  /*
+   * This is a data packet.  If the source needs activation,
+   * or the packet format has changed, deal with this.
+   * Then, hand the packet off to the packet handler.
+   * XXX might want to be careful about flip-flopping
+   * here when format changes due to misordered packets
+   * (easy solution -- keep rtp seqno of last fmt change).
+   */
 }
+
+ACE_FACTORY_DEFINE (AV, TAO_AV_RTCP_Flow_Factory)
+ACE_STATIC_SVC_DEFINE (TAO_AV_RTCP_Flow_Factory,
+                       ASYS_TEXT ("RTCP_Flow_Factory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_AV_RTCP_Flow_Factory),
+                       ACE_Service_Type::DELETE_THIS |
+                       ACE_Service_Type::DELETE_OBJ,
+                       0)

@@ -186,3 +186,9 @@ TAO_FlowSpec_Entry::protocol_object (TAO_AV_Protocol_Object *object)
   this->protocol_object_ = object;
 }
 
+ACE_INLINE
+int
+TAO_FlowSpec_Entry::is_multicast (void)
+{
+  return this->is_multicast_;
+}
