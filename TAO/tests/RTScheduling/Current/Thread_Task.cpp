@@ -80,6 +80,14 @@ Thread_Task::svc (void)
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+
+      //Start - Nested Scheduling Segment
+      this->current_->begin_scheduling_segment ("The Return of the King",
+						sched_param,
+						implicit_sched_param
+						ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       int count ;
       ACE_OS::memcpy (&count,
 		      this->current_->id ()->get_buffer (),
@@ -111,6 +119,11 @@ Thread_Task::svc (void)
       this->current_->end_scheduling_segment (name
 					      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
+      this->current_->end_scheduling_segment (name
+					      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      //End - Nested Scheduling Segment
 
       {
 	ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1); 
