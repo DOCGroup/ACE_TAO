@@ -975,11 +975,11 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 		    void *arg)
 {
   // ACE_TRACE ("ACE_OS::mutex_init");
-  type = type;
-  name = name;
-  arg = arg;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || defined(ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+
   pthread_mutexattr_t attributes;
   int result = -1;
 
@@ -1010,6 +1010,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 
   return result;
 #elif defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (name);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, type, arg), 
 				       ace_result_), 
 		     int, -1);
@@ -1032,11 +1033,18 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
     }
   /* NOTREACHED */
 #elif defined (VXWORKS)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+
   // Type includes these options: SEM_Q_PRIORITY, SEM_Q_FIFO, SEM_DELETE_SAFE,
   // and SEM_INVERSION_SAFE that are currently outside of the ACE mutex model.
   return (*m = ::semMCreate (type)) == 0 ? -1 : 0;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1068,6 +1076,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   return ::semDelete (*m) == OK ? 0 : -1;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1110,6 +1119,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
   return ::semTake (*m, WAIT_FOREVER) == OK ? 0 : -1;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1164,6 +1174,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     return 0;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1195,6 +1206,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   return ::semGive (*m) == OK ? 0 : -1;
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1206,9 +1218,9 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 			   void *arg)
 {
   // ACE_TRACE ("ACE_OS::thread_mutex_init");
-  type = type;
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_UNUSED_ARG (type);
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg);
 #elif defined (ACE_HAS_WTHREADS)
@@ -1222,6 +1234,10 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   return mutex_init (m, type, name, arg);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
+  ACE_UNUSED_ARG (type);
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1240,6 +1256,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
   return mutex_destroy (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1258,6 +1275,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
   return mutex_lock (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1281,6 +1299,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   return mutex_trylock (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1299,6 +1318,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
   return mutex_unlock (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
+  ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -1322,6 +1342,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
   return ACE_OS::sema_destroy (&cv->sema_);
 #endif /* ACE_HAS_STHREADS */
 #else
+  ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
@@ -3723,6 +3744,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_DCETHREADS) || (defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_STHREADS))
 #if defined (ACE_HAS_SETKIND_NP)
+  ACE_UNUSED_ARG (old_type);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setcancel (new_type), 
                                        ace_result_), 
                      int, -1);
@@ -3739,6 +3761,8 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   ACE_UNUSED_ARG (old_type);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_STHREADS)
+  ACE_UNUSED_ARG (new_type);
+  ACE_UNUSED_ARG (old_type);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (new_type);
