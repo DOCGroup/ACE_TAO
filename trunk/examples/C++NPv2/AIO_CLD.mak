@@ -1,19 +1,18 @@
 #----------------------------------------------------------------------------
 # $Id$
 #
-# Makefile for the AC_CLD library in the C++NPv2, Chapter 7 example.
+# Makefile for the AIO_CLD library in the C++NPv2, Chapter 8 example.
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
 
-# This example uses SSL.
+# This code uses SSL.
 ssl=1
 
-SHLIB   = libAC_CLD.$(SOEXT)
-FILES   = AC_Client_Logging_Daemon \
-          Logging_Handler
+SHLIB   = libAIO_CLD.$(SOEXT)
+FILES   = AIO_Client_Logging_Daemon
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)

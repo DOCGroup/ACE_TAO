@@ -8,6 +8,9 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+# This example uses SSL.
+ssl=1
+
 SHLIB   = libTPCLS.$(SOEXT)
 FILES   = TPC_Logging_Server \
           Logging_Handler

@@ -1,3 +1,13 @@
+Sat Jun  1 22:42:17 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_CLD.mak:
+        * examples/C++NPv2/TPCLS.mak: Added "ssl=1" to properly include
+          the SSL stuff in the build; these examples use SSL.
+
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_CLD_export.h:
+        * examples/C++NPv2/AIO_CLD.mak: Asynch I/O example from Chapter 8.
+
 Sat Jun  1 15:38:40 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_Acceptor.cpp (open): bind_port is in ACE_Sock_Connect,
