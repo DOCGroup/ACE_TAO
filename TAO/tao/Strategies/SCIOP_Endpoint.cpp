@@ -4,7 +4,7 @@
 
 #include "tao/debug.h"
 #include "ace/Synch_T.h"
-#include "tao/ORB_Endpoints.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (tao,
            IIOP_Endpoint,
