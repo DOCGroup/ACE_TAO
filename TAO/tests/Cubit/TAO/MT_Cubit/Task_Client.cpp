@@ -147,13 +147,13 @@ Task_State::parse_args (int argc,char **argv)
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
-	{
+        {
           ACE_DEBUG ((LM_DEBUG,buf));
-	  j = ACE_OS::strlen (buf);
-	  buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
-	  iors_[i] = ACE_OS::strdup (buf);
-	  i++;
-	}
+          j = ACE_OS::strlen (buf);
+          buf[j - 1] = 0;  // this is to delete the "\n" that was read from the file.
+          iors_[i] = ACE_OS::strdup (buf);
+          i++;
+        }
       ACE_OS::fclose (ior_file);
     }
 
@@ -571,22 +571,22 @@ Client::svc (void)
                                 -1);
 
             ACE_DEBUG ((LM_DEBUG,"(%P|%t) my ior is:%s\n",my_ior));
-	    // if we are running the "1 to n" test make sure all low
-	    // priority clients use only 1 low priority servant.
-	    if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
-	      my_ior = ts_->iors_[1];
+            // if we are running the "1 to n" test make sure all low
+            // priority clients use only 1 low priority servant.
+            if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
+              my_ior = ts_->iors_[1];
 
-	    if (my_ior == 0)
-	      ACE_ERROR_RETURN ((LM_ERROR,
-				 "Must specify valid factory ior key with -k option,"
-				 " naming service, or ior filename\n"),
-				-1);
+            if (my_ior == 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Must specify valid factory ior key with -k option,"
+                                 " naming service, or ior filename\n"),
+                                -1);
 
-	    objref = orb->string_to_object (my_ior,
-					    TAO_TRY_ENV);
+            objref = orb->string_to_object (my_ior,
+                                            TAO_TRY_ENV);
             ACE_DEBUG ((LM_DEBUG,"(%P|%t)  String_to_object success\n"));
-	    TAO_CHECK_ENV;
-	  }
+            TAO_CHECK_ENV;
+          }
 
         if (CORBA::is_nil (objref.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -720,7 +720,7 @@ Client::run_tests (Cubit_ptr cb,
   // Make the calls in a loop.
 
   //  ACE_DEBUG((LM_DEBUG,"(%P|%t)loop_count:%d",loop_count));
-  for (i = 0; 
+  for (i = 0;
        // keep running for loop count, OR
        i < loop_count ||
          // keep running if we are the highest priority thread and at
@@ -1121,3 +1121,9 @@ Client::run_tests (Cubit_ptr cb,
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Condition<ACE_SYNCH_MUTEX>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
