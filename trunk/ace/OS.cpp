@@ -3869,7 +3869,7 @@ ACE_OS::pread (ACE_HANDLE handle,
         {
           result = ::GetOverlappedResult (handle, 
                                           &overlapped, 
-                                          &bytes_written, 
+                                          &bytes_read, 
                                           TRUE);
           if (result == FALSE)
             return -1;

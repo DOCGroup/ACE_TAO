@@ -1,3 +1,7 @@
+Sat Aug 01 13:34:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.cpp (pread): Changed bytes_written to bytes_read.
+
 Fri Jul 31 23:47:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile: 
