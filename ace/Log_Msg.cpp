@@ -166,9 +166,12 @@ ACE_Log_Msg_Manager::close (void)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
 /* static */
-#if defined (ACE_HAS_THR_C_DEST)
-extern "C"
-#endif /* ACE_HAS_THR_C_DEST */
+#  if defined (ACE_HAS_THR_C_DEST)
+#   define LOCAL_EXTERN_PREFIX extern "C"
+#  else
+#   define LOCAL_EXTERN_PREFIX
+#  endif /* ACE_HAS_THR_C_DEST */
+LOCAL_EXTERN_PREFIX
 void
 ACE_TSS_cleanup (void *ptr)
 {
