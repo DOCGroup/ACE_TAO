@@ -109,17 +109,14 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
   TAO_TRY
     {
       CosNaming::Name schedule_name (1);
-      schedule_name[0].id = CORBA::string_dup (name);
       schedule_name.length (1);
-      CORBA::Object_ptr objref =
+      schedule_name[0].id = CORBA::string_dup (name);
+      CORBA::Object_var objref =
         naming->resolve (schedule_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       server_ =
         RtecScheduler::Scheduler::_narrow(objref, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      RtecScheduler::Scheduler::_duplicate (server_);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -196,16 +193,22 @@ int ACE_Scheduler_Factory::dump_schedule
           ACE_OS::fprintf(file, ",\n");
         }
       const RtecScheduler::RT_Info& info = infos[i];
+      // @@ TODO Eventually the TimeT structure will be a 64-bit
+      // unsigned int, we will have to change this dump method then.
       ACE_OS::fprintf (file,
-"{ \"%s\", %d, %f, %f, %f, %d, %d, %f, %d, %d, %d, %d }",
+"{ \"%s\", %d, {%d, %d}, {%d, %d}, {%d, %d}, %d, %d, {%d, %d}, %d, %d, %d, %d }",
                        (const char*)info.entry_point,
                        info.handle,
-                       info.worst_case_execution_time,
-                       info.typical_execution_time,
-                       info.cached_execution_time,
+                       info.worst_case_execution_time.low,
+                       info.worst_case_execution_time.high,
+                       info.typical_execution_time.low,
+                       info.typical_execution_time.high,
+                       info.cached_execution_time.low,
+                       info.cached_execution_time.high,
                        info.period,
                        info.importance,
-                       info.quantum,
+                       info.quantum.low,
+                       info.quantum.high,
                        info.threads,
                        info.priority,
                        info.static_subpriority,
