@@ -3,7 +3,7 @@
 
 #include "ace/SString.h"
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_DEV_Addr::set (LPCTSTR devname)
 {
   ACE_TRACE ("ACE_DEV_Addr::set");
@@ -31,13 +31,13 @@ ACE_DEV_Addr::addr_to_string (char *s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
-  ACE_OS::strncpy (s, 
-		   ACE_MULTIBYTE_STRING (this->devname_), 
+  ACE_OS::strncpy (s,
+		   ACE_MULTIBYTE_STRING (this->devname_),
 		   len);
   return 0;
 }
 
-// Return a pointer to the address. 
+// Return a pointer to the address.
 
 ACE_INLINE void *
 ACE_DEV_Addr::get_addr (void) const
@@ -47,15 +47,16 @@ ACE_DEV_Addr::get_addr (void) const
   return (void *) &this->devname_;
 }
 
-// Compare two addresses for equality. 
+// Compare two addresses for equality.
 
 ACE_INLINE int
 ACE_DEV_Addr::operator == (const ACE_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
-  return ACE_OS::strcmp (this->devname_,
-			 ((ACE_DEV_Addr &) sap).devname_) == 0;
+  return this->ACE_Addr::operator== (sap)
+    && ACE_OS::strcmp (this->devname_,
+                       ((ACE_DEV_Addr &) sap).devname_) == 0;
 }
 
 // Compare two addresses for inequality.
@@ -77,4 +78,3 @@ ACE_DEV_Addr::get_path_name (void) const
 
   return this->devname_;
 }
-
