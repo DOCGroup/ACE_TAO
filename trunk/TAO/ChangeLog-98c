@@ -1,5 +1,8 @@
 Wed Sep  2 14:48:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp (make_logger): Removed all
+ 	  vestiges of the exception specification.
+
 	* TAO/utils/catior: Integrated Jeff Hopper's new version of his
  	  "catior" program, which now parses Orbix "POOP" object
  	  references.  Made a few minor syntax changes, as well.

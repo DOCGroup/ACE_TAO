@@ -198,4 +198,4 @@ int main (int, char *[])
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;
 }
-#endif /* ACE_HAS_SVR4_POLL */
+#endif /* ACE_HAS_POLL */
