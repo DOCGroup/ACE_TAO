@@ -17,44 +17,16 @@ CFG=ACE_Init_Test - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "ACE_Init_Test - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "ACE_Init_Test - Win32 Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
-
-!IF  "$(CFG)" == "ACE_Init_Test - Win32 Release"
-
-# PROP BASE Use_MFC 6
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 6
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
-# PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o NUL /win32
-# ADD BASE RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 /nologo /subsystem:windows /machine:I386
-
-!ELSEIF  "$(CFG)" == "ACE_Init_Test - Win32 Debug"
-
 # PROP BASE Use_MFC 6
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "Debug"
@@ -69,8 +41,8 @@ LINK32=link.exe
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
-# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
-# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o NUL /win32
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
 # ADD RSC /l 0x409 /fo"./ACE_Init_Test.res" /d "_DEBUG" /d "_AFXDLL"
 BSC32=bscmake.exe
@@ -79,12 +51,9 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib /nologo /subsystem:windows /pdb:"./ACE_Init_Test.pdb" /debug /machine:I386 /out:"./ACE_Init_Test.exe" /pdbtype:sept /libpath:"..\ace"
-
-!ENDIF 
-
+# SUBTRACT LINK32 /pdb:none
 # Begin Target
 
-# Name "ACE_Init_Test - Win32 Release"
 # Name "ACE_Init_Test - Win32 Debug"
 # Begin Group "Source Files"
 
@@ -96,13 +65,6 @@ SOURCE=.\ACE_Init_Test.cpp
 # Begin Source File
 
 SOURCE=.\ACE_Init_Test.rc
-
-!IF  "$(CFG)" == "ACE_Init_Test - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE_Init_Test - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
