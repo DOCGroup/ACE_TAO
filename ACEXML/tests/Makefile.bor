@@ -29,4 +29,4 @@ install:
 	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor install
 
 regenerate:
-	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse
+	/usr/bin/perl /build/kitty/ACE_wrappers/bin/mwc.pl -type borland ACEXML.mwc

@@ -66,27 +66,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Svcconf EXE"=examples\svcconf\Svcconf.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACEXML_XML_Svc_Conf_Parser DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ACEXML_Parser DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ACEXML DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Transcoder_Test EXE"=tests\Transcoder_Test.dsp - Package Owner=<4>
 
 Package=<5>
