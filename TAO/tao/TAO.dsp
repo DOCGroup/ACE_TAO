@@ -1867,6 +1867,25 @@ SOURCE=.\Object_Proxy_Impl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Ref_Table.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\ObjectIDList.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3639,6 +3658,10 @@ SOURCE=.\Object_Proxy_Broker.h
 # Begin Source File
 
 SOURCE=.\Object_Proxy_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Ref_Table.h
 # End Source File
 # Begin Source File
 
