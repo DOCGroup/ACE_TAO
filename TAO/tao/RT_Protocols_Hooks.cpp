@@ -114,18 +114,18 @@ TAO_RT_Protocols_Hooks::validate_policy_type (CORBA::ULong type,
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    type_value = 0;
-
-  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
     type_value = 1;
 
-  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+  if (type == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE)
     type_value = 2;
 
-  if (type == RTCORBA::THREADPOOL_POLICY_TYPE
-      || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
+  if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
+    type_value = 3;
+
+  if ((type == RTCORBA::THREADPOOL_POLICY_TYPE)
+      || (type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE))
     {
-      type_value = 3;
+      type_value = 4;
       ACE_THROW (CORBA::INV_POLICY ());
     }
 }

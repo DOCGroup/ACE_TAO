@@ -439,13 +439,13 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
 
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
-  if (type_value == 0)
+  if (type_value == 1)
     return this->exposed_priority_model ();
 
-  if (type_value == 1)
+  if (type_value == 2)
     return this->effective_priority_banded_connection (ACE_TRY_ENV);
 
-  if (type_value == 2)
+  if (type_value == 3)
     return this->effective_client_protocol (ACE_TRY_ENV);
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -575,8 +575,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
       this->orb_core_->get_protocols_hooks ()->validate_policy_type (slot,
                                                                      type_value,
                                                                      ACE_TRY_ENV);
-      if (type_value == 0 || type_value == 3)
+      //ACE_CHECK;
+      
+      if (type_value == 1 || type_value == 4)
         ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
+      
     }
 
   // We are not required to check for consistency of <policies> with
