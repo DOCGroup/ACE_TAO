@@ -1,3 +1,10 @@
+Tue Jan 20 20:31:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/test_config.h: 
+	  Changed several buffer sizes from BUFSIZ to MAXPATHLEN, they
+	  were used for storing pathnames, so the later is a proper size
+	  for them.
+
 Tue Jan 20 15:54:44 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Heap_T.cpp: Fixed a bug that was introduced on 

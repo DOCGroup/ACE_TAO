@@ -120,7 +120,7 @@ typedef size_t KEY;
   // This is the only way I could figure out to avoid an error
   // about attempting to unlink a non-existant file.
 #define ACE_INIT_LOG(NAME) \
-  char temp[BUFSIZ]; \
+  char temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
                    ACE_LOG_DIRECTORY_A, \
                    ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
@@ -135,7 +135,7 @@ typedef size_t KEY;
     }
 #else /* ! VXWORKS */
 #define ACE_INIT_LOG(NAME) \
-  char temp[BUFSIZ]; \
+  char temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, "%s%s%s", \
                    ACE_LOG_DIRECTORY_A, \
                    ACE::basename (NAME, ACE_DIRECTORY_SEPARATOR_CHAR_A), \
@@ -182,7 +182,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
 int
 ACE_Test_Output::set_output (const char *filename, int append)
 {
-  char temp[BUFSIZ];
+  char temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
 
   char *test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
