@@ -1,3 +1,8 @@
+Wed Jan 14 20:32:47 1998    <coryan@MILONGA>
+
+	* tao/sequence_T.h: 
+	  Fixed typo in base class for ACE_Bounded_Managed_Sequence.
+
 Wed Jan 14 17:54:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_sequence.h: 
