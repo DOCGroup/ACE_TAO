@@ -1,16 +1,23 @@
 ##  Process this file with automake to create Makefile.in
+##
+## $Id$
+##
 
-ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
-TAO_ROOT = $(top_srcdir)
+ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
+TAO_ROOT = $(top_srcdir)
 
-## Makefile.Fault_Notifier.am 
+bin_PROGRAMS =
+
+## Makefile.Fault_Notifier.am
 
 if BUILD_ACE_UUID
+if BUILD_CORBA_MESSAGING
+if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-bin_PROGRAMS = Fault_Notifier
+bin_PROGRAMS += Fault_Notifier
 
 Fault_Notifier_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -32,8 +39,7 @@ Fault_Notifier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
@@ -50,10 +56,14 @@ Fault_Notifier_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
