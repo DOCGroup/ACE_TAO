@@ -1,3 +1,26 @@
+Wed Oct 29 07:03:12 2003  UTC Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Added a rule so that files with extension .rc are compiled with
+          COMPILE.rc which is then the RC. By setting then RC to the
+          resource compiler in the specific GNU file resource files are
+          compiled.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added COMPILE.rc rule that uses the new RC to make it easy to set the
+          resource compiler needed.
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Set RC to windres. Cygwin and MinGW have a resource compiler and then
+          put version info into the DLL.
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Generate the resource files into the makefile and when RC is set add
+          those files to FILES so that the resource files are compiled.
+
+          Thanks to Andrew L. Shwaika <als@solvo.ru> for pointing us at the
+          possibility to use a resource compiler with MinGW.
+
 Tue Oct 28 17:07:19 2003  Steve Huston  <shuston@riverace.com>
 
 	* Makefile.am: Added definition of ACLOCAL so autoconf stuff gets

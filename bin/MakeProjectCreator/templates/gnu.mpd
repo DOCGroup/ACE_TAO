@@ -65,6 +65,13 @@ FILES = \
 <%endfor%>
 
 <%endif%>
+<%if(resource_files)%>
+RESOURCES += \
+<%foreach(resource_files)%>
+  <%resource_file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
 <%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -243,6 +250,10 @@ endif
 OBJS   = $(addsuffix .o, <%notdirfiles%>)
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
+ifneq (,$(RC))
+  FILES += $(RESOURCES)
+endif
+
 <%if(sharedname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
 <%endif%>
