@@ -295,12 +295,44 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
       else
         local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
                                                  local_sap.get_addr ());
-      if (local_inet_addr.sin_port == 0)
-        {
-          if (ACE::bind_port (this->get_handle ()) == -1)
-            error = 1;
-        }
-      else
+
+//  A port number of 0 means that the user is requesting that the
+//  operating system choose an arbitrary, unused port.  Since some
+//  operating systems don't provide this service, ACE provides an
+//  emulation layer.  Therefore, the "ACE way" to bind an arbitrary,
+//  unused port is to call ACE:bind_port, which either 
+//
+//    (1)  Calls ACE_OS::bind with port 0, if the operating system
+//         directly supports the automated selection, or
+//  
+//    (2)  Performs more complicated logic to emulate this feature if
+//         it's missing from the OS.
+//
+//  The emulation logic in choice (2) is compiled if and only if
+//  ACE_LACKS_WILDCARD_BIND is defined at compile time.
+//
+//  Along these lines, the following block of code seems like it would
+//  be sufficient to support the wildcard bind operation:
+//
+//      if (local_inet_addr.sin_port == 0)
+//         {
+//           if (ACE::bind_port (this->get_handle (), 
+//               ACE_NTOHL (ACE_UINT32 (local_inet_addr.sin_addr.s_addr))) == -1)
+//             error = 1;
+//
+//         }
+//      else
+//
+//  Unfortunately, this code is insufficient because it does not
+//  address the possibility of secondary addresses.
+//
+//  However, rather than writing the correct code now, I'm putting it
+//  off, because this class, ACE_SOCK_SEQPACK_Acceptor, is currently
+//  only used with SCTP, and ACE currently supports SCTP only through
+//  the OpenSS7 and LKSCTP implmentations, which are available only on
+//  Linux.  Linux has native support for the wildcard bind, so the
+//  following code works regardless of whether or not the port is 0.
+
         {
           // The total number of addresses is the number of secondary
           // addresses plus one.
