@@ -22,6 +22,9 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
 int
 Trading_Shutdown::handle_signal (int signum, siginfo_t* sinfo, ucontext_t* ucon)
 {
+  ACE_UNUSED_ARG (signum);
+  ACE_UNUSED_ARG (sinfo);
+  ACE_UNUSED_ARG (ucon);
   this->trader_.~Trading_Service ();
   exit (0);
   return 0;

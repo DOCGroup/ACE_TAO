@@ -13,7 +13,7 @@ TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
   TAO_CHECK_ENV_RETURN_VOID (_env);
       
   // Narrow the Service Type Repository.
-  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
+  this->repos_ = CosTradingRepos::ServiceTypeRepository::_narrow (obj.in (), _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Build the service type descriptions.
@@ -121,7 +121,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (CORBA::Environment& _env)
           TAO_CHECK_ENV;
 
           CosTrading::Lookup_ptr remote_lookup =
-            CosTrading::Lookup::_narrow (obj, TAO_TRY_ENV);
+            CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           remote_repos = remote_lookup->type_repos (TAO_TRY_ENV);
