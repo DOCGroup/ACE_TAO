@@ -20,8 +20,8 @@ print STDERR "\n\n==== InitRef test\n";
 
 unlink $file;
 $SV = Process::Create ($EXEPREFIX."INS_test_server".$EXE_EXT,
-                       "-ORBEndpoint iiop://$TARGETHOSTNAME:$port "
-                       . " -i object_name -o $file");
+                       "-ORBEndpoint iiop://1.0@"."$TARGETHOSTNAME:$port "
+                       . " -i object_name -o $file -ORBDottedDecimalAddresses 1");
 
 if (ACE::waitforfile_timed ($file, 5) == -1) {
   print STDERR "ERROR: cannot find file <$file>\n";
@@ -32,7 +32,7 @@ if (ACE::waitforfile_timed ($file, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        ."-ORBInitRef random_service="
-                       ."corbaloc:iiop:$TARGETHOSTNAME:$port/object_name");
+                       ."corbaloc::1.1@"."$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -48,7 +48,7 @@ print STDERR "\n\n==== InvalidName test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " not_a_service "
                        ."-ORBInitRef random_service="
-                       ."corbaloc:iiop:$TARGETHOSTNAME:$port/object_name");
+                       ."corbaloc:iiop:1.0@"."$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -64,7 +64,7 @@ print STDERR "\n\n==== DefaultInitRef test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef"
-                       ." corbaloc:iiop:$TARGETHOSTNAME:$port/");
+                       ." corbaloc:iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -84,9 +84,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        . "-ORBInitRef random_service="
                        ."corbaloc:"
-                       ."iiop:$TARGETHOSTNAME:$port1,"
-                       ."iiop:$TARGETHOSTNAME:$port2,"
-                       ."iiop:$TARGETHOSTNAME:$port"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       .":1.0@"."$TARGETHOSTNAME:$port2,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port"
                        ."/object_name");
 
 $client = $CL->TimedWait (60);
@@ -109,9 +109,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        . " -l "
                        . "-ORBInitRef random_service="
                        . "corbaloc:"
-                       . "iiop:$TARGETHOSTNAME:$port1,"
-                       . "iiop:$TARGETHOSTNAME:$port2,"
-                       . "iiop:$TARGETHOSTNAME:$port"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port2,"
+                       . "iiop:1.0@"."$TARGETHOSTNAME:$port"
                        . "/object_name");
 
 $client = $CL->TimedWait (60);
@@ -129,9 +129,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."corbaloc:"
-                       ."iiop:$TARGETHOSTNAME:$port1,"
-                       ."iiop:$TARGETHOSTNAME:$port2,"
-                       ."iiop:$TARGETHOSTNAME:$port/");
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port1,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port2,"
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -148,7 +148,7 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."corbaloc:"
-                       ."iiop:$TARGETHOSTNAME:$port/");
+                       ."iiop:1.0@"."$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

@@ -173,7 +173,6 @@ TAO_Connector::make_mprofile (const char *string,
           this->make_profile (endpoint.c_str (),
                               profile,
                               ACE_TRY_ENV);
-
           ACE_CHECK_RETURN (-1);
           // Failure:  Problem during profile creation
 
@@ -182,6 +181,8 @@ TAO_Connector::make_mprofile (const char *string,
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)
             {
+              profile->_decr_refcnt ();
+
               ACE_THROW_RETURN (CORBA::INV_OBJREF (
                                   CORBA_SystemException::_tao_minor_code (
                                      TAO_MPROFILE_CREATION_ERROR,
