@@ -79,7 +79,9 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
   ACE_OS::fprintf (output_file, "%s\n",out_msg);
 
   // Calc the mean.
-  for (size_t i = 0; i != this->samples_count_; ++i)
+  size_t i = 0;
+
+  for (i = 0; i != this->samples_count_; ++i)
     {
       ACE_UINT32 val_2 = Task_Stats::diff_usec (time_inv_[i], time_exec_[i]);
 
@@ -94,7 +96,8 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
   this->mean_ /= this->samples_count_;
 
   // Calculate the var^2
-  for (size_t i = 0; i != this->samples_count_; ++i)
+
+  for (i = 0; i != this->samples_count_; ++i)
     {
       ACE_UINT64 diff = this->time_exec_[i] - this->mean_;
 
@@ -121,7 +124,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
   // dump the samples recorded.
   ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
 
-  for (size_t i = 0; i != this->samples_count_; ++i)
+  for (i = 0; i != this->samples_count_; ++i)
     {
       ACE_UINT32 val_1 = Task_Stats::diff_usec (base_time_, time_inv_[i]);
 
