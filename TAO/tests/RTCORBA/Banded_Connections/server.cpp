@@ -397,6 +397,8 @@ main (int argc, char *argv[])
 
       // Servant.
       Test_i server_impl (orb.in (), bands);
+      Test_i server_impl2 (orb.in (), bands);
+
 
       // Test 1: Attempt to create a POA with priority bands but
       // without the priority model.  Should get POA::InvalidPolicy
@@ -513,7 +515,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (server_declared_poa.in (), 
                               orb.in (), 
-                              &server_impl,
+                              &server_impl2,
                               ior_output_file2, 
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
