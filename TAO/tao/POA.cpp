@@ -3648,6 +3648,13 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
      request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
      priority_model_ (TAO_POA_Policies::CLIENT_PROPAGATED),
      server_priority_ (TAO_INVALID_PRIORITY),
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+     server_protocol_ (0),
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
      client_exposed_fixed_policies_ ()
 {
 
@@ -3669,6 +3676,12 @@ TAO_POA_Policies::TAO_POA_Policies (TAO_ORB_Core &orb_core,
         priority_model->server_priority (ACE_TRY_ENV);
       ACE_CHECK;
     }
+
+  TAO_ServerProtocolPolicy *server_protocol =
+    orb_core.server_protocol ();
+
+  if (server_protocol != 0)
+    this->server_protocol (server_protocol);
 
 #else
 
@@ -3697,6 +3710,13 @@ TAO_POA_Policies::~TAO_POA_Policies (void)
         }
       ACE_ENDTRY;
     }
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  this->server_protocol (0);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 }
 
 void
@@ -3744,7 +3764,13 @@ TAO_POA_Policies::validity_check (void)
         this->id_assignment_ != PortableServer::SYSTEM_ID)
       return -1;
 
-  int result = this->validate_priority_model ();
+  int result = 0;
+
+  result = this->validate_priority_model ();
+  if (result != 0)
+    return result;
+
+  result = this->validate_server_protocol ();
   if (result != 0)
     return result;
 
@@ -3753,6 +3779,12 @@ TAO_POA_Policies::validity_check (void)
 
 int
 TAO_POA_Policies::validate_priority_model (void)
+{
+  return 0;
+}
+
+int
+TAO_POA_Policies::validate_server_protocol (void)
 {
   return 0;
 }
@@ -3902,10 +3934,54 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
       return;
     }
 
+  RTCORBA::ServerProtocolPolicy_var server_protocol
+    = RTCORBA::ServerProtocolPolicy::_narrow (policy,
+                                             ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (server_protocol.in ()))
+    {
+      TAO_ServerProtocolPolicy *server_protocol_i =
+        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                          server_protocol.in ());
+
+      this->server_protocol (server_protocol_i);
+
+      return;
+    }
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+void
+TAO_POA_Policies::server_protocol (TAO_ServerProtocolPolicy *policy)
+{
+  if (this->server_protocol_)
+    {
+      this->server_protocol_->destroy ();
+      delete this->server_protocol_;
+      this->server_protocol_ = 0;
+    }
+
+  if (policy)
+    {
+      CORBA::Policy *base_copy = policy->copy ();
+
+      RTCORBA::ServerProtocolPolicy_var copy
+        = RTCORBA::ServerProtocolPolicy::_narrow (base_copy);
+
+      this->server_protocol_ =
+        ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                          copy.in ());
+    }
+
+}
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
