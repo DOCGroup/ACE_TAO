@@ -1,3 +1,69 @@
+Thu Apr 24 21:13:51 1997    <irfan@TWOSTEP>
+
+	* ace/Timer_Queue: Decoupled the Timer Queue from
+ 	  ACE_Event_Handler and the callback routines in the handler
+	  (handle_timeout and handle_close). The new Timer Queue is
+ 	  parameterized by the type of data to store and a FUNCTOR on
+ 	  which methods are invoked by the Timer Queue when timeouts and
+ 	  cancellations occur.
+
+	  No changes occured to the algorithms of the different
+ 	  implementations of the Timer Queues (Timer List and Timer
+ 	  Heap). Timer Queues, Timer List, and Timer Heap were all renamed
+ 	  as <class>_T. However, typedef were added such that there is now
+ 	  an ACE_Timer_Queue, ACE_Timer_Heap, and ACE_Timer_List, each
+ 	  being an instantiation of the respective template classes. The
+ 	  instantiation is done with ACE_Event_Handler as the type of data
+ 	  to be stored in Timer Queue and
+ 	  ACE_Event_Handler_Handle_Timeout_Upcall as the FUNCTOR that does
+ 	  the appropriate upcall to ACE_Event_Handler.
+
+	  Due to these typedefs, 99.9% of existing code should not
+	  break. However, the following two will cause problems:
+
+	  (a) Forward declarations of Timer_Queue will not work! This is
+	  because Timer_Queue is now a typedef and not a class.
+
+	  (b) #include "ace/Timer_Queue.h" will not be enough to get the
+	  ACE_Timer_Queue typedef. The new typedefs are in a new file
+	  called Timers.h. This file also has typedefs for ACE_Timer_Heap
+	  and ACE_Timer_List.
+
+	  Currently Proactor is the only class that uses a different
+ 	  instantiation of the Timer Queue class. Proactor's Timer Queue
+ 	  class is instantiated with ACE_Handler as the type of data to be
+ 	  stored in Timer Queue and ACE_Proactor_Handle_Timeout_Upcall as
+ 	  the FUNCTOR that does the appropriate posting to the Proactor's
+	  completion port.
+
+	  The Upcall Strategy is not needed any more cause it is replaced
+	  by the FUNCTORs. Thus this is removed.
+	
+	  Small modifications were made to the following files
+ 	  because of the changes to Timer_Queue.
+
+	  - examples/Reactor/Misc/test_timer_queue.cpp
+	  - examples/Reactor/Proactor/test_timeout.cpp
+	  - tests/Timer_Queue_Test.cpp
+	  - ace/Makefile (both UNIX and Win32)
+	  - ace/Connector.h
+	  - ace/Reactor.h
+	  - ace/ReactorEx.h
+	  - ace/Proactor.h
+
+	* ace/Proactor: Proactor now uses the new timer queues. Proactor's
+ 	  Timer Queue class is instantiated with ACE_Handler as the type
+ 	  of data to be stored in Timer Queue and
+ 	  ACE_Proactor_Handle_Timeout_Upcall as the FUNCTOR that does the
+ 	  appropriate posting to the Proactor's completion port. This will
+ 	  help reduce the overhead of creating new act for each
+ 	  timer. This also enables the cancellation of entire
+ 	  ACE_Handlers.
+
+	* examples/Reactor/Misc: Added Win32 makefiles.
+
+	* ace/Shared_Memory_MM.i: Fixed typo.
+
 Fri Apr 25 00:11:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/FILE_IO.h: Removed a trailing default initializer from the
