@@ -1,3 +1,8 @@
+Thu Apr 30 15:35:45 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/tests/Cubit/TAO/MT_Cubit/Task_Client.*,Util_Thread.*,
+          client.cpp,server.cpp: adapted to work on VxWorks.
+
 Thu Apr 30 14:26:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.17 released.
@@ -15,67 +20,67 @@ Thu Apr 30 10:06:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Apr 29 14:06:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/{Object, POAC, POAS, PolicyC, PolicyS}.cpp: Moved all the
-	static Param_Data and Call_Data tables from the outer global scope
-	to the scope of the respective stubs and skeletons. This was
-	necessary since the ORB-owned typecodes are now dynamically
-	allocated. Thus, if the tables remain in the global scope, the
-	values for typecodes get initialized to NUL. Thanks to Naga,
-	Sergio, and Sumedh who were trying in vain to understand why
-	things were failing.
+        * tao/{Object, POAC, POAS, PolicyC, PolicyS}.cpp: Moved all the
+        static Param_Data and Call_Data tables from the outer global scope
+        to the scope of the respective stubs and skeletons. This was
+        necessary since the ORB-owned typecodes are now dynamically
+        allocated. Thus, if the tables remain in the global scope, the
+        values for typecodes get initialized to NUL. Thanks to Naga,
+        Sergio, and Sumedh who were trying in vain to understand why
+        things were failing.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: Moved the code generation
-	of static Param_Data tables for the _is_a_skel from the outer
-	global scope to inside the skeleton for _is_a_skel.
+        * TAO_IDL/be/be_visitor_interface.cpp: Moved the code generation
+        of static Param_Data tables for the _is_a_skel from the outer
+        global scope to inside the skeleton for _is_a_skel.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: On line 119 to the call
-	to _narrow, we were passing the Object_var. g++ did not like
-	it. Hence we take the in () of the var object and pass it to
-	_narrow.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp: On line 119 to the call
+        to _narrow, we were passing the Object_var. g++ did not like
+        it. Hence we take the in () of the var object and pass it to
+        _narrow.
 
-	* tao/skip.cpp: In Sequence::skip, we did not have a return
-	TRAVERSE_CONTINUE statement after successfull skipping. Hence we
-	always returned an exception. The same iwas true with Array::skip.
-	Thanks to Alex (alex@cs.wustl.edu) for reporting this bug.
+        * tao/skip.cpp: In Sequence::skip, we did not have a return
+        TRAVERSE_CONTINUE statement after successfull skipping. Hence we
+        always returned an exception. The same iwas true with Array::skip.
+        Thanks to Alex (alex@cs.wustl.edu) for reporting this bug.
 
 Wed Apr 29 12:26:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/Makefile:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h:
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h:
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	  Added two precomputed schedules that are selected when the
-	  argument to -s is either RUNTIME1 or RUNTIME2, but it is still
-	  possible to have a global scheduler (-g) or to compute new
-	  schedules (-s <anyname>).
-	  The amount of work performed in the high priority threads can be
-	  controlled using the -w option.
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Added two precomputed schedules that are selected when the
+          argument to -s is either RUNTIME1 or RUNTIME2, but it is still
+          possible to have a global scheduler (-g) or to compute new
+          schedules (-s <anyname>).
+          The amount of work performed in the high priority threads can be
+          controlled using the -w option.
 
-	* orbsvcs/tests/EC_Multiple/latency.pl:
-	* orbsvcs/tests/EC_Multiple/run_utilization:
-	* orbsvcs/tests/EC_Multiple/run_overhead:
-	* orbsvcs/tests/EC_Multiple/run_latency:
-	* orbsvcs/tests/EC_Multiple/gen_utilization:
-	* orbsvcs/tests/EC_Multiple/gen_overhead:
-	* orbsvcs/tests/EC_Multiple/gen_latency:
-	  This scripts execute the test with different configurations
-	  designed to measure latency, overhead, utilization, etc.
-	  The run_* scripts execute the test, the gen_* scripts filter the
-	  results and generate Encapsulated PostScript and JPEG files with
-	  the results.
-	  I've tried to make the file naming conventions consistent so its
-	  easier to add new scripts or tests.
+        * orbsvcs/tests/EC_Multiple/latency.pl:
+        * orbsvcs/tests/EC_Multiple/run_utilization:
+        * orbsvcs/tests/EC_Multiple/run_overhead:
+        * orbsvcs/tests/EC_Multiple/run_latency:
+        * orbsvcs/tests/EC_Multiple/gen_utilization:
+        * orbsvcs/tests/EC_Multiple/gen_overhead:
+        * orbsvcs/tests/EC_Multiple/gen_latency:
+          This scripts execute the test with different configurations
+          designed to measure latency, overhead, utilization, etc.
+          The run_* scripts execute the test, the gen_* scripts filter the
+          results and generate Encapsulated PostScript and JPEG files with
+          the results.
+          I've tried to make the file naming conventions consistent so its
+          easier to add new scripts or tests.
 
-	* orbsvcs/Naming_Service/Naming_Service.h:
-	* orbsvcs/Naming_Service/Naming_Service.cpp:
-	  Added an option (-p) to dump the process ID into a file, this is
-	  useful when running the service from a script that has to shut
-	  it down.
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Added an option (-p) to dump the process ID into a file, this is
+          useful when running the service from a script that has to shut
+          it down.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-	  Fixed some memory managment problems, but the whole class has to
-	  be revised to be more compliant.
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+          Fixed some memory managment problems, but the whole class has to
+          be revised to be more compliant.
 
 Wed Apr 29 07:08:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
