@@ -257,7 +257,7 @@ worker (void *c)
         ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("(%P|%t) Warning: Number created (%d) != number deleted (%d)\n"),
           Errno::created (),
-          Errno::created ()
+          Errno::deleted ()
           ));
       }
 
