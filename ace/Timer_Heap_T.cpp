@@ -135,13 +135,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
   // Create the heap array.
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS)
     ACE_NEW (this->heap_,
              ACE_Timer_Node_T<TYPE> *[ACE_DEFAULT_TIMERS]);
 #else
     ACE_NEW (this->heap_,
              ACE_Timer_Node_T<TYPE> *[this->max_size_]);
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS) */
 
   // Create the parallel array.
   ACE_NEW (this->timer_ids_,
@@ -421,13 +421,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   ACE_Timer_Node_T<TYPE> **new_heap = 0;
 
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS)
   ACE_NEW (new_heap,
            ACE_Timer_Node_T<TYPE> *[1024]);
 #else
   ACE_NEW (new_heap,
            ACE_Timer_Node_T<TYPE> *[new_size]);
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS) */
   ACE_OS::memcpy (new_heap,
                   this->heap_,
                   max_size_ * sizeof *new_heap);
@@ -457,13 +457,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
     {
       // Create a new array with max_size elements to link in to
       // existing list.
-#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS)
       ACE_NEW (this->preallocated_nodes_,
                ACE_Timer_Node_T<TYPE>[88]);
 #else
       ACE_NEW (this->preallocated_nodes_,
                ACE_Timer_Node_T<TYPE>[this->max_size_]);
-#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) && defined (_WINDOWS) */
 
       // Add it to the set for later deletion
       this->preallocated_node_set_.insert (this->preallocated_nodes_);
