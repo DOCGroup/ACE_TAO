@@ -22,7 +22,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   // Not handling signals. the shutdown code and event handler is maintained in case we want to address this in the future.
 
-
   ACE_TRY_NEW_ENV
     {
       if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
@@ -40,7 +39,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (1);
 
   return 0;
 }
