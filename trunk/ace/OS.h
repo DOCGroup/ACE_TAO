@@ -35,16 +35,6 @@
 #define ACE_NESTED_CLASS(TYPE, NAME) TYPE::##NAME
 #endif /* ACE_WIN32 */
 
-// Easy way to designate that a class is used as a pseudo-namespace.
-// Insures that g++ "friendship" anamolies are properly handled.
-#define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
-private:\
-CLASSNAME (void);\
-CLASSNAME (const CLASSNAME&);\
-~CLASSNAME (void);\
-class dewarn_gplusplus;\
-friend dewarn_gplusplus
-
 // Define some helpful macros.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
 #define ACE_ONE_SECOND_IN_USECS 1000000L
@@ -401,6 +391,15 @@ private:
 #else
 # define ACE_UNIMPLEMENTED_FUNC(f) f;
 #endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
+
+// Easy way to designate that a class is used as a pseudo-namespace.
+// Insures that g++ "friendship" anamolies are properly handled.
+#define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
+private: \
+ACE_UNIMPLEMENTED_FUNC (CLASSNAME (void)) \
+ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)); \
+class ace_dewarn_gplusplus; \
+friend ace_dewarn_gplusplus
 
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
