@@ -1,3 +1,9 @@
+Fri Jun 09 11:31:24 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (close_singletons): Applied Tom
+	  Arbuckle's <arbuckle@uran.informatik.uni-bonn.de> patch so the
+	  Process_Manager singleton is closed before Reactor singleton.
+
 Fri Jun  9 09:28:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux_kcc.GNU:
