@@ -1,3 +1,9 @@
+Thu Jun 14 16:31:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tao/Policy_Set.i (compatible_scope):
+
+	  SUNCC42 doesn't like static_cast. Remove it altogether.
+
 Thu Jun 14 14:33:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/corbafwd.h:
@@ -12,8 +18,8 @@ Thu Jun 14 14:33:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Jun 14 14:18:34 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Makefile: 
-	* tao/RTCORBA/Makefile: 
+	* tao/Makefile:
+	* tao/RTCORBA/Makefile:
 	* tao/RTPortableServer/Makefile:
 	  Added guard to avoid building the RTCORBA related libraries when
 	  CORBA	Messaging is not enabled.
@@ -23,7 +29,7 @@ Thu Jun 14 13:43:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
 
           Removed a '>' left over from the time before TAO_Object_Field<>
-          was eliminated. It was overlooked for so long because it 
+          was eliminated. It was overlooked for so long because it
           turns up in generated code only when a valuetype has an
           interface member. Thanks to Srikanth Vedire <srvedire@yahoo.com>
           for reporting the problem.
@@ -31,7 +37,7 @@ Thu Jun 14 13:43:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Thu Jun 14 13:36:43 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy_Set.i:
-          
+
           Added const specifier to fix warnings on Sun CC42.
 
 Thu Jun 14 13:11:37 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
