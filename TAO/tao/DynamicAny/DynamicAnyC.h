@@ -23,7 +23,7 @@
 #define _TAO_IDL_ORIG_DYNAMICANYC_H_
 
 #if !defined(TAO_DYNAMICANY_SAFE_INCLUDE) && \
-    !defined(TAO_INSTANTIATING_TEMPLATES)
+    !defined(ACE_VACPP_INSTANTIATING_TEMPLATES)
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
 #endif /* !TAO_DYNAMICANY_SAFE_INCLUDE */
 
