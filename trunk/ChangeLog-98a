@@ -1,5 +1,7 @@
 Sun Mar 01 10:59:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Asynch_IO.cpp (cancel): Changed CancelIO to CancelIo.
+
 	* ace/Synch.h (ACE_Lock): Added a virtual destructor to ACE_Lock.
 
 Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>

@@ -132,7 +132,7 @@ ACE_Asynch_Operation::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
-  return -1; // ::CancelIO (this->handle_);
+  return (int) ::CancelIo (this->handle_);
 }
 
 // ************************************************************
