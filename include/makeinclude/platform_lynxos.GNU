@@ -1,4 +1,4 @@
-# platform_lynxos.GNU,v 4.40 2005/01/23 01:30:32 mbrudka Exp
+# $Id$
 #
 # LynxOS with g++.  Defaults to LynxOS Version 3.0.0.  For Version 3.1.0,
 # for example, add "VERSION=3.1.0" to your make invocation.
