@@ -246,8 +246,10 @@ Test_Any::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
 
-  *req->arguments ()->item (2, env)->value () >>= *this->out_;
-  *req->result ()->value () >>= *this->ret_;
+  CORBA::Any_ptr out = this->out_;
+  CORBA::Any_ptr ret = this->out_;
+  *req->arguments ()->item (2, env)->value () >>= *out;
+  *req->result ()->value () >>= *ret;
 
   return this->check_validity ();
 }

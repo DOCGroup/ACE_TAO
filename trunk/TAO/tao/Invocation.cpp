@@ -259,7 +259,11 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
   static CORBA::Principal_ptr anybody = 0;
-  static TAO_GIOP_ServiceContextList svc_ctx;   // all zeroes
+
+  // This static is only used to write into the CDR stream, once we
+  // have real service context (needed for the messaging spec) this
+  // will have to be a parameter.
+  static TAO_GIOP_ServiceContextList svc_ctx;
 
   switch (message_type)
     {

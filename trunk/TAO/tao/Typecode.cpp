@@ -537,8 +537,6 @@ CORBA_TypeCode::_decr_refcnt (void)
     if (this->refcount_ != 0)
       return this->refcount_;
   }
-  // @@ TODO This is an intentional memory leak to discover other
-  // problems..
   delete this;
   return 0;
 }

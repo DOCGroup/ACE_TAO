@@ -1,3 +1,30 @@
+Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Exception.i: 
+	* tao/Exception.cpp: 
+	  ExceptionList was not releasing the TypeCodes in its destructor,
+	  this produced a memory leak at shutdown, because there is a list
+	  with the standard exceptions typecodes.
+	  A similar problem ocurred with the CORBA::_tc_* exceptions.
+
+	* tao/Object_Table.h: 
+	* tao/Object_Table.cpp: 
+	  Removed static object, now it is a member of the class.
+
+	* tao/Typecode.cpp: 
+	  Removed outdated comments.
+
+	* tests/Param_Test/svc.conf: 
+	  Removed obsolete comments, the web page describes the options in
+	  more detail.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Fixed delete of (void*). Thanks to John Mulhern
+	  <9107@mn3.lawson.lawson.com> for reporting this.
+
+	* tests/Param_Test/any.cpp: 
+	  Fixed ambiguous call to >>= also reported by John Mulhern
+
 Fri Jul 24 17:00:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (open_queue):

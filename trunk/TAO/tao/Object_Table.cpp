@@ -325,8 +325,8 @@ TAO_Dynamic_Hash_ObjTable_Iterator::clone (void) const
 const TAO_Object_Table_Entry&
 TAO_Dynamic_Hash_ObjTable_Iterator::item (void) const
 {
-  static TAO_Object_Table_Entry entry;
-
+  TAO_Object_Table_Entry& entry = 
+    ACE_const_cast(TAO_Object_Table_Entry&, this->entry_);
   ACE_Hash_Map_Entry<PortableServer::ObjectId,PortableServer::Servant>* tmp;
   if (ACE_const_cast(TAO_Dynamic_Hash_ObjTable_Iterator*,this)->impl_.next (tmp) == 1)
     {

@@ -275,6 +275,7 @@ public:
 
 private:
   Impl impl_;
+  TAO_Object_Table_Entry entry_;
 };
 
 /****************************************************************/

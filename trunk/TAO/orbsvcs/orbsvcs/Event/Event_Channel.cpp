@@ -188,7 +188,7 @@ public:
     { return ::new char[sizeof (Shutdown_Consumer)]; }
 
   void operator delete (void *buf)
-    { ::delete [] buf; }
+    { ::delete [] ACE_static_cast(char*,buf); }
 
   // The module that we report to.
   ACE_ES_Consumer_Module *consumer_module_;
@@ -216,7 +216,7 @@ public:
     { return ::new char[sizeof (Shutdown_Channel)]; }
 
   void operator delete (void *buf)
-    { ::delete [] buf; }
+    { ::delete [] ACE_static_cast(char*,buf); }
 
   ACE_EventChannel *channel_;
 };
