@@ -324,6 +324,10 @@ SOURCE=.\PortableGroup\PortableGroup_Request_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup_Simple_DSC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableGroupC.cpp
 
 !IF  "$(CFG)" == "PortableGroup - Win32 Release"
@@ -576,6 +580,10 @@ SOURCE=.\PortableGroup\PortableGroup_ORBInitializer.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\PortableGroup_Request_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DSC.h
 # End Source File
 # Begin Source File
 
@@ -991,6 +999,57 @@ BuildCmds= \
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableGroup_Simple_DS.idl
+
+!IF  "$(CFG)" == "PortableGroup - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\PortableGroup_Simple_DS.idl
+InputName=PortableGroup_Simple_DS
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -Ge 1 -GC -I../.. -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "PortableGroup - Win32 MFC Release"
 
 !ENDIF 
 
