@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:737
+// C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:720
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_CPP_
 #define _TAO_IDL_ORIG_POLICYS_T_CPP_

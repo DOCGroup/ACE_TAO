@@ -53,7 +53,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:290
 
 static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
 {
@@ -358,7 +358,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1633
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -40,7 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "typecodefactory_export.h"
-#include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Typecode.h"
@@ -71,13 +70,13 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:63
 
 namespace TAO
 {
   class Collocation_Proxy_Broker;
-
+  
   template<typename T> class Narrow_Utils;
   template<typename T> class AbstractBase_Narrow_Utils;
 }
@@ -87,22 +86,22 @@ namespace TAO
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_CORBA_TYPECODEFACTORY__VAR_OUT_CH_)
 #define _CORBA_TYPECODEFACTORY__VAR_OUT_CH_
-
+  
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-
+  
   typedef
     TAO_Objref_Var_T<
         TypeCodeFactory
       >
     TypeCodeFactory_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         TypeCodeFactory
@@ -110,43 +109,43 @@ namespace CORBA
     TypeCodeFactory_out;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_TYPECODEFACTORY_CH_)
 #define _CORBA_TYPECODEFACTORY_CH_
-
+  
   class TAO_TypeCodeFactory_Export TypeCodeFactory
     : public virtual CORBA::Object
   {
   public:
     typedef TypeCodeFactory_ptr _ptr_type;
     typedef TypeCodeFactory_var _var_type;
-
+    
     // The static operations.
     static TypeCodeFactory_ptr _duplicate (TypeCodeFactory_ptr obj);
-
+    
     static TypeCodeFactory_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static TypeCodeFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static TypeCodeFactory_ptr _nil (void)
     {
       return (TypeCodeFactory_ptr)0;
     }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::TypeCode_ptr create_struct_tc (
         const char * id,
         const char * name,
@@ -156,10 +155,10 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::TypeCode_ptr create_union_tc (
         const char * id,
         const char * name,
@@ -170,10 +169,10 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::TypeCode_ptr create_enum_tc (
         const char * id,
         const char * name,
@@ -183,10 +182,10 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::TypeCode_ptr create_alias_tc (
         const char * id,
         const char * name,
@@ -196,7 +195,7 @@ namespace CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     

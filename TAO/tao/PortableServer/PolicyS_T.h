@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:553
+// C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:581
 
 #ifndef _TAO_IDL_ORIG_POLICYS_T_H_
 #define _TAO_IDL_ORIG_POLICYS_T_H_
@@ -42,14 +42,14 @@
 
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
+// C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
 namespace POA_CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
+  // C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -89,7 +89,7 @@ namespace POA_CORBA
       );
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    // C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     CORBA::PolicyType policy_type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -99,7 +99,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    // C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -109,7 +109,7 @@ namespace POA_CORBA
       ));
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
+    // C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_sh.cpp:60
     
     void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -131,7 +131,7 @@ namespace POA_CORBA
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1101
+// C:\ACE\BCB6dd\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1193
 
 #if defined (__ACE_INLINE__)
 #include "PolicyS_T.i"

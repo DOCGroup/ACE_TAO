@@ -29,8 +29,8 @@
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:631
 
-#ifndef _TAO_IDL_IMPLREPOS_CPP_
-#define _TAO_IDL_IMPLREPOS_CPP_
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
+#define _TAO_IDL_ORIG_IMPLREPOS_CPP_
 
 
 #include "ImplRepoS.h"
@@ -44,6 +44,7 @@
 #include "tao/Object_T.h"
 #include "tao/Typecode.h"
 #include "tao/DynamicC.h"
+#include "tao/CDR.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
@@ -6956,7 +6957,7 @@ POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_A
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1685
+// be\be_visitor_root/root.cpp:1680
 
 #if 0 
 /* Useful at a later date.
