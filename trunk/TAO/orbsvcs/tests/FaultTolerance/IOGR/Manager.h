@@ -42,9 +42,9 @@ public:
   Manager (void);
   // Ctor
 
-  int init (int argc,
-            char *argv[],
-            CORBA::Environment & ACE_TRY_ENV);
+  void init (int argc,
+             char *argv[],
+             CORBA::Environment & ACE_TRY_ENV);
 
   // Initialize the ORB, POA etc.
 
