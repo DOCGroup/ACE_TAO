@@ -68,7 +68,8 @@ Service specification</a>. This document has the following layout:
     </ul>
   </li>
   <li><a href="#RunningtheTradingServiceTests">Running the Trading Service Tests</a></li>
-  <li><a href="#KnownBugsandWorkarounds">Known Bugs and Workarounds</a> </li>
+  <li><a href="#KnownBugsandWorkarounds">Known Bugs and Workarounds</a></li>
+  <li><a href="#FutureWork">Future Work</a> </li>
 </ol>
 
 <hr>
@@ -1020,6 +1021,22 @@ file to accomplish this. A real solution to this problem is in the works. </p>
 Trading Service itself doesn't have any memory leaks, the <tt>TypeCodes</tt> it heavily
 relies on do.<br>
 <strong>Workaround: </strong>This problem is currently being addressed.&nbsp; </p>
+
+<hr>
+
+<h1><a name="FutureWork">Future Work</a></h1>
+
+<ul>
+  <li><strong>Persistence</strong> --- Have the Trading Service offer database and service
+    type repository survive the lifetime of a single Trading Service process. This would be
+    accomplished by either taking advantage of the ability to serialize IDL types --- using
+    CDR streams --- or through memory-mapped files, <em>a la </em>the ACE Naming Service.</li>
+</ul>
+
+<ul>
+  <li><strong>The <tt>Proxy</tt> Interface </strong>--- Should we ever feel so motivated, we
+    might implement the <tt>Proxy</tt> interface.&nbsp; </li>
+</ul>
 
 <hr>
 
