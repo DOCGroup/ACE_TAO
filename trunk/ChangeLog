@@ -1,3 +1,16 @@
+Mon Aug  4 09:31:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_dlfcn.h:
+          Added VxWorks includes for shared library functions.
+
+        * ace/OS.i:
+          Implemented access, dlerror and dlopen for VxWorks. There is no
+          reference counting on dlopen, when calling it multiple times on
+          the same shared lib it will load the same lib multiple times,
+          this because VxWorks has no reference counting. Use these with
+          care because of the strange VxWorks implementation. Thanks to
+          Marc Walrave <marc.walrave@meco.nl> for creating this.
+
 Mon Aug  4 23:47:33 2003  <Ossama Othman <ossama@dre.vanderbilt.edu>
 
 	* ace/Array_Base.cpp:
@@ -225,18 +238,18 @@ Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Removed the static log_msg_tss_key_ variable from ACE_Log_Msg
           and added a free function in Log_Msg.cpp with a static local
           variable to hold the same value.  The obviates the need to
-          include OS.h in Log_Msg.h. 
-        
+          include OS.h in Log_Msg.h.
+
 Sun Aug  3 20:55:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RMCast/RMCast_Reassembly_Test.cpp:
 	* tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp: #included ACE.h to
-	  get rid of compile errors in the full reactor build. 
+	  get rid of compile errors in the full reactor build.
 
 Sat Aug  2 17:50:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/WIN32_Asynch_IO.h:
-	  
+
 	  Added #include of ace/Handle_Set.h.
 
 Fri Aug  1 17:23:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -257,7 +270,7 @@ Fri Aug  1 14:55:00 2003  Dan Troesser  <troesser_d@ociweb.com>
 
         * bin/create_ace_build.pl:
 
-          Added -a (absolute) option to correspond with original 
+          Added -a (absolute) option to correspond with original
           create_ace_build script.
 
 Fri Aug  1 14:52:17 2003  Justin Michel  <michel_j@ociweb.com>
@@ -265,7 +278,7 @@ Fri Aug  1 14:52:17 2003  Justin Michel  <michel_j@ociweb.com>
         * bin/MakeProjectCreator/config/acedefaults.mpb:
 
 	  Removed the legacy libpaths. They make the log output too long, and
-	seem to cause a problem with some nightly builds for some 
+	seem to cause a problem with some nightly builds for some
 	unknown reason. We'll just have to be careful not to check in
 	mpc-generated files without editing for reverse compatibility.
 
