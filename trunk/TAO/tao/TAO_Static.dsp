@@ -358,7 +358,15 @@ SOURCE=.\Protocol_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Request.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Mux_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -431,6 +439,10 @@ SOURCE=.\ValueFactory.cpp
 # Begin Source File
 
 SOURCE=.\ValueFactory_Map.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -698,7 +710,15 @@ SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Mux_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -767,6 +787,10 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varout.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_Strategy.h
 # End Source File
 # Begin Source File
 
