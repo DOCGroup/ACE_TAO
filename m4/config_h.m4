@@ -1033,6 +1033,12 @@ AH_TEMPLATE([ACE_LACKS_MALLOC_H],[Platform lacks malloc.h])
 AH_TEMPLATE([ACE_LACKS_MEMORY_H],
 [Platform lacks memory.h (e.g., VxWorks and Chorus)])
 
+AH_TEMPLATE([ACE_LACKS_STDINT_H],
+[Platform lacks stdint.h (e.g., UnixWare)])
+
+AH_TEMPLATE([ACE_LACKS_INTTYPES_H],
+[Platform lacks inittypes.h (e.g. Unixware)])
+
 AH_TEMPLATE([ACE_LACKS_MKFIFO],
 [Platform lacks mkfifo(), e.g. VxWorks, Chorus, pSoS, and WinNT.])
 

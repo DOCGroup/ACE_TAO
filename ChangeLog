@@ -1,3 +1,16 @@
+Wed Jul 30 02:18:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * configure.ac:
+        * m4/config_h.m4:
+          Added macros to check for existence of stdint.h and inttypes.h
+          and define the appropriate ACE_LACKS_* macro is they are
+          missing.
+
+        * ace/os_include/os_pthread.h:
+          Added check for UNIXWARE_7_1 before defining default values for
+          several THR_* macros.  Terletsky Oleg
+          <oleg.terletsky@comverse.com> for supplying these patches.
+
 Tue Jul 29 09:59:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/UUID.cpp:
