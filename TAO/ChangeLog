@@ -1,3 +1,15 @@
+Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.cpp (close_connection_shared):  Make a check for
+	  the return value from the remove_handler_i () call before
+	  calling handle_close (). Thanks to Eric Malenfant
+	  <EMalenfant@interstarinc.com> for suggesting this. 
+
+	  Eric mentions that doesnt show up the BUG 1020  problem. But
+	  local testing here doesnt tell so. I still see some core dumps
+	  with a test, albeit slowly! The patch cannot do any harm and
+	  hence this is checked in.
+
 Thu Sep 26 13:11:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
