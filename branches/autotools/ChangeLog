@@ -1,3 +1,13 @@
+Wed Mar 26 08:00:11 2003  Ossama Othman  <ossama@uci.edu>
+
+	* configure.ac:
+
+	  Added check for the fgetwc() function.
+
+	* m4/config_h.m4 (ACE_LACKS_FGETWC):
+
+	  Added autoheader template for this macro.
+
 Tue Mar 25 08:33:55 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
