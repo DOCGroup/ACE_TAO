@@ -1,3 +1,9 @@
+Tue Aug 25 10:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Added orbsvcs/test/Property/run_test.pl.
+	  The Simple test was moved to Simple/time.
+
 Tue Aug 25 10:45:50 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/Aio_Platform_Test.cpp: Fixed the SunCC errors about

@@ -51,7 +51,7 @@ $MODULE='ACE_wrappers';
       'TAO/tests/Cubit/TAO/DII_Cubit , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
-      'TAO/tests/Simple , run_test.pl',
+      'TAO/tests/Simple/time , run_test.pl',
       'TAO/tests/NestedUpcall/Reactor , run_test.pl',
       'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
       'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
@@ -60,6 +60,7 @@ $MODULE='ACE_wrappers';
       'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
       'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
       'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
+      'TAO/orbsvcs/tests/Property , run_test.pl',
       'TAO/tests/Cubit/TAO/MT_Cubit , run_test.pl' );
 
 # We obtain our revision to report errors.
