@@ -6,6 +6,13 @@
 #include "JAWS/server/HTTP_Helpers.h"
 #include "JAWS/server/IO.h"
 
+/* static */
+//const char *HTTP_Handler::HTTP_HEADER = "Server: JAWS\r\n";
+const char *HTTP_Handler::HTTP_HEADER = "";
+const char *HTTP_Handler::HTTP_TRAILER = "";
+const int HTTP_Handler::HTTP_HEADER_LENGTH  = ACE_OS::strlen (HTTP_Handler::HTTP_HEADER);
+const int HTTP_Handler::HTTP_TRAILER_LENGTH = ACE_OS::strlen (HTTP_Handler::HTTP_TRAILER);
+
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
 			    HTTP_Handler_Factory &factory)
   : io_ (io),
@@ -79,7 +86,11 @@ HTTP_Handler::parse_request (void)
       switch (request_.type ())
 	{
 	case HTTP_Request::GET :
-	  this->io_.transmit_file (request_.filename (), "\r\n\r\n", 2);
+	  this->io_.transmit_file (request_.filename (), 
+				   HTTP_HEADER, 
+				   HTTP_HEADER_LENGTH,
+				   HTTP_TRAILER, 
+				   HTTP_TRAILER_LENGTH);
 	  break;
 
 	case HTTP_Request::PUT :
