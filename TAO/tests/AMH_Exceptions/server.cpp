@@ -165,8 +165,6 @@ ST_AMH_Server::start_orb_and_poa (void)
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      return 0;
     }
   ACE_CATCHANY
     {
@@ -251,4 +249,6 @@ main (int argc, char *argv[])
   amh_server.register_servant (&servant);
 
   amh_server.run_event_loop ();
+
+  return 0;
 }
