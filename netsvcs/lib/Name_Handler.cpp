@@ -381,16 +381,20 @@ ACE_Name_Handler::shared_bind (int rebind)
   int result;
   if (rebind == 0)
     {
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "request for BIND \n"));
+#endif /* 0 */
       result = NAMING_CONTEXT::instance ()->bind (a_name,
                                                   a_value,
                                                   this->name_request_.type ());
     }
   else
     {
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "request for REBIND \n"));
+#endif /* 0 */
       result = NAMING_CONTEXT::instance ()->rebind (a_name,
                                                     a_value,
                                                     this->name_request_.type ());
@@ -407,7 +411,9 @@ int
 ACE_Name_Handler::resolve (void)
 {
   ACE_TRACE ("ACE_Name_Handler::resolve");
+#if 0
   ACE_DEBUG ((LM_DEBUG, "request for RESOLVE \n"));
+#endif /* 0 */
   ACE_WString a_name (this->name_request_.name (),
                       this->name_request_.name_len () / sizeof (ACE_USHORT16));
 
@@ -438,7 +444,9 @@ int
 ACE_Name_Handler::unbind (void)
 {
   ACE_TRACE ("ACE_Name_Handler::unbind");
+#if 0
   ACE_DEBUG ((LM_DEBUG, "request for UNBIND \n"));
+#endif /* 0 */
   ACE_WString a_name (this->name_request_.name (),
                       this->name_request_.name_len () / sizeof (ACE_USHORT16));
 
@@ -554,22 +562,28 @@ ACE_Name_Handler::lists_entries (void)
   // So, the pointer-to-member-function temporary has been removed.
   if (msg_type == ACE_Name_Request::LIST_NAME_ENTRIES)
     {
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_NAME_ENTRIES \n"));
+#endif /* 0 */
       result = NAMING_CONTEXT::instance ()->
         ACE_Naming_Context::list_name_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_VALUE_ENTRIES)
     {
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_VALUE_ENTRIES \n"));
+#endif /* 0 */
       result = NAMING_CONTEXT::instance ()->
         ACE_Naming_Context::list_value_entries (set, pattern);
     }
   else if (msg_type == ACE_Name_Request::LIST_TYPE_ENTRIES)
     {
+#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "request for LIST_TYPE_ENTRIES \n"));
+#endif /* 0 */
       result = NAMING_CONTEXT::instance ()->
         ACE_Naming_Context::list_type_entries (set, pattern);
     }
@@ -621,6 +635,8 @@ ACE_Name_Handler::lists_entries (void)
 ACE_Name_Handler::~ACE_Name_Handler (void)
 {
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
+#if 0
   ACE_DEBUG ((LM_DEBUG, "closing down Handle  %d\n",
               this->get_handle ()));
+#endif /* 0 */
 }
