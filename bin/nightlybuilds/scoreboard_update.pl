@@ -555,8 +555,8 @@ sub update_html ($$)
             my $webfile = "$build/pretty/$build" . "_$time";
             my $newfile = "$dir/$webfile";
 
-            $newfile =~ s/\//\\/g;
-            $log =~ s/\//\\/g;
+            $newfile =~ s/\//\\/g if ($OSNAME eq "MSWin32");
+            $log =~ s/\//\\/g if ($OSNAME eq "MSWin32");
 
             if (!-e $newfile.'.html') {
                 print "        Creating HTML for $time\n";
@@ -579,25 +579,29 @@ sub update_html ($$)
             }
 
             print $indexhtml '<TR><TD>';
-            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">$build</A> ";
+
+            print $indexhtml "<A HREF=\"".$build_web{$build} ."\">" if defined $build_web{$build};
+            print $indexhtml $build;
+            print $indexhtml "</A> " if defined $build_web{$build};
+            
             print $indexhtml '<TD bgcolor=';
             print $indexhtml timestamp_color ($time);
             print $indexhtml '>',decode_timestamp ($time);
             print $indexhtml '<TD bgcolor=';
             print $indexhtml get_color ($newfile.'_Brief.html', 'cvs');
             print $indexhtml '>';
-            print $indexhtml "<A HREF=\"".$webfile.".html#cvs\">[Full]</A> ";
-            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#cvs\">[Brief]</A>";
+            print $indexhtml "[<A HREF=\"".$webfile.".html#cvs\">Full</A>] ";
+            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#cvs\">Brief</A>]";
             print $indexhtml '<TD bgcolor=';
             print $indexhtml get_color ($newfile.'_Brief.html', 'compiler');
             print $indexhtml '>';
-            print $indexhtml "<A HREF=\"".$webfile.".html#compiler\">[Full]</A> ";
-            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#compiler\">[Brief]</A>";
+            print $indexhtml "[<A HREF=\"".$webfile.".html#compiler\">Full</A>] ";
+            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#compiler\">Brief</A>]";
             print $indexhtml '<TD bgcolor=';
             print $indexhtml get_color ($newfile.'_Brief.html', 'tests');
             print $indexhtml '>';
-            print $indexhtml "<A HREF=\"".$webfile.".html#tests\">[Full]</A> ";
-            print $indexhtml "<A HREF=\"".$webfile."_Brief.html#tests\">[Brief]</A>";
+            print $indexhtml "[<A HREF=\"".$webfile.".html#tests\">Full</A>] ";
+            print $indexhtml "[<A HREF=\"".$webfile."_Brief.html#tests\">Brief</A>]";
             print $indexhtml "\n";
 
         }
@@ -648,9 +652,9 @@ sub update_html ($$)
 
 # Getopts
 
-our ($opt_c, $opt_h, $opt_o, $opt_m);
+use vars qw/$opt_c $opt_h $opt_m $opt_o/;
 
-if (!getopts ('c:hm:ro:') || defined $opt_h) {
+if (!getopts ('c:hm:o:') || defined $opt_h) {
     print "scoreboard_update.pl [-c file] [-h] [-o dir] [-m script]\n";
     print "\n";
     print "  input        input directory\n";
