@@ -21,26 +21,6 @@
 // IDL
 #pragma prefix "omg.org"
 
-// IDL
-module CORBA
-{
-  interface Current{};
-
-  // Basic Policy definition
-  typedef unsigned long PolicyType;
-
-  interface Policy
-    {
-      readonly attribute PolicyType policy_type;
-      Policy copy( );
-      void destroy( );
-    };
-
-  typedef sequence <Policy>  PolicyList;
-
-  // ....
-};
-
 module PortableServer
 {
   // forward reference
