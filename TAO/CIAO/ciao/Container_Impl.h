@@ -134,7 +134,7 @@ protected:
     CIAO::Container *container_;
 
     /// Cached ConfigValues.
-    Components::ConfigValues_var config_;
+    Components::ConfigValues config_;
 
     /// Cached Container reference (of ourselves.)
     Components::Deployment::Container_var objref_;
