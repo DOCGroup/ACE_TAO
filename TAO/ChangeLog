@@ -1,3 +1,30 @@
+Wed Nov 19 13:51:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Special_Impl_T.cpp (insert):
+
+	  Eliminated a memory leak (TypeCode copy not released) when inserting a
+	  string into an Any.
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+	  Eliminated memory leaks (ACE_Message_Block copy not released) that
+	  occur when an Any of known type is used to create or assign to a
+	  Dynamic Any. Such Anys do not contain their value encoded in a
+	  CDR stream as Anys of unknown type do. However, all of TAO's
+	  interpretive (de)marshaling code assumes the latter so, if the
+	  Any's type is known, it must be marshaled into a CDR stream
+	  before it can be processed by Dynamic Any code. In taking this
+	  step, we were leaving an extra copy of a message block lying
+	  around. Thanks to Harvinder Sawhney <harvinder_sawhney@agilent.com>
+	  for pointing out the leaks. Also made cosmetic changes to keep
+	  line lengths under 80 characters.
+
 Tue Nov 18 23:17:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Concurrency_Service/Makefile:

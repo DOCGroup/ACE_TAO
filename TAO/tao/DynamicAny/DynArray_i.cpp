@@ -58,6 +58,7 @@ TAO_DynArray_i::init (const CORBA::Any & any
 
   // Get the CDR stream of the argument.
   ACE_Message_Block* mb = any._tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -66,10 +67,16 @@ TAO_DynArray_i::init (const CORBA::Any & any
       TAO_OutputCDR out;
       any.impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
+
+  if (type_known)
+    {
+      mb->release ();
+    }
 
   CORBA::TypeCode_var field_tc =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -124,14 +131,16 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc
 
   this->init_common ();
 
-  CORBA::TypeCode_var elemtype = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var elemtype = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < numfields; ++i)
     {
       // Recursively initialize each element.
-      this->da_members_[i] = TAO_DynAnyFactory::make_dyn_any (elemtype.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
+      this->da_members_[i] = 
+        TAO_DynAnyFactory::make_dyn_any (elemtype.in ()
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -148,7 +157,8 @@ TAO_DynArray_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 
   while (kind != CORBA::tk_array)
     {
-      element_type = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      element_type = 
+        element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -156,7 +166,8 @@ TAO_DynArray_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_ptr retval = 
+    element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return retval;
@@ -261,15 +272,17 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value
     }
 
   CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var element_type = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var element_type = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < length; i++)
     {
       // Check each arg element for type match.
       value_tc = value[i].type ();
-      CORBA::Boolean equivalent = value_tc->equivalent (element_type.in ()
-                                                        ACE_ENV_ARG_PARAMETER);
+      CORBA::Boolean equivalent = 
+        value_tc->equivalent (element_type.in ()
+                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (equivalent)
@@ -351,7 +364,8 @@ TAO_DynArray_i::set_elements_as_dyn_any (
       ACE_THROW (DynamicAny::DynAny::InvalidValue ());
     }
 
-  CORBA::TypeCode_var element_type = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var element_type = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var val_type;
@@ -369,7 +383,8 @@ TAO_DynArray_i::set_elements_as_dyn_any (
 
       if (equivalent)
         {
-          this->da_members_[i] = values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->da_members_[i] = 
+            values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
@@ -396,14 +411,16 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_.in ()->equivalent (tc.in ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
+      bool type_known = false;
 
       if (mb == 0)
         {
@@ -412,10 +429,16 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
           TAO_OutputCDR out;
           any.impl ()->marshal_value (out);
           ACE_CDR::consolidate (mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
+
+      if (type_known)
+        {
+          mb->release ();
+        }
 
       CORBA::ULong length = ACE_static_cast (CORBA::ULong,
                                              this->da_members_.size ());
@@ -428,7 +451,8 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
 
-      CORBA::TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var field_tc = 
+        this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       for (CORBA::ULong i = 0; i < arg_length; ++i)
@@ -476,17 +500,20 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var field_tc = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
   size_t length = this->da_members_.size ();
+  bool type_known = false;
 
   for (size_t i = 0; i < length; ++i)
     {
       // Recursive step.
-      field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      field_any = 
+        this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_Message_Block* field_mb = field_any->_tao_get_cdr ();
@@ -499,10 +526,17 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
           TAO_OutputCDR out;
           field_any->impl ()->marshal_value (out);
           ACE_CDR::consolidate (field_mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
+
+      if (type_known)
+        {
+          field_mb->release ();
+          type_known = false;
+        }
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
                                                  &field_cdr,
