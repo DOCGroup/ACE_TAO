@@ -19,9 +19,12 @@
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
+
+#include "ace/Time_Value.h"
+#include "ace/Vector_T.h"
+
 #include "Supplier.h"
 #include "Service_Handler.h"
-#include "ace/Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -65,8 +68,10 @@ public:
 
   void setWorkTime(ACE_Time_Value& worktime);
 
-  void rt_info(RtecScheduler::handle_t consumer_rt_info);
-  RtecScheduler::handle_t rt_info(void) const;
+  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
+
+  void rt_info(RT_Info_Vector& consumer_rt_info);
+  RT_Info_Vector& rt_info(void);
 
   void handler(Service_Handler * handler);
 
@@ -77,7 +82,8 @@ private:
   ACE_Time_Value worktime_;
 
   Supplier *fwddest_;
-  RtecScheduler::handle_t rt_info_;
+  //RtecScheduler::handle_t rt_info_;
+  RT_Info_Vector rt_info_;
 
   Service_Handler * handler_;
 

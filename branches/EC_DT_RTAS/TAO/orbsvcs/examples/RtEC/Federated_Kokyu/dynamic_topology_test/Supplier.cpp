@@ -34,21 +34,30 @@ Supplier::~Supplier (void)
 }
 
 void
-Supplier::set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
+Supplier::set_consumer_proxy(PushConsumer_Vector consumer_proxies)
 {
-  consumer_proxy_ = RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(consumer_proxy);
+  this->consumer_proxy_.clear();
+
+  for(PushConsumer_Vector::Iterator iter(consumer_proxies);
+      !iter.done(); iter.advance())
+    {
+      PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
+      iter.next(proxy);
+
+      this->consumer_proxy_.push_back(*proxy);
+    }
 }
 
 void
-Supplier::rt_info(const RtecScheduler::handle_t supplier_rt_info)
+Supplier::rt_info(RT_Info_Vector& supplier_rt_info)
 {
-  rt_info_ = supplier_rt_info;
+  this->rt_info_ = supplier_rt_info;
 }
 
-RtecScheduler::handle_t
-Supplier::rt_info(void) const
+Supplier::RT_Info_Vector&
+Supplier::rt_info(void)
 {
-  return rt_info_;
+  return this->rt_info_;
 }
 
 void
@@ -94,7 +103,14 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
-  consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
+  for(PushConsumer_Vector::Iterator iter(this->consumer_proxy_);
+      !iter.done(); iter.advance())
+    {
+      PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
+      iter.next(proxy);
+
+      (*proxy)->push (event ACE_ENV_ARG_PARAMETER);
+    }
   //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);

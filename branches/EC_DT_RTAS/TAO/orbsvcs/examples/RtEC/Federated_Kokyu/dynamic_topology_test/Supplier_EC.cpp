@@ -223,7 +223,7 @@ public:
 
     Mode_Handler *mode_handler;
     ACE_NEW(mode_handler,
-            Mode_Handler(1)); //mode switch after first event
+            Mode_Handler(100)); //mode switch after first event
     Supplier *supplier_impl1_1;
     Timeout_Consumer *timeout_consumer_impl1_1;
     ACE_NEW(supplier_impl1_1,
@@ -232,7 +232,7 @@ public:
     this->handler_ = mode_handler;
     ACE_NEW(timeout_consumer_impl1_1,
             Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(2,200000); //period
+    ACE_Time_Value tv(0,200000); //period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
                               supp1_1_types,
@@ -245,10 +245,10 @@ public:
                               );
     ACE_CHECK;
 
-    RtecEventComm::EventType supp1_2_normal_type1 = ACE_ES_EVENT_UNDEFINED+1;
-    RtecEventComm::EventType supp1_2_normal_type2 = ACE_ES_EVENT_UNDEFINED+2;
-    RtecEventComm::EventType supp1_2_ft_type1 = ACE_ES_EVENT_UNDEFINED+3;
-    RtecEventComm::EventType supp1_2_ft_type2 = ACE_ES_EVENT_UNDEFINED+4;
+    RtecEventComm::EventType supp1_2_normal_type1 = ACE_ES_EVENT_UNDEFINED+2;
+    RtecEventComm::EventType supp1_2_normal_type2 = ACE_ES_EVENT_UNDEFINED+3;
+    RtecEventComm::EventType supp1_2_ft_type1 = ACE_ES_EVENT_UNDEFINED+4;
+    RtecEventComm::EventType supp1_2_ft_type2 = ACE_ES_EVENT_UNDEFINED+5;
     Kokyu_EC::EventType_Vector supp1_2_types(4);
     supp1_2_types.push_back(supp1_2_normal_type1);
     supp1_2_types.push_back(supp1_2_normal_type2);
@@ -256,10 +256,15 @@ public:
     supp1_2_types.push_back(supp1_2_ft_type2);
 
     Supplier *supplier_impl1_2;
+    /*
+    ACE_NEW(supplier_impl1_2,
+            Supplier(2,supp1_2_normal_type1,supp1_2_ft_type1));
+    */
     ACE_NEW(supplier_impl1_2,
             Dynamic_Supplier(2,
                              supp1_2_normal_type1,supp1_2_normal_type2,
                              supp1_2_ft_type1,supp1_2_ft_type2));
+
     Consumer * consumer_impl1_1;
     ACE_NEW(consumer_impl1_1,
             Consumer(supp1_1_normal_type,supp1_1_ft_type,supplier_impl1_2));

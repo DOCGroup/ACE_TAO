@@ -18,6 +18,7 @@
 #define SUPPLIER_H
 
 #include "ace/Event_Handler.h"
+#include "ace/Vector_T.h"
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
@@ -50,6 +51,8 @@ public:
     FAULT_TOLERANT
   };
 
+  typedef ACE_Vector<RtecEventChannelAdmin::ProxyPushConsumer_var> PushConsumer_Vector;
+
   Supplier (RtecEventComm::EventSourceID id, RtecEventComm::EventType norm_type, RtecEventComm::EventType ft_type,
             Service_Handler * handler = 0);
   // Constructor
@@ -64,10 +67,12 @@ public:
 
   virtual void timeout_occured (ACE_ENV_SINGLE_ARG_DECL);
 
-  void set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
+  void set_consumer_proxy(PushConsumer_Vector consumer_proxies);
 
-  void rt_info(RtecScheduler::handle_t supplier_rt_info);
-  RtecScheduler::handle_t rt_info(void) const;
+  typedef ACE_Vector<RtecScheduler::handle_t> RT_Info_Vector;
+
+  void rt_info(RT_Info_Vector& supplier_rt_info);
+  RT_Info_Vector& rt_info(void);
 
   RtecEventComm::EventSourceID get_id(void) const;
 
@@ -81,11 +86,11 @@ protected:
   RtecEventComm::EventType norm_type_;
   RtecEventComm::EventType ft_type_;
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy_;
+  PushConsumer_Vector consumer_proxy_;
 
   mode_t mode_;
 
-  RtecScheduler::handle_t rt_info_;
+  RT_Info_Vector rt_info_;
 
   Service_Handler *handler_;
 }; //class Supplier
