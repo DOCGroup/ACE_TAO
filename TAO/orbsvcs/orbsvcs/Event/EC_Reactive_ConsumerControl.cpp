@@ -92,13 +92,6 @@ int
 TAO_EC_Reactive_ConsumerControl::activate (void)
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-  long id = this->reactor_->schedule_timer (&this->adapter_,
-                                            0,
-                                            this->rate_,
-                                            this->rate_);
-  if (id == -1)
-    return -1;
-
   ACE_TRY_NEW_ENV
     {
       // Get the PolicyCurrent object
@@ -124,6 +117,20 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
                any
                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Only schedule the timer, when the rate is not zero
+      if (this->rate_ != ACE_Time_Value::zero)
+      {
+        // Schedule the timer after these policies has been set, because the
+        // handle_timeout uses these policies, if done in front, the channel
+        // can crash when the timeout expires before initiazation is ready.
+        long id = this->reactor_->schedule_timer (&this->adapter_,
+                                                  0,
+                                                  this->rate_,
+                                                  this->rate_);
+        if (id == -1)
+          return -1;
+      }
     }
   ACE_CATCHANY
     {

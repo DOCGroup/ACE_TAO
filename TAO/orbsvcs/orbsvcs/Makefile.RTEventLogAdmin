@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:Log
 
-ACE_SHLIBS = -lTAO_DsLogAdmin -lTAO_CosEvent -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_RTEvent -lTAO_DsLogAdmin -lTAO_CosEvent -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
