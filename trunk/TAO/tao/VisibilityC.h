@@ -49,13 +49,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined (TAO_EXPORT_NESTED_CLASSES)
-#  if defined (TAO_EXPORT_NESTED_MACRO)
-#    undef TAO_EXPORT_NESTED_MACRO
-#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */
-#  define TAO_EXPORT_NESTED_MACRO TAO_Export
-#endif /* TAO_EXPORT_NESTED_CLASSES */
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -76,6 +69,11 @@ namespace CORBA
   
   typedef CORBA::Short Visibility;
   typedef CORBA::Short_out Visibility_out;
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:44
+  
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr const _tc_Visibility;
   
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
@@ -101,7 +99,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:969
+// be\be_codegen.cpp:958
 
 #if defined (__ACE_INLINE__)
 #include "VisibilityC.inl"
