@@ -1,8 +1,8 @@
-*** Component_BaseC.cpp	Sat Jun 29 22:56:16 2002
---- Component_BaseC.cpp.mod	Sat Jun 29 22:47:10 2002
+*** Component_BaseC.cpp	Sun Jun 30 16:16:30 2002
+--- Component_BaseC.cpp.mod	Sun Jun 30 16:15:32 2002
 ***************
 *** 50826,50849 ****
-
+  
   // accessor to set the member
   void
 ! OBV_Components::ConfigValue::value (CORBA::Any val) // set
@@ -24,10 +24,10 @@
   {
 !   return *this->_pd_value;
   }
-
-  CORBA::Boolean
+  
+  CORBA::Boolean 
 --- 50826,50846 ----
-
+  
   // accessor to set the member
   void
 ! OBV_Components::ConfigValue::value (CORBA::Any &val) // set
@@ -46,5 +46,12 @@
   {
 !   return this->_pd_value;
   }
-
+  
   CORBA::Boolean
+***************
+*** 65403,65406 ****
+    ACE_ENDTRY;
+    return 0;
+  }
+- 
+--- 65400,65402 ----
