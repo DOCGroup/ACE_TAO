@@ -91,9 +91,11 @@ QuoterFactoryFinder_i::find_factories (const CosLifeCycle::Key & factory_key,
   CORBA::Environment env_here;
 
   // fill in the name of the Quoter Factory
-  CosNaming::Name factoryName (1);  // max = 1 
-  factoryName.length(1);
-  factoryName[0].id = CORBA::string_dup ("quoter_factory");
+  // CosNaming::Name factoryName (1);  // max = 1 
+  // factoryName.length(1);
+  // factoryName[0].id = CORBA::string_dup ("quoter_factory");
+  // or
+  CosNaming::Name factoryName = (CosNaming::Name) factory_key;
 
 
   // Try to get a reference to a Quoter Factory

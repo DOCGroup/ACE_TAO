@@ -30,6 +30,21 @@ module Stock
 
     void destroy ();
     // Destroy a Quoter session and release resources.
+
+    // LifeCycleObject copy(in FactoryFinder there, 
+		// 	   in Criteria the_criteria)
+    //     raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
+    // copies this object to a location "there" using the "the_criteria"
+  
+    // void move(in FactoryFinder there, 
+	  //     in Criteria the_criteria)
+    //     raises(NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
+    // moves this object to a location "there" using the "the_criteria"
+   
+    // void remove()
+    //     raises(NotRemovable);
+    // removes/deletes this object
+
   };
   
   interface Quoter_Factory 
