@@ -1,3 +1,71 @@
+Fri Mar 11 12:00:35 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	This checkin is mainly to address a problem with ORB
+        shutdown. The problem shows up when a client ORB with RW strategy
+        is communicating with a misbehaved server. It is possible that the
+	client sent a request to the server and is waiting for
+	replies. The server may not send back a reply at all. Meanwhile
+	the thread waiting for reply continues to wait even if the ORB is
+	shutdown making the process hang. This is simply ill behaviour. 
+	
+        * tao/Thread_Lane_Resources_Manager.h:
+
+	  Added a new pure virtual method cleanup_rw_transports () that
+	  can be overridden in concrete classes. 
+	
+	* tao/ORB_Core.cpp:
+
+	  Call cleanup_rw_transports () during shutdown (). 
+
+	* tao/Default_Thread_Lane_Resources_Manager.cpp:
+        * tao/Default_Thread_Lane_Resources_Manager.h:
+	* tao/RTCORBA/RT_Thread_Lane_Resources_Manager.cpp:
+        * tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h:
+	
+	  Concrete implementations for cleanup_rw_transports (). The
+	  implementation just delegates it concrete lane resources that
+	  are maintained. 
+	
+	* tao/Cache_Entries.cpp:
+	* tao/Cache_Entries.h:
+	* tao/Cache_Entries.inl:
+
+	  Added the code in TAO namespace. Redefined a new state enum
+	  called Cache_Entries_State.
+
+        * tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.inl:
+
+	  Moved the code into a namespace. Used the new new state enums
+	  defined in Cache_Entries.h to do lifecycle management of cache
+	  entries. Added a new method, blockable_client_transports ()
+	  which returns a list of transports that are opened as clients
+	  and are blocked on read/write (which basically boils down to RW
+	  strategy). 
+	
+        * tao/Connection_Handler.h: 
+
+	  Moved release_os_resources () to be public so that they could be
+	  called from Thread_Lane_Manager during shutdown. 
+
+	* tao/Thread_Lane_Resources.cpp:
+	* tao/Thread_Lane_Resources.h:
+
+	  Actual work for cleanup_rw_transports (), which collects all
+	  transports opened as clients and close the socket handles
+	  underneath to wake waiting threads. 
+
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+	* tao/Transport.inl:
+	* tao/Transport_Connector.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+
+	  Changes propogated due to changes in the Transport_Cache_Manager
+	  interface. 
+
+
 Fri Mar 11 08:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
