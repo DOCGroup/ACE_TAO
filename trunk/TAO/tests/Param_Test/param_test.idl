@@ -340,6 +340,25 @@ interface Param_Test
                                           inout Recursive_Struct rs2,
                                           out Recursive_Struct rs3);
 
+  // Recursive unions. We have one recursive union nested in a different
+  // recursive union.
+
+  union nested_rec_union switch (short)
+    {
+      case 0: long value;
+      case 1: sequence<nested_rec_union> nested_rec_member;
+    };
+
+  union Recursive_Union switch (short)
+    {
+      case 0: sequence<Recursive_Union> rec_member;
+      case 1: nested_rec_union nested_member;
+    };
+
+  Recursive_Union test_recursive_union (in Recursive_Union ru1,
+                                        inout Recursive_Union ru2,
+                                        out Recursive_Union ru3);
+
   // multidimensional arrays (fixed). The following will give rise to a 3
   // dimensional array. The following will define a 3-dimensional array of size
   // DIM1 X DIM2 X DIM3

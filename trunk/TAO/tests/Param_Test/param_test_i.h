@@ -299,6 +299,13 @@ public:
                     CORBA::Environment &env)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual Param_Test::Recursive_Union*
+    test_recursive_union (const Param_Test::Recursive_Union& ru1,
+                          Param_Test::Recursive_Union& ru2,
+                          Param_Test::Recursive_Union_out ru3,
+                          CORBA::Environment &env)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::Any*
     test_complex_any (const CORBA::Any &a1,
                       CORBA::Any &a2,

@@ -67,7 +67,7 @@ sub run_test
           "ub_short_sequence", "ub_long_sequence",
           "bd_short_sequence", "bd_long_sequence",
           "fixed_array", "var_array", "typecode", "exception",
-          "big_union", "complex_any");
+          "big_union", "recursive_union", "complex_any");
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {

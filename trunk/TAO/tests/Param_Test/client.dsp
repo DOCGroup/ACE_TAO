@@ -179,6 +179,10 @@ SOURCE=.\recursive_struct.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\recursive_union.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\results.cpp
 # End Source File
 # Begin Source File
@@ -344,6 +348,10 @@ SOURCE=.\Param_TestCli.h
 # Begin Source File
 
 SOURCE=.\recursive_struct.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\recursive_union.h
 # End Source File
 # Begin Source File
 
