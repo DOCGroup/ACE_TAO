@@ -1,9 +1,15 @@
+Wed May 17 20:37:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile.am:
+          Add missing CDR_File_Test_SOURCES and CDR_Array_Test_SOURCES
+          definitions.
+
 Wed May 17 20:25:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
         * ace/config-all.h:
 
-          Needed to move another define from OS.h to config-all 
+          Needed to move another define from OS.h to config-all
           (the ENOSYS to EFAULT define) since Borland doesn't
           have ENOSYS defined.
 
@@ -30,20 +36,20 @@ Wed May 17 20:02:25 2000  Darrell Brunsch <brunsch@uci.edu>
           Ladies and Gentlemen, you are witnessing the beginning of the
           end of ACE_OS as we know it.  That's right, I am taking on the
           bazillion lines of stuff in OS.*, and separating it into bite
-          size pieces.  
+          size pieces.
 
           So this is the first step, kind of a test of concept.  I took
           the dirent methods and separated them out into a separate class
           (in its own files), ACE_OS_Dirent.  So now if one only wishes
           to use the dirent static methods, one only has to include
-          OS_Dirent.h.  
+          OS_Dirent.h.
 
           But what about all the code that thinks it is still in ACE_OS?
           Glad you asked, since ACE_OS now inherits from ACE_OS_Dirent,
           meaning using ACE_OS::opendir () and family still works.
 
           So eventually everything will be moved out, and ACE_OS will
-          just be a shell of a class that inherits from the ACE_OS_* 
+          just be a shell of a class that inherits from the ACE_OS_*
           classes (with maybe an ACE_ONLY_LATEST_AND_GREATEST thrown
           in here and there).
 
