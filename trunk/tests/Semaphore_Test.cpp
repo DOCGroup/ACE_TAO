@@ -9,8 +9,8 @@
 //    Semaphore Test
 //
 // = DESCRIPTION
-//    This test verifies the functionality of the ACE_OS semaphore
-//    implementation.  It is a variation of the Reader/Writer test
+//    This test verifies the functionality of the ACE_Thread_Semaphore
+//    implementation.  It is a variation of the Reader/Writer test.
 //
 // = AUTHOR
 //    Darrell Brunsch
@@ -197,14 +197,14 @@ int main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers, 
-					       ACE_THR_FUNC (reader), 
-					       0, 
-					       THR_NEW_LWP) == -1)
+						ACE_THR_FUNC (reader), 
+						0, 
+						THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers, 
-						    ACE_THR_FUNC (writer), 
-						    0, 
-						    THR_NEW_LWP) == -1)
+						     ACE_THR_FUNC (writer), 
+						     0, 
+						     THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
