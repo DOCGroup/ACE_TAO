@@ -109,6 +109,9 @@ private:
 
   /// A reference to the ORB, to shut it down properly.
   CORBA::ORB_var orb_;
+
+  /// Use BiDirectional GIOP
+  int use_bidir_giop_;
 };
 
 #include /**/ "ace/post.h"
