@@ -1,3 +1,14 @@
+Mon Aug 30 12:11:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Strategies.i:
+	  Once a Recyclable object reaches the ACE_RECYCLABLE_CLOSED state 
+	  its state cannot change. This eliminates a nasty race condition
+	  where one thread detects that the connection is closed (and sets
+	  the state accordingly), but another thread changes the state to
+	  IDLE, based on old information.
+	  Thanks to Mark L Boriack <mboriack@std.saic.com> for reporting
+	  this problem and helping us debug it.
+
 Mon Aug 30 10:43:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-common.h:
