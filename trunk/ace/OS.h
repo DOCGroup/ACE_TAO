@@ -5787,7 +5787,9 @@ public:
 
   static int getpagesize (void);
   static int allocation_granularity (void);
+
   static gid_t getgid (void);
+  static int setgid (gid_t);
   static pid_t getpid (void);
   static pid_t getpgid (pid_t pid);
   static pid_t getppid (void);
