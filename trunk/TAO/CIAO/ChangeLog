@@ -1,3 +1,11 @@
+Sat Apr 24 22:25:55 2004  George Edwards <g.edwards@vanderbilt.edu>
+
+        Added files:
+        * DnC/Config_Handlers/PCI_Handler.h:
+        * DnC/Config_Handlers/PCI_Handler.cpp:
+
+          Added new handlers for PackagedComponentImplementation.
+
 Sat Apr 24 21:22:48 2004  George Edwards <g.edwards@vanderbilt.edu>
 
         Added files:
