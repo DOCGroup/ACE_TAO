@@ -1,3 +1,8 @@
+Sat May 08 02:03:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp and tao/TAO.dsp: Removed Sequence_T.cpp from
+	  compilation list; it only contains template code.
+
 Fri May 07 23:49:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/default_server.cpp (parse_args): Fixed
