@@ -677,38 +677,23 @@ protected:
   // Allocation Strategy of the queue.
 };
 
+#if !defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
 
-#if ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
-
-//
-// I found ACE_Double_Linked_List really difficult to use.  So, I create
-// another layer of abstraction on top of it to make it easier to use.
-// -- jxh
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
 
 template <class T>
 class ACE_DLList_Node
 {
-friend class ACE_DLList<T>;
-friend class ACE_DLList_Iterator<T>;
+  friend class ACE_DLList<T>;
+  friend class ACE_DLList_Iterator<T>;
 
 public:
-  ACE_DLList_Node (void)
-    : item_ (0),
-      next_ (0),
-      prev_ (0)
-    {};
-
+  ACE_DLList_Node (void);
   ACE_DLList_Node (T *&i,
                    ACE_DLList_Node<T> *n = 0,
-                   ACE_DLList_Node<T> *p = 0)
-    : item_ (i),
-      next_ (n),
-      prev_ (p)
-    {};
-
-  ~ACE_DLList_Node (void) {};
+                   ACE_DLList_Node<T> *p = 0);
+  ~ACE_DLList_Node (void);
   // This isn't necessary, but it keeps the compiler happy.
 
   T * item_;
@@ -719,27 +704,24 @@ public:
 };
 
 template <class T>
-class ACE_DLList
-  : private ACE_Double_Linked_List< ACE_DLList_Node<T> >
+class ACE_DLList : private ACE_Double_Linked_List< ACE_DLList_Node<T> >
 {
-friend class ACE_DLList_Node<T>;
-friend class ACE_DLList_Iterator<T>;
-
+  friend class ACE_DLList_Node<T>;
+  friend class ACE_DLList_Iterator<T>;
 public:
 
-  typedef ACE_Double_Linked_List< ACE_DLList_Node<T> > DLList;
-  typedef ACE_DLList_Node<T> DLList_NODE;
-  typedef ACE_DLList_Iterator<T> DLList_ITERATOR;
+  typedef ACE_Double_Linked_List< ACE_DLList_Node<T> > 
+          DLList;
+  typedef ACE_DLList_Node<T> 
+          DLList_NODE;
+  typedef ACE_DLList_Iterator<T> 
+          DLList_ITERATOR;
 
-  void operator= (ACE_DLList<T> &l) { *(DLList *)this = l; };
+  void operator= (ACE_DLList<T> &l);
 
   // = Check boundary conditions.
-
-  int is_empty (void) const
-    { return ACE_Double_Linked_List< ACE_DLList_Node<T> >::is_empty (); };
-
-  int is_full (void) const
-    { return ACE_Double_Linked_List< ACE_DLList_Node<T> >::is_full (); };
+  int is_empty (void) const;
+  int is_full (void) const;
 
   // = Classic queue operations.
 
@@ -750,77 +732,37 @@ public:
 
   // = Additional utility methods.
 
-  void reset (void)
-    { ACE_Double_Linked_List< ACE_DLList_Node<T> >::reset (); };
-
-  int get (T *&item, size_t index = 0)
-    {
-      DLList_NODE *node;
-      int result
-        = ACE_Double_Linked_List< ACE_DLList_Node<T> >::get (node, index);
-      item = node->item_;
-      return result;
-    };
-
-  size_t size (void) const
-    { return ACE_Double_Linked_List< ACE_DLList_Node<T> >::size (); };
-
-  void dump (void) const
-    { ACE_Double_Linked_List< ACE_DLList_Node<T> >::dump (); };
+  void reset (void);
+  int get (T *&item, size_t index = 0);
+  size_t size (void) const;
+  void dump (void) const;
 
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Initialization and termination methods.
-  ACE_DLList (ACE_Allocator *alloc = 0)
-    : ACE_Double_Linked_List< ACE_DLList_Node<T> > (alloc) {};
-
-  ACE_DLList (ACE_DLList<T> &l)
-    : ACE_Double_Linked_List< ACE_DLList_Node<T> > ((DLList &)l) {};
-
-  ~ACE_DLList (void) { while (this->delete_head ()) ; };
-
-private:
+  ACE_DLList (ACE_Allocator *alloc = 0);
+  ACE_DLList (ACE_DLList<T> &l);
+  ~ACE_DLList (void);
 };
 
 template <class T>
-class ACE_DLList_Iterator
-  : private ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >
+class ACE_DLList_Iterator : private ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >
 {
-friend class ACE_DLList<T>;
-friend class ACE_DLList_Node<T>;
-
+  friend class ACE_DLList<T>;
+  friend class ACE_DLList_Node<T>;
 public:
   // = Initialization method.
-  ACE_DLList_Iterator (ACE_DLList<T> &l)
-    : ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> > (l) {};
+  ACE_DLList_Iterator (ACE_DLList<T> &l);
 
   // = Iteration methods.
 
-  T *next (void) const
-    {
-      ACE_DLList_Node<T> *temp
-        = ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >
-        ::next ();
-      return temp ? temp->item_ : 0;
-    };
-
-  int advance (void)
-    { return
-        ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::advance (); };
-
-  int first (void)
-    { return
-        ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::first (); };
-
-  int done (void) const
-    { return
-        ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::done (); };
-
-  void dump (void) const
-    { ACE_Double_Linked_List_Iterator< ACE_DLList_Node<T> >::dump (); };
+  T *next (void) const;
+  int advance (void);
+  int first (void);
+  int done (void) const;
+  void dump (void) const;
 
   ACE_ALLOC_HOOK_DECLARE;
-
 };
 
 #endif /* ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER) */
