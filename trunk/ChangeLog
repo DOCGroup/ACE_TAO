@@ -1,7 +1,13 @@
+Wed Aug 25 08:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Fixed the ace_filecache misspelling.
+
 Wed Aug 25 08:38:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_unistd.inl (rmdir): Removed the ACE_USES_WCHAR case from
-	  the char* version of this method.
+        * ace/OS_NS_unistd.inl (rmdir): Removed the ACE_USES_WCHAR case from
+          the char* version of this method.
 
 Wed Aug 25 09:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -30,9 +36,9 @@ Wed Aug 25 08:47:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
 Wed Aug 25 01:19:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add checks for ACE_HAS_SYS_PSTAT_H and ACE_HAS_SYS_LOADAVG_H.
+          Add checks for ACE_HAS_SYS_PSTAT_H and ACE_HAS_SYS_LOADAVG_H.
 
 Wed Aug 25 08:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -72,219 +78,219 @@ Wed Aug 25 07:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 24 19:59:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Fixed typo in last change, add back typedef for ACE_UINT64.
+          Fixed typo in last change, add back typedef for ACE_UINT64.
 
 Tue Aug 24 19:32:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Removed extraneous cruft left over from autoheader generated
-	  file.  Added conditional support for NetBSD/AMD64.
+          Removed extraneous cruft left over from autoheader generated
+          file.  Added conditional support for NetBSD/AMD64.
 
 Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
 
-	Changes to improve the functionality of wide-char operation on
-	non-Windows platforms:
+        Changes to improve the functionality of wide-char operation on
+        non-Windows platforms:
 
-	* ace/ace_wchar.h: If ACE_HAS_XPG4_MULTIBYTE_CHAR is defined, but not
-	  ACE_HAS_WCHAR, set ACE_HAS_WCHAR.
+        * ace/ace_wchar.h: If ACE_HAS_XPG4_MULTIBYTE_CHAR is defined, but not
+          ACE_HAS_WCHAR, set ACE_HAS_WCHAR.
 
         * ace/ACE.cpp (timestamp): Use ACE_TCHAR for temp char arrays,
           not char. If ACE_USES_WCHAR on non-Windows, use %ls for printf
-	  strings, not %s.
+          strings, not %s.
 
         * ace/ARGV.cpp (constructor): Replaced most of the body with a call
           to ACE_OS::argv_to_string().
 
-	* ace/Basic_Types.h:
-	* ace/Cleanup.h:
-	* ace/Object_Manager_Base.h:
-	* ace/OS_NS_string.h:
-	* ace/os_include/os_float.h:
-	* ace/os_include/os_inttypes.h:
-	* ace/os_include/os_limits.h:
-	* ace/os_include/os_signal.h:
-	* ace/os_include/os_stdint.h:
-	* ace/os_include/os_stdlib.h:
-	* ace/os_include/os_time.h:
-	* ace/os_include/os_ucontext.h:
-	* ace/os_include/os_unistd.h:
-	* ace/os_include/sys/os_ipc.h:
-	* ace/os_include/sys/os_mman.h:
-	* ace/os_include/sys/os_msg.h:
-	* ace/os_include/sys/os_resource.h:
-	* ace/os_include/sys/os_select.h:
-	* ace/os_include/sys/os_sem.h:
-	* ace/os_include/sys/os_shm.h:
-	* ace/os_include/sys/os_socket.h:
-	* ace/os_include/sys/os_stat.h:
-	* ace/os_include/sys/os_statvfs.h:
-	* ace/os_include/sys/os_timeb.h:
-	* ace/os_include/sys/os_time.h:
-	* ace/os_include/sys/os_times.h:
-	* ace/os_include/sys/os_types.h:
-	* ace/os_include/sys/os_uio.h:
-	* ace/os_include/sys/os_un.h:
-	* ace/os_include/sys/os_utsname.h:
-	* ace/os_include/sys/os_wait.h:	#include "config-lite.h" rather than
-	  "config-all.h". Only need the user config.h and "lite" things.
-	  Including config-all.h introduces a circular include
-	  dependency from OS_main.h.
+        * ace/Basic_Types.h:
+        * ace/Cleanup.h:
+        * ace/Object_Manager_Base.h:
+        * ace/OS_NS_string.h:
+        * ace/os_include/os_float.h:
+        * ace/os_include/os_inttypes.h:
+        * ace/os_include/os_limits.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stdint.h:
+        * ace/os_include/os_stdlib.h:
+        * ace/os_include/os_time.h:
+        * ace/os_include/os_ucontext.h:
+        * ace/os_include/os_unistd.h:
+        * ace/os_include/sys/os_ipc.h:
+        * ace/os_include/sys/os_mman.h:
+        * ace/os_include/sys/os_msg.h:
+        * ace/os_include/sys/os_resource.h:
+        * ace/os_include/sys/os_select.h:
+        * ace/os_include/sys/os_sem.h:
+        * ace/os_include/sys/os_shm.h:
+        * ace/os_include/sys/os_socket.h:
+        * ace/os_include/sys/os_stat.h:
+        * ace/os_include/sys/os_statvfs.h:
+        * ace/os_include/sys/os_timeb.h:
+        * ace/os_include/sys/os_time.h:
+        * ace/os_include/sys/os_times.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/os_include/sys/os_uio.h:
+        * ace/os_include/sys/os_un.h:
+        * ace/os_include/sys/os_utsname.h:
+        * ace/os_include/sys/os_wait.h: #include "config-lite.h" rather than
+          "config-all.h". Only need the user config.h and "lite" things.
+          Including config-all.h introduces a circular include
+          dependency from OS_main.h.
 
-	* ace/Default_Constants.h: Add ACE_LIB_TEXT() to ACE_DEFAULT_SVC_CONF
-	  strings.
+        * ace/Default_Constants.h: Add ACE_LIB_TEXT() to ACE_DEFAULT_SVC_CONF
+          strings.
 
-	* ace/Env_Value_T.i (fetch_value): For non-Win32, force the env var
-	  name to narrow-char then convert the result back to ACE_TCHAR.
+        * ace/Env_Value_T.i (fetch_value): For non-Win32, force the env var
+          name to narrow-char then convert the result back to ACE_TCHAR.
 
-	* ace/FILE_Connector.cpp (connect): When generating a temp name,
-	  convert it to ACE_TCHAR for ACE_FILE_Addr.
+        * ace/FILE_Connector.cpp (connect): When generating a temp name,
+          convert it to ACE_TCHAR for ACE_FILE_Addr.
 
         * ace/Get_Opt.cpp (constructor): When checking for POSIXLY_CORRECT,
           must always use char *, not ACE_TCHAR*, on non-Win32.
 
-	* ace/High_Res_Timer.cpp: Added ACE_LIB_TEXT to naked string literals.
-	  Use 'char' when it must be narrow char; ACE_TCHAR when it has to
-	  change based on ACE_USES_WCHAR.
+        * ace/High_Res_Timer.cpp: Added ACE_LIB_TEXT to naked string literals.
+          Use 'char' when it must be narrow char; ACE_TCHAR when it has to
+          change based on ACE_USES_WCHAR.
 
-	* ace/Lib_Find.cpp (ldfind, get_temp_dir): Environment variables on
-	  non-Windows are always narrow char, so account for that.
+        * ace/Lib_Find.cpp (ldfind, get_temp_dir): Environment variables on
+          non-Windows are always narrow char, so account for that.
 
         * ace/Log_Msg_UNIX_Syslog.cpp: Operate internally with all narrow
           chars because the underlying OS APIs are only narrow char.
 
-	* ace/Log_Msg.cpp (log): For 'D', 'M', 'm', 'N', and 'p', use the
-	  proper 's' format code for the platform/char width. Similar to
-	  Log_Record.cpp below.
+        * ace/Log_Msg.cpp (log): For 'D', 'M', 'm', 'N', and 'p', use the
+          proper 's' format code for the platform/char width. Similar to
+          Log_Record.cpp below.
 
-	* ace/Log_Msg.h (ACE_ASSERT): Convert __FILE__ name to proper char
-	  width when necessary.
+        * ace/Log_Msg.h (ACE_ASSERT): Convert __FILE__ name to proper char
+          width when necessary.
 
-	* ace/Log_Record.cpp: When formatting log strings, have to change
-	  printf formats if using wide chars on non-Windows. Wide-char
-	  strings are printed with %ls, whereas Windows uses %s for
-	  wide-char strings if the format is wide-char.
+        * ace/Log_Record.cpp: When formatting log strings, have to change
+          printf formats if using wide chars on non-Windows. Wide-char
+          strings are printed with %ls, whereas Windows uses %s for
+          wide-char strings if the format is wide-char.
 
-	* ace/Memory_Pool.cpp (ctor): Change backing_store_name to narrow
-	  char when needed to pass it to sscanf().
+        * ace/Memory_Pool.cpp (ctor): Change backing_store_name to narrow
+          char when needed to pass it to sscanf().
 
-	* ace/Object_Manager_Base.cpp (print_error_message): Add
-	  ACE_TEXT_ALWAYS_CHAR to the message arg to convert on wide-char
-	  builds.
+        * ace/Object_Manager_Base.cpp (print_error_message): Add
+          ACE_TEXT_ALWAYS_CHAR to the message arg to convert on wide-char
+          builds.
 
-	* ace/OS_main.h: For ACE_MAIN on non-Windows ACE_USES_WCHAR platforms,
-	  convert the argv to wchar_t, and pass the wide-char strings to the
-	  ACE_TCHAR[]-expecting real main program.
+        * ace/OS_main.h: For ACE_MAIN on non-Windows ACE_USES_WCHAR platforms,
+          convert the argv to wchar_t, and pass the wide-char strings to the
+          ACE_TCHAR[]-expecting real main program.
 
-	* ace/OS_NS_dirent.inl (opendir): Moved the const_cast-needing
-	  VxWorks part to its own #elif section. Added ACE_TEXT_ALWAYS_CHAR
-	  to the other invocation of ::opendir().
+        * ace/OS_NS_dirent.inl (opendir): Moved the const_cast-needing
+          VxWorks part to its own #elif section. Added ACE_TEXT_ALWAYS_CHAR
+          to the other invocation of ::opendir().
 
-	* ace/OS_NS_dlfcn.inl (dlerror, dlopen, dlsym): Corrected use of
-	  narrow/wide-char.
+        * ace/OS_NS_dlfcn.inl (dlerror, dlopen, dlsym): Corrected use of
+          narrow/wide-char.
 
-	* ace/OS_NS_stdio.inl (cuserid, fdopen, freopen): Don't use
-	  ACE_TCHAR when a char is always needed.
-	  (fgets, fputs, perror, puts): Changed to have both narrow- and
-	  wide-char variants.
-	  (checkUnicodeFormat): Use a platform-neutral 2-byte type to
-	  read 2 bytes. Need a non-Windows 'whence' arg for fseek().
-	  (vsprintf (wchar_t)): Added the non-Windows, XPG5 code for this to
-	  use the XPG5 vswprintf() when equippped.
+        * ace/OS_NS_stdio.inl (cuserid, fdopen, freopen): Don't use
+          ACE_TCHAR when a char is always needed.
+          (fgets, fputs, perror, puts): Changed to have both narrow- and
+          wide-char variants.
+          (checkUnicodeFormat): Use a platform-neutral 2-byte type to
+          read 2 bytes. Need a non-Windows 'whence' arg for fseek().
+          (vsprintf (wchar_t)): Added the non-Windows, XPG5 code for this to
+          use the XPG5 vswprintf() when equippped.
 
-	* ace/OS_NS_stdlib.{h inl cpp}:
-	  (ACE_OS::mktemp() and mkstemp()): Changed to have both narrow-
-	  and wide-char variants for the !ACE_LACKS_MKTEMP case.
-	  Offering both for the ACE_LACKS_MKTEMP case is a low-return
-	  use of time since the wide-char variant will probably never be used.
-	  (strenvdup): Handle ACE_USES_WCHAR on non-Windows by converting
-	  back and forth to narrow-char.
-	  (system): On non-Windows, convert command line string to narrow-char.
-	  (getcwd): Changed to have both narrow- and wide-char variants.
+        * ace/OS_NS_stdlib.{h inl cpp}:
+          (ACE_OS::mktemp() and mkstemp()): Changed to have both narrow-
+          and wide-char variants for the !ACE_LACKS_MKTEMP case.
+          Offering both for the ACE_LACKS_MKTEMP case is a low-return
+          use of time since the wide-char variant will probably never be used.
+          (strenvdup): Handle ACE_USES_WCHAR on non-Windows by converting
+          back and forth to narrow-char.
+          (system): On non-Windows, convert command line string to narrow-char.
+          (getcwd): Changed to have both narrow- and wide-char variants.
 
-	* ace/OS_NS_sys_stat.inl (creat, mkfifo): For non-Windows, convert
-	  name to narrow-char when needed.
-	  (lstat): Change from a single ACE_TCHAR-based interface to both
-	  char* and wchar_t*.
+        * ace/OS_NS_sys_stat.inl (creat, mkfifo): For non-Windows, convert
+          name to narrow-char when needed.
+          (lstat): Change from a single ACE_TCHAR-based interface to both
+          char* and wchar_t*.
 
-	* ace/OS_NS_time.inl (ctime, ctime_r): Corrected narrow/wide char
-	  usage.
+        * ace/OS_NS_time.inl (ctime, ctime_r): Corrected narrow/wide char
+          usage.
 
-	* ace/OS_NS_unistd.inl (truncate): For non-Windows, convert the path
-	  to narrow-char when needed.
-	  (realpath): Changed to have both narrow- and wide-char variants.
+        * ace/OS_NS_unistd.inl (truncate): For non-Windows, convert the path
+          to narrow-char when needed.
+          (realpath): Changed to have both narrow- and wide-char variants.
 
-	* ace/OS_NS_unistd.{h inl cpp}:
-	  (rmdir): Changed to have both narrow- and wide-char variants.
-	  (argv_to_string): Handle narrow and wide-char environment variables.
-	  (fork_exec): Convert path and argv to narrow-char when needed.
+        * ace/OS_NS_unistd.{h inl cpp}:
+          (rmdir): Changed to have both narrow- and wide-char variants.
+          (argv_to_string): Handle narrow and wide-char environment variables.
+          (fork_exec): Convert path and argv to narrow-char when needed.
 
-	* ace/Process.cpp (spawn): Convert argv, procname, env vars to narrow
-	  char for non-Windows wide-char builds.
+        * ace/Process.cpp (spawn): Convert argv, procname, env vars to narrow
+          char for non-Windows wide-char builds.
 
-	* ace/Process.i (setreugid): Convert user name to narrow char for
+        * ace/Process.i (setreugid): Convert user name to narrow char for
           getpwnam().
 
-	* ace/Process_Mutex.cpp (ctor): Don't convert name to ACE_TCHAR for
-	  ACE_SV_Semaphore case - it requires char*.
+        * ace/Process_Mutex.cpp (ctor): Don't convert name to ACE_TCHAR for
+          ACE_SV_Semaphore case - it requires char*.
 
-	* ace/Process_Semaphore.cpp (ctor): Convert name to narrow char
-	  for ACE_SV_Semaphore_Complex case.
+        * ace/Process_Semaphore.cpp (ctor): Convert name to narrow char
+          for ACE_SV_Semaphore_Complex case.
 
-	* ace/Sock_Connect.cpp (get_bcast_addr):
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Host name needs to be
-	  converted to narrow-char for wide-char builds.
+        * ace/Sock_Connect.cpp (get_bcast_addr):
+        * ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): Host name needs to be
+          converted to narrow-char for wide-char builds.
 
-	* ace/SOCK_Dgram_Mcast.cpp (make_multicast_ifaddr): Interface name
-	  needs to be converted to narrow-char for wide-char builds.
+        * ace/SOCK_Dgram_Mcast.cpp (make_multicast_ifaddr): Interface name
+          needs to be converted to narrow-char for wide-char builds.
 
-	* ace/SV_Semaphore_Simple.{h,i,cpp}: Added wide-char versions of
-	  the named constructor and open() methods. They forward to the
-	  narrow-char versions.
+        * ace/SV_Semaphore_Simple.{h,i,cpp}: Added wide-char versions of
+          the named constructor and open() methods. They forward to the
+          narrow-char versions.
 
-	* tests/Dirent_Test.cpp: Account for dirent's d_name is an ACE_TCHAR
-	  when ACE_LACKS_STRUCT_DIR and a char* otherwise.
+        * tests/Dirent_Test.cpp: Account for dirent's d_name is an ACE_TCHAR
+          when ACE_LACKS_STRUCT_DIR and a char* otherwise.
 
-	* tests/FIFO_Test.cpp: Change ACE_ALPHABET to char[].
+        * tests/FIFO_Test.cpp: Change ACE_ALPHABET to char[].
 
-	* tests/Proactor_Test.cpp: Change complete_message from ACE_TCHAR
-	  to char. This is easier to handle; as ACE_TCHAR, we'd need to
-	  correct all the message block pointer adjustments to take the
-	  charset width into account.
+        * tests/Proactor_Test.cpp: Change complete_message from ACE_TCHAR
+          to char. This is easier to handle; as ACE_TCHAR, we'd need to
+          correct all the message block pointer adjustments to take the
+          charset width into account.
 
-	* tests/Log_Msg_Test.cpp:
-	* tests/MEM_Stream_Test.cpp:
-	* tests/Message_Queue_Test.cpp:
-	* tests/Pipe_Test.cpp:
-	* tests/Process_Manager_Test.cpp:
-	* tests/Process_Mutex_Test.cpp:
-	* tests/Process_Strategy_Test.cpp:
-	* tests/Signal_Test.cpp:
-	* tests/SOCK_Connector_Test.cpp:
-	* tests/SOCK_Dgram_Test.cpp:
-	* tests/SOCK_Send_Recv_Test.cpp:
-	* tests/SOCK_Test.cpp:
-	* tests/SV_Shared_Memory_Test.cpp: Char width correction.
+        * tests/Log_Msg_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp: Char width correction.
 
-	* tests/Service_Config_Test.cpp:
-	* tests/Service_Config_Test.WCHAR_T.conf:
-	* tests/Service_Config_Test.WCHAR_T.conf.xml: Added WCHAR_T-coded
-	  versions of the test input file and changed the test to use
-	  them on non-Windows ACE_USES_WCHAR builds.
+        * tests/Service_Config_Test.cpp:
+        * tests/Service_Config_Test.WCHAR_T.conf:
+        * tests/Service_Config_Test.WCHAR_T.conf.xml: Added WCHAR_T-coded
+          versions of the test input file and changed the test to use
+          them on non-Windows ACE_USES_WCHAR builds.
 
-	* tests/Test_Output.cpp (set_output): Handle env var and filepath
-	  building correctly even on wide-char non-Windows builds.
+        * tests/Test_Output.cpp (set_output): Handle env var and filepath
+          building correctly even on wide-char non-Windows builds.
 
-	* ACEXML/common/XML_Types.h: typedef ACEXML_Char as ACE_TCHAR, else
-	  it doesn't match any char interfaces when wchar_t is not 2 bytes.
+        * ACEXML/common/XML_Types.h: typedef ACEXML_Char as ACE_TCHAR, else
+          it doesn't match any char interfaces when wchar_t is not 2 bytes.
 
-	* ACEXML/parser/parser/Parser.cpp (parse_char_reference): Add the
-	  case where wide-char is 4 bytes.
+        * ACEXML/parser/parser/Parser.cpp (parse_char_reference): Add the
+          case where wide-char is 4 bytes.
 
-	Also brought in this fix:
-	Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
+        Also brought in this fix:
+        Mon Mar  8 15:52:33 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_Proactor.cpp: Comment out the signal setup; this should
           not be necessary and, indeed, is erroneous, at least on Linux.
@@ -293,17 +299,17 @@ Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
 
 Tue Aug 24 10:22:18 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-linux-common.h: Added ACE_HAS_SCANDIR and a new
-	  macro, ACE_SCANDIR_CMP_USES_VOIDPTR, saying that scandir()
-	  cmp() function takes void pointers, not dirent pointers.
+        * ace/config-linux-common.h: Added ACE_HAS_SCANDIR and a new
+          macro, ACE_SCANDIR_CMP_USES_VOIDPTR, saying that scandir()
+          cmp() function takes void pointers, not dirent pointers.
 
-	* ace/OS_NS_dirent.inl (scandir): When calling native scandir()
-	  with ACE_SCANDIR_CMP_USES_VOIDPTR, cast comparator appropriately.
-	  Also, for native scandir(), ACE_TEXT_ALWAYS_CHAR the dirname.
+        * ace/OS_NS_dirent.inl (scandir): When calling native scandir()
+          with ACE_SCANDIR_CMP_USES_VOIDPTR, cast comparator appropriately.
+          Also, for native scandir(), ACE_TEXT_ALWAYS_CHAR the dirname.
 
-	* ace/OS_NS_dlfcn.inl:
-	* tests/Test_Output.cpp: Added #include "ace/OS_NS_string.h" to get
-	  ACE_OS string methods. Fixes compile error on inline=0 build.
+        * ace/OS_NS_dlfcn.inl:
+        * tests/Test_Output.cpp: Added #include "ace/OS_NS_string.h" to get
+          ACE_OS string methods. Fixes compile error on inline=0 build.
 
 Tue Aug 24 11:16:00 2004  Jules White   <jules@dre.vanderbilt.edu>
 
@@ -311,124 +317,124 @@ Tue Aug 24 11:16:00 2004  Jules White   <jules@dre.vanderbilt.edu>
 
 Tue Aug 24 10:10:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-all.h: Moved #include "ace/OS_main.h" down to the bottom
-	  of the file, lest it invoke a circular dependency.
+        * ace/config-all.h: Moved #include "ace/OS_main.h" down to the bottom
+          of the file, lest it invoke a circular dependency.
 
-	* ace/OS_NS_stdlib.inl: Added #include "ace/config-all.h" to get
-	  ACE_TRACE.
+        * ace/OS_NS_stdlib.inl: Added #include "ace/config-all.h" to get
+          ACE_TRACE.
 
 Mon Aug 23 23:23:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile.am (AUTOMAKE_OPTIONS):
+        * Makefile.am (AUTOMAKE_OPTIONS):
 
-	  Removed required Automake version from `Makefile.am'.
-	  `configure.ac' already defines it.
+          Removed required Automake version from `Makefile.am'.
+          `configure.ac' already defines it.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Updated required version of Automake to 1.9.
+          Updated required version of Automake to 1.9.
 
-	  Added test for partial template specialization.  Issue a warning
-	  if it isn't support by the compiler since ACE will require it in
-	  the near future.
+          Added test for partial template specialization.  Issue a warning
+          if it isn't support by the compiler since ACE will require it in
+          the near future.
 
-	* ace/ACE.h:
+        * ace/ACE.h:
 
-	  Corrected ACE namespace documentation to describe the ACE
-	  namespace itself rather than summarizing the contents of this
-	  header (i.e. the value added global ACE functions).
+          Corrected ACE namespace documentation to describe the ACE
+          namespace itself rather than summarizing the contents of this
+          header (i.e. the value added global ACE functions).
 
-	* ace/If_Then_Else.h:
+        * ace/If_Then_Else.h:
 
-	  Doxygen documentation corrections and improvements.
+          Doxygen documentation corrections and improvements.
 
 Mon Aug 23 22:19:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/CDR_Test.cpp (run_main):
+        * tests/CDR_Test.cpp (run_main):
 
-	  Added run-time assertions that verify proper CDR type sizes
-	  (e.g. sizeof (ACE_CDR::Boolean) == 1).
+          Added run-time assertions that verify proper CDR type sizes
+          (e.g. sizeof (ACE_CDR::Boolean) == 1).
 
 Mon Aug 23 19:18:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
+        * m4/config_h.m4:
 
-	  Removed autoheader template for ACE_LACKS_PARAM_H.
+          Removed autoheader template for ACE_LACKS_PARAM_H.
 
 Mon Aug 23 18:33:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added check for ACE_HAS_ITOA.
-	  Added check for ACE_LACKS_ITOW.
+          Added check for ACE_HAS_ITOA.
+          Added check for ACE_LACKS_ITOW.
 
 Mon Aug 23 18:22:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-dgux-4.11-epc.h
-	* ace/config-dgux-4.x-ghs.h
-	* ace/config-freebsd.h
-	* ace/config-lynxos.h
-	* ace/config-m88k.h
-	* ace/config-macosx-panther.h
-	* ace/config-macosx.h
-	* ace/config-openbsd.h
-	* ace/config-sunos4-g++.h
-	* ace/config-sunos4-lucid3.2.h
-	* ace/config-sunos4-sun3.x.h
-	* ace/config-sunos4-sun4.1.4.h
-	* ace/config-sunos4-sun4.x.h
-	* ace/config-sunos5.4-centerline-2.x.h
-	* ace/config-sunos5.4-g++.h
-	* ace/config-sunos5.4-sunc++-4.x.h
-	* ace/config-sunos5.5.h
-	* ace/config-tandem.h
-	* ace/config-unixware-2.01-g++.h
-	* ace/config-unixware-2.1.2-g++.h
-	* ace/config-unixware-7.1.0.h
-	* ace/config-unixware-7.1.0.udk.h
-	* ace/os_include/os_stropts.h
+        * ace/config-dgux-4.11-epc.h
+        * ace/config-dgux-4.x-ghs.h
+        * ace/config-freebsd.h
+        * ace/config-lynxos.h
+        * ace/config-m88k.h
+        * ace/config-macosx-panther.h
+        * ace/config-macosx.h
+        * ace/config-openbsd.h
+        * ace/config-sunos4-g++.h
+        * ace/config-sunos4-lucid3.2.h
+        * ace/config-sunos4-sun3.x.h
+        * ace/config-sunos4-sun4.1.4.h
+        * ace/config-sunos4-sun4.x.h
+        * ace/config-sunos5.4-centerline-2.x.h
+        * ace/config-sunos5.4-g++.h
+        * ace/config-sunos5.4-sunc++-4.x.h
+        * ace/config-sunos5.5.h
+        * ace/config-tandem.h
+        * ace/config-unixware-2.01-g++.h
+        * ace/config-unixware-2.1.2-g++.h
+        * ace/config-unixware-7.1.0.h
+        * ace/config-unixware-7.1.0.udk.h
+        * ace/os_include/os_stropts.h
 
           Changed name of feature test macro ACE_HAS_SOCKIO_H to
           ACE_HAS_SYS_SOCKIO_H.
 
 Mon Aug 23 17:41:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/config_h.m4:
-	* m4/platform.m4:
+        * m4/config_h.m4:
+        * m4/platform.m4:
 
-	  Removed support for unused ACE_NETBSD feature test macro.
+          Removed support for unused ACE_NETBSD feature test macro.
 
 Mon Aug 23 17:37:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/platform.m4:
+        * m4/platform.m4:
 
-	  Add check for ACE_LACKS_PERFECT_MULTICAST_FILTERING.
+          Add check for ACE_LACKS_PERFECT_MULTICAST_FILTERING.
 
 Mon Aug 23 16:33:59 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Remove PACKAGE, PACKAGE_*, and VERSION definitions.  The latter
-	  conflicts with some of the test/example programs.  I'll get rid
-	  of the others just to be safe.
+          Remove PACKAGE, PACKAGE_*, and VERSION definitions.  The latter
+          conflicts with some of the test/example programs.  I'll get rid
+          of the others just to be safe.
 
-	  Comment out ACE_NTRACE, as the constant definition conflicts
-	  with Misc_test_trace.  We probably need an option to control
-	  whether tracing and debugging features are enabled when ACE/
-	  TAO is compiled that is separate from the one used after it
-	  has been built.
+          Comment out ACE_NTRACE, as the constant definition conflicts
+          with Misc_test_trace.  We probably need an option to control
+          whether tracing and debugging features are enabled when ACE/
+          TAO is compiled that is separate from the one used after it
+          has been built.
 
 Mon Aug 23 16:06:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added checks for ACE_HAS_VWFPRINTF and ACE_HAS_VWSPRINTF.
+          Added checks for ACE_HAS_VWFPRINTF and ACE_HAS_VWSPRINTF.
 
 Tue Aug 24 00:34:30 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/QtReactor.cpp:
-	Removed unecessary #include <qeventloop.h>. Thanks to
-	Gan Deng <gan.deng@vanderbilt.edu> for a patch.
+        * ace/QtReactor.cpp:
+        Removed unecessary #include <qeventloop.h>. Thanks to
+        Gan Deng <gan.deng@vanderbilt.edu> for a patch.
 
 
 Mon Aug 23 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -457,17 +463,17 @@ Mon Aug 23 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Aug 22 21:49:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-netbsd.h:
+        * ace/config-netbsd.h:
 
-	  Update with autoconf generated results.  While not perfect, the
-	  old version would be difficult to update by hand.
+          Update with autoconf generated results.  While not perfect, the
+          old version would be difficult to update by hand.
 
 Mon Aug 23 01:04:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_T.cpp:
+        * ace/Select_Reactor_T.cpp:
 
-	  Made some slight changes to the BUG 1890 patch after receiving
-	  some clarifications from Kobi.
+          Made some slight changes to the BUG 1890 patch after receiving
+          some clarifications from Kobi.
 
 Sun Aug 22 11:11:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -492,24 +498,24 @@ Fri Aug 20 15:29:29 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
 Fri Aug 20 15:10:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/core.mpb:
+        * bin/MakeProjectCreator/config/core.mpb:
 
-	  Changed to define INSTALL_THIS_TARGET for automake builds.
+          Changed to define INSTALL_THIS_TARGET for automake builds.
 
-	* bin/MakeProjectCreator/config/taodefaults.mpb:
+        * bin/MakeProjectCreator/config/taodefaults.mpb:
 
-	  Changed to add $(TAO_BUILDDIR) to includes for automake builds.
+          Changed to add $(TAO_BUILDDIR) to includes for automake builds.
 
-	* bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
 
-	  Changed to add $(ACE_BUILDDIR) to includes for automake builds.
+          Changed to add $(ACE_BUILDDIR) to includes for automake builds.
 
 Fri Aug 20 12:17:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Added check for ACE_SIZEOF_WCHAR.
+          Added check for ACE_SIZEOF_WCHAR.
 
 Fri Aug 20 16:13:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -566,7 +572,7 @@ Fri Aug 20 15:20:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Added a default argument to the ACE_Signal class, which is used
           by the ACE_Select_Reactor.
 
-	  Thanks to Kobi for the patches.
+          Thanks to Kobi for the patches.
 
 Fri Aug 20 14:26:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
@@ -706,7 +712,7 @@ Tue Aug 17 17:42:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Tue Aug 17 09:50:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/MakeProjectCreator/config/ciao_servant.mpb:
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
         * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
 
           Added the path to $TAO_ROOT/orbsvcs to the CIDL compiler.
@@ -1011,7 +1017,7 @@ Fri Aug 13 23:26:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Sat Aug 14 03:44:02 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ace/TSS_T.cpp:
+        * ace/TSS_T.cpp:
 
           Fixed compilation errors in the SingleThreaded builds.
 
@@ -1033,12 +1039,12 @@ Fri Aug 13 16:17:32 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
         * ace/Module.h (class ACE_Module):
         * ace/Task.h (ACE_Task_Base):
           Updated the documentation so it's more clear.  Thanks to Andrew
- 	  Athan <aathan-ace-bugs-1524@cloakmail.com> for motivating this.
+          Athan <aathan-ace-bugs-1524@cloakmail.com> for motivating this.
 
         * ace/Stream.h: Updated the documentation for push() and pop() to
           clarify how it affects open() and close() hooks on the tasks.
-  	  Thanks to Andrew Athan <aathan-ace-bugs-1524@cloakmail.com> for
- 	  motivating this.
+          Thanks to Andrew Athan <aathan-ace-bugs-1524@cloakmail.com> for
+          motivating this.
 
 Fri Aug 13 15:26:40 2004  Dale Wilson  <wilson_d@ociweb.com>
 
