@@ -1,30 +1,56 @@
-//$Id$
+// $Id$
 
 #include "CEPE_Handler.h"
-#include "tao/Exception.h"
-#include "Utils.h"
+#include "Basic_Deployment_Data.hpp"
+#include "ciao/Deployment_DataC.h"
 
-using CIAO::Config_Handler::Utils;
-
-void
-CIAO::Config_Handler::CEPE_Handler::
-process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
-                                       Deployment::ComponentExternalPortEndpoint
-                                       &ret_struct)
+namespace CIAO
 {
-  //Check if the Schema IDs for both the elements match
-  DOMNode * node = iter->nextNode ();
-  XStr name (node->getNodeName ());
-
-  if (name != XStr (ACE_TEXT ("portName")))
+  namespace Config_Handlers
+  {
+    bool
+    CEPE_Handler::external_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ComponentExternalPortEndpoints &dest)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers:: \
-                   CEPE_Handler::process_ComponentExtPortEndPoint \
-                   element mismatch expected <portName>"));
-      ACE_THROW (CORBA::INTERNAL ());
+      PlanConnectionDescription::externalEndpoint_const_iterator eeci_e =
+        src.end_externalEndpoint ();
+
+      for (PlanConnectionDescription::externalEndpoint_const_iterator eeci_b =
+             src.begin_externalEndpoint ();
+           eeci_b != eeci_e;
+           ++eeci_b)
+        {
+          CORBA::ULong len =
+            dest.length ();
+
+          dest.length (len + 1);
+
+          (void) CEPE_Handler::external_port_endpoint ((*eeci_b),
+                                                       dest[len]);
+        }
+
+      return true;
+
     }
 
-  // Populate the structure
-  ret_struct.portName = Utils::parse_string (iter);
+    void
+    CEPE_Handler::external_port_endpoint (
+        const ComponentExternalPortEndpoint &src,
+        ::Deployment::ComponentExternalPortEndpoint &dest)
+    {
+      dest.portName =
+        src.portName ().c_str ();
+    }
+    
+    ComponentExternalPortEndpoint
+    CEPE_Handler::external_port_endpoint (
+      const ::Deployment::ComponentExternalPortEndpoint &src)
+    {
+      //MAJO Unfinished
+      XMLSchema::string< char > portname ((src.portName));
+      ComponentExternalPortEndpoint cepe (portname);
+      return cepe;
+    }
+  }
 }

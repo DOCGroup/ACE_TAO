@@ -1,62 +1,65 @@
-//==================================================================
+//==============================================================
 /**
  *  @file  CEPE_Handler.h
  *
  *  $Id$
  *
- *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *  @author Jules White <jules@dre.vanderbilt.edu>
  */
-//=====================================================================
-#ifndef CEPE_HANDLER_H
-#define CEPE_HANDLER_H
+//================================================================
+
+#ifndef CIAO_CONFIG_HANDLERS_CEPE_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_CEPE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "ciao/DeploymentC.h"
+#include "Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Config_Handler_export.h"
-#include <xercesc/util/XercesDefs.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include "XercesString.h"
-
-using Config_Handler::XStr;
-using xercesc::XMLString;
-using xercesc::DOMImplementation;
-using xercesc::DOMText;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
+namespace Deployment
+{
+  class ComponentExternalPortEndpoints;
+  struct ComponentExternalPortEndpoint;
+}
 
 namespace CIAO
 {
-  namespace Config_Handler
+  namespace Config_Handlers
   {
-    /**
-     * @class ID_Handler
+    class PlanConnectionDescription;
+    class ComponentExternalPortEndpoint;
+
+    /*
+     * @class CEPE_Handler
      *
-     * @brief Handler class for <ComponentExternalPortEndpoint> type
+     * @brief Handler class for <ComponentExternalPortEndpoint> types.
      *
-     * This class defines handler methods to parse the aforementioned type
-     * in the descriptor files. The corresponding CORBA IDL type for this
-     * element is returned.
+     * This class defines handler methods to map values from
+     * XSC ComponentExternalPortEndpoint objects, parsed from
+     * the descriptor files, to the corresponding CORBA IDL type.
+     *
      */
 
-    class Config_Handler_Export CEPE_Handler
+    class Config_Handlers_Export CEPE_Handler
     {
     public:
-      static void
-        process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
-                                               Deployment::ComponentExternalPortEndpoint &ret_struct);
-      // process <ComponentExternalPortEndPoint> definitions in the descriptor
-      // files
-
+      static bool external_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ComponentExternalPortEndpoints &dest);
+      
+      static ComponentExternalPortEndpoint
+      external_port_endpoint (
+        const ::Deployment::ComponentExternalPortEndpoint &src);
+        
+    private:
+      static void external_port_endpoint (
+        const ComponentExternalPortEndpoint &src,
+        ::Deployment::ComponentExternalPortEndpoint &dest);
     };
   }
-
 }
 
 #include /**/ "ace/post.h"
-
-#endif /* CEPE_HANDLER_H */
+#endif /* CIAO_CONFIG_HANDLERS_CEPE_HANDLER_H*/

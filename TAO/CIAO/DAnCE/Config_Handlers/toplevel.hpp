@@ -14,8 +14,7 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include "XSCRT/XMLSchema.hpp"
-#include "XSCRT/Parser.hpp"
+#include <XMLSchema/Types.hpp>
 
 #include "pcd.hpp"
 
@@ -29,7 +28,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // package
-      //
+      // 
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
@@ -44,6 +43,7 @@ namespace CIAO
 
       public:
       TopLevelPackageDescription ();
+
       TopLevelPackageDescription (::XSCRT::XML::Element< char > const&);
       TopLevelPackageDescription (TopLevelPackageDescription const& s);
 
@@ -53,6 +53,102 @@ namespace CIAO
       private:
       char regulator__;
     };
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include <XMLSchema/Traversal.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        package (Type&);
+
+        virtual void
+        package (Type const&);
+
+        virtual void
+        package_pre (Type&);
+
+        virtual void
+        package_pre (Type const&);
+
+        virtual void
+        package_next (Type&);
+
+        virtual void
+        package_next (Type const&);
+
+        virtual void
+        package_post (Type&);
+
+        virtual void
+        package_post (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include <XMLSchema/Writer.hpp>
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      virtual ::XSCRT::Writer< char >
+      {
+        typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
+        TopLevelPackageDescription (::XSCRT::XML::Element< char >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        package_pre (Type const&);
+
+        virtual void
+        package_next (Type const&);
+
+        virtual void
+        package_post (Type const&);
+
+        protected:
+        TopLevelPackageDescription ();
+      };
+    }
   }
 }
 
