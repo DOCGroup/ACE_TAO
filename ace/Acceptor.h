@@ -86,11 +86,11 @@ public:
    * <PEER_ACCEPTOR>.  If it is non-zero this will allow the OS to
    * reuse this listen port.
    */
-  int open (const ACE_PEER_ACCEPTOR_ADDR &,
-            ACE_Reactor * = ACE_Reactor::instance (),
-            int flags = 0,
-            int use_select = 1,
-            int reuse_addr = 1);
+  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &,
+                    ACE_Reactor * = ACE_Reactor::instance (),
+                    int flags = 0,
+                    int use_select = 1,
+                    int reuse_addr = 1);
 
   /// Close down the Acceptor's resources.
   virtual ~ACE_Acceptor (void);

@@ -1,3 +1,12 @@
+Wed May 29 21:55:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/TPC_Logging_Server.{h cpp}:
+        * examples/C++NPv2/TPCLS_export.h:
+        * examples/C++NPv2/TPCLS.mak:
+        * examples/C++NPv2/Makefile:  Added Chapter 7 examples.
+
+        * ace/Acceptor.h (ACE_Acceptor::open): Made open() virtual.
+
 Thu May 30 01:38:51 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/OS_String.inl: Revert:
