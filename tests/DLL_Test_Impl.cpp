@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#define ACE_BUILD_SVC_DLL
-
 #include "DLL_Test_Impl.h"
 
 ACE_RCSID(tests, DLL_Test_Impl, "$Id$")
