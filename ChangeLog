@@ -1,3 +1,9 @@
+Thu Mar 11 16:36:09 2004  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* tests/Semaphore_Test.cpp (worker): 
+	Fix a problem in counting the timeouts. if acquire == -1 then increment timeouts
+	and check diff time against ACE_ALLOWED_SLACK
+
 Thu Mar 11 07:10:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/String_Base.cpp (resize):
