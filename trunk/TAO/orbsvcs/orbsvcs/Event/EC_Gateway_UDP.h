@@ -213,7 +213,7 @@ public:
 private:
   /// avoid usage of default constructor that does no proper
   /// initialization
-  ACE_UNIMPLEMENTED_FUNC (TAO_ECG_UDP_Request_Entry (void));
+  ACE_UNIMPLEMENTED_FUNC (TAO_ECG_UDP_Request_Entry (void))
 
   /// This attributes should remain constant in all the fragments, used
   /// for validation....
