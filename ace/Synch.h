@@ -225,10 +225,10 @@ class ACE_Export ACE_Semaphore
 public:
   // = Initialization and termination.
   ACE_Semaphore (u_int count = 1, // By default make this unlocked.
-		 int type = USYNC_THREAD,
-		 LPCTSTR name = 0,
-		 void * = 0,
-		 int max = 0x7fffffff);
+                 int type = USYNC_THREAD,
+                 LPCTSTR name = 0,
+                 void * = 0,
+                 int max = 0x7fffffff);
   // Initialize the semaphore, with initial value of "count".
 
   ~ACE_Semaphore (void);
@@ -311,9 +311,9 @@ class ACE_Export ACE_Process_Semaphore
   //     across processes.
 public:
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-			 LPCTSTR name = 0,
-			 void * = 0,
-			 int max = 0x7FFFFFFF);
+                         LPCTSTR name = 0,
+                         void * = 0,
+                         int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 
@@ -390,8 +390,8 @@ class ACE_Export ACE_RW_Mutex
   //     parallel readers than writers...
 public:
   ACE_RW_Mutex (int type = USYNC_THREAD,
-		LPCTSTR name = 0,
-		void *arg = 0);
+                LPCTSTR name = 0,
+                void *arg = 0);
   // Initialize a readers/writer lock.
 
   ~ACE_RW_Mutex (void);
@@ -456,8 +456,8 @@ class ACE_Export ACE_Mutex
   //     processes (depending on TYPE flag)).
 public:
   ACE_Mutex (int type = USYNC_THREAD,
-	     LPCTSTR name = 0,
-	     void *arg = 0);
+             LPCTSTR name = 0,
+             void *arg = 0);
   // Initialize the mutex.
 
   ~ACE_Mutex (void);
@@ -528,7 +528,7 @@ class ACE_Export ACE_Process_Mutex
   //     course.
 public:
   ACE_Process_Mutex (LPCTSTR name = 0,
-		     void *arg = 0);
+                     void *arg = 0);
   // Create a Process_Mutex, passing in the optional <name>.
 
   ~ACE_Process_Mutex (void);
@@ -644,8 +644,8 @@ class ACE_Export ACE_Null_Barrier
   //     Implements "NULL barrier synchronization".
 public:
   ACE_Null_Barrier (u_int,
-		    const char * = 0,
-		    void * = 0);
+                    const char * = 0,
+                    void * = 0);
   // Initialize the barrier to synchronize <count> threads.
 
   ~ACE_Null_Barrier (void);
@@ -805,10 +805,10 @@ class ACE_Export ACE_Event
   //     native to Win32, but must be emulated on UNIX.
 public:
   ACE_Event (int manual_reset = 0,
-	     int initial_state = 0,
-	     int type = USYNC_THREAD,
-	     LPCTSTR name = 0,
-	     void *arg = 0);
+             int initial_state = 0,
+             int type = USYNC_THREAD,
+             LPCTSTR name = 0,
+             void *arg = 0);
   // Constructor which will create event.
 
   ~ACE_Event (void);
@@ -886,9 +886,9 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
   //     threads on signal()
 public:
   ACE_Manual_Event (int initial_state = 0,
-		    int type = USYNC_THREAD,
-		    LPCTSTR name = 0,
-		    void *arg = 0);
+                    int type = USYNC_THREAD,
+                    LPCTSTR name = 0,
+                    void *arg = 0);
   // constructor which will create manual event
 
   ~ACE_Manual_Event (void);
@@ -911,9 +911,9 @@ class ACE_Export ACE_Auto_Event : public ACE_Event
   //     thread on signal()
 public:
   ACE_Auto_Event (int initial_state = 0,
-		  int type = USYNC_THREAD,
-		  LPCTSTR name = 0,
-		  void *arg = 0);
+                  int type = USYNC_THREAD,
+                  LPCTSTR name = 0,
+                  void *arg = 0);
   // constructor which will create auto event
 
   ~ACE_Auto_Event (void);
@@ -1095,8 +1095,8 @@ class ACE_Export ACE_Condition_Thread_Mutex
   //     with compilers precludes this...
 public:
   ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
-			      LPCTSTR name = 0,
-			      void *arg = 0);
+                              LPCTSTR name = 0,
+                              void *arg = 0);
   // Initialize the condition variable.
 
   ~ACE_Condition_Thread_Mutex (void);
@@ -1169,7 +1169,7 @@ class ACE_Export ACE_Recursive_Thread_Mutex
   // friend class ACE_Condition<class ACE_COND_MUTEX>;
 public:
   ACE_Recursive_Thread_Mutex (LPCTSTR name = 0,
-			      void *arg = 0);
+                              void *arg = 0);
   // Initialize a recursive mutex.
 
   ~ACE_Recursive_Thread_Mutex (void);
@@ -1267,7 +1267,7 @@ class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
   //     Wrapper for readers/writer locks that exist within a process.
 public:
   ACE_RW_Thread_Mutex (LPCTSTR name = 0,
-		       void *arg = 0);
+                       void *arg = 0);
 
   ~ACE_RW_Thread_Mutex (void);
   // Default dtor.
@@ -1294,9 +1294,9 @@ class ACE_Export ACE_Thread_Semaphore : public ACE_Semaphore
   //     only within one process.
 public:
   ACE_Thread_Semaphore (u_int count = 1, // By default make this unlocked.
-			LPCTSTR name = 0,
-			void * = 0,
-			int max = 0x7FFFFFFF);
+                        LPCTSTR name = 0,
+                        void * = 0,
+                        int max = 0x7FFFFFFF);
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 
@@ -1314,9 +1314,9 @@ struct ACE_Export ACE_Sub_Barrier
 {
   // = Initialization.
   ACE_Sub_Barrier (u_int count,
-		   ACE_Thread_Mutex &lock,
-		   LPCTSTR name = 0,
-		   void *arg = 0);
+                   ACE_Thread_Mutex &lock,
+                   LPCTSTR name = 0,
+                   void *arg = 0);
 
   ~ACE_Sub_Barrier (void);
 
@@ -1349,8 +1349,8 @@ class ACE_Export ACE_Barrier
   //     (Richard.Marejka@canada.sun.com).
 public:
   ACE_Barrier (u_int count,
-	       LPCTSTR name = 0,
-	       void *arg = 0);
+               LPCTSTR name = 0,
+               void *arg = 0);
   // Initialize the barrier to synchronize <count> threads.
 
   ~ACE_Barrier (void);
@@ -1411,7 +1411,7 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
-#endif /* ACE_HAS_STHREADS */
+#endif /* 0 */
 
 #if 0
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
