@@ -1,3 +1,12 @@
+Tue Jun  1 21:50:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.cpp:
+	  Added missing #include
+
+	* tao/UIOP_Transport.cpp:
+	* tao/IIOP_Transport.cpp:
+	  Removed pesky warnings about unreached statements
+
 Tue Jun  1 19:48:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged in the changes from ami_phase1_start to

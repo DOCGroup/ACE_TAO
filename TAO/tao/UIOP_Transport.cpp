@@ -240,7 +240,6 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
                          "TAO (%P|%t) %N:%l handle_client_input: "
                          "error on stream.\n"),
                         -1);
-      return -1;
 
     case TAO_GIOP::Fragment:
       // Handle this.
@@ -248,7 +247,6 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
                          "TAO (%P|%t) %N:%l handle_client_input: "
                          "fragment.\n"),
                         -1);
-      return -1;
 
     case TAO_GIOP::Request:
       // In GIOP 1.0 and GIOP 1.1 this is an error, but it is
@@ -260,7 +258,6 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
                          "TAO (%P|%t) %N:%l handle_client_input: "
                          "request.\n"),
                         -1);
-      return -1;
 
     case TAO_GIOP::CancelRequest:
     case TAO_GIOP::LocateRequest:
@@ -272,7 +269,6 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
                          "TAO (%P|%t) %N:%l handle_client_input: "
                          "wrong message.\n"),
                         -1);
-      return -1;
 
     case TAO_GIOP::LocateReply:
     case TAO_GIOP::Reply:
