@@ -3,7 +3,7 @@
 # This are the pairs "sub-directory , script" we run; the separator
 # *must* be a space followed by a comma and then another space.
 
-$ace_tests = 'tests , run_tests.sh';
+$ace_tests = 'tests , run_tests.pl';
 if ($^O eq "MSWin32") {
   $ace_tests = 'tests , run_tests.bat';
 }
@@ -66,15 +66,15 @@ if ($^O eq "MSWin32") {
 
 @MINIMUM_CORBA_LIST =
     ( $ace_tests,
-      'TAO/tests/Param_Test , run_test.pl',
-      'TAO/tests/Param_Test , run_test.pl -i dii',
+# NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl',
+# NOT MINIMUM 'TAO/tests/Param_Test , run_test.pl -i dii',
 # NOT MINIMUM 'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
       'TAO/performance-tests/Latency , run_test.pl',
       'TAO/tests/OctetSeq , run_test.pl',
       'TAO/tests/Multiple_Inheritance , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
       'TAO/tests/MT_Server , run_test.pl',
-      'TAO/tests/Faults , run_test.pl',
+# NOT MINIMUM 'TAO/tests/Faults , run_test.pl',
       'TAO/tests/NestedUpcall/Simple , run_test.pl',
       'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
       'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
