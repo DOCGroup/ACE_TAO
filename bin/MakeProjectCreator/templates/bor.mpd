@@ -106,7 +106,7 @@ all: idl_src_files
 #
 # Override defaults in outputdir.bor
 #
-!ifndef STATIC
+!ifdef STATIC
 STATIC_DIR=.
 !endif
 !ifdef DEBUG
