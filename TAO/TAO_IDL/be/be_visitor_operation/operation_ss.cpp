@@ -412,8 +412,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << be_uidt_nl
       << "};" << be_uidt_nl << be_nl;
 
-  *os << "static size_t const _tao_nargs =" << be_nl
-      << "  sizeof (_tao_args) / sizeof (_tao_args[0]);" << be_nl << be_nl;
+  *os << "static size_t const _tao_nargs = "
+      << (node->argument_count () + 1) << ";" << be_nl << be_nl;
 
   *os << "TAO_" << node->flat_name ();
 
