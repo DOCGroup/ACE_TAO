@@ -207,10 +207,14 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
           iovcnt++;
         }
 
-      ACE_INET_Addr inet_addr (udp_addr.port, udp_addr.ipaddr);
+      ACE_INET_Addr inet_addr (udp_addr.port,
+                               udp_addr.ipaddr);
       // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
       // udp_addr.port, udp_addr.ipaddr));
-      ssize_t n = this->dgram_->send (iov, iovcnt, inet_addr);
+
+      ssize_t n = this->dgram_->send ((const iovec *) iov,
+                                      iovcnt,
+                                      inet_addr);
       if (n == -1)
         {
           // @@ TODO Use a Event Channel specific exception
