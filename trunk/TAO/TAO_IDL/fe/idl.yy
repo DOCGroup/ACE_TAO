@@ -4511,7 +4511,8 @@ uses_decl :
                   ud.is_multiple = $2;
                   c->uses ().enqueue_tail (ud);
                   
-                  if (ud.is_multiple == I_TRUE)
+                  if (ud.is_multiple == I_TRUE 
+                      && !idl_global->using_ifr_backend ())
                     {
                       // These datatypes must be created in the
                       // front end so they can be looked up
