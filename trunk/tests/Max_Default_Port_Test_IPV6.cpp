@@ -139,7 +139,7 @@ client (void *arg)
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test_IPV6"));
 
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

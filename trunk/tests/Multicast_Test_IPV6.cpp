@@ -999,7 +999,7 @@ template class ACE_Array<ACE_String_Base<char> *>;
 int
 run_main (int, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Multicast_Test_IPv6"));
+  ACE_START_TEST (ACE_TEXT ("Multicast_Test_IPV6"));
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("%s must be run on a platform ")
