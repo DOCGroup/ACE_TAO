@@ -1,3 +1,11 @@
+Fri Jul 11 12:12:40 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/TAO.dsp: changed to use ace-r.dll in the release 
+	  version
+	
+	* tests/Cubit/TAO/{client,server}.dsp: changed to use ace-r.dll
+	  and tao-r.dll for the release versions.
+
 Thu Jul 10 15:47:24 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/: Removed the following obsolete files: README.apm,
