@@ -214,8 +214,11 @@ ACE_Stream_Type::fini (void) const
     {
       ACE_Module_Type *t = m->link ();
 
-      // Final 0 arg disables ACE_Module::DELETE_THIS 
-      str->remove (m->name (), 0); 
+      // Final arg is an indication to *not* delete the Module.
+      str->remove (m->name (), MT_Module::M_DELETE_NONE);
+
+      // Finalize the Module (this may delete it, but we don't really
+      // care since we don't access it again).
       m->fini ();
       m = t;
     }
@@ -235,12 +238,10 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
   MT_Stream *str = (MT_Stream *) obj;
   int result = 0;
 
-  ACE_Module_Type *m = this->head_;
-
-  while (m != 0)
+  for (ACE_Module_Type *m = this->head_; m != 0; )
     {
-      ACE_Module_Type *next = m->link ();
       // We need to do this first so we don't bomb out if we delete m!
+      ACE_Module_Type *next = m->link ();
 
       if (m == mod)
 	{
@@ -249,10 +250,13 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 	  else	  
 	    prev->link (next);
 
-	  // Final 0 arg disables ACE_Module::DELETE_THIS 
-	  if (str->remove (m->name (), 0) == -1) 
+	  // Final arg is an indication to *not* delete the Module.
+	  if (str->remove (m->name (), MT_Module::M_DELETE_NONE) == -1)
 	    result = -1; 
-	  m->fini (); // This call may end up deleteing m!
+
+	  // This call may end up deleting m, which is ok since we
+	  // don't access it again!
+	  m->fini (); 
 	}
       else
 	prev = m;
@@ -280,7 +284,10 @@ ACE_Module_Type *
 ACE_Stream_Type::find (const char *mod_name) const
 {
   ACE_TRACE ("ACE_Stream_Type::find");
-  for (ACE_Module_Type *m = this->head_; m != 0; m = m->link ())
+
+  for (ACE_Module_Type *m = this->head_; 
+       m != 0; 
+       m = m->link ())
     if (ACE_OS::strcmp (m->name (), mod_name) == 0)
       return m;
 

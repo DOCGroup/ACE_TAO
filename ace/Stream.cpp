@@ -118,19 +118,21 @@ ACE_Stream<ACE_SYNCH_2>::pop (int flags)
   else
     {
       // Skip over the ACE_Stream head.
-      ACE_Module<ACE_SYNCH_2> *top = this->stream_head_->next ();
-      ACE_Module<ACE_SYNCH_2> *new_top = top->next ();
+      ACE_Module<ACE_SYNCH_2> *top_mod = this->stream_head_->next ();
+      ACE_Module<ACE_SYNCH_2> *new_top = top_mod->next ();
 
       this->stream_head_->next (new_top);
 
       // Close the top ACE_Module.
 
-      top->close (flags);
-      delete top;
+      top_mod->close (flags);
+
+      // Don't delete the Module unless the flags request this.
+      if (flags != ACE_Module<ACE_SYNCH_2>::M_DELETE_NONE)
+	delete top_mod;
 
       this->stream_head_->writer ()->next (new_top->writer ());
       new_top->reader ()->next (this->stream_head_->reader ());
-
       return 0;
     }
 }
@@ -139,12 +141,15 @@ ACE_Stream<ACE_SYNCH_2>::pop (int flags)
 // ACE_Stream.
 
 template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::remove (const char *name, int flags)
+ACE_Stream<ACE_SYNCH_2>::remove (const char *name, 
+				 int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::remove");
   ACE_Module<ACE_SYNCH_2> *prev = 0;
 
-  for (ACE_Module<ACE_SYNCH_2> *mod = this->stream_head_; mod != 0; mod = mod->next ())
+  for (ACE_Module<ACE_SYNCH_2> *mod = this->stream_head_; 
+       mod != 0; 
+       mod = mod->next ())
     if (ACE_OS::strcmp (mod->name (), name) == 0)
       {
 	if (prev == 0) // Deleting ACE_Stream Head
@@ -154,7 +159,11 @@ ACE_Stream<ACE_SYNCH_2>::remove (const char *name, int flags)
 
 	// Close down the module and release the memory.
 	mod->close (flags);
-	delete mod;
+
+	// Don't delete the Module unless the flags request this.
+	if (flags != ACE_Module<ACE_SYNCH_2>::M_DELETE_NONE)
+	  delete mod;
+
 	return 0;
       }
     else
