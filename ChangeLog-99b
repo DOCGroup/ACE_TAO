@@ -1,5 +1,11 @@
 Tue Sep  7 08:04:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (isatty): Fixed this code so that it doesn't use
+	  osf_handle() anymore on NT, but instead just casts the
+ 	  ACE_HANDLE to an int.  Thanks to Mark Winrock
+ 	  <mwinrock@nortelnetworks.com> for suggesting this fix and
+ 	  testing it out.
+
 	* tests/run_tests.lst: Added Signal_Test.
 
 1999-09-07  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
