@@ -23,3 +23,5 @@ SUBDIRS = \
         Trading_Service \
         Logging_Service \
         tests
+
+

@@ -43,3 +43,10 @@ noinst_HEADERS = \
         Video_Control_i.h \
         Video_Server.h \
         server_proto.h
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+

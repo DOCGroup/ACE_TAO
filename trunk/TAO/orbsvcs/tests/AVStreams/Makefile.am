@@ -20,3 +20,4 @@ SUBDIRS = \
         sfp
 
 EXTRA_DIST = README
+
