@@ -1,3 +1,8 @@
+Sun Jan 28 08:28:52 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB_Core.cpp:
+          Don't use priority_mapping_manager_ if RT-CORBA is disabled.
+
 Sun Jan 28 07:49:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/LongWrites/Coordinator.cpp:
@@ -98,24 +103,24 @@ Sat Jan 27 18:41:28 2001  Ossama Othman  <ossama@uci.edu>
 
 Sat Jan 27 16:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/IFR_Service/Options.cpp:
+        * orbsvcs/IFR_Service/Options.cpp:
 
-	  Include "ace/Log_Msg.h" to pull in ACE_ERROR_RETURN and LM_ERROR
-	  definitions.
+          Include "ace/Log_Msg.h" to pull in ACE_ERROR_RETURN and LM_ERROR
+          definitions.
 
-	* orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
+        * orbsvcs/tests/LoadBalancing/Hash_ReplicaControl.cpp:
 
-	  Include "ace/Reactor.h" to pull in ACE_Reactor class
-	  declaration.  Needed for configurations that do not define
-	  ACE_TEMPLATES_REQUIRE_SOURCE.
+          Include "ace/Reactor.h" to pull in ACE_Reactor class
+          declaration.  Needed for configurations that do not define
+          ACE_TEMPLATES_REQUIRE_SOURCE.
 
 Sat Jan 27 11:32:18 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IOP.pidl:
-	* tao/Policy.pidl:
+        * tao/IOP.pidl:
+        * tao/Policy.pidl:
 
-	  Removed backslashes in comments.  Some compilers issue a warning
-	  about including them in a comment.
+          Removed backslashes in comments.  Some compilers issue a warning
+          about including them in a comment.
 
 Sat Jan 27 00:30:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -126,8 +131,8 @@ Sat Jan 27 00:30:57 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
         * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
         * orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h:
-	  Add missing ace/Service_Config.h #include, required for
-	  platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
+          Add missing ace/Service_Config.h #include, required for
+          platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
 
         * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
@@ -137,24 +142,24 @@ Sat Jan 27 00:30:57 2001  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
         * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
         * tests/NestedUpcall/Triangle_Test/Object_A_i.cpp:
-	  Add missing ace/Reactor.h #include, required for
-	  platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
+          Add missing ace/Reactor.h #include, required for
+          platforms that do not define ACE_TEMPLATES_REQUIRE_SOURCE.
 
 Fri Jan 26 22:24:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Default_Protocols_Hooks.cpp (ACE_RCSID):
-	* tao/RT_Protocols_Hooks.cpp (ACE_RCSID):
+        * tao/Default_Protocols_Hooks.cpp (ACE_RCSID):
+        * tao/RT_Protocols_Hooks.cpp (ACE_RCSID):
 
-	  Removed trailing semi-colon.  The ACE_RCSID macro already places
-	  trailing semi-colons in the expanded text.  This change fixes a
-	  warning about the extra semi-colon.
+          Removed trailing semi-colon.  The ACE_RCSID macro already places
+          trailing semi-colons in the expanded text.  This change fixes a
+          warning about the extra semi-colon.
 
 Fri Jan 26 22:13:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp (run):
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp (run):
 
-	  Added missing ACE_TRY_CHECKs.  This fixes a compile-time
-	  warning.
+          Added missing ACE_TRY_CHECKs.  This fixes a compile-time
+          warning.
 
 Fri Jan 26 19:37:50 2001  Craig Rodrigues <crodrigu@bbn.com>
 
