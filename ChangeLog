@@ -1,3 +1,10 @@
+Thu May 20 18:23:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/SOCK_Dgram_Bcast_Test.cpp: When sending a datagram, only send
+	  the formatted text string, noth the whole buffer. Some OSes (i.e.
+	  AIX) don't allow a broadcast of that large a buffer. Also, fixed
+	  the style, indentation, and narrow/wide text capability.
+
 Thu May 20 10:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Reactor/Client.cpp: In handle_input(), use "%.*C",
