@@ -1,3 +1,10 @@
+Sun Jul 11 12:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * Reconfig_Scheduler_T.{cpp, h},
+          Reconfig_Sched_Utils.{cpp, h}: Fixes for nightly build log errors and warnings.
+          Changed exception from UNKNOWN_TASK to INTERNAL, added ACE_TYPENAME for traits,
+          moved DFS ordering function from scheduler to scheduling strategy.
+
 Sun Jul 11 03:25:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp

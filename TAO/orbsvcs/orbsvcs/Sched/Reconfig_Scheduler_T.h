@@ -326,11 +326,6 @@ protected:
   // Traverses dependency graph, assigning a topological ordering.
   // Resets DFS map entries, do DFS traversal, constructs DFS map.
 
-  static int comp_entry_finish_times (const void *first, const void *second);
-  // Helper function to compare the DFS finish times of
-  // two task entries, so qsort orders these in topological
-  // order, with the higher times *first*.
-
   virtual void detect_cycles_i (CORBA::Environment &_env)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::INTERNAL,

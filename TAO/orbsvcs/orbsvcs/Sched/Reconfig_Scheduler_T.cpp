@@ -689,7 +689,7 @@ compute_scheduling (CORBA::Long minimum_priority,
     }
   infos->length (this->rt_info_count_);
   RtecScheduler::RT_Info* rt_info = 0;
-  for (RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
+  for (ACE_TYPENAME RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
        info_iter.done () == 0;
        ++info_iter)
     {
@@ -705,7 +705,7 @@ compute_scheduling (CORBA::Long minimum_priority,
     }
   configs->length (this->config_info_count_);
   RtecScheduler::Config_Info* config_info = 0;
-  for (CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
+  for (ACE_TYPENAME CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
        config_iter.done () == 0;
        ++config_iter)
     {
@@ -1182,46 +1182,6 @@ dfs_traverse_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-// Helper function to compare the DFS finish times of
-// two task entries, so qsort orders these in topological
-// order, with the higher times *first*
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
-TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-comp_entry_finish_times (const void *first, const void *second)
-{
-  const TAO_Reconfig_Scheduler_Entry *first_entry =
-    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
-                            first);
-
-  const TAO_Reconfig_Scheduler_Entry *second_entry =
-    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
-                            second);
-
-  // sort blank entries to the end
-  if (! first_entry)
-  {
-    return (second_entry) ? 1 : 0;
-  }
-  else if (! second_entry)
-  {
-    return -1;
-  }
-
-  // Sort entries with higher forward DFS finishing times before those
-  // with lower forward DFS finishing times.
-  if (first_entry->fwd_finished () >
-      second_entry->fwd_finished ())
-  {
-    return -1;
-  }
-  else if (first_entry->fwd_finished () <
-           second_entry->fwd_finished ())
-  {
-    return 1;
-  }
-
-  return 0;
-}
 
 // Sorts an array of RT_info handles in topological order, then
 // checks for loops, marks unresolved remote dependencies.
@@ -1239,7 +1199,7 @@ detect_cycles_i (CORBA::Environment &ACE_TRY_ENV)
            this->rt_info_count_,
            sizeof (TAO_Reconfig_Scheduler_Entry *),
            ACE_reinterpret_cast (COMP_FUNC,
-                                 TAO_Reconfig_Scheduler::comp_entry_finish_times));
+                                 RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
 
   // Traverse entries in reverse topological order,
   // looking for strongly connected components (cycles).
@@ -1331,7 +1291,7 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
         }
       else
         {
-          ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+          ACE_THROW (RtecScheduler::INTERNAL ());
         }
     }
 
