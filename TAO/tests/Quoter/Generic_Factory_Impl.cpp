@@ -103,9 +103,9 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
   // available
 
   // Fill in the name of the Quoter Factory.
-  //CosNaming::Name factory_Name (1);  // max = 1 
-  //factory_Name.length (1);
-  //factory_Name[0].id = CORBA::string_dup ("Quoter_Factory");
+  // CosNaming::Name factory_Name (1);  // max = 1 
+  // factory_Name.length (1);
+  // factory_Name[0].id = CORBA::string_dup ("Quoter_Factory");
   // Take the key supplied to search for a Quoter Factory
   CosNaming::Name factory_Name = (CosNaming::Name) factory_key;
 
@@ -162,7 +162,6 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       Stock::Quoter_var quoter_var =
         factory_var->create_quoter ("test",
                                     _env_there);
-      
       ACE_DEBUG ((LM_DEBUG,
                   "Quoter Created\n"));
     
@@ -180,7 +179,3 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
       return object_ptr;
     }
 } 
-
- 
-
-
