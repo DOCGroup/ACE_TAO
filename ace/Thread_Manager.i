@@ -52,6 +52,22 @@ ACE_Thread_Descriptor::flags (void) const
   return flags_;
 }
 
+// Set the <next_> pointer
+ACE_INLINE void
+ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::set_next");
+  this->next_ = td;
+}
+
+// Get the <next_> pointer
+ACE_INLINE ACE_Thread_Descriptor *
+ACE_Thread_Descriptor::get_next (void)
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::flag");
+  return this->next_;
+}
+
 // Set the exit status.
 
 ACE_INLINE void *
