@@ -1,3 +1,13 @@
+Tue May 11 22:58:35 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Changes to support multiplex uses ports in components.
+          Thanks to Bala Natarajan <bala@dre.vanderbilt.edu> for
+          writing the hand-crafted version of the servant glue
+          code.
+
 Tue May 11 22:55:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/BasicSP.mpc:
