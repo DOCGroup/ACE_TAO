@@ -1,3 +1,28 @@
+Mon May 26 18:23:41 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/MEM_Acceptor.cpp (accept): Replace a C-style cast with
+	  ACE_reinterpret_cast to silence a warning from HP aC++.
+
+	* ace/config-hpux-11.00.h: Removed define for
+	  ACE_HAS_TIUSER_H_BROKEN_EXTERN_C - it's not broken anymore in
+	  11.00 relatively recent updates.
+
+	* ace/OS.h: Changed some u_int and u_long to unsigned int and
+	  unsigned long, respectively to compile correctly even if
+	  system includes are done out of order.
+
+	* ace/OS_TLI.h: Fixed comment on #else of #if !defined (ACE_HAS_TLI).
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Add -D_HPUX_SOURCE to
+	  CCFLAGS. ACE uses things that are set up by using this macro, but
+	  if system includes are done before ace/config.h, it isn't picked
+	  up in time. Fixes compile errors in performance-tests/SCTP which
+	  were triggered by including system headers before ACE headers.
+	  Although the general rule is to not do that, it's overly
+	  restrictive in practice and we should try to remove that
+	  restriction when it comes up.
+	  (g++ sets this macro by default)
+
 Mon May 26 12:03:33 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/tests.mpc: Added ACE_Init_Test. The WinXP-IA64 test was

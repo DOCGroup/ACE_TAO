@@ -93,7 +93,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
       if (remote_sap != 0)
         {
-          addr = (sockaddr *) &inet_addr;
+          addr = ACE_reinterpret_cast (sockaddr *, &inet_addr);
           len = sizeof (inet_addr);
           len_ptr = &len;
         }
