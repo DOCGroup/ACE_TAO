@@ -584,6 +584,8 @@ Time Service Specification.</A>
 <H3><A NAME="ec">CORBA Event Service</A></H3>
 
 <H4>
+<!-- @@ Pradeep: can you find an URL that points to the OMG website? -->
+<!-- IMHO it will look more official like that. -->
 Last Updated: Sat Jan&nbsp; 2 01:17:33 CST 1999</H4>
 Point of contact: <A HREF="mailto:pradeep@cs.wustl.edu">Pradeep Gore</A>
 <P>The COS compliant Event Service implements the <A HREF="http://siesta.cs.wustl.edu/~coryan/Docs/formal/97-12-11.pdf">Event
@@ -595,7 +597,7 @@ Features in this release:</H3>
 <UL>
 <LI>
 The Event Channel (<TT>$TAO_ROOT/orbsvcs/orbsvcs/CosEvent</TT>) supports
-the <TT>push </TT>style event&nbsp; communication.</LI>
+the <TT>push </TT>style event communication.</LI>
 
 <LI>
 A simple test (<TT>$TAO_ROOT/orbsvcs/tests/CosEC_Basic</TT>) demonstrates
@@ -608,12 +610,13 @@ Current Work:</H3>
 <UL>
 <LI>
 <TT>Event Service</TT>: The Event Service will create an event channel
-and register it with the naming service, Push style consumers and producers</LI>
+and register it with the naming service, Push style consumers and
+producers</LI> 
 
 <BR>can then connect to the service and send /receive events.
 <LI>
 <TT>CosEC_Multiple</TT>:&nbsp; This test demonstrates how multiple CosEC's
-connect to one RtEC and how multiple consumers and producers exchange<BR>
+connect to one RtEC and how multiple consumers and producers exchange
 events in this configuration.</LI>
 
 </UL>
