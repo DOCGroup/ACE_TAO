@@ -996,6 +996,36 @@ sub generate_default_components {
 }
 
 
+sub remove_duplicated_files {
+  my($self)   = shift;
+  my($dest)   = shift;
+  my($source) = shift;
+  my($names)  = $self->{$dest};
+  my(@slist)  = $self->get_component_list($source);
+
+  ## Find out which source files are listed
+  foreach my $name (keys %$names) {
+    my($comps) = $$names{$name};
+    foreach my $key (keys %$comps) {
+      my($array) = $$comps{$key};
+      my($count) = scalar(@$array);
+      for(my $i = 0; $i < $count; ++$i) {
+        foreach my $sfile (@slist) {
+          ## Is the source file is in the component array?
+          if ($$array[$i] eq $sfile) {
+            ## Remove the element and fix the index and count
+            splice(@$array, $i, 1);
+            --$count;
+            --$i;
+            last;
+          }
+        }
+      }
+    }
+  }
+}
+
+
 sub generated_source_extensions {
   my($self) = shift;
   my($tag)  = shift;
@@ -1181,6 +1211,10 @@ sub generate_defaults {
   ## Generate default components, but @specialComponents
   ## are skipped in the initial default components generation
   $self->generate_default_components(\@files);
+
+  ## Remove source files that are also listed in the template files
+  ## If we do not do this, then generated projects can be invalid.
+  $self->remove_duplicated_files('source_files', 'template_files');
 
   ## Generate the default idl generated list of source files
   ## only if we defaulted the idl file list
