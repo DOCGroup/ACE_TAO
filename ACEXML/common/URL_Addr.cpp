@@ -59,6 +59,14 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
   return this->addr_string_;
 }
 
+#if defined (ACE_USES_WCHAR)
+int
+ACEXML_URL_Addr::string_to_addr (const char* s)
+{
+  return this->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (s));
+}
+#endif /* ACE_USES_WCHAR */
+
 int
 ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s)
 {
