@@ -19,7 +19,8 @@ main (int argc, char *argv [])
 // ****************************************************************
 
 EC_BCast::EC_BCast (void)
-  : bcast_port_ (12345)
+  : bcast_address_ ("255.255.255.255"),
+    bcast_port_ (12345)
 {
 }
 
@@ -39,6 +40,12 @@ EC_BCast::parse_args (int& argc, char* argv[])
         {
           arg_shifter.consume_arg ();
           this->bcast_port_ = ACE_OS::atoi (arg_shifter.get_current ());
+        }
+
+      else if (ACE_OS::strcmp (arg, "-address") == 0)
+        {
+          arg_shifter.consume_arg ();
+          this->bcast_address_ = arg_shifter.get_current ();
         }
 
       arg_shifter.ignore_arg ();
@@ -70,7 +77,7 @@ EC_BCast::execute_test (CORBA::Environment& ACE_TRY_ENV)
   TAO_ECG_UDP_Sender sender;
   TAO_ECG_UDP_Out_Endpoint endpoint;
 
-  ACE_INET_Addr udp_addr (this->bcast_port_, "128.252.165.255");
+  ACE_INET_Addr udp_addr (this->bcast_port_, this->bcast_address_);
 
   Simple_Address_Server address_server_impl (udp_addr);
   RtecUDPAdmin::AddrServer_var address_server =

@@ -251,7 +251,8 @@ ACE_RT_Task::open_task (const char* name)
   char tempbuffer[64];
   if (tempname == 0)
     {
-      ACE_OS::sprintf (tempbuffer, "unnamed task %d", (long) this);
+      ACE_OS::sprintf (tempbuffer,
+                       "unnamed task %lx", (long) this);
       tempname = tempbuffer;
     }
 

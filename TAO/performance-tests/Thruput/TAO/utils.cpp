@@ -268,7 +268,7 @@ void PrintStats (void)
         break;
       }
       outFile = fopen (filename, "a+");
-      ACE_OS::fprintf (outFile, "%ldk \t", buflen / 1024);
+      ACE_OS::fprintf (outFile, "%dk \t", buflen / 1024);
       tmp = ((double) nbytes) / realt;
       ACE_OS::fprintf (outFile, "%.2f\n", tmp * 8.0 / 1024.0 / 1024.0);
       fclose (outFile);
@@ -286,7 +286,7 @@ void PrintStats (void)
                nbytes, cput, outfmt (((double) nbytes) / cput));
     }
   ACE_OS::fprintf (stdout,
-           "ttcp%s: %d Server Method calls, msec/call = %.2f, calls/sec = %.2f\n",
+           "ttcp%s: %ld Server Method calls, msec/call = %.2f, calls/sec = %.2f\n",
            trans ? "-t" : "-r",
            numCalls,
            1024.0 * realt / ((double) numCalls),
@@ -490,32 +490,33 @@ prusage (char *outp)
             break;
 
           case 'M':
-	    ACE_OS::sprintf (outp, "%d", rusage.ru_maxrss / 2);
+	    ACE_OS::sprintf (outp, "%ld", rusage.ru_maxrss / 2);
             END (outp);
             break;
 
           case 'F':
-            ACE_OS::sprintf (outp, "%d", rusage.ru_majflt);
+            ACE_OS::sprintf (outp, "%ld", rusage.ru_majflt);
 	    END (outp);
             break;
 
           case 'R':
-	    ACE_OS::sprintf (outp, "%d", rusage.ru_minflt);
+	    ACE_OS::sprintf (outp, "%ld", rusage.ru_minflt);
             END (outp);
             break;
 
           case 'I':
-            ACE_OS::sprintf (outp, "%d", rusage.ru_inblock);
+            ACE_OS::sprintf (outp, "%ld", rusage.ru_inblock);
             END (outp);
             break;
 
           case 'O':
-            ACE_OS::sprintf (outp, "%d", rusage.ru_oublock);
+            ACE_OS::sprintf (outp, "%ld", rusage.ru_oublock);
             END (outp);
             break;
 
 	  case 'C':
-	    ACE_OS::sprintf (outp, "%d+%d", rusage.ru_nvcsw, rusage.ru_nivcsw);
+	    ACE_OS::sprintf (outp, "%ld+%ld",
+                             rusage.ru_nvcsw, rusage.ru_nivcsw);
             END (outp);
             break;
 #   endif /*ACE HAS PRUSAGE_T |   ACE_HAS_GETRUSAGE*/

@@ -52,6 +52,9 @@ public:
   // Don't dump the EC_Driver results, they are meaningless.
 
 private:
+  const char* bcast_address_;
+  // The IP address used to broadcast
+
   u_short bcast_port_;
   // The port used to send and receive bcast messages...
 };

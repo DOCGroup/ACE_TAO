@@ -138,7 +138,7 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
       index = this->num_policies_ - 1;
 
       // Ensure the starting trader policy gets the first slot.
-      if (pol_type != TAO_Policies::STARTING_TRADER 
+      if (pol_type != TAO_Policies::STARTING_TRADER
           || index == 0)
         {
           this->policies_[index].name = TAO_Policies::POLICY_NAMES[pol_type];
@@ -864,15 +864,15 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 
       follow_option = link_info.limiting_follow_rule < trader_max_follow_policy
         ? (link_info.limiting_follow_rule < query_link_follow_rule
-           ? link_info.limiting_follow_rule 
-           : query_link_follow_rule) 
+           ? link_info.limiting_follow_rule
+           : query_link_follow_rule)
         : (trader_max_follow_policy < query_link_follow_rule
-           ? trader_max_follow_policy 
+           ? trader_max_follow_policy
            : query_link_follow_rule);
     }
   else
     follow_option = link_info.def_pass_on_follow_rule < trader_max_follow_policy
-      ? link_info.def_pass_on_follow_rule 
+      ? link_info.def_pass_on_follow_rule
       : trader_max_follow_policy;
 
   CORBA::ULong i = 0;
@@ -1377,7 +1377,7 @@ TAO_Offer_Filter::limits_applied (void)
     {
       TAO_String_Hash_Key* policy_name_ptr = 0;
       p_iter.next (policy_name_ptr);
-      temp[i++] = CORBA::string_dup ((const char*) *policy_name_ptr);
+      temp[i++] = CORBA::string_dup (policy_name_ptr->in ());
     }
 
   return new CosTrading::PolicyNameSeq (size, size, temp, 1);
