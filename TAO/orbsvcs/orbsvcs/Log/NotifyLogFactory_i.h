@@ -1,20 +1,17 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   NotifyLogFactory_i.h
-//
-// = DESCRIPTION
-//   Implements the Factory for NotifyLog Objects.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   NotifyLogFactory_i.h
+ *
+ *  $Id$
+ *
+ *  Implements the Factory for NotifyLog Objects.
+ *  
+ *
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_NOTIFYLOGFACTORY_I_H
 #define TLS_NOTIFYLOGFACTORY_I_H
@@ -53,7 +50,7 @@ public:
   NotifyLogFactory_i (void);
   // Ctor
 
-  NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf ACE_ENV_ARG_DECL);
+  NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
   ~NotifyLogFactory_i ();
   // Dtor

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Logging Service examples
-//
-// = FILENAME
-//   RTEvent_Consumer
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   RTEvent_Consumer.h
+ *
+ *  $Id$
+ *
+ *  An example of using the RTEvent_Logging_Service.
+ *  The RTEvent_Consumer consumes log-generated events.
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef RTEVENT_CONSUMER_H

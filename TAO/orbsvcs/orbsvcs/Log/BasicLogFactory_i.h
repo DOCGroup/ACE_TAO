@@ -1,21 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   BasicLogFactory_i.h
-//
-// = DESCRIPTION
-//   Implements the Factory for BasicLog Objects.
-//
-// = AUTHOR
-//   Matthew Braun <mjb2@cs.wustl.edu>
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   BasicLogFactory_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsLogAdmin::BasicLogFactory interface.
+ *
+ *
+ *  @author Matthew Braun <mjb2@cs.wustl.edu>
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_BASICLOGFACTORY_I_H
 #define TLS_BASICLOGFACTORY_I_H

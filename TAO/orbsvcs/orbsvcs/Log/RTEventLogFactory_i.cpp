@@ -1,7 +1,4 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/RTEventLogNotification.h"
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
@@ -22,6 +19,12 @@
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (Log,
+           RTEventLogFactory_i,
+           "$Id$")
+
+
 
 RTEventLogFactory_i::RTEventLogFactory_i (void)
 : poa_ (PortableServer::POA::_nil ()),
@@ -91,7 +94,7 @@ RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
   // uncomment this if we want to use the parent poa for some reason.
 
   PortableServer::POA_var defPOA = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   TAO_EC_Event_Channel_Attributes attr (defPOA.in (), defPOA.in ());
 
@@ -99,22 +102,22 @@ RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
   ACE_NEW_THROW_EX (impl,
                     TAO_EC_Event_Channel (attr),
                     CORBA::NO_MEMORY ());
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   auto_ptr <TAO_EC_Event_Channel> ec (impl);
 
   impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   PortableServer::ObjectId_var oidec = poa_->activate_object (ec.get ()
                                        ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ec.release ();
 
   CORBA::Object_var objec =
     poa_->id_to_reference (oidec.in () ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   this->event_channel_ = RtecEventChannelAdmin::EventChannel::_narrow (objec.in ());
 
@@ -128,29 +131,29 @@ RTEventLogFactory_i::init (PortableServer::POA_ptr poa,
 }
 
 RTEventLogAdmin::EventLogFactory_ptr
-RTEventLogFactory_i::activate (PortableServer::POA_ptr poa//,
+RTEventLogFactory_i::activate (PortableServer::POA_ptr poa
                            ACE_ENV_ARG_DECL)
 {
   RTEventLogAdmin::EventLogFactory_var v_return;
 
   PortableServer::ObjectId_var oid =
-    poa->activate_object (this//,
+    poa->activate_object (this
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   CORBA::Object_var obj =
-    poa->id_to_reference (oid.in ()//,
+    poa->id_to_reference (oid.in ()
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   // narrow and store the result..
   this->log_mgr_ =
-    DsLogAdmin::LogMgr::_narrow (obj.in ()//,
+    DsLogAdmin::LogMgr::_narrow (obj.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   v_return =
-    RTEventLogAdmin::EventLogFactory::_narrow (obj.in ()//,
+    RTEventLogAdmin::EventLogFactory::_narrow (obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLogFactory::_nil ());
 
@@ -162,7 +165,7 @@ RTEventLogFactory_i::create (
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_rec_size,
         const DsLogAdmin::CapacityAlarmThresholdList & thresholds,
-        DsLogAdmin::LogId_out id//,
+        DsLogAdmin::LogId_out id
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -178,7 +181,7 @@ RTEventLogFactory_i::create (
     this->create_with_id (this->max_id_,
                           full_action,
                           max_rec_size,
-                          thresholds//,
+                          thresholds
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
@@ -198,7 +201,7 @@ RTEventLogFactory_i::create_with_id (
         DsLogAdmin::LogId id,
         DsLogAdmin::LogFullActionType full_action,
         CORBA::ULongLong max_size,
-        const DsLogAdmin::CapacityAlarmThresholdList & thresholds//,
+        const DsLogAdmin::CapacityAlarmThresholdList & thresholds
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
@@ -233,34 +236,27 @@ RTEventLogFactory_i::create_with_id (
 
   ACE_CHECK_RETURN (event_log._retn ());
 
-  auto_ptr<RTEventLog_i> event_log_auto (event_log_i);
-  // just in case the activation fails.
+  PortableServer::ServantBase_var safe_event_log_i = event_log_i;
+  // Transfer ownership to POA.  
 
   event_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (event_log._retn ());
 
   //initialise the LogConsumer object
-  event_log_i->activate();
+  event_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   // Register with the poa
   event_log = event_log_i->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (event_log._retn ());
 
-  event_log_i->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
-
-  // widening a BasicLog_var to a Log_var.
-  DsLogAdmin::Log_var log = RTEventLogAdmin::EventLog::_duplicate(event_log.in ());
-
   // Add to the Hash table..
-  if (hash_map_.bind (id, log) == -1)
+  if (hash_map_.bind (id, event_log.in ()) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       RTEventLogAdmin::EventLog::_nil ());
 
-  // All is well, release the reference.
-  event_log_auto.release ();
-
-  notifier_->object_creation (ACE_static_cast(DsLogAdmin::Log*, log.in ()), id);
+  notifier_->object_creation (event_log.in (),
+                              id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (RTEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn ();
 }

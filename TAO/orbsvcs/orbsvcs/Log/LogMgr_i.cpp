@@ -1,6 +1,8 @@
-/* -*- C++ -*- $Id$ */
-
 #include "LogMgr_i.h"
+
+ACE_RCSID (Log,
+           LogMgr_i,
+           "$Id$")
 
 LogMgr_i::LogMgr_i (void)
 {

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Telecom Log Event Service examples
-//
-// = FILENAME
-//   Event_Supplier
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   Event_Supplier.h
+ *
+ *  $Id$
+ *
+ *  An example of using the Event_Logging_Service.
+ *  
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef EVENT_SUPPLIER_H

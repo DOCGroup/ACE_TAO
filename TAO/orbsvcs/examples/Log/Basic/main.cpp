@@ -1,5 +1,9 @@
-/* -*- C++ -*- $Id$ */
 #include "TLS_Client.h"
+
+ACE_RCSID (Basic,
+           main,
+           "$Id$")
+
 
 int
 main (int argc, char *argv [])

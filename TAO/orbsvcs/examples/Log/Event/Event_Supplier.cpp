@@ -1,6 +1,10 @@
-/* -*- C++ -*- $Id$ */
 #include "Event_Supplier.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
+
+ACE_RCSID (Event,
+           Event_Supplier,
+           "$Id$")
+
 
 #define NAMING_SERVICE_NAME "NameService"
 #define EVENT_TLS_LOG_FACTORY_NAME "EventLogFactory"
@@ -54,7 +58,7 @@ Supplier::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_THROW (CORBA::UNKNOWN ());
+        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);

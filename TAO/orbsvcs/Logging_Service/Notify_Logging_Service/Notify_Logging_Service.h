@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
 // ============================================================================
-//
-// = FILENAME
-//   Notify_Logging_Service.h
-//
-// = AUTHORS
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// = DESCRIPTION
-//   Notification Log Service front end.
-//
+/**
+ *  @file   Notify_Logging_Service.h
+ *
+ *  $Id$
+ *
+ *  Front End of the Telecom Log Service 
+ *  Notify_Logging_Service
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef NOTIFY_LOGGING_SERVICE_H

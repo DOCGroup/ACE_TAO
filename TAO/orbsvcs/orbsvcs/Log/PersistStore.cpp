@@ -1,7 +1,10 @@
-/* -*- C++ -*- $Id$ */
-
-#include "orbsvcs/Time_Utilities.h"
 #include "PersistStore.h"
+#include "orbsvcs/Time_Utilities.h"
+
+ACE_RCSID (Log,
+           PersistStore,
+           "$Id$")
+
 
 PersistStore::PersistStore (CORBA::ULongLong max_size,
                                 CORBA::ULong max_rec_list_len)

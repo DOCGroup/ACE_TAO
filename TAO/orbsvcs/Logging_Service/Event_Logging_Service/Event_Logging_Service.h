@@ -1,16 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
+
 // ============================================================================
-//
-// = FILENAME
-//   Event_Logging_Service.h
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// = DESCRIPTION
-//   Telecom EventLog Service front end.
-//
+/**
+ *  @file   Event_Logging_Service.h
+ *
+ *  $Id$
+ *
+ *  Front End of the Telecom Log Service 
+ *  Event_Logging_Service
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef EVENT_LOGGING_SERVICE_H

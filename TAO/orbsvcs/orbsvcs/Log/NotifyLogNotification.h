@@ -1,20 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   NotifyLogNotification_i.h
-//
-// = DESCRIPTION
-//   Implementation of Log generated events for NotifyLog.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   NotifyLogNotification.h
+ *
+ *  $Id$
+ *
+ *  Methods to enable log-generated events.
+ *
+ *
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
+ *   
+ *  
+ */
+//=============================================================================
 
 #ifndef TLS_NOTIFY_LOG_NOTIFICATION_H
 #define TLS_NOTIFY_LOG_NOTIFICATION_H
