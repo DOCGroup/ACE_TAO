@@ -1,8 +1,8 @@
 Sat May 15 19:17:00 2004 Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast): 
+	* ace/SOCK_Dgram_Bcast.cpp (mk_broadcast):
 	Quick fix to previous bugfix. It seems that not every system (eg. Linux)
-	provides sockaddr.sa_len. Previous fix (see below) restricted now to AIX, 
+	provides sockaddr.sa_len. Previous fix (see below) restricted now to AIX,
 	QNX and CHORUS, where sa_len is avalaible.
 
 Sat May 15 17:25:17 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
