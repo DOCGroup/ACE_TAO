@@ -21,21 +21,16 @@ Grid_i::Grid_i (CORBA::Short x,
   : width_ (x),
     height_ (y)
 {
-  ACE_NEW_THROW_EX (array_,
-                    CORBA::Long *[y],
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
+  ACE_NEW_THROW (array_,
+	         CORBA::Long *[y],
+                 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
   // Allocate memory for the matrix.
 
   for (int ctr = 0; ctr < y; ctr++)
-    {
-      ACE_NEW_THROW_EX (array_[ctr],
-                        CORBA::Long[x],
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK;
-    }
-
+    ACE_NEW_THROW (array_[ctr],
+	           CORBA::Long[x],
+                   CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 }
 
 // Default destructor.
@@ -47,7 +42,7 @@ Grid_i::~Grid_i (void)
 
 //  Set a value in the grid.
 
-void
+void 
 Grid_i::set (CORBA::Short x,
 	     CORBA::Short y,
 	     CORBA::Long value,
@@ -58,7 +53,7 @@ Grid_i::set (CORBA::Short x,
       || x >= width_
       || y >= height_)
     ACE_THROW (Grid::RANGE_ERROR ());
-  else
+  else 
     array_[x][y] = value;
 }
 
@@ -74,32 +69,32 @@ Grid_i::get (CORBA::Short x,
       || x >= width_
       || y >= height_)
     ACE_THROW_RETURN (Grid::RANGE_ERROR (), -1);
-  else
+  else 
     return array_[x][y];
 }
 
 // Access methods.
 
-CORBA::Short
+CORBA::Short 
 Grid_i::width (CORBA::Environment &A)
 {
   return this->width_;
 }
 
-CORBA::Short
+CORBA::Short 
 Grid_i::height (CORBA::Environment &)
 {
   return this->height_;
 }
 
-void
+void 
 Grid_i::width (CORBA::Short x,
 	       CORBA::Environment &)
 {
   this->width_ = x;
 }
 
-void
+void 
 Grid_i::height (CORBA::Short y,
 		CORBA::Environment &)
 {
@@ -108,7 +103,7 @@ Grid_i::height (CORBA::Short y,
 
 // Destroy the grid
 
-void
+void 
 Grid_i::destroy (CORBA::Environment &)
 {
   // Delete the array.
@@ -133,7 +128,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 // Shutdown.
 
-void
+void 
 Grid_Factory_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -167,30 +162,30 @@ Grid_Factory_i::~Grid_Factory_i (void)
 
 // Make a <Grid>.
 
-Grid_ptr
+Grid_ptr 
 Grid_Factory_i::make_grid (CORBA::Short width,
                            CORBA::Short height,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   Grid_i *grid_ptr = 0;
-
+ 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Making a new Grid\n"));
 
   // Set a default value for width.
   if (width <= 0)
     width = Grid_Factory::DEFAULT_WIDTH;
-
+ 
   // Set a default value for height.
   if (height <= 0)
     height = Grid_Factory::DEFAULT_HEIGHT;
 
   // This attempts to create a new Grid_i and throws an exception and
   // returns a null value if it fails
-  ACE_NEW_THROW_EX (grid_ptr,
-                    Grid_i (width, height, ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (Grid::_nil ());
+  ACE_NEW_THROW_RETURN (grid_ptr,
+			Grid_i (width, height, ACE_TRY_ENV),
+			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+			Grid::_nil ());
 
   // Register the Grid pointer.
   return grid_ptr->_this (ACE_TRY_ENV);

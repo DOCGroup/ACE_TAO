@@ -1,9 +1,6 @@
 // $Id$
 
 #include "tao/Forwarding_Servant.h"
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
 #include "tao/Object.h"
 #include "tao/POAC.h"
 #include "tao/Any.h"
@@ -28,7 +25,7 @@ TAO_Forwarding_Servant::invoke (CORBA::ServerRequest_ptr request,
   CORBA::Exception *exception
     = new PortableServer::ForwardRequest (this->forward_to_.in ());
 
-  CORBA::Any any (exception->_type (), exception, 1);
+  CORBA::Any any (exception->_type (), exception);
 
   request->set_exception (any, env);
 
@@ -46,5 +43,3 @@ TAO_Forwarding_Servant::_primary_interface (const PortableServer::ObjectId &oid,
 
   return CORBA::string_dup (this->interface_repository_id_.in ());
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */

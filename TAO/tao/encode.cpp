@@ -31,7 +31,6 @@
 #include "tao/Principal.h"
 #include "tao/varout.h"
 #include "tao/Union.h"
-#include "tao/debug.h"
 
 ACE_RCSID(tao, encode, "$Id$")
 
@@ -96,10 +95,9 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Primitive::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -146,10 +144,9 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Any::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Any::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -187,9 +184,8 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // Indirected typecodes can't occur at "top level" like
           // this, only nested inside others!
         case ~0u:
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "indirected typecode at top level!\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "indirected typecode at top level!"));
           continue_encoding = 0;
           break;
 
@@ -216,10 +212,9 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_TypeCode::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -232,16 +227,30 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
                                void *context,
                                CORBA::Environment &env)
 {
+  CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
   CORBA::Principal_ptr p = *(CORBA::Principal_ptr *) data;
 
-  if ((*stream << p) == 0)
+  if (p != 0)
     {
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      continue_encoding = stream->write_long (p->id.length ());
+
+      continue_encoding = continue_encoding &&
+        stream->write_octet_array (p->id.get_buffer (),
+                                   p->id.length ());
+    }
+  else
+    continue_encoding = stream->write_long (0);
+  if (continue_encoding == 1)
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  else
+    {
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Principal::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
 // encode obj ref
@@ -254,7 +263,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  // Current version:  objref is really an TAO_Stub.
+  // Current version:  objref is really an STUB_Object.
   // @@ But, it need not be.  All IIOP specific processing has
   //    been move to the specific transport profile class!
   //
@@ -263,12 +272,49 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
   // @@ Seems to break here!
   CORBA::Object_ptr obj = *(CORBA::Object_ptr *) data;
 
-  if ((*stream << obj) == 0)
+  // NIL objrefs ... marshal as empty type hint, no elements.
+
+  if (CORBA::is_nil (obj))
     {
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      // encode an empty type_id i.e., an empty string
+      stream->write_ulong (1);
+      stream->write_char (0);
+
+      // Number of profiles = 0
+      stream->write_ulong (0);
+
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
-  return CORBA::TypeCode::TRAVERSE_CONTINUE;
+  else
+    {
+
+      // All other objrefs ... narrow to a "real type" that we
+      // recognize, then marshal.
+      //
+      // XXX this will be changed so it narrows to STUB_Object and
+      // then asks that surrogate/proxy to marshal itself.
+      //
+      // For now, the original code is minimally changed.
+      // @@ Need to pass this stuff of to IIOP_Profile and let it
+      //    marshal it's own self.  This will be make_body
+
+      // @@ FRED: we will only encode he profile_in_use!!
+      // @@ need to add support for multiple profiles.  Move this part
+      // @@ to MProfile!!
+
+      STUB_Object *stubobj = obj->_stubobj ();
+
+      // STRING, a type ID hint
+      stream->encode (CORBA::_tc_string, &stubobj->type_id, 0, env);
+
+      // UNSIGNED LONG, value one, count of the sequence of
+      // encapsulated protocol profiles;
+      stream->write_ulong (1);
+
+      stubobj->profile_in_use ()->encode (stream, env);
+
+      return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    }
 }
 
 // encode structs
@@ -364,13 +410,39 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
 
                         case CORBA::tk_objref:
                           {
-                            // we know that the object pointer is stored in a
-                            // TAO_Object_Field_T parametrized type
-                            TAO_Object_Field_T<CORBA_Object>* field =
-                              ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                                    ACE_const_cast (void *, data));
-                            CORBA::Object_ptr ptr = field->_upcast ();
-                            retval = stream->encode (param, &ptr, 0, env);
+			    // The representation of a base
+			    // CORBA::Object is a little different.
+			    // @@ TODO maybe equivalent() is the right
+			    // method here.
+			    CORBA::Boolean is_corba_object =
+			      param->equal (CORBA::_tc_Object, env);
+			    if (env.exception () == 0)
+			      {
+				CORBA_Object_ptr ptr = 0;
+				if (is_corba_object == 0)
+				  {
+				    TAO_Object_Field* field =
+				      ACE_reinterpret_cast (TAO_Object_Field *,
+							    ACE_const_cast (void *, data));
+				    ptr = field->_upcast ();
+				    // The size of this field is different...
+				    size =
+				      sizeof(TAO_Object_Field_T<CORBA_Object>);
+				  }
+				else
+				  {
+				    CORBA_Object_ptr* tmp =
+				      ACE_reinterpret_cast(CORBA::Object_ptr*,
+							   ACE_const_cast(void*,
+									  data));
+				    ptr = *tmp;
+				  }
+				retval = stream->encode (param, &ptr, 0, env);
+			      }
+			    else
+			      {
+				retval = CORBA::TypeCode::TRAVERSE_STOP;
+			      }
                           }
                           break;
 
@@ -397,10 +469,9 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Struct::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -411,205 +482,220 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                            const void *data,
                            const void *data2,
                            void *context,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           CORBA::Environment &env)
 {
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
 
-  CORBA::TypeCode_ptr discrim_tc =
-    tc->discriminator_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+  CORBA::TypeCode_ptr discrim_tc = tc->discriminator_type (env);
   // get the discriminator type
 
-  CORBA::TypeCode_ptr default_tc = 0;
-  CORBA::Boolean discrim_matched = 0;
-
-  TAO_Base_Union *base_union = (TAO_Base_Union *)data;
-  void *member_val;
-
-  // encode the discriminator value
-  const void *discrim_val = base_union->_discriminant ();
-  CORBA::TypeCode::traverse_status retval =
-    stream->encode (discrim_tc, discrim_val, data2, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    return retval;
-
-  CORBA::ULong discrim_size_with_pad =
-    tc->TAO_discrim_pad_size (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  // move the pointer to point to the actual value
-  data = (char *) data + discrim_size_with_pad;
-  data2 = (char *) data2 + discrim_size_with_pad;
-
-  // now get ready to marshal the actual union value
-  CORBA::Long default_index =
-    tc->default_index (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  // get the member count
-  CORBA::ULong member_count =
-    tc->member_count (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-  // Check which label value matches with the
-  // discriminator value. Accordingly, marshal the
-  // corresponding member_type. If none match,
-  // check if default exists and marshal
-  // accordingly. Otherwise it is an error.
-  for (int i = 0; member_count-- != 0; i++)
+  if (env.exception () == 0)
     {
-      CORBA::Any_ptr member_label =
-        tc->member_label (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+      CORBA::TypeCode_ptr member_tc;
+      CORBA::Any_ptr member_label;
+      CORBA::ULong discrim_size_with_pad;
+      const void *discrim_val;
+      CORBA::ULong member_count;
+      CORBA::Long default_index;
+      CORBA::TypeCode_ptr default_tc = 0;
+      CORBA::Boolean discrim_matched = 0;
 
-      // do the matching
-      CORBA::TypeCode_var type = member_label->type ();
-      switch (type->kind (ACE_TRY_ENV))
+      TAO_Base_Union *base_union = (TAO_Base_Union *)data;
+      void *member_val;
+
+      // encode the discriminator value
+      discrim_val = base_union->_discriminant ();
+      CORBA::TypeCode::traverse_status retval =
+        stream->encode (discrim_tc, discrim_val, data2, env);
+
+      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-        case CORBA::tk_short:
-          {
-            CORBA::Short s;
-            *member_label >>= s;
-            if (s == *(CORBA::Short *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
+          discrim_size_with_pad = tc->TAO_discrim_pad_size (env);
+          if (env.exception () == 0)
+            {
+              // move the pointer to point to the actual value
+              data = (char *) data + discrim_size_with_pad;
+              data2 = (char *) data2 + discrim_size_with_pad;
+              // now get ready to marshal the actual union value
+              default_index = tc->default_index (env);
+              if (env.exception () == 0)
+                {
+                  // get the member count
+                  member_count = tc->member_count (env);
+                  if (env.exception () == 0)
+                    {
+                      // Check which label value matches with the
+                      // discriminator value. Accordingly, marshal the
+                      // corresponding member_type. If none match,
+                      // check if default exists and marshal
+                      // accordingly. Otherwise it is an error.
+                      for (int i = 0; member_count-- != 0; i++)
+                        {
+                          member_label = tc->member_label (i, env);
+                          if (env.exception () == 0)
+                            {
+                              // do the matching
+                              CORBA::TypeCode_var type = member_label->type ();
+                              switch (type->kind (env))
+                                {
+                                case CORBA::tk_short:
+                                  {
+                                    CORBA::Short s;
+                                    *member_label >>= s;
+                                    if (s == *(CORBA::Short *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_ushort:
+                                  {
+                                    CORBA::UShort s;
+                                    *member_label >>= s;
+                                    if (s == *(CORBA::UShort *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_long:
+                                  {
+                                    CORBA::Long l;
+                                    *member_label >>= l;
+                                    if (l == *(CORBA::Long *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_ulong:
+                                  {
+                                    CORBA::ULong l;
+                                    *member_label >>= l;
+                                    if (l == *(CORBA::ULong *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_enum:
+                                  {
+                                    CORBA::Long l;
+                                    TAO_InputCDR stream ((ACE_Message_Block *)
+                                                         member_label->_tao_get_cdr ());
+                                    (void)stream.decode (discrim_tc, &l, 0, env);
+                                    if (l == *(CORBA::Long *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_char:
+                                  {
+                                    CORBA::Char c;
+                                    *member_label >>= CORBA::Any::to_char (c);
+                                    if (c == *(CORBA::Char *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                case CORBA::tk_wchar:
+                                  // @@ ASG TO-DO
+                                  if (*(CORBA::WChar *) member_label->value () == *(CORBA::WChar *) discrim_val)
+                                    discrim_matched = 1;
+                                  break;
+                                case CORBA::tk_boolean:
+                                  {
+                                    CORBA::Boolean b;
+                                    *member_label >>= CORBA::Any::to_boolean (b);
+                                    if (b == *(CORBA::Boolean *) discrim_val)
+                                      discrim_matched = 1;
+                                  }
+                                  break;
+                                default:
+                                  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                                  ACE_DEBUG ((LM_DEBUG,
+                                              "Union::encode - Bad discriminant type"));
+                                  return CORBA::TypeCode::TRAVERSE_STOP;
+                                }// end of switch
 
-        case CORBA::tk_ushort:
-          {
-            CORBA::UShort s;
-            *member_label >>= s;
-            if (s == *(CORBA::UShort *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
+                              // get the member typecode
+                              member_tc = tc->member_type (i, env);
+                              if (env.exception () == 0)
+                                {
+                                  if (default_index >= 0 && default_index-- == 0)
+                                    {
+                                      // have we reached the default label?, if so,
+                                      // save a handle to the typecode for the default
+                                      default_tc = member_tc;
+                                    }
+                                  if (discrim_matched)
+                                    {
+                                      member_val = base_union->_access (0);
+                                      // marshal according to the matched typecode
+                                      return stream->encode (member_tc, member_val,
+                                                             data2, env);
+                                    }
+                                }
+                              else // error getting member type
+                                {
+                                  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                                  ACE_DEBUG ((LM_DEBUG,
+                                              "Union::encode - error getting member type:%d",i));
+                                  return CORBA::TypeCode::TRAVERSE_STOP;
+                                }
 
-        case CORBA::tk_long:
-          {
-            CORBA::Long l;
-            *member_label >>= l;
-            if (l == *(CORBA::Long *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
-
-        case CORBA::tk_ulong:
-          {
-            CORBA::ULong l;
-            *member_label >>= l;
-            if (l == *(CORBA::ULong *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
-
-        case CORBA::tk_enum:
-          {
-            CORBA::ULong ul;
-            TAO_InputCDR stream ((ACE_Message_Block *)
-                                 member_label->_tao_get_cdr ());
-            (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
-            ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-            if (ul == *(CORBA::ULong *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
-
-        case CORBA::tk_char:
-          {
-            CORBA::Char c;
-            *member_label >>= CORBA::Any::to_char (c);
-            if (c == *(CORBA::Char *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
-
-        case CORBA::tk_wchar:
-          CORBA::WChar wc;
-          *member_label >>= CORBA::Any::to_wchar (wc);
-          if (wc == *(CORBA::WChar *) discrim_val)
-            discrim_matched = 1;
-          break;
-
-        case CORBA::tk_boolean:
-          {
-            CORBA::Boolean b;
-            *member_label >>= CORBA::Any::to_boolean (b);
-            if (b == *(CORBA::Boolean *) discrim_val)
-              discrim_matched = 1;
-          }
-          break;
-
-        default:
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Union::encode - "
-                        "Bad discriminant type\n"));
-          ACE_THROW_RETURN (CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
-                            CORBA::TypeCode::TRAVERSE_STOP);
-        }// end of switch
-
-      // get the member typecode
-      CORBA::TypeCode_ptr member_tc =
-        tc->member_type (i, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-      if (default_index >= 0 && default_index-- == 0)
-        {
-          // have we reached the default label?, if so,
-          // save a handle to the typecode for the default
-          default_tc = member_tc;
+                            }
+                          else // error getting member label
+                            {
+                              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                              ACE_DEBUG ((LM_DEBUG,
+                                          "Union::encode - error member label : %d", i));
+                              return CORBA::TypeCode::TRAVERSE_STOP;
+                            }
+                        } // end of while
+                      // we are here only if there was no match
+                      if (default_tc)
+                        {
+                          member_val = base_union->_access (0);
+                          return stream->encode (default_tc, member_val, data2, env);
+                        }
+                      else
+                        {
+                          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+                          ACE_DEBUG ((LM_DEBUG,
+                                      "Union::encode - failed. No match and no default case"));
+                          return CORBA::TypeCode::TRAVERSE_STOP;
+                        }
+                    }
+                  else // error getting member count
+                    {
+                      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Union::encode - error getting member count"));
+                      return CORBA::TypeCode::TRAVERSE_STOP;
+                    }
+                }
+              else // error getting default index
+                {
+                  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Union::encode - error getting default used"));
+                  return CORBA::TypeCode::TRAVERSE_STOP;
+                }
+            }
+          else // error getting discrim_pad_size
+            {
+              env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+              ACE_DEBUG ((LM_DEBUG,
+                          "Union::encode - error getting discrim padded size"));
+              return CORBA::TypeCode::TRAVERSE_STOP;
+            }
         }
-      if (discrim_matched)
+      else // error encoding discriminant
         {
-          member_val = base_union->_access (0);
-          // marshal according to the matched typecode
-
-          if (member_tc->kind () == CORBA::tk_objref)
-            {
-              // we know that the object pointer is stored in a
-              // TAO_Object_Field_T parametrized type
-              TAO_Object_Field_T<CORBA_Object>* field =
-                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                      member_val);
-              CORBA::Object_ptr ptr = field->_upcast ();
-              return stream->encode (member_tc, &ptr, data2, ACE_TRY_ENV);
-            }
-          else
-            {
-              return stream->encode (member_tc, member_val,
-                                     data2, ACE_TRY_ENV);
-            }
+          env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Union::encode - error encoding discriminant"));
+          return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
-  // we are here only if there was no match
-  if (default_tc)
+  else // error getting the discriminant
     {
-      member_val = base_union->_access (0);
-      if (default_tc->kind () == CORBA::tk_objref)
-        {
-          // we know that the object pointer is stored in a
-          // TAO_Object_Field_T parametrized type
-          TAO_Object_Field_T<CORBA_Object>* field =
-            ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                  member_val);
-          CORBA::Object_ptr ptr = field->_upcast ();
-          return stream->encode (default_tc, &ptr, data2, ACE_TRY_ENV);
-        }
-      else
-        {
-          return stream->encode (default_tc, member_val,
-                                 data2, ACE_TRY_ENV);
-        }
+      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Union::encode - error getting the discriminant typecode"));
+      return CORBA::TypeCode::TRAVERSE_STOP;
     }
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Union::encode - failed. "
-                "No match and no default case\n"));
-
-  ACE_THROW_RETURN (CORBA::MARSHAL (),
-                    CORBA::TypeCode::TRAVERSE_STOP);
 }
 
 // encode string
@@ -849,7 +935,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
   // If an error was detected but no exception was raised then raise a
   // marshal exception.
   if (env.exception () == 0)
-    env.exception (new CORBA::MARSHAL ());
+    env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -994,12 +1080,10 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
             } // no exception computing size
         } // no exception computing content type
     } // no exception computing bounds
-
   // error exit
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_Marshal_Sequence::encode detected error\n"));
-  env.exception (new CORBA::MARSHAL ());
+  env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
+  ACE_DEBUG ((LM_DEBUG,
+              "marshaling TAO_Marshal_Sequence::encode detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1067,7 +1151,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
       case CORBA::tk_alias:
       case CORBA::tk_except:
       case CORBA::tk_wstring:
-        retval = stream->encode (tc2, data, 0, env);
+        retval = stream->encode (tc2, value, 0, env);
         break;
       default:
         // anything else is an error
@@ -1080,10 +1164,9 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Alias::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Alias::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1202,10 +1285,9 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
   else
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO_Marshal_Except::encode detected error\n"));
-      env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+      env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

@@ -39,20 +39,17 @@ CosEC_Multiple::init (int argc, char *argv[])
 int
 CosEC_Multiple::init_ORB  (int argc, char *argv [])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     "",
-                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       CORBA::Object_var poa_object  =
         this->orb_->resolve_initial_references("RootPOA",
-                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+                                               TAO_TRY_ENV);
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -60,35 +57,30 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in (),
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                      TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        root_poa->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      poa_manager->activate (TAO_TRY_ENV);
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
       return 0;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEC_Basic::init_ORB\n");
+      TAO_TRY_ENV.print_exception ("Exception in CosEC_Basic::init_ORB\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  ACE_NOTREACHED (return 0;)
+  TAO_ENDTRY;
 }
 
 int
 CosEC_Multiple::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  TAO_TRY
     {
       // Initialization of the naming service.
       if (this->naming_client_.init (this->orb_.in ()) != 0)
@@ -104,29 +96,25 @@ CosEC_Multiple::init_CosEC (void)
 
       CORBA::Object_var EC_obj =
         this->naming_client_->resolve (ec_ref_name,
-				      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+				      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // The CORBA::Object_var object is downcast to
       // CosEventChannelAdmin::EventChannel
       // using the <_narrow> method.
       this->cos_ec_ =
         CosEventChannelAdmin::EventChannel::_narrow (EC_obj.in (),
-                                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                                     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       return 0;
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in CosEC_Basic::init_ORB\n");
+      TAO_TRY_ENV.print_exception ("Exception in init_CosEC\n");
       return -1;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  ACE_NOTREACHED (return 0;)
+  TAO_ENDTRY;
 }
 
 int
@@ -141,6 +129,8 @@ CosEC_Multiple::runORB (void)
 void
 CosEC_Multiple::shutdown (void)
 {
-  if (!this->orb_->_nil ())
+  if (this->orb_ != CORBA::ORB::_nil ())
     this->orb_->shutdown ();
+
+  this->orb_ == CORBA::ORB::_nil ();
 }

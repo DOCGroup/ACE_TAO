@@ -37,8 +37,11 @@ public:
                    UTL_StrList *p);
   // constructor
 
-  int gen_label_value (TAO_OutStream *os);
-  // Generate the label value (as in a switch/case statement).
+  virtual int gen_encapsulation (void);
+  // generate the encapsulation
+
+  virtual long tc_encap_len (void);
+  // return the total byte length of ourselves represented as an encapsulation
 
   // Visiting
   virtual int accept (be_visitor *visitor);
@@ -46,7 +49,6 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);
-
 protected:
   virtual int compute_size_type (void);
   // compute the size type if it is unknown

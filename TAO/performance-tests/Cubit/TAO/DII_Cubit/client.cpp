@@ -22,6 +22,7 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 // Since we don't yet have an interface repository or dynamic-Any, we
 // just get the info from the IDL-generated files, since we're mainly
@@ -45,6 +46,14 @@ if (this->env_.exception () != 0) \
 { \
     this->error_count_++; \
  this->env_.print_exception (PRINT_STRING); \
+ return; \
+}
+
+#define REQUEST_CHECK_ENV_RETURN_VOID(REQ, PRINT_STRING) \
+if (REQ->env ()->exception () != 0) \
+{ \
+    this->error_count_++; \
+ REQ->env ()->print_exception (PRINT_STRING); \
  return; \
 }
 
@@ -124,6 +133,9 @@ private:
   int shutdown_;
   // Flag to tell server to exit.
 
+  int use_naming_service_;
+  // Flag toggling use of naming service to get IOR.
+
   CORBA::Environment env_;
   // Environment variable.
 
@@ -150,13 +162,17 @@ private:
 
   ACE_HANDLE f_handle_;
   // File handle to read the IOR.
+
+  TAO_Naming_Client my_name_client_;
+  // An instance of the name client used for resolving the factory
+  // objects.
 };
 
 // Constructor
 DII_Cubit_Client::DII_Cubit_Client (void)
   : loop_count_ (DEFAULT_LOOP_COUNT),			
     shutdown_ (0),
-    env_ (CORBA::default_environment ()),
+    use_naming_service_ (1),
     orb_var_ (0),
     factory_var_ (CORBA::Object::_nil ()),
     obj_var_ (CORBA::Object::_nil ()),
@@ -206,32 +222,49 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  ACE_TRY_NEW_ENV
+  // Exits gracefully when no IOR is provided and use_naming_service_
+  // is toggled off.
+  if (!ACE_OS::strcmp (this->factory_IOR_,
+		       DEFAULT_FACTORY_IOR) 
+      && !this->use_naming_service_)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%s: Must supply IOR, read it from a file, or use naming service."
+                       "\n",
+                       this->argv_ [0]),
+                      -1);
+
+  TAO_TRY
     {
       // Initialize the ORB.
       this->orb_var_ = CORBA::ORB_init (this->argc_,
                                         this->argv_,
                                         "internet",
-                                        ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                        TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "DII_Cubit_Client::parse_args failed"),
-                          -1);
+        return -1;
 
-      // Get a factory object reference from the factory IOR.
-      this->factory_var_ = 
-        this->orb_var_->string_to_object (this->factory_IOR_, 
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      if (this->use_naming_service_)
+        {
+          // Get a factory object reference from the naming service.
+          if (this->init_naming_service () == -1)
+            return -1;
+        }
+      else
+        {
+          // Get a factory object reference from the factory IOR.
+          this->factory_var_ = 
+            this->orb_var_->string_to_object (this->factory_IOR_, 
+                                              TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+        }
 
       // Get a Cubit object with a DII request on the Cubit factory.
-      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", ACE_TRY_ENV));
+      CORBA::Request_var mc_req (this->factory_var_->_request ("make_cubit", TAO_TRY_ENV));
 
-      ACE_TRY_CHECK;
+      TAO_CHECK_ENV;
 	
       // make_cubit takes a char* arg that it doesn't use, but we must
       // still include it in the request.
@@ -245,25 +278,72 @@ DII_Cubit_Client::init (int argc, char **argv)
       mc_req->result ()->value ()->replace (CORBA::_tc_Object, 
                                             &this->obj_var_,
                                             0, 
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+                                            TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       // Invoke the <make_cubit> operation to ask the Cubit factory
       // for a Cubit object.
-      mc_req->invoke (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      mc_req->invoke ();
 
       if (CORBA::is_nil (this->obj_var_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not obtain Cubit object from Cubit factory <%s>\n"),
                           -1);
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("DII_Cubit_Client::init");
+      TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
+
+  return 0;
+}
+
+// Get the factory IOR via a DII request on the naming service.
+
+int
+DII_Cubit_Client::init_naming_service (void)
+{
+  TAO_TRY
+    {
+      // Initialize the naming services
+      if (my_name_client_.init (orb_var_.in ()) != 0)
+	      ACE_ERROR_RETURN ((LM_ERROR,
+			                     " (%P|%t) Unable to initialize "
+			                     "the TAO_Naming_Client. \n"),
+			                    -1);
+       
+      // Build a Name object.
+      CosNaming::Name cubit_factory_name (2);
+      cubit_factory_name.length (2);
+      cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
+      cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
+
+      // Build up the <resolve> operation using the DII!
+      CORBA::Request_var req (my_name_client_->_request ("resolve", TAO_TRY_ENV));
+
+      TAO_CHECK_ENV;
+
+      req->add_in_arg () <<= cubit_factory_name;
+
+      req->set_return_type (CORBA::_tc_Object);
+
+      req->invoke ();
+
+      req->return_value () >>= this->factory_var_.inout ();
+
+      if (CORBA::is_nil (this->factory_var_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " could not resolve cubit factory in Naming service <%s>\n"),
+                          -1);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("DII_Cubit_Client::init_naming_service");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -287,9 +367,11 @@ DII_Cubit_Client::parse_args (void)
         this->loop_count_ = ACE_OS::atoi (opts.optarg);
         break;        
       case 'i':	  // Get the IOR from the command line.	
+	      this->use_naming_service_ = 0;
         this->factory_IOR_ = opts.optarg;
         break;
       case 'f':   // Read the IOR from the file.
+	      this->use_naming_service_ = 0;
         result = this->read_ior (opts.optarg);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -411,9 +493,10 @@ DII_Cubit_Client::cube_short_dii (void)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_short_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+                                 "cube_short_dii invoke");
 
   req->return_value () >>= ret_short;
 
@@ -445,9 +528,10 @@ DII_Cubit_Client::cube_long_dii (void)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+                                 "cube_long_dii invoke");
 
   req->return_value () >>= ret_long;
 
@@ -481,9 +565,10 @@ DII_Cubit_Client::cube_octet_dii (void)
   // Invoke, check for an exception and verify the result.
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+                                 "cube_octet_dii invoke");
 
   CORBA::Any::to_octet to_ret_octet (ret_octet);
   req->return_value () >>= to_ret_octet;
@@ -499,7 +584,7 @@ DII_Cubit_Client::cube_octet_dii (void)
 
 void
 DII_Cubit_Client::cube_union_dii (void)
-{ 
+{ /*
   // Create the request ...
   CORBA::Request_var req (this->obj_var_->_request ("cube_union",
                                                     this->env_));
@@ -526,9 +611,9 @@ DII_Cubit_Client::cube_union_dii (void)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_union_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_union_dii invoke");
 
   // Extract the result and check validity.
   Cubit::oneof* ret_ptr = &ret_union;
@@ -542,7 +627,7 @@ DII_Cubit_Client::cube_union_dii (void)
                   "cube_union_dii -- bad results\n"));
 
       this->error_count_++;
-    } 
+    } */
 }
 
 void
@@ -569,9 +654,9 @@ DII_Cubit_Client::cube_struct_dii (void)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_struct_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, "cube_struct_dii invoke");
 
   req->return_value () >>= ret_struct_ptr;
 
@@ -611,9 +696,10 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_octet_seq_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req, 
+                                 "cube_octet_seq_dii invoke");
 
   req->return_value () >>= ret_octet_seq_ptr;
 
@@ -662,9 +748,10 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
   this->call_count_++;
 
-  req->invoke (this->env_);
+  req->invoke ();
 
-  CUBIT_CHECK_ENV_RETURN_VOID ("cube_long_seq_dii invoke");
+  REQUEST_CHECK_ENV_RETURN_VOID (req,
+                                 "cube_long_seq_dii invoke");
 
   req->return_value () >>= ret_long_seq_ptr;
 
@@ -750,30 +837,29 @@ DII_Cubit_Client::run (void)
       this->print_stats (this->stats_messages_[j], dii_elapsed_time);
     }
 
-  ACE_TRY_NEW_ENV
+  TAO_TRY
     {
       // Shut down server via a DII request.
       if (this->shutdown_)
         {
           CORBA::Request_var req (this->obj_var_->_request ("shutdown",
-                                                            ACE_TRY_ENV));
+                                                            TAO_TRY_ENV));
 
-          ACE_TRY_CHECK;
+          TAO_CHECK_ENV;
 
           // Cubit::shutdown () is a oneway operation.
-          req->send_oneway (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          req->send_oneway ();
 
           ACE_DEBUG ((LM_DEBUG,
                       "\n\t Shutting down IDL_Cubit server \n\n"));
         }
     }
-  ACE_CATCHANY
+  TAO_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("DII_Cubit_Client: server shutdown");
+      TAO_TRY_ENV.print_exception ("DII_Cubit_Client: server shutdown");
       return -1;
     }
-  ACE_ENDTRY;
+  TAO_ENDTRY;
 
   return this->error_count_ == 0 ? 0 : 1;
 }

@@ -12,6 +12,11 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
+//   This class is an Abstract Factory for the
+//   TAO_EC_ProxyPushConsumer.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -36,21 +41,19 @@ class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
 
-class TAO_ORBSVCS_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
+class TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   ProxyPushSupplier
   //
   // = DESCRIPTION
-  //   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
-  //   This class is an Abstract Factory for the
-  //   TAO_EC_ProxyPushConsumer.
+  //   Implements the SupplierAdmin interface, i.e. the factory for
+  //   ProxyPushConsumer objects.
   //
   // = MEMORY MANAGMENT
   //   It does not assume ownership of the TAO_EC_Event_Channel object
   //
   // = LOCKING
-  //   @@ TODO
   //   No provisions for locking, access must be serialized
   //   externally.
   //
@@ -62,6 +65,9 @@ public:
 
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
+
+  void set_default_POA (PortableServer::POA_ptr poa);
+  // Set this servant's default POA
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
@@ -79,10 +85,6 @@ public:
                              CORBA::Environment&);
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
-
-  virtual void shutdown (CORBA::Environment&);
-  // The event channel is shutting down, inform all the consumers of
-  // this
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
@@ -102,11 +104,7 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  ACE_Lock* lock_;
-  // The locking strategy
-
   ConsumerSet all_consumers_;
-  // The set of consumers...
 };
 
 #if defined (__ACE_INLINE__)

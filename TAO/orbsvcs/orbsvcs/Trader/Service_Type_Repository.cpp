@@ -1,5 +1,4 @@
 // ========================================================================
-//
 // $Id$
 //
 // = LIBRARY
@@ -29,8 +28,7 @@ TAO_Service_Type_Repository (ACE_Lock* lock)
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
   if (this->lock_ == 0)
-    ACE_NEW (this->lock_,
-             ACE_Lock_Adapter<ACE_Null_Mutex> ());
+    ACE_NEW (this->lock_, ACE_Lock_Adapter<ACE_Null_Mutex> ());
 }
 
 
@@ -39,7 +37,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
   {
     ACE_WRITE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
-    for (Service_Type_Map_Iterator service_map_iterator (this->type_map_);
+    for (Service_Type_Map::iterator service_map_iterator (this->type_map_);
          ! service_map_iterator.done ();
          service_map_iterator++)
       {
@@ -203,9 +201,9 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes&
 
   int all = (which_types._d () == CosTradingRepos::ServiceTypeRepository::all);
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber num =
-    which_types.incarnation ();
+    which_types.incarnation ();    
 
-  for (Service_Type_Map_Iterator itr (this->type_map_);
+  for (Service_Type_Map::iterator itr (this->type_map_);
        ! itr.done ();
        itr++)
     {
@@ -445,7 +443,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
 
           const char* type_name = type_struct.super_types[i];
           target.enqueue_tail (ACE_const_cast (char*, type_name));
-
+          
           this->collect_inheritance_hierarchy (next_type_struct, target);
         }
     }
@@ -490,7 +488,7 @@ validate_supertypes (Service_Type_Map& super_map,
     {
       const char* type =  super_types[i];
       //      ACE_DEBUG ((LM_DEBUG, "%s\n", type));
-
+      
       if (! TAO_Trader_Base::is_valid_identifier_name (type))
         TAO_THROW (CosTrading::IllegalServiceType (type));
       else
@@ -577,7 +575,7 @@ update_type_map (const char* name,
   // update entries for all supertypes to include this type as a subtype.
   // we can use the super_types_map we have constructed.
 
-  for (Service_Type_Map_Iterator super_map_iterator (super_map);
+  for (Service_Type_Map::iterator super_map_iterator (super_map);
        ! super_map_iterator.done ();
        super_map_iterator++)
     {
@@ -617,24 +615,36 @@ update_type_map (const char* name,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTradingRepos::ServiceTypeRepository::PropStruct*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_Service_Type_Repository::Type_Info*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

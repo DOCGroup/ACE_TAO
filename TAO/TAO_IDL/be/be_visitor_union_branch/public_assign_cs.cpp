@@ -49,6 +49,9 @@ be_visitor_union_branch_public_assign_cs::~be_visitor_union_branch_public_assign
 int
 be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *node)
 {
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch (); // get union branch
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   // This visitor is used when we are generating the copy ctor and
@@ -57,10 +60,16 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (be_union_branch *n
   // statement because the type of member assigned is based on the value
   // of the discriminant
   os->indent ();
-  *os << "case ";
-  node->gen_label_value (os);
-  *os << ":" << be_nl;
-  *os << "{" << be_idt << "\n";
+  if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
+    {
+      *os << "case " << ub->label ()->label_val ()->n ()  << ":" << be_nl;
+      *os << "{" << be_idt << "\n";
+    }
+  else
+    {
+      *os << "case " << ub->label ()->label_val () << ":" << be_nl;
+      *os << "{" << be_idt << "\n";
+    }
 
   // first generate the type information
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
@@ -120,7 +129,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
-  // on
+  // on 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -132,7 +141,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
                            bt->local_name ()->get_string ());
         }
       else
@@ -150,11 +159,18 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free "
+          << "it on an assignment" << be_nl;
+      *os << fname << "_var " << ub->local_name () 
+          << "_var (this->u_." << ub->local_name () << "_);" << be_nl;
       *os << "// make a deep copy" << be_nl;
-      *os << "this->u_." << ub->local_name ()
-          << "_  = " << fname
-          << "_dup (u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+      *os << ub->local_name () << "_var = " << fname
+          << "_dup (u.u_." << ub->local_name () << "_);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->u_." << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -231,10 +247,18 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<" << bt->name ()
-          << "> (" << bt->name () << "::_duplicate (u.u_."
-          << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+          << ub->local_name () << "_->ptr ());" << be_nl;
+      *os << "// make a copy" << be_nl;
+      *os << ub->local_name () << "_var = " << bt->name ()
+          << "::_duplicate (u.u_." << ub->local_name () << "_->ptr ());" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "*this->u_." << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -274,10 +298,18 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "this->u_." << ub->local_name ()
-          << "_ = new TAO_Object_Field_T<" << bt->name ()
-          << "> (" << bt->name () << "::_duplicate (u.u_."
-          << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+          << ub->local_name () << "_->ptr ());" << be_nl;
+      *os << "// make a copy" << be_nl;
+      *os << ub->local_name () << "_var = " << bt->name ()
+          << "::_duplicate (u.u_." << ub->local_name () << "_->ptr ());" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "*this->u_." << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -317,24 +349,41 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
+      // valid label
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// make a copy" << be_nl;
+          *os << ub->local_name () << "_var = " << bt->name ()
+              << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
           *os << "this->u_." << ub->local_name () << "_ = "
-              << bt->name () << "::_duplicate (u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_any:
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (*u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// make a deep copy" << be_nl;
+          *os << ub->local_name () << "_var = new " << bt->name ()
+              << " (*u.u_." << ub->local_name () << "_);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
+          *os << "this->u_." << ub->local_name () << "_ = "
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
           break;
         case AST_PredefinedType::PT_void:
           break;
         default:
           *os << "// set the value" << be_nl
-              << "this->u_." << ub->local_name () << "_ = "
-              << "u.u_." << ub->local_name () << "_;" << be_uidt_nl;
+              << "this->u_." << ub->local_name () << "_ = u.u_."
+              << ub->local_name () << "_;" << be_uidt_nl;
           break;
         }
 
@@ -377,9 +426,18 @@ be_visitor_union_branch_public_assign_cs::visit_sequence (be_sequence *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = new " << bt->name ()
+          << " (*u.u_." << ub->local_name () << "_);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->u_." << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -412,9 +470,18 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << "CORBA::String_var " << ub->local_name () << "_var (this->u_."
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = CORBA::string_dup (u.u_."
+          << ub->local_name () << "_);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
       *os << "this->u_." << ub->local_name () << "_ = "
-          << "CORBA::string_dup (u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {
@@ -454,14 +521,24 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
+      // valid label
       if (bt->size_type () == be_type::VARIABLE)
         {
-          *os << "this->u_." << ub->local_name () << "_ = new "
-              << bt->name () << " (*u.u_."
-              << ub->local_name () << "_);" << be_uidt_nl;
+          *os << "// set the value" << be_nl;
+          *os << "// store current val in a _var so as to free it on an assignment"
+              << be_nl;
+          *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+              << ub->local_name () << "_);" << be_nl;
+          *os << "// make a deep copy" << be_nl;
+          *os << ub->local_name () << "_var = new " << bt->name ()
+              << " (*u.u_." << ub->local_name () << "_);" << be_nl;
+          *os << "// the _var gives up ownership" << be_nl;
+          *os << "this->u_." << ub->local_name () << "_ = "
+              << ub->local_name () << "_var._retn ();" << be_uidt_nl;
         }
       else
         {
+          *os << "// set the value" << be_nl;
           *os << "this->u_." << ub->local_name () << "_ = u.u_."
               << ub->local_name () << "_;" << be_uidt_nl;
         }
@@ -525,9 +602,18 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
   // set the discriminant to the appropriate label
   if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
     {
-      *os << "this->u_." << ub->local_name () << "_ = new "
-          << bt->name () << " (*u.u_."
+      // valid label
+      *os << "// set the value" << be_nl;
+      *os << "// store current val in a _var so as to free it on an assignment"
+          << be_nl;
+      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
+      *os << "// make a deep copy" << be_nl;
+      *os << ub->local_name () << "_var = new " << bt->name ()
+          << " (*u.u_." << ub->local_name () << "_);" << be_nl;
+      *os << "// the _var gives up ownership" << be_nl;
+      *os << "this->u_." << ub->local_name () << "_ = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
     {

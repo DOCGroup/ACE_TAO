@@ -66,9 +66,15 @@ visit_union_branch (be_union_branch *node)
     }
 
   this->ctx_->node (node); // save the node
-  *os << "case ";
-  node->gen_label_value (os);
-  *os << ":" << be_idt_nl;
+
+  if (node->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
+    {
+      *os << "case " << node->label ()->label_val ()->n ()  << ":" << be_idt_nl;
+    }
+  else
+    {
+      *os << "case " << node->label ()->label_val () << ":" << be_idt_nl;
+    }
 
   if (bt->accept (this) == -1)
     {
@@ -113,7 +119,7 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
 
   // save the node's local name and full name in a buffer for quick use later
-  // on
+  // on 
   ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
       && bt->is_child (bu)) // bt is defined inside the union
@@ -125,7 +131,7 @@ be_visitor_union_branch_public_access_cs::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent = be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (),
+          ACE_OS::sprintf (fname, "%s::_%s", parent->fullname (), 
                            bt->local_name ()->get_string ());
         }
       else
@@ -171,20 +177,12 @@ be_visitor_union_branch_public_access_cs::visit_enum (be_enum *)
 }
 
 int
-be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
+be_visitor_union_branch_public_access_cs::visit_interface (be_interface *)
 {
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
     this->ctx_->be_scope_as_union ();  // get the enclosing union backend
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
 
   if (!ub || !bu)
     {
@@ -195,10 +193,8 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "if (alloc_flag)" << be_idt_nl;
-  *os << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
-      << "TAO_Object_Field_T<" << bt->name () << ">, 0);" << be_uidt_nl;
-  *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
+  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name () 
+      << "_->inout ();" << be_uidt_nl;
 
   return 0;
 }

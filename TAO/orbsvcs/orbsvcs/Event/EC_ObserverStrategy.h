@@ -12,6 +12,10 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   Define the TAO_EC_ObserverStrategy interface and some simple
+//   implementations.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -31,7 +35,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/RB_Tree.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 class ACE_Lock;
@@ -39,7 +42,7 @@ class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
 
-class TAO_ORBSVCS_Export TAO_EC_ObserverStrategy
+class TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   The strategy to handle observers for the Event Channel
@@ -92,7 +95,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A null observer strategy.
@@ -130,7 +133,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
+class TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
   // = TITLE
   //   A simple observer strategy.
@@ -141,10 +144,6 @@ class TAO_ORBSVCS_Export TAO_EC_Basic_ObserverStrategy : public TAO_EC_ObserverS
   //   changes in queries the EC, computes the global subscription
   //   and/or publication list and sends the update message to all the
   //   observers.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the <lock>, but not of the
-  //   Event_Channel.
   //
 public:
   TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel* ec,
@@ -191,21 +190,15 @@ public:
     //   + Does it want to receive all changes?
     //
 
-    ACE_INLINE Observer_Entry (void);
-    ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-                               RtecEventChannelAdmin::Observer_ptr o);
+    Observer_Entry (void);
+    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+                    RtecEventChannelAdmin::Observer_ptr o);
 
     RtecEventChannelAdmin::Observer_Handle handle;
     // The handle
 
     RtecEventChannelAdmin::Observer_var observer;
     // The observer
-  };
-
-  struct Header_Compare
-  {
-    int operator () (const RtecEventComm::EventHeader& lhs,
-                     const RtecEventComm::EventHeader& rhs) const;
   };
 
 private:
@@ -231,9 +224,6 @@ private:
 
   Observer_Map observers_;
   // Keep the set of Observers
-
-  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
-  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 };
 
 #if defined (__ACE_INLINE__)

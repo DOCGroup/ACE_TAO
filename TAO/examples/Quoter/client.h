@@ -4,13 +4,13 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Quoter
+//    TAO/tests/Quoter
 //
 // = FILENAME
 //    quoter_client.h
 //
 // = DESCRIPTION
-//    Contains classes that do the work of the client side of the Quoter Test
+//    @@ Write this
 //
 // = AUTHORS
 //    Darrell Brunsch
@@ -35,10 +35,10 @@
 class Quoter_Client
 {
   // = TITLE
-  //    Quoter_Client
+  //    @@ Write this
   //
   // = DESCRIPTION
-  //    Does all the work of making the calls on the Quoter server
+  //    @@ Write this
 public:
   // = Constructor and destructor.
   Quoter_Client (void);
@@ -81,6 +81,9 @@ private:
   CosLifeCycle::GenericFactory_var generic_Factory_var_;
   // Pointer to a generic factory
 
+  CORBA::Environment env_;
+  // Environment variable.
+
   Stock::Quoter_var quoter_var_;
   // Quoter obj ref.
 
@@ -95,10 +98,10 @@ private:
 class Quoter_Task : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
-  //    Quoter_Task
+  //    @@ Write this
   //
   // = DESCRIPTION
-  //    Task that creates a Quoter_Client and uses it
+  //    @@ Write this
 public:
   Quoter_Task (int argc, char **argv);
 

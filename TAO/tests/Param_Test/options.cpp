@@ -78,7 +78,7 @@ Options::parse_args (int argc, char **argv)
 
      case 'k':
         CORBA::string_free (this->ior_);
-        this->ior_ = CORBA::string_dup (get_opts.optarg);
+        this->ior_ = CORBA::string_copy (get_opts.optarg);
         break;
 
       case 'i':  // invocation
@@ -137,11 +137,7 @@ Options::parse_args (int argc, char **argv)
           this->test_type_ = Options::TEST_MULTDIM_ARRAY;
         else if (!ACE_OS::strcmp (get_opts.optarg, "exception"))
           this->test_type_ = Options::TEST_EXCEPTION;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "big_union"))
-          this->test_type_ = Options::TEST_BIG_UNION;
-        else if (!ACE_OS::strcmp (get_opts.optarg, "complex_any"))
-          this->test_type_ = Options::TEST_COMPLEX_ANY;
-         break;
+        break;
 
       case '?':
       default:
