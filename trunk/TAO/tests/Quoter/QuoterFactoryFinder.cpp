@@ -17,6 +17,7 @@
 #include "tao/corba.h"
 #include "QuoterFactoryFinder.h"
 
+
 static const char usage [] = 
 "[-? |\n[-O[RBport] ORB port number]]";
 
@@ -44,10 +45,13 @@ QuoterFactoryFinder_Server::init (int argc, char *argv[], CORBA::Environment& en
 
   this->parse_args ();
 
+  QuoterFactoryFinder_i quoterFactoryFinder_Impl;
   // Activate the object.
   CORBA::String_var str  =
-    this->orb_manager_.activate (&this->quoterFactoryFinder_Impl_,
+    this->orb_manager_.activate (&quoterFactoryFinder_Impl,
                                  env);
+
+  quoterFactoryFinder_Impl_ptr_ = &quoterFactoryFinder_Impl;
 
 /*  ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
