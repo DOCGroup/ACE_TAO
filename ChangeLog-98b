@@ -4,6 +4,9 @@ Thu Nov 12 09:07:28 1998  David L. Levine  <levine@cs.wustl.edu>
           we no longer need a ../diffs symlink in TAO directory.  Thanks
           to Hans Rohnert <rohnert@scr.siemens.com> for motivating this.
 
+        * ace/README: removed ACE_LACKS_STREAM_MODULES.  Thanks to
+          Ossama for reporting that it's no longer used.
+
 Wed Nov 11 23:11:15 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * bin/ACEutils.pm: Updated to include $EXEPREFIX, which is used
@@ -92,8 +95,8 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.cpp: handle_close() wasn't being called when
- 	  handle_signal() returns -1.  It is now...  Thanks to Vicentini
- 	  Emanuele <arena.sci.univr.it> for reporting this.
+          handle_signal() returns -1.  It is now...  Thanks to Vicentini
+          Emanuele <arena.sci.univr.it> for reporting this.
 
         * ace/Event_Handler.h (ACE_Event_Handler): Added a SIGNAL_MASK so
           that we can pass this to handle_close() when handle_signal()
