@@ -34,8 +34,8 @@ int main (int argc, char *argv[])
       TAO_CHECK_ENV;
 
       // Create an Scheduling service servant...
-      RtecScheduler::Scheduler_ptr scheduler = new ACE_Config_Scheduler;
-      // CORBA::Object::_duplicate(scheduler);
+      ACE_Config_Scheduler *scheduler = new ACE_Config_Scheduler;
+      CORBA::Object::_duplicate(scheduler);
       TAO_CHECK_ENV;
 
       CORBA::String str =

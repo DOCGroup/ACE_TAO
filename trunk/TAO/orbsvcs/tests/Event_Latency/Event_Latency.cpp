@@ -142,7 +142,7 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
     }
 #endif /* quantify */
 
-  for (int i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
       if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
 	{
@@ -465,7 +465,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
-  for (int i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
       if (!master_ && events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
 	{
