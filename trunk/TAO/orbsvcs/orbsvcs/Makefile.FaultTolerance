@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:FaultTolerance
 
-ACE_SHLIBS = -lTAO_IORManip -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_IORManip -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -38,7 +38,8 @@ IDL_FILES += FT_CORBA
 CPP_SRCS += \
         FaultTolerance/FT_Service_Callbacks \
 	FaultTolerance/FT_IOGR_Property \
-	FaultTolerance/FT_Service_Activate
+	FaultTolerance/FT_Service_Activate \
+        FaultTolerance/FT_Policy_i 
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
