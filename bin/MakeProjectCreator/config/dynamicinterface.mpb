@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : valuetype, messaging, portableserver {
   after    += DynamicInterface
   libs     += TAO_DynamicInterface

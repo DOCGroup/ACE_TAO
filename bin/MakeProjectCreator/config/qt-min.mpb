@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project {
 // Project using this features requires Qt library but not ACE_QtReactor.
   includes += $(QTDIR)/include

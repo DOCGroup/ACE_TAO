@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 feature(zzip) {
   includes += $(ZZIP_ROOT)/include
   macros   += ACEXML_HAS_ZZIPLIB
