@@ -296,7 +296,7 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_StructBodySeen:
     return ACE_TEXT ("Illegal syntax following struct body statement(s)");
   case IDL_GlobalData::PS_MemberTypeSeen:
-    return ACE_TEXT ("Illegal syntax of missing identifier following member type");
+    return ACE_TEXT ("Illegal syntax or missing identifier following member type");
   case IDL_GlobalData::PS_MemberDeclsSeen:
     return ACE_TEXT ("Illegal syntax following member declarator(s)");
   case IDL_GlobalData::PS_MemberDeclsCompleted:
@@ -358,7 +358,7 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
     return ACE_TEXT ("Illegal syntax following sequence type declaration");
   case IDL_GlobalData::PS_SequenceCommaSeen:
     return
-      ACE_TEXT ("Illegal syntax of missing size expr following ',' in sequence");
+      ACE_TEXT ("Illegal syntax or missing size expr following ',' in sequence");
   case IDL_GlobalData::PS_SequenceExprSeen:
     return
       ACE_TEXT ("Illegal syntax or missing '>' following size expr in sequence");
