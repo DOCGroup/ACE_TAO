@@ -1,0 +1,28 @@
+#!/bin/sh
+# $Id$
+# Filter out the duplicate symbol warnings from Visual Age C++
+#
+
+output=`basename $0`.$$.`/bin/date +%Y%m%d%H%M%S`
+usrtmp="/tmp"
+for possible in "$TMPDIR" "$TEMP" "$TMP"; do
+  if [ "$possible" != "" ]; then
+    if [ -w "$possible" ]; then
+      usrtmp="$possible"
+      break
+    fi
+  fi
+done
+
+## Send the output to a temporary file and save the return code
+$@ > "$usrtmp/$output" 2>&1
+status=$?
+
+## Print the output to stdout, but filter duplicate symbol warnings
+/bin/egrep -v '0711-(224|345)' "$usrtmp/$output"
+
+## Clean up the temporary file
+/bin/rm -f "$usrtmp/$output"
+
+## Exit with the return code from the compiler
+exit $status
