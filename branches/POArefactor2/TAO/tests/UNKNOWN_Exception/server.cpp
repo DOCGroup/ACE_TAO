@@ -231,8 +231,7 @@ main (int argc, char *argv[])
 
       poa_manager->activate ();
 
-      TAO_POA *tao_poa =
-        root_poa->_tao_poa_downcast();
+      TAO_POA *tao_poa = dynamic_cast <TAO_POA*> (root_poa);
 
       while (!done)
         {

@@ -35,6 +35,8 @@ test_get_servant_manager (PortableServer::POA_ptr poa)
       PortableServer::ServantManager_ptr servant_manager =
         poa->get_servant_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      ACE_UNUSED_ARG (servant_manager);
     }
   ACE_CATCH (PortableServer::POA::WrongPolicy, ex)
     {

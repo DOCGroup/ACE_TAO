@@ -25,6 +25,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/Servant_Base.h"
 
 #include "tao/ORB.h"
 
