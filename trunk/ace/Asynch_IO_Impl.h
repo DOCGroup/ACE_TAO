@@ -81,7 +81,7 @@ public:
 
   virtual int signal_number (void) const = 0;
   // POSIX4 real-time signal number to be used for the
-  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By 
+  // operation. <signal_number> ranges from SIGRTMIN to SIGRTMAX. By
   // default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
   // on non-POSIX4 systems and returns 0.
 
@@ -272,6 +272,18 @@ public:
   // be read and stored in the <message_block>.  The read will start
   // at <offset> from the beginning of the file.
 
+  // We don;t need to redefine the following function again because it
+  // has already been defined in ACE_Asynch_Read_Stream_Impl.  But we
+  // still need it here to supress a overwriting pure virtual function
+  // warning in KAI compiler.
+  virtual int read (ACE_Message_Block &message_block,
+                    u_long bytes_to_read,
+                    const void *act,
+                    int priority,
+                    int signal_number) = 0;
+  // This starts off an asynchronous read. Upto <bytes_to_read> will
+  // be read and stored in the <message_block>.
+
 protected:
   ACE_Asynch_Read_File_Impl (void);
   // Do-nothing constructor.
@@ -317,6 +329,18 @@ public:
   // This starts off an asynchronous write.  Upto <bytes_to_write>
   // will be write and stored in the <message_block>.  The write will
   // start at <offset> from the beginning of the file.
+
+  // We don;t need to redefine the following function again because it
+  // has already been defined in ACE_Asynch_Write_Stream_Impl.  But we
+  // still need it here to supress a overwriting pure virtual function
+  // warning in KAI compiler.
+  virtual int write (ACE_Message_Block &message_block,
+                     u_long bytes_to_write,
+                     const void *act,
+                     int priority,
+                     int signal_number) = 0;
+  // This starts off an asynchronous write.  Upto <bytes_to_write>
+  // will be written from the <message_block>.
 
 protected:
   ACE_Asynch_Write_File_Impl (void);
