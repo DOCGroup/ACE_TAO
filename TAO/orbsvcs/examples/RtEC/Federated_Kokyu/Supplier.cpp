@@ -21,22 +21,22 @@ void
 Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
-  if (id_ == 1)
+  event.length (1);
+  event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+  event[0].header.source = id_;
+  event[0].header.ttl    = 1;
+
+  if (id_ != 1)
     {
-      event.length (1);
-      event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
-      event[0].header.source = id_;
-      event[0].header.ttl    = 1;
-    }
-  else
-    {
-      event.length (1);
       event[0].header.type   = ACE_ES_EVENT_UNDEFINED + 1;
-      event[0].header.source = id_;
-      event[0].header.ttl    = 1;
     }
 
+  //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
+  //when event is pushed by client.
+
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
 }
 
 void
@@ -63,7 +63,15 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Timeout Event received\n"));
+  //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
+  //timeout occurs to trigger event push. Roughly equivalent to the
+  //scheduling segments started for each one-way call of the DTs.
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+  //@BT: Finished handling the timeout.
+  //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
 }
 
 void

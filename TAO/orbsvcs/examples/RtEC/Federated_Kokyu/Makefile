@@ -18,13 +18,45 @@ else
   KEEP_GOING = 0
 endif
 
-%.tgt0:
+
+all: all.Supplier_EC all.Consumer_EC
+
+debug: debug.Supplier_EC debug.Consumer_EC
+
+profile: profile.Supplier_EC profile.Consumer_EC
+
+optimize: optimize.Supplier_EC optimize.Consumer_EC
+
+install: install.Supplier_EC install.Consumer_EC
+
+deinstall: deinstall.Supplier_EC deinstall.Consumer_EC
+
+clean: clean.Supplier_EC clean.Consumer_EC
+
+realclean: realclean.Supplier_EC realclean.Consumer_EC
+
+clobber: clobber.Supplier_EC clobber.Consumer_EC
+
+depend: depend.Supplier_EC depend.Consumer_EC
+
+rcs_info: rcs_info.Supplier_EC rcs_info.Consumer_EC
+
+idl_stubs: idl_stubs.Supplier_EC idl_stubs.Consumer_EC
+
+Supplier_EC: all.Supplier_EC
+.PHONY: Supplier_EC
+
+%.Supplier_EC:
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
 else
 	@$(MAKE) -f Makefile.Supplier_EC -C . $(*);
 endif
-%.tgt1: %.tgt0
+
+Consumer_EC: all.Consumer_EC
+.PHONY: Consumer_EC
+
+%.Consumer_EC: %.Supplier_EC
 ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.Consumer_EC -C . $(*);
 else
@@ -32,28 +64,8 @@ else
 endif
 
 
-all: all.tgt0 all.tgt1
+reverseclean: realclean.Consumer_EC realclean.Supplier_EC
 
-debug: debug.tgt0 debug.tgt1
-
-profile: profile.tgt0 profile.tgt1
-
-optimize: optimize.tgt0 optimize.tgt1
-
-install: install.tgt0 install.tgt1
-
-deinstall: deinstall.tgt0 deinstall.tgt1
-
-clean: clean.tgt0 clean.tgt1
-
-realclean: realclean.tgt0 realclean.tgt1
-
-clobber: clobber.tgt0 clobber.tgt1
-
-depend: depend.tgt0 depend.tgt1
-
-rcs_info: rcs_info.tgt0 rcs_info.tgt1
-
-idl_stubs: idl_stubs.tgt0 idl_stubs.tgt1
-
-reverseclean: realclean.tgt1 realclean.tgt0
+project_name_list:
+	@echo Supplier_EC
+	@echo Consumer_EC
