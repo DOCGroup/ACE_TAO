@@ -24,7 +24,8 @@ main (int argc, char **argv)
   int m_argc =
     sizeof (m_argv) / sizeof (char *) -1; 
 
-  name_options->parse_args (m_argc, m_argv);
+  name_options->parse_args (m_argc,
+                            m_argv);
 
   int result = ns.open (ACE_Naming_Context::NET_LOCAL); 
   ACE_DEBUG ((LM_DEBUG,
