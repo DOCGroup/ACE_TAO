@@ -1,7 +1,7 @@
 //$Id$
 
 project(CompilerElements) {
-  requires += cidl
+  requires += cidl exceptions
   sharedname =
   staticname = CompilerElements
   includes += ../..

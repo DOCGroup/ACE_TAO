@@ -198,7 +198,7 @@ namespace Indentation
        * <tag whatever="xxx
        */
       STRING_LITERAL,
-      INSIDE_TAG,
+      INSIDE_TAG
     };
 
     Construct construct_;
