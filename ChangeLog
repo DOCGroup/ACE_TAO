@@ -1,3 +1,10 @@
+Mon Nov  8 13:30:47 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/OS_Test.cpp:
+
+          Converted the binary string data in string_convert_test() to hex
+          escape sequences to get it to compile on gcc 3.4.1.
+
 Mon Nov  8 12:05:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.lib.GNU:
