@@ -881,7 +881,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
       return this->location_forward (this->inp_stream_, ACE_TRY_ENV);
     }
 
-  ACE_NOTREACHED (return TAO_INVOKE_EXCEPTION);
+  return TAO_INVOKE_EXCEPTION;
 }
 
 // ****************************************************************
