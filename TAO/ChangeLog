@@ -23,7 +23,7 @@ Mon Dec 29 15:10:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           and refactoring includes.
         
         * tao/Messaging/Asynch_Invocation.cpp:
-          Fixed explicit tempate instatiation to use
+          Fixed explicit template instatiation to use
           TAO::Utils::Auto_Functor<> instead of auto_ptr<>.
 
 Mon Dec 29 13:32:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
