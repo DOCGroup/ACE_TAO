@@ -1,3 +1,8 @@
+Sun Mar 10 18:53:48 2002  Si Mong Park  <spark@ociweb.com>
+
+	* Svc_Conf_l.cpp:
+	  Commented out 'break' line to resolve unreachable statement warning.
+
 Sun Mar 10 05:54:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS : Added Val Dumitrescu <val.dumitrescu@am-beo.com> to the
@@ -16,6 +21,106 @@ Sat Mar  9 07:52:45 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/SPIPE_Addr.cpp (set): Changed a strcpy() to a strcat() to
 	  fix the code.  Thanks to Robert Laferriere
  	  <robert.laferriere@med.ge.com> for reporting this.
+
+Fri Mar  8 22:29:36 2002  Si Mong Park  <spark@ociweb.com>
+
+	* Argv_Type_Converter.cpp:
+	* Argv_Type_Converter.h:
+	* Argv_Type_Converter.inl:
+	  new class to convert command line parameter type between char
+	  and wchar_t.
+
+	* Basic_Types.h:
+	  Set the endian type to 'little endian' for ARM processor -
+	  Pocket PC 2002 platform.
+
+	* Log_Record.cpp:
+	* Log_Record.h:
+	  Removed print method that uses ACE_CE_Bridge since CE_Bridge is
+	  no longer supported by ACE CE port.
+
+	* ace_dll.dsp:
+	* ace_lib.dsp:
+	  Added Argv_Type_Converter class to the project.
+
+	* WFMO_Reactor.cpp:
+	* WFMO_Reactor.h:
+	* WFMO_Reactor.i:
+	  Updated to support WinCE.
+
+	* Process.cpp:
+	  Fixed incorrect call to CreateProcess for WinCE.
+
+	* config-WinCE.h:
+	  Updated for WinCE Pocket PC 2002.
+
+	* ace.vcw:
+	* ace_dll.vcp:
+	* ace_os_dll.vcp:
+	  New ACE project file for WinCE Pocket PC 2002 build on eMbedded
+	  Visual C++ 3.0.
+
+	* Makefile:
+	* Makefile.am:
+	* Makefile.bor:
+	  Added Argv_Type_Converter file.
+
+	* Configuration.cpp:
+	* Memory_Pool.cpp:
+	  Updated for the WinCE port.
+
+	* Read_Buffer.cpp:
+	* Read_Buffer.h:
+	  Disabled Ctor with ACE_HANDLE on WinCE since ACE_HANDLE is same
+	  as FILE* on WinCE.
+
+	* OS.cpp:
+	* OS.h:
+	* OS.i:
+	  Updated for WinCE port.  Changes includes removal of CE Bridge
+	  added CE argv process class, enabled many file IO functions
+	  that formerly disabled on CE, bypassing QoS parts for CE, and
+	  other CE specific declarations.
+
+	* Dynamic_Service.h:
+	* Dynamic_Service.i:
+	  Added 'instance' method uses ACE_ANTI_TCHAR type name for when
+	  ACE_TCHAR is wchar_t.
+
+	* CE_Screen_Output.cpp:
+	* CE_Screen_Output.h:
+	  screen output helper class only for WinCE platform - should
+	  not be used on any other platform.
+
+	* OS_Memory.h:
+	* OS_String.h:
+	  Changed to skip including stddef.h for WinCE.
+
+	* MEM_Acceptor.h:
+	* MEM_Acceptor.i:
+	* SOCK_Acceptor.cpp:
+	* SOCK_Acceptor.h:
+	* SOCK_Connector.cpp:
+	* SOCK_Connector.h:
+	* SOCK_Dgram_Mcast.h:
+	  Updated to skip QoS part on WinCE.
+
+	* Svc_Conf.l:
+	* Svc_Conf_l.cpp:
+	  Fixed a problem giving a parse error on reading carriage return
+	  token on Unicode formatted svc conf file.
+
+	* Registry.cpp:
+	  Changed connect function for WinCE to return -1 because CE does
+	  not allow direct registry connection.
+
+	* Sock_Connect.cpp:
+	  Changed to use Iphlpapi library (standard on WinCE) on WinCE to
+	  find IP address instead of searching registry since CE has so
+	  many variations on registry settings.
+
+	* Log_Msg.cpp:
+	  Minor change for WinCE on stderr.
 
 Fri Mar  8 19:45:31 2002  Steve Huston  <shuston@riverace.com>
 
