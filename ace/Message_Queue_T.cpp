@@ -1222,108 +1222,93 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
 
   // first, try to dequeue from the head of the pending list
   if (this->pending_head_)
-  {
-    first_item = this->pending_head_;
+    {
+      first_item = this->pending_head_;
 
-    if (0 == this->pending_head_->prev ())
-    {
-      this->head_ = this->pending_head_->next ();
-    }
-    else
-    {
-      this->pending_head_->prev ()->next (this->pending_head_->next ());
-    }
+      if (0 == this->pending_head_->prev ())
+        this->head_ = this->pending_head_->next ();
+      else
+        this->pending_head_->prev ()->next (this->pending_head_->next ());
 
-    if (0 == this->pending_head_->next ())
-    {
-      this->tail_ = this->pending_head_->prev ();
-      this->pending_head_ = 0;
-      this->pending_tail_ = 0;
-    }
-    else
-    {
-      this->pending_head_->next ()->prev (this->pending_head_->prev ());
-      this->pending_head_ = this->pending_head_->next ();
-    }
+      if (0 == this->pending_head_->next ())
+        {
+          this->tail_ = this->pending_head_->prev ();
+          this->pending_head_ = 0;
+          this->pending_tail_ = 0;
+        }
+      else
+        {
+          this->pending_head_->next ()->prev (this->pending_head_->prev ());
+          this->pending_head_ = this->pending_head_->next ();
+        }
 
-    first_item->prev (0);
-    first_item->next (0);
-  }
+      first_item->prev (0);
+      first_item->next (0);
+    }
   // second, try to dequeue from the head of the late list
   else if (this->late_head_)
-  {
-        last_in_subqueue =
-      (this->late_head_ == this->late_tail_) ? 1 : 0;
-
-    first_item = this->late_head_;
-
-    if (0 == this->late_head_->prev ())
     {
-      this->head_ = this->late_head_->next ();
-    }
-    else
-    {
-      this->late_head_->prev ()->next (this->late_head_->next ());
-    }
+      last_in_subqueue = this->late_head_ == this->late_tail_ ? 1 : 0;
 
-    if (0 == this->late_head_->next ())
-    {
-      this->tail_ = this->late_head_->prev ();
-    }
-    else
-    {
-      this->late_head_->next ()->prev (this->late_head_->prev ());
-      this->late_head_ = this->late_head_->next ();
-    }
+      first_item = this->late_head_;
 
-    if (last_in_subqueue)
-    {
-      this->late_head_ = 0;
-      this->late_tail_ = 0;
-    }
+      if (0 == this->late_head_->prev ())
+        this->head_ = this->late_head_->next ();
+      else
+        this->late_head_->prev ()->next (this->late_head_->next ());
 
-    first_item->prev (0);
-    first_item->next (0);
-  }
+      if (0 == this->late_head_->next ())
+        this->tail_ = this->late_head_->prev ();
+      else
+        {
+          this->late_head_->next ()->prev (this->late_head_->prev ());
+          this->late_head_ = this->late_head_->next ();
+        }
+
+      if (last_in_subqueue)
+        {
+          this->late_head_ = 0;
+          this->late_tail_ = 0;
+        }
+
+      first_item->prev (0);
+      first_item->next (0);
+    }
   // finally, try to dequeue from the head of the beyond late list
   else if (this->beyond_late_head_)
-  {
-        last_in_subqueue =
-      (this->beyond_late_head_ == this->beyond_late_tail_) ? 1 : 0;
-
-    first_item = this->beyond_late_head_;
-    this->head_ = this->beyond_late_head_->next ();
-
-    if (0 == this->beyond_late_head_->next ())
     {
-      this->tail_ = this->beyond_late_head_->prev ();
-    }
-    else
-    {
-      this->beyond_late_head_->next ()->prev (this->beyond_late_head_->prev ());
-      this->beyond_late_head_ = this->beyond_late_head_->next ();
-    }
+      last_in_subqueue =
+        (this->beyond_late_head_ == this->beyond_late_tail_) ? 1 : 0;
 
-    if (last_in_subqueue)
-    {
-      this->beyond_late_head_ = 0;
-      this->beyond_late_tail_ = 0;
-    }
+      first_item = this->beyond_late_head_;
+      this->head_ = this->beyond_late_head_->next ();
 
-    first_item->prev (0);
-    first_item->next (0);
-  }
+      if (0 == this->beyond_late_head_->next ())
+        this->tail_ = this->beyond_late_head_->prev ();
+      else
+        {
+          this->beyond_late_head_->next ()->prev (this->beyond_late_head_->prev ());
+          this->beyond_late_head_ = this->beyond_late_head_->next ();
+        }
+
+      if (last_in_subqueue)
+        {
+          this->beyond_late_head_ = 0;
+          this->beyond_late_tail_ = 0;
+        }
+
+      first_item->prev (0);
+      first_item->next (0);
+    }
   else
-  {
-    // nothing to dequeue: set the pointer to zero and return an error code
-    first_item = 0;
-    result = -1;
-  }
+    {
+      // nothing to dequeue: set the pointer to zero and return an error code
+      first_item = 0;
+      result = -1;
+    }
 
   if (result < 0)
-  {
     return result;
-  }
 
   // Make sure to subtract off all of the bytes associated with this
   // message.
