@@ -50,14 +50,6 @@ be_native::tc_size (void)
 }
 
 int
-be_native::write_as_return (TAO_OutStream *stream,
-			       be_type *type)
-{
-  *stream << type->name ();
-  return 0;
-}
-
-int
 be_native::accept (be_visitor *visitor)
 {
   return visitor->visit_native (this);

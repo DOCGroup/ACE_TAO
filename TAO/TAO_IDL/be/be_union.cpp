@@ -776,17 +776,6 @@ be_union::compute_size_type (void)
   return 0;
 }
 
-int be_union::write_as_return (TAO_OutStream *stream,
-			       be_type *type)
-{
-  *stream << type->name ();
-  if (this->size_type () == be_decl::VARIABLE)
-    {
-      *stream << " *";
-    }
-  return 0;
-}
-
 int
 be_union::accept (be_visitor *visitor)
 {

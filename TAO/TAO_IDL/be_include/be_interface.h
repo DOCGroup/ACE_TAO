@@ -111,10 +111,6 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
-  virtual int write_as_return (TAO_OutStream *stream,
-			       be_type *type);
-  // write the mapping as a return value on the stream.
-
   // Narrowing
   DEF_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type);
   DEF_NARROW_FROM_DECL (be_interface);

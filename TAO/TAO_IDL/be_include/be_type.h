@@ -65,17 +65,6 @@ public:
   virtual const char *nested_type_name (be_decl *d, const char *suffix = 0);
   // type name of a node used when generating declarations
 
-  virtual int write_as_return (TAO_OutStream *stream,
-			       be_type *type);
-  // Different types have different mappings as return values, for
-  // instance interfaces are returned by reference (_ptr), but basic
-  // types by value.
-  // Typedefs are tricky, their mapping depend on the real type they
-  // are aliasing, but the name should be the typedef name, hence
-  // typedefs delegate on their base type, but pass their nodes down
-  // so the real name can be generated; hence the <type> parameter.
-  // This method writes the type as a return value on the stream.
-
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
   // depend on base type they are aliasing.  Since typedefs can be

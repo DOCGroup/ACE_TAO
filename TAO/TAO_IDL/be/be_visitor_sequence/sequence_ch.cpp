@@ -288,6 +288,38 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << " &); // copy ctor" << be_nl;
   *os << "~" << node->local_name () << " (void); // dtor\n";
 
+  // TAO provides extensions for octet sequences, first find out if
+  // the base type is an octet (or an alias for octet)
+  be_predefined_type *predef = 0;
+  if (bt->base_node_type () == AST_Type::NT_pre_defined)
+    {
+      be_typedef* alias = 
+	be_typedef::narrow_from_decl (bt);
+
+      if (alias == 0)
+	{
+	  predef = be_predefined_type::narrow_from_decl (bt);
+	}
+      else
+	{
+	  predef = be_predefined_type::narrow_from_decl
+	    (alias->primitive_base_type ());
+	}
+    }
+  // Now generate the extension...
+  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet)
+    {
+      *os << "\n"
+	  << "#if defined(TAO_NO_COPY_OCTET_SEQUENCES)" << be_nl
+	  << node->local_name () << " (" << be_idt << be_idt_nl
+	  << "CORBA::ULong length," << be_nl
+	  << "const ACE_Message_Block* mb" << be_uidt_nl
+	  << ")" << be_uidt_nl
+	  << "  : " << node->instance_name ()
+	  << " (length, mb) {}" << "\n"
+	  << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE */\n\n";
+    }
+
   os->decr_indent ();
   *os << "};" << be_nl;
 

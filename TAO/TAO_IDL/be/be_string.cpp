@@ -108,13 +108,6 @@ be_string::tc_encap_len (void)
   return this->encap_len_;
 }
 
-int be_string::write_as_return (TAO_OutStream *stream,
-				be_type * /* type */)
-{
-  *stream << "char* ";
-  return 0;
-}
-
 int
 be_string::accept (be_visitor *visitor)
 {

@@ -176,13 +176,6 @@ be_exception::tc_encap_len (void)
   return this->encap_len_;
 }
 
-int be_exception::write_as_return (TAO_OutStream *,
-				   be_type *)
-{
-  // exceptions cannot be returned
-  return -1;
-}
-
 int
 be_exception::accept (be_visitor *visitor)
 {
