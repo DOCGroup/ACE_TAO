@@ -30,13 +30,12 @@ sub airplane_test
                     " -k file://$airplane_ior");
 
   $SV->Kill (); $SV->Wait ();
-  unlink $airplane_ior;
 }
 
 sub airplane_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
-                         "-ORBobjrefstyle url -d 0");
+                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
@@ -49,6 +48,7 @@ sub airplane_ir_test
 
   system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
 
+  $SV->Kill (); $SV->Wait ();
   $IR->Kill (); $IR->Wait ();
 }
 
@@ -63,14 +63,12 @@ sub nestea_test
                     " -k file://$nestea_ior");
 
   $SV->Kill (); $SV->Wait ();
-
-  unlink $nestea_ior;
 }
 
 sub nestea_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
-                         "-ORBobjrefstyle url -d 0");
+                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
@@ -83,13 +81,14 @@ sub nestea_ir_test
 
   system($EXEPREFIX."nestea_client -k file://$nestea_ior -ORBobjrefstyle url");
 
-#  $IR->Kill (); $IR->Wait ();
+  $SV->Kill (); $SV->Wait ();
+  $IR->Kill (); $IR->Wait ();
 }
 
 sub both_ir_test
 {
   $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
-                         "-ORBobjrefstyle url -d 0");
+                         "-ORBobjrefstyle url -o $implrepo_ior -d 0");
 
   ACE::waitforfile ($implrepo_ior);
 
@@ -111,6 +110,8 @@ sub both_ir_test
 
   system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
 
+  $ASV->Kill (); $ASV->Wait ();
+  $NSV->Kill (); $NSV->Wait ();
   $NCL->Kill (); $NCL->Kill ();
   $IR->Kill (); $IR->Wait ();
 }
@@ -127,7 +128,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "run_test test\n";
       print "\n";
       print "test               -- Runs a specific test\n";
-      print "                      airplane, simple, or implrepo\n";
+      print "                      airplane, airplane_ir, nestea, nestea_ir, both_ir\n";
       exit;
     }
     if ($ARGV[$i] eq "airplane")
