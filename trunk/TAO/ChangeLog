@@ -1,3 +1,12 @@
+Thu Oct 17 14:47:50 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+	  (populate_object_group, process_criteria):
+
+	  Explicitly cast an unsigned short value to unsigned long.
+	  Borland C++ apparently gets confused and assumes that the
+	  unsigned short value is signed.  Silences a warning.
+
 Thu Oct 17 21:04:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp: Add missing template instantiation
