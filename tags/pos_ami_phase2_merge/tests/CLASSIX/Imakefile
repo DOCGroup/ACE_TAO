@@ -1,0 +1,152 @@
+INDIR   = $(IPP_CHORUS_ROOT)/lib
+
+CDEBUGFLAGS += -gstabs+
+CXXDEBUGFLAGS += -gstabs+
+
+INCLUDES=       \
+        -I$(ACE_ROOT)   \
+        -I$(IPP_CHORUS_ROOT)
+
+CCOPTIONS += -fno-implicit-templates
+
+CCSRCS  =  \
+	CLASSIX_Con_Acc_Test.C	\
+	CLASSIX_CLD_Connector_Test.C	\
+	CLASSIX_Select_Reactor_Test.C	\
+	CLASSIX_Reactor_Test.C	\
+	CLASSIX_Stream_Test.C	\
+	CLASSIX_OS_Test.C	\
+	CLASSIX_Addr_Test.C	\
+	CLASSIX_Group_Test.C
+
+OBJS    =  \
+	CLASSIX_Con_Acc_Test.o	\
+	CLASSIX_CLD_Connector_Test.o	\
+	CLASSIX_Select_Reactor_Test.o	\
+	CLASSIX_Reactor_Test.o	\
+	CLASSIX_Stream_Test.o	\
+	CLASSIX_OS_Test.o	\
+	CLASSIX_Addr_Test.o	\
+	CLASSIX_Group_Test.o
+
+
+BININDIR= $(CLASSIXDIR)/users/wei
+
+CLASSIXLIB = \
+                $(CLASSIXDIR)/lib/CC/libC.a     \
+                ClassiXUserLibs
+
+LOCALLIB	= \
+	$(IPP_CHORUS_ROOT)/libCLASSIX.a
+
+ClassiXObjectRule()
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Con_Acc_Test,\
+                                CLASSIX_Con_Acc_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Con_Acc_Test)
+InstallProgram(CLASSIX_Con_Acc_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_CLD_Connector_Test,\
+                                CLASSIX_CLD_Connector_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_CLD_Connector_Test)
+InstallProgram(CLASSIX_CLD_Connector_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Notify_Test,\
+                                CLASSIX_Notify_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Notify_Test)
+InstallProgram(CLASSIX_Notify_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Reactor_Test,\
+                                CLASSIX_Reactor_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Reactor_Test)
+InstallProgram(CLASSIX_Reactor_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Select_Reactor_Test,\
+                                CLASSIX_Select_Reactor_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Select_Reactor_Test)
+InstallProgram(CLASSIX_Select_Reactor_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Addr_Test,\
+                                CLASSIX_Addr_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Addr_Test)
+InstallProgram(CLASSIX_Addr_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Group_Test,\
+                                CLASSIX_Group_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Group_Test)
+InstallProgram(CLASSIX_Group_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_OS_Test,\
+                                CLASSIX_OS_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_OS_Test)
+InstallProgram(CLASSIX_OS_Test,$(BININDIR))
+
+################################################################
+ClassiXCplusplusUserProgramTarget(CLASSIX_Stream_Test,\
+                                CLASSIX_Stream_Test.o,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a,\
+				$(LOCALLIB) \
+                                $(ACE_ROOT)/ace/libACE.a \
+                                $(CLASSIXLIB))
+
+AllTarget(CLASSIX_Stream_Test)
+InstallProgram(CLASSIX_Stream_Test,$(BININDIR))
+
+

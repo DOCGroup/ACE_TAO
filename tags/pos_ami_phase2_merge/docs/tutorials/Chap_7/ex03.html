@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 3</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "The Message Queue"</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 3</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> "<FONT COLOR="#006600">ace/Message_Queue.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> "<FONT COLOR="#006600">ace/Get_Opt.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> "<FONT COLOR="#006600">ace/OS.h"</FONT>
+
+<P>class Args{
+<BR>public:
+<BR>Args(int argc, char*argv[],int&amp; no_msgs, int&amp; time,ACE_Message_Queue&lt;ACE_NULL_SYNCH>*
+&amp;mq){
+<BR>&nbsp;ACE_Get_Opt get_opts(argc,argv,"h:l:t:n:xsd");
+<BR>&nbsp;while((opt=get_opts())!=-1)
+<BR>&nbsp; switch(opt){
+<BR>&nbsp; case 't':
+<BR>&nbsp;&nbsp; time=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"Time: %d \n",time));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'n':
+<BR>&nbsp;&nbsp; no_msgs=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"Number of Messages %d \n",no_msgs));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'x':
+<BR>&nbsp;&nbsp; mq=ACE_Message_Queue_Factory&lt;ACE_NULL_SYNCH>:: create_laxity_message_queue();
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_DEBUG,"Creating laxity q\n"));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'd':
+<BR>&nbsp;&nbsp; mq=ACE_Message_Queue_Factory&lt;ACE_NULL_SYNCH>:: create_deadline_message_queue();
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_DEBUG,"Creating deadline q\n"));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 's':
+<BR>&nbsp;&nbsp; mq=ACE_Message_Queue_Factory&lt;ACE_NULL_SYNCH>:: create_static_message_queue();
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_DEBUG,"Creating static q\n"));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'h':
+<BR>&nbsp;&nbsp; hwm=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; mq->high_water_mark(hwm);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"High Water Mark %d msgs \n",hwm));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; case 'l':
+<BR>&nbsp;&nbsp; lwm=ACE_OS::atoi(get_opts.optarg);
+<BR>&nbsp;&nbsp; mq->low_water_mark(lwm);
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_INFO,"Low Water Mark %d msgs \n",lwm));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; default:
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_ERROR,"Usage specify queue type\n"));
+<BR>&nbsp;&nbsp; break;
+<BR>&nbsp; }
+<BR>&nbsp;}
+
+<P>private:
+<BR>&nbsp;int opt;
+<BR>&nbsp;int hwm;
+<BR>&nbsp;int lwm;
+<BR>};
+<BR>&nbsp;
+<BR>&nbsp;
+
+<P>class QTest{
+<BR>public:
+<BR>QTest(int argc, char*argv[]){
+<BR>&nbsp;args_ = new Args(argc,argv,no_msgs_,time_,mq_);
+<BR>&nbsp;array_ =new ACE_Message_Block*[no_msgs_];
+<BR>&nbsp;}
+
+<P>int start_test(){
+<BR>&nbsp;for(int i=0; i&lt;no_msgs_;i++){
+<BR>&nbsp; ACE_NEW_RETURN (array_[i], ACE_Message_Block (1), -1);
+<BR>&nbsp; set_deadline(i);
+<BR>&nbsp; set_execution_time(i);
+<BR>&nbsp; enqueue(i);
+<BR>&nbsp; }
+
+<P>&nbsp;this->dequeue_all();
+<BR>&nbsp;return 0;
+<BR>&nbsp;}
+
+<P><FONT COLOR="#FF0000">//Call the underlying ACE_Message_Block method
+msg_deadline_time() to set the deadline of the message.</FONT>
+<BR>void set_deadline(int msg_no){
+<BR>&nbsp;float temp=(float) time_/(msg_no+1);
+<BR>&nbsp;ACE_Time_Value tv;
+<BR>&nbsp;tv.set(temp);
+<BR>&nbsp;ACE_Time_Value deadline(ACE_OS::gettimeofday()+tv);
+<BR>&nbsp;array_[msg_no]->msg_deadline_time(deadline);
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"EQd with DLine %d:%d\n", deadline.sec(),deadline.usec()));
+<BR>&nbsp;}
+
+<P><FONT COLOR="#FF0000">//Call the underlying ACE_Message_Block method
+to set the execution time</FONT>
+<BR>void set_execution_time(int msg_no){
+<BR>&nbsp;float temp=(float) time_/10*msg_no;
+<BR>&nbsp;ACE_Time_Value tv;
+<BR>&nbsp;tv.set(temp);
+<BR>&nbsp;ACE_Time_Value xtime(ACE_OS::gettimeofday()+tv);
+<BR>&nbsp;array_[msg_no]->msg_execution_time (xtime);
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"Xtime %d:%d\n",xtime.sec(),xtime.usec()));
+<BR>&nbsp;}
+
+<P>void enqueue(int msg_no){
+<BR><FONT COLOR="#FF0000">&nbsp;//Set the value of data at the read position</FONT>
+<BR>&nbsp;*array_[msg_no]->rd_ptr()=msg_no;
+<BR><FONT COLOR="#FF0000">&nbsp;//Advance write pointer</FONT>
+<BR>&nbsp;array_[msg_no]->wr_ptr(1);
+<BR><FONT COLOR="#FF0000">&nbsp;//Enqueue on the message queue</FONT>
+<BR>&nbsp;if(mq_->enqueue_prio(array_[msg_no])==-1){
+<BR>&nbsp; ACE_DEBUG((LM_ERROR,"\nCould not enqueue on to mq!!\n"));
+<BR>&nbsp; return;
+<BR>&nbsp; }
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"Data %d\n",*array_[msg_no]->rd_ptr()));
+<BR>&nbsp;}
+
+<P>void dequeue_all(){
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"Beginning DQ \n"));
+<BR>&nbsp;ACE_DEBUG((LM_INFO,"No. of Messages on Q:%d Bytes on Q:%d \n",
+mq_->message_count(),mq_->message_bytes()));
+<BR>&nbsp;for(int i=0;i&lt;no_msgs_ ;i++){
+<BR>&nbsp; ACE_Message_Block *mb;
+<BR>&nbsp; if(mq_->dequeue_head(mb)==-1){
+<BR>&nbsp;&nbsp; ACE_DEBUG((LM_ERROR,'\nCould not dequeue from mq!!\n"));
+<BR>&nbsp;&nbsp; return;
+<BR>&nbsp;&nbsp; }
+<BR>&nbsp; ACE_DEBUG((LM_INFO,"DQd data %d\n",*mb->rd_ptr()));
+<BR>&nbsp; }
+<BR>&nbsp;}
+<BR>private:
+<BR>&nbsp;Args *args_;
+<BR>&nbsp;ACE_Message_Block **array_;
+<BR>&nbsp;ACE_Message_Queue&lt;ACE_NULL_SYNCH> *mq_;
+<BR>&nbsp;int no_msgs_;
+<BR>&nbsp;int time_;
+<BR>};
+
+<P>int main(int argc, char* argv[]){
+<BR>&nbsp;QTest test(argc,argv);
+<BR>&nbsp;if(test.start_test()&lt;0)
+<BR>&nbsp; ACE_DEBUG((LM_ERROR,"Program failure \n"));
+<BR>&nbsp;
+<BR>}
+<BR>&nbsp;
+</BODY>
+</HTML>
