@@ -10,8 +10,11 @@
 
 #if defined (ACE_HAS_POLL)
 
+// Should we be verbose?
+static int verbose = 0;
+
 // Max number of open handles.
-const int MAX_HANDLES = 200;
+static const int MAX_HANDLES = 200;
 
 struct Buffer_Info
 {
@@ -41,10 +44,10 @@ init_poll_array (void)
 }
 
 static int
-init_buffer (ACE_HANDLE handle)
+init_buffer (size_t index)
 {
-  if (ACE::recv_n (handle,
-                   (void *) &buffer_array[handle].len_,
+  if (ACE::recv_n (poll_array[index].fd,
+                   (void *) &buffer_array[index].len_,
                    sizeof (ACE_UINT32)) != sizeof (ACE_UINT32))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
@@ -52,13 +55,14 @@ init_buffer (ACE_HANDLE handle)
                       0);
   else
     {
-      buffer_array[handle].len_ =
-        ntohl (buffer_array[handle].len_);
+      buffer_array[index].len_ =
+        ntohl (buffer_array[index].len_);
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) reading messages of size %d\n",
-                  buffer_array[handle].len_));
-      buffer_array[handle].buf_ =
-        ACE_OS::malloc (buffer_array[handle].len_);
+                  buffer_array[index].len_));
+      ACE_ALLOCATOR_RETURN (buffer_array[index].buf_,
+                            ACE_OS::malloc (buffer_array[index].len_),
+                            -1);
     }
 }
 
@@ -68,19 +72,29 @@ handle_data (size_t n_handles)
   // Handle pending logging messages first (s_handle + 1 is guaranteed
   // to be lowest client descriptor).
 
-  for (ACE_HANDLE handle = 1; handle < n_handles; handle++)
+  for (size_t index = 1; index < n_handles; index++)
     {
-      if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN))
+      if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
           // Read data from client (terminate on error).
 
+          ACE_DEBUG ((LM_DEBUG, 
+                      "(%P|%t) buf = %d, handle = %d\n",
+                      buffer_array[index].buf_,
+                      poll_array[index].fd));
           // First time in -- gotta initialize the buffer.
-          if (buffer_array[handle].buf_ == 0)
-            init_buffer (handle);
+          if (buffer_array[index].buf_ == 0 
+              && init_buffer (index) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t) %p\n",
+                          "init_buffer"));
+              continue;
+            }
 
-          ssize_t n = ACE::recv (poll_array[handle].fd,
-                                 buffer_array[handle].buf_, 
-                                 buffer_array[handle].len_);
+          ssize_t n = ACE::recv (poll_array[index].fd,
+                                 buffer_array[index].buf_, 
+                                 buffer_array[index].len_);
           // <recv> will not block in this case!
 
           if (n == -1)
@@ -89,21 +103,24 @@ handle_data (size_t n_handles)
                         "read failed"));
           else if (n == 0)
             {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) closing oneway server at handle %d\n",
+                          poll_array[index].fd));
+
               // Handle client connection shutdown.
-              ACE_OS::close (poll_array[handle].fd);
-              poll_array[handle].fd = poll_array[--n_handles].fd;
+              ACE_OS::close (poll_array[index].fd);
+              poll_array[index].fd = poll_array[--n_handles].fd;
 
-              ACE_OS::free ((void *) buffer_array[handle].buf_);
-              buffer_array[handle].buf_ = 0;
-
-              // Send handshake back to client to unblock it.
-              if (ACE::send (poll_array[handle].fd, "", 1) != 1)
-                ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
+              ACE_OS::free ((void *) buffer_array[index].buf_);
+              buffer_array[index].buf_ = 0;
+              buffer_array[index].len_ = 0;
             }
-          else
-            ACE_OS::printf ("%*s", n, buffer_array[handle].buf_), fflush (stdout);
+          else if (verbose)
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) %*s",
+                        n,
+                        buffer_array[index].buf_));
         }
-      ACE_OS::fflush (stdout);
     }
 }
 
@@ -129,8 +146,9 @@ handle_connections (ACE_SOCK_Acceptor &peer_acceptor,
             const char *s = client.get_host_name ();
 
             ACE_ASSERT (s != 0);
-            ACE_OS::printf ("client %s\n", s);
-            ACE_OS::fflush (stdout);
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) client %s\n",
+                        s));
             poll_array[n_handles++].fd = new_stream.get_handle ();
           }
     }
@@ -139,8 +157,10 @@ handle_connections (ACE_SOCK_Acceptor &peer_acceptor,
 int
 main (int, char *[])
 {
+  u_short port = ACE_DEFAULT_SERVER_PORT + 1;
+
   // Create a server end-point.
-  ACE_INET_Addr addr (ACE_DEFAULT_SERVER_PORT);
+  ACE_INET_Addr addr (port);
   ACE_SOCK_Acceptor peer_acceptor (addr);
 
   ACE_HANDLE s_handle = peer_acceptor.get_handle ();
@@ -148,6 +168,10 @@ main (int, char *[])
   init_poll_array ();
 
   poll_array[0].fd = s_handle;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) starting oneway server at port %d\n",
+              port));
 
   for (int n_handles = 1;;)
     {
