@@ -8,9 +8,12 @@
 #include "IFR_ComponentsS.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/ORB_Core.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(IFR_Service, IFR_Service, "$Id$")
+ACE_RCSID (IFR_Service,
+           IFR_Service,
+           "$Id$")
 
 IFR_Service::IFR_Service (void)
   : servant_locator_impl_ (0),

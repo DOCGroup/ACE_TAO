@@ -3,6 +3,7 @@
 #include "tao_imr_i.h"
 
 #include "tao/Stub.h"
+#include "tao/Profile.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"

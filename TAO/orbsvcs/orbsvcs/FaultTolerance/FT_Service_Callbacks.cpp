@@ -4,6 +4,7 @@
 #include "FT_Policy_i.h"
 
 #include "tao/MProfile.h"
+#include "tao/Profile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
 
@@ -15,7 +16,9 @@
 # include "FT_Service_Callbacks.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(FaultTolerance, FT_Service_Callbacks, "$Id$")
+ACE_RCSID (FaultTolerance,
+           FT_Service_Callbacks,
+           "$Id$")
 
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
     TAO_ORB_Core *orb_core)

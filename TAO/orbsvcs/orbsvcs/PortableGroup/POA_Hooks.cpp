@@ -1,13 +1,16 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
+// -*- C++ -*-
 
 #include "POA_Hooks.h"
 #include "PortableGroup_Loader.h"
-#include "tao/Stub.h"
 #include "PortableGroup_Request_Dispatcher.h"
 
-ACE_RCSID(tao, PortableGroup, "$Id$")
+#include "tao/Stub.h"
+#include "tao/Profile.h"
+
+ACE_RCSID (tao,
+           PortableGroup,
+           "$Id$")
+
 
 TAO_POA_Hooks::TAO_POA_Hooks (PortableGroup_Request_Dispatcher &request_dispatcher) :
   request_dispatcher_ (request_dispatcher)
