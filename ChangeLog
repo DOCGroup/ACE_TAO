@@ -1,3 +1,8 @@
+Thu Dec  5 20:33:18 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Removed ACE_NEEDS_DEV_IO_CONVERSION. This
+          seems like a ludicrous workaround to some old, buggy compiler.
+
 Thu Dec  5 14:35:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* netsvcs/clients/Naming/Client/Makefile: Do not build in static
