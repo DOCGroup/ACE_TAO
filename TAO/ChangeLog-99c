@@ -1,3 +1,49 @@
+Fri Mar 12 16:17:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/client.cpp:
+        * orbsvcs/tests/ImplRepo/client.dsp:
+        * orbsvcs/tests/ImplRepo/client_impl.cpp:
+        * orbsvcs/tests/ImplRepo/client_impl.h:
+        * orbsvcs/tests/ImplRepo/server.cpp:
+        * orbsvcs/tests/ImplRepo/server.dsp:
+        * orbsvcs/tests/ImplRepo/server_impl.cpp:
+        * orbsvcs/tests/ImplRepo/server_impl.h:
+        * orbsvcs/tests/ImplRepo/Simple_Object.idl:
+        * orbsvcs/tests/ImplRepo/simple_object_impl.cpp:
+        * orbsvcs/tests/ImplRepo/simple_object_impl.h:
+
+          Removed the Simple Test.
+
+        * orbsvcs/tests/ImplRepo/Nestea.idl:
+        * orbsvcs/tests/ImplRepo/nestea_client.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+
+          Added the new Nestea Bookshelf test.
+
+        * orbsvcs/tests/ImplRepo/README:
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+
+          Changed because of the new test.
+
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+
+          Now uses ACE exception handling macros.
+
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+          
+          Added the -k option for IOR input.
+
 Fri Mar 12 14:11:28 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * ORB.h, ORB.cpp and orbconf.h:  Fixed multicast problem.
