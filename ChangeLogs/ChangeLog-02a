@@ -1,3 +1,9 @@
+Thu Mar  2 13:23:39 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TLI.cpp, TLI_Connector.cpp, TLI_Stream.cpp: Removed comments
+	  regarding the quality of SunOS 4...  Thanks to Malcolm Spence
+	  <spence_m@ociweb.com> for reporting this!
+
 Wed Mar  1 22:39:04 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Log_Record.cpp:

@@ -211,8 +211,10 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 	  name.maxlen = remote_sap->get_size ();
 	  name.buf    = (char *) remote_sap->get_addr ();
 
-	  if (ACE_OS::ioctl (new_stream.get_handle (), TI_GETPEERNAME, &name) == -1) 
-#else /* SunOS4 sucks... */
+	  if (ACE_OS::ioctl (new_stream.get_handle (),
+                             TI_GETPEERNAME,
+                             &name) == -1) 
+#else /* SunOS4 */
 	  if (0)
 #endif /* ACE_HAS_SVR4_TLI */  
 	    {
