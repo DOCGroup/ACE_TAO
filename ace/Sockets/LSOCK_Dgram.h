@@ -16,13 +16,13 @@
 #define ACE_LOCAL_SOCK_DGRAM_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Dgram.h"
+#include "ace/Sockets/SOCK_Dgram.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/LSOCK.h"
+#include "ace/Sockets/LSOCK.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -62,7 +62,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_Dgram.i"
+#include "ace/Sockets/LSOCK_Dgram.i"
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

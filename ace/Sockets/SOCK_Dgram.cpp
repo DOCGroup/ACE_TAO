@@ -5,9 +5,7 @@
 #include "ace/OS/Handle_Set.h"
 #include "ace/Threads/Synch.h"
 
-#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
-#endif
 
 #include "ace/IPC/INET_Addr.h"
 

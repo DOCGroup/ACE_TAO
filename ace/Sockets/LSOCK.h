@@ -15,7 +15,7 @@
 #define ACE_LOCAL_SOCK_H
 #include "ace/pre.h"
 
-#include "ace/SOCK.h"
+#include "ace/Sockets/SOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -69,7 +69,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK.i"
+#include "ace/Sockets/LSOCK.i"
 #endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

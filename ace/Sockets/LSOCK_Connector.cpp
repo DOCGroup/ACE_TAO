@@ -1,15 +1,16 @@
 // LSOCK_Connector.cpp
 // $Id$
 
-#include "ace/LSOCK_Connector.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/LSOCK_Connector.h"
+
+#include "ace/Logging/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_Connector, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_Connector.i"
+#include "ace/Sockets/LSOCK_Connector.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Connector)

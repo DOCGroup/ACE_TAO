@@ -1,10 +1,11 @@
 // $Id$
 
-#include "ace/SOCK_Dgram_Bcast.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/SOCK_Dgram_Bcast.h"
+
+#include "ace/Logging/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Bcast.i"
+#include "ace/Sockets/SOCK_Dgram_Bcast.i"
 #endif
 
 ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
@@ -119,6 +120,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
   // Get interface structure and initialize the addresses using UNIX
   // techniques.
+
   if (ACE_OS::ioctl (s,
                      SIOCGIFCONF,
                      (char *) &ifc) == -1)
@@ -182,9 +184,10 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           // the sa_family, even when there are no errors!  Thus, we
           // only print an error if this is not the case, or if we're
           // in "debugging" mode.
+
           if (ifr->ifr_addr.sa_family != 0
               || ACE::debug () > 0)
-          ACE_DEBUG ((LM_DEBUG,
+	  ACE_DEBUG ((LM_DEBUG,
                       "warning %p: sa_family: %d\n",
                       "ACE_SOCK_Dgram_Bcast::mk_broadcast: Not AF_INET",
                       ifr->ifr_addr.sa_family));
@@ -202,7 +205,6 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                      "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)"));
           continue;
         }
-
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_UP) == 0)
         {

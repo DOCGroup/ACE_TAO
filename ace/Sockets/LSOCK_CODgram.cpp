@@ -1,15 +1,16 @@
 // LSOCK_CODgram.cpp
 // $Id$
 
-#include "ace/LSOCK_CODgram.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/LSOCK_CODgram.h"
+
+#include "ace/Logging/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_CODgram, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/LSOCK_CODgram.i"
+#include "ace/Sockets/LSOCK_CODgram.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_CODgram)
@@ -49,6 +50,7 @@ ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
 				      int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
+
   if (this->open (remote, local, protocol_family, 
 		  protocol) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_LSOCK_CODgram")));

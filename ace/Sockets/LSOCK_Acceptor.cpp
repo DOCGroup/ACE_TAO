@@ -1,8 +1,8 @@
 // LSOCK_Acceptor.cpp
 // $Id$
 
-#include "ace/LSOCK_Acceptor.h"
-#include "ace/Log_Msg.h"
+#include "ace/Sockets/LSOCK_Acceptor.h"
+#include "ace/Logging/Log_Msg.h"
 
 ACE_RCSID(ace, LSOCK_Acceptor, "$Id$")
 

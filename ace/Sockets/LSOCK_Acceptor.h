@@ -15,14 +15,14 @@
 #define ACE_LOCAL_SOCK_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/SOCK_Acceptor.h"
+#include "ace/Sockets/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/UNIX_Addr.h"
-#include "ace/LSOCK_Stream.h"
+#include "ace/IPC/UNIX_Addr.h"
+#include "ace/Sockets/LSOCK_Stream.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
