@@ -620,7 +620,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
           
-          CosTrading::Lookup_ptr remote_lookup;
+          CosTrading::Lookup_var remote_lookup;
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
           CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
           CORBA::Object_var obj =
@@ -629,7 +629,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           remote_lookup = CosTrading::Lookup::_narrow (obj, TAO_TRY_ENV);
           TAO_CHECK_ENV;
 #else
-          remote_lookup = link_info->target;
+          remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
           
 	  // Perform the federated query.
@@ -750,7 +750,7 @@ forward_query (const char* next_hop,
 	link_interface->describe_link (next_hop, TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
-      CosTrading::Lookup_ptr remote_lookup;      
+      CosTrading::Lookup_var remote_lookup;      
 #ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
       CORBA::ORB_ptr orb = TAO_ORB_Core_instance ()-> orb ();
       CORBA::Object_var obj = orb->string_to_object (link_info->target, TAO_TRY_ENV);
@@ -758,7 +758,7 @@ forward_query (const char* next_hop,
       remote_lookup = CosTrading::Lookup::_narrow (obj, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #else
-      remote_lookup = link_info->target;
+      remote_lookup = CosTrading::Lookup::_duplicate (link_info->target);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
       CORBA::Object_var us = this->_this (TAO_TRY_ENV);
@@ -1062,7 +1062,7 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
     return CosTrading::Register::_nil ();
   
   CosTrading::Link::LinkInfo_var link_info;
-  CosTrading::Register_ptr remote_reg;
+  CosTrading::Register_var remote_reg;
   
   TAO_TRY
     {
@@ -1077,7 +1077,7 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
       remote_reg = CosTrading::Register::_narrow (obj, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 #else 
-      remote_reg = link_info->target_reg;
+      remote_reg = CosTrading::Register::_narrow (link_info->target_reg);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
     }
@@ -1089,7 +1089,7 @@ TAO_Register<TRADER>::resolve (const CosTrading::TraderName &name,
   TAO_ENDTRY;
   
   // Ensure that the register pointer isn't nil.
-  if (remote_reg == CosTrading::Register::_nil ())
+  if (remote_reg.ptr () == CosTrading::Register::_nil ())
     TAO_THROW_RETURN (CosTrading::Register::RegisterNotSupported (name),
 		      CosTrading::Register::_nil ());
 
@@ -1606,7 +1606,7 @@ TAO_Link<TRADER,MAP_LOCK_TYPE>::describe_link (const char *name,
   CORBA::Object_var obj =
     orb->string_to_object (old_link_info.target, _env);
   TAO_CHECK_ENV_RETURN (_env, new_link_info);
-  CosTrading::Lookup_ptr remote_lookup =
+  CosTrading::Lookup_var remote_lookup =
     CosTrading::Lookup::_narrow (obj.in (), _env);
   TAO_CHECK_ENV_RETURN (_env, new_link_info);
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
