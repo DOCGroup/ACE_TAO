@@ -17,6 +17,7 @@ DIRS = \
 	Client_Leaks \
 	Codec \
 	Collocation \
+	Connect_Strategy_Test \
 	Connection_Purging \
 	Crash_On_Write \
 	Cache_Growth_Test \
@@ -50,6 +51,7 @@ DIRS = \
         Native_Exceptions \
 	Nested_Event_Loop \
         NestedUpcall \
+	No_Server_MT_Connect_Test \
         Object_Loader \
         Objref_Sequence_Test \
         OBV \

@@ -31,6 +31,8 @@ DIRS  = CDR \
         ORB_init \
         ORB_destroy \
 	Objref_Sequence_Test \
+	No_Server_MT_Connect_Test \
+	Connect_Strategy_Test \
         File_IO \
         Nested_Event_Loop \
         Leader_Followers \
