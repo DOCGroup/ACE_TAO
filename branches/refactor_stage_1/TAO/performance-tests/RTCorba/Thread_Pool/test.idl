@@ -1,0 +1,11 @@
+//
+// $Id$
+//
+
+interface test
+{
+  void method (in unsigned long work,
+               in unsigned long prime_number);
+
+  void shutdown ();
+};

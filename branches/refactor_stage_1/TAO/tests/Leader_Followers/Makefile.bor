@@ -1,0 +1,10 @@
+#
+# Makefile for building the Leader_Followers test
+#
+
+MAKEFILES = \
+	client.bor \
+	server.bor 
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

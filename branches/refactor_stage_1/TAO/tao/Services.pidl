@@ -1,0 +1,51 @@
+// -*- IDL -*-
+//
+// $Id$
+
+// ================================================================
+//
+//   This file was used to generate the code in ServicesC.*
+//   The command used to generate code is:
+//
+//     tao_idl
+//        -o orig -Gp -Gd -Ge 1
+//          -Wb,export_macro=TAO_Export
+//          -Wb,export_include="tao/corbafwd.h"
+//          -Wb,pre_include="ace/pre.h"
+//          -Wb,post_include="ace/post.h"
+//          Services.pidl
+//
+//   Patches for changes to the generated code are available in the
+//   `diffs' directory.
+// ================================================================
+
+
+#ifndef TAO_CORBA_SERVICES_IDL
+#define TAO_CORBA_SERVICES_IDL
+
+#include "OctetSeq.pidl"
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef unsigned short ServiceType;
+  typedef unsigned long ServiceOption;
+  typedef unsigned long ServiceDetailType;
+
+  const ServiceType Security = 1;
+
+  struct ServiceDetail
+  {
+    ServiceDetailType service_detail_type;
+    OctetSeq service_detail;
+  };
+
+  struct ServiceInformation
+  {
+    sequence<ServiceOption> service_options;
+    sequence<ServiceDetail> service_details;
+  };
+};
+
+#endif  /* TAO_CORBA_SERVICES_IDL */

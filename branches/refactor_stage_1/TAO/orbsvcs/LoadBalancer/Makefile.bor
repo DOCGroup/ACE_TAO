@@ -1,0 +1,11 @@
+#
+# Makefile for building	the TAO	ORB Services libraries
+#
+# $Id$
+#
+
+MAKEFILES = \
+	LoadManager.bor \
+	LoadMonitor.bor
+
+!include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
