@@ -6,7 +6,7 @@
 //   TAO
 //
 // = FILENAME
-//   RTPolicy_Factory.h
+//   Policy_Factory.h
 //
 // = AUTHOR
 //   Angelo Corsaro (corsaro@cs.wustl.edu)
@@ -26,25 +26,29 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class TAO_Export Policy_Factory {
-
-  // = TITLE 
-  //   RTPolicy_Factory 
+// @@ Angelo, all TAO implementation classes should start with TAO_.
+// Please change.
+class TAO_Export Policy_Factory
+{
+  // = TITLE
+  //   Policy_Factory
   //
   // = DESCRIPTION
   //   This class allows the creation of RT-Policies based on the
-  //   type of the policy. 
-  
+  //   type of the policy.
 
+  // @@ Angelo, does this class creates only RT policies as the
+  // comment above indicates?
 public:
-  
+
   static CORBA::Policy * create_policy (CORBA::PolicyType ptype);
-  // Creates a Policy of the type specified by the parameter CORBA::PolicyType ptype
-  // NULL is returned if the policy type is unknown.
+  // Creates a Policy of the type specified by <ptype>.  NULL is
+  // returned if the policy type is unknown.
 
 protected:
   Policy_Factory (void);
-  
+  // @@ Angelo, The only method in this class is a static.  Do we
+  // need the constructor?
 };
 
 

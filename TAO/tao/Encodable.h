@@ -9,15 +9,9 @@
 //    Encodable.h
 //
 // = DESCRIPTION
-//     Defines the  interface that should  be implemented by the
-//     classes that whish to  be  encodable into a CDR representation.
-//
-//     NOTE: This interface is different in purpose from the 
-//           operaror << and operator >>. In fact those operator
-//           usually create and object reference, while this interface
-//           is meant to store and retrieve an object state (i.e. member
-//           variable) into or from CDR. 
-//
+//     Defines the  interface for
+//     classes that wish to be encodable/decodable into/from a CDR
+//     representation.
 //
 // = AUTHOR
 //     Angelo Corsaro <corsaro@cs.wustl.edu>
@@ -31,36 +25,48 @@
 #include "tao/orbconf.h"
 #include "tao/corbafwd.h"
 
+// @@ Angelo, I fixed several typos in class and file descriptions.
+// Make sure to review what you write!!!
+
+// @@ Angelo, when you type, many of the adjacent words have more than
+// 1 space between them.  Please make sure to use just one space!
+
+// @@ Angelo, do we need to include orbconf.h ?  If not, make sure to
+// delete it.  We need to avoid creating unnecessary dependencies,
+// since they increase compilation times.
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-#endif // ACE_LACKS_PRAGMA_ONCE 
+#endif // ACE_LACKS_PRAGMA_ONCE
 
-
-class TAO_Export TAO_Encodable 
+class TAO_Export TAO_Encodable
 {
-
 // = TITLE
 //    TAO_Encodable Interface
 //
 // = DESCRIPTION
-//    This interface has to be implemented by class that
-//    whish to  be encoded into  CDR. The responsability
-//    or implementing the streaming methods is deferred to 
-//    the subclasses.
+//    This interface for use by classes that
+//    whish to be encoded/decoded into/from a CDR
+//    stream. Implementation of the streaming
+//    methods is deferred to the subclasses.
 //
 public:
 
   virtual ~TAO_Encodable (void);
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) = 0;
-  //  Encode the Object into a CDR representation. 
+  //  Encodes the object implementing this method into a CDR stream.
+  //  Returns true on success and false on failure.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) = 0;
-  //  Decode the Object from a CDR representation. If the CDR
-  //  given has the wrong format than the method will return
-  //  false.
-}; 
+  //  Decodes the object implementing this method from a CDR stream.
+  //  Returns true on success and false on failure.
+};
 
 #include "ace/post.h"
 
 #endif // defined (TAO_ENCODABLE_H_)
+
+// @@ Angelo, please use #endif // TAO_ENCODABLE_H_
+// In other words, don't include 'defined' and parens in the comment
+// for endif.
