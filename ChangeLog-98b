@@ -1,3 +1,10 @@
+Sat Jul 18 20:35:00 1998  Michael Kircher <mk1@cs.wustl.edu>
+
+	* tests/Upgradable_RW_Test.cpp: Changed the time measurement
+	  completely. Before we meassured end to end. Now we meassure
+	  only the time spend in actual doing things. At the end
+	  all the time spend is summarized.
+
 Sat Jul 18 19:47:45 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/ACE.cpp: Looks like we are having some trouble with the
