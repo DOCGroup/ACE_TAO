@@ -1,15 +1,12 @@
-Wed Jun  9 10:46:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* tests/Priority_Reactor_Test.cpp:
-	  Added missing template instantiations for
-	  ACE_Message_Queue_Iterator
-
-	* ace/Svc_Handler.cpp (flush):
-	  Removed extra characters and the end of a #endif
-	  Fixed warning about unused variable
-	  Use right iterator for the Message_Queue
-
 Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-mvs.h: Added ACE_HAS_NONCONST_SELECT_TIMEVAL on the
+ 	  advice of Jim Rogers <jrogers@viasoft.com>.
+
+	* ace/OS.h (class ACE_Errno_Guard): Propagate the return value of
+ 	  the assignment operator to allow chaining.  Thanks to Jeff for
+ 	  reporting this.
+
 
 	* ace/OS.i: Fixed a bizzarre problem with lower-case ace_os::.
 	  Thanks to Andy for pointing this out.
@@ -34,6 +31,16 @@ Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           is "full" or (2) a period of time elapses, at which point the
           queue is "flushed" via sendv_n() to the peer.
 
+Wed Jun  9 10:46:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Priority_Reactor_Test.cpp:
+	  Added missing template instantiations for
+	  ACE_Message_Queue_Iterator
+
+	* ace/Svc_Handler.cpp (flush):
+	  Removed extra characters and the end of a #endif
+	  Fixed warning about unused variable
+	  Use right iterator for the Message_Queue
 Wed Jun 09 10:11:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-g++-common.h: added #define of
@@ -59,9 +66,10 @@ Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
           new ACE_Errno_Guard class.
 
         * ace/OS.h: Added a new ACE_Errno_Guard class that improves
-          performance when thread-specific errno must be saved/restored in
-          a block of code.  Thanks to Serge Kolgan <skolgan@cisco.com> for
-          motivating this.
+ 	  performance when thread-specific errno must be saved/restored in
+ 	  a block of code.  Thanks to Serge Kolgan <skolgan@cisco.com> for
+ 	  motivating this and to Rick Weisner <Rick.Weisner@East.Sun.COM>
+ 	  for explaining the technique to Serge.
 
         * ace/Env_Value_T.h: Added a new ACE_Convert() function that works
           for const char *'s.  Thanks to David for reporting this.
