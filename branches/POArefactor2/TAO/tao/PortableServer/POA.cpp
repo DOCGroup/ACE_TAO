@@ -2750,6 +2750,12 @@ TAO_POA::set_servant (PortableServer::Servant servant
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+TAO::Portable_Server::Cached_Policies::PriorityModel
+TAO_POA::priority_model (void) const
+{
+  return cached_policies_.priority_model ();
+}
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 int
 TAO_POA::enter ()

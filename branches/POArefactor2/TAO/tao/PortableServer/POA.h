@@ -409,6 +409,8 @@ public:
   /// ORB Core for POA.
   TAO_ORB_Core &orb_core (void) const;
 
+  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model (void) const;
+
   CORBA::Boolean cleanup_in_progress (void);
 
   /// Calls protected static method used when POACurrent is not appropriate.
