@@ -195,6 +195,11 @@
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
+// This is a lie, but the signatures are all messed up on
+// Solaris. Adding  the right options lie XOPEN_SOURCE and stuff
+// doesn't seem to work right. This is a hack.
+#define ACE_LACKS_SWAB
+
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
