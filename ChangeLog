@@ -1,3 +1,11 @@
+Tue Jul  9 08:07:20 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          When using Cygwin Perl, we need to convert the cwd to a windows
+          path to match up with environment variables that are usable
+          outside of Cygwin.
+
 Tue Jul  9 07:46:57 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/TemplateParser.pm:
