@@ -423,12 +423,6 @@ protected:
   int fini (void);
   // Final termination hook, typically called by CORBA::ORB's DTOR.
 
-  // int preconnect (const char *preconnections);
-  // @@ Now defined in IIOP_Connector
-  // Attempt to establish connections specified in <preconnections>.
-  // Returns -1 in case of error, or the number of connections
-  // actually established.
-
   void create_and_set_root_poa (const char *adapter_name,
                                 TAO_POA_Manager *poa_manager,
                                 const TAO_POA_Policies *policies,
