@@ -1,5 +1,8 @@
 Fri Feb 27 15:03:58 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* docs/Options.html (TAO_Default_Server_Strategy_Factory): Added
+ 	documentation for POA-related lock strategies.
+
 	* tao/connect.cpp (handle_input): Added call to
  	Reactor::suspend_handler() in here so that, in the bizarre corner
  	case where sub-event loop "A" eventually leads to sub-sub-event
