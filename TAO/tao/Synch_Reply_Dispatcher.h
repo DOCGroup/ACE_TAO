@@ -31,6 +31,11 @@
 
 class TAO_Pluggable_Reply_Params;
 
+namespace IOP
+{
+  class ServiceContextList;
+}
+
 /**
  * @class TAO_Synch_Reply_Dispatcher
  *

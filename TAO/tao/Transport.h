@@ -42,6 +42,7 @@ class TAO_Codeset_Translator_Factory;
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
+class TAO_Stub;
 
 /**
  * @class TAO_Transport
