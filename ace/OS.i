@@ -4596,7 +4596,7 @@ ACE_OS::rewind (FILE *fp)
 ACE_INLINE long
 ACE_OS::filesize (ACE_HANDLE handle)
 {
-  // ACE_TRACE ("ACE::filesize");
+  // ACE_TRACE ("ACE_OS::filesize");
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::GetFileSize (handle, NULL), int, ACE_SYSCALL_FAILED);
 #else /* !ACE_WIN32 */
