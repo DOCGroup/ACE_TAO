@@ -30,7 +30,7 @@
 #include "tao/PortableServer/PortableServerC.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-
+#include "ace/Null_Mutex.h"
 
 /**
  * @class TAO_PG_ObjectGroup_Map_Entry

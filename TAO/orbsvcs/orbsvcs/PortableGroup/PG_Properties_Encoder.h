@@ -18,6 +18,7 @@
 
 #include "ace/Vector_T.h"
 #include "ace/Pair_T.h"
+#include "ace/SString.h"
 
 namespace TAO_PG
 {
