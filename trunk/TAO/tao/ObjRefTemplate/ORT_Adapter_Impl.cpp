@@ -11,11 +11,6 @@ ACE_RCSID (ObjRefTemplate,
            ORT_Adapter_Impl,
            "$Id$")
 
-
-TAO::ORT_Adapter_Impl::~ORT_Adapter_Impl (void)
-{
-}
-
 char *
 TAO::ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -98,7 +93,7 @@ TAO::ORT_Adapter_Impl::activate (
   // when the POA creates and actives an ORT_Adapter it will lock
   // itself. Create an ObjectReferenceTemplate for this POA.
 
-  ObjectReferenceTemplate * t;
+  ObjectReferenceTemplate * t = 0;
   ACE_NEW_THROW_EX (t,
                     ObjectReferenceTemplate (server_id,
                                              orb_id,

@@ -45,11 +45,10 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-    virtual ~ORT_Adapter_Factory (void);
-
     /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create () = 0;
 
+    /// Destroy the passed adapter
     virtual void destroy (TAO::ORT_Adapter * adapter) = 0;
   };
 }

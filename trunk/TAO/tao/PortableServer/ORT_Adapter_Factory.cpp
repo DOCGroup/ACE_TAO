@@ -9,10 +9,6 @@ ACE_RCSID (PortableServer,
 
 namespace TAO
 {
-  ORT_Adapter_Factory::~ORT_Adapter_Factory (void)
-  {
-  }
-
   #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class ACE_Dynamic_Service<ORT_Adapter_Factory>;
