@@ -568,7 +568,7 @@ ace_yynewstate:
       /* Extend the stack our own way.  */
       if (ace_yystacksize >= ACE_YYMAXDEPTH)
 	{
-	  ace_yyerror("parser stack overflow");
+	  ace_yyerror(ACE_LIB_TEXT("parser stack overflow"));
 	  if (ace_yyfree_stacks)
 	    {
 	      free (ace_yyss);
@@ -1098,11 +1098,11 @@ ace_yyerrlab:   /* here on detecting error */
 	      free(msg);
 	    }
 	  else
-	    ace_yyerror ("parse error; also virtual memory exceeded");
+	    ace_yyerror (ACE_LIB_TEXT("parse error; also virtual memory exceeded"));
 	}
       else
 #endif /* ACE_YYERROR_VERBOSE */
-	ace_yyerror("parse error");
+	ace_yyerror(ACE_LIB_TEXT("parse error"));
     }
 
   goto ace_yyerrlab1;

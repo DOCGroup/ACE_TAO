@@ -1,3 +1,16 @@
+Wed Nov 14 23:11:59 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/Naming_Context.cpp (info): Fixed Unicode build problems
+	  by consistently using ACE_TCHAR instead of char, and by
+	  using Unicode aware string functions in ACE_OS_String
+	  instead of ACE_OS.
+
+	* ace/Svc_Conf_l.cpp: Default intialized ace_yy_c_buf_p to ACE_TCHAR
+	  instead of char.  Default initialized ace_yy_cp, ace_yy_bp to 0.
+
+	* ace/Svc_Conf_y.cpp: Wrap string literals passed to ace_yyerror
+	  with ACE_LIB_TEXT().
+
 Wed Nov 14 06:38:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/ACE-bug-process.html (HREF): Changed references from ace.cs
