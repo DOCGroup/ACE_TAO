@@ -45,6 +45,8 @@ public:
       DEF_IIOP_MINOR = 0
     };
 
+  static const char object_key_delimiter;
+
   static const char *prefix (void);
   // Return the char string prefix.
 

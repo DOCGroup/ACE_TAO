@@ -45,7 +45,8 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
   TAO_ProtocolFactorySetItor factory =
                 orb_core->protocol_factories ()->begin ();
 
-  for (TAO_Connector *connector = 0;
+  TAO_Connector *connector = 0;
+  for ( ;
        factory != end;
        ++factory)
     {
@@ -59,6 +60,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
       else
         return -1;
     }
+
   return 0;
 }
 

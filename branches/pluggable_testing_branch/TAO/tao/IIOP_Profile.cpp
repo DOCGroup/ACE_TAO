@@ -17,7 +17,10 @@ ACE_RCSID(tao, IIOP_Profile, "$Id$")
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
+
 static const char *prefix_ = "iiop:";
+
+const char TAO_IIOP_Profile::object_key_delimiter = '/';
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr& addr,
                                     const char *object_key)
@@ -353,7 +356,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (!string || !*string)
     return 0;
 
-  // Remove the "N.N//" prefix, and verify the version is one
+  // Remove the "N.n//" prefix, and verify the version is one
   // that we accept
 
   if (isdigit (string [0])
@@ -367,7 +370,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
       this->version_.set_version ((char) (string [0] - '0'),
                                   (char) (string [2] - '0'));
       string += 5;
-      // Skip over the "N.N//"
+      // Skip over the "N.n//"
     }
   else
     {
@@ -417,7 +420,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   *cp = 0; start++; // increment past :
 
-  cp = ACE_OS::strchr (start, '/');
+  cp = ACE_OS::strchr (start, this->object_key_delimiter);
 
   if (cp == 0)
     {
@@ -602,7 +605,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &env)
                   ACE_OS::strlen (this->host_) +
                   1 /* colon separator */ +
                   5 /* port number */ +
-                  1 /* slash separator */ +
+                  1 /* object key separator */ +
                   ACE_OS::strlen (key) +
                   1 /* zero terminator */);
 
@@ -611,12 +614,13 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &env)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s%c.%c//%s:%d/%s",
+                   "%s%c.%c//%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->host_,
                    this->port_,
+                   this->object_key_delimiter,
                    key.in ());
   return buf;
 }

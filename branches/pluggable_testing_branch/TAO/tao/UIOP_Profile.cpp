@@ -18,7 +18,10 @@ ACE_RCSID(tao, UIOP_Profile, "$Id$")
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
+
 static const char *prefix_ = "uiop:";
+
+const char TAO_UIOP_Profile::object_key_delimiter = '|';
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr& addr,
                                     const char *object_key)
@@ -258,7 +261,7 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (!string || !*string)
     return 0;
 
-  // Remove the "N.N//" prefix, and verify the version's one
+  // Remove the "N.n//" prefix, and verify the version is one
   // that we accept
 
   if (isdigit (string [0])
@@ -274,7 +277,13 @@ TAO_UIOP_Profile::parse_string (const char *string,
       string += 5;
     }
   else
-    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+    {
+      // ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+      // The version is optional so don't throw an exception.
+
+      string += 2;
+      // Skip over the "//"
+    }
 
   if (this->version_.major != TAO_UIOP_Profile::DEF_UIOP_MAJOR ||
       this->version_.minor  > TAO_UIOP_Profile::DEF_UIOP_MINOR)
@@ -282,16 +291,17 @@ TAO_UIOP_Profile::parse_string (const char *string,
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
     }
 
-  // Pull off the "rendezvous_pointname:" part of the objref
+  // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy = CORBA::string_dup (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');
+  char *cp = ACE_OS::strchr (start, this->object_key_delimiter);
 
   if (cp == 0)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      // No rendezvous point specified
     }
 
   if (this->rendezvous_point_)
@@ -310,22 +320,13 @@ TAO_UIOP_Profile::parse_string (const char *string,
     }
 
   this->rendezvous_point_ = CORBA::string_alloc (1 + cp - start);
-  for (cp = this->rendezvous_point_; *start != ':'; *cp++ = *start++)
-    continue;
 
-  *cp = 0; start++; // increment past :
-
-  cp = ACE_OS::strchr (start, '/');
-
-  if (cp == 0)
-    {
-      CORBA::string_free (this->rendezvous_point_);
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
-    }
+  ACE_OS::strncpy (this->rendezvous_point_, start, cp - start);
+  this->rendezvous_point_[cp - start] = '\0';
 
   this->object_addr_.set (this->rendezvous_point_);
 
-  start = ++cp;  // increment past the /
+  start = ++cp;  // increment past the object key separator
 
   TAO_POA::decode_string_to_sequence (this->object_key_, start);
 
@@ -486,7 +487,7 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
                   1 /* major # */ + 1 /* minor # */ + 1 /* decimal point */ +
                   2 /* double-slash separator */ +
                   ACE_OS::strlen (this->rendezvous_point_) +
-                  1 /* slash separator */ +
+                  1 /* object key separator */ +
                   ACE_OS::strlen (key) +
                   1 /* zero terminator */);
 
@@ -495,11 +496,12 @@ TAO_UIOP_Profile::to_string (CORBA::Environment &)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%s%c.%c//%s/%s",
+                   "%s%c.%c//%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->rendezvous_point_,
+                   this->object_key_delimiter,
                    key.in ());
   return buf;
 }

@@ -418,6 +418,9 @@ protected:
   // Check that the prefix of the provided endpoint is valid for use
   // with a given pluggable protocol.
 
+  virtual const char object_key_delimiter (void) const = 0;
+  // Return the object key delimiter to be used.
+
 private:
   CORBA::ULong tag_;
   // IOP protocol tag.
