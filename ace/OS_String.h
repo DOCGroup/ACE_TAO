@@ -323,7 +323,6 @@ public:
                          const char *src,
                          size_t maxlen);
 
-#if defined (ACE_HAS_WCHAR)
   /// This is a "safe" c string copy function (wchar_t version).
   /**
    * Unlike strncpy() this function will always add a terminating '\0'
@@ -340,10 +339,9 @@ public:
    * Very seldom it's possible that the '\0' padding feature from
    * strncpy() is needed.
    */
-  static wchar_t *strsncpy (wchar_t *dst,
-                            const wchar_t *src,
-                            size_t maxlen);
-#endif /* ACE_HAS_WCHAR */
+  static ACE_WCHAR_T *strsncpy (ACE_WCHAR_T *dst,
+                                const ACE_WCHAR_T *src,
+                                size_t maxlen);
 
   /// Finds the first occurance of a substring in an array (const char
   /// version).
