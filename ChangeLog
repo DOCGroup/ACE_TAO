@@ -1,3 +1,10 @@
+Sun Nov  9 04:37:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Removed STDERR from print statements for new checks.  They
+          didn't work well and got the messages out of order.  Thanks to
+          Bala for motivating this.
+
 Sat Nov  8 22:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/TkReactor_Test.cpp:
