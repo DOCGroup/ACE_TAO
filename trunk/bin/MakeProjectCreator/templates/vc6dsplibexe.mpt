@@ -8,6 +8,7 @@ subsystem             = console
 pch_defines           = ACE_USING_PCH
 ssl_libs              = libeay32 ssleay32
 need_libflags         = 1
+pdb                   = 1
 
 Static Release {
   use_debug_libraries   = 0
