@@ -1,3 +1,8 @@
+Thu Aug  5 13:28:49 2004  Will Otte <wotte@dre.vanderbilt.edu>
+	* docs/schema/ciaopolicy.xsd:
+
+	  Schema describing ORB policy configurations.
+
 Thu Aug  5 11:56:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/CodeGenerationKit/IndentationImplanter.hpp:
