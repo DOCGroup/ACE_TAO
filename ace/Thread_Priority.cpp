@@ -79,6 +79,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
   return 0;
 }
 
+
 #elif defined (ACE_WIN32)
 
 /* mapping of
@@ -148,6 +149,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
   return 0;
 }
 
+
 #elif defined (VXWORKS)
 
 /* mapping of
@@ -197,6 +199,72 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 }
 
 
+#elif defined (DIGITAL_UNIX)
+
+// Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+// figuring this out for Digital UNIX and providing this code . . .
+//
+// might be adapted to other flavours of POSIX threads...
+
+/* mapping of
+      ACE_Thread_Priority::                    to        POSIX 1003.1c
+   Priority_Class             Thread_Priority      class      THREAD_PRIORITY_
+   ==============             ===============      =====      ================
+   ACE_LOW_PRIORITY_CLASS         0 .. 6           BG_NP          0 .. 6
+   ACE_NORMAL_PRIORITY_CLASS      0 .. 6           OTHER          8 .. 14
+   ACE_HIGH_PRIORITY_CLASS        0 .. 6           RR             16 .. 22
+   ACE_REALTIME_PRIORITY_CLASS    0 .. 6           FIFO           25 .. 31
+ */
+// Man pages don't talk about "real time", but at least, FIFO threads are
+// not preempted (except for threads with higher priority).
+
+long
+ACE_Thread_Priority::convert_to_os_priority (void)
+{
+  switch (priority_class_)
+  {
+    case ACE_LOW_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_BG_NP;
+      break;
+    case ACE_NORMAL_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_OTHER;
+      break;
+    case ACE_HIGH_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_RR;
+      break;
+    case ACE_REALTIME_PRIORITY_CLASS :
+      os_priority_class_ = SCHED_FIFO;
+      break;
+  }
+
+  if (ACE_PRIORITY_MIN <= default_thread_priority_
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
+    {
+      switch (priority_class_)
+      {
+        case ACE_LOW_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_;
+          break;
+        case ACE_NORMAL_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_ + 8;
+          break;
+        case ACE_HIGH_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_ + 16;
+          break;
+        case ACE_REALTIME_PRIORITY_CLASS :
+          os_default_thread_priority_ = default_thread_priority_ + 25;
+          break;
+      }
+    }
+  else
+    // The user specified a thread priority outside the enum range, so
+    // use it without modification.
+    os_default_thread_priority_ = default_thread_priority_;
+
+  return 0;
+}
+
+
 #else
 
 long
@@ -205,5 +273,5 @@ ACE_Thread_Priority::convert_to_os_priority (void)
   ACE_NOTSUP_RETURN (-1);
 }
 
-#endif /* ACE_HAS_STHREADS */
 
+#endif /* ACE_HAS_STHREADS */
