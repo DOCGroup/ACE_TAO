@@ -165,7 +165,6 @@ CORBA_Any::operator= (const CORBA_Any &src)
   this->value_ = 0;
   this->any_owns_data_ = CORBA::B_TRUE;
   this->refcount_ = 1;
-  this->type_->AddRef ();
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
@@ -492,7 +491,7 @@ CORBA_Any::operator>>= (to_boolean b) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
           return stream.read_boolean (b.ref_);
         }
       else
@@ -514,7 +513,7 @@ CORBA_Any::operator>>= (to_octet o) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
           return stream.read_octet (o.ref_);
         }
       else
@@ -536,7 +535,7 @@ CORBA_Any::operator>>= (to_char c) const
     {
       if (this->any_owns_data_)
         {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->value_);
+          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
           return stream.read_char (c.ref_);
         }
       else

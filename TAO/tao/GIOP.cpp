@@ -498,7 +498,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
     out_stream_ (buffer, sizeof buffer),
-    inp_stream_ (buffer, sizeof buffer),
+    inp_stream_ (out_stream_),
     handler_ (0)
 {
   // @@ TODO The comments here are scary, can someone please give me a
@@ -1242,9 +1242,7 @@ TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
-template class TAO_Unbounded_Object_Sequence<CORBA::TypeCode>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA::TypeCode>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
