@@ -1,3 +1,9 @@
+Tue Feb 08 10:04:21 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * DAnCE/NEWS
+
+          Updated the NEWS file for the coming 0.4.4 release.
+
 Mon Feb  7 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Release:
@@ -149,6 +155,7 @@ Sun Jan 23 01:49:51 2005  Marek Brudka  <mbrudka@aster.pl>
         * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
         Removed deprecated qt_moc base project.
 
+>>>>>>> 1.1095
 Fri Jan 21 17:27:12 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
