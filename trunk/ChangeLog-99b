@@ -1,3 +1,8 @@
+Sun Feb 28 20:21:05 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/run_tests.sh (ace_version): Disabled DLL_Test for chorus,
+	  LynxOS, Unicos platforms as they dont support shared libraries.
+
 Sun Feb 28 20:08:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* ace/POSIX_Proactor.cpp: 
