@@ -91,6 +91,7 @@ SOCKETS_FILES = \
   SOCK_Dgram \
   SOCK_Dgram_Bcast \
   SOCK_Dgram_Mcast \
+  SOCK_Dgram_Mcast_QoS \
   SOCK_IO \
   SOCK_Stream
 IPC_FILES = \
