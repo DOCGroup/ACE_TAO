@@ -19,8 +19,6 @@ OBJFILES = \
 	$(OBJDIR)\CosLifeCycleS.obj \
 	$(OBJDIR)\CosPropertyServiceC.obj \
 	$(OBJDIR)\CosPropertyServiceS.obj \
-	$(OBJDIR)\AVStreamsC.obj \
-	$(OBJDIR)\AVStreamsS.obj \
 	$(OBJDIR)\CosTradingC.obj \
 	$(OBJDIR)\CosTradingS.obj \
 	$(OBJDIR)\CosTradingDynamicC.obj \
@@ -31,8 +29,6 @@ OBJFILES = \
 	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\LifeCycleServiceC.obj \
 	$(OBJDIR)\LifeCycleServiceS.obj \
-	$(OBJDIR)\Null_MediaCtrlC.obj \
-	$(OBJDIR)\Null_MediaCtrlS.obj \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
 	$(OBJDIR)\RtecEventCommC.obj \
@@ -43,12 +39,9 @@ OBJFILES = \
 	$(OBJDIR)\RtecEventChannelAdminS.obj \
 	$(OBJDIR)\RtecUDPAdminC.obj \
 	$(OBJDIR)\RtecUDPAdminS.obj \
-	$(OBJDIR)\sfpC.obj \
-	$(OBJDIR)\sfpS.obj \
 	$(OBJDIR)\TimeServiceC.obj \
 	$(OBJDIR)\TimeServiceS.obj \
 	\
-	$(OBJDIR)\AVStreams_i.obj \
 	$(OBJDIR)\BCU.obj \
 	$(OBJDIR)\Config_Scheduler.obj \
 	$(OBJDIR)\Constraint_Interpreter.obj \
@@ -130,7 +123,6 @@ OBJFILES = \
 	$(OBJDIR)\Scheduler_Generic.obj \
 	$(OBJDIR)\Scheduler_Utilities.obj \
 	$(OBJDIR)\Service_Type_Repository.obj \
-	$(OBJDIR)\sfp.obj \
 	$(OBJDIR)\Strategy_Scheduler.obj \
 	$(OBJDIR)\SupplierAdmin_i.obj \
 	$(OBJDIR)\TAO_Time_Service_Clerk.obj \
@@ -159,9 +151,6 @@ LIBFILES = $(ACE_LIB) $(TAO_LIB)
 #
 # IDL Build rules
 #
-
-$(IDLDIR)\AVStreamsC.cpp $(IDLDIR)\AVStreamsS.cpp: $(IDLDIR)\AVStreams.idl
-	$(TAO_IDL) $**
 
 $(IDLDIR)\CosEventCommC.cpp $(IDLDIR)\CosEventCommS.cpp: $(IDLDIR)\CosEventComm.idl
 	$(TAO_IDL) $**
@@ -193,9 +182,6 @@ $(IDLDIR)\ImplRepoC.cpp $(IDLDIR)\ImplRepoS.cpp: $(IDLDIR)\ImplRepo.idl
 $(IDLDIR)\LifeCycleServiceC.cpp $(IDLDIR)\LifeCycleServiceS.cpp: $(IDLDIR)\LifeCycleService.idl
 	$(TAO_IDL) $**
 
-$(IDLDIR)\Null_MediaCtrlC.cpp $(IDLDIR)\Null_MediaCtrlS.cpp: $(IDLDIR)\Null_MediaCtrl.idl
-	$(TAO_IDL) $**
-
 $(IDLDIR)\RtecEventCommC.cpp $(IDLDIR)\RtecEventCommS.cpp: $(IDLDIR)\RtecEventComm.idl
 	$(TAO_IDL) $**
 
@@ -206,9 +192,6 @@ $(IDLDIR)\RtecEventChannelAdminC.cpp $(IDLDIR)\RtecEventChannelAdminS.cpp: $(IDL
 	$(TAO_IDL) $**
 
 $(IDLDIR)\RtecUDPAdminC.cpp $(IDLDIR)\RtecUDPAdminS.cpp: $(IDLDIR)\RtecUDPAdmin.idl
-	$(TAO_IDL) $**
-
-$(IDLDIR)\sfpC.cpp $(IDLDIR)\sfpS.cpp: $(IDLDIR)\sfp.idl
 	$(TAO_IDL) $**
 
 $(IDLDIR)\TimeBaseC.cpp $(IDLDIR)\TimeBaseS.cpp: $(IDLDIR)\TimeBase.idl

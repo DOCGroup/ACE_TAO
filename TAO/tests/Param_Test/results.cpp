@@ -19,7 +19,7 @@
 #include "ace/Log_Msg.h"
 #include "results.h"
 
-ACE_RCSID(Param_Test, results, "$Id$")
+ACE_RCSID(Param_Test, results, "results.cpp,v 1.8 1999/06/23 14:50:14 parsons Exp")
 
 Results::Results (void)
 {
@@ -70,7 +70,7 @@ Results::print_stats (void)
       avg_real_time /= this->call_count_;
       avg_user_time /= this->call_count_;
       avg_system_time /= this->call_count_;
-      cps = 1000 / avg_real_time;
+      cps = 1000 / (avg_real_time < 0.01 ? 0.01 : avg_real_time);
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*= Average *=*=*=*=*=*=\n"

@@ -251,8 +251,7 @@ main (int argc, char *[])
       // Register an "external" signal handler so that the
       // ACE_Sig_Handlers code will have something to incorporate!
 
-      ACE_SignalHandler eh = 
-        ACE_SignalHandler (external_handler);
+      ACE_SignalHandler eh = (ACE_SignalHandler) external_handler;
       ACE_Sig_Action sa (eh);
 
       sa.register_action (SIGINT);
