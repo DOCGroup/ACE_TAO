@@ -45,13 +45,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/basic_types.o .obj/basic_types.o .obj/basic_types.o .obj/basic_types.o: basic_types.cpp \
+.obj/basic_types.o .obj/basic_types.so .shobj/basic_types.o .shobj/basic_types.so: basic_types.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -368,10 +366,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/tc.o .obj/tc.o .obj/tc.o .obj/tc.o: tc.cpp $(TAO_ROOT)/tao/corba.h \
+.obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -688,12 +685,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/growth.o .obj/growth.o .obj/growth.o .obj/growth.o: growth.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1012,11 +1008,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/octet_sequence.o .obj/octet_sequence.o .obj/octet_sequence.o .obj/octet_sequence.o: octet_sequence.cpp \
+.obj/octet_sequence.o .obj/octet_sequence.so .shobj/octet_sequence.o .shobj/octet_sequence.so: octet_sequence.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1333,13 +1327,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/allocator.o .obj/allocator.o .obj/allocator.o .obj/allocator.o: allocator.cpp \
+.obj/allocator.o .obj/allocator.so .shobj/allocator.o .shobj/allocator.so: allocator.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1658,11 +1650,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h
 
-.obj/alignment.o .obj/alignment.o .obj/alignment.o .obj/alignment.o: alignment.cpp \
+.obj/alignment.o .obj/alignment.so .shobj/alignment.o .shobj/alignment.so: alignment.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

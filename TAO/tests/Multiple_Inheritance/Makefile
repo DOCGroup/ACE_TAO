@@ -55,12 +55,10 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Multiple_InheritanceC.o .obj/Multiple_InheritanceC.o .obj/Multiple_InheritanceC.o .obj/Multiple_InheritanceC.o: Multiple_InheritanceC.cpp \
+.obj/Multiple_InheritanceC.o .obj/Multiple_InheritanceC.so .shobj/Multiple_InheritanceC.o .shobj/Multiple_InheritanceC.so: Multiple_InheritanceC.cpp \
  Multiple_InheritanceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -378,12 +376,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  Multiple_InheritanceC.i
 
-.obj/Multiple_InheritanceS.o .obj/Multiple_InheritanceS.o .obj/Multiple_InheritanceS.o .obj/Multiple_InheritanceS.o: Multiple_InheritanceS.cpp \
+.obj/Multiple_InheritanceS.o .obj/Multiple_InheritanceS.so .shobj/Multiple_InheritanceS.o .shobj/Multiple_InheritanceS.so: Multiple_InheritanceS.cpp \
  Multiple_InheritanceS.h Multiple_InheritanceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -733,12 +729,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1070,10 +1065,9 @@ realclean: clean
  Multiple_InheritanceS_T.cpp Multiple_InheritanceS.i \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp $(ACE_ROOT)/ace/streams.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -49,12 +49,10 @@ Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Notify_Service.o .obj/Notify_Service.o .obj/Notify_Service.o .obj/Notify_Service.o: Notify_Service.cpp Notify_Service.h \
+.obj/Notify_Service.o .obj/Notify_Service.so .shobj/Notify_Service.o .shobj/Notify_Service.so: Notify_Service.cpp Notify_Service.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

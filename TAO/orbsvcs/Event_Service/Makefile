@@ -59,7 +59,7 @@ endif # LYNXTARGET == ppc
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Event_Service.o .obj/Event_Service.o .obj/Event_Service.o .obj/Event_Service.o: Event_Service.cpp Event_Service.h \
+.obj/Event_Service.o .obj/Event_Service.so .shobj/Event_Service.o .shobj/Event_Service.so: Event_Service.cpp Event_Service.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
@@ -70,8 +70,6 @@ endif # LYNXTARGET == ppc
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -53,11 +53,9 @@ Manipulation: $(addprefix $(VDIR),$(MANIPULATION_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Manipulation.o .obj/Manipulation.o .obj/Manipulation.o .obj/Manipulation.o: Manipulation.cpp testC.h \
+.obj/Manipulation.o .obj/Manipulation.so .shobj/Manipulation.o .shobj/Manipulation.so: Manipulation.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -373,7 +371,8 @@ Manipulation: $(addprefix $(VDIR),$(MANIPULATION_OBJS))
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- testC.i $(ACE_ROOT)/ace/Get_Opt.h \
+ testC.i \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
@@ -386,11 +385,9 @@ Manipulation: $(addprefix $(VDIR),$(MANIPULATION_OBJS))
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -708,11 +705,9 @@ Manipulation: $(addprefix $(VDIR),$(MANIPULATION_OBJS))
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

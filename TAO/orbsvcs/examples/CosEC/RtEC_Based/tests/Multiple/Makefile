@@ -71,12 +71,10 @@ Consumer: $(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Multiple.o .obj/Multiple.o .obj/Multiple.o .obj/Multiple.o: Multiple.cpp Multiple.h \
+.obj/Multiple.o .obj/Multiple.so .shobj/Multiple.o .shobj/Multiple.so: Multiple.cpp Multiple.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -431,12 +429,10 @@ Consumer: $(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i
 
-.obj/Consumer.o .obj/Consumer.o .obj/Consumer.o .obj/Consumer.o: Consumer.cpp Consumer.h \
+.obj/Consumer.o .obj/Consumer.so .shobj/Consumer.o .shobj/Consumer.so: Consumer.cpp Consumer.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -804,12 +800,10 @@ Consumer: $(addprefix $(VDIR),$(SIMPLE_CON_OBJS))
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Supplier.o .obj/Supplier.o .obj/Supplier.o .obj/Supplier.o: Supplier.cpp Supplier.h \
+.obj/Supplier.o .obj/Supplier.so .shobj/Supplier.o .shobj/Supplier.so: Supplier.cpp Supplier.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

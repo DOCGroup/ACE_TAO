@@ -53,12 +53,10 @@ include $(TAO_ROOT)/taoconfig.mk
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/nslist.o .obj/nslist.o .obj/nslist.o .obj/nslist.o: nslist.cpp \
+.obj/nslist.o .obj/nslist.so .shobj/nslist.o .shobj/nslist.so: nslist.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -377,12 +375,10 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
-.obj/nsadd.o .obj/nsadd.o .obj/nsadd.o .obj/nsadd.o: nsadd.cpp \
+.obj/nsadd.o .obj/nsadd.so .shobj/nsadd.o .shobj/nsadd.so: nsadd.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -701,12 +697,10 @@ include $(TAO_ROOT)/taoconfig.mk
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
-.obj/nsdel.o .obj/nsdel.o .obj/nsdel.o .obj/nsdel.o: nsdel.cpp \
+.obj/nsdel.o .obj/nsdel.so .shobj/nsdel.o .shobj/nsdel.so: nsdel.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

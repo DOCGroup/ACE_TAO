@@ -44,12 +44,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosEvent_Service.o .obj/CosEvent_Service.o .obj/CosEvent_Service.o .obj/CosEvent_Service.o: CosEvent_Service.cpp \
+.obj/CosEvent_Service.o .obj/CosEvent_Service.so .shobj/CosEvent_Service.o .shobj/CosEvent_Service.so: CosEvent_Service.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

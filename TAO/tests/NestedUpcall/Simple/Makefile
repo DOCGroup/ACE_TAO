@@ -66,11 +66,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp client_i.h testS.h testC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -410,11 +408,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/client_i.o .obj/client_i.o .obj/client_i.o .obj/client_i.o: client_i.cpp client_i.h testS.h testC.h \
+.obj/client_i.o .obj/client_i.so .shobj/client_i.o .shobj/client_i.so: client_i.cpp client_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -742,11 +738,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp server_i.h testS.h testC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1086,11 +1080,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/server_i.o .obj/server_i.o .obj/server_i.o .obj/server_i.o: server_i.cpp server_i.h testS.h testC.h \
+.obj/server_i.o .obj/server_i.so .shobj/server_i.o .shobj/server_i.so: server_i.cpp server_i.h testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1418,11 +1410,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  testS_T.h testS_T.i testS_T.cpp testS.i
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1740,11 +1730,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -82,11 +82,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/testC.o .obj/testC.o .obj/testC.o .obj/testC.o: testC.cpp testC.h \
+.obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -404,11 +402,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  testC.i
 
-.obj/testS.o .obj/testS.o .obj/testS.o .obj/testS.o: testS.cpp testS.h testC.h \
+.obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -757,12 +753,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.o: Smart_Test_Factory.cpp Smart_Test_Factory.h \
+.obj/Smart_Test_Factory.o .obj/Smart_Test_Factory.so .shobj/Smart_Test_Factory.o .shobj/Smart_Test_Factory.so: Smart_Test_Factory.cpp Smart_Test_Factory.h \
  Smart_Proxy_Impl.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1080,11 +1074,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  testC.i
 
-.obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.o: Smart_Proxy_Impl.cpp Smart_Proxy_Impl.h testC.h \
+.obj/Smart_Proxy_Impl.o .obj/Smart_Proxy_Impl.so .shobj/Smart_Proxy_Impl.o .shobj/Smart_Proxy_Impl.so: Smart_Proxy_Impl.cpp Smart_Proxy_Impl.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -72,13 +72,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Time_Service_Server.o .obj/Time_Service_Server.o .obj/Time_Service_Server.o .obj/Time_Service_Server.o: Time_Service_Server.cpp Server_i.h \
+.obj/Time_Service_Server.o .obj/Time_Service_Server.so .shobj/Time_Service_Server.o .shobj/Time_Service_Server.so: Time_Service_Server.cpp Server_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -451,13 +449,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i
 
-.obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.o: Time_Service_Clerk.cpp Clerk_i.h \
+.obj/Time_Service_Clerk.o .obj/Time_Service_Clerk.so .shobj/Time_Service_Clerk.o .shobj/Time_Service_Clerk.so: Time_Service_Clerk.cpp Clerk_i.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -831,12 +827,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h
 
-.obj/Clerk_i.o .obj/Clerk_i.o .obj/Clerk_i.o .obj/Clerk_i.o: Clerk_i.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/Clerk_i.o .obj/Clerk_i.so .shobj/Clerk_i.o .shobj/Clerk_i.so: Clerk_i.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -916,7 +911,8 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Read_Buffer.i Clerk_i.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i \
+ Clerk_i.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1212,13 +1208,11 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/Timer_Helper.h
 
-.obj/Server_i.o .obj/Server_i.o .obj/Server_i.o .obj/Server_i.o: Server_i.cpp \
+.obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1250,7 +1244,8 @@ Time_Service_Clerk:  $(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Server_i.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Server_i.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \

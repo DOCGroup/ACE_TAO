@@ -76,13 +76,11 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Time_Utilities.o .obj/Time_Utilities.o .obj/Time_Utilities.o .obj/Time_Utilities.o: Time_Utilities.cpp \
+.obj/Time_Utilities.o .obj/Time_Utilities.so .shobj/Time_Utilities.o .shobj/Time_Utilities.so: Time_Utilities.cpp \
  Time_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
  TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -402,11 +400,9 @@ realclean: clean
  TimeBaseC.i \
  Time_Utilities.i
 
-.obj/IOR_Multicast.o .obj/IOR_Multicast.o .obj/IOR_Multicast.o .obj/IOR_Multicast.o: IOR_Multicast.cpp IOR_Multicast.h \
+.obj/IOR_Multicast.o .obj/IOR_Multicast.so .shobj/IOR_Multicast.o .shobj/IOR_Multicast.so: IOR_Multicast.cpp IOR_Multicast.h \
  $(ACE_ROOT)/ace/pre.h \
  svc_utils_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -744,7 +740,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i
 
-.obj/TimeBaseS.o .obj/TimeBaseS.o .obj/TimeBaseS.o .obj/TimeBaseS.o: TimeBaseS.cpp TimeBaseS.h \
+.obj/TimeBaseS.o .obj/TimeBaseS.so .shobj/TimeBaseS.o .shobj/TimeBaseS.so: TimeBaseS.cpp TimeBaseS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -752,8 +748,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -866,7 +860,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -1102,11 +1097,10 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/RtecBaseS.o .obj/RtecBaseS.o .obj/RtecBaseS.o .obj/RtecBaseS.o: RtecBaseS.cpp RtecBaseS.h \
- $(ACE_ROOT)/ace/pre.h RtecBaseC.h \
+.obj/RtecBaseS.o .obj/RtecBaseS.so .shobj/RtecBaseS.o .shobj/RtecBaseS.so: RtecBaseS.cpp RtecBaseS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RtecBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1455,11 +1449,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/TimeBaseC.o .obj/TimeBaseC.o .obj/TimeBaseC.o .obj/TimeBaseC.o: TimeBaseC.cpp TimeBaseC.h \
+.obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp TimeBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1777,11 +1769,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  svc_utils_export.h TimeBaseC.i
 
-.obj/RtecBaseC.o .obj/RtecBaseC.o .obj/RtecBaseC.o .obj/RtecBaseC.o: RtecBaseC.cpp RtecBaseC.h \
+.obj/RtecBaseC.o .obj/RtecBaseC.so .shobj/RtecBaseC.o .shobj/RtecBaseC.so: RtecBaseC.cpp RtecBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

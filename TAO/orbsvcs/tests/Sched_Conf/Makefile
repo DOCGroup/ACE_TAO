@@ -44,12 +44,10 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Sched_Conf.o .obj/Sched_Conf.o .obj/Sched_Conf.o .obj/Sched_Conf.o: Sched_Conf.cpp \
+.obj/Sched_Conf.o .obj/Sched_Conf.so .shobj/Sched_Conf.o .shobj/Sched_Conf.so: Sched_Conf.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -62,12 +62,10 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/IORTest.o .obj/IORTest.o .obj/IORTest.o .obj/IORTest.o: IORTest.cpp \
+.obj/IORTest.o .obj/IORTest.so .shobj/IORTest.o .shobj/IORTest.so: IORTest.cpp \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

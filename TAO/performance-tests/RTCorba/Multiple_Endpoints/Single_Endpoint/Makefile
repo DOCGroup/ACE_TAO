@@ -58,11 +58,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp ../Common/testC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp ../Common/testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -400,11 +398,10 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp ../Common/test_i.h ../Common/testS.h \
- ../Common/testC.h $(TAO_ROOT)/tao/corba.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp ../Common/test_i.h ../Common/testS.h \
+ ../Common/testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
