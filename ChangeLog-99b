@@ -1,3 +1,9 @@
+Tue Jul 06 22:21:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linuxppcr5.h: commented out #define __USE_XOPEN
+          because it's not necessary with glibc 2.1.1.  Thanks to
+          Andreas Tobler <toa@pop.agri.ch> for reporting this.
+
 Tue Jul 06 21:57:59 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_kill, thr_setprio, sema_destroy, sema_wait, chdir,
