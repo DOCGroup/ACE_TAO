@@ -158,6 +158,16 @@ endif # debug
 
 ifdef exceptions
   CCFLAGS += -DACE_HAS_EXCEPTIONS
+else
+  ifeq ($(CXX),g++)
+    #### Disable the default exception handling of g++ >= 2.8.0.
+    G++_HAS_EXCEPTIONS := \
+      $(shell if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then \
+                 echo 1; fi)
+    ifdef G++_HAS_EXCEPTIONS
+      CCFLAGS += -fno-exceptions
+    endif # G++_HAS_EXCEPTIONS
+  endif # g++
 endif # exceptions
 
 ifeq ($(profile),0)
