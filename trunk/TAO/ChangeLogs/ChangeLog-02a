@@ -1,3 +1,11 @@
+Tue Jun 19 09:46:30 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tests/Exposed_Policies/Makefile:
+
+	  Added guards to Makefile to prevent compilation on
+	  minimum CORBA builds, since this test uses both
+	  RTCORBA and Messaging features.
+
 Tue Jun 19 07:26:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/tutorials/Quoter/AMI/Stock_i.h:
@@ -41,7 +49,7 @@ Mon Jun 18 20:32:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  have this test in the daily builds.
 
 	* tests/Makefile: Added the above test to the Makefile.
-	
+
 Mon Jun 18 18:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/ior_corbaloc/run_test.pl:
@@ -51,9 +59,9 @@ Mon Jun 18 18:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 Mon Jun 18 13:01:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy_Set.cpp:
-          
+
           Fixed compile error on Tru64.  Thanks to Kitty for
-          reporting the problem.          
+          reporting the problem.
 
 Mon Jun 18 11:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -21,7 +21,7 @@ IDL_SRC = CounterC.cpp CounterS.cpp
 MISC_TEST_SRC = Policy_Tester Policy_Verifier RT_Properties
 CLIENT_SRC = client $(MISC_TEST_SRC)
 SERVER_SRC = server $(MISC_TEST_SRC)
-BIN = client server
+BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(MISC_TEST_SRC) $(BIN))
 
@@ -38,6 +38,11 @@ TAO_IDLFLAGS += -Ge 1
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(rt_corba),1)
+BIN=$(BIN_UNCHECKED)
+endif # rt_corba
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
