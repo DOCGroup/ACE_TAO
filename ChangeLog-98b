@@ -1,3 +1,17 @@
+Thu Jul 02 10:58:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tests/Upgradable_RW_Test.cpp: Totally new version,
+	  now we use linked lists on which we search to 
+	  spend some time.
+
+	* tests/Upgradable_RW_Test.dsp: Project file for this test.
+
+	* tests/tests.dsw: Integrated this project.
+
+	* tests/version_tests.dsw: Integrated this project.
+
+	* tests/Upgradable_RW_Test.dsp: Project file for this test.
+
 Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Reactor/Misc/test_timer_queue.cpp (test_functionality):
