@@ -104,7 +104,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      idl_bool inherited_from_value = 0;
+      
       for (; i < node->n_inherits (); ++i)
         {
           AST_Interface *inherited =
@@ -122,7 +122,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           // dump the scoped name.
           *os << "  public virtual OBV_";
           *os << inherited->full_name();
-          inherited_from_value = 1;
         }  // end of for loop
 
       if (obv_need_ref_counter (node))
