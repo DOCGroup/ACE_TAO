@@ -76,6 +76,10 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     orb_core_ (orb_core),
     transport_ (0)
 {
+  // @@ Alex: this code here is broken, this is not the right way to
+  //    initialize the request_id, please fix it I know it is not your 
+  //    fault....
+
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
 
@@ -157,7 +161,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Loop until a connection is established or there aren't any more
   // profiles to try.
- for (;;)
+  for (;;)
     {
       // Get the current profile...
       this->profile_ = this->stub_->profile_in_use ();
@@ -173,6 +177,10 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       if (this->stub_->next_profile_retry () == 0)
         ACE_THROW (CORBA::TRANSIENT ());
     }
+
+  // @@ Alex: this is the place where we need to obtain the request id 
+  //    from the this->transport_ object... [or its demuxing strategy]
+
 
   const TAO_ObjectKey& key = this->profile_->object_key();
 
@@ -313,7 +321,7 @@ TAO_GIOP_Invocation::write_request_header
 
 
 // @@ Does this comment make sense?. We dont wait for reply, right?
-// (alex)  
+// (alex)
 // Send request, block until any reply comes back, and unmarshal reply
 // parameters as appropriate.
 
@@ -640,7 +648,7 @@ int
 TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Just send the request, without trying to wait for the reply.  
+  // Just send the request, without trying to wait for the reply.
   int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
@@ -680,26 +688,46 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // according to POSIX, all C stack frames must also have their
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
-  
+
   // Get the reply status.
-  
+
+  // @@ Alex: I botched last time, we also need to obtain the
+  //    ServiceContextList and other fields from the wait_for_reply()
+  //    call.
+
+  // @@ Alex: How did we choose the wait_strategy?  The problem is to
+  //    do it in such a way that does *not* require a dynamic memory
+  //    allocation for the critical path [this *IS* the critical]
+  //    I would like to obtain the object from the stack, but I don't
+  //    know how...
+
+  // @@ Please remove the extra the ACE_TRY_ENV....
   TAO_GIOP_ReplyStatusType reply_status =
     this->transport_->wait_for_reply (this->request_id_,
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (reply_status);
-  
+
+  // @@ Alex: the old version of this had some error handling code,
+  //    like:  this->profile_->reset_hint ()
+  //    Can you make sure we don't forget to do that on exceptions
+  //    and/or errors.
+  //    BTW, think about native exceptions where if the exception is
+  //    raised in the wait_for_reply() method you won't get a chance
+  //    to do that kind of error handling.  Do you really need
+  //    exceptions in the transport objects?
+
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:
       // Return so that the STUB can demarshal the reply.
       return TAO_INVOKE_OK;
       // NOT REACHED.
-      
+
     case TAO_GIOP_USER_EXCEPTION:
-      // Return so that the STUB can demarshal the user exception. 
+      // Return so that the STUB can demarshal the user exception.
       return TAO_INVOKE_EXCEPTION;
       // NOTREACHED.
-      
+
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
 	// Demarshal the system exception and raise it!
@@ -716,7 +744,13 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
-#if 0  
+#if 0
+  // @@ Alex: you are right, this code has to be moved into the
+  //    Transport class, because it is receiving the reply and
+  //    demarshaling its header.
+
+
+
   // @@ Fred: if it makes sense to have a wrapper for send_request on
   //    the TAO_Transport class then it should also make sense to have
   //    one for recv_request(), right?
