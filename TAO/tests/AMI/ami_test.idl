@@ -28,15 +28,20 @@ module A
 
       };
 
+    exception DidNotWork {
+        long id;
+      };
+
     interface AMI_Test
       {
         long foo (out long out_l, 
                   in long in_l,
-                  in string in_str);
+                  in string in_str)
+                  raises (DidNotWork);
         // Get the number as the return value as well as the out value and
         // also puts the value.  
   
-         attribute long yadda;
+        // attribute long yadda;
         //  oneway void shutdown ();
       };
 

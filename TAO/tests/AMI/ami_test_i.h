@@ -16,7 +16,11 @@
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
 
+#ifdef TAO_HAS_AMI_EXCEPTIONS
+#include "ami_testS-hand.h"
+#else
 #include "ami_testS.h"
+#endif
 
 class AMI_Test_i : public POA_A::AMI_Test
 {
