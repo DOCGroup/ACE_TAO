@@ -128,7 +128,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Catched exception in Endpoint per Priority:server:");
       return 1;
     }
   ACE_ENDTRY;

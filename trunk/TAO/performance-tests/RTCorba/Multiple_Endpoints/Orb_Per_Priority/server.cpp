@@ -251,9 +251,11 @@ Server::svc (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception in Orb per priority server:");
-      return 1;
+      char message[100];
+      ACE_OS::sprintf (message,
+                       "ORB_per_Priority::server: Exception in thread with priority = %d",
+                       this->priority_);
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, message);
     }
   ACE_ENDTRY;
 

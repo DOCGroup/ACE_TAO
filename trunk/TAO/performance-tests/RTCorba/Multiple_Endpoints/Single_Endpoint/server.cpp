@@ -116,7 +116,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Catched exception in Single_Endpoint:server");
       return 1;
     }
   ACE_ENDTRY;
