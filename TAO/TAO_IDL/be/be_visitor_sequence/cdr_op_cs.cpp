@@ -75,7 +75,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
 
       // If our base type is anonymous sequence, 
-      // generate code for the sequence here.
+      // generate code for the base type sequence here.
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
@@ -85,7 +85,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_array_cdr_op_cs::"
-                                 "visit_array - "
+                                 "visit_sequence - "
                                  "gen_anonymous_base_type failed\n"),
                                 -1);
             }              
@@ -96,11 +96,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       // save the sequence node for further use
       this->ctx_->node (node);
 
-      be_typedef *tdef = be_typedef::narrow_from_decl (bt);
-
       // If we're an anonymous sequence, we must protect against
       // being declared more than once.
-      if (!tdef)
+      if (!this->ctx_->tdef ())
         {
           *os << "\n#if !defined _TAO_CDR_OP_"
               << node->flat_name () << "_CPP_" << be_nl
@@ -121,7 +119,12 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "{" << be_idt_nl;
       // now encode the sequence elements
       *os << "// encode all elements" << be_nl;
-      if (bt->node_type () != AST_Decl::NT_sequence)
+
+      if (bt->node_type () == AST_Decl::NT_sequence)
+        {
+          this->visit_node (node);
+        }
+      else
         {
           if (bt->accept (this) == -1)
             {
@@ -132,6 +135,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                                 -1);
             }
         }
+
       *os << "}" << be_nl
           << "return 0; // error" << be_uidt_nl
           << "}\n\n";
@@ -161,6 +165,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                              "bad sequence dimension\n"),
                             -1);
         }
+
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           if (expr->ev ()->u.ulval > 0)
@@ -179,17 +184,28 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                              "bad sequence dimension value\n"),
                             -1);
         }
+
       *os << "// set the length of the sequence" << be_nl
           << "_tao_sequence.length (_tao_seq_len);" << be_nl;
       *os << "// retrieve all the elements" << be_nl;
-      if (bt->accept (this) == -1)
+
+      
+      if (bt->node_type () == AST_Decl::NT_sequence)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "Base type codegen failed\n"),
-                            -1);
+          this->visit_node (node);
         }
+      else
+        {
+          if (bt->accept (this) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_sequence_cdr_op_cs::"
+                                 "visit_sequence - "
+                                 "Base type codegen failed\n"),
+                                -1);
+            }
+        }
+
       if (expr->ev ()->u.ulval > 0)
         {
           // we are dealing with a bounded sequence.
@@ -199,7 +215,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "return 0; // error" << be_uidt_nl
           << "}\n\n";
 
-      if (!tdef)
+      if (!this->ctx_->tdef ())
         {
           *os << "#endif /* _TAO_CDR_OP_"
               << node->flat_name () << "_CPP_ */"
