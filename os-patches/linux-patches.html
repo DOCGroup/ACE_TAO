@@ -1,5 +1,8 @@
+<!-- $Id$ -->
+
 <html><head>
-  <title>Linux patches to support ACE</title>
+  <title>Linux Configuration Support for ACE</title>
+  <link rev=made href="mailto:levine@cs.wustl.edu">
 </head>
 
 <BODY text = "#000000"
@@ -7,11 +10,22 @@ link="#000fff"
 vlink="#ff0f0f"
 bgcolor="#ffffff">
 
+<center>
+  <h1>Linux Configuration Support for ACE</h1>
+  <font size=+1>
+  <a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a><br>
+  </font>
+</center>
+
+<h2>&nbsp;</h2>
+
 With RedHat 5.0 distributions of Linux, it's best to upgrade the
 distribution with these:
 <ul>
   <li>egcs 1.0.2
-  <li>glibc-2.0.7-7 (from ftp://sunsite.unc.edu/pub/gnu)
+  <li>glibc-2.0.7-7 or<br>
+      glibc-2.0.6 (from ftp://sunsite.unc.edu/pub/gnu plus Torbjörn's patch,
+                   <a href="#Old Patches">below</a>)
 </ul>
 
 Thanks to James CE Johnson &lt;jjohnson@lads.com&gt;, Torbjörn
@@ -153,7 +167,7 @@ With that and the above configuration/pathes, all ACE tests run
 perfectly cleanly on Alpha!<p>
 
 <hr>
-<h3>Old patches</h3>
+<h3><a name="Old Patches">Old Patches</a></h3>
 
 If you use glibc-2.0.6, you'll need to apply Torbjörn Lindgren's
 &lt;tl@funcom.com&gt; patch to glibc-2.0.6's LinuxThreads:<p>
