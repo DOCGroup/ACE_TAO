@@ -403,8 +403,8 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) ")
-                         ACE_TEXT ("IIOP_Acceptor::open_default - ")
+                         ACE_TEXT ("TAO (%P|%t) - ")
+                         ACE_TEXT ("IIOP_Acceptor::open_default, ")
                          ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
@@ -485,7 +485,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
+                        ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("trying to listen on port %d\n"), p));
 
           // Now try to actually open on that port
@@ -506,7 +506,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
+                        ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                         ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
                         ACE_TEXT ("- %p\n"),
                         requested_port, last_port, ACE_TEXT("")));
@@ -522,8 +522,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ACE_TEXT ("- %p"),
+                    ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("%p"),
                     ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
@@ -546,7 +546,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
                       ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
@@ -618,9 +618,9 @@ TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) ")
-                    ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address ")
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - ")
+                    ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address, ")
                     ACE_TEXT ("- %p, "),
                     ACE_TEXT ("cannot determine hostname\n")));
       return -1;
@@ -654,8 +654,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ACE_TEXT ("interfaces.  Using default.\n")));
+                      ACE_TEXT ("TAO (%P|%t) - Unable to probe network ")
+                      ACE_TEXT ("interfaces. Using default.\n")));
         }
 
       if_cnt = 1; // Force the network interface count to be one.
@@ -768,7 +768,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Profile::decode, v%d.%d\n"),
                       major,
                       minor));
         }
@@ -785,7 +785,7 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_IIOP_Acceptor::object_key - ")
+                      ACE_TEXT ("TAO (%P|%t) - TAO_IIOP_Acceptor::object_key, ")
                       ACE_TEXT ("error while decoding host/port\n")));
         }
       return -1;
