@@ -1,3 +1,10 @@
+Tue Jul 08 14:49:38 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Timer_List_T: 
+	* ace\Timer_Wheel_T: 
+
+	  Fixed unused arg warning in cancel_i().
+
 Mon Jul  7 23:17:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (spawn_i): Change to always return the
