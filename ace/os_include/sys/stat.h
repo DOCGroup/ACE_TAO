@@ -26,6 +26,10 @@
 
 #include "ace/os_include/sys/types.h"
 
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  include <direct.h>
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+
 #if !defined (ACE_LACKS_SYS_STAT_H)
 # include /**/ <sys/stat.h>
 #endif /* !ACE_LACKS_SYS_STAT_H */

@@ -2788,7 +2788,7 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#     include /**/x <ws2tcpip.h>
+#     include "ace/os_include/netinet/in.h"  // <ws2tcpip.h>
 #   endif /* ACE_HAS_WINSOCK2 */
 
 // error code mapping
@@ -2839,9 +2839,9 @@ PAGE_NOCACHE  */
 
 #   if !defined (ACE_HAS_WINCE)
 #     include "ace/os_include/time.h"
-#     include /**/x <direct.h>
-#     include /**/x <process.h>
-#     include /**/x <io.h>
+#     include "ace/os_include/sys/stat.h"  // <direct.h>
+#     include "ace/os_include/unistd.h"  // <process.h>
+//#     include /**/ <io.h>
 #   endif /* ACE_HAS_WINCE */
 
 #   if defined (__BORLANDC__)
