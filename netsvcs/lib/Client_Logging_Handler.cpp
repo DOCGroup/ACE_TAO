@@ -105,57 +105,84 @@ ACE_Client_Logging_Handler::get_handle (void) const
 int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
+  ACE_DEBUG ((LM_DEBUG, "in handle_input, handle = %u\n", handle));
+
   if (handle == this->peer ().get_handle ())
     // We're getting a message from the logging server!
     ACE_ERROR_RETURN ((LM_ERROR, "received data from server!\n"), -1);
 #if defined (ACE_LACKS_FIFO)
   else if (handle == this->acceptor_.get_handle ())
     {
-      ACE_SOCK_Stream msg_queue;
+      ACE_SOCK_Stream client_stream;
 
-      if (this->acceptor_.accept (msg_queue) == -1)
+      if (this->acceptor_.accept (client_stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), -1);
 
       // Register message socket to receive input from clients.
       else if (ACE_Reactor::instance ()->register_handler
-	       (msg_queue_.get_handle (),
+	       (client_stream.get_handle (),
 		this,
 		ACE_Event_Handler::READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
 			   "register_handler"), -1);
       return 0;
     }
-
-  // For the duration of this call store the socket into the FIFO so
-  // that we can use the ol' 2-read trick...  Note that this assumes
-  // we aren't using STREAM pipes (if we were, we wouldn't need to use
-  // sockets!).
-  this->msg_queue_.set_handle (handle);
-
 #endif /* ACE_LACKS_FIFO */  
-     {
-       // We're getting a logging message from a local application.
 
-       ACE_Log_Record log_record;
-       ACE_Str_Buf msg ((void *) &log_record,
-			0,
-			sizeof log_record);
+  // We're getting a logging message from a local application.
 
-       ACE_DEBUG ((LM_DEBUG, "in handle_input\n"));
+  ACE_Log_Record log_record;
+  ACE_Str_Buf msg ((void *) &log_record,
+		   0,
+		   sizeof log_record);
 
-       if (this->msg_queue_.recv (msg) == -1)
-	 ACE_ERROR_RETURN ((LM_ERROR,
-			    "%p\n",
-			    "ACE_FIFO_Recv_Msg::recv"),
-			   -1);
-       else if (this->send (log_record) == -1)
-	 ACE_ERROR_RETURN ((LM_ERROR,
-			    "%p\n",
-			    "send"),
-			   0);
-       return 0;
-     }
-    
+#if defined (ACE_LACKS_FIFO)
+  long length;
+
+  // We need to use the ol' two-read trick here since TCP sockets
+  // don't support framing natively.
+
+  switch (ACE_OS::recv (handle,
+			(char *) &length,
+			sizeof length,
+			MSG_PEEK))
+    {
+      // Handle shutdown and error cases.
+    default:
+    case -1:
+    case 0:
+      if (ACE_Reactor::instance ()->remove_handler
+	  (handle,
+	   ACE_Event_Handler::READ_MASK
+	   | ACE_Event_Handler::DONT_CALL) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
+			   "remove_handler"), -1);
+      ACE_OS::closesocket (handle);
+      ACE_DEBUG ((LM_DEBUG, "client closing down\n"));
+      return 0;
+      /* NOTREACHED */
+
+    case sizeof length:
+      // Process normal data reception.
+      if (ACE_OS::recv (handle,
+			(char *) &log_record,
+			(int) length) != length)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), -1);
+    }
+#else
+  // We've got a framed IPC mechanism, so we can just to a recv().
+  if (this->msg_queue_.recv (msg) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "ACE_FIFO_Recv_Msg::recv"),
+		      0);
+#endif /* ACE_LACKS_FIFO */
+
+  // Forward the logging record to the server.
+  if (this->send (log_record) == -1)
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
+		"send"));
   return 0;
 }
 
@@ -178,7 +205,8 @@ ACE_Client_Logging_Handler::close (u_long)
 #if defined (ACE_LACKS_FIFO)
   if (ACE_Reactor::instance ()->remove_handler
       (this->acceptor_.get_handle (),
-       ACE_Event_Handler::ACCEPT_MASK) == -1)
+       ACE_Event_Handler::ACCEPT_MASK
+       | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR, "%n: %p\n",
 		"remove_handler"));
 #else
@@ -353,7 +381,10 @@ ACE_Client_Logging_Connector::parse_args (int argc, char *argv[])
 	}
     }
 
-  this->server_addr_.set (this->server_port_, this->server_host_);
+  if (this->server_addr_.set (this->server_port_, 
+			      this->server_host_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
+
   return 0;
 }
 

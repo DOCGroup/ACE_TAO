@@ -133,11 +133,13 @@ private:
   void round_up (void);
   // Round up to the alignment restrictions.
 
+  long length_;      
+  // Total length of the logging record in bytes.  This field *must*
+  // come first in order for various framing mechanisms to work
+  // correctly.
+
   long type_;
   // Type of logging record.
-
-  long length_;      
-  // Total length of the logging record in bytes.
 
   ACE_Time_Value time_stamp_;  
   // Time that the logging record was generated.

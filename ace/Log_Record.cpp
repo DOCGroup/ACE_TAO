@@ -32,8 +32,8 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "type_ = %d\n", this->type_));
-  ACE_DEBUG ((LM_DEBUG, "\nlength_ = %d\n", this->length_));
+  ACE_DEBUG ((LM_DEBUG, "length_ = %d\n", this->length_));
+  ACE_DEBUG ((LM_DEBUG, "\ntype_ = %d\n", this->type_));
   ACE_DEBUG ((LM_DEBUG, "\ntime_stamp_ = (%d, %d)\n", this->time_stamp_.sec (), this->time_stamp_.usec ()));
   ACE_DEBUG ((LM_DEBUG, "\npid_ = %d\n", this->pid_));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_data_ = %s\n", this->msg_data_));
@@ -51,8 +51,8 @@ ACE_Log_Record::msg_data (const char *data)
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp, 
 				long ts_sec,
 				long p)
-  : type_ (long (lp)), 
-    length_ (0),
+  : length_ (0),
+    type_ (long (lp)), 
     time_stamp_ (ts_sec), 
     pid_ (p)
 {
@@ -62,8 +62,8 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp, 
 				const ACE_Time_Value &ts,
 				long p)
-  : type_ (long (lp)), 
-    length_ (0),
+  : length_ (0),
+    type_ (long (lp)),
     time_stamp_ (ts), 
     pid_ (p)
 {
@@ -84,8 +84,8 @@ ACE_Log_Record::round_up (void)
 }
 
 ACE_Log_Record::ACE_Log_Record (void)
-  : type_ (0),
-    length_ (0),
+  : length_ (0),
+    type_ (0),
     time_stamp_ (0L),
     pid_ (0)
 {
