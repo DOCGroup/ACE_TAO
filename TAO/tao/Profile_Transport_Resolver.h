@@ -83,9 +83,11 @@ namespace TAO
      * the ORB_Core to decide on the strategy to be used for selecting
      * the profile.
      */
+#if !defined (TAO_HAS_COLLOCATION)
     void resolve (ACE_Time_Value *val
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+#endif
 
     //@{
     /**
@@ -118,12 +120,14 @@ namespace TAO
     /// released back to the cache.
     void transport_released (void) const;
 
+#if !defined (TAO_HAS_COLLOCATION)
     /// This is a callback method used by the endpoint selectors, to
     /// delegate the responsibility of reserving a transport from the
     /// connection cache for this invocation.
     bool try_connect (TAO_Transport_Descriptor_Interface *desc,
                       ACE_Time_Value *val
                       ACE_ENV_ARG_DECL);
+#endif
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.

@@ -1,6 +1,10 @@
 #include "IIOP_Factory.h"
 #include "IIOP_Acceptor.h"
-#include "IIOP_Connector.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "IIOP_Connector.h"
+#endif
+
 #include "IOP_IORC.h"
 
 #include "ace/OS_NS_strings.h"
@@ -65,12 +69,18 @@ TAO_IIOP_Protocol_Factory::init (int /* argc */,
 TAO_Connector *
 TAO_IIOP_Protocol_Factory::make_connector (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
                   TAO_IIOP_Connector,
                   0);
   return connector;
+#else
+  return 0;
+#endif
+
 }
 
 int

@@ -11,11 +11,21 @@
 #include "Profile.h"
 #include "ORB_Core.h"
 #include "Connector_Registry.h"
-#include "LocateRequest_Invocation_Adapter.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "LocateRequest_Invocation_Adapter.h"
+#endif /* TAO_HAS_COLLOCATION */
+
 #include "debug.h"
 #include "Dynamic_Adapter.h"
 #include "IFR_Client_Adapter.h"
-#include "Remote_Object_Proxy_Broker.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Remote_Object_Proxy_Broker.h"
+#else
+# include "tao/Object_Proxy_Broker.h"
+#endif
+
 #include "CDR.h"
 #include "SystemException.h"
 #include "PolicyC.h"
@@ -26,7 +36,6 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
 #endif /* ! __ACE_INLINE__ */
-
 
 ACE_RCSID (tao,
            Object,
@@ -68,13 +77,17 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
 
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
+#if !defined (TAO_HAS_COLLOCATION)
   if (this->is_collocated_ &&
       _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+#endif
     this->proxy_broker_ =
       _TAO_Object_Proxy_Broker_Factory_function_pointer (this);
+#if !defined (TAO_HAS_COLLOCATION)
   else
     this->proxy_broker_ =
       the_tao_remote_object_proxy_broker ();
+#endif
 }
 
 CORBA::Object::Object (IOP::IOR *ior,
@@ -587,6 +600,8 @@ CORBA::Object::_validate_connection (
   if (this->is_collocated_)
       return !(this->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER));
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
   TAO::LocateRequest_Invocation_Adapter tao_call (this);
   ACE_TRY
     {
@@ -607,6 +622,9 @@ CORBA::Object::_validate_connection (
   ACE_CHECK_RETURN (false);
 
   retval = true;
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   return retval;
@@ -766,14 +784,18 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   obj->protocol_proxy_ = objdata;
 
+#if !defined (TAO_HAS_COLLOCATION)
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
   if (obj->is_collocated_ &&
     _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+#endif
     obj->proxy_broker_ =
       _TAO_Object_Proxy_Broker_Factory_function_pointer (obj);
+#if !defined (TAO_HAS_COLLOCATION)
     else
       obj->proxy_broker_ = the_tao_remote_object_proxy_broker ();
+#endif
 
   obj->is_evaluated_ = 1;
 

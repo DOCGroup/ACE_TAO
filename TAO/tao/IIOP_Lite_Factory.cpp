@@ -1,6 +1,10 @@
 #include "IIOP_Lite_Factory.h"
 #include "IIOP_Acceptor.h"
-#include "IIOP_Connector.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "IIOP_Connector.h"
+#endif
+
 #include "IOP_IORC.h"
 
 #include "ace/OS_NS_strings.h"
@@ -68,6 +72,8 @@ TAO_IIOP_Lite_Protocol_Factory::init (int /*argc*/,
 TAO_Connector *
 TAO_IIOP_Lite_Protocol_Factory::make_connector (void)
 {
+
+#if !defined (TAO_HAS_COLLOCATION)
   TAO_Connector *connector = 0;
 
   // We are a Lite factory
@@ -77,6 +83,9 @@ TAO_IIOP_Lite_Protocol_Factory::make_connector (void)
                   TAO_IIOP_Connector (lite_flag),
                   0);
   return connector;
+#else
+  return 0;
+#endif
 }
 
 int

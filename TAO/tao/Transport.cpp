@@ -164,12 +164,14 @@ TAO_Transport::~TAO_Transport (void)
   ACE_ASSERT (this->cache_map_entry_ == 0);
 }
 
+#if !defined (TAO_HAS_COLLOCATION)
 void
 TAO_Transport::provide_handler (TAO_Connection_Handler_Set &handlers)
 {
   this->add_reference ();
   handlers.insert (this->connection_handler_i ());
 }
+#endif
 
 bool
 TAO_Transport::idle_after_send (void)

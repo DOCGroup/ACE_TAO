@@ -31,7 +31,7 @@
  * options so that everything operates as if there were no
  * dynamically-linkable strategies.
  */
-class TAO_Export TAO_Default_Client_Strategy_Factory 
+class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
@@ -101,8 +101,10 @@ private:
     TAO_LEADER_FOLLOWER_CONNECT
   };
 
+#if !defined (TAO_HAS_COLLOCATION)
   /// The connection initiation strategy.
   Connect_Strategy connect_strategy_;
+#endif
 
   /// Size of the reply dispatcher table
   int rd_table_size_;

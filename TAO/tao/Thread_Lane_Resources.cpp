@@ -411,8 +411,10 @@ TAO_Thread_Lane_Resources::finalize (void)
       // Connection is closed.  Potential removal from the Reactor.
       (*handler)->close_connection ();
 
+#if !defined (TAO_HAS_COLLOCATION)
       // #REFCOUNT# related to the handler set decreases.
       (*handler)->transport ()->remove_reference ();
+#endif
     }
 
   delete this->transport_cache_;

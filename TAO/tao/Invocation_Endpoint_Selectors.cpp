@@ -34,6 +34,7 @@ TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 {
 }
 
+#if !defined (TAO_HAS_COLLOCATION)
 void
 TAO_Default_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
@@ -81,3 +82,4 @@ TAO_Default_Endpoint_Selector::select_endpoint (
   ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
+#endif

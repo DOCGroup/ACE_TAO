@@ -9,7 +9,11 @@
 #include "Endpoint_Selector_Factory.h"
 #include "Codeset_Manager.h"
 #include "Connector_Registry.h"
-#include "Transport_Connector.h"
+
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Transport_Connector.h"
+#endif
+
 #include "Endpoint.h"
 #include "SystemException.h"
 
@@ -67,6 +71,7 @@ namespace TAO
   }
 
 
+#if !defined (TAO_HAS_COLLOCATION)
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val
                                        ACE_ENV_ARG_DECL)
@@ -183,6 +188,7 @@ namespace TAO
 
     return true;
   }
+#endif
 
   bool
   Profile_Transport_Resolver::get_connection_timeout (

@@ -1,15 +1,21 @@
 //$Id$
 
 #include "Invocation_Adapter.h"
-#include "Profile_Transport_Resolver.h"
+
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
+# include "Profile_Transport_Resolver.h"
+# include "Synch_Invocation.h"
+# include "Transport_Mux_Strategy.h"
+# include "Transport.h"
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
+
 #include "operation_details.h"
 #include "Stub.h"
 #include "ORB_Core.h"
-#include "Synch_Invocation.h"
 #include "debug.h"
 #include "Collocated_Invocation.h"
-#include "Transport.h"
-#include "Transport_Mux_Strategy.h"
 #include "Collocation_Proxy_Broker.h"
 
 #if !defined (__ACE_INLINE__)
@@ -59,27 +65,40 @@ namespace TAO
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
     ACE_Time_Value *max_wait_time = 0;
 
     while (status == TAO_INVOKE_START ||
            status == TAO_INVOKE_RESTART)
       {
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
+
         // Default we go to remote
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
 
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
         // If we have a collocated proxy broker we look if we maybe
         // can use a collocated invocation.
         if (cpb_ != 0)
           {
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
             strat =
               TAO_ORB_Core::collocation_strategy (effective_target.in ()
                                                   ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
           }
 
         if (strat == TAO_CS_REMOTE_STRATEGY ||
             strat == TAO_CS_LAST)
           {
+
             status =
               this->invoke_remote_i (stub,
                                      details,
@@ -90,6 +109,8 @@ namespace TAO
           }
         else
           {
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
             status =
               this->invoke_collocated_i (stub,
                                          details,
@@ -97,6 +118,9 @@ namespace TAO
                                          strat
                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
+
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
           }
 
         if (status == TAO_INVOKE_RESTART)
@@ -112,6 +136,8 @@ namespace TAO
               }
           }
       }
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
   }
 
   bool
@@ -150,9 +176,11 @@ namespace TAO
                                            Collocation_Strategy strat
                                            ACE_ENV_ARG_DECL)
   {
+#if !defined (TAO_HAS_COLLOCATION)
     // To make a collocated call we must have a collocated proxy broker, the
     // invoke_i() will make sure that we only come here when we have one
     ACE_ASSERT (cpb_ != 0);
+#endif
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
@@ -169,6 +197,7 @@ namespace TAO
                        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
+#if !defined (TAO_HAS_COLLOCATION)
     if (status == TAO_INVOKE_RESTART &&
         coll_inv.is_forwarded ())
       {
@@ -180,9 +209,13 @@ namespace TAO
                                        ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
+#endif
 
     return status;
   }
+
+//@@ TAO_HAS_COLLOCATION -- start
+#if !defined (TAO_HAS_COLLOCATION)
 
   void
   Invocation_Adapter::set_response_flags (
@@ -195,7 +228,7 @@ namespace TAO
         {
           // Grab the syncscope policy from the ORB.
           Messaging::SyncScope sync_scope;
-    
+
           bool has_synchronization = false;
 
           stub->orb_core ()->call_sync_scope_hook (stub,
@@ -219,6 +252,7 @@ namespace TAO
 
     return;
   }
+
 
   Invocation_Status
   Invocation_Adapter::invoke_remote_i (TAO_Stub *stub,
@@ -378,4 +412,8 @@ namespace TAO
 
     return;
   }
+
+#endif
+//@@ TAO_HAS_COLLOCATION -- end
+
 } // End namespace TAO
