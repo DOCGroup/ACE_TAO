@@ -1,11 +1,25 @@
+Fri Nov 20 11:15:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5.h: changed comment to use
+          -D_POSIX_PTHREAD_SEMANTICS to specify POSIX threads only.
+          Just commenting out ACE_HAS_STHREADS in insufficient.
+          See the Intro (3) man page for information on
+          -D_POSIX_PTHREAD_SEMANTICS; it's the Sun-recommended
+          way to specify use of POSIX threads.  Thanks to
+          Rich Christy <rchristy@cccis.com> for pointing out that
+          removal of ACE_HAS_STHREADS doesn't work.
+
+        * include/makeinclude/platform_sunos5_g++.GNU: added support
+          for threads=0.
+
 Thu Nov 19 23:04:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Functor.h (ACE_Command_Base): Added missing ACE_Export.
+        * ace/Functor.h (ACE_Command_Base): Added missing ACE_Export.
 
 Thu Nov 19 18:01:00 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
         * ace/DLL.cpp ACE_DLL::ACE_DLL (int close_on_destruction):
-	 made base-member initialisation change to member variable 
-	 close_mode_.
+         made base-member initialisation change to member variable
+         close_mode_.
 
 Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -14,9 +28,9 @@ Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Nov 18 20:56:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/DLL.{cpp,h} ACE_DLL::ACE_DLL (int close_on_destruction):
-	added the close-on-destruction featurei in the constructor of
-	the ACE_DLL class.
+        * ace/DLL.{cpp,h} ACE_DLL::ACE_DLL (int close_on_destruction):
+        added the close-on-destruction featurei in the constructor of
+        the ACE_DLL class.
 
 Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): on other
