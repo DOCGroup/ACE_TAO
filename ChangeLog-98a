@@ -1,3 +1,10 @@
+Thu Jan 15 15:45:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* etc/ACE-guidelines.html: Reformatted this page a bit.
+
+	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
+ 	  incorrect.  I reverted the change.
+
 Thu Jan 15 12:43:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* /: Added a bunch of makefiles (*.MAK) for one button
@@ -42,11 +49,6 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * apps/Gateway/Peer/Peer.cpp (recv):
           changed type of HEADER_SIZE to size_t to avoid signed/unsigned
           comparison.
-
-Thu Jan 15 00:00:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
- 	  incorrect.  I reverted the change.
 
 Wed Jan 14 20:41:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
