@@ -1,3 +1,18 @@
+Wed Jun 28 14:00:33 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Protected RTCORBA specific code with if (TAO_HAS_RT_CORBA == 1).
+
+	* tao/RT_Policy_i.cpp:
+
+	  Fixed warnings about not initializing CORBA::LocalObject
+	  superclass in copy constructors.
+
+	* peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
+
+	  Fixed compile errors.
+
 Wed Jun 28 12:49:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Messaging_Policy_i.cpp: Some version of g++
