@@ -24,9 +24,9 @@ if ($^O eq "MSWin32") {
 $tao_ifr = "../../../../../bin/tao_ifr";
 if (! -e $tao_ifr . $exec_extn ) {
     $tao_ifr = "../../../IFR_Service/tao_ifr";
-	if (! -e $tao_ifr . $exec_extn ) {
+    if (! -e $tao_ifr . $exec_extn ) {
         print STDERR "ERROR: tao_ifr compiler not found.\n";
-	    exit 1;
+        exit 1;
     }
 }
 
