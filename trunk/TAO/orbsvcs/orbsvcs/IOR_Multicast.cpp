@@ -16,7 +16,7 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (void)
 {
 }  
 
-TAO_IOR_Multicast::TAO_IOR_Multicast (char * ior,
+TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                                       u_short port,
                                       const char *mcast_addr,
                                       TAO_Service_ID service_id)
@@ -33,9 +33,9 @@ TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
 }
 
 int
-TAO_IOR_Multicast::init (char* ior,
+TAO_IOR_Multicast::init (const char *ior,
                          u_short port,
-                         const char* mcast_addr,
+                         const char *mcast_addr,
                          TAO_Service_ID service_id)
 {
   this->service_id_ = service_id;

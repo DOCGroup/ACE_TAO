@@ -40,6 +40,10 @@ IIOP_Object::~IIOP_Object (void)
   assert (this->refcount_ == 0);
   delete this->fwd_profile_;
   delete this->fwd_profile_lock_ptr_;
+  
+  // Cleanup hint
+  if (this->handler_ != 0)
+    this->handler_->cleanup_hint ();
 }
 
 ACE_INLINE
@@ -52,9 +56,8 @@ IIOP_Object::IIOP_Object (char *repository_id)
     first_locate_request_ (0),
     handler_ (0)
 {
-  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
-                                ->client_factory ()
-                                  ->create_iiop_profile_lock ();  
+  this->fwd_profile_lock_ptr_ = 
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
 
 ACE_INLINE
@@ -69,9 +72,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
     first_locate_request_ (0),
     handler_ (0)
 {
-  this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
-                                ->client_factory ()
-                                  ->create_iiop_profile_lock ();  
+  this->fwd_profile_lock_ptr_ =  
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();  
 }
 
 
@@ -155,6 +157,7 @@ IIOP_Object::handler (void)
 ACE_INLINE void 
 IIOP_Object::reset_handler (void)
 {
+  this->handler_->cleanup_hint ();
   this->handler_ = 0;
 }
 

@@ -697,29 +697,28 @@ main (int argc, ASYS_TCHAR *argv[])
   return 0;
 }
 
-#define HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
-#define RECYCLABLE_ADDR ACE_Recyclable<HASH_ADDR>
-#define HASH_RECYCLABLE_ADDR ACE_Hash_Recyclable<HASH_ADDR>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
+#define HASH_ADDR CACHED_CONNECT_STRATEGY::HASH_ADDRESS
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR CACHED_CONNECT_STRATEGY::REFCOUNTED_HASH_RECYCLABLE_ADDRESS
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>;
+template class CACHED_CONNECT_STRATEGY;
 template class HASH_ADDR;
-template class RECYCLABLE_ADDR;
-template class HASH_RECYCLABLE_ADDR;
+template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
-template class ACE_Hash_Map_Entry<HASH_RECYCLABLE_ADDR, Svc_Handler *>;
-template class ACE_Hash_Map_Manager<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>;
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
@@ -742,24 +741,23 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
+#pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate HASH_ADDR
-#pragma instantiate RECYCLABLE_ADDR
-#pragma instantiate HASH_RECYCLABLE_ADDR
+#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
 #pragma instantiate ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<Svc_Handler>
-#pragma instantiate ACE_Hash_Map_Entry<HASH_RECYCLABLE_ADDR, Svc_Handler *>
-#pragma instantiate ACE_Hash_Map_Manager<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *>
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>

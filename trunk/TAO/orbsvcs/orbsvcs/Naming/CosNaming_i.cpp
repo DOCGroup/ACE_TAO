@@ -30,19 +30,13 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "TAO_NamingContext"));
-}
 
-int
-TAO_NamingContext::init (void)
-{
   // Get the lock from the ORB, which knows what type is appropriate.
   // This method must be called AFTER the ORB has been initialized via
   // <CORBA::ORB_init> since otherwise <TAO_ORB_Core_instance> won't
   // work correctly...
-  ACE_ALLOCATOR_RETURN (this->lock_,
-                        TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock (), 
-                        -1);
-  return 0;
+  ACE_ALLOCATOR (this->lock_,
+                 TAO_ORB_Core_instance ()->server_factory ()->create_servant_lock ());
 }
 
 TAO_NamingContext::~TAO_NamingContext (void)
@@ -465,33 +459,26 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
 {
   TAO_NamingContext *c = 0;
 
-  CosNaming::NamingContext_ptr result = 
-    CosNaming::NamingContext::_nil ();
+  CosNaming::NamingContext_var result;
 
   ACE_NEW_THROW_RETURN (c,
 			TAO_NamingContext (poa_.in ()),
 			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			result);
-  if (c->init () == -1)
-    {
-      delete c;
-      TAO_THROW_RETURN (CORBA::INTERNAL (CORBA::COMPLETED_NO), 
-			result);
-    }
-
+			result._retn ());
   TAO_TRY
     {
       result = c->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      return result;
+      return result._retn ();
     }
   TAO_CATCHANY
     {
       delete c;
-      CORBA::release (result);
-      TAO_RETHROW_RETURN (CosNaming::NamingContext::_nil ());
+      TAO_RETHROW_RETURN (result._retn ());
     }
   TAO_ENDTRY;
+
+  return result._retn ();
 }
 
 CosNaming::NamingContext_ptr
@@ -696,6 +683,7 @@ TAO_NamingContext::list_helper (TAO_BindingIterator* &bind_iter,
       ACE_NEW_TRY_THROW (bind_iter,
 			 TAO_BindingIterator (hash_iter, this->poa_.in (), this->lock_),
 			 CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

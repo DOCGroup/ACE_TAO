@@ -1,3 +1,40 @@
+Mon Sep 21 01:38:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp (init_naming_service): 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp
+ 	  (init_naming_service): Fixed initialization of Naming_Server.
+
+	* orbsvcs/orbsvcs/IOR_Multicast.h (TAO_IOR_Multicast): Changed
+	  char * to const char *.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Server):
+ 	  Complete revamp of Naming_Server and Naming_Client. New
+ 	  implementation is better with respect to functionality, memory
+ 	  management and other indescribable things ;-)
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext):
+ 	  Deprecated init(). Also fixed some other simple stuff.
+
+	* tao/IIOP_Object.cpp (IIOP_Object): Fixed initialization for
+ 	  this->fwd_profile_lock_ptr_.
+
+	* tao/IIOP_Object.i (reset_handler) and (~IIOP_Object): Added code
+ 	  to cleanup hint svc_handler.
+
+	* tao/ORB.cpp: Fixed template instantiations.
+
+	* tao/GIOP: 
+	* tao/Invocation.cpp
+
+	  Changed close to handle_close.
+
+	* tao/Environment.cpp (print_exception): Check for zero exception
+ 	  before printing.
+
+	* tao/Connect.cpp (handle_close): Close socket but don't delete
+ 	  instance.  Instance will be deleted when all "hints" are
+ 	  removed. Instance is deleted in close().
+
 Sun Sep 20 23:30:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB: It is now possible to give an ACE_Time_Value to the

@@ -368,72 +368,43 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume (void)
 }
 
 template <class T> ASYS_INLINE
-ACE_Recyclable<T>::ACE_Recyclable (void)
-  : recyclable_ (0),
-    t_ (T ())
+ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
+  : ACE_Refcountable (0),
+    ACE_Hashable (),
+    ACE_Recyclable (ACE_Recyclable::UNKNOWN),
+    t_ ()
 {
 }
 
 template <class T> ASYS_INLINE
-ACE_Recyclable<T>::ACE_Recyclable (const T &t, int recyclable)
-  : recyclable_ (recyclable),
+ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t, 
+                                                                   int refcount,
+                                                                   ACE_Recyclable::State state)
+  : ACE_Refcountable (refcount),
+    ACE_Hashable (),
+    ACE_Recyclable (state),
     t_ (t)
 {
 }
 
 template <class T> ASYS_INLINE
-ACE_Recyclable<T>::~ACE_Recyclable (void)
-{
-}
-
-template <class T> ASYS_INLINE int
-ACE_Recyclable<T>::operator== (const ACE_Recyclable<T> &rhs) const
-{
-  if (!this->recyclable ())
-    return 0;
-  else
-    return this->t_ == rhs.t_;
-}
-
-template <class T> ASYS_INLINE int
-ACE_Recyclable<T>::recyclable (void) const
-{
-  return this->recyclable_;
-}
-
-template <class T> ASYS_INLINE void
-ACE_Recyclable<T>::recyclable (int new_value)
-{
-  this->recyclable_ = new_value;
-}
-
-template <class T> ASYS_INLINE
-ACE_Hash_Recyclable<T>::ACE_Hash_Recyclable (void)
-  : ACE_Recyclable<T> ()
-{
-}
-
-template <class T> ASYS_INLINE
-ACE_Hash_Recyclable<T>::ACE_Hash_Recyclable (const T &t, int recyclable)
-  : ACE_Recyclable<T> (t, recyclable)
-{
-}
-
-template <class T> ASYS_INLINE
-ACE_Hash_Recyclable<T>::~ACE_Hash_Recyclable (void)
+ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable (void)
 {
 }
 
 template <class T> ASYS_INLINE u_long
-ACE_Hash_Recyclable<T>::hash (void) const
+ACE_Refcounted_Hash_Recyclable<T>::hash (void) const
 {
   return this->t_.hash ();
 }
 
-template <class T> ASYS_INLINE int
-ACE_Hash_Recyclable<T>::operator== (const ACE_Recyclable<T> &rhs) const
+template <class T> ASYS_INLINE int 
+ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  return ACE_Recyclable<T>::operator== (rhs);
+  if (this->state () != ACE_Recyclable::IDLE)
+    return 0;
+  else
+    return this->t_ == rhs.t_;  
 }
 
 template<class ADDR_T> ASYS_INLINE

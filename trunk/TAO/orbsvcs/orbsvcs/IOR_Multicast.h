@@ -37,14 +37,14 @@ public:
   TAO_IOR_Multicast (void);
   // Default constructor  
 
-  TAO_IOR_Multicast (char * ior,
+  TAO_IOR_Multicast (const char *ior,
                      u_short port,
                      const char *mcast_addr,
                      TAO_Service_ID service_id);
 
-  int init (char* ior,
+  int init (const char *ior,
             u_short port,
-            const char* mcast_addr,
+            const char *mcast_addr,
             TAO_Service_ID service_id);
   
   // destructor
@@ -73,7 +73,7 @@ private:
   ACE_INET_Addr mcast_addr_;
   // multicast address
 
-  char * ior_;
+  const char *ior_;
   // object reference to send in response to the multicast
 
   ACE_INET_Addr response_addr_;

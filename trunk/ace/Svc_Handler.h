@@ -61,6 +61,10 @@ public:
   // instead of closing it.  If the object does not have a recycler,
   // it will be closed.
 
+  virtual void cleanup_hint (void);
+  // When the svc_handle is no longer needed around as a hint, call
+  // this method.
+
   // = Dynamic linking hooks.
   virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded

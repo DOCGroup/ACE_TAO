@@ -479,7 +479,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           ACE_DEBUG ((LM_DEBUG,"(%P|%t) closing conn %d after fault %p\n",
                       this->peer().get_handle (),
                       "TAO_Server_ConnectionHandler::send_error"));
-            this->close ();
+          this->handle_close ();
           return;
         }
       TAO_ENDTRY;
@@ -589,7 +589,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) exception thrown "
                       "but client is not waiting a response\n"));
-          this->close ();
+          this->handle_close ();
           result = -1;
         }
       return result;
@@ -603,7 +603,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "(%P|%t) closing conn %d after fault %p\n",
                   this->peer().get_handle (),
                   "TAO_Server_ConnectionHandler::handle_input"));
-                  this->close ();
+                  this->handle_close ();
         return -1;
     }
   TAO_ENDTRY;
@@ -621,7 +621,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                         "(%P|%t) %s: closing conn, no exception, "
                         "but expecting response\n",
                         "TAO_Server_ConnectionHandler::handle_input"));
-          this->close ();
+          this->handle_close ();
           return -1;
         }
     }
@@ -634,7 +634,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                     "(%P|%t) %s: closing conn, no exception, "
                     "but expecting response\n",
                     "TAO_Server_ConnectionHandler::handle_input"));
-      this->close ();
+      this->handle_close ();
       return -1;
     }
 
@@ -967,7 +967,20 @@ TAO_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  return BASECLASS::handle_close (handle, rm);
+  if (this->recycler ())
+    this->recycler ()->mark_as_closed (this->recycling_act ());
+
+  this->shutdown ();
+
+  return 0;
+}
+
+int
+TAO_Client_Connection_Handler::close (u_long flags)
+{
+  this->destroy ();
+
+  return 0;
 }
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
