@@ -1,3 +1,11 @@
+Mon Aug 16 16:44:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* CIAO/DAnCE/ExecutionManager/Execution_Manager.cpp:
+	* CIAO/DAnCE/NodeManager/Node_Daemon.cpp:
+	* CIAO/DAnCE/ciao/CCM_Container.idl:
+	* CIAO/ciao/CCM_Container.idl:
+	  Changed #include "orbsvcs/orbsvcs/..." to #include "orbsvcs/...".
+
 Mon Aug 16 16:36:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
@@ -102,15 +110,15 @@ Sat Aug 14 14:44:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  shouldn't be there at the application level. Applications should
 	  only be bothered about using $XERCESCROOT and the like. If the
 	  application doesn't specify the compiler, linker and the loader
-	  knows where to pick things from. 
+	  knows where to pick things from.
 
 Sat Aug 14 14:07:53 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DAnCE/NodeManager/Node_Daemon.cpp:
-          
-	  Included "ace/os_include/os_netdb.h since otherwise the 
+
+	  Included "ace/os_include/os_netdb.h since otherwise the
 	  MAXHOSTNAMELEN constant was not found.
-	
+
 Sat Aug 14 15:36:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/NodeManager/NodeDaemon_Impl.cpp:
@@ -119,7 +127,7 @@ Sat Aug 14 15:36:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Cosmetic fixes for fuzz errors and other simple fixes for the
 	  daily builds.
-	
+
 	* DAnCE/NodeManager/README:
 
 	  Added a README file in the directory.
@@ -140,14 +148,14 @@ Sat Aug 14 03:29:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tools/XML_Helpers/XMLHelpers.mpc:
 
 	  Tried fixing some warnings and errors in the builds. I am not
-	  able to reproduce it and so I am taking a blind shot. 
+	  able to reproduce it and so I am taking a blind shot.
 
 Thu Aug 12 14:14:00 Jules White <jules@dre.vanderbilt.edu>
-  
-	* docs/schema/cdp.xsd: 
+
+	* docs/schema/cdp.xsd:
 	* docs/schema/Modified_Deployment.xsd:
-	
-          Changed the schema so that it was more compliant with the spec. 
+
+          Changed the schema so that it was more compliant with the spec.
 
 Thu Aug 12 15:25:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -163,16 +171,16 @@ Thu Aug 12 11:35:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/ciao/Servant_Impl_T.h:
 
 	  Propogating the changes from "Mon Aug  9 11:38:04 2004  Jeff
-	  Parsons <j.parsons@vanderbilt.edu>"  to DAnCE. 
-	  
+	  Parsons <j.parsons@vanderbilt.edu>"  to DAnCE.
+
 	* DAnCE/tests/Config_Handlers/Handler_Test.cpp:
 	* DAnCE/tests/Config_Handlers/Handler_Test.h:
 
 	  Cleaned up things so that it is more portable.
-	
+
 	* DAnCE/tests/Config_Handlers/handler_test.mpb:
-	  
-	  Put Handler_Test as a template file. 
+
+	  Put Handler_Test as a template file.
 
 Thu Aug 12 16:20:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -206,17 +214,17 @@ Wed Aug 11 14:38:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ExecutionManager/Execution_Manager.cpp:
 
-	  Made certain parts exception safe and fixed fuzz errors. 
-	
+	  Made certain parts exception safe and fixed fuzz errors.
+
 	* tests/CIDL/CodeGen/CodeGen.mpc:
 
 	  The MPC file was busted which lead to errors in the daily
-	  builds. 
-	
+	  builds.
+
 	* tests/RTCCM/DiffServ/Receiver/Receiver.mpc:
 
-	  Fixed errors in he MPC file. 
-	
+	  Fixed errors in he MPC file.
+
 	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
 
 	  Fixed fuzz errors.
@@ -225,8 +233,8 @@ Wed Aug 11 12:45:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mpc:
 
-	  Added new files startting with Exec* into the CIDLC project. 
-	
+	  Added new files startting with Exec* into the CIDLC project.
+
 	* CIAOTAO.mwc:
 
 	  Added tests section to the above file.
@@ -241,7 +249,7 @@ Mon Aug  9 11:38:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servant_Impl_T.cpp:
         * ciao/Servant_Impl_T.h:
-        
+
           Moved the body of the destructor and the same_component()
           method from the generated servant class to the base class.
 
