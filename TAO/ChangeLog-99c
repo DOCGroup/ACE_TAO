@@ -1,3 +1,23 @@
+Thu Jul 22 02:14:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Connection_Purging: This program tests automatic purging
+	  in TAO.
+
+	* tests/POA/Destruction/Destruction.dsp (BuildCmds):
+	* tests/POA/Deactivation/Deactivation.dsp (BuildCmds):
+
+	  Added C.h to list of IDL compiler output files.
+
+	* tao/default_resource.cpp (TAO_Default_Resource_Factory):
+	  Initialized <connection_caching_type_> and <purge_percentage_>.
+
+	* tests/POA/Deactivation/Deactivation.cpp (main): Made sure to
+	  destroy the Root POA to avoid memory leaks.
+
+	* tao/ORB_Core.cpp (init): Checking for environment variable
+	  TAO_ORB_DEBUG should happen before checking the ORBDebugLevel
+	  command line option.
+
 Wed Jul 21 23:38:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
