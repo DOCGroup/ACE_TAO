@@ -9,40 +9,6 @@ endif # TAO_ROOT
 
 TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
-ifdef trader
-
-ifndef STL_ROOT
-  STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
-endif # STL_ROOT
-
-STD=$(STL_ROOT)/ospace/std
-STL=$(STL_ROOT)/stl
-
-include $(STL_ROOT)/config/local.cfg
-
-CC_INCLUDES += -I$(STD)
-CC_INCLUDES += -pta
-
-CPPFLAGS += \
-        -I$(TOOLKIT) \
-        $(CC_INCLUDES) \
-        $(CC_FLAGS) \
-        $(CC_DEFINES) \
-        $(CC_EH) \
-        $(CC_MT)
-
-
-ifndef exceptions
-CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
-else
-CPPFLAGS += -DOS_STL_ASSERT
-endif
-
-LDFLAGS += -L$(STL_ROOT)/lib
-
-endif # trader
-# end of the trading service stuff
-
 BIN = client server Factory_Finder Generic_Factory
 
 # The following lines tell the souce code that the trading
