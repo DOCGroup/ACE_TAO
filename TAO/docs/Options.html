@@ -36,7 +36,7 @@ for configuring TAO's behaviors:
     will not be removed. <P>
 
 <LI>Users can also modify the internal behaviors of an ORB by
-    dynamically linking <EM>ORB plug-ins</EM>, such as client/server connection 
+    dynamically linking <EM>ORB plug-ins</EM>, such as client/server connection
     strategies, via a <code>svc.conf</code> file.  These ORB plug-ins
     can be fine-tuned by specifying their options in the
     <code>svc.conf</code> file.
@@ -387,7 +387,7 @@ the ORB.
     are selected by the ORB during runtime. For example the memory for
     the output datapath always defaults to TSS. The inour data path
     always defaults to stack for small messages and global pool for
-    larger messages. There was no effect with the use of this option. 
+    larger messages. There was no effect with the use of this option.
     </TD>
   </TR>
 
@@ -439,7 +439,7 @@ the ORB.
     <TD><A name=-ORBListenEndpoints></A>This Option is similar to
     ORBEndPoint option described above. The ORBEndpoint option
     would be deprecated in later versions on TAO. This option is
-    introduced with Object Reference Template Specification. 
+    introduced with Object Reference Template Specification.
     </TD>
   </TR>
 
@@ -566,7 +566,7 @@ would load all the options listed within "".
   <TD><a name="-ORBMuxedConnectionMax"></a>
       The transport cache allows only specified number of
       connections-per-QoS property to be added to connection
-      cache. Threads not getting the connections will wait for the 
+      cache. Threads not getting the connections will wait for the
       connections to be released. This options is more useful for
       transports using a muxed connection strategy and want control on
       the number of connections that are created by the active threads.
@@ -615,19 +615,50 @@ would load all the options listed within "".
   </TD>
 </TR>
 <TR>
-  <TD><CODE>-ORBResourceUsage</CODE> <EM>eager / lazy</EM></TD>
-  <TD><a name="-ORBResourceUsage"></a>
-      This option, as the name implies is useful for strategizing the
-      resources used byt the ORB. <EM> Eager </EM> resource usage
-      would mean that all the resources are reserved upfront even
-      if they are not used. The <EM> lazy </EM> resource usage on the
-      other hand, tries to allocate or use resources when needed. <p>
-
-      The default for this option is <EM> eager </EM>, and at this
-      point, only the de-marshalling resources for IOR can be
-      controlled using this option. It will not have any effect on
-      other resources that are eagerly used by the ORB. They are work
-      in progress.<p>
+  <TD><CODE>-ORBNativeCharCodeset</CODE> <EM>id</EM></TD>
+  <TD><a name="-ORBNativeCharCodeset"></a>
+      Specify the codeset ID used natively to represent char data. The
+      ID value may be a number or a Locale name. The codeset ID is a
+      32-bit unsigned value that is assigned by the Open Systems Foundation,
+      and listed in the OSF's Code and Character Set registry. In TAO, this
+      registry is embedded in an ACE class, ACE_Codeset_Registry. The file
+      ace/Codeset_Registry_db.cpp composes an array of those codesets applications
+      linked to it may use. The full code and character set registry currently
+      lists over two hundred specific codesets. The tool <CODE>bin/mkcsregdb</CODE>
+      may be used to generate a new Codeset_Registry_db.cpp file tuned to your
+      environment. If a Locale name is used, it must match a name entered in the
+      generated Codeset Registry db. As provided by the OSF, the registry does
+      not include Locale names, as these are not regulated. The default value
+      for the native Char codeset corresponds to the ISO-8859-1 (ASCII) codeset.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBNativeWcharCodeset</CODE> <EM>id</EM></TD>
+  <TD><a name="-ORBNativeWcharCodeset"></a>
+      Specify the codeset ID used natively to represent wide char data. The
+      ID value may be a number or a Locale name. The same rules apply to the
+      Wchar native codeset ID as do to the native Char codeset, with one exception.
+      No default value is defined for Wchar codesets, as required by the CORBA (2.3)
+      specification. If no Wchar codeset is defined, and communication is attempted
+      using wchar data, an exception is raised.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBCharCodesetTranslator</CODE> <EM>FactoryName</EM></TD>
+  <TD><a name="-ORBCharCodesetTranslator"></a>
+      Identify a factory used to supply translators between the native Char
+      codeset and some other codeset. The factory must be loaded as a separate
+      service object. Only the factories that match the configured native Wchar
+       codeset will actually be used.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBWcharCodesetTranslator</CODE> <EM>FactoryName</EM></TD>
+  <TD><a name="-ORBWcharCodesetTranslator"></a>
+      Identify a factory used to supply translators between the native Wchar
+      codeset and some other codeset. The factory must be loaded as a separate
+      service object. Only the factories that match the configured native Wchar
+      codeset will actually be used.
   </TD>
 </TR>
 </TABLE>
@@ -871,7 +902,7 @@ would load all the options listed within "".
         response. Further, this strategy cannot be used with AMI
         calls. Therefore, this strategy is appropriate only for "pure"
         synchronous clients. Note that  applications with nested
-        upcalls are not "pure" synchronous clients. Also note 
+        upcalls are not "pure" synchronous clients. Also note
         that this strategy will only effect two way calls, since there is no
         waiting for one way calls. This strategy can also be used in an
         application that is both a client and a server if the server side is
@@ -882,6 +913,7 @@ would load all the options listed within "".
 
     </TD>
   </TR>
+
   <TR>
     <TD><CODE>-ORBTransportMuxStrategy</CODE> <EM>EXCLUSIVE / MUXED</EM></TD>
 
@@ -901,39 +933,9 @@ would load all the options listed within "".
     </TD>
   </TR>
   <TR>
-    <TD><CODE>-ORBTransportMuxStrategyLock</CODE> <EM>thread / null</EM></TD>
-
-    <TD><A name="-ORBTransportMuxStrategyLock"></a>
-
-        Specify the kind of synchronization primitive for the Muxed
-        strategy.  Default is <code>thread</code>, which means that a
-        mutex is used. The type of mutex depends on the muxed strategy
-        in use. The second option is <code>null</code>, which
-        means a null lock is used.  This makes sense in case of
-        optimizations and when only a single threaded client
-        is in use.  <p> 
-
-        Default for this option is <EM> thread </EM>.
-
-    </TD>
-  </TR>
-  <TR>
-    <TD><CODE>-ORBReplyDispatcherTableSize</CODE> <EM>number</EM></TD>
-
-    <TD><A name="-ORBReplyDispatcherTableSize"></a>
-
-        Specify the initial number of entries in the tables used for
-        storing the reply dispatchers. Using a smaller value would
-        limit the amount of runtime memory used. But, if the number of 
-        entries exceeds the starting size, dynamic changes in table
-        sizes could incur unpredictability during execution <p>
-        Default for this option is <EM> thread </EM>.
-    </TD>
-  </TR>
-  <TR>
   <TD><CODE>-ORBConnectStrategy</CODE> <EM>type</EM></TD>
   <TD><a name="-ORBConnectStrategy"></a>
-      TAO provides three strategies to connect to remote  servers. 
+      TAO provides three strategies to connect to remote  servers.
       The default <CODE>leader_follower</CODE> strategy uses the
       Reactor and non-blocking connects to connect and this strategy
       participates in the Leader/Followers protocol to synchronize
@@ -1019,10 +1021,10 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TR>
     <TD><CODE>-ORBReactorThreadQueue</CODE> <EM>which</EM></TD>
     <TD><a name="-ORBReactorThreadQueue"></a>
-    Applies only to the ACE_TP_Reactor, i.e., when <CODE>-ORBReactorType</CODE> 
-    = <CODE>tp</CODE>, and specifies the order, last-in-first-out 
-    (<EM>which</EM> = <CODE>LIFO</CODE>), the default, or first-in-first-out 
-    (<EM>which</EM> = <CODE>FIFO</CODE>), in which waiting threads are selected 
+    Applies only to the ACE_TP_Reactor, i.e., when <CODE>-ORBReactorType</CODE>
+    = <CODE>tp</CODE>, and specifies the order, last-in-first-out
+    (<EM>which</EM> = <CODE>LIFO</CODE>), the default, or first-in-first-out
+    (<EM>which</EM> = <CODE>FIFO</CODE>), in which waiting threads are selected
     to run by the ACE_Select_Reactor_Token.
     </TD>
   </TR>
