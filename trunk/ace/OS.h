@@ -1441,6 +1441,7 @@ typedef HANDLE ACE_sema_t;
 #  define THR_DETACHED    0       /* ?? ignore in most places */
 #  define THR_BOUND       0       /* ?? ignore in most places */
 #  define THR_NEW_LWP     0       /* ?? ignore in most places */
+#  define THR_DAEMON      0       /* ?? ignore in most places */
 #  define THR_JOINABLE    0       /* ?? ignore in most places */
 #  define THR_SUSPENDED   CREATE_SUSPENDED
 #  define THR_USE_AFX             0x01000000
@@ -4295,17 +4296,16 @@ private:
 #define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
 
-#if defined (ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
    do { POINTER->T_CLASS##T_PARAMETER::~T_CLASS (); \
         DEALLOCATOR (POINTER); \
       } while (0)
-#else
+#if 0
 #define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
    do { POINTER->T_CLASS##T_PARAMETER::~T_CLASS##T_PARAMETER (); \
         DEALLOCATOR (POINTER); \
       } while (0)
-#endif /* ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR */
+#endif /* 0 */
 
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
