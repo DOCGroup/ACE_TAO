@@ -265,7 +265,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
       ACE_DEBUG ((LM_DEBUG, "------------------------------\n"));
       if (! CORBA::is_nil (offer_iterator))
 	{
-          CORBA::ULong length = offer_seq.length ();
+          int length = offer_seq.length ();
 	  CORBA::Boolean any_left = CORBA::B_FALSE;
 
 	  do
