@@ -342,7 +342,7 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 CORBA_ORB::get_service_information (CORBA::ServiceType service_type,
                                     CORBA::ServiceInformation_out service_information,
                                     CORBA::Environment &ACE_TRY_ENV)
@@ -572,7 +572,7 @@ CORBA_ORB::resolve_policy_current (CORBA::Environment& ACE_TRY_ENV)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_service (CORBA::String service_name,
+CORBA_ORB::resolve_service (const char *service_name,
                             ACE_Time_Value *timeout,
                             CORBA::Environment& ACE_TRY_ENV)
 {
