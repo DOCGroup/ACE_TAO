@@ -122,7 +122,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     orb_params_ (),
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
-    dt_hash_(),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
 #if 0
@@ -2823,19 +2822,6 @@ TAO_ORB_Core::init_ref_map ()
 }
 
 
-DT_Hash_Map*
-TAO_ORB_Core::dt_hash (void)
-{
-  return &this->dt_hash_;
-}
-
-u_long
-TAO_DTId_Hash::operator () (const IdType &id) const
-{
-  return ACE::hash_pjw ((const char *) id.get_buffer (),
-                        id.length ());
-}
-
 
 // ****************************************************************
 
@@ -2859,12 +2845,6 @@ template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_C
 template class ACE_Hash_Map_Entry<ACE_CString, ACE_CString>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
 
 template class ACE_Array_Base<void *>;
 
@@ -2891,12 +2871,6 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_CString>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Entry<IdType, CORBA::Object_ptr>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Hash<IdType>, ACE_Equal_To<IdType>, ACE_Null_Mutex>;
 
 #pragma instantiate ACE_Array_Base<void *>
 
