@@ -73,7 +73,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_amh_classes_ (I_FALSE),
     gen_tie_classes_ (I_TRUE),
     gen_smart_proxies_ (I_FALSE),
-    gen_inline_constants_ (I_FALSE),
+    gen_inline_constants_ (I_TRUE),
     gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
