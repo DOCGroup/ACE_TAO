@@ -18,20 +18,20 @@
 namespace MyImpl
 {
   /**
-   * @class GPS_tracing_exec_impl
+   * @class GPS_tracing_exec_i
    *
    * RateGen executor implementation class.
    */
-  class GPS_EXEC_Export GPS_tracing_exec_impl :
+  class GPS_EXEC_Export GPS_tracing_exec_i :
     public virtual HUDisplay::GPS_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    GPS_tracing_exec_impl ();
+    GPS_tracing_exec_i ();
 
     /// Default destructor.
-    ~GPS_tracing_exec_impl ();
+    ~GPS_tracing_exec_i ();
 
     // Operations from HUDisplay::GPS
 
@@ -77,8 +77,11 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
+    /// Current GPS reading.
     CORBA::Long positionx_;
     CORBA::Long positiony_;
+
+    /// Delta amounts to emulate the position shift of each reading.
     int dx_;
     int dy_;
 
@@ -87,20 +90,20 @@ namespace MyImpl
   };
 
   /**
-   * @class GPSHome_tracing_exec_impl
+   * @class GPSHome_tracing_exec_i
    *
    * GPS home executor implementation class.
    */
-  class GPS_EXEC_Export GPSHome_tracing_exec_impl :
+  class GPS_EXEC_Export GPSHome_tracing_exec_i :
     public virtual HUDisplay::CCM_GPSHome,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    GPSHome_tracing_exec_impl ();
+    GPSHome_tracing_exec_i ();
 
     /// Default dtor.
-    ~GPSHome_tracing_exec_impl ();
+    ~GPSHome_tracing_exec_i ();
 
     // Explicit home operations.
 
@@ -114,6 +117,8 @@ namespace MyImpl
 
 }
 
+// Executor DLL entry point.  CIAO's deployment and assembly framework
+// invokes this function on the resulting DLL to get the home executor.
 extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
 createGPSHome_Tracing_Impl (void);
 

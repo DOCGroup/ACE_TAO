@@ -1,5 +1,14 @@
 // $Id$
 
+/**
+ * @file client.cpp
+ *
+ * This is a simple client test program that interact with the RateGen
+ * component implementation.  This test uses the explicit factory
+ * operation in the home interface to create a RateGen component
+ * instance, run it for a while, and destroy the component instance.
+ */
+
 #include "RateGenC.h"
 
 int

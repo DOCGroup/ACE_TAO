@@ -13,6 +13,8 @@
 #endif /* __ACE_INLINE__ */
 
 // get_component implementation.
+// get_component is a standard CORBA::Object operations that returns
+// the component reference that an object interface associates to.
 CORBA::Object_ptr
 CIAO_GLUE_HUDisplay::position_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

@@ -104,11 +104,11 @@ Step 4:
   All the .cad files instruct the Assembly_Manager to write the IOR of
   the RateGen component to a file called "rategen.ior" in this
   directory.  You will then need to use a controller program in a
-  separate shell window to switch on/off the Rate Generator.
+  separate shell window to switch on/off the Rate Generator.  Cont
 
-  Start the controller with:
+  Execute the controller with:
 
-    ../RateGen/controller
+    ../RateGen/controller -o          # To switch on the RateGen
 
   See its source to check what options are available to start up the
   controller.  (Hints: you can control the rate (hertz) of the Rate
@@ -116,9 +116,10 @@ Step 4:
 
   Once the controller is running, check out the Daemon window (for
   text-based NavDisplay component) or the GUI window for the output.
-  Once you are happy with it, press <enter> in this shell window to
-  terminate the controller program and you will stop the RateGen
-  component from sending out more event.
+  Once you are happy with it, you can stop the RateGen by executing
+  the controller as:
+
+    ../RateGen/controller -f          # To switch off the RateGen
 
   Repeat this step again to instruct the RateGen component to start
   generating events.
