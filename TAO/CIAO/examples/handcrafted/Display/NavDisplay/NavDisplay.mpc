@@ -1,3 +1,5 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay NavDisplay"
 
 project(NavDisplay_stub): ciao_client {
   depends += HUDisplay_stub
@@ -39,6 +41,7 @@ project(NavDisplay_exec) : ciao_server {
   sharedname = NavDisplay_exec
   libs      += NavDisplay_stub HUDisplay_stub NavDisplay_svnt
   libpaths += ..
+  idlflags  +=  -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   dllflags   = NAVDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {

@@ -24,3 +24,8 @@ To generate mpc files:
   All others
 
    generate_component_mpc.pl -l .. -p HUDisplay {RateGen|GPS|NavDisplay}
+
+To generate Makefiles/Projects of your choice, try the following under
+the current directory $(CIAO_ROOT)/examples/handcrafted/Display/:
+
+  mwc -type <makefile type> -dynamic_only

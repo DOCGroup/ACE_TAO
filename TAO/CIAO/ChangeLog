@@ -1,3 +1,27 @@
+Tue Mar 18 16:36:07 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/generate_component_mpc.pl:
+	* examples/handcrafted/Display/HUDisplay.mpc:
+	* examples/handcrafted/Display/GPS/GPS.mpc:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+	* examples/handcrafted/Display/RateGen/RateGen.mpc: Updated the
+	  script and regenerated mpc file to record the original options
+	  used to generate the MPC files.
+
+	* examples/handcrafted/Display/NOTE: Added more info on how to
+	  generate Makefiles/Projects for this example.
+
+	* examples/handcrafted/Display/RateGen/RateGen.idl: Fixed a typo.
+
+	* examples/handcrafted/Display/RateGen/RateGen_Impl.idl:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.cpp:
+	* examples/handcrafted/Display/RateGen/RateGen_exec.h: Added the
+	  actual component and home implementations.  This particular
+	  component implementation shows how to suppoort SessionComponent
+	  interface in a component implementation (you will need to do
+	  that for any non-trivial component implementations that require
+	  to access component-specific context.)
+
 Tue Mar 18 12:03:29 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Hello/hello_servants.cpp:
