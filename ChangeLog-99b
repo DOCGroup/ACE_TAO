@@ -2,7 +2,10 @@ Mon Mar 01 13:04:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.*,Object_Manager.{h,cpp},ACE.cpp: added class
           ACE_OS_Object_Manager.  It manages the three preallocated
-          locks that ACE_OS uses.
+          locks that ACE_OS uses.  Many thanks to Nanbor for
+          suggesting the scheme to avoid dependency on Synch_T.h
+          for the ACE_Guard instantiations:  OS.cpp now has a
+          couple of lightweight guards for its internal use.
 
         * ace/ACE.{i,cpp},OS.*: moved ACE::strecpy () and
           ACE::unique_name () from class ACE to ACE_OS.  That
@@ -14,6 +17,13 @@ Mon Mar 01 13:04:53 1999  David L. Levine  <levine@cs.wustl.edu>
           can now be built.  The ace/config-minimal.h config file
           should be included in ace/config.h if you want to build
           the ACE OS adaptation layer.
+
+          Two deficiencies remain with the ACE OS adaptation layer:
+          the dependencies on ACE_Log_Msg have been conditionally
+          compiled out by config-minimal.h.  Similarly, there is
+          a conditional dependency of ACE_Thread_Adapter::invoke ()
+          on ACE_Thread_Exit.  It would probably be best to move
+          that to ACE Thread_Manager, if possible.
 
         * ace/Synch.{i,cpp} (~ACE_Recursive_Thread_Mutex): added
           a call to this->remove ().  Without it, the mutex wasn't
