@@ -107,7 +107,8 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (const TYPE &c)
 // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
+// ****************************************************************
+// ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
 template <class ACE_LOCK> void
 ACE_Guard<ACE_LOCK>::dump (void) const
@@ -120,7 +121,7 @@ ACE_Guard<ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
+// ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
 
 template <class ACE_LOCK> void
 ACE_Write_Guard<ACE_LOCK>::dump (void) const
@@ -129,7 +130,7 @@ ACE_Write_Guard<ACE_LOCK>::dump (void) const
   ACE_Guard<ACE_LOCK>::dump ();
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
+// ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
 
 template <class ACE_LOCK> void
 ACE_Read_Guard<ACE_LOCK>::dump (void) const
