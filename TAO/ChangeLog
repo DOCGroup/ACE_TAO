@@ -1,3 +1,17 @@
+Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * TAOACE.mwc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/RTCORBAEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTKokyuEvent.mpc:
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+        * orbsvcs/orbsvcs/RTSchedEvent.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+
+          Fixes for mpc generated builds.
+
+
 Thu Jun 26 16:08:03 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO/tests/OBV/Supports/Supports_Test_impl.cpp:

@@ -271,6 +271,7 @@ sub wanted {
         ! /^.*\.icc\z/s && 
         ! /^.*\.icp\z/s && 
         ! /^.*\.ncb\z/s &&
+        ! /^.*\.opt\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^Makefile.*\z/s
       );
