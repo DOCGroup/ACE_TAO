@@ -1,3 +1,9 @@
+Fri Nov  7 10:59:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* include/makeinclude/platform_sunos5_g++.GNU: Append -D_REENTRANT
+	  to CPPFLAGS if threads=1
+
+
 Wed Nov  7 08:09:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Changed the name CC5 build as

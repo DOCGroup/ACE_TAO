@@ -49,6 +49,11 @@ endif # ! i86pc
 CC              = gcc
 CXX             = g++
 CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
+
+ifeq ($(threads,1))
+  CPPFLAGS      += -D_REENTRANT
+endif
+
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DLD             = $(CXX)
 LD              = $(CXX)
