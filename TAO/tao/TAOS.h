@@ -135,11 +135,11 @@ TAO_NAMESPACE  POA_TAO
 
     virtual const char* _interface_repository_id (void) const;
 
-    virtual TAO::BufferingConstraint buffering_constraint (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      ) = 0;
-
+    virtual TAO::BufferingConstraint buffering_constraint (CORBA::Environment &ACE_TRY_ENV) = 0;
+    // Hacky TAO extension to reduce call to
+    // CORBA::Environment::default_environment () since this method
+    // will never raise exceptions.
+    virtual TAO::BufferingConstraint buffering_constraint (void) = 0;
 
   };
 
