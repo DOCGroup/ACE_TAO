@@ -39,6 +39,9 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
   const char *exception_message = "Null Message";
+
+  CosLifeCycle::Factories *factories_ptr = 0;
+  
   ACE_TRY
   {
     // Get a reference to the ORB.
@@ -72,10 +75,10 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))
-        ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
 
     // create a sequence of factories object
-    CosLifeCycle::Factories *factories_ptr = new CosLifeCycle::Factories (1);
+    factories_ptr = new CosLifeCycle::Factories (1);
 
     // using the Naming Service only one reference is available
     factories_ptr->length (1);
@@ -89,14 +92,13 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
 
     ACE_DEBUG ((LM_DEBUG,
                 "Have reference to a Quoter Factory.\n"));
-    return factories_ptr;
   }
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %s\n", exception_message));
-      ACE_THROW (CosLifeCycle::NoFactory (factory_key));
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (factory_key), 0);
     }
   ACE_ENDTRY;
 
-  return 0;
+  return factories_ptr;
 }
