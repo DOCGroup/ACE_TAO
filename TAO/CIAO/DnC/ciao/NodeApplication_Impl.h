@@ -55,7 +55,7 @@ namespace CIAO
 
     // Default constructor.
     NodeApplication_Impl (CORBA::ORB_ptr o,
-			  PortableServer::POA_ptr p);
+                          PortableServer::POA_ptr p);
 
     // Default destructor.
     virtual ~NodeApplication_Impl (void);
@@ -76,11 +76,11 @@ namespace CIAO
      */
     virtual void
     finishLaunch (const Deployment::Connections & providedReference,
-		  CORBA::Boolean start
-		  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                  CORBA::Boolean start
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::StartError,
-		       Deployment::InvalidConnection));
+                       Deployment::StartError,
+                       Deployment::InvalidConnection));
 
     /**
      * @method start
@@ -88,7 +88,7 @@ namespace CIAO
     virtual void
     start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::StartError));
+                       Deployment::StartError));
 
     /*-------------  CIAO specific helper operations (idl)--------
      *
@@ -101,12 +101,12 @@ namespace CIAO
     // Start install homes and components.
     virtual ::Deployment::ComponentInfos *
       install (const ::Deployment::ImplementationInfos & impl_infos
-	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       ::Deployment::UnknownImplId,
-		       ::Deployment::ImplEntryPointNotFound,
-		       ::Deployment::InstallationFailure,
-		       ::Components::InvalidConfiguration));
+                       ::Deployment::UnknownImplId,
+                       ::Deployment::ImplEntryPointNotFound,
+                       ::Deployment::InstallationFailure,
+                       ::Components::InvalidConfiguration));
 
     // Access the readonly attribute.
     virtual ::Deployment::Properties *
@@ -115,7 +115,7 @@ namespace CIAO
 
     virtual ::Components::CCMHome_ptr
       install_home (const ::Deployment::ImplementationInfo & impl_info
-		  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::UnknownImplId,
                        Deployment::ImplEntryPointNotFound,
@@ -178,9 +178,9 @@ namespace CIAO
                        Components::RemoveFailure));
 
     virtual void remove_component (const char * comp_ins_name
-				   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Components::RemoveFailure));
+                       Components::RemoveFailure));
 
     // This function is a helper for start call. Bala's
     // Idea of adding those pre/post activate calls doesn't work
@@ -190,9 +190,9 @@ namespace CIAO
       (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     virtual void start_i (Funct_Ptr functor
-			  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-		       Deployment::StartError));
+                       Deployment::StartError));
 
     // To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

@@ -26,7 +26,7 @@ NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			 "NodeApp_CB_Impl::Constructor\t\n");
+                         "NodeApp_CB_Impl::Constructor\t\n");
     ACE_RE_THROW;
   }
   ACE_ENDTRY;

@@ -43,21 +43,21 @@ namespace CIAO
                        public Servant_Impl_Base
   {
   public:
-    Servant_Impl (typename EXEC::_ptr_type exe, 
+    Servant_Impl (typename EXEC::_ptr_type exe,
                   Session_Container * c);
     virtual ~Servant_Impl (void);
-   
+
     virtual ::Components::FacetDescriptions *
     get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
     virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-      
-  protected: 
-    typename EXEC::_var_type executor_;        
-    CONTEXT * context_;  
+
+  protected:
+    typename EXEC::_var_type executor_;
+    CONTEXT * context_;
   };
 }
 

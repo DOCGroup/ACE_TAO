@@ -55,7 +55,7 @@ namespace CIAO
                      const char * nodeapp_loc,
                      int spawn_delay
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-		ACE_THROW_SPEC ((CORBA::SystemException));
+                ACE_THROW_SPEC ((CORBA::SystemException));
 
     // @@ (OO) Since this class is reference counted, please make this
     //         destructor protected to enforce proper memory managment
