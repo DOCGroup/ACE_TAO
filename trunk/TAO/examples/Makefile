@@ -13,7 +13,6 @@
 DIRS  = Callback_Quoter \
         POA \
 	Logging \
-	Quoter \
 	Simple \
 	Event_Comm \
 	OBV
@@ -23,6 +22,14 @@ DIRS  = Callback_Quoter \
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifndef minimum_corba
+
+# No POA forwarding in minimum CORBA
+  DIRS += Quoter
+
+endif # minimum_corba
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU

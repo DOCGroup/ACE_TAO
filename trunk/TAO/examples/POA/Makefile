@@ -11,19 +11,9 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Generic_Servant \
-	Adapter_Activator \
-	DSI \
-	Default_Servant \
-	Explicit_Activation \
-	FindPOA \
-	Forwarding \
-	Loader \
-	NewPOA \
-	On_Demand_Activation \
 	On_Demand_Loading \
 	RootPOA \
-	Reference_Counted_Servant \
-	TIE
+	Reference_Counted_Servant
 
 # The following test hasn't been updated yet
 # Demux_Test
@@ -35,6 +25,36 @@ DIRS  = Generic_Servant \
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifndef minimum_corba
+
+# No AdapterActivator in minimum CORBA
+  DIRS += Adapter_Activator
+
+# Some POA policies and NVList unavailable in minimum CORBA
+  DIRS += DSI
+
+# Some POA policies and default servants unavailable in minimum CORBA
+  DIRS += Default_Servant
+
+# Some POA policies unavailable in minimum CORBA
+  DIRS += Explicit_Activation
+
+# No AdapterActivator in minimum CORBA
+  DIRS += FindPOA
+
+# No servant managers in minimum CORBA
+  DIRS += Forwarding
+  DIRS += Loader
+  DIRS += On_Demand_Activation
+
+# Some POA policies unavailable in minimum CORBA
+  DIRS += NewPOA
+  DIRS += TIE
+
+endif # minimum_corba
+
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU

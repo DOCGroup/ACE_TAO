@@ -46,19 +46,29 @@ ifndef TAO_ORBSVCS
   #### Please see docs/configurations.html#orbsvcs for documentation of
   #### TAO_ORBSVCS.
   TAO_ORBSVCS = Naming \
-                ImplRepo \
                 Time \
                 Property \
-                Trader \
-                LifeCycle \
                 Sched \
                 Event \
                 CosEvent \
                 Event2
 
-ifndef TEMPINCDIR # ! AIX
-  TAO_ORBSVCS += AV
-endif # TEMPINCDIR
+ifndef minimum_corba
+
+# ImplRepo uses AdapterActivator which is disabled when compiling with 
+# minimum CORBA support.
+  TAO_ORBSVCS += ImplRepo
+
+# Trader uses DynAny which is disabled when compiling with minimum
+# CORBA support.  LifeCycle and AV depend on Trader so don't build
+# them either.
+  TAO_ORBSVCS += Trader LifeCycle
+
+  ifndef TEMPINCDIR # ! AIX
+    TAO_ORBSVCS += AV
+  endif # TEMPINCDIR
+
+endif # minimum_corba
 
 # This services is not compiled by default, it is rarely used and it
 # is not prepared to deal with exceptions
