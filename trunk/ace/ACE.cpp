@@ -2415,17 +2415,19 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 #if defined (WIN32)
    // Emulate Unix.  Win32 does NOT support all the UNIX versions
    // below, so DO we need this ifdef.
-  static const ACE_TCHAR *day_of_week_name[] = {
+  static const ACE_TCHAR *day_of_week_name[] = 
+  {
     ACE_LIB_TEXT ("Sun"),
     ACE_LIB_TEXT ("Mon"),
     ACE_LIB_TEXT ("Tue"),
     ACE_LIB_TEXT ("Wed"),
-    ACE_LIB_TEXT ("Thr"),
+    ACE_LIB_TEXT ("Thu"),
     ACE_LIB_TEXT ("Fri"),
     ACE_LIB_TEXT ("Sat")
   };
 
-  static const ACE_TCHAR *month_name[] = {
+  static const ACE_TCHAR *month_name[] = 
+  {
     ACE_LIB_TEXT ("Jan"),
     ACE_LIB_TEXT ("Feb"),
     ACE_LIB_TEXT ("Mar"),
@@ -2437,7 +2439,8 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     ACE_LIB_TEXT ("Sep"),
     ACE_LIB_TEXT ("Oct"),
     ACE_LIB_TEXT ("Nov"),
-    ACE_LIB_TEXT ("Dec") };
+    ACE_LIB_TEXT ("Dec") 
+  };
 
   SYSTEMTIME local;
   ::GetLocalTime (&local);
