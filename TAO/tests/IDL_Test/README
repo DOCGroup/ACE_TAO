@@ -34,3 +34,8 @@ To run the test, type 'main' at the command line.  A message will be
 output saying that the build had no errors. To test the client/server
 functionality of the various IDL types and operations, see the test
 suite in ACE_wrappers/TAO/tests/Param_Test.
+
+The generated code from reopened_modules.idl is not included in the
+Makefile per se. Platforms without namespaces cannot handle
+reopened modules, so reopened_modulesC.cpp and reopened_modulesS.cpp
+have been conditionally included in a file called namespace_check.cpp.

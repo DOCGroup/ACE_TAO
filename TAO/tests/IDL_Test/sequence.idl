@@ -30,3 +30,12 @@ interface seqTest
   void send_dozen (inout dozens bouquets);
 };
 
+// CDR operator declarations and definitions 
+// for the sequences were getting generated
+// twice. Now there's an #if !defined guard
+// around them.
+struct twinStruct
+  {
+    sequence<short> and_;
+    sequence<short> or_;
+  };
