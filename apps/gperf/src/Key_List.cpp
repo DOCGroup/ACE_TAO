@@ -354,7 +354,8 @@ Key_List::merge (List_Node *list1, List_Node *list2)
   else if (!list2)
     return list1;
   else if (occurrence_sort && list1->occurrence < list2->occurrence
-           || hash_sort && list1->hash_value > list2->hash_value)
+           || hash_sort && list1->hash_value > list2->hash_value
+           || key_sort && strcmp (list1->key, list2->key) >= 0)
     {
       list2->next = merge (list2->next, list1);
       return list2;
@@ -792,6 +793,7 @@ Key_List::output_keyword_table (void)
   if (0 < head->hash_value)
     printf ("      ");
 
+ 
   int column;
 
   for (column = 1; index < head->hash_value; column++)
@@ -799,10 +801,10 @@ Key_List::output_keyword_table (void)
       printf ("%s\"\",%s %s", l_brace, r_brace, column % 9 ? "" : "\n      ");
       index++;
     }
-
+  
   if (0 < head->hash_value && column % 10)
     printf ("\n");
-
+       
   // Generate an array of reserved words at appropriate locations.
 
   for (temp = head ; temp; temp = temp->next, index++)
@@ -851,8 +853,103 @@ Key_List::output_keyword_table (void)
                       links->index);
             putchar ('\n');
           }
+    
     }
   printf ("%s%s};\n\n", indent, indent);
+}
+
+// Generates C code for the binary search algorithm that returns
+// the proper encoding for each key word
+
+int
+Key_List::output_binary_search_function (void)
+{
+  printf ("%s\n", include_src);
+
+  // Get prototype for strncmp() and strcmp().
+  if (!option[SKIPSTRINGH])
+    printf ("#include <string.h>\n");
+
+  // Output type declaration now, reference it later on....
+  if (option[TYPE] && !option[NOTYPE])
+    printf ("%s;\n",
+	    array_type_);
+
+  output_min_max ();
+
+  if (option[STRCASECMP])
+    output_strcasecmp ();
+
+  // Class definition if -M is *not* enabled.
+  if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
+    printf ("class %s {\npublic:\n"
+	    "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
+	    option.class_name (),
+	    option[CONSTANT] ? "const " : "",
+	    return_type,
+	    option.function_name ());
+
+  // Use the inline keyword to remove function overhead.
+  if (option[INLINE])
+    printf ("inline\n");
+
+  printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
+  if (option[CPLUSPLUS])
+    printf ("%s::", option.class_name ());
+
+  printf (option[ANSI]
+	  ? "%s (const char *str, unsigned int len)\n{\n"
+	  : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+	  option.function_name ());
+
+// Use the switch in place of lookup table.
+
+  if (option[SWITCH])
+    output_switch ();
+
+  // Use the lookup table, in place of switch.
+  else
+    {
+      if (!option[GLOBAL])
+	{
+	  if (option[LENTABLE])
+	    output_keylength_table ();
+	  output_keyword_table ();
+	}
+    }
+
+  // Logic to handle the Binary Search.
+
+  printf ("int first=0, last=0, middle=0;\n");
+  printf ("%s*base;\n",struct_tag);
+  printf ("\nlast = %d;\n",total_keys-1);
+  printf ("while (last>=first)\n");
+  printf ("\t{\n");
+  printf ("\t   middle = (last + first)/2;\n");
+  printf ("\t   if (strcmp(wordlist[middle].opname_,str)==0) break;\n");
+  printf ("\t   if (strcmp(wordlist[middle].opname_,str)<0) first = middle+1;\n");
+  printf ("\t   else last = middle-1;\n");
+  printf ("\t}\n");
+  printf ("if (last<first) return 0;\n");
+  printf ("else return (&wordlist[middle]);\n}\n");
+
+  if (additional_code)
+    {
+      for (;;)
+	{
+	  int c = getchar ();
+
+	  if (c == EOF)
+	    break;
+	  else
+	    putchar (c);
+	}
+    }
+
+  fflush(stdout);
+
+  return 0;
+
 }
 
 // Generates C code for the hash function that returns the proper
@@ -1345,127 +1442,138 @@ Key_List::output_strcasecmp (void)
 int
 Key_List::output (void)
 {
-  printf ("%s\n", include_src);
-
-  // Get prototype for strncmp() and strcmp().
-  if (!option[SKIPSTRINGH])
-    printf ("#include <string.h>\n");
-
-  // Output type declaration now, reference it later on....
-  if (option[TYPE] && !option[NOTYPE])
-    printf ("%s;\n",
-            array_type_);
-
-  output_min_max ();
-
-  if (option[STRCASECMP])
-    output_strcasecmp ();
-
-  // Class definition if -M is *not* enabled.
-  if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
-    printf ("class %s\n{\nprivate:\n"
-            "  static unsigned int %s (const char *str, unsigned int len);\npublic:\n"
-            "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
-            option.class_name (),
-            option.hash_name (),
-            option[CONSTANT] ? "const " : "",
-            return_type,
-            option.function_name ());
-
-  output_hash_function ();
-
-  if (option[GLOBAL])
-    if (option[SWITCH])
-      {
-        if (option[LENTABLE] && option[DUP])
-          output_keylength_table ();
-        if (option[POINTER] && option[TYPE])
-          output_keyword_table ();
-      }
-    else
-      {
-        if (option[LENTABLE])
-          output_keylength_table ();
-        output_keyword_table ();
-        if (output_lookup_array () == -1)
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "%p\n",
-                             "output_lookup_array"),
-                            -1);
-      }
-
-  // Use the inline keyword to remove function overhead.
-  if (option[INLINE])           
-    printf ("inline\n");
-
-  printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
-  if (option[CPLUSPLUS])
-    printf ("%s::", option.class_name ());
-
-  printf (option[ANSI]
-          ? "%s (const char *str, unsigned int len)\n{\n"
-          : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
-          option.function_name ());
-
-  if (option[ENUM] && !option[GLOBAL])
-    printf ("  enum\n    {\n"
-            "      TOTAL_KEYWORDS = %d,\n"
-            "      MIN_WORD_LENGTH = %d,\n"
-            "      MAX_WORD_LENGTH = %d,\n"
-            "      MIN_HASH_VALUE = %d,\n"
-            "      MAX_HASH_VALUE = %d,\n"
-            "      HASH_VALUE_RANGE = %d,\n"
-            "      DUPLICATES = %d\n    };\n\n",
-            total_keys, min_key_len, max_key_len, min_hash_value,
-            max_hash_value, max_hash_value - min_hash_value + 1,
-            total_duplicates ? total_duplicates + 1 : 0);
-  // Use the switch in place of lookup table.
-  if (option[SWITCH])
-    output_switch ();
-  // Use the lookup table, in place of switch.
+  if (option[BINARYSEARCH])
+    {
+      // Generate all the things necessary for doing binary search.
+  
+      // Output the lookup method for binary search.
+      output_binary_search_function ();
+    }
   else
     {
-      if (!option[GLOBAL])
-        {
-          if (option[LENTABLE])
-            output_keylength_table ();
-          output_keyword_table ();
-        }
-      if (!option[GLOBAL])
-        {
-          switch (output_lookup_array ())
-            {
-            case -1:
+      // Not binary search. Generate the usual GPERF things. 
+      
+      printf ("%s\n", include_src);
+
+      // Get prototype for strncmp() and strcmp().
+      if (!option[SKIPSTRINGH])
+        printf ("#include <string.h>\n");
+
+  // Output type declaration now, reference it later on....
+      if (option[TYPE] && !option[NOTYPE])
+        printf ("%s;\n",
+                array_type_);
+
+      output_min_max ();
+
+      if (option[STRCASECMP])
+        output_strcasecmp ();
+
+  // Class definition if -M is *not* enabled.
+      if ((option[CPLUSPLUS]) && (!option[SKIPCLASS]))
+        printf ("class %s\n{\nprivate:\n"
+                "  static unsigned int %s (const char *str, unsigned int len);\npublic:\n"
+                "  static %s%s%s (const char *str, unsigned int len);\n};\n\n",
+                option.class_name (),
+                option.hash_name (),
+                option[CONSTANT] ? "const " : "",
+                return_type,
+                option.function_name ());
+
+      output_hash_function ();
+
+      if (option[GLOBAL])
+        if (option[SWITCH])
+          {
+            if (option[LENTABLE] && option[DUP])
+              output_keylength_table ();
+            if (option[POINTER] && option[TYPE])
+              output_keyword_table ();
+          }
+        else
+          {
+            if (option[LENTABLE])
+              output_keylength_table ();
+            output_keyword_table ();
+            if (output_lookup_array () == -1)
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "%p\n",
                                  "output_lookup_array"),
                                 -1);
-              /* NOTREACHED */
-            case 0:
-              output_lookup_function ();
-              break;
-              /* NOTREACHED */
-            default:
-              break;
-              /* NOTREACHED */
+          }
+
+      // Use the inline keyword to remove function overhead.
+      if (option[INLINE])           
+        printf ("inline\n");
+
+      printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
+      if (option[CPLUSPLUS])
+        printf ("%s::", option.class_name ());
+
+      printf (option[ANSI]
+              ? "%s (const char *str, unsigned int len)\n{\n"
+              : "%s (str, len)\n     char *str;\n     unsigned int len;\n{\n",
+              option.function_name ());
+
+      if (option[ENUM] && !option[GLOBAL])
+        printf ("  enum\n    {\n"
+                "      TOTAL_KEYWORDS = %d,\n"
+                "      MIN_WORD_LENGTH = %d,\n"
+                "      MAX_WORD_LENGTH = %d,\n"
+                "      MIN_HASH_VALUE = %d,\n"
+                "      MAX_HASH_VALUE = %d,\n"
+                "      HASH_VALUE_RANGE = %d,\n"
+                "      DUPLICATES = %d\n    };\n\n",
+                total_keys, min_key_len, max_key_len, min_hash_value,
+                max_hash_value, max_hash_value - min_hash_value + 1,
+                total_duplicates ? total_duplicates + 1 : 0);
+      // Use the switch in place of lookup table.
+      if (option[SWITCH])
+        output_switch ();
+      // Use the lookup table, in place of switch.
+      else
+        {
+          if (!option[GLOBAL])
+            {
+              if (option[LENTABLE])
+                output_keylength_table ();
+              output_keyword_table ();
+            }
+          if (!option[GLOBAL])
+            {
+              switch (output_lookup_array ())
+                {
+                case -1:
+                  ACE_ERROR_RETURN ((LM_DEBUG,
+                                     "%p\n",
+                                     "output_lookup_array"),
+                                    -1);
+                  /* NOTREACHED */
+                case 0:
+                  output_lookup_function ();
+                  break;
+                  /* NOTREACHED */
+                default:
+                  break;
+                  /* NOTREACHED */
+                }
             }
         }
-    }
 
-  if (additional_code)
-    {
-      for (;;)
+      if (additional_code)
         {
-          int c = getchar ();
+          for (;;)
+            {
+              int c = getchar ();
 
-          if (c == EOF)
-            break;
-          else
-            putchar (c);
+              if (c == EOF)
+                break;
+              else
+                putchar (c);
+            }
         }
+      fflush (stdout);
     }
-
-  fflush (stdout);
   return 0;
 }
 
@@ -1480,6 +1588,49 @@ Key_List::sort (void)
 
   this->head = merge_sort (this->head);
 }
+
+// Sorts the keys by normal strcmp.
+void
+Key_List::string_sort (void)
+{
+  
+  // Flatten the equivalence class list to a linear list.
+ 
+  List_Node *ptr;
+  for(ptr=head;ptr;ptr=ptr->next)
+    {
+      List_Node *curr;
+      if(ptr->link)
+        {
+          for(curr=ptr->link;curr->link;curr=curr->link)
+            {
+              curr->next = curr->link;
+            }
+          curr->next = ptr->next;
+          ptr->next = ptr->link;
+          
+        }  
+    }  
+
+  // Set all links to Null.
+
+  for(ptr=head;ptr;ptr=ptr->next)
+    {
+      ptr->link = 0;
+    }
+
+  // Set the sorting options.
+
+  key_sort = 1;
+  hash_sort = 0;
+  occurrence_sort = 0;
+
+  // Sort.
+
+  this->head = merge_sort (head);
+  key_sort = 0;
+}
+
 
 // Dumps the key list to stderr stream.
 
@@ -1550,6 +1701,7 @@ Key_List::Key_List (void)
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
     additional_code (0),
+    key_sort (0),
     total_keys (1)
 {
 }
