@@ -220,7 +220,6 @@ ACE_INET_Addr::set (u_short port_number,
                     int address_family)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-
   int ret = this->set_host_name(host_name,address_family);
   if(ret != 0)
     return ret;
@@ -615,7 +614,7 @@ ACE_INET_Addr::set_host_name (const char host_name[],
   ACE_UINT32 addrv4;
   if (ACE_OS::inet_aton (host_name,
                          (struct in_addr *) &addrv4) == 1) {
-      this->set_addr((void*)&addrv4, sizeof(addrv4));
+      this->set_address((void*)&addrv4, sizeof(addrv4));
       return 0;
     }
   else
@@ -638,7 +637,7 @@ ACE_INET_Addr::set_host_name (const char host_name[],
         }
       else
         {
-          this->set_addr((void*)hp->h_addr, hp->h_length);
+          this->set_address((void*)hp->h_addr, hp->h_length);
           return 0;
         }
     }
