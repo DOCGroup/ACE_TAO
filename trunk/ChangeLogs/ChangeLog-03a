@@ -1,5 +1,8 @@
 Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Log_Msg.cpp (dump): Fixed some unintentional tabs.  Thanks
+	  to Mike Curtis for reporting this!
+
 	* ace/SOCK_Dgram_Mcast.cpp (open): Modified the call to
 	  ACE_SOCK_Dgram::shared_open() to just pass in this->mcast_
  	  rather than making a local copy that just contained the port
