@@ -1694,7 +1694,7 @@ template <class T> T&
 ACE_Unbounded_Set_Iterator<T>::operator* (void)
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator*");
-  T *retv;
+  T *retv = 0;
 
   ACE_ASSERT (this->next (retv) != 0);
   return *retv;
