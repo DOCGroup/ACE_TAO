@@ -10,13 +10,17 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
 
-  Thread_Task (RTScheduling::Current_ptr current);
-
+  Thread_Task (RTScheduling::Current_ptr current,
+	       CORBA::Policy_ptr sched_param,
+	       int start_time,
+	       int load,
+	       long flags,
+	       ACE_Barrier* barrier);
+  
   int perform_task (int times);
 
-  int activate_task (CORBA::Policy_ptr sched_param,
-		     long flags,
-		     ACE_Barrier* barrier);
+  int activate_task (void);
+
 
  protected:
   /// task svc
@@ -24,7 +28,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
  private:
   RTScheduling::Current_var current_;
   CORBA::Policy_var sched_param_;
-  int count_;
+  int start_time_;
   ACE_Barrier* barrier_;
 };
 
