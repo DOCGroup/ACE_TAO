@@ -4,8 +4,8 @@
 
 #ifndef ACE_CONFIG_NSK_H
 #define ACE_CONFIG_NSK_H
-#include /**/ "ace/pre.h"
 
+#include /**/ "ace/pre.h"
 
 // The following configuration file contains defines for Tandem NSK
 // platform, MIPS processor, version 2 C++ compiler.
@@ -398,5 +398,7 @@ extern int cma_sigwait  (sigset_t *);
 
 // Uncomment the following if tokens library is needed.
 //#define ACE_HAS_TOKENS_LIBRARY
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_NSK_H */
