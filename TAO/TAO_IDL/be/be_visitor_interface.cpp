@@ -25,7 +25,22 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
   os->gen_ifdef_macro (node->flatname (), "_collocated");
 
   os->indent ();
-  *os << "class _tao_collocated : public virtual " << node->name () << nl;
+  *os << "class _tao_collocated\n";
+  os->incr_indent ();
+  *os << ": public virtual " << node->name ();
+
+  if (node->n_inherits () > 0)
+    {
+      for (int i = 0; i < node->n_inherits (); ++i)
+	{
+	  *os << "," << nl;
+	  be_interface* parent =
+	    be_interface::narrow_from_decl (node->inherits()[i]);
+	  *os << "  public virtual " << parent->full_coll_name ();
+	}
+    }
+  *os << "\n";
+  os->decr_indent ();
   *os << "{" << nl;
   *os << "public:\n";
   os->incr_indent ();
@@ -124,6 +139,8 @@ be_visitor_collocated_ss::~be_visitor_collocated_ss (void)
 
 int be_visitor_collocated_ss::visit_interface (be_interface *node)
 {
+  TAO_NL nl;
+
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   TAO_OutStream *ss = cg->server_skeletons ();
 
@@ -133,7 +150,19 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
       << "_tao_collocated (" << node->full_skel_name () << "_ptr "
       << " servant)\n";
   ss->incr_indent ();
-  *ss << ": servant_ (servant)\n";
+  *ss << ": servant_ (servant)";
+
+  if (this->current_interface_->n_inherits () > 0)
+    {
+      for (int i = 0; i < node->n_inherits (); ++i)
+	{
+	  *ss << "," << nl;
+	  be_interface* parent =
+	    be_interface::narrow_from_decl (this->current_interface_->inherits()[i]);
+	  *ss << "  " << parent->full_coll_name () << " (servant)";
+	}
+    }
+  *ss << "\n";
   ss->decr_indent ();
   *ss << "{\n";
   ss->incr_indent ();
