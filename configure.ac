@@ -5714,7 +5714,7 @@ dnl We don't have a gettimeofday prototype
     ],
     [
      if test "$ace_cv_lib_voidptr_gettimeofday" = yes; then
-       AC_DEFINE([ACE_HAS_SUNOS4_GETTIMEOFDAY])
+       AC_DEFINE([ACE_HAS_VOIDPTR_GETTIMEOFDAY])
      else
        AC_DEFINE([ACE_HAS_TIMEZONE_GETTIMEOFDAY])
      fi

@@ -1,3 +1,31 @@
+Tue Jun 22 07:27:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* ace/OS_NS_sys_time.inl:
+	* ace/README:
+	* ace/config-cygwin32.h:
+	* ace/config-hpux-10.x.h:
+	* ace/config-hpux-11.00.h:
+	* ace/config-hpux11.h:
+	* ace/config-linux-common.h:
+	* ace/config-macosx-panther.h:
+	* ace/config-macosx.h:
+	* ace/config-rtems.h:
+	* ace/config-sco-4.2-nothread.h:
+	* ace/config-sco-5.0.0-mit-pthread.h:
+	* ace/config-sunos4-lucid3.2.h:
+	* ace/config-sunos4-sun3.x.h:
+	* ace/config-sunos4-sun4.1.4.h:
+	* ace/config-sunos4-sun4.x.h:
+	* ace/config-tandem.h:
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h:
+	* ace/os_include/sys/os_time.h:
+	* m4/config_h.m4:
+	  Renamed ACE_HAS_SUNOS4_GETTIMEOFDAY to ACE_HAS_VOIDPTR_GETTIMEOFDAY.
+	  Changed canned SunOS 4 configs to use ACE_HAS_TIMEZONE_GETTIMEOFDAY,
+	  as SunOS wasn't changed to use a void * until SunOS 5/Solaris 2.
+
 Tue Jun 22 13:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:
