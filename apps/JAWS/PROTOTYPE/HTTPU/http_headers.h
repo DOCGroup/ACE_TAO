@@ -41,7 +41,7 @@ private:
 
 class HTTP_HCodes;
 
-class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, const HTTP_Hdr_Node *>
+class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
 {
   friend class HTTP_HCodes;
   friend class HTTP_Hdr_Node;
