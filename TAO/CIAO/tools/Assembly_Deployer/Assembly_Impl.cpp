@@ -336,15 +336,15 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
-            if (CORBA::is_nil (sink))
+            if (CORBA::is_nil (sink.in ()))
               ACE_DEBUG ((LM_DEBUG, "Nil sink\n"));
 
             Components::EventConsumerBase_var consumer
-              = this->resolve_consumer (connection->dest_iface_
-                                        ACE_ENV_ARG_PARAMETER);
+              = sink->get_consumer (connection->dest_iface_->resolver_info ()
+                                    ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
-            if (CORBA::is_nil (consumer))
+            if (CORBA::is_nil (consumer.in ()))
               ACE_DEBUG ((LM_DEBUG, "Nil consumer\n"));
 
             Components::CCMObject_var source
@@ -352,7 +352,7 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
-            if (CORBA::is_nil (source))
+            if (CORBA::is_nil (source.in ()))
               ACE_DEBUG ((LM_DEBUG, "Nil source\n"));
 
             Components::Deployment::Container_var container;
@@ -365,7 +365,7 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
               container->get_event_service (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_CHECK;
 
-            if (CORBA::is_nil (event_service))
+            if (CORBA::is_nil (event_service.in ()))
               ACE_DEBUG ((LM_DEBUG, "Nil event_service\n"));
 
             CIAO::EventServiceType type = CIAO::RTEC;
@@ -399,6 +399,9 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
                 ACE_CHECK;
 
                 this->connected_publishers_.insert (sid);
+
+                supplier_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
+                ACE_CHECK;
               }
 
             CIAO::Consumer_Config_var consumer_config =
@@ -409,12 +412,15 @@ CIAO::Assembly_Impl::make_connections (ACE_ENV_SINGLE_ARG_DECL)
             ACE_CHECK;
             consumer_config->consumer_id (cid.c_str () ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
-            consumer_config->consumer (Components::EventConsumerBase::_duplicate (consumer.in ())
+            consumer_config->consumer (consumer.in ()
                                        ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
 
+            event_service->connect_event_consumer (consumer_config.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
 
-            event_service->connect_event_consumer (consumer_config.in () ACE_ENV_ARG_PARAMETER);
+            consumer_config->destroy (ACE_ENV_SINGLE_ARG_DECL);
             ACE_CHECK;
 
           }

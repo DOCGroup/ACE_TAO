@@ -29,28 +29,6 @@ namespace CIAO
     rt_event_channel_ (RtecEventChannelAdmin::EventChannel::_nil ()),
     notify_channel_ (CosNotifyChannelAdmin::EventChannel::_nil ())
   {
-
-    /*this->orb_ = CORBA::ORB_init (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    CORBA::Object_var poa_object =
-      this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (poa_object.in ()))
-      ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to initialize the POA.\n"));
-    this->root_poa_ =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    */
-
   }
 
   EventService_Factory_impl::~EventService_Factory_impl (void)
@@ -67,7 +45,7 @@ namespace CIAO
       {
       Direct_Consumer_Config_impl * consumer_config = 0;
       ACE_NEW_RETURN (consumer_config,
-                      Direct_Consumer_Config_impl,
+                      Direct_Consumer_Config_impl (this->root_poa_.in ()),
                       Consumer_Config::_nil ());
       Direct_Consumer_Config_var return_direct =
         consumer_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -79,7 +57,7 @@ namespace CIAO
       {
       RTEvent_Consumer_Config_impl * consumer_config = 0;
       ACE_NEW_RETURN (consumer_config,
-                      RTEvent_Consumer_Config_impl,
+                      RTEvent_Consumer_Config_impl (this->root_poa_.in ()),
                       Consumer_Config::_nil ());
       RTEvent_Consumer_Config_var return_rtec =
         consumer_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -91,7 +69,7 @@ namespace CIAO
       {
       CosNotify_Consumer_Config_impl * consumer_config = 0;
       ACE_NEW_RETURN (consumer_config,
-                      CosNotify_Consumer_Config_impl,
+                      CosNotify_Consumer_Config_impl (this->root_poa_.in ()),
                       Consumer_Config::_nil ());
       CosNotify_Consumer_Config_var return_notify =
         consumer_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -119,7 +97,7 @@ namespace CIAO
     {
       Direct_Supplier_Config_impl * supplier_config = 0;
       ACE_NEW_RETURN (supplier_config,
-                      Direct_Supplier_Config_impl,
+                      Direct_Supplier_Config_impl (this->root_poa_.in ()),
                       Supplier_Config::_nil ());
       Direct_Supplier_Config_var return_direct =
         supplier_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -131,7 +109,7 @@ namespace CIAO
     {
       RTEvent_Supplier_Config_impl * supplier_config = 0;
       ACE_NEW_RETURN (supplier_config,
-                      RTEvent_Supplier_Config_impl,
+                      RTEvent_Supplier_Config_impl (this->root_poa_.in ()),
                       Supplier_Config::_nil ());
       RTEvent_Supplier_Config_var return_rtec =
         supplier_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -143,7 +121,7 @@ namespace CIAO
     {
       CosNotify_Supplier_Config_impl * supplier_config = 0;
       ACE_NEW_RETURN (supplier_config,
-                      CosNotify_Supplier_Config_impl,
+                      CosNotify_Supplier_Config_impl (this->root_poa_.in ()),
                       Supplier_Config::_nil ());
       CosNotify_Supplier_Config_var return_notify =
         supplier_config->_this (ACE_ENV_SINGLE_ARG_PARAMETER);

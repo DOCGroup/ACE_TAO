@@ -1,3 +1,23 @@
+Fri Oct 31 02:00:56 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * ChangeLog_EC
+        * ciao/CIAO_CosNotify.cpp
+        * ciao/CIAO_CosNotify.h 
+        * ciao/CIAO_DirectEvent.cpp
+        * ciao/CIAO_DirectEvent.h 
+        * ciao/CIAO_EventService_Factory_impl.cpp
+        * ciao/CIAO_Events.idl 
+        * ciao/CIAO_RTEvent.cpp
+        * ciao/CIAO_RTEvent.h 
+        * ciao/Container_Base.cpp 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplayE.idl 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h 
+        * tools/Assembly_Deployer/Assembly_Impl.cpp
+
+          Fixed reference counting bugs.
+
 Mon Oct 20 12:21:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/CIAO_CosNotify.cpp:
@@ -17,16 +37,17 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
         * ciao/CIAO_CosNotify.idl 
         * ciao/CIAO_DirectEvent.cpp
 
-//@@ George, could you please add the path to the following files? 	
-        * CIAO_DirectEvent.h
-        * CIAO_DirectEvent.idl 
-        * CIAO_EventServiceBase.h
-        * CIAO_EventService_Factory.cpp 
-        * CIAO_EventService_Factory.h
-        * CIAO_EventService_Factory_impl.cpp 
-        * CIAO_EventService_Factory_impl.h
-        * CIAO_Events_Export.h 
-        * CIAO_RTEvent.cpp CIAO_RTEvent.h CIAO_RTEvent.idl
+        * ciao/CIAO_DirectEvent.h
+        * ciao/CIAO_DirectEvent.idl 
+        * ciao/CIAO_EventServiceBase.h
+        * ciao/CIAO_EventService_Factory.cpp 
+        * ciao/CIAO_EventService_Factory.h
+        * ciao/CIAO_EventService_Factory_impl.cpp 
+        * ciao/CIAO_EventService_Factory_impl.h
+        * ciao/CIAO_Events_Export.h 
+        * ciao/CIAO_RTEvent.cpp
+        * ciao/CIAO_RTEvent.h
+        * ciao/CIAO_RTEvent.idl
 
           Added event service factory to dynamically create event service
           objects, provided via ACE dynamic service. Changed UUID to string
@@ -34,18 +55,19 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
           into the event service objects.
 
         Modified files:
-        * CCM_Component.idl
-        * CCM_Core.mpc
-        * CCM_Deployment.idl 
-        * CIAO_Events.idl
-        * ComponentInstallation_Impl.h 
-        * ComponentServer_Impl.h
-        * Container_Base.cpp
-        * Container_Base.h 
-        * Container_Base.inl
-        * Container_Impl.h
-        * Container_Impl.inl 
-        * Cookies.h
+
+        * ciao/CCM_Component.idl
+        * ciao/CCM_Core.mpc
+        * ciao/CCM_Deployment.idl 
+        * ciao/CIAO_Events.idl
+        * ciao/ComponentInstallation_Impl.h 
+        * ciao/ComponentServer_Impl.h
+        * ciao/Container_Base.cpp
+        * ciao/Container_Base.h 
+        * ciao/Container_Base.inl
+        * ciao/Container_Impl.h
+        * ciao/Container_Impl.inl 
+        * ciao/Cookies.h
 
           Changed container to dynamically link event service
           libraries. Added new CIAO_Events project. Added method to
@@ -53,30 +75,30 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
           events interface. Removed map of EventServiceInfo structs
           from CIAO::Container. Added a UUID attribute to CCM_Object.
 
-        * Assembly_Deployer/Assembly_Impl.cpp 
-        * Assembly_Deployer/Assembly_Impl.h 
-        * Assembly_Deployer/Assembly_Visitors.cpp 
-        * Assembly_Deployer/Assembly_Visitors.h 
-        * XML_Helpers/Assembly_Handlers.cpp
-        * XML_Helpers/Assembly_Spec.h 
-        * XML_Helpers/Assembly_Spec.inl
+        * tools/Assembly_Deployer/Assembly_Impl.cpp 
+        * tools/Assembly_Deployer/Assembly_Impl.h 
+        * tools/Assembly_Deployer/Assembly_Visitors.cpp 
+        * tools/Assembly_Deployer/Assembly_Visitors.h 
+        * tools/XML_Helpers/Assembly_Handlers.cpp
+        * tools/XML_Helpers/Assembly_Spec.h 
+        * tools/XML_Helpers/Assembly_Spec.inl
 
           Moved glue code that establishes events connections into the
           Deployer. Added a map of container references to
           CIAO::Assembly_Context. 
 
-        * handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl 
-        * handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
-        * handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h 
-        * handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl 
-        * handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp 
-        * handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h 
-        * handcrafted/BasicSP_EC/BMDisplay/BMDisplayE.idl 
-        * handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp 
-        * handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h 
-        * handcrafted/BasicSP_EC/EC/ECE.idl 
-        * handcrafted/BasicSP_EC/EC/EC_svnt.cpp 
-        * handcrafted/BasicSP_EC/EC/EC_svnt.h 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplayE.idl 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay_svnt.h 
+        * examples/handcrafted/BasicSP_EC/EC/ECE.idl 
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp 
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h 
 
           Added a UUID attribute to CCM_Object. Moved glue code that
           establishes events connections into the Deployer. Changed
@@ -84,8 +106,9 @@ Sat Oct 18 14:19:56 2003  George Edwards <g.edwards@vanderbilt.edu>
           appended. 
 
         Removed files:
-        * CIAO_Events.cpp
-        * CIAO_Events.h
+
+        * ciao/CIAO_Events.cpp
+        * ciao/CIAO_Events.h
 
           Broke these files apart into one file per service.
 

@@ -41,7 +41,7 @@ namespace CIAO
                     PortableServer::POA_ptr poa,
                     RtecEventChannelAdmin::EventChannel_ptr ec);
 
-    ~RTEventService ();
+    virtual ~RTEventService (void);
 
     virtual void connect_event_supplier (
         CIAO::Supplier_Config_ptr supplier_config
@@ -137,10 +137,8 @@ namespace CIAO
 
   public:
 
-    RTEventServiceSupplier_impl (void);
-
     RTEventServiceSupplier_impl (
-      CORBA::ORB_ptr orb);
+      PortableServer::POA_ptr poa);
 
     virtual void disconnect_push_supplier (
         ACE_ENV_SINGLE_ARG_DECL)
@@ -149,7 +147,7 @@ namespace CIAO
 
   private:
 
-    CORBA::ORB_var orb_;
+    PortableServer::POA_var poa_;
 
   };
 
@@ -165,10 +163,8 @@ namespace CIAO
 
   public:
 
-    RTEventServiceConsumer_impl (void);
-
     RTEventServiceConsumer_impl (
-      CORBA::ORB_ptr orb,
+      PortableServer::POA_ptr poa,
       Components::EventConsumerBase_ptr consumer);
 
     virtual void push (
@@ -181,7 +177,7 @@ namespace CIAO
 
   private:
 
-    CORBA::ORB_var orb_;
+    PortableServer::POA_var poa_;
 
     Components::EventConsumerBase_var event_consumer_;
 
@@ -196,14 +192,15 @@ namespace CIAO
    * specified as the event service type.
    */
   class RTEvent_Consumer_Config_impl :
-    public virtual POA_CIAO::RTEvent_Consumer_Config
+    public virtual POA_CIAO::RTEvent_Consumer_Config,
+    public virtual PortableServer::RefCountServantBase
   {
 
   public:
 
-    RTEvent_Consumer_Config_impl ();
+    RTEvent_Consumer_Config_impl (PortableServer::POA_ptr poa);
 
-    ~RTEvent_Consumer_Config_impl ();
+    virtual ~RTEvent_Consumer_Config_impl (void);
 
     virtual void start_conjunction_group (CORBA::Long size ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -238,6 +235,9 @@ namespace CIAO
     virtual RtecEventChannelAdmin::ConsumerQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     ACE_CString consumer_id_;
@@ -250,6 +250,8 @@ namespace CIAO
 
     ACE_ConsumerQOS_Factory qos_;
 
+    PortableServer::POA_var poa_;
+
   };
 
   /**
@@ -261,14 +263,15 @@ namespace CIAO
    * specified as the event service type.
    */
   class RTEvent_Supplier_Config_impl :
-    public virtual POA_CIAO::RTEvent_Supplier_Config
+    public virtual POA_CIAO::RTEvent_Supplier_Config,
+    public virtual PortableServer::RefCountServantBase
   {
 
   public:
 
-    RTEvent_Supplier_Config_impl ();
+    RTEvent_Supplier_Config_impl (PortableServer::POA_ptr poa);
 
-    ~RTEvent_Supplier_Config_impl ();
+    virtual ~RTEvent_Supplier_Config_impl (void);
 
     void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -282,6 +285,9 @@ namespace CIAO
     RtecEventChannelAdmin::SupplierQOS * rt_event_qos (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     ACE_CString supplier_id_;
@@ -289,6 +295,8 @@ namespace CIAO
     EventServiceType service_type_;
 
     ACE_SupplierQOS_Factory qos_;
+
+    PortableServer::POA_var poa_;
 
   };
 

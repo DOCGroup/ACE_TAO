@@ -210,7 +210,7 @@ namespace CIAO
 
   public:
 
-    CosNotify_Consumer_Config_impl ();
+    CosNotify_Consumer_Config_impl (PortableServer::POA_ptr poa);
 
     virtual void consumer_id (const char * consumer_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -233,10 +233,13 @@ namespace CIAO
     virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CosNotifyFilter::Filter_ptr notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CosNotifyFilter::Filter_ptr notify_filter (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CosNotification::QoSProperties * notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CosNotification::QoSProperties * notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -252,6 +255,8 @@ namespace CIAO
     CosNotifyFilter::Filter_var filter_;
 
     CosNotification::QoSProperties_var qos_;
+
+    PortableServer::POA_var poa_;
 
   };
 
@@ -269,21 +274,24 @@ namespace CIAO
 
   public:
 
-    CosNotify_Supplier_Config_impl ();
+    CosNotify_Supplier_Config_impl (PortableServer::POA_ptr poa);
 
-    void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
+    virtual void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    char * supplier_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * supplier_id (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
+    virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CosNotifyFilter::Filter_ptr notify_filter (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CosNotifyFilter::Filter_ptr notify_filter (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CosNotification::QoSProperties * notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+    virtual CosNotification::QoSProperties * notify_qos (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -295,6 +303,8 @@ namespace CIAO
     CosNotifyFilter::Filter_var filter_;
 
     CosNotification::QoSProperties_var qos_;
+
+    PortableServer::POA_var poa_;
 
   };
 

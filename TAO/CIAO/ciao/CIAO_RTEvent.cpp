@@ -58,7 +58,7 @@ namespace CIAO
     // Create and register supplier servant
     RTEventServiceSupplier_impl * supplier_servant = 0;
     ACE_NEW (supplier_servant,
-             RTEventServiceSupplier_impl (orb_.in ()));
+             RTEventServiceSupplier_impl (root_poa_.in ()));
     RtecEventComm::PushSupplier_var push_supplier =
       supplier_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -98,7 +98,7 @@ namespace CIAO
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (CORBA::is_nil (consumer.in ()))
+    if (CORBA::is_nil (consumer))
       ACE_DEBUG ((LM_DEBUG, "nil event consumer\n"));
 
     RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -113,8 +113,8 @@ namespace CIAO
     RTEventServiceConsumer_impl * consumer_servant = 0;
     ACE_NEW (consumer_servant,
              RTEventServiceConsumer_impl (
-             orb_.in (),
-             Components::EventConsumerBase::_duplicate (consumer.in ())));
+               root_poa_.in (),
+               consumer.in ()));
     RtecEventComm::PushConsumer_var push_consumer =
       consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
@@ -207,40 +207,24 @@ namespace CIAO
 
   }
 
-  RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (void)
-  {
-  }
-
   RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (
-    CORBA::ORB_ptr orb) :
-  orb_ (CORBA::ORB::_duplicate (orb))
+    PortableServer::POA_ptr poa) :
+  poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
   void
   RTEventServiceSupplier_impl::disconnect_push_supplier (void)
   {
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-    delete this;
-  }
-
-  RTEventServiceConsumer_impl::RTEventServiceConsumer_impl (void)
-  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
   RTEventServiceConsumer_impl::RTEventServiceConsumer_impl (
-    CORBA::ORB_ptr orb,
+    PortableServer::POA_ptr poa,
     Components::EventConsumerBase_ptr consumer) :
-  orb_ (CORBA::ORB::_duplicate (orb)),
+  poa_ (PortableServer::POA::_duplicate (poa)),
   event_consumer_ (Components::EventConsumerBase::_duplicate (consumer))
   {
   }
@@ -261,6 +245,7 @@ namespace CIAO
             ACE_CHECK;
           }
       }
+
   }
 
   void
@@ -269,21 +254,14 @@ namespace CIAO
   {
     ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventServiceConsumer_impl::disconnect_push_consumer\n"));
 
-    CORBA::Object_var poa_object =
-      orb_->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::POA_var root_poa =
-      PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    if (CORBA::is_nil (root_poa.in ()))
-      ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
-    PortableServer::ObjectId_var oid = root_poa->servant_to_id (this);
-    root_poa->deactivate_object (oid);
-    delete this;
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
-  RTEvent_Consumer_Config_impl::RTEvent_Consumer_Config_impl (void) :
-    service_type_ (RTEC)
+  RTEvent_Consumer_Config_impl::RTEvent_Consumer_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (RTEC),
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -337,7 +315,7 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::consumer_id\n"));
+    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::set_consumer_id\n"));
 
     this->consumer_id_ = consumer_id;
   }
@@ -350,7 +328,7 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::supplier_id\n"));
+    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::set_supplier_id\n"));
 
     this->supplier_id_ = supplier_id;
 
@@ -371,7 +349,7 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    this->consumer_ = consumer;
+    this->consumer_ = Components::EventConsumerBase::_duplicate (consumer);
   }
 
   CONNECTION_ID
@@ -389,6 +367,9 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
+
+    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_supplier_id\n"));
+
     return CORBA::string_dup (this->supplier_id_.c_str ());
   }
 
@@ -407,6 +388,8 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
+    ACE_DEBUG ((LM_DEBUG, "RTEvent_Consumer_Config_impl::get_consumer\n"));
+
     return Components::EventConsumerBase::_duplicate (this->consumer_.in ());
   }
 
@@ -425,8 +408,24 @@ namespace CIAO
 
   }
 
-  RTEvent_Supplier_Config_impl::RTEvent_Supplier_Config_impl (void) :
-    service_type_ (RTEC)
+  void
+  RTEvent_Consumer_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+
+    ACE_DEBUG
+      ((LM_DEBUG, "RTEvent_Consumer_Config_impl::destroy\n"));
+
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
+  }
+
+  RTEvent_Supplier_Config_impl::RTEvent_Supplier_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (RTEC),
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -486,6 +485,17 @@ namespace CIAO
     ACE_NEW_RETURN (supplier_qos, RtecEventChannelAdmin::SupplierQOS (this->qos_.get_SupplierQOS ()), 0);
     return supplier_qos;
 
+  }
+
+  void
+  RTEvent_Supplier_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
 }

@@ -87,7 +87,7 @@ namespace CIAO
      * List of consumers.
      */
     /// @@ George, this is cool! Do you want to use a _var or _ptr?
-    ACE_Array<Components::EventConsumerBase_ptr> consumer_array_;
+    ACE_Array<Components::EventConsumerBase_var> consumer_array_;
 
   };
 
@@ -101,12 +101,15 @@ namespace CIAO
    * is specified as the event service type.
    */
   class Direct_Consumer_Config_impl :
-    public virtual POA_CIAO::Direct_Consumer_Config
+    public virtual POA_CIAO::Direct_Consumer_Config,
+    public virtual PortableServer::RefCountServantBase
   {
 
   public:
 
-    Direct_Consumer_Config_impl ();
+    Direct_Consumer_Config_impl (PortableServer::POA_ptr poa);
+
+    virtual ~Direct_Consumer_Config_impl (void);
 
     virtual void consumer_id (const char * consumer_id
                               ACE_ENV_ARG_DECL)
@@ -132,6 +135,9 @@ namespace CIAO
     virtual EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     ACE_CString consumer_id_;
@@ -141,6 +147,8 @@ namespace CIAO
     Components::EventConsumerBase_var consumer_;
 
     EventServiceType service_type_;
+
+    PortableServer::POA_var poa_;
 
   };
 
@@ -153,12 +161,15 @@ namespace CIAO
    * is specified as the event service type.
    */
   class Direct_Supplier_Config_impl :
-    public virtual POA_CIAO::Direct_Supplier_Config
+    public virtual POA_CIAO::Direct_Supplier_Config,
+    public virtual PortableServer::RefCountServantBase
   {
 
   public:
 
-    Direct_Supplier_Config_impl ();
+    Direct_Supplier_Config_impl (PortableServer::POA_ptr poa);
+
+    virtual ~Direct_Supplier_Config_impl (void);
 
     void supplier_id (const char * supplier_id ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -169,11 +180,16 @@ namespace CIAO
     EventServiceType service_type (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
   private:
 
     ACE_CString supplier_id_;
 
     EventServiceType service_type_;
+
+    PortableServer::POA_var poa_;
 
   };
 

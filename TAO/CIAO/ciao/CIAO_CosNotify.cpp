@@ -337,8 +337,9 @@ namespace CIAO
   {
   }
 
-  CosNotify_Consumer_Config_impl::CosNotify_Consumer_Config_impl () :
-    service_type_ (NOTIFY)
+  CosNotify_Consumer_Config_impl::CosNotify_Consumer_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (NOTIFY),
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -408,8 +409,20 @@ namespace CIAO
     return this->qos_._retn ();
   }
 
-  CosNotify_Supplier_Config_impl::CosNotify_Supplier_Config_impl () :
-    service_type_ (NOTIFY)
+  void
+  CosNotify_Consumer_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
+  }
+
+  CosNotify_Supplier_Config_impl::CosNotify_Supplier_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (NOTIFY),
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -446,6 +459,17 @@ namespace CIAO
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->qos_._retn ();
+  }
+
+  void
+  CosNotify_Supplier_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
 }
