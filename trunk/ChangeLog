@@ -1,3 +1,10 @@
+Tue Mar  8 17:01:34 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Correct the variable checked for whether or not to
+	  do the SSL/TLS check from ace_user_with_ssl to ace_user_enable_ssl.
+	  Matches the change from --with-ssl to --enable-ssl. See also:
+	  Sat Jan 29 00:39:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
 Tue Mar  8 15:26:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_Acceptor.cpp (handle_accept): Don't restart an accept

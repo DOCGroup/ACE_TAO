@@ -403,7 +403,7 @@ dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
 
 dnl Check for TLS/SSL support.
-if test "$ace_user_with_ssl" = yes; then
+if test "$ace_user_enable_ssl" = yes; then
   ACE_CHECK_TLS
 fi
 
