@@ -89,7 +89,7 @@ namespace Config_Handler
     return;
   }
 
-  void SIP_Handler::process_name (const XMLCh* name)
+  void APM_Handler::process_name (const XMLCh* name)
   {
     if (name)
       {
@@ -98,7 +98,7 @@ namespace Config_Handler
       }
   }
 
-  void SIP_Handler::process_externalName (const XMLCh* name)
+  void APM_Handler::process_externalName (const XMLCh* name)
   {
     if (name)
       {
