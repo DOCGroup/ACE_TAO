@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NodeDaemon_Impl.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
