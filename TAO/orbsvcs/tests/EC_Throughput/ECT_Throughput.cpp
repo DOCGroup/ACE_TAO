@@ -471,31 +471,29 @@ ECT_Throughput::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
 void
 ECT_Throughput::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats consumers;
-  ECT_Driver::Latency_Stats latency;
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+
+  ACE_Throughput_Stats consumers;
   for (int j = 0; j < this->n_consumers_; ++j)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", j);
 
-      this->consumers_[j]->dump_results (buf);
+      this->consumers_[j]->dump_results (buf, gsf);
       this->consumers_[j]->accumulate (consumers);
-      this->consumers_[j]->accumulate (latency);
     }
-  consumers.dump_results ("ECT_Consumer", "throughput");
-  latency.dump_results ("ECT_Consumer", "latency");
+  consumers.dump_results ("ECT_Consumer/totals", gsf);
 
-  ECT_Driver::Throughput_Stats suppliers;
+  ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
-      this->suppliers_[i]->dump_results (buf);
+      this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
     }
-  suppliers.dump_results ("ECT_Supplier", "accumulated");
-  this->dump_latency_results ("Latency");
+  suppliers.dump_results ("ECT_Supplier/totals", gsf);
 }
 
 int

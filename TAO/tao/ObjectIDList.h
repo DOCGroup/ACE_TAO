@@ -125,8 +125,8 @@ private:
 
 #ifndef __ACE_INLINE__
 
-CORBA::Boolean  operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
-CORBA::Boolean  operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const CORBA_ORB_ObjectIdList &); //
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, CORBA_ORB_ObjectIdList &);
 
 #endif /* __ACE_INLINE__ */
 
