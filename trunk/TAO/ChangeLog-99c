@@ -1,3 +1,9 @@
+Sat Nov 13 19:07:53 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init):
+	  Added functionality to close file if one is opened for Log_Msg
+	  ACE_DEBUG redirection.
+
 Sat Nov 13 18:25:52 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/Exception.h (ostream& operator<<)
