@@ -723,6 +723,9 @@ namespace Deployment
   {
   }
 
+  void DnC_Dump::dump(const Deployment::DeploymentPlan &)
+  {
+  }
 }
 
 #endif /* DNC_DUMP_C */
