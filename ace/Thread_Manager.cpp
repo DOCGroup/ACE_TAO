@@ -2225,11 +2225,6 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
   template class ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>;
   template class ACE_Free_List<ACE_Thread_Descriptor>;
   template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>;
-# if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
-    // These don't necessarily belong here, but it's a convenient place for them.
-    template class ACE_TSS<ACE_Dynamic>;
-    template class ACE_TSS<ACE_Thread_Exit>;
-# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_THREAD_MANAGER_LACKS_STATICS)
   #pragma instantiate ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>
@@ -2247,9 +2242,4 @@ ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
   #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Thread_Descriptor*>
   #pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
   #pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
-# if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
-    // These don't necessarily belong here, but it's a convenient place for them.
-    #pragma instantiate ACE_TSS<ACE_Dynamic>
-    #pragma instantiate ACE_TSS<ACE_Thread_Exit>
-# endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

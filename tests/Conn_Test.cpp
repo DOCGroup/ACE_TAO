@@ -17,8 +17,8 @@
 //     cache connections on the client.
 //
 // = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, 
-//    Chris Cleeland <cleeland@cs.wustl.edu>, 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
+//    Chris Cleeland <cleeland@cs.wustl.edu>,
 //    and Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
@@ -32,6 +32,7 @@
 #include "ace/Strategies.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
+#include "ace/Process_Mutex.h"
 #include "Conn_Test.h"
 
 ACE_RCSID(tests, Conn_Test, "$Id$")

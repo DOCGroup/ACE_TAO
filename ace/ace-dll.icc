@@ -241,6 +241,10 @@ option
                                               'SV_Semaphore_Simple.h',
                                               'SV_Shared_Memory.h',
                                               'Synch.h',
+                                              'Process_Semaphore.h',
+                                              'Process_Mutex.h',
+                                              'RW_Process_Mutex.h',
+                                              'File_Lock.h',
                                               'Synch_Options.h',
                                               'Synch_T.h',
                                               'System_Time.h',
@@ -419,6 +423,10 @@ option
                  source type(cpp) "Svc_Conf_l.cpp"
                  source type(cpp) "Svc_Conf_y.cpp"
                  source type(cpp) "Synch.cpp"
+                 source type(cpp) "Process_Semaphore.cpp"
+                 source type(cpp) "Process_Mutex.cpp"
+                 source type(cpp) "RW_Process_Mutex.cpp"
+                 source type(cpp) "File_Lock.cpp"
                  source type(cpp) "Synch_Options.cpp"
                  source type(cpp) "System_Time.cpp"
                  source type(cpp) "Task.cpp"

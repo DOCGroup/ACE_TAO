@@ -60,6 +60,10 @@ THREADS_FILES = \
   Process_Manager \
   Synch \
   Synch_Options \
+  Process_Semaphore \
+  Process_Mutex \
+  RW_Process_Mutex \
+  File_Lock \
   Thread \
   Thread_Manager \
   Thread_Adapter \
@@ -281,6 +285,10 @@ endif # GHS
 ifeq ($(ssl),1)
   DIRS += SSL
 endif # ssl
+
+ifeq ($(rmcast),1)
+  DIRS += RMCast
+endif # rmcast
 
 ####
 #### Build customization.

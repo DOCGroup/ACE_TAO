@@ -225,7 +225,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (const ACE_WString &nam
 {
   ACE_TRACE ("ACE_Local_Name_Space::unbind");
 
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
   if (this->name_space_map_->unbind (ns_name,
@@ -247,7 +247,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (const ACE_WString &name,
                                                       const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::bind");
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   return this->shared_bind (name, value, type, 0);
 }
@@ -258,7 +258,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (const ACE_WString &name,
                                                         const char *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   return this->shared_bind (name, value, type, 1);
 }
@@ -289,7 +289,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (const ACE_WString &na
                                                            char *&type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::resolve");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   ACE_NS_String ns_name (name);
   ACE_NS_Internal ns_internal;
@@ -473,7 +473,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   // conditions...  We will use the double check here
   else
     {
-      ACE_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+      ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
       // This is the easy case since if we find the Name Server Map
       // Manager we know it's already initialized.
@@ -512,7 +512,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (ACE_PWSTRING_SET &
                                                               const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -545,7 +545,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (ACE_PWSTRING_SET 
                                                            const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -578,7 +578,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (ACE_PWSTRING_SET &
                                                           const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -648,7 +648,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (ACE_BINDIN
                                                                       const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -676,7 +676,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (ACE_BINDIN
                                                                   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
@@ -703,7 +703,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (ACE_BINDING
                                                                  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries");
-  ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;

@@ -6,6 +6,7 @@
 #include "ace/Local_Name_Space_T.h"
 #include "ace/Registry_Name_Space.h"
 #include "ace/Memory_Pool.h"
+#include "ace/RW_Process_Mutex.h"
 
 ACE_RCSID(ace, Naming_Context, "$Id$")
 
@@ -417,10 +418,10 @@ ACE_Name_Options::ACE_Name_Options (void)
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
   this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS::malloc (pathsize));
-  
-  if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1) 
+
+  if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Temporary path too long, ")
                   ACE_TEXT ("defaulting to current directory\n")));
       ACE_OS::strcat (this->namespace_dir_, ACE_TEXT ("."));
@@ -680,4 +681,3 @@ template class ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_M
 #pragma instantiate ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >
 #pragma instantiate ACE_Name_Space_Map <ACE_Allocator_Adapter <ACE_Malloc <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> > >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

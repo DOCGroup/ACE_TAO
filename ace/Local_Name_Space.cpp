@@ -6,6 +6,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
+#include "ace/RW_Process_Mutex.h"
 
 ACE_RCSID(ace, Local_Name_Space, "$Id$")
 
@@ -71,17 +72,17 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
       size_t pat_len = s.len_ / sizeof (ACE_USHORT16) - 1;
 
       for (size_t i = 0; i <= len; i++)
-	{
-	  size_t j;
+        {
+          size_t j;
 
-	  for (j = 0; j < pat_len; j++)
-	    if (this->rep_[i + j] != s.rep_[j])
-	      break;
+          for (j = 0; j < pat_len; j++)
+            if (this->rep_[i + j] != s.rep_[j])
+              break;
 
-	  if (j == pat_len)
-	    // Found a match!  Return the index.
-	    return i;
-	}
+          if (j == pat_len)
+            // Found a match!  Return the index.
+            return i;
+        }
 
       return -1;
     }
@@ -93,7 +94,7 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
     && ACE_OS::memcmp ((void *) this->rep_,
-		       (void *) s.rep_, this->len_) == 0;
+                       (void *) s.rep_, this->len_) == 0;
 }
 
 int
@@ -104,8 +105,8 @@ ACE_NS_String::operator != (const ACE_NS_String &s) const
 }
 
 ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
-			      const ACE_USHORT16 *src,
-			      size_t bytes)
+                              const ACE_USHORT16 *src,
+                              size_t bytes)
   : len_ (bytes),
     rep_ (dst)
 {
@@ -116,9 +117,9 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
 size_t
 ACE_NS_String::hash (void) const
 {
-  return ACE::hash_pjw 
+  return ACE::hash_pjw
     (ACE_reinterpret_cast (char *, ACE_const_cast (ACE_USHORT16 *,
-                                                   this->rep_)), 
+                                                   this->rep_)),
      this->len_);
 }
 
