@@ -1,3 +1,12 @@
+Mon Sep 13 14:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/RB_Tree.h (class ACE_RB_Tree): 
+	* ace/RB_Tree.cpp:
+
+	  Added a special constructor useful for providing a valid vtable
+	  and allocator if the tree is reconstructed from shared
+	  memory. Thanks to Lothar Werzinger for the patches.
+
 Mon Sep 13 12:49:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-4.x.h: Alter the value of ACE_SIZEOF_WCHAR based
