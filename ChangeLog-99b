@@ -1,7 +1,14 @@
+Fri Oct 29 07:08:16 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU,
+          include/makeinclude/wrapper_macros.GNU
+          include/makeinclude/platform_vxworks5.x_g++.GNU:
+          fixed typo:  COMSPEC instead of COMPSPEC.
+
 Thu Oct 28 11:15:43 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Added a new guideline on avoiding
-	  multicharacter format specifiers in ACE_DEBUG/ACE_ERROR.
+        * docs/ACE-guidelines.html: Added a new guideline on avoiding
+          multicharacter format specifiers in ACE_DEBUG/ACE_ERROR.
 
 Thu Oct 28 10:54:42 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
 
