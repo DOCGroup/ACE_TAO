@@ -1,4 +1,7 @@
-Mon Jan 11 00:53:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 11 02:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_THROW_ENV_RETURN): Forgot to removed
+	  duplicate definition.
 
 	* tao/try_macros.h (TAO_CATCHALL): For compilers without c++
 	  exceptions, simply make it identical to TAO_CATCHANY.  Thanks,
