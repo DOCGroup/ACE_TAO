@@ -11,21 +11,11 @@
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
   // egcs or g++ >= 2.8.0
 
-# if __GNUC__ == 2 && __GNUC_MINOR__ >= 90
-    // egcs or really modern g++.  Do these work with g++ 2.8.0?
-#   define ACE_HAS_ANSI_CASTS
-#   define ACE_HAS_CPLUSPLUS_HEADERS
-#   define ACE_HAS_STDCPP_STL_INCLUDES
-#   define ACE_HAS_TEMPLATE_TYPEDEFS
-#   define ACE_HAS_TYPENAME_KEYWORD
-# else
-    // Let's find out
-#   define ACE_HAS_ANSI_CASTS
-#   define ACE_HAS_CPLUSPLUS_HEADERS
-#   define ACE_HAS_STDCPP_STL_INCLUDES
-#   define ACE_HAS_TEMPLATE_TYPEDEFS
-#   define ACE_HAS_TYPENAME_KEYWORD
-# endif /* __GNUC__ >= 2.90 */
+# define ACE_HAS_ANSI_CASTS
+# define ACE_HAS_CPLUSPLUS_HEADERS
+# define ACE_HAS_STDCPP_STL_INCLUDES
+# define ACE_HAS_TEMPLATE_TYPEDEFS
+# define ACE_HAS_TYPENAME_KEYWORD
 
 # if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
 #   define ACE_HAS_USING_KEYWORD
