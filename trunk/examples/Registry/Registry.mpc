@@ -1,11 +1,37 @@
 project(*iterator) : aceexe {
   exename = iterator
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo iterator will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     test_registry_iterator.cpp
   }
 }
 project(*update) : aceexe {
   exename = update
+
+  verbatim(gnuace, top) {
+    ifneq ($(MAKE),)
+    include $(ACE_ROOT)/include/makeinclude/macros.GNU
+    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
+    $(TARGETS_NESTED):
+    "	@echo update will only build on Windows"
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif
+  }
+
   Source_Files {
     test_registry_update.cpp
   }
