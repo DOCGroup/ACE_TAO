@@ -511,12 +511,41 @@ class POA_Foo {
 	types.
       <P></LI>
 
-      <LI>Add a -ORBlogfile flag so we can set the ACE_ERROR and
-	ACE_DEBUG output destination in all TAO applications
-      <P></LI>
+      <LI><P><B>ORB:</B>
+	  Add a -ORBlogfile flag so we can set the ACE_ERROR and
+	  ACE_DEBUG output destination in all TAO applications
+	</P>
+      </LI>
       
-      <LI>Support several calls to ORB_init() on the same thread.
-      <P></LI>
+      <LI><P><B>ORB:</B>
+	  Support multiple calls to ORB_init().
+	  This requires several changes:
+	<UL>
+	  <LI>Object references must keep an explicit reference to the
+	    ORB that created them. In turn this requires that CDR
+	    streams carry the ORB pointer for object reference
+	    decoding.
+	  </LI>
+	  <LI>We must keep a table of ORB pointers based on the
+	    <CODE>-ORBid</CODE> option.
+	  </LI>
+	  <LI>The hint on the cached connector has to be revised if
+	    support for zero locks in the cached connector is going to 
+	    work.
+	  </LI>
+	</UL>
+        </P>
+      </LI>
+
+      <LI><P><B>ORB:</B>
+	  Support multiple endpoints in the ORB.
+	  Some interesting concurrency models (such as
+	  thread-per-endpoint or thread-pool-per-endpoint) require
+	  that we give an explicit name to each endpoint, and use
+	  policies to match the thread with the endpoints it will
+	  serve (and share).
+        </P>
+      </LI>
 
       <LI><B>EC:</B> Call ORB_init() in the EC threads?
 	[The dispatching threads for Boeing]
@@ -642,7 +671,8 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>Is the client side in TAO handling a
+      <LI><P><B>ORB:</B>
+	  Is the client side in TAO handling a
 	  <CODE>CloseConnection</CODE> GIOP message properly?
 	</P>
       </LI>
@@ -673,7 +703,8 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>The implementation for the leader-follower
+      <LI><P><B>ORB:</B>
+	  The implementation for the leader-follower
 	  model on the client side has bug:
 	  it will add the current thread to the follower list every
 	  time it returns from waiting in the condition variable,
@@ -683,7 +714,8 @@ class POA_Foo {
 	</P>
       </LI>
 
-      <LI><P>By default TAO disables Nagle's algorithm, this should be
+      <LI><P><B>ORB:</B>
+	  By default TAO disables Nagle's algorithm, this should be
 	  an optional feature, otherwise TAO will perform poorly over
 	  WANs.
 	  <BR>[STATUS] An alternative: this could be fixed as part of
@@ -774,6 +806,36 @@ class POA_Foo {
 	  CORBAmessaging. The timeouts can control connection and
 	  total request time.
         </P>
+      </LI>
+
+      <LI><P><B>ORB:</B>
+	  Decouple the ORB from interpretive marshaling. This style of 
+	  marshaling will not be required for many applications, and
+	  it increases the footprint significantly (around 10%).
+	  The tasks required are:
+	<UL>
+	  <LI>Write one class per marshaling operation (encode,
+	    decode, skip, etc), instead of one class per type.
+	    This way we can extract out the operations we don't use.
+	  </LI>
+	  <LI>The IDL compiler could generate a
+	    <CODE>_tao_destroy</CODE> method, that would delete an
+	    object through a <CODE>void*</CODE>.
+	    Such an operation will allow us to implement
+	    <CODE>Any</CODE> without the <CODE>deep_free</CODE>
+	    operation.
+	  </LI>
+	  <LI>Optimize <CODE>append</CODE> to stop the recursion once
+	    the source and destination CDR streams have the same
+	    alignment.
+	  </LI>
+	  <LI>It seems like the <CODE>skip</CODE> operation is only
+	    used in the <CODE>Any</CODE> support.
+	    It may be possible to agressively reduce the footprint by
+	    removing both <CODE>skip</CODE> and <CODE>Any</CODE>.
+	  </LI>
+	</UL>
+	</P>
       </LI>
 
     <HR>
