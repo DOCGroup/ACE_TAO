@@ -4005,11 +4005,6 @@ struct sigaction
 #   endif
 # endif /* SIG_DFL */
 
-# if defined (ACE_HAS_PACE) && PACE_LYNXOS
-#   undef SIG_IGN
-#   define SIG_IGN ((pace_sig_pf) 1)
-# endif /* (ACE_HAS_PACE) && PACE_LYNXOS */
-
 # if !defined (SIG_IGN)
 #   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
 #     define SIG_IGN ((void *) 1)     /* ignore signal */
