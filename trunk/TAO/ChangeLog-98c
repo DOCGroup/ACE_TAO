@@ -1,3 +1,8 @@
+Tue Sep 22 18:03:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Simple/chat/Client_i.h: 
+	  Added missing file.
+
 Tue Sep 22 16:59:30 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/ORB.cpp (CORBA_ORB): Changed
