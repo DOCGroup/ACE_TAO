@@ -1,3 +1,11 @@
+Tue Jul 08 17:28:58 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
+
+	  Not sure why handle_close() was trying to remove the handler
+	  from the Reactor.  handle_close() is called as a result of being
+	  removed from the Reactor.  No need to remove again.
+
 Tue Jul 08 15:02:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* examples\Reactor\Misc\pingpong.cpp: 
