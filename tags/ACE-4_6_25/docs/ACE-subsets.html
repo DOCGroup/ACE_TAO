@@ -1,0 +1,705 @@
+<HTML>
+
+<HEAD>
+<TITLE>ACE Subsets</TITLE>
+
+<BODY text = "#000000"
+link="#000fff"
+vlink="#ff0f0f"
+bgcolor="#ffffff">
+
+<HR>
+<H3>Proposal for Splitting ACE into Multiple Libraries</H3>
+
+The following is a draft of our proposal for spliting ACE into
+multiple libraries, each of which will contain a smaller subset of the
+overall ACE functionality.  The primary motivations for subsetting ACE
+are:
+
+<UL>
+<LI> <EM>Principle of parsimony</EM> -- <EM>i.e.</EM>, developers
+    should incur time/space overhead for components they use, rather
+    than for all the components in the ACE framework. <P>
+
+<LI> <EM>Simplify the learning curve</EM> -- <EM>i.e.</EM>, developers
+    only need to learn how to program components that they actually
+    use. <P>
+</UL>
+
+The main design goals of this proposal are as follows: <P>
+
+<OL>
+<LI> Support the original libACE as before.  Thus, for users who
+want to use the existing ACE library as is, there will be 
+no changes, i.e., just link with <CODE>libACE</CODE> as usual. <P>
+
+<LI> Allow ACE (and TAO) programmers to use smaller subsets of the
+entire <CODE>libACE</CODE> library.  These subsets will include the
+following libraries: <P>
+
+<DL>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_OS</CODE> -- This library contains the OS adaptation
+layer and its supporting classes.  All other ACE libraries will depend
+on <CODE>libACE_OS</CODE> and it will depend on <EM>no</EM> other ACE
+libraries. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Utils</CODE> -- This library contains the various ACE
+container classes and other miscellaneous classes, such as Singleton,
+auto_ptr, timers, etc.  This library will depend only on
+<CODE>libACE_OS</CODE>.<P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Logging</CODE> -- This library contains the various ACE
+logging and tracing classes.  This library will depend only on
+<CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Threads</CODE> -- This library contains the ACE
+thread/process management and synchronization classes.  This library
+will depend only on <CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Demux</CODE> -- This library contains the ACE Reactor and
+Proactor classes.  This library will depend on <CODE>libACE_OS</CODE>
+and <CODE>libACE_Thread</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Connection</CODE> -- This library contains the ACE
+Connection components, i.e., Acceptor, Connector, and Svc_Handler.
+This library will depend on <CODE>libACE_OS</CODE>,
+<CODE>libACE_Thread</CODE>, and <CODE>libACE_Demux</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Sockets</CODE> -- This library contains the ACE C++
+wrappers for sockets.  This library will depend on
+<CODE>libACE_OS</CODE>. <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_IPC</CODE> -- This library contains all the ACE C++
+wrappers for the other types of IPC and FILE I/O other than sockets.
+This library will depend on <CODE>libACE_OS</CODE> and
+<CODE>libACE_Sockets</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Svcconf</CODE> -- This library contains the ACE C++
+wrappers for the Service Configurator.  This library will depend on
+<CODE>libACE_OS</CODE>, <CODE>libACE_Demux</CODE>,
+<CODE>libACE_Thread</CODE>, and <CODE>libACE_Sockets</CODE>.  <P>
+
+<DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Streams</CODE> -- This library contains the ACE Streams
+classes.  This library will depend on <CODE>libACE_OS</CODE>,
+<CODE>libACE_Demux</CODE>, and <CODE>libACE_Thread</CODE>.  <P>
+
+<DT> <img alt="o"
+src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
+<CODE>libACE_Memory</CODE> -- This library contains the ACE C++
+wrappers for shared memory and memory-mapped files.  This library will
+depend on <CODE>libACE_OS</CODE>.<P>
+
+</DL>
+</OL>
+
+In addition, we will create <CODE>libACE_TAO</CODE>, which contains
+just the core set of components in ACE that are required to support
+TAO.  This library is targeted at embedded systems developers who want
+to minimize the footprint of ACE+TAO. <P>
+
+Note that the ACE library subsets described above are intended as a
+guideline, <EM>not</EM> a complete specification.  The actual
+partitioning of files in the final ACE library subsets may differ
+somewhat in order to improve footprint and simplify common
+use-cases. <P>
+
+<HR><P>
+<H3>Configuration Management</H3>
+
+Configuration management for the ACE library subsets described above
+will be organized as follows:
+
+<OL>
+<LI> A single source tree with a single "version" for the source
+    tree. <P>
+
+<LI> Releases of libACE and its "subsets" will be atomic, <EM>i.e.</EM>,
+     all or nothing. <P>
+</OL>
+
+<HR><P>
+<H3>Classes in Each ACE Library Subset</H3>
+
+Below, we describe the classes in each ACE library subset. 
+
+<H4>libACE_OS</H4>
+
+This library contains the OS adaptation layer and its supporting
+classes.  The classes in this library should not depend on any other
+ACE library subsets.  All of the other libraries will depend on this
+library.  The following classes are included in this library.
+
+<PRE><CODE>
+ACE.cpp
+ACE.h
+ACE.i
+config.h
+Basic_Types.cpp
+Basic_Types.h
+Basic_Types.i
+OS.cpp
+OS.h
+OS.i
+Version.h
+</PRE></CODE>
+
+<H4>libACE_Utils</H4>
+
+This library contains the following ACE container classes and other
+miscellaneous classes.
+
+<PRE><CODE>
+ARGV.cpp
+ARGV.h
+ARGV.i
+Auto_Ptr.cpp
+Auto_Ptr.h
+Auto_Ptr.i
+Containers.cpp
+Containers.i
+Containers.h
+Date_Time.cpp
+Date_Time.h
+Date_Time.i
+Dynamic.cpp
+Dynamic.h
+Dynamic.i
+Filecache.cpp
+Filecache.h
+Free_List.cpp
+Free_List.i
+Free_List.h
+Get_Opt.cpp
+Get_Opt.h
+Get_Opt.i
+Hash_Map_Manager.cpp
+Hash_Map_Manager.h
+High_Res_Timer.cpp
+High_Res_Timer.h
+High_Res_Timer.i
+Managed_Object.cpp
+Managed_Object.h
+Managed_Object.i
+Map_Manager.cpp
+Map_Manager.h
+Map_Manager.i
+Object_Manager.cpp
+Object_Manager.i
+Object_Manager.h
+Profile_Timer.cpp
+Profile_Timer.h
+Profile_Timer.i
+Registry.cpp
+Registry.h
+Singleton.cpp
+Singleton.h
+Singleton.i
+SString.cpp
+SString.h
+SString.i
+System_Time.cpp
+System_Time.h
+Time_Request_Reply.cpp
+Time_Request_Reply.h
+# Time_Value.cpp
+# Time_Value.h
+# Time_Value.i
+Timer_Hash.cpp
+Timer_Hash.h
+Timer_Hash_T.cpp
+Timer_Hash_T.h
+Timer_Heap.cpp
+Timer_Heap.h
+Timer_Heap.i
+Timer_Heap_T.cpp
+Timer_Heap_T.h
+Timer_Heap_T.i
+Timer_List.cpp
+Timer_List.h
+Timer_List.i
+Timer_List_T.cpp
+Timer_List_T.h
+Timer_List_T.i
+Timer_Queue.cpp
+Timer_Queue.h
+Timer_Queue.i
+Timer_Queue_Adapters.cpp
+Timer_Queue_Adapters.h
+Timer_Queue_Adapters.i
+Timer_Queue_T.cpp
+Timer_Queue_T.h
+Timer_Queue_T.i
+Timer_Wheel.cpp
+Timer_Wheel.h
+Timer_Wheel.i
+Timer_Wheel_T.cpp
+Timer_Wheel_T.h
+Timer_Wheel_T.i
+</PRE></CODE>
+
+<H4>libACE_Logging</H4>
+
+This library contains the various ACE logging and tracing classes. 
+
+<PRE><CODE>
+Dump.cpp
+Dump.h
+Dump_T.cpp
+Dump_T.h
+Log_Msg.cpp
+Log_Msg.h
+Log_Msg.i
+Log_Priority.h
+Log_Record.cpp
+Log_Record.h
+Log_Record.i
+Trace.cpp
+Trace.h
+Trace.i
+</PRE></CODE>
+
+<H4>libACE_Threads</H4>
+
+This library contains the ACE thread/process management and
+synchronization classes. 
+
+<PRE><CODE>
+Activation_Queue.h
+Activation_Queue.cpp
+Atomic_Op.i
+Future.h
+Future.cpp
+Method_Object.h
+Method_Object.cpp
+Process.cpp
+Process.h
+Process.i
+Process_Manager.cpp
+Process_Manager.h
+Process_Manager.i
+Sched_Params.cpp
+Sched_Params.h
+Sched_Params.i
+Synch.cpp
+Synch.h
+Synch.i
+Synch_Options.cpp
+Synch_Options.h
+Synch_Options.i
+Synch_T.cpp
+Synch_T.h
+Synch_T.i
+Thread.cpp
+Thread.h
+Thread.i
+Thread_Manager.cpp
+Thread_Manager.h
+Thread_Manager.i
+Token.cpp
+Token.h
+Token.i
+Token_Collection.cpp
+Token_Collection.h
+Token_Collection.i
+Token_Invariants.cpp
+Token_Invariants.h
+Token_Invariants.i
+Token_Manager.cpp
+Token_Manager.h
+Token_Manager.i
+Token_Request_Reply.cpp
+Token_Request_Reply.h
+Token_Request_Reply.i
+</PRE></CODE>
+
+<H4>libACE_Demux</H4>
+
+This library contains the ACE Reactor and its associated classes,
+including the ACE Connection components. 
+
+<PRE><CODE>
+Event_Handler.cpp
+Event_Handler.h
+Event_Handler.i
+Event_Handler_T.cpp
+Event_Handler_T.h
+Event_Handler_T.i
+Handle_Set.cpp
+Handle_Set.h
+Handle_Set.i
+Priority_Reactor.cpp
+Priority_Reactor.i
+Priority_Reactor.h
+Proactor.h
+Proactor.i
+Proactor.cpp
+Reactor.cpp
+Reactor.h
+Reactor.i
+Reactor_Impl.h
+Select_Reactor.cpp
+Select_Reactor.h
+Select_Reactor.i
+Select_Reactor_Base.cpp
+Select_Reactor_Base.h
+Select_Reactor_Base.i
+Select_Reactor.h
+Select_Reactor.i
+WFMO_Reactor.cpp
+WFMO_Reactor.h
+WFMO_Reactor.i
+XtReactor.cpp
+XtReactor.h
+</PRE></CODE>
+
+<H4>libACE_Connection</H4>
+
+This library contains the ACE Connection components, i.e., Acceptor,
+Connector, and Svc_Handler.
+
+<PRE><CODE>
+Acceptor.cpp
+Acceptor.h
+Acceptor.i
+Asynch_Acceptor.cpp
+Asynch_Acceptor.h
+Asynch_Acceptor.i
+Asynch_IO.cpp
+Asynch_IO.h
+Asynch_IO.i
+Connector.cpp
+Connector.h
+Connector.i
+Dynamic_Service.cpp
+Dynamic_Service.h
+Dynamic_Service.i
+Strategies.cpp
+Strategies.h
+Strategies.i
+Strategies_T.cpp
+Strategies_T.h
+Strategies_T.i
+Svc_Handler.cpp
+Svc_Handler.h
+Svc_Handler.i
+</PRE></CODE>
+
+<H4>libACE_Sockets</H4>
+
+This library contains the ACE C++ wrappers for sockets.  
+
+<PRE><CODE>
+IPC_SAP.cpp
+IPC_SAP.h
+IPC_SAP.i
+LOCK_SOCK_Acceptor.cpp
+LOCK_SOCK_Acceptor.h
+LSOCK.cpp
+LSOCK.h
+LSOCK.i
+LSOCK_Acceptor.cpp
+LSOCK_Acceptor.h
+LSOCK_Acceptor.i
+LSOCK_CODgram.cpp
+LSOCK_CODgram.h
+LSOCK_CODgram.i
+LSOCK_Connector.cpp
+LSOCK_Connector.h
+LSOCK_Connector.i
+LSOCK_Dgram.cpp
+LSOCK_Dgram.h
+LSOCK_Dgram.i
+LSOCK_Stream.cpp
+LSOCK_Stream.h
+LSOCK_Stream.i
+SOCK.cpp
+SOCK.h
+SOCK.i
+SOCK_Acceptor.cpp
+SOCK_Acceptor.h
+SOCK_Acceptor.i
+SOCK_CODgram.cpp
+SOCK_CODgram.h
+SOCK_CODgram.i
+SOCK_Connector.cpp
+SOCK_Connector.h
+SOCK_Connector.i
+SOCK_Dgram.cpp
+SOCK_Dgram.h
+SOCK_Dgram.i
+SOCK_Dgram_Bcast.cpp
+SOCK_Dgram_Bcast.h
+SOCK_Dgram_Bcast.i
+SOCK_Dgram_Mcast.cpp
+SOCK_Dgram_Mcast.h
+SOCK_Dgram_Mcast.i
+SOCK_IO.cpp
+SOCK_IO.h
+SOCK_IO.i
+SOCK_Stream.cpp
+SOCK_Stream.h
+SOCK_Stream.i
+
+</PRE></CODE>
+
+<H4>libACE_IPC</H4>
+
+This library contains all the ACE C++ wrappers for the other types of
+IPC and FILE I/O other than sockets.  This library will depend on the
+<CODE>libACE_Socket</CODE> library.
+
+<PRE><CODE>
+
+Addr.cpp
+Addr.h
+Addr.i
+DEV.cpp
+DEV.h
+DEV.i
+DEV_Addr.cpp
+DEV_Addr.h
+DEV_Addr.i
+DEV_Connector.cpp
+DEV_Connector.h
+DEV_Connector.i
+DEV_IO.cpp
+DEV_IO.h
+DEV_IO.i
+FIFO.cpp
+FIFO.h
+FIFO.i
+FIFO_Recv.cpp
+FIFO_Recv.h
+FIFO_Recv.i
+FIFO_Recv_Msg.cpp
+FIFO_Recv_Msg.h
+FIFO_Recv_Msg.i
+FIFO_Send.cpp
+FIFO_Send.h
+FIFO_Send.i
+FIFO_Send_Msg.cpp
+FIFO_Send_Msg.h
+FIFO_Send_Msg.i
+FILE_Addr.cpp
+FILE_Addr.h
+FILE_Addr.i
+FILE.cpp
+FILE.h
+FILE.i
+FILE_Connector.cpp
+FILE_Connector.h
+FILE_Connector.i
+FILE_IO.cpp
+FILE_IO.h
+FILE_IO.i
+INET_Addr.cpp
+INET_Addr.h
+INET_Addr.i
+IO_SAP.cpp
+IO_SAP.h
+IO_SAP.i
+IOStream.cpp
+IOStream.h
+IOStream_T.cpp
+IOStream_T.h
+IOStream_T.i
+Pipe.cpp
+Pipe.h
+Pipe.i
+Signal.cpp
+Signal.h
+Signal.i
+SPIPE_Addr.cpp
+SPIPE_Addr.h
+SPIPE_Addr.i
+SPIPE.cpp
+SPIPE.h
+SPIPE.i
+SPIPE_Acceptor.cpp
+SPIPE_Acceptor.h
+SPIPE_Acceptor.i
+SPIPE_Connector.cpp
+SPIPE_Connector.h
+SPIPE_Connector.i
+SPIPE_Stream.cpp
+SPIPE_Stream.h
+SPIPE_Stream.i
+SV_Message.cpp
+SV_Message.h
+SV_Message.i
+SV_Message_Queue.cpp
+SV_Message_Queue.h
+SV_Message_Queue.i
+SV_Semaphore_Complex.cpp
+SV_Semaphore_Complex.h
+SV_Semaphore_Complex.i
+SV_Semaphore_Simple.cpp
+SV_Semaphore_Simple.h
+SV_Semaphore_Simple.i
+SV_Shared_Memory.cpp
+SV_Shared_Memory.h
+SV_Shared_Memory.i
+TLI.cpp
+TLI.h
+TLI.i
+TLI_Acceptor.cpp
+TLI_Acceptor.h
+TLI_Acceptor.i
+TLI_Connector.cpp
+TLI_Connector.h
+TLI_Connector.i
+TLI_Stream.cpp
+TLI_Stream.h
+TLI_Stream.i
+TTY_IO.cpp
+TTY_IO.h
+Typed_SV_Message.cpp
+Typed_SV_Message.h
+Typed_SV_Message.i
+Typed_SV_Message_Queue.cpp
+Typed_SV_Message_Queue.h
+Typed_SV_Message_Queue.i
+UNIX_Addr.cpp
+UNIX_Addr.h
+UNIX_Addr.i
+UPIPE_Addr.h
+UPIPE_Acceptor.cpp
+UPIPE_Acceptor.h
+UPIPE_Acceptor.i
+UPIPE_Connector.cpp
+UPIPE_Connector.h
+UPIPE_Connector.i
+UPIPE_Stream.cpp
+UPIPE_Stream.h
+UPIPE_Stream.i
+</PRE></CODE>
+
+<H4>libACE_Svcconf</H4>
+
+This library contains the ACE C++ wrappers for the Service
+Configurator component.
+
+<PRE><CODE>
+Parse_Node.cpp
+Parse_Node.h
+Parse_Node.i
+Service_Config.cpp
+Service_Config.h
+Service_Config.i
+Service_Manager.cpp
+Service_Manager.h
+Service_Manager.i
+Service_Object.cpp
+Service_Object.h
+Service_Object.i
+Service_Repository.cpp
+Service_Repository.h
+Service_Repository.i
+Service_Types.cpp
+Service_Types.i
+Service_Types.h
+Shared_Object.cpp
+Shared_Object.h
+Shared_Object.i
+Svc_Conf.h
+Svc_Conf_l.cpp
+Svc_Conf_y.cpp
+Svc_Conf_Tokens.h
+</PRE></CODE>
+
+<H4>libACE_Streams</H4>
+
+This library contains the ACE Streams classes. 
+
+<PRE><CODE>
+IO_Cntl_Msg.cpp
+IO_Cntl_Msg.h
+IO_Cntl_Msg.i
+Message_Block.cpp
+Message_Block.h
+Message_Block.i
+Message_Queue.cpp
+Message_Queue.h
+Message_Queue.i
+Message_Queue_T.cpp
+Message_Queue_T.h
+Message_Queue_T.i
+Module.cpp
+Module.h
+Module.i
+Multiplexor.cpp
+Multiplexor.h
+Multiplexor.i
+Stream.cpp
+Stream.h
+Stream.i
+Stream_Modules.cpp
+Stream_Modules.h
+Stream_Modules.i
+Task.cpp
+Task.h
+Task.i
+Task_T.cpp
+Task_T.h
+Task_T.i
+</PRE></CODE>
+
+<H4>libACE_Memory</H4>
+
+This library contains the ACE C++ wrappers for shared memory and
+memory-mapped files. 
+
+<PRE><CODE>
+Malloc.cpp
+Malloc.h
+Malloc.i
+Malloc_T.cpp
+Malloc_T.h
+Malloc_T.i
+Mem_Map.cpp
+Mem_Map.h
+Mem_Map.i
+Memory_Pool.cpp
+Memory_Pool.h
+Memory_Pool.i
+Obstack.cpp
+Obstack.h
+Read_Buffer.cpp
+Read_Buffer.h
+Read_Buffer.i
+Shared_Memory.cpp
+Shared_Memory.h
+Shared_Memory_MM.cpp
+Shared_Memory_MM.h
+Shared_Memory_MM.i
+Shared_Memory_SV.cpp
+Shared_Memory_SV.h
+Shared_Memory_SV.i
+</PRE></CODE>
+
+<HR><P>
+Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> home page.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY> 
+</HTML>
