@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H
 #include /**/ "ace/pre.h"

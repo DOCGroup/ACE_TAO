@@ -6,7 +6,7 @@
  *  $Id$
  *
  *  Define the format used to exchange messages between the
- *  ACE_Time_Server and clerks.
+ *  ACE time server and clerks.
  *
  *  @author  Prashant Jain
  */
