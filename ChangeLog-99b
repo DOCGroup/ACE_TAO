@@ -1,3 +1,19 @@
+Sun Jan 17 15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SString.cpp (operator<<): The operator<< used to print out
+	  ACE_WString caused an infinite loop on platform without UNICODE
+	  defined because we didn't convert the wide string on these
+	  platform.  However, since an ACE_WString always contains a wide
+	  string, the conversion from wide string to char string should
+	  always be done here.  Thanks to Scott Snyder
+	  <snyder@d0sgif.fnal.gov> for noticing this bug.
+
+	  (operator<<): Changed the ACE_SString and ACE_CString version to
+	  check against the case when the internal <rep_> contains 0.
+	  The ACE_CString version was printing out the string one char a
+	  time.  Can't see any reason why this is done like this.  Changed
+	  to print out the underlying <rep_> directly.
+
 Sun Jan 17 14:42:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/001/*:
@@ -7,7 +23,7 @@ Sun Jan 17 14:42:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 	* docs/tutorials/005/*:
 	Converted to the new (colorized) format used by T13 and beyond.
 	I will convert the remaining tutorials (6-12) as each is reviewed.
-	
+
 	* docs/tutorials/005/fix.Makefile:
 	* docs/tutorials/006/fix.Makefile:
 	* docs/tutorials/007/fix.Makefile: Replaced by ../fix.Makefile.
@@ -18,13 +34,13 @@ Sun Jan 17 14:42:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 	* docs/tutorials/013/Makefile:
 	* docs/tutorials/014/Makefile:
 	* docs/tutorials/016/Makefile:
-	* docs/tutorials/017/Makefile:  
+	* docs/tutorials/017/Makefile:
 	These all referenced ../007/fix.Makefile.  They now reference
 	../fix.Makefile instead.
-	
+
 Sun Jan 17 13:50:16 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/002/handler.h: 
+	* docs/tutorials/002/handler.h:
 	* docs/tutorials/002/handler.h:
 	* docs/tutorials/002/page03.html:
 	* docs/tutorials/003/client.cpp:
@@ -38,14 +54,14 @@ Sun Jan 17 13:50:16 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	  More improvements from Doug's class (and Ossama).  Each "page2"
 	  includes an abstract by Kirthika.
-	  
+
 	  Reviewers to date:
 	  Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 	  Kirthika Parameswaran <kirthika@cs.wustl.edu>
 	  Balachandran Natarajan <bala@cs.wustl.edu>
 	  Pradeep Gore <pradeep@cs.wustl.edu>
 	  Ossama Othman <othman@cs.wustl.edu>
-	
+
 Sat Jan 16 19:08:12 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/High_Res_Timer.cpp: Added #ifdef so high-res timers work
