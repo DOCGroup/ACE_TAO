@@ -1,3 +1,15 @@
+Wed Jul 24 22:30:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp: 
+	* tao/Asynch_Queued_Message.h (TAO_Asynch_Queued_Message): 
+	* tao/Asynch_Queued_Message.cpp: Added comments and spruced up
+	  line spacings.
+
+	* tao/Transport.cpp: Added a debug statement for logging
+	  purposes. 
+	
+
 Mon Jul 22 17:52:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp: We now use the global pool for

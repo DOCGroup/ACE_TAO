@@ -45,7 +45,6 @@ public:
                              ACE_Allocator *alloc = 0);
 
 
-
   /// Destructor
   virtual ~TAO_Asynch_Queued_Message (void);
 

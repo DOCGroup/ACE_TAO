@@ -163,10 +163,5 @@ TAO_Synch_Queued_Message::destroy (void)
         {
           delete this;
         }
-
-      // Are these needed? Cannot have them in the destructor since
-      // the ACE_DES_FREE macro first calls the decstructor :(.
-      // this->is_heap_created_ = 0;
-      // this->allocator_ = 0;
     }
 }

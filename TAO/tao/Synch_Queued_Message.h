@@ -54,8 +54,6 @@ public:
   TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
                             ACE_Allocator *alloc = 0);
 
-
-
   /// Destructor
   virtual ~TAO_Synch_Queued_Message (void);
 
