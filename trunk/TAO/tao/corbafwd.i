@@ -37,8 +37,8 @@ CORBA::wstring_free (CORBA::WChar *const str)
   delete [] str;
 }
 
-ACE_INLINE CORBA_Environment&
-CORBA::default_environment ()
+ACE_INLINE CORBA::Environment&
+CORBA::default_environment (void)
 {
   return TAO_default_environment ();
 }

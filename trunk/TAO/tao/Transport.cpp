@@ -108,6 +108,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , current_deadline_ (ACE_Time_Value::zero)
   , flush_timer_id_ (-1)
   , transport_timer_ (this)
+  , handler_lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , id_ ((long) this)
   , purging_order_ (0)
 {
@@ -119,10 +120,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
   // Create TMS now.
   this->tms_ = cf->create_transport_mux_strategy (this);
-
-  // Create a handler lock
-  this->handler_lock_ =
-    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -526,7 +523,10 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   {
     typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
     TAO_REVERSE_LOCK reverse (*this->handler_lock_);
-    ACE_GUARD_RETURN (TAO_REVERSE_LOCK, ace_mon, reverse, -1);
+    ACE_GUARD_RETURN (TAO_REVERSE_LOCK,
+                      ace_mon,
+                      reverse,
+                      -1);
 
     result = flushing_strategy->flush_message (this,
                                                &synch_message,

@@ -20,7 +20,9 @@
 # include "GIOP_Message_Generator_Parser_10.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Message_Gen_Parser_10, "$Id$")
+ACE_RCSID (tao,
+           GIOP_Message_Gen_Parser_10,
+           "$Id$")
 
 int
 TAO_GIOP_Message_Generator_Parser_10::write_request_header (
@@ -367,7 +369,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
 
       request.requesting_principal (principal.in ()); */
 
-      CORBA_OctetSeq oct_seq;
+      CORBA::OctetSeq oct_seq;
       input >> oct_seq;
       request.requesting_principal (oct_seq);
       hdr_status = (CORBA::Boolean) input.good_bit ();

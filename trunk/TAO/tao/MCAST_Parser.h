@@ -16,11 +16,12 @@
 #include "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
-#include "tao/ORB_Core.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/CORBA_String.h"
 
 #include "ace/Service_Config.h"
 
@@ -55,14 +56,14 @@ public:
 
 private:
 
-  CORBA_Object_ptr multicast_to_service (const char *service_name,
-                                         CORBA::UShort port,
-                                         const char *mcast_address,
-                                         const char *mcast_ttl,
-                                         const char *mcast_nic,
-                                         CORBA::ORB_ptr orb,
-                                         ACE_Time_Value *timeout
-                                         ACE_ENV_ARG_DECL_NOT_USED);
+  CORBA::Object_ptr multicast_to_service (const char *service_name,
+                                          CORBA::UShort port,
+                                          const char *mcast_address,
+                                          const char *mcast_ttl,
+                                          const char *mcast_nic,
+                                          CORBA::ORB_ptr orb,
+                                          ACE_Time_Value *timeout
+                                          ACE_ENV_ARG_DECL_NOT_USED);
 
   int multicast_query (char *&buf,
                        const char *service_name,

@@ -95,6 +95,14 @@ const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
+// The default size of TAO's ValueFactory table, i.e. the
+// one used as the underlying implementation for the
+// CORBA::ORB::register_value_factory() method.
+#if !defined (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
+const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
+#endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
+
+
 // The default size of TAO's server active object map.
 #if !defined (TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE)
 # if defined (TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE)

@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- * A Policy Container that provides O(1) time access for policy that support caching
- * (see orbconf.h).
+ *  A Policy Container that provides O(1) time access for policy that
+ *  support caching (see orbconf.h).
  *
  *  @author Angelo Cosaro (corsaro@cs.wustl.edu)
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
@@ -15,16 +15,17 @@
  */
 //=============================================================================
 
-#ifndef TAO_POLICY_SET_H_
-#define TAO_POLICY_SET_H_
+#ifndef TAO_POLICY_SET_H
+#define TAO_POLICY_SET_H
+
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
 #include "tao/PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @class TAO_Policy_Set
@@ -55,35 +56,35 @@ public:
                   ACE_ENV_ARG_DECL);
 
   /**
-   * Modify the list of policies to include <policies>.
-   * If <set_add> is CORBA::SET_OVERRIDE then we replace all the old
-   * policies. If it is CORBA::ADD_OVERRIDE we simply add the policies
-   * in <policies>.
+   * Modify the list of policies to include @a policies.
+   * If @a set_add is @c CORBA::SET_OVERRIDE then we replace all the
+   * old policies. If it is @c CORBA::ADD_OVERRIDE we simply add the
+   * policies in @a policies.
    * No attempt is made to validate the policies for consistency.
    */
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                             ACE_ENV_ARG_DECL);
 
-
-  /// Get the values (if any) for the policies in <types>, if <types>
-  /// is an empty list the method returns *all* the current policies.
+  /// Get the values (if any) for the policies in @a types, if @a
+  /// types is an empty list the method returns *all* the current
+  /// policies.
   CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+                                            ACE_ENV_ARG_DECL);
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+                                ACE_ENV_ARG_DECL);
 
   /// Obtain a cached policy for speedy lookups.
-  /// This method just returns a const reference to the policy to
-  /// avoid obtaining a lock to increment the reference count.  As such,
-  /// it can only be used for single threaded cases or cases where the
-  /// policies cannot be removed such as at the object and thread level
-  /// scopes.  This method is most likely not appropriate for accessing
-  /// policies at the ORB level scope in any situation.
+  /**
+   * This method just returns a const reference to the policy to avoid
+   * obtaining a lock to increment the reference count.  As such, it
+   * can only be used for single threaded cases or cases where the
+   * policies cannot be removed such as at the object and thread level
+   * scopes.  This method is most likely not appropriate for accessing
+   * policies at the ORB level scope in any situation.
+   */
   CORBA::Policy_ptr get_cached_const_policy (TAO_Cached_Policy_Type type) const;
 
   /// Obtain a single cached policy.
@@ -94,7 +95,8 @@ public:
                    ACE_ENV_ARG_DECL);
 
   /// Returns the policy at the specified index.
-  /// CORBA::Policy::_nil () is returned if the policy doesn't exist
+  /// @c CORBA::Policy::_nil () is returned if the policy doesn't
+  /// exist.
   CORBA::Policy *get_policy_by_index (CORBA::ULong index);
   CORBA::ULong num_policies (void) const;
 
@@ -121,10 +123,11 @@ private:
   TAO_Policy_Scope scope_;
 };
 
+
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Set.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_POLICY_SET_H_ */
+#endif /* TAO_POLICY_SET_H */
 

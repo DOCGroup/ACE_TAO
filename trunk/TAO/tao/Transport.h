@@ -24,7 +24,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Exception.h"
-#include "Transport_Descriptor_Interface.h"
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
@@ -34,6 +33,7 @@ class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
+class TAO_Transport_Descriptor_Interface;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
@@ -41,7 +41,6 @@ class TAO_Pluggable_Messaging;
 class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
-
 
 
 /**
@@ -216,9 +215,6 @@ public:
   /// default creator, requres the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
-
-  /// destructor
-  virtual ~TAO_Transport (void);
 
   // Maintain reference counting with these
   static TAO_Transport* _duplicate (TAO_Transport* transport);
@@ -421,6 +417,14 @@ public:
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
 protected:
+
+  /// Destructor
+  /**
+   * Protected destructor to enforce proper memory management through
+   * the reference counting mechanism.
+   */
+  virtual ~TAO_Transport (void);
+
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -956,7 +960,7 @@ protected:
   /// resources (such as a connection handler) get serialized.
   /**
    * This is an <code>ACE_Lock</code> that gets initialized from
-   * <code>TAO_ORB_Core::resource_factory()->create_cached_connection_lock ()</code>.
+   * @c TAO_ORB_Core::resource_factory()->create_cached_connection_lock().
    * This way, one can use a lock appropriate for the type of system, i.e.,
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
@@ -965,8 +969,7 @@ protected:
 
   /// A unique identifier for the transport.
   /**
-   * This never *never*
-   * changes over the lifespan, so we don't have to worry
+   * This never *never* changes over the lifespan, so we don't have to worry
    * about locking it.
    *
    * HINT: Protocol-specific transports that use connection handler

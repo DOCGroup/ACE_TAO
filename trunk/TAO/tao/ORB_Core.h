@@ -193,7 +193,7 @@ class TAO_Export TAO_ORB_Core
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
-                                         CORBA_Environment &);
+                                         CORBA::Environment &);
 public:
 
   /// Constructor.
@@ -374,8 +374,10 @@ public:
 
   //@}
 
-  /// Sets the value of TAO_ORB_Core::thread_lane_resources_manager_factory_name_
-  static void set_thread_lane_resources_manager_factory (const char *thread_lane_resources_manager_factory_name);
+  /// Sets the value of
+  /// TAO_ORB_Core::thread_lane_resources_manager_factory_name_
+  static void set_thread_lane_resources_manager_factory (const char *
+    thread_lane_resources_manager_factory_name);
 
   /// Sets the value of TAO_ORB_Core::collocation_resolver_name_
   static void set_collocation_resolver (const char *collocation_resolver_name);
@@ -530,8 +532,8 @@ public:
    * tradeoffs and take a decision.
    */
   //@{
-  CORBA_Environment *default_environment (void) const;
-  void default_environment (CORBA_Environment*);
+  CORBA::Environment *default_environment (void) const;
+  void default_environment (CORBA::Environment*);
   //@}
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -718,15 +720,15 @@ public:
   CORBA::Object_ptr resolve_dynanyfactory (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Resolve the IOR Manipulation reference for this ORB.
-  CORBA::Object_ptr resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  CORBA::Object_ptr resolve_ior_manipulation (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Resolve the IOR Table reference for this ORB.
-  CORBA::Object_ptr resolve_ior_table (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  CORBA::Object_ptr resolve_ior_table (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Resolve an initial reference via the -ORBInitRef and
   // -ORBDefaultInitRef options.
   CORBA::Object_ptr resolve_rir (const char *name
-                                 ACE_ENV_ARG_DECL_NOT_USED);
+                                 ACE_ENV_ARG_DECL);
 
   /// Resolve the RT ORB reference for this ORB.
   CORBA::Object_ptr resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL);
@@ -742,7 +744,8 @@ public:
   void portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks);
 
   /// List all the service known by the ORB
-  CORBA_ORB_ObjectIdList_ptr list_initial_references (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  CORBA::ORB::ObjectIdList_ptr list_initial_references (
+    ACE_ENV_SINGLE_ARG_DECL);
 
   /// Reference counting...
   CORBA::ULong _incr_refcnt (void);
@@ -757,7 +760,6 @@ public:
   /// isn't included in the set that is passed to the reactor upon ORB
   /// destruction.
   int remove_handle (ACE_HANDLE handle);
-
 
   /**
    * @name ORB Core Service Hooks
@@ -832,7 +834,6 @@ public:
   /// of an FT service.
   void services_log_msg_post_upcall (TAO_ServerRequest &req);
   //@}
-
 
   /**
    * @name Portable Interceptor Related Methods
@@ -1362,47 +1363,6 @@ private:
 // ****************************************************************
 
 /**
- * @class TAO_ORB_Core_Auto_Ptr
- *
- * @brief Define a TAO_ORB_Core auto_ptr class.
- *
- * This class is used as an aid to make ORB initialization exception
- * safe.  It ensures that the ORB core is deallocated if an exception
- * is thrown.
- *
- * @todo
- * TAO_ORB_Core_Auto_Ptr should be renamed to TAO_ORB_Core_var
- * since the ORB Core is reference counted.
- */
-class TAO_Export TAO_ORB_Core_Auto_Ptr
-{
-public:
-
-  /// Initialization and termination methods
-  //@{
-  /* explicit */ TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
-  TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
-  TAO_ORB_Core_Auto_Ptr &operator= (TAO_ORB_Core_Auto_Ptr &rhs);
-  ~TAO_ORB_Core_Auto_Ptr (void);
-  //@}
-
-  /// Accessor methods.
-  //@{
-  TAO_ORB_Core &operator *() const;
-  TAO_ORB_Core *get (void) const;
-  TAO_ORB_Core *release (void);
-  void reset (TAO_ORB_Core *p = 0);
-  TAO_ORB_Core *operator-> () const;
-  //@}
-
-protected:
-
-  TAO_ORB_Core *p_;
-
-};
-
-// ****************************************************************
-/**
  * @class TAO_TSS_Resources
  *
  * @brief The TSS resoures shared by all the ORBs
@@ -1443,11 +1403,11 @@ public:
   void *poa_current_impl_;
 
   /// The default environment for the thread.
-  CORBA_Environment *default_environment_;
+  CORBA::Environment *default_environment_;
 
   /// If the user (or library) provides no environment the ORB_Core
   /// still holds one.
-  CORBA_Environment tss_environment_;
+  CORBA::Environment tss_environment_;
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 

@@ -38,10 +38,6 @@ TAO_Profile::orb_core (void) const
 ACE_INLINE CORBA::ULong
 TAO_Profile::_incr_refcnt (void)
 {
-  // OK, think I got it.  When this object is created (guard) the
-  // lock is automatically acquired (refcount_lock_).  Then when
-  // we leave this method the destructir for guard is called which
-  // releases the lock!
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
 
   return this->refcount_++;
@@ -58,7 +54,7 @@ TAO_Profile::_decr_refcnt (void)
   }
 
   // refcount is 0, so delete us!
-  // delete will call our ~ destructor which in turn deletes stuff.
+  // delete() will call our destructor which in turn deletes stuff.
   delete this;
   return 0;
 }

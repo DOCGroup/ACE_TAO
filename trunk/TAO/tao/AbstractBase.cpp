@@ -1,20 +1,5 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     AbstractBase.cpp
-//
-// = AUTHOR
-//     Jeff Parsons  <parsons@cs.wustl.edu>
-//
-// ============================================================================
-
 #include "tao/AbstractBase.h"
-#include "tao/Any.h"
+
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/ValueFactory.h"
@@ -24,13 +9,15 @@
 # include "tao/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            AbstractBase,
            "$Id$")
 
-int CORBA_AbstractBase::_tao_class_id = 0;
 
-CORBA_AbstractBase::CORBA_AbstractBase (void)
+int CORBA::AbstractBase::_tao_class_id = 0;
+
+CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (0),
     concrete_stubobj_ (0),
     is_collocated_ (0),
@@ -39,7 +26,7 @@ CORBA_AbstractBase::CORBA_AbstractBase (void)
 {
 }
 
-CORBA_AbstractBase::CORBA_AbstractBase (const CORBA_AbstractBase &rhs)
+CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_),
     concrete_stubobj_ (rhs.concrete_stubobj_),
     is_collocated_ (rhs.is_collocated_),
@@ -52,9 +39,9 @@ CORBA_AbstractBase::CORBA_AbstractBase (const CORBA_AbstractBase &rhs)
     }
 }
 
-CORBA_AbstractBase::CORBA_AbstractBase (TAO_Stub * protocol_proxy,
-                                        CORBA::Boolean collocated,
-                                        TAO_Abstract_ServantBase * servant)
+CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
+                                   CORBA::Boolean collocated,
+                                   TAO_Abstract_ServantBase * servant)
   : is_objref_ (1),
     concrete_stubobj_ (protocol_proxy),
     is_collocated_ (collocated),
@@ -67,7 +54,7 @@ CORBA_AbstractBase::CORBA_AbstractBase (TAO_Stub * protocol_proxy,
     }
 }
 
-CORBA_AbstractBase::~CORBA_AbstractBase (void)
+CORBA::AbstractBase::~AbstractBase (void)
 {
   if (this->concrete_stubobj_ != 0)
     {
@@ -76,13 +63,13 @@ CORBA_AbstractBase::~CORBA_AbstractBase (void)
 }
 
 void *
-CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
+CORBA::AbstractBase::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
 
   if (type == ACE_reinterpret_cast (
               ptr_arith_t,
-              &CORBA_AbstractBase::_tao_class_id)
+              &CORBA::AbstractBase::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
@@ -100,17 +87,17 @@ CORBA_AbstractBase::_tao_QueryInterface (ptr_arith_t type)
 // class in the CDR extraction operator. The actual management
 // of the refcount will always be done in the derived class.
 void
-CORBA_AbstractBase::_add_ref (void)
+CORBA::AbstractBase::_add_ref (void)
 {
 }
 
 void
-CORBA_AbstractBase::_remove_ref (void)
+CORBA::AbstractBase::_remove_ref (void)
 {
 }
 
 CORBA::Object_ptr
-CORBA_AbstractBase::_to_object (void)
+CORBA::AbstractBase::_to_object (void)
 {
   if (this->concrete_stubobj_ == 0)
     {
@@ -124,7 +111,7 @@ CORBA_AbstractBase::_to_object (void)
 }
 
 CORBA::ValueBase *
-CORBA_AbstractBase::_to_value (void)
+CORBA::AbstractBase::_to_value (void)
 {
   if (this->is_objref_)
     {
@@ -143,7 +130,7 @@ CORBA_AbstractBase::_to_value (void)
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA_AbstractBase_ptr abs)
+operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 {
   CORBA::Boolean discriminator = 0;
 
@@ -223,7 +210,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA_AbstractBase_ptr abs)
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
+operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = 0;
   CORBA::Boolean discriminator = 0;
@@ -272,8 +259,8 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_WARNING,
-                              "TAO (%P|%t) WARNING: extracting valuetype using "
-                              "default ORB_Core\n"));
+                              "TAO (%P|%t) WARNING: extracting "
+                              "valuetype using default ORB_Core\n"));
                 }
             }
 
@@ -315,9 +302,10 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
                 && generic_objref->_is_collocated ();
 
               ACE_NEW_RETURN (abs,
-                              CORBA_AbstractBase (concrete_stubobj,
-                                                  collocated,
-                                                  generic_objref->_servant ()),
+                              CORBA::AbstractBase (
+                                concrete_stubobj,
+                                collocated,
+                                generic_objref->_servant ()),
                               0);
               return 1;
             }
@@ -328,19 +316,19 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
 }
 
 CORBA::Boolean
-CORBA_AbstractBase::_tao_marshal_v (TAO_OutputCDR &)
+CORBA::AbstractBase::_tao_marshal_v (TAO_OutputCDR &)
 {
   return 0;
 }
 
 CORBA::Boolean
-CORBA_AbstractBase::_tao_unmarshal_v (TAO_InputCDR &)
+CORBA::AbstractBase::_tao_unmarshal_v (TAO_InputCDR &)
 {
   return 0;
 }
 
 CORBA::ValueBase *
-CORBA_AbstractBase::_tao_to_value (void)
+CORBA::AbstractBase::_tao_to_value (void)
 {
   return 0;
 }

@@ -14,12 +14,12 @@
 #define TAO_LF_EVENT_LOOP_THREAD_HELPER_H
 #include "ace/pre.h"
 
-#include "tao/orbconf.h"
 #include "tao/LF_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 
 /**
  * @brief Helper class to enter and exit the Leader/Followers event

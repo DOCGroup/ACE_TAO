@@ -642,7 +642,7 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
       x._tao_encode (cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA_Exception, ex)
+  ACE_CATCH (CORBA::Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.
@@ -1432,7 +1432,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
       x->_tao_encode (output ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-  ACE_CATCH (CORBA_Exception, ex)
+  ACE_CATCH (CORBA::Exception, ex)
     {
       // Now we know that while handling the error an other error
       // happened -> no hope, close connection.

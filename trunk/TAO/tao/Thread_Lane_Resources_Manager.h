@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Thread_Lane_Resources_Manager.h
@@ -12,13 +14,14 @@
 #define TAO_THREAD_LANE_RESOURCES_MANAGER_H
 
 #include "ace/pre.h"
-#include "tao/orbconf.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 #include "ace/Service_Object.h"
 
 class TAO_ORB_Core;
@@ -48,7 +51,7 @@ public:
   virtual void finalize (void) = 0;
 
   /// Open default resources.
-  virtual int open_default_resources (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual int open_default_resources (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;

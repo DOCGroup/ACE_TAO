@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,11 +14,11 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_REMOTE_OBJECT_PROXY_IMPL_H_
 #define TAO_REMOTE_OBJECT_PROXY_IMPL_H_
 
 #include "ace/pre.h"
+
 #include "tao/corbafwd.h"
 
 #include "tao/Object_Proxy_Impl.h"
@@ -29,16 +30,13 @@
  *
  * This class implements the remote proxy for the CORBA::Object class.
  */
-class TAO_Export TAO_Remote_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
+class TAO_Export TAO_Remote_Object_Proxy_Impl
+  : public virtual TAO_Object_Proxy_Impl
 {
 public:
 
-  TAO_Remote_Object_Proxy_Impl (void);
-
-  virtual ~TAO_Remote_Object_Proxy_Impl (void);
-
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,
-                                const CORBA::Char *logical_type_id
+                                const char * logical_type_id
                                 ACE_ENV_ARG_DECL);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -46,7 +44,7 @@ public:
   virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target
                                         ACE_ENV_ARG_DECL);
 
-  virtual CORBA_InterfaceDef_ptr _get_interface (
+  virtual CORBA::InterfaceDef_ptr _get_interface (
       const CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     );
@@ -57,6 +55,7 @@ public:
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 };
+
 
 #include "ace/post.h"
 

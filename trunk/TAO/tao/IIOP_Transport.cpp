@@ -258,12 +258,14 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 int
-TAO_IIOP_Transport::send_message_shared (TAO_Stub *stub,
-                                         int message_semantics,
-                                         const ACE_Message_Block *message_block,
-                                         ACE_Time_Value *max_wait_time)
+TAO_IIOP_Transport::send_message_shared (
+  TAO_Stub *stub,
+  int message_semantics,
+  const ACE_Message_Block *message_block,
+  ACE_Time_Value *max_wait_time)
 {
   int r;
+
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
@@ -272,7 +274,8 @@ TAO_IIOP_Transport::send_message_shared (TAO_Stub *stub,
 
     if (TAO_debug_level > 6)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::send_message_shared, ")
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("IIOP_Transport::send_message_shared, ")
                   ACE_TEXT ("enable_network_priority = %d\n"),
                   this->connection_handler_->enable_network_priority ()));
 
@@ -324,8 +327,8 @@ int
 TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
-  this->messaging_object_->init (major,
-                                 minor);
+  this->messaging_object_->init (major, minor);
+
   return 1;
 }
 

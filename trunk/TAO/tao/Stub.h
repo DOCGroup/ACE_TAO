@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_STUB_H
 #define TAO_STUB_H
 
@@ -26,9 +25,10 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_Auto_Ptr.h"
+
 
 // Forward declarations.
-
 class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
@@ -37,9 +37,6 @@ class TAO_Buffering_Constraint_Policy;
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_Policy_Set;
-
-
-// Descriptions of parameters.
 
 class TAO_Profile;
 
@@ -79,8 +76,7 @@ struct TAO_Exception_Data
  * The type ID (the data specified by CORBA 2.0 that gets exposed
  * "on the wire", and in stringified objrefs) is held by this
  * module.
- * The stub APIs are member functions of this
- * type.
+ * The stub APIs are member functions of this type.
  */
 class TAO_Export TAO_Stub
 {
@@ -103,11 +99,13 @@ public:
                                           CORBA::SetOverrideType set_add
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::PolicyList * get_policy_overrides (
+    const CORBA::PolicyTypeSeq & types
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean validate_connection (CORBA::PolicyList_out inconsistent_policies
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Boolean validate_connection (
+    CORBA::PolicyList_out inconsistent_policies
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

@@ -26,9 +26,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_LF_Event;
-class TAO_New_Leader_Generator;
 class TAO_Transport;
 
+/**
+ * @class TAO_Leader_Follower
+ *
+ * @brief TAO_Leader_Follower
+ *
+ * TAO_Leader_Follower
+ */
 class TAO_Export TAO_Leader_Follower
 {
 public:

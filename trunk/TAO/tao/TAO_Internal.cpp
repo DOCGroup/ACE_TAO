@@ -5,6 +5,7 @@
 #include "default_client.h"
 #include "default_resource.h"
 
+#include "Adapter.h"
 #include "IIOP_Factory.h"
 #include "MCAST_Parser.h"
 #include "CORBANAME_Parser.h"
@@ -12,9 +13,8 @@
 #include "FILE_Parser.h"
 #include "DLL_Parser.h"
 #include "StringSeqC.h"
-
+#include "ORB_Core.h"
 #include "Object_Loader.h"
-#include "ace/Dynamic_Service.h"
 
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
@@ -22,6 +22,7 @@
 #include "Default_Thread_Lane_Resources_Manager.h"
 #include "Default_Collocation_Resolver.h"
 
+#include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Stub_Factory.h
@@ -18,15 +20,19 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
+
+
 // Forward references
 class TAO_MProfile;
 class TAO_ORB_Core;
+class TAO_Stub;
 
 /**
  * @class TAO_Stub_Factory
