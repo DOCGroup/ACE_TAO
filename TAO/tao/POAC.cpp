@@ -67,7 +67,7 @@ PortableServer::ForwardRequest::~ForwardRequest (void)
 
 // copy constructor
 PortableServer::ForwardRequest::ForwardRequest (const PortableServer::ForwardRequest &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
   this->forward_reference = CORBA::Object::_duplicate (_tao_excp.forward_reference.in ());
 }
@@ -950,7 +950,7 @@ PortableServer::POAManager::AdapterInactive::~AdapterInactive (void)
 
 // copy constructor
 PortableServer::POAManager::AdapterInactive::AdapterInactive (const PortableServer::POAManager::AdapterInactive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1332,7 +1332,7 @@ PortableServer::POA::AdapterAlreadyExists::~AdapterAlreadyExists (void)
 
 // copy constructor
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (const PortableServer::POA::AdapterAlreadyExists &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1428,7 +1428,7 @@ PortableServer::POA::AdapterInactive::~AdapterInactive (void)
 
 // copy constructor
 PortableServer::POA::AdapterInactive::AdapterInactive (const PortableServer::POA::AdapterInactive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1524,7 +1524,7 @@ PortableServer::POA::AdapterNonExistent::~AdapterNonExistent (void)
 
 // copy constructor
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (const PortableServer::POA::AdapterNonExistent &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1621,7 +1621,7 @@ PortableServer::POA::InvalidPolicy::~InvalidPolicy (void)
 
 // copy constructor
 PortableServer::POA::InvalidPolicy::InvalidPolicy (const PortableServer::POA::InvalidPolicy &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
   this->index = _tao_excp.index;
 }
@@ -1729,7 +1729,7 @@ PortableServer::POA::NoServant::~NoServant (void)
 
 // copy constructor
 PortableServer::POA::NoServant::NoServant (const PortableServer::POA::NoServant &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1828,7 +1828,7 @@ PortableServer::POA::ObjectAlreadyActive::~ObjectAlreadyActive (void)
 
 // copy constructor
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (const PortableServer::POA::ObjectAlreadyActive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -1925,7 +1925,7 @@ PortableServer::POA::ObjectNotActive::~ObjectNotActive (void)
 
 // copy constructor
 PortableServer::POA::ObjectNotActive::ObjectNotActive (const PortableServer::POA::ObjectNotActive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -2022,7 +2022,7 @@ PortableServer::POA::ServantAlreadyActive::~ServantAlreadyActive (void)
 
 // copy constructor
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (const PortableServer::POA::ServantAlreadyActive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -2119,7 +2119,7 @@ PortableServer::POA::ServantNotActive::~ServantNotActive (void)
 
 // copy constructor
 PortableServer::POA::ServantNotActive::ServantNotActive (const PortableServer::POA::ServantNotActive &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -2216,7 +2216,7 @@ PortableServer::POA::WrongAdapter::~WrongAdapter (void)
 
 // copy constructor
 PortableServer::POA::WrongAdapter::WrongAdapter (const PortableServer::POA::WrongAdapter &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -2313,7 +2313,7 @@ PortableServer::POA::WrongPolicy::~WrongPolicy (void)
 
 // copy constructor
 PortableServer::POA::WrongPolicy::WrongPolicy (const PortableServer::POA::WrongPolicy &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 
@@ -2467,7 +2467,7 @@ PortableServer::Current::NoContext::~NoContext (void)
 
 // copy constructor
 PortableServer::Current::NoContext::NoContext (const PortableServer::Current::NoContext &_tao_excp)
-  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completion ())
+  : CORBA_SystemException (_tao_excp._type (), _tao_excp.minor (), _tao_excp.completed ())
 {
 }
 

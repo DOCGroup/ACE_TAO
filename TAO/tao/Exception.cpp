@@ -300,6 +300,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // held!  The <CORBA::ORB_init> method is responsible for ensuring
   // this.
   static const char *minor = "minor";
+  // @@ NW should this be "completed" or "completion"?
   static const char *completion = "completion";
 
   // Create a CDR stream ... juggle the alignment here a bit, we know
