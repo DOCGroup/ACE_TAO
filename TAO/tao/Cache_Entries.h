@@ -15,7 +15,7 @@
 #define TAO_CACHE_ENTRIES_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,6 @@
 
 #include "ace/Recyclable.h"
 
-class TAO_Transport_Descriptor_Interface;
 class TAO_Transport;
 
 #ifdef index
