@@ -129,6 +129,11 @@ TAO_Stub::~TAO_Stub (void)
 
   this->orb_core_->_decr_refcnt ();
 
+  if (this->ior_info_)
+    delete this->ior_info_;
+
+  if (this->forwarded_ior_info_)
+    delete this->forwarded_ior_info_;
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -180,7 +185,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 
 
 int
-TAO_Stub::create_ior_info (IOP::IOR *ior_info,
+TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
                            CORBA::ULong &index,
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
