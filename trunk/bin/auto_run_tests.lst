@@ -219,6 +219,7 @@ TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL
+TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
