@@ -85,8 +85,8 @@ public:
                    size_t length,
                    size_t offset,
                    char *filename,
-                   char *request_prefix = "GET",
-                   char *request_suffix = "HTTP/1.0\r\n\r\n");
+                   const char *request_prefix = "GET",
+                   const char *request_suffix = "HTTP/1.0\r\n\r\n");
 
 private:
   int send_request (void);
@@ -102,8 +102,8 @@ public:
                    size_t length,
                    size_t offset,
                    char *filename,
-                   char *request_prefix = "PUT",
-                   char *request_suffix = "HTTP/1.0\nContent-length:");
+                   const char *request_prefix = "PUT",
+                   const char *request_suffix = "HTTP/1.0\nContent-length:");
 
 private:
   int send_request (void);

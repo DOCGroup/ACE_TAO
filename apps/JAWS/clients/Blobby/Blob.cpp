@@ -17,7 +17,7 @@ ACE_Blob::~ACE_Blob (void)
 // initialize address and filename. No network i/o in open
 
 int
-ACE_Blob::open (char *filename, char *hostname , u_short port)
+ACE_Blob::open (char *filename, const char *hostname , u_short port)
 {
   filename_ = ACE_OS::strdup(filename);
   inet_addr_.set (port, hostname);

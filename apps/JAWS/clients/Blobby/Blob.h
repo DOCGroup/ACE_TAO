@@ -50,7 +50,7 @@ public:
   ~ACE_Blob (void);
 
   int open (char *filename,
-            char *hostname =  ACE_DEFAULT_SERVER_HOST ,
+            const char *hostname =  ACE_DEFAULT_SERVER_HOST ,
             u_short port = 80);
   // initializes the class with the given filename, hostname and port.
   // it should be called with the filename, before any read/write calls
