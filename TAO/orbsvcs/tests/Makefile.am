@@ -37,3 +37,4 @@ SUBDIRS = \
 noinst_SCRIPTS = start_services
 
 EXTRA_DIST = $(noinst_SCRIPTS)
+

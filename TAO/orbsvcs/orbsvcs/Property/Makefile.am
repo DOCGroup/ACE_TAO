@@ -25,3 +25,10 @@ libTAO_Property_la_SOURCES = \
 
 noinst_HEADERS = \
         CosPropertyService_i.h
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+

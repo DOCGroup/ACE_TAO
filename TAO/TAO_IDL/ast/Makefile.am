@@ -49,3 +49,10 @@ libast_a_SOURCES = \
          ast_union_branch.cpp  \
          ast_union_label.cpp
 
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
