@@ -1,0 +1,8 @@
+Fri Aug 13 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ObjectReferenceTemplate_Adapter.{h,cpp}
+          New file with base calss for ORT Adapters
+
+        * tao/PortableServer/ObjectReferenceTemplate_Adapter_Facotry.{h,cpp}
+          New file with base calss for ORT Adapter factories
+
