@@ -985,6 +985,10 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
+  // @@ (ANDY) This *should* continue to work because I hacked the
+  // layout of the CORBA_SEQUENCE<> template.  This doesn't seem like
+  // a good long-term solution, however.  Is there a way we can make
+  // the generated code grnt acess to its private data members?
   CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status

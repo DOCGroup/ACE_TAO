@@ -443,14 +443,23 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey_ptr key,
   else
     id = 0;
 
+  // @@ (IRFAN) This is the most likely chunk of code to break because
+  // of this evil cast.  Unfortunately, the generated code for
+  // sequences doesn't give access to the underlying buffer, so I
+  // don't have a way to construct a new OctetSeq instance in the
+  // appropriate manner.  Fortunately, in order for ObjectKey to be
+  // useable internally, we need the same capabilities, and so right
+  // around the time that this conversion could be done properly it
+  // won't have to be done at all.
+  CORBA::OctetSeq *internal_key = (CORBA::OctetSeq *)key;
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         *key));
+                                         *internal_key));
   if (data != 0)
     env.clear ();
   else
     {
-      env.exception (new CORBA_NO_MEMORY (CORBA::COMPLETED_NO));
+      env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
       return 0;
     }
 

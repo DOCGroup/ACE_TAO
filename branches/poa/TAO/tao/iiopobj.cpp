@@ -324,10 +324,23 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 // TAO extensions
-TAO_ObjectKey_ptr
-IIOP_Object::key (CORBA::Environment &)
+TAO::ObjectKey_ptr
+IIOP_Object::key (CORBA::Environment &e)
 {
-  return &this->profile.object_key;
+  register CORBA::ULong len = this->profile.object_key.length;
+  
+  CORBA::Octet *buf = TAO::ObjectKey::allocbuf (len);
+  if (buf == 0)
+    {
+      e.exception (new CORBA::NO_MEMORY(CORBA::COMPLETED_NO) );
+      return 0;
+    }
+  
+  (void) ACE_OS::memcpy (buf, this->profile.object_key.buffer, len);
+
+  // Create a new instance and transfer ownership and responsibility
+  // to the caller
+  return new TAO_ObjectKey (len, len, buf, CORBA::B_TRUE);
 }
 
 // It will usually be used by the _bind call.

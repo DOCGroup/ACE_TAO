@@ -46,34 +46,6 @@ public:
   //
   // @@ Hum, does this still make sense now that it's in POA?
 
-  /* virtual */
-  CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
-                            CORBA::String type_id,
-                            CORBA::Environment& env);
-  // Create a reference to an object, using identifying information
-  // that is fully exposed to applications. (An ORB may use additional
-  // data internally, of course.)
-  //
-  // Object IDs are assigned and used by servers to identify objects.
-  //
-  // Type IDs are repository IDs, assigned as part of OMG-IDL
-  // interface definition to identify specific interfaces and their
-  // relationships to other OMG-IDL interfaces.  It's OK to provide a
-  // null type ID.
-  //
-  // Clients which invoke operations using one of these references
-  // when the server is not active (or after the last reference to the
-  // POA is released) will normally see an OBJECT_NOT_EXIST exception
-  // reported by the ORB.  If the POA is a "Named POA" the client's
-  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
-  // reports that fault.
-  //
-  // NOTE: Since any given POA may have been used in the past, servers
-  // may need to place some data (such as a timestamp) into the object
-  // ID to help distinguish different incarnations of the POA.  "Named
-  // POA" objects won't want those semantics as much as "Anonymous"
-  // ones.
-
   typedef void (CORBA_POA::*dsi_handler) (CORBA::OctetSeq &obj_id,
 					  CORBA::ServerRequest &request,
 					  void *context,

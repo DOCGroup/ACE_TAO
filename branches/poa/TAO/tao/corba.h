@@ -86,6 +86,7 @@
 
 // Defines CORBA namespace
 #include "tao/corbacom.h"
+#include "tao/objkeyC.h"
 
 // individual CORBA classes
 #include "tao/sequence.h"
