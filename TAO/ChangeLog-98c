@@ -1,3 +1,30 @@
+Fri Aug  8 14:25:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orbobj.*: Updated various methods to use the new
+ 	dynamically-linked strategy factories discussed below.
+
+	* tao/default_client.*: This file now contains the default client
+ 	strategy factory which is (a) dynamically linkable by the service
+ 	configurator and (b) can be configured by flags passed in via
+ 	service configurator.
+
+	* tao/client_factory.*: This file now contains the abstract base
+ 	class for the client strategy factory.
+
+	* tao/default_server.*: This file now contains the default server
+ 	strategy factory which is (a) dynamically linkable by the service
+ 	configurator and (b) can be configured by flags passed in via
+ 	service configurator.
+
+	* tao/server_factory.*: This file now contains the abstract base
+ 	class for the server strategy factory.
+
+	* tao/params.*: Renamed DEMUX_STRATEGY enum to TAO_Demux_Strategy
+ 	and put it at global scope instead of within TAO_OA_Parameters.
+
+	* tao/svc.conf.eg: Created this file to serve as an example of
+ 	various lines one might find in an application's svc.conf.
+
 Thu Aug  7 09:51:31 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* factories.cpp: Incorrect use of ACE_ASSERT in

@@ -37,6 +37,15 @@ public:
   // = SERVER-SIDE
 };
 
+typedef enum 
+  {
+    TAO_NONE,
+    TAO_LINEAR,
+    TAO_DYNAMIC_HASH,
+    TAO_ACTIVE_DEMUX,
+    TAO_USER_DEFINED
+  } TAO_Demux_Strategy;
+
 class ACE_Svc_Export TAO_OA_Parameters
 // = TITLE
 //    Parameters specific to an Object Adapter.  By definition, this
@@ -54,14 +63,6 @@ public:
 
   static TAO_OA_Parameters *instance (TAO_OA_Parameters*);
   // Set the Singleton instance.
-
-  enum DEMUX_STRATEGY
-  {
-    TAO_LINEAR,
-    TAO_DYNAMIC_HASH,
-    TAO_ACTIVE_DEMUX,
-    TAO_USER_DEFINED
-  };
 
   typedef CORBA_BOA::dsi_handler UpcallFunc;
   typedef void (*ForwardFunc)(CORBA_OctetSeq &,
@@ -129,10 +130,10 @@ public:
   // "user_def", or "active_demux".  If the value is not valid, then
   // <Dynamic Hash> is used as a default.
   
-  void demux_strategy (DEMUX_STRATEGY s);
+  void demux_strategy (TAO_Demux_Strategy s);
   // Specify the demultiplexing strategy to be used.
   
-  DEMUX_STRATEGY demux_strategy (void);
+  TAO_Demux_Strategy demux_strategy (void);
   // Return the demultiplexing strategy being used.
 
   void userdef_lookup_strategy (TAO_Object_Table *&ot);
@@ -179,7 +180,7 @@ private:
   CORBA_BOA_ptr oa_;		
   // Pointer to One True Object Adapter
 
-  DEMUX_STRATEGY demux_;  
+  TAO_Demux_Strategy demux_;  
   // demux strategy
 
   ACE_INET_Addr addr_;          

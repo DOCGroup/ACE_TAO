@@ -93,8 +93,10 @@ private:
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
 
-  TAO_Client_Factory client_factory_;
-  TAO_Server_Factory server_factory_;
+  TAO_Client_Strategy_Factory *client_factory_;
+  CORBA_Boolean                client_factory_from_service_config_;
+  TAO_Server_Strategy_Factory *server_factory_;
+  CORBA_Boolean                server_factory_from_service_config_;
   TAO_ORB_Parameters params_;
 
   // = NON-PROVIDED METHODS
