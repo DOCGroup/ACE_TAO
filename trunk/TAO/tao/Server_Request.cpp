@@ -222,6 +222,14 @@ IIOP_ServerRequest::set_exception (const CORBA::Any &value,
     {
       this->exception_ = new CORBA::Any;
       this->exception_->replace (value.type (), value.value (), 1, env);
+
+      // @@ This cast is not safe, but we haven't implemented the >>=
+      // and <<= operators for base exceptions (yet).
+      CORBA_Exception* x = (CORBA_Exception*)value.value ();
+      if (CORBA_UserException::_narrow (x) != 0)
+	this->is_user_exception_ = 1;
+      else
+	this->is_user_exception_ = 0;
     }
 }
 
@@ -386,20 +394,20 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
   // Any exception at all.
   else if (this->exception_)
     {
-      CORBA::Exception *x;
       CORBA::TypeCode_ptr except_tc;
 
-      x = (CORBA::Exception *) this->exception_->value ();
       except_tc = this->exception_->type ();
 
       // Finish the GIOP Reply header, then marshal the exception.
       // XXX x->type () someday ...
 
-      if (CORBA::UserException::_narrow (x))
+      if (this->is_user_exception_)
         this->outgoing_->write_ulong (TAO_GIOP_USER_EXCEPTION);
       else
         this->outgoing_->write_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
-      (void) this->outgoing_->encode (except_tc, x, 0, env);
+
+      TAO_InputCDR cdr ((ACE_Message_Block*)this->exception_->value ());
+      (void) this->outgoing_->append (except_tc, &cdr, env);
     }
   else // Normal reply
     // First finish the GIOP header ...

@@ -259,6 +259,9 @@ private:
   CORBA::Any_ptr exception_;
   // Any exception which might be raised.
 
+  int is_user_exception_;
+  // Flag to decide if the exception was a user exception or not.
+
   u_int refcount_;
   // Number of things hold references to here.
 
