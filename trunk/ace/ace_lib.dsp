@@ -42,8 +42,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
@@ -69,8 +69,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT BASE CPP /YX
 # ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
@@ -96,8 +96,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O1 /I "../" /I "../PACE" /D "_WINDOWS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -122,8 +122,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Target_Dir ""
-LINK32=link.exe -lib
 MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_WINDOWS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
@@ -238,6 +238,10 @@ SOURCE=.\Configuration.cpp
 # Begin Source File
 
 SOURCE=.\Configuration_Import_Export.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Recycling_Strategy.cpp
 # End Source File
 # Begin Source File
 
@@ -370,6 +374,10 @@ SOURCE=.\Handle_Set.cpp
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hashable.cpp
 # End Source File
 # Begin Source File
 
@@ -553,6 +561,10 @@ SOURCE=.\Naming_Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.cpp
 # End Source File
 # Begin Source File
@@ -657,7 +669,19 @@ SOURCE=.\Reactor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Read_Buffer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.cpp
 # End Source File
 # Begin Source File
 
@@ -806,10 +830,6 @@ SOURCE=.\SString.cpp
 # Begin Source File
 
 SOURCE=.\Stats.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.cpp
 # End Source File
 # Begin Source File
 
@@ -1189,6 +1209,10 @@ SOURCE=.\Configuration_Import_Export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connection_Recycling_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.h
 # End Source File
 # Begin Source File
@@ -1346,6 +1370,10 @@ SOURCE=.\Hash_Map_Manager_T.h
 # Begin Source File
 
 SOURCE=.\Hash_Map_With_Allocator_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Hashable.h
 # End Source File
 # Begin Source File
 
@@ -1573,6 +1601,10 @@ SOURCE=.\Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.h
 # End Source File
 # Begin Source File
@@ -1721,11 +1753,23 @@ SOURCE=.\Reactor_Impl.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ReactorEx.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Read_Buffer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.h
 # End Source File
 # Begin Source File
 
@@ -1894,10 +1938,6 @@ SOURCE=.\Stats.h
 # Begin Source File
 
 SOURCE=.\stdcpp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.h
 # End Source File
 # Begin Source File
 
@@ -2429,6 +2469,10 @@ SOURCE=.\Hash_Map_With_Allocator_T.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Hashable.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\High_Res_Timer.i
 # End Source File
 # Begin Source File
@@ -2573,6 +2617,10 @@ SOURCE=.\Multiplexor.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notification_Strategy.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\NT_Service.i
 # End Source File
 # Begin Source File
@@ -2677,11 +2725,23 @@ SOURCE=.\Reactor.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Reactor_Notification_Strategy.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\ReactorEx.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Read_Buffer.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Recyclable.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Refcountable.inl
 # End Source File
 # Begin Source File
 
@@ -2822,10 +2882,6 @@ SOURCE=.\SString.i
 # Begin Source File
 
 SOURCE=.\Stats.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Strategies.i
 # End Source File
 # Begin Source File
 

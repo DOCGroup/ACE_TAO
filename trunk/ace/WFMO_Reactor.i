@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Handle_Set.h"
-
+#include "ace/Reactor.h"
 /************************************************************/
 
 ACE_INLINE int
