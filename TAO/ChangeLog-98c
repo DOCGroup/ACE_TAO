@@ -1,3 +1,11 @@
+Fri Oct 24 18:25:00 1997  Aniruddha Gokhale  <gokhale@flamenco.cs.wustl.edu>
+
+	* TAO/tao/svrrqst.cpp: Method params was allocating memory even
+	when the Any's already had memory allocated for the IN and INOUT
+	parameters. Due to this the params would retrieve results in the
+	allocated storage whereas the stubs/skeletons would continue to
+	use variables that they had defined to hold the values.
+
 Fri Oct 24 17:33:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/poa.*: #ifdef'd out the IIOP 1.4 references to shutdown.
