@@ -1,3 +1,18 @@
+Thu Jan 07 14:34:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_CATCHANY,TAO_CATCHALL): Changed
+	  TAO_CATCHANY to catch CORBA_Exception or its subclasses only.
+	  Another macro TAO_CATCHALL was added to facilitate the use of
+	  "catch (...)".  TAO_CATCHALL translates to a no-op on platforms
+	  without native exception support.
+
+	  This change is aim to unify the error handling behavior of TAO
+	  programs on platforms with or without native exceptions.  "catch
+	  (...)" is evil anyway.
+
+	* tao/Connect.cpp (handle_input): Changed to use TAO_CATCHANY and
+	  TAO_CATCHALL.
+
 Thu Jan 07 07:16:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/RT_Task.cpp (svc): initialize local
