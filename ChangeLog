@@ -1,3 +1,13 @@
+Tue Jun 25 12:13:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_CLD.dsp:
+        * examples/C++NPv2/examples.dsw: Added project for the
+          Acceptor-Connector Client Logging Daemon in chapter 7.
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Use the ACE
+          traits macros instead of relying on traits class support to
+          help the aged MSVC 6 compiler along.
+
 Mon Jun 24 20:55:45 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (select): Fixed typo.
