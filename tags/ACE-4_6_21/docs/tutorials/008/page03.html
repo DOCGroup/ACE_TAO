@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 008</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 008</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Sending and receiving datagrams</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+
+<P>In <A HREF="directed_client.cpp">directed_client.cpp</A> we create a
+client that knows how to send a datagram to a server on a known host.&nbsp;
+This is a good thing if you know where the server lives and want to have
+a conversation.&nbsp;&nbsp; The Unix <I>talk</I> utilitiy, for instance,
+could be written this way.
+
+<P>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Dgram.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/INET_Addr.h</font>"
+
+<font color=red>/* Once again, we use the default server port.  In a "<font color=green>real</font>" system,
+   the server's port (or ports) would be published in some way so that
+   clients would know where to "<font color=green>look</font>".  We could even add entries to
+   the operating system's services file and use a service name instead
+   of a number.  We'll come back to that in some other tutorial
+   though.  For now, let's stay simple.  */</font>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+
+<font color=red>/* Our goal here is to develop a client that can send a datagram to a
+   server running on a known host.  We'll use a command-line argument
+   to specify the hostname instead of hard-coding it.  */</font>
+int 
+main (int argc,char *argv[])
+{
+  <font color=red>/* All datagrams must have a point of origin.  Since we intend to
+    transmit instead of receive, we initialize an address with zero
+    and let the OS choose a port for us.  We could have chosen our own
+    value between 1025 and 65535 as long as it isn't already in use.
+
+    The biggest difference between client and server when datagrams
+    are used is the fact that servers tend to have a known/fixed
+    address at which they listen and clients tend to have arbitrary
+    addresses assigned by the OS.  */</font>
+  ACE_INET_Addr local((u_short) 0);
+
+  <font color=red>/* And here is our datagram object.  */</font>
+  ACE_SOCK_Dgram dgram;
+	
+  <font color=red>/* Notice that this looks a lot like the server application.
+    There's no difference in creating server datagrams an client
+    datagrams.  You can even use a zero-constructed address for your
+    server datagram as long as you tell the client where you're
+    listening (eg -- by writting into a file or some such).  */</font>
+  if (dgram.open (local) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>datagram open</font>"),
+                      -1);
+
+  <font color=red>/* Yep.  We've seen this before too...  */</font>
+  char buf[BUFSIZ];
+
+  <font color=red>/* Ok, now we're doing something different.  */</font>
+  sprintf (buf, "<font color=green>Hello World!</font>");
+
+  <font color=red>/* Just like sending a telegram, we have to address our datagram.
+    Here, we create an address object at the desired port on the
+    chosen host.  To keep us from crashing, we'll provide a default
+    host name if we aren't given one.  */</font>
+  ACE_INET_Addr remote (PORT,
+                        argc > 1 ? argv[1] : "<font color=green>localhost</font>");
+
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) Sending (%s) to the server.\n</font>",
+              buf));
+  <font color=red>/* Now we send our buffer of stuff to the remote address.  This is
+    just exactly what the server did after receiving a client message.
+    Datagrams are rather orthogonal that way: they don't generally
+    make much of a fuss about being either client or server.  */</font>
+  if (dgram.send (buf,
+                  <font color=#008888>ACE_OS::strlen</font> (buf) + 1,
+                  remote) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>send</font>"),
+                      -1);
+
+  <font color=red>/* Now we've turned around and put ourselves into "<font color=green>server mode</font>" by
+    invoking the recv() method.  We know our server is going to send
+    us something, so we hang out here and wait for it.  Because we
+    know datagrams are unreliable, there is a chance that the server
+    will respond but we won't hear.  You might consider providing a
+    timeout on the recv() in that case.  If recv() fails due to
+    timeout it will return -1 and you can then resend your query and
+    attempt the recv() again.
+
+    Like the server application, we have to give the recv() an
+    uninitialized addr object so that we can find out who is talking
+    back to us.  */</font>
+  if (dgram.recv (buf,
+                  sizeof (buf),
+                  remote) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>recv</font>"),
+                      -1);
+
+  <font color=red>/* Find out what the server had to say.  */</font>
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) The server said:  %s\n</font>",
+              buf));
+
+  <font color=red>/* Using the "<font color=green>remote</font>" object instance, find out where the server
+    lives.  We could then save this address and use directed datagrams
+    to chat with the server for a while.  */</font>
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) The server can be found at:  (%s:%d)\n</font>",
+              remote.get_host_name(),
+              PORT));
+  
+  return 0;
+}
+</PRE>
+<HR WIDTH="100%">
+
+<P>That's all neat and good but the point of what we're doing here is not
+to talk to a server we know about but to discover servers we don't know
+about.&nbsp; Now, you could send a directed datagram to every possible
+host address on your network but that's not a very nice thing to do.&nbsp;
+On the next page, we'll find out the right approach...
+
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>

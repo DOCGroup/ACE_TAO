@@ -1,0 +1,274 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 004</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 004</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>A much more clever Client</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+
+<P>Ok, so the last time around, we learned how to create a simple client
+that can send a chunk of data.  A cooler thing to do is to overload
+the C++ put operator (&lt;&lt;) to put some data for us.  That's what
+we're going to do this time.  (This tutorial is actually where ACE_IOStream
+was born.)
+<P>
+Kirthika says:
+<UL>
+The cool thing about this "cooler" client is how we use a C++ trick for
+streaming incoming data by using the operator<<() method. Also the
+Connector portion is wrapped in the open() method which now takes in the 
+server hostname and port. The result is a cleaner looking client which
+successfully interacts with the server when connection is established.
+</UL>
+<HR WIDTH="100%">
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/* We need the connector object & we also bring in a simple string
+  class.  */</font>
+<font color=blue>#include</font> "<font color=green>ace/SOCK_Connector.h</font>"
+<font color=blue>#include</font> "<font color=green>ace/SString.h</font>"
+
+<font color=red>/* In this tutorial, we extend SOCK_Stream by adding a few wrappers
+  around the send_n() method.  */</font>
+class Client : public ACE_SOCK_Stream
+{
+public:
+  <font color=red>// Basic constructor</font>
+  Client (void);
+
+  <font color=red>/* Construct and open() in one call.  This isn't generally a good
+    idea because you don't have a clean way to inform the caller when
+    open() fails.  (Unless you use C++ exceptions.)  */</font>
+  Client (const char *server,
+          u_short port);
+
+  <font color=red>/* Open the connection to the server.  Notice that this mirrors the
+    use of ACE_SOCK_Connector.  By providing our own open(), we can
+    hide the connector from our caller & make it's interaction easier.  */</font>
+  int open (const char *server,
+            u_short port);
+
+  <font color=red>/* These are necessary if you're going to use the constructor that
+    invokes open().  */</font>
+  int initialized (void) { return initialized_; }
+  int error (void) { return error_; }
+
+  <font color=red>/* This is where the coolness lies.  Most C++ folks are familiar
+    with "<font color=green>cout &lt;&lt; some-data.</font>"  It's a very handy and easy way to toss
+    data around.  By adding these method calls, we're able to do the
+    same thing with a socket connection.  */</font>
+  Client &operator&lt;&lt; (ACE_SString &str);
+  Client &operator&lt;&lt; (char *str);
+  Client &operator&lt;&lt; (int n);
+
+protected:
+  u_char initialized_;
+  u_char error_;
+};
+
+<font color=red>/* The basic constructor just sets our flags to reasonable values.  */</font>
+<font color=#008888>Client::Client</font>(void)
+{
+  initialized_ = 0;
+  error_ = 0;
+}
+
+<font color=red>/* This constructor also sets the flags but then calls open().  If the
+  open() fails, the flags will be set appropriately.  Use the two
+  inline method calls initialized() and error() to check the object
+  state after using this constructor.  */</font>
+<font color=#008888>Client::Client</font> (const char *server,
+                u_short port)
+{
+  initialized_ = 0;
+  error_ = 0;
+  this->open (server, port);
+}
+
+<font color=red>/* Open a connection to the server.  This hides the use of
+  ACE_SOCK_Connector from our caller.  Since our caller probably
+  doesn't care *how* we connect, this is a good thing.  */</font>
+int 
+<font color=#008888>Client::open</font> (const char *server,
+              u_short port)
+{
+  <font color=red>/* This is right out of Tutorial 3.  The only thing we've added is
+    to set the initialized_ member variable on success.  */</font>
+
+  ACE_SOCK_Connector connector;
+  ACE_INET_Addr addr (port, server);
+
+  if (connector.connect (*this, addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+  initialized_ = 1;
+  return 0;
+}
+
+<font color=red>/* The first of our put operators sends a simple string object to the
+  peer.  */</font>
+Client & 
+<font color=#008888>Client::operator</font>&lt;&lt; (ACE_SString &str)
+{
+  <font color=red>/* We have to be able to allow: server &lt;&lt; foo &lt;&lt; bar &lt;&lt; stuff;
+
+    To accomplish that, every &lt;&lt; operator must check that the object
+    is in a valid state before doing work.  */</font>
+
+  if (initialized () && !error ())
+    {
+      <font color=red>/* Get the actual data held in the string object */</font>
+      const char *cp = str.fast_rep ();
+
+      <font color=red>/* Send that data to the peer using send_n() as before.  If we
+        have a problem, we'll set error_ so that subsequent &lt;&lt;
+        operations won't try to use a broken stream.  */</font>
+      if (this->send_n (cp,
+                        <font color=#008888>ACE_OS::strlen</font> (cp)) == -1)
+        error_ = 1;
+    }
+  else
+    <font color=red>/* Be sure that error_ is set if somebody tries to use us when
+        we're not initialized.  */</font>
+    error_ = 1;
+
+  <font color=red>/* We have to return a reference to ourselves to allow chaining of
+    put operations (eg -- "<font color=green>server &lt;&lt; foo &lt;&lt; bar</font>").  Without the
+    reference, you would have to do each put operation as a statement.
+    That's OK but doesn't have the same feel as standard C++
+    iostreams.  */</font>
+  return *this ;
+}
+
+<font color=red>/* How do you put a char*?  We'll take an easy way out and construct
+an ACE_SString from the char* and then put that.  It would have been
+more efficient to implement this with the body of the
+operator&lt;&lt;(ACE_SString&) method and then express that method in terms
+of this one.  There's always more than one way to do things!  */</font>
+
+Client & 
+<font color=#008888>Client::operator</font>&lt;&lt; (char *str)
+{
+  ACE_SString newStr (str);
+
+  *this &lt;&lt; newStr;
+
+  return *this ;
+
+  <font color=red>/* Notice that we could have been really clever and done:
+
+     return *this &lt;&lt; ACE_SString (str);
+
+    That kind of thing just makes debugging a pain though!  */</font>
+}
+
+<font color=red>/* ACE_SString and char* are both about the same thing.  What do you
+  do about different datatypes though?
+
+  Do the same thing we did with char* and convert it to ACE_SString
+  where we already have a &lt;&lt; operator defined.  */</font>
+Client & 
+<font color=#008888>Client::operator</font>&lt;&lt; (int n)
+{
+  <font color=red>/* Create a character buffer large enough for the largest number.
+    That's a tough call but BUFSIZ should be quite enough.  */</font>
+  char buf[BUFSIZ];
+
+  <font color=red>/* Put the number into our buffer...  */</font>
+  <font color=#008888>ACE_OS::sprintf</font> (buf,
+                   "<font color=green>(%d)\n</font>",
+                   n);
+
+  <font color=red>/* And create the ACE_SString that we know how to put.  */</font>
+  ACE_SString newStr (buf);
+
+  <font color=red>/* Send it and...  */</font>
+  *this &lt;&lt; newStr;
+
+  <font color=red>/* return ourselves as usual.  */</font>
+  return *this;
+}
+
+<font color=red>/* Now we pull it all together.  Like Tutorial 3, we'll allow command
+  line options.  */</font>
+int 
+main (int argc, char *argv[])
+{
+  const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  u_short server_port = argc > 2 ? <font color=#008888>ACE_OS::atoi</font> (argv[2]) : ACE_DEFAULT_SERVER_PORT;
+  int max_iterations = argc > 3 ? <font color=#008888>ACE_OS::atoi</font> (argv[3]) : 4;
+
+  <font color=red>/* Use the basic constructor since the other isn't really very safe.  */</font>
+  Client peer;
+  
+  <font color=red>/* Open the server connection.  Notice how this is simpler than
+    Tutorial 3 since we only have to provide a host name and port
+    value.  */</font>
+  if (peer.open (server_host,
+                 server_port) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>open</font>"),
+                      -1);
+  
+  for (int i = 0; i &lt; max_iterations; i++)
+    {
+      <font color=red>/* Tell the server which iteration we're on.  No more mucking
+        aroudn with sprintf at this level!  It's all hidden from us.  */</font>
+      peer &lt;&lt; "<font color=green>message = </font>" &lt;&lt; i+1;
+
+      <font color=red>/* Everything OK?  */</font>
+      if (peer.error ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "<font color=green>%p\n</font>",
+                           "<font color=green>send</font>"),
+                          -1);
+      else
+        <font color=#008888>ACE_OS::sleep</font> (1);
+    }
+
+  if (peer.close () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n</font>",
+                       "<font color=green>close</font>"),
+                      -1);
+  return 0;
+}
+</PRE>
+<HR WIDTH="100%">
+
+<P>Ok, now we're done with that.  As you can see, it really isn't
+so hard to create an object that makes sending data much more "natural"
+than the typical send() or send_n() invocation.  You can even build
+up arbitrary objects and do some neat tricks with C++ templates to stream
+their data out as well.  (We may go into that a little later.) 
+Of course, writting the full implementation such that these streams are
+interchangable with the standard C++ ostreams is quite a bit more difficult. 
+In addition, there are a lot of optimizations that this client would benefit
+from!
+
+<P>As an exercise to the reader (don't you hate those!) I challenge you
+to write the server side of this.  You can take a  look at IOStream_Test
+in the ACE distribution if you get stuck...
+
+<P>If you want to compile it yourself, here's the <A HREF="client.cpp">source</A>,
+the <A HREF="Makefile">Makefile</A>,
+and <A HREF="00SetEnv">Environment
+settings</A>.
+
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
