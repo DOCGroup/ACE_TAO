@@ -1,3 +1,13 @@
+Tue Jun  8 17:01:32 2004  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Removed the AREXTRA
+	  definition. It caused all the files to be listed twice on the
+	  ar command line; once from xargs and once from the command given
+	  to xargs. Thanks to Ofira Shaer <Oshaer@ndsisrael.com> for
+	  reporting this problem.
+
+	* THANKS: Added Ofira Shaer.
+
 Tue Jun  8 16:27:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Removed the individual AC_CONFIG_FILE entries for the
