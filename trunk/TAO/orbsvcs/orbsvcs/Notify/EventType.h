@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_EVENTTYPE_H
-#define TAO_NS_EVENTTYPE_H
+#ifndef TAO_Notify_EVENTTYPE_H
+#define TAO_Notify_EVENTTYPE_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,7 +22,7 @@
 #include "orbsvcs/CosNotificationC.h"
 
 /**
- * @class TAO_NS_EventType
+ * @class TAO_Notify_EventType
  *
  * @brief
  *
@@ -30,34 +30,34 @@
  * It is used by the Event Manager as a key to find subscription lists.
  *
  */
-class TAO_Notify_Export TAO_NS_EventType
+class TAO_Notify_Export TAO_Notify_EventType
 {
 public:
   /// Constuctor
-  TAO_NS_EventType (void);
-  TAO_NS_EventType (const char* domain_name, const char* type_name);
-  TAO_NS_EventType (const CosNotification::EventType& event_type);
+  TAO_Notify_EventType (void);
+  TAO_Notify_EventType (const char* domain_name, const char* type_name);
+  TAO_Notify_EventType (const CosNotification::EventType& event_type);
   // Constuctor
 
   /// Destructor
-  ~TAO_NS_EventType ();
+  ~TAO_Notify_EventType ();
 
   /// hash value
   u_long hash (void) const;
 
   /// Assignment from CosNotification::EventType
-  TAO_NS_EventType& operator=(const CosNotification::EventType& event_type);
+  TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
 
   /// Assignment operator.
-  TAO_NS_EventType& operator=(const TAO_NS_EventType& event_type);
+  TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
   /// == operator
-  int operator==(const TAO_NS_EventType& notify_event_type) const;
+  int operator==(const TAO_Notify_EventType& notify_event_type) const;
 
   /// != operator
-  int operator!=(const TAO_NS_EventType& notify_event_type) const;
+  int operator!=(const TAO_Notify_EventType& notify_event_type) const;
 
-  static TAO_NS_EventType special (void);
+  static TAO_Notify_EventType special (void);
   // Return the special event type.
 
   CORBA::Boolean is_special (void) const;
@@ -89,4 +89,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_EVENTTYPE_H */
+#endif /* TAO_Notify_EVENTTYPE_H */

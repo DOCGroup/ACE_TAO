@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROXYPUSHCONSUMER_H
-#define TAO_NS_PROXYPUSHCONSUMER_H
+#ifndef TAO_Notify_PROXYPUSHCONSUMER_H
+#define TAO_Notify_PROXYPUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -30,20 +30,20 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_ProxyPushConsumer
+ * @class TAO_Notify_ProxyPushConsumer
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_ProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_ProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer>
 {
- friend class TAO_NS_Builder;
+ friend class TAO_Notify_Builder;
 public:
   /// Constuctor
-  TAO_NS_ProxyPushConsumer (void);
+  TAO_Notify_ProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_NS_ProxyPushConsumer ();
+  ~TAO_Notify_ProxyPushConsumer ();
 
   /// Release
   virtual void release (void);
@@ -77,8 +77,8 @@ protected:
                      ));
 
 private:
-  // Overloaded TAO_NS_ProxyConsumer::push to get around Borland compiler warnings.
-  virtual void push (TAO_NS_Event_var &event);
+  // Overloaded TAO_Notify_ProxyConsumer::push to get around Borland compiler warnings.
+  virtual void push (TAO_Notify_Event_var &event);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -90,4 +90,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROXYPUSHCONSUMER_H */
+#endif /* TAO_Notify_PROXYPUSHCONSUMER_H */

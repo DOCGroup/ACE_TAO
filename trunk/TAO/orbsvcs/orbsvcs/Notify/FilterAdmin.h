@@ -20,24 +20,24 @@
 #include "notify_export.h"
 
 /**
- * @class TAO_NS_FilterAdmin
+ * @class TAO_Notify_FilterAdmin
  *
  * @brief FilterAdmin interface methods implementation.
  *
  */
-class TAO_Notify_Export TAO_NS_FilterAdmin
+class TAO_Notify_Export TAO_Notify_FilterAdmin
 {
 
  public:
   /// Constructor
-  TAO_NS_FilterAdmin (void);
+  TAO_Notify_FilterAdmin (void);
 
   /// Destructor
-  virtual ~TAO_NS_FilterAdmin (void);
+  virtual ~TAO_Notify_FilterAdmin (void);
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -45,7 +45,7 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -86,7 +86,7 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
   FILTER_LIST filter_list_;
 
   /// Id generator for proxy suppliers
-  TAO_NS_ID_Factory filter_ids_;
+  TAO_Notify_ID_Factory filter_ids_;
 };
 
 #if defined (__ACE_INLINE__)

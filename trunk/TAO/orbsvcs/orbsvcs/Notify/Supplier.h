@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIER_H
-#define TAO_NS_SUPPLIER_H
+#ifndef TAO_Notify_SUPPLIER_H
+#define TAO_Notify_SUPPLIER_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,28 +22,28 @@
 #include "Peer.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
-class TAO_NS_ProxyConsumer;
+class TAO_Notify_ProxyConsumer;
 
 /**
- * @class TAO_NS_Supplier
+ * @class TAO_Notify_Supplier
  *
  * @brief Base Wrappers for Suppliers that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_NS_Supplier : public TAO_NS_Peer
+class TAO_Notify_Export TAO_Notify_Supplier : public TAO_Notify_Peer
 {
 public:
   /// Constuctor
-  TAO_NS_Supplier (TAO_NS_ProxyConsumer* proxy);
+  TAO_Notify_Supplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_NS_Supplier ();
+  ~TAO_Notify_Supplier ();
 
   /// Access Specific Proxy.
-  TAO_NS_ProxyConsumer* proxy_consumer (void);
+  TAO_Notify_ProxyConsumer* proxy_consumer (void);
 
   /// Access Base Proxy.
-  virtual TAO_NS_Proxy* proxy (void);
+  virtual TAO_Notify_Proxy* proxy (void);
 
 protected:
   /// Dispatch updates implementation.
@@ -52,7 +52,7 @@ protected:
                                    ACE_ENV_ARG_DECL);
 
   /// The proxy that we associate with.
-  TAO_NS_ProxyConsumer* proxy_;
+  TAO_Notify_ProxyConsumer* proxy_;
 
   /// Interface that accepts subscription_changes
   CosNotifyComm::NotifySubscribe_var subscribe_;
@@ -63,4 +63,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIER_H */
+#endif /* TAO_Notify_SUPPLIER_H */

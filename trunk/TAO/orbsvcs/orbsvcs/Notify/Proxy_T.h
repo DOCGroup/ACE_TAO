@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROXY_T_H
-#define TAO_NS_PROXY_T_H
+#ifndef TAO_Notify_PROXY_T_H
+#define TAO_Notify_PROXY_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,7 +22,7 @@
 #include "Proxy.h"
 
 /**
- * @class TAO_NS_Proxy_T
+ * @class TAO_Notify_Proxy_T
  *
  * @brief The is a base class for all proxys , templatized by the servant
  * type. All the Filter Admin and QoS Admin interface methods are
@@ -30,16 +30,16 @@
  *
  */
 template <class SERVANT_TYPE>
-class TAO_NS_Proxy_T : public SERVANT_TYPE, public virtual TAO_NS_Proxy
+class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
   /// Constuctor
-  TAO_NS_Proxy_T (void);
+  TAO_Notify_Proxy_T (void);
 
   /// Destructor
-  ~TAO_NS_Proxy_T ();
+  ~TAO_Notify_Proxy_T ();
 
-  /// Implements TAO_NS_Object::servant method.
+  /// Implements TAO_Notify_Object::servant method.
   virtual PortableServer::Servant servant (void);
 
   /// ServantBase refcount methods.
@@ -125,21 +125,21 @@ public:
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
+TAO_Notify_Proxy_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
+TAO_Notify_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_Event_Forwarder::ProxyPushSupplier>;
+TAO_Notify_Proxy_T<POA_Event_Forwarder::ProxyPushSupplier>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
+TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>;
+TAO_Notify_Proxy_T<POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>;
+TAO_Notify_Proxy_T<POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosNotifyChannelAdmin::ProxyPushConsumer>;
+TAO_Notify_Proxy_T<POA_CosNotifyChannelAdmin::ProxyPushConsumer>;
 template class TAO_Notify_Export
-TAO_NS_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
+TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 #if defined (__ACE_INLINE__)
@@ -155,4 +155,4 @@ TAO_NS_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROXY_T_H */
+#endif /* TAO_Notify_PROXY_T_H */

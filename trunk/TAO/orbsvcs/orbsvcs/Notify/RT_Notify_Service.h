@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_NOTIFY_SERVICE_H
-#define TAO_NS_RT_NOTIFY_SERVICE_H
+#ifndef TAO_Notify_RT_NOTIFY_SERVICE_H
+#define TAO_Notify_RT_NOTIFY_SERVICE_H
 
 #include "ace/pre.h"
 #include "rt_notify_export.h"
@@ -24,7 +24,7 @@
 /**
  * @class TAO_RT_Notify_Service
  *
- * @brief Implemetation of the TAO_NS_Service interface for RT Notification.
+ * @brief Implemetation of the TAO_Notify_Service interface for RT Notification.
  *
  */
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
@@ -60,4 +60,4 @@ ACE_FACTORY_DECLARE (TAO_RT_Notify,TAO_RT_Notify_Service)
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_NOTIFY_SERVICE_H */
+#endif /* TAO_Notify_RT_NOTIFY_SERVICE_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIERADMIN_H
-#define TAO_NS_SUPPLIERADMIN_H
+#ifndef TAO_Notify_SUPPLIERADMIN_H
+#define TAO_Notify_SUPPLIERADMIN_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -30,23 +30,23 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_SupplierAdmin
+ * @class TAO_Notify_SupplierAdmin
  *
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_NotifyExt::SupplierAdmin
-                                             , public virtual TAO_NS_Admin
+class TAO_Notify_Export TAO_Notify_SupplierAdmin : public virtual POA_NotifyExt::SupplierAdmin
+                                             , public virtual TAO_Notify_Admin
 {
 public:
   /// Constuctor
-  TAO_NS_SupplierAdmin (void);
+  TAO_Notify_SupplierAdmin (void);
 
   /// Destructor
-  ~TAO_NS_SupplierAdmin ();
+  ~TAO_Notify_SupplierAdmin ();
 
   /// Init
-  void init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL);
+  void init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -200,4 +200,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIERADMIN_H */
+#endif /* TAO_Notify_SUPPLIERADMIN_H */

@@ -30,12 +30,12 @@ class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
 class TAO_Notify_Property_Constraint;
 
-class TAO_Notify_Export TAO_NS_Constraint_Visitor
+class TAO_Notify_Export TAO_Notify_Constraint_Visitor
   : public TAO_ETCL_Constraint_Visitor
 {
 public:
   /// Constructor.
-  TAO_NS_Constraint_Visitor (void);
+  TAO_Notify_Constraint_Visitor (void);
 
   /// Put the event data into our hash map.
   int bind_structured_event (const CosNotification::StructuredEvent &s_event);

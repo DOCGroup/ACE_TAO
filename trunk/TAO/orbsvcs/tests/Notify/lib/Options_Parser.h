@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_OPTIONS_PARSER_H
-#define TAO_NS_OPTIONS_PARSER_H
+#ifndef TAO_Notify_Tests_OPTIONS_PARSER_H
+#define TAO_Notify_Tests_OPTIONS_PARSER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -23,19 +23,19 @@
 #include "orbsvcs/CosNotificationC.h"
 
 /**
- * @class TAO_NS_Options_Parser
+ * @class TAO_Notify_Tests_Options_Parser
  *
  * @brief Common Options parsing code.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Options_Parser
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Options_Parser
 {
 public:
   /// Constuctor
-  TAO_NS_Options_Parser (void);
+  TAO_Notify_Tests_Options_Parser (void);
 
   /// Destructor
-  ~TAO_NS_Options_Parser ();
+  ~TAO_Notify_Tests_Options_Parser ();
 
   /// Populates <qos> with options apecified in <arg_shifter>
   void execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter);
@@ -45,4 +45,4 @@ public:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_OPTIONS_PARSER_H */
+#endif /* TAO_Notify_Tests_OPTIONS_PARSER_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_CONSUMER_H
-#define TAO_NS_CONSUMER_H
+#ifndef TAO_Notify_CONSUMER_H
+#define TAO_Notify_CONSUMER_H
 
 #include "ace/pre.h"
 
@@ -20,17 +20,17 @@
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 
 /**
- * @class TAO_NS_Consumer
+ * @class TAO_Notify_Lanes_Consumer
  *
  * @brief Consumer
  *
  */
 
-class TAO_NS_Consumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_Notify_Lanes_Consumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor
-  TAO_NS_Consumer (TAO_NS_ORB_Objects& orb_objects);
+  TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
   void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL);
@@ -42,7 +42,7 @@ protected:
   // = Data members
 
   /// ORB Objects.
-  TAO_NS_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects orb_objects_;
 
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
@@ -61,7 +61,7 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~TAO_NS_Consumer (void);
+  virtual ~TAO_Notify_Lanes_Consumer (void);
 
   // = ServantBase operations
   virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
@@ -106,4 +106,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_CONSUMER_H */
+#endif /* TAO_Notify_CONSUMER_H */

@@ -1,6 +1,6 @@
 // $Id$
-#ifndef TAO_NS_Peer_T_CPP
-#define TAO_NS_Peer_T_CPP
+#ifndef TAO_Notify_Tests_Peer_T_CPP
+#define TAO_Notify_Tests_Peer_T_CPP
 
 #include "Peer_T.h"
 
@@ -8,7 +8,7 @@
 #include "Peer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Peer_T, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Peer_T, "$id$")
 
 #include "ace/Arg_Shifter.h"
 #include "Name.h"
@@ -17,30 +17,30 @@ ACE_RCSID(Notify, TAO_NS_Peer_T, "$id$")
 #include "orbsvcs/NotifyExtC.h"
 
 template <class Peer_Traits>
-TAO_NS_Peer_T<Peer_Traits>::TAO_NS_Peer_T (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T (void)
   : proxy_id_ (0)
 {
 }
 
 template <class Peer_Traits>
-TAO_NS_Peer_T<Peer_Traits>::~TAO_NS_Peer_T ()
+TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T ()
 {
 }
 
-template <class Peer_Traits> ACE_TYPENAME TAO_NS_Peer_T<Peer_Traits>::Proxy_Traits_PTR
-TAO_NS_Peer_T<Peer_Traits>::get_proxy (void)
+template <class Peer_Traits> ACE_TYPENAME TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
+TAO_Notify_Tests_Peer_T<Peer_Traits>::get_proxy (void)
 {
   return proxy_.in ();
 }
 
-template <class Peer_Traits> ACE_TYPENAME TAO_NS_Peer_T<Peer_Traits>::Peer_Traits_PTR
-TAO_NS_Peer_T<Peer_Traits>::activate (ACE_ENV_SINGLE_ARG_DECL)
+template <class Peer_Traits> ACE_TYPENAME TAO_Notify_Tests_Peer_T<Peer_Traits>::Peer_Traits_PTR
+TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID proxy_id ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID proxy_id ACE_ENV_ARG_DECL)
 {
   PortableServer::ServantBase_var servant_var (this);
 
@@ -61,7 +61,7 @@ TAO_NS_Peer_T<Peer_Traits>::connect (Proxy_Traits_PTR proxy, Proxy_Traits_ID pro
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL)
 {
   ACE_TYPENAME Proxy_Traits::VAR proxy_var = this->obtain_proxy (admin_ptr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -74,7 +74,7 @@ TAO_NS_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr ACE_ENV_ARG_DECL
 
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get the POA
   PortableServer::POA_var poa;
@@ -109,14 +109,14 @@ TAO_NS_Peer_T<Peer_Traits>::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::set_qos (CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL)
 {
   this->get_proxy ()->set_qos (qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_TRY
@@ -150,7 +150,7 @@ TAO_NS_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
@@ -161,13 +161,13 @@ TAO_NS_Peer_T<Peer_Traits>::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class Peer_Traits> PortableServer::POA_ptr
-TAO_NS_Peer_T<Peer_Traits>::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 template <class Peer_Traits> void
-TAO_NS_Peer_T<Peer_Traits>::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var poa = this->_default_POA ();
 
@@ -181,4 +181,4 @@ TAO_NS_Peer_T<Peer_Traits>::deactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-#endif /* TAO_NS_Peer_T_CPP */
+#endif /* TAO_Notify_Tests_Peer_T_CPP */

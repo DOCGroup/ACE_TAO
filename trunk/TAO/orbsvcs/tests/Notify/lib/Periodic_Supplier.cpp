@@ -13,9 +13,9 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID(RT_Notify, TAO_NS_Periodic_Supplier, "$id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Supplier, "$id$")
 
-TAO_NS_Periodic_Supplier::TAO_NS_Periodic_Supplier (void)
+TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier (void)
   : barrier_ (0),
     priority_ (0),
     period_ (0),
@@ -29,22 +29,22 @@ TAO_NS_Periodic_Supplier::TAO_NS_Periodic_Supplier (void)
 {
 }
 
-TAO_NS_Periodic_Supplier::~TAO_NS_Periodic_Supplier ()
+TAO_Notify_Tests_Periodic_Supplier::~TAO_Notify_Tests_Periodic_Supplier ()
 {
 }
 
 
 void
-TAO_NS_Periodic_Supplier::task_callback(TAO_NS_Task_Callback* client)
+TAO_Notify_Tests_Periodic_Supplier::task_callback(TAO_Notify_Tests_Task_Callback* client)
 {
   this->client_ = client;
 }
 
 int
-TAO_NS_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
-  if (TAO_Notify_StructuredPushSupplier::init_state (arg_shifter) == -1)
+  if (TAO_Notify_Tests_StructuredPushSupplier::init_state (arg_shifter) == -1)
     return -1;
 
   const ACE_TCHAR *current_arg = 0;
@@ -130,7 +130,7 @@ TAO_NS_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 int
-TAO_NS_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
+TAO_Notify_Tests_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
 {
   barrier_ = barrier;
 
@@ -143,7 +143,7 @@ TAO_NS_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
   flags |=
     orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
-  TAO_NS_Priority_Mapping* priority_mapping;
+  TAO_Notify_Tests_Priority_Mapping* priority_mapping;
   LOOKUP_MANAGER->resolve (priority_mapping);
 
   CORBA::Short native_prio;
@@ -174,7 +174,7 @@ TAO_NS_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
 }
 
 void
-TAO_NS_Periodic_Supplier::send_warmup_events (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::send_warmup_events (ACE_ENV_SINGLE_ARG_DECL)
 {
   int WARMUP_COUNT = 10;
 
@@ -186,7 +186,7 @@ TAO_NS_Periodic_Supplier::send_warmup_events (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier::send_prologue (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::send_prologue (ACE_ENV_SINGLE_ARG_DECL)
 {
   // populate event.
   // send the base time and max count.
@@ -212,7 +212,7 @@ TAO_NS_Periodic_Supplier::send_prologue (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->send_prologue (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -297,7 +297,7 @@ TAO_NS_Periodic_Supplier::handle_svc (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_NS_Periodic_Supplier::svc (void)
+TAO_Notify_Tests_Periodic_Supplier::svc (void)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
@@ -336,7 +336,7 @@ TAO_NS_Periodic_Supplier::svc (void)
 }
 
 void
-TAO_NS_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());

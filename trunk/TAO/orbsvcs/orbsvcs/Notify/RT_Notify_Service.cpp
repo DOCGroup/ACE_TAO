@@ -6,7 +6,7 @@
 #include "RT_Notify_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_RT_Notify_Service, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_RT_Notify_Service, "$Id$")
 
 #include "ace/Dynamic_Service.h"
 #include "Properties.h"
@@ -44,7 +44,7 @@ TAO_RT_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   TAO_CosNotify_Service::init_i (orb ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_NS_RT_Properties* properties = TAO_NS_RT_PROPERTIES::instance();
+  TAO_Notify_RT_Properties* properties = TAO_Notify_RT_PROPERTIES::instance();
 
   // Resolve RTORB
   CORBA::Object_var object =
@@ -76,28 +76,28 @@ TAO_RT_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 void
 TAO_RT_Notify_Service::init_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->factory_ = ACE_Dynamic_Service<TAO_NS_Factory>::instance ("TAO_NS_Factory");
+  this->factory_ = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
   if (this->factory_ == 0)
     {
       ACE_NEW_THROW_EX (this->factory_,
-                        TAO_NS_RT_Factory (),
+                        TAO_Notify_RT_Factory (),
                         CORBA::NO_MEMORY ());
       ACE_CHECK;
     }
 
-  TAO_NS_PROPERTIES::instance()->factory (this->factory_);
+  TAO_Notify_PROPERTIES::instance()->factory (this->factory_);
 }
 
 void
 TAO_RT_Notify_Service::init_builder (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->builder_,
-                    TAO_NS_RT_Builder (),
+                    TAO_Notify_RT_Builder (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  TAO_NS_PROPERTIES::instance()->builder (this->builder_);
+  TAO_Notify_PROPERTIES::instance()->builder (this->builder_);
 }
 
 ACE_FACTORY_DEFINE (TAO_RT_Notify,TAO_RT_Notify_Service)

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
-#define TAO_NS_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
+#ifndef TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
+#define TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../rt_notify_export.h"
@@ -22,34 +22,34 @@
 #include "StructuredProxyPushSupplier.h"
 
 /**
- * @class TAO_NS_RT_StructuredProxyPushSupplier
+ * @class TAO_Notify_RT_StructuredProxyPushSupplier
  *
  * @brief
  *
  */
-class TAO_RT_Notify_Export TAO_NS_RT_StructuredProxyPushSupplier : public virtual TAO_NS_StructuredProxyPushSupplier
+class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier : public virtual TAO_Notify_StructuredProxyPushSupplier
 {
 public:
   /// Constuctor
-  TAO_NS_RT_StructuredProxyPushSupplier (void);
+  TAO_Notify_RT_StructuredProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_NS_RT_StructuredProxyPushSupplier ();
+  ~TAO_Notify_RT_StructuredProxyPushSupplier ();
 
   /// Activate this object and obtain the Event_Forwarder interface.
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void push (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+  virtual void push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer
-  virtual void push (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
+  virtual void push (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+  virtual void push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer, no filtering
-  virtual void push_no_filtering (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
+  virtual void push_no_filtering (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
 private:
   /// Our ref.
@@ -61,4 +61,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_STRUCTUREDPROXYPUSHSUPPLIER_H */
+#endif /* TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H */

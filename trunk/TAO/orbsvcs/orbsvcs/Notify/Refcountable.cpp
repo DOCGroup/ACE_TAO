@@ -8,19 +8,19 @@
 #include "Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Refcountable, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
-TAO_NS_Refcountable::TAO_NS_Refcountable (void)
+TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)
   :refcount_ (1)
 {
 }
 
-TAO_NS_Refcountable::~TAO_NS_Refcountable ()
+TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 {
 }
 
 CORBA::ULong
-TAO_NS_Refcountable::_incr_refcnt (void)
+TAO_Notify_Refcountable::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
@@ -32,7 +32,7 @@ TAO_NS_Refcountable::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_NS_Refcountable::_decr_refcnt (void)
+TAO_Notify_Refcountable::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);

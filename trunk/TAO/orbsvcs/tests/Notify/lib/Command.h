@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_COMMAND_H
-#define TAO_NS_COMMAND_H
+#ifndef TAO_Notify_Tests_COMMAND_H
+#define TAO_Notify_Tests_COMMAND_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,20 +24,20 @@
 #include "ace/CORBA_macros.h"
 
 /**
- * @class TAO_NS_Command
+ * @class TAO_Notify_Tests_Command
  *
  * @brief Base Class for all command objects.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Command
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
 {
-  friend class TAO_NS_Command_Builder;
+  friend class TAO_Notify_Tests_Command_Builder;
 public:
   /// Constuctor
-  TAO_NS_Command (void);
+  TAO_Notify_Tests_Command (void);
 
   /// Destructor
-  virtual ~TAO_NS_Command ();
+  virtual ~TAO_Notify_Tests_Command ();
 
   /// Parse args and populate options.
   virtual void init (ACE_Arg_Shifter& arg_shifter);
@@ -53,7 +53,7 @@ public:
 
 protected:
   /// Next command after this one.
-  TAO_NS_Command* next_;
+  TAO_Notify_Tests_Command* next_;
 
   enum {INVALID = -1};
 
@@ -64,8 +64,8 @@ private:
   void execute (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Save the next command to exec.
-  void next (TAO_NS_Command* command);
+  void next (TAO_Notify_Tests_Command* command);
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_COMMAND_H */
+#endif /* TAO_Notify_Tests_COMMAND_H */

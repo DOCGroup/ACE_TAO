@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PERIODIC_SUPPLIER_H
-#define TAO_NS_PERIODIC_SUPPLIER_H
+#ifndef TAO_Notify_Tests_PERIODIC_SUPPLIER_H
+#define TAO_Notify_Tests_PERIODIC_SUPPLIER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,27 +24,27 @@
 #include "Task_Stats.h"
 #include "StructuredEvent.h"
 
-class TAO_NS_Task_Callback;
+class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
 class ACE_Arg_Shifter;
 
 /**
- * @class TAO_NS_Periodic_Supplier
+ * @class TAO_Notify_Tests_Periodic_Supplier
  *
  * @brief A Periodic Supplier.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Periodic_Supplier : public TAO_Notify_StructuredPushSupplier, public ACE_Task <ACE_SYNCH>
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier : public TAO_Notify_Tests_StructuredPushSupplier, public ACE_Task <ACE_SYNCH>
 {
 public:
   /// Constuctor
-  TAO_NS_Periodic_Supplier (void);
+  TAO_Notify_Tests_Periodic_Supplier (void);
 
   /// Destructor
-  ~TAO_NS_Periodic_Supplier ();
+  ~TAO_Notify_Tests_Periodic_Supplier ();
 
   /// set the helper callback
-  void task_callback(TAO_NS_Task_Callback* client);
+  void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
   int init_state (ACE_Arg_Shifter& arg_shifter);
@@ -76,9 +76,9 @@ protected:
   ACE_Barrier* barrier_;
 
   /// The event to send.
-  TAO_NS_StructuredEvent event_;
+  TAO_Notify_Tests_StructuredEvent event_;
 
-  TAO_NS_StructuredEvent zeroth_event;
+  TAO_Notify_Tests_StructuredEvent zeroth_event;
 
   /// The priority of this task.
   CORBA::Short priority_;
@@ -108,8 +108,8 @@ protected:
   Task_Stats stats_;
 
   /// Client
-  TAO_NS_Task_Callback* client_;
+  TAO_Notify_Tests_Task_Callback* client_;
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_PERIODIC_SUPPLIER_H */
+#endif /* TAO_Notify_Tests_PERIODIC_SUPPLIER_H */

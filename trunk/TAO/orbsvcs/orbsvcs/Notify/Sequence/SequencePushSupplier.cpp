@@ -6,19 +6,19 @@
 #include "SequencePushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_SequencePushSupplier, "$id$")
+ACE_RCSID(Notify, TAO_Notify_SequencePushSupplier, "$id$")
 
-TAO_NS_SequencePushSupplier::TAO_NS_SequencePushSupplier (TAO_NS_ProxyConsumer* proxy)
-  :TAO_NS_Supplier (proxy)
+TAO_Notify_SequencePushSupplier::TAO_Notify_SequencePushSupplier (TAO_Notify_ProxyConsumer* proxy)
+  :TAO_Notify_Supplier (proxy)
 {
 }
 
-TAO_NS_SequencePushSupplier::~TAO_NS_SequencePushSupplier ()
+TAO_Notify_SequencePushSupplier::~TAO_Notify_SequencePushSupplier ()
 {
 }
 
 void
-TAO_NS_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->push_supplier_ = CosNotifyComm::SequencePushSupplier::_duplicate (push_supplier);
 
@@ -26,7 +26,7 @@ TAO_NS_SequencePushSupplier::init (CosNotifyComm::SequencePushSupplier_ptr push_
 }
 
 void
-TAO_NS_SequencePushSupplier::release (void)
+TAO_Notify_SequencePushSupplier::release (void)
 {
   delete this;
   //@@ inform factory

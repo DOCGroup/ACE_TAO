@@ -8,8 +8,8 @@
  *
  *
  */
-#ifndef TAO_NS_STRUCTUREDEVENT_H
-#define TAO_NS_STRUCTUREDEVENT_H
+#ifndef TAO_Notify_STRUCTUREDEVENT_H
+#define TAO_Notify_STRUCTUREDEVENT_H
 
 #include "ace/pre.h"
 #include "../notify_export.h"
@@ -23,23 +23,23 @@
 #include "orbsvcs/CosNotificationC.h"
 
 /**
- * @class TAO_NS_StructuredEvent_No_Copy
+ * @class TAO_Notify_StructuredEvent_No_Copy
  *
  * @brief StructuredEvent implementation.
  *
  */
 
-class TAO_Notify_Export TAO_NS_StructuredEvent_No_Copy : public TAO_NS_Event
+class TAO_Notify_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Notify_Event
 {
 public:
   /// Constuctor
-  TAO_NS_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
+  TAO_Notify_StructuredEvent_No_Copy (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  ~TAO_NS_StructuredEvent_No_Copy ();
+  ~TAO_Notify_StructuredEvent_No_Copy ();
 
   /// Copy the event.
-  virtual TAO_NS_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  virtual TAO_Notify_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const;
 
   CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const;
 
@@ -47,10 +47,10 @@ public:
   virtual void convert (CosNotification::StructuredEvent& notification) const;
 
   /// Get the event type.
-  virtual const TAO_NS_EventType& type (void) const;
+  virtual const TAO_Notify_EventType& type (void) const;
 
   /// Push event to consumer
-  virtual void push (TAO_NS_Consumer* consumer ACE_ENV_ARG_DECL) const;
+  virtual void push (TAO_Notify_Consumer* consumer ACE_ENV_ARG_DECL) const;
 
   /// Push event to the Event_Forwarder interface
   virtual void push (Event_Forwarder::StructuredProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
@@ -69,25 +69,25 @@ protected:
   const CosNotification::StructuredEvent* notification_;
 
   /// Our type.
-  const TAO_NS_EventType type_;
+  const TAO_Notify_EventType type_;
 };
 
 /*****************************************************************************************************/
 
 /**
- * @class TAO_NS_StructuredEvent
+ * @class TAO_Notify_StructuredEvent
  *
  * @brief StructuredEvent implementation.
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredEvent : public TAO_NS_StructuredEvent_No_Copy
+class TAO_Notify_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
 {
 public:
   /// Constuctor
-  TAO_NS_StructuredEvent (const CosNotification::StructuredEvent& notification);
+  TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent& notification);
 
   /// Destructor
-  ~TAO_NS_StructuredEvent ();
+  ~TAO_Notify_StructuredEvent ();
 
 protected:
   /// Copy of the Event.
@@ -99,4 +99,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_STRUCTUREDEVENT_H */
+#endif /* TAO_Notify_STRUCTUREDEVENT_H */

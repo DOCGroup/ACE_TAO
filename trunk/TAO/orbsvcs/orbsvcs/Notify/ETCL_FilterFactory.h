@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_ETCL_FILTERFACTORY_H
-#define TAO_NS_ETCL_FILTERFACTORY_H
+#ifndef TAO_Notify_ETCL_FILTERFACTORY_H
+#define TAO_Notify_ETCL_FILTERFACTORY_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -30,23 +30,23 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_ETCL_FilterFactory
+ * @class TAO_Notify_ETCL_FilterFactory
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_ETCL_FilterFactory : public virtual PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory : public virtual PortableServer::RefCountServantBase
                                                   , public virtual POA_CosNotifyFilter::FilterFactory
-                                                  , public TAO_NS_FilterFactory
+                                                  , public TAO_Notify_FilterFactory
 {
 public:
   /// Constuctor
-  TAO_NS_ETCL_FilterFactory (void);
+  TAO_Notify_ETCL_FilterFactory (void);
 
   /// Destructor
-  ~TAO_NS_ETCL_FilterFactory ();
+  ~TAO_Notify_ETCL_FilterFactory ();
 
-  ///= TAO_NS_FilterFactory methods.
+  ///= TAO_Notify_FilterFactory methods.
 
   virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
 
@@ -78,11 +78,11 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_ETCL_FilterFactory)
+ACE_FACTORY_DECLARE (TAO_Notify, TAO_Notify_ETCL_FilterFactory)
 
 #if defined (__ACE_INLINE__)
 #include "ETCL_FilterFactory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_ETCL_FILTERFACTORY_H */
+#endif /* TAO_Notify_ETCL_FILTERFACTORY_H */

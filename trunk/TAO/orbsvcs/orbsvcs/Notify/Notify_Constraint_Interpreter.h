@@ -25,21 +25,21 @@
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "notify_export.h"
 
-class TAO_NS_Constraint_Visitor;
+class TAO_Notify_Constraint_Visitor;
 
 /**
- * @class TAO_NS_Constraint_Interpreter
+ * @class TAO_Notify_Constraint_Interpreter
  *
  * @brief "ETCL" Interpreter for the Notify queries.
  */
-class TAO_Notify_Export TAO_NS_Constraint_Interpreter : public TAO_ETCL_Interpreter
+class TAO_Notify_Export TAO_Notify_Constraint_Interpreter : public TAO_ETCL_Interpreter
 {
 public:
   // = Initialization and termination methods.
-  TAO_NS_Constraint_Interpreter (void);
+  TAO_Notify_Constraint_Interpreter (void);
 
   /// Destructor
-  ~TAO_NS_Constraint_Interpreter (void);
+  ~TAO_Notify_Constraint_Interpreter (void);
 
   /**
    * This method builds an expression tree representing the
@@ -54,7 +54,7 @@ public:
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.
-  CORBA::Boolean evaluate (TAO_NS_Constraint_Visitor &evaluator);
+  CORBA::Boolean evaluate (TAO_Notify_Constraint_Visitor &evaluator);
 };
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_CONSTRAINT_INTERPRETER_H */

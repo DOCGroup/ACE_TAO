@@ -13,28 +13,28 @@ ACE_RCSID(lib, TAO_Periodic_Consumer_Command, "$id$")
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_NS_Periodic_Consumer_Command::TAO_NS_Periodic_Consumer_Command (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_Command (void)
 {
 }
 
-TAO_NS_Periodic_Consumer_Command::~TAO_NS_Periodic_Consumer_Command ()
+TAO_Notify_Tests_Periodic_Consumer_Command::~TAO_Notify_Tests_Periodic_Consumer_Command ()
 {
-}
-
-const char*
-TAO_NS_Periodic_Consumer_Command::get_name (void)
-{
-  return TAO_NS_Periodic_Consumer_Command::name ();
 }
 
 const char*
-TAO_NS_Periodic_Consumer_Command::name (void)
+TAO_Notify_Tests_Periodic_Consumer_Command::get_name (void)
 {
-  return TAO_NS_Name::periodic_consumer_command;
+  return TAO_Notify_Tests_Periodic_Consumer_Command::name ();
+}
+
+const char*
+TAO_Notify_Tests_Periodic_Consumer_Command::name (void)
+{
+  return TAO_Notify_Tests_Name::periodic_consumer_command;
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -68,19 +68,19 @@ TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
               arg_shifter.consume_arg ();
             }
 
-          TAO_NS_Periodic_Consumer* consumer = 0;
+          TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
 
           // create the consumer
           if (is_relay == 1)
-            consumer = new TAO_NS_Relay_Consumer (relay_destination);
+            consumer = new TAO_Notify_Tests_Relay_Consumer (relay_destination);
           else if (is_direct == 1)
-            consumer = new TAO_NS_Direct_Consumer ();
+            consumer = new TAO_Notify_Tests_Direct_Consumer ();
           else
-            consumer = new TAO_NS_Periodic_Consumer ();
+            consumer = new TAO_Notify_Tests_Periodic_Consumer ();
 
           consumer->set_name (this->name_);
 
-         TAO_NS_Activation_Manager* act_mgr = 0;
+         TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
@@ -101,7 +101,7 @@ TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->name_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser options_parser;
+          TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         } /* Subscription */
       else if (arg_shifter.cur_arg_strncasecmp ("-Disconnect") == 0) //
@@ -141,21 +141,21 @@ TAO_NS_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser qos_parser;
+          TAO_Notify_Tests_Options_Parser qos_parser;
           qos_parser.execute (this->qos_, arg_shifter);
         }
     }
 }
 
-TAO_NS_Periodic_Consumer*
-TAO_NS_Periodic_Consumer_Command::consumer (void)
+TAO_Notify_Tests_Periodic_Consumer*
+TAO_Notify_Tests_Periodic_Consumer_Command::consumer (void)
 {
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
 
   LOOKUP_MANAGER->resolve (act_mgr);
 
   // Locate the consumer
-  TAO_NS_Periodic_Consumer* consumer = 0;
+  TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
 
   {
     ACE_DECLARE_NEW_CORBA_ENV;
@@ -170,16 +170,16 @@ TAO_NS_Periodic_Consumer_Command::consumer (void)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->consumer ()->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Consumer* consumer = this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
@@ -191,9 +191,9 @@ TAO_NS_Periodic_Consumer_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Consumer* consumer= this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
@@ -202,9 +202,9 @@ TAO_NS_Periodic_Consumer_Command::handle_subscriptions (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Consumer* consumer= this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
   if (consumer == 0)
     return;
 
@@ -213,9 +213,9 @@ TAO_NS_Periodic_Consumer_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Consumer* consumer = this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
   if (consumer == 0)
     return;
 
@@ -224,9 +224,9 @@ TAO_NS_Periodic_Consumer_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Consumer* consumer = this->consumer ();
+  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
   if (consumer == 0)
     return;
@@ -236,7 +236,7 @@ TAO_NS_Periodic_Consumer_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Consumer_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == CREATE)
     {

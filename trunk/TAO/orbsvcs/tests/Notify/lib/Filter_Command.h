@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_FILTER_COMMAND_H
-#define TAO_NS_FILTER_COMMAND_H
+#ifndef TAO_Notify_Tests_FILTER_COMMAND_H
+#define TAO_Notify_Tests_FILTER_COMMAND_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,19 +24,19 @@
 #include "Command.h"
 
 /**
- * @class TAO_NS_Filter_Command
+ * @class TAO_Notify_Tests_Filter_Command
  *
  * @brief Command for Filter Objects.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Filter_Command : public TAO_NS_Command
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Filter_Command : public TAO_Notify_Tests_Command
 {
 public:
   /// Constuctor
-  TAO_NS_Filter_Command (void);
+  TAO_Notify_Tests_Filter_Command (void);
 
   /// Destructor
-  ~TAO_NS_Filter_Command ();
+  ~TAO_Notify_Tests_Filter_Command ();
 
   /// Parse args and populate options.
   virtual void init (ACE_Arg_Shifter& arg_shifter);
@@ -80,4 +80,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_FILTER_COMMAND_H */
+#endif /* TAO_Notify_Tests_FILTER_COMMAND_H */

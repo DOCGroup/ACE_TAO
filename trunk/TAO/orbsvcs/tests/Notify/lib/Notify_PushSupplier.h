@@ -6,7 +6,7 @@
 
 #include "PushSupplier.h"
 
-typedef TAO_NS_PushSupplier TAO_Notify_PushSupplier;
+typedef TAO_Notify_Tests_PushSupplier TAO_Notify_PushSupplier;
 
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_PUSHSUPPLIER_H */

@@ -24,7 +24,7 @@
 class AdminProperties;
 /***************************************************************************/
 
-class AdminProperties_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class AdminProperties_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
   friend class AdminProperties;
 public:
@@ -60,7 +60,7 @@ public:
   // Constructor.
 
   /// Init this object.
-  void init (TAO_Notify_StructuredPushSupplier *supplier, AdminProperties* client);
+  void init (TAO_Notify_Tests_StructuredPushSupplier *supplier, AdminProperties* client);
 
   virtual int init (int argc, ACE_TCHAR *argv []);
 
@@ -69,7 +69,7 @@ public:
 
 private:
   /// Supplier
-  TAO_Notify_StructuredPushSupplier *supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier *supplier_;
 
   /// Client Object.
   AdminProperties* client_;

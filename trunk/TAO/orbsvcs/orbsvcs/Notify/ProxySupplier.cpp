@@ -6,7 +6,7 @@
 #include "ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_ProxySupplier, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_ProxySupplier, "$Id$")
 
 #include "Event_Manager.h"
 #include "AdminProperties.h"
@@ -17,47 +17,47 @@ ACE_RCSID(RT_Notify, TAO_NS_ProxySupplier, "$Id$")
 #include "Properties.h"
 #include "ConsumerAdmin.h"
 
-TAO_NS_ProxySupplier::TAO_NS_ProxySupplier (void)
+TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier (void)
   : consumer_admin_ (0)
   , consumer_ (0)
 {
 }
 
-TAO_NS_ProxySupplier::~TAO_NS_ProxySupplier ()
+TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
 {
   this->consumer_admin_->_decr_refcnt ();
 }
 
 void
-TAO_NS_ProxySupplier::init (TAO_NS_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Object::init (consumer_admin);
+  TAO_Notify_Object::init (consumer_admin);
 
   this->consumer_admin_ = consumer_admin;
 
   this->consumer_admin_->_incr_refcnt ();
 
   const CosNotification::QoSProperties &default_ps_qos =
-    TAO_NS_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
+    TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
   this->set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_NS_Peer*
-TAO_NS_ProxySupplier:: peer (void)
+TAO_Notify_Peer*
+TAO_Notify_ProxySupplier:: peer (void)
 {
   return this->consumer ();
 }
 
 void
-TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
                    ))
 {
-  TAO_NS_Atomic_Property_Long& consumer_count = this->admin_properties_->consumers ();
-  const TAO_NS_Property_Long& max_consumers = this->admin_properties_->max_consumers ();
+  TAO_Notify_Atomic_Property_Long& consumer_count = this->admin_properties_->consumers ();
+  const TAO_Notify_Property_Long& max_consumers = this->admin_properties_->max_consumers ();
 
   if (max_consumers != 0 &&
       consumer_count >= max_consumers.value ())
@@ -83,7 +83,7 @@ TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
   // Inform QoS values.
   consumer_->qos_changed (this->qos_properties_);
 
-  TAO_NS_EventTypeSeq removed;
+  TAO_Notify_EventTypeSeq removed;
 
   this->event_manager_->subscription_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
 
@@ -95,9 +95,9 @@ TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_ProxySupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_EventTypeSeq added;
+  TAO_Notify_EventTypeSeq added;
 
   this->event_manager_->subscription_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -110,9 +110,9 @@ TAO_NS_ProxySupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_NS_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->TAO_NS_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+  if (this->TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return 1;
 
   ACE_CHECK_RETURN (1);
@@ -127,7 +127,7 @@ TAO_NS_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
@@ -139,48 +139,48 @@ TAO_NS_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_ProxySupplier::push (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch_No_Copy request (event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 1);
 
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxySupplier::push (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::push (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch_No_Copy_Ex request (event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 1);
 
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch_No_Copy request (event, this, 0); // No filtering.
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 0); // No filtering.
 
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxySupplier::push_no_filtering (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Dispatch_No_Copy_Ex request (event, this, 0); // No filtering.
+  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 0); // No filtering.
 
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_ProxySupplier::qos_changed (const TAO_NS_QoSProperties& qos_properties)
+TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 {
-  TAO_NS_Property_Long mepc_qos (CosNotification::MaxEventsPerConsumer);
+  TAO_Notify_Property_Long mepc_qos (CosNotification::MaxEventsPerConsumer);
 
   if (mepc_qos.set (qos_properties) != -1)
     {
       // Does the Proxy own the Worker Task?
       if (own_worker_task_)
         {
-          TAO_NS_Buffering_Strategy* bs = this->worker_task_->buffering_strategy ();
+          TAO_Notify_Buffering_Strategy* bs = this->worker_task_->buffering_strategy ();
 
           // Apply this QoS to the Proxy's Buffering Strategy.
           if (bs)
@@ -190,16 +190,16 @@ TAO_NS_ProxySupplier::qos_changed (const TAO_NS_QoSProperties& qos_properties)
         }
     }
 
-  TAO_NS_Proxy::qos_changed (qos_properties);
+  TAO_Notify_Proxy::qos_changed (qos_properties);
 }
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Refcountable_Guard_T<TAO_NS_ProxySupplier>;
+template class TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_Refcountable_Guard_T<TAO_NS_ProxySupplier>
+#pragma instantiate TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

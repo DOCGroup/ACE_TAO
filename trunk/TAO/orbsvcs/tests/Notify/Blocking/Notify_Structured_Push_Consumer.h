@@ -21,7 +21,7 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "orbsvcs/TimeBaseC.h"
 
-class Notify_Structured_Push_Consumer: public TAO_Notify_StructuredPushConsumer
+class Notify_Structured_Push_Consumer: public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   Notify_Structured_Push_Consumer (

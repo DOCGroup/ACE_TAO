@@ -12,11 +12,11 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID(RT_Notify, TAO_NS_Periodic_Consumer, "$id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Consumer, "$id$")
 
 int WARMUP_COUNT = 10;
 
-TAO_NS_Periodic_Consumer::TAO_NS_Periodic_Consumer (void)
+TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer (void)
   : count_ (-2)
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
@@ -27,21 +27,21 @@ TAO_NS_Periodic_Consumer::TAO_NS_Periodic_Consumer (void)
 {
 }
 
-TAO_NS_Periodic_Consumer::~TAO_NS_Periodic_Consumer ()
+TAO_Notify_Tests_Periodic_Consumer::~TAO_Notify_Tests_Periodic_Consumer ()
 {
 }
 
 void
-TAO_NS_Periodic_Consumer::task_callback (TAO_NS_Task_Callback* client)
+TAO_Notify_Tests_Periodic_Consumer::task_callback (TAO_Notify_Tests_Task_Callback* client)
 {
   this->client_ = client;
 }
 
 int
-TAO_NS_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
-  if (TAO_Notify_StructuredPushConsumer::init_state (arg_shifter) == -1)
+  if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
     return -1;
 
   const ACE_TCHAR *current_arg = 0;
@@ -75,7 +75,7 @@ TAO_NS_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event \n", this->name_.c_str ()));
@@ -112,7 +112,7 @@ TAO_NS_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq
 }
 
 void
-TAO_NS_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& prop_seq)
 {
   // Check if the event carries a Priority.
   int event_has_priority_set = 0;
@@ -147,7 +147,7 @@ TAO_NS_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& pr
 
       CORBA::Short native_priority = CORBA::Short (priority);
 
-      TAO_NS_Priority_Mapping* priority_mapping;
+      TAO_Notify_Tests_Priority_Mapping* priority_mapping;
       LOOKUP_MANAGER->resolve (priority_mapping);
 
       CORBA::Short corba_priority;
@@ -167,7 +167,7 @@ TAO_NS_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& pr
 }
 
 void
-TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -252,7 +252,7 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
 }
 
 void
-TAO_NS_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_ACTIVATION_MANAGER_H
-#define TAO_NS_ACTIVATION_MANAGER_H
+#ifndef TAO_Notify_Tests_ACTIVATION_MANAGER_H
+#define TAO_Notify_Tests_ACTIVATION_MANAGER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -29,27 +29,27 @@
 class ACE_Barrier;
 
 /**
- * @class TAO_NS_Activation_Manager
+ * @class TAO_Notify_Tests_Activation_Manager
  *
  * @brief Class to handle Suppliers and Consumers.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Activation_Manager : public TAO_NS_Task_Callback
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_Notify_Tests_Task_Callback
                                                        , public POA_Notify_Test::Activation_Manager
 {
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_NS_PeriodicSupplier_Map;
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_NS_PeriodicConsumer_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_NS_PeriodicSupplier_Iterator;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_NS_PeriodicConsumer_Iterator;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Supplier*> TAO_NS_PeriodicSupplier_Entry;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Periodic_Consumer*> TAO_NS_PeriodicConsumer_Entry;
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Map;
+  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Map;
+  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Iterator;
+  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Iterator;
+  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*> TAO_Notify_Tests_PeriodicSupplier_Entry;
+  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*> TAO_Notify_Tests_PeriodicConsumer_Entry;
 
 public:
   /// Constuctor
-  TAO_NS_Activation_Manager (void);
+  TAO_Notify_Tests_Activation_Manager (void);
 
   /// Destructor
-  virtual ~TAO_NS_Activation_Manager ();
+  virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
   virtual void start (ACE_ENV_SINGLE_ARG_DECL)
@@ -58,15 +58,15 @@ public:
                      ));
 
   /// Register Supplier
-  void _register (TAO_NS_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name ACE_ENV_ARG_DECL);
   /// Register Consumer
-  void _register (TAO_NS_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void _register (TAO_Notify_Tests_Periodic_Consumer* consumer, const char* obj_name ACE_ENV_ARG_DECL);
 
   /// Resolve Supplier
-  void resolve (TAO_NS_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Supplier*& supplier, const char* obj_name ACE_ENV_ARG_DECL);
 
   /// Resolve Consumer
-  void resolve (TAO_NS_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL);
+  void resolve (TAO_Notify_Tests_Periodic_Consumer*& consumer, const char* obj_name ACE_ENV_ARG_DECL);
 
   // Activate the tasks for each supplier.
   int activate_suppliers (void);
@@ -80,9 +80,9 @@ public:
   /// Wait till active suppliers and consumers are done.
   void wait_for_completion (void);
 
-  /// TAO_NS_Task_Callback methods
-  virtual void done (TAO_NS_Periodic_Supplier* supplier);
-  virtual void done (TAO_NS_Periodic_Consumer* consumer);
+  /// TAO_Notify_Tests_Task_Callback methods
+  virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier);
+  virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer);
 
   // Dump stats gathered during exec..
   void dump_stats (int dump_samples);
@@ -114,10 +114,10 @@ protected:
   TAO_SYNCH_CONDITION active_done_;
 
   // Map that stores suppliers.
-  TAO_NS_PeriodicSupplier_Map supplier_map_;
+  TAO_Notify_Tests_PeriodicSupplier_Map supplier_map_;
 
   // Map that stores consumers.
-  TAO_NS_PeriodicConsumer_Map consumer_map_;
+  TAO_Notify_Tests_PeriodicConsumer_Map consumer_map_;
 
   /// The file for output
   FILE *ior_output_file_;
@@ -133,4 +133,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_ACTIVATION_MANAGER_H */
+#endif /* TAO_Notify_Tests_ACTIVATION_MANAGER_H */

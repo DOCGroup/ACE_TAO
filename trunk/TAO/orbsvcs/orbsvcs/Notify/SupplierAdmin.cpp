@@ -6,7 +6,7 @@
 #include "SupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_SupplierAdmin, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_SupplierAdmin, "$Id$")
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Builder.h"
@@ -17,55 +17,55 @@ ACE_RCSID(RT_Notify, TAO_NS_SupplierAdmin, "$Id$")
 #include "Seq_Worker_T.h"
 #include "Properties.h"
 
-typedef TAO_NS_Find_Worker_T<TAO_NS_Proxy
+typedef TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
                              , CosNotifyChannelAdmin::ProxyConsumer
                              , CosNotifyChannelAdmin::ProxyConsumer_ptr
                              , CosNotifyChannelAdmin::ProxyNotFound>
-TAO_NS_ProxyConsumer_Find_Worker;
+TAO_Notify_ProxyConsumer_Find_Worker;
 
-typedef TAO_NS_Seq_Worker_T<TAO_NS_Proxy> TAO_NS_Proxy_Seq_Worker;
+typedef TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Seq_Worker;
 
-TAO_NS_SupplierAdmin::TAO_NS_SupplierAdmin (void)
+TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin (void)
 {
 }
 
-TAO_NS_SupplierAdmin::~TAO_NS_SupplierAdmin ()
+TAO_Notify_SupplierAdmin::~TAO_Notify_SupplierAdmin ()
 {
 }
 
 void
-TAO_NS_SupplierAdmin::init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Admin::init (ec ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Admin::init (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   const CosNotification::QoSProperties &default_sa_qos =
-    TAO_NS_PROPERTIES::instance ()->default_supplier_admin_qos_properties ();
+    TAO_Notify_PROPERTIES::instance ()->default_supplier_admin_qos_properties ();
 
   this->set_qos (default_sa_qos ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_SupplierAdmin::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_SupplierAdmin::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_NS_SupplierAdmin::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_SupplierAdmin::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_NS_SupplierAdmin::release (void)
+TAO_Notify_SupplierAdmin::release (void)
 {
   delete this;
   //@@ inform factory
 }
 
 void
-TAO_NS_SupplierAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -80,26 +80,26 @@ TAO_NS_SupplierAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_SupplierAdmin::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::set_qos (const CosNotification::QoSProperties & qos ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotification::UnsupportedQoS
                    ))
 {
-  this->TAO_NS_Object::set_qos (qos ACE_ENV_ARG_PARAMETER);
+  this->TAO_Notify_Object::set_qos (qos ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotification::QoSProperties*
-TAO_NS_SupplierAdmin::get_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::get_qos (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  return this->TAO_Notify_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_NS_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdmin::ClientType ctype
+TAO_Notify_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdmin::ClientType ctype
                                                          , CosNotifyChannelAdmin::ProxyID_out proxy_id
                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -110,7 +110,7 @@ TAO_NS_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdmin::
 {
   CosNotification::QoSProperties initial_qos;
 
-  return TAO_NS_PROPERTIES::instance()->builder()->build_proxy (this
+  return TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
                                                                 , ctype
                                                                 , proxy_id
                                                                 , initial_qos
@@ -118,7 +118,7 @@ TAO_NS_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdmin::
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_NS_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
+TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                                                   CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                                                   const CosNotification::QoSProperties & initial_qos
                                                                   ACE_ENV_ARG_DECL
@@ -129,7 +129,7 @@ TAO_NS_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChann
                    , CosNotification::UnsupportedQoS
                    ))
 {
-  return TAO_NS_PROPERTIES::instance()->builder()->build_proxy (this
+  return TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
                                                                 , ctype
                                                                 , proxy_id,
                                                                 initial_qos
@@ -138,16 +138,16 @@ TAO_NS_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChann
 
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_NS_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return TAO_NS_PROPERTIES::instance()->builder()->build_proxy (this ACE_ENV_ARG_PARAMETER);
+  return TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::AdminID
-TAO_NS_SupplierAdmin::MyID (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_SupplierAdmin::MyID (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -156,7 +156,7 @@ TAO_NS_SupplierAdmin::MyID (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_NS_SupplierAdmin::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -165,7 +165,7 @@ TAO_NS_SupplierAdmin::MyChannel (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 ::CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_NS_SupplierAdmin::MyOperator (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_SupplierAdmin::MyOperator (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -174,30 +174,30 @@ TAO_NS_SupplierAdmin::MyOperator (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_NS_SupplierAdmin::push_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::push_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  TAO_NS_Proxy_Seq_Worker seq_worker;
+  TAO_Notify_Proxy_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_NS_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyChannelAdmin::ProxyNotFound
                    ))
 {
-  TAO_NS_ProxyConsumer_Find_Worker find_worker;
+  TAO_Notify_ProxyConsumer_Find_Worker find_worker;
 
   return find_worker.resolve (proxy_id, *this->proxy_container_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
+TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed
                                     ACE_ENV_ARG_DECL
                                     )
@@ -207,8 +207,8 @@ TAO_NS_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
                    ))
 
 {
-  TAO_NS_EventTypeSeq seq_added (added);
-  TAO_NS_EventTypeSeq seq_removed (removed);
+  TAO_Notify_EventTypeSeq seq_added (added);
+  TAO_Notify_EventTypeSeq seq_removed (removed);
 
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
@@ -217,14 +217,14 @@ TAO_NS_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
 
     this->subscribed_types_.init (seq_added, seq_removed);
 
-    TAO_NS_Subscription_Change_Worker worker (added, removed);
+    TAO_Notify_Subscription_Change_Worker worker (added, removed);
 
     this->proxy_container_->collection ()->for_each (&worker ACE_ENV_ARG_PARAMETER);
   }
 }
 
 CosNotifyFilter::FilterID
-TAO_NS_SupplierAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -233,7 +233,7 @@ TAO_NS_SupplierAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter ACE_ENV
 }
 
 void
-TAO_NS_SupplierAdmin::remove_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::remove_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyFilter::FilterNotFound
@@ -243,7 +243,7 @@ TAO_NS_SupplierAdmin::remove_filter (CosNotifyFilter::FilterID filter ACE_ENV_AR
 }
 
 ::CosNotifyFilter::Filter_ptr
-TAO_NS_SupplierAdmin::get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
+TAO_Notify_SupplierAdmin::get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosNotifyFilter::FilterNotFound
@@ -253,7 +253,7 @@ TAO_NS_SupplierAdmin::get_filter (CosNotifyFilter::FilterID filter ACE_ENV_ARG_D
 }
 
 ::CosNotifyFilter::FilterIDSeq*
-TAO_NS_SupplierAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -262,7 +262,7 @@ TAO_NS_SupplierAdmin::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_SupplierAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -273,7 +273,7 @@ TAO_NS_SupplierAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 /************** UNIMPLEMENTED METHODS ***************/
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_NS_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -282,7 +282,7 @@ TAO_NS_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_NS_SupplierAdmin::pull_consumers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SupplierAdmin::pull_consumers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -292,7 +292,7 @@ TAO_NS_SupplierAdmin::pull_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-TAO_NS_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
+TAO_Notify_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
                                     CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -304,7 +304,7 @@ TAO_NS_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /*req
 }
 
 CosNotifyChannelAdmin::ProxyConsumer_ptr
-TAO_NS_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdmin::ClientType /*ctype*/,
+TAO_Notify_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdmin::ClientType /*ctype*/,
                                                          CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/
                                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -318,18 +318,18 @@ TAO_NS_SupplierAdmin::obtain_notification_pull_consumer (CosNotifyChannelAdmin::
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Find_Worker_T<TAO_NS_Proxy
+template class TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
                              , CosNotifyChannelAdmin::ProxyConsumer
                              , CosNotifyChannelAdmin::ProxyConsumer_ptr
                              , CosNotifyChannelAdmin::ProxyNotFound>;
-template class TAO_NS_Seq_Worker_T<TAO_NS_Proxy>;
+template class TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_Proxy
+#pragma instantiate TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
                              , CosNotifyChannelAdmin::ProxyConsumer
                              , CosNotifyChannelAdmin::ProxyConsumer_ptr
                              , CosNotifyChannelAdmin::ProxyNotFound>
-#pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_Proxy>
+#pragma instantiate TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

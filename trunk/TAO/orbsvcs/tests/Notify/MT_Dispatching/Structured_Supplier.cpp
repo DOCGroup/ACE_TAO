@@ -21,7 +21,7 @@
 // ******************************************************************
 
 static const unsigned int supplier_max = 32;
-static TAO_Notify_StructuredPushSupplier* suppliers[supplier_max] = {0};
+static TAO_Notify_Tests_StructuredPushSupplier* suppliers[supplier_max] = {0};
 static unsigned int supplier_count = 1;
 static CORBA::Boolean done = 0;
 static CORBA::Boolean start = 0;
@@ -197,7 +197,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
     {
       // startup the supplier
       ACE_NEW_THROW_EX (suppliers[i],
-                        TAO_Notify_StructuredPushSupplier (),
+                        TAO_Notify_Tests_StructuredPushSupplier (),
                         CORBA::NO_MEMORY ());
       suppliers[i]->init (poa ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

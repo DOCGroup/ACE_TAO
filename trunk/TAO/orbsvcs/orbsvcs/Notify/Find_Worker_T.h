@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_FIND_WORKER_T_H
-#define TAO_NS_FIND_WORKER_T_H
+#ifndef TAO_Notify_FIND_WORKER_T_H
+#define TAO_Notify_FIND_WORKER_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -24,33 +24,33 @@
 #include "Container_T.h"
 
 /**
- * @class TAO_NS_Find_Worker_T
+ * @class TAO_Notify_Find_Worker_T
  *
  * @brief Helper to locate a TYPE given its ID.
  *
  */
 template <class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
-class TAO_Notify_Export TAO_NS_Find_Worker_T : public TAO_ESF_Worker<TYPE>
+class TAO_Notify_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TYPE>
 {
-  typedef TAO_NS_Container_T<TYPE> CONTAINER;
+  typedef TAO_Notify_Container_T<TYPE> CONTAINER;
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
 
 public:
   /// Constructor
-  TAO_NS_Find_Worker_T (void);
+  TAO_Notify_Find_Worker_T (void);
 
   /// Find the Type.
-  TYPE* find (TAO_NS_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
+  TYPE* find (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
 
   /// Find and resolve to the Interface.
-  INTERFACE_PTR resolve (TAO_NS_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
+  INTERFACE_PTR resolve (TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL);
 
 protected:
   ///= TAO_ESF_Worker method
   void work (TYPE* object ACE_ENV_ARG_DECL);
 
   /// The id we're looking for.
-  TAO_NS_Object::ID id_;
+  TAO_Notify_Object::ID id_;
 
   /// The result
   TYPE* result_;
@@ -69,4 +69,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_FIND_WORKER_T_H */
+#endif /* TAO_Notify_FIND_WORKER_T_H */

@@ -10,21 +10,21 @@
 #include "StructuredProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_StructuredProxyPushSupplier, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushSupplier, "$Id$")
 
-TAO_NS_StructuredProxyPushSupplier::TAO_NS_StructuredProxyPushSupplier (void)
+TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier (void)
 {
 }
 
-TAO_NS_StructuredProxyPushSupplier::~TAO_NS_StructuredProxyPushSupplier ()
+TAO_Notify_StructuredProxyPushSupplier::~TAO_Notify_StructuredProxyPushSupplier ()
 {
 }
 
 void
-TAO_NS_StructuredProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "In TAO_NS_StructuredProxyPushConsumer::destroy \n"));
+    ACE_DEBUG ((LM_DEBUG, "In TAO_Notify_StructuredProxyPushConsumer::destroy \n"));
 
   if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
     return;
@@ -33,7 +33,7 @@ TAO_NS_StructuredProxyPushSupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_StructuredProxyPushSupplier::release (void)
+TAO_Notify_StructuredProxyPushSupplier::release (void)
 {
   if (this->consumer_)
     this->consumer_->release ();
@@ -43,7 +43,7 @@ TAO_NS_StructuredProxyPushSupplier::release (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_NS_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -52,7 +52,7 @@ TAO_NS_StructuredProxyPushSupplier::MyType (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_NS_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyComm::StructuredPushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    , CosEventChannelAdmin::AlreadyConnected
@@ -60,9 +60,9 @@ TAO_NS_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyC
                    ))
 {
   // Convert Consumer to Base Type
-  TAO_NS_StructuredPushConsumer* consumer;
+  TAO_Notify_StructuredPushConsumer* consumer;
   ACE_NEW_THROW_EX (consumer,
-                    TAO_NS_StructuredPushConsumer (this),
+                    TAO_Notify_StructuredPushConsumer (this),
                     CORBA::NO_MEMORY ());
 
   consumer->init (push_consumer ACE_ENV_ARG_PARAMETER);
@@ -72,7 +72,7 @@ TAO_NS_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNotifyC
 }
 
 void
-TAO_NS_StructuredProxyPushSupplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

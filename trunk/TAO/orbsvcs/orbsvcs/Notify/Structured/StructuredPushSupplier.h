@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_STRUCTUREDPUSHSUPPLIER_H
-#define TAO_NS_STRUCTUREDPUSHSUPPLIER_H
+#ifndef TAO_Notify_STRUCTUREDPUSHSUPPLIER_H
+#define TAO_Notify_STRUCTUREDPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -22,22 +22,22 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Supplier.h"
 
-class TAO_NS_ProxyConsumer;
+class TAO_Notify_ProxyConsumer;
 
 /**
- * @class TAO_NS_StructuredPushSupplier
+ * @class TAO_Notify_StructuredPushSupplier
  *
  * @brief Wrapper for the StructuredPushSupplier that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredPushSupplier : public TAO_NS_Supplier
+class TAO_Notify_Export TAO_Notify_StructuredPushSupplier : public TAO_Notify_Supplier
 {
 public:
   /// Constuctor
-  TAO_NS_StructuredPushSupplier (TAO_NS_ProxyConsumer* proxy);
+  TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_NS_StructuredPushSupplier ();
+  ~TAO_Notify_StructuredPushSupplier ();
 
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
@@ -55,4 +55,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_STRUCTUREDPUSHSUPPLIER_H */
+#endif /* TAO_Notify_STRUCTUREDPUSHSUPPLIER_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PEER_H
-#define TAO_NS_PEER_H
+#ifndef TAO_Notify_Tests_PEER_H
+#define TAO_Notify_Tests_PEER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -25,19 +25,19 @@
 class ACE_Arg_Shifter;
 
 /**
- * @class TAO_NS_Peer
+ * @class TAO_Notify_Tests_Peer
  *
  * @brief
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Peer
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
   /// Constuctor
-  TAO_NS_Peer (void);
+  TAO_Notify_Tests_Peer (void);
 
   /// Destructor
-  virtual ~TAO_NS_Peer ();
+  virtual ~TAO_Notify_Tests_Peer ();
 
   /// Init
   void init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED);
@@ -77,4 +77,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PEER_H */
+#endif /* TAO_Notify_Tests_PEER_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_NAME_H
-#define TAO_NS_NAME_H
+#ifndef TAO_Notify_Tests_NAME_H
+#define TAO_Notify_Tests_NAME_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -20,12 +20,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_NS_Name
+ * @class TAO_Notify_Tests_Name
  *
  * @brief Define the names for command objects and other common strings.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Name
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Name
 {
 public:
   static const char* const root_poa;
@@ -60,4 +60,4 @@ public:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_NAME_H */
+#endif /* TAO_Notify_Tests_NAME_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_EVENTCHANNEL_H
-#define TAO_NS_EVENTCHANNEL_H
+#ifndef TAO_Notify_EVENTCHANNEL_H
+#define TAO_Notify_EVENTCHANNEL_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,10 +22,10 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Object.h"
 
-class TAO_NS_ConsumerAdmin;
-class TAO_NS_SupplierAdmin;
-class TAO_NS_EventChannelFactory;
-template <class TYPE> class TAO_NS_Container_T;
+class TAO_Notify_ConsumerAdmin;
+class TAO_Notify_SupplierAdmin;
+class TAO_Notify_EventChannelFactory;
+template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,37 +35,37 @@ template <class TYPE> class TAO_NS_Container_T;
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_EventChannel
+ * @class TAO_Notify_EventChannel
  *
  * @brief Implementation of CosNotifyChannelAdmin::EventChannel
  *
  */
-class TAO_Notify_Export TAO_NS_EventChannel : public POA_CosNotifyChannelAdmin::EventChannel
-                                            , public virtual TAO_NS_Object
+class TAO_Notify_Export TAO_Notify_EventChannel : public POA_CosNotifyChannelAdmin::EventChannel
+                                            , public virtual TAO_Notify_Object
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 
 public:
   typedef CosNotifyChannelAdmin::ChannelIDSeq SEQ;
   typedef CosNotifyChannelAdmin::ChannelIDSeq_var SEQ_VAR;
 
   /// Constuctor
-  TAO_NS_EventChannel (void);
+  TAO_Notify_EventChannel (void);
 
   /// Destructor
-  ~TAO_NS_EventChannel ();
+  ~TAO_Notify_EventChannel ();
 
   /// Init
-  void init (TAO_NS_EventChannelFactory* ecf
+  void init (TAO_Notify_EventChannelFactory* ecf
              , const CosNotification::QoSProperties & initial_qos
              , const CosNotification::AdminProperties & initial_admin
              ACE_ENV_ARG_DECL);
 
   /// Remove ConsumerAdmin from its container.
-  void remove (TAO_NS_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
 
   /// Remove SupplierAdmin from its container.
-  void remove (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -78,18 +78,18 @@ public:
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
-  typedef TAO_NS_Container_T <TAO_NS_ConsumerAdmin> TAO_NS_ConsumerAdmin_Container;
-  typedef TAO_NS_Container_T <TAO_NS_SupplierAdmin> TAO_NS_SupplierAdmin_Container;
+  typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;
+  typedef TAO_Notify_Container_T <TAO_Notify_SupplierAdmin> TAO_Notify_SupplierAdmin_Container;
 
   /// = Data Members
   /// The parent object.
-  TAO_NS_EventChannelFactory* ecf_;
+  TAO_Notify_EventChannelFactory* ecf_;
 
   /// ConsumerAdmin Container.
-  TAO_NS_ConsumerAdmin_Container *ca_container_;
+  TAO_Notify_ConsumerAdmin_Container *ca_container_;
 
   /// SupplierAdmin Container.
-  TAO_NS_SupplierAdmin_Container *sa_container_;
+  TAO_Notify_SupplierAdmin_Container *sa_container_;
 
   // Default Consumer Admin
   CosNotifyChannelAdmin::ConsumerAdmin_var default_consumer_admin_;
@@ -218,4 +218,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_EVENTCHANNEL_H */
+#endif /* TAO_Notify_EVENTCHANNEL_H */

@@ -2,19 +2,19 @@
 
 #include "ORB_Run_Task.h"
 
-ACE_RCSID(Notify, TAO_NS_ORB_Run_Task, "$id$")
+ACE_RCSID(Notify, TAO_Notify_ORB_Run_Task, "$id$")
 
-TAO_NS_ORB_Run_Task::TAO_NS_ORB_Run_Task (TAO_NS_ORB_Objects& orb_objects)
+TAO_Notify_ORB_Run_Task::TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
 {
 }
 
-TAO_NS_ORB_Run_Task::~TAO_NS_ORB_Run_Task ()
+TAO_Notify_ORB_Run_Task::~TAO_Notify_ORB_Run_Task ()
 {
 }
 
 int
-TAO_NS_ORB_Run_Task::svc (void)
+TAO_Notify_ORB_Run_Task::svc (void)
 {
   ACE_TRY_NEW_ENV
     {

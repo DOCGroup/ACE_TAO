@@ -7,16 +7,16 @@ ACE_RCSID(lib, TAO_Options_Parser, "$id$")
 #include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_NS_Options_Parser::TAO_NS_Options_Parser (void)
+TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
 {
 }
 
-TAO_NS_Options_Parser::~TAO_NS_Options_Parser ()
+TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
 {
 }
 
 void
-TAO_NS_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR* current_arg = 0;
 
@@ -47,7 +47,7 @@ TAO_NS_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotific
 }
 
 void
-TAO_NS_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
   const ACE_TCHAR *current_arg = 0;
   int default_priority = ACE_DEFAULT_THREAD_PRIORITY;

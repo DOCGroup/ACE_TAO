@@ -6,18 +6,18 @@ ACE_RCSID(lib, TAO_Direct_Consumer, "$id$")
 
 #include "LookupManager.h"
 
-TAO_NS_Direct_Consumer::TAO_NS_Direct_Consumer (void)
+TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer (void)
 {
 }
 
-TAO_NS_Direct_Consumer::~TAO_NS_Direct_Consumer ()
+TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer ()
 {
 }
 
 void
-TAO_NS_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_NS_Direct_Consumer::connect resolving poa %s\n",
+  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_Direct_Consumer::connect resolving poa %s\n",
               this->poa_name_.c_str ()));
   // Get the POA
   PortableServer::POA_var poa;
@@ -28,7 +28,7 @@ TAO_NS_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
   this->set_poa (poa.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "TAO_NS_Direct_Consumer::connect - _this\n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Tests_Direct_Consumer::connect - _this\n"));
 
   // Activate the consumer with the default_POA_.
   CosNotifyComm::StructuredPushConsumer_var consumer_ref =

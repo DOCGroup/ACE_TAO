@@ -20,7 +20,7 @@
 // Data Section
 // ******************************************************************
 
-static TAO_Notify_SequencePushSupplier* supplier_1 = 0;
+static TAO_Notify_Tests_SequencePushSupplier* supplier_1 = 0;
 static CORBA::Boolean done = 0;
 static CORBA::Boolean start = 0;
 static int max_events = 2;  // 6 sets of 16
@@ -199,7 +199,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 {
   // startup the first supplier
   ACE_NEW_THROW_EX (supplier_1,
-                    TAO_Notify_SequencePushSupplier (),
+                    TAO_Notify_Tests_SequencePushSupplier (),
                     CORBA::NO_MEMORY ());
 
   supplier_1->init (poa ACE_ENV_ARG_PARAMETER);

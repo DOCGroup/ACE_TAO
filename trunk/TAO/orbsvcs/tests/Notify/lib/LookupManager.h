@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_LOOKUPMANAGER_H
-#define TAO_NS_LOOKUPMANAGER_H
+#ifndef TAO_Notify_Tests_LOOKUPMANAGER_H
+#define TAO_Notify_Tests_LOOKUPMANAGER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -25,26 +25,26 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 
-class TAO_NS_Periodic_Supplier;
-class TAO_NS_Periodic_Consumer;
-class TAO_NS_Driver_Base;
-class TAO_NS_Activation_Manager;
-class TAO_NS_Priority_Mapping;
+class TAO_Notify_Tests_Periodic_Supplier;
+class TAO_Notify_Tests_Periodic_Consumer;
+class TAO_Notify_Tests_Driver_Base;
+class TAO_Notify_Tests_Activation_Manager;
+class TAO_Notify_Tests_Priority_Mapping;
 
 /**
- * @class TAO_NS_LookupManager
+ * @class TAO_Notify_Tests_LookupManager
  *
  * @brief Utility to register and resolve object references.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_LookupManager
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_LookupManager
 {
 public:
   /// Constuctor
-  TAO_NS_LookupManager (void);
+  TAO_Notify_Tests_LookupManager (void);
 
   /// Destructor
-  ~TAO_NS_LookupManager ();
+  ~TAO_Notify_Tests_LookupManager ();
 
   /// Init
   void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
@@ -52,9 +52,9 @@ public:
   ///= Register Objects
 
   /// Register the application starter object.
-  void _register (TAO_NS_Driver_Base* app);
-  void _register (TAO_NS_Activation_Manager* activation_manager);
-  void _register (TAO_NS_Priority_Mapping *priority_mapping);
+  void _register (TAO_Notify_Tests_Driver_Base* app);
+  void _register (TAO_Notify_Tests_Activation_Manager* activation_manager);
+  void _register (TAO_Notify_Tests_Priority_Mapping *priority_mapping);
 
   /// Register Objects with Naming Service
   void _register(CORBA::Object_ptr obj, const char* obj_name ACE_ENV_ARG_DECL);
@@ -62,9 +62,9 @@ public:
   ///= Resolve methods
 
   /// Resolve the application starter object.
-  void resolve (TAO_NS_Driver_Base*& app);
-  void resolve (TAO_NS_Activation_Manager*& activation_manager);
-  void resolve (TAO_NS_Priority_Mapping* &priority_mapping);
+  void resolve (TAO_Notify_Tests_Driver_Base*& app);
+  void resolve (TAO_Notify_Tests_Activation_Manager*& activation_manager);
+  void resolve (TAO_Notify_Tests_Priority_Mapping* &priority_mapping);
 
   /// Return the orb
   void resolve (CORBA::ORB_var& orb);
@@ -89,10 +89,10 @@ public:
 
 protected:
   /// Application Starter
-  TAO_NS_Driver_Base* app_;
+  TAO_Notify_Tests_Driver_Base* app_;
 
   /// Activation Manager
-  TAO_NS_Activation_Manager* activation_manager_;
+  TAO_Notify_Tests_Activation_Manager* activation_manager_;
 
   /// Resolve to CORBA::Object
   CORBA::Object_ptr resolve_object (const char* obj_name ACE_ENV_ARG_DECL);
@@ -107,14 +107,14 @@ protected:
   CosNaming::NamingContextExt_var naming_;
 
   // Priority Mapping.
-  TAO_NS_Priority_Mapping *priority_mapping_;
+  TAO_Notify_Tests_Priority_Mapping *priority_mapping_;
 };
 
-typedef ACE_Singleton<TAO_NS_LookupManager, TAO_SYNCH_MUTEX> _TAO_NS_LookupManager;
+typedef ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> _TAO_Notify_Tests_LookupManager;
 
-TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_NS_LookupManager, TAO_SYNCH_MUTEX);
+TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX);
 
-#define LOOKUP_MANAGER  _TAO_NS_LookupManager::instance()
+#define LOOKUP_MANAGER  _TAO_Notify_Tests_LookupManager::instance()
 
 #include "ace/post.h"
-#endif /* TAO_NS_LOOKUPMANAGER_H */
+#endif /* TAO_Notify_Tests_LOOKUPMANAGER_H */

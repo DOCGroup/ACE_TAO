@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PUSHCONSUMER_H
-#define TAO_NS_PUSHCONSUMER_H
+#ifndef TAO_Notify_PUSHCONSUMER_H
+#define TAO_Notify_PUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -23,31 +23,31 @@
 #include "../Consumer.h"
 
 /**
- * @class TAO_NS_PushConsumer
+ * @class TAO_Notify_PushConsumer
  *
  * @brief Wrapper for the PushConsumer that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_NS_PushConsumer : public TAO_NS_Consumer
+class TAO_Notify_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {
 public:
   /// Constuctor
-  TAO_NS_PushConsumer (TAO_NS_ProxySupplier* proxy);
+  TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  ~TAO_NS_PushConsumer ();
+  ~TAO_Notify_PushConsumer ();
 
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods.
+  /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 
   /// Push <event> to this consumer.
-  virtual void push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
-  virtual void push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
+  virtual void push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);
@@ -65,4 +65,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PUSHCONSUMER_H */
+#endif /* TAO_Notify_PUSHCONSUMER_H */

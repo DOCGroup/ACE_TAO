@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_ORB_OBJECTS_H
-#define TAO_NS_ORB_OBJECTS_H
+#ifndef TAO_Notify_ORB_OBJECTS_H
+#define TAO_Notify_ORB_OBJECTS_H
 #include "ace/pre.h"
 
 #include "tao/corba.h"
@@ -20,19 +20,19 @@
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
 /**
- * @class TAO_NS_ORB_Objects
+ * @class TAO_Notify_ORB_Objects
  *
  * @brief Handy Objects that we keep asking the ORB for.
  *
  */
-class TAO_NS_ORB_Objects
+class TAO_Notify_ORB_Objects
 {
 public:
   /// Constuctor
-  TAO_NS_ORB_Objects (void);
+  TAO_Notify_ORB_Objects (void);
 
   /// Destructor
-  ~TAO_NS_ORB_Objects ();
+  ~TAO_Notify_ORB_Objects ();
 
   /// Resolves all the references.
   void init (CORBA::ORB_var& orb ACE_ENV_ARG_DECL);
@@ -53,4 +53,4 @@ public:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_ORB_OBJECTS_H */
+#endif /* TAO_Notify_ORB_OBJECTS_H */

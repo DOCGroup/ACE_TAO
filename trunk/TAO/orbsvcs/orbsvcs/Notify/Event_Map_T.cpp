@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_NS_EVENT_MAP_T_C
-#define TAO_NS_EVENT_MAP_T_C
+#ifndef TAO_Notify_EVENT_MAP_T_C
+#define TAO_Notify_EVENT_MAP_T_C
 
 #include "Event_Map_T.h"
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
@@ -13,22 +13,22 @@
 #include "Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Event_Map_T, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Event_Map_T, "$Id$")
 
 template <class PROXY, class ACE_LOCK>
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::TAO_NS_Event_Map_T (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T (void)
   :proxy_count_ (0)
 {
 
 }
 
 template <class PROXY, class ACE_LOCK>
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::~TAO_NS_Event_Map_T ()
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::~TAO_Notify_Event_Map_T ()
 {
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->broadcast_entry_.init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -37,7 +37,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy ACE_ENV_ARG_DECL)
 {
   this->updates_entry_.connected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -47,7 +47,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy ACE_ENV_ARG_DECL)
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy ACE_ENV_ARG_DECL)
 {
   this->updates_entry_.disconnected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -57,7 +57,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy ACE_ENV_ARG_DECL)
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL)
 {
   ENTRY* entry;
 
@@ -109,7 +109,7 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_NS_EventTyp
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL)
 {
   ENTRY* entry;
 
@@ -161,4 +161,4 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventTyp
   return 0;
 }
 
-#endif /* TAO_NS_EVENT_MAP_T_C */
+#endif /* TAO_Notify_EVENT_MAP_T_C */

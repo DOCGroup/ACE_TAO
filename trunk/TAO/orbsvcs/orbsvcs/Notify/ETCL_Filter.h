@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_ETCL_FILTER_H
-#define TAO_NS_ETCL_FILTER_H
+#ifndef TAO_Notify_ETCL_FILTER_H
+#define TAO_Notify_ETCL_FILTER_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -38,14 +38,14 @@
  * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class TAO_Notify_Export TAO_NS_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor
-  TAO_NS_ETCL_Filter (void);
+  TAO_Notify_ETCL_Filter (void);
 
   /// Destructor
-  ~TAO_NS_ETCL_Filter ();
+  ~TAO_Notify_ETCL_Filter ();
 
 protected:
   virtual char * constraint_grammar (ACE_ENV_SINGLE_ARG_DECL)
@@ -136,7 +136,7 @@ private:
                      CORBA::SystemException
                      ));
 
-  struct TAO_NS_Constraint_Expr
+  struct TAO_Notify_Constraint_Expr
   {
     // = DESCRIPTION
     //   Structure for associating ConstraintInfo with an interpreter.
@@ -144,7 +144,7 @@ private:
     CosNotifyFilter::ConstraintExp constr_expr;
     // Constraint Expression.
 
-    TAO_NS_Constraint_Interpreter interpreter;
+    TAO_Notify_Constraint_Interpreter interpreter;
     // Constraint Interpreter.
   };
 
@@ -156,7 +156,7 @@ private:
 
   /// A list of the constraints stored in this filter.
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                ACE_NESTED_CLASS (TAO_NS_ETCL_Filter, TAO_NS_Constraint_Expr*),
+                                ACE_NESTED_CLASS (TAO_Notify_ETCL_Filter, TAO_Notify_Constraint_Expr*),
                                 ACE_SYNCH_NULL_MUTEX>
   CONSTRAINT_EXPR_LIST;
 

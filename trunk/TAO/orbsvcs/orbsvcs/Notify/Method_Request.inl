@@ -1,7 +1,7 @@
 // $Id$
 
 ACE_INLINE void
-TAO_NS_Method_Request::init (const TAO_NS_Event_var& event)
+TAO_Notify_Method_Request::init (const TAO_Notify_Event_var& event)
 {
   // Set the parameters that affect queuing in the message queue.
   // The ACE_Message_Block priorities go from 0 (lowest) to ULONG_MAX
@@ -19,7 +19,7 @@ TAO_NS_Method_Request::init (const TAO_NS_Event_var& event)
   // timeout for the event is relative to the time it was received.
   // So, we do a little conversion and set it on the message block (us)
 
-  const TAO_NS_Property_Time& timeout = event->timeout ();
+  const TAO_Notify_Property_Time& timeout = event->timeout ();
 
   if (timeout.is_valid () && timeout != 0)
     {

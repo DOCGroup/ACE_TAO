@@ -6,18 +6,18 @@
 #include "PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_PropertySeq, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_PropertySeq, "$Id$")
 
-TAO_NS_PropertySeq::TAO_NS_PropertySeq (void)
+TAO_Notify_PropertySeq::TAO_Notify_PropertySeq (void)
 {
 }
 
-TAO_NS_PropertySeq::~TAO_NS_PropertySeq ()
+TAO_Notify_PropertySeq::~TAO_Notify_PropertySeq ()
 {
 }
 
 int
-TAO_NS_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
 {
   ACE_CString name;
 
@@ -34,7 +34,7 @@ TAO_NS_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
 }
 
 int
-TAO_NS_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq)
+TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq)
 {
   PROPERTY_MAP::ITERATOR iterator (this->property_map_);
 

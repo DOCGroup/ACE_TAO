@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_ADMINPROPERTIES_H
-#define TAO_NS_ADMINPROPERTIES_H
+#ifndef TAO_Notify_ADMINPROPERTIES_H
+#define TAO_Notify_ADMINPROPERTIES_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -28,35 +28,35 @@
 #include "Property_Boolean.h"
 
 /**
- * @class TAO_NS_AdminProperties
+ * @class TAO_Notify_AdminProperties
  *
  * @brief The AdminProperties per EventChannel.
  *
  */
-class TAO_Notify_Export TAO_NS_AdminProperties : public TAO_NS_PropertySeq
+class TAO_Notify_Export TAO_Notify_AdminProperties : public TAO_Notify_PropertySeq
 {
 public:
   /// Constuctor
-  TAO_NS_AdminProperties (void);
+  TAO_Notify_AdminProperties (void);
 
   /// Destructor
-  ~TAO_NS_AdminProperties ();
+  ~TAO_Notify_AdminProperties ();
 
   // Init
   int init (const CosNotification::PropertySeq& prop_seq);
 
   // = Accessors
-  const TAO_NS_Property_Long& max_global_queue_length (void) const;
-  const TAO_NS_Property_Long& max_consumers (void) const;
-  const TAO_NS_Property_Long& max_suppliers (void) const;
-  const TAO_NS_Property_Boolean& reject_new_events (void) const;
+  const TAO_Notify_Property_Long& max_global_queue_length (void) const;
+  const TAO_Notify_Property_Long& max_consumers (void) const;
+  const TAO_Notify_Property_Long& max_suppliers (void) const;
+  const TAO_Notify_Property_Boolean& reject_new_events (void) const;
 
   CORBA::Long& global_queue_length (void);
   TAO_SYNCH_MUTEX& global_queue_lock (void);
   TAO_SYNCH_CONDITION& global_queue_not_full_condition (void);
 
-  TAO_NS_Atomic_Property_Long& consumers (void);
-  TAO_NS_Atomic_Property_Long& suppliers (void);
+  TAO_Notify_Atomic_Property_Long& consumers (void);
+  TAO_Notify_Atomic_Property_Long& suppliers (void);
 
   // = Helper method
   /// Returns true if Queue is full
@@ -74,18 +74,18 @@ protected:
    * the channel begins discarding events or rejecting new events upon
    * receipt of each new event.
    */
-  TAO_NS_Property_Long max_global_queue_length_;
+  TAO_Notify_Property_Long max_global_queue_length_;
 
   /// The maximum number of consumers that can be connected to the channel at
   /// any given time.
-  TAO_NS_Property_Long max_consumers_;
+  TAO_Notify_Property_Long max_consumers_;
 
   /// The maximum number of suppliers that can be connected to the channel at
   /// any given time.
-  TAO_NS_Property_Long max_suppliers_;
+  TAO_Notify_Property_Long max_suppliers_;
 
   /// Reject any new event.
-  TAO_NS_Property_Boolean reject_new_events_;
+  TAO_Notify_Property_Boolean reject_new_events_;
 
   //= Variables
   /// This is used to count the queue length across all buffers in the Notify Service
@@ -100,15 +100,15 @@ protected:
 
   /// These are used to count the number of consumers and suppliers connected to
   /// the system.
-  TAO_NS_Atomic_Property_Long consumers_;
-  TAO_NS_Atomic_Property_Long suppliers_;
+  TAO_Notify_Atomic_Property_Long consumers_;
+  TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
-typedef ACE_Refcounted_Auto_Ptr<TAO_NS_AdminProperties, TAO_SYNCH_MUTEX> TAO_NS_AdminProperties_var;
+typedef ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX> TAO_Notify_AdminProperties_var;
 
 #if defined (__ACE_INLINE__)
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_ADMINPROPERTIES_H */
+#endif /* TAO_Notify_ADMINPROPERTIES_H */

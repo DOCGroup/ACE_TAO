@@ -23,7 +23,7 @@
 
 #include "SequencePushSupplier.h"
 
-typedef TAO_NS_SequencePushSupplier TAO_Notify_SequencePushSupplier;
+typedef TAO_Notify_Tests_SequencePushSupplier TAO_Notify_SequencePushSupplier;
 
 #include "ace/post.h"
 #endif /* TAO_NOTIFY_SequencePUSHSUPPLIER_H */

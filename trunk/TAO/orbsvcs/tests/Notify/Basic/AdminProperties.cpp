@@ -13,7 +13,7 @@ AdminProperties_Task::AdminProperties_Task (void)
 }
 
 void
-AdminProperties_Task::init (TAO_Notify_StructuredPushSupplier *supplier, AdminProperties* client)
+AdminProperties_Task::init (TAO_Notify_Tests_StructuredPushSupplier *supplier, AdminProperties* client)
 {
   supplier_  = supplier;
   client_ = client;
@@ -322,9 +322,9 @@ AdminProperties::test_max_queue_length (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Create the supplier
-  TAO_Notify_StructuredPushSupplier *supplier = 0;
+  TAO_Notify_Tests_StructuredPushSupplier *supplier = 0;
   ACE_NEW (supplier,
-           TAO_Notify_StructuredPushSupplier ());
+           TAO_Notify_Tests_StructuredPushSupplier ());
 
   supplier->init (root_poa_.in ()
                   ACE_ENV_ARG_PARAMETER);
@@ -417,12 +417,12 @@ AdminProperties::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      TAO_Notify_StructuredPushSupplier *supplier;
+      TAO_Notify_Tests_StructuredPushSupplier *supplier;
 
       for (index = 0; index < this->suppliers_; ++index)
         {
           ACE_NEW (supplier,
-                   TAO_Notify_StructuredPushSupplier ());
+                   TAO_Notify_Tests_StructuredPushSupplier ());
           supplier->init (root_poa_.in ()
                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -459,12 +459,12 @@ AdminProperties::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      TAO_Notify_StructuredPushConsumer *consumer;
+      TAO_Notify_Tests_StructuredPushConsumer *consumer;
 
       for (index = 0; index < this->consumers_; ++index)
         {
           ACE_NEW (consumer,
-                   TAO_Notify_StructuredPushConsumer ());
+                   TAO_Notify_Tests_StructuredPushConsumer ());
           consumer->init (root_poa_.in ()
                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

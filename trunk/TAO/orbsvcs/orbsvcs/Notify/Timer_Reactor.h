@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_TIMER_REACTOR_H
-#define TAO_NS_TIMER_REACTOR_H
+#ifndef TAO_Notify_TIMER_REACTOR_H
+#define TAO_Notify_TIMER_REACTOR_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -24,19 +24,19 @@
 class ACE_Reactor;
 
 /**
- * @class TAO_NS_Timer_Reactor
+ * @class TAO_Notify_Timer_Reactor
  *
  * @brief Reactor::instance based timer. The timers are dispatched by the main thread.
  *
  */
-class TAO_Notify_Export TAO_NS_Timer_Reactor : public TAO_NS_Timer
+class TAO_Notify_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 {
 public:
   /// Constuctor
-  TAO_NS_Timer_Reactor (void);
+  TAO_Notify_Timer_Reactor (void);
 
   /// Destructor
-  virtual ~TAO_NS_Timer_Reactor ();
+  virtual ~TAO_Notify_Timer_Reactor ();
 
   /// Release
   virtual void release (void);
@@ -59,4 +59,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_TIMER_REACTOR_H */
+#endif /* TAO_Notify_TIMER_REACTOR_H */

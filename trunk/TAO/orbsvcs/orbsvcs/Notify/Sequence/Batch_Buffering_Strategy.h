@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_BATCH_BUFFERING_STRATEGY_H
-#define TAO_NS_BATCH_BUFFERING_STRATEGY_H
+#ifndef TAO_Notify_BATCH_BUFFERING_STRATEGY_H
+#define TAO_Notify_BATCH_BUFFERING_STRATEGY_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -23,19 +23,19 @@
 #include "../Buffering_Strategy.h"
 
 /**
- * @class TAO_NS_Batch_Buffering_Strategy
+ * @class TAO_Notify_Batch_Buffering_Strategy
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_Batch_Buffering_Strategy : public TAO_NS_Buffering_Strategy
+class TAO_Notify_Export TAO_Notify_Batch_Buffering_Strategy : public TAO_Notify_Buffering_Strategy
 {
 public:
   /// Constuctor
-  TAO_NS_Batch_Buffering_Strategy (TAO_NS_Message_Queue& msg_queue, TAO_NS_AdminProperties_var& admin_properties, CORBA::Long batch_size);
+  TAO_Notify_Batch_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size);
 
   /// Destructor
-  ~TAO_NS_Batch_Buffering_Strategy ();
+  ~TAO_Notify_Batch_Buffering_Strategy ();
 
   /// Dequeue batch. This method will block till <batch_size> is available..
   /// Return -1 on error else the number of items actually dequeued.
@@ -57,4 +57,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_BATCH_BUFFERING_STRATEGY_H */
+#endif /* TAO_Notify_BATCH_BUFFERING_STRATEGY_H */

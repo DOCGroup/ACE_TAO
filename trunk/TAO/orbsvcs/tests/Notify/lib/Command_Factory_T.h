@@ -23,7 +23,7 @@
 #include "ace/Service_Object.h"
 #include "Command_Factory.h"
 
-class TAO_NS_Command;
+class TAO_Notify_Tests_Command;
 
 /**
  * @class TAO_Command_Factory_T
@@ -36,21 +36,21 @@ class TAO_NS_Command;
 #undef COMMAND
 #endif
 template <class COMMAND>
-class TAO_NOTIFY_TEST_Export TAO_NS_Command_Factory_T : public TAO_NS_Command_Factory, public ACE_Service_Object
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
   /// Constuctor
-  TAO_NS_Command_Factory_T (void);
+  TAO_Notify_Tests_Command_Factory_T (void);
 
   /// Destructor
-  ~TAO_NS_Command_Factory_T ();
+  ~TAO_Notify_Tests_Command_Factory_T ();
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, char *argv[]);
   virtual int fini (void);
 
   /// Create the <COMMAND> command.
-  TAO_NS_Command* create (void);
+  TAO_Notify_Tests_Command* create (void);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

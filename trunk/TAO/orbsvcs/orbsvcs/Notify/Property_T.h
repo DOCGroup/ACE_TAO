@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROPERTY_T_H
-#define TAO_NS_PROPERTY_T_H
+#ifndef TAO_Notify_PROPERTY_T_H
+#define TAO_Notify_PROPERTY_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,35 +22,35 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNotificationC.h"
 
-class TAO_NS_PropertySeq;
+class TAO_Notify_PropertySeq;
 
 /**
- * @class TAO_NS_PropertyBase_T
+ * @class TAO_Notify_PropertyBase_T
  *
  * @brief
  *
  */
 template <class TYPE>
-class TAO_NS_PropertyBase_T
+class TAO_Notify_PropertyBase_T
 {
 public:
   /// Constuctor
-  TAO_NS_PropertyBase_T (const char* name, const TYPE& initial);
+  TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_PropertyBase_T (const char* name);
+  TAO_Notify_PropertyBase_T (const char* name);
 
   /// Copy Constuctor
-  TAO_NS_PropertyBase_T (const TAO_NS_PropertyBase_T &rhs);
+  TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
 
   /// Destructor
-  ~TAO_NS_PropertyBase_T ();
+  ~TAO_Notify_PropertyBase_T ();
 
-  /// Assignment from TAO_NS_PropertyBase_T
-  // TAO_NS_PropertyBase_T& operator= (const TAO_NS_PropertyBase_T& rhs);
+  /// Assignment from TAO_Notify_PropertyBase_T
+  // TAO_Notify_PropertyBase_T& operator= (const TAO_Notify_PropertyBase_T& rhs);
 
   /// Assignment from TYPE
-  TAO_NS_PropertyBase_T& operator= (const TYPE& rhs);
+  TAO_Notify_PropertyBase_T& operator= (const TYPE& rhs);
 
   /// Equality comparison operator.
   int operator== (const TYPE &rhs) const;
@@ -81,33 +81,33 @@ protected:
   CORBA::Boolean valid_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_NS_PropertyBase_T& operator= (const TAO_NS_PropertyBase_T& rhs))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_PropertyBase_T& operator= (const TAO_Notify_PropertyBase_T& rhs))
 };
 
 
 /*******************************************************************************/
 /**
- * @class TAO_NS_Property_T
+ * @class TAO_Notify_Property_T
  *
  * @brief
  *
  */
 template <class TYPE>
-class TAO_NS_Property_T : public TAO_NS_PropertyBase_T<TYPE>
+class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
   /// Constuctor
-  TAO_NS_Property_T (const char* name, const TYPE& initial);
+  TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_Property_T (const char* name);
+  TAO_Notify_Property_T (const char* name);
 
   /// Assignment from TYPE
-  TAO_NS_Property_T& operator= (const TYPE& rhs);
+  TAO_Notify_Property_T& operator= (const TYPE& rhs);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_NS_PropertySeq& property_seq);
+  int set (const TAO_Notify_PropertySeq& property_seq);
 
   /// Init this Property from the CosNotification::PropertyValue
   /// Returns 0 on success, -1 on error
@@ -116,24 +116,24 @@ public:
 
 /*******************************************************************************/
 /**
- * @class TAO_NS_StructProperty_T
+ * @class TAO_Notify_StructProperty_T
  *
  * @brief
  *
  */
 template <class TYPE>
-class TAO_NS_StructProperty_T
+class TAO_Notify_StructProperty_T
 {
 public:
   /// Constuctor
-  TAO_NS_StructProperty_T (const char* name, const TYPE& initial);
+  TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
   /// Constuctor
-  TAO_NS_StructProperty_T (const char* name);
+  TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_NS_PropertySeq& property_seq);
+  int set (const TAO_Notify_PropertySeq& property_seq);
 
   /// Return the value.
   const TYPE& value (void) const;
@@ -165,4 +165,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROPERTY_T_H */
+#endif /* TAO_Notify_PROPERTY_T_H */

@@ -5,7 +5,7 @@
 int
 ACE_TMAIN (int argc, char *argv[])
 {
-  TAO_NS_Driver driver;
+  TAO_Notify_Tests_Driver driver;
 
   ACE_TRY_NEW_ENV
     {

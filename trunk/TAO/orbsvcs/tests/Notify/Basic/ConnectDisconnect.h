@@ -101,14 +101,14 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_PushConsumer** any_consumer_;
-  TAO_Notify_StructuredPushConsumer** structured_consumer_;
-  TAO_Notify_SequencePushConsumer** sequence_consumer_;
+  TAO_Notify_Tests_PushConsumer** any_consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer** structured_consumer_;
+  TAO_Notify_Tests_SequencePushConsumer** sequence_consumer_;
   // Arrays of Consumers.
 
-  TAO_Notify_PushSupplier** any_supplier_;
-  TAO_Notify_StructuredPushSupplier** structured_supplier_;
-  TAO_Notify_SequencePushSupplier** sequence_supplier_;
+  TAO_Notify_Tests_PushSupplier** any_supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier** structured_supplier_;
+  TAO_Notify_Tests_SequencePushSupplier** sequence_supplier_;
   // arrays of Suppliers
 
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;

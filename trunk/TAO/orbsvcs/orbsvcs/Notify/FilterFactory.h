@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_FILTERFACTORY_H
-#define TAO_NS_FILTERFACTORY_H
+#ifndef TAO_Notify_FILTERFACTORY_H
+#define TAO_Notify_FILTERFACTORY_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,12 +23,12 @@
 #include "tao/PortableServer/PortableServer.h"
 
 /**
- * @class TAO_NS_FilterFactory
+ * @class TAO_Notify_FilterFactory
  *
  * @brief Service Object to obtain a CosNotifyFilter::FilterFactory reference.
  *
  */
-class /*TAO_Notify_Export*/ TAO_NS_FilterFactory : public ACE_Service_Object
+class /*TAO_Notify_Export*/ TAO_Notify_FilterFactory : public ACE_Service_Object
 {
 public:
   /// Factory method to create a FilterFactory reference
@@ -37,4 +37,4 @@ public:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_FILTERFACTORY_H */
+#endif /* TAO_Notify_FILTERFACTORY_H */

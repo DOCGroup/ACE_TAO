@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIER_MAP_H
-#define TAO_NS_SUPPLIER_MAP_H
+#ifndef TAO_Notify_SUPPLIER_MAP_H
+#define TAO_Notify_SUPPLIER_MAP_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,13 +23,13 @@
 #include "ProxyConsumer.h"
 
 /**
- * @class TAO_NS_Supplier_Map
+ * @class TAO_Notify_Supplier_Map
  *
  * @brief The Event Map for Suppliers.
  *
  */
 
-typedef TAO_NS_Event_Map_T<TAO_NS_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_NS_Supplier_Map;
+typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_Notify_Supplier_Map;
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIER_MAP_H */
+#endif /* TAO_Notify_SUPPLIER_MAP_H */

@@ -7,29 +7,29 @@
 
 ACE_RCSID(lib, TAO_Command, "$id$")
 
-TAO_NS_Command::TAO_NS_Command (void)
+TAO_Notify_Tests_Command::TAO_Notify_Tests_Command (void)
   :next_ (0), command_ (INVALID)
 {
 }
 
-TAO_NS_Command::~TAO_NS_Command ()
+TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command ()
 {
 }
 
 void
-TAO_NS_Command::init (ACE_Arg_Shifter& /*arg_shifter*/)
+TAO_Notify_Tests_Command::init (ACE_Arg_Shifter& /*arg_shifter*/)
 {
   // default: do nothing.
 }
 
 void
-TAO_NS_Command::next (TAO_NS_Command* command)
+TAO_Notify_Tests_Command::next (TAO_Notify_Tests_Command* command)
 {
   this->next_ = command;
 }
 
 void
-TAO_NS_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == INVALID)
     {

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_COMMAND_FACTORY_H
-#define TAO_NS_COMMAND_FACTORY_H
+#ifndef TAO_Notify_Tests_COMMAND_FACTORY_H
+#define TAO_Notify_Tests_COMMAND_FACTORY_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -19,26 +19,26 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_NS_Command;
+class TAO_Notify_Tests_Command;
 
 /**
- * @class TAO_NS_Command_Factory
+ * @class TAO_Notify_Tests_Command_Factory
  *
  * @brief Base class for Factory to create command objects.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Command_Factory
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory
 {
 public:
   /// Constuctor
-  TAO_NS_Command_Factory (void);
+  TAO_Notify_Tests_Command_Factory (void);
 
   /// Destructor
-  virtual ~TAO_NS_Command_Factory ();
+  virtual ~TAO_Notify_Tests_Command_Factory ();
 
   /// Create the command.
-  virtual TAO_NS_Command* create (void) = 0;
+  virtual TAO_Notify_Tests_Command* create (void) = 0;
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_COMMAND_FACTORY_H */
+#endif /* TAO_Notify_Tests_COMMAND_FACTORY_H */

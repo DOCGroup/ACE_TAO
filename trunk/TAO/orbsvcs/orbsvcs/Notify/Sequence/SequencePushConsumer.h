@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SEQUENCEPUSHCONSUMER_H
-#define TAO_NS_SEQUENCEPUSHCONSUMER_H
+#ifndef TAO_Notify_SEQUENCEPUSHCONSUMER_H
+#define TAO_Notify_SEQUENCEPUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -27,38 +27,38 @@
 #include "../AdminProperties.h"
 #include "Batch_Buffering_Strategy.h"
 
-class TAO_NS_ProxySupplier;
-class TAO_NS_QoSProperties;
-class TAO_NS_Timer;
+class TAO_Notify_ProxySupplier;
+class TAO_Notify_QoSProperties;
+class TAO_Notify_Timer;
 
 /**
- * @class TAO_NS_SequencePushConsumer
+ * @class TAO_Notify_SequencePushConsumer
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_SequencePushConsumer : public ACE_Event_Handler, public TAO_NS_Consumer
+class TAO_Notify_Export TAO_Notify_SequencePushConsumer : public ACE_Event_Handler, public TAO_Notify_Consumer
 {
 public:
   /// Constuctor
-  TAO_NS_SequencePushConsumer (TAO_NS_ProxySupplier* proxy);
+  TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy);
 
   /// Destructor
-  ~TAO_NS_SequencePushConsumer ();
+  ~TAO_Notify_SequencePushConsumer ();
 
   /// Init the Consumer
-  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
+  void init (CosNotifyComm::SequencePushConsumer_ptr push_consumer, TAO_Notify_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
 
   /// Shutdown the consumer
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods.
+  /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 
   /// Push <event> to this consumer.
-  virtual void push_i (const TAO_NS_Event* event ACE_ENV_ARG_DECL);
+  virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
-  virtual void push_i (const TAO_NS_Event_var& event ACE_ENV_ARG_DECL);
+  virtual void push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);
@@ -70,7 +70,7 @@ public:
   virtual void push (const CosNotification::EventBatch& event);
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
+  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
 protected:
   /// When the pacing interval is used, handle_timeout () is called by
@@ -96,16 +96,16 @@ protected:
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
 
   /// The Message queue.
-  TAO_NS_Message_Queue msg_queue_;
+  TAO_Notify_Message_Queue msg_queue_;
 
   /// The Buffering Strategy
-  TAO_NS_Batch_Buffering_Strategy* buffering_strategy_;
+  TAO_Notify_Batch_Buffering_Strategy* buffering_strategy_;
 
   /// Max. batch size.
-  TAO_NS_Property_Long max_batch_size_;
+  TAO_Notify_Property_Long max_batch_size_;
 
   /// The Timer Manager that we use.
-  TAO_NS_Timer* timer_;
+  TAO_Notify_Timer* timer_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -113,4 +113,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SEQUENCEPUSHCONSUMER_H */
+#endif /* TAO_Notify_SEQUENCEPUSHCONSUMER_H */

@@ -12,28 +12,28 @@ ACE_RCSID(lib, TAO_Periodic_Supplier_Command, "$id$")
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_NS_Periodic_Supplier_Command::TAO_NS_Periodic_Supplier_Command (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command (void)
 {
 }
 
-TAO_NS_Periodic_Supplier_Command::~TAO_NS_Periodic_Supplier_Command ()
+TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_Command ()
 {
-}
-
-const char*
-TAO_NS_Periodic_Supplier_Command::get_name (void)
-{
-  return TAO_NS_Periodic_Supplier_Command::name ();
 }
 
 const char*
-TAO_NS_Periodic_Supplier_Command::name (void)
+TAO_Notify_Tests_Periodic_Supplier_Command::get_name (void)
 {
-  return TAO_NS_Name::periodic_supplier_command;
+  return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
+}
+
+const char*
+TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
+{
+  return TAO_Notify_Tests_Name::periodic_supplier_command;
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -60,17 +60,17 @@ TAO_NS_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
               arg_shifter.consume_arg ();
             }
 
-          TAO_NS_Periodic_Supplier* supplier = 0;
+          TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
           // create the supplier
           if (is_direct == 1)
-            supplier = new TAO_NS_Direct_Supplier (direct_target);
+            supplier = new TAO_Notify_Tests_Direct_Supplier (direct_target);
           else
-            supplier = new TAO_NS_Periodic_Supplier ();
+            supplier = new TAO_Notify_Tests_Periodic_Supplier ();
 
           supplier->set_name (this->name_);
 
-         TAO_NS_Activation_Manager* act_mgr = 0;
+         TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
@@ -90,7 +90,7 @@ TAO_NS_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->name_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser options_parser;
+          TAO_Notify_Tests_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-Disconnect") == 0) //
@@ -130,20 +130,20 @@ TAO_NS_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser qos_parser;
+          TAO_Notify_Tests_Options_Parser qos_parser;
           qos_parser.execute (this->qos_, arg_shifter);
         }
     } /* if */
 }
 
-TAO_NS_Periodic_Supplier*
-TAO_NS_Periodic_Supplier_Command::supplier (void)
+TAO_Notify_Tests_Periodic_Supplier*
+TAO_Notify_Tests_Periodic_Supplier_Command::supplier (void)
 {
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   // Locate the supplier
-  TAO_NS_Periodic_Supplier* supplier = 0;
+  TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   act_mgr->resolve (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
@@ -156,9 +156,9 @@ TAO_NS_Periodic_Supplier_Command::supplier (void)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
@@ -169,9 +169,9 @@ TAO_NS_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
@@ -180,9 +180,9 @@ TAO_NS_Periodic_Supplier_Command::handle_offers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier= this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier= this->supplier ();
   if (supplier == 0)
     return;
 
@@ -191,9 +191,9 @@ TAO_NS_Periodic_Supplier_Command::handle_disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
   if (supplier == 0)
     return;
 
@@ -202,9 +202,9 @@ TAO_NS_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
   if (supplier == 0)
     return;
@@ -213,9 +213,9 @@ TAO_NS_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+  TAO_Notify_Tests_Periodic_Supplier* supplier = this->supplier ();
 
   if (supplier == 0)
     return;
@@ -224,7 +224,7 @@ TAO_NS_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Periodic_Supplier_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Periodic_Supplier_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == CREATE)
     {

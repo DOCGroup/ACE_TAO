@@ -6,36 +6,36 @@
 #include "Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Consumer, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Consumer, "$Id$")
 
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "tao/debug.h"
 
-TAO_NS_Consumer::TAO_NS_Consumer (TAO_NS_ProxySupplier* proxy)
+TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
   :proxy_ (proxy), event_collection_ (0), is_suspended_ (0)
 {
-  this->event_collection_ = new TAO_NS_Event_Collection ();
+  this->event_collection_ = new TAO_Notify_Event_Collection ();
 }
 
-TAO_NS_Consumer::~TAO_NS_Consumer ()
+TAO_Notify_Consumer::~TAO_Notify_Consumer ()
 {
   delete this->event_collection_;
 }
 
-TAO_NS_Proxy*
-TAO_NS_Consumer::proxy (void)
+TAO_Notify_Proxy*
+TAO_Notify_Consumer::proxy (void)
 {
   return this->proxy_supplier ();
 }
 
 void
-TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->is_suspended_ == 1)
     return; // Do nothing if we're suspended.
 
-  TAO_NS_Event_Collection event_collection_copy;
+  TAO_Notify_Event_Collection event_collection_copy;
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
@@ -43,9 +43,9 @@ TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
     this->event_collection_->reset ();
   }
 
-  TAO_NS_ProxySupplier* proxy_supplier = this->proxy_supplier ();
+  TAO_Notify_ProxySupplier* proxy_supplier = this->proxy_supplier ();
 
-  TAO_NS_Event_var event;
+  TAO_Notify_Event_var event;
 
   while (!event_collection_copy.is_empty ())
     {
@@ -57,7 +57,7 @@ TAO_NS_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Consumer::resume (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Consumer::resume (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->is_suspended_ = 0;
 
@@ -65,7 +65,7 @@ TAO_NS_Consumer::resume (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
+TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed
                                      ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (this->publish_.in ()))

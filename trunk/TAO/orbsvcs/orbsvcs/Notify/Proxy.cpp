@@ -6,7 +6,7 @@
 #include "Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Proxy, "$Id$")
 
 #include "Peer.h"
 #include "Proxy.h"
@@ -15,17 +15,17 @@ ACE_RCSID(RT_Notify, TAO_NS_Proxy, "$Id$")
 #include "Properties.h"
 #include "POA_Helper.h"
 
-TAO_NS_Proxy::TAO_NS_Proxy (void)
+TAO_Notify_Proxy::TAO_Notify_Proxy (void)
   :updates_off_ (0)
 {
 }
 
-TAO_NS_Proxy::~TAO_NS_Proxy ()
+TAO_Notify_Proxy::~TAO_Notify_Proxy ()
 {
 }
 
 CORBA::Object_ptr
-TAO_NS_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
+TAO_Notify_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 {
   // Set the POA that we use to return our <ref>
   this->poa_ = this->proxy_poa_;
@@ -34,13 +34,13 @@ TAO_NS_Proxy::activate (PortableServer::Servant servant ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Proxy::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_poa_->deactivate (this->id_ ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Proxy::subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL)
+TAO_Notify_Proxy::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                         CORBA::INTERNAL ());
@@ -51,11 +51,11 @@ TAO_NS_Proxy::subscribed_types (TAO_NS_EventTypeSeq& subscribed_types ACE_ENV_AR
 }
 
 void
-TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL)
+TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request_Updates_No_Copy request (added, removed, this);
+  TAO_Notify_Method_Request_Updates_No_Copy request (added, removed, this);
 
-  if (TAO_NS_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
+  if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
       this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
     }
@@ -66,7 +66,7 @@ TAO_NS_Proxy::types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_Even
 }
 
 CosNotification::EventTypeSeq*
-TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_NS_EventTypeSeq& types ACE_ENV_ARG_DECL)
+TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_Notify_EventTypeSeq& types ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -100,10 +100,10 @@ TAO_NS_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TA
 }
 
 void
-TAO_NS_Proxy::qos_changed (const TAO_NS_QoSProperties& qos_properties)
+TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
 {
   //Inform Peers of qos changes.
-  TAO_NS_Peer* peer = this->peer ();
+  TAO_Notify_Peer* peer = this->peer ();
 
   if (peer != 0)
     peer->qos_changed (qos_properties);
