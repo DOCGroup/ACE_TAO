@@ -15,7 +15,7 @@ module HUDisplay
   component navDisplay
     {
       consumes tick Refresh;
-      uses position GetLocation;
+      uses position GPSLocation;
     };
 
   home NavDisplayHome manages NavDisplay

@@ -14,7 +14,7 @@ module HUDisplay
 {
   component GPS
     {
-      provides position MyPosition;
+      provides position MyLocation;
       publishes tick Ready;
       consumes tick Refresh;
     };
