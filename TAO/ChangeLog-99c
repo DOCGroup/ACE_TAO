@@ -1,3 +1,8 @@
+Fri Jun 18 11:19:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  Put the output CDR alllocators in TSS storage *all* the time.
+
 Fri Jun 18 10:07:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/POA/Adapter_Activator/server.cpp:

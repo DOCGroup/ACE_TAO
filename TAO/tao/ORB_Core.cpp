@@ -1451,7 +1451,9 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
+#if 0
   if (this->use_tss_resources_)
+#endif /* 0 */
     {
       TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
@@ -1463,6 +1465,7 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
       return tss->output_cdr_buffer_allocator_;
     }
 
+#if 0
   if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
     {
       // Double checked locking
@@ -1475,12 +1478,15 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
         }
     }
   return this->orb_resources_.output_cdr_buffer_allocator_;
+#endif /* 0 */
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
+#if 0
   if (this->use_tss_resources_)
+#endif /* 0 */
     {
       TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
 
@@ -1492,6 +1498,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
       return tss->output_cdr_buffer_allocator_;
     }
 
+#if 0
   if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
     {
       // Double checked locking
@@ -1504,6 +1511,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
         }
     }
   return this->orb_resources_.output_cdr_buffer_allocator_;
+#endif /* 0 */
 }
 
 ACE_Data_Block*
