@@ -1,3 +1,19 @@
+Thu Apr 16 21:12:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Signal.cpp: There was a major portability violation in the
+ 	  ACE_Sig_Handler::dispatch() method, which was previously
+ 	  acquiring a mutex lock.  This is NOT permitted in the POSIX
+ 	  signal handler spec.  In addition, the implementation had other
+ 	  nasty consequences related to dynamic allocation of memory in
+ 	  the signal handler, which has a bad habit of breaking
+ 	  non-reentrant uses of "new".  The consequence of all this is
+ 	  that you really shouldn't be modifying signal handlers via the
+ 	  Reactor in multiple threads of control.  In general, threads and
+ 	  signals are just plain evil, so they are best addressed via
+ 	  sigwait() anyhow...
+
+	  Thanks to Sumedh and Naga for first tracking this down.
+
 Thu Apr 16 20:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-pthread.h: added ACE_HAS_THREADS.

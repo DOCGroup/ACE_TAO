@@ -183,6 +183,7 @@ void
 ACE_Sig_Handler::sig_pending (int pending)
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
+
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
           ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
@@ -304,14 +305,20 @@ ACE_Sig_Handler::dispatch (int signum,
                            ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
+  // The following is #ifdef'd out because it's entirely non-portable
+  // to acquire a mutex in a signal handler...
+#if 0
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
           ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
           ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+#endif /* 0 */
 
   // Preserve errno across callbacks!
   int old_errno = errno;
 
-  ACE_Sig_Handler::sig_pending (1);
+  // We can't use the <sig_pending> call here because that acquires
+  // the lock, which is non-portable...
+  ACE_Sig_Handler::sig_pending_ = pending;
 
   // Darn well better be in range since the OS dispatched this...
   ACE_ASSERT (ACE_Sig_Handler::in_range (signum));
@@ -651,15 +658,19 @@ ACE_Sig_Handlers::dispatch (int signum,
                             ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handlers::dispatch");
+  // The following is #ifdef'd out because it's entirely non-portable
+  // to acquire a mutex in a signal handler...
+#if 0
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_SIG_HANDLER_LOCK);
     ACE_TSS_Guard<ACE_Recursive_Thread_Mutex> m (*lock));
+#endif /* 0 */
 
   // Preserve errno across callbacks!
   int old_errno = errno;
 
-  ACE_Sig_Handler::sig_pending (1);
+  ACE_Sig_Handler::sig_pending_ = 1;
 
   // Darn well better be in range since the OS dispatched this...
   ACE_ASSERT (ACE_Sig_Handler::in_range (signum));
