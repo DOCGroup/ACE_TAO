@@ -26,13 +26,6 @@
 #if !defined (_CORBA_POLLABLE___CI_)
 #define _CORBA_POLLABLE___CI_
 
-ACE_INLINE
-CORBA::Boolean
-CORBA::Pollable::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -41,13 +34,6 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 #if !defined (_CORBA_DIIPOLLABLE___CI_)
 #define _CORBA_DIIPOLLABLE___CI_
 
-ACE_INLINE
-CORBA::Boolean
-CORBA::DIIPollable::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
@@ -55,13 +41,6 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 
 #if !defined (_CORBA_POLLABLESET___CI_)
 #define _CORBA_POLLABLESET___CI_
-
-ACE_INLINE
-CORBA::Boolean
-CORBA::PollableSet::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 

@@ -91,36 +91,6 @@ int be_visitor_union_ci::visit_union (be_union *node)
                         -1);
     }
 
-  // Generate the ifdefined macro for the array type.
-  os->gen_ifdef_macro (node->flat_name (), "_var");
-
-  if (node->gen_var_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ci::"
-                         "visit_union - "
-                         "codegen for _var failed\n"), 
-                        -1);
-    }
-
-  os->gen_endif ();
-
-  // Generate the ifdefined macro for the array type then generate the
-  // _out impl
-  os->gen_ifdef_macro (node->flat_name (), "_out");
-
-  if (node->size_type () == AST_Type::VARIABLE
-      && node->gen_out_impl () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_union_ci::"
-                         "visit_union - "
-                         "codegen for _out failed\n"), 
-                        -1);
-    }
-
-  os->gen_endif ();
-
   node->cli_inline_gen (I_TRUE);
   return 0;
 }

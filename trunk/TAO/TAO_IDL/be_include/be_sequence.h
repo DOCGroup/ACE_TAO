@@ -30,6 +30,7 @@ class AST_Expression;
 class AST_Type;
 class be_visitor;
 class be_typedef;
+class be_field;
 
 // A sequence in OMG IDL does not define a scoping construct just as a struct
 // or union or an interface do. However, in the C++ mapping, a sequence becomes
@@ -89,13 +90,29 @@ public:
   const char *instance_name (void);
   // Report the instance name for instantiation.
 
+  int gen_base_class_name (TAO_OutStream *os,
+                           AST_Decl *elem_scope);
+  // Common code for generating the name and parameters of our
+  // template sequence base class.
+
+  be_field *field_node (void) const;
+  void field_node (be_field *node);
+  // Accessors for the member.
+
 protected:
   virtual char *gen_name (void);
   // Helper to create_name.
 
 private:
+  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+                                     be_type *elem);
+
+private:
   MANAGED_TYPE mt_;
   // Our managed type.
+
+  be_field *field_node_;
+  // Used if we are an anonymous member, to help generate a unique name.
 };
 
 #endif

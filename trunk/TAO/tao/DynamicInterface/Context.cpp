@@ -211,3 +211,20 @@ CORBA::ContextList::_decr_refcnt (void)
       delete this;
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class TAO_Pseudo_Var_T<CORBA::Context>;
+  template class TAO_Pseudo_Out_T<CORBA::Context, CORBA::Context_var>;
+  template class TAO_Pseudo_Var_T<CORBA::ContextList>;
+  template class TAO_Pseudo_Out_T<CORBA::ContextList, CORBA::ContextList_var>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate TAO_Pseudo_Var_T<CORBA::Context>
+# pragma instantiate TAO_Pseudo_Out_T<CORBA::Context, CORBA::Context_var>
+# pragma instantiate TAO_Pseudo_Var_T<CORBA::ContextList>
+# pragma instantiate TAO_Pseudo_Out_T<CORBA::ContextList, CORBA::ContextList_var>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

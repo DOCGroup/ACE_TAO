@@ -199,6 +199,21 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
           break;
         }
     }
+  else if (pt == AST_PredefinedType::PT_value)
+    {
+      switch (this->direction ())
+        {
+        case AST_Argument::dir_IN:
+          *os << this->type_name (node) << " *";
+          break;
+        case AST_Argument::dir_INOUT:
+          *os << this->type_name (node) << " *&";
+          break;
+        case AST_Argument::dir_OUT:
+          *os << this->type_name (node, "_out");
+          break;
+        }
+    }
   else if (pt == AST_PredefinedType::PT_pseudo
            || pt == AST_PredefinedType::PT_object)
     {

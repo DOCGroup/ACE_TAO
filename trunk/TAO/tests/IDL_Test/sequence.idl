@@ -30,14 +30,14 @@ interface seqTest
   void send_dozen (inout dozens bouquets);
 };
 
-// CDR operator declarations and definitions 
-// for the sequences were getting generated
-// twice. Now there's an #if !defined guard
-// around them.
+// Anonymous sequence members must be unique types even if the
+// sequence itself is not, so the member name has been
+// incorported into the sequence class name. #if !defined guards
+// are generated around code for the inner anonymous sequences.
 struct twinStruct
   {
-    sequence<short> and_;
-    sequence<short> or_;
+    sequence<sequence<short> > and_;
+    sequence<sequence<short> > or_;
   };
 
 // Nested sequences

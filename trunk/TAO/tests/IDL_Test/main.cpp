@@ -219,6 +219,7 @@ main (int argc , char *argv[])
       if (ACE_OS::strcmp (s_schmendrick._interface_repository_id (),
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
+         cout << s_schmendrick._interface_repository_id () << endl;
           ++error_count;
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'schmendrick'\n"));

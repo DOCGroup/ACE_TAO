@@ -26,7 +26,7 @@
 #define _TAO_IDL_ORIG_MESSAGINGC_H_
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "Messaging_SyncScope_PolicyC.h"
 
 #ifndef TAO_MESSAGING_SAFE_INCLUDE 
 #error "You should not include MessagingC.h directly, use Messaging.h"
@@ -38,13 +38,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "messaging_export.h"
-#include "Messaging_SyncScope_PolicyC.h"
 #include "Messaging_RT_PolicyC.h"
 #include "Messaging_No_ImplC.h"
 #include "tao/OctetSeqC.h"
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
-
+#include "tao/Value_VarOut_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -76,83 +75,33 @@ TAO_NAMESPACE  Messaging
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:307
   
   class ExceptionHolder;
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___PTR_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___PTR_CH_
+  struct tao_ExceptionHolder_life;
   
-  typedef ExceptionHolder *ExceptionHolder_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___VAR_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___VAR_CH_
+  typedef
+    TAO_Value_Var_T<
+        ExceptionHolder,
+        tao_ExceptionHolder_life
+      >
+    ExceptionHolder_var;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:181
+  typedef
+    TAO_Value_Out_T<
+        ExceptionHolder,
+        tao_ExceptionHolder_life
+      >
+    ExceptionHolder_out;
   
-  class TAO_Messaging_Export ExceptionHolder_var
+  struct TAO_Messaging_Export tao_ExceptionHolder_life
   {
-  public:
-    ExceptionHolder_var (void);
-    ExceptionHolder_var (ExceptionHolder*);
-    ExceptionHolder_var (const ExceptionHolder*); // (TAO extension)
-    ExceptionHolder_var (const ExceptionHolder_var &);
-    ~ExceptionHolder_var (void);
-    
-    ExceptionHolder_var &operator= (ExceptionHolder*);
-    ExceptionHolder_var &operator= (const ExceptionHolder_var &);
-    ExceptionHolder* operator-> (void) const;
-    
-    operator const ExceptionHolder* () const;
-    operator ExceptionHolder*& ();
-    // in, inout, out, _retn 
-    ExceptionHolder* in (void) const;
-    ExceptionHolder*& inout (void);
-    ExceptionHolder*& out (void);
-    ExceptionHolder* _retn (void);
-    ExceptionHolder* ptr (void) const;
-    
-    // Hooks used by template sequence and valuetype manager classes
-    // for non-defined forward declared valuetypes.
     static void tao_add_ref (ExceptionHolder *);
     static void tao_remove_ref (ExceptionHolder *);
-  
-  private:
-    ExceptionHolder* ptr_;
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___OUT_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___OUT_CH_
-  
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:490
-  
-  class TAO_Messaging_Export ExceptionHolder_out
-  {
-  public:
-    ExceptionHolder_out (ExceptionHolder* &);
-    ExceptionHolder_out (ExceptionHolder_var &);
-    ExceptionHolder_out (const ExceptionHolder_out &);
-    ExceptionHolder_out &operator= (const ExceptionHolder_out &);
-    ExceptionHolder_out &operator= (const ExceptionHolder_var &);
-    ExceptionHolder_out &operator= (ExceptionHolder*);
-    operator ExceptionHolder*& ();
-    ExceptionHolder*& ptr (void);
-    ExceptionHolder* operator-> (void);
-    
-  private:
-    ExceptionHolder* &ptr_;
   };
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:96
-
-#endif /* end #if !defined */
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:56
 
 #if !defined (_MESSAGING_EXCEPTIONHOLDER_CH_)
 #define _MESSAGING_EXCEPTIONHOLDER_CH_
@@ -176,13 +125,13 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:411
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
     
     virtual void is_system_exception (CORBA::Boolean) = 0;
     virtual CORBA::Boolean is_system_exception (void) const = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:411
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
     
     virtual void byte_order (CORBA::Boolean) = 0;
     virtual CORBA::Boolean byte_order (void) const = 0;virtual void marshaled_exception (const CORBA::OctetSeq &) = 0;
@@ -190,7 +139,7 @@ TAO_NAMESPACE  Messaging
     virtual CORBA::OctetSeq &marshaled_exception (void) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:315
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ch.cpp:272
   
   protected:
     ExceptionHolder (void);
@@ -226,6 +175,8 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder_init (void);
     virtual ~ExceptionHolder_init (void);
     
+    
+    
     static ExceptionHolder_init* _downcast (CORBA::ValueFactoryBase* );
     
     virtual CORBA::ValueBase *create_for_unmarshal (void);
@@ -243,90 +194,53 @@ TAO_NAMESPACE  Messaging
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionHolder;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_MESSAGING_REPLYHANDLER___PTR_CH_)
-#define _MESSAGING_REPLYHANDLER___PTR_CH_
+#if !defined (_MESSAGING_REPLYHANDLER__ODDS_N_ENDS_CH_)
+#define _MESSAGING_REPLYHANDLER__ODDS_N_ENDS_CH_
   
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_REPLYHANDLER___VAR_CH_)
-#define _MESSAGING_REPLYHANDLER___VAR_CH_
+  struct tao_ReplyHandler_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ReplyHandler,
+        tao_ReplyHandler_life
+      >
+    ReplyHandler_var;
   
-  class TAO_Messaging_Export ReplyHandler_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ReplyHandler,
+        tao_ReplyHandler_life
+      >
+    ReplyHandler_out;
+  
+  struct TAO_Messaging_Export tao_ReplyHandler_life
   {
-  public:
-    ReplyHandler_var (void); // default constructor
-    ReplyHandler_var (ReplyHandler_ptr p) : ptr_ (p) {} 
-    ReplyHandler_var (const ReplyHandler_var &); // copy constructor
-    ~ReplyHandler_var (void); // destructor
-    
-    ReplyHandler_var &operator= (ReplyHandler_ptr);
-    ReplyHandler_var &operator= (const ReplyHandler_var &);
-    ReplyHandler_ptr operator-> (void) const;
-    
-    operator const ReplyHandler_ptr &() const;
-    operator ReplyHandler_ptr &();
-    // in, inout, out, _retn 
-    ReplyHandler_ptr in (void) const;
-    ReplyHandler_ptr &inout (void);
-    ReplyHandler_ptr &out (void);
-    ReplyHandler_ptr _retn (void);
-    ReplyHandler_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ReplyHandler_ptr tao_duplicate (ReplyHandler_ptr);
     static void tao_release (ReplyHandler_ptr);
     static ReplyHandler_ptr tao_nil (void);
-    static ReplyHandler_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ReplyHandler_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ReplyHandler_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ReplyHandler_var (const TAO_Base_var &rhs);
-    ReplyHandler_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_MESSAGING_REPLYHANDLER___OUT_CH_)
-#define _MESSAGING_REPLYHANDLER___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Messaging_Export ReplyHandler_out
+  struct TAO_Messaging_Export tao_ReplyHandler_cast
   {
-  public:
-    ReplyHandler_out (ReplyHandler_ptr &);
-    ReplyHandler_out (ReplyHandler_var &);
-    ReplyHandler_out (const ReplyHandler_out &);
-    ReplyHandler_out &operator= (const ReplyHandler_out &);
-    ReplyHandler_out &operator= (const ReplyHandler_var &);
-    ReplyHandler_out &operator= (ReplyHandler_ptr);
-    operator ReplyHandler_ptr &();
-    ReplyHandler_ptr &ptr (void);
-    ReplyHandler_ptr operator-> (void);
-  
-  private:
-    ReplyHandler_ptr &ptr_;
+    static ReplyHandler_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_MESSAGING_REPLYHANDLER_CH_)
 #define _MESSAGING_REPLYHANDLER_CH_
@@ -365,7 +279,7 @@ TAO_NAMESPACE  Messaging
     static void _tao_any_destructor (void *);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -560,17 +474,16 @@ TAO_NAMESPACE  OBV_Messaging
     virtual ~ExceptionHolder (void);
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:411
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
     
     virtual void is_system_exception (CORBA::Boolean);
     virtual CORBA::Boolean is_system_exception (void) const;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:411
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/field_ch.cpp:412
     
     virtual void byte_order (CORBA::Boolean);
-    virtual CORBA::Boolean byte_order (void) const;
-    virtual void marshaled_exception (const CORBA::OctetSeq &);
+    virtual CORBA::Boolean byte_order (void) const;virtual void marshaled_exception (const CORBA::OctetSeq &);
     virtual const CORBA::OctetSeq &marshaled_exception (void) const;
     virtual CORBA::OctetSeq &marshaled_exception (void);
     
@@ -613,7 +526,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:682
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:212
 
 TAO_NAMESPACE CORBA
 {
@@ -640,7 +553,7 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "MessagingC.i"
@@ -656,5 +569,4 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Reply
 
 #include "ace/post.h"
 #endif /* ifndef */
-
 

@@ -44,33 +44,6 @@ public:
 
   virtual int visit_sequence (be_sequence *node);
   // visit sequence node
-
-  virtual int gen_unbounded_sequence (be_sequence *node);
-  // generate a instance of the unbounded sequence
-
-  virtual int gen_bounded_sequence (be_sequence *node);
-  // generate a instance of the bounded sequence
-
-  virtual int gen_unbounded_obj_sequence (be_sequence *node);
-  // generate a instance of the unbounded object sequence
-
-  virtual int gen_bounded_obj_sequence (be_sequence *node);
-  // generate a instance of the bounded object sequence
-
-  virtual int gen_bounded_str_sequence (be_sequence *node);
-  // generate a instance of the bounded string sequence
-
-  virtual int gen_bounded_wstr_sequence (be_sequence *node);
-  // generate a instance of the bounded wstring sequence
-
-  virtual int instantiate_sequence (be_sequence *node);
-  // determine which sequence to instantiate
-
-  virtual int gen_var_impl (be_sequence *node);
-  // generate the var impl
-
-  virtual int gen_out_impl (be_sequence *node);
-  // generate the out impl
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_SEQUENCE_CI_H_ */

@@ -26,13 +26,12 @@
 #define _TAO_IDL_ORIG_TAO_EXTC_H_
 
 #include "ace/pre.h"
-#include "tao/orbconf.h"
+#include "tao/PolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
 #include "messaging_export.h"
 
@@ -68,93 +67,56 @@ TAO_NAMESPACE  TAO
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
   
-  const CORBA::ULong CONNECTION_TIMEOUT_POLICY_TYPE = 1413545992U;
+  const CORBA::PolicyType CONNECTION_TIMEOUT_POLICY_TYPE = 1413545992U;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___PTR_CH_)
-#define _TAO_CONNECTIONTIMEOUTPOLICY___PTR_CH_
+#if !defined (_TAO_CONNECTIONTIMEOUTPOLICY__ODDS_N_ENDS_CH_)
+#define _TAO_CONNECTIONTIMEOUTPOLICY__ODDS_N_ENDS_CH_
   
   class ConnectionTimeoutPolicy;
   typedef ConnectionTimeoutPolicy *ConnectionTimeoutPolicy_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___VAR_CH_)
-#define _TAO_CONNECTIONTIMEOUTPOLICY___VAR_CH_
+  struct tao_ConnectionTimeoutPolicy_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        ConnectionTimeoutPolicy,
+        tao_ConnectionTimeoutPolicy_life
+      >
+    ConnectionTimeoutPolicy_var;
   
-  class TAO_Messaging_Export ConnectionTimeoutPolicy_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        ConnectionTimeoutPolicy,
+        tao_ConnectionTimeoutPolicy_life
+      >
+    ConnectionTimeoutPolicy_out;
+  
+  struct TAO_Messaging_Export tao_ConnectionTimeoutPolicy_life
   {
-  public:
-    ConnectionTimeoutPolicy_var (void); // default constructor
-    ConnectionTimeoutPolicy_var (ConnectionTimeoutPolicy_ptr p) : ptr_ (p) {} 
-    ConnectionTimeoutPolicy_var (const ConnectionTimeoutPolicy_var &); // copy constructor
-    ~ConnectionTimeoutPolicy_var (void); // destructor
-    
-    ConnectionTimeoutPolicy_var &operator= (ConnectionTimeoutPolicy_ptr);
-    ConnectionTimeoutPolicy_var &operator= (const ConnectionTimeoutPolicy_var &);
-    ConnectionTimeoutPolicy_ptr operator-> (void) const;
-    
-    operator const ConnectionTimeoutPolicy_ptr &() const;
-    operator ConnectionTimeoutPolicy_ptr &();
-    // in, inout, out, _retn 
-    ConnectionTimeoutPolicy_ptr in (void) const;
-    ConnectionTimeoutPolicy_ptr &inout (void);
-    ConnectionTimeoutPolicy_ptr &out (void);
-    ConnectionTimeoutPolicy_ptr _retn (void);
-    ConnectionTimeoutPolicy_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static ConnectionTimeoutPolicy_ptr tao_duplicate (ConnectionTimeoutPolicy_ptr);
     static void tao_release (ConnectionTimeoutPolicy_ptr);
     static ConnectionTimeoutPolicy_ptr tao_nil (void);
-    static ConnectionTimeoutPolicy_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        ConnectionTimeoutPolicy_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    ConnectionTimeoutPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ConnectionTimeoutPolicy_var (const TAO_Base_var &rhs);
-    ConnectionTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___OUT_CH_)
-#define _TAO_CONNECTIONTIMEOUTPOLICY___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_Messaging_Export ConnectionTimeoutPolicy_out
+  struct TAO_Messaging_Export tao_ConnectionTimeoutPolicy_cast
   {
-  public:
-    ConnectionTimeoutPolicy_out (ConnectionTimeoutPolicy_ptr &);
-    ConnectionTimeoutPolicy_out (ConnectionTimeoutPolicy_var &);
-    ConnectionTimeoutPolicy_out (const ConnectionTimeoutPolicy_out &);
-    ConnectionTimeoutPolicy_out &operator= (const ConnectionTimeoutPolicy_out &);
-    ConnectionTimeoutPolicy_out &operator= (const ConnectionTimeoutPolicy_var &);
-    ConnectionTimeoutPolicy_out &operator= (ConnectionTimeoutPolicy_ptr);
-    operator ConnectionTimeoutPolicy_ptr &();
-    ConnectionTimeoutPolicy_ptr &ptr (void);
-    ConnectionTimeoutPolicy_ptr operator-> (void);
-  
-  private:
-    ConnectionTimeoutPolicy_ptr &ptr_;
+    static ConnectionTimeoutPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY_CH_
@@ -198,7 +160,7 @@ TAO_NAMESPACE  TAO
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -208,10 +170,6 @@ TAO_NAMESPACE  TAO
   protected:
     ConnectionTimeoutPolicy (void);
     virtual ~ConnectionTimeoutPolicy (void);
-    
-    friend class _TAO_ConnectionTimeoutPolicy_Remote_Proxy_Impl;
-    friend class _TAO_ConnectionTimeoutPolicy_ThruPOA_Proxy_Impl;
-    friend class _TAO_ConnectionTimeoutPolicy_Direct_Proxy_Impl;
   
   private:
     ConnectionTimeoutPolicy (const ConnectionTimeoutPolicy &);
@@ -249,7 +207,7 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::Connec
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "TAO_ExtC.i"

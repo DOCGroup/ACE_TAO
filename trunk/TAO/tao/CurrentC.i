@@ -26,13 +26,6 @@
 #if !defined (_CORBA_CURRENT___CI_)
 #define _CORBA_CURRENT___CI_
 
-ACE_INLINE
-CORBA::Boolean
-CORBA::Current::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 template<>
 ACE_INLINE
 CORBA::Boolean
@@ -59,6 +52,4 @@ TAO::Any_Impl_T<CORBA::Current>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
 }
-
 #endif /* end #if !defined */
-

@@ -30,10 +30,16 @@
 #include <stdarg.h> // LynxOS requires this before stdio.h
 #include <stdio.h>  // Pull in "stdout" definition.
 
+#include "tao/Pseudo_VarOut_T.h"
+
 class TAO_ORB_Core;
 
 namespace CORBA
 {
+  class Environment;
+  typedef TAO_Pseudo_Var_T<Environment> Environment_var;
+  typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
+
   /**
    * @class Environment
    *
@@ -120,11 +126,9 @@ namespace CORBA
     // = Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment (void);
 
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
     typedef CORBA::Environment_ptr _ptr_type;
     typedef CORBA::Environment_var _var_type;
-#endif /* __GNUC__ */
 
   private:
 
@@ -138,71 +142,6 @@ namespace CORBA
 
     /// The previous environment on the "default environment stack".
     Environment *previous_;
-  };
-
-  /**
-   * @class Environment_var
-   *
-   * @brief Environment_var
-   *
-   * Provide for automatic storage deallocation on going out of
-   * scope.
-   */
-  class TAO_Export Environment_var
-  {
-  public:
-    /**
-     * default constructor
-     * copy constructor
-     * destructor
-     */
-    Environment_var (void);
-    Environment_var (CORBA::Environment_ptr);
-    Environment_var (const Environment_var &);
-    ~Environment_var (void);
-
-    Environment_var &operator= (CORBA::Environment_ptr);
-    Environment_var &operator= (const Environment_var &);
-    CORBA::Environment_ptr operator-> (void) const;
-
-    /// in, inout, out, _retn
-    operator const CORBA::Environment_ptr &() const;
-    operator CORBA::Environment_ptr &();
-    CORBA::Environment_ptr in (void) const;
-    CORBA::Environment_ptr &inout (void);
-    CORBA::Environment_ptr &out (void);
-    CORBA::Environment_ptr _retn (void);
-    CORBA::Environment_ptr ptr (void) const;
-
-  private:
-    CORBA::Environment_ptr ptr_;
-  };
-
-  /**
-   * @class Environment_out
-   *
-   * @brief Environment_out
-   *
-   * The _out class for CORBA::Environment.  This is used to help in
-   * managing the out parameters.
-   */
-  class TAO_Export Environment_out
-  {
-  public:
-    Environment_out (Environment_ptr &);
-    Environment_out (Environment_var &);
-    Environment_out (const Environment_out &);
-    Environment_out &operator= (const Environment_out &);
-    Environment_out &operator= (CORBA::Environment_ptr);
-    operator CORBA::Environment_ptr &();
-    CORBA::Environment_ptr &ptr (void);
-    CORBA::Environment_ptr operator-> (void);
-
-  private:
-    Environment_ptr &ptr_;
-
-    /// Assignment from _var not allowed.
-    Environment_out &operator= (const CORBA::Environment_var &);
   };
 } // End CORBA namespace
 

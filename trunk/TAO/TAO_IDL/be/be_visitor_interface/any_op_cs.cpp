@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -17,8 +15,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           any_op_cs, 
+ACE_RCSID (be_visitor_interface,
+           any_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -111,7 +109,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << node->full_name () << ","
       << node->full_name () << "_var>;" << be_nl
-      << "template class TAO::Any_Impl_T<" << node->name () << ">;" 
+      << "template class TAO::Any_Impl_T<" << node->name () << ">;"
       << be_uidt_nl
       << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl;
 
@@ -126,7 +124,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << node->full_name () << ", "
       << node->full_name () << "_var>" << be_nl
-      << "# pragma instantiate TAO::Any_Impl_T<" << node->name () << ">" 
+      << "# pragma instantiate TAO::Any_Impl_T<" << node->name () << ">"
       << be_uidt_nl
       << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 

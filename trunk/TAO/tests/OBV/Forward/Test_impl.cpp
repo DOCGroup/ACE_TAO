@@ -12,15 +12,15 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 
 
 void
-reflect_node (BaseNode_ptr bn)
+reflect_node (BaseNode* bn)
 {
   if(bn == 0) return;
 
   reflect_node (bn->left ());
   reflect_node (bn->right ());
 
-  BaseNode_ptr old_right = bn->right ();
-  BaseNode_ptr old_left = bn->left ();
+  BaseNode *old_right = bn->right ();
+  BaseNode *old_left = bn->left ();
 
   CORBA::add_ref (old_right);
   CORBA::add_ref (old_left);

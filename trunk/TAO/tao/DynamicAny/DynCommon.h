@@ -256,7 +256,7 @@ public:
       ));
 
   virtual void insert_val (
-      CORBA::ValueBase_ptr value
+      CORBA::ValueBase * value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
@@ -436,7 +436,7 @@ public:
         DynamicAny::DynAny::InvalidValue
       ));
 
-  virtual CORBA::ValueBase_ptr get_val (
+  virtual CORBA::ValueBase * get_val (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((

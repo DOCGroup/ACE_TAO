@@ -45,9 +45,9 @@ be_visitor_root_cdr_op::visit_root (be_root *node)
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CDR_OP_CH)
     {
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__;
 
-      *os << "#ifndef __ACE_INLINE__";
+      *os << "\n\n#ifndef __ACE_INLINE__";
     }
 
   if (this->visit_scope (node) == -1)
@@ -61,9 +61,9 @@ be_visitor_root_cdr_op::visit_root (be_root *node)
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CDR_OP_CH)
     {
       *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__;
 
-      *os << "#endif /* __ACE_INLINE__ */";
+      *os << "\n\n#endif /* __ACE_INLINE__ */";
     }
 
   return 0;

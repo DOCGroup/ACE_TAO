@@ -67,90 +67,53 @@ TAO_NAMESPACE  RTPortableServer
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_RTPORTABLESERVER_POA___PTR_CH_)
-#define _RTPORTABLESERVER_POA___PTR_CH_
+#if !defined (_RTPORTABLESERVER_POA__ODDS_N_ENDS_CH_)
+#define _RTPORTABLESERVER_POA__ODDS_N_ENDS_CH_
   
   class POA;
   typedef POA *POA_ptr;
-
-#endif /* end #if !defined */
-
-#if !defined (_RTPORTABLESERVER_POA___VAR_CH_)
-#define _RTPORTABLESERVER_POA___VAR_CH_
+  struct tao_POA_life;
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  typedef
+    TAO_Objref_Var_T<
+        POA,
+        tao_POA_life
+      >
+    POA_var;
   
-  class TAO_RTPortableServer_Export POA_var : public TAO_Base_var
+  typedef
+    TAO_Objref_Out_T<
+        POA,
+        tao_POA_life
+      >
+    POA_out;
+  
+  struct TAO_RTPortableServer_Export tao_POA_life
   {
-  public:
-    POA_var (void); // default constructor
-    POA_var (POA_ptr p) : ptr_ (p) {} 
-    POA_var (const POA_var &); // copy constructor
-    ~POA_var (void); // destructor
-    
-    POA_var &operator= (POA_ptr);
-    POA_var &operator= (const POA_var &);
-    POA_ptr operator-> (void) const;
-    
-    operator const POA_ptr &() const;
-    operator POA_ptr &();
-    // in, inout, out, _retn 
-    POA_ptr in (void) const;
-    POA_ptr &inout (void);
-    POA_ptr &out (void);
-    POA_ptr _retn (void);
-    POA_ptr ptr (void) const;
-    
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
     static POA_ptr tao_duplicate (POA_ptr);
     static void tao_release (POA_ptr);
     static POA_ptr tao_nil (void);
-    static POA_ptr tao_narrow (
-        CORBA::Object *
-        ACE_ENV_ARG_DECL_NOT_USED
+    static CORBA::Boolean tao_marshal (
+        POA_ptr,
+        TAO_OutputCDR &
       );
-    static CORBA::Object * tao_upcast (void *);
-  
-  private:
-    POA_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    POA_var (const TAO_Base_var &rhs);
-    POA_var &operator= (const TAO_Base_var &rhs);
   };
-
-#endif /* end #if !defined */
-
-#if !defined (_RTPORTABLESERVER_POA___OUT_CH_)
-#define _RTPORTABLESERVER_POA___OUT_CH_
   
-  // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
-  
-  class TAO_RTPortableServer_Export POA_out
+  struct TAO_RTPortableServer_Export tao_POA_cast
   {
-  public:
-    POA_out (POA_ptr &);
-    POA_out (POA_var &);
-    POA_out (const POA_out &);
-    POA_out &operator= (const POA_out &);
-    POA_out &operator= (const POA_var &);
-    POA_out &operator= (POA_ptr);
-    operator POA_ptr &();
-    POA_ptr &ptr (void);
-    POA_ptr operator-> (void);
-  
-  private:
-    POA_ptr &ptr_;
+    static POA_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_RTPORTABLESERVER_POA_CH_)
 #define _RTPORTABLESERVER_POA_CH_
@@ -241,7 +204,7 @@ TAO_NAMESPACE  RTPortableServer
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
     virtual void *_tao_QueryInterface (ptr_arith_t type);
     
@@ -251,7 +214,7 @@ TAO_NAMESPACE  RTPortableServer
   protected:
     POA (void);
     virtual ~POA (void);
-    
+  
   private:
     POA (const POA &);
     void operator= (const POA &);
@@ -288,7 +251,7 @@ TAO_RTPortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, RTPo
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "RTPortableServerC.i"

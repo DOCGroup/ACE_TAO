@@ -39,6 +39,10 @@
 
 namespace CORBA
 {
+  class ServerRequest;
+  typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
+  typedef TAO_Pseudo_Out_T<ServerRequest, ServerRequest_var> ServerRequest_out;
+
   class TAO_DynamicInterface_Export ServerRequest
   {
     // = TITLE
@@ -123,11 +127,8 @@ namespace CORBA
     // Returns a user exception through a TAO gateway without
     // knowing its type.
     
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
     // Useful for template programming.
-    typedef CORBA::ServerRequest_ptr _ptr_type;
-#endif /* __GNUC__ */
-    
+    typedef CORBA::ServerRequest_ptr _ptr_type;    
     
   private:
     int lazy_evaluation_;
