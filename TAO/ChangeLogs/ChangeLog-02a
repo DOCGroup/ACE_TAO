@@ -1,33 +1,40 @@
+Thu Dec 21 19:33:33 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Param_Test/except.cpp:
+          We need an explicit #include to get the declaration of
+          CORBA::UnknownUserException, it used to be in tao/Exception.h,
+          but the class has moved into the DynamicInterface library.
+
 Thu Dec 21 18:53:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Strategies/advanced_svc.conf: 
-	  Changed the entry in the conf file from Resource_Factory to
-	  Advanced_Resource_Factory.
+        * tests/Strategies/advanced_svc.conf:
+          Changed the entry in the conf file from Resource_Factory to
+          Advanced_Resource_Factory.
 
-	  Thanks to Bala for pointing it out.
+          Thanks to Bala for pointing it out.
 
 Thu Dec 21 13:23:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed the file
-	  permission specifier when opening the temp file.  The should be
-	  taken care of by ACE_OS::open automatically and the old
-	  specifier no longer worked on NT.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Removed the file
+          permission specifier when opening the temp file.  The should be
+          taken care of by ACE_OS::open automatically and the old
+          specifier no longer worked on NT.
 
 Wed Dec 20 09:34:20 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.h :
-	* tao/CORBALOC_Parser.cpp :
+        * tao/CORBALOC_Parser.h :
+        * tao/CORBALOC_Parser.cpp :
 
-	  Instead of declaring CORBA::ORB orb_ and TAO_MProfile mprofile_
-	  as private variables, declared them in the implementation and
-	  accrdingly changed the signatures of the methods using these
-	  variables. This way the MProfile will be cleaned automatically
-	  when it goes out of scope. Previosuly, the new mprofile was
-	  added to the already existing mprofile which was never cleaned
-	  causing a problem.
+          Instead of declaring CORBA::ORB orb_ and TAO_MProfile mprofile_
+          as private variables, declared them in the implementation and
+          accrdingly changed the signatures of the methods using these
+          variables. This way the MProfile will be cleaned automatically
+          when it goes out of scope. Previosuly, the new mprofile was
+          added to the already existing mprofile which was never cleaned
+          causing a problem.
 
-	  Thanks to Russell Carter <rcarter@consys.com> for reporting this
-	  problem.
+          Thanks to Russell Carter <rcarter@consys.com> for reporting this
+          problem.
 
 Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -44,9 +51,9 @@ Tue Dec 19 19:31:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Dec 19 19:22:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/TAO_Static.dsp
+        * tao/TAO_Static.dsp
 
-	  Added the new files.
+          Added the new files.
 
 Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -77,26 +84,26 @@ Tue Dec 19 14:21:12 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Dec 19 11:47:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Protocols_Hooks.cpp :
-	* tao/Protocols_Hooks.h :
-	* tao/Default_Protocols_Hooks.cpp :
-	* tao/Default_Protocols_Hooks.h :
-	* tao/RT_Protocols_Hooks.cpp :
-	* tao/RT_Protocols_Hooks.h :
+        * tao/Protocols_Hooks.cpp :
+        * tao/Protocols_Hooks.h :
+        * tao/Default_Protocols_Hooks.cpp :
+        * tao/Default_Protocols_Hooks.h :
+        * tao/RT_Protocols_Hooks.cpp :
+        * tao/RT_Protocols_Hooks.h :
 
-	* tao/RT_Invocation_Endpoint_Selectors.i :
-	* tao/Invocation_Endpoint_Selectors.i :
+        * tao/RT_Invocation_Endpoint_Selectors.i :
+        * tao/Invocation_Endpoint_Selectors.i :
 
-	* tao/Invocation.h :
-	* tao/Invocation.i :
+        * tao/Invocation.h :
+        * tao/Invocation.i :
 
-	  Added TAO_HAS_RT_CORBA if-def guards.
+          Added TAO_HAS_RT_CORBA if-def guards.
 
 Tue Dec 19 12:16:32 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* utils/nslist/nslist.cpp (main): Added a fix to check if non-existent
-	  IOR is passed in.  Thanks to Jerry Jiang <javalist@21cn.com> for
- 	  reporting this problem.
+        * utils/nslist/nslist.cpp (main): Added a fix to check if non-existent
+          IOR is passed in.  Thanks to Jerry Jiang <javalist@21cn.com> for
+          reporting this problem.
 
 Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -125,255 +132,255 @@ Tue Dec 19 06:17:57 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Mon Dec 18 23:17:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/DomainS.h:
-	* tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.cpp:
 
-	  Fixed compile-time error that occurs when Interface Repository
-	  support is enabled.
+          Fixed compile-time error that occurs when Interface Repository
+          support is enabled.
 
 Mon Dec 18 19:18:51 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Protocol/server.cpp :
+        * tests/RTCORBA/Server_Protocol/server.cpp :
 
-	  In check_default_server_protocol, changed the type of the
-	  variable server_protocol to CORBA::Policy * and later did the
-	  necessary narrows.
+          In check_default_server_protocol, changed the type of the
+          variable server_protocol to CORBA::Policy * and later did the
+          necessary narrows.
 
 Mon Dec 18 19:03:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/TAO.dsp
-	  Added the new files.
+        * tao/TAO.dsp
+          Added the new files.
 
 Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/Makefile :
-	  Added the new files.
+        * tao/Makefile :
+          Added the new files.
 
-	* tao/*/Makefile :
-	  Updated dependencies.
+        * tao/*/Makefile :
+          Updated dependencies.
 
-	* tao/RT_Protocols_Hooks.h :
-	* tao/RT_Protocols_Hooks.i :
-	* tao/RT_Protocols_Hooks.cpp :
+        * tao/RT_Protocols_Hooks.h :
+        * tao/RT_Protocols_Hooks.i :
+        * tao/RT_Protocols_Hooks.cpp :
 
-	* tao/Default_Protocols_Hooks.h :
-	* tao/Default_Protocols_Hooks.i :
-	* tao/Default_Protocols_Hooks.cpp :
+        * tao/Default_Protocols_Hooks.h :
+        * tao/Default_Protocols_Hooks.i :
+        * tao/Default_Protocols_Hooks.cpp :
 
-	* tao/Protocols_Hooks.h:
-	* tao/Protocols_Hooks.i:
-	* tao/Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks.h:
+        * tao/Protocols_Hooks.i:
+        * tao/Protocols_Hooks.cpp:
 
-	  This change is aimed at removing the dependencies between
-	  RTCORBA and the rest of the TAO library. For the same
-	  purpose, I added hooks for almost all the methods which use
-	  RTCORBA related stuff.
-	  TAO_Protocools_Hooks is the base class from which
-	  TAO_Default_Protocols_Hooks and TAO_RT_Protocols_Hooks derive.
+          This change is aimed at removing the dependencies between
+          RTCORBA and the rest of the TAO library. For the same
+          purpose, I added hooks for almost all the methods which use
+          RTCORBA related stuff.
+          TAO_Protocools_Hooks is the base class from which
+          TAO_Default_Protocols_Hooks and TAO_RT_Protocols_Hooks derive.
 
-	  If TAO_HAS_RT_CORBA==1, TAO_RT_ORBInitializer::pre_init method
-	  invokes the static method 'TAO_ORB_Core::set_protocols_hooks'
-	  which sets the static variable
-	  'TAO_ORB_Core::protocols_hooks_name' to 'RT_Protocols_Hooks'
-	  thereby causing the control to go to TAO_RT_Protocols_Hooks
-	  methods in case any of the hooks are invoked. Else, the control
-	  goes to the TAO_Default_Protocols_Hooks which does nothing.
+          If TAO_HAS_RT_CORBA==1, TAO_RT_ORBInitializer::pre_init method
+          invokes the static method 'TAO_ORB_Core::set_protocols_hooks'
+          which sets the static variable
+          'TAO_ORB_Core::protocols_hooks_name' to 'RT_Protocols_Hooks'
+          thereby causing the control to go to TAO_RT_Protocols_Hooks
+          methods in case any of the hooks are invoked. Else, the control
+          goes to the TAO_Default_Protocols_Hooks which does nothing.
 
-	* tao/RT_ORBInitializer.cpp :
+        * tao/RT_ORBInitializer.cpp :
 
-	  Invoke the static methods in TAO_ORB_Core and
-	  TAO_RT_Protocols_Hooks to set the new values.
+          Invoke the static methods in TAO_ORB_Core and
+          TAO_RT_Protocols_Hooks to set the new values.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
 
-	  Added a new method
-	  TAO_ORB_Core::set_protocols_hooks (const char *)
-	  to set the static variable protocols_hooks_name_. The default
-	  value is "Protocols_Hooks". It can be set to
-	  "RT_Protocols_Hooks".
+          Added a new method
+          TAO_ORB_Core::set_protocols_hooks (const char *)
+          to set the static variable protocols_hooks_name_. The default
+          value is "Protocols_Hooks". It can be set to
+          "RT_Protocols_Hooks".
 
-	  Added another method
-	  TAO_ORB_Core::get_protocols_hooks (void)
-	  to get the desired Protocols_Hooks (TAO_Default_Protocols_Hooks
-	  or TAO_RT_Protocols_Hooks) class depending on the value of
-	  protocols_hooks_name_. The handle to this factory is
-	  TAO_ORB_Core::protocols_hooks_
+          Added another method
+          TAO_ORB_Core::get_protocols_hooks (void)
+          to get the desired Protocols_Hooks (TAO_Default_Protocols_Hooks
+          or TAO_RT_Protocols_Hooks) class depending on the value of
+          protocols_hooks_name_. The handle to this factory is
+          TAO_ORB_Core::protocols_hooks_
 
-	  Changed the return values of the following functions to return a
-	  CORBA::Policy * instead of the policies that they are returning
-	  previously.
+          Changed the return values of the following functions to return a
+          CORBA::Policy * instead of the policies that they are returning
+          previously.
 
-	  /// Methods for obtaining ORB implementation default values for RT
-	  /// policies.
-	  //@{
- 	  TAO_PrivateConnectionPolicy *default_private_connection (void) const;
-	  TAO_PriorityBandedConnectionPolicy *
-	  default_priority_banded_connection (void) const;
+          /// Methods for obtaining ORB implementation default values for RT
+          /// policies.
+          //@{
+          TAO_PrivateConnectionPolicy *default_private_connection (void) const;
+          TAO_PriorityBandedConnectionPolicy *
+          default_priority_banded_connection (void) const;
           TAO_ClientProtocolPolicy *default_client_protocol (void) const;
           TAO_ServerProtocolPolicy *default_server_protocol (void) const;
- 	  TAO_ThreadpoolPolicy *default_threadpool (void) const;
-	  TAO_PriorityModelPolicy *default_priority_model (void) const;
-  	  //@}
+          TAO_ThreadpoolPolicy *default_threadpool (void) const;
+          TAO_PriorityModelPolicy *default_priority_model (void) const;
+          //@}
 
-	  and
-	  {
-	  TAO_ThreadpoolPolicy *threadpool (void);
-	  TAO_PriorityModelPolicy *priority_model (void);
+          and
+          {
+          TAO_ThreadpoolPolicy *threadpool (void);
+          TAO_PriorityModelPolicy *priority_model (void);
           TAO_ServerProtocolPolicy *server_protocol (void);
-	  }
+          }
 
-	* tao/Policy_Manager.h :
-	* tao/Policy_Manager.i :
-	* tao/Policy_Manager.cpp :
+        * tao/Policy_Manager.h :
+        * tao/Policy_Manager.i :
+        * tao/Policy_Manager.cpp :
 
-	  Changed the return values of the following functions to return
-	  CORBA::Policy * in all the classes.
+          Changed the return values of the following functions to return
+          CORBA::Policy * in all the classes.
 
-	  {
-	  TAO_PriorityModelPolicy *priority_model (void) const;
-	  TAO_ThreadpoolPolicy *threadpool (void) const;
-	  TAO_PrivateConnectionPolicy *private_connection (void) const;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
-	  (void) const;
-	  TAO_ServerProtocolPolicy *server_protocol (void) const;
+          {
+          TAO_PriorityModelPolicy *priority_model (void) const;
+          TAO_ThreadpoolPolicy *threadpool (void) const;
+          TAO_PrivateConnectionPolicy *private_connection (void) const;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+          (void) const;
+          TAO_ServerProtocolPolicy *server_protocol (void) const;
           TAO_ClientProtocolPolicy *client_protocol (void) const;
-	  }
+          }
 
-	  and
-	  {
-	  TAO_PrivateConnectionPolicy *private_connection (void) const;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection
-	  (void) const;
-	  TAO_ClientProtocolPolicy *client_protocol (void) const;
-	  }
+          and
+          {
+          TAO_PrivateConnectionPolicy *private_connection (void) const;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection
+          (void) const;
+          TAO_ClientProtocolPolicy *client_protocol (void) const;
+          }
 
-	  And all these variables are now CORBA::Policy *
-	  {
-	  TAO_PriorityModelPolicy *priority_model_;
-	  TAO_ThreadpoolPolicy *threadpool_;
-	  TAO_PrivateConnectionPolicy *private_connection_;
-	  TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
-	  TAO_ServerProtocolPolicy *server_protocol_;
-	  TAO_ClientProtocolPolicy *client_protocol_;
-	  }
+          And all these variables are now CORBA::Policy *
+          {
+          TAO_PriorityModelPolicy *priority_model_;
+          TAO_ThreadpoolPolicy *threadpool_;
+          TAO_PrivateConnectionPolicy *private_connection_;
+          TAO_PriorityBandedConnectionPolicy *priority_banded_connection_;
+          TAO_ServerProtocolPolicy *server_protocol_;
+          TAO_ClientProtocolPolicy *client_protocol_;
+          }
 
-	  In TAO_Policy_Manager_Impl::copy_from implementation, instead of
-	  calling ACE_NEW_THROW_EX for a new instance of all
-	  classes related to RTCORBA (which are in the #if guard of
-	  TAO_HAS_RT_CORBA==1), invoked the copy function of the
-	  respective classes.
+          In TAO_Policy_Manager_Impl::copy_from implementation, instead of
+          calling ACE_NEW_THROW_EX for a new instance of all
+          classes related to RTCORBA (which are in the #if guard of
+          TAO_HAS_RT_CORBA==1), invoked the copy function of the
+          respective classes.
 
-	  In TAO_Policy_Manager_Impl::set_policy_overrides, for the
-	  sections related to RTCORBA, removed unneeded narrows and casts
-	  now that the variables are CORBA::Policy *.
+          In TAO_Policy_Manager_Impl::set_policy_overrides, for the
+          sections related to RTCORBA, removed unneeded narrows and casts
+          now that the variables are CORBA::Policy *.
 
-	* tao/Invocation.h:
-	* tao/Invocation.i :
-	* tao/Invocation.cpp :
+        * tao/Invocation.h:
+        * tao/Invocation.i :
+        * tao/Invocation.cpp :
 
           Moved part of add_rt_service_context to
-	  TAO_RT_Protocols_Hooks::add_rt_service_context_hook and invoked
-	  the hook instead in
-	  TAO_Invocation::add_rt_service_context method implementation.
+          TAO_RT_Protocols_Hooks::add_rt_service_context_hook and invoked
+          the hook instead in
+          TAO_Invocation::add_rt_service_context method implementation.
 
-	  Added the following two methods to get access to the protected
-	  variables for the add_rt_service_context_hook method in
-	  RT_Protocols_Hooks.cpp
+          Added the following two methods to get access to the protected
+          variables for the add_rt_service_context_hook method in
+          RT_Protocols_Hooks.cpp
 
-	  {
-	  /// Get the protected variable <endpoint_selection_state_>
-	  TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
+          {
+          /// Get the protected variable <endpoint_selection_state_>
+          TAO_Endpoint_Selection_State get_endpoint_selection_state (void);
 
-	  /// Get the pointer to stub.
-	  TAO_Stub *get_stub (void);
-	  }
+          /// Get the pointer to stub.
+          TAO_Stub *get_stub (void);
+          }
 
-	* tao/Stub.h :
-	* tao/Stub.cpp :
+        * tao/Stub.h :
+        * tao/Stub.cpp :
 
-	  Call TAO_RT_Protocols_Hooks::call_policy_type_hook in
-	  TAO_Stub::parse_policies to get the policy_type as a (in a
-	  hard-coded way)
-	  CORBA::Ulong value. The policy_type is checked in the hook
-	  method and a CORBA::ULong value is set accordingly. Depending on
-	  this value, the corresponding steps are executed.
+          Call TAO_RT_Protocols_Hooks::call_policy_type_hook in
+          TAO_Stub::parse_policies to get the policy_type as a (in a
+          hard-coded way)
+          CORBA::Ulong value. The policy_type is checked in the hook
+          method and a CORBA::ULong value is set accordingly. Depending on
+          this value, the corresponding steps are executed.
 
-	  Changed the return value to CORBA::Policy * for the functions
-	  returning different RTCORBA Policy pointers. The same for all
-	  the RTCORBA Policy_ptr variables.
+          Changed the return value to CORBA::Policy * for the functions
+          returning different RTCORBA Policy pointers. The same for all
+          the RTCORBA Policy_ptr variables.
 
-	  Owing to this change, modified the
-	  TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
-	  TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
-	  TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
-	  methods to remove unnecessary narrows and casts.
+          Owing to this change, modified the
+          TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
+          TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
+          TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
+          methods to remove unnecessary narrows and casts.
 
-	  In TAO_Stub::get_policy,
-	     TAO_Stub::get_client_policy and
-	     TAO_Stub::set_policy_overrides, invoked the
-	  TAO_Protocols_Hooks::validate_policy_type to check the
-	  CORBA::PolicyType. The same strategy used for
-	  call_policy_type method as above.
+          In TAO_Stub::get_policy,
+             TAO_Stub::get_client_policy and
+             TAO_Stub::set_policy_overrides, invoked the
+          TAO_Protocols_Hooks::validate_policy_type to check the
+          CORBA::PolicyType. The same strategy used for
+          call_policy_type method as above.
 
-	  In TAO_Stub::effective_priority_banded_connection,
-	  TAO_Stub::effective_client_protocol, call
-	  effective_priority_banded_connection_hook and
-	  effective_client_protocol_hook respectively to check if override
-	  or exposed policy is to be returned.
+          In TAO_Stub::effective_priority_banded_connection,
+          TAO_Stub::effective_client_protocol, call
+          effective_priority_banded_connection_hook and
+          effective_client_protocol_hook respectively to check if override
+          or exposed policy is to be returned.
 
-	* tao/RT_Invocation_Endpoint_Selectors.h :
-	* tao/RT_Invocation_Endpoint_Selectors.i :
-	* tao/RT_Invocation_Endpoint_Selectors.cpp :
+        * tao/RT_Invocation_Endpoint_Selectors.h :
+        * tao/RT_Invocation_Endpoint_Selectors.i :
+        * tao/RT_Invocation_Endpoint_Selectors.cpp :
 
-	* tao/Invocation_Endpoint_Selectors.h :
-	* tao/Invocation_Endpoint_Selectors.i :
-	* tao/Invocation_Endpoint_Selectors.cpp :
+        * tao/Invocation_Endpoint_Selectors.h :
+        * tao/Invocation_Endpoint_Selectors.i :
+        * tao/Invocation_Endpoint_Selectors.cpp :
 
-	  Moved the classes in Invocation_Endpoint_Selectors
-	  which are used only if TAO_HAS_RT_CORBA==1 to these new RT_ files.
-	  This helps helps to simply move the file to the new library when
-	  we are actually creating a new library for RTCORBA.
+          Moved the classes in Invocation_Endpoint_Selectors
+          which are used only if TAO_HAS_RT_CORBA==1 to these new RT_ files.
+          This helps helps to simply move the file to the new library when
+          we are actually creating a new library for RTCORBA.
 
-	  The classes that are moved are:
-	  TAO_Priority_Endpoint_Selector
-	  TAO_Bands_Endpoint_Selector
-	  TAO_Protocol_Endpoint_Selector
-	  TAO_Client_Priority_Policy_Selector
-	  TAO_Priority_Protocol_Selector
-	  TAO_Bands_Protocol_Selector.
+          The classes that are moved are:
+          TAO_Priority_Endpoint_Selector
+          TAO_Bands_Endpoint_Selector
+          TAO_Protocol_Endpoint_Selector
+          TAO_Client_Priority_Policy_Selector
+          TAO_Priority_Protocol_Selector
+          TAO_Bands_Protocol_Selector.
 
-	  The other classes are in Invocation_Endpoint_Selectors itself.
+          The other classes are in Invocation_Endpoint_Selectors itself.
 
-	  Also, called the get_selector_hook and
-	  get_selector_bands_policy_hook in
- 	  TAO_Endpoint_Selector_Factory::get_selector and
-	  get_selector_bands_policy_hook.
+          Also, called the get_selector_hook and
+          get_selector_bands_policy_hook in
+          TAO_Endpoint_Selector_Factory::get_selector and
+          get_selector_bands_policy_hook.
 
-	* tao/RT_Policy_i.h:
-	* tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.h:
+        * tao/RT_Policy_i.cpp:
 
-	  Added hooks
-	  TAO_ClientProtocolPolicy::hook and
-	  TAO_ServerProtocolPolicy::hook which are called from
-	  TAO_IIOP(/UIOP)_Connector(/Acceptor)::init_tcp(/uiop)_properties.
+          Added hooks
+          TAO_ClientProtocolPolicy::hook and
+          TAO_ServerProtocolPolicy::hook which are called from
+          TAO_IIOP(/UIOP)_Connector(/Acceptor)::init_tcp(/uiop)_properties.
 
-	  These hook methods set the RTCORBA::ProtocolProperties_var
-	  &properties depending on the protocol_type. The method
-	  implementation is a little bit hardcoded .. should change in
-	  future.
+          These hook methods set the RTCORBA::ProtocolProperties_var
+          &properties depending on the protocol_type. The method
+          implementation is a little bit hardcoded .. should change in
+          future.
 
-	* tao/IIOP_Connector.cpp :
-	* tao/IIOP_Acceptor.cpp :
-	* tao/Strategies/UIOP_Connector.cpp:
-	* tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp :
+        * tao/IIOP_Acceptor.cpp :
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
 
-	  Corresponding change as listed above for RT_Policy_i.cpp.
+          Corresponding change as listed above for RT_Policy_i.cpp.
 
-	* tao/PortableServer/POA.cpp :
-	  In TAO_POA_Policies constructor, narrowed down the pointers
-	  returned to the correct policy_vars.
+        * tao/PortableServer/POA.cpp :
+          In TAO_POA_Policies constructor, narrowed down the pointers
+          returned to the correct policy_vars.
 
 Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -396,281 +403,281 @@ Mon Dec 18 19:48:52 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Dec 18 19:57:07 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/PortableServer/DomainS.h:
+        * tao/PortableServer/DomainS.h:
 
-  	  Fixed "initialization re-ordered to match declaration order"
-	  warning.
+          Fixed "initialization re-ordered to match declaration order"
+          warning.
 
-	* tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.cpp:
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Mon Dec 18 19:37:40 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
 
-	  Aesthetic formatting updates to the generated code.
+          Aesthetic formatting updates to the generated code.
 
 Mon Dec 18 19:14:25 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  (visit_operation):
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+          (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+          (visit_operation):
 
-	  Fixed "unused variable" warnings in the generated stub and
-	  skeleton.
+          Fixed "unused variable" warnings in the generated stub and
+          skeleton.
 
 Mon Dec 18 18:58:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/interceptors.html:
+        * docs/interceptors.html:
 
-	  Updated TAO's Portable Interceptor release notes to reflect the
-	  new updates and fixes made to the TAO's Portable Interceptor
-	  support.
+          Updated TAO's Portable Interceptor release notes to reflect the
+          new updates and fixes made to the TAO's Portable Interceptor
+          support.
 
-	* tao/PortableServer/ServerRequestInfo.cpp (forward_reference):
+        * tao/PortableServer/ServerRequestInfo.cpp (forward_reference):
 
-	  Fixed "better conversion sequence" warning by explicitly using
-	  the "CORBA::Object_var::in()" accessor.
+          Fixed "better conversion sequence" warning by explicitly using
+          the "CORBA::Object_var::in()" accessor.
 
 Mon Dec 18 14:09:31 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.h:
+        * tao/Invocation.h:
 
-	 Include "Stub.h" to pull in TAO_Stub class declaration.
+         Include "Stub.h" to pull in TAO_Stub class declaration.
 
 Mon Dec 18 16:44:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_argument/paramlist.cpp (visit_argument):
-	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp
-	  (gen_exceptlist):
-	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
-	  (visit_array, visit_enum, visit_interface, visit_interface_fwd,
-	  visit_predefined_type, visit_sequence, visit_string,
-	  visit_structure, visit_union):
-
-	  Updated generated code to be consistent with the return value
-	  updates/fixes.  A cached value is no longer returned since it
-	  breaks conformance with the CORBA C++ mapping.
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp (visit_argument):
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp
+          (gen_exceptlist):
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+          (visit_array, visit_enum, visit_interface, visit_interface_fwd,
+          visit_predefined_type, visit_sequence, visit_string,
+          visit_structure, visit_union):
+
+          Updated generated code to be consistent with the return value
+          updates/fixes.  A cached value is no longer returned since it
+          breaks conformance with the CORBA C++ mapping.
 
-	* TAO_IDL/be/be_codegen.cpp (start_client_stubs,
-	  start_server_skeletons):
-
-	  Include the "tao/RequestInfo_Util.h" header when
-	  TAO_HAS_INTERCEPTORS is defined to 1.  Needed to pull in the
-	  utility factory methods related to the return value types
-	  defined in the "Dynamic" module.
+        * TAO_IDL/be/be_codegen.cpp (start_client_stubs,
+          start_server_skeletons):
+
+          Include the "tao/RequestInfo_Util.h" header when
+          TAO_HAS_INTERCEPTORS is defined to 1.  Needed to pull in the
+          utility factory methods related to the return value types
+          defined in the "Dynamic" module.
 
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
-	  (visit_operation):
-
-	  In the case of a one-way request, invoke the send_other()
-	  interception point, not the send_reply() interception point.
-
-	  Added support for the PortableInterceptor::ForwardRequest
-	  exception, meaning the send_other() interception point, too.
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+          (visit_operation):
+
+          In the case of a one-way request, invoke the send_other()
+          interception point, not the send_reply() interception point.
+
+          Added support for the PortableInterceptor::ForwardRequest
+          exception, meaning the send_other() interception point, too.
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (visit_operation):
 
-	  Added support for the PortableInterceptor::ForwardRequest
-	  exception.  This includes support for the receive_other()
-	  interception point.
+          Added support for the PortableInterceptor::ForwardRequest
+          exception.  This includes support for the receive_other()
+          interception point.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
-	  (visit_operation):
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
+          (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+          (visit_operation):
 
-	  Pass a pointer to the TAO_GIOP_Invocation object for the
-	  current invocation to the ClientRequestInfo object.  This saves
-	  us the trouble of passing the operation name and the service
-	  context list since the invocation object already encapsulates
-	  both of them either directly or indirectly.  Doing so also makes
-	  it possible to implement the ClientRequestInfo::sync_scope()
-	  method.
+          Pass a pointer to the TAO_GIOP_Invocation object for the
+          current invocation to the ClientRequestInfo object.  This saves
+          us the trouble of passing the operation name and the service
+          context list since the invocation object already encapsulates
+          both of them either directly or indirectly.  Doing so also makes
+          it possible to implement the ClientRequestInfo::sync_scope()
+          method.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
+          (visit_operation):
 
-	  Pass a pointer to the TAO_ServerRequest object for the current
-	  invocation to the ServerRequestInfo object.  This saves us the
-	  trouble of passing the operation name and the service context
-	  list since the invocation object already encapsulates both of
-	  them either directly or indirectly.  Doing so also makes it
-	  possible to implement the ServerRequestInfo::sync_scope()
-	  method, and various other ServerRequestInfo methods.
+          Pass a pointer to the TAO_ServerRequest object for the current
+          invocation to the ServerRequestInfo object.  This saves us the
+          trouble of passing the operation name and the service context
+          list since the invocation object already encapsulates both of
+          them either directly or indirectly.  Doing so also makes it
+          possible to implement the ServerRequestInfo::sync_scope()
+          method, and various other ServerRequestInfo methods.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
-	  (visit_operation):
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+          (visit_operation):
 
-	  Corrected a long standing typographical error that prevented the
-	  result from being inserted into an Any when invoking the
-	  ServerRequestInfo::result() accessor method.  This accounts for
-	  the garbage result on the server seen in the
-	  PortableInterceptors/Dynamic test.  The raw be_operation node
-	  was accepting the visitor instead of the narrowed be_type.
+          Corrected a long standing typographical error that prevented the
+          result from being inserted into an Any when invoking the
+          ServerRequestInfo::result() accessor method.  This accounts for
+          the garbage result on the server seen in the
+          PortableInterceptors/Dynamic test.  The raw be_operation node
+          was accepting the visitor instead of the narrowed be_type.
 
-	  Updated generated code to be consistent with the return value
-	  updates/fixes.  A cached value is no longer returned since it
-	  breaks conformance with the CORBA C++ mapping.
+          Updated generated code to be consistent with the return value
+          updates/fixes.  A cached value is no longer returned since it
+          breaks conformance with the CORBA C++ mapping.
 
-	  Generate the target_most_derived_interface() and the
-	  target_is_a() ServerRequestInfo methods in the ServerRequestInfo
-	  subclasses.  In other words, these methods have now been
-	  implemented.
+          Generate the target_most_derived_interface() and the
+          target_is_a() ServerRequestInfo methods in the ServerRequestInfo
+          subclasses.  In other words, these methods have now been
+          implemented.
 
-	* tao/RequestInfo_Util.h:
-	* tao/RequestInfo_Util.cpp:
+        * tao/RequestInfo_Util.h:
+        * tao/RequestInfo_Util.cpp:
 
-	  New files that contain helper class that provides methods useful
-	  for both PortableInterceptor::ClientRequestInfo and
-	  PortableInterceptor::ServerRequestInfo objects, such as factory
-	  methods for sequences and Anys.
+          New files that contain helper class that provides methods useful
+          for both PortableInterceptor::ClientRequestInfo and
+          PortableInterceptor::ServerRequestInfo objects, such as factory
+          methods for sequences and Anys.
 
-	* tao/ClientRequestInfo.h (TAO_ClientRequestInfo):
+        * tao/ClientRequestInfo.h (TAO_ClientRequestInfo):
 
-	  This constructor now accepts a pointer to a TAO_GIOP_Invocation
-	  object.  This allows us to remove the operation name and request
-	  ID fields since both can be obtained from the Invocation
-	  object.
+          This constructor now accepts a pointer to a TAO_GIOP_Invocation
+          object.  This allows us to remove the operation name and request
+          ID fields since both can be obtained from the Invocation
+          object.
 
-	* tao/ClientRequestInfo.cpp (request_id, operation):
+        * tao/ClientRequestInfo.cpp (request_id, operation):
 
-	  Obtain these attributes from the Invocation object.
+          Obtain these attributes from the Invocation object.
 
-	  (arguments, exceptions, contexts, operation_context, result):
+          (arguments, exceptions, contexts, operation_context, result):
 
-	  Throw a CORBA::BAD_INV_ORDER() exception.  The subclasses in the
-	  generated stub will override these methods appropriately.
+          Throw a CORBA::BAD_INV_ORDER() exception.  The subclasses in the
+          generated stub will override these methods appropriately.
 
-	  (sync_scope):
+          (sync_scope):
 
-	  Implemented this method.  If the Invocation object is a
-	  TAO_GIOP_Oneway_Invocation, then query its own sync_scope()
-	  method and return that value as the result.
+          Implemented this method.  If the Invocation object is a
+          TAO_GIOP_Oneway_Invocation, then query its own sync_scope()
+          method and return that value as the result.
 
-	  (forward_reference):
+          (forward_reference):
 
-	  Implemented this method.  This was made possible by an update to
-	  the interceptor support in generated stubs, and to the
-	  TAO_GIOP_Invocation class.
+          Implemented this method.  This was made possible by an update to
+          the interceptor support in generated stubs, and to the
+          TAO_GIOP_Invocation class.
 
-	* tao/Invocation.h (start, invoke, invoke_i, prepare_header,
-	  location_forward, init_inconsistent_policies,
-	  add_rt_service_context):
+        * tao/Invocation.h (start, invoke, invoke_i, prepare_header,
+          location_forward, init_inconsistent_policies,
+          add_rt_service_context):
 
-	  Removed "TAO_default_environment()" default CORBA::Environment
-	  argument.  All of these methods are internal to TAO.  Method
-	  invocations internal to TAO should always explicitly use the
-	  CORBA::Environment argument, and not rely on a default
-	  CORBA::Environment argument.
+          Removed "TAO_default_environment()" default CORBA::Environment
+          argument.  All of these methods are internal to TAO.  Method
+          invocations internal to TAO should always explicitly use the
+          CORBA::Environment argument, and not rely on a default
+          CORBA::Environment argument.
 
-	* tao/Invocation.i (operation):
+        * tao/Invocation.i (operation):
 
-	  New method to return the name of the operation for the current
-	  request.
+          New method to return the name of the operation for the current
+          request.
 
-	  (forward_reference):
+          (forward_reference):
 
-	  New method that returns the object reference returned in a
-	  LOCATION_FORWARD reply.  The reference is only valid if the
-	  invocation status is TAO_INVOKE_RESTART, except during a
-	  transport retry.  This method is used by the client side
-	  Portable Interceptor implementation.
+          New method that returns the object reference returned in a
+          LOCATION_FORWARD reply.  The reference is only valid if the
+          invocation status is TAO_INVOKE_RESTART, except during a
+          transport retry.  This method is used by the client side
+          Portable Interceptor implementation.
 
-	  (location_forward_i):
+          (location_forward_i):
 
-	  Inlined method that contains code common to both
-	  location_forward() methods.  This method takes the TAO_Stub
-	  object pointer argument, and adds the profiles in that object to
-	  the list of forward profiles.
+          Inlined method that contains code common to both
+          location_forward() methods.  This method takes the TAO_Stub
+          object pointer argument, and adds the profiles in that object to
+          the list of forward profiles.
 
-	* tao/Invocation.cpp (location_forward):
+        * tao/Invocation.cpp (location_forward):
 
-	  Refactored code common to both location_forward() methods to the
-	  new location_forward_i() inlined method.
+          Refactored code common to both location_forward() methods to the
+          new location_forward_i() inlined method.
 
-	* tao/PortableInterceptor.h:
+        * tao/PortableInterceptor.h:
 
-	  Removed unused "ending_intercept_called_" class member from the
-	  TAO_ClientRequestInterceptor_Adapter and the
-	  TAO_ServerRequestInterceptor_Adapter classes.
+          Removed unused "ending_intercept_called_" class member from the
+          TAO_ClientRequestInterceptor_Adapter and the
+          TAO_ServerRequestInterceptor_Adapter classes.
 
-	* tao/PortableInterceptor.i
-	  (TAO_ServerRequestInterceptor_Adapter):
+        * tao/PortableInterceptor.i
+          (TAO_ServerRequestInterceptor_Adapter):
 
-	  The current flow stack size is now passed in as a reference
-	  argument to make it possible to implement the
-	  "receive_request_service_contexts" interception point.
+          The current flow stack size is now passed in as a reference
+          argument to make it possible to implement the
+          "receive_request_service_contexts" interception point.
 
-	  (receive_request_service_contexts):
+          (receive_request_service_contexts):
 
-	  New adapter method that implements the
-	  "receive_request_service_contexts" server side starting
-	  interception point.
+          New adapter method that implements the
+          "receive_request_service_contexts" server side starting
+          interception point.
 
-	  (send_other):
+          (send_other):
 
-	  New adapter method for the
-	  ServerRequestInterceptor::send_other() method.  It is used in
-	  one-way requests and LOCATION_FORWARD replies..
+          New adapter method for the
+          ServerRequestInterceptor::send_other() method.  It is used in
+          one-way requests and LOCATION_FORWARD replies..
 
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.i (forward_location):
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i (forward_location):
 
-	  New method to set the reference to which the request will be
-	  forwarded.  It is needed in order to implement the
-	  PortableInterceptor::ForwardRequest exception.
+          New method to set the reference to which the request will be
+          forwarded.  It is needed in order to implement the
+          PortableInterceptor::ForwardRequest exception.
 
-	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+        * tao/TAO_Server_Request.cpp (TAO_ServerRequest):
 
-	  Initialize the interceptor count to zero in the constructors.
+          Initialize the interceptor count to zero in the constructors.
 
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
 
-	  Fixed compile-time problem.  Include "CORBA_String.h" to pull
-	  CORBA::String_var class declaration.
+          Fixed compile-time problem.  Include "CORBA_String.h" to pull
+          CORBA::String_var class declaration.
 
-	* tao/Makefile:
-	* tao/Makefile.bor:
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
+        * tao/Makefile:
+        * tao/Makefile.bor:
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
 
-	  Added the new RequestInfo_Util.* files to the source lists.
+          Added the new RequestInfo_Util.* files to the source lists.
 
-	* tao/DomainC.h:
-	* tao/DomainC.cpp:
-	* tao/PortableServer/DomainS.cpp:
-	* tao/PortableServer/DomainS.h:
+        * tao/DomainC.h:
+        * tao/DomainC.cpp:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.h:
 
-	  Updated (by hand) with the changes made to the stubs and
-	  skeletons now generated by TAO_IDL.
+          Updated (by hand) with the changes made to the stubs and
+          skeletons now generated by TAO_IDL.
 
-	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+        * tao/PortableServer/Object_Adapter.cpp (dispatch):
 
-	  Added support for the receive_request_service_contexts()
-	  interception point, and the accompanying send_other() and
-	  send_exception() interception points.  This includes support for
-	  the PortableInterceptor::ForwardRequest exception.
+          Added support for the receive_request_service_contexts()
+          interception point, and the accompanying send_other() and
+          send_exception() interception points.  This includes support for
+          the PortableInterceptor::ForwardRequest exception.
 
-	* tao/PortableServer/ServerRequestInfo.h:
+        * tao/PortableServer/ServerRequestInfo.h:
 
-	  This constructor now accepts a reference to a TAO_ServerRequest
-	  object.  This allows us to remove the operation name and service
-	  context list fields since both can be obtained from the
-	  TAO_ServerRequest object.
+          This constructor now accepts a reference to a TAO_ServerRequest
+          object.  This allows us to remove the operation name and service
+          context list fields since both can be obtained from the
+          TAO_ServerRequest object.
 
-	* tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/PortableServer/ServerRequestInfo.cpp:
 
-	  Implemented most of the remaining unimplemented
-	  ServerRequestInfo methods.
+          Implemented most of the remaining unimplemented
+          ServerRequestInfo methods.
 
-	* tao/PortableServer/TAO_PortableServer.dsp:
-	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
 
-	  Added ServerRequestInfo.inl to the list of inline sources.
+          Added ServerRequestInfo.inl to the list of inline sources.
 
 Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -688,27 +695,27 @@ Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Dec 18 10:45:33 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp:
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/AVStreams/Latency/control.cpp:
+        * orbsvcs/tests/AVStreams/Latency/pong.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
 
-	  Fixed compile warnings.
+          Fixed compile warnings.
 
 Mon Dec 18 08:03:13 2000  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -752,214 +759,214 @@ Mon Dec 18 09:14:25 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Mon Dec 18 01:14:25 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/docs/rtcorba/features.html
-	* tao/docs/rtcorba/content.html
-	* tao/docs/rtcorba/faq.html:
+        * tao/docs/rtcorba/features.html
+        * tao/docs/rtcorba/content.html
+        * tao/docs/rtcorba/faq.html:
 
-	  Finished rtcorba online documentation.
+          Finished rtcorba online documentation.
 
 Sun Dec 17 19:43:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/SHMIOP_Acceptor.h:
-	* tao/Strategies/SHMIOP_Acceptor.cpp: Added methods from
-	  SHMIOP_Factory class to pass in the MMAP file options.
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Acceptor.cpp: Added methods from
+          SHMIOP_Factory class to pass in the MMAP file options.
 
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close):
-	  Must call remove method on the MEM_Stream to make sure the mmap
-	  file get removed when not in use.
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close):
+          Must call remove method on the MEM_Stream to make sure the mmap
+          file get removed when not in use.
 
-	* tao/Strategies/SHMIOP_Factory.h: Added methods to set mmap file
-	  prefix and its initial file size.
+        * tao/Strategies/SHMIOP_Factory.h: Added methods to set mmap file
+          prefix and its initial file size.
 
-	* tao/Strategies/SHMIOP_Factory.cpp: Added methods to set mmap
-	  file prefix and its initial file size.  These options are
-	  changed thru the argument string passed to SHMIOP_Factory in
-	  svc.conf files using flags: "-MMAPFilePrefix" and
-	  "-MMAPFileSize".
+        * tao/Strategies/SHMIOP_Factory.cpp: Added methods to set mmap
+          file prefix and its initial file size.  These options are
+          changed thru the argument string passed to SHMIOP_Factory in
+          svc.conf files using flags: "-MMAPFilePrefix" and
+          "-MMAPFileSize".
 
-	* tao/Strategies/advanced_resource.cpp: Changed to change the
-	  resource factory in the ORB_Core from
-	  Advanced_Resource_Facotry's contructor to its init method so
-	  users won't forced to use Advanced_Resource_Factory with either
-	  SHMIOP or UIOP.
+        * tao/Strategies/advanced_resource.cpp: Changed to change the
+          resource factory in the ORB_Core from
+          Advanced_Resource_Facotry's contructor to its init method so
+          users won't forced to use Advanced_Resource_Factory with either
+          SHMIOP or UIOP.
 
 Sun Dec 17 10:49:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.h:
-	* orbsvcs/TAO_Service/TAO_Service.cpp:
-	* orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
-	  Fixed minor warnings detected by DU/CXX builds.
+        * orbsvcs/tests/Event_Latency/Event_Latency.h:
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+          Fixed minor warnings detected by DU/CXX builds.
 
-	* tests/POA/Identity/Identity.cpp:
-	  Change ASSERT to simple if() statements. The former does not
-	  work in release builds.
+        * tests/POA/Identity/Identity.cpp:
+          Change ASSERT to simple if() statements. The former does not
+          work in release builds.
 
 Sun Dec 17 01:29:20 2000  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (gen_marshal_and_invoke):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (gen_marshal_and_invoke):
 
-	  Fixed generated stub compile problems in the case where
-	  TAO_HAS_INTERCEPTORS is not equal to one.
+          Fixed generated stub compile problems in the case where
+          TAO_HAS_INTERCEPTORS is not equal to one.
 
-	  Added code that was accidentally removed that set the request ID
-	  in the generated stub.
+          Added code that was accidentally removed that set the request ID
+          in the generated stub.
 
-	  (gen_check_exception, gen_check_interceptor_exception,
-	   visit_operation):
+          (gen_check_exception, gen_check_interceptor_exception,
+           visit_operation):
 
-	  Fixed formatting problems in generated code.
+          Fixed formatting problems in generated code.
 
 Sat Dec 16 09:40:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/BiDirectional: New test for BiDirectional connections.
+        * tests/BiDirectional: New test for BiDirectional connections.
 
-	* tests/BiDirectional/README:
-	* tests/BiDirectional/client.cpp:
-	* tests/BiDirectional/server.cpp:
-	* tests/BiDirectional/test_i.h:
-	* tests/BiDirectional/test_i.cpp:
-	* tests/BiDirectional/test_i.i:
-	* tests/BiDirectional/test.idl:
-	* tests/BiDirectional/BiDir.dsw:
-	* tests/BiDirectional/client.dsp:
-	* tests/BiDirectional/server.dsp:
-	* tests/BiDirectional/client.bor:
-	* tests/BiDirectional/server.bor:
-	* tests/BiDirectional/Makefile.bor:
-	* tests/BiDirectional/Makefile: Files for the new test.
+        * tests/BiDirectional/README:
+        * tests/BiDirectional/client.cpp:
+        * tests/BiDirectional/server.cpp:
+        * tests/BiDirectional/test_i.h:
+        * tests/BiDirectional/test_i.cpp:
+        * tests/BiDirectional/test_i.i:
+        * tests/BiDirectional/test.idl:
+        * tests/BiDirectional/BiDir.dsw:
+        * tests/BiDirectional/client.dsp:
+        * tests/BiDirectional/server.dsp:
+        * tests/BiDirectional/client.bor:
+        * tests/BiDirectional/server.bor:
+        * tests/BiDirectional/Makefile.bor:
+        * tests/BiDirectional/Makefile: Files for the new test.
 
 Fri Dec 15 21:30:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* */Makefile: Updated dependencies.
+        * */Makefile: Updated dependencies.
 
 Fri Dec 15 20:59:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	This set of changes are for the support of BiDirGIOP in TAO.
+        This set of changes are for the support of BiDirGIOP in TAO.
 
-	* tao/BiDirPolicy.pidl:
-	* tao/BiDirPolicyC.cpp:
-	* tao/BiDirPolicyC.h:
-	* tao/BiDirPolicyC.i: The generated code and the pidl file for
-	  BiDirGIOP policy.
+        * tao/BiDirPolicy.pidl:
+        * tao/BiDirPolicyC.cpp:
+        * tao/BiDirPolicyC.h:
+        * tao/BiDirPolicyC.i: The generated code and the pidl file for
+          BiDirGIOP policy.
 
-	* tao/BiDir_ORBInitializer.cpp:
-	* tao/BiDir_ORBInitializer.h: The ORB initialiser that registers
-	  the policy factory with the PortableInterceptor.
+        * tao/BiDir_ORBInitializer.cpp:
+        * tao/BiDir_ORBInitializer.h: The ORB initialiser that registers
+          the policy factory with the PortableInterceptor.
 
-	* tao/BiDir_PolicyFactory.cpp:
-	* tao/BiDir_PolicyFactory.h: The PolicyFactory implementation for
-	  BiDirGIOP policy
+        * tao/BiDir_PolicyFactory.cpp:
+        * tao/BiDir_PolicyFactory.h: The PolicyFactory implementation for
+          BiDirGIOP policy
 
-	* tao/BiDir_Policy_i.cpp:
-	* tao/BiDir_Policy_i.h:
-	* tao/BiDir_Policy_i.inl: The actual policy implementation for
-	  BiDirGIOP policy
+        * tao/BiDir_Policy_i.cpp:
+        * tao/BiDir_Policy_i.h:
+        * tao/BiDir_Policy_i.inl: The actual policy implementation for
+          BiDirGIOP policy
 
-	* tao/Connection_Descriptor_Interface.h:
-	* tao/Connection_Descriptor_Interface.inl: Added a flag to
-	  indicate a BiDirectional connection. Provided a method to set
-	  the flag if the connection is bidirectional.
+        * tao/Connection_Descriptor_Interface.h:
+        * tao/Connection_Descriptor_Interface.inl: Added a flag to
+          indicate a BiDirectional connection. Provided a method to set
+          the flag if the connection is bidirectional.
 
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.h: Added a method recache_handler
-	  (). This method purges the previous entry and caches itself with
-	  new properties.
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.h: Added a method recache_handler
+          (). This method purges the previous entry and caches itself with
+          new properties.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Base.h: Added a method
-	  is_ready_for_bidirectional (). This method checks whether the
-	  messaging object is ready for bidirectional connections. This is
-	  done by actually delegating to the generator and parser class.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h: Added a method
+          is_ready_for_bidirectional (). This method checks whether the
+          messaging object is ready for bidirectional connections. This is
+          done by actually delegating to the generator and parser class.
 
-	* tao/GIOP_Message_Generator_Parser.cpp:
-	* tao/GIOP_Message_Generator_Parser.h: Implementation for
-	  is_ready_for_bidirectional ().
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser.h: Implementation for
+          is_ready_for_bidirectional ().
 
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.h: Other than the
-	  implementation of is_ready_for_bidirectional () added methods
-	  check_bidirectional_context () and process_bidirectional_context
-	  (). These methods as the name implies, checks whether there is a
-	  bidirectional context info in the request that came in.
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.h: Other than the
+          implementation of is_ready_for_bidirectional () added methods
+          check_bidirectional_context () and process_bidirectional_context
+          (). These methods as the name implies, checks whether there is a
+          bidirectional context info in the request that came in.
 
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h: Implementation for
-	  is_ready_for_bidirectional ().
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h: Implementation for
+          is_ready_for_bidirectional ().
 
-	* tao/IIOP.pidl:
-	* tao/IIOPC.cpp:
-	* tao/IIOPC.h:
-	* tao/IIOPC.i: Generated code for IIOP module that has the
-	  definition for ListenPointList that needs to be sent with the
-	  service context to the server.
+        * tao/IIOP.pidl:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOPC.i: Generated code for IIOP module that has the
+          definition for ListenPointList that needs to be sent with the
+          service context to the server.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/IIOP_Acceptor.i: Added a method endpoints () that returns
-	  the array of endpoints on which the acceptor is listening on.
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.i: Added a method endpoints () that returns
+          the array of endpoints on which the acceptor is listening on.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.h: Added a method,
-	  process_listen_point_list (). This method finds out the port and
-	  host for which the connection needs to be used and recaches the
-	  handle with this new endpoint specification.
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h: Added a method,
+          process_listen_point_list (). This method finds out the port and
+          host for which the connection needs to be used and recaches the
+          handle with this new endpoint specification.
 
-	* tao/IIOP_Transport.cpp:
-	* tao/IIOP_Transport.h: Added the following methods
-	  tear_listen_point_list (), set_bidir_context_info () and
-	  get_listen_point (). The method tear_listen_point_list ()
-	  extracts the ListenPointList from the CDR stream of the seervice
-	  context. It then passes that information to the connection
-	  handler. The method set_bidir_context_info () sets the service
-	  context information that needs to be sent to
-	  server. get_listen_point () gets the list of endpoints on the
-	  same interface on which the clients connection is
-	  established. Added a flag to indicate that the BiDirContext info
-	  has already been sent on the connection.
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Transport.h: Added the following methods
+          tear_listen_point_list (), set_bidir_context_info () and
+          get_listen_point (). The method tear_listen_point_list ()
+          extracts the ListenPointList from the CDR stream of the seervice
+          context. It then passes that information to the connection
+          handler. The method set_bidir_context_info () sets the service
+          context information that needs to be sent to
+          server. get_listen_point () gets the list of endpoints on the
+          same interface on which the clients connection is
+          established. Added a flag to indicate that the BiDirContext info
+          has already been sent on the connection.
 
-	* tao/Invocation.cpp: Left some comments for RT folks.
+        * tao/Invocation.cpp: Left some comments for RT folks.
 
-	* tao/ORB.cpp: Registered the BiDirORB initializer with the
-	  PortableInterceptor.
+        * tao/ORB.cpp: Registered the BiDirORB initializer with the
+          PortableInterceptor.
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: Added a a flag bidir_giop_policy () to indicate
-	  that BiDir GIOP policy has been set.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i: Added a a flag bidir_giop_policy () to indicate
+          that BiDir GIOP policy has been set.
 
-	* tao/Pluggable.cpp:
-	* tao/Pluggable.h: Added a tear_listen_point_list () as a virtual
-	  method.
+        * tao/Pluggable.cpp:
+        * tao/Pluggable.h: Added a tear_listen_point_list () as a virtual
+          method.
 
-	* tao/Pluggable_Messaging.h: Added a pure virtual method,
-	  is_ready_for_bidirectional ().
+        * tao/Pluggable_Messaging.h: Added a pure virtual method,
+          is_ready_for_bidirectional ().
 
-	* tao/Service_Context.cpp:
-	* tao/Service_Context.h:
-	* tao/Service_Context.inl: A new class that would do the parsing,
-	  encoding, decoding and addition of contexts to the service
-	  context list. This class introduces quite a few changes for the
-	  RT folks.
+        * tao/Service_Context.cpp:
+        * tao/Service_Context.h:
+        * tao/Service_Context.inl: A new class that would do the parsing,
+          encoding, decoding and addition of contexts to the service
+          context list. This class introduces quite a few changes for the
+          RT folks.
 
-	* tao/TAO_Server_Request.cpp:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.i: Changed the reference of a service
-	  context list to TAO_Service_Context. Have left the old methods
-	  that return service_context_list as such so that we can clean up
-	  the stuff.
+        * tao/TAO_Server_Request.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i: Changed the reference of a service
+          context list to TAO_Service_Context. Have left the old methods
+          that return service_context_list as such so that we can clean up
+          the stuff.
 
-	* tao/corba.h: Added the new file BiDirPolicyC.h.
+        * tao/corba.h: Added the new file BiDirPolicyC.h.
 
-	* tao/operation_details.h:
-	* tao/operation_details.i: Chaged the reference of
-	  service_context_lsit to TAO_Service_Context.
+        * tao/operation_details.h:
+        * tao/operation_details.i: Chaged the reference of
+          service_context_lsit to TAO_Service_Context.
 
-	* tao/POA.cpp: Parsing of BiDirPolicy. This parsing is a bit of a
-	  hack. It just parses the policy and sets a flag in the
-	  ORB_Core. This needs to change when the POA gets upgraded for RT
-	  and RT folks have agreed to do it.
+        * tao/POA.cpp: Parsing of BiDirPolicy. This parsing is a bit of a
+          hack. It just parses the policy and sets a flag in the
+          ORB_Core. This needs to change when the POA gets upgraded for RT
+          and RT folks have agreed to do it.
 
-	* tao/Makefile: Added new files and updated dependencies.
+        * tao/Makefile: Added new files and updated dependencies.
 
 Fri Dec 15 15:17:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
