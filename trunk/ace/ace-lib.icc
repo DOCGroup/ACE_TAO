@@ -98,6 +98,7 @@ option
                  source type(cpp) "Obstack.cpp"
                  source type(cpp) "OS.cpp"
                  source type(cpp) "OS_Dirent.cpp"
+                 source type(cpp) "OS_String.cpp"
                  source type(cpp) "Pair.cpp"
                  source type(cpp) "Parse_Node.cpp"
                  source type(cpp) "Pipe.cpp"
