@@ -146,10 +146,17 @@ Task_State::parse_args (int argc,char **argv)
 
   if (ior_file_ != 0)
     {
-      FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
       char buf[BUFSIZ];
       u_int i = 0;
       int j = 0;
+      FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
+
+      if (ior_file == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Task_State::parse_args; "
+                             "unable to open IOR file \"%s\"\n",
+                             ior_file_), -1);
+        }
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
         {
