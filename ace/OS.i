@@ -10411,19 +10411,27 @@ ACE_OS::readdir_r (DIR *dirp,
                    struct dirent **result)
 {
 #if defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
+
 # if (defined (sun) && defined (_POSIX_PTHREAD_SEMANTICS))  ||  \
-     (!defined (sun) && defined (ACE_HAS_PTHREADS_STD))
+     (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
+			 defined (ACE_HAS_PTHREADS_DRAFT7)))
     return ::readdir_r (dirp, entry, result);
 # else  /* ! POSIX.1c */
+#   if defined (sun) || defined (ACE_HAS_PTHREADS_DRAFT6)
     // <result> had better not be 0!
     *result = ::readdir_r (dirp, entry);
     return 0;
+#   else /* This is Pthreads draft 4 */
+    *result = entry;
+    return ::readdir_r (dirp, entry);
+#   endif /* sun || ACE_HAS_PTHREADS_DRAFT6 */
 # endif /* ! POSIX.1c */
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
   ACE_UNUSED_ARG (entry);
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
+
 #endif /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
 }
 
