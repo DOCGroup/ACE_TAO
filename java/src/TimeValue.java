@@ -252,5 +252,5 @@ public class TimeValue
 
   private long millisec_;
   private int nanos_;
-  private final long ONE_MILLISECOND = 1000000L;
+  private final static int ONE_MILLISECOND = 1000000;
 }
