@@ -6,7 +6,7 @@
 # include "RMCast_Fork.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Fork, "$Id$")
+ACE_RCSID(RMCast, RMCast_Fork, "$Id$")
 
 ACE_RMCast_Fork::~ACE_RMCast_Fork (void)
 {

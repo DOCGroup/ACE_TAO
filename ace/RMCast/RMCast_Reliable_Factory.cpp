@@ -9,7 +9,7 @@
 # include "RMCast_Reliable_Factory.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Reliable_Factory, "$Id$")
+ACE_RCSID(RMCast, RMCast_Reliable_Factory, "$Id$")
 
 ACE_RMCast_Reliable_Factory::~ACE_RMCast_Reliable_Factory (void)
 {

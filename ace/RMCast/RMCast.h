@@ -249,9 +249,5 @@ public:
   };
 };
 
-#if defined (__ACE_INLINE__)
-#include "RMCast.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_H */

@@ -12,7 +12,7 @@
 # include "RMCast_Retransmission.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Retransmission, "$Id$")
+ACE_RCSID(RMCast, RMCast_Retransmission, "$Id$")
 
 ACE_RMCast_Retransmission::~ACE_RMCast_Retransmission (void)
 {

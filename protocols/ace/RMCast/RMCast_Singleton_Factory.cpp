@@ -6,7 +6,7 @@
 # include "RMCast_Singleton_Factory.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Singleton_Factory, "$Id$")
+ACE_RCSID(RMCast, RMCast_Singleton_Factory, "$Id$")
 
 ACE_RMCast_Singleton_Factory::~ACE_RMCast_Singleton_Factory (void)
 {

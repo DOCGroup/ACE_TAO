@@ -9,7 +9,7 @@
 # include "RMCast_UDP_Reliable_Sender.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_UDP_Reliable_Sender, "$Id$")
+ACE_RCSID(RMCast, RMCast_UDP_Reliable_Sender, "$Id$")
 
 ACE_RMCast_UDP_Reliable_Sender::ACE_RMCast_UDP_Reliable_Sender (ACE_RMCast_Module *user_control)
   : user_control_ (user_control)

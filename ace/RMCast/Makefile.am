@@ -16,7 +16,7 @@ ACE_ROOT = $(top_srcdir)
 
 nobase_include_HEADERS =
 lib_LTLIBRARIES =
-## Makefile.RMCast.am 
+## Makefile.RMCast.am
 
 if BUILD_RMCAST
 lib_LTLIBRARIES += libACE_RMCast.la
@@ -86,7 +86,6 @@ nobase_include_HEADERS += \
   RMCast_UDP_Reliable_Receiver.h \
   RMCast_UDP_Reliable_Sender.h \
   RMCast_Worker.h \
-  RMCast.i \
   RMCast_Ack_Worker.i \
   RMCast_Copy_On_Write.i \
   RMCast_Fork.i \
@@ -94,10 +93,8 @@ nobase_include_HEADERS += \
   RMCast_IO_UDP.i \
   RMCast_Membership.i \
   RMCast_Module.i \
-  RMCast_Module_Factory.i \
   RMCast_Partial_Message.i \
   RMCast_Proxy.i \
-  RMCast_Reassembly.i \
   RMCast_Receiver_Module.i \
   RMCast_Reliable_Factory.i \
   RMCast_Reordering.i \
@@ -109,8 +106,7 @@ nobase_include_HEADERS += \
   RMCast_UDP_Event_Handler.i \
   RMCast_UDP_Proxy.i \
   RMCast_UDP_Reliable_Receiver.i \
-  RMCast_UDP_Reliable_Sender.i \
-  RMCast_Worker.i
+  RMCast_UDP_Reliable_Sender.i
 
 pkgconfigdata_DATA = ACE_RMCast.pc
 

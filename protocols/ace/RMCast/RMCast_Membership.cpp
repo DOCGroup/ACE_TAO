@@ -11,7 +11,7 @@
 #include "RMCast_Proxy.h"
 #include "ace/Guard_T.h"
 
-ACE_RCSID(ace, RMCast_Membership, "$Id$")
+ACE_RCSID(RMCast, RMCast_Membership, "$Id$")
 
 ACE_RMCast_Membership::~ACE_RMCast_Membership (void)
 {

@@ -8,7 +8,7 @@
 # include "RMCast_Proxy.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Proxy, "$Id$")
+ACE_RCSID(RMCast, RMCast_Proxy, "$Id$")
 
 ACE_RMCast_Proxy::~ACE_RMCast_Proxy (void)
 {

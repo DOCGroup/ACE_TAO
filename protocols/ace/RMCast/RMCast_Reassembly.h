@@ -67,9 +67,5 @@ private:
   Message_Map messages_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RMCast_Reassembly.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_RMCAST_REASSEMBLY_H */
