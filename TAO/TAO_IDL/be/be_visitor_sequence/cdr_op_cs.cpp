@@ -505,7 +505,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             else
               {
                 *os << "CORBA::Any::to_string (_tao_sequence[i].out (), "
-                    << str->max_size ()->ev ()->u.ulval << ")"; 
+                    << str->max_size ()->ev ()->u.ulval - 1 << ")"; 
               }
           }
           break;

@@ -526,12 +526,12 @@ int be_visitor_args_compiled_marshal_cs::visit_string (be_string *node)
             case AST_Argument::dir_INOUT:
               *os << "CORBA::Any::to_string (" 
                   << arg->local_name () << ", "
-                  << node->max_size ()->ev ()->u.ulval << ")";
+                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             case AST_Argument::dir_OUT:
               *os << "CORBA::Any::to_string (" 
                   << arg->local_name () << ".ptr (), "
-                  << node->max_size ()->ev ()->u.ulval << ")";
+                  << node->max_size ()->ev ()->u.ulval - 1 << ")";
               break;
             }
         }
