@@ -1,8 +1,8 @@
 Thu Dec 03 14:23:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Removed macros TAO_TRY_SYS and TAO_TRY_SYS_EX
-	  for they are covered by Irfan's TAO_TRY_VAR[_EX].  Thanks to
-	  Irfan for reminding this.
+	* tao/try_macros.h: Removed macros TAO_TRY_SYS[_EX]
+	  TAO_CHECK_ENV_SYS[_EX] and TAO_CATCH_SYS for they are covered by
+ 	  Irfan's TAO_TRY_VAR[_EX].  Thanks to Irfan for reminding this.
 
 	* docs/exceptions.html: Added guidelines for TAO_TRY_VAR and
 	  TAO_TRY_VAR_EX.
