@@ -8,10 +8,6 @@
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_SupplierAdmin.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_SupplierAdmin, "$Id$")
 
 TAO_EC_SupplierAdmin::TAO_EC_SupplierAdmin (TAO_EC_Event_Channel_Base *ec)

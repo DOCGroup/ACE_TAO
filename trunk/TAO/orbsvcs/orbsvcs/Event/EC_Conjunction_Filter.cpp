@@ -2,10 +2,6 @@
 
 #include "EC_Conjunction_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Conjunction_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Conjunction_Filter, "$Id$")
 
 const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;

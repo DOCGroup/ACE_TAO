@@ -8,10 +8,6 @@
 #include "EC_Scheduling_Strategy.h"
 #include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Trivial_Supplier_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Trivial_Supplier_Filter, "$Id$")
 
 // ****************************************************************

@@ -10,10 +10,6 @@
 
 #include "ace/Sched_Params.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Priority_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)

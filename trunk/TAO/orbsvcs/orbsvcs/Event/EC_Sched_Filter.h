@@ -123,9 +123,5 @@ private:
   RtecScheduler::Info_Type_t info_type_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Sched_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_SCHED_FILTER_H */

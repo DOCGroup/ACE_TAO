@@ -8,12 +8,8 @@
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_ConsumerAdmin.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Event, 
-           EC_ConsumerAdmin, 
+ACE_RCSID (Event,
+           EC_ConsumerAdmin,
            "$Id$")
 
 TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base *ec)

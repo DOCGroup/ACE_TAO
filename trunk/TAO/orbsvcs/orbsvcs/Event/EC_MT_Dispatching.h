@@ -85,9 +85,5 @@ private:
   int active_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_MT_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_MT_DISPATCHING_H */

@@ -119,10 +119,6 @@ private:
   ACE_Reactor *reactor_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ECG_Reactive_ConsumerEC_Control.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ECG_REACTIVE_CONSUMEREC_CONTROL_H */
