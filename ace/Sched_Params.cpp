@@ -34,32 +34,54 @@ ACE_Sched_Params::priority_min (const Policy policy,
   // Assume that ACE_SCHED_OTHER indicates TS class, and that other
   // policies indicate RT class.
 
-  if (policy == ACE_SCHED_OTHER)
+  // Call ACE_OS::priority_control only for processes (lightweight
+  // or otherwise). Calling ACE_OS::priority_control for thread
+  // priorities gives incorrect results.
+  if (scope == ACE_SCOPE_PROCESS || scope == ACE_SCOPE_LWP)
     {
-      // Get the priority class ID and attributes.
-      pcinfo_t pcinfo;
-      // The following is just to avoid Purify warnings about unitialized
-      // memory reads.
-      ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
-      ACE_OS::strcpy (pcinfo.pc_clname, "TS");
+      if (policy == ACE_SCHED_OTHER)
+        {
+          // Get the priority class ID and attributes.
+          pcinfo_t pcinfo;
+          // The following is just to avoid Purify warnings about unitialized
+          // memory reads.
+          ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
+          ACE_OS::strcpy (pcinfo.pc_clname, "TS");
 
-      if (ACE_OS::priority_control (P_ALL /* ignored */,
-                                    P_MYID /* ignored */,
-                                    PC_GETCID,
-                                    (char *) &pcinfo) == -1)
-        // Just hope that priority range wasn't configured from -1
-        // .. 1
-        return -1;
+          if (ACE_OS::priority_control (P_ALL /* ignored */,
+                                        P_MYID /* ignored */,
+                                        PC_GETCID,
+                                        (char *) &pcinfo) == -1)
+            // Just hope that priority range wasn't configured from -1
+            // .. 1
+            return -1;
 
-      // OK, now we've got the class ID in pcinfo.pc_cid.  In
-      // addition, the maximum configured time-share priority is in
-      // ((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri.  The minimum
-      // priority is just the negative of that.
+          // OK, now we've got the class ID in pcinfo.pc_cid.  In
+          // addition, the maximum configured time-share priority is in
+          // ((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri.  The minimum
+          // priority is just the negative of that.
 
-      return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
+          return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
+        }
+      else
+        return 0;
     }
   else
-    return 0;
+    {
+      // Here we handle the case for ACE_SCOPE_THREAD. Calling
+      // ACE_OS::priority_control for thread scope gives incorrect
+      // results.
+      switch (policy)
+        {
+        case ACE_SCHED_FIFO:
+          return ACE_THR_PRI_FIFO_MIN;
+        case ACE_SCHED_RR:
+          return ACE_THR_PRI_RR_MIN;
+        case ACE_SCHED_OTHER:
+        default:
+          return ACE_THR_PRI_OTHER_MIN;
+        }
+    }
 #elif defined (ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
   switch (scope)
@@ -116,30 +138,52 @@ ACE_Sched_Params::priority_max (const Policy policy,
 #if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (scope);
 
-  // Assume that ACE_SCHED_OTHER indicates TS class, and that other
-  // policies indicate RT class.
+  // Call ACE_OS::priority_control only for processes (lightweight
+  // or otherwise). Calling ACE_OS::priority_control for thread
+  // priorities gives incorrect results.
+  if (scope == ACE_SCOPE_PROCESS || scope == ACE_SCOPE_LWP)
+    {
+      // Assume that ACE_SCHED_OTHER indicates TS class, and that other
+      // policies indicate RT class.
 
-  // Get the priority class ID and attributes.
-  pcinfo_t pcinfo;
-  // The following is just to avoid Purify warnings about unitialized
-  // memory reads.
-  ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
-  ACE_OS::strcpy (pcinfo.pc_clname,
-                  policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
+      // Get the priority class ID and attributes.
+      pcinfo_t pcinfo;
+      // The following is just to avoid Purify warnings about unitialized
+      // memory reads.
+      ACE_OS::memset (&pcinfo, 0, sizeof pcinfo);
+      ACE_OS::strcpy (pcinfo.pc_clname,
+                      policy == ACE_SCHED_OTHER  ?  "TS"  :  "RT");
 
-  if (ACE_OS::priority_control (P_ALL /* ignored */,
-                                P_MYID /* ignored */,
-                                PC_GETCID,
-                                (char *) &pcinfo) == -1)
-    return -1;
+      if (ACE_OS::priority_control (P_ALL /* ignored */,
+                                    P_MYID /* ignored */,
+                                    PC_GETCID,
+                                    (char *) &pcinfo) == -1)
+        return -1;
 
-  // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
-  // the maximum configured real-time priority is in ((rtinfo_t *)
-  // pcinfo.pc_clinfo)->rt_maxpri, or similarly for the TS class.
+      // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
+      // the maximum configured real-time priority is in ((rtinfo_t *)
+      // pcinfo.pc_clinfo)->rt_maxpri, or similarly for the TS class.
 
-  return policy == ACE_SCHED_OTHER
-      ? ((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri
-      : ((rtinfo_t *) pcinfo.pc_clinfo)->rt_maxpri;
+      return policy == ACE_SCHED_OTHER
+        ? ((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri
+        : ((rtinfo_t *) pcinfo.pc_clinfo)->rt_maxpri;
+    }
+  else
+    {
+      // Here we handle the case for ACE_SCOPE_THREAD. Calling
+      // ACE_OS::priority_control for thread scope gives incorrect
+      // results.
+      switch (policy)
+        {
+        case ACE_SCHED_FIFO:
+          return ACE_THR_PRI_FIFO_MAX;
+        case ACE_SCHED_RR:
+          return ACE_THR_PRI_RR_MAX;
+        case ACE_SCHED_OTHER:
+        default:
+          return ACE_THR_PRI_OTHER_MAX;
+        }
+    }
 #elif defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
 
   switch (scope)
