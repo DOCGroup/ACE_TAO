@@ -26,6 +26,7 @@ EC_Driver::EC_Driver (void)
      consumers_ (0),
      n_suppliers_ (1),
      suppliers_ (0),
+     tasks_ (0),
      burst_count_  (100),
      burst_size_   (100),
      payload_size_ (0),
@@ -532,10 +533,8 @@ EC_Driver::build_consumer_qos (
   qos_factory.start_disjunction_group ();
   qos_factory.insert_type (shutdown_event_type, rt_info);
 
-  for (int i = 0; i != this->consumer_type_count_; ++i)
-    {
-      qos_factory.insert_type (type_start + i, rt_info);
-    }
+  for (int j = 0; j != this->consumer_type_count_; ++j)
+    qos_factory.insert_type (type_start + j, rt_info);
 
   qos = qos_factory.get_ConsumerQOS ();
 }
@@ -583,21 +582,25 @@ EC_Driver::build_supplier_qos (
   RtecScheduler::handle_t rt_info = 0;
 
   ACE_SupplierQOS_Factory qos_factory;
-  for (int i = 0; i != this->supplier_type_count_; ++i)
-    {
-      qos_factory.insert (supplier_id,
-                          type_start + i,
-                          rt_info, 1);
-    }
+  for (int j = 0; j != this->supplier_type_count_; ++j)
+    qos_factory.insert (supplier_id,
+                        type_start + j,
+                        rt_info, 1);
+
   qos_factory.insert (supplier_id,
                       shutdown_event_type,
                       rt_info, 1);
+
+  qos = qos_factory.get_SupplierQOS ();
 }
 
 void
 EC_Driver::execute_test (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->activate_suppliers (ACE_TRY_ENV);
+  if (this->allocate_tasks () == -1)
+    return;
+
+  this->activate_tasks (ACE_TRY_ENV);
   ACE_CHECK;
 
   if (this->verbose ())
@@ -613,6 +616,19 @@ EC_Driver::execute_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers finished\n"));
 }
 
+int
+EC_Driver::allocate_tasks (void)
+{
+  ACE_NEW_RETURN (this->tasks_,
+                  ACE_Task_Base*[this->n_suppliers_],
+                  -1);
+
+  for (int i = 0; i < this->n_suppliers_; ++i)
+    this->tasks_[i] =
+      this->allocate_task (i);
+  return 0;
+}
+
 ACE_Task_Base*
 EC_Driver::allocate_task (int i)
 {
@@ -625,6 +641,27 @@ EC_Driver::allocate_task (int i)
                                this->burst_pause_,
                                this->payload_size_,
                                start + this->supplier_type_count_);
+}
+
+void
+EC_Driver::activate_tasks (CORBA::Environment &)
+{
+  int priority =
+    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
+     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+
+  for (int i = 0; i < this->n_suppliers_; ++i)
+    {
+      this->tasks_[i] = this->allocate_task (i);
+
+      if (this->tasks_[i]->activate (this->thr_create_flags_,
+                                     1, 0, priority) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Cannot activate thread for supplier %d\n",
+                      i));
+        }
+    }
 }
 
 void
@@ -861,7 +898,7 @@ EC_Driver::parse_args (int &argc, char *argv [])
 
       else
         {
-          arg_shifter.consume_arg ();
+          arg_shifter.ignore_arg ();
         }
 
     }
@@ -895,30 +932,6 @@ EC_Driver::print_usage (void)
 void
 EC_Driver::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 {
-}
-
-void
-EC_Driver::activate_suppliers (CORBA::Environment &)
-{
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-
-  ACE_NEW (this->tasks_,
-           ACE_Task_Base*[this->n_suppliers_]);
-
-  for (int i = 0; i < this->n_suppliers_; ++i)
-    {
-      this->tasks_[i] = this->allocate_task (i);
-
-      if (this->tasks_[i]->activate (this->thr_create_flags_,
-                                     1, 0, priority) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Cannot activate thread for supplier %d\n",
-                      i));
-        }
-    }
 }
 
 void
@@ -1024,7 +1037,6 @@ EC_Driver::Throughput_Stats::dump_results (const char *test_name,
 
   if (this->done_ == 0)
     {
-      this->stop ();
       ACE_DEBUG ((LM_DEBUG,
                   "%s/%s: incomplete data,"
                   " potentially skewed results\n",

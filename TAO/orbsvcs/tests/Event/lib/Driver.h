@@ -131,10 +131,6 @@ public:
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
   // Allow modifications of the default EC attributes
 
-  virtual void activate_suppliers (CORBA::Environment& env);
-  // Activate all the suppliers, by default runs each supplier on its
-  // own thread.
-
   virtual void consumer_push (void* consumer_cookie,
                               const RtecEventComm::EventSet& event,
                               CORBA::Environment& ACE_TRY_ENV);
@@ -153,7 +149,7 @@ public:
   // Obtain the EC from the Naming service
 
   virtual CosNaming::NamingContext_var
-      get_naming_context (CORBA::Environment &ACE_TRY_ENV);
+       get_naming_context (CORBA::Environment &ACE_TRY_ENV);
 #endif
 
 #if !defined(EC_DISABLE_OLD_EC)
@@ -172,8 +168,13 @@ public:
   virtual EC_Supplier* allocate_supplier (int i);
   // Allocate one consumer or supplier
 
+  virtual int allocate_tasks (void);
   virtual ACE_Task_Base* allocate_task (int i);
   // Allocate one task for supplier number <i>
+
+  virtual void activate_tasks (CORBA::Environment& env);
+  // Activate all the tasks, by default runs each supplier on its
+  // own thread.
 
   class Latency_Stats
   {
