@@ -13,7 +13,7 @@
 #ifndef ACEXML_SVCCONF_HANDLER_H
 #define ACEXML_SVCCONF_HANDLER_H
 
-#include "common/DefaultHandler.h"
+#include "ACEXML/common/DefaultHandler.h"
 
 class ACE_Parsed_Info
 {
