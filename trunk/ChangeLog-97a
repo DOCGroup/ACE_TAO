@@ -1,3 +1,10 @@
+Mon May 19 16:04:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* bin/create_ace_build: changed startup line for compatibility
+	  with bash.  This startup line lets the script run without
+	  hard-coding the full path to the perl executable, as long as
+	  perl is on the user's PATH.
+
 Mon May 19 12:45:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Released version 4.2.
