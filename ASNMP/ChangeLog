@@ -1,7 +1,7 @@
 Fri Apr 16 16:53:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Gauge_Test.cpp (TestGuage):
-	* tests/Integer_Test.cpp (TestInteger32):
+	* tests/Integer_Test.cpp (TestInteger32, TestUnsignedInteger32):
 
 	  Fixed some "comparison between signed and unsigned integer"
 	  warnings.
