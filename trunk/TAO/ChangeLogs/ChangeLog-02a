@@ -1,8 +1,16 @@
+Sat Apr 15 21:53:44 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+	  added explicit template instantiation directives for
+	  ACE_Hash<TAO_Notify_EventType> and
+	  ACE_Equal_To<TAO_Notify_EventType> to fix linking errors in
+	  orbsvcs with suncc5.
+
 Sat Apr 15 20:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/TAO.dsp: Rectified the lost Smart_PRoxies.{h,cpp,i} entries
 	  in the .dsp by adding them once again.
-	
+
 Sat Apr 15 14:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
