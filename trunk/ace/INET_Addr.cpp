@@ -589,7 +589,7 @@ ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset ();
   if (this->set (port_name,
-                 inet_address,
+                 htonl (inet_address),
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
@@ -604,7 +604,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset ();
   if (this->set (port_name,
-                 inet_address,
+                 htonl (inet_address),
                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("ACE_INET_Addr::ACE_INET_Addr")));
