@@ -14,7 +14,10 @@
     <H3>New on this release</H3>
 
     <UL>
-      <LI>Fixed memory leak in</LI>
+      <LI>The <CODE>Gateway</CODE> to connect two event channels was
+	moved from a test to the library.
+	The corresponding test (<CODE>EC_Multiple</CODE>) has been
+	expanded and improved.</LI>
     </UL>
 
     <H3>Known issues:</H3>
@@ -58,7 +61,7 @@
 	so startup cost are lower too.</P>
 	
 	<P>The current design contemplates a config run were a global
-	consumer acumulates the QoS requirements of all the objects, 
+	consumer accumulates the QoS requirements of all the objects, 
 	next an external utility is used to force a computation and
 	save of the schedule.
 	In future executions 
@@ -72,7 +75,9 @@
 	  collocations</EM></DT>
       <DD>
 	The user should have complete control of services collocation,
-	using ACE Service Configurator.
+	using ACE Service Configurator;
+	currently the services must be explicitly instantiated by the
+	user.
       </DD>
 
     </DL>
@@ -127,43 +132,50 @@ $ cd tests/Event_Latency ; ./Event_Latency -ORBport 10030 -m 20 &
     </OL>
 
     <P>Another example is <CODE>EC_Multiple</CODE>,
-      please check the README file on
-      <CODE>$TAO_ROOT/orbsvcs/tests/EC_Multiple</CODE> for
-      further detail.</P>
+      numerous examples on how to run this test can be found in the
+      scripts located in 
+      <CODE>$TAO_ROOT/orbsvcs/tests/EC_Multiple</CODE>.</P>
 
     <H3>Features in previous releases</H3>
 
-<UL>
+    <UL>
       <LI>
+	<P>
 	When several suppliers are consumers are distributed over the
 	network it could be nice to exploit locality and have a
 	separate Event Channel on each process (or host).
 	Only when an event is required by some remote consumer we need
-	to send it through the network. <P>
+	to send it through the network. </P>
 
+	<P>
 	The basic architecture to achieve this seems very simple,
 	each Event Channel has a proxy that connects to the EC peers,
 	providing a "merge" of its (local) consumer subscriptions as
-	its own subscription list. <P>
+	its own subscription list. </P>
 
+	<P>
 	Locally the proxy connects as a supplier,
-	publishing all the events it has register for. <P>
+	publishing all the events it has register for. </P>
 
+	<P>
 	To avoid event looping the events carry a time-to-live field
 	that is decremented each time the event goes through a proxy, 
 	when the TTL gets to zero the event is not propagated by the
-	proxy. <P>
+	proxy. </P>
 
+	<P>
 	In the current release an experimental implementation is
 	provided,
 	it basically hardcodes all the subscriptions and publications,
 	we are researching on how to automatically build the
-	publication list.<P>
+	  publication list.</P>
+      </LI>
 
       <LI> <P>
 	We use the COS Time Service types (not the services) to
-	specify time for the Event Service and Scheduling Service.<P>
-</UL>
+	specify time for the Event Service and Scheduling Service.</P>
+      </LI>
+    </UL>
 
   </BODY>
 </HTML>

@@ -222,6 +222,13 @@ public:
   void shutdown (void);
   // Do not call this.  The last module has shut down.
 
+  void report_connect_i (u_long);
+  // Consumer or supplier connected.
+
+  void report_disconnect_i (u_long);
+  // Consumer or supplier disconnected.
+
+
 private:
   ACE_RTU_Manager *rtu_manager_;
   // The RTU manager dude!

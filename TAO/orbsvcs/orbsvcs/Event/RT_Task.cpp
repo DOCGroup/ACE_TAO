@@ -58,6 +58,31 @@ ACE_RT_Task::~ACE_RT_Task (void)
 int
 ACE_RT_Task::svc (void)
 {
+  // @@ TODO It may be necessary to call ORB init here...
+
+  TAO_TRY
+    {
+      RtecScheduler::OS_Priority thread_priority;
+      RtecScheduler::Sub_Priority subpriority;
+      RtecScheduler::Preemption_Priority preemption_priority;
+
+      ACE_Scheduler_Factory::server ()->priority
+	(this->rt_info_,
+	 thread_priority,
+	 subpriority,
+	 preemption_priority, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      if (ACE_OS::thr_setprio (thread_priority) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed\n"));
+	}
+    }
+  TAO_CATCHANY
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
+    }
+  TAO_ENDTRY;
+
   int done = 0;
 
   ACE_hthread_t self;

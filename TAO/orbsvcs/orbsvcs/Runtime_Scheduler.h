@@ -3,24 +3,24 @@
 #ifndef ACE_RUNTIME_SCHEDULER_H
 #define ACE_RUNTIME_SCHEDULER_H
 
-#include "ace/OS.h"
-
+#include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-class TAO_ORBSVCS_Export ACE_Runtime_Scheduler
-  : public POA_RtecScheduler::Scheduler
+class TAO_ORBSVCS_Export ACE_Runtime_Scheduler : public POA_RtecScheduler::Scheduler
+{
   // = TITLE
-  //   A proxy server for RtecScheduler::Scheduler.
+  //   A fast and simple servant for RtecScheduler::Scheduler based on
+  //   precomputed schedules.
   //
   // = DESCRIPTION
   //   This class offers the services of the scheduler, but based on
   //   precomputed and precompiled information. This results in a
   //   highly optimized execution after the configuration runs.
-{
+  //
 public:
   ACE_Runtime_Scheduler (int entry_count,
-                         RtecScheduler::RT_Info* rt_info[]);
-  // Initialize the data from the RT_Info array.
+                         ACE_Scheduler_Factory::POD_RT_Info rt_info[]);
+  // Initialize the data from the POD_RT_Info array.
   // Only basic validation is done.
 
   virtual RtecScheduler::handle_t create (const char * entry_point,
@@ -85,7 +85,10 @@ public:
 
 private:
   int entry_count_;
-  RtecScheduler::RT_Info** rt_info_;
+  // The number of elements in the array.
+
+  ACE_Scheduler_Factory::POD_RT_Info* rt_info_;
+  // The array of precomputed RT_Info structures.
 };
 
 #if defined (__ACE_INLINE__)
