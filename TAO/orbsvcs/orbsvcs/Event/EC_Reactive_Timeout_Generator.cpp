@@ -13,10 +13,6 @@ TAO_EC_Reactive_Timeout_Generator::
       TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor)
  : reactor_ (reactor)
 {
-  if (this->reactor_ == 0)
-    {
-      this->reactor_ = TAO_ORB_Core_instance ()->reactor ();
-    }
 }
 
 TAO_EC_Reactive_Timeout_Generator::~TAO_EC_Reactive_Timeout_Generator (void)
@@ -55,4 +51,3 @@ TAO_EC_Reactive_Timeout_Generator::cancel_timer (
 
   return this->reactor_->cancel_timer (id, &vp);
 }
-

@@ -120,6 +120,15 @@ public:
   virtual ACE_Lock* create_supplier_admin_lock (void);
   virtual void destroy_supplier_admin_lock (ACE_Lock*);
 
+  virtual TAO_EC_ConsumerControl*
+      create_consumer_control (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_consumer_control (TAO_EC_ConsumerControl*);
+  virtual TAO_EC_SupplierControl*
+      create_supplier_control (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_supplier_control (TAO_EC_SupplierControl*);
+
 private:
   int dispatching_;
   int filtering_;
@@ -140,6 +149,17 @@ private:
   int dispatching_threads_force_active_;
   // The MT dispatching priority has several arguments that could be
   // controlled here...
+
+  const char *orbid_;
+  // Use this ORB to locate global resources.
+
+  int consumer_control_;
+  int supplier_control_;
+  // The consumer and supplier control policies.
+
+  int consumer_control_period_;
+  int supplier_control_period_;
+  // The consumer and supplier control periods in usecs
 };
 
 #if defined (__ACE_INLINE__)

@@ -263,6 +263,8 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                               "ProxySupplier::disconnect_push_supplier");
         }
       ACE_ENDTRY;
     }
@@ -466,6 +468,27 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
   // The reference count was incremented just before delegating on the
   // dispatching strategy, in this can we need to decrement it *now*.
   this->refcount_--;
+}
+
+CORBA::Boolean
+TAO_EC_ProxyPushSupplier::consumer_non_existent (
+      CORBA::Boolean_out disconnected,
+      CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  disconnected = 0;
+  if (this->is_connected_i () == 0)
+    {
+      disconnected = 1;
+      return 0;
+    }
+
+  return this->consumer_->_non_existent (ACE_TRY_ENV);
 }
 
 void

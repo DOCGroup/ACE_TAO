@@ -1,3 +1,73 @@
+Tue Jan 18 20:39:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierControl.i:
+	* orbsvcs/orbsvcs/Event/EC_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.i:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.i:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.i:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	  New components to the event channel that deal with stale
+	  consumer and/or supplier proxies.
+	  The first implementations simply poll the consumers and
+	  suppliers periodically, using the _non_existent() method to
+	  check if the object is there, to avoid dead-locks they use the
+	  timeout policies in the ORB to bound the time the spend
+	  polling.
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	  The factory must create the new components now.
+	  Use CORBA::ORB_init() instead of TAO_ORB_Core_instance() to get
+	  to the ORB.  This is standard and it can be easily configured
+	  using the ORBid.
+
+	* docs/ec_options.html:
+	  Documented the new options in the TAO_EC_Default_Factory.
+
+	* orbsvcs/orbsvcs/Event/EC_Defaults.h:
+	  New defaults for the consumer and supplier control policies.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  The event channel creates the consumer and supplier control
+	  policies (using the factory), and then activates them.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Addded methods to invoke _non_existent() while holding the state
+	  lock, to avoid race conditions (as in one thread disconnecting
+	  a consumer while another thread tries to check if the consumer
+	  still exists).
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.i:
+	  New accessor to use the collection lock.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+	  Fixed nasty bug in the definition of the Disconnect command
+	  object, the typedef was wrong.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.cpp:
+	  Removed old debug message.
+
+	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+	  Removed references to TAO_ORB_Core_instance().
+
 Mon Jan 17 19:54:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/GIOP.cpp (write_request_header_lite): Made

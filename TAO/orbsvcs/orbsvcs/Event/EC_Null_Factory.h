@@ -109,6 +109,15 @@ public:
   virtual void destroy_consumer_admin_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_admin_lock (void);
   virtual void destroy_supplier_admin_lock (ACE_Lock*);
+
+  virtual TAO_EC_ConsumerControl*
+      create_consumer_control (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_consumer_control (TAO_EC_ConsumerControl*);
+  virtual TAO_EC_SupplierControl*
+      create_supplier_control (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_supplier_control (TAO_EC_SupplierControl*);
 };
 
 #if defined (__ACE_INLINE__)

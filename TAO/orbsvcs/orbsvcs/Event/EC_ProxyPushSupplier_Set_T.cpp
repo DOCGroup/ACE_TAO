@@ -160,9 +160,6 @@ TAO_EC_ProxyPushSupplier_Set_Delayed<ACE_SYNCH_USE>::shutdown (
       ACE_Command_Base* command;
       ACE_NEW (command,
                TAO_EC_ProxyPushSupplier_Set::Shutdown_Command (this));
-      ACE_DEBUG ((LM_DEBUG,
-                  "EC (%P|%t) Delayed shutdown command = %x\n",
-                  command));
 
       this->command_queue_.enqueue_tail (command);
       this->write_delay_++;

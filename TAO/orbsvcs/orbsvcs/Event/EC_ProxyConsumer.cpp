@@ -31,6 +31,27 @@ TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
+CORBA::Boolean
+TAO_EC_ProxyPushConsumer::supplier_non_existent (
+      CORBA::Boolean_out disconnected,
+      CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+        ACE_Lock, ace_mon, *this->lock_,
+        CORBA::INTERNAL ());
+    // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  disconnected = 0;
+  if (this->is_connected_i () == 0)
+    {
+      disconnected = 1;
+      return 0;
+    }
+
+  return this->supplier_->_non_existent (ACE_TRY_ENV);
+}
+
 void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier,
                                      CORBA::Environment &ACE_TRY_ENV)

@@ -251,6 +251,62 @@ static EC_Factory "-ECFiltering basic ....."
             SupplierAdmin state.
           </TD>
         </TR>
+
+        <!-- <TR NAME="ECORBId"> -->
+        <TR>
+          <TD><CODE>-ECORBId</CODE>
+            <EM>orbid</EM>
+          </TD>
+          <TD>Set the name of the ORB used by the event service, only
+	    useful in applications that create multiple ORBs and
+	    activate the event service in one of them.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECConsumerControl"> -->
+        <TR>
+          <TD><CODE>-ECConsumerControl</CODE>
+            <EM>policy</EM>
+          </TD>
+          <TD>Select the consumer control policy (<EM>null</EM> or
+	    <EM>reactive</EM>) to detect and discard broken consumer
+	    proxies.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECSupplierControl"> -->
+        <TR>
+          <TD><CODE>-ECSupplierControl</CODE>
+            <EM>policy</EM>
+          </TD>
+          <TD>Select the supplier control policy (<EM>null</EM> or
+	    <EM>reactive</EM>) to detect and discard broken supplier
+	    proxies.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECConsumerPeriod"> -->
+        <TR>
+          <TD><CODE>-ECConsumerPeriod</CODE>
+            <EM>period</EM>
+          </TD>
+          <TD>Set the period (in microseconds) used by the reactive
+	    consumer control policy to poll the state of the
+	    consumer proxies.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECSupplierPeriod"> -->
+        <TR>
+          <TD><CODE>-ECSupplierPeriod</CODE>
+            <EM>period</EM>
+          </TD>
+          <TD>Set the period (in microseconds) used by the reactive
+	    supplier control policy to poll the state of the
+	    supplier proxies.
+          </TD>
+        </TR>
+
       </TABLE>
     </P>
 
@@ -349,7 +405,7 @@ static EC_Factory "-ECFiltering basic ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Jul  2 11:24:48 CDT 1999
+Last modified: Tue Jan 18 20:19:17 PST 2000
 <!-- hhmts end -->
   </body>
 </html>

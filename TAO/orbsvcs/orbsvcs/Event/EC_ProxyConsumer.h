@@ -76,6 +76,12 @@ public:
   const RtecEventChannelAdmin::SupplierQOS& publications (void) const;
   // The QoS (subscription) used to connect to the EC.
 
+  CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected,
+                                        CORBA::Environment &ACE_TRY_ENV);
+  // Invoke the _non_existent() pseudo-operation on the supplier. If
+  // it is disconnected then it returns true and sets the
+  // <disconnected> flag.
+
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
                           CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,

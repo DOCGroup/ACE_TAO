@@ -67,7 +67,7 @@ public:
   // Can consumers or suppliers invoke connect_push_* multiple times?
 
   int disconnect_callbacks;
-  // It not zero the event channel will send disconnect callbacks when 
+  // It not zero the event channel will send disconnect callbacks when
   // a disconnect method is called on a Proxy.  In other words, if a
   // consumer calls disconnect_push_supplier() on its proxy the EC
   // will invoke disconnect_push_consumer() on the consumer.  A
@@ -299,6 +299,11 @@ private:
   int max_write_delay_;
   // Control the level of concurrency in the supplier sets with
   // delayed operations
+
+  TAO_EC_ConsumerControl *consumer_control_;
+  TAO_EC_SupplierControl *supplier_control_;
+  // Strategies to disconnect misbehaving or destroyed consumers and
+  // suppliers
 };
 
 #if defined (__ACE_INLINE__)
