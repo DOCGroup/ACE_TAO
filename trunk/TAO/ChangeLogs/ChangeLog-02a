@@ -1,3 +1,18 @@
+Fri Jun 23 12:08:51 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
+	  (destroy):
+	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h
+	  (deactivate):
+
+	  Added missing throw spec.  This fixes compile-time errors when
+	  native exception support is enabled.
+
+	* examples/Content_Server/AMI_Observer/Callback_i.h:
+
+	  Added dummy friend declaration to quiet down a warning due to
+	  the fact the destructor is private.
+
 Wed Jun 21 17:15:44 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
