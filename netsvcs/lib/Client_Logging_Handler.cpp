@@ -290,13 +290,14 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
       if (ACE::send (this->logging_output_,
 		     (char *) &log_record,
 		     len) == -1)
-	// Switch over to logging to stderr for now.  At some point,
-	// we'll improve the implementation to queue up the message,
-	// try to reestablish a connection, and then send the queued
-	// data once we've reconnect to the logging server.  If you'd
-	// like to implement this functionality and contribute it back
-	// to ACE that would be great!
-	this->logging_output_ = ACE_STDERR;
+        if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
+          // Switch over to logging to stderr for now.  At some point,
+          // we'll improve the implementation to queue up the message,
+          // try to reestablish a connection, and then send the queued
+          // data once we've reconnect to the logging server.  If
+          // you'd like to implement this functionality and contribute
+          // it back to ACE that would be great!
+          this->logging_output_ = ACE_STDERR;
     }
 
   ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
@@ -444,9 +445,10 @@ ACE_Client_Logging_Acceptor::init (int argc, char *argv[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p, using stderr\n"),
 		  ACE_TEXT ("can't connect to logging server")));
-      // If we can't connect to the server then we'll send the logging
-      // messages to stderr.
-      stream.set_handle (ACE_STDERR);
+      if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
+        // If we can't connect to the server then we'll send the logging
+        // messages to stderr.
+        stream.set_handle (ACE_STDERR);
     }
   else
     {
