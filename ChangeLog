@@ -4,8 +4,8 @@ Fri Nov 21 07:24:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Moved the declaration of $config_list to before the if(!getopt
           line, since it's used there if the if is satisfied.  Removed the
           ":" after a in the getopt argument list, since -a does not take
-          a manditory argument (which is what ":" means).  These problems
-          have prevent any tests from running in the ACE only autobuilds.
+          a manditory argument (which is what ":" means).  This has
+          prevented any tests from running in the ACE only autobuilds.
           since September.
 
 Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
