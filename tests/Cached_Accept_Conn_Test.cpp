@@ -187,6 +187,7 @@ static int user_has_specified_iterations = 0;
 static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
+static int connection_accepted = 0;
 
 // On Win32, the handle gobbling doesn't work.  Therefore, we need
 // more iterations to get to the handle limit.
@@ -236,7 +237,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNE
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-                                                                    int restart)
+                                                         int restart)
 {
   int result = ACCEPT_STRATEGY_BASE::open (local_addr,
                                            restart);
@@ -259,8 +260,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
 {
   // Stop the event loop.
-  int result = ACE_Reactor::instance ()->end_event_loop ();
-  ACE_ASSERT (result != 1);
+  connection_accepted = 1;
 
   // Try to find out if the implementation of the reactor that we are
   // using requires us to reset the event association for the newly
@@ -269,15 +269,21 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // associations.
   int reset_new_handle = this->reactor_->uses_event_associations ();
 
-  result = this->acceptor_.accept (svc_handler->peer (), // stream
+  int result = this->acceptor_.accept (svc_handler->peer (), // stream
                                    0, // remote address
                                    0, // timeout
                                    1, // restart
                                    reset_new_handle  // reset new handler
                                    );
   if (result == 0)
-    return result;
-
+    {
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("Accept succeeded with handle %d\n"),
+                    svc_handler->get_handle ()));
+      return result;
+    }
+  
   // If the error occured due to teh fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
@@ -325,6 +331,11 @@ cached_connect (STRATEGY_CONNECTOR &con,
                        ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("connection failed")),
                       -1);
+  else
+    if (debug)
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("Connection successful to server at port %d!\n"),
+                  remote_addr.get_port_number ()));
 
   // Reset Svc_Handler state.
   svc_handler->recycle_state (ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE);
@@ -335,10 +346,13 @@ cached_connect (STRATEGY_CONNECTOR &con,
 static void
 server (void)
 {
-  ACE_Reactor::instance ()->reset_event_loop ();
+  int result = 1;
 
-  int result = ACE_Reactor::instance ()->run_event_loop ();
-  ACE_ASSERT (result != 1);
+  while (connection_accepted == 0)
+    result = ACE_Reactor::instance ()->handle_events ();
+
+  connection_accepted = 0;
+
   ACE_UNUSED_ARG (result);
 }
 
@@ -410,17 +424,18 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
               ACE_ASSERT (0);
             }
 
-          if (debug)
+        }
+
+      if (debug)
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("starting server at port %d\n"),
                         server_addr.get_port_number ()));
-        }
-
+      
       // Run the cached blocking test.
       int result = cached_connect (strategy_connector,
                                    server_addr);
       ACE_ASSERT (result != -1);
-
+      
       server ();
     }
 }
