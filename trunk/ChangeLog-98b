@@ -1,3 +1,9 @@
+Thu Nov  5 14:42:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Cleaned up the comments a bit to make it
+ 	  more clear how to enable/disable threads.  Thanks to Russ
+ 	  Noseworthy <rnosewor@objectsciences.com> for reporting this.
+
 Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: default VERSION
