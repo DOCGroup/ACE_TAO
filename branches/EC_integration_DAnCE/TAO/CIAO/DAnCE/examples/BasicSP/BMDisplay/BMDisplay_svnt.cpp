@@ -105,6 +105,7 @@ namespace BMDisplay_Impl
 
   namespace CIAO_GLUE_BasicSP
   {
+    /*
     void
     BMDisplay_Servant::component_UUID (
     const char * new_component_UUID
@@ -121,7 +122,7 @@ namespace BMDisplay_Impl
     {
       return CORBA::string_dup (this->component_UUID_.c_str ());
     }
-
+*/
  
     BMDisplay_Servant::BMDisplay_Servant (
     ::BasicSP::CCM_BMDisplay_ptr exe,

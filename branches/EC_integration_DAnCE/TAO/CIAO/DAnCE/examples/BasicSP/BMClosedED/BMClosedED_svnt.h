@@ -207,6 +207,7 @@ namespace BMClosedED_Impl
       ACE_ENV_ARG_DECL);
 
       // Supported operations.
+      /*
       virtual void
       component_UUID (
       const char * new_component_UUID
@@ -217,7 +218,7 @@ namespace BMClosedED_Impl
       component_UUID (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-
+*/
       // Public port operations.
 
       virtual ::BasicSP::ReadData_ptr
@@ -384,7 +385,7 @@ namespace BMClosedED_Impl
       ::BasicSP::DataAvailableConsumer_var
       consumes_in_avail_;
 
-      ACE_CString component_UUID_;
+      //ACE_CString component_UUID_;
 
       private:
 

@@ -27,7 +27,7 @@
     <provider>true</provider>
     <supportedType>IDL:BasicSP/DataAvailable:1.0</supportedType>
     <specificType>IDL:BasicSP/DataAvailable:1.0</specificType>
-    <kind>EventPublisher</kind>
+    <kind>rtecEventPublisher</kind>
   </port>
 
   <port>

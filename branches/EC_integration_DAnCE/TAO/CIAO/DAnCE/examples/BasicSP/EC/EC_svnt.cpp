@@ -52,8 +52,9 @@ namespace EC_Impl
 
       ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      my_uuid += "_prepare_capture_publisher";
+      my_uuid += "_timeout_publisher";
 
+      ACE_DEBUG ((LM_DEBUG, "======== connection_uuid is: %s =============\n", my_uuid.c_str ()));
       this->container_->push_event (ev,
                                     my_uuid.c_str ()
                                     ACE_ENV_ARG_PARAMETER);
@@ -151,6 +152,7 @@ namespace EC_Impl
 
   namespace CIAO_GLUE_BasicSP
   {
+    /*
     void
     EC_Servant::component_UUID (
     const char * new_component_UUID
@@ -167,7 +169,7 @@ namespace EC_Impl
     {
       return CORBA::string_dup (this->component_UUID_.c_str ());
     }
-
+*/
  
     EC_Servant::EC_Servant (
     ::BasicSP::CCM_EC_ptr exe,
