@@ -1,10 +1,16 @@
+Thu May 27 18:22:22 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+
+          Added ACE_HAS_GETPAGESIZE and ACE_HAS_MEMCHR macros.
+
 Thu May 27 17:55:38 2004  Olli Savia  <ops@iki.fi>
 
         * ACE-INSTALL.html:
 
           Updated LynxOS resource advises. These were unnesessary large.
           This fixes bugzilla bug 1154.
-        
+
 Wed May 26 23:51:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * ace/OS_NS_string.cpp:
