@@ -1,3 +1,10 @@
+Tue Jun 24 13:10:25 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Cached_Connect_Strategy_T.cpp (cached_connect): Added
+	  a check for "|| errno == EADDRINUSE" to fix problems on Windows.
+  	  Thanks to Valery Salamakha <ccapstan@bigpond.net.au> for
+ 	  reporting this.
+
 Tue Jun 24 12:07:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
