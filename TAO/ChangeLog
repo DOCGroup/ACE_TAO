@@ -1,3 +1,9 @@
+Thu Aug 28 12:37:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp:
+          Fixed unused variable warning and compile problem in emulated
+          exception build.
+
 Wed Aug 27 21:45:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Big_Oneways/Session.h:
