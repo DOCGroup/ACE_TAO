@@ -26,6 +26,7 @@
 //#define ACE_LACKS_RECVMSG
 
 #define ACE_HAS_POSIX_TIME
+typedef struct timespec timespec_t; // Linux is missing this for POSIX spec 1003.1(?)
 #define ACE_LACKS_STRRECVFD
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
