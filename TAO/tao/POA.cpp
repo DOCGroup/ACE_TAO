@@ -3978,7 +3978,7 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
         priority = poa_priority;
       else
         {
-          if (object_priority != TAO_INVALID_PRIORITY)
+          if (object_priority == TAO_INVALID_PRIORITY)
             priority = poa_priority;
           else
             priority = object_priority;

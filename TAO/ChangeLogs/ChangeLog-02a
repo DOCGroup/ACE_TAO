@@ -1,3 +1,39 @@
+Mon Aug 14 10:23:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Stub.cpp (exposed_client_protocol): 
+	
+	* tao/Stub.cpp (exposed_priority_banded_connection): 
+	  Fixed "typo bug". The result was passed to the _narrow method 
+	  instead of the policy that had to be narrowed.
+
+	* tao/POA.cpp (client_exposed_policies): 
+	  Changed <client_exposed_policies> constructor, and
+	  setted the length of the policy list, (before it was
+	  set just the max size in the constructor but not the
+	  size of the list).
+
+	* tao/POA.cpp (client_exposed_policies): 
+	  Fixed bug in the test that check wether an object
+	  priority is valid or not. The condition was reversed
+	  i.e. it was if (object_priority != TAO_INVALID_PRIORITY)
+	  instead of if (object_priority == TAO_INVALID_PRIORITY).
+	
+	* tao/Stub.cpp (Stub): 
+	  Added code to set the Stub pointer in the Profiles.
+	  This is needed because it is thru the stub that the
+	  profile get access to the policy list.
+	
+	* tao/MProfile.i (policy_list): 
+	  Added policy list intialization. (The creation of
+	  the PolicyList should be guarded my multiple thread
+	  trying to invoking the method at the same time)
+
+	* tao/Profile.cpp (policies): 
+          Added byte order field in the CDR encapsualtion used to store
+	  the client exposed policies.
+	
+          Fixed memory leak caused by a missing buffer allocation.
+
 Mon Aug 14 08:25:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples,

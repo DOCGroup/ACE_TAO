@@ -13,9 +13,9 @@
 
 ACE_RCSID(tao, Profile, "$Id$")
 
-// ****************************************************************
+  // ****************************************************************
 
-TAO_Profile::~TAO_Profile (void)
+  TAO_Profile::~TAO_Profile (void)
 {
 }
 
@@ -23,13 +23,11 @@ void
 TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-
+  
   ACE_ASSERT (policy_list != 0);
 
   Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
-
-  TAO_OutputCDR out_CDR;
 
   CORBA::ULong length;
   CORBA::Octet *buf = 0;
@@ -40,14 +38,16 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // each CORBA::Policy into a CORBA::PolicyValue
   for (size_t i = 0; i < policy_list->length (); i++)
     {
-      pv.ptype = (*policy_list)[i]->policy_type ();
+      TAO_OutputCDR out_CDR;
+      policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
 
+      out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
-
+      
       length = out_CDR.total_length ();
-      pv.pvalue.length (length);
+      policy_value_seq[i].pvalue.length (length);
 
-      buf = pv.pvalue.get_buffer ();
+      buf = policy_value_seq[i].pvalue.get_buffer ();
 
       // Copy the CDR buffer data into the sequence<octect> buffer.
 
@@ -59,31 +59,45 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
           buf += iterator->length ();
         }
 
-      policy_value_seq[i] = pv;
+      //policy_value_seq[i] = pv;
       
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
-      out_CDR.reset ();
+      //out_CDR.reset ();
     }
-
+  
+  TAO_OutputCDR out_CDR;
   // Now we have to embedd the Messaging::PolicyValueSeq into
   // a TaggedComponent.
 
   IOP::TaggedComponent tagged_component;
-
   tagged_component.tag = Messaging::TAG_POLICIES;
+
+  out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
   out_CDR << policy_value_seq;
+ 
+  length = out_CDR.total_length ();
+  ACE_DEBUG ((LM_DEBUG, "CDR Length: %d\n", length));
 
+  tagged_component.component_data.length(length);
   buf = tagged_component.component_data.get_buffer ();
-
+  
+  int i_length;
   for (const ACE_Message_Block *iterator = out_CDR.begin ();
        iterator != 0;
        iterator = iterator->cont ())
-  {
-    ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
-    buf += iterator->length ();
-  }
+    {
+
+      i_length = iterator->length ();
+      ACE_DEBUG ((LM_DEBUG, "Iterator Length: %d\n", i_length));
+      ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+
+      buf += iterator->length ();
+  
+      i_length = iterator->length ();
+      ACE_DEBUG ((LM_DEBUG, "Iterator Length: %d\n", i_length));
+    }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
@@ -102,11 +116,12 @@ CORBA::PolicyList&
 TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
+  
+  ACE_DEBUG ((LM_DEBUG, "TAO_Profile::policies Decoder called.\n"));
+  CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
   if (!are_policies_parsed_
       && (policies->length () == 0))
-      // None has already parsed the policies.
+    // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = Messaging::TAG_POLICIES;
@@ -119,7 +134,13 @@ TAO_Profile::policies (void)
             tagged_component.component_data.get_buffer ();
 
           TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
-                              tagged_component.component_data.length ());
+                               tagged_component.component_data.length ());
+
+          // Extract the Byte Order
+          CORBA::Boolean byte_order;
+          if ((in_CDR >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+              return *(stub_->base_profiles ().policy_list ());
+          in_CDR.reset_byte_order (ACE_static_cast(int, byte_order));
 
           // Now we take out the Messaging::PolicyValueSeq out from the
           // CDR.
@@ -143,9 +164,12 @@ TAO_Profile::policies (void)
               if (policy != 0)
                 {
                   buf = policy_value_seq[i].pvalue.get_buffer ();
-
+                  
                   TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
                                        policy_value_seq[i].pvalue.length ());
+                  
+                  in_CDR >> ACE_InputCDR::to_boolean (byte_order);
+                  in_CDR.reset_byte_order (ACE_static_cast(int, byte_order));
 
                   policy->_tao_decode (in_CDR);
                   (*policies)[i] = policy;
