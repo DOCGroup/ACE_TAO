@@ -21,7 +21,7 @@ my(@symbols) = ('dequeue__t17ACE_Message_Queue1Z14ACE_NULL_SYNCHRP17ACE_Message_
                );
 
 $usage =
-  "usage: $0 [-? | [-w] [[-C <compile> --] [-m <munch>] [-n <nm>]] [-f]]] " .
+  "usage: $0 [-? | [-w] [-o <VDIR>] [[-C <compile> --] [-m <munch>] [-n <nm>]] [-f]]] " .
   "<ld command>\n";
 
 #### To avoid quoting problems on the command line, all arguments
@@ -57,6 +57,13 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
             print STDERR "$0:  must provide argument for -n option\n";
             die $usage;
         }
+    } elsif ( $ARGV[0] eq '-o' ) {
+        if ( $ARGV[1] !~ /^[-].+$/ ) {
+            $vdir = $ARGV[1]; shift;
+        } else {
+            print STDERR "$0:  must provide argument for -o option\n";
+            die $usage;
+        }
     } elsif ( $ARGV[0] eq '-w' ) {
       $ss_change_warn = 1;
     } elsif ( $ARGV[0] eq '-?' ) {
@@ -73,6 +80,12 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ ) {
     shift;
 }
 
+####
+#### If $vdir is empty, set default object file directory (.obj)
+####
+if ($vdir eq ''){
+   $vdir = ".obj";
+}
 
 ####
 #### Save link command, i.e., current @ARGV, for use below.
@@ -143,7 +156,7 @@ if ($munch) {
   close CTORDTOR || &fail ("$0: unable to write \"__ctordtor.c\"\n");
   close MUNCH;
 
-  system ("$compile -o .obj/__ctordtor.o __ctordtor.c") &&
+   system ("$compile -o $vdir/__ctordtor.o __ctordtor.c") &&
     &fail ("$0: \"$compile\" failed\n");
 }
 
@@ -160,7 +173,7 @@ if ($munch) {
     }
     ++$arg_lib;
   }
-  splice (@args, $arg_lib, 0, ".obj/__ctordtor.o");
+  splice (@args, $arg_lib, 0, "$vdir/__ctordtor.o");
 }
 
 $link_command = join (' ', @args);
@@ -213,7 +226,7 @@ sub fail {
 #### clean up when done or on signal
 ####
 sub cleanup {
-  unlink "__ctordtor.c", ".obj/__ctordtor.o";
+  unlink "__ctordtor.c", "$vdir/__ctordtor.o";
   if ($done) {
     exit 0;
   } else {
