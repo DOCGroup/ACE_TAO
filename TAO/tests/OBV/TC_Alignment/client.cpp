@@ -19,7 +19,7 @@ int do_shutdown = 0;
 
 int
 register_factories (CORBA::ORB_ptr orb
-                    ACE_ENV_ARG_PARAMETER)
+                    ACE_ENV_ARG_DECL)
 {
   // Create and register factories.
 
@@ -76,7 +76,7 @@ register_factories (CORBA::ORB_ptr orb
 int
 run_test (test_ptr objref, 
           CORBA::Long offset
-          TAO_ENV_ARG_PARAMETER)
+          ACE_ENV_ARG_DECL)
 {
   CORBA::Any_var result = objref->get_value (offset
                                              ACE_ENV_ARG_PARAMETER);
@@ -157,8 +157,8 @@ parse_args (int argc, char *argv[])
 int 
 main (int argc, char* argv[])
 {
-	ACE_TRY_NEW_ENV
-	  {
+  ACE_TRY_NEW_ENV
+    {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, 
                                             argv, 
                                             "" 

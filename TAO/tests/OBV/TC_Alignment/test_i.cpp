@@ -17,9 +17,9 @@ test_i::get_value (CORBA::Long offset
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_var retval;
-  ACE_NEW_RETURN (retval,
-                  CORBA::Any,
-                  0);
+  ACE_NEW_THROW_EX (retval,
+                    CORBA::Any,
+                    CORBA::NO_MEMORY ());
 
   switch (offset)
   {
