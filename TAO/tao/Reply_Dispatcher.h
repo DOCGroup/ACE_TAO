@@ -21,6 +21,7 @@
 #define TAO_REPLY_DISPATCHER_H
 
 #include "tao/GIOP.h"
+#include "tao/Request.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -203,6 +204,66 @@ private:
 
   Messaging::ReplyHandler_ptr reply_handler_;
   // Reply Handler passed in the Asynchronous Invocation.
+};
+
+// *********************************************************************
+
+class TAO_Export TAO_DII_Deferred_Reply_Dispatcher : public TAO_Reply_Dispatcher
+{
+  // = TITLE
+  //
+  //     Reply dispatcher for DII deferred requests.
+  //
+  // = DESCRIPTION
+  //
+
+public:
+  TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req);
+ // Constructor.
+
+  virtual ~TAO_DII_Deferred_Reply_Dispatcher (void);
+  // Destructor.
+
+  CORBA::ULong reply_status (void) const;
+  // Get the reply status.
+
+  const TAO_GIOP_Version& version (void) const;
+  // Get the GIOP version
+
+  virtual int dispatch_reply (CORBA::ULong reply_status,
+                              const TAO_GIOP_Version& version,
+                              IOP::ServiceContextList& reply_ctx,
+                              TAO_GIOP_Message_State* message_state);
+  // Dispatch the reply. This involves demarshalling the reply and
+  // calling the appropriate call back hook method on the reply
+  // handler.
+  // Return 1 on sucess, -1 on error.
+
+  virtual TAO_GIOP_Message_State *message_state (void);
+  // Return the message state.
+
+protected:
+  IOP::ServiceContextList reply_service_info_;
+  // The service context list
+  // Note, that this is not a reference as in
+  // the synchronous case. We own the reply_service_info
+  // because our TAO_Asynch_Invocation will go out
+  // of scope before we are done.
+
+private:
+  CORBA::ULong reply_status_;
+  // Reply or LocateReply status.
+
+  TAO_GIOP_Version version_;
+  // The version
+
+  TAO_GIOP_Message_State *message_state_;
+  // CDR stream for reading the input.
+  // @@ Carlos : message_state should go away. All we need is the reply
+  //    cdr. Is that right? (Alex).
+
+  const CORBA::Request_ptr req_;
+  // Where the reply needs to go.
 };
 
 #  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */

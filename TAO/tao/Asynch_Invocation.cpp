@@ -94,7 +94,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Just send the request, without trying to wait for the reply.
-  retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+  retval = TAO_GIOP_Invocation::invoke (1, 
+                                        ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
   if (retval != TAO_INVOKE_OK)
@@ -105,9 +106,63 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   return TAO_INVOKE_OK;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+//**************************************************************************
+
+void
+TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->transport_->start_request (this->orb_core_,
+                                   this->profile_,
+                                   this->out_stream_,
+                                   ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+int
+TAO_GIOP_DII_Deferred_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
+
+  return this->invoke_i (ACE_TRY_ENV);
+}
+
+
+int
+TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Register a reply dispatcher for this Asynch_Invocation. Use the
+  // heap allocated reply dispatcher.
+
+  int retval =
+    this->transport_->tms ()->bind_dispatcher (this->request_id_,
+                                               this->rd_);
+  if (retval == -1)
+    {
+      // @@ What is the right way to handle this error?
+      this->close_connection ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                        TAO_INVOKE_EXCEPTION);
+    }
+
+  // Just send the request, without trying to wait for the reply.
+  retval = TAO_GIOP_Invocation::invoke (1, 
+                                        ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  if (retval != TAO_INVOKE_OK)
+    return retval;
+
+  // We do not wait for the reply. Let us return.
+
+  return TAO_INVOKE_OK;
+}
 
 #endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
 #endif /* TAO_HAS_CORBA_MESSAGING */
