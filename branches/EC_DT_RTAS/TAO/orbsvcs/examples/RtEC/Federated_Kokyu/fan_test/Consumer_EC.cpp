@@ -13,7 +13,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Factory.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Event_Limit.h"
 #include "tao/ORB_Core.h"
 
 #include "Kokyu_EC.h"
@@ -192,24 +191,15 @@ int
 main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
-#ifdef ACE_HAS_DSUI
-  ds_control* ds_cntl = new ds_control ("Fan_Test_Consumer","consumer_enabled.dsui");
-#endif // ACE_HAS_DSUI
-
   TAO_EC_Kokyu_Factory::init_svcs ();
-
-  //@BT
-#ifdef ACE_HAS_DSUI
-  //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
-  //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
-  ACE_Time_Value now(ACE_OS::gettimeofday());
-  ACE_OS::printf("Consumer_EC START at %isec %iusec\n",now.sec(),now.usec());
-  DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
-#endif //ACE_HAS_DSUI
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+#ifdef ACE_HAS_DSUI
+      ds_control ds_cntl("Fan_Test_Consumer","consumer_enabled.dsui");
+#endif // ACE_HAS_DSUI
+
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
@@ -217,8 +207,6 @@ main (int argc, char* argv[])
 
       if (parse_args (argc, argv) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-o IOR_file_name]\n"));
           return 1;
         }
 
@@ -286,23 +274,27 @@ main (int argc, char* argv[])
       //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
       ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
-#endif //ACE_HAS_DSUI
 
-#ifdef ACE_HAS_DSUI
-      EC_Event_Limit* e_limit = new EC_Event_Limit (orb, ds_cntl);
-#else
-      EC_Event_Limit* e_limit = new EC_Event_Limit (orb);
+      //@BT
+      //  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
+      //  DSTRM_EVENT(MAIN_GROUP_FAM, START, 1, sizeof(EC_Event_Counter::event_id), (char*)&eid);
+      ACE_Time_Value now(ACE_OS::gettimeofday());
+      ACE_OS::printf("Consumer_EC START at %isec %iusec\n",now.sec(),now.usec());
+      DSTRM_EVENT(MAIN_GROUP_FAM, START, 0, 0, NULL);
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (125);
-      long timer_id = rt.reactor()->schedule_timer(e_limit,0, ticker);
-      if (timer_id < 0)
-        {
-          ACE_DEBUG((LM_DEBUG,"Consumer_EC (%t) Could not schedule EC_Event_Limit timeout\n"));
-        }
 
       rt.activate(); //need thread creation flags? or priority?
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_Time_Value stop_time(300,0);
+      orb->run (stop_time ACE_ENV_ARG_PARAMETER);
+      //orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+#ifdef ACE_HAS_DSUI
+      //@BT
+      //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+      ACE_DEBUG((LM_DEBUG,"Consumer_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
+      DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+#endif //ACE_HAS_DSUI
 
       // ****************************************************************
 
@@ -313,7 +305,7 @@ main (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC - Service");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Consumer_EC");
       return 1;
     }
   ACE_ENDTRY;
