@@ -37,7 +37,7 @@ ACE_SSL_Context::instance (void)
 }
 
 ACE_INLINE void
-ACE_SSL_Context::check_context ()
+ACE_SSL_Context::check_context (void)
 {
   if (this->context_ == 0)
     this->set_mode ();
