@@ -23,7 +23,7 @@
 
 #include "tao/Operation_Table.h"
 #include "tao/Server_Request.h"
-
+#include "tao/ORB.h"
 #if !defined (__ACE_INLINE__)
 #include "tao/PollableS.i"
 #endif /* !defined INLINE */
