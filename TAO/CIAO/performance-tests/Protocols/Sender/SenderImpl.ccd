@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:Protocols/Sender:1.0"/>
+  <homerepid repid="IDL:Protocols/SenderHome:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="SenderHome"
+      repid="IDL:Protocols/SenderHome:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Sender"
+      repid="IDL:Protocols/Sender:1.0">
+    <supportsinterface repid="IDL:Protocols/Sender_Controller:1.0"/>
+    <ports>
+      <uses
+          usesname="reader"
+          repid="IDL:Protocols/test:1.0">
+      </uses>
+    </ports>
+  </componentfeatures>
+  
+  <interface
+      name="Sender_Controller"
+      repid="IDL:Protocols/Sender_Controller:1.0">
+  </interface>
+  
+  <interface
+      name="test"
+      repid="IDL:Protocols/test:1.0">
+  </interface>
+  
+</corbacomponent>
