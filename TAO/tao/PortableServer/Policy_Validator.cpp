@@ -24,7 +24,7 @@ void
 TAO_POA_Policy_Validator::add_validator (TAO_POA_Policy_Validator *validator)
 {
   if (this->last_ == 0)
-      this->last_ = this->next_ = validator;
+    this->last_ = this->next_ = validator;
   else
     this->last_ = this->last_->next_ = validator;
 }
@@ -32,7 +32,7 @@ TAO_POA_Policy_Validator::add_validator (TAO_POA_Policy_Validator *validator)
 
 void
 TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies,
-                                         CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->validate_impl (policies, ACE_TRY_ENV);
   ACE_CHECK;
@@ -40,6 +40,20 @@ TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies,
   if (this->next_ != 0)
     {
       this->next_->validate (policies, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}
+
+void
+TAO_POA_Policy_Validator::merge_policies (TAO_Policy_Set &policies,
+                                          CORBA::Environment &ACE_TRY_ENV)
+{
+  this->merge_policies_impl (policies, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (this->next_ != 0)
+    {
+      this->next_->merge_policies (policies, ACE_TRY_ENV);
       ACE_CHECK;
     }
 }

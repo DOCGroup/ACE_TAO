@@ -581,21 +581,6 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
-  TAO_POA_Policy_Set policies (this->default_poa_policies ());
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-  // Specify the implicit activation policy since it should
-  // be different from the default.  Note that merge_policy
-  // takes a const reference and makes its own copy of the
-  // policy.  (Otherwise, we'd have to allocate the policy
-  // on the heap.)
-  TAO_Implicit_Activation_Policy
-    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
-
-  policies.merge_policy (&implicit_activation_policy,
-                         ACE_TRY_ENV);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
   // This makes sure that the default resources are open when the Root
   // POA is created.
   this->orb_core_.thread_lane_resources_manager ().open_default_resources (ACE_TRY_ENV);
@@ -615,17 +600,38 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
                                                        ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_POA_Policy_Set policies (this->default_poa_policies ());
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  // Specify the implicit activation policy since it should
+  // be different from the default.  Note that merge_policy
+  // takes a const reference and makes its own copy of the
+  // policy.  (Otherwise, we'd have to allocate the policy
+  // on the heap.)
+  TAO_Implicit_Activation_Policy
+    implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
+
+  policies.merge_policy (&implicit_activation_policy,
+                         ACE_TRY_ENV);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  // Merge policies from the ORB level.
+  this->validator ().merge_policies (policies.policies (),
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
-  this->root_ = this->servant_dispatcher_->create_POA (root_poa_name,
-                                                       *poa_manager,
-                                                       policies,
-                                                       0,
-                                                       this->lock (),
-                                                       this->thread_lock (),
-                                                       this->orb_core_,
-                                                       this,
-                                                       ACE_TRY_ENV);
+  this->root_ =
+    this->servant_dispatcher_->create_POA (root_poa_name,
+                                           *poa_manager,
+                                           policies,
+                                           0,
+                                           this->lock (),
+                                           this->thread_lock (),
+                                           this->orb_core_,
+                                           this,
+                                           ACE_TRY_ENV);
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that

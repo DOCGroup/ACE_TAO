@@ -183,8 +183,9 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in (),
-                                                           ACE_TRY_ENV);
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in (),
+                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 1;
@@ -346,4 +347,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-

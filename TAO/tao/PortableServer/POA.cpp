@@ -380,6 +380,11 @@ TAO_POA::create_POA_i (const char *adapter_name,
   // default POA policies.
   TAO_POA_Policy_Set tao_policies (this->object_adapter ().default_poa_policies ());
 
+  // Merge policies from the ORB level.
+  this->object_adapter ().validator ().merge_policies (tao_policies.policies (),
+                                                       ACE_TRY_ENV);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+
   // Merge in any policies that the user may have specified.
   tao_policies.merge_policies (policies,
                                ACE_TRY_ENV);
@@ -1707,7 +1712,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             TAO_INVALID_PRIORITY,
+                                                                             this->cached_policies_.server_priority (),
                                                                              user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -1870,7 +1875,8 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant,
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
-  CORBA::Short priority = TAO_INVALID_PRIORITY;
+  CORBA::Short priority =
+    this->cached_policies_.server_priority ();
   PortableServer::ObjectId_var id = this->servant_to_system_id (servant,
                                                                 priority,
                                                                 ACE_TRY_ENV);
@@ -3367,7 +3373,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
   // Activate the servant in the root poa.
   PortableServer::ObjectId_var id =
     root_poa->activate_object_i (this->server_object_,
-                                 TAO_INVALID_PRIORITY,
+                                 this->cached_policies_.server_priority (),
                                  ACE_TRY_ENV);
   ACE_CHECK;
 

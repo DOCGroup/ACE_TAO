@@ -39,8 +39,12 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  virtual void validate_impl (TAO_Policy_Set &policies,
-                              CORBA::Environment &ACE_TRY_ENV);
+  void validate_impl (TAO_Policy_Set &policies,
+                      CORBA::Environment &ACE_TRY_ENV);
+
+  /// Add/merge policies.
+  void merge_policies_impl (TAO_Policy_Set &policies,
+                            CORBA::Environment &ACE_TRY_ENV);
 
   /**
    * Return whether the specified policy type is legal for the

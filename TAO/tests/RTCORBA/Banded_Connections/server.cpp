@@ -4,7 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/Pool_Per_Endpoint.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -365,8 +364,9 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB", ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in (),
-                                                           ACE_TRY_ENV);
+      RTCORBA::RTORB_var rt_orb =
+        RTCORBA::RTORB::_narrow (object.in (),
+                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 1;
@@ -398,26 +398,8 @@ main (int argc, char *argv[])
       Test_i server_impl (orb.in (), bands);
       Test_i server_impl2 (orb.in (), bands);
 
-
-      // Test 1: Attempt to create a POA with priority bands but
-      // without the priority model.  Should get POA::InvalidPolicy
-      // exception.
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n     Test 1\n"));
-
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
-      poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy
-        (bands,
-         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_creation_exception_test (root_poa.in (),
-                                   poa_manager.in (),
-                                   poa_policy_list,
-                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
       // Test 2: Attempt to create a POA with priority bands that do
       // not match the resources (i.e., endpoints/lanes).  Should get
@@ -525,12 +507,7 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Start ORB event loop.
-      // @@ Currently we are using Reactor per priority to emulate
-      // threadpool with lanes.  Once POA threadpools are implemented,
-      // this code should be replaced with standard threadpool apis.
-      TAO_Pool_Per_Endpoint pool (orb.in ());
-      pool.run (ACE_TRY_ENV);
+      orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "\nServer ORB event loop finished\n\n"));
@@ -545,4 +522,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
