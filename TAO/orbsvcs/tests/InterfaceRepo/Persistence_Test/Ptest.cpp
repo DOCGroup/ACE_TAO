@@ -50,8 +50,8 @@ Ptest::init (int argc,
         }
 
       this->repo_ =
-        IR_Repository::_narrow (object.in (),
-                                ACE_TRY_ENV);
+        CORBA::Repository::_narrow (object.in (),
+                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->repo_.in ()))
@@ -138,10 +138,10 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
       ACE_TEXT ("\n============== POPULATE ==============\n\n")
     ));
 
-  IR_StructMemberSeq members (2);
+  CORBA::StructMemberSeq members (2);
   members.length (2);
   members[0].name = CORBA::string_dup ("long_mem");
-  members[0].type_def = this->repo_->get_primitive (pk_long,
+  members[0].type_def = this->repo_->get_primitive (CORBA::pk_long,
                                                     ACE_TRY_ENV);
   ACE_CHECK;
   members[0].type = members[0].type_def->type (ACE_TRY_ENV);
@@ -156,24 +156,24 @@ Ptest::populate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
 
-  IR_StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
-                                                      "my_struct",
-                                                      "1.0",
-                                                      members,
-                                                      ACE_TRY_ENV);
+  CORBA::StructDef_var svar = this->repo_->create_struct ("IDL:my_struct:1.0",
+                                                          "my_struct",
+                                                          "1.0",
+                                                          members,
+                                                          ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR_EnumMemberSeq def_members (2);
+  CORBA::EnumMemberSeq def_members (2);
   def_members.length (2);
 
   def_members[0] = CORBA::string_dup ("ZERO");
   def_members[1] = CORBA::string_dup ("ONE");
 
-  IR_EnumDef_var e_def_var = svar->create_enum ("IDL:my_def_enum:1.0",
-                                                "my_enum",
-                                                "1.0",
-                                                def_members,
-                                                ACE_TRY_ENV);
+  CORBA::EnumDef_var e_def_var = svar->create_enum ("IDL:my_def_enum:1.0",
+                                                    "my_enum",
+                                                    "1.0",
+                                                    def_members,
+                                                    ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -192,9 +192,9 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
     "my_enum"
   };
 
-  IR_ContainedSeq_var contents = this->repo_->contents (dk_all,
-                                                        0,
-                                                        ACE_TRY_ENV);
+  CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all,
+                                                            0,
+                                                            ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::ULong length = contents->length ();
@@ -208,13 +208,13 @@ Ptest::query (CORBA::Environment &ACE_TRY_ENV)
 
   CORBA::ULong i = 0;
 
-  IR_StructDef_var svar = IR_StructDef::_narrow (contents[i],
-                                                 ACE_TRY_ENV);
+  CORBA::StructDef_var svar = CORBA::StructDef::_narrow (contents[i],
+                                                         ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (svar.in ()));
 
-  IR_StructMemberSeq_var out_members = svar->members (ACE_TRY_ENV);
+  CORBA::StructMemberSeq_var out_members = svar->members (ACE_TRY_ENV);
   ACE_CHECK;
 
   length = out_members->length ();

@@ -79,3 +79,33 @@ The order of events is as follows:
 
 (7)     The repository is shut down.
 
+By default, the client will call _get_interface() on the target
+object to get its InterfaceDef from the respository, and then
+query the IntefaceDef object to get information about its
+operations and their parameters. If the command line option -n
+is passed to the client (or to the Perl script), the client will
+resolve the repository by a call to 
+orb->resolve_initial_references ("InterfaceRepository") and use
+information it has (through some unspecified means) about the
+local name of the interface and of its containing module,
+to search the repository for the InterfaceDef of the target object,
+and from there acquire the rest of the information the same way as
+in the default case.
+
+If the default method is used, the call to CORBA::Object::_get_interface()
+requires that the server (specifically the generated skeleton code)
+know about the TAO_IFR_Client library, since the implementation of
+this method is not found in the TAO library, requiring as it does the
+knowledge of the rather large IFR client interface. To dynamically load
+the TAO_IFR_Client library (assuming it has been compiled), the
+header file ACE_ROOT/TAO/tao/IFR_Client/IFR_Client_Adapter_Impl.h is
+included in the application (in test_i.h) and TAO_IFR_Client added to
+the list of linked libraries. This will force the static Initializer
+function in the library to initialize all the IFR typecodes and to
+load the library. Applications that don't need to call _get_interface
+don't need to link this library and can thus keep the server-side 
+footprint smaller.
+
+More information about the Interface Repository can be found in 
+TAO/docs/releasenotes/index.html.
+

@@ -22,7 +22,7 @@
 #if !defined (ADMIN_CLIENT_H)
 #define ADMIN_CLIENT_H
 
-#include "tao/IFR_Client/InterfaceC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/corba.h"
 
 const CORBA::ULong NUMBER_OF_TESTS = 11;
@@ -88,7 +88,7 @@ private:
   CORBA::ORB_var orb_;
   // Storage of the ORB reference.
 
-  IR_Repository_var repo_;
+  CORBA::Repository_var repo_;
   // Storage of the IFR reference.
 };
 

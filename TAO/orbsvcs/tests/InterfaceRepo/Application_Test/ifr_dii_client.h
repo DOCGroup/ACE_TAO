@@ -4,14 +4,12 @@
 #ifndef IFR_DII_CLIENT_H
 #define IFR_DII_CLIENT_H
 
-#include "tao/ORB.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/NVList.h"
-#include "tao/IFR_Client/InterfaceC.h"
 #include "tao/DynamicInterface/Request.h"
 
 class IFR_DII_Client
@@ -29,9 +27,15 @@ public:
   // Run the client.
 
 private:
+  int parse_args (int argc,
+                  char *argv[]);
+  // Process the command line arguments.
+
   void find_interface_def (CORBA::Environment &ACE_TRY_ENV);
-  // Search the repository to find the desired interface
-  // definition.
+  // Query the object reference to get its InterfaceDef in the IFR.
+
+  void lookup_interface_def (CORBA::Environment &ACE_TRY_ENV);
+  // Look up the InterfaceDef by name in the IFR.
 
   void get_operation_def (CORBA::Environment &ACE_TRY_ENV);
   // Find the desired operation in the interface definition.
@@ -46,16 +50,16 @@ private:
   CORBA::ORB_var orb_;
   // Reference to our ORB.
 
-  IR_Repository_var repo_;
+  CORBA::Repository_var repo_;
   // Reference to the Interface Repository.
 
   CORBA::Object_var target_;
-  // Reference to the target of the DII request.
+  // Reference to the target object.
 
-  IR_InterfaceDef_var target_def_;
+  CORBA::InterfaceDef_var target_def_;
   // Repository entry corresponding to target_.
 
-  IR_OperationDef_var op_;
+  CORBA::OperationDef_var op_;
   // Reference to the discovered operation.
 
   CORBA::TypeCode_var result_;
@@ -68,6 +72,11 @@ private:
   CORBA::String_var interface_name;
   CORBA::String_var op_name;
   // Things that we will be searching for in the repository.
+
+  CORBA::Boolean lookup_by_name_;
+  // Are we looking up info on the target object by querying the
+  // IFR directly with the target's name, or indirectly
+  // by calling _get_interface() on the target object?
 };
 
 #endif /* IFR_DII_CLIENT_H */

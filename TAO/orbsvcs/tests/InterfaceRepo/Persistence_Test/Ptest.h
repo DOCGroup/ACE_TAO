@@ -22,7 +22,7 @@
 #if !defined (PTEST_H)
 #define PTEST_H
 
-#include "tao/IFR_Client/InterfaceC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/corba.h"
 
 class Ptest
@@ -67,7 +67,7 @@ private:
   CORBA::ORB_var orb_;
   // Storage of the ORB reference.
 
-  IR_Repository_var repo_;
+  CORBA::Repository_var repo_;
   // Storage of the IFR reference.
 };
 

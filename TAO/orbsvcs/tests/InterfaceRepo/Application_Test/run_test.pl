@@ -21,10 +21,23 @@ else {
     $tao_ifr = "../../../IFR_Service/tao_ifr";
 }
 
+$lookup_by_name = "";
+$other = "";
+
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-n") {
+        $lookup_by_name = "-n";
+    }
+    else {
+        $other .= $ARGV[$i];
+    }
+}
+
 $TAO_IFR = new PerlACE::Process ($tao_ifr);
 $IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service");
 $SV      = new PerlACE::Process ("server");
-$CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile");
+$CL      = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile"
+                                 . " $lookup_by_name");
 
 unlink $ifr_iorfile;
 unlink $svr_iorfile;
