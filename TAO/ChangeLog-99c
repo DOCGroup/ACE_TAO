@@ -17,6 +17,14 @@ Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/Naming_Service/Makefile
 	* orbsvcs/tests/Simple_Naming/Makefile
 	* tests/InterOp-Naming/Makefile
+	* examples/Callback_Quoter/Makefile
+	* examples/Event_Comm/Makefile
+	* examples/Simple/bank/Makefile
+	* examples/Simple/time/Makefile
+	* examples/Simple/time-date/Makefile
+	* examples/Simple/echo/Makefile
+	* examples/Simple/grid/Makefile
+	* examples/Logging/Makefile
 	  Updated inclusions and makefile dependencies to reflect the
 	  change above.
 
