@@ -1,3 +1,11 @@
+Wed Oct 25 20:38:33 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/SSL/ACE_SSL.dsp:
+
+          Removed the include/lib directories put here.  Instead
+          we rely on the fact that OpenSSL should be in 
+          DevStudio's global include and library directories.
+
 Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/adapter/README:  (removed)
@@ -37,8 +45,8 @@ Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
         * ace/adapter/ace/Trace.h:  (removed)
 
           The adapter classes were removed since they were
-          not ready for prime time and their main focus was
-          removed.  If need be, they can be resurrected in
+          not ready for prime time and their main purpose was
+          invalidated.  If need be, they can be brought back in
           the future.
 
 Wed Oct 25 12:26:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
