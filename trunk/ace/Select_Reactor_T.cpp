@@ -651,18 +651,18 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
   int result = 0;
 
-#if (ACE_NSIG > 0)  &&  !defined(ACE_LACKS_UNIX_SIGNALS)
+#if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
                                                     new_disp) == -1)
       result = -1;
-#else  /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
+#else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (sigset);
   ACE_UNUSED_ARG (new_sh);
   ACE_UNUSED_ARG (new_disp);
-#endif /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
+#endif /* ACE_NSIG <= 0  ||  CHORUS */
   return result;
 }
 
@@ -673,14 +673,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
   int result = 0;
 
-#if (ACE_NSIG > 0)  &&  !defined(ACE_LACKS_UNIX_SIGNALS)
+#if (ACE_NSIG > 0)  &&  !defined (CHORUS)
   for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
         && this->signal_handler_->remove_handler (s) == -1)
       result = -1;
-#else  /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
+#else  /* ACE_NSIG <= 0  ||  CHORUS */
   ACE_UNUSED_ARG (sigset);
-#endif /* ACE_NSIG <= 0  ||  ACE_LACKS_UNIX_SIGNALS */
+#endif /* ACE_NSIG <= 0  ||  CHORUS */
 
   return result;
 }
