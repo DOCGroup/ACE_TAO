@@ -1205,7 +1205,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
       // Do the testing.
       not_empty_test (my_context,
-                         ACE_TRY_ENV);
+				      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       my_context->unbind (object_name, ACE_TRY_ENV);
@@ -1220,7 +1220,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
 
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Exceptions test");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Destroy test");
       return -1;
     }
   ACE_ENDTRY;
@@ -1347,9 +1347,10 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
         CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (CORBA::is_nil (level1.in ()))
+      if (CORBA::is_nil (level1_context.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot narrow object to Naming Context\n"));
+                           "Cannot narrow object to Naming Context\n"),
+                          -1);
 
       //  Resolve for <level2> context through the persistent ior we
       // got from part 1 of this test.
@@ -1366,7 +1367,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
 
       // Make sure we got the same answer through both methods.
-      if (obj2->i_s_equivalent (obj.in ()))
+      if (obj2->_is_equivalent (obj.in ()))
         ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 2) OK.\n"));
     }
   ACE_CATCHANY
