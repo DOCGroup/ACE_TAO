@@ -107,8 +107,8 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   AVStreams::VDev_var vdev_b_;
   // The Virtual Devices for this stream
 
-  AVStreams::StreamEndPoint_A_var stream_endpoint_a_;
-  AVStreams::StreamEndPoint_B_var stream_endpoint_b_;
+  AVStreams::StreamEndPoint_A_var sep_a_;
+  AVStreams::StreamEndPoint_B_var sep_b_;
   // The Endpoints for this stream
 
   typedef ACE_Hash_Map_Manager <TAO_String_Hash_Key,CORBA::Object_ptr,ACE_Null_Mutex> FlowConnection_Map;
@@ -119,6 +119,15 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   u_int flow_count_;
   AVStreams::flowSpec flows_;
   //sequence of flow names.
+};
+
+class TAO_ORBSVCS_Export TAO_Negotiator
+  : public POA_AVStreams::Negotiator
+{
+public:
+  virtual CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
+                                    const AVStreams::streamQoS &qos_spec,
+                                    CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ());
 };
 
 class TAO_ORBSVCS_Export TAO_StreamCtrl
@@ -162,10 +171,39 @@ public:
   // unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
 
   virtual ~TAO_StreamCtrl (void);
-  // Destructor
+  // Destructor.
 
+private:
+  TAO_MCastConfigIf *mcastconfigif_;
+  AVStreams::MCastConfigIf_ptr mcastconfigif_ptr_;
 };
 
+class TAO_ORBSVCS_Export TAO_MCastConfigIf
+  : public virtual POA_AVStreams::MCastConfigIf,
+    public virtual TAO_PropertySet<POA_AVStreams::MCastConfigIf>
+{
+public:
+  virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
+                                   AVStreams::streamQoS & the_qos,
+                                   const AVStreams::flowSpec & the_spec,
+                                   CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) ;
+
+  virtual void configure (const CosPropertyService::Property & a_configuration,
+                          CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) ;
+
+  virtual void set_initial_configuration (const CosPropertyService::Properties & initial,
+                                          CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) ;
+
+  virtual void set_format (const char * flowName,
+                           const char * format_name,
+                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment::default_environment ()) ;
+
+  virtual void set_dev_params (const char * flowName,
+                               const CosPropertyService::Properties & new_params,
+                               CORBA::Environment &ACE_TRY_ENV = CORBA::Environment::default_environment ()) ;
+
+};
 
 class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 // = DESCRIPTION
