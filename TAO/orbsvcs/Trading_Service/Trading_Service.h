@@ -93,9 +93,15 @@ private:
   CORBA::Boolean federate_;
   // Flag indicating whether this trader should join the federation.
 
+  FILE *ior_output_file_;
+  // File to output the Naming Service IOR.
+  
+  CORBA::Boolean dumpior_;
+  // Flag indicating whether to dump the ior to standard output.
+  
   CORBA::Boolean bootstrapper_;
   // Flag inidicating whether we're the trader others are bootstrapping to.
-
+  
   TAO_IOR_Multicast ior_multicast_;
   // Event handler that responds to resolve_initial_references requests.
 };
