@@ -147,12 +147,12 @@ public:
   // '-f' - Option to read in the list of svc.conf file names
   // '-k' - Option to read a wide string where in the logger output can
   //        be written
-  // '-y' - Option to require the use of statically linked service.
+  // '-y' - Option required to use statically linked services.
   //        A static service repostory will be constructed if the flag
-  //        is used.  Use this flag to overwrite the default
+  //        is used.  Use this flag to override the default
   //        <ignore_static_svcs> flag at run-time.
-  // '-n' - We don't use any statically linked service.  Skip the  static
-  //        service repository construction.
+  // '-n' - Option to avoid using any statically linked services, which
+  //        eliminates the need to construct the static service repository.
   // '-S' - Option to read in the list of services on the command-line
   //        Please observe the difference between options '-f' that looks
   //        for a list of files and here a list of services.
