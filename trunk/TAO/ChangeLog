@@ -1,3 +1,10 @@
+Wed Sep  8 08:58:21 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+
+	  Fixed tipo -- the export macro was not changed when export
+	  header was.
+
 Wed Sep  8 10:28:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/CosEvent.mpc:
@@ -11,7 +18,7 @@ Wed Sep  8 10:22:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_visitor_root/root.cpp:
- 
+
           Modified stream output to make sure a bare newline (with no
           whitespace) is added at the end of the generated source
           file containing Any operators and type codes (if the file
