@@ -167,7 +167,7 @@ iout2:$(addprefix $(VDIR),$(IOUT2_OBJS))
 tout:$(addprefix $(VDIR),$(TOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-runtests:
+runtests: cout aout c++out preout m3out pout iout iout2 tout
 	@echo "performing some tests of the perfect hash generator"
 	# test cout
 	./cout -v < $(srcdir)/c.gperf > c.out
