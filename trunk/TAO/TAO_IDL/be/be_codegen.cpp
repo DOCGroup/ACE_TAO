@@ -120,86 +120,92 @@ TAO_CodeGen::start_client_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".h");
+      const char *suffix = ACE_OS::strstr (fname, ".");
       if (suffix == 0)
-        return -1; // bad file name
-      else
         {
-          ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-          // convert letters in fname to upcase
-          for (int i=0; i < (suffix - fname); i++)
-            {
-              if (isalpha (fname [i]))
-                macro_name[i+9] = toupper (fname [i]);
-              else if (isdigit (fname [i]))
-                macro_name[i+9] = fname[i];
-              else
-                macro_name[i+9] = '_';
-            }
-
-          ACE_OS::strcat (macro_name, "_H_");
-
-          // generate the #ifndef ... #define statements
-          this->client_header_->print ("#if !defined (%s)\n", macro_name);
-          this->client_header_->print ("#define %s\n\n", macro_name);
-
-          *this->client_header_ << "#include \"tao/corba.h\"\n";
-
-          if (idl_global->export_include () != 0)
-            {
-              *this->client_header_ << "#include \""
-                                    << idl_global->export_include ()
-                                    << "\"\n";
-            }
-
-          // We must include all the skeleton headers corresponding to
-          // IDL files included by the current IDL file.
-          // We will use the included IDL file names as they appeared
-          // in the original main IDL file, not the one  which went
-          // thru CC preprocessor.
-          for (size_t j = 0;
-               j < idl_global->n_included_idl_files ();
-               j++)
-            {
-              char* idl_name =
-                idl_global->included_idl_files ()[j];
-
-              // Make a String out of it.
-              String idl_name_str = idl_name;
-
-              // Get the clnt header from the IDL file name.
-              const char* client_hdr =
-                IDL_GlobalData::be_get_client_hdr (&idl_name_str);
-
-              // Sanity check and then print.
-              if (client_hdr != 0)
-                {
-                  this->client_header_->print ("#include \"%s\"\n",
-                                               client_hdr);
-                }
-              else
-                {
-                  ACE_ERROR ((LM_WARNING,
-                              "WARNING, invalid file '%s' included\n",
-                              idl_name));
-                }
-            }
-          *this->client_header_ << "\n";
-
-          // generate the TAO_EXPORT_MACRO macro
-          *this->client_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
-          *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
-          *this->client_header_ << "#endif\n";
-          *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                                << idl_global->export_macro ()
-                                << be_nl;
-
-          *this->client_header_ << "#if defined(_MSC_VER)\n"
-                                << "#pragma warning(disable:4250)\n"
-                                << "#endif /* _MSC_VER */\n\n";
-
-          return 0;
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
         }
+      
+      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+      // convert letters in fname to upcase
+      for (int i=0; i < (suffix - fname); i++)
+        {
+          if (isalpha (fname [i]))
+            macro_name[i+9] = toupper (fname [i]);
+          else if (isdigit (fname [i]))
+            macro_name[i+9] = fname[i];
+          else
+            macro_name[i+9] = '_';
+        }
+      
+      ACE_OS::strcat (macro_name, "_H_");
+      
+      // generate the #ifndef ... #define statements
+      this->client_header_->print ("#if !defined (%s)\n", macro_name);
+      this->client_header_->print ("#define %s\n\n", macro_name);
+      
+      *this->client_header_ << "#include \"tao/corba.h\"\n";
+
+      if (idl_global->export_include () != 0)
+        {
+          *this->client_header_ << "#include \""
+                                    << idl_global->export_include ()
+                                << "\"\n";
+        }
+
+      // We must include all the skeleton headers corresponding to
+      // IDL files included by the current IDL file.
+      // We will use the included IDL file names as they appeared
+      // in the original main IDL file, not the one  which went
+      // thru CC preprocessor.
+      for (size_t j = 0;
+           j < idl_global->n_included_idl_files ();
+           j++)
+        {
+          char* idl_name =
+                idl_global->included_idl_files ()[j];
+          
+              // Make a String out of it.
+          String idl_name_str = idl_name;
+          
+          // Get the clnt header from the IDL file name.
+          const char* client_hdr =
+            IDL_GlobalData::be_get_client_hdr (&idl_name_str);
+
+          // Sanity check and then print.
+          if (client_hdr != 0)
+            {
+              this->client_header_->print ("#include \"%s\"\n",
+                                               client_hdr);
+            }
+          else
+            {
+              ACE_ERROR ((LM_WARNING,
+                          "WARNING, invalid file '%s' included\n",
+                          idl_name));
+            }
+        }
+      *this->client_header_ << "\n";
+      
+      // generate the TAO_EXPORT_MACRO macro
+      *this->client_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
+      *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
+      *this->client_header_ << "#endif\n";
+      *this->client_header_ << "#define TAO_EXPORT_MACRO "
+                            << idl_global->export_macro ()
+                            << be_nl;
+      
+      *this->client_header_ << "#if defined(_MSC_VER)\n"
+                            << "#pragma warning(disable:4250)\n"
+                            << "#endif /* _MSC_VER */\n\n";
+      
+      return 0;
     }
 }
 
@@ -299,54 +305,60 @@ TAO_CodeGen::start_server_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".h");
+      const char *suffix = ACE_OS::strstr (fname, ".");
       if (suffix == 0)
-        return -1; // bad file name
-      else
         {
-          ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-          // convert letters in fname to upcase
-          for (int i=0; i < (suffix - fname); i++)
-            if (isalpha (fname [i]))
-              macro_name[i+9] = toupper (fname [i]);
-            else if (isdigit (fname [i]))
-              macro_name[i+9] = fname[i];
-            else
-              macro_name[i+9] = '_';
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
+        }
 
-          ACE_OS::strcat (macro_name, "_H_");
+      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+      // convert letters in fname to upcase
+      for (int i=0; i < (suffix - fname); i++)
+        if (isalpha (fname [i]))
+          macro_name[i+9] = toupper (fname [i]);
+        else if (isdigit (fname [i]))
+          macro_name[i+9] = fname[i];
+        else
+          macro_name[i+9] = '_';
+      
+      ACE_OS::strcat (macro_name, "_H_");
 
-          this->server_header_->print ("#if !defined (%s)\n", macro_name);
-          this->server_header_->print ("#define %s\n\n", macro_name);
-
-          // We must include all the skeleton headers corresponding to
-          // IDL files included by the current IDL file.
-          for (size_t j = 0;
-               j < idl_global->n_included_idl_files ();
-               ++j)
+      this->server_header_->print ("#if !defined (%s)\n", macro_name);
+      this->server_header_->print ("#define %s\n\n", macro_name);
+      
+      // We must include all the skeleton headers corresponding to
+      // IDL files included by the current IDL file.
+      for (size_t j = 0;
+           j < idl_global->n_included_idl_files ();
+           ++j)
             {
               char* idl_name =
                 idl_global->included_idl_files ()[j];
-
+              
               // String'ifying the name.
               String idl_name_str (idl_name);
-
+              
               const char* server_hdr =
                 IDL_GlobalData::be_get_server_hdr (&idl_name_str);
-
+              
               this->server_header_->print ("#include \"%s\"\n",
                                            server_hdr);
             }
           // the server header should include the client header
-          *this->server_header_ << "#include \"" <<
-            idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
-
-          *this->server_header_ << "#if defined(_MSC_VER)\n"
-                                << "#pragma warning(disable:4250)\n"
-                                << "#endif /* _MSC_VER */\n\n";
-
-          return 0;
-        }
+      *this->server_header_ << "#include \"" <<
+        idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
+      
+      *this->server_header_ << "#if defined(_MSC_VER)\n"
+                            << "#pragma warning(disable:4250)\n"
+                            << "#endif /* _MSC_VER */\n\n";
+      
+      return 0;
     }
 }
 
@@ -379,33 +391,38 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".h");
+      const char *suffix = ACE_OS::strstr (fname, ".");
       if (suffix == 0)
-        return -1; // bad file name
-      else
         {
-          ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-          // convert letters in fname to upcase
-          for (int i=0; i < (suffix - fname); i++)
-            if (isalpha (fname [i]))
-              macro_name[i+9] = toupper (fname [i]);
-            else if (isdigit (fname [i]))
-              macro_name[i+9] = fname[i];
-            else
-              macro_name[i+9] = '_';
-
-          ACE_OS::strcat (macro_name, "_H_");
-
-          this->server_template_header_->print ("#if !defined (%s)\n",
-                                                macro_name);
-          this->server_template_header_->print ("#define %s\n\n", macro_name);
-
-          *this->server_template_header_ << "#if defined(_MSC_VER)\n"
-                                         << "#pragma warning(disable:4250)\n"
-                                         << "#endif /* _MSC_VER */\n\n";
-
-          return 0;
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
         }
+      ACE_OS::sprintf (macro_name, "_TAO_IDL_");
+      // convert letters in fname to upcase
+      for (int i=0; i < (suffix - fname); i++)
+        if (isalpha (fname [i]))
+              macro_name[i+9] = toupper (fname [i]);
+        else if (isdigit (fname [i]))
+          macro_name[i+9] = fname[i];
+        else
+          macro_name[i+9] = '_';
+
+      ACE_OS::strcat (macro_name, "_H_");
+      
+      this->server_template_header_->print ("#if !defined (%s)\n",
+                                            macro_name);
+      this->server_template_header_->print ("#define %s\n\n", macro_name);
+      
+      *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+                                     << "#pragma warning(disable:4250)\n"
+                                     << "#endif /* _MSC_VER */\n\n";
+      
+      return 0;
     }
 }
 
@@ -479,9 +496,17 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".cpp");
+      const char *suffix = ACE_OS::strstr (fname, ".");
       if (suffix == 0)
-        return -1; // bad file name
+        {
+          // File seems to have no extension, so let us take the name
+          // as it is.
+          if (fname == 0)
+            // bad file name
+            return -1;
+          else 
+            suffix = fname;
+        }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
       // convert letters in fname to upcase
