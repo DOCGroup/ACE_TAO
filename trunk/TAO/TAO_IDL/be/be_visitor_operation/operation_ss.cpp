@@ -422,7 +422,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
 
   if (be_global->use_raw_throw ())
     {

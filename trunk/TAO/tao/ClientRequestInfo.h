@@ -1,32 +1,25 @@
 // -*- C++ -*-
-//
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ClientRequestInfo.h
-//
-// = DESCRIPTION
-//     This is the implementation of the
-//     PortableInterceptor::ClientRequestInfo interface.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//     Ossama Othman <ossama@uci.edu>
-//
-//=========================================================================
-
+//=============================================================================
+/**
+ * @file     ClientRequestInfo.h
+ *
+ * $Id$
+ *
+ * This is the implementation of the
+ * PortableInterceptor::ClientRequestInfo interface.
+ *
+ * @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INFO_H
 #define TAO_CLIENT_REQUEST_INFO_H
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,10 +34,10 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
-#include "tao/StringSeqC.h"
-
+#include "PortableInterceptorC.h"
+#include "LocalObject.h"
+#include "StringSeqC.h"
+#include "Invocation.h"
 
 class TAO_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
@@ -87,11 +80,11 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-# if (TAO_HAS_CORBA_MESSAGING == 1)
+#if TAO_HAS_CORBA_MESSAGING == 1
   virtual CORBA::Short sync_scope (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-#endif  /* TAO_HAS_CORBA_MESSAGING */
+#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   virtual PortableInterceptor::ReplyStatus reply_status (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -129,17 +122,17 @@ public:
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method causes problem since there is no trivial way to
+  /// extract the exception from the Any.
   virtual CORBA::Any * received_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // This method causes problem since there is no trivial way to
-  // extract the exception from the Any.
 
+  /// Note: This is TAO specific and was done to combat the previous
+  /// problem to some extent.
   virtual CORBA::Exception * _received_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Note: This is TAO specific and was done to combat the previous
-  // problem to some extent.
 
   virtual char * received_exception_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -162,20 +155,27 @@ public:
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+  /// Change the exception status.
   void exception (CORBA::Exception *exception);
-  // Change the exception status.
 
   void request_id (CORBA::ULong request_id);
   // Update the request id.
 
+  /// Set the flag that states whether or not a response is expected.
+  /// For example, no response is expected in a one-way operation.
+  void response_expected (CORBA::Boolean flag);
+
+  /// Set the status of the received reply.
+  void reply_status (int invoke_status);
+
 protected:
+
   CORBA::ULong request_id_;
   const char * operation_;
   Dynamic::ParameterList parameter_list_;
   Dynamic::ExceptionList exception_list_;
   Dynamic::ContextList context_list_;
   Dynamic::RequestContext request_context_;
-  CORBA::Object_var forward_reference_;
 
   // Needed to ensure no copy anywhere.
   IOP::ServiceContextList &service_context_list_;
@@ -183,9 +183,15 @@ protected:
   CORBA::Any result_val_;
   CORBA::Object_var target_;
   CORBA::Object_var effective_target_;
-  CORBA::Any any_exception_;
   CORBA::Exception *caught_exception_;
+
+  CORBA::Boolean response_expected_;
+  PortableInterceptor::ReplyStatus reply_status_;
 };
+
+# if defined (__ACE_INLINE__)
+#  include "ClientRequestInfo.inl"
+# endif  /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
