@@ -421,6 +421,8 @@ typedef long      id_t;
 #   endif /* ACE_NON_BLOCKING_BUG_DELAY */
 
 #   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
+# include /**/ <crtdbg.h>
+
 class ACE_OS_Export ACE_No_Heap_Check
 {
 public:

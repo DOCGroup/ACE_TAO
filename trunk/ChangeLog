@@ -1,3 +1,53 @@
+Tue Mar  6 14:14:06 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        Here are some fixes for MSVC 7 beta.  Note that no project files 
+        are checked in.  Right now they will have to be generated from 
+        the MSVC 5/6 files (The devenv.exe will do this automatically).
+        When MSVC 7 becomes released, we'll probably have to deal with
+        including their files (even if only for nightly builds).
+
+        * ace/OS.h:
+        * ace/config-win32-msvc.h:
+
+          Moved the inclusion of the crtdbg.h file to where it is being
+          used.  This is mainly 
+
+        * ace/config-WinCE.h:
+        * ace/config-win32.h:
+        * ace/config-win32-msvc-5.h: (added)
+        * ace/config-win32-msvc-6.h: (added)
+        * ace/config-win32-msvc-7.h: (added)
+        * ace/config-win32-borland.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-msvc.h:
+        * ace/config-win32-visualage.h:
+
+          Added a new config-win32-msvc-7.h with some new settings.  While
+          doing this I also rearranged the files a bit.  Everything now 
+          goes through config-win32.h (and an error will occur if you
+          include the others directly).  
+
+        * ace/config-hpux-10.x-hpc++.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-win32-msvc-5.h: 
+        * ace/config-win32-msvc-6.h: 
+        * ace/README:
+
+          Removed ACE_HAS_ONE_DEFINITION_RULE.  Could not find this 
+          actually used anywhere so I'm assuming it can be safely 
+          removed.  
+
+        * ace/Asynch_IO.h:
+
+          Added some dummy assignment operators.  It seems that the default
+          ones produce infinite recursion (at least with MSVC 6 SP5 and 
+          MSVC 7 beta)   
+
+        * ace/Future.h:
+
+          Future_Holder needs to be ACE_Export-ed.
+          
 Tue Mar  6 16:58:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ACE.cpp (format_hexdump): The format_hexdump () was missing
