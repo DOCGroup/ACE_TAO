@@ -258,7 +258,7 @@ public:
   TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
   // constructor. If size is 0, some default is used.
   
-  virtual ~TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
+  virtual ~TAO_Dynamic_Hash_ObjTable (void);
 
   // Implement TAO_Dynamic_Hash_ObjTable....
   virtual int find (const PortableServer::Servant servant);
