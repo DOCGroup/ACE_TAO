@@ -133,7 +133,15 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 # else
 
+#   if defined (ACE_LACKS_GETLOADAVG)
+
+  const int samples = 0;
+
+#   else
+
   const int samples = ::getloadavg (loadavg, 1);
+
+#   endif /* ACE_LACKS_GETLOADAVG */
 
 # endif  /* linux
             && ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)

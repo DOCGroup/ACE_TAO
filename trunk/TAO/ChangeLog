@@ -1,3 +1,10 @@
+Thu Jan 22 13:28:04 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+
+          Do not attempt to call getloadavg() if ACE_LACKS_GETLOADAVG is
+          defined.
+
 Wed Jan 22 11:33:47 2004  Scott Harris <harris_s@ociweb.com>
         * utils/wxNamingViewer/Makefile:
           Made the Makefile log which component was missing when
