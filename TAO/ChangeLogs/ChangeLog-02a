@@ -18,6 +18,8 @@ Tue Sep  4 07:22:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Mon Sep  3 18:52:03 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/ftp.bor:
+        * orbsvcs/tests/AVStreams/Multicast/server.bor:
         * orbsvcs/tests/AVStreams/Multicast/server.h:
         * orbsvcs/tests/AVStreams/Multicast/server.cpp:
         * orbsvcs/tests/AVStreams/Multicast/ftp.h:
