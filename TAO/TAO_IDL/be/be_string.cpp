@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_string.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -46,7 +46,7 @@ be_string::be_string (AST_Expression *v)
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -74,7 +74,7 @@ be_string::be_string (AST_Expression *v, long wide)
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 }
 
@@ -115,7 +115,7 @@ be_string::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_string::gen_client_inline (void)
 {
   // nothing to be done
@@ -123,7 +123,7 @@ be_string::gen_client_inline (void)
 }
 
 // Generates the server-side inline
-int 
+int
 be_string::gen_server_inline (void)
 {
   // nothing to be done
@@ -141,6 +141,7 @@ be_string::gen_typecode (void)
   cs->indent (); // start from the current indentation level
   // emit the enumeration
   *cs << "CORBA::tk_string, " << nl;
+  *cs << this->max_size () << ", // string length" << nl;
   return 0;
 }
 
@@ -171,4 +172,3 @@ be_string::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_string, AST_String, be_type)
 IMPL_NARROW_FROM_DECL (be_string)
-
