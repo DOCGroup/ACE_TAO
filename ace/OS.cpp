@@ -5788,7 +5788,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #       else /* ACE_USES_WINCE_SEMA_SIMULATION */
       // Can't use Win32 API on our simulated semaphores.
       result = ACE_OS::sema_wait (&cv->sema_,
-                                  ACE_Time_Value (0, msec_timeout * 1000));
+                                  timeout);
 #       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     elif defined (ACE_PSOS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
@@ -5960,7 +5960,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     if defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Can't use Win32 API on simulated semaphores.
   result = ACE_OS::sema_wait (&cv->sema_,
-                              ACE_Time_Value (0, msec_timeout * 1000));
+                              timeout);
 
   if (result == -1 && errno == ETIME)
     result = WAIT_TIMEOUT;

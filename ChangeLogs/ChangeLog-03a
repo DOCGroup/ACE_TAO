@@ -1,20 +1,32 @@
+Mon Sep 09 11:37:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (cond_timedwait): Changed to pass absolute time when
+	  using emulated semaphore on WinCE.  Thanks to Herbert Wang
+	  <herbert@nowsol.com> for reporting this.
+
+	* ace/Thread_Manager.cpp (join): This function was not cropping
+	  the thread return status when a thread had already exited when
+	  we called and its Thread_Descriptor had been moved to
+	  terminated_thr_list_.  Thanks to Roger Weeks
+	  <rogersw@firstlogic.com> for reporting the problem.
+
 Mon Sep  9 00:12:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/Makefile.dirs:
 	* examples/Makefile:
 	* tests/Makefile:
-	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make 
+	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make
 	  variable.
 
 Sat Sep  7 23:22:20 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* bin/make_release: The tar ball that is put out during the
-	  release, is copied now to the the previous_versions directory 
+	  release, is copied now to the the previous_versions directory
 	  with the appopriate version information. This should work right
-	  since this was tested against a local repo. 
+	  since this was tested against a local repo.
 
 	  Thanks to Preston A. Elder <prez@gentoo.org>  for motivating
-	  this change. 
+	  this change.
 
 Sat Sep  7 18:03:21 2002  Steve Huston  <shuston@riverace.com>
 
@@ -48,7 +60,7 @@ Wed Sep  4 20:59:40 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* include/makeinclude/platform_qnx_neutrino.GNU:
 	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
 	* include/makeinclude/platform_sco-nothread.GNU:
-	  Instead of setting -fno-implicit-templates, 
+	  Instead of setting -fno-implicit-templates,
 	  use $(TEMPLATES_FLAG).  Include platform_g++.GNU to get the
 	  correct value of $(TEMPLATES_FLAG).
 
@@ -59,11 +71,11 @@ Wed Sep  4 16:31:29 2002  Steve Huston  <shuston@riverace.com>
 Wed Sep  4 20:08:54 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
 
 	* ace/Framework_Component.cpp (close):
-	  
-	  Delete each component explicitely instead of calling 
-	  close_singleton () to avoid a memory leak.  The dtor calls 
-	  close_singleton () anyway.  Thanks Vladimir Chovanec 
-	  <Vladimir CHOVANEC@asset.sk> for reporting the leak and 
+
+	  Delete each component explicitely instead of calling
+	  close_singleton () to avoid a memory leak.  The dtor calls
+	  close_singleton () anyway.  Thanks Vladimir Chovanec
+	  <Vladimir CHOVANEC@asset.sk> for reporting the leak and
 	  suggesting the fix.
 
 Tue Sep 03 22:59:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
