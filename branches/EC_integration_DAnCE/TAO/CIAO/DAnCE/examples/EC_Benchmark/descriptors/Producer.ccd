@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentInterfaceDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>E5291C08-5CDA-4343-8AC5-48A8AC031D58</UUID>
+
+  <port>
+    <name>timeout</name>
+    <exclusiveProvider>true</exclusiveProvider>
+    <exclusiveUser>false</exclusiveUser>
+    <optional>false</optional>
+    <provider>true</provider>
+    <kind>rtecEventEmitter</kind>
+  </port>
+
+</Deployment:ComponentInterfaceDescription>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:ComponentImplementationDescription xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>65528A6D-F74C-45CD-A570-EE56E1356DB5</UUID>
+
+  <implements href="Producer.ccd"/>
+
+  <monolithicImpl>
+    <primaryArtifact>
+      <name>Producer_exec</name>
+      <referencedArtifact href="Producer_exec.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Producer_stub</name>
+      <referencedArtifact href="Producer_stub.iad"/>
+    </primaryArtifact>
+    <primaryArtifact>
+      <name>Producer_svnt</name>
+      <referencedArtifact href="Producer_svnt.iad"/>
+    </primaryArtifact>
+  </monolithicImpl>
+
+  <configProperty>
+    <name>ComponentIOR</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>Producer.ior</string>
+      </value>
+    </value>
+  </configProperty>
+
+</Deployment:ComponentImplementationDescription>
