@@ -1,3 +1,8 @@
+Tue Nov 11 08:09:16 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/INET_Addr.cpp (get_host_name): added ACE_UNUSED_ARG (len);
+          for VxWorks only.
+
 Tue Nov 11 13:19:46 1997  Torbjorn Lindgren  <tl@funcom.com>
 
 	* include/makeinclude/rules.local.GNU: Fixed so that the ACE
