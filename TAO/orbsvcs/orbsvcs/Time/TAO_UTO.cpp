@@ -10,10 +10,18 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
 {
+  
   this->attr_utc_time_.time = time;
-  this->attr_utc_time_.inacchi = ACE_U64_TO_U32 (inaccuracy) / 2;
-  this->attr_utc_time_.inacclo = ACE_U64_TO_U32 (inaccuracy - (inaccuracy/2));
+
+  // Extract the lower 32 bits in the inacclo.
+  this->attr_utc_time_.inacclo = (CORBA::ULong) ACE_U64_TO_U32 (inaccuracy);
+
+  // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF 
+  // is only a sanity check.
+  this->attr_utc_time_.inacchi = (CORBA::UShort) (inaccuracy >> 32) & (0xFFFF); 
+
   this->attr_utc_time_.tdf = tdf;
+  
 }
 
 // Destructor.
@@ -35,7 +43,13 @@ TAO_UTO::time (CORBA::Environment &)
 TimeBase::InaccuracyT
 TAO_UTO::inaccuracy (CORBA::Environment &)
 {
-  return attr_utc_time_.inacclo + attr_utc_time_.inacchi;
+  // Construct the Inaccuracy from the 
+  // inacchi and inacclo.
+
+  TimeBase::InaccuracyT inaccuracy = attr_utc_time_.inacchi;
+  inaccuracy <<= 32;
+  inaccuracy |= attr_utc_time_.inacclo;
+  return inaccuracy;
 }
 
 // Get method for the readonly attribute tdf.
