@@ -3634,6 +3634,7 @@ FTRT_EventChannel = \
   FtRtEvent/EventChannel/Update_Manager.cpp \
   FtRtEvent/EventChannel/UpdateableHandler.cpp \
   FtRtEvent/EventChannel/create_persistent_poa.cpp \
+  FtRtEvent/EventChannel/replace_key.cpp \
   PortableGroup_Simple_DSC.cpp
 
 lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
