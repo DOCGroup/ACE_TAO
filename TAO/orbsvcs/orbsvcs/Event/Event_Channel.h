@@ -1430,10 +1430,11 @@ private:
 
 // ************************************************************
 
-// Helper function that returns
-// qos.dependencies_[0].rt_info_->entry_point or "no-name".
+// Helper function that returns the first RT_Info entry point name.
+// Use for debugging purposes only.
 const TAO_ORBSVCS_Export char *
-ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos);
+ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos,
+                      CORBA::Environment &_env);
 
 // ************************************************************
 
