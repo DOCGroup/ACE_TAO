@@ -194,6 +194,11 @@ FTP_Client_Callback::handle_timeout (void *)
                   TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
                   return 0;
                 }
+              ACE_CATCHANY
+                {
+                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"FTP_Client_Callback::handle_timeout\n");
+                  return -1;
+                }
               ACE_ENDTRY;
             }
           else
@@ -318,9 +323,9 @@ Client::Client (void)
    endpoint_strategy_ (orb_manager_),
    client_mmdevice_ (&endpoint_strategy_),
    fdev_ (0),
+   address_ (ACE_OS::strdup ("224.9.9.2:10002")),
    fp_ (0),
-   protocol_ (ACE_OS::strdup ("UDP")),
-   address_ ("224.9.9.2:10002")
+   protocol_ (ACE_OS::strdup ("UDP"))
 {
 }
 
