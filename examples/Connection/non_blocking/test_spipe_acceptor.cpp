@@ -49,7 +49,7 @@ template class Svc_Handler<ACE_SPIPE_STREAM>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "This test is not ported to Win32 (yet)\n"),

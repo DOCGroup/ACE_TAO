@@ -47,7 +47,7 @@ template class Svc_Handler<ACE_TLI_STREAM>;
 
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "your platform does not support TLI\n"),
