@@ -4,7 +4,11 @@
 #
 
 DIRS = \
+        Callback \
+        Cubit \
+        Latency \
+        Pluggable \
+        POA \
         RTCorba \
-	Latency
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
