@@ -1955,6 +1955,15 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
         , CORBA::PolicyError
       )) = 0;
 
+    virtual ::CORBA::Policy_ptr _create_policy (
+        CORBA::PolicyType type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , CORBA::PolicyError
+      ));
+
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
     virtual const char* _interface_repository_id (void) const;

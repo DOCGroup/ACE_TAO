@@ -179,20 +179,9 @@ TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL)
             {
               ACE_TRY_NEW_ENV
                 {
-                  // @@ Angelo: please check my comments on this stuff
-                  //            in the Policy_Factory.h file.
-                  // @@ I updated this code to use the standard
-                  //    ORB::create_policy () which now queries the
-                  //    policy factory registry.
-                  //       -Ossama
-
-                  // We don't need to pass any policy construction
-                  // value to the RT policies.
-                  CORBA::Any dummy_any;
                   policy =
-                    this->orb_core_->orb ()->create_policy (
-                      policy_value_seq[i].ptype,
-                      dummy_any
+                    this->orb_core_->orb ()->_create_policy (
+                      policy_value_seq[i].ptype
                       ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 

@@ -23,7 +23,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (RTCORBA::PriorityModel priorit
 }
 
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const TAO_PriorityModelPolicy &rhs)
-  : RTCORBA::PriorityModelPolicy (), 
+  : RTCORBA::PriorityModelPolicy (),
     TAO_Local_RefCounted_Object (),
     priority_model_ (rhs.priority_model_),
     server_priority_ (rhs.server_priority_)
@@ -45,9 +45,9 @@ TAO_PriorityModelPolicy::create (const CORBA::Any &
                                  ACE_ENV_ARG_DECL)
 {
   /*
-   * The following code should be changed once the OMG spec has been
-   * fixed such that a RTCORBA::PriorityModelPolicy can be created by
-   * using the ORB::create_policy interface.
+   * @@ The following code should be changed once the OMG spec has
+   * been fixed such that a RTCORBA::PriorityModelPolicy can be
+   * created by using the ORB::create_policy interface.
    */
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
