@@ -15,6 +15,7 @@ set nsport=20002
 set clport=20003
 set svport=20004
 set ffport=20005
+set gfport=20006
 set n=1
 set leave=/C
 set ior=0
@@ -26,12 +27,12 @@ if %1 == /h goto is_h
 if %1 == /? goto is_h
 goto no_h
 :is_h
-echo run_test [/n num] [/leave] [/h] [/ns|sv|ff|cl]
+echo run_test [/n num] [/leave] [/h] [/ns|sv|ff|cl|gf]
 echo.
-echo /n num          -- runs the client num times
-echo /leave          -- leaves the servers running and their windows open
-echo /h              -- prints this information
-echo /ns /sv /ff /cl -- Runs each separately
+echo /n num              -- runs the client num times
+echo /leave              -- leaves the servers running and their windows open
+echo /h                  -- prints this information
+echo /ns /sv /ff /cl /gf -- Runs each separately
 quit
 :no_h
 
@@ -49,6 +50,12 @@ if not %1 == /ff goto no_ff
 set done=quit
 goto run_finder
 :no_ff
+
+if not %1 == /gf goto no_gf
+set done=quit
+goto run_generic_factory
+:no_gf
+
 
 if not %1 == /cl goto no_cl
 set done=quit
@@ -102,6 +109,19 @@ start "Quoter Factory Finder" %leave Factory_Finder.exe -ORBport %ffport -ORBobj
 REM Delay some to let the Factory Finder get set up
 DELAY %del
 
+:run_generic_factory
+REM read in the IOR from the file
+for %%d in (@%nsiorfile) do set ior=%%d
+
+REM Start the factory finder
+start "Quoter Generic Factory" %leave Generic_Factory.exe -ORBport %gfport -ORBobjrefstyle url -ORBnameserviceior %ior -ORBsvcconf svc.conf
+
+
+%done
+
+REM Delay some to let the Generic Factory get set up
+DELAY %del
+
 :run_client
 REM read in the IOR from the file
 for %%d in (@%nsiorfile) do set ior=%%d
@@ -118,5 +138,6 @@ REM Remove any running servers
 if %leave==/C activate "Naming Service" CLOSE
 if %leave==/C activate "Quoter Server" CLOSE
 if %leave==/C activate "Quoter Factory Finder" CLOSE
+if %leave==/C activate "Quoter Generic Factory" CLOSE
 
 endlocal

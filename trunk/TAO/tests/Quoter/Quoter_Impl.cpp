@@ -83,7 +83,7 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // The name of the Quoter Factory
       CosLifeCycle::Key factoryKey (1);  // max = 1 
       factoryKey.length(1);
-      factoryKey[0].id = CORBA::string_dup ("quoter_factory");
+      factoryKey[0].id = CORBA::string_dup ("Quoter_Factory");
     
       // Find an appropriate factory over there.
       CosLifeCycle::Factories_ptr factories_ptr = 
@@ -110,6 +110,11 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
             Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
                                             TAO_TRY_ENV);
           TAO_CHECK_ENV;
+
+          if (CORBA::is_nil (quoter_Factory_var.in ())) 
+            ACE_ERROR_RETURN ((LM_ERROR,
+                        "Quoter::copy: Factory did not create the Quoter properly.\n"),
+                        0);
 
           // Try to get a Quoter created by this factory.
           // and duplicate the pointer to it

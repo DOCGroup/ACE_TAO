@@ -160,7 +160,7 @@ Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
 
 // Function get_options.
 
-u_
+u_int
 Quoter_Factory_Finder_Server::parse_args (void)
 {
   // We need the 'O' in get_opt () because we also want to have ORB
