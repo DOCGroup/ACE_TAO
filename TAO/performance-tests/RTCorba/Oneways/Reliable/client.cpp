@@ -44,7 +44,7 @@ inline int QuantifyStopRecordingData ()
 static const char *ior = "file://test.ior";
 
 // Levels at which syncscope policy can be set.
-const enum LEVEL {ORB, THREAD, OBJECT};
+enum LEVEL {ORB, THREAD, OBJECT};
 
 // Default is OBJECT level.
 static LEVEL level = OBJECT;
