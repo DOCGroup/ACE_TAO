@@ -1996,7 +1996,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
 
 int
 ifr_adding_visitor::create_value_def (AST_ValueType *
-                                      ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }
