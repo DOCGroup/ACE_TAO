@@ -279,6 +279,9 @@ private:
   void *value_;
   // Value for the <Any>.
 
+  ACE_Message_Block *cdr_;
+  // encoded value.
+
   CORBA::Boolean any_owns_data_;
   // Flag that indicates the ORB is responsible for deleting the data.
 

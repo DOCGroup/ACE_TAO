@@ -1,3 +1,47 @@
+Fri Apr 17 02:38:13 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_visitor_exception, be_visitor_sequence,
+	be_visitor_structure, be_visitor_union}.cpp: We had a mismatch in
+	the signatures of operator <<= in the declaration and
+	implementation. In addition, we force the generated code for >>=
+	operator to own the allocated memory.
+
+	* TAO_IDL/be/be_visitor_interface.cpp: In the code that generates
+	>>= operator, we also generate code such that the allocated memory
+	is owned by the Any
+
+	* tao/Any.{h, cpp}: We now have two data members in class Any. We
+	keep the older semantics of the value_ field. In addition, we
+	maintain a ACE_Message_Block *cdr_ member. Originally we shared
+	the value_ variable to mean either a CDR stream or a pointer to
+	some data type. This was based on whether the Any owns the data or
+	not. However, this strategy does not work because in the >>=
+	operators for constructed types, we must hold on to the newly
+	allocated storage since we own it and we must free it.
+
+	* tao/TypeCode.cpp: In the constructor, we were initializing the
+	internal buffer to point to 4 bytes past the actual buffer that
+	was passed as a parameter. Things were fine as long as we were not
+	transmitting typecodes. However, once we started doing that, we
+	realized that somehow the buffers kept on reducing by 4 as we kept
+	transmitting typecodes over the wire. Thus, a typecode receive don
+	the other end had a smaller buffer (and hence different contents)
+	than the original. We fix this by making our internal buffer point
+	ot the start of the buffer that was passed as a parameter. The
+	side-effect of this is that whenever we have to initialize a
+	TAO_InputCDR with this internal buffer, we must do so by
+	explicitly skipping the first 4 bytes (which contains the byte
+	order flag) and indicating that the length is 4 less than the
+	actual.
+
+	* tao/decode.cpp: In TypeCode::decode, there was a very subtle
+	error. Whenever we were decoding a typecode and determining that
+	it was one  of the ORB maintained constants, we were simply
+	pointing to it and passing it back. However, this is not correct
+	because the application can call "release" which was resulting in
+	"Freeing Non-Heap Memory" which is terrible. We now "_duplicate"
+	such typecodes and then pass them to the applications.
+
 Thu Apr 16 20:34:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp (TAO_ORB_Core): reordered initializers to
