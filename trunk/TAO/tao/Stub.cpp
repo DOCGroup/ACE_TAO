@@ -327,7 +327,7 @@ private:
 void
 TAO_Stub::parse_policies (void)
 {
-  CORBA::PolicyList *policy_list
+  CORBA::PolicyList *policy_list    // @@ Angelo -> should this be a var...
     = this->base_profiles_.policy_list ();
 
   CORBA::ULong length = policy_list->length ();
@@ -335,7 +335,7 @@ TAO_Stub::parse_policies (void)
 
   CORBA::ULong policy_type = 0;
 
-  this->orb_core ()->get_protocols_hooks ()->call_policy_type_hook (policy_list,
+  this->orb_core ()->get_protocols_hooks ()->call_policy_type_hook (policy_list, 
                                                                     policy_type);
 
   for (unsigned int i = 0; i < length; ++i)
@@ -370,7 +370,8 @@ TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
 {
   if (!CORBA::is_nil (policy))
     {
-      this->priority_model_policy_ = policy;
+      this->priority_model_policy_ = policy;  
+      this->priority_model_policy_->_add_ref ();
     }
 }
 
@@ -391,8 +392,8 @@ TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
 {
   if (!CORBA::is_nil (policy))
     {
-      this->priority_banded_connection_policy_ =
-        policy;
+      this->priority_banded_connection_policy_ = policy;
+      this->priority_banded_connection_policy_->_add_ref ();
     }
 }
 
@@ -414,6 +415,7 @@ TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
   if (!CORBA::is_nil (policy))
     {
       this->client_protocol_policy_ = policy;
+      this->client_protocol_policy_->_add_ref ();
     }
 }
 
@@ -439,7 +441,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
 
   // If we are dealing with a client exposed policy, check if any
   // value came in the IOR/reconcile IOR value and overrides.
-  if (type_value == 1)
+  if (type_value == 1)   
     return this->exposed_priority_model ();
 
   if (type_value == 2)
@@ -962,19 +964,19 @@ CORBA::Policy *
 TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
 {
   // Get effective override.
-  CORBA::Policy *override =
+  CORBA::Policy_var override =  
     this->priority_banded_connection ();
 
   // Get the value from the ior.
-  CORBA::Policy *exposed =
+  CORBA::Policy_var exposed =   
     this->exposed_priority_banded_connection ();
 
   // Reconcile client-exposed and locally set values.
-  if (exposed == 0)
-    return override;
+  if (CORBA::is_nil (exposed.in ())) 
+    return override._retn (); 
 
-  if (override == 0)
-    return exposed;
+  if (CORBA::is_nil (override.in ())) 
+    return exposed._retn (); 
 
   CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->
@@ -983,7 +985,7 @@ TAO_Stub::effective_priority_banded_connection (CORBA::Environment &ACE_TRY_ENV)
                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  return policy.in ();
+  return policy._retn ();
 }
 
 CORBA::Policy *
@@ -999,10 +1001,10 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
 
   // Reconcile client-exposed and locally set values.
   if (CORBA::is_nil (exposed.in ()))
-    return override.in ();
+    return override._retn ();  
 
   if (CORBA::is_nil (override.in ()))
-    return exposed.in ();
+    return exposed._retn ();
 
   CORBA::Policy_var policy =
     this->orb_core_->get_protocols_hooks ()->effective_client_protocol_hook (
@@ -1016,7 +1018,7 @@ TAO_Stub::effective_client_protocol (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::Policy::_nil ());
   */
 
-  return policy.in ();
+  return policy._retn ();
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
