@@ -1,9 +1,41 @@
+Thu May 27 11:02:47 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added two new operations get_uuid and set_uuid that will help
+          the ExecutionManager associating the DomainApplicationManager
+          with a concrete DeploymentPlan passed. These are defined on the
+          servant only.
+
+        * DnC/ExecutionManager/ExecutionManager_Impl.h:
+        * DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+
+          Implementation of Deployment::ExecutionManager interface. This
+          has now been integrated with the DomainApplicationManager.
+
+        * DnC/DomainApplicationManager/Deployment_Configuration.h:
+
+          Removed "#include Core/.." as now the include paths are
+          generated from the deployment_svnt.mpb
+
+        * DnC/ExecutionManager/Execution_Manager.cpp:
+        * DnC/ExecutionManager/ExectionManager.idl:
+
+          CIAO's implementation of ExecutionManager Daemon
+          interface. Added a shutdown () method for clean release of
+          resources associated with the Daemon
+
+        * DnC/ExecutionManager/ExecutionManager.mpc:
+
+          mpc file to generate Makefiles!
+
 Wed May 26 17:08:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
-          Changed the member functions signature in accordance with the 
+          Changed the member functions signature in accordance with the
           modified DomainApplicationManager IDL interface.
 
 
@@ -11,8 +43,8 @@ Wed May 26 16:24:54 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/Core/Deployment.idl
 
-          Modified the IDL interface of the DomainApplicationManager, 
-          which now integrates the functionality of both 
+          Modified the IDL interface of the DomainApplicationManager,
+          which now integrates the functionality of both
           DomainApplicationManager and DomainApplication in the original
           DnC spec. The old DomainApplication interface is deleted.
 
