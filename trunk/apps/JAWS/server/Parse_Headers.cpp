@@ -44,7 +44,7 @@ Headers::parse_header_line (char * const header_line)
   *ptr = '\0';
   ptr += offset;
 
-  char *value;
+  char *value = 0;
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
@@ -53,7 +53,7 @@ Headers::parse_header_line (char * const header_line)
   if (header != NULL && this->map_.mapped (header))
     {
       while (isspace (*value))
-	value++;
+        value++;
 
       this->map_[header] = value;
 
@@ -95,22 +95,22 @@ Headers::complete_header_line (char *const header_line)
   do
     {
       switch (ptr[offset])
-	{
-	case ' ':
-	case '\t':
-	  ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
-	  break;
+        {
+        case ' ':
+        case '\t':
+          ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+          break;
 
-	case '\n':
-	case '\r':
-	  return 1;
+        case '\n':
+        case '\r':
+          return 1;
 
-	default:
-	  if (isalpha (ptr[offset]))
-	    return 1;
-	  else
-	    return -1;
-	}
+        default:
+          if (isalpha (ptr[offset]))
+            return 1;
+          else
+            return -1;
+        }
     }
   while (this->end_of_line (ptr, offset) != 0);
 
@@ -269,10 +269,10 @@ Headers_Map::find (const char * const header) const
 #if 0
   Headers_Map_Item *mi_ptr = (Headers_Map_Item *)
     ::bsearch (&this->garbage_,
-	       this->map_,
-	       this->num_headers_,
+               this->map_,
+               this->num_headers_,
                sizeof (Headers_Map_Item),
-	       Headers_Map::compare);
+               Headers_Map::compare);
 #else
   int i = 0;
   int j = this->num_headers_;
@@ -311,7 +311,7 @@ Headers_Map::place (const char *const header)
   while (i > 0)
     {
       if (Headers_Map::compare (&this->garbage_,
-				&this->map_[i - 1]) > 0)
+                                &this->map_[i - 1]) > 0)
         break;
 
       this->map_[i].header_ = this->map_[i - 1].header_;
@@ -332,7 +332,7 @@ Headers_Map::place (const char *const header)
 
 int
 Headers_Map::compare (const void *item1,
-		      const void *item2)
+                      const void *item2)
 {
   Headers_Map_Item *a, *b;
   int result;

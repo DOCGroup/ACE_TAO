@@ -93,7 +93,7 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
         }
       else if (result > 0)
         do
-	  this->headers_.parse_header_line (mb.rd_ptr ());
+          this->headers_.parse_header_line (mb.rd_ptr ());
         while (this->headers_.complete_header_line (mb.rd_ptr ()) > 0);
     }
 
@@ -129,7 +129,7 @@ HTTP_Request::parse_request_line (char *const request_line)
   *ptr = '\0';
   ptr += offset;
 
-  char *lasts; // for strtok_r
+  char *lasts = 0; // for strtok_r
 
   // Get the request type.
   this->got_request_line_ = 1;
@@ -140,11 +140,11 @@ HTTP_Request::parse_request_line (char *const request_line)
       this->type (this->method ());
 
       if (this->version (ACE_OS::strtok_r (NULL, " \t", &lasts)) == 0
-	  && this->type () != HTTP_Request::GET)
-	this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+          && this->type () != HTTP_Request::GET)
+        this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
 
       if (this->path (this->uri ()) == 0)
-	this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
+        this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) request %s %s %s parsed\n",
@@ -157,7 +157,7 @@ HTTP_Request::parse_request_line (char *const request_line)
 
 int
 HTTP_Request::init (char *const buffer,
-		    int buflen)
+                    int buflen)
 {
   // Initialize these every time.
   content_length_ = -1;
@@ -456,7 +456,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
   if (cgi_path == 0)
     return 0;
 
-  char *lasts;
+  char *lasts = 0;
   char *cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
 
   if (cgi_path_next)
@@ -490,7 +490,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
 
                 // move past the executable name
                 do
-		  extra_path_info++;
+                  extra_path_info++;
                 while (*extra_path_info != '/'
                        && *extra_path_info != '?'
                        && *extra_path_info != '\0');
@@ -503,7 +503,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
           }
         extra_path_info = 0;
 
-	cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts);
+        cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts);
       }
     while (cgi_path_next);
 
@@ -570,10 +570,10 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
           char *ptr = cgi_question;
           int count = 0;
           do
-	    if (*ptr == '+')
-	      *ptr = ' ';
-	    else if (*ptr == '&' || *ptr == '=')
-	      count++;
+            if (*ptr == '+')
+              *ptr = ' ';
+            else if (*ptr == '&' || *ptr == '=')
+              count++;
           while (*++ptr);
 
           count++;
