@@ -9,7 +9,7 @@
 //    Object_A_i.cpp
 //
 // = DESCRIPTION
-//    This class implements the Object A  of the 
+//    This class implements the Object A  of the
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -44,7 +44,7 @@ Initiator_i::foo_object_B (CORBA::Environment &)
 
   TAO_TRY
     {
-      this->object_B_var_->foo (this->object_A_var_.in (), 
+      this->object_B_var_->foo (this->object_A_var_.in (),
                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
@@ -59,4 +59,3 @@ Initiator_i::foo_object_B (CORBA::Environment &)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) END Initiator_i::foo_object_B ()\n"));
 }
-
