@@ -6777,7 +6777,7 @@ ACE_INLINE char *
 ACE_OS::dlerror (void)
 {
   // ACE_TRACE ("ACE_OS::dlerror");
-# if defined (AC1E_HAS_SVR4_DYNAMIC_LINKING)
+# if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   ACE_OSCALL_RETURN ((char *)::dlerror (), char *, 0);
 # elif defined (__hpux)
   ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
