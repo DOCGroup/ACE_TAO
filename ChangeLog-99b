@@ -1,3 +1,10 @@
+Wed Jul  7 18:10:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	 * ace/CDR_Stream.h
+	 * ace/CDR_Stream.i
+  
+ 	   Added a method to return <byte_order>. 
+
 Sat Jun 19 22:28:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:

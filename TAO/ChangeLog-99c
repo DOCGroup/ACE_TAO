@@ -1,4 +1,15 @@
 Wed Jul  7 18:13:40 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* TAO/TAO_IDL/be/be_visitor_typecode/typecode_decl.cpp: Fixed CC5
+	  warnings.  
+  
+	* TAO/tao/Invocation.cpp
+	* TAO/tao/Invocation.i
+	* TAO/tao/Reply_Dispatcher.cpp
+	* TAO/tao/Reply_Dispatcher.h: Integrated the CDR changes done in
+	  ACE_CDR. Stealing the CDR content is coded here now.
+  
+	* TAO/tests/AMI/orb_creation.cpp: Fixed CC5 warnings. 
 
 Wed Jul  7 10:55:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   

@@ -723,7 +723,7 @@ public:
   // of message_blocks starting from <data>.
 
   ACE_Message_Block *steal_contents (void);
-  // Steal the contents from the currect CDR. 
+  // Steal the contents from the currect CDR.
 
   char* rd_ptr (void);
   // Returns the current position for the rd_ptr....
@@ -743,7 +743,7 @@ public:
 
   int byte_order (void) const;
   // If <do_byte_swap> returns 1, this returns ACE_CDR_BYTE_ORDER else
-  // it returns ~ACE_CDR_BYTE_ORDER.  
+  // it returns ~ACE_CDR_BYTE_ORDER.
 
   ACE_Char_Codeset_Translator *char_translator (void) const;
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
