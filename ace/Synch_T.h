@@ -430,10 +430,11 @@ public:
   /// <tryacquire> it.  
   ACE_Guard (ACE_LOCK &l, int block);
 
-  /// Implicitly and automatically acquire (or try to acquire) the
-  /// lock.  If <become_owner> is 0 then initialize the guard without
-  /// automatically acquiring the lock; this parameter simply indicates
+  // Implicitly and automatically acquire (or try to acquire) the
+  /// lock.  If <become_owner> is 0 or 1 then initialize the guard without
+  /// automatically acquiring the lock; this parameter then indicates
   /// whether the guard should release the lock implicitly on destruction.
+  /// If <become_owner> is -1 then the lock is acquired automatically.
   /// If <block> is non-0 then <acquire> the <ACE_LOCK>, else
   /// <tryacquire> it.  
   ACE_Guard (ACE_LOCK &l, int block, int become_owner);

@@ -49,9 +49,9 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block, int become_owner)
   : lock_ (&l),
-    owner_ (0)
+    owner_ (become_owner == 0 ? -1 : 0)
 {
-  if (become_owner)
+  if (become_owner == -1)
     {
       if (block)
         this->acquire ();
