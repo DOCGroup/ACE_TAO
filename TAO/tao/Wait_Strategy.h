@@ -23,7 +23,11 @@
 #define TAO_WAIT_STRATEGY_H
 
 // @@ Alex: why do you need this #include?
-#include "tao/GIOP.h"
+// @@ I just wanted some file to include ;-). I am taking it
+//    off. (Alex).
+// #include "tao/GIOP.h"
+
+#include "tao/CDR.h"
 
 class TAO_Request_Mux_Strategy;
 class TAO_Transport;
@@ -43,6 +47,11 @@ public:
 
   virtual ~TAO_Wait_Strategy (void);
   // Destructor.
+
+  virtual int send_request (TAO_ORB_Core *orb_core,
+                            TAO_OutputCDR &stream,
+                            int two_way);
+  // Does the send.
 
   virtual int wait (void) = 0;
   // Base class virtual method.
@@ -127,6 +136,11 @@ public:
 
   virtual ~TAO_Wait_On_Leader_Follower (void);
   // Destructor.
+
+  virtual int send_request (TAO_ORB_Core *orb_core,
+                            TAO_OutputCDR &stream,
+                            int two_way);
+  // Send the request. Set some  flags in case of two way call.
 
   virtual int wait (void);
   // Wait according to the L-F model.
