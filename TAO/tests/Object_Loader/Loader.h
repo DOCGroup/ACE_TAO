@@ -34,7 +34,7 @@ public:
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Create a new instance
 };
 
