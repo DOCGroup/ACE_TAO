@@ -365,7 +365,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
                         -1);
 
     if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
-                TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_
+                TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in()
                                                                     ACE_ENV_ARG_PARAMETER)));
     ACE_TRY_CHECK;
     stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
@@ -415,7 +415,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (ACE_ENV_SINGLE_ARG_DECL
       ACE_TRY_CHECK;
 
       // Check for validity
-      if (CORBA::is_nil (this->stream_endpoint_b_))
+      if (CORBA::is_nil (this->stream_endpoint_b_.in() ))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve Stream_Endpoint_B in Naming service <%s>\n"),
                           -1);
