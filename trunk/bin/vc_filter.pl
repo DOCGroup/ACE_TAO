@@ -16,28 +16,58 @@ $trailer = "</TT></body></html>";
 $kosher_b = "";
 $kosher_e = "";
 
-$in_sin_b = "<FONT COLOR=\"RED\">";
-$in_sin_e = "</FONT>";
+$error_b = "<FONT COLOR=\"FF0000\">";
+$error_e = "</FONT>";
+
+$warning_b = "<FONT COLOR=\"FF7700\">";
+$warning_e = "</FONT>";
+
+$config_b = "";
+$config_e = "";
 
 $new_build_b = "<P>";
 $new_build_e = "";
 $line_break = "<BR>";
+$brief = 0;
+$results = 0;
 
-while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
+while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 {
-    if ( $ARGV[0] eq '-c') # Text format
+    if ( $ARGV[0] =~ /(-|\/)c/) # Text format
     {
         $header = "" ;
         $trailer = "" ;
         $kosher_b = "";
         $kosher_e = "";
 
-        $in_sin_b = "";
-        $in_sin_e = "";
+        $error_b = "";
+        $error_e = "";
+
+        $warning_b = "";
+        $warning_e = "";
+
+        $config_b = "";
+        $config_e = "";
 
         $new_build_b = "\n\n";
         $new_build_e = "";
         $line_break = "";
+    }
+    elsif ( $ARGV[0] =~ /(-|\/)b/) 
+    {
+        $brief = 1;
+    }
+    elsif( $ARGV[0] =~ /(-|\/)r/)
+    {
+        $results = 1;
+    }
+    elsif ( $ARGV[0] =~ /(-|\/)(\?|h)/)
+    {
+        print "Options\n";
+        print "-b         = Brief output (only errors)\n";
+        print "-c         = Text format\n";
+        print "-r         = Print only results\n";
+        exit;
     }
     else
     {
@@ -49,35 +79,62 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
 
 # Get filename.
 $fname = $ARGV[0];
-open (fp, "$fname");
+open FP, "$fname";
 
-print $header ;
+print $header;
 
-restart: while ($line = <fp>)
+$project = "NULL";
+$configuration = "NULL";
+$first_problem = 1;
+
+restart: while (<FP>)
 {
-    print "$new_build_b $line $new_build_e $line_break" if ($line =~/^--------------------Configuration:/);
 
-    if ($line =~ /(^[A-Z_a-z0-9.]+ - [0-9]+ error\(s\), +[0-9]+ warning\(s\))|(LNK4089)/)
+    if (/^--------------------Configuration:/)
     {
-        if ($line =~ /(0 error\(s\), 0 warning\(s\))|(LNK4089)/)
-        {
-            print "$kosher_b $line $kosher_e $line_break";
-        }
-        else
-        {
-            print "$in_sin_b $line $in_sin_e $line_break";
-        }
-        next restart;
-    }
+        /--------------------Configuration: (.*) - (.*)--------------------/;
 
-    print "$in_sin_b $line $in_sin_e $line_break"
-        if ($line =~/^[-A-Z_a-z0-9.\/\\:]+\([0-9]+\) : / ||
-            $line =~/^[-A-Z_a-z0-9.\/\\:]+.*, line [0-9]+: / ||
-            $line =~/^[-A-Z_a-z0-9.\\:]+\.obj : / ||
-            $line =~/^fatal error/ ||
-            $line =~/^Error executing/ ||
-            $line =~/^4NT: / ||
-            $line =~/^LINK : /);
+        if (!$brief && !$results)
+        {
+            print $new_build_b;
+            print;
+            print $new_build_e;
+            print $line_break;
+        }
+        $project = $1;
+        $configuration = $2;
+        $first_problem = 1;
+    }
+    elsif (/\- (.*) error\(s\)\, (.*) warning\(s\)/)
+    {
+        print "$_$line_break"
+            if (!$brief || ($results && ($1 > 0 || $2 > 0)));
+    }
+    elsif (/warning/i)
+    {
+        if (!$results)
+        {
+            print "$config_b-------------------- $project: $configuration$config_e$line_break"
+                if ($first_problem && $brief);
+            $first_problem = 0;
+            print "$warning_b$_$warning_e$line_break";
+        }
+    }
+    elsif (/error/i)
+    {
+        if (!$results)
+        {
+            print "$config_b-------------------- $project: $configuration$config_e$line_break"
+                if ($first_problem && $brief);
+            $first_problem = 0;
+            print "$error_b$_$error_e$line_break";
+        }
+    }
+    else
+    {
+        print "$_$line_break"
+            if (!$brief && !$results);
+    }
 
 }
 
