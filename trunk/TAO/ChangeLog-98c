@@ -1,3 +1,17 @@
+Mon Sep 22 01:08:51 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* changed examples/Simple/echo/Client_i.cpp 
+		 - the initialization of the naming service just
+	       	needs a single argument now.
+	
+	* changed examples/Simple/echo/Server_i.cpp 
+		- return values from TAO_CHECK_ENV have been removed.
+
+	* checked in 
+		examples/Simple/echo/Echo.dsw,
+		examples/Simple/echo/client.dsp,
+		examples/Simple/echo/server.dsp.
+	  
 Mon Sep 21 22:24:45 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.h (TAO_Naming_Client): Added
@@ -98,6 +112,7 @@ Sun Sep 20 22:57:28 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
           TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
           updated servants to keep a reference to their POA (which might be
           different from the root POA).
+
 
 Sun Sep 20 22:41:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
