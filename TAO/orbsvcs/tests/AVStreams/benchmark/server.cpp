@@ -116,7 +116,8 @@ ACE_RCSID(benchmark, server, "$Id$")
 //------------------------------------------------------------
 Server::Server (void)
   :process_strategy_ (&process_options_),
-   reactive_strategy_(&orb_manager_)
+   reactive_strategy_(&orb_manager_),
+   mmdevice_ (0)
 {
 }
 
