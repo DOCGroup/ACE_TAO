@@ -23,6 +23,9 @@ char * ACE_Svc_Export TAO_debug_filter	= "l";
 
 static FILE *debug_stream = stderr;
 
+void use_debug_stream_to_get_rid_of_warning (void) {ACE_UNUSED_ARG (debug_stream);}
+// Dummy function to get rid of "'debug_stream' defined but not used" warning
+
 // The rest of this file is not needed without -DDEBUG, and unless the
 // vfprintf () call is available it can't work.
 //

@@ -1,3 +1,8 @@
+Sun Nov  9 16:05:56 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tao/debug.cpp: Added dummy function to get rid of
+ 	"'debug_stream' defined but not used" warning.
+
 Sun Nov  9 13:03:37 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tao: Removed the svc.conf.eg file since it was out of date.
