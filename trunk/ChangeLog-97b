@@ -11,6 +11,9 @@ Thu Nov 13 05:47:42 1997  David L. Levine  <levine@cs.wustl.edu>
           protect declarations of wchar versions with
           ACE_HAS_WCHAR_TYPEDEFS_CHAR.  GreenHills typedefs wchar to char.
 
+        * ace/Singleton.cpp: register ACE_TSS_Singletons for cleanup with
+          Object_Manager.
+
 Thu Nov 13 02:06:58 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
 
         * ace/Signal.i: Changed to use new Object Manager member.
