@@ -1,3 +1,10 @@
+Wed Apr 30 09:22:33 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Logger/client/logging_app.cpp (main),
+	  performance-tests/Misc/test_naming.cpp (*): replaced sprintf
+	  with ACE_OS::sprintf.  Thanks to Thilo Kielmann
+	  <kielmann@informatik.uni-siegen.de> for reporting these.
+
 Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Added a new macro ACE_LACKS_GETPGID to clean up the code
