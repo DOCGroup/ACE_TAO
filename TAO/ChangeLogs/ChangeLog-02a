@@ -1,3 +1,21 @@
+Fri Aug 25 18:24:14 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Protocol/Server_Protocol.dsw
+	* tests/RTCORBA/Server_Protocol/Makefile
+	* tests/RTCORBA/Server_Protocol/Makefile.bor
+	* tests/RTCORBA/Server_Protocol/README
+	* tests/RTCORBA/Server_Protocol/client.bor
+	* tests/RTCORBA/Server_Protocol/client.cpp
+	* tests/RTCORBA/Server_Protocol/client.dsp
+	* tests/RTCORBA/Server_Protocol/run_test.pl
+	* tests/RTCORBA/Server_Protocol/server.bor
+	* tests/RTCORBA/Server_Protocol/server.cpp
+	* tests/RTCORBA/Server_Protocol/server.dsp
+	* tests/RTCORBA/Server_Protocol/test.idl:
+
+	  Added a unit test for RTCORBA ServerProtocolPolicy
+	  support.
+
 Fri Aug 25 16:59:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/Makefile.IFR_Service (IFR_Service):
