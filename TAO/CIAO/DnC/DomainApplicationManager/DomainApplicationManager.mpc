@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): taolib, ciao_deployment_svnt {
-  libs += TAO_Valuetype 
+project (DomainApplicationManager): taolib, ciao_deployment_stub, ciao_deployment_svnt {
+  libs += TAO_Valuetype CIAO_Server
   requires += dnc
   
   Source_Files {

@@ -1,3 +1,17 @@
+Mon May 31 13:10:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
+
+	  Added necessary dependency libraries to the mpc file, which
+          causes build probelm under Windows.
+
+        * DnC/DomainApplication/DomainApplication_Impl.h
+        * DnC/DomainApplication/DomainApplication_Impl.cpp
+
+          Removed these files since DomainApplication are now
+          combined with DomainApplicationManager.
+
+
 Mon May 31 11:00:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Core/NodeApplication_Impl.cpp:
