@@ -23,8 +23,7 @@ class McastHello
 public:
   /// Constructor
   McastHello (CORBA::ORB_ptr orb,
-              int instance,
-              CORBA::Boolean &status);
+              int instance);
 
   // = The skeleton methods
   virtual void send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL)
@@ -35,6 +34,12 @@ public:
 
   /// Return whether all test requests have been received successfully.
   CORBA::Boolean get_status ();
+
+  // Silence the builds
+  void send_large_octet_array (const Test::Octets & 
+                               ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
