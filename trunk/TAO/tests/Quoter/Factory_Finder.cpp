@@ -17,15 +17,13 @@
 #include "tao/corba.h"
 #include "Factory_Finder.h"
 
+static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
 
-static const char usage [] = 
-"[-? |\n[-O[RBport] ORB port number]]";
-
-Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server () 
+Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server (void)
 {
 }
 
-Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server () 
+Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server (void) 
 {
   TAO_TRY
     {
@@ -100,7 +98,7 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
 
       if (CORBA::is_nil (namingObj_var.in ())) 
         ACE_ERROR ((LM_ERROR,
-                   " (%P|%t) Unable get the Naming Service.\n"));
+                    " (%P|%t) Unable get the Naming Service.\n"));
 
       // Narrow the object reference to a Naming Context.
       CosNaming::NamingContext_var namingContext_var =
@@ -122,7 +120,8 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in (),
                                            TAO_TRY_ENV);
        
-      ACE_DEBUG ((LM_DEBUG,"Have a proper reference to the Quoter Naming Context.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Have a proper reference to the Quoter Naming Context.\n"));
 
       // Bind the QuoterFactory Finder to the IDL_Quoter naming
       // context.
@@ -131,10 +130,11 @@ Quoter_Factory_Finder_Server::init (int argc, char *argv[], CORBA::Environment& 
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
-                                            this->quoter_Factory_Finder_Impl_ptr_->_this(TAO_TRY_ENV),
-                                            TAO_TRY_ENV);
+                                      this->quoter_Factory_Finder_Impl_ptr_->_this(TAO_TRY_ENV),
+                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      ACE_DEBUG ((LM_DEBUG,"Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Bound the Quoter Factory Finder to the Quoter Naming Context.\n"));
     }
   TAO_CATCHANY
     {
@@ -160,8 +160,8 @@ Quoter_Factory_Finder_Server::run (CORBA::Environment& env)
 
 // Function get_options.
 
-unsigned int
-Quoter_Factory_Finder_Server::parse_args ()
+u_
+Quoter_Factory_Finder_Server::parse_args (void)
 {
   // We need the 'O' in get_opt () because we also want to have ORB
   // parameters, they all start with 'O'.

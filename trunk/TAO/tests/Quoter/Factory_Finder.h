@@ -38,7 +38,7 @@ public:
   int run (CORBA::Environment& env);
   // Run the orb 
 
-  unsigned int parse_args ();
+  u_ parse_args (void);
   // parse the passed parameters
 
 private:

@@ -28,17 +28,17 @@ public:
   Quoter_Generic_Factory_Impl (void);
   ~Quoter_Generic_Factory_Impl (void);
 
-  CORBA::Boolean supports (const CosLifeCycle::Key & factory_key,
+  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key,
                            CORBA::Environment &_env_there);
-  // returns true if the Generic Factory is able to forward a request for
-  // creating an objct described by k
+  // Returns true if the Generic Factory is able to forward a request
+  // for creating an object described by the <factory_key>.
 
   CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key, 
-                                   const CosLifeCycle::Criteria & the_criteria,
+                                   const CosLifeCycle::Criteria &the_criteria,
                                    CORBA::Environment &_env_there);
-  // Returns an object reference to a newly created object, though the 
-  // Generic Factory itself cannot create objects, it will forward the request to
-  // a more concrete Factory.
+  // Returns an object reference to a newly created object, though the
+  // Generic Factory itself cannot create objects, it will forward the
+  // request to a more concrete Factory.
 };
 
 #endif /* QUOTER_GENERIC_FACTORY_IMPL_H */
