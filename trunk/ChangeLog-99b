@@ -1,3 +1,17 @@
+Fri May 14 19:31:04 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Message_Block.cpp (total_size): 
+
+	  Corrected warning caused by assignment to non-const from const.
+
+	* ace/Message_Queue_T.cpp (close): 
+
+	  Temporary variable wasn't declared.
+
+	* ace/Message_Queue_T.cpp (remove_messages): 
+
+	  Removed unused variable.
+
 Fri May 14 19:16:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Task_T.cpp (put, flush):  
