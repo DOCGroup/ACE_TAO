@@ -750,6 +750,7 @@ TAO_Persistent_Binding_Iterator::_default_POA (CORBA::Environment &/*env*/)
 CORBA::Boolean
 TAO_Persistent_Binding_Iterator::next_one (CosNaming::Binding_out b,
                                            CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNaming::Binding *binding;
 
@@ -814,6 +815,7 @@ CORBA::Boolean
 TAO_Persistent_Binding_Iterator::next_n (CORBA::ULong how_many,
                                          CosNaming::BindingList_out bl,
                                          CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We perform an allocation before obtaining the lock so that an out
   // parameter is allocated in case we fail to obtain the lock.
@@ -863,6 +865,7 @@ TAO_Persistent_Binding_Iterator::next_n (CORBA::ULong how_many,
 
 void
 TAO_Persistent_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
     ACE_GUARD_THROW_EX (ACE_Lock,

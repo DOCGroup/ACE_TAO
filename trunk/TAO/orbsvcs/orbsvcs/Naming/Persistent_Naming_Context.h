@@ -177,16 +177,19 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
   CORBA::Boolean next_one (CosNaming::Binding_out b,
-                           CORBA::Environment &ACE_TRY_ENV);
+                           CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns the next binding.  If there are no more
   // bindings false is returned.
 
   CORBA::Boolean next_n (CORBA::ULong how_many,
                          CosNaming::BindingList_out bl,
-                         CORBA::Environment &ACE_TRY_ENV);
+                         CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns at most the requested number of bindings.
 
-  void destroy (CORBA::Environment &ACE_TRY_ENV);
+  void destroy (CORBA::Environment &ACE_TRY_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation destroys the iterator.
 
 private:

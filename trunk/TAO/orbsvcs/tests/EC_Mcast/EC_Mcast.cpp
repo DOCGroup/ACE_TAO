@@ -733,6 +733,7 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events,
 
 void
 ECM_Supplier::disconnect_push_supplier (CORBA::Environment& TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (TAO_IN_ENV);
 
@@ -840,6 +841,7 @@ ECM_Consumer::close (CORBA::Environment &TAO_IN_ENV)
 void
 ECM_Consumer::push (const RtecEventComm::EventSet& events,
                     CORBA::Environment &TAO_IN_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->federation_->consumer_push (arrival, events, TAO_IN_ENV);
@@ -847,6 +849,7 @@ ECM_Consumer::push (const RtecEventComm::EventSet& events,
 
 void
 ECM_Consumer::disconnect_push_consumer (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

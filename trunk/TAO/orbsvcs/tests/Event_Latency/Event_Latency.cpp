@@ -163,6 +163,7 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
 void
 Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Consumer received disconnect from channel.\n"));
 }
@@ -170,6 +171,7 @@ Latency_Consumer::disconnect_push_consumer (CORBA::Environment &)
 void
 Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   ACE_TIMEPROBE (EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
@@ -356,8 +358,10 @@ Latency_Supplier::Supplier::Supplier (Latency_Supplier* impl)
 {
 }
 
-void Latency_Supplier::Supplier::disconnect_push_supplier
-  (CORBA::Environment &TAO_IN_ENV)
+void
+Latency_Supplier::Supplier::disconnect_push_supplier (
+    CORBA::Environment &TAO_IN_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->impl_->disconnect_push_supplier (TAO_IN_ENV);
 }
@@ -367,15 +371,19 @@ Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
 {
 }
 
-void Latency_Supplier::Consumer::disconnect_push_consumer
-  (CORBA::Environment &TAO_IN_ENV)
+void
+Latency_Supplier::Consumer::disconnect_push_consumer (
+    CORBA::Environment &TAO_IN_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->impl_->disconnect_push_consumer (TAO_IN_ENV);
 }
 
-void Latency_Supplier::Consumer::push
-  (const RtecEventComm::EventSet &events,
-   CORBA::Environment &TAO_IN_ENV)
+void
+Latency_Supplier::Consumer::push (
+    const RtecEventComm::EventSet &events,
+    CORBA::Environment &TAO_IN_ENV)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->impl_->push (events, TAO_IN_ENV);
 }

@@ -97,7 +97,8 @@ public:
   // Return an event type to push....
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (CORBA::Environment &);
+  virtual void disconnect_push_supplier (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   EC_Driver *driver_;
