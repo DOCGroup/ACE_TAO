@@ -202,15 +202,15 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                TAO_OutputCDR &output,
                                                CORBA::Boolean &response_required,
                                                CORBA::ULong &request_id,
-                                               CORBA::Environment &TAO_IN_ENV)
+                                               CORBA::Environment &ACE_TRY_ENV)
 {
   // This will extract the request header, set <response_required> as
   // appropriate.
   IIOP_ServerRequest request (input,
                               output,
                               this->orb_core_,
-                              TAO_IN_ENV);
-  TAO_CHECK_RETURN (-1);
+                              ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   // The request_id_ field in request will be 0 if something went
   // wrong before it got a chance to read it out.
@@ -234,10 +234,10 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                   request,
                                                   0,
                                                   this->orb_core_,
-                                                  TAO_IN_ENV);
-  // Need to check for any errors present in <env> and set the return
+                                                  ACE_TRY_ENV);
+  // NEED TO CHECK FOR any errors present in <env> and set the return
   // code appropriately.
-  TAO_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -411,7 +411,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 
       // A new try/catch block, but if something goes wrong now we
       // have no hope, just abort.
-      TAO_TRY
+      ACE_TRY_NEW_ENV
         {
           // create and write a dummy context
           TAO_GIOP_ServiceContextList resp_ctx;
@@ -419,8 +419,8 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           output.encode (TC_ServiceContextList,
                          &resp_ctx,
                          0,
-                         TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                         ACE_TRY_ENV);
+          ACE_CHECK;
 
           // Write the request ID
           output.write_ulong (request_id);
@@ -450,8 +450,8 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               output.encode (CORBA::_tc_Object,
                              &object_ptr,
                              0,
-                             TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+                             ACE_TRY_ENV);
+              ACE_CHECK;
             }
           // end of the forwarding code ****************************
           else
@@ -467,11 +467,11 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
               output.write_ulong (TAO_GIOP::convert_CORBA_to_GIOP_exception (extype));
 
               // write the actual exception
-              output.encode (except_tc, x, 0, TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              output.encode (except_tc, x, 0, ACE_TRY_ENV);
+              ACE_CHECK;
             }
         }
-      TAO_CATCH (CORBA_Exception, ex)
+      ACE_CATCH (CORBA_Exception, ex)
         {
           // now we know, that while handling the error an other error
           // happened -> no hope, close connection.
@@ -484,7 +484,8 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
           this->handle_close ();
           return;
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
+      ACE_CHECK
 
       // hand it to the next lower layer
       TAO_SVC_HANDLER *this_ptr = this;
@@ -526,7 +527,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   TAO_SVC_HANDLER *this_ptr = this;
   CORBA::ULong request_id = 0;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Try to recv a new request.
       TAO_GIOP::Message_Type type =
@@ -548,9 +549,9 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                         output,
                                         response_required,
                                         request_id,
-                                        TAO_TRY_ENV) == -1)
+                                        ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              TAO_CHECK_ENV;
+              ACE_CHECK;
               break;
 
             case TAO_GIOP::LocateRequest:
@@ -558,9 +559,9 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                        output,
                                        response_required,
                                        request_id,
-                                       TAO_TRY_ENV) == -1)
+                                       ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              TAO_CHECK_ENV;
+              ACE_CHECK;
               break;
 
             case TAO_GIOP::EndOfFile:
@@ -578,7 +579,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             default:                                    // Unknown message
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) Illegal message received by server\n"));
-              TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+              ACE_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
               // FALLTHROUGH
 
             case TAO_GIOP::CommunicationError:
@@ -592,7 +593,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
             }
         }
     }
-  TAO_CATCHANY                  // Only CORBA exceptions are caught here.
+  ACE_CATCHANY                  // Only CORBA exceptions are caught here.
     {
       if (response_required)
         this->send_error (request_id, &ex);
@@ -603,7 +604,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
               ACE_ERROR ((LM_ERROR,
                           "(%P|%t) exception thrown "
                           "but client is not waiting a response\n"));
-              TAO_TRY_ENV.print_exception ("");
+              ACE_TRY_ENV.print_exception ("");
             }
           //          this->handle_close ();
           result = -1;
@@ -611,7 +612,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       return result;
     }
 #if defined (TAO_HAS_EXCEPTIONS)
-  TAO_CATCHALL
+  ACE_CATCHALL
     {
       // @@ TODO some c++ exception or another, but what do we do with
       // it? BTW, this cannot be detected if using the <env> mapping.
@@ -624,7 +625,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       return -1;
     }
 #endif /* TAO_HAS_EXCEPTIONS */
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK;
 
   if (response_required)
     {
