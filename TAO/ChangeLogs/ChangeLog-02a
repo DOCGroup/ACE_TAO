@@ -1,3 +1,10 @@
+Mon Nov 12 11:38:03 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Big_Request/client.cpp (main):
+
+	  Added a check that verifies both the sent and received octet
+	  sequences actually match.  This is a sanity check.
+
 Mon Nov 12 12:15:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
