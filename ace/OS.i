@@ -9350,7 +9350,10 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
                               FILE_ATTRIBUTE_NORMAL,
                               NULL);
   if (retv == INVALID_HANDLE_VALUE)
-    errno = ::GetLastError ();
+    {
+      errno = ::GetLastError ();
+      retv = 0;
+    }
   // Move the file pointer to EOF if we are opening the file in append mode.
   else if (creation == OPEN_ALWAYS)
     {
