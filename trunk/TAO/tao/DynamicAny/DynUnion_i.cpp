@@ -5,6 +5,7 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
            DynUnion_i,
@@ -81,7 +82,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  CORBA::Any_var first_label = 
+  CORBA::Any_var first_label =
     unaliased_tc->member_label (this->current_position_
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -92,7 +93,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var first_type = 
+  CORBA::TypeCode_var first_type =
     unaliased_tc->member_type (this->current_position_
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -136,7 +137,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
    TAO_DynAnyFactory::strip_alias (any.type ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   // Get the CDR stream of the argument.
   ACE_Message_Block* mb = any._tao_get_cdr ();
   bool type_known = false;
@@ -159,7 +160,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
       mb->release ();
     }
 
-  CORBA::TypeCode_var disc_tc = 
+  CORBA::TypeCode_var disc_tc =
     tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 

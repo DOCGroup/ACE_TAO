@@ -5,6 +5,7 @@
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
            DynStruct_i,
@@ -76,7 +77,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong numfields = 
+  CORBA::ULong numfields =
     unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -182,7 +183,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
       ACE_CHECK;
 
       // Recursively initialize each member.
-      this->da_members_[i] = 
+      this->da_members_[i] =
         TAO_DynAnyFactory::make_dyn_any (mtype.in ()
                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
