@@ -39,7 +39,7 @@ public:
   void parse_args (int argc, ACE_TCHAR *argv[]);
   // parses commandline arguments
 
-  char *hostname_;
+  ACE_TCHAR *hostname_;
   // Hostname to connect to
 
   u_short port_;
