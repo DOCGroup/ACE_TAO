@@ -275,7 +275,7 @@ TAO_DynStruct_i::current_member_kind (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::TypeCode_var unaliased_tc =
     TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::tk_null);
   CORBA::TypeCode_var tc =
   unaliased_tc->member_type (this->current_position_
                                   ACE_ENV_ARG_PARAMETER);
