@@ -1,3 +1,16 @@
+Mon Jul 12 14:46:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Event_Comm/Consumer.dsp:
+	* examples/Event_Comm/Notifier.dsp:
+	* examples/Event_Comm/Supplier.dsp:
+	* orbsvcs/tests/Trading/TradingLib.dsp:
+	* performance-tests/Latency/client.dsp:
+	* performance-tests/Latency/server.dsp:
+	* tests/Faults/client.dsp:
+	* tests/Faults/server.dsp:
+	  Fixed dependencies in the Custom Build rules, many .idl files
+	  did not depend on the IDL compiler.
+
 Mon Jul 12 14:18:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/ValueFactory_Map.cpp:
