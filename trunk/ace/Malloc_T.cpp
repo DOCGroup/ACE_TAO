@@ -16,7 +16,7 @@ ACE_Cached_Allocator<T, LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
     free_list_ (ACE_PURE_FREE_LIST)
 {
-  ACE_NEW (this->pool_, T[n_chunks]);
+  this->pool_ = new char[ n_chunks * sizeof (T[1])];
   // ERRNO could be lost because this is within ctor
   
   for (size_t c = 0 ; c < n_chunks ; c++)
