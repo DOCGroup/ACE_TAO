@@ -108,6 +108,20 @@ MyImpl::Rate_Controller_i::set_session_context (Components::SessionContext_ptr c
 }
 
 void
+MyImpl::Rate_Controller_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
+MyImpl::Rate_Controller_i::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Components::CCMException))
+{
+}
+
+void
 MyImpl::Rate_Controller_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
