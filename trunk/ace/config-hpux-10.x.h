@@ -97,6 +97,10 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 // Platform supports SVR4 extended signals
 #define ACE_HAS_SIGINFO_T
+
+// Platform doesn't detect a signal out of range unless it's way out of range.
+#define ACE_HAS_SIGISMEMBER_BUG
+
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
 
@@ -116,6 +120,8 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 // Platform supports the tid_t type
 #define ACE_HAS_TID_T
+
+#define ACE_HAS_UALARM
 
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
@@ -230,5 +236,3 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
-#define ACE_HAS_UALARM
