@@ -65,17 +65,24 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int light)
   // Name_Space subclass.
 
   if (scope_in == ACE_Naming_Context::NET_LOCAL && this->local () == 0)
-    // Use NET_LOCAL name space, set up connection with remote server.
-    ACE_NEW_RETURN (this->name_space_, 
-		    ACE_Remote_Name_Space (this->netnameserver_host_,
-					   this->netnameserver_port_),
-		    -1);
+    {
+      // Use NET_LOCAL name space, set up connection with remote server.
+      ACE_NEW_RETURN (this->name_space_, 
+		      ACE_Remote_Name_Space (this->netnameserver_host_,
+					     this->netnameserver_port_),
+		      -1);
+      if (ACE_LOG_MSG->errnum ())
+	ACE_ERROR_RETURN ((LM_ERROR, "REMOTE_NAME_SPACE::REMOTE_NAME_SPACE\n"), -1);          
+    }
   else // Use NODE_LOCAL or PROC_LOCAL name space.
     {
       if (light)
 	ACE_NEW_RETURN (this->name_space_, LIGHT_LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
       else
 	ACE_NEW_RETURN (this->name_space_, LOCAL_NAME_SPACE (scope_in, this->name_options_), -1);
+
+      if (ACE_LOG_MSG->errnum ())
+	ACE_ERROR_RETURN ((LM_ERROR, "LOCAL_NAME_SPACE::LOCAL_NAME_SPACE\n"), -1);          
     }
   return 0;
 }
@@ -333,7 +340,8 @@ ACE_Name_Options::ACE_Name_Options (void)
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     namespace_dir_  (ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR)),
     process_name_ (0),
-    database_ (0)
+    database_ (0),
+    base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");
 }
@@ -407,6 +415,20 @@ ACE_Name_Options::database (const char *db)
   this->database_ = ACE_OS::strdup (db);
 }
 
+char *
+ACE_Name_Options::base_address (void)
+{
+  ACE_TRACE ("ACE_Name_Options::database");
+  return this->base_address_;
+}
+
+void   
+ACE_Name_Options::base_address (char *base_address)
+{
+  ACE_TRACE ("ACE_Name_Options::base_address");
+  this->base_address_ = base_address;
+}
+
 ACE_Naming_Context::Context_Scope_Type
 ACE_Name_Options::context (void)
 {
@@ -464,7 +486,7 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, "c:dh:l:P:p:s:T:v");
+  ACE_Get_Opt get_opt (argc, argv, "b:c:dh:l:P:p:s:T:v");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -497,6 +519,9 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
       case 's':
 	this->database (get_opt.optarg);
 	break;
+      case 'b':
+	this->base_address (ACE_OS::atoi (get_opt.optarg));
+	break;
       case 'T':
 	if (ACE_OS::strcasecmp (get_opt.optarg, "ON") == 0)
 	  ACE_Trace::start_tracing ();
@@ -514,6 +539,7 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
 			 "\t[-P processname]\n"
 			 "\t[-p nameserver port]\n"
 			 "\t[-s database name]\n"
+			 "\t[-b base address]\n"
 			 "\t[-v] (verbose) \n",
 			 argv[0]);
 	/* NOTREACHED */

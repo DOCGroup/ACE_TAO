@@ -23,18 +23,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch_T.h"
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_PEER_STREAM_1 class PEER_STREAM
-#define ACE_PEER_STREAM_2 PEER_STREAM
-#define ACE_PEER_STREAM PEER_STREAM
-#define ACE_PEER_STREAM_ADDR PEER_STREAM::PEER_ADDR
-#else
-#define ACE_PEER_STREAM_1 class PEER_STREAM, class PEER_ADDR
-#define ACE_PEER_STREAM_2 PEER_STREAM, PEER_ADDR
-#define ACE_PEER_STREAM PEER_STREAM
-#define ACE_PEER_STREAM_ADDR PEER_ADDR
-#endif /* ACE_TEMPLATE_TYPEDEFS */
-
 // Forward decls.
 class ACE_Dynamic;
 

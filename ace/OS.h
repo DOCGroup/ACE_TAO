@@ -126,15 +126,97 @@
 // most of this nastiness!
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_SYNCH_1 class ACE_SYNCH
-#define ACE_SYNCH_2 ACE_SYNCH
-#define ACE_SYNCH_MUTEX ACE_SYNCH::ACE_MUTEX
-#define ACE_SYNCH_CONDITION ACE_SYNCH::ACE_CONDITION
-#else /* TEMPLATES are broken (must be a cfront-based compiler...) */
-#define ACE_SYNCH_1 class ACE_SYNCH_MUTEX, class ACE_SYNCH_CONDITION
-#define ACE_SYNCH_2 ACE_SYNCH_MUTEX, ACE_SYNCH_CONDITION
-#define ACE_SYNCH_MUTEX ACE_SYNCH_MUTEX
-#define ACE_SYNCH_CONDITION ACE_SYNCH_CONDITION
+
+// Handle ACE_Message_Queue.
+#define ACE_SYNCH_1 class _ACE_SYNCH
+#define ACE_SYNCH_2 _ACE_SYNCH
+#define ACE_SYNCH_MUTEX _ACE_SYNCH::ACE_MUTEX
+#define ACE_SYNCH_CONDITION _ACE_SYNCH::ACE_CONDITION
+
+// Handle ACE_Malloc*
+#define ACE_MEM_POOL_1 class _ACE_MEM_POOL
+#define ACE_MEM_POOL_2 _ACE_MEM_POOL
+#define ACE_MEM_POOL _ACE_MEM_POOL
+#define ACE_MEM_POOL_OPTIONS _ACE_MEM_POOL::OPTIONS
+
+// Handle ACE_Svc_Handler
+#define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM
+#define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
+#define ACE_PEER_STREAM _ACE_PEER_STREAM
+#define ACE_PEER_STREAM_ADDR _ACE_PEER_STREAM::PEER_ADDR
+
+// Handle ACE_SOCK_*
+#define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor
+#define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
+#define ACE_SOCK_STREAM ACE_SOCK_Stream
+
+// Handle ACE_TLI_*
+#define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor
+#define ACE_TLI_CONNECTOR ACE_TLI_Connector
+#define ACE_TLI_STREAM ACE_TLI_Stream
+
+// Handle ACE_SPIPE_*
+#define ACE_SPIPE_ACCEPTOR ACE_SPIPE_Acceptor
+#define ACE_SPIPE_CONNECTOR ACE_SPIPE_Connector
+#define ACE_SPIPE_STREAM ACE_SPIPE_Stream
+
+// Handle ACE_UPIPE_*
+#define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor
+#define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector
+#define ACE_UPIPE_STREAM ACE_UPIPE_Stream
+
+// Handle ACE_*_Memory_Pool.
+#define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool
+#define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool
+#define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool
+#define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool
+
+#else /* TEMPLATES are broken */
+
+// Handle ACE_Message_Queue.
+#define ACE_SYNCH_1 class _ACE_SYNCH_MUTEX, class _ACE_SYNCH_CONDITION
+#define ACE_SYNCH_2 _ACE_SYNCH_MUTEX, _ACE_SYNCH_CONDITION
+#define ACE_SYNCH_MUTEX _ACE_SYNCH_MUTEX
+#define ACE_SYNCH_CONDITION _ACE_SYNCH_CONDITION
+
+// Handle ACE_Malloc*
+#define ACE_MEM_POOL_1 class _ACE_MEM_POOL, class _ACE_MEM_POOL_OPTIONS
+#define ACE_MEM_POOL_2 _ACE_MEM_POOL, _ACE_MEM_POOL_OPTIONS
+#define ACE_MEM_POOL _ACE_MEM_POOL
+#define ACE_MEM_POOL_OPTIONS _ACE_MEM_POOL_OPTIONS
+
+// Handle ACE_Svc_Handler
+#define ACE_PEER_STREAM_1 class _ACE_PEER_STREAM, class _ACE_PEER_ADDR
+#define ACE_PEER_STREAM_2 _ACE_PEER_STREAM, _ACE_PEER_ADDR
+#define ACE_PEER_STREAM _ACE_PEER_STREAM
+#define ACE_PEER_STREAM_ADDR _ACE_PEER_ADDR
+
+// Handle ACE_SOCK_*
+#define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
+#define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
+#define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handle ACE_TLI_*
+#define ACE_TLI_ACCEPTOR ACE_TLI_Acceptor, ACE_INET_Addr
+#define ACE_TLI_CONNECTOR ACE_TLI_Connector, ACE_INET_Addr
+#define ACE_TLI_STREAM ACE_TLI_Stream, ACE_INET_Addr
+
+// Handle ACE_SPIPE_*
+#define ACE_SPIPE_ACCEPTOR ACE_SPIPE_Acceptor, ACE_SPIPE_Addr
+#define ACE_SPIPE_CONNECTOR ACE_SPIPE_Connector, ACE_SPIPE_Addr
+#define ACE_SPIPE_STREAM ACE_SPIPE_Stream, ACE_SPIPE_Addr
+
+// Handle ACE_UPIPE_*
+#define ACE_UPIPE_ACCEPTOR ACE_UPIPE_Acceptor, ACE_SPIPE_Addr
+#define ACE_UPIPE_CONNECTOR ACE_UPIPE_Connector, ACE_SPIPE_Addr
+#define ACE_UPIPE_STREAM ACE_UPIPE_Stream, ACE_SPIPE_Addr
+
+// Handle ACE_*_Memory_Pool.
+#define ACE_MMAP_MEMORY_POOL ACE_MMAP_Memory_Pool, ACE_MMAP_Memory_Pool_Options
+#define ACE_SBRK_MEMORY_POOL ACE_Sbrk_Memory_Pool, ACE_Sbrk_Memory_Pool_Options
+#define ACE_SHARED_MEMORY_POOL ACE_Shared_Memory_Pool, ACE_Shared_Memory_Pool_Options
+#define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options
+
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 // Increase the range of "address families".

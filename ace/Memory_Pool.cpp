@@ -23,6 +23,12 @@ ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const char *)
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
 }
 
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const OPTIONS &,
+					      const char *)
+{
+  ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
+}
+
 void *
 ACE_Local_Memory_Pool::acquire (size_t nbytes, 
 				size_t &rounded_bytes)
@@ -102,13 +108,30 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
   return ACE_OS::mprotect (addr, len, prot);
 }
 
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name,
-					    int use_fixed_addr,
-					    int write_each_page,
-					    char *base_addr)
-  : base_addr_ (use_fixed_addr ? base_addr : 0),
-    flags_ (MAP_SHARED | (use_fixed_addr ? MAP_FIXED : 0)),
-    write_each_page_ (write_each_page)
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name)
+  : base_addr_ (ACE_DEFAULT_BACKING_STORE),
+    flags_ (MAP_SHARED | MAP_FIXED),
+    write_each_page_ (1)
+{
+  ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
+
+  if (pool_name == 0)
+    // Only create a new unique filename for the backing store file
+    // if the user didn't supply one...
+    pool_name = ACE_DEFAULT_BACKING_STORE; // from "ace/OS.h"
+
+  ACE_OS::strncpy (this->backing_store_, pool_name, 
+		   sizeof this->backing_store_);
+
+  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", this->backing_store_));
+}
+
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const OPTIONS &options,
+					    const char *pool_name)
+  : base_addr_ (options.use_fixed_addr_ ? options.base_addr_ : 0),
+    flags_ (MAP_SHARED | (options.use_fixed_addr_ ? MAP_FIXED : 0)),
+    write_each_page_ (options.write_each_page_)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
 
@@ -126,7 +149,6 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *pool_name,
 
 // Compute the new file_offset of the backing store and commit the
 // memory.
-
 int
 ACE_MMAP_Memory_Pool::commit_backing_store (size_t rounded_bytes,
 					    off_t &file_offset)
@@ -234,6 +256,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
     }
   else if (errno == EEXIST)
     {
+      errno = 0;
       // Reopen file *without* using O_EXCL...
       if (this->mmap_.map (this->backing_store_,
 			   -1,
@@ -312,11 +335,15 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
 
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const char *pool_name,
-							int use_fixed_addr,
-							int write_each_page,
-							char *base_addr)
-  : ACE_MMAP_Memory_Pool (pool_name, use_fixed_addr, write_each_page, base_addr)
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const char *pool_name)
+  : ACE_MMAP_Memory_Pool (pool_name)
+{
+  ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool");
+}
+
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const OPTIONS &options,
+						      const char *pool_name)
+  : ACE_MMAP_Memory_Pool (options, pool_name)
 {
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool");
 }
@@ -363,6 +390,12 @@ ACE_Sbrk_Memory_Pool::dump (void) const
 }
 
 ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const char *)
+{
+  ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
+}
+
+ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const OPTIONS &options,
+					    const char *)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
 }
@@ -465,6 +498,15 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   this->commit_backing_store (this->round_up (ACE_DEFAULT_SEGMENT_SIZE), 
 			      offset);
   return 0;
+}
+
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const OPTIONS &options,
+						const char *)
+{
+  ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
+
+  if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Sig_Handler::register_handler"));
 }
 
 ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *pool_name)
