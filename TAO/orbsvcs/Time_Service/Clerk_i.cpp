@@ -101,7 +101,7 @@ Clerk_i::read_ior (const char *filename)
 int
 Clerk_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "dt:f:o:");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "dt:u:f:o:");
 
   int c, result;
 
@@ -112,8 +112,14 @@ Clerk_i::parse_args (void)
         TAO_debug_level++;
         break;
 
-      case 't':  // time after which the clerk should update time.
+      case 't':  // time in secs after which the clerk should update time.
         this->timer_value_ = atoi (get_opts.optarg);
+        break;
+
+      case 'u': 
+        // time in usecs after which the clerk should update time.
+        // Continues the precision of the -t option.
+        this->timer_value_usecs_ = atoi (get_opts.optarg);
         break;
 
       case 'f':  // read the server IORs from a file.
@@ -143,7 +149,8 @@ Clerk_i::parse_args (void)
                            "[SERVER] Process/Thread Id : (%P/%t)"
                            "usage:  %s"
                            " [-d]"
-                           " [-t] <Timer value>"
+                           " [-t] <Timer value inn Secs>"
+                           " [-u] <Timer value in uSecs>"
                            " [-f] <ior_input_file>"
                            " [-o] <ior_output_file>"
                            "\n",
@@ -347,6 +354,7 @@ Clerk_i::create_clerk (void)
       // of server IORs and the no. of servers.
       ACE_NEW_RETURN (this->time_service_clerk_impl_,
                       TAO_Time_Service_Clerk (this->timer_value_,
+                                              this->timer_value_usecs_,
                                               this->server_),
                       0);
 
