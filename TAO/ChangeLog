@@ -1,3 +1,8 @@
+Tue Apr 20 12:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+          Added include of tao/CDR.h
+
 Tue Apr 20 12:29:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
