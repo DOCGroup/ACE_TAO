@@ -125,12 +125,6 @@ CORBA_String_var::~CORBA_String_var (void)
     }
 }
 
-TAO_Export CORBA::String
-CORBA::string_dup (const CORBA::Char *str)
-{
-  return CORBA::string_copy (str);
-}
-
 CORBA_ORB::InvalidName::InvalidName (void)
 {
 }

@@ -21,6 +21,12 @@ CORBA::string_free (CORBA::Char *str)
 // String_var type
 // ----------------------------------------------------------------------
 
+ACE_INLINE TAO_Export CORBA::String
+CORBA::string_dup (const CORBA::Char *str)
+{
+  return CORBA::string_copy (str);
+}
+
 ACE_INLINE
 CORBA_String_var::CORBA_String_var (void)
 {
