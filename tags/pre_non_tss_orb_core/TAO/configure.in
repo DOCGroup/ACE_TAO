@@ -1,0 +1,608 @@
+dnl
+dnl $Id$
+
+AC_REVISION($Revision 0.5 $)dnl
+
+dnl
+dnl An autoconf script to automatically configure TAO.
+dnl Process this file with autoconf to produce a configure script.
+dnl
+
+dnl
+dnl The autoconf documentation states that this is the recommended
+dnl sequence for this file:
+dnl
+dnl   `AC_INIT(FILE)'
+dnl   checks for programs
+dnl   checks for libraries
+dnl   checks for header files
+dnl   checks for typedefs
+dnl   checks for structures
+dnl   checks for variables
+dnl   checks for compiler characteristics
+dnl   checks for library functions
+dnl   checks for system services
+dnl   `AC_OUTPUT([FILE...])'
+dnl
+dnl I followed this convention, and added a few sections.
+dnl                      -- Gonzo
+
+ 
+dnl
+dnl SECTION 1: `AC_INIT(FILE)'
+dnl
+dnl This macro must be the very first invoked.
+dnl Its argument names a file that must exist in the directory where
+dnl autoconf will run, just to check things.
+dnl AC_INIT(ace_unique.m4)
+dnl
+AC_INIT(tao/TAO.cpp)
+
+dnl Require GNU Autoconf 2.13 or better.
+AC_PREREQ(2.13)
+
+dnl Check what platform we are running on.
+AC_CANONICAL_SYSTEM
+
+dnl Allow the standard program name transformations.
+dnl We probably don't need AC_ARG_PROGRAM any longer since AM_INIT_AUTOMAKE
+dnl handles this functionality.  -- Ossama
+dnl AC_ARG_PROGRAM
+
+dnl Cause GNU Automake to initialize the state of things and run
+dnl some sanity checks
+TAO_PACKAGE="tao"
+dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
+changequote(, )dnl
+TAO_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
+changequote([, ])dnl
+
+AM_INIT_AUTOMAKE("$TAO_PACKAGE", "$TAO_VERSION-aceconf-0.5", )
+
+dnl Generate a header file with all settings.
+dnl AM_CONFIG_HEADER(tao/config.h)
+
+dnl Move before the AC_ARG_ENABLE stuff to prevent autoconf complaints.
+dnl This is a bit messy but it makes life easier for me.
+dnl                          -Ossama
+dnl
+dnl SECTION: checks for programs
+dnl
+
+dnl Check if system supports "#! /bin/sh" line in scripts
+AC_SYS_INTERPRETER
+
+dnl Check the C compiler and preprocessor.
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_CC_C_O
+
+dnl Check the C++ compiler and preprocessor.
+AC_PROG_CXX
+AC_PROG_CXXCPP
+
+dnl This checks for a binary called gm4, gnum4 or m4, and assigns
+dnl whatever was found (or "gonzo") to the M4 macro.
+dnl AC_CHECK_PROGS(M4, gm4 gnum4 m4, gonzo)
+
+dnl Look for the best awk-style program available.
+AC_PROG_AWK
+
+dnl Set some version information
+TAO_CURRENT="0"
+TAO_AGE="0"
+TAO_REVISION="0"
+
+if test -n "$AWK"; then
+  TAO_MAJOR=`echo "$TAO_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]1 }'`
+  TAO_MINOR=`echo "$TAO_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]2 }'`
+  TAO_BETA=`echo "$TAO_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]3 }'`
+
+dnl This is a terrible kludge to fool libtool into making it produce a shared
+dnl library with the "right" version information.
+dnl We really should switch to a version scheme that is compatible with
+dnl libtool.
+dnl               -Ossama
+TAO_CURRENT=`expr $TAO_MAJOR + $TAO_MINOR`
+TAO_AGE=$TAO_MINOR
+TAO_REVISION=$TAO_BETA
+
+fi
+
+AC_SUBST(TAO_CURRENT)
+AC_SUBST(TAO_AGE)
+AC_SUBST(TAO_REVISION)
+
+dnl Do the usual install settings; don't forget to include a
+dnl install-sh script, in case the is no BDS compatible install
+dnl installed (no pun intended) in your machine.
+dnl 
+dnl We don't need this anymore since AM_INIT_AUTOMAKE calls AM_PROG_INSTALL
+dnl yes "AM_PROG_INSTALL," not "AC_PROG_INSTALL." -- Ossama
+dnl AC_PROG_INSTALL
+
+dnl Special handling for some UNIX variants and Cygwin32
+AC_AIX
+AC_ISC_POSIX
+AC_MINIX
+AC_CYGWIN
+
+dnl The user's/default C++ flags are stored in "CXXFLAGS."  We use
+dnl the variable "TAO_CXXFLAGS" to set the C++ flags we want.  At the end
+dnl of the configuration process we combine TAO_CXXFLAGS and CXXFLAGS
+dnl into CXXFLAGS (e.g., CXXFLAGS="$TAO_CXXFLAGS $CXXFLAGS").  CXXFLAGS
+dnl goes after TAO_CXXFLAGS so that the user's C++ flag command line
+dnl choices always override the configure script's choices.
+TAO_CXXFLAGS=""
+TAO_CFLAGS=""
+
+dnl Set the test language as C++
+AC_LANG_CPLUSPLUS
+
+dnl Check if we support symlinks
+AC_PROG_LN_S
+
+dnl Check if a lexical analyzer exists (lex, flex, etc.)
+AM_PROG_LEX
+
+dnl Check if some implementation of YACC exists (yacc, byacc, bison, etc.)
+AC_PROG_YACC
+dnl if test -z "$YACC"; then
+dnl   ./missing yacc
+dnl fi
+
+dnl Check for ace-config script
+AC_CHECK_PROG(ACE_CONFIG, ace-config, ace-config,) dnl
+if test -z "$ACE_CONFIG"; then
+  AC_MSG_WARN(ace-config script not found)
+  AC_MSG_WARN(TAO may not find all of the necessary ACE related libraries)
+fi
+
+dnl We actually check for this in the user AC_ARG_WITH(--with-gperf) 
+dnl block since it is more convenient to put it there.
+dnl Check for gperf program
+dnl AC_CHECK_PROGS(GPERF, gperf-ace gperf,) dnl
+
+dnl Check for profiling progam
+AC_CHECK_PROGS(PROF, gprof prof,) dnl
+
+dnl Since we are linking TAO with the C++ compiler, and since
+dnl libtool checks linker characteristics using the C compiler,
+dnl temporarily state that the C compiler is the C++ compiler.
+TEMP_CC="$CC"
+CC="$CXX"
+
+dnl Disable building of static libraries by default
+AM_DISABLE_STATIC
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AM_PROG_LIBTOOL
+
+
+dnl Restore the C compiler variable
+CC="$TEMP_CC"
+
+dnl
+dnl SECTION 2: Configure script command line options
+dnl
+AC_ARG_ENABLE(fast,
+              [  --enable-fast           enable -fast flag, e.g. Sun C++ [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  TAO_CXXFLAGS="$TAO_CXXFLAGS -fast"
+                  TAO_CFLAGS="$TAO_CFLAGS -fast"
+                  ;;
+                no)
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-fast)
+                  ;;
+               esac
+              ],)
+
+AC_ARG_ENABLE(optimize,
+              [  --enable-optimize       enable additional optimizations [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  AC_MSG_WARN(Optimization configure support not implemented yet.)
+                  ;;
+                no)
+                  AC_MSG_WARN(Optimization configure support not implemented yet.)
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-optimize)
+                  ;;
+               esac
+              ],)
+
+AC_ARG_ENABLE(profile,
+              [  --enable-profile        enable profiling                [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  if test -z "$PROF"; then
+                    AC_MSG_WARN(No profiling program found.  Assuming 'prof' exists)
+                    TAO_CXXFLAGS="$TAO_CXXFLAGS -p"
+                    TAO_CFLAGS="$TAO_CFLAGS -p"
+                  else
+                    case "$PROF" in
+                    gprof)
+                      echo "Building with 'gprof' support"
+                      TAO_CXXFLAGS="$TAO_CXXFLAGS -pg"
+                      TAO_CFLAGS="$TAO_CFLAGS -pg"
+                      ;;
+                    prof)
+                      echo "Building with 'prof' support"
+                      TAO_CXXFLAGS="$TAO_CXXFLAGS -p"
+                      TAO_CFLAGS="$TAO_CFLAGS -p"
+                      ;;
+                    *)
+                      dnl We shouldn't get here.
+                      AC_MSG_WARN(Assuming 'prof' exists)
+                      TAO_CXXFLAGS="$TAO_CXXFLAGS -p"
+                      TAO_CFLAGS="$TAO_CFLAGS -p"
+                      ;;
+                    esac
+                  fi
+                  ;;
+                no)
+                  dnl Do nothing
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-profile)
+                  ;;
+               esac
+              ],)
+
+AC_ARG_ENABLE(purify,
+              [  --enable-purify         Purify all executables          [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  AC_CHECK_PROG(PURIFY, purify, purify,)
+                  if test -n "$PURIFY"; then
+                    PURE_CACHE_BASE_DIR="/tmp/purifycache"
+                    PURE_CACHE_DIR=${PURE_CACHE_BASE_DIR}-${LOGNAME}-${notdir ${CXX} }
+                    PURELINK="$PURIFY -best-effort -chain-length=20 \
+             -cache-dir=$PURE_CACHE_DIR \
+             -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit \
+             -max_threads=100"
+                    TAO_CXXFLAGS="$TAO_CXXFLAGS -DTAO_HAS_PURIFY"
+                    TAO_CFLAGS="$TAO_CFLAGS -DTAO_HAS_PURIFY"
+                  else
+                    AC_MSG_WARN(Purify program was not found.)
+                    AC_MSG_WARN(Disabling purify support.)
+                  fi
+                  ;;
+                no)
+                  PURELINK=""
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-purify)
+                  ;;
+               esac
+              ], PURELINK="")
+
+AC_ARG_ENABLE(quantify,
+              [  --enable-quantify       Quantify all executables        [default=no]],
+              [
+               case "${enableval}" in
+                yes)
+                  AC_CHECK_PROG(QUANTIFY, quantify, quantify,)
+                  if test -n "$QUANTIFY"; then
+                    PURE_CACHE_BASE_DIR="/tmp/purifycache"
+                    PURE_CACHE_DIR=${PURE_CACHE_BASE_DIR}-${LOGNAME}-${notdir ${CXX} }
+                    PRELINK="$QUANTIFY  -best-effort -max_threads=100 \
+             -cache-dir=$PURE_CACHE_DIR"
+                    TAO_CXXFLAGS="$TAO_CXXFLAGS -DTAO_HAS_QUANTIFY"
+                    TAO_CFLAGS="$TAO_CFLAGS -DTAO_HAS_QUANTIFY"
+                  else
+                    AC_MSG_WARN(Quantify program was not found.)
+                    AC_MSG_WARN(Disabling quantify support.)
+                  fi
+                  ;;
+                no)
+                  PRELINK=""
+                  ;;
+                *)
+                  AC_MSG_ERROR(bad value ${enableval} for --enable-quantify)
+                  ;;
+               esac
+              ], PRELINK="")
+
+AC_ARG_WITH(ace-includes,
+              [  --with-ace-includes=DIR ACE include files are in DIR],
+              [
+               case "${withval}" in
+                yes)
+                  AC_MSG_ERROR(specify a directory where the 'ace' include directory exists.)
+                  ;;
+                no)
+                  AC_MSG_ERROR(specify a directory where the 'ace' include directory exists.)
+                  ;;
+                *)
+                  if test -d "${withval}"; then
+                    ACE_INCLUDEDIR="${withval}"
+                    CXXFLAGS="${CXXFLAGS} -I${ACE_INCLUDEDIR}"
+                  else
+                    AC_MSG_ERROR(header directory '${withval}' does not exist.)
+                  fi
+                  ;;
+               esac
+              ],)
+
+AC_ARG_WITH(ace-libs,
+              [  --with-ace-libs=DIR     ACE library files are in DIR],
+              [
+               case "${withval}" in
+                yes)
+                  AC_MSG_ERROR(specify a directory where the ACE libraries exist.)
+                  ;;
+                no)
+                  AC_MSG_ERROR(specify a directory where the ACE libraries exist.)
+                  ;;
+                *)
+                  if test -d "${withval}"; then
+                    ACE_LIBDIR="${withval}"
+                    LDFLAGS="${LDFLAGS} -L${ACE_LIBDIR}"
+                  else
+                    AC_MSG_ERROR(library directory '${withval}' does not exist.)
+                  fi
+                  ;;
+               esac
+              ],)
+
+AC_ARG_WITH(gperf,
+              [  --with-gperf=PROG       gperf program                   [default=gperf]],
+              [
+               case "${withval}" in
+                yes)
+                  AC_MSG_ERROR(Specify the gperf program.)
+                  ;;
+                no)
+                  AC_MSG_ERROR(Specify the gperf program.)
+                  ;;
+                *)
+                  AC_CHECK_PROGS(GPERF, ${withval} gperf-ace gperf,) dnl
+                  if test -n "$GPERF"; then
+                    AC_DEFINE_UNQUOTED(ACE_GPERF, "${withval}")
+                  else
+                    AC_MSG_ERROR(gperf program ${withval} does not exist.)
+                  fi
+                  ;;
+               esac
+              ],
+              [
+               if test -z "$GPERF"; then
+                 AC_MSG_WARN(No gperf program found.  TAO will not use perfect hashing.)
+               else
+                 AC_DEFINE_UNQUOTED(ACE_GPERF, "${GPERF}")
+               fi
+              ])
+
+dnl Check for a working ACE installation
+ac_save_CXXFLAGS="$CXXFLAGS"
+ac_save_LDFLAGS="$LDFLAGS"
+ac_save_LIBS="$LIBS"
+if test -n "$ACE_CONFIG"; then
+  CXXFLAGS=`$ACE_CONFIG --cxxflags ace`
+  LDFLAGS=`$ACE_CONFIG --libs-only-L ace`
+  LIBS=`$ACE_CONFIG --libs-only-l ace`
+fi
+CXXFLAGS="$ac_save_CXXFLAGS $CXXFLAGS"
+LDFLAGS="$ac_save_LDFLAGS $LDFLAGS"
+LIBS="$ac_save_LIBS -lACE $LIBS"
+AC_MSG_CHECKING(for a working ACE installation)
+AC_CACHE_VAL(ac_cv_lib_ace_ace_os_exit,
+[
+ cat > conftest.$ac_ext <<EOF
+
+#include <ace/OS.h>
+changequote(, )dnl
+int main(int argc, char *argv[])
+changequote([, ])dnl
+{
+ ACE_OS::exit(0);
+}
+EOF
+
+ if (eval "$CXX -o conftest conftest.$ac_ext $CXXFLAGS $LDFLAGS $LIBS") 2>&5; then
+   ac_cv_lib_ace_ace_os_exit="yes"
+   rm -f conftest*
+ else
+   ac_cv_lib_ace_ace_os_exit="no"
+   dnl rm -f conftest*
+ fi
+])
+if test "$ac_cv_lib_ace_ace_os_exit" = "yes"; then
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+  AC_MSG_WARN(no functional ACE library found)
+  AC_MSG_ERROR(specify needed compiler flags using CXXFLAGS variable first)
+fi
+
+dnl We only set the following if the ace-config script doesn't exist!
+if test -z "$ACE_CONFIG"; then
+
+  dnl Check if platform supports exceptions using ACE headers
+  AC_MSG_CHECKING(if ACE supports exceptions)
+  AC_EGREP_CPP(TAO_EXCEPTIONS,
+    [
+#include <ace/config.h>
+
+#if defined (ACE_HAS_EXCEPTIONS)
+       TAO_EXCEPTIONS
+#endif
+    ],
+    [
+     AC_MSG_RESULT(yes)
+    ] ,
+    [
+     AC_MSG_RESULT(no)
+     if test -n "$GXX"; then
+dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
+changequote(, )dnl
+       if g++ --version | egrep -v '^2\.[0-7]' > /dev/null; then
+changequote([, ])dnl
+         if test -z "$ACE_CONFIG"; then
+           TAO_CXXFLAGS="$TAO_CXXFLAGS -fno-exceptions"
+         fi
+       fi
+     fi
+     if test -n "$GCC"; then
+dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
+changequote(, )dnl
+       if gcc --version | egrep -v '^2\.[0-7]' > /dev/null; then
+changequote([, ])dnl
+         if test -z "$ACE_CONFIG"; then
+           TAO_CFLAGS="$TAO_CFLAGS -fno-exceptions" 
+         fi
+       fi
+     fi
+    ])
+
+  dnl Check if platform supports run-time type identification using ACE headers
+  AC_MSG_CHECKING(if ACE supports GNU C++ repositories)
+  AC_EGREP_CPP(TAO_GNU_REPO,
+    [
+#include <ace/config.h>
+
+#if defined (ACE_HAS_GNU_REPO)
+       TAO_GNU_REPO
+#endif
+    ],
+    [
+     AC_MSG_RESULT(yes)
+     if test -n "$GXX" && test -z "$ACE_CONFIG"; then
+       TAO_CXXFLAGS="$TAO_CXXFLAGS -frepo"
+     fi
+    ] ,
+    [
+     AC_MSG_RESULT(no)
+     if test -n "$GXX" && test -z "$ACE_CONFIG"; then
+       TAO_CXXFLAGS="$TAO_CXXFLAGS -fno-implicit-templates"
+     fi
+    ])
+
+  dnl Check if platform supports run-time type identification using ACE headers
+  AC_MSG_CHECKING(if ACE supports run-time type identification)
+  AC_EGREP_CPP(TAO_RTTI,
+    [
+#include <ace/config.h>
+
+#if !defined (ACE_LACKS_RTTI)
+       TAO_RTTI
+#endif
+    ],
+    [
+     AC_MSG_RESULT(yes)
+       if test -z "$GXX" && test -z "$ACE_CONFIG"; then
+         case "$target" in
+           *solaris*)
+              TAO_CXXFLAGS="$TAO_CXXFLAGS -features=rtti"
+              ;;
+           *)
+              ;;
+         esac
+       fi
+    ],
+    [
+     AC_MSG_RESULT(no)
+    ])
+
+fi dnl test -z "$ACE_CONFIG"
+
+dnl Check if templates require source on platform using ACE headers
+AC_MSG_CHECKING(if ACE and TAO require template source)
+AC_EGREP_CPP(TAO_TEMPLATES_SOURCE,
+  [
+#include <ace/config.h>
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+       TAO_TEMPLATES_SOURCE
+#endif
+  ],
+  [
+   tao_cv_feature_templates_require_source="yes"
+   AC_MSG_RESULT(yes)
+  ],
+  [
+   tao_cv_feature_templates_require_source="no"
+   AC_MSG_RESULT(no)
+  ])
+AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE,
+               test X$tao_cv_feature_templates_require_source = Xyes)
+
+
+dnl Additional flags to set by the configure script
+
+if test -n "$GXX" && test -z "$ACE_CONFIG"; then
+  TAO_CXXFLAGS="$TAO_CXXFLAGS -Wall -Wpointer-arith -Wno-switch"
+else
+  TAO_CXXFLAGS="$TAO_CXXFLAGS -Wno-switch"
+fi
+
+if test -n "$GCC" && test -z "$ACE_CONFIG"; then
+  TAO_CFLAGS="$TAO_CFLAGS -Wall -Wpointer-arith -Wno-switch"
+fi
+
+dnl Combine package set flags with user's flags.
+dnl User's flags go after package flags to allow user to override
+dnl package defaults.
+dnl X_CFLAGS comes from AC_PATH_XTRA.  It may include, for example,
+dnl additional include file paths or macros that need to be defined
+dnl in order for X11 related files to be compiled properly.
+CXXFLAGS="$TAO_CXXFLAGS $CXXFLAGS"
+CXXCPPFLAGS="$TAO_CXXCPPFLAGS $CXXCPPFLAGS"
+CFLAGS="$TAO_CFLAGS $CFLAGS"
+CPPFLAGS="$TAO_CPPFLAGS $CPPFLAGS"
+LDFLAGS="$TAO_LDFLAGS $LDFLAGS"
+
+dnl Prepend purify and quantify command lines if purify and quantify are
+dnl enabled.  Otherwise, PURELINK and PRELINK will just be "blank."
+LD="$PURELINK $PRELINK $LD"
+dnl LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
+
+dnl AC_SUBST(LDFLAGS)
+dnl AC_SUBST(LIBOBJS)
+
+dnl These definitions are expanded in the makefile and ace-config
+TAO_LIBDIR='-L${libdir}'
+TAO_LIBS="${LIBS}"
+TAO_INCLUDEDIR='-I${includedir}'
+
+AC_SUBST(TAO_LIBDIR)
+AC_SUBST(TAO_LIBS)
+AC_SUBST(TAO_INCLUDEDIR)
+
+dnl Force CXXFLAGS to be substituted in Makefiles that don't "need" them.
+AC_SUBST(CXXFLAGS)
+
+dnl
+dnl SECTION 16: `AC_OUTPUT([FILE...])'
+dnl
+dnl
+dnl We can finally create all the files listed here; Makefile is
+dnl created from Makefile.in, etc.  Top-level Makefiles should be
+dnl created first.
+AC_OUTPUT([
+           Makefile
+           TAO_IDL/Makefile
+           TAO_IDL/ast/Makefile
+           TAO_IDL/be/Makefile
+           TAO_IDL/be_include/Makefile
+           TAO_IDL/driver/Makefile
+           TAO_IDL/fe/Makefile
+           TAO_IDL/include/Makefile
+           TAO_IDL/narrow/Makefile
+           TAO_IDL/util/Makefile
+           tao/Makefile
+           tao-config
+          ])
+
+echo ""
+echo "Configuration of TAO is now complete."
+echo ""
