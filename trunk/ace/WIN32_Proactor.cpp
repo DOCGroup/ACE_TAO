@@ -242,7 +242,7 @@ ACE_Asynch_Read_Stream_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       ACE_HANDLE handle,
                                                       ACE_Message_Block &message_block,
-                                                      u_long bytes_to_read,
+                                                      size_t bytes_to_read,
                                                       const void* act,
                                                       ACE_HANDLE event,
                                                       int priority,
@@ -266,7 +266,7 @@ ACE_Asynch_Write_Stream_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                        ACE_HANDLE handle,
                                                        ACE_Message_Block &message_block,
-                                                       u_long bytes_to_write,
+                                                       size_t bytes_to_write,
                                                        const void* act,
                                                        ACE_HANDLE event,
                                                        int priority,
@@ -290,7 +290,7 @@ ACE_Asynch_Read_File_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                     ACE_HANDLE handle,
                                                     ACE_Message_Block &message_block,
-                                                    u_long bytes_to_read,
+                                                    size_t bytes_to_read,
                                                     const void* act,
                                                     u_long offset,
                                                     u_long offset_high,
@@ -318,7 +318,7 @@ ACE_Asynch_Write_File_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      ACE_HANDLE handle,
                                                      ACE_Message_Block &message_block,
-                                                     u_long bytes_to_write,
+                                                     size_t bytes_to_write,
                                                      const void* act,
                                                      u_long offset,
                                                      u_long offset_high,
@@ -401,7 +401,7 @@ ACE_WIN32_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                  ACE_HANDLE listen_handle,
                                                  ACE_HANDLE accept_handle,
                                                  ACE_Message_Block &message_block,
-                                                 u_long bytes_to_read,
+                                                 size_t bytes_to_read,
                                                  const void* act,
                                                  ACE_HANDLE event,
                                                  int priority,
@@ -447,10 +447,10 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         ACE_HANDLE socket,
                                                         ACE_HANDLE file,
                                                         ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                        u_long bytes_to_write,
+                                                        size_t bytes_to_write,
                                                         u_long offset,
                                                         u_long offset_high,
-                                                        u_long bytes_per_send,
+                                                        size_t bytes_per_send,
                                                         u_long flags,
                                                         const void *act,
                                                         ACE_HANDLE event,
@@ -624,7 +624,8 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
         result_err = errno ;
 
       this->application_specific_code (asynch_result,
-                                       bytes_transferred,
+                                       ACE_static_cast (size_t,
+                                                        bytes_transferred),
                                        (void *) completion_key,
                                        result_err);
     }
@@ -633,7 +634,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
 void
 ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
-                                               u_long bytes_transferred,
+                                               size_t bytes_transferred,
                                                const void *completion_key,
                                                u_long error)
 {
@@ -669,7 +670,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   // to the ::PostQueuedCompletionStatus()
   //   error will be extracted later in handle_events()
 
-  u_long bytes_transferred = 0;
+  size_t bytes_transferred = 0;
   const void * completion_key = 0 ;
 
   if ( result != 0 )
