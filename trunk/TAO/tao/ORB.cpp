@@ -275,8 +275,7 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 CORBA::Boolean
 CORBA_ORB::work_pending (void)
 {
-  // There's ALWAYS work to do ;-)
-  return 1;
+  return this->orb_core_->reactor ()->work_pending ();
 }
 
 // The following functions are not implemented - they just throw
