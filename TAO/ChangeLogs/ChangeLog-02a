@@ -1,3 +1,12 @@
+Tue Jan 30 20:41:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 
+	  
+	  Initialized the roles (TAO_AV_PRODUCER & TAO_AV_CONSUMER) of the
+	  entries correspondingly for the flows. Thanks to David Karr
+	  <dkarr@bbn.com> and Craig Rodrigues <crodrigu@bbn.com> for
+	  reporting this
+
 Tue Jan 30 13:49:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/Servant_Factory.h:
