@@ -1,7 +1,7 @@
 // $Id$
 
-#include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 
 int
