@@ -1,8 +1,17 @@
+Mon May 17 15:49:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-dgux-4.x-ghs.h,config-vxworks5.x.h,config-ghs-common.h:
+          factored ACE_LACKS_SIGNED_CHAR to config-ghs-common.h.
+
+        * config-dgux-4.x-ghs.h: removed ACE_LACKS_ACE_IOSTREAM.
+          It should work now, though we don't have that platform
+          to verify it.
+
 Mon May 17 15:08:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CORBA_macros.h:
-	  Fixed implementation of the ACE_READ_GUARD_THROW_EX and
-	  ACE_WRITE_GUARD_THROW_EX macros.
+        * ace/CORBA_macros.h:
+          Fixed implementation of the ACE_READ_GUARD_THROW_EX and
+          ACE_WRITE_GUARD_THROW_EX macros.
 
 Mon May 17 15:12:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
