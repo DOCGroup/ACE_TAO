@@ -98,7 +98,7 @@ TAO_DynStruct_i::~TAO_DynStruct_i (void)
 // Functions specific to DynStruct
 
 FieldName
-TAO_DynStruct_i::current_member_name (CORBA::Environment& env)
+TAO_DynStruct_i::current_member_name (CORBA::Environment &)
 {
   return CORBA::string_dup (this->type_.in ()->member_name (this->index_));
 }

@@ -120,7 +120,7 @@ TAO_DynAny_i::copy (CORBA::Environment &env)
 }
 
 void
-TAO_DynAny_i::destroy (CORBA::Environment &env)
+TAO_DynAny_i::destroy (CORBA::Environment &)
 {
   delete this;
 }

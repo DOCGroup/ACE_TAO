@@ -90,7 +90,7 @@ TAO_DynEnum_i::value_as_string (const char* value_as_string,
 }
 
 CORBA::ULong
-TAO_DynEnum_i::value_as_ulong (CORBA::Environment&)
+TAO_DynEnum_i::value_as_ulong (CORBA::Environment &)
 {
   return this->value_;
 }
@@ -131,7 +131,7 @@ TAO_DynEnum_i::copy (CORBA::Environment &env)
 }
 
 void
-TAO_DynEnum_i::destroy (CORBA::Environment &env)
+TAO_DynEnum_i::destroy (CORBA::Environment &)
 {
   // Freeing the top level is all we have to do.
   delete this;
@@ -212,112 +212,112 @@ TAO_DynEnum_i::rewind (CORBA::Environment &)
 // enlightening exception.
 
 void
-TAO_DynEnum_i::insert_boolean (CORBA::Boolean value,
+TAO_DynEnum_i::insert_boolean (CORBA::Boolean,
                                CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_octet (CORBA::Octet value,
+TAO_DynEnum_i::insert_octet (CORBA::Octet,
                              CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_char (CORBA::Char value,
+TAO_DynEnum_i::insert_char (CORBA::Char,
                             CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_short (CORBA::Short value,
+TAO_DynEnum_i::insert_short (CORBA::Short,
                              CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_ushort (CORBA::UShort value,
+TAO_DynEnum_i::insert_ushort (CORBA::UShort,
                               CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_long (CORBA::Long value,
+TAO_DynEnum_i::insert_long (CORBA::Long,
                             CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_ulong (CORBA::ULong value,
+TAO_DynEnum_i::insert_ulong (CORBA::ULong,
                              CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_float (CORBA::Float value,
+TAO_DynEnum_i::insert_float (CORBA::Float,
                              CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_double (CORBA::Double value,
+TAO_DynEnum_i::insert_double (CORBA::Double,
                               CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_string (const char * value,
+TAO_DynEnum_i::insert_string (const char *,
                               CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_reference (CORBA::Object_ptr value,
+TAO_DynEnum_i::insert_reference (CORBA::Object_ptr,
                                  CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_typecode (CORBA::TypeCode_ptr value,
+TAO_DynEnum_i::insert_typecode (CORBA::TypeCode_ptr,
                                 CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_longlong (CORBA::LongLong value,
+TAO_DynEnum_i::insert_longlong (CORBA::LongLong,
                                CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_ulonglong (CORBA::ULongLong value,
+TAO_DynEnum_i::insert_ulonglong (CORBA::ULongLong,
                                  CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_wchar (CORBA::WChar value,
+TAO_DynEnum_i::insert_wchar (CORBA::WChar,
                              CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 void
-TAO_DynEnum_i::insert_any (const CORBA::Any& value,
+TAO_DynEnum_i::insert_any (const CORBA::Any&,
                            CORBA::Environment &env)
 {
   env.exception (new CORBA::BAD_OPERATION (CORBA::COMPLETED_NO));
