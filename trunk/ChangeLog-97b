@@ -1,16 +1,9 @@
 Wed Nov 12 16:29:15 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* platform_netbsd.GNU: added /usr/lib/c++rtO.o to SOBUILD to
-	  insure that static objects' ctors are called.
+        * platform_netbsd.GNU: added /usr/lib/c++rtO.o to SOBUILD to
+          insure that static objects' ctors are called.
 
-Wed Nov 12 10:11:09 1997  David Levine  <levine@lindy.cs.wustl.edu>
-
-	* platform_sunos5_sunc++.GNU:
-	removed +w from CFLAGS because it generates too many spurious warnings.
-
-	* rules.local.GNU: removed extra "fi" in Install operation
-
-Wed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
+cvs diWed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{i,cpp} (inet_ntoa): use VxWorks' native inet_ntoa.  It's
           not documented but it works.
@@ -28,21 +21,24 @@ Wed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
           c_line.  Thanks to Amos Shapira <amos@gezernet.co.il> for
           reporting this.
 
+        * ace/OS.{h,i} (hostname): added Chorus support.  Thanks to Wei
+          for the patches.
+
 Tue Nov 11 23:44:17 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.45, released Tue Nov 11 23:44:17 1997.
 
 Tue Nov 11 21:26:36 1997  Douglas C. Schmidt  <schmidt@lindy.cs.wustl.edu>
 
-	* platform_sunos5_sunc++.GNU, platform_irix6.x-sgic++.GNU, rules.local.GNU:
-	*** empty log message ***
+        * platform_sunos5_sunc++.GNU, platform_irix6.x-sgic++.GNU, rules.local.GNU:
+        *** empty log message ***
 
 Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * Makefile: Added the tests and netsvcs directory to
- 	  RELEASE_LIB_FILES since this is pretty important to determine
- 	  whether ACE works.  Thanks to Chuck Gehr and Steve Coy for this
- 	  suggestion.
+          RELEASE_LIB_FILES since this is pretty important to determine
+          whether ACE works.  Thanks to Chuck Gehr and Steve Coy for this
+          suggestion.
 
         * tests/UNIXclerk.conf: Changed "merengue" to "localhost."
           Thanks to Steve Coy for this suggestion.
