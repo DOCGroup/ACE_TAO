@@ -72,7 +72,7 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler");
 
   // Open the shared library.
-  ACE_SHLIB_HANDLE handle = ACE_OS::dlopen (this->shared_library_);
+  ACE_SHLIB_HANDLE handle = ACE_OS::dlopen (this->dll_name_);
 
   // Extract the factory function.
   SVC_HANDLER *(*factory)(void) =

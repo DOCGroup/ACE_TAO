@@ -66,6 +66,7 @@ NAMES = \
 	OrdMultiSet_Test \
 	OS_Test \
 	Pipe_Test \
+	Proactor_Scatter_Gather_Test \
 	Proactor_Test \
 	Proactor_Timer_Test \
 	Priority_Buffer_Test \
