@@ -1,3 +1,17 @@
+Wed Dec  1 12:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/SystemException.cpp:
+          Fixed typo and added some missing messages
+
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.cpp:
+          Throw object not exist with the minor code described in the spec
+
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp:
+          Removed obsolete code
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+          Changed some formatting of debug messages.
+
 Wed Dec  1 09:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Fixed a few bugs introduced yesterday, not all strategies where added
