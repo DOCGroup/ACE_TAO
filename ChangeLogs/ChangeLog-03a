@@ -1,3 +1,8 @@
+Tue Jul 25 16:12:31 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* ace/Log_Msg.h:
+	  More cosmetic changes, similar to previous ChangeLog entry.
+
 Tue Jul 25 15:58:27 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* ace/Capabilities.{h, cpp}:

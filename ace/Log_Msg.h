@@ -642,6 +642,21 @@ private:
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
+     defined (ACE_HAS_TSS_EMULATION)
+/* static */
+#  if defined (ACE_HAS_THR_C_DEST)
+#   define LOCAL_EXTERN_PREFIX extern "C"
+#  else
+#   define LOCAL_EXTERN_PREFIX
+#  endif /* ACE_HAS_THR_C_DEST */
+LOCAL_EXTERN_PREFIX
+void
+ACE_TSS_cleanup (void *ptr);
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
+#endif /* ACE_MT_SAFE */
+
 #if defined (ACE_THREAD_HACK)
 #define THREAD ACE_THREAD_HACK
 #undef ACE_THREAD_HACK
