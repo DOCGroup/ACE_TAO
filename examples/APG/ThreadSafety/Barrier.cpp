@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
@@ -43,7 +44,7 @@ private:
 void
 HA_CommandHandler::initialize_handler (void)
 {
-  ACE_Time_Value tv (0, this->thr_mgr ()->thr_self () * 100);
+  ACE_Time_Value tv (0, ACE_OS::rand () * 100);
   timespec_t t = (timespec_t)tv;
   ACE_OS::nanosleep (&t);
 }
@@ -51,7 +52,7 @@ HA_CommandHandler::initialize_handler (void)
 int
 HA_CommandHandler::handle_command_requests (void)
 {
-  ACE_Time_Value tv (0, this->thr_mgr ()->thr_self () * 100);
+  ACE_Time_Value tv (0, ACE_OS::rand () * 100);
   timespec_t t = (timespec_t)tv;
 
   // Simulate work.
