@@ -1,3 +1,8 @@
+Thu Mar 16 13:22:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* utils/catior/Makefile:
+	* utils/nslist/Makefile: Some Makefile updates.
+
 Thu Mar 16 13:02:45 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Makefile:
@@ -193,40 +198,40 @@ Wed Mar 15 19:20:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Mar 15 19:10:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Acceptor_Impl.h (TAO_ACCEPTOR_IMPL_H)
+	* tao/Acceptor_Impl.h (TAO_ACCEPTOR_IMPL_H):
 	* tao/Acceptor_Impl.i:
 	* tao/Acceptor_Impl.cpp:Added an argument to the constructor of
 	  TAO_Creation_Strategy.
 
 Wed Mar 15 19:05:53 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Protocol_Factory.h
+	* tao/Protocol_Factory.h:
        	* tao/Transport_Mux_Strategy.h:
-	* tao/ORB.cpp
-       	* tao/ORB.h
-	* tao/skip.cpp
-	* tao/decode.cpp
-	* tao/append.cpp
-	* tao/SHMIOP_Profile.h
-	* tao/SHMIOP_Profile.cpp
-	* tao/UIOP_Profile.cpp
-	* tao/Object.cpp
-	* tao/Stub.cpp
-	* tao/corba.h
-	* tao/Server_Request.h
+	* tao/ORB.cpp:
+       	* tao/ORB.h:
+	* tao/skip.cpp:
+	* tao/decode.cpp:
+	* tao/append.cpp:
+	* tao/SHMIOP_Profile.h:
+	* tao/SHMIOP_Profile.cpp:
+	* tao/UIOP_Profile.cpp:
+	* tao/Object.cpp:
+	* tao/Stub.cpp:
+	* tao/corba.h:
+	* tao/Server_Request.h:
 	* tao/Typecode_Constants.cpp: Removed the header file GIOP.h from
 	  these files. GIOP.h would be retired now.
 
 Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOPC.cpp
-	* tao/GIOPC.i
+	* tao/GIOPC.cpp:
+	* tao/GIOPC.i:
 	* tao/GIOPC.h: Removed some generated code for
 	  sequence<octet>. TAO has this in abundance and it would be
 	  better to reuse them.
 
-	* tao/GIOP_Server_Request.cpp
-	* tao/GIOP_Server_Request.h
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.h:
 	* tao/GIOP_Server_Request.i: Removed the header parsing code from
 	  the class. It has now been moved to the right version dependant
 	  acceptor side code which will do the right parse and store the
