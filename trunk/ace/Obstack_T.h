@@ -5,10 +5,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt, Nanbor Wang
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_OBSTACK_T_H
 #define ACE_OBSTACK_T_H
