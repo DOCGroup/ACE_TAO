@@ -1,3 +1,9 @@
+Fri Feb  4 15:56:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Added -fstrict-prototype
+          for HP-UX 11 - it resolves a pthread_atfork dispute between two
+          slightly different declarations in pthread.h and unistd.h.
+
 Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T.cpp (unbind): Removed the != 0 test since it was
