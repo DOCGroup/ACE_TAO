@@ -1,3 +1,11 @@
+Sun Sep 30 09:08:59 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+
+	  Added missing custom build step for the test IDL file.  Fixes
+	  builds on Windows.
+
 Sat Sep 29 18:58:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
