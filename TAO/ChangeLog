@@ -11,7 +11,7 @@ Mon Jul 19 01:09:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.cpp:
 	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
 
-	  New CSIv2 source files.
+	  New CSIv2 source files.  More to follow ...
 
 	* orbsvcs/orbsvcs/Security.mpc:
 
