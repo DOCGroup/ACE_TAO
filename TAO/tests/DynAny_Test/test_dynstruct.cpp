@@ -175,7 +175,8 @@ Test_DynStruct::run_test (void)
       ftc1->seek (2,
                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA::FieldName_var fn = ftc1->current_member_name (ACE_TRY_ENV);
+      DynamicAny::FieldName_var fn =
+        ftc1->current_member_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (ACE_OS::strcmp (fn.in (), "es"))
         ++this->error_count_;
