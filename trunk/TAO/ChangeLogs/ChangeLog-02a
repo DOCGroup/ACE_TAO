@@ -1,18 +1,23 @@
+Fri Jan 25 12:14:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * TAO/performance-tests/AMH_Single_Threaded_Latency/*.bor:
+          Added BCB makefiles
+
 Fri Jan 25 00:04:05 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile: 
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile: 
-	* docs/tutorials/Quoter/AMI/Makefile: 
-	* docs/tutorials/Quoter/idl/Makefile: 
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+	* docs/tutorials/Quoter/AMI/Makefile:
+	* docs/tutorials/Quoter/idl/Makefile:
 	  Regenerated dependencies.
-	
+
 Thu Jan 24 20:15:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO/performance-tests/AMH_Single_Threaded_Latency/AMH_Single_Threaded_Latency.dsw:
-	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.dsp: 
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.dsp:
 	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.dsp:
 	  Workspace and projects for the AMH performance test.
-	
+
 Thu Jan 24 18:51:21 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO/performance-tests/AMH_Single_Threaded_Latency:
@@ -85,10 +90,10 @@ Thu Jan 24 15:48:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/TAO_Static.dsp:
 	* tao/PortableServer/TAO_PortableServer_Static.dsp:
-	  
+
 	  Fixed worspaces regarding moving of the AMH_Response_Handler
 	  files.
-	
+
 Thu Jan 24 11:48:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
@@ -110,11 +115,11 @@ Thu Jan 24 12:35:17 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.cpp:
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  
+
 	  Fixed a bug in typecode generation for multidimension arrays.
 	  Implemented first part of new recursive IDL handling machanism.
  	  Refactored some repetitive code.
-	
+
 Thu Jan 24 00:08:22 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp:
@@ -141,7 +146,7 @@ Wed Jan 23 16:40:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 	  Made changes to get the correct port value to search the NameService
 	  when the ORBDefaultInitRef option is used.
 	  The changes are made thanks to Andrew L. Shwaika<als@solvo.ru>
-	
+
 Wed Jan 23 14:16:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/include/ast_argument.h:
@@ -172,7 +177,7 @@ Wed Jan 23 14:16:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  Fix indentation in the skeleton.
 	  Insert the arguments for the upcall.  Unfortunately we are
 	  generating *all* the arguments, not only the IN and INOUT ones.
-	
+
 	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
 	* TAO_IDL/be/be_visitor_operation/operation.cpp:
 	  Eliminate duplicate code using the
@@ -193,11 +198,11 @@ Wed Jan 23 13:09:40 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO/tao/Makefile: 
-	* TAO/tao/Makefile.bor: 
-	* TAO/tao/PortableServer/Makefile: 
+	* TAO/tao/Makefile:
+	* TAO/tao/Makefile.bor:
+	* TAO/tao/PortableServer/Makefile:
 	* TAO/tao/PortableServer/Makefile.bor:
-	
+
 	  Updated the files with the changes of moving the
 	  AMH_Response_Handler files from `tao' and `tao/PortableServer'.
 
