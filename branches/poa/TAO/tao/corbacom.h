@@ -672,9 +672,6 @@ public:
   };
 };  // end of class (namespace) CORBA
 
-typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
-extern CORBA::TypeCode TC_opaque;
-
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
                              void *, // object_ptr
                              void *, // context_ptr

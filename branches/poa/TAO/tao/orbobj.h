@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    orbobj.h
 //
@@ -17,7 +17,7 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_ORBOBJ_H)
@@ -48,7 +48,7 @@ public:
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is
   // complete, it should be freed up using <CORBA::release()>.
-  
+
   static CORBA::ORB_ptr _nil (void);
   // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
   // can be used for initialization or in comparisons.
@@ -74,18 +74,18 @@ public:
   // Of all of these operations, only <run> is currently implemented.
   // Others require clarification of design or more implementation
   // than is currently available.
-  
+
   CORBA::Boolean work_pending (void);
   // Returns an indication of whether the ORB needs the <{main thread}> to
   // perform some work.
-  
+
   int perform_work (ACE_Time_Value * = 0);
   // If called by the <{main thread}>, this operation performs an
   // implementation-defined unit of work. Otherwise, it does nothing.
   //
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
-  
+
   int run (ACE_Time_Value *tv = 0);
   // Instructs the ORB to initialize itself and run its event loop in
   // the current thread, not returning until the ORB has shut down.
@@ -97,7 +97,7 @@ public:
   // is returned.
   //
   // <{Note that this interface differs from the POA specification,
-  // which is reproduced below:}> 
+  // which is reproduced below:}>
   //
   // Returns when the ORB has shut down.  If called by the main
   // thread, it enables the ORB to perform work using the main
@@ -202,6 +202,48 @@ private:
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);
+};
+
+class CORBA_ORB_var
+{
+public:
+  CORBA_ORB_var (void); // default constructor
+  CORBA_ORB_var (CORBA::ORB_ptr);
+  CORBA_ORB_var (const CORBA_ORB_var &); // copy constructor
+  ~CORBA_ORB_var (void); // destructor
+
+  CORBA_ORB_var &operator= (CORBA::ORB_ptr);
+  CORBA_ORB_var &operator= (const CORBA_ORB_var &);
+  CORBA::ORB_ptr operator-> (void) const;
+
+  operator const CORBA::ORB_ptr &() const;
+  operator CORBA::ORB_ptr &();
+  // in, inout, out, _retn
+  CORBA::ORB_ptr in (void) const;
+  CORBA::ORB_ptr &inout (void);
+  CORBA::ORB_ptr &out (void);
+  CORBA::ORB_ptr _retn (void);
+  CORBA::ORB_ptr ptr (void) const;
+
+private:
+  CORBA::ORB_ptr ptr_;
+};
+
+class CORBA_ORB_out
+{
+public:
+  CORBA_ORB_out (CORBA::ORB_ptr &);
+  CORBA_ORB_out (CORBA_ORB_var &);
+  CORBA_ORB_out (CORBA_ORB_out &);
+  CORBA_ORB_out &operator= (CORBA_ORB_out &);
+  CORBA_ORB_out &operator= (const CORBA_ORB_var &);
+  CORBA_ORB_out &operator= (CORBA::ORB_ptr);
+  operator CORBA::ORB_ptr &();
+  CORBA::ORB_ptr &ptr (void);
+  CORBA::ORB_ptr operator-> (void);
+
+private:
+  CORBA::ORB_ptr &ptr_;
 };
 
 #endif /* TAO_ORBOBJ_H */

@@ -91,6 +91,10 @@
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
+
+typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+extern CORBA::TypeCode TC_opaque;
+
 #include "tao/any.h"
 
 #include "tao/params.h"
@@ -147,7 +151,6 @@ extern TAO_Export int operator== (const TAO::ObjectKey &l,
 
 #include "tao/orb_core.i"
 #include "tao/corbacom.i"
-#include "tao/sequence.i"
 #include "tao/typecode.i"
 #include "tao/nvlist.i"
 #include "tao/any.i"

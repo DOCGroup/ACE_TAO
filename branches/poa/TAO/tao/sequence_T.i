@@ -123,6 +123,8 @@ TAO_Object_Manager<T>::TAO_Object_Manager(T** ptr, CORBA::Boolean release)
   : ptr_ (ptr),
     release_ (release)
 {
+  if (this->release_)
+    T::_duplicate (*this->ptr_);
 }
 
 template <class T> ACE_INLINE
@@ -137,81 +139,58 @@ TAO_Object_Manager<T>::operator T* &() // cast
   return *this->ptr_;
 }
 
-template <class T> ACE_INLINE const T*
-TAO_Object_Manager<T>::in (void) const
-{
-  return *this->ptr_;
-}
-
-template <class T> ACE_INLINE T*&
-TAO_Object_Manager<T>::inout (void)
-{
-  return *this->ptr_;
-}
-
 // *************************************************************
-// class TAO_Unbounded_Managed_Sequence
+// class TAO_Unbounded_Object_Sequence
 // *************************************************************
-
-template <class T, class Manager> ACE_INLINE void
-TAO_Unbounded_Managed_Sequence<T,Manager>::freebuf (T* *seq)
-{
-  delete []seq;
-}
 
 //default constructor
-template <class T, class Manager> ACE_INLINE
-TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence (void)
-{}
-
-// constructor for unbounded seq
-template <class T, class Manager> ACE_INLINE
-TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
-(CORBA::ULong maximum)
-  : TAO_Unbounded_Base_Sequence (maximum, TAO_Unbounded_Managed_Sequence<T,Manager>::allocbuf (max))
+template <class T> ACE_INLINE
+TAO_Unbounded_Object_Sequence<T>::TAO_Unbounded_Object_Sequence (void)
 {
 }
 
-// constructor from data buffer
-template <class T, class Manager> ACE_INLINE
-TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
-(CORBA::ULong max, CORBA::ULong length,	T* *value, CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (max, length, value, release)
+template <class T> ACE_INLINE
+TAO_Unbounded_Object_Sequence<T>::
+TAO_Unbounded_Object_Sequence (CORBA::ULong maximum,
+			       CORBA::ULong length,
+			       T* *value,
+			       CORBA::Boolean release)
+  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
 
-template <class T, class Manager> ACE_INLINE Manager
-TAO_Unbounded_Managed_Sequence<T,Manager>::operator[] (CORBA::ULong index) const
+template <class T> ACE_INLINE TAO_Object_Manager<T>
+TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T* tmp = ACE_reinterpret_cast (T*, this->buffer_);
+  T** tmp = ACE_reinterpret_cast (T**, this->buffer_);
   return Manager (tmp + index, this->release_);
 }
 
 // *************************************************************
-// class TAO_Bounded_Managed_Sequence
+// class TAO_Bounded_Object_Sequence
 // *************************************************************
 
-template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE void
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::freebuf (T* *seq)
+template <class T, CORBA::ULong MAX> ACE_INLINE void
+TAO_Bounded_Object_Sequence<T,MAX>::freebuf (T* *seq)
 {
   delete []seq;
 }
 
-template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence (void)
+template <class T, CORBA::ULong MAX> ACE_INLINE
+TAO_Bounded_Object_Sequence<T,MAX>::TAO_Bounded_Object_Sequence (void)
 {}
 
 // constructor from data buffer
-template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
+template <class T, CORBA::ULong MAX> ACE_INLINE
+TAO_Bounded_Object_Sequence<T,MAX>::TAO_Bounded_Object_Sequence
 (CORBA::ULong length, T* *value, CORBA::Boolean release)
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
 
-template <class T, class Manager, CORBA::ULong MAX> ACE_INLINE Manager
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::operator[] (CORBA::ULong index) const
+template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Object_Manager<T>
+TAO_Bounded_Object_Sequence<T,MAX>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
   T* tmp = ACE_reinterpret_cast (T*, this->buffer_);
