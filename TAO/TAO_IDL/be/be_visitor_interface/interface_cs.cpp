@@ -338,10 +338,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // Empty implementations so the application can override or not.
   if (node->session_component_child () == 1)
     {
-      *os << "// These two are inherited from SessionComponent." 
+      *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_preactivate (" 
+          << node->full_name () << "::ciao_preactivate ("
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -350,7 +350,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}" << be_nl << be_nl
           << "void" << be_nl
-          << node->full_name () << "::ciao_postactivate (" 
+          << node->full_name () << "::ciao_postactivate ("
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
