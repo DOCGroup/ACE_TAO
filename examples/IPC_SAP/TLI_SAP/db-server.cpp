@@ -1,6 +1,6 @@
 // $Id$
 
-/* Simple multi-threaded database server example. */
+// Simple multi-threaded database server example. 
 
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
@@ -9,7 +9,7 @@ ACE_RCSID(TLI_SAP, db_server, "$Id$")
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
-/* Global thread manager. */
+// Global thread manager. 
 ACE_Thread_Manager thr_mgr;
 
 void *
@@ -22,23 +22,24 @@ lookup_name (ACE_HANDLE handle)
   };
 
   static struct
+  {
+    int emp_id;
+    const char *emp_name;
+  } employee_db[] =
     {
-      int emp_id;
-      const char *emp_name;
-    } employee_db[] =
-      {
-        {123, "John Wayne Bobbit"},
-        {124, "Cindy Crawford"},
-        {125, "O. J. Simpson"},
-        {126, "Bill Clinton"},
-        {127, "Rush Limbaugh"},
-        {128, "Michael Jackson"},
-        {129, "George Burns"},
-        {130, "Paula Jones"},
-        {0, ""}
-      };
+      {123, "John Wayne Bobbit"},
+      {124, "Woody Allen"},
+      {125, "O. J. Simpson"},
+      {126, "Bill Clinton"},
+      {127, "Rush Limbaugh"},
+      {128, "Michael Jackson"},
+      {129, "Kenneth Starr"},
+      {130, "Paula Jones"},
+      {131, "Monica Lewinsky"},
+      {132, "Marv Albert"},
+      {0, ""}
+    };
 
-  int n;
   int flags;
   int employee_id;
   int index;
@@ -47,10 +48,14 @@ lookup_name (ACE_HANDLE handle)
   char recvline[MAXLINE];
   char sendline[MAXLINE];
 
-  ACE_DEBUG ((LM_DEBUG, "stream handle = %d, thread id = %t\n", handle));
+  ACE_DEBUG ((LM_DEBUG,
+              "stream handle = %d, thread id = %t\n",
+              handle));
   stream.set_handle (handle);
 
-  if ((n = stream.recv (recvline, MAXLINE, &flags)) == -1)
+  ssize_t n = stream.recv (recvline, MAXLINE, &flags);
+
+  if (n == -1)
     ACE_OS::t_error ("stream.recv error");
 
   employee_id = ACE_OS::atoi (recvline);
@@ -60,7 +65,8 @@ lookup_name (ACE_HANDLE handle)
     if (employee_id == employee_db[index].emp_id)
       {
         found = 1;
-        n = ACE_OS::sprintf (sendline, "%s", employee_db[index].emp_name);
+        n = ACE_OS::sprintf (sendline,
+                             "%s", employee_db[index].emp_name);
       }
 
   if (found == 0)
@@ -92,12 +98,13 @@ main (int argc, char *argv[])
   for (;;)
     {
       if (server.accept (new_stream) == -1)
-        ::t_error ("server.accept error");
+        ACE_OS::t_error ("server.accept error");
 
       if (thr_mgr.spawn (ACE_THR_FUNC (lookup_name),
                          (void *) new_stream.get_handle (),
                          THR_DETACHED) == -1)
-        ACE_DEBUG ((LM_ERROR, "server: can't create worker thread %d\n"));
+        ACE_DEBUG ((LM_ERROR,
+                    "server: can't create worker thread %d\n"));
     }
 
   ACE_NOTREACHED (return 0);
@@ -106,6 +113,8 @@ main (int argc, char *argv[])
 #include <stdio.h>
 int main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "platform does not support ACE_TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "platform isn't configured to support TLI\n"),
+                    1);
 }
 #endif /* ACE_HAS_THREADS */
