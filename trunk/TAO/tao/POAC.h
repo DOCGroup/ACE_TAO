@@ -1790,7 +1790,7 @@ TAO_NAMESPACE PortableServer{
           CORBA::UShort _tao_index
         );
 
-      CORBA::UShort slot;
+      CORBA::UShort index;
 
       // = TAO extension
       static CORBA::Exception *_alloc (void);

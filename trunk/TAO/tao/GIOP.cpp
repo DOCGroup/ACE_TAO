@@ -1037,7 +1037,7 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
   // appropriate.
   TAO_GIOP_LocateRequestHeader locateRequestHeader;
 
-  TAO_GIOP_LocateStatusType status;
+  TAO_GIOP_LocateStatusType status = TAO_GIOP_UNKNOWN_OBJECT;
   CORBA::Object_var forward_location_var;
 
   ACE_TRY

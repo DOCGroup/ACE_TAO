@@ -1,3 +1,20 @@
+Sun Jun 06 23:17:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAC: Changed <InvalidPolicy::slot> back to
+	  <InvalidPolicy::index>.  We can't rename this since it is
+	  specified in the CORBA spec.
+
+	* tao/GIOP.cpp (process_server_locate): Initialized <status> to
+	  TAO_GIOP_UNKNOWN_OBJECT. This is a safe initial value and will
+	  prevent the "might be used uninitialized in this function"
+	  warning.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed the method
+	  such that when we are not looking for an existing Naming Service
+	  and we are simply become one, we don't print extra erroneous
+	  debug messages.  Thanks to Gul Onural <Gul_Onural@Mitel.COM> for
+	  pointing this out.
+
 Sun Jun  6 22:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.cpp:
@@ -126,7 +143,7 @@ Sun Jun  6 14:04:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/GIOP.cpp:
 	* tao/Wait_Strategy.cpp:
 	* tao/GIOP.cpp: Addesses the @@ Carlos comments.
-	
+
 	* tao/IOP.pidl: Completed the IOP module definition
 
 Sun Jun  6 13:32:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
