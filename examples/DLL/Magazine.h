@@ -33,7 +33,7 @@ class Magazine
 public:
 
   virtual ~Magazine (void) {};
-  // No-op vitrual destructor.
+  // No-op virtual destructor.
   
   virtual void title (void) = 0;
   // This method gives the title of the magazine.
