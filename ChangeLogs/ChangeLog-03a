@@ -1,3 +1,10 @@
+Tue Apr 18 07:39:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.h:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Benchmark_Performance.h:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.h:
+	  Added include of svc_export.h.
+
 Wed Apr 17 18:41:30 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Activation_Queue.h:
