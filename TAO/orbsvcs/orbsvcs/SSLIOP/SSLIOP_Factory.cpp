@@ -18,7 +18,7 @@ TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
-     no_protection_ (0)
+     qop_ (Security::SecQOPIntegrityAndConfidentiality)
 {
 }
 
@@ -51,7 +51,7 @@ TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_SSLIOP_Acceptor (this->no_protection_),
+                  TAO_SSLIOP_Acceptor (this->qop_),
                   0);
 
   return acceptor;
@@ -88,7 +88,12 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               return -1;
             }
 
-          this->no_protection_ = 1;
+          // This does not disable secure invocations on the server
+          // side.  It merely enables insecure ones.  On the client
+          // side, secure invocations will be disabled unless
+          // overridden by a SecurityLevel2::QOPPolicy in the object
+          // reference.
+          this->qop_ = Security::SecQOPNoProtection;
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -232,7 +237,7 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
       // Register the SSLIOP ORB initializer.
       // PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
-                        TAO_SSLIOP_ORBInitializer (this->no_protection_),
+                        TAO_SSLIOP_ORBInitializer (this->qop_),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -266,7 +271,7 @@ TAO_SSLIOP_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO_SSLIOP_Connector (this->no_protection_),
+                  TAO_SSLIOP_Connector (this->qop_),
                   0);
   return connector;
 }

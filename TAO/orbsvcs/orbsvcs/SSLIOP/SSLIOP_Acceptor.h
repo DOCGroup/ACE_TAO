@@ -47,7 +47,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Acceptor
 public:
 
   /// Constructor.
-  TAO_SSLIOP_Acceptor (int support_no_protection);
+  TAO_SSLIOP_Acceptor (Security::QOP qop);
 
   /// Destructor.
   ~TAO_SSLIOP_Acceptor (void);

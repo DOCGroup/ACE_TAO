@@ -283,7 +283,9 @@ TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
   // additional events if there is still data in OpenSSL's internal
   // buffers.  That buffer must be flushed before additional events on
   // the SSLIOP handle can be polled.
-  if (result == 0 && ::SSL_pending (this->peer ().ssl ()))
+  if (result == 0
+      && this->transport () != 0
+      && ::SSL_pending (this->peer ().ssl ()))
     return 1;
 
   return result;
@@ -370,7 +372,7 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
         {
           0,                        // target_supports
           0,                        // target_requires
-          addr.get_port_number ()   // port
+          listen_point.port         // port
         };
 
       // Construct an SSLIOP_Endpoint
