@@ -12,7 +12,8 @@ Fri May 11 12:13:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
 	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: More fixes for FORTE 6.1. 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: More fixes for FORTE
+	  6.1.  
 
 Fri May 11 07:52:02 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -32,7 +33,7 @@ Fri May 11 08:11:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
         * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
-        * orbsvc/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
         * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h: More fixes for
           FORTE 6.1.
