@@ -1,3 +1,8 @@
+Sat Nov 17 10:09:33 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP.cpp (send_report): Changed sdes_type from 
+	ACE_UINT16 to unsigned char to remove VC++ warning.
+
 Fri Nov 16 23:11:33 2001  Ossama Othman  <ossama@uci.edu>
 
  	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (ssl_component):
