@@ -355,12 +355,12 @@ ACE_WFMO_Reactor_Handler_Repository::max_handlep1 (void) const
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t index) const
+ACE_WFMO_Reactor_Handler_Repository::scheduled_for_deletion (size_t slot) const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
-    return this->current_info_[index].delete_entry_ == 1;
+    return this->current_info_[slot].delete_entry_ == 1;
   else
-    return this->current_info_[index + 1].delete_entry_ == 1;
+    return this->current_info_[slot + 1].delete_entry_ == 1;
 }
 
 ACE_INLINE int

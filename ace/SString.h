@@ -81,12 +81,12 @@ public:
   ~ACE_CString (void);
   // Deletes the memory...
 
-  const char &operator [] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
+  const char &operator [] (size_t slot) const;
+  // Return the <slot'th> character in the string (doesn't perform
   // bounds checking).
 
-  char &operator [] (size_t index);
-  // Return the <index'th> character by reference in the string
+  char &operator [] (size_t slot);
+  // Return the <slot'th> character by reference in the string
   // (doesn't perform bounds checking).
 
   ACE_CString &operator = (const ACE_CString &);
@@ -128,23 +128,23 @@ public:
 
   int strstr (const ACE_CString &s) const;
   // Comparison operator that will match substrings.  Returns the
-  // index of the first location that matches, else -1.
+  // slot of the first location that matches, else -1.
 
   int find (const ACE_CString &str, int pos = 0) const;
-  // Find <str> starting at pos.  Returns the index of the first
+  // Find <str> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (const char *s, int pos = 0) const;
-  // Find <s> starting at pos.  Returns the index of the first
+  // Find <s> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (char c, int pos = 0) const;
-  // Find <c> starting at pos.  Returns the index of the first
+  // Find <c> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int rfind (char c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
-  // index of the first location that matches, else npos.
+  // slot of the first location that matches, else npos.
 
   int operator == (const ACE_CString &s) const;
   // Equality comparison operator (must match entire string).
@@ -238,12 +238,12 @@ public:
   ~ACE_WString (void);
   // Deletes the memory...
 
-  ACE_USHORT16 operator [] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
+  ACE_USHORT16 operator [] (size_t slot) const;
+  // Return the <slot'th> character in the string (doesn't perform
   // bounds checking).
 
-  ACE_USHORT16 &operator [] (size_t index);
-  // Return the <index'th> character by reference in the string
+  ACE_USHORT16 &operator [] (size_t slot);
+  // Return the <slot'th> character by reference in the string
   // (doesn't perform bounds checking).
 
   ACE_WString &operator = (const ACE_WString &);
@@ -286,23 +286,23 @@ public:
 
   int strstr (const ACE_WString &s) const;
   // Comparison operator that will match substrings.  Returns the
-  // index of the first location that matches, else -1.
+  // slot of the first location that matches, else -1.
 
   int find (const ACE_WString &str, int pos = 0) const;
-  // Find <str> starting at pos.  Returns the index of the first
+  // Find <str> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (const ACE_USHORT16 *s, int pos = 0) const;
-  // Find <s> starting at pos.  Returns the index of the first
+  // Find <s> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (ACE_USHORT16 c, int pos = 0) const;
-  // Find <c> starting at pos.  Returns the index of the first
+  // Find <c> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int rfind (ACE_USHORT16 c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
-  // index of the first location that matches, else npos.
+  // slot of the first location that matches, else npos.
 
   int operator == (const ACE_WString &s) const;
   // Equality comparison operator (must match entire string).
@@ -393,12 +393,12 @@ public:
   ~ACE_SString (void);
   // Default dtor.
 
-  char operator [] (size_t index) const;
-  // Return the <index'th> character in the string (doesn't perform
+  char operator [] (size_t slot) const;
+  // Return the <slot'th> character in the string (doesn't perform
   // bounds checking).
 
-  char &operator [] (size_t index);
-  // Return the <index'th> character by reference in the string
+  char &operator [] (size_t slot);
+  // Return the <slot'th> character by reference in the string
   // (doesn't perform bounds checking).
 
   ACE_SString &operator = (const ACE_SString &);
@@ -433,23 +433,23 @@ public:
 
   int strstr (const ACE_SString &s) const;
   // Comparison operator that will match substrings.  Returns the
-  // index of the first location that matches, else -1.
+  // slot of the first location that matches, else -1.
 
   int find (const ACE_SString &str, int pos = 0) const;
-  // Find <str> starting at pos.  Returns the index of the first
+  // Find <str> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (const char *s, int pos = 0) const;
-  // Find <s> starting at pos.  Returns the index of the first
+  // Find <s> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int find (char c, int pos = 0) const;
-  // Find <c> starting at pos.  Returns the index of the first
+  // Find <c> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
   int rfind (char c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
-  // index of the first location that matches, else npos.
+  // slot of the first location that matches, else npos.
 
   int operator == (const ACE_SString &s) const;
   // Equality comparison operator (must match entire string).

@@ -762,7 +762,7 @@ protected:
   // -1 if <h_id> is not in the table doesn't contain <h_id>.
 
   ACE_Thread_Descriptor *find_task (ACE_Task_Base *task,
-                                    int index = -1);
+                                    int slot = -1);
   // Locate the thread descriptor address of the list occupied by
   // <task>.  Returns 0 if <task> is not in the table doesn't contain
   // <task>.

@@ -100,7 +100,8 @@ public:
   // just allocate the nodes as we need them.  This can also take in a
   // upcall functor and freelist (if 0, then defaults will be created)
 
-  ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0, ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
+  ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0);
   // Default constructor. <upcall_functor> is the instance of the
   // FUNCTOR to be used by the queue. If <upcall_functor> is 0, Timer
   // Heap will create a default FUNCTOR.  <freelist> the freelist of
@@ -176,8 +177,8 @@ protected:
   // internal freelist).
 
 private:
-  ACE_Timer_Node_T<TYPE> *remove (size_t index);
-  // Remove and return the <index>th <ACE_Timer_Node> and restore the
+  ACE_Timer_Node_T<TYPE> *remove (size_t slot);
+  // Remove and return the <slot>th <ACE_Timer_Node> and restore the
   // heap property.
 
   void insert (ACE_Timer_Node_T<TYPE> *new_node);
@@ -189,18 +190,18 @@ private:
   // preallocated array of ACE_Timer_Nodes.
 
   void reheap_up (ACE_Timer_Node_T<TYPE> *new_node,
-                  size_t index,
+                  size_t slot,
                   size_t parent);
-  // Restore the heap property, starting at <index>.
+  // Restore the heap property, starting at <slot>.
 
   void reheap_down (ACE_Timer_Node_T<TYPE> *moved_node,
-                    size_t index,
+                    size_t slot,
                     size_t child);
-  // Restore the heap property, starting at <index>.
+  // Restore the heap property, starting at <slot>.
 
-  void copy (int index, ACE_Timer_Node_T<TYPE> *moved_node);
-  // Copy <moved_node> into the <index> slot of <heap_> and move
-  // <index> into the corresponding slot in the <timer_id_> array.
+  void copy (int slot, ACE_Timer_Node_T<TYPE> *moved_node);
+  // Copy <moved_node> into the <slot> slot of <heap_> and move
+  // <slot> into the corresponding slot in the <timer_id_> array.
 
   int timer_id (void);
   // Returns a timer id that uniquely identifies this timer.  This id
@@ -232,9 +233,9 @@ private:
   long *timer_ids_;
   // An array of "pointers" that allows each <ACE_Timer_Node> in the
   // <heap_> to be located in O(1) time.  Basically, <timer_id_[i]>
-  // contains the index in the <heap_> array where an <ACE_Timer_Node>
+  // contains the slot in the <heap_> array where an <ACE_Timer_Node>
   // * with timer id <i> resides.  Thus, the timer id passed back from
-  // <schedule> is really an index into the <timer_ids> array.  The
+  // <schedule> is really an slot into the <timer_ids> array.  The
   // <timer_ids_> array serves two purposes: negative values are
   // treated as "pointers" for the <freelist_>, whereas positive
   // values are treated as "pointers" into the <heap_> array.
