@@ -6,10 +6,9 @@ Sun Aug  9 18:20:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 	* TAO_IDL/tao_idl.dsp:
 	* TAO_IDL/tao_idl.dsw:
 	* TAO_IDL/tao_idl_static.dsp:
-	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsw
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
 	* tao/TAO_Static.dsp:
-	* tao/Typecode.cpp:
 	* tests/Simple/Simple_Object.dsw:
 	* tests/Simple/client.dsp:
 	* tests/Simple/server.dsp:
