@@ -25,6 +25,7 @@
 #ifndef TAO_FTCORBAFWD_H
 #define TAO_FTCORBAFWD_H
 #include "ace/pre.h"
+#include "tao/TimeBaseC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,11 +50,11 @@ class  FT_TagFTGroupTaggedComponent_out;
 
 struct FT_TagFTPrimaryTaggedComponent;
 class  FT_TagFTPrimaryTaggedComponent_var;
-class  FT_TagFTPrimaryTaggedComponent_out;
+
 
 struct FT_FTGroupVersionServiceContext;
 class  FT_FTGroupVersionServiceContext_var;
-class  FT_FTGroupVersionServiceContext_out;
+
 
 struct FT_FTRequestServiceContext;
 class  FT_FTRequestServiceContext_var;
@@ -66,11 +67,11 @@ typedef FT_RequestDurationPolicy *FT_RequestDurationPolicy_ptr;
 
 struct FT_TagFTHeartbeatEnabledTaggedComponent;
 class  FT_TagFTHeartbeatEnabledTaggedComponent_var;
-class  FT_TagFTHeartbeatEnabledTaggedComponent_out;
+
 
 struct FT_HeartbeatPolicyValue;
 class  FT_HeartbeatPolicyValue_var;
-class  FT_HeartbeatPolicyValue_out;
+
 
 class   FT_HeartbeatPolicy;
 class   FT_HeartbeatPolicy_var;
@@ -94,7 +95,7 @@ typedef FT_FaultNotifier *FT_FaultNotifier_ptr;
 
 class FT_Name;
 class FT_Name_var;
-class FT_name_out;
+class FT_Name_out;
 
 struct FT_Property;
 class  FT_Property_var;
@@ -104,9 +105,9 @@ class FT_Properties;
 class FT_Properties_var;
 class FT_Properties_out;
 
-typedef FT_Name FT_Location;
-typedef FT_Name_var FT_Location_var;
-typedef FT_Name_out FT_Location_out;
+class FT_Location;
+class FT_Location_var;
+class FT_Location_out;
 
 class FT_Locations;
 class FT_Locations_var;
@@ -132,6 +133,7 @@ class FT_InterfaceNotFound;
 class FT_MemberNotFound;
 class FT_ObjectNotFound;
 class FT_MemberAlreadyPresent;
+class FT_BadReplicationStyle;
 class FT_ObjectNotCreated;
 class FT_ObjectNotAdded;
 class FT_PrimaryNotSet;
@@ -175,15 +177,15 @@ class FT_State;
 class FT_State_var;
 class FT_State_out;
 
-class NoStateAvailable;
-class InvalidState;
-class NoUpdateAvailable;
-class InvalidUpdate;
+class FT_NoStateAvailable;
+class FT_InvalidState;
+class FT_NoUpdateAvailable;
+class FT_InvalidUpdate;
 
 class FT_Checkpointable;
 class FT_Checkpointable_var;
 class FT_Checkpointable_out;
-class FT_Checkpointable *FT_Checkpointable_ptr;
+typedef FT_Checkpointable *FT_Checkpointable_ptr;
 
 class FT_Updateable;
 class FT_Updateable_var;
@@ -212,13 +214,10 @@ TAO_NAMESPACE FT
 
   typedef FT_TagFTPrimaryTaggedComponent TagFTPrimaryTaggedComponent;
   typedef FT_TagFTPrimaryTaggedComponent_var TagFTPrimaryTaggedComponent_var;
-  typedef TagFTPrimaryTaggedComponent &TagFTPrimaryTaggedComponent_out;
-  typedef FT_TagFTPrimaryTaggedComponent_out TagFTPrimaryTaggedComponent_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TagFTPrimaryTaggedComponent;
 
   typedef FT_FTGroupVersionServiceContext FTGroupVersionServiceContext;
   typedef FT_FTGroupVersionServiceContext_var FTGroupVersionServiceContext_var;
-  typedef FT_FTGroupVersionServiceContext_out FTGroupVersionServiceContext_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FTGroupVersionServiceContext;
 
   typedef FT_FTRequestServiceContext FTRequestServiceContext;
@@ -236,15 +235,13 @@ TAO_NAMESPACE FT
 
   typedef FT_TagFTHeartbeatEnabledTaggedComponent TagFTHeartbeatEnabledTaggedComponent;
   typedef FT_TagFTHeartbeatEnabledTaggedComponent_var TagFTHeartbeatEnabledTaggedComponent_var;
-  typedef FT_TagFTHeartbeatEnabledTaggedComponent_out TagFTHeartbeatEnabledTaggedComponent_out;
-
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TagFTHeartbeatEnabledTaggedComponent;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong HEARTBEAT_POLICY;
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong HEARTBEAT_ENABLED_POLICY;
+
   typedef FT_HeartbeatPolicyValue HeartbeatPolicyValue;
   typedef FT_HeartbeatPolicyValue_var HeartbeatPolicyValue_var;
-  typedef FT_HeartbeatPolicyValue_out HeartbeatPolicyValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_HeartbeatPolicyValue;
 
   typedef FT_HeartbeatPolicy HeartbeatPolicy;
@@ -300,9 +297,12 @@ TAO_NAMESPACE FT
   typedef FT_Properties_out Properties_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Properties;
 
-  typedef Name Location;
-  typedef Name_var Location_var;
-  typedef Name_out Location_out;
+  //  typedef Name Location;
+  //typedef Name_var Location_var;
+  //typedef Name_out Location_out;
+  typedef FT_Location Location;
+  typedef FT_Location_var Location_var;
+  typedef FT_Location_out Location_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Location;
 
   typedef FT_Locations Locations;
@@ -381,9 +381,10 @@ TAO_NAMESPACE FT
   typedef TimeBase::TimeT CheckpointIntervalValue;
   typedef TimeBase::TimeT_out CheckpointIntervalValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CheckpointIntervalValue;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceNotFound;
 
   typedef FT_InterfaceNotFound InterfaceNotFound;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceNotFound;
+
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupNotFound;
 
   typedef FT_MemberNotFound MemberNotFound;

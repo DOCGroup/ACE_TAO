@@ -2,6 +2,10 @@
 
 #include "tao/Tagged_Components.h"
 
+#if (TAO_HAS_FT_CORBA == 1)
+#include "tao/ORB.h"
+#endif /*TAO_HAS_FT_CORBA == 1*/
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
@@ -188,7 +192,7 @@ TAO_Tagged_Components::set_unique_component_i (
   if (component.tag == IOP::TAG_FT_PRIMARY)
     {
       CORBA::Boolean primary;
-      if ((cdr >> primary) == 0)
+      if ((cdr.read_boolean (primary)) == 0)
         return;
 
       this->ft_tag_primary_ = 1;
@@ -198,9 +202,9 @@ TAO_Tagged_Components::set_unique_component_i (
       // Revision numbers of the FT specification
       CORBA::Octet ft_minor, ft_major;
 
-      if ((cdr >> ft_major) == 0)
+      if ((cdr.read_octet (ft_major)) == 0)
         return;
-      if ((cdr >> ft_minor) == 0)
+      if ((cdr.read_octet (ft_minor)) == 0)
         return;
 
       // Check for the revsion numbers
@@ -220,7 +224,7 @@ TAO_Tagged_Components::set_unique_component_i (
               // Do not include NULL character at the end.
               // @@ This is not getting demarshaled using the codeset
               //    translators!
-              this->ft_tagged_component_.ft_domain_id_.set (cdr.rd_ptr (), 
+              this->ft_tagged_component_.ft_domain_id_.set (cdr.rd_ptr (),
                                                             length - 1,
                                                             0);
               cdr.skip_bytes (length);
@@ -237,16 +241,16 @@ TAO_Tagged_Components::set_unique_component_i (
       CORBA::ULongLong group_id;
       if (cdr.read_ulonglong (group_id) == 0)
         return;
-      
+
       this->ft_tagged_component_.object_group_id_ = group_id;
-      
+
       // Read the object group ref version
       CORBA::ULong ref_version;
       if (cdr.read_ulong (ref_version) == 0)
         return;
-      
+
       this->ft_tagged_component_.object_group_ref_version_ =
-        ref_version; 
+        ref_version;
     }
 #endif /*TAO_HAS_FT_CORBA == 1 */
 
