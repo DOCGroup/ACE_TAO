@@ -68,7 +68,6 @@ Video_Sig_Handler::register_handler (void)
                        "%p\n", 
                        "register_handler"),
                       -1);
-
   return 0;
 }
 // Called by the ACE_Reactor to extract the fd.

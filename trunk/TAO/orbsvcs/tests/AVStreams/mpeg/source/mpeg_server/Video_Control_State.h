@@ -36,11 +36,11 @@ class Video_Control_Handler;
 
 class Video_Control_State
 {
-  // =TITLE
+  // = TITLE
   //   Defines an abstract class that is used to implement the state
   //   pattern for the video control.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   The various states of the video control are defined by the
   //   Video_States enum. They can be implemented by subclassing from
   //   this class and overriding the handle_input method.
@@ -65,25 +65,20 @@ public:
 
   void set_state (Video_States state);
   // sets the state
-
  
 protected:
-  
   Video_States state_;
   // State of this object
  
   Video_Control_Handler *vch_;
   // My Video Control Handler
-
 };
 
-class Video_Control_Waiting_State
-  : public virtual Video_Control_State
+class Video_Control_Waiting_State : public virtual Video_Control_State
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that implements the waiting state of the video
-  // control state pattern.
-
+  //   control state pattern.
 public:
   Video_Control_Waiting_State (void);
   // Default constructor, sets the state to WAITING
@@ -93,12 +88,11 @@ public:
   // the waiting state  
 };
 
-class Video_Control_Play_State
-  : public virtual Video_Control_State
+class Video_Control_Play_State : public virtual Video_Control_State
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that implements the playing state of the video
-  // control state pattern.
+  //   control state pattern.
 public:
   Video_Control_Play_State (void);
   // Default constructor, sets the state to VIDEO_PLAY
@@ -106,15 +100,13 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the playing state  
-
 };
 
-class Video_Control_Fast_Forward_State
-  : public virtual Video_Control_State
+class Video_Control_Fast_Forward_State : public virtual Video_Control_State
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that implements the fast_forward state of the video
-  // control state pattern.
+  //   control state pattern.
 public:
   Video_Control_Fast_Forward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_FORWARD
@@ -122,15 +114,13 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the fast_forward state  
-
 };
 
-class Video_Control_Fast_Backward_State
-  : public virtual Video_Control_State
+class Video_Control_Fast_Backward_State : public virtual Video_Control_State
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that implements the fast_backward state of the video
-  // control state pattern.
+  //   control state pattern.
 public:
   Video_Control_Fast_Backward_State (void);
   // Default constructor, sets the state to VIDEO_FAST_BACKWARD
@@ -140,10 +130,14 @@ public:
   // the fast_backward state  
 };
 
-typedef ACE_TSS_Singleton <Video_Control_Waiting_State,       ACE_SYNCH_MUTEX> VIDEO_CONTROL_WAITING_STATE;     
-typedef ACE_TSS_Singleton <Video_Control_Play_State,          ACE_SYNCH_MUTEX> VIDEO_CONTROL_PLAY_STATE;        
-typedef ACE_TSS_Singleton <Video_Control_Fast_Forward_State,  ACE_SYNCH_MUTEX> VIDEO_CONTROL_FAST_FORWARD_STATE;
-typedef ACE_TSS_Singleton <Video_Control_Fast_Backward_State, ACE_SYNCH_MUTEX> VIDEO_CONTROL_FAST_BACKWARD_STATE;
+// @@ Is there a particular reason we need these to be thread-specific singletons?!
+typedef ACE_TSS_Singleton <Video_Control_Waiting_State, ACE_SYNCH_MUTEX>
+        VIDEO_CONTROL_WAITING_STATE;     
+typedef ACE_TSS_Singleton <Video_Control_Play_State, ACE_SYNCH_MUTEX>
+        VIDEO_CONTROL_PLAY_STATE;        
+typedef ACE_TSS_Singleton <Video_Control_Fast_Forward_State, ACE_SYNCH_MUTEX>
+        VIDEO_CONTROL_FAST_FORWARD_STATE;
+typedef ACE_TSS_Singleton <Video_Control_Fast_Backward_State, ACE_SYNCH_MUTEX>
+        VIDEO_CONTROL_FAST_BACKWARD_STATE;
 
-
-#endif // MPEG_VIDEO_SERVER_STATE_H
+#endif /* MPEG_VIDEO_SERVER_STATE_H */

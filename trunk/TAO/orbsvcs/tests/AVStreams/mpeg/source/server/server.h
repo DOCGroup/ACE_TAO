@@ -1,5 +1,4 @@
 /* -*- c++ -*- */
-
 /* $Id$ */
 
 // ============================================================================
@@ -10,6 +9,9 @@
 // = FILENAME
 //    server.h
 //
+// = DESCRIPTION
+//   @@ Please add a synopsis of this file.
+//
 // = AUTHORS
 //    Sumedh Mungee (sumedh@cs.wustl.edu)
 //    Nagarajan Surendran (naga@cs.wustl.edu)
@@ -17,73 +19,59 @@
 // ============================================================================
 
 #if !defined (TAO_AV_SERVER_H)
-#define      TAO_AV_SERVER_H
+#define TAO_AV_SERVER_H
 
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <string.h>
-#include <netdb.h>
-#include <ctype.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netinet/tcp.h>
-#include <arpa/inet.h>
-#include <sys/un.h>
-#include <time.h>
-#include <sys/time.h>
-#include "../include/common.h"
-#include "../mpeg_server/proto.h"
-#include "fileio.h"
-#include "routine.h"
-#include "com.h"
 #include "ace/Get_Opt.h"
-
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/Select_Reactor.h"
+// @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
+#include "../include/common.h"
+#include "../mpeg_server/proto.h"
+#include "fileio.h"
+#include "routine.h"
+#include "com.h"
 
-#ifdef NATIVE_ATM
+#if defined (NATIVE_ATM)
 #include "atmcom.h"
-#endif
+#endif /* NATIVE_ATM */
 
+// @@ Make sure you use the -I option in the makefile to avoid having to use the ../... pathname stuff..
 #include "../mpeg_server/Video_Server.h"
 
+// Forward declaration.
 class AV_Svc_Handler;
 
-class AV_Acceptor 
-  : public virtual ACE_Acceptor <AV_Svc_Handler, 
-                                 ACE_SOCK_ACCEPTOR>
+// @@ We should probably try to replace the ACE_Acceptor with the
+// ACE_Strategy_Acceptor using the ACE_Process_Strategy... 
+class AV_Acceptor : public virtual ACE_Acceptor <AV_Svc_Handler, ACE_SOCK_ACCEPTOR>
 {
-  // =TITLE
+  // = TITLE
   //   This defines a AV_Acceptor which is an Acceptor and
-  // overrides the make_svc_handler method of the Acceptor.
+  //   overrides the make_svc_handler method of the Acceptor.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   This class overrides the Acceptor's make_svc_handler so that a
-  // AV_Svc_Handler can be created with a non-default constructor.
+  //   AV_Svc_Handler can be created with a non-default constructor.
 public:  
   virtual int make_svc_handler (AV_Svc_Handler *&sh);
-  // Create a new  <AV_Svc_Handler> passing 'this' to the service handler
+  // Create a new <AV_Svc_Handler> passing 'this' to the service
+  // handler.
 };
 
-class AV_Svc_Handler 
-  : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, 
-                                    ACE_NULL_SYNCH>
+class AV_Svc_Handler : public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-  // =TITLE
+  // = TITLE
   //   This class defines the service handler for a new connection to
-  // the AV_Server.
+  //   the AV_Server.
   //
   // =DESCRIPTION
   //   This calls the handle_connection method for a new connection
-  // which demuxes the connection to a video or audio server depending
-  // on the connection request.
+  //   which demuxes the connection to a video or audio server
+  //   depending on the connection request.
 public:
   // = Initialization method.
   AV_Svc_Handler (ACE_Reactor * = 0,
@@ -121,12 +109,11 @@ private:
   // Pointer to the Acceptor that created us so that we can remove it
   // from the <ACE_Reactor> when we <fork>.
 
-  // %% need a similar dude for audio!
+  // @@ need a similar component for audio!
   Video_Server *vs_;
 };
 
-class AV_Server_Sig_Handler 
-  : public virtual ACE_Event_Handler
+class AV_Server_Sig_Handler : public virtual ACE_Event_Handler
 {
 public:
   AV_Server_Sig_Handler (void);
@@ -159,13 +146,13 @@ private:
   // dummy handle for the sig handler.
 };
 
-
 class AV_Server
 {
-  // =TITLE
+  // = TITLE
   //   Defines a class that abstracts the functionality of a 
   //   video and audio server.
-  // =DESCRIPTION
+  //
+  // = DESCRIPTION
   //   Using the class is as simple as calling init () first and then
   //   run. It uses an acceptor with the default ACE_Reactor::instance ().
 public:
@@ -198,7 +185,6 @@ private:
   int parse_args (int argcs,
                   char **argv);
   // parse the arguments
-
 };
 
-#endif // TAO_AV_SERVER_H
+#endif /* TAO_AV_SERVER_H */
