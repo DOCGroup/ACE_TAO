@@ -1,3 +1,8 @@
+Tue Aug 24 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Config.h:
+          Removed not needed ; after namespace closure
+
 Mon Aug 23 21:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
@@ -15,24 +20,24 @@ Mon Aug 23 21:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/XSCRT/XMLSchema.ipp:
 	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp:
 
-	  Added XSCRT 0.0.4 into the repository to compile the handlers. 
+	  Added XSCRT 0.0.4 into the repository to compile the handlers.
 
 Mon Aug 23 21:32:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/TypeNameEmitter.cpp:
 
 	  Fixed a compiler error in the daily builds showing up from a
-	  non-const declaration of a char * for extraction into an Any. 
+	  non-const declaration of a char * for extraction into an Any.
 
 	* DAnCE/Config_Handlers/Config.h:
 
-	  Deployment.h has been renamed to Config.h 
-	
-	* DAnCE/Config_Handlers/Process_Element.h:	
+	  Deployment.h has been renamed to Config.h
+
+	* DAnCE/Config_Handlers/Process_Element.h:
 	* DAnCE/Config_Handlers/Basic_Handler.h:
-	
+
 	  Include Config.h
-	  
+
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
 	* DAnCE/Config_Handlers/Deployment.cpp:
@@ -53,11 +58,11 @@ Mon Aug 23 21:32:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/pcd.hpp:
 	* DAnCE/Config_Handlers/toplevel.cpp:
 	* DAnCE/Config_Handlers/toplevel.hpp:
-	* DAnCE/Config_Handlers/Config_Handlers.mpc:	
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
 
 	  Generated code from XSC which is going to be used for the next
 	  generation handlers. They have been added in the MPC but guarded
-	  with requires += dummy_label since they give lot of warnings. 
+	  with requires += dummy_label since they give lot of warnings.
 
 Mon Aug 23 08:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
