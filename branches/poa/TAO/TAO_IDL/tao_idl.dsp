@@ -152,6 +152,10 @@ SOURCE=.\ast\ast_module.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_native.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_operation.cpp
 # End Source File
 # Begin Source File
@@ -277,6 +281,10 @@ SOURCE=.\be\be_interface_fwd.cpp
 # Begin Source File
 
 SOURCE=.\be\be_module.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_native.cpp
 # End Source File
 # Begin Source File
 
@@ -580,6 +588,10 @@ SOURCE=.\include\ast_module.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\include\ast_native.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\include\ast_operation.h
 # End Source File
 # Begin Source File
@@ -697,6 +709,10 @@ SOURCE=.\be_include\be_interface_fwd.h
 # Begin Source File
 
 SOURCE=.\be_include\be_module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_native.h
 # End Source File
 # Begin Source File
 

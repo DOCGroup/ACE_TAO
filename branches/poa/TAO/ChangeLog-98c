@@ -1,3 +1,11 @@
+Sat Jan 10 19:21:18 1998    <coryan@MILONGA>
+
+	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be_include/be_interface.h: 
+	* tao/orb_core.cpp: 
+	  Fixed some problems in the latest merges.
+
 Sat Jan 10 18:06:24 1998    <coryan@MILONGA>
 
 	* Merged changes from tag main_to_poa_merge_7 and
