@@ -2,9 +2,9 @@
 
 #include "IO.h"
 #include "HTTP_Helpers.h"
-#include "JAWS_File.h"
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Filecache.h"
 
 JAWS_IO::JAWS_IO (void)
   : handle_ (ACE_INVALID_HANDLE),
@@ -66,11 +66,11 @@ JAWS_Synch_IO::receive_file (const char *filename,
 			     int initial_data_length,
 			     int entire_length)
 {
-  JAWS_File_Handle handle (filename, entire_length);
+  ACE_Filecache_Handle handle (filename, entire_length);
 
   int result = handle.error ();
 
-  if (result == JAWS_File::OKIE_DOKIE)
+  if (result == ACE_Filecache_Handle::SUCCESS)
     {
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
@@ -88,7 +88,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
 	result = -1;
     }
 
-  if (result != JAWS_File::OKIE_DOKIE)    
+  if (result != ACE_Filecache_Handle::SUCCESS)    
     this->handler_->receive_file_error (result);
 }
 
@@ -99,11 +99,11 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 			      const char *trailer, 
 			      int trailer_size)
 {
-  JAWS_File_Handle handle (filename);
+  ACE_Filecache_Handle handle (filename);
 
   int result = handle.error ();
 
-  if (result == JAWS_File::OKIE_DOKIE)
+  if (result == ACE_Filecache_Handle::SUCCESS)
     {
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
@@ -116,7 +116,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 	result = -1;      
     }
 
-  if (result != JAWS_File::OKIE_DOKIE)    
+  if (result != ACE_Filecache_Handle::SUCCESS)    
     this->handler_->transmit_file_error (result);
 }
 
@@ -181,7 +181,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
       if (result.success () && result.bytes_transferred () != 0)
 	{
 	  if (result.message_block ().length () == result.message_block ().size ())
-	    code = JAWS_File::OKIE_DOKIE;
+	    code = ACE_Filecache_Handle::SUCCESS;
 	  else
 	    {
 	      ACE_Asynch_Read_Stream ar;
@@ -197,13 +197,13 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
       else
 	code = -1;
 
-      if (code == JAWS_File::OKIE_DOKIE)
+      if (code == ACE_Filecache_Handle::SUCCESS)
 	this->handler_->receive_file_complete ();
       else
 	this->handler_->receive_file_error (code);    
       
       delete &result.message_block ();
-      delete (JAWS_File_Handle *) result.act ();
+      delete (ACE_Filecache_Handle *) result.act ();
     }
   else
     {
@@ -223,16 +223,16 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 			      int entire_length)
 {
   ACE_Message_Block *mb = 0;
-  JAWS_File_Handle *handle;
+  ACE_Filecache_Handle *handle;
 
   // James, please fix this method so that it returns an int (i.e.,
   // -1) if new fails.  Then replace ACE_NEW with ACE_NEW_RETURN and
   // make sure to update all the callers.
-  ACE_NEW (handle, JAWS_File_Handle (filename, entire_length));
+  ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length));
 
   int result = handle->error ();
 
-  if (result == JAWS_File::OKIE_DOKIE)
+  if (result == ACE_Filecache_Handle::SUCCESS)
     {
       ACE_OS::memcpy (handle->address (),
 		      initial_data,
@@ -258,7 +258,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 	result = -1;
     }
   
-  if (result != JAWS_File::OKIE_DOKIE)    
+  if (result != ACE_Filecache_Handle::SUCCESS)    
     {
       this->handler_->receive_file_error (result);
       delete mb;
@@ -274,11 +274,11 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 			       int trailer_size)
 {
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  JAWS_File_Handle *handle = new JAWS_File_Handle (filename);
+  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename);
 
   int result = handle->error ();
 
-  if (result == JAWS_File::OKIE_DOKIE)
+  if (result == ACE_Filecache_Handle::SUCCESS)
     {
       ACE_Message_Block header_mb (header, header_size);
       ACE_Message_Block trailer_mb (trailer, trailer_size);
@@ -301,7 +301,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 	result = -1;
     }   
   
-  if (result != JAWS_File::OKIE_DOKIE)    
+  if (result != ACE_Filecache_Handle::SUCCESS)    
     {
       this->handler_->transmit_file_error (result);
       delete header_and_trailer;
@@ -320,7 +320,7 @@ JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &re
     this->handler_->transmit_file_error (-1);
   
   delete result.header_and_trailer ();
-  delete (JAWS_File_Handle *) result.act ();
+  delete (ACE_Filecache_Handle *) result.act ();
 }
 
 void 
