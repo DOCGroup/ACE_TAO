@@ -16,8 +16,8 @@
 //=============================================================================
 
 
-#ifndef TAO_OBJECT_MANAGER_H
-#define TAO_OBJECT_MANAGER_H
+#ifndef TAO_SINGLETON_MANAGER_H
+#define TAO_SINGLETON_MANAGER_H
 
 #include "ace/pre.h"
 
@@ -188,4 +188,4 @@ private:
 
 #include "ace/post.h"
 
-#endif  /* TAO_OBJECT_MANAGER_H */
+#endif  /* TAO_SINGLETON_MANAGER_H */
