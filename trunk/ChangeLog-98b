@@ -1,3 +1,8 @@
+Wed Jun 24 17:10:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe: Removed ACE_COMPILE_TIMEPROBE.  ACE library will
+ 	  always contain ACE_Timeprobe code.
+
 Wed Jun 24 16:20:02 1998  James CE Johnson  <jcej@lads.com>
 
         * ace/IOStream.cpp (underflow,overflow): added protection against

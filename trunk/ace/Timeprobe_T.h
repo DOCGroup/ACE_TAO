@@ -3,8 +3,6 @@
 #if !defined (ACE_TIMEPROBE_T_H)
 #define ACE_TIMEPROBE_T_H
 
-#if defined (ACE_COMPILE_TIMEPROBES)
-
 template <class ACE_LOCK>
 class ACE_Timeprobe
 {
@@ -141,5 +139,4 @@ protected:
 #pragma implementation ("Timeprobe_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_TIMEPROBE_T_H */

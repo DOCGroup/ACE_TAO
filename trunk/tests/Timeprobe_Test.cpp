@@ -20,13 +20,6 @@
 # define ACE_ENABLE_TIMEPROBES
 #endif /* ! ACE_ENABLE_TIMEPROBES */
 
-#if !defined (ACE_COMPILE_TIMEPROBES)
-  // #include Timeprobe.cpp so that we get any necessary template
-  // instantiations.
-# define ACE_COMPILE_TIMEPROBES
-# include "ace/Timeprobe.cpp"
-#endif /* ! ACE_COMPILE_TIMEPROBES */
-
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 

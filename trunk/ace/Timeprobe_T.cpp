@@ -4,8 +4,6 @@
 #define ACE_TIMEPROBE_T_C
 
 #include "ace/Timeprobe.h"
-
-#if defined (ACE_COMPILE_TIMEPROBES)
 #include "ace/High_Res_Timer.h"
 
 template <class ACE_LOCK>
@@ -227,5 +225,4 @@ ACE_Function_Timeprobe<Timeprobe>::~ACE_Function_Timeprobe (void)
   this->timeprobe_.timeprobe (this->event_ + 1);
 }
 
-#endif /* ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_TIMEPROBE_T_C */
