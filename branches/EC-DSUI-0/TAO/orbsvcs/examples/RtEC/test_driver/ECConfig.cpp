@@ -5,7 +5,7 @@
 
 #include "ECConfig.h"
 #include "Consumer.h"
-#include "TimeoutConsumer.h"
+#include "Supplier.h"
 
 #include <sstream> //for ostringstream
 
@@ -255,7 +255,7 @@ ECConfig<SCHED_STRAT>::run (void)
         }
 
       //      Block waiting for consumers to finish
-      //when can acquire write lock, all TimeoutConsumers are finished
+      //when can acquire write lock, all Suppliers are finished
       ret = this->test_done->acquire_write();
       if (ret == -1)
         {
@@ -264,7 +264,7 @@ ECConfig<SCHED_STRAT>::run (void)
           return 1;
         }
 
-      //all TimeoutConsumers done, so stop EC and ORB
+      //all Suppliers done, so stop EC and ORB
       //Shutdown EC
       this->reset();
 
@@ -348,7 +348,7 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   RtecEventComm::EventSet event(1);
   event.length(1);
 
-  ACE_DEBUG((LM_DEBUG,"TimeoutConsumers to connect: %d\n",this->suppliers.size()));
+  ACE_DEBUG((LM_DEBUG,"Suppliers to connect: %d\n",this->suppliers.size()));
   //this->suppliers already has correct size
   size_t supp_idx = 0;
   for (size_t i=0; i<this->testcfgs.size(); ++i)
@@ -356,16 +356,16 @@ ECConfig<SCHED_STRAT>::connect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
       if (this->testcfgs[i]->comptype == SOURCE)
         {
           ACE_ASSERT(supp_idx < this->suppliers.size());
-          ACE_NEW (this->suppliers[supp_idx], TimeoutConsumer ());
+          ACE_NEW (this->suppliers[supp_idx], Supplier ());
 
           event[0].header.type   = ACE_ES_EVENT_UNDEFINED+this->testcfgs[i]->type;
           event[0].header.source = supp_idx; //supplier_id
           event[0].header.ttl    = 1;
 
           std::ostringstream entry_prefix;
-          entry_prefix << "TimeoutConsumer " << supp_idx;
+          entry_prefix << "Supplier " << supp_idx;
 
-          ACE_DEBUG((LM_DEBUG,"TimeoutConsumer.connect() for %s\n",entry_prefix.str().c_str()));
+          ACE_DEBUG((LM_DEBUG,"Supplier.connect() for %s\n",entry_prefix.str().c_str()));
           this->suppliers[supp_idx]->connect (this->test_done,
                                               this->scheduler.in(),
                                               entry_prefix.str().c_str(),
