@@ -11,7 +11,7 @@ endif # ! TAO_ROOT
 #### VisiBroker
 ifdef VBROKER_ADM
   JAVA_DIR = $(VBROKER_ADM)/../bin/
-  CLASSPATH = $(VBROKER_ADM)/../lib/:$(VBROKER_ADM)/../bin/:$(CLASSPATH)
+  CLASSPATH := $(VBROKER_ADM)/../lib/:$(VBROKER_ADM)/../bin/:$(CLASSPATH)
 else  # ! VBROKER_ADM
   JAVA_DIR = /project/doc/pkg/VisiJava3.4/bin/
 endif # ! VBROKER_ADM
@@ -32,7 +32,7 @@ DOVE_BROWSER_JAVA = \
         RtecEventChannelAdmin.java \
         Navigation.java \
         Weapons.java \
-	Persian.java
+        Persian.java
 
 DOVE_BROWSER_CLASS = Navigation.class
 
@@ -56,9 +56,10 @@ ifeq ($(CROSS-COMPILE),)
 	-$(RM) -r $(DOVE_BROWSER_JAVA) \
          $(patsubst %.java,%.idl,$(DOVE_BROWSER_JAVA)) NavWeap.idl \
          Navigation.java NavigationH*.java \
-         Weapons.java WeaponsH*.java *.class CosNaming \
+         Weapons.java WeaponsH*.java *.class CosNaming PersianRecursion \
          RtecEventChannelAdmin RtecEventComm RtecScheduler TimeBase \
-         NavWeapTerminator*.java _*.java
+         NavWeapTerminator*.java _*.java \
+         EventPayloadH*.java RtecEventData*.java
 
 else
   all default_embedded:
@@ -95,14 +96,11 @@ else  # ! vbjc
 endif # vbjc
 	@$(JAVAC) *.java
 
-NavWeap.idl: ../NavWeap.idl
-	@cp -p $< .
-
-Persian.idl: ../Persian.idl
-	@cp -p $< .
-
 Navigation.java Weapons.java: NavWeap.idl
 	@$(IDL2JAVA) -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT) $<
+
+%.idl: ../%.idl
+	@cp -p $< .
 
 %.idl: $(TAO_ROOT)/orbsvcs/orbsvcs/%.idl
 	@cp -p $< .
