@@ -36,6 +36,7 @@ ifndef TAO_ORBSVCS
                 Concurrency \
 		Trader \
 		Log \
+		IFR_Service \
 		AV
 
   ifeq ($(minimum_corba),0)
@@ -174,6 +175,9 @@ ifneq (,$(findstring  FaultTolerance, $(TAO_ORBSVCS)))
 endif
 ifneq (,$(findstring  PortableGroup, $(TAO_ORBSVCS)))
   MKLIST += Makefile.PortableGroup
+endif
+ifneq (,$(findstring  IFR_Service, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.IFRService
 endif
 
 #----------------------------------------------------------------------------

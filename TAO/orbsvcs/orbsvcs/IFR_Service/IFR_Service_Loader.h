@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IFR_Service/IFR_Service.h"
+#include "IFR_Service_Utils.h"
 
 class TAO_IFR_Service_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
@@ -53,8 +53,8 @@ public:
 
 
  protected:
-  IFR_Service ifr_service_;
-  // Instance of the IFR Service
+  TAO_IFR_Server ifr_server_;
+  // Instance of the TAO_IFR_Server
 
 private:
 

@@ -1,3 +1,148 @@
+Fri Apr 26 12:04:08 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/IFR_Service/AbstractInterfaceDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/AliasDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/AliasDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ArrayDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ArrayDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/AttributeDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/AttributeDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ComponentDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ComponentDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ComponentRepository_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ComponentRepository_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ConstantDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ConstantDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ConsumesDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ConsumesDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Contained_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/Container_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Container_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/EmitsDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/EmitsDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/EnumDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/EnumDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/EventDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/EventDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ExceptionDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/FactoryDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/FactoryDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/FinderDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/FinderDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/FixedDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/FixedDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/HomeDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/HomeDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/IDLType_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IDLType_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BaseS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_BasicS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_Service_Loader.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_Service_Loader.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_Service_Utils.h:
+	* orbsvcs/orbsvcs/IFR_Service/IFR_macro.h:
+	* orbsvcs/orbsvcs/IFR_Service/IRObject_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/IRObject_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/InterfaceDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/LocalInterfaceDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ModuleDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ModuleDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/NativeDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/NativeDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/OperationDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/OperationDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/Options.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Options.h:
+	* orbsvcs/orbsvcs/IFR_Service/PrimaryKeyDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/PrimitiveDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/PrimitiveDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ProvidesDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ProvidesDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/PublishesDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/PublishesDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/Repository_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Repository_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/SequenceDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/SequenceDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/Servant_Factory.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Servant_Factory.h:
+	* orbsvcs/orbsvcs/IFR_Service/Servant_Locator.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/Servant_Locator.h:
+	* orbsvcs/orbsvcs/IFR_Service/StringDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/StringDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/StructDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/StructDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/TypedefDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/TypedefDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/UnionDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/UnionDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/UsesDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/UsesDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ValueBoxDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ValueBoxDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ValueDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ValueDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/ValueMemberDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/ValueMemberDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/WstringDef_i.cpp:
+	* orbsvcs/orbsvcs/IFR_Service/WstringDef_i.h:
+	* orbsvcs/orbsvcs/IFR_Service/concrete_classes.h:
+	* orbsvcs/orbsvcs/IFR_Service/ifr_service_export.h:
+	* orbsvcs/orbsvcs/IFR_Service/tmplinst.cpp:
+	* orbsvcs/orbsvcs/Makefile.IFRService:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/IFR_Service/ifr_visitor.h:
+	* orbsvcs/IFR_Service/ifr_removing_visitor.h:
+	* orbsvcs/IFR_Service/ifr_removing_visitor.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
+	* orbsvcs/IFR_Service/Makefile:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/IFR_Service/IFR_Service.h:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/Makefile.BE:
+	  Modified the server code, service executable for the IFR Service
+	  in the directory orbsvcs/IFR_Service.
+	  Moved the utilities and other files required by the server code
+	  to a new directory orbsvcs/orbsvcs/IFRService. A new library
+	  TAO_IFRService will be created by these utilities in this
+	  directory. This library will be linked at compile time
+	  to get the server execuatble in the orbsvcs/IFR_Service
+	  directory.
+	  Also the IFR Service can now be dynamically loaded.
+
 Fri Apr 26 13:48:22 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* utils/catior/catior.cpp: Updated the utility so that it works

@@ -22,13 +22,12 @@
 
 #include "ifr_visitor.h"
 #include "idl.h"
-#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_IFR_Service_Export ifr_adding_visitor : public ifr_visitor
+class ifr_adding_visitor : public ifr_visitor
 {
   //
   // = TITLE
