@@ -2,8 +2,19 @@
 // $Id$
 
 // The following configuration file is designed to work for HP
-// platforms running HP/UX 10.x.  For using HP C++ compiler with
-// templates you should have patch PHSS_6246.
+// platforms running HP/UX 10.x.
+// To use HP/C++ you need some patches, the following set
+//
+// PHSS_9855
+// PHSS_9096
+// PHSS_10261
+// PHSS_9062
+// PHSS_7505
+// PHSS_8490
+//
+// worked for me (Carlos O'Ryan), but you should check by yourself.
+// The most important one is PHSS_9855, but in depends on some of the
+// others.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H

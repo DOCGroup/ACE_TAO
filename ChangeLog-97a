@@ -1,3 +1,45 @@
+Mon May  5 08:19:54 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-hpux-10.*.h: Applied a number of patches courtesy of
+ 	  Carlos O'Ryan.
+
+	* ace/Dump.cpp: Changed a cast from
+
+  	  delete (ACE_Dumpable_Ptr *) this->dumper_;
+
+	  to
+
+  	  delete (ACE_Dumpable *) this->dumper_;
+
+	  This fixes a potential bug.  Thanks to Carlos O'Ryan for this
+ 	  bug report.
+
+	* ace/DEV_IO.h,
+	* ace/SPIPE_Stream.h: Removed the = 0 default value for one send()
+ 	  method to avoid ambiguity with the other send() method.  Thanks
+ 	  to Carlos O'Ryan for this bug report.
+
+	* ace/Map_Manager.cpp (advance): Removed a cast to size_t since
+ 	  that is always true.  Thanks to David Levine for pointing this
+ 	  out.
+
+	* ace/XtReactor: Moved the remove_handler_i() and
+	  register_handler_i() methods into the protected portion
+	  of the class.  Since these should never be called by the
+	  client I've moved them into protected portion to ensure this
+	  is the case. 
+
+	* ace/XtReactor: Changed the implementation of the XtReactor to
+ 	  use long for dealing with timers.  Thanks to Stuart Powell
+ 	  <stuartp@in.ot.com.au> for reporting this.
+
+Mon May 5 17:16:41 1997  Carlos O'Ryan  <coryan@mat.puc.cl>
+
+ 	* ace/config-hpux-10.x.h: 
+ 	* ace/config-hpux-10.x-nothread.h: 
+	  Some patches are needed to compile ACE under HP-UX (using HP/C++),
+	  I documented those patches.
+ 
 Mon May 05 08:39:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler.cpp: fixed template
