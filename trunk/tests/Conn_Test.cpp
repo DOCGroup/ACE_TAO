@@ -572,7 +572,12 @@ template class ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Creation_Strategy<Svc_Handler>;
 template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>;
 template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>;
@@ -597,7 +602,12 @@ template class ACE_Auto_Basic_Array_Ptr<pid_t>;
 #pragma instantiate ACE_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *>
 #pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, Svc_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, LOCK_SOCK_ACCEPTOR>

@@ -588,11 +588,15 @@ NS_BindingIterator::destroy (CORBA::Environment &IT_env)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
 template class  ACE_Hash_Map_Entry<NS_ExtId, NS_IntId>;
+template class  ACE_Hash_Map_Iterator_Base<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
 template class  ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
+template class  ACE_Hash_Map_Reverse_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<NS_ExtId, NS_IntId>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<NS_ExtId, NS_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_MT_SAFE */
 

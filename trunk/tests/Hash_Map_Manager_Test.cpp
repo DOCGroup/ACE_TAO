@@ -218,8 +218,12 @@ main (int, char *[])
 template class ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>;
 template class ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<MAP_STRING, MAP_STRING>
 #pragma instantiate ACE_Hash_Map_Manager<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<MAP_STRING, MAP_STRING, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

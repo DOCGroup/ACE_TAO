@@ -205,11 +205,15 @@ TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Iterator_Base<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Iterator_Base<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Manager<char const*, CORBA::Object_ptr, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<char const*, CORBA::Object_ptr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
