@@ -1,12 +1,12 @@
 Fri Sep 18 18:06:19 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-	
-	* ace/Asynch_IO.h:
-	* ace/Asynch_IO.cpp: 
-	* examples/Reactor/Proactor/test_proactor.cpp: 
-	Implemented Asynch_Accept for POSIX4 systems, by having only one
-	thread doing <handle_events>. Asynch_Accept_Handler has been
-	changed to act as Event Handler now. No problem of having threads
-	blocking on the <accept> now.  Thanks to Irfan for this idea. 		
+
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        Implemented Asynch_Accept for POSIX4 systems, by having only one
+        thread doing <handle_events>. Asynch_Accept_Handler has been
+        changed to act as Event Handler now. No problem of having threads
+        blocking on the <accept> now.  Thanks to Irfan for this idea.
 
 Fri Sep 18 13:26:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -14,6 +14,8 @@ Fri Sep 18 13:26:50 1998  David L. Levine  <levine@cs.wustl.edu>
           threshold from 10 to 25 percent.  Ossama saw just over
           10 percent on an Linux box, not surprising.  Thanks to
           him for reporting it.
+
+        * ace/OS.cpp (ACE_TSS_Emulation_cleanup): added ACE_UNUSED_ARG (ptr).
 
 Fri Sep 18 01:53:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
