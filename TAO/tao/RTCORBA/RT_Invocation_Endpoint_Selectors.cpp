@@ -26,7 +26,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invoc
 {
   CORBA::Policy_var client_protocol_policy_base =
     TAO_RT_Endpoint_Utils::client_protocol_policy (invocation ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   if (client_protocol_policy_base.ptr () == 0)
     {
@@ -154,7 +154,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
   CORBA::Policy_var bands_policy =
     TAO_RT_Endpoint_Utils::priority_bands_policy (invocation
                                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   int all_endpoints_are_valid = 0;
   int match_priority = 0;
@@ -212,11 +212,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
           int status =
             protocol_hooks->get_thread_CORBA_priority (client_thread_priority  // side effect
                                                        ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
           if (status == -1)
             {
-              ACE_THROW (CORBA::DATA_CONVERSION (1,
-                                                 CORBA::COMPLETED_NO));
+              ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1,
+                                                        CORBA::COMPLETED_NO),
+                                0);
             }
 
           // If there are no bands.
@@ -250,7 +251,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
                     }
 
                   // Indicate error.
-                  ACE_THROW (CORBA::INV_POLICY ());
+                  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                                    0);
                 }
 
               // Match the priority of the band with the endpoint.
