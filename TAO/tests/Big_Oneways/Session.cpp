@@ -32,10 +32,6 @@ Session::svc (void)
 {
   this->barrier_.wait ();
 
-  /// Automatically decrease the reference count at the end of the
-  /// thread
-  PortableServer::ServantBase_var auto_decrement (this);
-
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
@@ -93,6 +89,7 @@ Session::svc (void)
     }
   ACE_ENDTRY;
 
+  this->_remove_ref();
   return 0;
 }
 
