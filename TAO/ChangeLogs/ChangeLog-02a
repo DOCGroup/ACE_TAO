@@ -1,16 +1,21 @@
+Sat May  5 16:24:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/TIE/server.cpp: Guarded some more portions using
+	  the ACE_HAS_USING_KEYWORD macros. This should prevent compile
+	  errors in the two Lynx builds. 
+
 Sat May  5 13:27:36 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/Makefile: 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.h: 	
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 		
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h: 		
-	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp: 		
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h: 			
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp: 				
-
-	  Added clean unbinding of the object references from the Naming Service 
-	  on termination of processes. Also fixed bugs that were breaking the test
-	  on many platforms.
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.cpp:
+	  Added clean unbinding of the object references from the Naming
+	  Service  on termination of processes. Also fixed bugs that were
+	  breaking the test on many platforms.
 
 Fri May  4 14:11:36 2001  Chad Elliott  <elliott_c@ociweb.com>
 
