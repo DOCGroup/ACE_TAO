@@ -1,3 +1,11 @@
+Mon Nov 15 18:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Added allow_implicit_activation to the POA which calls the implicit
+          activation policy. In the servant retention strategy use this
+          method, this way the servant retention strategy is not dependen on
+          implicit activation policy directly.
+
 Mon Nov 15 18:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:

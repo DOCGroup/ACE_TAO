@@ -52,6 +52,7 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/IdUniquenessStrategy.h"
 #include "tao/PortableServer/IdAssignmentStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -2638,6 +2639,13 @@ TAO_POA::servant_has_remaining_activations (PortableServer::Servant servant)
 {
   return this->active_policy_strategies_.servant_retention_strategy ()->
     servant_has_remaining_activations (servant);
+}
+
+bool
+TAO_POA::allow_implicit_activation (void) const
+{
+  return this->active_policy_strategies_.implicit_activation_strategy ()->
+    allow_implicit_activation ();
 }
 
 void

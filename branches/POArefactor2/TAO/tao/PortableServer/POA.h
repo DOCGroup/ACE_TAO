@@ -477,6 +477,8 @@ public:
   CORBA::Boolean servant_has_remaining_activations (
     PortableServer::Servant servant);
 
+  bool allow_implicit_activation (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
