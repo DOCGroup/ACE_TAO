@@ -1,3 +1,20 @@
+Tue May 28 17:00:21 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Read_Buffer.cpp (rec_read):
+
+          Fixed stupid thinko when decrementing slot. Tell myself to think
+          twice to about using ?:. My previous change also ate the
+          character when only one character is in a file. ACE_Read_Buffer
+          is crying for a test under $ACE_ROOT/tests which tests variable
+          sized buffers with sizes of 1, < BUFSIZ, BUFSIZ, > BUFSIZ
+          instead of under examples/misc/test_tead_buffer.cpp. Will try to
+          get in one.
+
+        * docs/ACE-guidelines.html:
+
+          Update guidelines to be careful about using ?: in some
+          situations. Thanks to Doug for suggesting this.
+
 Tue May 28 21:54:44 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* bin/nightlybuilds/builds.lst: Move Debian_NoInline and Debian_GCC_3.0.4
@@ -19,7 +36,7 @@ Tue May 28 18:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  instead of ::wcstok.
 	* ace/OS_String.inl (strtok): If ACE_HAS_XPG4_MULTIBYTE_CHAR is defined,
 	  call 3 parameter version of wcstok, else call 2 parameter version.
-	* ace/config-linux-common.h: Only define ACE_LACKS_WCSTOK and 
+	* ace/config-linux-common.h: Only define ACE_LACKS_WCSTOK and
 	  ACE_LACKS_WCSDUP_PROTOTYPE for glibc versions less than 2.  Define
 	  ACE_HAS_XPG4_MULTIBYTE_CHAR for glibc 2 and higher.
 	* tests/OS_Test.cpp: Add test for wchar_t version of strtok.
@@ -41,60 +58,60 @@ Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 	* tests/Logging_Strategy_Test.cpp:
 
 	  Fixed typo, ACE_AS_* > ACE_HAS_*.
-	
+
 	* tests/Makefile.Framework_Component_DLL:
 	* tests/Makefile:
 	* tests/Makefile.bor:
 
-	  Added/modified Makefiles to add new test file, and updated 
+	  Added/modified Makefiles to add new test file, and updated
 	  dependancies.
-	
+
 	* tests/Framework_Component_Test.{h,cpp}:
 	* tests/Framework_Component_DLL.{h,cpp}:  Added.
 	* tests/Framework_Component_DLL_export.h:  Added.
 
-	  Modified to test to exercise the new ACE_DLL_Singleton and 
+	  Modified to test to exercise the new ACE_DLL_Singleton and
 	  ACE_DLL* classed in concert with the Service Config framework
-	  and new Framework Component mechanisms. 
+	  and new Framework Component mechanisms.
 
 	* tests/DLL_Test.{h,cpp}:
 
 	  Modified test to fully test all the features of the new
 	  ACE_DLL, ACE_DLL_Handle, and ACE_DLL_Manager classes.
-	
+
 	* ace/Makefile:
-	* ace/Makefile.bor: 
-	 
-	  Added DLL_Manager and updated dependancies.	
+	* ace/Makefile.bor:
+
+	  Added DLL_Manager and updated dependancies.
 
 	* bin/generate_export_file.pl:
 
 	  Added generation of library specific TRACE macros in
 	  terms of the new ACE_TRACE_IMPL macro below.
 
-	* ace/Global_Macros.h: 
+	* ace/Global_Macros.h:
 
-	  Added new macro, ACE_TRACE_IMPL and implemented ACE_TRACE 
+	  Added new macro, ACE_TRACE_IMPL and implemented ACE_TRACE
 	  in terms of it if tracing is enabled.  This allows you
 	  to turn tracing on for a particular cpp by just undef'ing
-	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.  
-	
+	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.
+
 	* ace/Parse_Node.{h,cpp}:
 
-	  Removed handle() method and added a dll() method.  Also, 
-	  since ACE_DLL_Handle::symbol() calls ACE::ldname() internally, 
-	  changed the ACE::ldname() calls in the ctors for 
+	  Removed handle() method and added a dll() method.  Also,
+	  since ACE_DLL_Handle::symbol() calls ACE::ldname() internally,
+	  changed the ACE::ldname() calls in the ctors for
 	  ACE_Object_node and ACE_Function_Node to ACE::strnew().
 
 	* ace/Svc_Conf_y.cpp:
 
 	  Changed call to ACE_Location_Node::handle() to ACE_Location_Node::dll()
 	  in ACE_Service_Type::ctor.
-	
+
 	* ace/Service_Object.{h,cpp,i}:
 
-	  Modified ACE_Service_Type to maintain an ACE_DLL member variable 
-	  instead of an ACE_SHLIB_HANDLE, and changed ctor accordingly.  
+	  Modified ACE_Service_Type to maintain an ACE_DLL member variable
+	  instead of an ACE_SHLIB_HANDLE, and changed ctor accordingly.
 	  Removed call to ACE_OS::dlclose() from dtor.  Removed handle()
 	  methods.
 
@@ -102,14 +119,14 @@ Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 	* ace/Service_Config.cpp:
 
 	  The Object Manager is now always responsible for cleaning up
-	  the ACE_Framework_Repository, but only after the Service 
+	  the ACE_Framework_Repository, but only after the Service
 	  Config framework has been cleanup.  ACE_Service_Config no longer
 	  knows anything about ACE_Framework_Repository.
-	
+
 	* ace/Service_Config.cpp:
 
 	  Changed create_service_type() to take an ACE_DLL& instead of
-	  an ACE_SHLIB_HANDLE.  Removed unneeded call to ACE::ldname().	
+	  an ACE_SHLIB_HANDLE.  Removed unneeded call to ACE::ldname().
 
 	* ace/DLL_Manager.{h,cpp}: Added.
 	* ace/DLL.{h,cpp}:
@@ -118,23 +135,23 @@ Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 	  and moved all functionalility from ACE_DLL to the new classes.
 	  ACE_DLL maintains the same interface and semantics but defers
 	  all calls to the new classes.  ACE_DLL_Manager is a singleton
-	  that manages the lifetimes of instances of refcounted 
+	  that manages the lifetimes of instances of refcounted
 	  ACE_DLL_Handle objects that represent the actual dlls.  The
 	  following unloading strategies are available: per-process/dll,
 	  eager/lazy.
 
-	  Added copy ctor to ACE_DLL so that the get/set_handle() methods 
+	  Added copy ctor to ACE_DLL so that the get/set_handle() methods
 	  aren't needed--there use in the Service Config framework can
 	  complicate orderly destruction of singletons based on
 	  ACE_DLL_Singleton.
 
 	  Added call to ACE::ldname() to the symbol() method so that
-	  the caller no longer needs to do it themselves. 
+	  the caller no longer needs to do it themselves.
 
 	* ace/Singleton.{h,cpp,i}:
 
 	  Added new singleton template, ACE_DLL_Singleton, that registers
-	  itself with the ACE_Framework_Repository so that it can be 
+	  itself with the ACE_Framework_Repository so that it can be
 	  destroyed when the dll with which it is associated is unloaded.
 
 
@@ -143,7 +160,7 @@ Tue May 28 10:47:50 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	  Added name() method as needed by changes below, and implemented
 	  dll_name() method to return "ACE".
-	
+
 	* ace/Framework_Component.{h,cpp,inl}:
 	* ace/Framework_Component_T.{h,cpp}:
 
