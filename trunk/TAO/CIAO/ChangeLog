@@ -2,7 +2,8 @@ Wed Sep 22 17:46:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
         
-          Removed unused parameter identifiers.
+          Removed unused parameter identifiers and fixed the order of some
+          class member initializations.
 
 Tue Sep 21 13:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
