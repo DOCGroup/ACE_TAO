@@ -1,3 +1,9 @@
+Fri Jul 23 12:17:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf: We
+	  can't use TSS resource in this test because it shuts down the
+	  wrong reactor.
+
 Fri Jul 23 13:23:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/PolicyC.cpp:
@@ -11,7 +17,7 @@ Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	   New file that includes files generated from reopened_modules.idl
 	   if ACE_HAS_USING_KEYWORD is defined. Reopened
 	   modules are mapped to reopened namespaces, and platforms
-	   without namespaces cannot handle this, even with the 
+	   without namespaces cannot handle this, even with the
 	   TAO_NAMESPACE macro. If this is the case, the file
 	   namespace_check.cpp will be empty after preprocessing.
 
@@ -26,14 +32,14 @@ Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
 	   Further tweaking of the lookup_by_name() method,
-	   in response to a bug report. Thanks to 
+	   in response to a bug report. Thanks to
 	   Ruud Diterwich<R.M.L.Diterwich@marin.nl>
 	   for sending in the example.
 
 	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
 	   Added code generation for an explicit temporary in
 	   CDR extraction operator of multi-dimensional array
-	   where base type is a typedef, rather than just 
+	   where base type is a typedef, rather than just
 	   putting a constructor on the rhs of the >> operator
 	   in the FOR loop. SunOS/egcs complained about
 	   lvalue/rvalue stuff.
@@ -46,7 +52,7 @@ Fri Jul 23 12:01:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	   anonymous. A struct or a union could contain an
 	   anonymous sequence of the same type more than once,
 	   and the body of the CDR operators would also appear
-	   more than once in generated code, leading to C++ 
+	   more than once in generated code, leading to C++
 	   compile errors. Thanks to Roger Egbers <regbers@isrglobal.com>
 	   for sending in the example.
 
@@ -62,7 +68,7 @@ Fri Jul 23 08:53:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	* TAO_IDL/be/be_type.cpp (nested_type_name):
 	  There was an error in the computation of the string length that we
 	  use to do string comparison. This error resulted due to a copy/paste which
-	  was causing errors in generated code. This bug report was passed to me by 
+	  was causing errors in generated code. This bug report was passed to me by
 	  Jeff Parsons. Thanks to Alex Hornby <alex@anvil.co.uk>
 	  for submitting the bug report.
 
@@ -4341,7 +4347,7 @@ Sun Jun 27 20:29:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/POA_CORBA.h (POA_CORBA): Added a no-op constructor for
           the _tao_collocated_Current class to work around a bug with
-          IBM's VisualAge C++ compiler.  
+          IBM's VisualAge C++ compiler.
 
         * tao/encode.cpp (encode): Borland's C++ Builder 4.0 doesn't seem
           to align caught exceptions along the correct boundaries!
