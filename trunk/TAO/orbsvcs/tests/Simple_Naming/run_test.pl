@@ -1,4 +1,5 @@
 # $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -8,37 +9,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
+require Uniqueid;
 
 # amount of delay between running the servers
 
 $sleeptime = 3;
 
-# Get the userid (or ip on NT)
-
-if ($^O eq "MSWin32")
-{
-  system ("ipconfig | find \"Address\">ipnum");
-
-  open (IPNUM, "ipnum");
-
-  read (IPNUM, $line, 80);
-
-  ($junk, $ip1, $ip2, $ip3, $ip4) = split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line);
-
-  close IPNUM;
-
-  system ("del /q ipnum");
-
-  $uid = $ip4;
-}
-else
-{
-  $uid = getpwnam (getlogin ());
-}
-
 # variables for parameters
 
-$nsmport = 10000 + $uid;
+$nsmport = 10000 + uniqueid ();
 
 sub name_server
 {

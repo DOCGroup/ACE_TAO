@@ -1,4 +1,5 @@
 # $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -239,11 +240,4 @@ if ($leave)
 }
 
 
-if ($^O eq "MSWin32")
-{
-  system ("del /q $nsiorfile");
-}
-else
-{
-  system ("rm $nsiorfile");
-}
+unlink $nsiorfile;
