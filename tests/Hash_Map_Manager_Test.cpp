@@ -182,8 +182,8 @@ static String_Table string_table[] =
   }
 };
 
-static const int STRING_TABLE_SIZE = 3;
-static const int MAX_HASH = 6;
+static const size_t STRING_TABLE_SIZE = 3;
+static const size_t MAX_HASH = 6;
 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure

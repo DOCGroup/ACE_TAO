@@ -1,3 +1,8 @@
+Tue Apr 14 12:59:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp: Changed the consts to 
+	  size_t, as well...
+
 Tue Apr 14 11:40:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Hash_Map_Manager.cpp: made type, size_t, of String_Table_size
