@@ -1,3 +1,10 @@
+Wed Sep  8 17:25:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h (ACE_FACTORY_DEFINE): It shouldn't be necessary
+	  to use ACE_dynamic_cast() or ACE_static_cast() for the
+ 	  ACE_FACTORY_DEFINE macro because ACE_Service_Object's destructor
+ 	  is virtual.  Thanks to Carlos for pointing this out.
+
 Wed Sep  8 16:51:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Acceptor.cpp (handle_close): Removed a unnecessary check
