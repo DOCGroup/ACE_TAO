@@ -636,8 +636,8 @@ be_valuetype::gen_helper_header (char* ,
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "void add_ref (" << this->full_name () << " *);" << be_nl
-      << "void remove_ref (" << this->full_name () << " *);"
+      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" << this->full_name () << " *);" << be_nl
+      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl
       << "TAO_NAMESPACE_CLOSE" << be_nl
@@ -654,12 +654,14 @@ be_valuetype::gen_helper_inline (char* ,
 
   os = tao_cg->client_inline ();
 
+  // There is a problem, here. Looks like the if defined __ACE_INLINE
+  // is not getting generated...
   *os << "//@@ Boris: begin experimental" << be_nl
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
-      << "void add_ref (" << this->full_name () << " *);" << be_nl
-      << "void remove_ref (" << this->full_name () << " *);"
+      << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" << this->full_name () << " *);" << be_nl
+      << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl
       << "TAO_NAMESPACE_CLOSE" << be_nl

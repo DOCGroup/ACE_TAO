@@ -1,3 +1,13 @@
+Sat Feb  9 15:21:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* TAO_IDL/be/be_valuetype.cpp: Added the keywords
+	  TAO_NAMESPACE_STORAGE_CLASS to the declarations of add_ref ()
+	  and remove_ref (). This should fix link errors in Win32. 
+
+	* tao/ObjectReferenceTemplateC.h:
+	* tao/ObjectReferenceTemplateC.i: Regenerated code for this
+	  class. Looks like other classes dont need regeneration. 
+
 Sat Feb  9 09:36:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/amh.html (href): Removed some wizard generated
