@@ -1,3 +1,11 @@
+Tue Nov  4 17:02:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+	  Corrected system exception minor codes.  In particular, they
+	  have to be logically ORed with the standard CORBA::OMGVMCID
+	  constant.
+
 Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
