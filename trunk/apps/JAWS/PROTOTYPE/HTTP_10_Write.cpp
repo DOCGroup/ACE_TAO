@@ -33,10 +33,19 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_HTTP_10_Request *info = ACE_static_cast (JAWS_HTTP_10_Request *,
                                                 data->payload ());
 
-  ACE_DEBUG ((LM_DEBUG, " (%t) request %s %s %s parsed\n",
+  ACE_DEBUG ((LM_DEBUG, " (%t) request %s::%s::%s parsed\n",
               (info->method () ? info->method () : "-"),
               (info->uri () ? info->uri () : "="),
               (info->version () ? info->version () : "HTTP/0.9")));
+
+  JAWS_HTTP_10_Headers *table = info->table ();
+  Symbol_Table_Iterator &iter = table->iter ();
+  for (iter.first (); ! iter.is_done (); iter.next ())
+    {
+      ACE_DEBUG ((LM_DEBUG, " (%t) header %s::%s\n",
+                  *(iter.key ()),
+                  *(iter.item ())));
+    }
 
   char message[] = "<html><h1>This is a test</h1></html>\n";
 
