@@ -948,7 +948,13 @@ public:
   virtual CORBA::ULong _decr_refcnt (void);
 
   TAO_Leader_Follower_Info &leader_follower_info (void);
-  // get access to the leader_follower_info
+  // Get access to the leader_follower_info
+
+  void should_shutdown (int value);
+  // Set the shutdown flag to <value>.
+
+  int should_shutdown (void);
+  // Get the shutdown flag value
 
 protected:
   // We must be created via the <ORB_init> call.

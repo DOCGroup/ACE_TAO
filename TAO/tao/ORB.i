@@ -159,6 +159,20 @@ CORBA::wstring_dup (const WChar *const str)
 //  ORB specific
 // ---------------------------------------------------------------------------
 
+ACE_INLINE void
+CORBA_ORB::should_shutdown (int value)
+{
+  ACE_GUARD (ACE_Lock, monitor, *this->shutdown_lock_);
+  this->should_shutdown_ = value;
+}
+
+ACE_INLINE int
+CORBA_ORB::should_shutdown (void)
+{
+  ACE_GUARD_RETURN (ACE_Lock, monitor, *this->shutdown_lock_, -1);
+  return this->should_shutdown_;
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_ORB::_incr_refcnt (void)
 {

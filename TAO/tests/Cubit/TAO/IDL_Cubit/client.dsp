@@ -98,10 +98,6 @@ SOURCE=.\client_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cubit_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\cubitC.cpp
 # End Source File
 # Begin Source File

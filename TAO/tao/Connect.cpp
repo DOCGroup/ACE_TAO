@@ -43,7 +43,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
-  : TAO_SVC_HANDLER (t, 0, 0),
+  : TAO_SVC_HANDLER (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
     parent_ (0)
 {
   // Grab the singleton...at some later point in time we can provide
@@ -124,7 +124,6 @@ TAO_Server_Connection_Handler::activate (long flags,
                                          ACE_thread_t  thread_names[])
 {
   this->parent_ = TAO_ORB_Core_instance ();
-  this->thr_mgr (this->parent_->thr_mgr ());
   return TAO_SVC_HANDLER::activate (flags,
                                     n_threads,
                                     force_active,
@@ -484,8 +483,6 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
-
-
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
   // buffer because we cannot minimize memory copies in that case.
@@ -504,51 +501,60 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   CORBA::Environment env;
   CORBA::ULong request_id;
 
-  switch (TAO_GIOP::recv_request (this_ptr, input))
+  // Try to recv a new request.
+  TAO_GIOP::Message_Type type = TAO_GIOP::recv_request (this_ptr, input);
+
+  // Check to see if we've been cancelled cooperatively.
+  if (TAO_ORB_Core_instance ()->orb ()->should_shutdown () != 0)
+    error_encountered = 1;
+  else
     {
-    case TAO_GIOP::Request:
-      // Message was successfully read, so handle it.  If we encounter
-      // any errors, <output> will be set appropriately by the called
-      // code, and -1 will be returned.
-      if (this->handle_message (input,
-                                output,
-                                response_required,
-                                request_id,
-                                env) == -1)
-        error_encountered = 1;
-      break;
+      switch (type)
+        {
+        case TAO_GIOP::Request:
+          // Message was successfully read, so handle it.  If we
+          // encounter any errors, <output> will be set appropriately
+          // by the called code, and -1 will be returned.
+          if (this->handle_message (input,
+                                    output,
+                                    response_required,
+                                    request_id,
+                                    env) == -1)
+            error_encountered = 1;
+          break;
 
-    case TAO_GIOP::LocateRequest:
-      if (this->handle_locate (input,
-                               output,
-                               response_required,
-                               request_id,
-                               env) == -1)
-        error_encountered = 1;
-      break;
+        case TAO_GIOP::LocateRequest:
+          if (this->handle_locate (input,
+                                   output,
+                                   response_required,
+                                   request_id,
+                                   env) == -1)
+            error_encountered = 1;
+          break;
 
-    case TAO_GIOP::EndOfFile:
-      // Got a EOF
-      errno = EPIPE;
-      response_required = error_encountered = 0;
-      result = -1;
-      break;
+        case TAO_GIOP::EndOfFile:
+          // Got a EOF
+          errno = EPIPE;
+          response_required = error_encountered = 0;
+          result = -1;
+          break;
 
-      // These messages should never be sent to the server; it's an
-      // error if the peer tries.  Set the environment accordingly, as
-      // it's not yet been reported as an error.
-    case TAO_GIOP::Reply:
-    case TAO_GIOP::LocateReply:
-    case TAO_GIOP::CloseConnection:
-    default:                                    // Unknown message
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Illegal message received by server\n"));
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-      // FALLTHROUGH
+          // These messages should never be sent to the server; it's an
+          // error if the peer tries.  Set the environment accordingly, as
+          // it's not yet been reported as an error.
+        case TAO_GIOP::Reply:
+        case TAO_GIOP::LocateReply:
+        case TAO_GIOP::CloseConnection:
+        default:                                    // Unknown message
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Illegal message received by server\n"));
+          env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+          // FALLTHROUGH
 
-    case TAO_GIOP::MessageError:
-      error_encountered = 1;
-      break;
+        case TAO_GIOP::MessageError:
+          error_encountered = 1;
+          break;
+        }
     }
 
   if (response_required && !error_encountered)
@@ -559,7 +565,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     this->send_error (request_id, env);
   else if (error_encountered)
     {
-      // Now we are completely lost
+      // Now we are completely lost.
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) closing conn %d after fault %p\n",
                   this->peer().get_handle (),
@@ -567,13 +573,13 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       this->close ();
       result = -1;
     }
-  // else there was no repsonse expected and no error happened
+  // Else there was no response expected and no error happened.
 
   return result;
 }
 
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t, 0, 0),
+  : TAO_SVC_HANDLER (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
     input_available_ (0),
     calling_thread_ (0)
 {
@@ -632,18 +638,6 @@ TAO_Client_Connection_Handler::open (void *)
 
   // For now, we just return success
   return 0;
-}
-
-int
-TAO_Client_Connection_Handler::close (u_long flags)
-{
-  ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
-
-  // Now we must register ourselves with the reactor for input events
-  // which will detect GIOP Reply messages and EOF conditions.
-  r->remove_handler (this, ACE_Event_Handler::DONT_CALL);
-
-  return BASECLASS::close (flags);
 }
 
 int

@@ -490,12 +490,13 @@ TAO_ORB_Core::init (int& argc, char** argv)
   this_orb->_use_omg_ior_format (use_ior);
   this_orb->_optimize_collocation_objects (this->opt_for_collocation_);
 
+  // Set the <shutdown_lock_> for the ORB
+  this_orb->shutdown_lock_ = ssf->create_event_loop_lock ();
+
   // @@ Michael: I don't know if this is the best spot,
   // we might have to discuss that.
   //this->leader_follower_lock_ptr_ =  this->client_factory ()
   //                                       ->create_leader_follower_lock ();
-
-
 
   // Set all kinds of orb parameters whose setting needed to be
   // deferred until after the service config entries had been
@@ -519,9 +520,9 @@ TAO_ORB_Core::init (int& argc, char** argv)
 
   // Open the <Strategy_Connector>.
   if (this->connector ()->open (this->reactor (),
-                                this->resource_factory ()->get_null_creation_strategy (),
-                                this->resource_factory ()->get_cached_connect_strategy (),
-                                this->resource_factory ()->get_null_activation_strategy ()) != 0)
+                                trf->get_null_creation_strategy (),
+                                trf->get_cached_connect_strategy (),
+                                trf->get_null_activation_strategy ()) != 0)
     return -1;
 
   if (preconnections)
@@ -1309,6 +1310,12 @@ TAO_GLOBAL_Collocation_Table *
 TAO_Resource_Factory::get_global_collocation_table (void)
 {
   return (collocation_table_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
+}
+
+TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
+{
+  // Make sure that the thread manager does not wait for threads
+  this->tm_.wait_on_exit (0);
 }
 
 // This function exists because of Win32's proclivity for expanding

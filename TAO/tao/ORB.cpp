@@ -78,7 +78,7 @@ CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
     open_called_ (CORBA::B_FALSE),
     shutdown_lock_ (0),
-    should_shutdown_(CORBA::B_FALSE),
+    should_shutdown_ (CORBA::B_FALSE),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
     event_service_ (CORBA_Object::_nil ()),
@@ -107,11 +107,8 @@ CORBA_ORB::~CORBA_ORB (void)
       TAO_TypeCodes::fini ();
     }
 
-  if (this->shutdown_lock_ != 0)
-    {
-      delete this->shutdown_lock_;
-      this->shutdown_lock_ = 0;
-    }
+  delete this->shutdown_lock_;
+  this->shutdown_lock_ = 0;
 
   if (!CORBA::is_nil (this->name_service_))
     CORBA::release (this->name_service_);
@@ -167,19 +164,24 @@ CORBA_ORB::open (void)
 }
 
 void
-CORBA_ORB::shutdown (CORBA::Boolean /* wait_for_completion */)
+CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
 {
-  // NOTE: we play some games with this monitor to release the lock
-  // while blocked on I/O.
-  if (this->shutdown_lock_ != 0)
-    {
-      ACE_GUARD (ACE_Lock, monitor, *this->shutdown_lock_);
-      this->should_shutdown_ = 1;
-    }
-  else
-      this->should_shutdown_ = 1;
+  // Set the shutdown flag
+  this->should_shutdown (1);
 
+  // Grab the thread manager
+  ACE_Thread_Manager *tm = TAO_ORB_Core_instance ()->thr_mgr ();
+
+  // Try to cancel all the threads in the ORB.
+  tm->cancel_all ();
+
+  // Wake up all waiting threads in the reactor.
   TAO_ORB_Core_instance ()->reactor ()->wakeup_all_threads ();
+
+  // If <wait_for_completion> is set, wait for all threads to exit.
+  if (wait_for_completion != 0)
+    tm->wait ();
+
   return;
 }
 
@@ -236,11 +238,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
   
- 
-  if (this->shutdown_lock_ == 0)
-    this->shutdown_lock_ =
-      TAO_ORB_Core_instance ()->server_factory ()->create_event_loop_lock ();
-
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
   // Set the owning thread of the Reactor to the one which we're
@@ -259,19 +256,12 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   int counter = 0;
 #endif /* 0 */
 
-  // NOTE: we play some games with this monitor to release the lock
-  // while blocked on I/O.
-  ACE_GUARD_RETURN (ACE_Lock, monitor, *this->shutdown_lock_, -1);
-
   int result = 1;
   // 1 to detect that nothing went wrong
   
   // Loop "forever" handling client requests.
-  while (this->should_shutdown_ == 0)
+  while (this->should_shutdown () == 0)
     {
-      if (monitor.release () == -1)
-        return -1;
-      
 #if 0
       counter++;
       if (counter == max_iterations)
@@ -301,9 +291,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 	}
       if (result == 0 || result == -1)
         break;
-      
-      if (monitor.acquire () == -1)
-        return -1;
     }
   
   if (result != -1)
@@ -821,8 +808,11 @@ CORBA::ORB_init (int &argc,
       return 0;
     }
 
+  // Get ORB Core
+  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
+
   // Initialize the ORB Core instance.
-  int result = TAO_ORB_Core_instance ()->init (argc, (char **)argv);
+  int result = oc->init (argc, (char **)argv);
 
   // check for errors and return 0 if error.
   if (result == -1)
@@ -831,7 +821,7 @@ CORBA::ORB_init (int &argc,
       return 0;
     }
 
-  return TAO_ORB_Core_instance()->orb ();
+  return oc->orb ();
 }
 
 

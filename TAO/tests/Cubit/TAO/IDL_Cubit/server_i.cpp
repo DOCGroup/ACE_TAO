@@ -5,8 +5,7 @@
 ACE_RCSID(IDL_Cubit, server_i, "$Id$")
 
 Cubit_Server::Cubit_Server (void)
-  : num_of_objs_ (1),
-    use_naming_service_ (1),
+  : use_naming_service_ (1),
     ior_output_file_ (0)
 {
 }
@@ -14,7 +13,7 @@ Cubit_Server::Cubit_Server (void)
 int
 Cubit_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:o:s");
+  ACE_Get_Opt get_opts (argc_, argv_, "do:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -22,9 +21,6 @@ Cubit_Server::parse_args (void)
       {
       case 'd':  // debug flag.
         TAO_debug_level++;
-        break;
-      case 'n': // number of cubit objects we export
-        this->num_of_objs_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'o': // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
@@ -68,7 +64,6 @@ Cubit_Server::init (int argc,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
   TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
@@ -76,9 +71,15 @@ Cubit_Server::init (int argc,
   this->parse_args ();
   // @@ Check for the return value here.
 
+  // Get the orb 
+  CORBA::ORB_var orb = this->orb_manager_.orb ();
+
+  // Now create the implementations
+  this->factory_impl_ = new Cubit_Factory_i (orb.in ());
+
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("factory",
-                                                 &this->factory_impl_,
+                                                 this->factory_impl_,
                                                  env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
@@ -115,7 +116,7 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
                                        child_poa.in ());
   if (result < 0)
     return result;
-  factory = this->factory_impl_._this (env);
+  Cubit_Factory_var factory = this->factory_impl_->_this (env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
   CosNaming::Name cubit_context_name (1);
@@ -136,16 +137,6 @@ Cubit_Server::init_naming_service (CORBA::Environment& env)
                               env);
   TAO_CHECK_ENV_RETURN (env,-1);
 
-  shutdown_ = this->shutdown_impl_._this (env);
-  TAO_CHECK_ENV_RETURN (env,-1);
-
-  CosNaming::Name shutdown_name (1);
-  shutdown_name.length (1);
-  shutdown_name[0].id = CORBA::string_dup ("shutdown");
-  this->cubit_context_->bind (shutdown_name,
-                              shutdown_.in (),
-                              env);
-  TAO_CHECK_ENV_RETURN (env,-1);
   return 0;
 }
 
@@ -161,4 +152,5 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
+  delete this->factory_impl_;
 }

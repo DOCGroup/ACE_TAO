@@ -171,6 +171,4 @@ Cubit_i::cube_union (const Cubit::oneof &values)
 void Cubit_i::please_exit (void)
 {
   ACE_DEBUG ((LM_DEBUG, "I've been asked to shut down...\n"));
-  // TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  //dexc (env, "please_exit, shutdown");
 }
