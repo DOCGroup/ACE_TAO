@@ -2941,6 +2941,7 @@ namespace
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
          << "{"
+         << "ACE_ENV_ARG_NOT_USED;"
          << "::CORBA::Object_var obj_var;"
          << "::Components::EventConsumerBase_var ecb_var;" << endl;
 
