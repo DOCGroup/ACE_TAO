@@ -13,6 +13,7 @@
 
 #include "PortableServer.h"
 #include "Object_Adapter.h"
+#include "Object_Adapter_Factory.h"
 
 ACE_RCSID (PortableServer,
            PortableServer,

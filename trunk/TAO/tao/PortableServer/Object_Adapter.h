@@ -44,22 +44,14 @@
 // Policy Set
 #include "POA_Policy_Set.h"
 
+#include "Servant_Location.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-// ****************************************************************
-
-enum TAO_SERVANT_LOCATION
-{
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
-};
 
 // ****************************************************************
 

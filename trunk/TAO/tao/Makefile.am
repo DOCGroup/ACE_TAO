@@ -1087,6 +1087,7 @@ nobase_include_HEADERS += \
   PortableServer/PortableServer_PolicyFactory.h \
   PortableServer/Servant_Base.h \
   PortableServer/Local_Servant_Base.h \
+  PortableServer/Servant_Location.h \
   PortableServer/Servant_Dispatcher.h \
   PortableServer/ServerInterceptorAdapter.h \
   PortableServer/ServerRequestInfo.h \
