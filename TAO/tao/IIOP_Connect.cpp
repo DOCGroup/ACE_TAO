@@ -66,7 +66,12 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
   : TAO_IIOP_Handler_Base (t),
     transport_ (this, 0),
     orb_core_ (0),
-    tss_resources_ (0)
+    tss_resources_ (0),
+    // This will bomb if get called. But this constructor shouldnt be
+    // called anyway.
+    input_cdr_ (orb_core_->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core_)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -80,7 +85,10 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
   : TAO_IIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     orb_core_ (orb_core),
-    tss_resources_ (orb_core->get_tss_resources ())
+    tss_resources_ (orb_core->get_tss_resources ()),
+    input_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core)
 {
 }
 
@@ -236,10 +244,26 @@ TAO_IIOP_Server_Connection_Handler::handle_input (ACE_HANDLE)
   if (result == 0 || result == -1)
     return result;
 
+  // = Take out all the information from the <message_state> and reset
+  //   it so that nested upcall on the same Transport can be handled.
+
+  // Copy message type.
+  CORBA::Octet message_type = this->transport_.message_state_.message_type;
+  
+  // Copy version.
+  TAO_GIOP_Version giop_version = this->transport_.message_state_.giop_version;
+  
+  // Steal the input CDR from the message state.
+  TAO_InputCDR input_cdr (this->transport_.message_state_.cdr);
+  
+  // Reset the message state.
+  this->transport_.message_state_.reset ();
+  
   result = TAO_GIOP::process_server_message (this->transport (),
                                              this->orb_core_,
-                                             this->transport_.message_state_.cdr,
-                                             this->transport_.message_state_);
+                                             input_cdr,
+                                             message_type,
+                                             giop_version);
   if (result != -1)
     {
       this->transport_.message_state_.reset ();
