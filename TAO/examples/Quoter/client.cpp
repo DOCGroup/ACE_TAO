@@ -163,7 +163,8 @@ Quoter_Client::init_naming_service (void)
     {
       // Resolve the Naming Service
       CORBA::Object_var naming_obj =
-        orb_->resolve_initial_references ("NameService");
+        orb_->resolve_initial_references ("NameService", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
