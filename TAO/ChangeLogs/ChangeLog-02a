@@ -1,3 +1,19 @@
+Tue Dec  5 19:56:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/Object.cpp:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+
+	  Added static const char* dynamic_adapter_name_ to 
+	  TAO_ORB_Core, along with set and get methods. The get
+	  method is used in the CORBA::Object methods that create
+	  DII requests, and the set method is used in the static
+	  initializer in TAO_Dynamic_Adapter_Impl. These changes
+	  will make sure the TAO_DynamicInterface library will be
+	  build even on pure static builds. Thanks to Carlos for
+	  his help with this fix.
+
 Tue Dec  5 19:39:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.i:
