@@ -1,3 +1,9 @@
+Mon Nov 20 21:52:57 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am:
+
+	  Added more missing files to the source lists.
+
 Mon Nov 20 19:16:12 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.i (mutex_init):
