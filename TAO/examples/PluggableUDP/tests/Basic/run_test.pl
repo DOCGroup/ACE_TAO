@@ -12,7 +12,7 @@ $status = 0;
 $iorfile = PerlACE::LocalFile ("time.ior");
 
 $SV = new PerlACE::Process ("server", "-o $iorfile -ORBendpoint diop://:12345");
-$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 1000");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10");
 
 $SV->Spawn ();
 
