@@ -111,15 +111,56 @@ public:
                         CORBA::Boolean ignore_exceptions
                         ACE_ENV_ARG_DECL);
 
+  /// If the member corresponding to the given group ID and location
+  /// was created by the infrastructure, call delete_object() on the
+  /// remote GenericFactory that created it.
+  /**
+   * This method is only used by the TAO_PG_ObjectGroupManager class
+   * when ObjectGroupManager::remove_member() is explicitly called.
+   */
+  void delete_member (CORBA::ULong group_id,
+                      const PortableGroup::Location & location
+                      ACE_ENV_ARG_DECL);
+
+  /// Verify that the MinimumNumberMembers criterion is satisfied.
+  /**
+   * If the current number of members in the given object group is
+   * less than the MinimumNumberMembers criterion in effect for that
+   * group, the infrastructure will attempt create and add more
+   * members to the group by invoking any unused application-supplied
+   * GenericFactorys.
+   */
+  void check_minimum_number_members (
+    PortableGroup::ObjectGroup_ptr object_group,
+    CORBA::ULong group_id,
+    const char * type_id
+    ACE_ENV_ARG_DECL);
+
+  /// Create a new object group member using the supplied FactoryInfo
+  /// and RepositoryId and add it to the given object group.
+  /**
+   * @note This method is only used by the infrastructure.
+   */
+  PortableGroup::GenericFactory::FactoryCreationId * create_member (
+      PortableGroup::ObjectGroup_ptr object_group,
+      const PortableGroup::FactoryInfo & factory_info,
+      const char * type_id,
+      const CORBA::Boolean propagate_member_already_present
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::NoFactory,
+                     PortableGroup::ObjectNotCreated,
+                     PortableGroup::InvalidCriteria,
+                     PortableGroup::InvalidProperty,
+                     PortableGroup::CannotMeetCriteria));
+
 private:
 
   /// Populate the object group being created.  Called when the
   /// infrastructure-controlled membership style is used for the
   /// object group being created.
   void populate_object_group (
-         const CORBA::ULong fcid,
          PortableGroup::ObjectGroup_ptr object_group,
-         const PortableServer::ObjectId & oid,
          const char * type_id,
          const PortableGroup::FactoryInfos &factory_infos,
          const PortableGroup::InitialNumberMembersValue initial_number_members,
