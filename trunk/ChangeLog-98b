@@ -1,9 +1,15 @@
+Thu Sep 10 13:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-sunos4-sun3.x.h,config-tandem.h,README: removed
+          ACE_HAS_SYSV_SPRINTF because it's no longer used.  Thanks
+          to Ossama for reporting this.
+
 Thu Sep 10 10:18:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_event_loop):
-	  Changed to use ACE_Handle_Set instead of FD_SET.  It is more
-	  portable this way.  Thanks to Andre Folkers
-	  <folkers@informatik.mu-luebeck.de> for noticing this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_event_loop):
+          Changed to use ACE_Handle_Set instead of FD_SET.  It is more
+          portable this way.  Thanks to Andre Folkers
+          <folkers@informatik.mu-luebeck.de> for noticing this.
 
 Wed Sep 09 16:29:36 1998  David L. Levine  <levine@cs.wustl.edu>
 
