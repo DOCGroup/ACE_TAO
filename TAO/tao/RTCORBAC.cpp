@@ -776,9 +776,6 @@ void *RTCORBA::ProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
 //////////////////////////////////////////////////////
 // CDR Encoding Support
 
-// @@ Angelo, can you explain to me why these methods here return
-// true, while same methods in PolicyC.cpp return false?
-
 CORBA::Boolean
 RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
 {

@@ -82,9 +82,6 @@ TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
   // the order specified in the RTCORBA 1.0 spec (ptc/99-05-03)
   // section 4.7.3.
 
-  // @@ Angelo, this code is wrong: you are missing byte ordering
-  // octet here (and in all other encode/decode places).  See section
-  // 15.3.3 of the CORBA 2.3.1
   CORBA::Boolean b = (out_cdr << priority_model_);
   if (b  && (out_cdr << server_priority_))
     return 1;
@@ -420,63 +417,29 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 CORBA::Boolean
 TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 {
-  if (!(out_cdr << send_buffer_size_))
-    return 0;
-
-  if (!(out_cdr << recv_buffer_size_))
-    return 0;
-
-  if (!(out_cdr.write_boolean (keep_alive_)))
-    return 0;
-
-  if (!(out_cdr.write_boolean (dont_route_)))
-    return 0;
-
-  if (!(out_cdr.write_boolean (no_delay_)))
-    return 0;
-
-  return 1;
-
-  // @@ Angelo, a more consize and idiomatic way to write what you
-  // have above is the following:
-
-  // @@ Marina your code is more concise, but you go on reading
-  // even after an error occur, and this is not a good habit.
-  // My code is more verbose but it was meant to be that way,
-  // i believe that as soon as something goes wrong you should
-  // stop doing anything.
-  /*
-  return
-    ((out_cdr << send_buffer_size_)
-      and (out_cdr << recv_buffer_size_)
-      and (out_cdr.write_boolean (keep_alive_))
-      and (out_cdr.write_boolean (dont_route_))
-      and (out_cdr.write_boolean (no_delay_)))
-  */
-
-  // @@ Angelo, I sent you an e-mail explaining C++ short-circuiting
-  // feature in operator AND and why the above works.  Please fix.
+  return ((out_cdr << this->send_buffer_size_) 
+          &&
+          (out_cdr << this->recv_buffer_size_)
+          &&
+          (out_cdr.write_boolean (this->keep_alive_))
+          &&
+          (out_cdr.write_boolean (this->dont_route_))
+          &&
+          (out_cdr.write_boolean (this->no_delay_)));
 }
 
 CORBA::Boolean
 TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  if (!(in_cdr >> this->send_buffer_size_))
-    return 0;
-
-  if (!(in_cdr >> this->recv_buffer_size_))
-    return 0;
-
-  if (in_cdr.read_boolean (this->keep_alive_))
-    return 0;
-
-  if (in_cdr.read_boolean (this->dont_route_))
-    return 0;
-
-  if (in_cdr.read_boolean (this->no_delay_))
-    return 0;
-
-  return 1;
+  return ((in_cdr >> this->send_buffer_size_)
+          &&
+          (in_cdr >> this->recv_buffer_size_)
+          &&
+          (in_cdr.read_boolean (this->keep_alive_))
+          &&
+          (in_cdr.read_boolean (this->dont_route_))
+          &&
+          (in_cdr.read_boolean (this->no_delay_)));
 }
 
 void
@@ -644,42 +607,22 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (void)
 CORBA::Boolean
 TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  CORBA::Boolean is_write_ok = out_cdr << protocols_.length ();
+  CORBA::Boolean is_write_ok = out_cdr << this->protocols_.length ();
 
   for (CORBA::ULong i = 0;
-       (i < protocols_.length ()) && is_write_ok;
+       (i < this->protocols_.length ()) && is_write_ok;
        i++)
     {
-      is_write_ok = out_cdr << protocols_[i].protocol_type;
-
-      if (is_write_ok)
-        is_write_ok =
-          protocols_[i].orb_protocol_properties->_tao_encode (out_cdr);
-
-      if (is_write_ok)
-        is_write_ok =
-          protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
+      is_write_ok = 
+        (out_cdr << protocols_[i].protocol_type)
+        &&
+        this->protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
+        &&
+        this->protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
     }
 
   return is_write_ok;
 }
-// @@ Angelo, like I mentioned in one of the methods above, you can
-// write the code above more concisely.
-
-// @ Marina see explanation above.
-/*
-  For (Corba::ULong i = 0;
-     (i < protocols_.length ()) && is_write_ok;
-     i++)
-{
-  is_write_ok =
-    (out_cdr << protocols_[i].protocol_type
-     and protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
-     and protocols_[i].transport_protocol_properties->_tao_encode (out_cdr));
-}
-  */
-
-// @@ Angelo, see above ...
 
 CORBA::Boolean
 TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
@@ -687,7 +630,7 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   CORBA::ULong length;
   CORBA::Boolean is_read_ok = in_cdr >> length;
 
-  protocols_.length (length);
+  this->protocols_.length (length);
   RTCORBA::ProtocolProperties *protocol_properties;
 
   for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
@@ -695,53 +638,29 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
       IOP::ProfileId id;
       is_read_ok = in_cdr >> id;
 
-      // @@ Angelo, the code below looks buggy.  For example, I don't
-      // see where transport properties are created: you are calling
-      // create_orb_protocol_property twice.  Please review this
-      // whole method carefully to make sure it's correct.
-
       protocol_properties =
         TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
 
-      protocols_[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
+      this->protocols_[i].transport_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property (id);
 
       if (is_read_ok && protocol_properties != 0 )
         {
-          // @@ Angelo, shouldn't you be checking that the pointer is
-          // *not* 0 in the tests below before proceeding?!  You
-          // should check that allocations succeeded right after you
-          // perform them above and return false immediately on
-          // detecting a failure.
+          this->protocols_[i].orb_protocol_properties = protocol_properties;
 
-          // @Marina  The factory arlready handle the memory allocation
-          // problems.
-          // But also if I am right we could receive ORB specific protocol
-          // Properties that we need to skip.
-
-          // @@ Angelo, how does the factory handles memory allocation
-          // problem?  by returning 0, so you still need to check for
-          // it here...  Furthermore, if 0 is returned, and you are
-          // trying to invoke a method on it here, you are busted...
-
-          protocols_[i].orb_protocol_properties = protocol_properties;
-
-          if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
+          if (is_read_ok && (this->protocols_[i].orb_protocol_properties.ptr () == 0))
             is_read_ok =
-              protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+              this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
 
           if (is_read_ok
-              && (protocols_[i].transport_protocol_properties.ptr () == 0))
+              && (this->protocols_[i].transport_protocol_properties.ptr () == 0))
             is_read_ok =
-              protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+              this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
         }
     }
 
   return is_read_ok;
 }
-// @@ Angelo, please include protocol policy in your Exposed_Policies
-// test to make sure the above works!
-
 // ****************************************************************
 
 TAO_GIOP_Properties::TAO_GIOP_Properties (void)

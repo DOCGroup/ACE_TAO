@@ -26,7 +26,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   ACE_ASSERT (policy_list != 0);
 
-  Messaging::PolicyValue *pv_ptr;
+  Messaging::PolicyValue pv;
   Messaging::PolicyValueSeq policy_value_seq;
 
   TAO_OutputCDR out_CDR;
@@ -40,17 +40,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // each CORBA::Policy into a CORBA::PolicyValue
   for (size_t i = 0; i < policy_list->length (); i++)
     {
-      // @@ Angelo, avoid unnecessary memory allocations like the one below -
-      // they are very expensive!
-      ACE_NEW (pv_ptr, Messaging::PolicyValue);
-      pv_ptr->ptype = (*policy_list)[i]->policy_type ();
+      pv.ptype = (*policy_list)[i]->policy_type ();
 
       (*policy_list)[i]->_tao_encode (out_CDR);
 
       length = out_CDR.total_length ();
-      pv_ptr->pvalue.length (length);
+      pv.pvalue.length (length);
 
-      buf = pv_ptr->pvalue.get_buffer ();
+      buf = pv.pvalue.get_buffer ();
 
       // Copy the CDR buffer data into the sequence<octect> buffer.
 
@@ -62,9 +59,8 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
           buf += iterator->length ();
         }
 
-      policy_value_seq[i] = *pv_ptr;
-      delete pv_ptr;
-
+      policy_value_seq[i] = pv;
+      
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
