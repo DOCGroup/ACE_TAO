@@ -20,7 +20,11 @@ ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
 TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core)
   : message_status_ (TAO_GIOP_WAITING_FOR_HEADER),
     message_size_ (ACE_CDR::DEFAULT_BUFSIZE),
-    current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
+    current_buffer_ (ACE_CDR::DEFAULT_BUFSIZE),
+    // @@ This doesn't seem to work. The problem comes when we extract
+    // data portion from this buffer in the skeleton. Why?? Needs
+    // investigation.
+    //current_buffer_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE)),
     message_state_ (orb_core)
 {
 }

@@ -1,2 +1,5 @@
 - Fragmentation
 - Mutliple message reads
+- Why does the rd_ptr () not align when 
+  we use a cdr allocator from ORB_Core??
+
