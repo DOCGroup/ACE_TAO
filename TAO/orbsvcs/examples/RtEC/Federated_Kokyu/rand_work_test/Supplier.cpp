@@ -45,7 +45,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
-  event[0].header.type   = ACE_ES_EVENT_UNDEFINED + id_ - 1;
+  event[0].header.type   = id_;
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
@@ -60,7 +60,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //when event is pushed by client.
 
   //DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
+  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START pushing type %d at %u\n",this->id_,event[0].header.type,ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
@@ -89,8 +89,8 @@ Supplier_Timeout_Handler::Supplier_Timeout_Handler (Supplier * supplier_impl)
 {}
 
 int
-Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
-                                          const void *act)
+Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
+                                          const void *)
 {
   ACE_DEBUG ((LM_DEBUG, "Supplier_Timeout_Handler (%t): timeout received\n"));
   //@BT INSTRUMENT with event ID: EVENT_TIMEOUT Measure time when
@@ -116,6 +116,7 @@ Supplier_Timeout_Handler::handle_timeout (const ACE_Time_Value &current_time,
   ACE_DEBUG((LM_DEBUG,"Supplier_Timeout_Handler (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
              this->supplier_impl_->get_id(),ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  return 0;
 } //Supplier_Timeout_Handler::handle_timeout()
 
 // ****************************************************************

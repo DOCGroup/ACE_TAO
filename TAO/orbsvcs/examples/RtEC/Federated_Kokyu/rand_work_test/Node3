@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./Node3_EC -i node2_ec.ior \
+           -o node3_ec.ior \
+           -i node4_ec.ior \
+           -i node1_ec.ior \
+           -s edf
