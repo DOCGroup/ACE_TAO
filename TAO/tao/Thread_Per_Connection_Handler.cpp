@@ -40,7 +40,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
   if (TAO_debug_level)
     {
       ACE_DEBUG  ((LM_DEBUG,
-                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
+                   ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
                    ACE_TEXT ("activate %d threads, flags = %d\n"),
                    n_threads,
                    flags));

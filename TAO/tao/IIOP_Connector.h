@@ -99,6 +99,9 @@ protected:
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
 
+  /// Cancel the passed cvs handler from the connector
+  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
+
 protected:
 
   /// TCP configuration properties to be used for all

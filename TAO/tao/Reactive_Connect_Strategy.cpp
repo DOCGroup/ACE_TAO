@@ -2,6 +2,7 @@
 #include "Connection_Handler.h"
 #include "ORB_Core.h"
 #include "debug.h"
+#include "Transport.h"
 
 #include "ace/Synch_Options.h"
 
@@ -86,4 +87,16 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
     }
 
   return result;
+}
+
+
+int
+TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
+                                     ACE_Time_Value *val)
+{
+  if (t == 0)
+    return -1;
+
+  return this->wait (t->connection_handler (),
+                     val);
 }

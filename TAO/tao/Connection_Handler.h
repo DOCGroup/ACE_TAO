@@ -93,6 +93,10 @@ public:
    */
   virtual int open_handler (void *) = 0;
 
+  /// A close() hook, called by the Transport Connector when they want to close
+  /// this handler
+  virtual int close_handler (void);
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
