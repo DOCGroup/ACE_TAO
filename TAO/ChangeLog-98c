@@ -1,102 +1,107 @@
+Sun Dec 27 09:27:23 1998  David L. Levine  <levine@cs.wustl.edu>
+
+         * orbsvcs/orbsvcs/Makefile: don't build sfp, even with
+           Sun CC, because the Makefile didn't handle it properly.
+
 Fri Dec 25 18:26:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Table: Renamed all Object_Table classes to
- 	  Active_Object_Map.  This makes the names consistent with the new
- 	  POA spec. Also renamed the files.
+        * tao/Object_Table: Renamed all Object_Table classes to
+          Active_Object_Map.  This makes the names consistent with the new
+          POA spec. Also renamed the files.
 
-	  The other major change was to add a reverse lookup table to the
- 	  active object map.  This new table map servants to object ids.
-  	  This is used to find servants in the active object map when
- 	  _this() is called.  The previous implementation was a simple,
- 	  but expensive, linear search.  This made object registration and
- 	  activation very expensive when there are many objects in the
- 	  active object map.  Note that this optimization is only relevant
-	  in the UNIQUE_ID POA policy. 
+          The other major change was to add a reverse lookup table to the
+          active object map.  This new table map servants to object ids.
+          This is used to find servants in the active object map when
+          _this() is called.  The previous implementation was a simple,
+          but expensive, linear search.  This made object registration and
+          activation very expensive when there are many objects in the
+          active object map.  Note that this optimization is only relevant
+          in the UNIQUE_ID POA policy.
 
-	  Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
-	  this optimization.
-	
-	* tao/orbconf.h: TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE is
- 	  deprecated. Please use
- 	  TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE.
+          Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
+          this optimization.
 
-	* tao/Server_Strategy_Factory, default_server and params: Added
- 	  the ability to change the default creation policy of reverse
- 	  active object map.
+        * tao/orbconf.h: TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE is
+          deprecated. Please use
+          TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE.
 
-	* tao/Operation_Table: Removed template specialization and made
- 	  use of the new ACE_Hash_Map_Manager_Ex.
+        * tao/Server_Strategy_Factory, default_server and params: Added
+          the ability to change the default creation policy of reverse
+          active object map.
 
-	* tao/Servant_Base.h (TAO_Servant_Hash): Added a new class so that
- 	  we can hash servants. 
+        * tao/Operation_Table: Removed template specialization and made
+          use of the new ACE_Hash_Map_Manager_Ex.
 
-	* tao/Sequence.h (TAO_Base_Sequence): Removed the hash() method
- 	  from this class.  It was a non-standard method that is not
-	  required with the new Hash_Map_Manager_Ex design. 
+        * tao/Servant_Base.h (TAO_Servant_Hash): Added a new class so that
+          we can hash servants.
 
-	  Added TAO_ObjectId_Hash that will help us hash object ids.
+        * tao/Sequence.h (TAO_Base_Sequence): Removed the hash() method
+          from this class.  It was a non-standard method that is not
+          required with the new Hash_Map_Manager_Ex design.
 
-	* tao/POA: Removed the second POA constructor which took the
- 	  active object map as a parameter.  Since the user never gets to
- 	  call this function, this second constructor is extra.  Anyway,
- 	  if the user does want to specific their own (custom) active
- 	  object map, they should use the -ORBsystemidpolicydemuxstrategy
- 	  user or -ORBuseridpolicydemuxstrategy user or
- 	  -ORBuniqueidpolicyreversedemuxstrategy user policy.
-	  
-	  This change also effected some functions in ORB.cpp,
- 	  ORB_Core.cpp, and poa_T.cpp.
+          Added TAO_ObjectId_Hash that will help us hash object ids.
 
-	* tao/default_server.cpp (parse_args): Added new option
- 	  -ORBuniqueidpolicyreversedemuxstrategy.
+        * tao/POA: Removed the second POA constructor which took the
+          active object map as a parameter.  Since the user never gets to
+          call this function, this second constructor is extra.  Anyway,
+          if the user does want to specific their own (custom) active
+          object map, they should use the -ORBsystemidpolicydemuxstrategy
+          user or -ORBuseridpolicydemuxstrategy user or
+          -ORBuniqueidpolicyreversedemuxstrategy user policy.
+
+          This change also effected some functions in ORB.cpp,
+          ORB_Core.cpp, and poa_T.cpp.
+
+        * tao/default_server.cpp (parse_args): Added new option
+          -ORBuniqueidpolicyreversedemuxstrategy.
 
 Fri Dec 25 18:27:21 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_array.cpp
-	  TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be/be_array.cpp
+          TAO_IDL/be_include/be_array.h:
 
-	  Moved code generation of the var, out, and forany classes to the
-	  visitor for arrays since there were some dependencies on the
-	  information stored in the visitor context. In particular, this
-	  was required to handle anonymous arrays in structs and unions.
+          Moved code generation of the var, out, and forany classes to the
+          visitor for arrays since there were some dependencies on the
+          information stored in the visitor context. In particular, this
+          was required to handle anonymous arrays in structs and unions.
 
-	* TAO_IDL/be/be_type.cpp (nested_type_name)
-	  TAO_IDL/be_include/be_type.h (nested_type_name):
+        * TAO_IDL/be/be_type.cpp (nested_type_name)
+          TAO_IDL/be_include/be_type.h (nested_type_name):
 
-	  Added a third parameter for prefix. We need this for anonymous
-	  array type names who have an underscore prepended to the field
-	  name. 
+          Added a third parameter for prefix. We need this for anonymous
+          array type names who have an underscore prepended to the field
+          name.
 
-	* TAO_IDL/be/be_visitor_array/array_ch.cpp
-	  TAO_IDL/be/be_visitor_array/array_ci.cpp
-	  TAO_IDL/be/be_visitor_array/array_cs.cpp
-	  TAO_IDL/be/be_visitor_array/cdr_ch.cpp
-	  TAO_IDL/be/be_visitor_array/cdr_cs.cpp
-	  TAO_IDL/be_include/be_visitor_array/array_ch.h
-	  TAO_IDL/be_include/be_visitor_array/array_ci.h:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp
+          TAO_IDL/be/be_visitor_array/array_ci.cpp
+          TAO_IDL/be/be_visitor_array/array_cs.cpp
+          TAO_IDL/be/be_visitor_array/cdr_ch.cpp
+          TAO_IDL/be/be_visitor_array/cdr_cs.cpp
+          TAO_IDL/be_include/be_visitor_array/array_ch.h
+          TAO_IDL/be_include/be_visitor_array/array_ci.h:
 
-	  Moved code generation of the var, out, and forany classes to the
-	  visitors. In addition, fixed a number of problems with anonymous
-	  arrays in structs and unions. Fixed CDR operators for anonymous
-	  arrays.
+          Moved code generation of the var, out, and forany classes to the
+          visitors. In addition, fixed a number of problems with anonymous
+          arrays in structs and unions. Fixed CDR operators for anonymous
+          arrays.
 
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp
-	  TAO_IDL/be/be_visitor_field/field_ci.cpp
-	  TAO_IDL/be/be_visitor_field/field_cs.cpp
-	  TAO_IDL/be/be_visitor_field/cdr_cs.cpp
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp
+          TAO_IDL/be/be_visitor_field/field_ci.cpp
+          TAO_IDL/be/be_visitor_field/field_cs.cpp
+          TAO_IDL/be/be_visitor_field/cdr_cs.cpp
 
-	  Fixed problems with anonymous arrays and sequences.
+          Fixed problems with anonymous arrays and sequences.
 
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_access.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_assign.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_ch.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_ci.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_cs.cpp
-	  TAO_IDL/be/be_visitor_union_branch/public_reset.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_access.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_assign.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_ch.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_ci.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_cs.cpp
+          TAO_IDL/be/be_visitor_union_branch/public_reset.cpp:
 
-	  Fixed problems with anonymous arrays and sequences.
-	
+          Fixed problems with anonymous arrays and sequences.
+
 Thu Dec 24 09:45:36 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.44 released.
