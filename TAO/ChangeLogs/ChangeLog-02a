@@ -1,3 +1,29 @@
+Mon Apr  2 20:08:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ORB.cpp:
+
+          Added a check to each create_*_tc method. If the
+          creation of the service object instance fails, a null 
+          typecode pointer will be returned, avoiding the crash 
+          that was happening previously.
+
+        * examples/TypeCode_Creation/main.cpp:
+        * examples/TypeCode_Creation/Makefile:
+        * examples/TypeCode_Creation/Makefile.bor:
+        * examples/TypeCode_Creation/README:
+        * examples/TypeCode_Creation/run_test.pl:
+        * examples/TypeCode_Creation/test.idl:
+        * examples/TypeCode_Creation/TypeCode_Creation.dsp:
+
+          New files for the example on creating typecodes
+          through the use of CORBA::ORB::create_*_tc.
+
+        * examples/TAO_Examples.dsw:
+        * examples/Makefile:
+        * examples/Makefile.bor:
+
+          Updated these with the new example.
+
 Mon Apr  2 20:01:05 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AVStreams.idl:
