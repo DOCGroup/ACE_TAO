@@ -1,3 +1,9 @@
+Wed May 17 12:48:24 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/CDR_File_Test.cpp:
+	  More workarounds for compiler bugs, this time egcs-1.1.1 is at
+	  fault.
+
 Wed May 17 09:02:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/CDR_Array_Test.cpp:
