@@ -85,21 +85,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Constructor(s) and destructor
  */
 AST_Operation::AST_Operation()
-	     : pd_flags(OP_noflags),
-	       pd_return_type(NULL),
-	       pd_context(NULL),
-	       pd_exceptions(NULL)
+  : pd_return_type(NULL),
+    pd_flags(OP_noflags),
+    pd_context(NULL),
+    pd_exceptions(NULL)
 {
 }
 
 AST_Operation::AST_Operation(AST_Type *rt, Flags fl, UTL_ScopedName *n,
 			   UTL_StrList *p)
-	     : pd_return_type(rt),
-	       pd_flags(fl),
-	       pd_context(NULL),
-	       pd_exceptions(NULL),
-	       AST_Decl(AST_Decl::NT_op, n, p),
-	       UTL_Scope(AST_Decl::NT_op)
+  : pd_return_type(rt),
+    pd_flags(fl),
+    pd_context(NULL),
+    pd_exceptions(NULL),
+    AST_Decl(AST_Decl::NT_op, n, p),
+    UTL_Scope(AST_Decl::NT_op)
 {
   AST_PredefinedType *pdt;
 
@@ -157,6 +157,9 @@ AST_Operation::fe_add_exceptions(UTL_NameList *t)
   UTL_Scope		     *fs = idl_global->scopes()->top();
   AST_Exception		     *fe;
   AST_Decl		     *d;
+
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (fs);
 
   pd_exceptions = NULL;
   nl_i = new UTL_NamelistActiveIterator(t);
