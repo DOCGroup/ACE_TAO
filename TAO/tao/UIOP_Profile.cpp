@@ -114,34 +114,33 @@ TAO_UIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor  > TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
     }
 
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
-  CORBA::String_var copy = CORBA::string_dup (string);
+  CORBA::String_var copy (string);
 
   char *start = copy.inout ();
   char *cp = ACE_OS::strchr (start, this->object_key_delimiter);
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
       // No rendezvous point specified
     }
 
-  char *rendezvous = 0;
+  CORBA::String_var rendezvous = CORBA::string_alloc (1 + cp - start);
 
-  ACE_NEW_RETURN (rendezvous,
-                  char[1 + cp - start],
-                  -1);
-
-  ACE_OS::strncpy (rendezvous, start, cp - start);
+  ACE_OS::strncpy (rendezvous.inout (), start, cp - start);
   rendezvous[cp - start] = '\0';
 
-  (void) this->rendezvous_point (rendezvous);
+  ACE_DEBUG ((LM_DEBUG, "OSSAMA UIOP 0 ---> <%s>\n", rendezvous.in ()));
 
-  delete [] rendezvous;
+  if (this->rendezvous_point (rendezvous.in ()) == 0)
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+    }
 
   start = ++cp;  // increment past the object key separator
 
