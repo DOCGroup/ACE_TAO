@@ -1,6 +1,7 @@
 // $Id$
 
 #include "client_i.h"
+#include "tao/Timeprobe.h"
 
 // This function runs the test.
 
