@@ -1,3 +1,33 @@
+Fri Jun 16 17:47:59 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/pace/config/features.h	
+
+	  Added to the repository to isolate user defined features.
+	  (ie: PACE_HAS_INLINE)
+
+	* pace/pace/config/compiler.h
+
+	  Added *hack* to cover PACE_INLINE to static, inline 
+	  or (blank) expansion depending on the compiler.
+	
+	* pace/pace/config/platform.h
+	* pace/pace/config/config.h
+	* pace/pace/config/utility.h
+
+	  Cleaned up source.
+
+	* pace/pace/common/README
+	* pace/pace/common
+
+	  Removed from the repository. Not used for anything.
+
+	* pace/pace/*.h
+
+	  Started adding code to include the correct directory
+	  here, but there seems to be a better way... :-) We will
+	  wait and see. Do away with these .h files and simply
+	  go to the correct directory via the makefile.
+
 Fri Jun 16 16:15:25 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/Makefile:
