@@ -1,3 +1,11 @@
+Thu Jul 25 22:58:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Synch.cpp: Removed explicit instantiation of
+	  ACE_Condition<ACE_Recursive_Thread_Mutex> since a template
+	  specialization exists. This was causing a compile error when
+	  explicit template instantiations were used with
+	  g++-2.95.3.
+
 Thu Jul 25 11:32:41 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
