@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:338
 
 
 #include "TypeCodeFactoryC.h"
@@ -52,13 +52,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:438
 
 #if !defined (_CORBA_ANY__ARG_TRAITS_CS_)
 #define _CORBA_ANY__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::Any>
     : public
@@ -71,13 +71,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:393
 
 #if !defined (_CORBA_DEFINITIONKIND__ARG_TRAITS_CS_)
 #define _CORBA_DEFINITIONKIND__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::DefinitionKind>
     : public
@@ -91,7 +91,7 @@ namespace TAO
 
 #if !defined (_CORBA_CONTAINER__ARG_TRAITS_CS_)
 #define _CORBA_CONTAINER__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::Container>
     : public
@@ -108,7 +108,7 @@ namespace TAO
 
 #if !defined (_CORBA_IDLTYPE__ARG_TRAITS_CS_)
 #define _CORBA_IDLTYPE__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::IDLType>
     : public
@@ -122,13 +122,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::InterfaceDefSeq>
     : public
@@ -144,7 +144,7 @@ namespace TAO
 
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ValueDef>
     : public
@@ -158,13 +158,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ValueDefSeq>
     : public
@@ -177,13 +177,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_ABSTRACTINTERFACEDEFSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::AbstractInterfaceDefSeq>
     : public
@@ -196,13 +196,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRUCTMEMBERSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::StructMemberSeq>
     : public
@@ -215,13 +215,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::InitializerSeq>
     : public
@@ -234,13 +234,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ExtInitializerSeq>
     : public
@@ -253,13 +253,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_UNIONMEMBERSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::UnionMemberSeq>
     : public
@@ -272,13 +272,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_ENUMMEMBERSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::EnumMemberSeq>
     : public
@@ -291,13 +291,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:393
 
 #if !defined (_CORBA_PRIMITIVEKIND__ARG_TRAITS_CS_)
 #define _CORBA_PRIMITIVEKIND__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::PrimitiveKind>
     : public
@@ -308,13 +308,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ExceptionDefSeq>
     : public
@@ -327,13 +327,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:393
 
 #if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_)
 #define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::AttributeMode>
     : public
@@ -344,13 +344,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:393
 
 #if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_CS_)
 #define _CORBA_OPERATIONMODE__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::OperationMode>
     : public
@@ -361,13 +361,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ParDescriptionSeq>
     : public
@@ -380,13 +380,13 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:265
 
 #if !defined (_CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_)
 #define _CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_TypeCodeFactory_Export Arg_Traits<CORBA::ContextIdSeq>
     : public
@@ -400,6 +400,7 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
@@ -442,7 +443,7 @@ TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_TypeCodeFactory_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -453,7 +454,7 @@ CORBA::TypeCodeFactory::TypeCodeFactory (void)
 CORBA::TypeCodeFactory::~TypeCodeFactory (void)
 {}
 
-void
+void 
 CORBA::TypeCodeFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
   TypeCodeFactory *_tao_tmp_pointer =
@@ -471,10 +472,27 @@ CORBA::TypeCodeFactory::_narrow (
     {
       return TypeCodeFactory::_nil ();
     }
-
+  
   TypeCodeFactory_ptr proxy =
     dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
+  
+  return TypeCodeFactory::_duplicate (proxy);
+}
 
+CORBA::TypeCodeFactory_ptr
+CORBA::TypeCodeFactory::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return TypeCodeFactory::_nil ();
+    }
+  
+  TypeCodeFactory_ptr proxy =
+    dynamic_cast<TypeCodeFactory_ptr> (_tao_objref);
+  
   return TypeCodeFactory::_duplicate (proxy);
 }
 
@@ -485,7 +503,7 @@ CORBA::TypeCodeFactory::_duplicate (TypeCodeFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -536,20 +554,20 @@ static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f5479),
-  ACE_NTOHL (0x7065436f),
-  ACE_NTOHL (0x64654661),
-  ACE_NTOHL (0x63746f72),
-  ACE_NTOHL (0x793a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f5479), 
+  ACE_NTOHL (0x7065436f), 
+  ACE_NTOHL (0x64654661), 
+  ACE_NTOHL (0x63746f72), 
+  ACE_NTOHL (0x793a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/TypeCodeFactory:1.0
     16,
-  ACE_NTOHL (0x54797065),
-  ACE_NTOHL (0x436f6465),
-  ACE_NTOHL (0x46616374),
+  ACE_NTOHL (0x54797065), 
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0x46616374), 
   ACE_NTOHL (0x6f727900),  // name = TypeCodeFactory
   };
 
@@ -637,7 +655,7 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -894,7 +912,7 @@ operator>>= (
     TAO_Objref_Var_T<
         CORBA::TypeCodeFactory
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         CORBA::TypeCodeFactory
