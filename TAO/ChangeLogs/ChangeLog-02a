@@ -1,3 +1,10 @@
+Tue Jun 12 17:42:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+
+          Added -A (preprocessor assertion) command line option, 
+          identical to the option for the IDL compiler.
+
 Tue Jun 12 17:31:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TAO_Internal.cpp:
