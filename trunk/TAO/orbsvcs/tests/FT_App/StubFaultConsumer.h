@@ -79,17 +79,17 @@ public:
       const CosNotification::StructuredEvent &notification
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosEventComm::Disconnected);
+      ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected));
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
-      throw (CORBA::SystemException, CosNotifyComm::InvalidEventType);
+      ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType));
 
    virtual void disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      throw (CORBA::SystemException);
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   ////////////////////
   // Forbidden methods

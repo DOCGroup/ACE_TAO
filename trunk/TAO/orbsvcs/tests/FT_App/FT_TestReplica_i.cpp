@@ -20,6 +20,7 @@
 #include "FT_TestReplicaC.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_stdio.h"
 
 //////////////////
 // TestReplica_i
@@ -139,7 +140,8 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate FAULT_CODE fault: " << note << endl;
+  ACE_OS::fprintf (stdout, "%s@%s#%u Simulate FAULT_CODE fault: %s\n",
+  						   name_.c_str(), this->factory_->location(), this->factory_id_, note);
 
   // Tell the poa we aren't accepting future calls
   this->poa_->deactivate_object (this->object_id_.in ());
@@ -393,8 +395,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << name_.c_str() << '@' << this->factory_->location()
-    << '#' << this->factory_id_ << " Received death threat: " << when << endl;
+  ACE_OS::fprintf (stdout, "%s@%s#%u Received death threat: %d\n",
+  						   name_.c_str(), this->factory_->location(), this->factory_id_, when);
 
   this->death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
@@ -403,8 +405,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << name_.c_str() << '@' << this->factory_->location()
-    << '#' << this->factory_id_ << " Shut down requested" << endl;
+  ACE_OS::fprintf (stdout, "%s@%s#%u Shut down requested\n",
+  						   name_.c_str(), this->factory_->location(), this->factory_id_);
   this->death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
@@ -454,8 +456,8 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
-      cout << name_.c_str() << '@' << this->factory_->location()
-        << '#' << this->factory_id_ << ": " << counter << endl;
+      ACE_OS::fprintf (stdout, "%s@%s#%u :%d\n",
+  							   name_.c_str(), this->factory_->location(), this->factory_id_, counter);
     }
     delete[] buffer;
     buffer = 0;
