@@ -364,16 +364,6 @@ public:
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);
   // Handles signals to trigger reconfigurations.
 
-protected:
-  static int process_commandline_directives (void);
-  // Process service configuration requests that were provided on the
-  // command-line.  Returns the number of errors that occurred.
-
-  static int process_directives_i (void);
-  // This is the implementation function that <process_directives> and
-  // <process_directive> both call.  Returns the number of errors that
-  // occurred.
-
   static int parse_args (int, ACE_TCHAR *argv[]);
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
@@ -390,6 +380,15 @@ protected:
   // '-S' - Option to read in the list of services on the command-line
   //        Please observe the difference between options '-f' that looks
   //        for a list of files and here a list of services.
+protected:
+  static int process_commandline_directives (void);
+  // Process service configuration requests that were provided on the
+  // command-line.  Returns the number of errors that occurred.
+
+  static int process_directives_i (void);
+  // This is the implementation function that <process_directives> and
+  // <process_directive> both call.  Returns the number of errors that
+  // occurred.
 
   static int start_daemon (void);
   // Become a daemon.
