@@ -1,3 +1,14 @@
+Mon Oct 18 23:46:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Undefined ACE_HAS_PENTIUM for
+	  freebsd.  The high resolution timer doesn't seem to work on this
+	  platfrom.
+
+	* ace/OS.i (cuserid): Added missing ACE_UNUSED_ARG (maxlen)
+	  statement.
+
+	* ace/Log_Msg.cpp (log): FreeBSD defines sys_nerr as a const int.
+
 Mon Oct 18 23:13:55 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Web_Crawler/URL_Visitor.cpp: Updated some broken
