@@ -56,7 +56,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   // output the class defn
 
-  *os << "class TAO_" << node->flat_name ()
+  *os << "class " << idl_global->stub_export_macro ()<< " " 
+      << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl << be_nl
@@ -74,7 +75,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt_nl
       << "};\n\n";
 
-  *os << "class TAO_" << node->flat_name ()
+  *os << "class " << idl_global->stub_export_macro ()<< " " 
+      << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl << be_nl
@@ -116,7 +118,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_"
       << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
-  *os << "class TAO_"<< node->flat_name ()
+  *os << "class " << idl_global->stub_export_macro ()<< " " 
+      << "TAO_"<< node->flat_name ()
       << "_Smart_Proxy_Base" << be_idt_nl
       << ": public virtual "
       << bt->nested_type_name (this->ctx_->scope ());
@@ -175,7 +178,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
   os->decr_indent ();
   *os << be_uidt_nl << "protected:" << be_idt_nl
       << "::" << node->full_name ()
-      << "_ptr get_proxy (void);"
+      << "_ptr get_proxy (void);" << be_nl
+      << "::" << node->full_name () << "_var proxy_;"
       << be_uidt_nl
       << "};\n\n";
 
