@@ -1,3 +1,8 @@
+Wed Jun 23 00:42:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time-date: Fixed warnings in the code.
+	  Thanks to Carlos for reporting this.
+
 Wed Jun 23 00:07:51 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/run_test.pl: Changed all instances of server
