@@ -8,6 +8,13 @@ Fri Dec 15 14:36:33 2000  Christopher Kohlhoff <chris@kohlhoff.com>
           Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
           suggesting this.
 
+Fri Dec 15 14:32:06 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Log_Msg.h (ACE_Log_Msg): Changed the documentation
+	  to reflect the fact that the %a option causes the program to
+ 	  abort() rather than exit().  Thanks to Mike Curtis
+ 	  <mccurry@my-deja.com> for pointing this out.
+
 Fri Dec 15 14:29:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/generate_doxygen.pl:
@@ -63,6 +70,12 @@ Thu Dec 14 10:20:49 2000  Chad Elliott  <elliott_c@ociweb.com>
         * include/makeinclude/platform_lynxos.GNU
           Allow users to set the debug option without using
           'override debug='.  debug=0 now works properly.
+
+Thu Dec 14 06:00:12 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace: Removed makefile-light since it's no longer needed.
+	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+ 	  reporting this.
 
 Wed Dec 13 18:33:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
