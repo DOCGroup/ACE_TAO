@@ -13,12 +13,15 @@
 //     GIOP utility definitions
 //
 // = AUTHOR
-//     Balachandran Natarajan <bala@cs.wustl.edu>
-//
+//     Chris Cleeland <cleeland@cs.wustl.edu>
+//     Carlos O' Ryan <coryan@uci.edu>
+//     
 // ============================================================================
 #ifndef TAO_GIOP_UTILS_H
 #define TAO_GIOP_UTILS_H
 #include "tao/Pluggable_Messaging.h"
+#include "tao/Object.h"
+
 
 
 typedef enum GIOP_Messages
