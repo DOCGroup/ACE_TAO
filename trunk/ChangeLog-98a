@@ -1,3 +1,14 @@
+Wed Jan 14 19:01:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp (open): In Message_Queue::open
+ 	  deactivated_ flag is beeing set to 0 instead of
+ 	  WAS_INACTIVE. This is causing incorrect return value from
+ 	  first-time call to activate().  Thanks to Slawomir Kuzniar
+ 	  <kuzniar@Bear.COM> for reporting this.
+
+	* ace/Signal.i (is_member): Added an ACE_const_cast().  Thanks to
+ 	  Oleg Krivosheev <kriol@fnal.gov> for reporting this.
+
 Wed Jan 14 06:45:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i: Fixed typo in ACE_Time_Value::operator const timeval *
