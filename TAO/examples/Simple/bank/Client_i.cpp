@@ -58,24 +58,24 @@ Client_i::parse_args (void)
 
   while ((c = get_opts ()) != -1)
     // ACE_DEBUG((LM_DEBUG,"bal =1%c",c
-    //		   ));
+    //             ));
     switch (c)
       {
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
       case 'n':  // loop count
-	this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'b':  // initial balance
-	this->initial_balance_ = (float) ACE_OS::atoi (get_opts.optarg);
+        this->initial_balance_ = (float) ACE_OS::atoi (get_opts.optarg);
       break;
       case 'y': // Name of one account holder.
-	this->account_holder_name1_ = ACE_OS::strdup (get_opts.optarg);
-	break;
+        this->account_holder_name1_ = ACE_OS::strdup (get_opts.optarg);
+        break;
       case 'z': // Name of another account holder.
-	this->account_holder_name2_ = ACE_OS::strdup (get_opts.optarg);
-	break;
+        this->account_holder_name2_ = ACE_OS::strdup (get_opts.optarg);
+        break;
       case 'k':  // ior provide on command line
         this->ior_ = ACE_OS::strdup (get_opts.optarg);
         break;
@@ -95,10 +95,10 @@ Client_i::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-			   " [-b Initial Balance]"
-			   " [-y First Account Holder's Name]"
-			   " [-z Second Account Holder's Name]"
-			   " [-n loopcount]"
+                           " [-b Initial Balance]"
+                           " [-y First Account Holder's Name]"
+                           " [-z Second Account Holder's Name]"
+                           " [-n loopcount]"
                            " [-f ior-file]"
                            " [-k ior]"
                            " [-x]"
@@ -114,7 +114,7 @@ Client_i::parse_args (void)
 void
 Client_i::deposit (Bank::Account_ptr server,
                    CORBA::Float deposit_amount,
-		   CORBA::Environment &env)
+                   CORBA::Environment &env)
 {
   server->deposit (deposit_amount,
                    this->env_);
@@ -127,38 +127,38 @@ Client_i::withdraw (Bank::Account_ptr server,
   TAO_TRY
     {
       server->withdraw (withdrawl_amount,
-			TAO_TRY_ENV);
+                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
       Bank::Account::Overdraft_ptr except =
-	Bank::Account::Overdraft::_narrow
-	(TAO_TRY_ENV.exception ());
+        Bank::Account::Overdraft::_narrow
+        (TAO_TRY_ENV.exception ());
 
       ACE_DEBUG ((LM_DEBUG,
-		  "[CLIENT] Process/Thread Id : (%P/%t) %s",
-		  (char *) except->reason));
+                  "[CLIENT] Process/Thread Id : (%P/%t) %s",
+                  except->reason.in ()));
     }
   TAO_ENDTRY;
 }
 
 Bank::Account_ptr
 Client_i::open (const char *name,
-		CORBA::Float initial_balance,
-		CORBA::Environment &env)
+                CORBA::Float initial_balance,
+                CORBA::Environment &env)
 {
   return this->accountmanager_server_->open (name,
-					     initial_balance,
-					     env);
+                                             initial_balance,
+                                             env);
 }
 
 void
 Client_i::close (Bank::Account_ptr account,
-		 CORBA::Environment &env)
+                 CORBA::Environment &env)
 {
   this->accountmanager_server_->close (account,
-				       env);
+                                       env);
 }
 
 
@@ -169,17 +169,17 @@ void
 Client_i::test_for_same_name (CORBA::Environment &env)
 {
   this->server1_ = this->open (this->account_holder_name1_,
-			       this->initial_balance_,
-			       this->env_);
+                               this->initial_balance_,
+                               this->env_);
   this->server2_ = this->open (this->account_holder_name1_,
-			       this->initial_balance_,
-			       this->env_);
+                               this->initial_balance_,
+                               this->env_);
   ACE_ASSERT (server1_->_is_equivalent ((CORBA::Object *) server2_.in ()) != 0);
 
   this->close (server1_.in (),
-	       this->env_);
+               this->env_);
   this->close (server2_.in (),
-	       this->env_);
+               this->env_);
 }
 
 // This method tests if opening an account with different names
@@ -188,18 +188,18 @@ void
 Client_i::test_for_different_name (CORBA::Environment &env)
 {
   this->server1_ = this->open (this->account_holder_name1_,
-			       this->initial_balance_,
-			       this->env_);
+                               this->initial_balance_,
+                               this->env_);
   this->server2_ = this->open (this->account_holder_name2_,
-			       this->initial_balance_,
-			       this->env_);
+                               this->initial_balance_,
+                               this->env_);
 
   ACE_ASSERT (server1_->_is_equivalent ((CORBA::Object *)server2_.in ()) == 0);
 
   this->close (server1_.in (),
-	       this->env_);
+               this->env_);
   this->close (server2_.in (),
-	       this->env_);
+               this->env_);
 }
 
 // This method tests the Overdraft exception.
@@ -208,15 +208,15 @@ void
 Client_i::test_for_overdraft (CORBA::Environment &env)
 {
   this->server1_ = this->open (this->account_holder_name1_,
-			       this->initial_balance_,
-			       this->env_);
+                               this->initial_balance_,
+                               this->env_);
   this->deposit (server1_.in (),
-		 100.00,
-		 this->env_);
+                 100.00,
+                 this->env_);
   this->withdraw (server1_.in (),
-		  server1_->balance(this->env_) + 20);
+                  server1_->balance(this->env_) + 20);
   this->close (server1_.in (),
-	       this->env_);
+               this->env_);
 }
 
 
@@ -226,24 +226,24 @@ Client_i::check_accounts (void)
   TAO_TRY
     {
       ACE_DEBUG((LM_DEBUG,
-		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with same name\n"));
+                 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with same name\n"));
       this->test_for_same_name (this->env_);
       TAO_CHECK_ENV;
 
       ACE_DEBUG((LM_DEBUG,
-		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with different name\n"));
+                 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Accounts with different name\n"));
       this->test_for_different_name (this->env_);
       TAO_CHECK_ENV;
 
       ACE_DEBUG((LM_DEBUG,
-		 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Overdraft Exception\n"));
+                 "\n[CLIENT] Process/Thread Id : (%P/%t):Test for Overdraft Exception\n"));
       this->test_for_overdraft (this->env_);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
       if (this->env_.exception () != 0)
-	this->env_.print_exception ("From Client_i::check_accounts()");
+        this->env_.print_exception ("From Client_i::check_accounts()");
     }
   TAO_ENDTRY;
 
@@ -260,13 +260,13 @@ Client_i::run (void)
   TAO_TRY
     {
       if (this->shutdown_)
-	this->accountmanager_server_->shutdown (TAO_TRY_ENV);
+        this->accountmanager_server_->shutdown (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "[CLIENT] Process/Thread Id : (%P/%t) Unable to shut down the server\n"));
+                  "[CLIENT] Process/Thread Id : (%P/%t) Unable to shut down the server\n"));
     }
   TAO_ENDTRY;
 
@@ -286,10 +286,10 @@ Client_i::obtain_initial_references (void)
     {
       // Initialize the naming services.
       if (my_name_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "[CLIENT] Process/Thread Id : (%P/%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
 
       CosNaming::Name account_manager_name (1);
       account_manager_name.length (1);
@@ -298,12 +298,12 @@ Client_i::obtain_initial_references (void)
 
       CORBA::Object_var account_manager_obj =
         my_name_client_->resolve (account_manager_name,
-				  TAO_TRY_ENV);
+                                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->accountmanager_server_ =
         Bank::AccountManager::_narrow (account_manager_obj.in (),
-				       TAO_TRY_ENV);
+                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -339,37 +339,37 @@ Client_i::init (int argc, char **argv)
         return -1;
 
       if (this->ior_)
-	{
-	  // An ior is specified for the client through a commandline
-	  // option or a file.
+        {
+          // An ior is specified for the client through a commandline
+          // option or a file.
 
-	  CORBA::Object_var server_object =
-	  this->orb_->string_to_object (this->ior_,
-					TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          CORBA::Object_var server_object =
+          this->orb_->string_to_object (this->ior_,
+                                        TAO_TRY_ENV);
+          TAO_CHECK_ENV;
 
-	  if (CORBA::is_nil (server_object.in ()))
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "invalid ior <%s>\n",
-			       this->ior_),
-			      -1);
+          if (CORBA::is_nil (server_object.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid ior <%s>\n",
+                               this->ior_),
+                              -1);
 
-	  this->accountmanager_server_ =
-	    Bank::AccountManager::_narrow (server_object.in (),
-					   TAO_TRY_ENV);
+          this->accountmanager_server_ =
+            Bank::AccountManager::_narrow (server_object.in (),
+                                           TAO_TRY_ENV);
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
-	  TAO_CHECK_ENV;
-	}
+          ACE_DEBUG ((LM_DEBUG,
+                      "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));
+          TAO_CHECK_ENV;
+        }
       else
-	{ // No IOR specified. Use the Naming Service
-	  ACE_DEBUG((LM_DEBUG,
-		     "[CLIENT] Process/Thread Id : (%P/%t) Using the Naming Service\n"));
+        { // No IOR specified. Use the Naming Service
+          ACE_DEBUG((LM_DEBUG,
+                     "[CLIENT] Process/Thread Id : (%P/%t) Using the Naming Service\n"));
 
-	  this->obtain_initial_references ();
-	  TAO_CHECK_ENV;
-	}
+          this->obtain_initial_references ();
+          TAO_CHECK_ENV;
+        }
     }
   TAO_CATCHANY
     {
