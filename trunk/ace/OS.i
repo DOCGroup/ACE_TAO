@@ -1781,6 +1781,21 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #endif /* ACE_HAS_POSIX_SEM */
 }
 
+ACE_INLINE sem_t *
+ACE_OS::sema_open (const char *name, int oflag, 
+		   u_long mode, u_int value)
+{
+#if defined (ACE_HAS_POSIX_SEM) && !defined (CHORUS)
+  return ::sem_open (name, oflag, mode, value);
+#else
+  ACE_UNUSED_ARG(name);
+  ACE_UNUSED_ARG(oflag);
+  ACE_UNUSED_ARG(mode);
+  ACE_UNUSED_ARG(value);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* defined (ACE_HAS_POSIX_SEM) && !defined (CHORUS) */
+}
+
 ACE_INLINE int 
 ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type, 
 		   LPCTSTR name, void *arg, int max)
@@ -1792,7 +1807,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   if (name)
     {
       s->name_ = ACE_OS::strdup (name);
-      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
+      s->sema_ = ACE_OS::sema_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
       return (int) s->sema_ == -1 ? -1 : 0;
     }
   else
