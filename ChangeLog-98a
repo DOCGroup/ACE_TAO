@@ -1,3 +1,12 @@
+Wed Apr  8 01:09:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Hash_Map_Manager: Made a bunch of minor changes to fix some
+ 	  subtle deadlocks with intra-class locking.
+
+	* tests/Map_Manager_Test.cpp: Restructured the tests so that we
+ 	  don't keep recomputing end() and rend() of the map in each loop
+ 	  iteration!
+
 Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: added this script that creates ACE and/or

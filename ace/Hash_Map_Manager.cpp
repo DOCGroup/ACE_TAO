@@ -79,12 +79,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::create_buckets (size_t size)
 
   this->total_size_ = size;
 
-  // Initialize the hash table by creating sentinals that point to
-  // themselves.
-  for (size_t i = 0; i < this->total_size_; i++)
+  // Initialize each entry in the hash table to be a circular linked
+  // list with the dummy node in the front serving as the anchor of
+  // the list.
+  for (size_t i = 0; i < size; i++)
     new (&this->table_[i]) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (&this->table_[i],
                                                                &this->table_[i]);
-
   return 0;
 }
 
@@ -102,7 +102,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
   // This assertion is here to help track a situation that shouldn't
   // happen, but did with Sun C++ 4.1 (before a change to this class
   // was made: it used to have an enum that was supposed to be defined
-  // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0.
+  // to be ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0).
   ACE_ASSERT (size != 0);
 
   // Calling this->close_i () to ensure we release previous allocated
@@ -158,6 +158,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
               this->allocator_->free (hold_ptr);
             }
 
+          // Destroy the dummy entry.
           ACE_Hash_Map_Entry<EXT_ID, INT_ID> &entry = table_[i];
           entry.ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ();
         }
@@ -165,6 +166,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
       // Free table memory.
       this->allocator_->free (this->table_);
       this->cur_size_ = 0;
+      this->total_size_ = 0;
       // Should be done last...
       this->table_ = 0;
     }
@@ -226,14 +228,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
                             this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
 
-      this->table_[loc].next_ = entry =
-        new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
-                                                      int_id,
-                                                      this->table_[loc].next_,
-                                                      &this->table_[loc]);
-      entry->next_->prev_ = entry;
+      entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
+                                                            int_id,
+                                                            this->table_[loc].next_,
+                                                            &this->table_[loc]);
       this->table_[loc].next_ = entry;
-
+      entry->next_->prev_ = entry;
       this->cur_size_++;
       return 0;
     }
@@ -285,12 +285,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
                             this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
                             -1);
 
-      this->table_[loc].next_ = entry =
-        new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
-                                                      int_id,
-                                                      this->table_[loc].next_,
-                                                      &this->table_[loc]);
-
+      entry = new (ptr) ACE_Hash_Map_Entry<EXT_ID, INT_ID> (ext_id,
+                                                            int_id,
+                                                            this->table_[loc].next_,
+                                                            &this->table_[loc]);
+      this->table_[loc].next_ = entry;
+      entry->next_->prev_ = entry;
       this->cur_size_++;
       return 0;
     }
@@ -582,17 +582,16 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                                                                   int head)
   : map_man_ (&mm),
-    index_ (head != 0 ? -1 : ACE_static_cast (ssize_t,
-                                              mm.total_size_)),
+    index_ (head != 0 ? -1 : ACE_static_cast (ssize_t, mm.total_size_)),
     next_ (0)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator_Base");
   if (mm.table_ != 0)
-    this->next_ = &mm.table_[ (head != 0 ? 0 : mm.total_size_ - 1 ) ];
+    this->next_ = &mm.table_[head != 0 ? 0 : mm.total_size_ - 1];
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *& entry)
+ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
@@ -617,7 +616,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 
   return this->map_man_->table_ == 0
     || this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_)
-    || this->index_ <= -1;
+    || this->index_ < 0;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -628,31 +627,31 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i (void)
 
   if (this->map_man_->table_ == 0)
     return -1;
-
-  // Guard against error condition first.
-  if (this->index_ < 0)
+  // Handle initial case specially.
+  else if (this->index_ == -1)
     {
       this->index_++;
       return this->forward_i ();
     }
-  else if (this->index_ >= ACE_static_cast(ssize_t, this->map_man_->total_size_))
+  else if (this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_))
     return 0;
 
-  this->next_ = this->next_->next_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
-    {
-      while (++this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_))
-        {
-          this->next_ = &this->map_man_->table_[this->index_];
-          if (this->next_->next_ != &this->map_man_->table_[this->index_])
-            {
-              this->next_ = this->map_man_->table_[this->index_].next_;
-              return 1;
-            }
-        }
-      return 0;
-    }
-  return 1;
+  for (;;)
+    if (this->next_ == &this->map_man_->table_[this->index_])
+      {
+        while (++this->index_ < ACE_static_cast (ssize_t,
+                                                 this->map_man_->total_size_))
+          {
+            this->next_ = this->map_man_->table_[this->index_].next_;
+            if (this->next_ != &this->map_man_->table_[this->index_])
+              break;
+          }
+        break;
+      }
+    else
+      this->next_ = this->next_->next_;
+
+  return this->index_ < ACE_static_cast (ssize_t, this->map_man_->total_size_);
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -663,8 +662,7 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
 
   if (this->map_man_->table_ == 0)
     return -1;
-
-  if (this->index_ >= ACE_static_cast (ssize_t, this->map_man_->total_size_))
+  else if (this->index_ == ACE_static_cast (ssize_t, this->map_man_->total_size_))
     {
       this->index_--;
       return this->reverse_i ();
@@ -672,32 +670,33 @@ ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i (void)
   else if (this->index_ < 0)
     return 0;
 
-  this->next_ = this->next_->prev_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
-    {
-      while (--this->index_ >= 0)
-        {
-          this->next_ = &this->map_man_->table_[this->index_];
-          if (this->next_->prev_ != &this->map_man_->table_[this->index_])
-            {
-              this->next_ = this->map_man_->table_[this->index_].prev_;
-              return 1;
-            }
-        }
-      return 0;
-    }
+  for (;;)
+    if (this->next_ == &this->map_man_->table_[this->index_])
+      {
+        while (--this->index_ >= 0)
+          {
+            this->next_ = this->map_man_->table_[this->index_].next_;
+            if (this->next_ != &this->map_man_->table_[this->index_])
+              break;
+          }
+        break;
+      }
+    else
+      this->next_ = this->next_->prev_;
 
-  return 1;
+  return this->index_ >= 0;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Entry<EXT_ID, INT_ID>&
+ACE_Hash_Map_Entry<EXT_ID, INT_ID> &
 ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator*");
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *retv = 0;
 
-  ACE_ASSERT (this->next (retv) != 0);
+  int result = this->next (retv);
+
+  ACE_ASSERT (result != 0);
   return *retv;
 }
 
@@ -743,7 +742,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                                                         int tail)
   : ACE_Hash_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> (mm,
-                                                          (tail == 0 ? 1 : 0))
+                                                          tail == 0 ? 1 : 0)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator");
   if (tail == 0)
@@ -762,8 +761,9 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->forward_i ();
   return retv;
 }
@@ -773,6 +773,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
+
   this->forward_i ();
   return *this;
 }
@@ -782,8 +784,9 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
-  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
   return retv;
 }
@@ -793,6 +796,8 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
 ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
+
   this->reverse_i ();
   return *this;
 }
@@ -828,17 +833,20 @@ ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (void)");
-  ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->reverse_i ();
   return retv;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator++ (int)");
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
+
   this->reverse_i ();
   return *this;
 }
@@ -848,106 +856,24 @@ ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (void)");
-  ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
 
+  ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> retv (*this);
   this->forward_i ();
   return retv;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>&
+ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
 ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)
 {
   ACE_TRACE ("ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::operator-- (int)");
+  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, *this);
+
   this->forward_i ();
   return *this;
 }
 
-// ------------------------------------------------------------
-
-#if 0
-template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
-{
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("next_ = %d"), this->next_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-template <class EXT_ID, class INT_ID, class ACE_LOCK>
-ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm)
-  : map_man_ (mm),
-    index_ (0),
-    next_ (0)
-{
-  if (this->map_man_->table_ != 0)
-    {
-      this->next_ = &this->map_man_->table_[this->index_];
-      this->advance ();
-    }
-}
-ble_ != 0)
-    {
-      this->next_ = &this->map_man_->table_[this->index_];
-      this->advance ();
-    }
-}
-
-template <class EXT_ID, class INT_ID, class ACE_LOCK>  int
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
-{
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
-
-  if (this->map_man_->table_ != 0
-      && this->index_ >= 0
-      && this->next_ != &this->map_man_->table_[this->index_])
-    {
-      entry = this->next_;
-      return 1;
-    }
-  else
-    return 0;
-}
-
-template <class EXT_ID, class INT_ID, class ACE_LOCK>  int
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
-{
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
-
-  if (this->map_man_->table_ != 0
-      && this->index_ >= 0
-      && this->next_ != &this->map_man_->table_[this->index_])
-    return 0;
-  else
-    return 1;
-}
-
-template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::advance (void)
-{
-  ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->map_man_->lock_, -1);
-
-  if (this->map_man_->table_ == 0)
-    return -1;
-
-  if (this->next_->prev_ != &this->map_man_->table_[this->index_])
-    this->next_ = this->next_->prev_;
-  else
-    while (--this->index_ >= 0)
-      {
-        this->next_ = &this->map_man_->table_[this->index_];
-        if (this->next_->prev_ != &this->map_man_->table_[this->index_])
-          {
-            this->next_ = this->map_man_->table_[this->index_].prev_;
-            break;
-          }
-      }
-
-  return this->index_ >= 0
-    && this->next_ != &this->map_man_->table_[this->index_];
-}
-#endif /* 0 */
 #endif /* ACE_HASH_MAP_MANAGER_C */
 
 

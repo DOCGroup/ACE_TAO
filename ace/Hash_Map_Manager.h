@@ -91,11 +91,17 @@ public:
 
   typedef EXT_ID KEY;
   typedef INT_ID VALUE;
-  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> ITERATOR;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> REVERSE_ITERATOR;
-  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> iterator;
-  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
+  typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> 
+          ENTRY;
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          ITERATOR;
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          REVERSE_ITERATOR;
+  // = STL-style iterator typedefs.
+  typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          iterator;
+  typedef ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> 
+          reverse_iterator;
 
   // = Initialization and termination methods.
 
@@ -303,14 +309,16 @@ private:
   // Returns the <ACE_Hash_Map_Entry> that corresponds to <ext_id>.
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_;
-  // Array of <ACE_Hash_Map_Entry> *s, each of which points to the
-  // beginning of a linked list of <EXT_ID>s that hash to that bucket.
+  // Array of <ACE_Hash_Map_Entry> *s, each of which points to an
+  // <ACE_Hash_Map_Entry> that serves as the beginning of a linked
+  // list of <EXT_ID>s that hash to that bucket.
 
   size_t total_size_;
   // Total size of the hash table.
 
   size_t cur_size_;
-  // Current number of elements in the table.
+  // Current number of entries in the table (note that this can be
+  // larger than <total_size_> due to the bucket chaining).
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
