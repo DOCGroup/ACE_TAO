@@ -52,7 +52,6 @@
 #ifndef _RT_CORBA_IDL_
 #define _RT_CORBA_IDL_
 
-#include <orb.idl>
 #include <IOP.pidl>
 #include <TimeBase.pidl>
 

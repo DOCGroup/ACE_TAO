@@ -1,94 +1,76 @@
---- orig/RTCORBAC.h	Wed Feb  6 13:37:48 2002
-+++ RTCORBAC.h	Wed Feb  6 13:44:01 2002
-@@ -23,15 +23,26 @@
- #define _TAO_IDL_ORIG_RTCORBAC_H_
-
- #include "ace/pre.h"
--#include "tao/corba.h"
-+#include "tao/orbconf.h"
-
- #if !defined (ACE_LACKS_PRAGMA_ONCE)
- # pragma once
- #endif /* ACE_LACKS_PRAGMA_ONCE */
-
- #include "rtcorba_export.h"
--#include "IOPC.h"
--#include "TimeBaseC.h"
-+#include "tao/IOPC.h"
-+#include "tao/TimeBaseC.h"
-+#include "tao/PolicyC.h"
-+
-+// Forward references.
-+class TAO_Priority_Mapping_Manager;
-+class TAO_Priority_Mapping_Manager_var;
-+class TAO_Priority_Mapping_Manager_out;
-+class TAO_Priority_Mapping;
-+
+--- orig/RTCORBAC.h	2004-09-16 12:52:02.885009600 +0200
++++ RTCORBAC.h	2004-09-16 12:36:01.362408000 +0200
+@@ -36,12 +36,18 @@
+ 
+ #include "ace/config-all.h"
+ 
 +#ifndef TAO_RTCORBA_SAFE_INCLUDE
 +#error "You should not include RTCORBAC.h directly, use RTCORBA.h"
 +#endif /* !TAO_RTCORBA_SAFE_INCLUDE */
-
++
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ #include "rtcorba_export.h"
++#include "rtcorba_typedefs.h"
+ #include "tao/ORB.h"
++#include "tao/TimeBaseC.h"
+ #include "tao/SystemException.h"
+ #include "tao/Environment.h"
+ #include "tao/Object.h"
+@@ -50,6 +56,8 @@
+ #include "tao/Seq_Var_T.h"
+ #include "tao/Seq_Out_T.h"
+ #include "tao/VarOut_T.h"
++#include "tao/Encodable.h"
++#include "tao/PolicyC.h"
+ 
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -58,6 +69,15 @@
-
- TAO_NAMESPACE  RTCORBA
- {
-+  // TAO-specific
-+  typedef TAO_Priority_Mapping_Manager PriorityMappingManager;
-+  typedef TAO_Priority_Mapping_Manager *PriorityMappingManager_ptr;
-+  typedef TAO_Priority_Mapping_Manager_var PriorityMappingManager_var;
-+  typedef TAO_Priority_Mapping_Manager_out PriorityMappingManager_out;
-+
-+  typedef TAO_Priority_Mapping PriorityMapping;
-+  // End TAO-specific
-+
-   typedef CORBA::Short NativePriority;
-   typedef CORBA::Short_out NativePriority_out;
-   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NativePriority;
-@@ -674,6 +694,7 @@
-
+@@ -532,6 +540,7 @@
+   
    class TAO_RTCORBA_Export ProtocolProperties
-     : public virtual CORBA_Object
+     : public virtual CORBA::Object
 +    , public virtual TAO_Encodable
    {
    public:
-   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-@@ -705,6 +726,11 @@
-
+     typedef ProtocolProperties_ptr _ptr_type;
+@@ -568,6 +577,9 @@
      virtual const char* _interface_repository_id (void) const;
-
-+    // CDR Encoder/Decoder methods.
-+
+     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+   
++    // CDR Encoder/Decoder methods. (handcrafted)
 +    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
 +    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-+
    protected:
+     // Abstract or local interface only.
      ProtocolProperties (void);
-
---- orig/RTCORBAC.cpp	Wed Feb  6 13:37:48 2002
-+++ RTCORBAC.cpp	Wed Feb  6 13:41:48 2002
-@@ -19,7 +19,7 @@
- // Information about TAO is available at:
- //     http://www.cs.wustl.edu/~schmidt/TAO.html
-
+--- orig/RTCORBAC.cpp	2004-09-16 12:52:02.885009600 +0200
++++ RTCORBAC.cpp	2004-09-16 12:36:36.643139200 +0200
+@@ -29,7 +29,7 @@
+ // be\be_codegen.cpp:303
+ 
+ 
 -#include "RTCORBAC.h"
 +#include "RTCORBA.h"
-
- #include "tao/Stub.h"
- #include "tao/Invocation.h"
-@@ -39,6 +39,21 @@
- #include "RTCORBAC.i"
- #endif /* !defined INLINE */
-
+ #include "tao/CDR.h"
+ #include "tao/Typecode.h"
+ #include "tao/Any_Impl_T.h"
+@@ -57,7 +57,23 @@
+ }
+ 
+ 
 +//////////////////////////////////////////////////////
-+// CDR Encoding Support
++// CDR Encoding Support hand crafted
 +
 +CORBA::Boolean
 +RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
 +{
 +  return 1;
 +}
+ // TAO_IDL - Generated from
++// be/be_visitor_arg_traits.cpp:60
 +
 +CORBA::Boolean
 +RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
@@ -96,6 +78,6 @@
 +  return 1;
 +}
 +
+ // be\be_visitor_typecode/typecode_defn.cpp:290
+ 
  static const CORBA::Long _oc_RTCORBA_NativePriority[] =
- {
-   TAO_ENCAP_BYTE_ORDER, // byte order
