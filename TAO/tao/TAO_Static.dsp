@@ -86,6 +86,10 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
+SOURCE=.\Acceptor_Registry.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Active_Object_Map.cpp
 # End Source File
 # Begin Source File
@@ -111,6 +115,10 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Connect.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
 
@@ -223,6 +231,10 @@ SOURCE=.\IIOP_Acceptor.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -342,6 +354,10 @@ SOURCE=.\Principal.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Protocol_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Request.cpp
 # End Source File
 # Begin Source File
@@ -426,6 +442,10 @@ SOURCE=.\WrongTransactionC.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
+SOURCE=.\Acceptor_Registry.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Active_Object_Map.h
 # End Source File
 # Begin Source File
@@ -455,6 +475,10 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Registry.h
 # End Source File
 # Begin Source File
 
@@ -539,6 +563,10 @@ SOURCE=.\IIOP_Acceptor.h
 # Begin Source File
 
 SOURCE=.\IIOP_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Factory.h
 # End Source File
 # Begin Source File
 
@@ -666,6 +694,10 @@ SOURCE=.\Principal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Protocol_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\request.h
 # End Source File
 # Begin Source File
@@ -744,6 +776,10 @@ SOURCE=.\WrongTransactionC.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "*.i"
+# Begin Source File
+
+SOURCE=.\Acceptor_Registry.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
