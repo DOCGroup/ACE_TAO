@@ -1,7 +1,7 @@
 Fri Feb  4 12:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
-          Fixed factory name
+          Fixed factory name.
 
 Thu Feb  3 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
