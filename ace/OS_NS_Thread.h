@@ -957,9 +957,12 @@ public:
 class ACE_TSS_Info
 {
 public:
+  /// typedef the pointer to the function that destroys the TSS object
+  typedef void (*Destructor)(void *);
+ 
   /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
-                void (*dest)(void *) = 0,
+                Destructor dest = 0,
                 void *tss_inst = 0);
 
   /// Default constructor
@@ -986,10 +989,12 @@ private:
   ACE_thread_key_t key_;
 
   /// "Destructor" that gets called when the item is finally released.
-  void (*destructor_)(void *);
+  Destructor destructor_;
 
   /// Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
-  void *tss_obj_;
+  /// Note: formerly named tss_obj_, but that led to confusion between the
+  /// ACE_TSS<TYPE> than managed the object, and the object itself
+  void *tss_inst_;
 
   /// Count of threads that are using this key.  Contains -1 when the
   /// key is not in use.
@@ -1657,7 +1662,7 @@ namespace ACE_OS {
                 ACE_THR_FUNC_RETURN *status);
 
   extern ACE_Export
-  int thr_key_detach (void *inst);
+  int thr_key_detach (ACE_thread_key_t key);
 
   extern ACE_Export
   int thr_key_used (ACE_thread_key_t key);
