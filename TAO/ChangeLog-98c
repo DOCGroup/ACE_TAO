@@ -2,7 +2,8 @@ Tue Mar 17 11:26:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence.cpp: 
 	  Fixed return value for operator[] in sequences of basic types,
-	  the _out and _var classes generated non-nested types.
+	  the _out and _var classes generated non-nested types. Thanks to
+	  Frak. J. Hodum <fhdum@std.saic.com> for reporting this problem.
 
 Tue Mar 17 10:25:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
