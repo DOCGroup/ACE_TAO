@@ -1,182 +1,189 @@
+Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/DynAny_i.cpp: added explicit template instantiations.
+          Thanks to Alex for reporting that they're necessary with
+          Sun C++ 5.0.  LynxOS' g++ also needs them.
+
 Sat Jun 26 19:47:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: changed TAO try macros to ACE try macros.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: changed TAO try
+          macros to ACE try macros.
 
 Sat Jun 26 18:38:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/{IIOP,UIOP}_Connect.cpp:
+        * tao/{IIOP,UIOP}_Connect.cpp:
 
-	  Clarified connection handler output.
+          Clarified connection handler output.
 
-	* tao/UIOP_Connect.cpp (enum): 
+        * tao/UIOP_Connect.cpp (enum):
 
-	  Fixed duplicate starting enumeration value (for use with
-	  timeprobes).
+          Fixed duplicate starting enumeration value (for use with
+          timeprobes).
 
-	* tao/UIOP_Connect.cpp (open):
+        * tao/UIOP_Connect.cpp (open):
 
-	  Fixed incorrect array size used when making call to
-	  addr_to_string().
+          Fixed incorrect array size used when making call to
+          addr_to_string().
 
-	* tao/UIOP_Transport.h:
+        * tao/UIOP_Transport.h:
 
-	  Comment updates.
+          Comment updates.
 
 Sat Jun 26 16:24:39 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp
-	  Updated to reflect Changes in orbsvcs/orbsvcs/Naming.
+        * orbsvcs/orbsvcs/orbsvcs.dsp
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp
+          Updated to reflect Changes in orbsvcs/orbsvcs/Naming.
 
 Sat Jun 26 15:13:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile.am: 
+        * tao/Makefile.am:
 
-	  Synchronized with latest version of TAO.
-	
-	* tao/Pluggable.cpp (start_locate, start_request):
+          Synchronized with latest version of TAO.
 
-	  Fixed unused argument warnings when native exception handling is
-	  enabled.
+        * tao/Pluggable.cpp (start_locate, start_request):
 
-	* tao/Pluggable.h (TAO_Transport):
+          Fixed unused argument warnings when native exception handling is
+          enabled.
 
-	  Exception handling update.
+        * tao/Pluggable.h (TAO_Transport):
+
+          Exception handling update.
 
 Sat Jun 26 14:23:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp
-	Clean up of the remaining old exception code.
+        * orbsvcs/tests/Simple_Naming/client.cpp
+        Clean up of the remaining old exception code.
 
-	* TAO/docs/releasenotes/index.html
-	Updated the Naming Service section.
+        * TAO/docs/releasenotes/index.html
+        Updated the Naming Service section.
 
-	* orbsvcs/orbsvcs/Naming/Shared_Hash_Map_T.{h, cpp}
-	Removed these files. (They were modified and moved up into the
-	ACE_wrappers/ace dicrectory.  See ACE ChangeLog for more info: tag 
-	Sat Jun 26 14:41:31 1999  Marina Spivak).
+        * orbsvcs/orbsvcs/Naming/Shared_Hash_Map_T.{h, cpp}
+        Removed these files. (They were modified and moved up into the
+        ACE_wrappers/ace dicrectory.  See ACE ChangeLog for more info: tag
+        Sat Jun 26 14:41:31 1999  Marina Spivak).
 
-	* orbsvcs/orbsvcs/Makefile
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h, cpp}
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Index.{h, cpp}	
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}	
-	Updated the files to reflect the removal of 
-	Shared_Hash_Map_T.{h,cpp} from this directory.
+        * orbsvcs/orbsvcs/Makefile
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.{h, cpp}
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Index.{h, cpp}
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.{h, cpp}
+        Updated the files to reflect the removal of
+        Shared_Hash_Map_T.{h,cpp} from this directory.
 
 Sat Jun 26 13:10:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.h: Fixed the exception spec
-	  for destroy.  Thanks to David for reporting this.
+        * examples/POA/Default_Servant/File_i.h: Fixed the exception spec
+          for destroy.  Thanks to David for reporting this.
 
-	* orbsvcs/orbsvcs/Trader: Removed all vestiges of the Locking.h
-	  file, which has been subsumed into other parts of ACE+TAO.
+        * orbsvcs/orbsvcs/Trader: Removed all vestiges of the Locking.h
+          file, which has been subsumed into other parts of ACE+TAO.
 
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp,
-	  orbsvcs/orbsvcs/Trader/Constraint_Visitors,
-	  orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp,
-	  orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp,
-	  orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp: Fixed exception
-	  handling to be compliant with the ACE macros.
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp,
+          orbsvcs/orbsvcs/Trader/Constraint_Visitors,
+          orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp,
+          orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp,
+          orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp: Fixed exception
+          handling to be compliant with the ACE macros.
 
-Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>  
-  
+Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>
+
         This is a change log for the modifications made to support
-	Borland C++Builder 4.0, Patch 1.  Thanks to 
-	Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
-	<chris@uzdavinis.com> for helping with this.
-	
+        Borland C++Builder 4.0, Patch 1.  Thanks to
+        Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
+        <chris@uzdavinis.com> for helping with this.
+
         * TAO\examples\BCB\chat\*: Example program for Borland C++Builder
-	  4 showing how to use TAO in a GUI application. Implements a
- 	  client for the server in TAO\examples\Simple\chat.
+          4 showing how to use TAO in a GUI application. Implements a
+          client for the server in TAO\examples\Simple\chat.
 
-	* TAO/TAO_IDL/be/be_args.cpp: Added new back end (-Wb) option
-	  'pch_include' which allows you to specify a common include to be
-	  added at the top of all idl generated files. This can be used
-	  with a precompiled header mechanism (such as that provided by
-	  C++Builder or MSVC++). It takes a *very* long time to compile
-	  GUI programs without this. 
+        * TAO/TAO_IDL/be/be_args.cpp: Added new back end (-Wb) option
+          'pch_include' which allows you to specify a common include to be
+          added at the top of all idl generated files. This can be used
+          with a precompiled header mechanism (such as that provided by
+          C++Builder or MSVC++). It takes a *very* long time to compile
+          GUI programs without this.
 
-	* TAO/TAO_IDL/be/be_codegen.cpp: Added support for
-	  TAO_EXPORT_NESTED_CLASSES macro. 
+        * TAO/TAO_IDL/be/be_codegen.cpp: Added support for
+          TAO_EXPORT_NESTED_CLASSES macro.
 
-	* Added support for new back end (-Wb) option 'pch_include'.
+        * Added support for new back end (-Wb) option 'pch_include'.
 
-	* TAO/TAO_IDL/be/be_helper.cpp: Target of sprintf function should
-	  not also be used as an insertion argument.
+        * TAO/TAO_IDL/be/be_helper.cpp: Target of sprintf function should
+          not also be used as an insertion argument.
 
-	* TAO/TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp: 
-	  Added support for TAO_EXPORT_NESTED_CLASSES macro.
+        * TAO/TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+          Added support for TAO_EXPORT_NESTED_CLASSES macro.
 
-	* TAO/TAO_IDL/driver/drv_preproc.cpp: Added command line options
-	  for use with Borland C++Builder preprocessor.
+        * TAO/TAO_IDL/driver/drv_preproc.cpp: Added command line options
+          for use with Borland C++Builder preprocessor.
 
-	* TAO/TAO_IDL/include/idl_global.h: Added support for new back end
-	  (-Wb) option 'pch_include'. 
+        * TAO/TAO_IDL/include/idl_global.h: Added support for new back end
+          (-Wb) option 'pch_include'.
 
-	* TAO/TAO_IDL/util/utl_global.h: Added support for new back end
-	  (-Wb) option 'pch_include'. 
+        * TAO/TAO_IDL/util/utl_global.h: Added support for new back end
+          (-Wb) option 'pch_include'.
 
-	* TAO/examples/Callback_Quoter/Consumer_Handler.cpp: Member
-	  variable use_naming_service_ was not initialised. 
+        * TAO/examples/Callback_Quoter/Consumer_Handler.cpp: Member
+          variable use_naming_service_ was not initialised.
 
-	* TAO/examples/Callback_Quoter/Supplier_i.cpp: Member variable
-	  f_ptr_ was not initialised.  Cmd line option string was missing
-	  ':' required for parameter to 'f'. 
+        * TAO/examples/Callback_Quoter/Supplier_i.cpp: Member variable
+          f_ptr_ was not initialised.  Cmd line option string was missing
+          ':' required for parameter to 'f'.
 
-	* TAO/orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Workaround for BCB4
- 	  internal compiler error
+        * TAO/orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Workaround for BCB4
+          internal compiler error
 
-	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h: Need
- 	  ACE_TEMPLATE_SPECIALIZE on specializations.
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h: Need
+          ACE_TEMPLATE_SPECIALIZE on specializations.
 
-	* TAO/tao/Active_Object_Map.cpp: BCB4 doesn't accept constructor
-	  syntax for static member variables. 
+        * TAO/tao/Active_Object_Map.cpp: BCB4 doesn't accept constructor
+          syntax for static member variables.
 
-	* TAO/tao/Object_Adapter.cpp: BCB4 doesn't accept constructor
- 	  syntax for static member variables.
+        * TAO/tao/Object_Adapter.cpp: BCB4 doesn't accept constructor
+          syntax for static member variables.
 
-	* TAO/tao/Sequence.i Need ACE_TEMPLATE_SPECIALIZE on
-	  specializations. 
+        * TAO/tao/Sequence.i Need ACE_TEMPLATE_SPECIALIZE on
+          specializations.
 
-	* TAO/tao/orbconf.h: Added TAO_EXPORT_NESTED_CLASSES macro to
-	  allow nested classes to be exported (see also change in
-	  ace\config-win32-borland.h). Borland C++Builder (unlike MSVC++)
-	  does not automatically export nested classes when the outer
-	  class is exported. 
-  
+        * TAO/tao/orbconf.h: Added TAO_EXPORT_NESTED_CLASSES macro to
+          allow nested classes to be exported (see also change in
+          ace\config-win32-borland.h). Borland C++Builder (unlike MSVC++)
+          does not automatically export nested classes when the outer
+          class is exported.
+
 Sat Jun 26 13:20:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/sfp.cpp : 
-	  Replaced ACE_TRY_ENV.print_exceptions with
-	  ACE_PRINT_EXCEPTION. Thanks to Doug Schmidt for reporting these
-	  errors. 
-	
+        * orbsvcs/orbsvcs/AV/sfp.cpp :
+          Replaced ACE_TRY_ENV.print_exceptions with
+          ACE_PRINT_EXCEPTION. Thanks to Doug Schmidt for reporting these
+          errors.
+
 Sat Jun 26 11:58:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/{IIOP,UIOP}_Connect.cpp:
+        * tao/{IIOP,UIOP}_Connect.cpp:
 
-	  Fixed incorrect enumeration used in ACE timeprobe macro.
+          Fixed incorrect enumeration used in ACE timeprobe macro.
 
 Sat Jun 26 11:55:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Transport.cpp:
+        * tao/UIOP_Transport.cpp:
 
-	  Fixed duplicate enum starting value for UIOP time probes.
+          Fixed duplicate enum starting value for UIOP time probes.
 
-	* tao/{IIOP,UIOP}_Transport.cpp:
+        * tao/{IIOP,UIOP}_Transport.cpp:
 
-	  Spelling correction in time probe character string array.
+          Spelling correction in time probe character string array.
 
 Sat Jun 26 12:43:26 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/DynAny_i.cpp:
-	  
-	  Fixed the following compile errors.
-	  copy: Used ACE_CHECK_RETURN instead of ACE_CHECK because the operation
-	        required a return value.
-	
-	  get_any: Return value expected is an Any_ptr and not DynAny_ptr.
-	
+        * tao/DynAny_i.cpp:
+
+          Fixed the following compile errors.
+          copy: Used ACE_CHECK_RETURN instead of ACE_CHECK because the operation
+                required a return value.
+
+          get_any: Return value expected is an Any_ptr and not DynAny_ptr.
+
 Sat Jun 26 09:35:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: on LynxOS/ppc only, for POA.cpp only,
