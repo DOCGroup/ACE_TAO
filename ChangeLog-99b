@@ -1,3 +1,14 @@
+Sun Jun 27 12:36:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.{h, i}: Moved non-deprecated iterator base class
+          method next (RB_Tree_Node<...>) down into derived forward and
+          reverse iterator classes due to method resolution conflict
+          with deprecated next (void) method in forward iterator class.
+          When the deprecated next method is removed, these will be
+          moved out of the derived classes and into the base class.
+          Thanks to Matt Braun and Carlos O'Ryan for pointing out
+          this problem.
+
 Sun Jun 27 12:14:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cache_Map_Manager_Test.dsp: The project file was

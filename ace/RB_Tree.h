@@ -473,10 +473,6 @@ public:
 
   // = Iteration methods.
 
-  int next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const;
-  // Passes back the <entry> under the iterator.  Returns 0 if
-  // the iteration has completed, otherwise 1.
-
   int done (void) const;
   // Returns 1 when the iteration has completed, otherwise 0.
 
@@ -581,6 +577,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  int next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const;
+  // Passes back the <entry> under the iterator.  Returns 0 if
+  // the iteration has completed, otherwise 1.  This method must
+  // be declared and defined in both the derived forward and
+  // reverse iterator classes rather than in the base iterator
+  // class because of a method signature resolution problem
+  // caused by the existence of the deprecated next (void)
+  // method in the derived forward iterator class.  When that
+  // deprecated method is removed, this method should be removed
+  // from the derived classes and placed in the base class.
+
   // = DEPRECATED methods.  Please migrate your code to use the new methods instead
 
   EXT_ID *key (void);
@@ -658,6 +665,17 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  int next (ACE_RB_Tree_Node<EXT_ID, INT_ID> *&next_entry) const;
+  // Passes back the <entry> under the iterator.  Returns 0 if
+  // the iteration has completed, otherwise 1.  This method must
+  // be declared and defined in both the derived forward and
+  // reverse iterator classes rather than in the base iterator
+  // class because of a method signature resolution problem
+  // caused by the existence of the deprecated next (void)
+  // method in the derived forward iterator class.  When that
+  // deprecated method is removed, this method should be removed
+  // from the derived classes and placed in the base class.
 
 };
 
