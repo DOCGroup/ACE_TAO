@@ -1,6 +1,8 @@
 // $Id$
 
 #include "Crashed_Callback.h"
+
+#include "tao/Messaging.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Crashed_Callback, client, "$Id$")

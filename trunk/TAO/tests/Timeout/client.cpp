@@ -1,6 +1,8 @@
 // $Id$
 
 #include "testC.h"
+
+#include "tao/Messaging.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Timeout, client, "$Id$")
