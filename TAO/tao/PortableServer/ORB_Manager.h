@@ -10,7 +10,7 @@
 //   ORB_Manager.h
 //
 // = AUTHOR
-//    Chris Cleeland
+//    Chris Cleeland <cleeland@cs.wustl.edu>
 //
 // ============================================================================
 

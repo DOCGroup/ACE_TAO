@@ -9,6 +9,7 @@
 #define MAX_HASH_VALUE 256
 #define HASH_VALUE_RANGE 256
 #define DUPLICATES 0
+#define WORDLIST_SIZE 41
 
 static unsigned int
 hash (str, len)

@@ -285,11 +285,12 @@ Key_List::read_keys (void)
             {
               List_Node *ptr = table.find (temp, option[NOLENGTH]);
 
-              // Check for links.  We deal with these by building an
-              // equivalence class of all duplicate values (i.e.,
-              // links) so that only 1 keyword is representative of
-              // the entire collection.  This *greatly* simplifies
-              // processing during later stages of the program.
+              // Check for static key links.  We deal with these by
+              // building an equivalence class of all duplicate values
+              // (i.e., links) so that only 1 keyword is
+              // representative of the entire collection.  This
+              // *greatly* simplifies processing during later stages
+              // of the program.
 
               if (ptr == 0)
                 trail = temp;
@@ -305,7 +306,7 @@ Key_List::read_keys (void)
                   // option.
                   if (!option[DUP] || option[DEBUGGING])
                     ACE_ERROR ((LM_ERROR,
-                                "Key link: \"%s\" = \"%s\", with key set \"%s\".\n",
+                                "Static key link: \"%s\" = \"%s\", with key set \"%s\".\n",
                                 temp->key,
                                 ptr->key,
                                 temp->keysig));
@@ -498,10 +499,10 @@ Key_List::output_min_max (void)
     ACE_OS::printf ("\n#define TOTAL_KEYWORDS %d\n#define MIN_WORD_LENGTH %d"
             "\n#define MAX_WORD_LENGTH %d\n#define MIN_HASH_VALUE %d"
             "\n#define MAX_HASH_VALUE %d\n#define HASH_VALUE_RANGE %d"
-            "\n#define DUPLICATES %d\n\n",
+            "\n#define DUPLICATES %d\n#define WORDLIST_SIZE %d\n\n",
             total_keys, min_key_len, max_key_len, min_hash_value,
             max_hash_value, max_hash_value - min_hash_value + 1,
-            total_duplicates ? total_duplicates + 1 : 0);
+            total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
   else if (option[GLOBAL])
     ACE_OS::printf ("enum\n{\n"
             "  TOTAL_KEYWORDS = %d,\n"
@@ -510,10 +511,11 @@ Key_List::output_min_max (void)
             "  MIN_HASH_VALUE = %d,\n"
             "  MAX_HASH_VALUE = %d,\n"
             "  HASH_VALUE_RANGE = %d,\n"
-            "  DUPLICATES = %d\n};\n\n",
+            "  DUPLICATES = %d\n"
+            "  WORDLIST_SIZE = %d};\n\n",
             total_keys, min_key_len, max_key_len, min_hash_value,
             max_hash_value, max_hash_value - min_hash_value + 1,
-            total_duplicates ? total_duplicates + 1 : 0);
+            total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
 }
 
 // Generates the output using a C switch.  This trades increased
@@ -1436,8 +1438,8 @@ Key_List::output_lookup_array (void)
             }
         }
 
-      int max = INT_MIN;
       lookup_ptr = lookup_array + max_hash_value + 1;
+      int max = INT_MIN;
 
       while (lookup_ptr > lookup_array)
         {
@@ -1448,14 +1450,13 @@ Key_List::output_lookup_array (void)
 
       const char *indent = option[GLOBAL] ? "" : "  ";
 
-      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n      ", indent, option[CONSTANT] ? "const " : "",
+      ACE_OS::printf ("%sstatic %ssigned %s lookup[] =\n%s%s{\n%s", indent, option[CONSTANT] ? "const " : "",
               max <= SCHAR_MAX ? "char" : (max <= SHRT_MAX ? "short" : "int"),
-              indent, indent);
+              indent, indent, option[DEBUGGING] ? "" : "      ");
 
       int count = max;
 
-      // Calculate maximum number of digits required for
-      // MAX_HASH_VALUE.
+      // Calculate maximum number of digits required for LOOKUP_ARRAY_SIZE.
 
       for (Key_List::field_width = 2; (count /= 10) > 0; Key_List::field_width++)
         continue;
@@ -1466,12 +1467,19 @@ Key_List::output_lookup_array (void)
       for (lookup_ptr = lookup_array;
            lookup_ptr < lookup_array + max_hash_value + 1;
            lookup_ptr++)
-        ACE_OS::printf ("%*d, %s",
-                Key_List::field_width,
-                *lookup_ptr,
-                ++column % (max_column - 1) ? "" : "\n      ");
-
-      ACE_OS::printf ("\n%s%s};\n\n", indent, indent);
+        {
+          if (option[DEBUGGING])
+            ACE_OS::printf ("      %*d, /* slot = %d */\n",
+                            Key_List::field_width,
+                            *lookup_ptr,
+                            lookup_ptr - lookup_array);
+          else
+            ACE_OS::printf ("%*d, %s",
+                            Key_List::field_width,
+                            *lookup_ptr,
+                            ++column % (max_column - 1) ? "" : "\n      ");
+        }
+      ACE_OS::printf ("%s%s%s};\n\n", option[DEBUGGING] ? "" : "\n", indent, indent);
 
       delete [] duplicates;
       delete [] lookup_array;
@@ -1496,7 +1504,7 @@ Key_List::output_lookup_function (void)
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
       ACE_OS::printf ("          int slot = lookup[key];\n\n"
-              "          if (slot >= 0 && slot <= MAX_HASH_VALUE)\n");
+              "          if (slot >= 0 && slot < WORDLIST_SIZE)\n");
       if (option[OPTIMIZE])
         ACE_OS::printf ("            return %swordlist[slot];\n", option[TYPE] && option[POINTER] ? "&" : "");
       else
@@ -1718,10 +1726,11 @@ Key_List::output (void)
 		"      MIN_HASH_VALUE = %d,\n"
 		"      MAX_HASH_VALUE = %d,\n"
 		"      HASH_VALUE_RANGE = %d,\n"
-		"      DUPLICATES = %d\n    };\n\n",
+		"      DUPLICATES = %d,\n"
+		"      WORDLIST_SIZE = %d\n    };\n\n",
 		total_keys, min_key_len, max_key_len, min_hash_value,
 		max_hash_value, max_hash_value - min_hash_value + 1,
-		total_duplicates ? total_duplicates + 1 : 0);
+		total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
       // Use the switch in place of lookup table.
       if (option[SWITCH])
 	output_switch ();
