@@ -31,7 +31,7 @@
 // THREADING NOTE: "CDR" is a data structure which must be protected
 // by external critical sections.
 
-#include "ace/Timeprobe.h"
+#include "tao/Timeprobe.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "tao/singletons.h"
@@ -46,24 +46,24 @@ ACE_RCSID(tao, CDR, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_CDR_Timeprobe_Description[] =
-{
-  "OutputCDR::ctor[1] - enter",
-  "OutputCDR::ctor[1] - leave",
-  "OutputCDR::ctor[2] - enter",
-  "OutputCDR::ctor[2] - leave",
-  "OutputCDR::ctor[3] - enter",
-  "OutputCDR::ctor[3] - leave"
-};
+  {
+    "OutputCDR::ctor[1] - enter",
+    "OutputCDR::ctor[1] - leave",
+    "OutputCDR::ctor[2] - enter",
+    "OutputCDR::ctor[2] - leave",
+    "OutputCDR::ctor[3] - enter",
+    "OutputCDR::ctor[3] - leave"
+  };
 
 enum
-{
-  TAO_OUTPUT_CDR_CTOR1_ENTER = 2000,
-  TAO_OUTPUT_CDR_CTOR1_LEAVE,
-  TAO_OUTPUT_CDR_CTOR2_ENTER,
-  TAO_OUTPUT_CDR_CTOR2_LEAVE,
-  TAO_OUTPUT_CDR_CTOR3_ENTER,
-  TAO_OUTPUT_CDR_CTOR3_LEAVE
-};
+  {
+    TAO_OUTPUT_CDR_CTOR1_ENTER = 2000,
+    TAO_OUTPUT_CDR_CTOR1_LEAVE,
+    TAO_OUTPUT_CDR_CTOR2_ENTER,
+    TAO_OUTPUT_CDR_CTOR2_LEAVE,
+    TAO_OUTPUT_CDR_CTOR3_ENTER,
+    TAO_OUTPUT_CDR_CTOR3_LEAVE
+  };
 
 
 // Setup Timeprobes

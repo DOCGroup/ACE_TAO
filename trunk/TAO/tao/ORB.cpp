@@ -39,17 +39,17 @@ ACE_RCSID(tao, ORB, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_ORB_Timeprobe_Description[] =
-{
-  "CORBA_ORB::run - start",
-  "CORBA_ORB::run - end",
-};
+  {
+    "CORBA_ORB::run - start",
+    "CORBA_ORB::run - end",
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_CORBA_ORB_RUN_START = 0,
-  TAO_CORBA_ORB_RUN_END
-};
+  {
+    // Timeprobe description table start key
+    TAO_CORBA_ORB_RUN_START = 0,
+    TAO_CORBA_ORB_RUN_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
@@ -59,8 +59,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-// Typecode stuff for the InconsistentTypeCode exception
-static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
+  // Typecode stuff for the InconsistentTypeCode exception
+  static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
 {
   TAO_ENCAP_BYTE_ORDER,   // byte order
   47,

@@ -18,41 +18,41 @@ ACE_RCSID(tao, Connect, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Connect_Timeprobe_Description[] =
-{
-  "Server_Connection_Handler::send_response - start",
-  "Server_Connection_Handler::send_response - end",
+  { 
+    "Server_Connection_Handler::send_response - start",
+    "Server_Connection_Handler::send_response - end",
 
-  "Server_Connection_Handler::handle_input - start",
-  "Server_Connection_Handler::handle_input - end",
+    "Server_Connection_Handler::handle_input - start",
+    "Server_Connection_Handler::handle_input - end",
 
-  "Server_Connection_Handler::handle_locate - start",
-  "Server_Connection_Handler::handle_locate - end",
+    "Server_Connection_Handler::handle_locate - start",
+    "Server_Connection_Handler::handle_locate - end",
 
-  "Client_Connection_Handler::send_request - start",
-  "Client_Connection_Handler::send_request - end",
+    "Client_Connection_Handler::send_request - start",
+    "Client_Connection_Handler::send_request - end",
 
-  "MT_Client_Connection_Handler - before l/f wakeup",
-  "MT_Client_Connection_Handler - after l/f wakeup"
-};
+    "MT_Client_Connection_Handler - before l/f wakeup",
+    "MT_Client_Connection_Handler - after l/f wakeup"
+  };
 
 enum
-{
-  // Timeprobe description table start key
-  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
-  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
+  {
+    // Timeprobe description table start key
+    TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
+    TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
 
-  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
-  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
+    TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
+    TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
 
-  TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
-  TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
+    TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START,
+    TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_END,
 
-  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
-  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+    TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+    TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
 
-  TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP,
-  TAO_MT_CLIENT_CONNECTION_HANDLER_AFTER_LF_WAKEUP
-};
+    TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP,
+    TAO_MT_CLIENT_CONNECTION_HANDLER_AFTER_LF_WAKEUP
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
@@ -295,7 +295,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                               CORBA::ULong &request_id,
                                               CORBA::Environment &env)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_LOCATE_START);
 
   // This will extract the request header, set <response_required> as
   // appropriate.
@@ -432,7 +432,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 void
 TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   TAO_GIOP::send_request (this->iiop_transport_,
                           output,
@@ -445,7 +445,7 @@ void
 TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                                            CORBA::Exception *x)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
 
   // The request_id is going to be not 0, if it was sucessfully read
   if (request_id != 0)
@@ -540,7 +540,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   // 2. construct a complete request
   // 3. dispatch that request and return any required reply and errors
 
-  ACE_FUNCTION_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
   // @@ TODO This should take its memory from a specialized
   // allocator. It is better to use a message block than a on stack
@@ -868,7 +868,7 @@ TAO_ST_Client_Connection_Handler::send_request (TAO_ORB_Core* orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -946,7 +946,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                 TAO_OutputCDR &stream,
                                                 int is_twoway)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
   // NOTE: Here would also be a fine place to calculate a digital
   // signature for the message and place it into a preallocated slot
@@ -987,7 +987,7 @@ TAO_MT_Client_Connection_Handler::send_request (TAO_ORB_Core *orb_core,
                                                   stream,
                                                   orb_core);
 
-      ACE_TIMEPROBE (TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP);
+      TAO_PP_TIMEPROBE (TAO_MT_CLIENT_CONNECTION_HANDLER_BEFORE_LF_WAKEUP);
 
       if (!success)
         {

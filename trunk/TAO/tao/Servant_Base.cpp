@@ -17,16 +17,16 @@ ACE_RCSID(tao, Servant_Base, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Servant_Base_Timeprobe_Description[] =
-{
-  "Servant_Base::_find - start",
-  "Servant_Base::_find - end"
-};
+  {
+    "Servant_Base::_find - start",
+    "Servant_Base::_find - end"
+  };
 
 enum
-{
-  TAO_SERVANT_BASE_FIND_START = 700,
-  TAO_SERVANT_BASE_FIND_END
-};
+  {
+    TAO_SERVANT_BASE_FIND_START = 700,
+    TAO_SERVANT_BASE_FIND_END
+  };
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
