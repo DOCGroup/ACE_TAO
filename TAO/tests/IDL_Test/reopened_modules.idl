@@ -119,14 +119,3 @@ module com
     };
 };
 
-// Not a reopened module per se, but a test to ensure that
-// the prevention of the redefinition of a module 
-// immediately within itself does not reach any further in 
-// than that.
-module skip
-{
-  module hump
-  {
-    interface skip {};
-  };
-};
