@@ -11,6 +11,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
 #include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO,
@@ -113,11 +114,12 @@ TAO_IIOP_Connector::close (void)
 }
 
 int
-TAO_IIOP_Connector::connect (TAO_Transport_Descriptor_Interface *desc,
-                             TAO_Transport *&transport,
-                             ACE_Time_Value *max_wait_time,
+TAO_IIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+                             TAO_Transport_Descriptor_Interface *desc,
                              CORBA::Environment &)
 {
+  TAO_Transport *&transport = invocation->transport ();
+  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)

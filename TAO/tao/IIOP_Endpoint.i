@@ -18,7 +18,7 @@ TAO_IIOP_Endpoint::object_addr (void) const
 
   if (this->object_addr_.get_type () != AF_INET
       && endpoint->object_addr_.set (this->port_,
-                                    this->host_.in ()) == -1)
+                                     this->host_.in ()) == -1)
     {
       // If this call fails, it most likely due a hostname lookup
       // failure caused by a DNS misconfiguration.  If a request is

@@ -114,7 +114,7 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == 0)
     return 0;
 
-   if (this->ssl_component_.port != 0
+  if (this->ssl_component_.port != 0
       && endpoint->ssl_component_.port != 0
       && this->ssl_component_.port != endpoint->ssl_component_.port)
     return 0;

@@ -1,22 +1,16 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     UIOP_Endpoint.h
-//
-// = DESCRIPTION
-//     UIOP implementation of PP Framework Endpoint interface.
-//
-// = AUTHOR
-//     Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//==========================================================================
+/**
+ * @file UIOP_Endpoint.h
+ *
+ * $Id$
+ *
+ * UIOP implementation of PP Framework Endpoint interface.
+ *
+ * @author  Marina Spivak <marina@cs.wustl.edu>
+ */
+//==========================================================================
 
 #ifndef TAO_UIOP_ENDPOINT_H
 #define TAO_UIOP_ENDPOINT_H
@@ -34,28 +28,29 @@
 #include "ace/UNIX_Addr.h"
 
 
+/**
+ * @class TAO_UIOP_Endpoint
+ *
+ * @brief TAO_UIOP_Endpoint
+ *
+ * UIOP-specific implementation of PP Framework Endpoint interface.
+ */
 class TAO_Strategies_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 {
-  // = TITLE
-  //   TAO_UIOP_Endpoint
-  //
-  // = DESCRIPTION
-  //   UIOP-specific implementation of PP Framework Endpoint interface.
-  //
 public:
 
   friend class TAO_UIOP_Profile;
 
   // = Initialization and termination methods.
 
+  /// Default constructor.
   TAO_UIOP_Endpoint (void);
-  // Default constructor.
 
+  /// Constructor.
   TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr);
-  // Constructor.
 
+  /// Destructor.
   ~TAO_UIOP_Endpoint (void);
-  // Destructor.
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
@@ -64,34 +59,34 @@ public:
   virtual int addr_to_string (char *buffer, size_t length);
   virtual void reset_hint (void);
 
+  /// Returns a copy of <this>
   virtual TAO_Endpoint *duplicate (void);
-  // Returns a copy of <this>
 
+  /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  /// endpoints are equivalent iff their rendezvous points are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
-  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  // endpoints are equivalent iff their rendezvous points are the same.
 
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
+  /// Return a hash value for this object.
+  virtual CORBA::ULong hash (void);
 
   // = UIOP_Endpoint-specific methods.
 
+  /// Return a reference to the <object_addr>.
   const ACE_UNIX_Addr &object_addr (void) const;
-  // Return a reference to the <object_addr>.
 
+  /// Return a pointer to the rendezvous point string.
+  /// This object maintains ownership of the returned string.
   const char *rendezvous_point (void) const;
-  // Return a pointer to the rendezvous point string.
-  // This object maintains ownership of the returned string.
 
 private:
 
+  /// Cached instance of <ACE_UNIX_Addr> for use in making
+  /// invocations, etc.
   ACE_UNIX_Addr object_addr_;
-  // Cached instance of <ACE_UNIX_Addr> for use in making
-  // invocations, etc.
 
+  /// UIOP Endpoints can be stringed into a list.  Return the next
+  /// endpoint in the list, if any.
   TAO_UIOP_Endpoint *next_;
-  // UIOP Endpoints can be stringed into a list.  Return the next
-  // endpoint in the list, if any.
 };
 
 #if defined (__ACE_INLINE__)
