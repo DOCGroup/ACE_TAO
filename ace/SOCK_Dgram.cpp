@@ -449,3 +449,41 @@ ACE_SOCK_Dgram::send (const void *buf,
       return this->send (buf, n, addr, flags);
     }
 }
+
+void
+ACE_SOCK_Dgram::set_nic (const char *option_value)
+{
+  /* The first step would be to get the interface address for the
+     nic_name specified */
+  ifreq if_address;
+  ip_mreq multicast_address;
+
+#if defined (ACE_PSOS)
+  // Look up the interface by number, not name.
+  if_address.ifr_ifno = ACE_OS::atoi (option_value);
+#else
+  ACE_OS::strcpy (if_address.ifr_name, option_value);
+#endif /* defined (ACE_PSOS) */
+
+  if (ACE_OS::ioctl (this->get_handle (),
+                     SIOCGIFADDR,
+                     &if_address) == -1)
+        return;
+
+  /* Cast this into the required format */
+  sockaddr_in *socket_address;
+  socket_address = ACE_reinterpret_cast(sockaddr_in *,
+                                        &if_address.ifr_addr);
+  multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
+
+  /*
+   * Now. I got the interface address for the 'nic' specified.
+   * Use that to set the nic option.
+   */
+
+  this->ACE_SOCK::set_option (IPPROTO_IP,
+                              IP_MULTICAST_IF,
+                              &multicast_address.imr_interface.s_addr,
+                              sizeof (struct in_addr));
+
+}

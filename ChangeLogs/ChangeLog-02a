@@ -1,3 +1,10 @@
+Wed Sep  5 11:29:59 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/SOCK_Dgram.h:
+	* ace/SOCK_Dgram.cpp:
+
+	  Added a new method to set the NIC address in the socket.
+
 Wed Sep 05 12:00:42 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4_g++.GNU: Sets ACE_AIX_VERS rather
@@ -41,7 +48,7 @@ Tue Sep  4 12:46:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/ACE.cpp: Reverted this change "Tue Sep  4 07:37:17 2001
 	  Balachandran Natarajan  <bala@cs.wustl.edu>". Thanks to Irfan
 	  for pointing that this change, changes the semantics of the
-	  methods. 
+	  methods.
 
 Tue Sep  4 09:14:36 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -176,11 +183,11 @@ Fri Aug 31 19:14:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  - Implemented read_notify_pipe (). Will read just one message from
 	    the notify pipe or one message from the notification queue.
-	
+
 	  - Reimplemented dispatch_notify (). This method would just
 	    dispatch the upcall using the information in the notification
 	    buffer.
-	
+
 	  - The handle_input () now uses the read_notify_pipe () and
 	    dispatch_notify () to achieve what it was doing before.
 
