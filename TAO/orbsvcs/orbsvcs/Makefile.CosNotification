@@ -117,8 +117,8 @@ CPP_SRCS += \
 CPP_SRCS += \
         Notify/ETCL_Filter \
         Notify/ETCL_FilterFactory \
-        Notify/Constraint_Interpreter \
-        Notify/Constraint_Visitors \
+        Notify/Notify_Constraint_Interpreter \
+        Notify/Notify_Constraint_Visitors \
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
@@ -19901,14 +19901,14 @@ realclean: clean
  CosNotifyFilterS_T.i \
  CosNotifyFilterS_T.cpp \
  CosNotifyFilterS.i \
- Notify/Constraint_Interpreter.h \
+ Notify/Notify_Constraint_Interpreter.h \
  ETCL/ETCL_Interpreter.h \
  ETCL/etcl_export.h \
  ETCL/ETCL_Constraint.h \
  ETCL/ETCL_Constraint.inl \
  Notify/ETCL_Filter.inl \
  $(TAO_ROOT)/tao/debug.h \
- Notify/Constraint_Visitors.h \
+ Notify/Notify_Constraint_Visitors.h \
  ETCL/ETCL_Constraint_Visitor.h
 
 .obj/ETCL_FilterFactory.o .obj/ETCL_FilterFactory.so .shobj/ETCL_FilterFactory.o .shobj/ETCL_FilterFactory.so: Notify/ETCL_FilterFactory.cpp \
@@ -20183,15 +20183,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- Notify/Constraint_Interpreter.h \
+ Notify/Notify_Constraint_Interpreter.h \
  ETCL/ETCL_Interpreter.h \
  ETCL/etcl_export.h \
  ETCL/ETCL_Constraint.h \
  ETCL/ETCL_Constraint.inl \
  Notify/ETCL_Filter.inl
 
-.obj/Constraint_Interpreter.o .obj/Constraint_Interpreter.so .shobj/Constraint_Interpreter.o .shobj/Constraint_Interpreter.so: Notify/Constraint_Interpreter.cpp \
- Notify/Constraint_Interpreter.h \
+.obj/Notify_Constraint_Interpreter.o .obj/Notify_Constraint_Interpreter.so .shobj/Notify_Constraint_Interpreter.o .shobj/Notify_Constraint_Interpreter.so: Notify/Notify_Constraint_Interpreter.cpp \
+ Notify/Notify_Constraint_Interpreter.h \
  $(ACE_ROOT)/ace/pre.h \
  ETCL/ETCL_Interpreter.h \
  ETCL/etcl_export.h \
@@ -20387,7 +20387,7 @@ realclean: clean
  CosEventCommC.i \
  CosNotifyCommC.i \
  CosNotifyFilterC.i \
- Notify/notify_export.h Notify/Constraint_Visitors.h \
+ Notify/notify_export.h Notify/Notify_Constraint_Visitors.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -20422,8 +20422,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  ETCL/ETCL_Constraint_Visitor.h
 
-.obj/Constraint_Visitors.o .obj/Constraint_Visitors.so .shobj/Constraint_Visitors.o .shobj/Constraint_Visitors.so: Notify/Constraint_Visitors.cpp \
- Notify/Constraint_Visitors.h \
+.obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.so .shobj/Notify_Constraint_Visitors.o .shobj/Notify_Constraint_Visitors.so: Notify/Notify_Constraint_Visitors.cpp \
+ Notify/Notify_Constraint_Visitors.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/post.h \

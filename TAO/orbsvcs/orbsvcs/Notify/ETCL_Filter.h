@@ -23,7 +23,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
-#include "Constraint_Interpreter.h"
+#include "Notify_Constraint_Interpreter.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,7 +35,7 @@
 /**
  * @class TAO_ETCL_Filter
  *
- * @brief
+ * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
 class TAO_Notify_Export TAO_NS_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
