@@ -16,7 +16,8 @@ Sat Jul 18 14:12:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tao/Connect.cpp: Added code for handle_locate, which is still
 	  commented, because not tested.
-	  I also cache the TAO_ORB_Core_instance.
+	  The TAO_ORB_Core_instance is now cached in send_request and
+    handle_input.
 
 Sat Jul 18 14:00:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
