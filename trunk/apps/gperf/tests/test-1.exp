@@ -11,6 +11,7 @@ struct resword { const char *name; short token; enum rid rid; };
 #define MAX_HASH_VALUE 82
 #define HASH_VALUE_RANGE 75
 #define DUPLICATES 0
+#define WORDLIST_SIZE 59
 
 static unsigned int
 hash (str, len)

@@ -1298,7 +1298,8 @@ Steve Harris <harris_s@ociweb.com>
 Stefan Kluehspies <Stefan.Kluehspies@gmx.net>
 Egon Wuchner <Egon.Wuchner@mchp.siemens.de>
 Ugendreshwar Kudupudi <ugenderk@rediffmail.com> 
-Ekkehard Hoffmann <ehoffman@fzi.de> 
+Ekkehard Hoffmann <ehoffman@fzi.de>
+Ted Krovetz <ted@digitalfountain.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
