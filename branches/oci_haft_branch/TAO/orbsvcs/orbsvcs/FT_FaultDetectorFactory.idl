@@ -101,7 +101,7 @@ module FT
      * @param property_set is a set of properties that (may) have new values.
      */
     void change_properties(in Properties property_set)
-      raises (InvalidProperty);
+      raises (PortableGroup::InvalidProperty);
 
     /**
      * Ask the Fault Detector Factory to come to an orderly end.

@@ -251,7 +251,7 @@ void FT_FaultDetectorFactory_i::change_properties (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::InvalidProperty
+    , PortableGroup::InvalidProperty
   ))
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::change_properties);
@@ -278,7 +278,7 @@ void FT_FaultDetectorFactory_i::change_properties (
       "Throwing Invalid Property: %s\n",
       FT::FT_FAULT_MONITORING_INTERVAL
       ));
-    ::FT::InvalidProperty ex;
+    ::PortableGroup::InvalidProperty ex;
     ex.nam.length(1);
     ex.nam[0].id = CORBA::string_dup(FT::FT_FAULT_MONITORING_INTERVAL);
     ACE_THROW (ex);
@@ -304,11 +304,11 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::NoFactory
-    , FT::ObjectNotCreated
-    , FT::InvalidCriteria
-    , FT::InvalidProperty
-    , FT::CannotMeetCriteria
+    , PortableGroup::NoFactory
+    , PortableGroup::ObjectNotCreated
+    , PortableGroup::InvalidCriteria
+    , PortableGroup::InvalidProperty
+    , PortableGroup::CannotMeetCriteria
   ))
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::create_object);
@@ -402,7 +402,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
       "Throwing 'InvalidCriteria' due to missing %s\n",
       missingParameterName
       ));
-    ACE_THROW ( FT::InvalidCriteria() );
+    ACE_THROW ( PortableGroup::InvalidCriteria() );
   }
 
   // NOTE: ACE_NEW is incompatable with ACE_Auto_Basic_Ptr
@@ -423,7 +423,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     ACE_ERROR ((LM_ERROR,
       "New FaultDetector_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    ACE_THROW ( FT::ObjectNotCreated() );
+    ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
   ACE_Auto_Basic_Ptr<Fault_Detector_i> detector(pFD);
 
@@ -435,7 +435,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
       "New factory_creation_id returned NULL.  Throwing ObjectNotCreated.\n"
       ));
 
-    ACE_THROW ( FT::ObjectNotCreated() );
+    ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
   (*factory_creation_id) <<= detectorId;
 
@@ -455,7 +455,7 @@ void FT_FaultDetectorFactory_i::delete_object (
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
-    , FT::ObjectNotFound
+    , PortableGroup::ObjectNotFound
   ))
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::delete_object);
@@ -472,12 +472,12 @@ void FT_FaultDetectorFactory_i::delete_object (
     }
     else
     {
-      ACE_THROW(::FT::ObjectNotFound());
+      ACE_THROW(::PortableGroup::ObjectNotFound());
     }
   }
   else
   {
-    ACE_THROW(::FT::ObjectNotFound());
+    ACE_THROW(::PortableGroup::ObjectNotFound());
   }
   METHOD_RETURN(FT_FaultDetectorFactory_i::delete_object);
 }
