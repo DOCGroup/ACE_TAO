@@ -139,7 +139,7 @@ module RtecScheduler
     // Token reserved for the scheduler's internal use:
     // information placed here from outside the scheduler
     // implementation is prone to be overwritten.
-    unsigned long volatile_token;
+    unsigned long long volatile_token;
   };
 
   enum Dispatching_Type_t
