@@ -30,8 +30,6 @@
 
 #include "tao/corba.h"
 
-extern CORBA::TypeCode TC_opaque;
-
 CORBA::TypeCode::traverse_status
 DEEP_FREE (CORBA::TypeCode_ptr  param,
 	   const void *source,

@@ -25,8 +25,6 @@
 
 #include "tao/corba.h"
 
-extern CORBA::TypeCode TC_opaque;
-
 // The decoder is exactly the reverse of the encoder, except that:
 //
 //      * Unmarshaling some data types involve allocating memory.  Such
@@ -47,42 +45,6 @@ extern CORBA::TypeCode TC_opaque;
 // XXX desirable to have a less hacky solution to that ... pull that
 // code out into a separate routine called both by CDR::decoder () and
 // by the code retrieving typecode parameters from encapsulations.
-
-CORBA::TypeCode_ptr __tc_consts [CORBA::TC_KIND_COUNT] =
-{
-  CORBA::_tc_null,
-  CORBA::_tc_void,
-  CORBA::_tc_short,
-  CORBA::_tc_long,
-  CORBA::_tc_ushort,
-
-  CORBA::_tc_ulong,
-  CORBA::_tc_float,
-  CORBA::_tc_double,
-  CORBA::_tc_boolean,
-  CORBA::_tc_char,
-
-  CORBA::_tc_octet,
-  CORBA::_tc_any,
-  CORBA::_tc_TypeCode,
-  CORBA::_tc_Principal,
-
-  0, // CORBA::_tc_Object ... type ID is CORBA_Object
-  0, // CORBA_tk_struct
-  0, // CORBA_tk_union
-  0, // CORBA_tk_enum
-  0, // CORBA::_tc_string ... unbounded
-  0, // CORBA_tk_sequence
-  0, // CORBA_tk_array
-  0, // CORBA_tk_alias
-  0, // CORBA_tk_except
-
-  CORBA::_tc_longlong,
-  CORBA::_tc_ulonglong,
-  CORBA::_tc_longdouble,
-  CORBA::_tc_wchar,
-  0           // CORBA::_tc_wstring ... unbounded
-};
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Primitive::decode (CORBA::TypeCode_ptr  tc,
@@ -250,7 +212,48 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
   // Typecode kind.
   CORBA::ULong kind;
 
-  // TypeCode for the parent.
+  static CORBA::TypeCode_ptr __tc_consts [CORBA::TC_KIND_COUNT] =
+  {
+    CORBA::_tc_null,
+    CORBA::_tc_void,
+    CORBA::_tc_short,
+    CORBA::_tc_long,
+    CORBA::_tc_ushort,
+
+    CORBA::_tc_ulong,
+    CORBA::_tc_float,
+    CORBA::_tc_double,
+    CORBA::_tc_boolean,
+    CORBA::_tc_char,
+
+    CORBA::_tc_octet,
+    CORBA::_tc_any,
+    CORBA::_tc_TypeCode,
+    CORBA::_tc_Principal,
+
+    0, // CORBA::_tc_Object ... type ID is CORBA_Object
+    0, // CORBA_tk_struct
+    0, // CORBA_tk_union
+    0, // CORBA_tk_enum
+    0, // CORBA::_tc_string ... unbounded
+    0, // CORBA_tk_sequence
+    0, // CORBA_tk_array
+    0, // CORBA_tk_alias
+    0, // CORBA_tk_except
+
+    CORBA::_tc_longlong,
+    CORBA::_tc_ulonglong,
+    CORBA::_tc_longdouble,
+    CORBA::_tc_wchar,
+    0           // CORBA::_tc_wstring ... unbounded
+  };
+
+  // TypeCode for the parent. The most likely situation when a parent will be
+  // provided is when we are precomputing the private state of an IDL compiler
+  // generated or an ORB owned TypeCode, OR we are decoding an indirected
+  // TypeCode. In such circumstances, the decoded
+  // TypeCode will share resources with its parent and cannot be freed until
+  // its parent is being freed.
   CORBA::TypeCode_ptr parent = (CORBA::TypeCode_ptr) parent_typecode;
 
   // Decode the "kind" field of the typecode from the stream
@@ -266,6 +269,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
       // heap access ... also, to speed things up!
       if (kind < CORBA::TC_KIND_COUNT
           && (*tcp = __tc_consts [(u_int) kind]) != 0)
+        // parent is ignored
         *tcp = CORBA::TypeCode::_duplicate (__tc_consts [(u_int) kind]);
       else if (kind == ~(CORBA::ULong)0 || kind < CORBA::TC_KIND_COUNT)
         {
@@ -291,6 +295,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                   {
                     if (bound == 0)
                       {
+                        // unbounded string. Let us reuse the ORB owned
+                        // _tc_string or _tc_wstring
                         if (kind == CORBA::tk_string)
                           *tcp = CORBA::TypeCode::_duplicate
                             (CORBA::_tc_string);
@@ -300,10 +306,13 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                       }
                     else
                       {
+                        // bounded string. Create a TypeCode. If it is does not
+                        // have a parent, then the application must free it.
                         CORBA::Long _oc_bounded_string [] =
                         {TAO_ENCAP_BYTE_ORDER, 0};
-                        _oc_bounded_string [1] = (CORBA::Long) bound;
                         // Bounded string. Save the bounds
+                        _oc_bounded_string [1] = (CORBA::Long) bound;
+                        // allocate a new TypeCode
                         *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                                     bound, (char *) &_oc_bounded_string,
                                                     CORBA::B_FALSE, parent);
@@ -329,6 +338,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // then set up indirection stream that's like "stream"
                 // but has space enough only for the typecode and the
                 // length for the encapsulated parameters.
+                //
+                // The offset must be negative
                 CORBA::Long offset;
 
                 continue_decoding = stream->read_long (offset);
@@ -380,10 +391,6 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                                                 indir_stream.rd_ptr(),
                                                 CORBA::B_FALSE,
                                                 parent);
-#if 0
-                    (*tcp)->parent_ = parent;
-                    parent->AddRef ();
-#endif /* 0 */
                   }
               }
             break;
@@ -401,6 +408,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
               {
                 CORBA::ULong length;
 
+                // get the encapsulation length
                 continue_decoding = stream->read_ulong (length);
                 if (!continue_decoding)
                   break;
@@ -408,6 +416,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // if length > MAXUNSIGNED, error ...
                 u_int len = (u_int) length;
 
+                // create a new typecode
                 *tcp = new CORBA::TypeCode ((CORBA::TCKind) kind,
                                             len,
                                             stream->rd_ptr (),
@@ -615,7 +624,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
 
         // ... and object key.
 
-        continue_decoding = str.decode (&TC_opaque,
+        continue_decoding = str.decode (TC_opaque,
                                         &profile->object_key,
                                         0,
                                         env) == CORBA::TypeCode::TRAVERSE_CONTINUE;

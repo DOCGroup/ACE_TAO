@@ -37,21 +37,6 @@ TAO_Marshal::init (void)
 
 // cosntructor for the factory
 TAO_Marshal_Factory::TAO_Marshal_Factory (void)
-#if 0
-  : m_primitive_ (TAO_MARSHAL_PRIMITIVE::instance ()),
-    m_any_ (TAO_MARSHAL_ANY::instance ()),
-    m_typecode_ (TAO_MARSHAL_TYPECODE::instance ()),
-    m_principal_ (TAO_MARSHAL_PRINCIPAL::instance ()),
-    m_objref_ (TAO_MARSHAL_OBJREF::instance ()),
-    m_struct_ (TAO_MARSHAL_STRUCT::instance ()),
-    m_union_ (TAO_MARSHAL_UNION::instance ()),
-    m_string_ (TAO_MARSHAL_STRING::instance ()),
-    m_sequence_ (TAO_MARSHAL_SEQUENCE::instance ()),
-    m_array_ (TAO_MARSHAL_ARRAY::instance ()),
-    m_alias_ (TAO_MARSHAL_ALIAS::instance ()),
-    m_except_ (TAO_MARSHAL_EXCEPT::instance ()),
-    m_wstring_ (TAO_MARSHAL_WSTRING::instance ())
-#endif /* 0 */
 {
   // initialize the mobj table
   mobj_table_[CORBA::tk_null].obj_ = TAO_MARSHAL_PRIMITIVE::instance ();
@@ -87,73 +72,6 @@ TAO_Marshal_Factory::TAO_Marshal_Factory (void)
 TAO_Marshal_Factory::~TAO_Marshal_Factory (void)
 {
 }
-
-#if 0
-// factory method
-//
-// Based on the kind of the typecode, return the appropriate marshal object
-TAO_Marshal_Object* TAO_Marshal_Factory::make_marshal_object (CORBA::TypeCode_ptr tc,
-                                                              CORBA::Environment &env)
-{
-  env.clear ();
-  if (tc)
-    {
-      switch (tc->kind_)
-        {
-        case CORBA::tk_null:
-        case CORBA::tk_void:
-        case CORBA::tk_short:
-        case CORBA::tk_ushort:
-        case CORBA::tk_long:
-        case CORBA::tk_ulong:
-        case CORBA::tk_float:
-        case CORBA::tk_enum:
-        case CORBA::tk_double:
-        case CORBA::tk_longlong:
-        case CORBA::tk_ulonglong:
-        case CORBA::tk_boolean:
-        case CORBA::tk_char:
-        case CORBA::tk_octet:
-        case CORBA::tk_longdouble:
-        case CORBA::tk_wchar:
-          return m_primitive_;
-        case CORBA::tk_any:
-          return m_any_;
-        case CORBA::tk_TypeCode:
-          return m_typecode_;
-        case CORBA::tk_Principal:
-          return m_principal_;
-        case CORBA::tk_objref:
-          return m_objref_;
-        case CORBA::tk_struct:
-          return m_struct_;
-        case CORBA::tk_union:
-          return m_union_;
-        case CORBA::tk_string:
-          return m_string_;
-        case CORBA::tk_sequence:
-          return m_sequence_;
-        case CORBA::tk_array:
-          return m_array_;
-        case CORBA::tk_alias:
-          return m_alias_;
-        case CORBA::tk_except:
-          return m_except_;
-        case CORBA::tk_wstring:
-          return m_wstring_;
-        default:
-          // anything else is an error
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          return (TAO_Marshal_Object *)0;
-        }
-    }
-  else
-    {
-      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      return (TAO_Marshal_Object *)0;
-    }
-}
-#endif /* 0 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<TAO_Marshal_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;

@@ -29,8 +29,6 @@
 
 #include "tao/corba.h"
 
-extern CORBA::TypeCode TC_opaque;
-
 // Deep copy from "source" to "dest" ... this code "knows" a bit about
 // representations, verify it when porting to oddball platforms with
 // non-IEEE floating point values or atypical byte and word sizes.
