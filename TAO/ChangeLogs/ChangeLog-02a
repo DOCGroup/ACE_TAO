@@ -1,3 +1,13 @@
+Thu Mar 30 12:16:25 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.{h.cpp}:
+	  Added several startup options to the Notify Service.
+	  See the README for details.
+	  Thanks to Wei Chiang <Wei.Chiang@nokia.com> for contributing these
+	  options to the Notify_Service.
+	* orbsvcs/Notify_Service/README:
+	  Updated the README.
+
 Wed Mar 29 12:57:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/examples/Notify/Filter/Makefile:
