@@ -314,7 +314,7 @@ read_buffer (
     while (len != 0) {
 	int	retval;
 
-	retval = ACE_OS::recv (fd, buf, len, 0);
+	retval = ACE::recv (fd, buf, len);
 
 #ifdef	DEBUG
 	dmsg_filter (6, "read %d bytes from connection: %d", retval, fd);
