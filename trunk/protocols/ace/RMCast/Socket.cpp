@@ -5,12 +5,61 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+#include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Condition_T.h"
+
+#include "Stack.h"
+#include "Protocol.h"
+#include "Bits.h"
+
+#include "Link.h"
+#include "Simulator.h"
+#include "Retransmit.h"
+#include "Acknowledge.h"
+
+
 #include "Socket.h"
 
 namespace ACE_RMCast
 {
-  Socket::
-  Socket (Address const& a, bool loop)
+  class Socket_Impl : protected Element
+  {
+  public:
+    ~Socket_Impl ();
+
+    Socket_Impl (Address const& a, bool loop);
+
+  public:
+    void
+    send_ (void const* buf, size_t s);
+
+    size_t
+    recv_ (void* buf, size_t s);
+
+  private:
+    virtual void
+    recv (Message_ptr m);
+
+  private:
+    bool loop_;
+
+    u64 sn_; //@@ lock?
+
+    Mutex mutex_;
+    Condition cond_;
+
+    ACE_Unbounded_Queue<Message_ptr> queue_;
+
+    ACE_Auto_Ptr<Acknowledge> acknowledge_;
+    ACE_Auto_Ptr<Retransmit> retransmit_;
+    ACE_Auto_Ptr<Simulator> simulator_;
+    ACE_Auto_Ptr<Link> link_;
+  };
+
+
+  Socket_Impl::
+  Socket_Impl (Address const& a, bool loop)
       : loop_ (loop), sn_ (1), cond_ (mutex_)
   {
     acknowledge_.reset (new Acknowledge ());
@@ -35,8 +84,8 @@ namespace ACE_RMCast
     out_start (acknowledge_.get ());
   }
 
-  Socket::
-  ~Socket ()
+  Socket_Impl::
+  ~Socket_Impl ()
   {
     // Stop OUT stack from top to bottom.
     //
@@ -56,8 +105,8 @@ namespace ACE_RMCast
   }
 
 
-  void Socket::
-  send (void const* buf, size_t s)
+  void Socket_Impl::
+  send_ (void const* buf, size_t s)
   {
     Message_ptr m (new Message);
 
@@ -69,8 +118,8 @@ namespace ACE_RMCast
     Element::send (m);
   }
 
-  size_t Socket::
-  recv (void* buf, size_t s)
+  size_t Socket_Impl::
+  recv_ (void* buf, size_t s)
   {
     Lock l (mutex_);
 
@@ -88,7 +137,7 @@ namespace ACE_RMCast
     return r;
   }
 
-  void Socket::
+  void Socket_Impl::
   recv (Message_ptr m)
   {
     if (m->find (Data::id) != 0)
@@ -111,5 +160,31 @@ namespace ACE_RMCast
 
       if (signal) cond_.signal ();
     }
+  }
+
+  // Socket
+  //
+  //
+  Socket::
+  ~Socket ()
+  {
+  }
+
+  Socket::
+  Socket (Address const& a, bool loop)
+      : impl_ (new Socket_Impl (a, loop))
+  {
+  }
+
+  void Socket::
+  send (void const* buf, size_t s)
+  {
+    impl_->send_ (buf, s);
+  }
+
+  size_t Socket::
+  recv (void* buf, size_t s)
+  {
+    return impl_->recv_ (buf, s);
   }
 }
