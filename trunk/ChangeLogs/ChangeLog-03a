@@ -1,3 +1,8 @@
+Mon May  6 14:26:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Proactor_Test.cpp: Fixed unused variable warnings in
+	  non-win32 builds.
+
 Mon May  6 13:37:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/generate_performance_chart.sh: Changed the range of the y
