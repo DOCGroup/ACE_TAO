@@ -956,6 +956,7 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
     return -1;
   }
   size = CLIENT_FDTABLE_SIZE;
+  // create and initialize the File Descriptor Table
   fdTable = (struct FdTable *)ACE_OS::malloc(size * sizeof(*fdTable));
   if (fdTable == NULL) {
     fprintf(stderr,
@@ -967,6 +968,7 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
   for (i = 0; i < size; i ++) {
     fdTable[i].fd = -1;
   }
+  // Set all the file descriptor for atm ,inet and unix to be -1
   fd_atm = fd_inet = fd_unix = -1;
 
   memset((char *)&myaddr_in, 0, sizeof(struct sockaddr_in));
@@ -1182,11 +1184,15 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   tval.tv_sec = 1;   /* wait at most 1 second */
   tval.tv_usec = 0;
 
+
   nfds = fd_inet;
   if (fd_unix > nfds) nfds = fd_unix;
   if (fd_atm > nfds) nfds = fd_atm;
-  nfds ++;
+  // nfds now holds the highest numbered open file descriptor
+  nfds ++; // increment so that select can use o to nfds -1 no. of
+           // file descriptors.
   errno = 0;
+  // fd is here used as the result of the select call
 #ifdef _HPUX_SOURCE
   if ((fd = select(nfds, (int *)&read_mask, NULL, NULL, &tval)) == -1)
 #else
@@ -1205,7 +1211,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
   if (fd == 0) return -1; /* time expire */
 
   fd = -1;
-
+  // fd will be reused inside this code as the accepted socket.
   if (fd == -1 && fd_unix >= 0 && FD_ISSET(fd_unix, &read_mask)) {
     struct sockaddr_un peeraddr_un;
     
@@ -1222,6 +1228,9 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     else fdType = CONN_UNIX;
     *max_pkt_size = 0;
   }
+  // fd here is the result of the  accept for unix if fd_unix is valid
+  // Hence if fd_unix is present then this won't be called if the
+  // accept for the fd_unix succeeds.
   if (fd == -1 && fd_inet >= 0 && FD_ISSET(fd_inet, &read_mask)) {
     
     fprintf(stderr, "Server to accept a INET connection.\n");
@@ -1247,11 +1256,14 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
 	    getpid());
 #endif
   }
+  // fd = -1 implies accept failed in any of the active connections
+  // which came out of the select call.
   if (fd == -1) return -1;
 
   for (i = 0; i < size; i ++) {
     if (fdTable[i].fd == -1) break;
   }
+  // Enter the accepted fd in the file descriptor Table
   if (i < size) {
     fdTable[i].fd = fd;
     fdTable[i].type = fdType;
@@ -1261,6 +1273,7 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     fprintf(stderr, "Weird\n");
   }
 
+  // read the port number for the UDP socket of the client
   if (time_read_int(fd, &nfds) == -1) {
     fprintf(stderr,
 	    "Error ComGetConnPair: pid %d failed to read int from %s fd:",
@@ -1271,13 +1284,18 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
     ComCloseConn(fd);
     return -1;
   }
-
+  fprintf (stderr,
+           " Received int nfds = %d \n",
+           nfds);
+  // nfds holds the int read in time_read_int
+  // if nfds is -1 then read int error.
   fprintf(stderr, "ComGetConnPair got %s fd = %d with value %d\n",
 	  fdType == CONN_ATM ? "ATM" :
 	  fdType == CONN_INET ? "INET" : "UNIX",
 	  fd, nfds);
 
   if (nfds >= 0) { /* can be paired and return */
+    // This is the success case where you got a control fd and a data fd.
     fdTable[i].state = STATE_DATA;
     for (i = 0; i < size; i ++) {
       if (fdTable[i].fd == nfds) break;
@@ -1290,12 +1308,17 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       ComCloseConn(fd);
       return -1;
     }
+    // ????
     *ctr_fd = fdTable[i].fd;
     *data_fd = fd;
     return 0;
   }
   else if (nfds == -1) { /* wait to be paired */
     fdTable[i].state = STATE_PENDING;
+    // fd is the inet or unix accepted socket.
+    // why is anyone writing the fd to the peer?
+    // looks like he is indicating an error to the client!!
+    // is this a hack ;-(
     if (time_write_int(fd, fd) == -1) {
       fprintf(stderr,
 	      "Error ComGetConnPair: pid %d failed to write (fd) to %s fd:",
@@ -1458,6 +1481,9 @@ int ComGetConnPair(int *ctr_fd, int *data_fd, int *max_pkt_size)
       fprintf(stderr,"Set UDP dfd-rcv to %dB\n", len);
     }
 #endif
+    // Most common return case where the server creates a UDP socket ,
+    // writes the port and ip addr and also gets the client's UDP
+    // endpoint .
     *max_pkt_size = - INET_SOCKET_BUFFER_SIZE;  /* UDP sockets on HP and SUN
 						are known to be discard mode */
 
