@@ -1,4 +1,4 @@
-// receiver.cpp,v 1.2 2001/04/15 20:32:54 yamuna Exp
+// $Id$ 
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
@@ -79,42 +79,42 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
     {
       // Modify QoS after receiving 20 frames
       if (frame_count_ == 20)
-	{
-	  // Specify the flow for which the qos needs to be changed.
-	  TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
-					    "IN",
-					    "",
-					    "",
-					    0);
+        {
+          // Specify the flow for which the qos needs to be changed.
+          TAO_Forward_FlowSpec_Entry entry ("Data_Receiver",
+                                            "IN",
+                                            "",
+                                            "",
+                                            0);
   
-	  AVStreams::flowSpec flow_spec (1);
-	  flow_spec.length (1);
-	  flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
-	  
-	  // Initialize the qos parameter(s) that need to be changed 
-	  // with the corresponding value.
-	  AVStreams::streamQoS qos;
-	  qos.length (1);
-	  
-	  // The QoS Type that needs to be changed.
-	  qos [0].QoSType =  CORBA::string_dup ("video_qos");
-	  
-	  qos [0].QoSParams.length (1);
-	  qos [0].QoSParams [0].property_name = CORBA::string_dup ("video_frame_rate");
-	  qos [0].QoSParams [0].property_value <<= (CORBA::Short) 30;
+          AVStreams::flowSpec flow_spec (1);
+          flow_spec.length (1);
+          flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
+          
+          // Initialize the qos parameter(s) that need to be changed 
+          // with the corresponding value.
+          AVStreams::streamQoS qos;
+          qos.length (1);
+          
+          // The QoS Type that needs to be changed.
+          qos [0].QoSType =  CORBA::string_dup ("video_qos");
+          
+          qos [0].QoSParams.length (1);
+          qos [0].QoSParams [0].property_name = CORBA::string_dup ("video_frame_rate");
+          qos [0].QoSParams [0].property_value <<= (CORBA::Short) 30;
 
-	  ACE_DECLARE_NEW_CORBA_ENV;
-	  
-	  // Initiate the modifying of the qos for the flows.
-	  this->streamctrl_->modify_QoS (qos, flow_spec, ACE_TRY_ENV);
-	  ACE_CHECK_RETURN (0);
+          ACE_DECLARE_NEW_CORBA_ENV;
+          
+          // Initiate the modifying of the qos for the flows.
+          this->streamctrl_->modify_QoS (qos, flow_spec, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Stream Ctrl available....Modify QoS called\n"));
-	}
+          ACE_DEBUG ((LM_DEBUG,
+                      "Stream Ctrl available....Modify QoS called\n"));
+        }
     }
   else ACE_DEBUG ((LM_DEBUG,
-		   "No Stream Ctrl\n"));
+                   "No Stream Ctrl\n"));
   
   while (frame != 0)
     {
