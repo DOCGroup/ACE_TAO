@@ -86,10 +86,12 @@ main (int argc, char *argv[])
         }
 
       CORBA::Short number = 0;
-      CORBA::String_var str;
+
 
       for (int i = 1; i <= 25; ++i)
         {
+          CORBA::String_var str;
+
           number = server->number (str.inout ()
                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
