@@ -1,3 +1,9 @@
+Tue Apr 29 16:38:18 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* tests/temp/assembly/client.dsp:
+	* tests/temp/assembly/client.dsp:
+	  Fixed build VCpp6 Release error.
+
 Mon Apr 28 21:43:01 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/RateGen/RateGen.mpc: Added missing
@@ -84,6 +90,7 @@ Mon Apr 28 16:49:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  compilation error.  Thanks to Tao Lu <tao.lu@dre.vanderbilt.edu>
 	  for reporting this.
 
+>>>>>>> 1.9
 Fri Apr 25 10:39:26 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/Display/NavDisplayGUI_exec/worldmap1.xpm:
