@@ -38,7 +38,7 @@ public:
     SUPPLIER_ACCEPTOR = 04,
     CONSUMER_ACCEPTOR = 010,
     SUPPLIER_CONNECTOR = 020,
-    CONSUMER_CONNECTOR = 040
+    CONSUMER_CONNECTOR = 040,
 
     DEFAULT_TIMEOUT = 32
     // The maximum timeout for trying to re-establish connections.
@@ -70,7 +70,7 @@ public:
   int performance_window (void) const;
   // Number of seconds after connection establishment to report
   // throughput.
-  
+
   int blocking_semantics (void) const;
   // 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
 
@@ -127,7 +127,7 @@ private:
   int performance_window_;
   // Number of seconds after connection establishment to report
   // throughput.
-  
+
   int blocking_semantics_;
   // 0 == blocking connects, ACE_NONBLOCK == non-blocking connects.
 
