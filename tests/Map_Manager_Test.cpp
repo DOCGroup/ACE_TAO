@@ -19,6 +19,9 @@
 // ============================================================================
 
 #include "test_config.h"
+
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+
 #include "ace/Map_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Profile_Timer.h"
@@ -27,7 +30,9 @@
 typedef ACE_Null_Mutex MUTEX;
 typedef size_t TYPE;
 
+
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+
 // We need this template specialization since TYPE is defined as a
 // size_t, which doesn't have a hash() method defined on it.
 
@@ -36,6 +41,7 @@ ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>::hash (const TYPE& ext_id)
 {
   return ext_id;
 }
+
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 typedef ACE_Map_Manager <TYPE, TYPE, MUTEX> MAP_MANAGER;
@@ -244,3 +250,20 @@ template class ACE_Map_Entry<TYPE, TYPE>;
 #pragma instantiate ACE_Map_Entry<TYPE, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#else  /* ACE_HAS_TEMPLATE_SPECIALIZATION */
+
+
+int
+main (int argc, char *argv[])
+{
+  ACE_START_TEST ("Map_Manager_Test");
+
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  ACE_ERROR ((LM_ERROR, "Template specializations not supported on this platform\n"));
+
+  ACE_END_TEST;
+  return 0;
+}
+
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
