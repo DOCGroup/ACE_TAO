@@ -1,3 +1,9 @@
+Mon Oct 26 11:29:55 1998  Darrell E. Brunsch  <brunsch@tango.cs.wustl.edu>
+
+	* tests/Semaphore_Test.cpp: Changed behavior for ACE_HAS_STHREADS
+	  and ACE_HAS_POSIX_SEM so it still tests everything but doesn't
+	  test the timed waits
+
 Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added recommendation and
