@@ -369,13 +369,13 @@ private:
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (__MINGW32__) || defined (CYGWIN32)
-// The MingW and Cygwin linker have problems with the exported statics
+#if defined (__MINGW32__)
+// The MingW linker has problems with the exported statics
 // zero and max_time with these two statics the linker will be able to
 // resolve the static exported symbols.
 static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
 static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
-#endif /* __MINGW32__ || CYGWIN32 */
+#endif /* __MINGW32__ */
 
 #include /**/ "ace/post.h"
 
