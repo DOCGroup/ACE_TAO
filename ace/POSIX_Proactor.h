@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_POSIX_PROACTOR_H)
+#ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H
 
 #include "ace/Proactor_Impl.h"

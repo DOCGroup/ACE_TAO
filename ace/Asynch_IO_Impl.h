@@ -25,7 +25,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_ASYNCH_IO_IMPL_H)
+#ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
