@@ -1723,11 +1723,11 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj
       // XXX there should be a simple way to reuse this code in other
       // ORB implementations ...
 
-#if defined (ACE_HAS_PURIFY)
+#if defined (ACE_HAS_MEMORY_PROFILER)
       char buf [ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
 #else
       // Avoid the initialization overhead if not compiling with
-      // support for Purify.  There is no need to actually perform
+      // support for a memory profiler.  There is no need to actually perform
       // initialization otherwise.
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
 #endif /* ACE_HAS_PURIFY */

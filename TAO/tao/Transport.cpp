@@ -1175,11 +1175,11 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
   // messages
   char buf [TAO_MAXBUFSIZE];
 
-#if defined (ACE_HAS_PURIFY)
+#if defined (ACE_HAS_MEMORY_PROFILER)
   (void) ACE_OS::memset (buf,
                          '\0',
                          sizeof buf);
-#endif /* ACE_HAS_PURIFY */
+#endif /* ACE_HAS_MEMORY_PROFILER */
 
   // Create a data block
   ACE_Data_Block db (sizeof (buf),
