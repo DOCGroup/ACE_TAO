@@ -37,7 +37,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class IdAssignmentStrategy;
     class RequestProcessingStrategy;
 
     class TAO_PortableServer_Export ServantRetentionStrategy
@@ -51,7 +50,6 @@ namespace TAO
       virtual
       void strategy_init (
         TAO_POA *poa,
-        IdAssignmentStrategy* id_assignment_strategy,
         RequestProcessingStrategy* request_processing_strategy
         ACE_ENV_ARG_DECL) = 0;
 

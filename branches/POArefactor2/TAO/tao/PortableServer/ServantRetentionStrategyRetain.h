@@ -43,7 +43,6 @@ namespace TAO
       virtual
       void strategy_init (
         TAO_POA *poa,
-        IdAssignmentStrategy* id_assignment_strategy,
         RequestProcessingStrategy* request_processing_strategy
         ACE_ENV_ARG_DECL);
 
