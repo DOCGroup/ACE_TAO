@@ -23,11 +23,9 @@
 
 
 /**
- * @class ACE_Recyclable
+ * @class ACE_Hashable
  *
- * @brief
- *
- *
+ * @brief ACE_Hashable
  */
 class ACE_Export ACE_Hashable
 {
