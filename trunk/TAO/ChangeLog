@@ -1,5 +1,4 @@
 Mon Feb 10 17:12:30 2003  Otis Nyandoro <o.nyandoro@ee.wits.ac.za>
-                          Balachandran Natarajan<bala@isis-server.isis.vanderbilt.edu>
 	
 	* tests/RTCORBA/check_supported_priorities.cpp: Changed the
 	  function to take in a ORB pointer. The function now queries the
