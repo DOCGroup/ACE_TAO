@@ -199,6 +199,10 @@ SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
@@ -224,6 +228,10 @@ SOURCE=.\Exception.h
 # Begin Source File
 
 SOURCE=.\Exclusive_TMS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
@@ -404,6 +412,10 @@ SOURCE=.\orbconf.h
 # Begin Source File
 
 SOURCE=.\params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.h
 # End Source File
 # Begin Source File
 
@@ -799,6 +811,10 @@ SOURCE=.\DLL_ORB.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
@@ -820,6 +836,10 @@ SOURCE=.\Environment.i
 # Begin Source File
 
 SOURCE=.\Exception.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
@@ -948,6 +968,10 @@ SOURCE=.\ORB_Strategies_T.i
 # Begin Source File
 
 SOURCE=.\params.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.i
 # End Source File
 # Begin Source File
 
@@ -1267,6 +1291,10 @@ SOURCE=.\DLL_ORB.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DLL_Parser.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.cpp
 # End Source File
 # Begin Source File
@@ -1292,6 +1320,10 @@ SOURCE=.\Exception.cpp
 # Begin Source File
 
 SOURCE=.\Exclusive_TMS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FILE_Parser.cpp
 # End Source File
 # Begin Source File
 
@@ -1460,6 +1492,10 @@ SOURCE=.\ORB_Core.cpp
 # Begin Source File
 
 SOURCE=.\params.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Parser_Registry.cpp
 # End Source File
 # Begin Source File
 
