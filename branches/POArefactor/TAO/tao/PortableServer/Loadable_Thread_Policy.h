@@ -49,23 +49,27 @@ namespace TAO
   class TAO_PortableServer_Export Loadable_Thread_Policy :
      public virtual POA_Policy
   {
-    public:
-      virtual ~Loadable_Thread_Policy (void);
+  public:
+    virtual ~Loadable_Thread_Policy (void);
 
-      /// Return the cached policy type for this policy.
-      TAO_Cached_Policy_Type _tao_cached_type (void) const;
+    /// Return the cached policy type for this policy.
+    TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-      /// Returns the scope at which this policy can be applied. See orbconf.h.
-      TAO_Policy_Scope _tao_scope (void) const;
+    /// Returns the scope at which this policy can be applied. See orbconf.h.
+    TAO_Policy_Scope _tao_scope (void) const;
 
-      /// Create a new thread policy
-      PortableServer::ThreadPolicy_ptr create (
-        PortableServer::ThreadPolicyValue value);
+    /// Create a new thread policy
+    // @@ Johnny, how nice would it be if all the compilers supported
+    //covariant return types. Grr..
+    //
+    // CORBA::
+    PortableServer::ThreadPolicy_ptr create (
+      PortableServer::ThreadPolicyValue value);
 
-      /// Create a new thread policy
-      PortableServer::ThreadPolicy_ptr create (
-        const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-          ACE_THROW_SPEC ((CORBA::PolicyError));
+    /// Create a new thread policy
+    PortableServer::ThreadPolicy_ptr create (
+      const CORBA::Any &value ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::PolicyError));
   };
 
   ACE_STATIC_SVC_DECLARE (Loadable_Thread_Policy)

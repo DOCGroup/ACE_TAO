@@ -32,13 +32,13 @@ namespace TAO
   {
     switch (value)
       {
-        case PortableServer::ORB_CTRL_MODEL :
+      case PortableServer::ORB_CTRL_MODEL :
         {
           this->value_ =
             ACE_Dynamic_Service<ORB_CTRL_Thread_Policy>::instance ("ORB_CTRL_Thread_Policy");
           break;
         }
-        case PortableServer::SINGLE_THREAD_MODEL :
+      case PortableServer::SINGLE_THREAD_MODEL :
         {
           this->value_ =
             ACE_Dynamic_Service<SINGLE_THREAD_Thread_Policy>::instance ("SINGLE_THREAD_Thread_Policy");

@@ -36,14 +36,16 @@ namespace TAO
   class TAO_PortableServer_Export POA_Policy :
      public virtual ACE_Service_Object
   {
-    public:
-      virtual ~POA_Policy (void);
+  public:
+    virtual ~POA_Policy (void);
 
-      /// Return the cached policy type for this policy.
-      TAO_Cached_Policy_Type _tao_cached_type (void) const;
+    // @@Johnny, why aren't the following methods implemented?
+    /// Return the cached policy type for this policy.
+    TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-      /// Returns the scope at which this policy can be applied. See orbconf.h.
-      TAO_Policy_Scope _tao_scope (void) const;
+    /// Returns the scope at which this policy can be applied. See
+    /// orbconf.h.
+    TAO_Policy_Scope _tao_scope (void) const;
   };
 }
 
