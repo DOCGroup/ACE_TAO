@@ -95,28 +95,33 @@ CORBA_Exception::_is_a (const char* repository_id) const
 }
 
 void
-CORBA_Exception::_tao_print_exception (const char *info,
+CORBA_Exception::_tao_print_exception (const char *user_provided_info,
                                        FILE *) const
 {
-  const char *id = this->_id ();
-
   ACE_DEBUG ((LM_ERROR,
-              "(%P|%t) EXCEPTION, %s\n",
-              info));
+              "(%P|%t) EXCEPTION, %s\n"
+              "%s\n",
+              user_provided_info,
+              this->_info ().c_str ()));
+}
 
-  CORBA::SystemException *x2 =
+ACE_CString
+CORBA_Exception::_info (void) const
+{
+  CORBA::SystemException *system_exception =
     CORBA_SystemException::_narrow (ACE_const_cast (CORBA_Exception *,
                                                     this));
 
-  if (x2 != 0)
-    x2->_tao_print_system_exception ();
-  else
-    // @@ we can use the exception's typecode to dump all the data
-    // held within it ...
+  if (system_exception != 0)
+    return system_exception->_info ();
 
-    ACE_DEBUG ((LM_ERROR,
-                "(%P|%t) user exception, ID '%s'\n",
-                id));
+  // @@ we can use the exception's typecode to dump all the data held
+  // within it ...
+
+  ACE_CString user_exception_info = "user exception, ID '";
+  user_exception_info += this->_id ();
+  user_exception_info += "'";
+  return user_exception_info;
 }
 
 CORBA::ULong
@@ -290,15 +295,23 @@ CORBA_SystemException::_tao_minor_code (u_int location,
 void
 CORBA_SystemException::_tao_print_system_exception (FILE *) const
 {
+  ACE_DEBUG ((LM_ERROR,
+              "(%P|%t) system exception, ID '%s'\n",
+              this->_info ().c_str ()));
+}
+
+ACE_CString
+CORBA_SystemException::_info (void) const
+{
   // @@ there are a other few "user exceptions" in the CORBA scope,
   // they're not all standard/system exceptions ... really need to
   // either compare exhaustively against all those IDs (yeech) or
   // (preferably) to represent the exception type directly in the
   // exception value so it can be queried.
 
-  ACE_DEBUG ((LM_ERROR,
-              "(%P|%t) system exception, ID '%s'\n",
-              _id ()));
+  ACE_CString info = "system exception, ID '";
+  info += this->_id ();
+  info += "'\n";
 
   CORBA::ULong VMCID =
     this->minor () & 0xFFFFF000u;
@@ -382,27 +395,37 @@ CORBA_SystemException::_tao_print_system_exception (FILE *) const
           errno_indication = "unknown errno";
         }
 
-      ACE_DEBUG ((LM_ERROR,
-                  "(%P|%t) TAO exception, "
-                  "minor code = %x (%s; %s), "
-                  "completed = %s\n",
-                  this->minor (), location, errno_indication,
-                  (completed () == CORBA::COMPLETED_YES) ? "YES" :
-                  (completed () == CORBA::COMPLETED_NO) ? "NO" :
-                  (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-                  "garbage"));
+      char buffer[BUFSIZ];
+      ACE_OS::sprintf (buffer,
+                       "TAO exception, "
+                       "minor code = %x (%s; %s), "
+                       "completed = %s\n",
+                       this->minor (),
+                       location,
+                       errno_indication,
+                       (completed () == CORBA::COMPLETED_YES) ? "YES" :
+                       (completed () == CORBA::COMPLETED_NO) ? "NO" :
+                       (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                       "garbage");
+
+      info += buffer;
     }
   else
     {
-      ACE_DEBUG ((LM_ERROR,
-                  "(%P|%t) non-TAO exception, "
-                  "minor code = %x, completed = %s\n",
-                  this->minor (),
-                  (completed () == CORBA::COMPLETED_YES) ? "YES" :
-                  (completed () == CORBA::COMPLETED_NO) ? "NO" :
-                  (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-                  "garbage"));
+      char buffer[BUFSIZ];
+      ACE_OS::sprintf (buffer,
+                       "non-TAO exception, "
+                       "minor code = %x, completed = %s\n",
+                       this->minor (),
+                       (completed () == CORBA::COMPLETED_YES) ? "YES" :
+                       (completed () == CORBA::COMPLETED_NO) ? "NO" :
+                       (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                       "garbage");
+
+      info += buffer;
     }
+
+  return info;
 }
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (void)
