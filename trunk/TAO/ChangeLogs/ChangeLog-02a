@@ -1,9 +1,29 @@
+Tue Feb 29 16:44:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/CDR/Makefile:
+        * tests/CDR/README:
+        * tests/CDR/alignment.cpp:
+        * tests/CDR/octet_sequence.cpp:
+        * tests/CDR/run_test.pl:
+          New test to verify that bug #160 won't show up again.
+
+        * examples/Simulator/DOVEMIB/AnyAnalyser.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * tao/CDR_Interpreter.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Typecode.cpp:
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+          Use ACE_ptr_align_binary and ACE_align_binary, i changed the
+          name of the macros.
+
 Tue Feb 29 10:37:53 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp,
-	  orbsvcs/orbsvcs/AV/Flows_T.cpp: Fixed locations where iterators
-	  where used without 'advance ()', but just 'next ()' this would have
-	  resulted to deadlocks.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp,
+          orbsvcs/orbsvcs/AV/Flows_T.cpp: Fixed locations where iterators
+          where used without 'advance ()', but just 'next ()' this would have
+          resulted to deadlocks.
 
 Mon Feb 28 17:37:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -27,35 +47,35 @@ Mon Feb 28 09:20:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Feb 28 09:56:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Resource_Factory.h (TAO_Protocol_Item):
-	* tao/Resource_Factory.cpp (factory):
+        * tao/Resource_Factory.h (TAO_Protocol_Item):
+        * tao/Resource_Factory.cpp (factory):
 
-	  Added flag that indicates whether or not the TAO_Protocol_Item
-	  retains ownership of the Protocol_Factory it contains.  Thanks
-	  to Christopher Kohlhoff <chris@kohlhoff.com> for suggesting this
-	  change.
+          Added flag that indicates whether or not the TAO_Protocol_Item
+          retains ownership of the Protocol_Factory it contains.  Thanks
+          to Christopher Kohlhoff <chris@kohlhoff.com> for suggesting this
+          change.
 
-	* tao/default_resource.cpp (init_protocol_factories):
+        * tao/default_resource.cpp (init_protocol_factories):
 
-	  Fixed potential memory leaks related to protocol factory pointer
-	  ownership.  Ownership of a factory pointer is transferred to the
-	  TAO_Protocol_Item only if a Protocol_Factory is allocated by the
-	  default resource factory, instead of obtaining it from the
-	  Service Configurator.  Thanks to Christopher Kohlhoff for
-	  reporting this bug, and suggesting a fix.
+          Fixed potential memory leaks related to protocol factory pointer
+          ownership.  Ownership of a factory pointer is transferred to the
+          TAO_Protocol_Item only if a Protocol_Factory is allocated by the
+          default resource factory, instead of obtaining it from the
+          Service Configurator.  Thanks to Christopher Kohlhoff for
+          reporting this bug, and suggesting a fix.
 
-	  Fixed potential problem where a TAO_Protocol_Item was used to
-	  obtain debugging output after it was deallocated.
+          Fixed potential problem where a TAO_Protocol_Item was used to
+          obtain debugging output after it was deallocated.
 
-	  Improved exception safety by adding and using an
-	  auto_ptr<TAO_Protocol_Factory> instance.
+          Improved exception safety by adding and using an
+          auto_ptr<TAO_Protocol_Factory> instance.
 
-	  Wrapped some debugging text with the ASYS_TEXT() macro.  These
-	  were missed in a previous iteration.
+          Wrapped some debugging text with the ASYS_TEXT() macro.  These
+          were missed in a previous iteration.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
 
-	  Added an IDL_Cubit run that uses a SHMIOP endpoint.
+          Added an IDL_Cubit run that uses a SHMIOP endpoint.
 
 Sat Feb 26 17:29:50 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -64,36 +84,36 @@ Sat Feb 26 17:29:50 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Feb 25 19:59:33 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/GIOP.cpp (process_server_request): Removed a memory leak.
-	  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting 
-	  this.
+        * tao/GIOP.cpp (process_server_request): Removed a memory leak.
+          Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting 
+          this.
 
 Fri Feb 25 18:39:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
-	  Added insertion/extraction operator for long double.
-	  These work right out of the box on platforms like
-	  Solaris and Digitial Unix where the size of the
-	  native long double is 16 bytes. For other platforms,
-	  we define CORBA::LongDouble to be a struct containing
-	  an array 'ld' of 16 chars. In that case, the workaround
-	  would look like:
+        * tao/Any.h:
+        * tao/Any.cpp:
+          Added insertion/extraction operator for long double.
+          These work right out of the box on platforms like
+          Solaris and Digitial Unix where the size of the
+          native long double is 16 bytes. For other platforms,
+          we define CORBA::LongDouble to be a struct containing
+          an array 'ld' of 16 chars. In that case, the workaround
+          would look like:
 
-	  CORBA::LongDouble dd;
-	  sprintf (dd.ld, "%f", 3.14159);
-	  CORBA::Any any;
-	  any <<= dd;
+          CORBA::LongDouble dd;
+          sprintf (dd.ld, "%f", 3.14159);
+          CORBA::Any any;
+          any <<= dd;
 
-	  CORBA::LongDouble dd_out;
-	  any >>= dd_out;
-	  cout << atof (dd_out.ld) << endl;
+          CORBA::LongDouble dd_out;
+          any >>= dd_out;
+          cout << atof (dd_out.ld) << endl;
 
 Fri Feb 25 18:25:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/reopened_modules.idl:
-	* tests/IDL_Test/including.idl:
-	  Fix to accomodate platforms without namespaces.
+        * tests/IDL_Test/reopened_modules.idl:
+        * tests/IDL_Test/including.idl:
+          Fix to accomodate platforms without namespaces.
 
 Fri Feb 25 15:08:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 

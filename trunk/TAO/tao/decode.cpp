@@ -604,9 +604,9 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
       align_offset =
-        (ptr_arith_t) ptr_align_binary (data, alignment)
+        (ptr_arith_t) ACE_ptr_align_binary (data, alignment)
         - (ptr_arith_t) data
-        - ((ptr_arith_t) ptr_align_binary (start_addr, alignment)
+        - ((ptr_arith_t) ACE_ptr_align_binary (start_addr, alignment)
         - (ptr_arith_t) start_addr);
       if (align_offset < 0)
         align_offset += alignment;
@@ -1456,7 +1456,7 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
       // @@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      data = ptr_align_binary (data, alignment);
+      data = ACE_ptr_align_binary (data, alignment);
       switch (param->kind_)
         {
         case CORBA::tk_null:
