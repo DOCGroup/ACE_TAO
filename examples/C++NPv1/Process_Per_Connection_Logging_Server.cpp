@@ -145,8 +145,15 @@ int
 Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 {
   int client_handle_i = atoi (argv[2]);
+  // Some compilers don't like reinterpret_casting an int to an int, so
+  // only do reinterpret_cast on Windows.
+#if defined (ACE_WIN32)
   ACE_HANDLE client_handle =
     ACE_reinterpret_cast (ACE_HANDLE, client_handle_i);
+#else
+  ACE_HANDLE client_handle =
+    ACE_static_cast (ACE_HANDLE, client_handle_i);
+#endif /* ACE_WIN32 */
   ACE_SOCK_Stream client (client_handle);
 
   handle_data (&client);
