@@ -317,7 +317,11 @@ typedef ACE_UINT16 ACE_USHORT16;
 #  elif LDBL_MAX_EXP == 1024
 #    define ACE_SIZEOF_LONG_DOUBLE 8
 #  elif LDBL_MAX_EXP == 16384
-#    define ACE_SIZEOF_LONG_DOUBLE 16
+#    if defined (LDBL_DIG)  &&  LDBL_DIG == 18
+#      define ACE_SIZEOF_LONG_DOUBLE 12
+#    else  /* ! LDBL_DIG  ||  LDBL_DIG != 18 */
+#      define ACE_SIZEOF_LONG_DOUBLE 16
+#    endif /* ! LDBL_DIG  ||  LDBL_DIG != 18 */
 #  else
 #    error: unsupported double size, must be updated for this platform!
 #  endif /* LDBL_MAX_EXP */
