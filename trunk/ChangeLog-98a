@@ -1,7 +1,3 @@
-Sat Mar 07 16:06:46 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * ACE version 4.4.32, released Sat Mar 07 16:06:46 1998.
-
 Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/ace_ld: made perl4-compatible.  Thanks to
@@ -34,6 +30,8 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/System_V_IPC/Makefile: added clean and realclean targets
           for VXWORKS.
+
+        * Makefile: cd .. before tagging.
 
 Thu Mar 05 12:36:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
