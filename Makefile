@@ -153,6 +153,7 @@ reverseclean:
 #### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
 ####   INSTALL_KIT= ZIP_FILES=-z
 
+
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
         ACE-install.sh \
@@ -174,8 +175,10 @@ CONTROLLED_FILES = \
         ace-config.in \
         aceConf.sh.in \
         apps \
+	aux \
         bin \
 	configure.ac \
+	configure \
         lib \
         docs \
         etc \

@@ -75,9 +75,7 @@ my $gnu = '/bin';
 
 $ENV{'PATH'} = "$gnu" . ':' . $ENV{'PATH'};
 
-### Any tools in /usr/local/bin can also be added. We dont need that
-### for deuce.doc
-my $gnu2 = '/usr/bin';
+my $gnu2 = '/usr/local/bin:/usr/bin';
 
 ####### Add the path to /usr/bin unconditionally..
 $ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
