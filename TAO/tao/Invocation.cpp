@@ -372,6 +372,10 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  // If there was a previous reply, cleanup its state first.
+  if (this->message_state_.message_size != 0)
+    this->message_state_.reset ();
+
   this->transport_->start_request (this->orb_core_,
                                    this->profile_,
                                    this->opname_,
@@ -728,6 +732,10 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 {
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
+
+  // If there was a previous reply, cleanup its state first.
+  if (this->message_state_.message_size != 0)
+    this->message_state_.reset ();
 
   this->transport_->start_locate (this->orb_core_,
                                   this->profile_,
