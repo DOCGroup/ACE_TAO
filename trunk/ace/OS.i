@@ -5875,7 +5875,7 @@ ACE_OS::readv (ACE_HANDLE handle,
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::writev (ACE_HANDLE handle,
                 const struct iovec *iov,
                 int iovcnt)
