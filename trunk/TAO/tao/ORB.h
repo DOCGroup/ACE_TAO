@@ -51,10 +51,7 @@ class TAO_OutputCDR;
 class TAO_Stub;
 
 class TAO_Acceptor_Filter;
-
-#if (TAO_HAS_VALUETYPE == 1)
 class TAO_ValueFactory_Map;
-#endif /* TAO_HAS_VALUETYPE  == 1*/
 
 // ****************************************************************
 
@@ -146,7 +143,6 @@ public:
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
-#if (TAO_HAS_VALUETYPE == 1)
   // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory register_value_factory (
          const char *repository_id,
@@ -157,7 +153,6 @@ public:
   CORBA::ValueFactory lookup_value_factory (
          const char *repository_id
          ACE_ENV_ARG_DECL_WITH_DEFAULTS );
-#endif /* TAO_HAS_VALUETYPE == 1 */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -562,10 +557,8 @@ private:
   /// The ORB_Core that created us....
   TAO_ORB_Core *orb_core_;
 
-#if (TAO_HAS_VALUETYPE == 1)
   /// If non-0 then this is the Factory for OBV unmarshaling
   TAO_ValueFactory_Map *valuetype_factory_map_;
-#endif /* TAO_HAS_VALUETYPE == 1 */
 
   /// Decides whether to use the URL notation or to use IOR notation.
   CORBA::Boolean use_omg_ior_format_;

@@ -21,8 +21,6 @@
 #include "tao/ValueFactory.h"
 #include "tao/debug.h"
 
-#if (TAO_HAS_VALUETYPE == 1)
-
 #if !defined (__ACE_INLINE__)
 # include "tao/ValueBase.i"
 #endif /* ! __ACE_INLINE__ */
@@ -346,4 +344,3 @@ operator>> (TAO_InputCDR &strm,
                                           _tao_valuetype);
 }
 
-#endif /* TAO_HAS_VALUETYPE == 1 */
