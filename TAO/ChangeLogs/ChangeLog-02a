@@ -1,3 +1,16 @@
+Thu Feb 15 14:20:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/namespace_check.cpp:
+
+          Added code generated from two additional IDL files
+          (params.idl and nested_scope.idl) to the list of
+          file skipped by compilers that either don't support
+          namespaces (SunCC4.2 and old g++) or have broken
+          typedefs (old g++). The two IDL files added to the
+          conditional list have nested modules, and old g++'s
+          broken typedef cannot compile the generated code.
+
 Thu Feb 15 13:43:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
