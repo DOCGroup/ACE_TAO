@@ -2672,7 +2672,7 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   if (name)
     {
       s->name_ = ACE_OS::strdup (name);
-      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_PERMS, count);
+      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
       return (int) s->sema_ == -1 ? -1 : 0;
     }
   else
@@ -5216,6 +5216,17 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #else
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, (timeval *) &tv), int, -1);
 #endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int 
+ACE_OS::mkdir (const char *path, mode_t mode)
+{
+// ACE_TRACE ("ACE_OS::mkdir");
+#if defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_mkdir (path), int, -1);  
+#else
+  ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
+#endif /* VXWORKS */
 }
 
 ACE_INLINE char *

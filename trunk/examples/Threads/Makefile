@@ -18,9 +18,10 @@ BIN     = test_auto_event \
 	  test_process_semaphore \
 	  test_reader_writer \
 	  test_recursive_mutex \
-	  test_task \
+	  test_task_one \
 	  test_task_two \
 	  test_task_three \
+	  test_task_four \
 	  test_thread_manager \
 	  test_thread_pool \
 	  test_thread_specific \

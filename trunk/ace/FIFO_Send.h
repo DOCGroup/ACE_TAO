@@ -31,12 +31,12 @@ public:
 
   ACE_FIFO_Send (const char *rendezvous, 
 		 int flags = O_WRONLY, 
-		 int perms = ACE_DEFAULT_PERMS);
+		 int perms = ACE_DEFAULT_FILE_PERMS);
   // Open up a bytestream named pipe for writing.
 
   int open (const char *rendezvous, 
 	    int flags = O_WRONLY, 
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open up a bytestream named pipe for writing.
 
   ssize_t send (const void *buf, size_t len);

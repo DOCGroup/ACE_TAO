@@ -22,6 +22,8 @@
 #include "ace/Thread.h"
 #include "ace/Synch.h"
 
+// Forward declarations.
+template <ACE_SYNCH_1> class ACE_Task;
 class ACE_Thread_Manager;
 
 class ACE_Export ACE_Thread_Descriptor
@@ -46,6 +48,9 @@ public:
 
   ACE_Thread_State state (void);
   // Current state of the thread.
+
+  ACE_Task<ACE_SYNCH> *task_;
+  // Pointer to an ACE_Task;
 
 private:
 
@@ -91,7 +96,8 @@ public:
 	       void * = 0, 
 	       long = 0, 
 	       u_int = 0,
-	       int = -1) { return -1;}
+	       int = -1
+	       ACE_Task<ACE_SYNCH> * = 0) { return -1;}
   void *exit (void *) { return 0; }
   void wait (const ACE_Time_Value * = 0) {}
   int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &) { return -1;}
@@ -163,7 +169,6 @@ public:
 	     void *stack = 0, 
 	     size_t stack_size = 0);
   // Create a new thread, which executes <func>.  
-
   // Returns: on success a unique group id that can be used to control
   // other threads added to the same group.  On failure, returns -1.
 
@@ -172,9 +177,9 @@ public:
 	       void *args = 0,
 	       long flags = THR_NEW_LWP,
 	       u_int priority = 0,
-	       int grp_id = -1);
+	       int grp_id = -1,
+	       ACE_Task<ACE_SYNCH> *task = NULL);
   // Create N new threads, all of which execute <func>.  
-  
   // Returns: on success a unique group id that can be used to control
   // all of the threads in the same group.  On failure, returns -1.
 
@@ -188,7 +193,7 @@ public:
   // <Thread_Manager> or <timeout> expires.  Returns 0 on success and
   // -1 on failure.
 
-  // = Accessors for <ACE_Thread_Descriptors>.
+  // = Accessors for ACE_Thread_Descriptors.
   int thread_descriptor (ACE_thread_t, ACE_Thread_Descriptor &);
   // Return the thread descriptor (indexed by ACE_thread_t).  Returns 0 on
   // success and -1 if not found.
@@ -201,8 +206,7 @@ public:
   // Passes out the "real" handle to the thread, caching it if
   // necessary in TSS to speed up subsequent lookups.
 
-  // = Suspend methods, which isn't supported on POSIX pthreads (will
-  // not block).
+  // = Suspend methods, which isn't supported on POSIX pthreads (will not block).
   int suspend_all (void);
   // Suspend all threads 
   int suspend (ACE_thread_t);
@@ -212,8 +216,7 @@ public:
   int testsuspend (ACE_thread_t t_id);
   // True if <t_id> is inactive (i.e., suspended), else false.
 
-  // = Resume methods, which isn't supported on POSIX pthreads (will
-  // not block).
+  // = Resume methods, which isn't supported on POSIX pthreads (will not block).
   int resume_all (void);
   // Resume all stopped threads 
   int resume (ACE_thread_t);
@@ -223,8 +226,7 @@ public:
   int testresume (ACE_thread_t t_id);
   // True if <t_id> is active (i.e., resumed), else false.
 
-  // = Kill methods, send signals -- which isn't supported on Win32
-  // (will not block).
+  // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
   int kill_all (int signum);
   // Send signum to all stopped threads 
   int kill (ACE_thread_t, int signum);
@@ -232,8 +234,7 @@ public:
   int kill_grp (int grp_id, int signum);
   // Kill a group of threads.
 
-  // = Cancel methods, which provides a cooperative thread-termination
-  // mechanism (will not block).
+  // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   int cancel_all (void);
   // Send signum to all stopped threads 
   int cancel (ACE_thread_t);
@@ -246,6 +247,60 @@ public:
   // = Set/get group ids for a particular thread id.
   int set_grp (ACE_thread_t, int grp_id);
   int get_grp (ACE_thread_t, int &grp_id);
+
+  // = The following methods are new methods which resemble current methods in ACE_Thread Manager. For example, the new apply_task() method resembles the old apply_thr() method, and suspend_task() resembles suspend_thr().
+  
+  int wait_task (ACE_Task<ACE_SYNCH> *task, 
+		 const ACE_Time_Value *timeout = 0);
+  // Block until there are no more threads running or <timeout>
+  // expires in an ACE_Task.  Returns 0 on success and -1 on failure.
+
+  int wait_group (int grp_id, 
+		  const ACE_Time_Value *timeout = 0);
+  // Block until there are no more threads running or <timeout>
+  // expires in a group.  Returns 0 on success and -1 on failure.
+
+  // = Operations on ACE_Tasks.
+  int suspend_task (ACE_Task<ACE_SYNCH> *task);
+  // Suspend all threads in an ACE_Task.
+  int resume_task (ACE_Task<ACE_SYNCH> *task);
+  // Resume all threads in an ACE_Task.
+  int kill_task (ACE_Task<ACE_SYNCH> *task, int signum);
+  // Kill all threads in an ACE_Task.
+  int cancel_task (ACE_Task<ACE_SYNCH> *task);
+  // Cancel all threads in an ACE_Task.
+
+  // = The following method provide new functionality. They do not follow the same design as current methods. They provide new functionality.
+
+  int num_tasks_in_group (int grp_id);
+  // Returns the number of ACE_Task in a group.
+
+  int num_threads_in_task (ACE_Task<ACE_SYNCH> *task);
+  // Returns the number of threads in an ACE_Task.
+
+  int task_list (int grp_id, 
+		 ACE_Task<ACE_SYNCH> *task_list[],
+		 size_t n);
+  // Returns in <task_list> a list of up to <n> <ACE_Tasks> in a
+  // group.  The caller must allocate the memory for <task_list>
+
+  int thread_list (ACE_Task<ACE_SYNCH> *task, 
+		   ACE_thread_t thread_list[],
+		   size_t n);
+  // Returns in <thread_list> a list of up to <h> thread ids in an
+  // <ACE_Task>.  The caller must allocate the memory for
+  // <thread_list>.
+
+  int hthread_list (ACE_Task<ACE_SYNCH> *task, 
+		    ACE_hthread_t hthread_list[],
+		    size_t n);
+  // Returns in <hthread_list> a list of up to <n> thread handles in
+  // an <ACE_Task>.  The caller must allocate memory for
+  // <hthread_list>.
+
+  // = Set/get group ids for a particular task.
+  int set_grp (ACE_Task<ACE_SYNCH> *task, int grp_id);
+  int get_grp (ACE_Task<ACE_SYNCH> *task, int &grp_id);
 
   void dump (void) const;
   // Dump the state of an object.
@@ -265,19 +320,25 @@ private:
 	       u_int priority = 0,
 	       int grp_id = -1,
 	       void *stack = 0, 
-	       size_t stack_size = 0);
+	       size_t stack_size = 0,
+	       ACE_Task<ACE_SYNCH> *task = 0);
   // Create a new thread (must be called with locks held).
 
   int find (ACE_thread_t t_id);
   // Locate the index of the table slot occupied by <t_id>.  Returns
   // -1 if <t_id> is not in the table doesn't contain <t_id>.
 
+  int find_task (ACE_Task<ACE_SYNCH> *task, int index = -1);
+  // Locate the index of the table slot occupied by <task>.  Returns
+  // -1 if <task> is not in the table doesn't contain <task>.
+
   int insert_thr (ACE_thread_t t_id, ACE_hthread_t, int grp_id = -1);
   // Insert a thread in the table (checks for duplicates).
 
   int append_thr (ACE_thread_t t_id, ACE_hthread_t, 
 		  ACE_Thread_State,
-		  int grp_id);
+		  int grp_id,
+		  ACE_Task<ACE_SYNCH> *task = 0);
   // Append a thread in the table (adds at the end, growing the table
   // if necessary).
 
@@ -296,15 +357,16 @@ private:
   // this to avoid intra-class method deadlock on systems that lack
   // recursive mutexes.
 
-  // = The following four methods implement a simple scheme for
-  // operating on a collection of threads atomically.
-
+  // = The following four methods implement a simple scheme for operating on a collection of threads atomically.
   typedef int (ACE_Thread_Manager::*THR_FUNC)(int, int);
 
   int check_state (ACE_Thread_State state, ACE_thread_t thread);
   // Efficiently check whether <thread> is in a particular <state>.
   // This call updates the TSS cache if possible to speed up
   // subsequent searches.
+
+  int apply_task (ACE_Task<ACE_MT_SYNCH> *task, THR_FUNC, int = 0);
+  // Apply <func> to all members of the table that match the <task>
 
   int apply_grp (int grp_id, THR_FUNC, int = 0);
   // Apply <func> to all members of the table that match the <grp_id>.
@@ -337,8 +399,7 @@ private:
   int grp_id_;
   // Keeps track of the next group id to assign.
 
-  // = ACE_Thread_Mutex and condition variable for synchronizing
-  // termination.
+  // = ACE_Thread_Mutex and condition variable for synchronizing termination.
   ACE_Thread_Mutex lock_;
   ACE_Condition_Thread_Mutex zero_cond_;
 };

@@ -17,7 +17,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
-				  ACE_Thread_Manager *)
+					   ACE_Thread_Manager *)
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::open");
   if (this->svc_handler_ != 0)
@@ -260,17 +260,17 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int restart)
 {
-  return this->peer_acceptor_.open (local_addr, restart);
+  ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
+
+  if (this->open (local_addr, restart) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open 
   (const ACE_PEER_ACCEPTOR_ADDR &local_addr, int restart)
 {
-  ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
-
-  if (this->open (local_addr, restart) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
+  return this->peer_acceptor_.open (local_addr, restart);
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void

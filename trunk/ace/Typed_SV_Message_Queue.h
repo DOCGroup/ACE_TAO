@@ -38,10 +38,10 @@ public:
   ACE_Typed_SV_Message_Queue (void);
   ACE_Typed_SV_Message_Queue (key_t external_id, 
 			      int create = ACE_OPEN,
-			      int perms = ACE_DEFAULT_PERMS);
+			      int perms = ACE_DEFAULT_FILE_PERMS);
   int open (key_t external_id, 
 	    int create = ACE_OPEN,
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
   int close (void);
   int remove (void);
   ~ACE_Typed_SV_Message_Queue (void);

@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ace (Win32 only)
+//    ace
 // 
 // = FILENAME
 //    Registry.h
@@ -20,12 +20,15 @@
 #define ACE_REGISTRY_H
 
 #include "ace/OS.h"
+// You must build and configure the STL components in order to use
+// this wrapper.
 #include "vector.h"
 #include "bstring.h"
 
 class ACE_Export ACE_Registry
   // = TITLE
   //     A Name Server implementation
+  // 
   // = DESCRIPTION
   //     The registry interface is inspired by the interface 
   //     specified in the CORBA Naming Service Specification.

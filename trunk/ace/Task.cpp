@@ -58,12 +58,22 @@ ACE_Task_Exit<ACE_SYNCH_2>::ACE_Task_Exit (void)
   ACE_TRACE ("ACE_Task_Exit<ACE_SYNCH_2>::ACE_Task_Exit");
 }
 
+// Returns the pointer to the ACE_Task.
+
+template<ACE_SYNCH_1> ACE_Task<ACE_SYNCH_2>*
+ACE_Task_Exit<ACE_SYNCH_2>::get_task (void)
+{
+  ACE_TRACE ("ACE_Task_Exit<ACE_SYNCH_2>::get_task");
+
+  return this->t_;
+}
+
 // Set the this pointer...
 
 template<ACE_SYNCH_1> void
-ACE_Task_Exit<ACE_SYNCH_2>::set_this (ACE_Task<ACE_SYNCH_2> *t)
+ACE_Task_Exit<ACE_SYNCH_2>::set_task (ACE_Task<ACE_SYNCH_2> *t)
 {
-  ACE_TRACE ("ACE_Task_Exit<ACE_SYNCH_2>::set_this");
+  ACE_TRACE ("ACE_Task_Exit<ACE_SYNCH_2>::set_task");
   this->t_ = t;
 
   if (t != 0)
@@ -179,7 +189,7 @@ ACE_Task<ACE_SYNCH_2>::svc_run (ACE_Task<ACE_SYNCH_2> *t)
   ACE_Task_Exit<ACE_SYNCH_2> *exit_hook = 
     ACE_Task_Exit<ACE_SYNCH_2>::instance ();
 
-  exit_hook->set_this (t);
+  exit_hook->set_task (t);
 
   // Call the Task's svc() method.
   void *status = (void *) t->svc ();
@@ -240,7 +250,7 @@ ACE_Task<ACE_SYNCH_2>::suspend (void)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::suspend");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
-    return this->thr_mgr_->suspend_grp (this->grp_id_);
+    return this->thr_mgr_->suspend_task (this);
   else
     return 0;
 }
@@ -252,7 +262,7 @@ ACE_Task<ACE_SYNCH_2>::resume (void)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::resume");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
   if (this->thr_count_ > 0)
-    return this->thr_mgr_->resume_grp (this->grp_id_);
+    return this->thr_mgr_->resume_task (this);
   else
     return 0;
 }
@@ -262,7 +272,8 @@ ACE_Task<ACE_SYNCH_2>::activate (long flags,
 				 int n_threads, 
 				 int force_active,
 				 u_int priority,
-				 int grp_id)
+				 int grp_id,
+				 ACE_Task<ACE_SYNCH_2> *task)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::activate");
 
@@ -285,7 +296,8 @@ ACE_Task<ACE_SYNCH_2>::activate (long flags,
 					   (void *) this, 
 					   flags,
 					   priority,
-					   grp_id);
+					   grp_id,
+					   task);
   if (this->grp_id_ == -1)
     return -1;
   else

@@ -235,7 +235,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
 
   if (this->mmap_.open (this->backing_store_, 
 			O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 
-			ACE_DEFAULT_PERMS) != -1)
+			ACE_DEFAULT_FILE_PERMS) != -1)
     {
       // First time in, so need to acquire memory. 
       first_time = 1;
@@ -248,7 +248,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       if (this->mmap_.map (this->backing_store_,
 			   -1,
 			   O_RDWR,
-			   ACE_DEFAULT_PERMS,
+			   ACE_DEFAULT_FILE_PERMS,
 			   PROT_RDWR,
 			   this->flags_,
 			   this->base_addr_) == -1)
@@ -427,7 +427,7 @@ ACE_Shared_Memory_Pool::commit_backing_store (size_t rounded_bytes,
     {
       int shmid = ACE_OS::shmget (st[counter].key,
 			    rounded_bytes,
-			    ACE_DEFAULT_PERMS | IPC_CREAT | IPC_EXCL);
+			    ACE_DEFAULT_FILE_PERMS | IPC_CREAT | IPC_EXCL);
       if (shmid == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "shmget"), 0);
 
@@ -525,7 +525,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
   int shmid = ACE_OS::shmget (ACE_DEFAULT_SHM_KEY,
 			      rounded_bytes + shm_table_offset,
-			      ACE_DEFAULT_PERMS | IPC_CREAT | IPC_EXCL);
+			      ACE_DEFAULT_FILE_PERMS | IPC_CREAT | IPC_EXCL);
   if (shmid == -1)
     {
       if (errno != EEXIST)

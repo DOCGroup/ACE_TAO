@@ -26,7 +26,7 @@ static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
-void
+static void
 bind (ACE_Naming_Context *ns_context, int result)
 {
   // do the binds
@@ -43,7 +43,7 @@ bind (ACE_Naming_Context *ns_context, int result)
     }
 }
 
-void
+static void
 rebind (ACE_Naming_Context *ns_context, int result)
 {
   // do the rebinds
@@ -58,7 +58,7 @@ rebind (ACE_Naming_Context *ns_context, int result)
     }
 }
 
-void
+static void
 unbind (ACE_Naming_Context *ns_context, int result)
 {
   // do the unbinds
@@ -70,7 +70,7 @@ unbind (ACE_Naming_Context *ns_context, int result)
     }
 }
 
-void
+static void
 find (ACE_Naming_Context *ns_context, int sign, int result)
 {
   char temp_val[BUFSIZ];

@@ -36,7 +36,7 @@ public:
   ACE_SV_Shared_Memory (key_t external_id, 
 			size_t size, 
 			int create,
-			int perms = ACE_DEFAULT_PERMS, 
+			int perms = ACE_DEFAULT_FILE_PERMS, 
 			void *virtual_addr = 0, 
 			int flags = 0);
 
@@ -46,12 +46,12 @@ public:
   int  open (key_t external_id, 
 	     size_t size,
 	     int create = ACE_SV_Shared_Memory::ACE_OPEN,
-	     int perms = ACE_DEFAULT_PERMS);
+	     int perms = ACE_DEFAULT_FILE_PERMS);
 
   int  open_and_attach (key_t external_id, 
 			size_t size, 
 			int create = ACE_SV_Shared_Memory::ACE_OPEN,
-			int perms = ACE_DEFAULT_PERMS, 
+			int perms = ACE_DEFAULT_FILE_PERMS, 
 			void *virtual_addr = 0, 
 			int flags = 0);
 

@@ -64,19 +64,19 @@ public:
 			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE,
 			    int initial_value = 1, 
 			    int nsems = 1, 
-			    int perms = ACE_DEFAULT_PERMS);
+			    int perms = ACE_DEFAULT_FILE_PERMS);
   ACE_SV_Semaphore_Complex (const char *name, 
 			    int create = ACE_SV_Semaphore_Complex::ACE_CREATE, 
 			    int initial_value = 1, 
 			    int nsems = 1, 
-			    int perms = ACE_DEFAULT_PERMS);
+			    int perms = ACE_DEFAULT_FILE_PERMS);
   ~ACE_SV_Semaphore_Complex (void);
 
   int open (const char *name, 
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
 	    int nsems = 1, 
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
 
@@ -84,7 +84,7 @@ public:
 	    int flags = ACE_SV_Semaphore_Simple::ACE_CREATE, 
 	    int initial_value = 1, 
 	    int nsems = 1, 
-	    int perms = ACE_DEFAULT_PERMS);
+	    int perms = ACE_DEFAULT_FILE_PERMS);
   // Open or create an array of SV_Semaphores.  We return 0 if all is
   // OK, else -1.
 
