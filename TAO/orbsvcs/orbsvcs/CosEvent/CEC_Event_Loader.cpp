@@ -281,14 +281,17 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                                                 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              if (TAO_debug_level >= 10)
+              if (CORBA::is_nil(interface_repository.in () ))
                 {
-                  if (CORBA::is_nil(interface_repository.in () ))
+                  if (TAO_debug_level >= 10)
                     {
                       ACE_DEBUG ((LM_DEBUG, "***** CORBA::Repository::_narrow failed *****\n"));
-                      return CORBA::Object::_nil ();
                     }
-                  else
+                  return CORBA::Object::_nil ();
+                }
+              else
+                {
+                  if (TAO_debug_level >= 10)
                     {
                       ACE_DEBUG ((LM_DEBUG, "***** ...IFR connection completed *****\n"));
                     }
