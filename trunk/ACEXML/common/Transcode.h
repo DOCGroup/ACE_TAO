@@ -57,7 +57,7 @@ public:
   /*
    * Convert a UTF-16 character into a string in UTF-8 encoding.
    *
-   * @retval number of characters the function uses to store the
+   * @return number of characters the function uses to store the
    *         converted string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -68,7 +68,7 @@ public:
   /*
    * Convert a UCS-4 character into a string in UTF-8 encoding.
    *
-   * @retval number of characters the function uses to store the
+   * @return number of characters the function uses to store the
    *         converted string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -79,7 +79,7 @@ public:
   /*
    * Convert a UCS-4 character into a string in UTF-16 encoding.
    *
-   * @retval number of characters the function uses to store the
+   * @return number of characters the function uses to store the
    *         converted string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -90,7 +90,7 @@ public:
   /*
    * Convert a UTF-16 surrogate character pair into a string in UTF-8 encoding.
    *
-   * @retval number of characters the function uses to store the
+   * @return number of characters the function uses to store the
    *         converted string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -102,7 +102,7 @@ public:
   /*
    * Convert a UTF-16 surrogate character pair into a UCS-4 character.
    *
-   * @retval SUCCESS if succeeds or one of the error STATUS
+   * @return SUCCESS if succeeds or one of the error STATUS
    *         otherwise.
    */
   static int surrogate2ucs4 (ACEXML_UTF16 high,
@@ -113,7 +113,7 @@ public:
    * Convert the first UNICODE character in a UTF-8 character string
    * into a UCS-4 character.
    *
-   * @retval number of characters the function consumed from the
+   * @return number of characters the function consumed from the
    *         UTF-8 string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -125,7 +125,7 @@ public:
    * Convert the first UNICODE character in a UTF-16 character string
    * into a UCS-4 character.
    *
-   * @retval number of characters the function consumed from the
+   * @return number of characters the function consumed from the
    *         UTF-16 string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -145,7 +145,7 @@ public:
    *
    * @param len The length of @a dst string.
    *
-   * @retval number of characters the function consumed from the
+   * @return number of characters the function consumed from the
    *         UTF-8 string if succeeds or one of the error STATUS
    *         otherwise.
    */
@@ -158,7 +158,7 @@ public:
    *
    * @param len The length of @a dst string.
    *
-   * @retval number of characters the function uses in
+   * @return number of characters the function uses in
    *         UTF-8 string if succeeds or one of the error STATUS
    *         otherwise.
    */
