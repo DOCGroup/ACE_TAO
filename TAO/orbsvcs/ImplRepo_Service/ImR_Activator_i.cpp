@@ -639,7 +639,7 @@ ImR_Activator_i::reregister_server (const char *server,
 
       ImplementationRepository::ServerObject_var ping_object =
         ImplementationRepository::ServerObject::_narrow (object.in ()
-                                                         ACE_ENV_ARG_PARAMETER)
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (ping_object.in ()))
