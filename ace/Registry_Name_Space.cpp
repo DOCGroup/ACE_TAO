@@ -72,8 +72,13 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
                                size,
                                REG_SZ);
   // Add new <key>/<value> pair
+#if defined ACE_USES_WCHAR
   return this->context_.bind (name.fast_rep(),
                               object);
+#else
+  return this->context_.bind (name.char_rep(),
+                              object);
+#endif /* ACE_HAS_WCHAR */
 }
 
 
@@ -93,15 +98,24 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
                                size,
                                REG_SZ);
   // Add new <key>/<value> pair
+#if defined (ACE_USES_WCHAR)
   return this->context_.rebind (name.fast_rep (),
                                 object);
+#else
+  return this->context_.rebind (name.char_rep (),
+                                object);
+#endif /* ACE_USES_WCHAR */
 }
 
 
 int
 ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
 {
+#if defined (ACE_USES_WCHAR)
   return this->context_.unbind (name.fast_rep ());
+#else
+  return this->context_.unbind (name.char_rep ());
+#endif /* ACE_USES_WCHAR */
 }
 
 
@@ -113,7 +127,12 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
   // This object will be used to query the size of the data.
   // Note: The query_object.data will be null for this invocation.
   ACE_Registry::Object query_object;
-  int result = this->context_.resolve (name.fast_rep (), query_object);
+  int result =
+#if defined (ACE_USES_WCHAR)
+    this->context_.resolve (name.fast_rep (), query_object);
+#else
+    this->context_.resolve (name.char_rep (), query_object);
+#endif /* ACE_USES_WCHAR */
   if (result != 0)
     return result;
 
@@ -126,7 +145,11 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
                                query_object.size (),
                                REG_SZ);
 
+#if defined (ACE_USES_WCHAR)
   result = this->context_.resolve (name.fast_rep (), object);
+#else
+  result = this->context_.resolve (name.char_rep (), object);
+#endif /* ACE_USES_WCHAR */
   if (object.size () != query_object.size ())
     return -1;
   if (result != 0)

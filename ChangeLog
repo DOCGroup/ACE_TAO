@@ -1,3 +1,10 @@
+Fri Dec 07 15:42:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Registry_Name_Space.cpp: Changed to conditionally use
+	  char_rep for binding/unbinding/resolving name bindings.  This is
+	  because ACE_CString and ACE_WString no longer allow
+	  initialization with different string type.
+
 Fri Dec  7 10:22:25 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.i (close):
