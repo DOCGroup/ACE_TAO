@@ -32,42 +32,31 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
-#if defined (__alpha__)
-// The following might be necessary on Intel as well as Alpha.
-# define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-
-// The following might only be necessary on Alpha?  On second
-// thought, I think that they're necessary with glibc, not Alpha.
-# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
-# define ACE_LACKS_RPC_H
-# define ACE_NEEDS_SYSTIME_H
-# define ACE_HAS_VOIDPTR_SOCKOPT
-
-  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
-  // being redefined, because they're defined in linux/socket.h:
-# define ACE_LACKS_TCP_H
-
-  // This is protected in string.h.
-  extern char *strtok_r __P ((char *__s, __const char *__delim,
-                             char **__save_ptr));
-# include <sys/types.h>
-# if defined (_REENTRANT)
-   // This is protected in unistd.h.
-   extern __pid_t getpgid __P ((__pid_t __pid));
-# endif /* _REENTRANT */
-#endif /* __alpha__ */
-
 // Then glibc/libc5 specific parts
 
 #if defined(__GLIBC__)
-  // OS/compiler uses size_t * rather than int * for socket lengths
+# define ACE_HAS_BROKEN_SETRLIMIT
+# define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
+# define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
 # define ACE_HAS_SIZET_SOCKET_LEN
 
-# if defined (__alpha__)
-    // This is need on Alphas with glibc.  It that because it has an
-    // older glibc, or do we need this on Intels as well?
-#   define ACE_LACKS_SOME_POSIX_PROTOTYPES
-# endif /* __alpha__ */
+// NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
+//        on Alpha.  I assume that they're necessary on Intel as well,
+//        but that may depend on the version of glibc that is used.
+# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
+# define ACE_HAS_VOIDPTR_SOCKOPT
+# define ACE_LACKS_GETPGID
+# define ACE_LACKS_RPC_H
+# define ACE_LACKS_SOME_POSIX_PROTOTYPES
+  // To avoid compilation warnings about TCP_NODELAY and TCP_MAXSEG
+  // being redefined, because they're defined in linux/socket.h:
+# define ACE_LACKS_TCP_H
+# define ACE_NEEDS_SYSTIME_H
+  // The strtok_r declaration is protected in string.h.
+  extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
+                                  char **__save_ptr));
+// NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+
 #else
   // Platform lacks POSIX prototypes for certain System V functions
   // like shared memory and message queues.
@@ -94,8 +83,10 @@
 // Completely common part :-)
 
 // Platform/compiler has the sigwait(2) prototype
-// Was only for Alpha
 #define ACE_HAS_SIGWAIT
+
+// The following is necessary on Alpha, and might be necessary on Intel.
+# define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights

@@ -6263,7 +6263,11 @@ ACE_OS::getrusage (int who, struct rusage *ru)
                                           ace_result_),
                         int, -1);
 #else
+# if defined (ACE_HAS_RUSAGE_WHO_ENUM)
+  ACE_OSCALL_RETURN (::getrusage ((ACE_HAS_RUSAGE_WHO_ENUM) who, ru), int, -1);
+# else
   ACE_OSCALL_RETURN (::getrusage (who, ru), int, -1);
+# endif /* ACE_HAS_RUSAGE_WHO_ENUM */
 #endif /* ACE_WIN32 */
 #else
   who = who;
@@ -7158,7 +7162,11 @@ ACE_OS::getrlimit (int resource, struct rlimit *rl)
 
   ACE_NOTSUP_RETURN (-1);
 #else
+# if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
+  ACE_OSCALL_RETURN (::getrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl), int, -1);
+# else
   ACE_OSCALL_RETURN (::getrlimit (resource, rl), int, -1);
+# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #endif /* ACE_LACKS_RLIMIT */
 }
 
@@ -7173,7 +7181,11 @@ ACE_OS::setrlimit (int resource, ACE_SETRLIMIT_TYPE *rl)
 
   ACE_NOTSUP_RETURN (-1);
 #else
+# if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
+  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource, rl), int, -1);
+# else
   ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
+# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
 #endif /* ACE_LACKS_RLIMIT */
 }
 
