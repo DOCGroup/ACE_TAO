@@ -1,5 +1,8 @@
 Thu Feb 15 11:33:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Refcounted_Auto_Ptr_Test.cpp (main): Always call ACE_OS::exit(0)
+	  to make sure that this test terminates...
+
 	* ace/Thread_Manager.i (get_next): Added an ACE_const_cast() to
 	  make certain compilers happy.
 
