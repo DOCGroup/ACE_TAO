@@ -1,3 +1,13 @@
+Tue Apr  6 15:44:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Changed the Names of the following files:
+	
+	* orbsvcs/Time_Service/server.cpp -> Time_Service_Server.cpp: 
+	* orbsvcs/Time_Service/clerk.cpp  -> Time_Service_Clerk.cpp: 
+
+	* orbsvcs/Time_Service/Makefile: Changed the Makefile to reflect
+	  the above changes.
+	
 Tue Apr 06 15:33:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all orbscvs/tests/AVStreams Makefiles:
