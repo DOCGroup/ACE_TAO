@@ -370,7 +370,7 @@ class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> : public TAO_Unbounded_Bas
   //   An unbounded sequence of Octets
   //
   // = DESCRIPTION
-  //   Marshalling and demarshalling cctet sequences can be highly
+  //   Marshalling and demarshalling octet sequences can be highly
   //   optimize, for instance at demarshalling we don't require a copy
   //   from the CDR buffer to the octet sequence buffer, we can simply
   //   hold a duplicate of the underlying ACE_Message_Block.
@@ -381,17 +381,17 @@ public:
   friend class TAO_Marshal_Sequence;
   // For efficient marshalling and demarshalling.
 
-  TAO_Unbounded_Sequence<CORBA::Octet> (void);
-  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong max);
-  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong max,
-					CORBA::ULong length,
-					CORBA::Octet *data,
-					CORBA::Boolean release = 0);
+  TAO_Unbounded_Sequence (void);
+  TAO_Unbounded_Sequence (CORBA::ULong max);
+  TAO_Unbounded_Sequence (CORBA::ULong max,
+			  CORBA::ULong length,
+			  CORBA::Octet *data,
+			  CORBA::Boolean release = 0);
   ~TAO_Unbounded_Sequence (void);
   // see TAO_Unbounded_Sequence in "Sequence_T.h"
 
-  TAO_Unbounded_Sequence<CORBA::Octet> (CORBA::ULong length,
-					const ACE_Message_Block* mb);
+  TAO_Unbounded_Sequence (CORBA::ULong length,
+			  const ACE_Message_Block* mb);
   // Create a sequence of octets from a single message block (i.e. it
   // ignores any chaining in the meesage block).
 
