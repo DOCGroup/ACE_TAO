@@ -15,7 +15,9 @@
 # include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
+ACE_RCSID (tao,
+           GIOP_Message_Base,
+           "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t input_cdr_size)
@@ -232,10 +234,10 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
       // messageblocks. If so, consolidate them to one block that can be
       // dumped
       ACE_Message_Block* consolidated_block = 0;
-      if (stream.begin()->cont() != 0)
+      if (stream.begin()->cont () != 0)
 	{
 	  consolidated_block = new ACE_Message_Block;
-	  ACE_CDR::consolidate(consolidated_block, stream.begin());
+	  ACE_CDR::consolidate (consolidated_block, stream.begin ());
 	  buf = (char *) (consolidated_block->rd_ptr ());
 	}
       ///
@@ -445,7 +447,7 @@ TAO_GIOP_Message_Base::write_protocol_header (TAO_GIOP_Message_Type t,
     0x50, // 'P'
   };
 
-  static int magic_size = sizeof (magic)/sizeof (magic[0]);
+  static int magic_size = sizeof (magic) / sizeof (magic[0]);
 
   msg.write_octet_array (magic, magic_size);
   msg.write_octet (this->generator_parser_->major_version ());
@@ -479,13 +481,12 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 			     transport,
 			     orb_core);
 
-  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
-
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
 
   int parse_error = 0;
 
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       parse_error =
@@ -842,7 +843,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 
   this->dump_msg ("send_error",
 		  (const u_char *) error_message,
-		  TAO_GIOP_MESSAGE_HEADER_LEN );
+		  TAO_GIOP_MESSAGE_HEADER_LEN);
 
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
 			     ACE_Message_Block::MB_DATA,
@@ -1062,8 +1063,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
   if (TAO_debug_level >= 5)
     {
-      static const char digits [] = "0123456789ABCD";
-      static const char *names [] =
+      static const char digits[] = "0123456789ABCD";
+      static const char *names[] =
       {
 	"Request",
 	"Reply",
@@ -1071,15 +1072,15 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 	"LocateRequest",
 	"LocateReply",
 	"CloseConnection",
-	"MessageError"
+        "MessageError",
 	"Fragment"
       };
 
       // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
-      if (slot < sizeof (names)/sizeof(names[0]))
-	message_name = names [slot];
+      if (slot < sizeof (names) / sizeof (names[0]))
+	message_name = names[slot];
 
       // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
@@ -1107,8 +1108,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
       // Print.
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("(%P | %t):%s GIOP v%c.%c msg, ")
-		  ACE_TEXT ("%d data bytes, %s endian, %s = %d\n"),
+		  ACE_TEXT ("(%P | %t): %s GIOP v%c.%c msg, ")
+		  ACE_TEXT ("%d data bytes, %s endian, %s = %u\n"),
 		  label,
 		  digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
 		  digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
@@ -1136,7 +1137,7 @@ TAO_GIOP_Message_Base::generate_locate_reply_header (
 int
 TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
 {
-  // We dont really know.. So ask the enerator and parser objects that
+  // We dont really know.. So ask the generator and parser objects that
   // we know.
   return this->generator_parser_->is_ready_for_bidirectional ();
 }
