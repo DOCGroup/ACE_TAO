@@ -1,3 +1,9 @@
+Thu Jun 29 00:12:04 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Makefile.bor:
+
+	  Added Priority_Mapping_Manager.
+
 Wed Jun 28 15:50:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IORC.cpp (_unchecked_narrow): Removed smart proxies code
