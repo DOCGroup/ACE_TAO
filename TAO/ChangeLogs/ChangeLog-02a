@@ -1,3 +1,11 @@
+Tue Jan 15 13:22:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/ORT/*.bor:
+          Added BCB makefiles for this test
+
+        * tests/Makefile.bor:
+          Added new ORT test
+
 Tue Jan 15 11:09:13 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Makefile.bor:
