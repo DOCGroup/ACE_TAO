@@ -71,6 +71,11 @@ includes the following:
           Test that combines and tests several RT policies in
           different ways.
 
+        . Priority_Inversion_With_Bands
+
+          This test check for priority inversion when using different
+          RTCORBA configurations.
+
         . Private_Connection
 
           Test for RTCORBA::PrivateConnection policy.

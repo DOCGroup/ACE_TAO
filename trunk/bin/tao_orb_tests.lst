@@ -41,6 +41,7 @@ TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM  !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM
 TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST 
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
