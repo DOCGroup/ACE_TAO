@@ -73,6 +73,10 @@
 # error unsupported compiler on Digital Unix
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
 
+#if (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
+#define ACE_LACKS_PREAD_PROTOTYPE
+#endif // (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
+
 #if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
   // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
 # define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
