@@ -1,3 +1,19 @@
+Fri Jul  5 16:14:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h i} (send, sendto, recv, recvfrom): Change 'len' argument
+          from int to size_t.
+          Removed conditional typedef of ssize_t; it's done in Basic_Types.h.
+
+        * ace/ACE.h (recv): Filled in documentation for varargs variant.
+        * ace/ACE.cpp (send, recv): Properly convert size_t 'count' arg to int
+          iovec count for call to ACE_OS::sendv/recvv().
+          (handle_timed_accept, handle_timed_complete, handle_ready): Use
+          an int select_width for ACE_OS::select() calls to get the types
+          correct. This arg is ignored on Windows anyway.
+
+        * ace/Basic_Types.h: If ACE_HAS_SSIZE_T not defined, and Win64,
+          typedef SSIZE_T ssize_t; else use the existing int typedef.
+
 Wed Jul  3 11:09:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
@@ -270,6 +286,7 @@ Mon Jun 24 20:55:45 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (select): Fixed typo.
 
+>>>>>>> 4.3835
 Mon Jun 24 17:39:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_dll64.mak:
