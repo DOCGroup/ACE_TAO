@@ -36,8 +36,9 @@
 
 #include "rtscheduler_export.h"
 
-#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBA.h"
+#include "c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBAC.h"
 #include "c:/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h"
+#include "c:/ACE_wrappers/TAO/tao/PortableInterceptorC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,7 +69,6 @@
 TAO_NAMESPACE  CORBA
 {
 
-	typedef void* VoidData;	
 // TAO_IDL - Generated from
 // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
@@ -1308,6 +1308,185 @@ TAO_NAMESPACE  RTScheduling
         PortableServer::Servant & resource,
         const char * name,
         CORBA::Policy_ptr scheduling_parameter
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void begin_new_scheduling_segment (
+        const RTScheduling::Current::IdType & guid,
+        const char * name,
+        CORBA::Policy_ptr sched_param,
+        CORBA::Policy_ptr implicit_sched_param
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void begin_nested_scheduling_segment (
+        const RTScheduling::Current::IdType & guid,
+        const char * name,
+        CORBA::Policy_ptr sched_param,
+        CORBA::Policy_ptr implicit_sched_param
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void update_scheduling_segment (
+        const RTScheduling::Current::IdType & guid,
+        const char * name,
+        CORBA::Policy_ptr sched_param,
+        CORBA::Policy_ptr implicit_sched_param
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void end_scheduling_segment (
+        const RTScheduling::Current::IdType & guid,
+        const char * name
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void end_nested_scheduling_segment (
+        const RTScheduling::Current::IdType & guid,
+        const char * name,
+        CORBA::Policy_ptr outer_sched_param
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void send_request (
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void receive_request (
+        PortableInterceptor::ServerRequestInfo_ptr ri,
+        const RTScheduling::Current::IdType & guid,
+        const char * name,
+        CORBA::Policy_ptr sched_param,
+        CORBA::Policy_ptr implicit_sched_param
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void send_reply (
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void send_exception (
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void send_other (
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void receive_reply (
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void receive_exception (
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void receive_other (
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
+      )) = 0;
+    
+    // TAO_IDL - Generated from
+    // C:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
+    virtual void cancel (
+        const RTScheduling::Current::IdType & guid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((

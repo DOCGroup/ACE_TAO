@@ -1,6 +1,7 @@
 //$Id$
 #include <c:/ACE_wrappers/TAO/tao/RTCORBA/RTCORBA.pidl>
 #include <c:/ACE_wrappers/TAO/tao/PortableServer/PortableServer.pidl>
+#include <c:/ACE_wrappers/TAO/tao/PortableInterceptor.pidl>
 
 
 module CORBA
@@ -66,7 +67,7 @@ in RTCORBA::Priority base_priority);
         readonly attribute IdType id;
             // a globally unique id
 
-        IdType get_current_id();
+        //IdType get_current_id();
             // returns id of thread that is running
 
         DistributableThread lookup(in IdType id);
@@ -106,5 +107,61 @@ in RTCORBA::Priority base_priority);
             (inout PortableServer::Servant resource,
              in    string         name,
              in    CORBA::Policy  scheduling_parameter);
+
+	void begin_new_scheduling_segment (in Current::IdType guid,
+				      	in string name,
+					in CORBA::Policy sched_param,
+					in CORBA::Policy implicit_sched_param)
+	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
+
+	void begin_nested_scheduling_segment (in Current::IdType guid,
+				      	in string name,
+					in CORBA::Policy sched_param,
+					in CORBA::Policy implicit_sched_param)
+	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
+
+
+	void update_scheduling_segment (in Current::IdType guid,
+				      	in string name,
+					in CORBA::Policy sched_param,
+					in CORBA::Policy implicit_sched_param)
+	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
+
+	void end_scheduling_segment (in Current::IdType guid,
+				      	in string name);
+
+
+	void end_nested_scheduling_segment (in Current::IdType guid,
+				      	in string name,
+					in CORBA::Policy outer_sched_param);
+
+	void send_request (in PortableInterceptor::ClientRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
+
+	void receive_request (in PortableInterceptor::ServerRequestInfo ri,
+				in Current::IdType guid,
+			      	in string name,
+				in CORBA::Policy sched_param,
+				in CORBA::Policy implicit_sched_param)
+	raises (PortableInterceptor::ForwardRequest);
+
+	void send_reply (in PortableInterceptor::ServerRequestInfo ri);
+
+	void send_exception (in PortableInterceptor::ServerRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
+
+	void send_other (in PortableInterceptor::ServerRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
+	
+	void receive_reply (in PortableInterceptor::ClientRequestInfo ri);
+
+	void receive_exception (in PortableInterceptor::ClientRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
+
+	void receive_other (in PortableInterceptor::ClientRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
+
+	void cancel (in Current::IdType guid);
     };
+
 };
