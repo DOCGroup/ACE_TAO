@@ -20,26 +20,20 @@ DIRS	= driver fe ast util narrow be
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-ifndef CHORUS
-ifndef LYNXOS
-ifndef VXWORKS
+ifndef CROSS-COMPILE
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-endif # VXWORKS
-endif # LYNXOS
-endif # CHORUS
+endif # ! CROSS-COMPILE
 
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifndef CHORUS
-ifndef LYNXOS
-ifndef VXWORKS
+ifndef CROSS-COMPILE
 IDL_CFE_VERSION	= \"1.3.0\"
 CPPFLAGS += -Iinclude -Ibe_include -DCPP_LOCATION=\"$(CXX)\" \
             -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
@@ -51,16 +45,8 @@ realclean:
 	rm -f tao_idl TAGS
 else
   default_embedded:
-	@echo The IDL compiler won\'t run or build for VxWorks.
-endif # VXWORKS
-else
-  default_embedded:
-	@echo The IDL compiler won\'t run or build for LynxOS.
-endif # LYNXOS
-else
-  default_embedded:
-	@echo The IDL compiler won\'t run or build for Chorus.
-endif # CHORUS
+	@echo The IDL compiler won\'t run or build on CROSS-COMPILE platforms.
+endif # ! CROSS-COMPILE
 
 tags:
 	rm -f TAGS

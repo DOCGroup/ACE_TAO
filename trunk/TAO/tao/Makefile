@@ -98,15 +98,9 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-ifdef CHORUS
+ifdef CROSS-COMPILE
   override fakesvcconf = 1
-endif
-ifdef LYNXOS
-  override fakesvcconf = 1
-endif
-ifdef VXWORKS
-  override fakesvcconf = 1
-endif
+endif # CROSS-COMPILE
 
 ifeq ($(fakesvcconf),1)
   CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
