@@ -54,6 +54,8 @@ public:
     const char *paritymode;
     int databits;
     int stopbits;
+    // Minimum number of characters for non-canonical read
+    int readmincharacters; 
     int readtimeoutmsec;
     int ctsenb;  // CTS & RTS are the same under unix
     int rtsenb;  // enable & set rts mode (win32)
