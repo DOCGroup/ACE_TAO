@@ -1063,7 +1063,7 @@ CORBA_ORB::create_enum_tc (const char *id,
   ACE_CDR::ULong slen = ACE_OS::strlen (id) + 1; // 1 for NULL terminating
   cdr << slen;
 
-  ACE_CDR::Ulong *larr, arrlen;
+  ACE_CDR::ULong *larr, arrlen;
 
   string2long (id, larr, arrlen);
 
