@@ -1,3 +1,8 @@
+Wed Dec 26 10:19:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: Removed a
+	  duplicate template instantiation.
+
 Wed Dec 26 09:16:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ./examples/AMI/FL_Callback/peer.cpp
