@@ -1,3 +1,16 @@
+Fri Jan 16 18:44:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/INET_Addr_Test.cpp:
+	* tests/Max_Default_Port_Test.cpp:
+	* tests/Multicast_Test.cpp:
+	* tests/Multihomed_INET_Addr_Test.cpp:
+	* tests/Proactor_Test.cpp:
+	* tests/SOCK_Test.cpp:
+
+	  Reverted changes from "Fri Jan 16 17:25:50 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since the IPV6 needs to be
+	  placed seperately.
+
 Fri Jan 16 17:25:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/INET_Addr_Test.cpp:

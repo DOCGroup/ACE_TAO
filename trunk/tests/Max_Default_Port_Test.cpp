@@ -5,7 +5,7 @@
 //    tests
 //
 // = FILENAME
-//    Max_Default_Port_Test_IPv6.cpp
+//    Max_Default_Port_Test.cpp
 //
 // = DESCRIPTION
 //    This is a test for ACE_MAX_DEFAULT_PORT value. The test tests the
@@ -23,7 +23,6 @@
 //
 // = AUTHOR
 //    Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//    Brian Buesker <bbuesker@qualcomm.com> - Made test run over IPv6 as well
 //
 // ============================================================================
 
@@ -73,7 +72,7 @@ int
 My_Accept_Handler::handle_input (ACE_HANDLE)
 {
 
-  if (this->peer_acceptor_.accept(this->stream_, NULL) == -1) {
+  if (this->peer_acceptor_.accept(this->stream_, 0) == -1) {
     ACE_ERROR((LM_ERROR, ACE_TEXT ("%p\n"),
                ACE_TEXT ("peer_acceptor.accept")));
     ACE_OS::exit(1);
@@ -106,10 +105,9 @@ client (void *arg)
                                                      arg);
 
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
-                             "::1");
+                             ACE_LOCALHOST);
 
   ACE_SOCK_Stream cli_stream;
-
   ACE_SOCK_Connector con;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
@@ -144,18 +142,18 @@ client (void *arg)
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test_IPv6"));
+
+  ACE_START_TEST (ACE_TEXT ("Max_Default_Port_Test"));
 
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-#if defined (ACE_HAS_IPV6)
   u_short max_listened_port = 0;
 
   //Ports beyond 65279 were said to bad on NT sp 3.
   for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
     {
-      ACE_INET_Addr addr (idx, "::");
+      ACE_INET_Addr addr (idx);
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
 
@@ -251,8 +249,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_MAX_DEFAULT_PORT, max_listened_port));
 
     }
-
-#endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
   return 0;
