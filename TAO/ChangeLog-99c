@@ -3,7 +3,7 @@ Tue Apr  6 19:52:55 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* orbsvcs/tests/Property/PropertyTest.dsw:
 	* orbsvcs/tests/Property/server.dsp:
 	* orbsvcs/tests/Property/client.dsp:
-	
+	* orbsvcs/tests/Property/README:
 	Tested on WIN NT.
 	
 Tue Apr 06 18:51:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
