@@ -1,7 +1,13 @@
+Tue Nov 25 16:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst:
+
+	  Added the Servant_To_Reference_Test for the daily builds.
+
 Tue Nov 25 23:41:21 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* apps/JAWS3/jaws3/Concurrency.cpp:
-	Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
+	  Remove the unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
 
 	* apps/JAWS3/jaws3/Config_File.cpp:
 	Added #include "ace/Unbounded_Queue.h"

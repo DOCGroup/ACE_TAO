@@ -152,3 +152,4 @@ TAO/tests/Object_Loader/run_test.pl: !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/tests/UNKNOWN_Exception/run_test.pl: Exceptions
 TAO/tests/Native_Exceptions/run_test.pl: Exceptions
+TAO/tests/Servant_To_Reference_Test/run_test.pl: !MINIMUM
