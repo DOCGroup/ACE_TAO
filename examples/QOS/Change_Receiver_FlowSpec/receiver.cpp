@@ -132,14 +132,9 @@ main (int argc, char * argv[])
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;
 
-      // Ask the factory to create a QoS session. This could be RAPI or
-      // GQoS based on the parameter passed.
+      // Ask the factory to create a QoS session.
       ACE_QoS_Session *qos_session = 
-        session_factory.create_session (ACE_QoS_Session_Factory::ACE_RAPI_SESSION);
-      // XX Shouldn't have to specify GQOS or RAPI?!?  XX it is not
-      // clear that we need to pass in a key indicating the type XX of
-      // object to create.  Since we use RAPI flag at compile time can
-      // XX we assume rapi here also?  Or could we have RAPI and GQoS?
+        session_factory.create_session ();
 
       // Create a destination address for the QoS session. The same
       // address should be used for the subscribe call later. A copy
@@ -286,25 +281,6 @@ main (int argc, char * argv[])
                            "Error in registering the Decorator with the Reactor\n"),
                           -1);
 
-//        // Register the RAPI Event Handler with the Reactor. This
-//        // handles the QoS events.
-//        if (ACE_Reactor::instance ()->register_handler
-//            (&rapi_event_handler,
-//             ACE_Event_Handler::QOS_MASK | ACE_Event_Handler::READ_MASK) == -1)
-//          ACE_ERROR_RETURN ((LM_ERROR,
-//                             "Error in registering the RAPI Event Handler\n"),
-//                            -1);
-
-//        // The following event handler handles the data.
-//        ACE_QoS_Event_Handler data_event_handler (dgram_mcast_qos,
-//                                                  qos_session);
-      
-//        // Register the Data Event Handler with the Reactor.
-//        if (ACE_Reactor::instance ()->register_handler 
-//            (&data_event_handler,ACE_Event_Handler::READ_MASK) == -1)
-//          ACE_ERROR_RETURN ((LM_ERROR,
-//                             "Error in registering Data Event Handler\n"),
-//                            -1);
       
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,

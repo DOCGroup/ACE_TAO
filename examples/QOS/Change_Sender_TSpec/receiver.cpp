@@ -132,14 +132,9 @@ main (int argc, char * argv[])
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;
 
-      // Ask the factory to create a QoS session. This could be RAPI or
-      // GQoS based on the parameter passed.
+      // Ask the factory to create a QoS session.
       ACE_QoS_Session *qos_session = 
-        session_factory.create_session (ACE_QoS_Session_Factory::ACE_RAPI_SESSION);
-      // XX Shouldn't have to specify GQOS or RAPI?!?  XX it is not
-      // clear that we need to pass in a key indicating the type XX of
-      // object to create.  Since we use RAPI flag at compile time can
-      // XX we assume rapi here also?  Or could we have RAPI and GQoS?
+        session_factory.create_session ();
 
       // Create a destination address for the QoS session. The same
       // address should be used for the subscribe call later. A copy

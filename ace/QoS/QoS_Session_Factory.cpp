@@ -9,6 +9,16 @@ ACE_RCSID(ace, QoS_Session_Factory, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Factory)
 
+#if defined(ACE_HAS_RAPI)
+const enum ACE_QoS_Session_Factory::ACE_QoS_Session_Type
+  ACE_QoS_Session_Factory::ACE_DEFAULT_QOS_SESSION = ACE_QoS_Session_Factory::ACE_RAPI_SESSION;
+#elif defined(ACE_HAS_WINSOCK2_GQOS)
+  const enum ACE_QoS_Session_Factory::ACE_QoS_Session_Type
+  ACE_QoS_Session_Factory::ACE_DEFAULT_QOS_SESSION = ACE_QoS_Session_Factory::ACE_GQOS_SESSION;
+#else
+#  error "QoS type not supported.  Cannot build."
+#endif /* ACE_HAS_RAPI */ 
+
 ACE_QoS_Session_Factory::ACE_QoS_Session_Factory (void)
 {
   ACE_TRACE ("ACE_QoS_Session_Factory::ACE_QoS_Session_Factory");
