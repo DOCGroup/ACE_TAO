@@ -1,3 +1,16 @@
+Fri Mar 12 11:46:55 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added two new functions tzset () and timezone (). The former sets the 
+	timezone information based on an environment variable TZ which is
+	set when the user logs on. (For St. Louis TZ=US/Central and 
+	timezone = 360 minutes or 6 hrs. from GMT.). timezone () retrieves 
+	the timezone value in seconds.
+ 	
+	* ace/OS.h (ACE_OS): Added a wrapper for timezone () and tzset ().
+	* ace/OS.i (ACE_OS): Added Implementation for the above functions.
+
+	The timezone information is being used in the Time Service.
+	
 Thu Mar 11 20:11:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Get_Opt.cpp (operator): Reverted the following change since
@@ -2404,7 +2417,7 @@ Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
               manage the search structure but manages the two linked list
               on top of the array.  Thanks to Carlos for this cool idea.
 
-          (d) current_sizewas broken.  This is fixed in the new code.
+          (d) current_size() was broken.  This is fixed in the new code.
 
           (e) Inlined a bunch of small functions.
 
@@ -2782,7 +2795,7 @@ Sun Jan 17 16:40:22 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           message to indicate that C++ exception support isn't ENABLED on
           a platform, rather than saying that it's not supported at all...
 
-Sun Jan 17 15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Jan 17 15:16:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/SString.cpp (operator<<): The operator<< used to print out
           ACE_WString caused an infinite loop on platform without UNICODE
@@ -3174,7 +3187,7 @@ Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
           libedgenoe.a, so that a symlink in $(GHS_DIR) is no longer necessary.
           Thanks to Steve Kay for reporting this.
 
-        * ace/config-mklinux.h: removed ACE_HAS_SOCKLEN_T, addedUSE_XOPEN.
+        * ace/config-mklinux.h: removed ACE_HAS_SOCKLEN_T, added __USE_XOPEN.
           Thanks to Andreas Tobler <toa@pop.agri.ch> for these updates.
 
 Tue Jan 12 08:44:11 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
@@ -3546,7 +3559,7 @@ Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
           ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
 
         * ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
-          to "/tmp/ace-fileXXXX" and is used by the ACE_FILE_Connector
+          to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
           to create a temporary file when it's given an ACE_Addr::sap_any.
 
         * ace/FILE_Addr.h: The <set> accessor should return an int to be
