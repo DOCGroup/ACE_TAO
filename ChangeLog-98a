@@ -1,4 +1,9 @@
-Thu Apr 23 17:52:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Apr 23 22:28:02 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Service_Config: Began adding support for the new service
+ 	  configurator feature that will make it possible to dynamically
+ 	  configure services that are read in from the command-line.
+  	  Thanks to Karlheinz for requesting this.
 
 	* ace/Parse_Node.cpp (open_handle),
 	  ace/Svc_Conf.l: The line for the service object for the service
