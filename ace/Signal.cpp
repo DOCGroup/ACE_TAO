@@ -392,7 +392,7 @@ ACE_Sig_Handler::remove_handler (int signum,
       // Register either the new disposition or restore the default.
       return new_disp->register_action (signum, old_disp);
     }
-  else
+
     return -1;
 }
 
