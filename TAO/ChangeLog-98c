@@ -1,3 +1,16 @@
+Sat Aug 29 12:40:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/POA/TIE/client.cpp: 
+	* tests/POA/TIE/server.cpp: 
+	  Added missing template instantiations.
+
+	* tests/POA/Forwarding/MyFooServant.cpp: 
+	  A call to is_nil() using a T_var was missing the .in ()
+	  invocation.
+
+	* tests/POA/Makefile: 
+	  Fixed order.  Thanks to David for reporting this problems.
+
 Sat Aug 29 09:15:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * utils/catior/catior.cpp (iiop_string_to_object): commented out
