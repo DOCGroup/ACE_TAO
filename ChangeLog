@@ -1,3 +1,9 @@
+Mon Dec 31 16:33:17 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS.{h,i}:
+          Added ACE_OS::freopen. This method reassigns an existing
+          stream with a new stream. This is not supported on WinCE
+
 Mon Dec 31 15:09:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * apps/drwho/BM_Server.cpp:
