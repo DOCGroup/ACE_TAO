@@ -1346,6 +1346,8 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 {
   ACE_TRACE ("ACE_Reactor::wait_for_multiple_events");
   u_long width = 0;
+  ACE_Time_Value timer_buf (0) ;
+  ACE_Time_Value *this_timeout = &timer_buf ;
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 
@@ -1356,8 +1358,9 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
     {
       do
 	{
-	  (void) this->timer_queue_->calculate_timeout (max_wait_time,
-							max_wait_time);
+	  if (this->timer_queue_->calculate_timeout (max_wait_time,
+						     this_timeout) == 0) {
+	    this_timeout = 0 ;
       
 	  width = (u_long) this->handler_rep_.max_handlep1 ();
 
@@ -1369,7 +1372,7 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
 						     dispatch_set.rd_mask_, 
 						     dispatch_set.wr_mask_, 
 						     dispatch_set.ex_mask_, 
-						     max_wait_time);
+						     this_timeout);
 	} 
       while (number_of_active_handles == -1 && this->handle_error () > 0);
 

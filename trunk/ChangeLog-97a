@@ -1,7 +1,9 @@
 Tue Jun 24 18:15:46 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
-	* ace/Reactor.cpp (wait_for_multiple_events): Reverted the
- 	  original changes made in Jun 11.
+	* ace/Reactor.cpp (wait_for_multiple_events): Modified the way to
+	  manipulate timeout value so that we can differentiate when there
+	  are timeout events to be handle from no timer and we want to
+	  wait indefinitely.
 
 Tue Jun 24 16:52:22 1997  David L. Levine  <levine@cs.wustl.edu>
 
