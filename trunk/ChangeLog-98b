@@ -1,6 +1,6 @@
 Fri Oct 09 00:02:01 1998  Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp: The YET another problem with doing multiple
+	* ace/Asynch_IO.cpp: Another problem with doing multiple
 	Asynch_Accepts have been fixed. Thanks very much James Hu for
 	reporting this. I was calling reactor's resume_handlers and
 	suspend_handlers instead of only for one handle. Thanks very much
