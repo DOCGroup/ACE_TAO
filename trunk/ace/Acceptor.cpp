@@ -66,6 +66,8 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
   this->flags_ = flags;
   this->use_select_ = use_select;
+  this->reuse_addr_ = reuse_addr; 
+  this->peer_acceptor_addr_ = local_addr; 
 
   // Must supply a valid Reactor to Acceptor::open()...
 
@@ -101,7 +103,9 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor (ACE_Reactor *reactor,
                                                               int use_select)
-  : use_select_ (use_select)
+  : use_select_ (use_select),
+    flags_ (0),
+    reuse_addr_ (1) 
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Acceptor");
 
@@ -285,6 +289,16 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler
     {
       // Close down handler to avoid memory leaks.
       svc_handler->close (0);
+
+      // If <reuse_addr> is true then we will close the socket and
+      // open it again...
+      if (this->reuse_addr_) 
+        {
+          this->peer_acceptor_.close ();
+          this->peer_acceptor_.open (this->peer_acceptor_addr_,
+                                     this->reuse_addr_);
+        }
+
       return -1;
     }
   else

@@ -1,5 +1,20 @@
 Thu May  3 06:58:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Acceptor.{h,cpp},
+	* ace/SOCK_Acceptor.{h,cpp}:  When the number of clients
+	  connecting to a server exceeds the process handle limit the
+ 	  server would busy loop.  The Acceptor accept_svc_handler()
+ 	  method is called which (1) constructs a handler and (2) attempts
+ 	  to accept the connection, which fails (because there is no
+ 	  available handle).  The handler is destructed, but the connect
+ 	  request is still queued and so the acceptor gets called back
+ 	  again.... and so on until one of the client which is already
+ 	  connected disconnects and frees up a descriptor.  Changed the
+ 	  Acceptor the close and reopen the connection when accept()
+ 	  fails.  A check is done to make sure address reuse is set. So
+ 	  this fix will only work in case where it is set.  Thanks to
+ 	  Dominic Hughes <dominic@aersoft.ie> for this fix.
+
 	* ace/Unbounded_Queue.h: The comment was incorrect for
 	  ~ACE_Unbounded_Queue.  Thanks to Johnny Willemsen for
 	  reporting this.

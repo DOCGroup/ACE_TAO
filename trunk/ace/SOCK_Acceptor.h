@@ -88,6 +88,9 @@ public:
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 
+  /// Close the socket.  Returns 0 on success and -1 on failure.
+  int close (void);
+
   /// Default dtor.
   ~ACE_SOCK_Acceptor (void);
 
