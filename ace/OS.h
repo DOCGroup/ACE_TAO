@@ -1891,6 +1891,7 @@ typedef DWORD ACE_id_t;
 typedef int ACE_pri_t;
 
 // Dynamic loading-related types - used for dlopen and family.
+#define RTLD_LAZY 1
 typedef HINSTANCE ACE_SHLIB_HANDLE;
 const int ACE_DEFAULT_SHLIB_MODE = 0;
 
@@ -2198,17 +2199,26 @@ extern "C" int sigwait (sigset_t *set);
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#include /**/ <dlfcn.h>
-typedef void *ACE_SHLIB_HANDLE;
-const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
+# include /**/ <dlfcn.h>
+  typedef void *ACE_SHLIB_HANDLE;
+  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #elif defined (__hpux)
 # if __cplusplus >= 199707L
-#include /**/ <dl.h>
+#   include /**/ <dl.h>
 # else
-#include /**/ <cxxdl.h>
+#   include /**/ <cxxdl.h>
 # endif /* HP aC++ vs. HP C++ */
-typedef shl_t ACE_SHLIB_HANDLE;
-const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
+  typedef shl_t ACE_SHLIB_HANDLE;
+  const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
+# if !defined(RTLD_LAZY)
+#   define RTLD_LAZY 1
+# endif /* !RTLD_LAZY */
+#else
+# if !defined(RTLD_LAZY)
+#   define RTLD_LAZY 1
+# endif /* !RTLD_LAZY */
+  typedef void *ACE_SHLIB_HANDLE;
+  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_SOCKIO_H)
@@ -2348,10 +2358,6 @@ typedef short ACE_pri_t;
 #endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
-
-#if !defined(RTLD_LAZY)
-#define RTLD_LAZY 1
-#endif /* !RTLD_LAZY */
 
 #if defined (ACE_SELECT_USES_INT)
 typedef int ACE_FD_SET_TYPE;
