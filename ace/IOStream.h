@@ -284,14 +284,31 @@ protected:
   virtual ACE_HANDLE get_handle (void);
 
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-  char *base (void) const { return eback_saved_; }
-  char *ebuf (void) const { return eback_saved_ + streambuf_size_; }
-  int blen (void) const { return streambuf_size_; }
+  char *base (void) const
+    {
+      return cur_mode_ == get_mode_ ? eback_saved_
+        : cur_mode_ == put_mode_ ? pbase_saved_
+        : 0;
+    }
+  char *ebuf (void) const 
+    { 
+      return cur_mode_ == 0 ? 0 : base() + streambuf_size_;
+    }
+
+  int blen (void) const 
+    { 
+      return streambuf_size_; 
+    }
+
   void setb (char* b, char* eb, int a=0)
     {
       setbuf (b, (eb - b));
     }
-  int out_waiting (void) { return pptr () - pbase (); }
+
+  int out_waiting (void) 
+    {
+      return pptr () - pbase (); 
+    }
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 };
 
