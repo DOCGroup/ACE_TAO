@@ -6,7 +6,9 @@
 #include "SSLIOP_Connection_Handler.h"
 #include "tao/IIOP_Endpoint.h"
 
-ACE_RCSID(tao, SSLIOP_Endpoint, "$Id$")
+ACE_RCSID (SSLIOP,
+           SSLIOP_Endpoint,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Endpoint.i"
@@ -106,10 +108,13 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
                                         other_endpoint);
 
-  TAO_SSLIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
-                                                    endpt);
+  TAO_SSLIOP_Endpoint *endpoint =
+    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *, endpt);
 
-  if (this->ssl_component_.port != 0
+  if (endpoint == 0)
+    return 0;
+
+   if (this->ssl_component_.port != 0
       && endpoint->ssl_component_.port != 0
       && this->ssl_component_.port != endpoint->ssl_component_.port)
     return 0;
@@ -134,5 +139,5 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 CORBA::ULong
 TAO_SSLIOP_Endpoint::hash (void)
 {
-  return this->iiop_endpoint_->hash ();
+  return this->iiop_endpoint_->hash () + this->ssl_component_.port;
 }
