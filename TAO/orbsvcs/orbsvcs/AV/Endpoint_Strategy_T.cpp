@@ -12,9 +12,7 @@
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
-  : orb_ (orb),
-    poa_ (poa)
+TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy (void)
 {
 }
 
@@ -197,8 +195,7 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 
 //Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
-  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl> (orb, poa)
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A (void)
 {
 }
 
@@ -207,6 +204,16 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A (void)
 {
+}
+
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+{
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+  return 0;
 }
 
 // Creates an "A" type streamendpoint, and a vdev and returns the
@@ -269,8 +276,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
 // Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
-  : TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl> (orb, poa)
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B (void)
 {
 }
 
@@ -278,6 +284,16 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B (void)
 {
+}
+
+
+template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
+int
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
+{
+  this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->poa_ = PortableServer::POA::_duplicate (poa);
+  return 0;
 }
 
 // Activate stream_endpoint

@@ -12,9 +12,9 @@ Server::Server (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   : orb_ (orb),
     poa_ (poa),
     process_strategy_ (&SERVER_GLOBALS::instance ()->process_options_),
-    reactive_strategy_(orb, poa),
     mmdevice_ (0)
 {
+  reactive_strategy_.init (orb, poa);
 }
 
 
