@@ -50,9 +50,9 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Input_Handler::init_naming_service (CORBA::Environment& env)
+Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_TRY
+  ACE_TRY
     {
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -68,28 +68,28 @@ Notifier_Input_Handler::init_naming_service (CORBA::Environment& env)
 			  -1);
 
       // Register the object implementation with the POA.
-      Notifier_var notifier_obj = this->notifier_i_._this (env);
-      TAO_CHECK_ENV;
+      Notifier_var notifier_obj = this->notifier_i_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Name the object.
       CosNaming::Name notifier_obj_name (1);
       notifier_obj_name.length (1);
       notifier_obj_name[0].id = CORBA::string_dup ("Notifier");
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
       // Now, attach the object name to the context.
       this->naming_server_->bind (notifier_obj_name,
 				  notifier_obj.in (),
-				  env);
-      TAO_CHECK_ENV;
+				  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Notifier_Input_Handler::init_naming_service\n");
+      ACE_TRY_ENV.print_exception ("Notifier_Input_Handler::init_naming_service\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -141,8 +141,8 @@ Notifier_Input_Handler::parse_args (void)
 
 int
 Notifier_Input_Handler::init (int argc,
-		char *argv[],
-		CORBA::Environment &TAO_TRY_ENV)
+                              char *argv[],
+                              CORBA::Environment &ACE_TRY_ENV)
 {
 
   // Register our <Input_Handler> to handle STDIN events, which will
@@ -163,12 +163,12 @@ Notifier_Input_Handler::init (int argc,
   if (this->orb_manager_.init_child_poa (argc,
 					 argv,
 					 "child_poa",
-					 TAO_TRY_ENV) == -1)
+					 ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -187,7 +187,7 @@ Notifier_Input_Handler::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
 						 &this->notifier_i_,
-						 TAO_TRY_ENV);
+						 ACE_TRY_ENV);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
@@ -201,13 +201,13 @@ Notifier_Input_Handler::init (int argc,
     }
 
   if (this->using_naming_service_)
-    return this->init_naming_service (TAO_TRY_ENV);
+    return this->init_naming_service (ACE_TRY_ENV);
 
   return 0;
 }
 
 int
-Notifier_Input_Handler::run (CORBA::Environment &TAO_TRY_ENV)
+Notifier_Input_Handler::run (CORBA::Environment &ACE_TRY_ENV)
 {
   // Run the main event loop for the ORB.
 
@@ -215,7 +215,7 @@ Notifier_Input_Handler::run (CORBA::Environment &TAO_TRY_ENV)
   ACE_DEBUG ((LM_DEBUG,
 	      " Type \"q\" to quit \n "));
 
-  if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Notifier_Input_Handler::run"),
                       -1);
@@ -227,7 +227,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
@@ -247,16 +247,16 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
 	{
           // @@ Please remove this call if it's not used.
 	  // (this->notifier_i_.consumer_map_).close();
-	  this->notifier_i_.shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+	  this->notifier_i_.shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 	}
     }
-   TAO_CATCHANY
+   ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Input_Handler::init");
+      ACE_TRY_ENV.print_exception ("Input_Handler::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

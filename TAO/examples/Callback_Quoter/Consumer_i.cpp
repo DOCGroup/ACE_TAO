@@ -29,7 +29,7 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Callback_Quoter::Info &data,
-                  CORBA::Environment &env)
+                  CORBA::Environment &ACE_TRY_ENV)
 {
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.

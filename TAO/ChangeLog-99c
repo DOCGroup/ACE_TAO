@@ -1,3 +1,10 @@
+Tue Feb  9 20:43:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* $TAO_ROOT/examples/Callback_Quoter/*.cpp
+	Changed all the TAO_* macros for exceptions to 
+	ACE_* macros. This went clean on SunOSC++ and 
+	SunOSg++
+
 Tue Feb  9 17:55:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h: 
