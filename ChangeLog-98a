@@ -1,3 +1,9 @@
+Tue Jan 27 06:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/IOStream/server/iostream_server.cpp: for egcs, use
+          ACE_SOCK_IOSTREAM instead of its expansion in the ACE_Svc_Handler
+          template instantiation.
+
 Tue Jan 27 02:38:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{i,cpp}:
