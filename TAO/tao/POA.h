@@ -242,6 +242,8 @@ public:
   TAO_POA_Policies (TAO_ORB_Core &orb_core,
                     CORBA::Environment &ACE_TRY_ENV);
 
+  ~TAO_POA_Policies (void);
+
   PortableServer::ThreadPolicyValue thread (void) const;
   void thread (PortableServer::ThreadPolicyValue value);
 
