@@ -498,3 +498,28 @@ TAO_FT_Service_Callbacks::restart_policy_check (
   // Failure
   return 0;
 }
+
+
+void
+TAO_FT_Service_Callbacks::service_log_msg_rcv (
+    TAO_Message_State_Factory & /*state*/)
+{
+  // Oscar & ANDY to fill up
+  return;
+}
+
+void
+TAO_FT_Service_Callbacks::service_log_msg_pre_upcall (
+    TAO_ServerRequest & /*req*/)
+{
+  // Oscar & ANDY to fill up
+  return;
+}
+
+void
+TAO_FT_Service_Callbacks::service_log_msg_post_upcall (
+    TAO_ServerRequest & /*req*/)
+{
+  // Oscar & ANDY to fill up
+  return;
+}

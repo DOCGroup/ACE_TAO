@@ -30,6 +30,8 @@
 class TAO_Profile;
 class TAO_MProfile;
 class TAO_GIOP_Invocation;
+class TAO_Server_Request;
+class TAO_Message_State_Factory;
 
 class TAO_Export TAO_Service_Callbacks
 {
@@ -90,6 +92,23 @@ public:
                                        CORBA::Environment &ACE_TRY_ENV);
   // Allow the service layer to decide whether the TRANSIENT
   // exception should be thrown or a reinvocation is needed
+
+
+  virtual void service_log_msg_rcv (TAO_Message_State_Factory &state);
+  // Send the message state to the FT service for logging. This hook
+  // sends the message state after the server receives the
+  // message. The message at this point has been verified that it is a
+  // GIOP message.
+
+  virtual void service_log_msg_pre_upcall (TAO_ServerRequest &req);
+  // Send the message state to the FT service for logging. This hook
+  // sends the message state after the POA receives upcall but just
+  // before the call has been dispatched to the servant
+
+  virtual void service_log_msg_post_upcall (TAO_ServerRequest &req);
+  // Send the message state to the FT service for logging. This hook
+  // sends the message state just before the reply is ready to be
+  // dispatched.
 };
 
 

@@ -1255,6 +1255,7 @@ CORBA::ORB_init (int &argc,
   PortableInterceptor::ORBInitInfo_var orb_init_info =
     orb_init_info_temp;
 
+
   /// Call the ORBInitializer::pre_init() on each registered ORB
   /// initializer.
   TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in (),

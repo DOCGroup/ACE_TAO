@@ -1,8 +1,22 @@
+Mon Nov 13 09:50:06 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connect.cpp (open):
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.i:
+	* tao/PortableServer/Servant_Base.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Added
+	  hooks for the implementation of the Logging & Recovery. This
+	  will be implemented by Andy & Oscar at Bell-Labs.
+
 Mon Nov 13 02:13:54 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Strategies/TAO_Strategies.dsp:
 
-          An ACE_HAS_STRATEGIES_DLL was being defined for the cpp 
+          An ACE_HAS_STRATEGIES_DLL was being defined for the cpp
           files, which was preventing anything from being exported.
           Removed it and things look happy on Win32 Release now.
 
