@@ -22,15 +22,12 @@ int
 ACE_SSL_SOCK_Connector::shared_connect_start(ACE_SSL_SOCK_Stream &new_stream,
 					     ACE_Time_Value *timeout,
 					     const ACE_Addr &local_sap,
-					     int reuse_addr,
-					     int protocol_family,
-					     int protocol)
+					     int /* reuse_addr */,
+					     int /* protocol_family */,
+					     int /* protocol */)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_start");
 
-  ACE_UNUSED_ARG (reuse_addr);
-  ACE_UNUSED_ARG (protocol_family);
-  ACE_UNUSED_ARG (protocol);
   if (local_sap != ACE_Addr::sap_any)
   {
       sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
@@ -193,7 +190,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
       new_stream.set_SSL_fd ((int)new_stream.get_handle ());
 
       if (tv)
-        ACE::set_flags (new_stream.get_handle(), ACE_NONBLOCK);
+        ACE::set_flags (new_stream.get_handle (), ACE_NONBLOCK);
     }
 
   return new_stream.connect ();
@@ -232,7 +229,12 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
     {
       if (new_stream.get_SSL_fd () != new_stream.get_handle ())
         {
-          new_stream.set_SSL_fd ((int)new_stream.get_handle ());
+          if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
+              == ACE_INVALID_HANDLE)
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
+                                   "ACE_SSL_SOCK_Connector: "
+                                   "invalid handle\n")));
 
           if (timeout)
             ACE::set_flags(new_stream.get_handle (), ACE_NONBLOCK);
@@ -290,9 +292,14 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
               )));
   else
     {
-      if (new_stream.get_SSL_fd() != new_stream.get_handle())
+      if (new_stream.get_SSL_fd () != new_stream.get_handle())
         {
-          new_stream.set_SSL_fd((int)new_stream.get_handle());
+          if (new_stream.set_SSL_fd ((int)new_stream.get_handle ())
+              == ACE_INVALID_HANDLE)
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("ACE_SSL_SOCK_Connector::"
+                                   "ACE_SSL_SOCK_Connector: "
+                                   "invalid handle\n")));
 
           // if (timeout)
           //   ACE::set_flags(new_stream.get_handle(), ACE_NONBLOCK);

@@ -431,7 +431,7 @@ ACE_SSL_SOCK_Stream::enable (int value) const
     case ACE_CLOEXEC:
       ACE_NOTSUP_RETURN (-1);
     case ACE_NONBLOCK:
-      return stream_.enable (value);
+      return this->stream_.enable (value);
     default:
       return -1;
     }
@@ -451,7 +451,7 @@ ACE_SSL_SOCK_Stream::disable (int value) const
     case ACE_CLOEXEC:
       ACE_NOTSUP_RETURN (-1);
     case ACE_NONBLOCK:
-      return stream_.disable (value);
+      return this->stream_.disable (value);
     default:
       return -1;
     }
