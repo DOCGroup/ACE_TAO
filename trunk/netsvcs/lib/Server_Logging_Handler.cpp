@@ -134,6 +134,7 @@ ACE_Server_Logging_Acceptor::init (int argc,
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
 
@@ -361,6 +362,7 @@ ACE_Thr_Server_Logging_Acceptor::init (int argc,
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
 
