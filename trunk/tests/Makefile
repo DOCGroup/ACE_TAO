@@ -15,6 +15,7 @@ BIN =   Aio_Platform_Test \
         Auto_IncDec_Test \
         Barrier_Test \
         Basic_Types_Test \
+	Bound_Ptr_Test \
         Buffer_Stream_Test \
         Cache_Map_Manager_Test \
         Cached_Accept_Conn_Test \
