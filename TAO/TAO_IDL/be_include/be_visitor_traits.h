@@ -47,6 +47,8 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
+  
+  virtual int visit_array (be_array *node);
 
   virtual int visit_typedef (be_typedef *node);
 };
