@@ -34,7 +34,7 @@ Handle_Timeout::init (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'd': 
+       case 'd':
 	 delta.sec (ACE_OS::atoi (get_opt.optarg));
 	 break;
        case 'i':
@@ -46,18 +46,18 @@ Handle_Timeout::init (int argc, char *argv[])
        default:
 	 break;
        }
-  
-  if (ACE_Reactor::instance ()->schedule_timer (this, 
-						      (void *) arg, 
-						      delta, 
+
+  if (ACE_Reactor::instance ()->schedule_timer (this,
+						      (void *) arg,
+						      delta,
 						      interval) == -1)
     return -1;
   else
     return 0;
 }
 
-ACE_INLINE int 
-Handle_Timeout::fini (void) 
+ACE_INLINE int
+Handle_Timeout::fini (void)
 {
   return 0;
 }
@@ -69,14 +69,20 @@ Handle_Timeout::get_handle (void) const
 }
 
 ACE_INLINE int
-Handle_Timeout::handle_timeout (const ACE_Time_Value &tv, 
+Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
 				const void *arg)
 {
   if (this->count++ >= 10)
     return -1; // Automatically cancel periodic timer...
 
-  ACE_DEBUG ((LM_INFO, 
+#if defined (ACE_HAS_64BIT_LONGS)
+  ACE_DEBUG ((LM_INFO,
+	      "time for this(%u) expired at (%d, %d) with arg = %d\n",
+	     this, tv.sec (), tv.usec (), long (arg)));
+#else /* ! ACE_HAS_64BIT_LONGS */
+  ACE_DEBUG ((LM_INFO,
 	      "time for this(%u) expired at (%d, %d) with arg = %d\n",
 	     this, tv.sec (), tv.usec (), int (arg)));
+#endif /* ! ACE_HAS_64BIT_LONGS */
   return 0;
 }
