@@ -82,6 +82,7 @@
 // Platform does not have const anything
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_HAS_NONCONST_GETBY
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
@@ -207,5 +208,5 @@ extern "C"
 // Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
 // on SIG Proactor for this platform.
 // #define ACE_POSIX_SIG_PROACTOR
-#define ACE_POSIX_AIOCB_PROACTOR 
+#define ACE_POSIX_AIOCB_PROACTOR
 #endif /* ACE_CONFIG_H */
