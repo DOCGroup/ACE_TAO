@@ -8,6 +8,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
+#include "ace/OS_NS_string.h"
 
 #include "ace/TMCast/Group.hpp"
 
@@ -16,6 +17,7 @@ class Args {};
 int
 main (int argc, char* argv[])
 {
+  int status = 0;
   try
   {
     if (argc < 4) throw Args ();
@@ -72,14 +74,18 @@ main (int argc, char* argv[])
   {
     ACE_ERROR ((LM_ERROR,
                 "Usage: member {r|s} <id> <IPv4 mcast address>:<port>\n"));
+    status++;
   }
   catch (TMCast::Group::Failed const&)
   {
     ACE_ERROR ((LM_ERROR,
                 "Group failure. Perhaps I am alone in the group.\n"));
+    status++;
   }
   catch (TMCast::Group::InsufficienSpace const&)
   {
     ACE_ERROR ((LM_ERROR, "Insufficient space in receive buffer.\n"));
+    status++;
   }
+  return status;
 }

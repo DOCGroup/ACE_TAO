@@ -16,13 +16,14 @@
 #define ACE_NULL_CONDITION_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+// All methods in this class are inline, so there is no
+// need to import or export on Windows. -- CAE 12/18/2003
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
 #include "ace/os_include/os_errno.h"
 
 class ACE_Time_Value;
@@ -34,7 +35,7 @@ class ACE_Time_Value;
  * i.e., all methods are no ops.  This class is necessary since
  * some C++ compilers are *very* lame...
  */
-class ACE_Export ACE_Null_Condition
+class ACE_Null_Condition
 {
 public:
   ACE_Null_Condition (const ACE_Null_Mutex &m,
