@@ -526,7 +526,7 @@ be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
   else
     bt = node;
 
-  // pre do_call processing is valid only for pseudo objects and for Any
+  // pre do_static_call processing is valid only for pseudo objects and for Any
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
@@ -718,13 +718,13 @@ be_visitor_args_pre_docall_cs::visit_typedef (be_typedef *node)
 }
 
 // ****************************************************************************
-// visitor for argument passing to do_call. The do_call method takes a variable
+// visitor for argument passing to do_static_call. The do_static_call method takes a variable
 // number of parameters. The total number of parameters is determined by the
 // "calldata" parameter that must be passed before the variable list
-// starts. Each argument to the do_call is considered to be of type "void *".
+// starts. Each argument to the do_static_call is considered to be of type "void *".
 // Hence we pass the address of each argument. The case for _out is a bit
 // tricky where we must first retrieve the pointer, allocate memory and pass it
-// to do_call. This is done in the "pre_do_call" processing.
+// to do_static_call. This is done in the "pre_do_static_call" processing.
 // ****************************************************************************
 
 be_visitor_args_docall_cs::be_visitor_args_docall_cs (be_visitor_context *ctx)

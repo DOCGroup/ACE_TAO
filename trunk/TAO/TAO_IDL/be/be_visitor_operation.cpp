@@ -347,14 +347,14 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     {
       // STEP 5B:
       // generate code that retrieves the underlying stub object and then
-      // invokes do_call on it.
+      // invokes do_static_call on it.
       *os << "STUB_Object *istub = this->stubobj (_tao_environment);" << be_nl
           << "if (istub)" << be_nl
           << "{\n";
       os->incr_indent (0);
 
       // STEP 5C:
-      // do any pre do_call processing with return type. This includes
+      // do any pre do_static_call processing with return type. This includes
       // allocating memory, initialization.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_PRE_DOCALL_CS);
@@ -365,13 +365,13 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for retval pre do_call failed\n"),
+                             "codegen for retval pre do_static_call failed\n"),
                             -1);
         }
 
 
       // STEP 5D:
-      // do any pre do_call stuff with arguments
+      // do any pre do_static_call stuff with arguments
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_DOCALL_CS);
       visitor = tao_cg->make_visitor (&ctx);
@@ -381,14 +381,14 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for argument pre do_call failed\n"),
+                             "codegen for argument pre do_static_call failed\n"),
                             -1);
         }
 
       // STEP 5E:
-      // call do_call with appropriate number of arguments
+      // call do_static_call with appropriate number of arguments
       os->indent ();
-      *os << "istub->do_call (" << be_idt_nl
+      *os << "istub->do_static_call (" << be_idt_nl
           << "_tao_environment, " << be_nl
           << "&";
       // check if we are an attribute node in disguise
@@ -412,7 +412,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for return var in do_call failed\n"),
+                             "codegen for return var in do_static_call failed\n"),
                             -1);
         }
       // insert a comma after the return val if there are arguments
@@ -421,7 +421,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           *os << ",\n";
         }
 
-      // pass each argument to do_call
+      // pass each argument to do_static_call
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS);
       visitor = tao_cg->make_visitor (&ctx);
@@ -431,11 +431,11 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for return var in do_call failed\n"),
+                             "codegen for return var in do_static_call failed\n"),
                             -1);
         }
 
-      // end the do_call
+      // end the do_static_call
       *os << be_uidt_nl;
       *os << ");\n";
 
@@ -450,7 +450,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for return type post do_call failed\n"),
+                             "codegen for return type post do_static_call failed\n"),
                             -1);
         }
 
@@ -464,7 +464,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
-                             "codegen for args in post do_call failed\n"),
+                             "codegen for args in post do_static_call failed\n"),
                             -1);
         }
 
@@ -1901,7 +1901,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_union (be_union *node)
 //    be_visitor_operation_rettype_pre_docall_cs
 //
 //    This visitor generates code that passes the return type variable to the
-//    do_call method
+//    do_static_call method
 // *****************************************************************************
 
 be_visitor_operation_rettype_pre_docall_cs::
@@ -2012,7 +2012,7 @@ be_visitor_operation_rettype_pre_docall_cs::visit_union (be_union *node)
 //    be_visitor_operation_rettype_docall_cs
 //
 //    This visitor generates code that passes the return type variable to the
-//    do_call method
+//    do_static_call method
 // *****************************************************************************
 
 be_visitor_operation_rettype_docall_cs::be_visitor_operation_rettype_docall_cs
@@ -2146,7 +2146,7 @@ be_visitor_operation_rettype_docall_cs::visit_union (be_union *node)
 //    be_visitor_operation_rettype_post_docall_cs
 //
 //    This visitor generates code that passes the return type variable to the
-//    do_call method
+//    do_static_call method
 // ********************************************************************************
 
 be_visitor_operation_rettype_post_docall_cs::
@@ -2914,7 +2914,7 @@ be_visitor_operation_rettype_post_upcall_ss::visit_union (be_union *node)
 }
 
 // ************************************************************
-// generic operation visitor to handle the pre/post do_call/upcall stuff with
+// generic operation visitor to handle the pre/post do_static_call/upcall stuff with
 // arguments
 // ************************************************************
 

@@ -273,8 +273,8 @@ be_attribute::gen_client_stubs (void)
   *cs << "}" << nl;
   *cs << "this->Release (); // QueryInterface has bumped up our refcount" << nl;
 
-  // call do_call with appropriate number of arguments
-  *cs << "istub->do_call (env, &_get_" << this->flatname () <<
+  // call do_static_call with appropriate number of arguments
+  *cs << "istub->do_static_call (env, &_get_" << this->flatname () <<
     "_calldata";
 
   if (bt->node_type () == AST_Decl::NT_typedef)
@@ -392,7 +392,7 @@ be_attribute::gen_client_stubs (void)
   *cs << "}" << nl;
   *cs << "this->Release (); // QueryInterface has bumped up our refcount" << nl;
 
-  // do any pre do_call stuff with the lone IN parameter
+  // do any pre do_static_call stuff with the lone IN parameter
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_PRE_DOCALL_CS);
   if (!s || (s->gen_code (bt, this) == -1))
     {
@@ -403,8 +403,8 @@ be_attribute::gen_client_stubs (void)
     }
   cg->pop ();
 
-  // call do_call with appropriate number of arguments
-  *cs << "istub->do_call (env, &_set_" << this->flatname () <<
+  // call do_static_call with appropriate number of arguments
+  *cs << "istub->do_static_call (env, &_set_" << this->flatname () <<
   "_calldata, 0"; // no return value
 
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_DOCALL_CS);
@@ -420,7 +420,7 @@ be_attribute::gen_client_stubs (void)
   cg->pop ();
   *cs << ");" << nl;
 
-  // do any post do_call processing
+  // do any post do_static_call processing
   cg->push (TAO_CodeGen::TAO_ATTRIBUTE_POST_DOCALL_CS);
   s = cg->make_state ();
   if (!s || !bt || (s->gen_code (bt, this) == -1))

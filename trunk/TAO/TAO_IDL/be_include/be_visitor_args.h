@@ -131,7 +131,7 @@ class be_visitor_args_pre_docall_cs : public be_visitor_args
   //   be_visitor_args_docall_cs
   //
   // = DESCRIPTION
-  //   Code to be generated when making the do_call
+  //   Code to be generated when making the do_static_call
   //
 public:
   be_visitor_args_pre_docall_cs (be_visitor_context *ctx);
@@ -187,7 +187,7 @@ class be_visitor_args_docall_cs : public be_visitor_args
   //   be_visitor_args_docall_cs
   //
   // = DESCRIPTION
-  //   Code to be generated when making the do_call
+  //   Code to be generated when making the do_static_call
   //
 public:
   be_visitor_args_docall_cs (be_visitor_context *ctx);
@@ -243,7 +243,7 @@ class be_visitor_args_post_docall_cs : public be_visitor_args
   //   be_visitor_args_post_docall_cs
   //
   // = DESCRIPTION
-  //   Code to be generated after the do_call is done
+  //   Code to be generated after the do_static_call is done
   //
 public:
   be_visitor_args_post_docall_cs (be_visitor_context *ctx);

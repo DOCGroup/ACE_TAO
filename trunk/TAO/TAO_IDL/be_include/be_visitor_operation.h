@@ -332,7 +332,7 @@ public:
 };
 
 // ************************************************************
-// Operation visitor for preprocessing before do_call is invoked
+// Operation visitor for preprocessing before do_static_call is invoked
 // ************************************************************
 
 class be_visitor_operation_rettype_pre_docall_cs :public be_visitor_decl
@@ -342,7 +342,7 @@ class be_visitor_operation_rettype_pre_docall_cs :public be_visitor_decl
   //   be_visitor_operation_rettype_pre_docall_cs
   //
   // = DESCRIPTION
-  //   This is a visitor to generate any pre processing before the do_call is
+  //   This is a visitor to generate any pre processing before the do_static_call is
   //   made
   //
 public:
@@ -379,7 +379,7 @@ public:
 };
 
 // ************************************************************
-// Operation visitor for passing return variable to do_call
+// Operation visitor for passing return variable to do_static_call
 // ************************************************************
 
 class be_visitor_operation_rettype_docall_cs :public be_visitor_decl
@@ -432,7 +432,7 @@ public:
 };
 
 // ************************************************************
-// Operation visitor for postprocessing after do_call is invoked
+// Operation visitor for postprocessing after do_static_call is invoked
 // ************************************************************
 
 class be_visitor_operation_rettype_post_docall_cs :public be_visitor_decl
@@ -442,7 +442,7 @@ class be_visitor_operation_rettype_post_docall_cs :public be_visitor_decl
   //   be_visitor_operation_rettype_psot_docall_cs
   //
   // = DESCRIPTION
-  //   This is a visitor to generate any post processing after the do_call is
+  //   This is a visitor to generate any post processing after the do_static_call is
   //   made
   //
 public:
