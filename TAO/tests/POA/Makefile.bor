@@ -5,6 +5,7 @@
 DIRS = \
         Object_Reactivation \
 	Excessive_Object_Deactivations \
+	Etherealization \
         POA_Destruction \
         Identity \
         Non_Servant_Upcalls \
