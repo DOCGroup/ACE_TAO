@@ -212,9 +212,10 @@ CORBA_TypeCode::Release (void)
 	}
       else
 	{
-	  --_refcount;
-	  if (_refcount == 0)
+	  ULONG result = --_refcount;
+	  if (result == 0)
 	    delete this;
+	  return result; 
 	}
     }
 }
@@ -310,6 +311,7 @@ CORBA_TypeCode::prv_equal(CORBA_TypeCode_ptr tc, CORBA_Environment &env) const
       //      return prv_equal_alias(tc, env);
     case tk_except:
       //      return prv_equal_except(tc, env);
+    default:
       // Not implemented yet
       return CORBA_B_FALSE;
     }
