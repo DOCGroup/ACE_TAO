@@ -1,3 +1,7 @@
+Wed Jan 27 13:14:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO version 0.2.53 released.
+
 Tue Jan 26 22:06:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU,docs/configurations.html: moved TAO_ORBSVCS
