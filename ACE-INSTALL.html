@@ -288,7 +288,7 @@ make: *** [libACE.so] Error 8
       <code>include/makeinclude/platform_linux_lxpthread.GNU</code>
       and <code>ace/config-linux-lxpthreads.h</code> as your
       platform_macros.GNU and config.h files, respectively.  The same
-      files can be used on PowerPC, with LinuxPPC 
+      files can be used on PowerPC, with LinuxPPC
       1999 (R5), with glibc 2.1.1.<p>
 
       If you run out of memory, it's easy to add virtual memory on
@@ -480,7 +480,7 @@ make: *** [libACE.so] Error 8
   mkdir /usr/local/newgnu
 &lt ftp and untar binutils-2.9.1 &gt
 &lt ftp and untar gcc-2.95.2 &gt
-  mkdir -p build/binutils build/gcc                               
+  mkdir -p build/binutils build/gcc
   cd build/binutils
   ../../binutils-2.9.1/configure i386-sco-sysv4
   gmake  # takes a long time
@@ -1014,10 +1014,10 @@ need to do:<P>
   <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
       <code>$ACE_ROOT/ace/config.h</code>
       file that contains the appropriate platform/compiler-specific
-      header configurations, e.g., 
+      header configurations, e.g.,
 <PRE><CODE>
 % ln -s config-sunos5-sunc++-4.x.h config.h
-</PRE></CODE>
+</CODE></PRE>
       This file
       contains the #defines that are used throughout ACE to indicate
       which features your system supports (see the
@@ -1034,12 +1034,12 @@ need to do:<P>
       release.<P>
 
   <LI>Create (via <code>ln -s</CODE> or <CODE>cp</CODE>) a
-      $ACE_ROOT/include/makeinclude/platform_macros.GNU file 
+      $ACE_ROOT/include/makeinclude/platform_macros.GNU file
       that contains the appropriate platform/compiler-specific
-      Makefile configurations, e.g., 
+      Makefile configurations, e.g.,
 <PRE><CODE>
 % ln -s platform_sunos5_sunc++.GNU platform_macros.GNU
-</PRE></CODE>
+</CODE></PRE>
  This file
       contains the compiler and Makefile directives that are
       platform/compiler-specific<P>
@@ -1712,6 +1712,147 @@ on Windows NT hosts:
 </ol>
 
 
+<H4><A NAME=3D"vxworks">
+<a href="mailto:Jaffar_Shaikh@Mitel.COM">Jaffar Shaikh's</a>
+Notes for Building ACE and TAO for VxWorks on NT host</A></H4>
+<B><P>Scenario:</B>  I was building the ACE and TAO for VxWorks =
+on NT. The target system was a PPC860 based chassis and another a NT =
+host based card.</P>
+<B><P>Host System:</P>
+</B><P>NT 4.0 workstation with 128 M RAM, 266MHz Pentium.</P>
+
+<B><P>Software Needed For Building TAO</P>
+</B><P>1) PERL: Active State's ActivePerl 5.6.0.618 for NT available as =
+freeware from =
+http://www.ActiveState.com/download/contrib/Microsoft/NT/InstMsi.exe =
+</P>
+
+<P>2) Tornado II .Release V 9904 from Windriver.</P>
+
+<P>3) Cygwin GNU to build TAO. It is available for NT as a freeware =
+from </P>
+<P>http://sources.redhat.com/cygwin/</P>
+<P>The Cygwin Make (version 3.75) can only build the TAO not the =
+Tornado II make (version 3.74)</P>
+
+<B><P>Environmet Variables:</P>
+</B><P>On NT the environment Variables are set as follows, (from =
+Control Panel-&gt; System -&gt; Environment)</P>
+<P>I added following Environment variable entries to PATH </P>
+
+<P>C:\Perl\bin\;</P>
+<P>C:\tornado\host\x86-win32\bin;</P>
+<P>C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;</P>
+<P>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.=
+2-960126;</P>
+<P>C:\Corba\Ace_wrappers\bin;</P>
+<P>C:\Cygwin\bin;</P>
+<P>C:\Cygwin\usr\bin;</P>
+<P>C:\bin</P>
+
+<P>Additional Environmental variables and the values,</P>
+<P>CPU=3DPPC860</P>
+<P>LD_LIBRARY_PATH=3D</P>
+<P>SHELL=3D/bin/sh.exe</P>
+
+<P>ACE_ROOT=3D /Corba/ACE_wrappers </P>
+<P>WIND_BASE=3D/tornado</P>
+<P>SHELL=3D/bin/sh.exe</P>
+<P>TERM=3Dpcbios</P>
+<P>TAO_ROOT=3D/Corba/ACE_wrapper/Tao</P>
+<P>CPP_LOCATION=3D/Program Files/Microsoft Visual =
+Studio/VC98/Bin/CL.exe</P>
+<P>GCC_EXEC_PREFIX=3D/tornado/host/x86-win32/lib/gcc-lib/</P>
+<P>WIND_HOST_TYPE=3Dx86-win32</P>
+<P>PERL_PATH=3D/perl/bin/perl.exe</P>
+
+<B><P>Directories of importance</P>
+</B><P>C:\Corba &#9;&lt;-- Ace_wrappers (uzipped)</P>
+<P>C:\tornado &#9;&lt;-- Tornado installed</P>
+<P>C:\Perl &#9;&lt;-- Perl installed</P>
+<P>C:\Cygwin  &#9;&lt;-- Cygwin installed</P>
+<P>C:\bin        &lt;-- Copy these files,</P>
+<P>&#9;&#9; Ace.dll, &#9;&lt;-- After you build Ace</P>
+<P>&#9;&#9;gperf.exe     &#9;&lt;-- After you build gperf</P>
+<P>&#9;&#9;Cygwin1.dll, &#9;&lt;-- After you install Cygwin</P>
+<P>&#9;&#9;perl.exe,      &#9;&lt;-- After you install Perl</P>
+<P>&#9;&#9;rm.exe&#9;&#9;&lt;-- After you install Cygwin</P>
+<P>&#9;&#9;sh.exe&#9;&#9;&lt;-- After you install Cygwin</P>
+<P>&#9;&#9;true&#9;&#9;&lt;-- After you install Cygwin</P>
+<B><P>Create Files</P>
+</B><P>1) C:\Corba\ACE_Wrappers\ace\config.h</P>
+<P>with entry</P>
+<P>#if defined (_MSC_VER) || (__BORLANDC__)</P>
+<P>&#9;#include "ace/config-win32.h"</P>
+<P>&#9;#undef ACE_HAS_EXCEPTIONS</P>
+<P>#else</P>
+<P>&#9;#include "ace/config-vxworks5.x.h"</P>
+<P>&#9;#define ACE_HAS_IP_MULTICAST </P>
+<P>#endif</P>
+
+<P>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</P>
+<P>WIND_BASE =3D /tornado</P>
+<P>WIND_HOST_TYPE =3D x86-win32</P>
+<P>include =
+$(ACE_ROOT)/include/makeinclude/platform_vxworks5.x_g++.GNU</P>
+<P>ACE_COMPONENTS=3DFOR_TAO (you may choose this option to build ACE =
+library that supports TAO)</P>
+
+<P>&nbsp;</P>
+<B><P>Steps to Build</P>
+</B><P>1) Build Ace.dll under NT</P>
+<P>In  MS Visual C++ open C:\Corba\ACE_wrappers\ace.dsw And build Ace =
+DLL</P>
+<P>Copy Ace.dll in C:\bin</P>
+
+<P>2) Build gperf utility under NT</P>
+<P>In MS Visual C++ open =
+C:\Corba\ACE_wrappers\apps\gperf\src\gperf.dsw. Build gperf.exe</P>
+<P>Copy gperf.exe to C:\bin</P>
+
+<P>3) Mount Directries in Cygwin</P>
+<P>Click on Cygnus Solutions -&gt; Cygwin Bash Shell</P>
+<P>Mount following directories by using mount command.</P>
+<P>create respective directories first then use mount command </P>
+
+<P>e.g. Create /Corba directory then use $mount -s "C:\Corba" =
+/Corba</P>
+
+<P>C:\Corba  mount to /Corba</P>
+<P>C:\tornado mount to /tornado</P>
+<P>C:\Perl  mount to /perl</P>
+<P>C:\Cygwin  mount to /cygwin</P>
+<P>C:\bin  mount to /bin</P>
+<P>C:\Program Files mount to /Program Files </P>
+
+<P>4) Build ACE in Cygwin</P>
+<P>$cd /Corba/ACE_wrappers/ace </P>
+<P>$make static_libs=3D1</P>
+<P>This will build your ace library libACE.a for VxWorks. If you use =
+option shared_libs=3D1 then the build will be libACE.so. The other =
+options are same as follows.</P>
+
+<P>5) Build TAO in Cygwin</P>
+<P>$cd $TAO_ROOT/tao</P>
+<P>$make debug=3D0 optimize=3D1 static_libs_only=3D1 minimum_orb=3D1 =
+</P>
+<P>for shared libs use shared_libs=3D1</P>
+
+<P>The minimum Tao does not have following components,</P>
+<P>Dynamic Skeleton Interface</P>
+<P>Dynamic Invocation Interface</P>
+<P>Dynamic Any</P>
+<P>Interceptors</P>
+<P>Interface Repository</P>
+<P>Advanced POA features</P>
+<P>CORBA/COM interworking</P>
+
+<P>You may play around with above options to find suitable build for =
+your needs. For example when you give option debug=3D1 all the debug =
+symbols will be created and the build will huge in size. The debug =
+symbols are necessary when you want to debug your code.</P>
+
+
 <HR>
 <H3><A NAME="svcsinstall">Building and Installing ACE Network Services</A></H3>
 
@@ -1773,7 +1914,7 @@ the Network Services.<P>
 
 
 <HR><P>
-<H3><A NAME="#minimum_build">What Do I Need to Build for TAO?</A></H3>
+<H3><A NAME="minimum_build">What Do I Need to Build for TAO?</A></H3>
 Toshio Hori &lt;toshi@etl.go.jp&gt; provided these suggestions on building
 just what's needed for (a subset of) TAO:<p>
 
@@ -1921,7 +2062,7 @@ construct and destroy the ACE_Object_Manager.  The best way to do that
 is to call <code>ACE::init ()</code> and <code>ACE::fini ()</code>.
 Or, see the <code>#define</code> of <code>main (int, char *[])</code>
 in <a href="ace/OS.h"><code>ace/OS.h</code></a> to see how ACE does
-that for entry points named <code>main</code>.<p>
+that for entry points named <code>main</code>.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="cloning">Cloning the Source Tree</A></H4>
@@ -2037,8 +2178,7 @@ will get a rc=4 from the pre-linker.  This is ok.  This is due to some
 warnings about unresolved references which should get resolved during the
 link step.  Note, however, there shouldn't be any unresolved references
 from the binder (linkage editor).   You can get pre-link and link maps by
-uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
-
+uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="flags">Makefile Flags</A></H4>
