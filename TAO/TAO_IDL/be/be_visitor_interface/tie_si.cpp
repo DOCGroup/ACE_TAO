@@ -47,12 +47,14 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   TAO_OutStream *os; // output stream
   static char fulltiename [NAMEBUFSIZE]; // holds the class name
   static char localtiename [NAMEBUFSIZE]; // holds the tie name
+  static char localskelname [NAMEBUFSIZE]; // holds the local skeleton name
 
   if (node->srv_inline_gen () || node->imported ())
     return 0;
 
   ACE_OS::memset (fulltiename, '\0', NAMEBUFSIZE);
   ACE_OS::memset (localtiename, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (localskelname, '\0', NAMEBUFSIZE);
 
   os = this->ctx_->stream ();
 
@@ -63,11 +65,15 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
   ACE_OS::sprintf (fulltiename, "%s_tie", node->full_skel_name ());
   if (!node->is_nested ())
     {
+      ACE_OS::sprintf (localskelname, "POA_%s",
+                       node->local_name ()->get_string ());
       ACE_OS::sprintf (localtiename, "POA_%s_tie",
                        node->local_name ()->get_string ());
     }
   else
     {
+      ACE_OS::sprintf (localskelname, "%s",
+                       node->local_name ()->get_string ());
       ACE_OS::sprintf (localtiename, "%s_tie",
                        node->local_name ()->get_string ());
     }
@@ -159,7 +165,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());\n"
       << be_uidt_nl
-      << "return this->" << node->local_name () << "::_default_POA (env);" << be_uidt_nl
+      << "return this->" << localskelname << "::_default_POA (env);" << be_uidt_nl
       << "}\n\n";
 
   if (node->traverse_inheritance_graph (be_visitor_interface_tie_si::method_helper, os) == -1)
