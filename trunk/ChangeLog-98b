@@ -1,3 +1,8 @@
+Sun Aug  2 19:43:04 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/Reactor_Performance_Test.cpp:  Made a change suggested by 
+	  Irfan to allow this test to work in Windows 95.
+
 Sat Aug  1 20:35:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace:
