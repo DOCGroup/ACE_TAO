@@ -233,13 +233,14 @@ public:
                             ACE_Time_Value *timeout = 0);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> that has the lowest
-   * priority.  Note that <timeout> uses <{absolute}> time rather than
-   * <{relative}> time.  If the <timeout> elapses without receiving a
-   * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
-   * the queue is deactivated -1 is returned and <errno> is set to
-   * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
-   * of items still on the queue.
+   * Dequeue and return earliest the <ACE_Message_Block *> that has
+   * the lowest priority (i.e., preserves FIFO order for messages with
+   * the same priority).  Note that <timeout> uses <{absolute}> time
+   * rather than <{relative}> time.  If the <timeout> elapses without
+   * receiving a message -1 is returned and <errno> is set to
+   * <EWOULDBLOCK>.  If the queue is deactivated -1 is returned and
+   * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
+   * else the number of items still on the queue.  
    */
   virtual int dequeue_prio (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
@@ -258,7 +259,7 @@ public:
 
   /**
    * Dequeue and return the <ACE_Message_Block *> with the lowest
-   * deadlien time.  Note that <timeout> uses <{absolute}> time rather than
+   * deadline time.  Note that <timeout> uses <{absolute}> time rather than
    * <{relative}> time.  If the <timeout> elapses without receiving a
    * message -1 is returned and <errno> is set to <EWOULDBLOCK>.  If
    * the queue is deactivated -1 is returned and <errno> is set to
