@@ -1,3 +1,11 @@
+Wed Jun 21 18:35:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the 
+	  timer_value_usecs_ field to 0.  Thanks to Sandro Doro
+ 	  <doro.s@flashnet.it> for reporting this.
+
+	* tao/POA.cpp (key_to_object): Minor stylistic enhancements.
+
 Wed Jun 21 15:51:10 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:

@@ -4108,41 +4108,44 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       && this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       // Check to see if we alter the IOR.
-      CORBA::Object_var imr = this->orb_core ().implrepo_service ();
+      CORBA::Object_var imr =
+        this->orb_core ().implrepo_service ();
 
       if (CORBA::is_nil (imr.in ())
           || !imr->_stubobj ()
           || !imr->_stubobj ()->profile_in_use ())
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Invalid Implementation Repository IOR, skipping IMRification\n"));
-
+            ACE_DEBUG ((LM_DEBUG,
+                        "Invalid Implementation Repository IOR, skipping IMRification\n"));
           goto orbkey;
         }
 
-      CORBA::String_var imr_str = imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
+      CORBA::String_var imr_str =
+        imr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
       ACE_CHECK_RETURN (obj);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "IMR IOR = \n%s\n", imr_str.in ()));
-
-      char *pos = ACE_OS::strstr (imr_str.inout (), "://");
-
-      pos = ACE_OS::strchr (pos + 3, imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
-
+        ACE_DEBUG ((LM_DEBUG,
+                    "IMR IOR = \n%s\n",
+                    imr_str.in ()));
+      char *pos = ACE_OS::strstr (imr_str.inout (),
+                                  "://");
+      pos = ACE_OS::strchr (pos + 3,
+                            imr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
       if (pos)
-        *(pos + 1) = 0;  // Crop the string
+        pos[1] = 0;  // Crop the string.
       else
         {
           if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR, "Could not parse IMR IOR, skipping IMRification\n"));
-
+            ACE_ERROR ((LM_ERROR,
+                        "Could not parse IMR IOR, skipping IMRification\n"));
           goto orbkey;
         }
 
       ACE_CString ior (imr_str.in ());
 
-      // Add the key
+      // Add the key.
 
       CORBA::String_var key_str;
       TAO_POA::encode_sequence_to_string (key_str.inout (), key);
@@ -4150,16 +4153,18 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       ior += key_str.in ();
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "IMR-ified IOR = \n%s\n", ior.c_str ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    "IMR-ified IOR = \n%s\n",
+                    ior.c_str ()));
 
-      obj = this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      obj =
+        this->orb_core_.orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (obj);
 
       return obj;
     }
 
- orbkey:
-
+orbkey:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::PolicyList_var client_exposed_policies =
