@@ -244,4 +244,9 @@ ACEXML_ZipCharStream::peek_i (void)
 }
 #endif /* ACE_USES_WCHAR */
 
+#else
+#if defined (__HP_aCC)
+static int shut_up_aCC = 0;
+#endif /* __HP_aCC */
+
 #endif /* ACEXML_HAS_ZZIPLIB */
