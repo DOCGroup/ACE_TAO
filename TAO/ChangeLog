@@ -1,3 +1,17 @@
+Fri Oct 18 15:52:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/tests/ImplRepo/Makefile: 
+	* orbsvcs/tests/ImplRepo/NameService/Makefile: 
+	* orbsvcs/ImplRepo_Service/Makefile: 
+	* orbsvcs/orbsvcs/Makefile:
+	  Applied the patches provided by Craig Rodrigues so that
+	  Implementation Repostory and related tests will be compiled 
+	  only when ImplRepo is added to the list of TAO_ORBSVCS
+	  in platform_macros.
+
+	  Thanks to Craig Rodrigues for pointing this out and for
+	  the patches.
+
 Fri Oct 18 15:59:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/AMH/Sink_Server/mt_server.cpp: 

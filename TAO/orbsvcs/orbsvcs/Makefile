@@ -86,7 +86,8 @@ ifndef TAO_ORBSVCS
     TAO_ORBSVCS += Security SSLIOP
   endif # ssl
 
-  TAO_ORBSVCS += Notify
+  TAO_ORBSVCS += Notify \
+	ImplRepo
 
 endif # TAO_ORBSVCS
 

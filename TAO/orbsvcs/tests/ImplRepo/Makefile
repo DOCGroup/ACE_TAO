@@ -71,9 +71,12 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (ImplRepo,$(findstring ImplRepo,$(TAO_ORBSVCS)))
 ifeq ($(minimum_corba),0)
   BIN = $(BIN_UNCHECKED)
 endif # minimum_corba
+endif # ImplRepo
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
