@@ -63,7 +63,7 @@ Logger_Client::init (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init");
       return -1;
     }
   ACE_ENDTRY;
@@ -134,44 +134,52 @@ Logger_Client::init_loggers (CORBA::Environment &ACE_TRY_ENV)
 { 
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
-  this->logger_1_ = factory_->make_logger ("key1",
-                                           ACE_TRY_ENV);
-  if (ACE_TRY_ENV.exception () != 0)
-    return -1;
-
-  this->logger_2_ = factory_->make_logger ("key2",
-                                           ACE_TRY_ENV);
-  if (ACE_TRY_ENV.exception () != 0)
-    return -1;
-
-  if (CORBA::is_nil (this->logger_1_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "nil logger1"),
-                      -1);
-
-  if (CORBA::is_nil (this->logger_2_.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "nil logger2"),
-                      -1);
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Created two loggers\n"));
-
-  if (TAO_debug_level > 0)
+  ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nTrying to resolve already created logger..."));
-      Logger_var logger_3 = factory_->make_logger ("key1",
-                                                   ACE_TRY_ENV);
-      if (CORBA::is_nil (logger_3.in ()))
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nResolution failed."));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nResolution succeeded."));
-    }
+      this->logger_1_ = factory_->make_logger ("key1",
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      this->logger_2_ = factory_->make_logger ("key2",
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
+      if (CORBA::is_nil (this->logger_1_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "nil logger1"),
+                          -1);
+      
+      if (CORBA::is_nil (this->logger_2_.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "nil logger2"),
+                          -1);
+      
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Created two loggers\n"));
+      
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\nTrying to resolve already created logger..."));
+          Logger_var logger_3 = factory_->make_logger ("key1",
+                                                       ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+      
+          if (CORBA::is_nil (logger_3.in ()))
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nResolution failed."));
+          else
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nResolution succeeded."));
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "init_loggers");
+      return -1;
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -189,7 +197,7 @@ Logger_Client::run (void)
       Logger::Log_Record rec2;
       Logger::Log_Record rec3;
       Logger::Log_Record rec4;
-        ;
+      ;
       // Setup the first log record
       this->init_record (rec1,
                          Logger::LM_DEBUG,
@@ -265,10 +273,10 @@ Logger_Client::run (void)
 
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("run");
-      return -1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "run");
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
