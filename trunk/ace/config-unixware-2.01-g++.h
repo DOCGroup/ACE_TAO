@@ -14,6 +14,8 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_GNU_CSTRING_H
 
+#define __ACE_INLINE__
+
 #if defined (__ACE_INLINE__)
 #define ACE_HAS_INLINED_OSCALLS
 #endif /* __ACE_INLINE__ */

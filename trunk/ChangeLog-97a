@@ -1,3 +1,14 @@
+Sun Mar  2 17:14:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude: Updated all the platform-*g++.GNU files so
+ 	  that they no longer -D__ACE_INLINE__ (since this is handled in
+ 	  the the config-*g++.h files).
+
+	* ace: Updated all the config-*g++.h files so that they now
+ 	  #define __ACE_INLINE__ rather than having this set in the
+ 	  platform_*.GNU file.  This makes ACE easier to build and
+ 	  integrate with other software packages.
+
 Fri Feb 28 02:22:33 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SOCK_*: There were problems starting UDP broadcast servers

@@ -31,6 +31,12 @@
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
 
+#define __ACE_INLINE__
+
+#if defined (__ACE_INLINE__)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* __ACE_INLINE__ */
+
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights
 #undef msg_control

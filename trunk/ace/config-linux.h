@@ -10,6 +10,12 @@
 // Do we really need this #define here?
 #define LINUX 1.2.10
 
+#define __ACE_INLINE__
+
+#if defined (__ACE_INLINE__)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* __ACE_INLINE__ */
+
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
 

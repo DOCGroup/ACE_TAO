@@ -9,6 +9,12 @@
 
 #define ACE_HAS_UNICODE
 
+#define __ACE_INLINE__
+
+#if defined (__ACE_INLINE__)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* __ACE_INLINE__ */
+
 #define ACE_HAS_TERM_IOCTLS
 
 // Must specialize templates due to G++'s lame parameterized type
