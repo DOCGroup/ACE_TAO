@@ -476,11 +476,17 @@ main (int argc,
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+          if( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
+	  {
+            orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  }
           ACE_TRY_CHECK;
         }
 
       DISTRIBUTER::instance ()->shut_down (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb->shutdown(1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

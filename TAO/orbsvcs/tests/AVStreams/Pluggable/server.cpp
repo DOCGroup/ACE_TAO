@@ -11,6 +11,9 @@ static FILE *output_file = 0;
 static const char *output_file_name = "output";
 // File handle of the file into which data is written.
 
+int done = 0;
+
+
 int
 FTP_Server_StreamEndPoint::get_callback (const char *,
                                          TAO_AV_Callback *&callback)
@@ -55,7 +58,7 @@ FTP_Server_Callback::handle_destroy (void)
   // Called when the ftp client requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "FTP_Server_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
+  done = 1;
   return 0;
 }
 
@@ -167,7 +170,7 @@ main (int argc,
                           -1);
 
       else ACE_DEBUG ((LM_DEBUG,
-                       "File Opened Successfull\n"));
+                       "File Opened Successfully\n"));
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
@@ -203,7 +206,16 @@ main (int argc,
       if (result != 0)
         return result;
 
-      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      while ( !done )
+      {
+        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) ) 
+	{
+          orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+	}
+      }
+
+      orb->shutdown( ACE_ENV_SINGLE_ARG_PARAMETER );
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

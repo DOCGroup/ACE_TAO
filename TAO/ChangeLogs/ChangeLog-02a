@@ -1,3 +1,13 @@
+Mon Apr 22 15:20:50 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+
+	  Clean up termination: - do not call orb->shutdown() in a CORBA method
+	                        - change orb->run() to work_pending()/perform_work() 
+	                        - put the orb->shutdown() after the perform_work()
+
 Mon Apr 22 09:00:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Cache_Entries.h:
