@@ -1,3 +1,16 @@
+Wed Feb 12 12:32:57 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/RTCORBA/Client_Protocol/svc.conf:
+	* tests/RTCORBA/Server_Protocol/server_iiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf:  Added
+	  scheduling policy information to the above configuration
+	  files. This should fix the problems that shows up in our daily
+	  builds.
+
+
 Wed Feb 12 12:14:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* utils/catior/catior.cpp: Fixed a warning in g++ builds.
