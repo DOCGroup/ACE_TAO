@@ -19,12 +19,8 @@
 #define ACE_CONFIG_WIN32_H
 #include "ace/pre.h"
 
-
-
 // NOTE: Please do not add anything besides #include's here.  Put other stuff
 //       (definitions, etc.) in the included headers
-
-
 
 // Include the platform specific config file (Windows CE is special)
 
@@ -52,6 +48,8 @@
 #    include "ace/config-win32-ghs.h"
 #elif defined (__MINGW32__)
 #    include "ace/config-win32-mingw.h"
+#elif defined (__CYGWIN32__)
+#    include "ace/config-cygwin32.h"
 #else
 #    error Compiler is not supported
 #endif

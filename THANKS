@@ -566,7 +566,7 @@ N Becker <nbecker@fred.net>
 Yaolong Lan <lyaolong@cs.sunysb.edu>
 Elias Sreih <sealstd1@nortelnetworks.com>
 Liang Chen <chenl@nortelnetworks.com>
-Mark Laffoon <mark.laffoon@centraxcorp.com>
+Mark Laffoon <mark.laffoon@burning-glass.com>
 Ti Z <tiz@cisco.com>
 Brian Dance <Brian_Dance@UECCS.co.uk>
 Alexey Gadzhiev <alg@null.ru>
@@ -1353,8 +1353,12 @@ Tad Hetke <thetke@oresis.com>
 Graeme Clark <gclark@opentext.com>
 Gu Song <gusong_m@yahoo.com>
 Chris Hughes <chughes@stentor.com>
+Fikri Pribadi <fikri@ugotacall.com>
 Ioulia Passynkova <ioulia.passynkova@nettest.com>
+Steve Osselton <steve@prismtechnologies.com>
+Doron Rajwan <doron@BANDWIZ.COM>
 Stuart Jones <sjones@clcsmail.ksc.nasa.gov>
+Guillaume Renaud <guillaume.renaud@valtech.fr>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

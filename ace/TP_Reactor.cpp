@@ -125,7 +125,6 @@ ACE_TP_Reactor::owner (ACE_thread_t, ACE_thread_t *o_id)
     *o_id = ACE_Thread::self ();
 
   return 0;
-
 }
 
 int
@@ -135,9 +134,7 @@ ACE_TP_Reactor::owner (ACE_thread_t *t_id)
   *t_id = ACE_Thread::self ();
 
   return 0;
-
 }
-
 
 int
 ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)

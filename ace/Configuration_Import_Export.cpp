@@ -377,7 +377,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* fileName)
 
       // we have a line
       const ACE_TCHAR *name = this->skip_whitespace (buffer);
-      if (name)
+      if (*name != '\0')
         {
           ACE_TCHAR *end = (ACE_TCHAR *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
 

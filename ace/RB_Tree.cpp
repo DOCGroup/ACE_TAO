@@ -104,22 +104,24 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator =");
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  // Clear out the existing tree.
-  close_i ();
+  if (this != &rbt)
+    {
+      // Clear out the existing tree.
+      close_i ();
 
-  // Make a deep copy of the passed tree.
-  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
+      // Make a deep copy of the passed tree.
+      ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
-  for (iter.first ();
-       iter.is_done () == 0;
-       iter.next ())
-    insert_i (*(iter.key ()),
-              *(iter.item ()));
+      for (iter.first ();
+           iter.is_done () == 0;
+           iter.next ())
+        insert_i (*(iter.key ()),
+                  *(iter.item ()));
 
-  // Use the same allocator as the rhs.
-  allocator_ = rbt.allocator_;
+      // Use the same allocator as the rhs.
+      allocator_ = rbt.allocator_;
+    }
 }
-
 // Less than comparison function for keys, default functor
 // implementation returns 1 if k1 < k2, 0 otherwise.
 
@@ -1013,8 +1015,11 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator=");
-  tree_ = iter.tree_;
-  node_ = iter.node_;
+  if (this != &iter)
+    {
+      tree_ = iter.tree_;
+      node_ = iter.node_;
+    }
 }
 
 // Destructor.
