@@ -192,7 +192,7 @@ public:
 
   void print_stats (void);
 
-  void setup (void);
+  void setup (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -257,7 +257,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
     RTCORBA::TCPProtocolProperties::_narrow (base_transport_protocol_properties.in ());
 
   tcp_base_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-  ACE_CHECK;
 
   RTCORBA::ProtocolList protocols;
   protocols.length (1);
@@ -299,7 +298,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       udp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
   else if (protocols[0].protocol_type == TAO_TAG_SCIOP_PROFILE)
     {
@@ -307,7 +305,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::StreamControlProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       sctp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
   else if (protocols[0].protocol_type == IOP::TAG_INTERNET_IOP)
     {
@@ -315,7 +312,6 @@ Worker::Worker (CORBA::ORB_ptr orb,
         RTCORBA::TCPProtocolProperties::_narrow (test_transport_protocol_properties.in ());
 
       tcp_test_transport_protocol_properties->enable_network_priority (enable_diffserv_code_points);
-      ACE_CHECK;
     }
 
   protocols[0].transport_protocol_properties =
@@ -479,11 +475,11 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
 
     test_protocol_setup:
 
-      ACE_TRY
+      ACE_TRY_EX (B1)
         {
           // Send a message to ensure that the connection is setup.
           this->test_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (B1);
 
           goto test_protocol_success;
         }
@@ -521,7 +517,7 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
 
     base_protocol_setup:
 
-      ACE_TRY
+      ACE_TRY_EX (B2)
         {
           // Let the server know what to expect..
           this->test_->start_test (this->session_id_,
@@ -530,7 +526,7 @@ Worker::setup (ACE_ENV_SINGLE_ARG_DECL)
                                    message_size,
                                    iterations
                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_TRY_CHECK_EX (B2);
 
           goto base_protocol_success;
         }
@@ -668,7 +664,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   if (test_type == THROUGHPUT && 
       ACE_OS::strcmp (test_protocol, "DIOP") != 0)
     {
-      this->test_->twoway_sync (ACE_ENV_ARG_PARAMETER);
+      this->test_->twoway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -682,7 +678,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Tell server that the test is over.
-  this->test_->end_test (ACE_ENV_ARG_PARAMETER);
+  this->test_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
