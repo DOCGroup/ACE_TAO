@@ -1,3 +1,18 @@
+Thu Dec 16 20:37:17 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/Options.html:
+
+	  Added HTML name attributes to some ORB option descriptions.
+
+	* docs/pluggable_protocols/index.html:
+
+	  Added many more useful hyperlinks
+
+	* docs/img5.png:
+
+	  Scaled to 75% of original size.  Thanks to Doug for pointing out
+	  the original size was very large.
+
 Thu Dec 16 18:52:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/pluggable_protocols/index.html:
