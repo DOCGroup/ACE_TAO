@@ -89,6 +89,10 @@ LINK32=link.exe
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
+SOURCE=.\Clock_Ticks.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\server.cpp
 # End Source File
 # Begin Source File
@@ -110,6 +114,14 @@ SOURCE=.\TestS.cpp
 # Begin Source File
 
 SOURCE=.\Server_Peer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TestS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
