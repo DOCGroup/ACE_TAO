@@ -118,7 +118,7 @@ private:
   // by advancing to the next <argv>-element.
 
   const char *optstring_;
-  // Holds the option string.
+  // Holds the option string.  
 };
 
 #if defined (__ACE_INLINE__)
