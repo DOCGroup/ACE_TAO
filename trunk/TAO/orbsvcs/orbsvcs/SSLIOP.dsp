@@ -159,19 +159,19 @@ SOURCE=.\SSLIOP\SSLIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_Util.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOPC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
 SOURCE=.\SSLIOP\IIOP_SSL_Acceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSLIOP\IIOP_SSL_Connect.h
 # End Source File
 # Begin Source File
 
@@ -195,10 +195,6 @@ SOURCE=.\SSLIOP\SSLIOP_Acceptor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Connect.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.h
 # End Source File
 # Begin Source File
@@ -211,15 +207,7 @@ SOURCE=.\SSLIOP\SSLIOP_Current.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Current.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSLIOP\SSLIOP_Current_Impl.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSLIOP\SSLIOP_Current_Impl.inl
 # End Source File
 # Begin Source File
 
@@ -248,6 +236,10 @@ SOURCE=.\SSLIOP\SSLIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Util.h
 # End Source File
 # Begin Source File
 
@@ -345,7 +337,11 @@ BuildCmds= \
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter "i;inl"
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Connection_Handler.inl
+# End Source File
 # Begin Source File
 
 SOURCE=.\SSLIOP\ssl_endpoints.i
@@ -356,11 +352,15 @@ SOURCE=.\SSLIOP\SSLIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Connect.i
+SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\SSLIOP\SSLIOP_Connection_Handler.i
+SOURCE=.\SSLIOP\SSLIOP_Current.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_Current_Impl.inl
 # End Source File
 # Begin Source File
 
