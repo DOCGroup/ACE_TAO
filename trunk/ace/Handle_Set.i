@@ -2,6 +2,7 @@
 // $Id$
 
 // Handle_Set.i
+#include "ace/Log_Msg.h"
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 
