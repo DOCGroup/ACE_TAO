@@ -1,3 +1,14 @@
+Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Shared_Malloc/test_malloc.cpp (spawn): Fixed a minor
+ 	  problem with conversions from const char * literals to char *'s.
+  	  Thanks to John Mulhern for reporting this problem.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-in{server,client}.cpp: Fixed all
+ 	  uses of void *request with char *request to stop ANSI C++
+ 	  compilers from complaining.  Thanks to John Mulhern for
+ 	  reporting this problem.
+
 Tue Sep 01 16:22:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Filecache.cpp (init and ~ACE_Filecache_Object): Changed
