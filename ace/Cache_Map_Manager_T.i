@@ -5,9 +5,9 @@
 #define T_2  KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
 
 template <T_1> ACE_INLINE int
-ACE_Cache_Map_Manager<T_2>::purge (MAP &map)
+ACE_Cache_Map_Manager<T_2>::purge (void)
 {
-  return this->caching_strategy ()->clear_cache (map);
+  return this->caching_strategy ()->clear_cache (this->map_);
 }
 
 template <T_1> ACE_INLINE size_t
