@@ -605,8 +605,8 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
 
   // = Set/get the debug level.
-  ACE_NAMESPACE_INLINE_FUNCTION char debug (void);
-  ACE_NAMESPACE_INLINE_FUNCTION void debug (char d);
+  extern ACE_Export char debug (void);
+  extern ACE_Export void debug (char d);
 
   /// Wrapper facade for @c select that uses @c ACE_Handle_Sets.
   extern ACE_Export int select (int width,

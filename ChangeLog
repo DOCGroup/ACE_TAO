@@ -1,3 +1,10 @@
+Mon Aug 16 11:54:50 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h (debug):
+
+	  Corrected the export qualifier for these functions.  They are no
+	  longer inlined.
+
 Mon Aug 16 11:16:02 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.h:
