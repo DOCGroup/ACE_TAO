@@ -1,3 +1,8 @@
+Fri Aug 27 18:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+          Added iorinterceptor as base project
+
 Fri Aug 27 16:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
