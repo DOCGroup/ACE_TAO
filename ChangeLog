@@ -1,3 +1,11 @@
+Fri Feb  7 13:04:51 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_wchar.h: Added a new macro, ACE_TEXT_ALWAYS_WCHAR(STRING).
+          It's the inverse of ACE_TEXT_ALWAYS_CHAR - whatever STRING is,
+          the macro produces a wide-char string. Thanks to
+          Emmanuel Thevenot Beaufort <emmanuel.thevenot-beaufort@jci.com>
+          for this macro.
+
 Thu Feb  6 19:30:18 2003  Steve Huston  <shuston@riverace.com>
 
         * tests/SString_Test.cpp: Added a test for wide-string compares of
