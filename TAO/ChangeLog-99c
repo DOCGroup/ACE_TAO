@@ -1,3 +1,15 @@
+Thu Apr 29 19:28:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.{h,i,cpp}:
+	* tao/Object.cpp:
+          Added the contexts() and env() operations to Request.
+	  Since this involved adding an env_ member to Request,
+	  I modified Objects's _create_request and _request
+	  methods to pass along their environment args to the
+	  Request constructors, whicn were also modified to 
+	  accept them and initialize env_. This won't change the
+	  signature or the functionality of any existing code.
+
 Thu Apr 29 19:16:04 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): 
