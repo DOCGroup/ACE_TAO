@@ -27,12 +27,12 @@ QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
   TAO_TRY 
     {
       // Get a reference to the ORB.
-      CORBA::ORB_var orb_var = TAO_ORB_Core_instance ()->orb ();
+      CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
       TAO_CHECK_ENV;
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var = 
-        orb_var->resolve_initial_references ("NameService");
+        orb_ptr->resolve_initial_references ("NameService");
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (namingObj_var.in ())) 
@@ -65,7 +65,7 @@ QuoterFactoryFinder_i::QuoterFactoryFinder_i (void)
       quoterFactoryFinderName_[0].id = CORBA::string_dup ("QuoterFactoryFinder");
 
       this->quoterNamingContext_var_->bind (quoterFactoryFinderName_,
-                                            (CORBA::Object *) this,
+                                            this->_this(),
                                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
