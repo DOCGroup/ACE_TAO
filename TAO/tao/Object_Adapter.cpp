@@ -720,7 +720,8 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_a
     cookie_ (0),
     operation_ (0),
 #endif /* TAO_HAS_MINIMUM_CORBA */
-    active_object_map_entry_ (0)
+    active_object_map_entry_ (0),
+    using_servant_locator_ (0)
 {
 }
 
@@ -875,8 +876,17 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
 {
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  if (this->cookie_ != 0)
+  if (this->using_servant_locator_)
     {
+      // If we are a single threaded POA, teardown the appropriate
+      // locking in the servant.
+      //
+      // Note that teardown of the servant lock must happen before the
+      // post_invoke() call since that might end up deleting the
+      // servant.
+      //
+      this->poa_->teardown_servant_lock (this->servant_);
+
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {

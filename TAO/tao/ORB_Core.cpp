@@ -44,7 +44,7 @@ TAO_default_environment ()
 
 // ****************************************************************
 
-TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
+TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
@@ -149,7 +149,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Be certain to copy the program name so that service configurator
   // has something to skip!
   ACE_Arg_Shifter arg_shifter (argc, argv);
-  const char* argv0 = "";
+  const char *argv0 = "";
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
@@ -524,7 +524,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              char* opt = arg_shifter.get_current ();
+              char *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt,
                                       "URL") == 0)
                 use_ior = 0;
@@ -1075,7 +1075,7 @@ TAO_ORB_Core::resource_factory (void)
                     "(%P|%t) WARNING - No Resource Factory found in Service Repository."
                     "  Using default instance with GLOBAL resource source specifier.\n"));
 
-      TAO_Default_Resource_Factory* default_factory;
+      TAO_Default_Resource_Factory *default_factory;
       ACE_NEW_RETURN (default_factory,
                       TAO_Default_Resource_Factory,
                       0);
@@ -1189,7 +1189,7 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   if (tss_resources->reactor_ != 0)
     {
       // We'll use the spawning thread's reactor.
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
       if (tss->reactor_ != 0 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -1421,7 +1421,7 @@ TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
       if (tss->input_cdr_dblock_allocator_ == 0)
         {
@@ -1450,7 +1450,7 @@ TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
       if (tss->input_cdr_buffer_allocator_ == 0)
         {
@@ -1481,7 +1481,7 @@ TAO_ORB_Core::output_cdr_dblock_allocator (void)
   if (this->use_tss_resources_)
 #endif /* 0 */
     {
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1514,7 +1514,7 @@ TAO_ORB_Core::output_cdr_buffer_allocator (void)
   if (this->use_tss_resources_)
 #endif /* 0 */
     {
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
       if (tss->output_cdr_buffer_allocator_ == 0)
         {
@@ -1592,7 +1592,7 @@ TAO_ORB_Core::reactor (void)
 {
   if (this->use_tss_resources_)
     {
-      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+      TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
       if (tss->reactor_ == 0)
         {
@@ -1629,7 +1629,7 @@ TAO_ORB_Core::default_environment (void) const
 }
 
 void
-TAO_ORB_Core::default_environment (CORBA_Environment* env)
+TAO_ORB_Core::default_environment (CORBA_Environment *env)
 {
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
@@ -1740,8 +1740,8 @@ TAO_ORB_Table::end (void)
 }
 
 int
-TAO_ORB_Table::bind (const char* orb_id,
-                     TAO_ORB_Core* orb_core)
+TAO_ORB_Table::bind (const char *orb_id,
+                     TAO_ORB_Core *orb_core)
 {
   if (this->first_orb_ == 0)
     {
@@ -1752,16 +1752,16 @@ TAO_ORB_Table::bind (const char* orb_id,
 }
 
 TAO_ORB_Core*
-TAO_ORB_Table::find (const char* orb_id)
+TAO_ORB_Table::find (const char *orb_id)
 {
-  TAO_ORB_Core* found = 0;
+  TAO_ORB_Core *found = 0;
   ACE_CString id (orb_id);
   this->table_.find (id, found);
   return found;
 }
 
 int
-TAO_ORB_Table::unbind (const char* orb_id)
+TAO_ORB_Table::unbind (const char *orb_id)
 {
   ACE_CString id (orb_id);
   TAO_ORB_Core *orb_core;
@@ -1786,22 +1786,29 @@ TAO_ORB_Core_instance (void)
 {
   // @@ This is a slight violation of layering, we should use
   //    TAO_ORB_Core_instance(), but that breaks during startup.
-  TAO_ORB_Table* orb_table = TAO_ORB_Table::instance ();
+  TAO_ORB_Table *orb_table = TAO_ORB_Table::instance ();
   if (orb_table->first_orb () == 0)
     {
-      int argc = 0;
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_TRY
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      if (orb_table->first_orb () == 0)
         {
-          (void) CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          int argc = 0;
+          ACE_DECLARE_NEW_CORBA_ENV;
+          ACE_TRY
+            {
+              (void) CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // @@ What should we do here?
+            }
+          ACE_ENDTRY;
         }
-      ACE_CATCHANY
-        {
-          // @@ What should we do here?
-        }
-      ACE_ENDTRY;
     }
+
   return orb_table->first_orb ();
 }
 

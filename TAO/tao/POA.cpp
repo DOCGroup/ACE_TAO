@@ -1214,7 +1214,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
   if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
       // If we reach here, then we either have the MULTIPLE_ID policy
-      // or we xhave the UNIQUE_ID policy and we are not in the active
+      // or we have the UNIQUE_ID policy and we are not in the active
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
@@ -1895,6 +1895,18 @@ TAO_POA::locate_servant_i (const char *operation,
               // Increment the reference count.
               ++servant_upcall.active_object_map_entry ()->reference_count_;
 
+              // If this operation causes the object to be activated,
+              // _add_ref is invoked at least once on the Servant
+              // argument before returning. Otherwise, the POA does
+              // not increment or decrement the reference count of the
+              // Servant passed to this function.
+              servant->_add_ref (ACE_TRY_ENV);
+              ACE_CHECK_RETURN (0);
+
+              // If we are a single threaded POA, set up the
+              // appropriate locking in the servant.
+              this->establish_servant_lock (servant);
+
               // Success
               return servant;
             }
@@ -1932,7 +1944,17 @@ TAO_POA::locate_servant_i (const char *operation,
           ACE_CHECK_RETURN (0);
 
           if (servant == 0)
-            return 0;
+            {
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                0);
+            }
+
+          // If we are a single threaded POA, set up the
+          // appropriate locking in the servant.
+          this->establish_servant_lock (servant);
+
+          // Remember to invoke <postinvoke>
+          servant_upcall.using_servant_locator ();
 
           // Remember the cookie
           servant_upcall.locator_cookie (cookie);
