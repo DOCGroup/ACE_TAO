@@ -1358,6 +1358,19 @@ ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
 // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_DNode)
+
+template <class T>
+ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
+  : item_ (i), next_ (n), prev_ (p)
+{
+}
+
+template <class T>
+ACE_DNode<T>::~ACE_DNode (void)
+{
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 
 template <class T> int
@@ -1703,5 +1716,357 @@ ACE_Unbounded_Stack_Iterator<T>::next (T *&item)
       return 1;
     }
 }
+
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Ordered_MultiSet)
+
+
+template <class T>
+ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (ACE_Allocator *alloc)
+  : head_ (0)
+  , tail_ (0)
+  , cur_size_ (0)
+  , allocator_ (alloc)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
+
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+}
+
+template <class T>
+ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &us)
+  : head_ (0)
+  , tail_ (0)
+  , cur_size_ (0)
+  , allocator_ (us.allocator_)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
+
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+
+  this->copy_nodes (us);
+}
+
+template <class T>
+ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet (void)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet");
+
+  this->delete_nodes ();
+}
+
+
+template <class T> void
+ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
+{
+  ACE_TRACE ("ACE_Ordered_MultiSet<T>::operator=");
+
+  if (this != &us)
+    {
+      this->delete_nodes ();
+      this->copy_nodes (us);
+    }
+}
+
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::insert (const T &item)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
+
+  return  this->insert_from (item, this->head_, 0);
+}
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::insert (const T &item, ITERATOR &iter)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
+
+  return  this->insert_from (item, iter.current_, &iter.current_);
+}
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::remove (const T &item)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::remove");
+
+  ACE_DNode<T> *node = 0;
+
+  int result = locate (item, 0, node);
+
+  // if we found the node, remove from list and free it
+  if (node && (result == 0))
+  {
+    if (node->prev_)
+    {
+      node->prev_->next_ = node->next_;
+    }
+    else
+    {
+      head_ = node->next_;
+    }
+
+    if (node->next_)
+    {
+      node->next_->prev_ = node->prev_;
+    }
+    else
+    {
+      tail_ = node->prev_;
+    }
+
+    this->cur_size_--;
+
+    ACE_DES_FREE_TEMPLATE (node, this->allocator_->free, ACE_DNode, <T>);
+
+	return 0;
+  }
+
+  return -1;
+}
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::find (const T &item, ITERATOR &iter) const
+{
+  // search an occurance of item, using iterator's current position as a hint
+  ACE_DNode<T> *node = iter.current_;
+  int result = locate (item, node, node);
+
+  // if we found the node, update the iterator and indicate success
+  if (node && (result == 0))
+  {
+    iter.current_ = node;
+    return 0;
+  }
+
+  return -1;
+}
+
+
+
+template <class T> void
+ACE_Ordered_MultiSet<T>::reset (void)
+{
+  ACE_TRACE ("reset");
+
+  this->delete_nodes ();
+}
+
+template <class T> void
+ACE_Ordered_MultiSet<T>::dump (void) const
+{
+//  ACE_TRACE ("ACE_Ordered_MultiSet<T>::dump");
+//
+//  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+//  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
+//  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
+//  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+//
+//  T *item = 0;
+//  size_t count = 1;
+//
+//  for (ACE_Ordered_MultiSet_Iterator<T> iter (*(ACE_Ordered_MultiSet<T> *) this);
+//       iter.next (item) != 0;
+//       iter.advance ())
+//    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+//
+//  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
+                                      ACE_DNode<T> **new_position)
+{
+// ACE_TRACE ("ACE_Unbounded_Queue<T>::insert_tail");
+
+    // create a new node
+  ACE_DNode<T> *temp;
+  ACE_NEW_MALLOC_RETURN (
+    temp,
+    (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
+    ACE_DNode<T> (item), -1);
+
+  // obtain approximate location of the node
+  int result = locate (item, position, position);
+
+  // if there are nodes in the multiset
+  if (position)
+  {
+    switch (result)
+    {
+      // insert after the approximate position
+      case -1:
+
+        // if there is a following node
+        if (position->next_)
+        {
+          // link up with the following node
+          position->next_->prev_ = temp;
+          temp->next_ = position->next_;
+        }
+        else
+        {
+          // appending to the end of the set
+          tail_ = temp;
+        }
+
+        // link up with the preceeding node
+        temp->prev_ = position;
+        position->next_ = temp;
+
+        break;
+
+      // insert before the position
+      case  0:
+      case  1:
+
+        // if there is a preceeding node
+        if (position->prev_)
+        {
+          // link up with the preceeding node
+          position->prev_->next_ = temp;
+          temp->prev_ = position->prev_;
+        }
+        else
+        {
+          // prepending to the start of the set
+          head_ = temp;
+        }
+
+        // link up with the preceeding node
+        temp->next_ = position;
+        position->prev_ = temp;
+
+        break;
+
+      default:
+        return -1;
+		break;
+    }
+  }
+  else
+  {
+    // point the head and tail to the new node.
+    this->head_ = temp;
+    this->tail_ = temp;
+  }
+
+
+  this->cur_size_++;
+  return 0;
+}
+
+template <class T> int
+ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position, 
+                                 ACE_DNode<T> *&new_position) const
+{
+  if (! start_position)
+  {
+    start_position = this->head_;
+  }
+
+  // if starting before the item, move forward
+  // until at or just before item
+  while (start_position && start_position->item_ < item && 
+         start_position->next_)
+  {
+    start_position = start_position->next_;    
+  }
+
+  // if starting after the item, move back
+  // until at or just after item
+  while (start_position && item < start_position->item_ &&
+         start_position->prev_)
+  {
+    start_position = start_position->prev_;
+  }
+
+  // save the (approximate) location in the passed pointer
+  new_position = start_position;
+
+  // show the location is after (1), before (-1) , or at (0) the item
+  if (! new_position )
+  {
+    return 1;
+  }
+  else if (item < new_position->item_)
+  {
+    return 1;
+  }
+  else if (new_position->item_ < item)
+  {
+    return -1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+  // looks for first occurance of <item> in the ordered set, using the 
+  // passed starting position as a hint: if there is such an instance, it
+  // updates the new_position pointer to point to one such node and returns 0;
+  // if there is no such node, then if there is a node before where the 
+  // item would have been, it updates the new_position pointer to point
+  // to this node and returns -1; if there is no such node, then if there
+  // is a node after where the item would have been, it updates the 
+  // new_position pointer to point to this node (or 0 if there is no such 
+  // node) and returns 1; 
+
+template <class T> void
+ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
+{
+  ACE_DNode<T> *insertion_point = this->head_;
+
+  for (ACE_DNode<T> *curr = us.head_;
+       curr;
+       curr = curr->next_)
+  {
+    this->insert_from (curr->item_, insertion_point, &insertion_point);
+  }
+}
+
+template <class T> void
+ACE_Ordered_MultiSet<T>::delete_nodes (void)
+{
+  // iterate through list, deleting nodes
+  ACE_DNode<T> *curr = this->head_;
+  while (curr)
+  {
+    ACE_DNode<T> *temp = curr;
+    curr = curr->next_;
+    ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free, ACE_DNode, <T>);
+  }
+
+  this->head_ = 0;
+  this->tail_ = 0;
+  this->cur_size_ = 0;
+}
+
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Ordered_MultiSet_Iterator)
+
+template <class T>
+ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s)
+    : current_ (s.head_),
+      set_ (s)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator");
+}
+
+ template <class T> int
+ACE_Ordered_MultiSet_Iterator<T>::next (T *&item)
+{
+// ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::next");
+  if (this->current_)
+  {
+    item = &this->current_->item_;
+    return 1;
+  }
+
+  return 0;  
+}
+
 
 #endif /* ACE_CONTAINERS_C */
