@@ -89,7 +89,8 @@ Collocation_Test::init (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Collocation_Test::parse_args (int argc, char *argv[])
+Collocation_Test::parse_args (int /*argc*/,
+                              char *[] /*argv*/)
 {
   return 0;
 }
@@ -98,19 +99,19 @@ int
 Collocation_Test::test_narrow (CORBA::Environment &ACE_TRY_ENV)
 {
   Diamond::Top_var top =
-    Diamond::Top::_narrow (this->diamond_obj_, ACE_TRY_ENV);
+    Diamond::Top::_narrow (this->diamond_obj_.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Left_var left =
-    Diamond::Left::_narrow (this->diamond_obj_, ACE_TRY_ENV);
+    Diamond::Left::_narrow (this->diamond_obj_.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Right_var right =
-    Diamond::Right::_narrow (this->diamond_obj_, ACE_TRY_ENV);
+    Diamond::Right::_narrow (this->diamond_obj_.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Buttom_var buttom =
-    Diamond::Buttom::_narrow (this->diamond_obj_, ACE_TRY_ENV);
+    Diamond::Buttom::_narrow (this->diamond_obj_.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   CORBA::String_var str = top->shape (ACE_TRY_ENV);

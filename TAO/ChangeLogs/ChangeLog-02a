@@ -1,3 +1,10 @@
+Sun Feb 25 10:01:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Collocation/Coll_Tester.cpp (parse_args): 
+	* tests/Collocation/Coll_Tester.h:
+	* tests/Collocation/Diamond_i.h: Fixed warnings with g++ on
+	  Linux. 
+
 Sat Feb 24 11:01:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Latency/st_client.conf:
