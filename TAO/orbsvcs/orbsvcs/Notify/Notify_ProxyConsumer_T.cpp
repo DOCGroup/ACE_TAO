@@ -87,6 +87,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
   CORBA::Boolean ret_val;
 
   ret_val = supplier_admin_->MyOperator (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   if (ret_val == CosNotifyChannelAdmin::AND_OP)
     {
@@ -123,6 +124,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::on_connected (CORBA::Environment &ACE_TR
     ACE_THROW (CORBA::IMP_LIMIT ()); // we've reached the limit of suppliers connected.
 
   this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
+  ACE_CHECK;
 
   (*supplier_count)++;
 }

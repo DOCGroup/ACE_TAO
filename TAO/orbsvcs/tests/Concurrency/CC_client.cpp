@@ -361,8 +361,10 @@ CC_Client::init_naming_service (void)
   ACE_TRY
     {
       ACE_NEW_RETURN (naming_service_,
-                      CC_naming_service (this->orb_, ACE_TRY_ENV),
+                      CC_naming_service,
                       -1);
+
+      this->naming_service_->Init (this->orb_, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

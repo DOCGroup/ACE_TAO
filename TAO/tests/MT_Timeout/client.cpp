@@ -19,24 +19,24 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case 'i':
-	iterations = ACE_OS::atoi (get_opts.optarg);
-	break;
+        iterations = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case 'n':
-	threads = ACE_OS::atoi (get_opts.optarg);
-	break;
+        threads = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
-			   "-i <iterations> "
-			   "-i <threads> "
+                           "-k <ior> "
+                           "-i <iterations> "
+                           "-i <threads> "
                            "\n",
                            argv [0]),
                           -1);
@@ -105,10 +105,23 @@ main (int argc, char *argv[])
                   task0.successful_calls (),
                   task0.timed_out_calls ()));
 
+      if (task0.timed_out_calls () == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: non-zero number of timeouts "
+                      "expected for task 0\n"));
+        }
+
       ACE_DEBUG ((LM_DEBUG,
                   "Task 1: Successful calls = %d, timed out calls = %d\n",
                   task1.successful_calls (),
                   task1.timed_out_calls ()));
+      if (task1.successful_calls () != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "ERROR: zero successful calls "
+                      "expected for task 1\n"));
+        }
     }
   ACE_CATCHANY
     {
