@@ -434,6 +434,11 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   // to check for errors before indirect and to limit the new
   // stream's length.  ULONG_MAX is too much!
 
+  // @@ ASG @@ - comparison with -8 or -4. I think the spec says it must be
+  // larger than -4 (absolute value)
+  // 09/04/98 - check this
+  //
+
   CORBA::Long offset;
   if (!stream->read_long (offset)
       || offset >= -8
@@ -711,11 +716,43 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
       }
 
     // Get the member size and alignment.
+    // However, for variable sized member types and types that have
+    // constructors, these become members of the pointer types. We need to
+    // determine if we are dealing with such a member and accordingly adjust
+    // the size and alignment
+    CORBA::Boolean var_sized_member = 0;
+    TAO_InputCDR temp (*stream);
+    if (calc_union_attr_is_var_sized_member (&temp, var_sized_member) == -1)
+      {
+        env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+        return 0;
+     }
 
-    member_size = calc_nested_size_and_alignment (0,
-                                                  stream,
-                                                  member_alignment,
-                                                  env);
+    if (var_sized_member)
+      {
+        // define a dummy structure to compute alignment of pointer type
+        struct align_ptr
+        {
+          void *one;
+          char dummy [TAO_MAXIMUM_NATIVE_TYPE_SIZE + 1 - sizeof (void*)];
+          void *two;
+        };
+        align_ptr ap;
+
+        member_size = sizeof (void*);
+        member_alignment = (char *) &ap.two - (char *) &ap.one 
+          - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+        (void) CORBA::TypeCode::skip_typecode (*stream);
+      }
+    else
+      {
+        // proceed with the normal way of computing the size and alignment
+        member_size = calc_nested_size_and_alignment (0,
+                                                      stream,
+                                                      member_alignment,
+                                                      env);
+      }
+
     if (env.exception () != 0)
       return 0;
 
@@ -742,7 +779,8 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
   if (value_alignment > overall_alignment)
     overall_alignment = value_alignment;
 
-  return (size_t) align_binary (discrim_size_with_pad + value_size,
+  return (size_t) align_binary (discrim_size_with_pad + value_size
+                                + sizeof (TAO_Base_Union),
                                 overall_alignment);
 }
 
@@ -992,6 +1030,156 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
     }
 
   return retval;
+}
+
+int 
+TAO_IIOP_Interpreter
+::calc_union_attr_is_var_sized_member (TAO_InputCDR *stream,
+                                       CORBA::Boolean &flag)
+{
+  CORBA::Environment env;
+  CORBA::ULong temp;
+  flag = 0;
+
+  // Get the tk_ "kind"  field
+  if (stream->read_ulong (temp) == 0)
+    {
+      // error
+      return -1;
+    }
+
+  env.clear ();
+
+  CORBA::TCKind kind = (CORBA::TCKind) temp;
+
+  switch (kind)
+    {
+    case CORBA::tk_null:
+    case CORBA::tk_void:
+      // error
+      return -1;
+    case CORBA::tk_short:
+    case CORBA::tk_ushort:
+    case CORBA::tk_long:
+    case CORBA::tk_ulong:
+    case CORBA::tk_longlong:
+    case CORBA::tk_ulonglong:
+    case CORBA::tk_float:
+    case CORBA::tk_double:
+    case CORBA::tk_longdouble:
+    case CORBA::tk_boolean:
+    case CORBA::tk_char:
+    case CORBA::tk_wchar:
+    case CORBA::tk_octet:
+    case CORBA::tk_enum:
+    case CORBA::tk_Principal:
+      // not variable sized
+      return 0;
+    case CORBA::tk_any:
+    case CORBA::tk_TypeCode:
+    case CORBA::tk_objref:
+    case CORBA::tk_union:
+    case CORBA::tk_string:
+    case CORBA::tk_wstring:
+    case CORBA::tk_sequence:
+    case CORBA::tk_array:
+    case CORBA::tk_except:
+      // always variable sized
+      flag = 1;
+      return 0;
+    case CORBA::tk_alias:
+      // find out what its base says
+      {
+        CORBA::ULong encap;
+
+        // Pull encapsulation length out of the stream.
+        if (stream->read_ulong (encap) == 0)
+          {
+            return -1;
+          }
+
+        assert (encap <= UINT_MAX);
+        
+        TAO_InputCDR nested (*stream, temp);
+        
+        if (nested.good_bit () == 0)
+          {
+            return -1;
+          }
+
+        // Skip type ID and name in the parameter stream
+        if (!nested.skip_string ()                   // type ID
+            || !nested.skip_string ())               // typedef name
+          {
+            return -1;
+          }
+
+        //        stream->skip_bytes (encap);
+        return calc_union_attr_is_var_sized_member (&nested, flag);
+      }
+      break;
+    case CORBA::tk_struct:
+      // explore further based on members
+      {
+        CORBA::ULong encap;
+
+        // Pull encapsulation length out of the stream.
+        if (stream->read_ulong (encap) == 0)
+          {
+            return -1;
+          }
+
+        assert (encap <= UINT_MAX);
+        
+        TAO_InputCDR nested (*stream, temp);
+        
+        if (nested.good_bit () == 0)
+          {
+            return -1;
+          }
+
+        //        stream.skip_bytes (encap);
+        // Skip type ID and name in the parameter stream
+        if (!nested.skip_string ()                   // type ID
+            || !nested.skip_string ())               // typedef name
+          {
+            return -1;
+          }
+        
+        CORBA::ULong member_count;
+        if (nested.read_ulong (member_count) == 0)
+          {
+            return -1;
+          }
+        for (CORBA::ULong i = 0; i < member_count && !flag; i++)
+          {
+            // stop this loop the moment we discover that a member is variable
+            // in size
+
+            // skip the name
+            if (nested.skip_string () == 0)
+              {
+                return -1;
+              }
+            TAO_InputCDR member_tc (nested);
+            if (calc_union_attr_is_var_sized_member (&member_tc, flag) == -1)
+              {
+                return -1;
+              }
+            CORBA::TypeCode::skip_typecode (nested);
+          }
+      }
+      return flag;
+      break;
+    case ~0:
+      // TO-DO
+      return 0;
+    default:
+      // error
+      return -1;
+    }
+  // cannot reach here
+  return -1;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

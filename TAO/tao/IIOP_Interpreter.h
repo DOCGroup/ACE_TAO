@@ -216,6 +216,12 @@ public:
                              size_t &discrim_size_with_pad,
                              CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
+
+  // = Utility routine that checks if a union member is a variable sized type
+  // (and hence is a pointer)
+  static int calc_union_attr_is_var_sized_member (TAO_InputCDR *temp,
+                                                  CORBA::Boolean &flag);
+
   // = Utility routines that skip unneeded parameter lists.
   static CORBA::Boolean skip_encapsulation (TAO_InputCDR *stream);
   static CORBA::Boolean skip_long (TAO_InputCDR *stream);

@@ -1,3 +1,20 @@
+Fri Sep  4 14:35:58 1998  Aniruddha Gokhale  <gokhale@cs.wustl.edu>
+
+	* tao/IIOP_Interpreter.{h, cpp}:
+
+	  Added a new static method called
+	  "calc_union_attr_is_var_sized_member".
+
+	  It turns out that since variable sized data typed become pointer
+	  variables inside the C++ mapping of union members, the "size"
+	  calculation in IIOP_Interpreter.cpp (calc_union_attributes) was
+	  completely wrong. In addition, it did not take into the account
+	  the size of the vtable. This is necessary since our C++ union
+	  mapping is a class that derives from the TAO_Base_Union class.
+
+	  This code has been verified to work on the Cubit example for the
+	  RTI test which was previously failing.
+
 Fri Sep 04 13:25:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Scheduling_Service/Makefile,
