@@ -46,7 +46,7 @@ public:
   // return operation name
 
   int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+                       CORBA::Environment &env);
   // set values for parameters
 
   int reset_parameters (void);
@@ -77,6 +77,8 @@ private:
 
   Param_Test::Var_Struct_var ret_;
   // return value
+
+  Param_Test::Var_Struct *dii_out_;
 };
 
 #endif /* PARAM_TEST_VAR_STRUCT_H */

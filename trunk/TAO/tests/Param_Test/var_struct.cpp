@@ -98,20 +98,28 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
 			   CORBA::NVList_ptr retval,
 			   CORBA::Environment &env)
 {
-  CORBA::Any in_arg (Param_Test::_tc_Var_Struct, (void *) &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Var_Struct, &this->inout_.inout (), 0);
-  CORBA::Any out_arg (Param_Test::_tc_Var_Struct, this->out_.out (), 0);
+  CORBA::Any in_arg (Param_Test::_tc_Var_Struct, 
+                    &this->in_, 
+                    CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Var_Struct, 
+                        (void *) &this->inout_.in (), 
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Var_Struct, 
+                      this->dii_out_, 
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Struct,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Struct,
+                                            0,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
@@ -147,12 +155,25 @@ CORBA::Boolean
 Test_Var_Struct::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
+
+#if 0
   this->inout_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *) req->arguments
                                          ()->item (1, env)->value ()->value ());
   this->out_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *) req->arguments
                                        ()->item (2, env)->value ()->value ());
   this->ret_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *)req->result
                                        ()->value ()->value ());
+#endif
+
+  Param_Test::Var_Struct *inout_holder, *out_holder, *ret_holder;
+  *req->arguments ()->item (1, env)->value () >>= inout_holder;
+  *req->arguments ()->item (2, env)->value () >>= out_holder;
+  *req->result ()->value () >>= ret_holder;
+
+//  this->inout_ = inout_holder;
+  this->out_ = out_holder;
+  this->ret_ = ret_holder;
+
   return this->check_validity ();
 }
 
