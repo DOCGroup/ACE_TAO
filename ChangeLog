@@ -1,3 +1,11 @@
+Sun Jan 23 19:17:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Create new ACE_WITH_{GL,FL,QT,TK} autoconf macros which will be
+	  used for finding OpenGL, FL/TK, Qt and Tk libraries and setting
+	  compiler and linker flags.
+
 Sun Jan 23 15:45:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
