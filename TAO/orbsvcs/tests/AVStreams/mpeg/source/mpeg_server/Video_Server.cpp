@@ -242,6 +242,7 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
   server_string = (const char *) the_spec [0];
   CORBA::Boolean result;
   result = VIDEO_CONTROL_I::instance ()->set_peer (server_string,env);
+  // Get media control from my vdev and call set_peer on that.
   
   the_spec.length (1);
   the_spec [0]=server_string;

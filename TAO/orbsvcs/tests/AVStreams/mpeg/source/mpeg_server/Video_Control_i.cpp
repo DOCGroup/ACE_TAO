@@ -4,9 +4,11 @@
 #include "mpeg_server/Video_Server.h"
 
 Video_Control_i::Video_Control_i ()
-  : reactor_ (TAO_ORB_Core_instance ()->reactor ())
+  : reactor_ (TAO_ORB_Core_instance ()->reactor ()),
+    state_ (0),
+    data_handler_ (0),
+    sig_handler_ (0)
 {
-  
 }
 
 int
@@ -202,8 +204,16 @@ Video_Control_i::register_handlers (void)
 {
   int result;
 
-  // Register the event handlers with the Reactor
 
+  // create the handlers
+
+  if (this->create_handlers () == -1)
+    return -1;
+
+  this->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+  // sets the state to waiting.
+
+  // Register the event handlers with the Reactor
   // first the data handler, i.e. UDP
   result = this->reactor_->register_handler (this->data_handler_, 
                                              ACE_Event_Handler::READ_MASK);
