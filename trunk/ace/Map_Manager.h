@@ -341,8 +341,7 @@ protected:
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
 
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
-  // Implementation of the Map (should use hashing instead of
-  // array...).
+  // Implement the Map as a resizeable array of <ACE_Map_Entry>.
 
   size_t total_size_;
   // Total number of elements in this->search_structure_.

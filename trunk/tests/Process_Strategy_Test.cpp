@@ -450,7 +450,9 @@ Counting_Service::open (void *)
     {
       // We need to rerun the event loop here since we ended up here
       // due to being fork'd and we can't just return to our context
-      // since it's in the wrong location in the process.
+      // because it's in the middle of a different event loop that
+      // won't behave properly since it's meant to handle connection
+      // establishment, *not* data transfer.
       while (this->handle_input () >= 0)
         continue;
 

@@ -1,3 +1,14 @@
+Thu Aug 12 22:05:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Synch.h: Updated the comment to remind folks who would
+	  like to have a working ACE_Process_Condition to contact us if
+ 	  they know how to do this.  Thanks to Craig Anderson
+ 	  <chanders@timing.com> for motivating this.
+
+	* tests/Process_Strategy_Test.cpp (open): Clarified the behavior
+	  of the code that's run when fork() is used.  Thanks to Umar
+ 	  Syyid for motivating this.
+
 Thu Aug 12 21:30:09 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
