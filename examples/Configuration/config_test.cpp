@@ -269,8 +269,9 @@ main (int, char *[])
     int result = test (&RegConfig);
     if (result)
       {
-        ACE_DEBUG ((LM_ERROR, "Win32 registry test failed (%d)\n", result));
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Win32 registry test failed (%d)\n", result),
+                          -1);
       }
   }
 
@@ -286,30 +287,29 @@ main (int, char *[])
     int result = test (&heap_config);
     if (result)
       {
-        ACE_DEBUG ((LM_ERROR,
-                    "Heap Configuration test failed (%d)\n", result));
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Heap Configuration test failed (%d)\n", result),
+                          -1);
       }
   }
 
   // Test persistent heap version
   unlink ("test.reg");
-  ACE_Configuration_Heap* pers_config = new ACE_Configuration_Heap;
-  if (pers_config->open ("test.reg"))
+  ACE_Configuration_Heap pers_config;
+  if (pers_config.open ("test.reg"))
     {
       return 0;
     }
   {
-    int result = test (pers_config);
+    int result = test (&pers_config);
     if (result)
       {
-        ACE_DEBUG ((LM_ERROR,
-                    "Persistent Heap Configuration test failed (%d)\n",
-                    result));
-        return -1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Persistent Heap Configuration test failed (%d)\n",
+                           result),
+                          -1);
       }
   }
-  delete pers_config;
 
   // Test file i/o using a transient heap
   ACE_Configuration_Heap io_config;
