@@ -11,6 +11,10 @@ Tue Jul 10 11:51:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Richard L. Johnson <rich@huey.jpl.nasa.gov> for reporting
           this bug and for sending in the example IDL file.
 
+        * tests/IDL_Test/interface.idl:
+
+          Added example IDL to this file in the IDL test suite.
+
 Tue Jul 10 05:52:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* tao/Profile.h,
