@@ -30,8 +30,9 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-RSC=rc.exe
+# PROP Target_Last_Scanned "Indirect - Win32 Debug"
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "Direct - Win32 Debug"
 
@@ -62,7 +63,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -75,10 +76,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\..\..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\..\..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Direct.pdb" /debug /machine:I386 /out:"$(OUTDIR)/Direct.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)\direct_logging.obj"
@@ -120,7 +119,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_OBJS=.\Debug/
 CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -133,10 +132,8 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+# ADD LINK32 ..\..\..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\..\..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
  /pdb:"$(OUTDIR)/Indirect.pdb" /debug /machine:I386\
  /out:"$(OUTDIR)/Indirect.exe" 
 LINK32_OBJS= \
@@ -149,8 +146,8 @@ LINK32_OBJS= \
 
 !ENDIF 
 
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
- /Fp"$(INTDIR)/Direct.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /D "WIN32" /D "_DEBUG"\
+ /D "_CONSOLE" /Fp"$(INTDIR)/Direct.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -179,45 +176,53 @@ CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
 
 SOURCE=.\direct_logging.cpp
 DEP_CPP_DIREC=\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Addr.h"\
-	{$(INCLUDE)}"\ace\Addr.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.h"\
-	{$(INCLUDE)}"\ace\INET_Addr.i"\
-	{$(INCLUDE)}"\ace\IPC_SAP.h"\
-	{$(INCLUDE)}"\ace\IPC_SAP.i"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\SOCK.h"\
-	{$(INCLUDE)}"\ace\SOCK.i"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
-	{$(INCLUDE)}"\ace\SOCK_Connector.i"\
-	{$(INCLUDE)}"\ace\SOCK_IO.h"\
-	{$(INCLUDE)}"\ace\SOCK_IO.i"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.h"\
-	{$(INCLUDE)}"\ace\SOCK_Stream.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\..\..\ace/ACE.h"\
+	"..\..\..\ace/ACE.i"\
+	"..\..\..\ace/Addr.h"\
+	"..\..\..\ace/Addr.i"\
+	"..\..\..\ace/Auto_Ptr.cpp"\
+	"..\..\..\ace/Auto_Ptr.h"\
+	"..\..\..\ace/Auto_Ptr.i"\
+	"..\..\..\ace/Basic_Types.h"\
+	"..\..\..\ace/Basic_Types.i"\
+	"..\..\..\ace/config-win32-borland.h"\
+	"..\..\..\ace/config-win32-common.h"\
+	"..\..\..\ace/config-win32.h"\
+	"..\..\..\ace/config-WinCE.h"\
+	"..\..\..\ace/config.h"\
+	"..\..\..\ace/inc_user_config.h"\
+	"..\..\..\ace/INET_Addr.h"\
+	"..\..\..\ace/INET_Addr.i"\
+	"..\..\..\ace/iosfwd.h"\
+	"..\..\..\ace/IPC_SAP.h"\
+	"..\..\..\ace/IPC_SAP.i"\
+	"..\..\..\ace/Log_Msg.h"\
+	"..\..\..\ace/Log_Priority.h"\
+	"..\..\..\ace/Log_Record.h"\
+	"..\..\..\ace/Log_Record.i"\
+	"..\..\..\ace/Malloc_Base.h"\
+	"..\..\..\ace/Managed_Object.cpp"\
+	"..\..\..\ace/Managed_Object.h"\
+	"..\..\..\ace/Managed_Object.i"\
+	"..\..\..\ace/Object_Manager.h"\
+	"..\..\..\ace/Object_Manager.i"\
+	"..\..\..\ace/OS.h"\
+	"..\..\..\ace/OS.i"\
+	"..\..\..\ace/SOCK.h"\
+	"..\..\..\ace/SOCK.i"\
+	"..\..\..\ace/SOCK_Connector.h"\
+	"..\..\..\ace/SOCK_Connector.i"\
+	"..\..\..\ace/SOCK_IO.h"\
+	"..\..\..\ace/SOCK_IO.i"\
+	"..\..\..\ace/SOCK_Stream.h"\
+	"..\..\..\ace/SOCK_Stream.i"\
+	"..\..\..\ace/SString.h"\
+	"..\..\..\ace/SString.i"\
+	"..\..\..\ace/streams.h"\
+	"..\..\..\ace/sys_conf.h"\
+	"..\..\..\ace/Time_Value.h"\
+	"..\..\..\ace/Trace.h"\
+	"..\..\..\ace/ws2tcpip.h"\
 	
 
 "$(INTDIR)\direct_logging.obj" : $(SOURCE) $(DEP_CPP_DIREC) "$(INTDIR)"
@@ -234,30 +239,38 @@ DEP_CPP_DIREC=\
 
 SOURCE=.\indirect_logging.cpp
 DEP_CPP_INDIR=\
-	{$(INCLUDE)}"\ace\ACE.h"\
-	{$(INCLUDE)}"\ace\ACE.i"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
-	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
-	{$(INCLUDE)}"\ace\config-win32-common.h"\
-	{$(INCLUDE)}"\ace\config-win32.h"\
-	{$(INCLUDE)}"\ace\config.h"\
-	{$(INCLUDE)}"\ace\Log_Msg.h"\
-	{$(INCLUDE)}"\ace\Log_Priority.h"\
-	{$(INCLUDE)}"\ace\Log_Record.h"\
-	{$(INCLUDE)}"\ace\Log_Record.i"\
-	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
-	{$(INCLUDE)}"\ace\Managed_Object.h"\
-	{$(INCLUDE)}"\ace\Managed_Object.i"\
-	{$(INCLUDE)}"\ace\Object_Manager.h"\
-	{$(INCLUDE)}"\ace\Object_Manager.i"\
-	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\ace\OS.i"\
-	{$(INCLUDE)}"\ace\SString.h"\
-	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
-	{$(INCLUDE)}"\ace\Trace.h"\
-	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	"..\..\..\ace/ACE.h"\
+	"..\..\..\ace/ACE.i"\
+	"..\..\..\ace/Auto_Ptr.cpp"\
+	"..\..\..\ace/Auto_Ptr.h"\
+	"..\..\..\ace/Auto_Ptr.i"\
+	"..\..\..\ace/Basic_Types.h"\
+	"..\..\..\ace/Basic_Types.i"\
+	"..\..\..\ace/config-win32-borland.h"\
+	"..\..\..\ace/config-win32-common.h"\
+	"..\..\..\ace/config-win32.h"\
+	"..\..\..\ace/config-WinCE.h"\
+	"..\..\..\ace/config.h"\
+	"..\..\..\ace/inc_user_config.h"\
+	"..\..\..\ace/iosfwd.h"\
+	"..\..\..\ace/Log_Msg.h"\
+	"..\..\..\ace/Log_Priority.h"\
+	"..\..\..\ace/Log_Record.h"\
+	"..\..\..\ace/Log_Record.i"\
+	"..\..\..\ace/Malloc_Base.h"\
+	"..\..\..\ace/Managed_Object.cpp"\
+	"..\..\..\ace/Managed_Object.h"\
+	"..\..\..\ace/Managed_Object.i"\
+	"..\..\..\ace/Object_Manager.h"\
+	"..\..\..\ace/Object_Manager.i"\
+	"..\..\..\ace/OS.h"\
+	"..\..\..\ace/OS.i"\
+	"..\..\..\ace/SString.h"\
+	"..\..\..\ace/SString.i"\
+	"..\..\..\ace/streams.h"\
+	"..\..\..\ace/sys_conf.h"\
+	"..\..\..\ace/Trace.h"\
+	"..\..\..\ace/ws2tcpip.h"\
 	
 
 "$(INTDIR)\indirect_logging.obj" : $(SOURCE) $(DEP_CPP_INDIR) "$(INTDIR)"
