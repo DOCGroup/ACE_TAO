@@ -26,6 +26,7 @@
 class TAO_Notify_Event_Listener;
 class TAO_Notify_Update_Listener;
 
+// @@ Pradeep: do not forget the TAO_***_Export macros...
 class TAO_Notify_EventType
 {
   // = TITLE
@@ -78,12 +79,22 @@ protected:
   // A special event type
 };
 
+// ****************************************************************
+// @@ Pradeep: please remember to separate your classes with a line
+// like the one above.  Or better yet, do not put multiple classes in
+// the same file.
+
+// @@ Pradeep: more export macro madness
 class TAO_Notify_Event
 {
   // = TITLE
   //   TAO_Notify_Event
   //
   // = DESCRIPTION
+  //   @@ Pradeep: Could you explain in more detail what do this
+  //   abstraction is there for?  Is it to treat different event
+  //   types, like anys, structured events, etc. homogenously?
+  //
   //   Abstraction for an event
   //
 public:
@@ -106,13 +117,17 @@ public:
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer, CORBA::Environment &ACE_TRY_ENV) const = 0;
   // Push self to <consumer>
+
 protected:
   CORBA::Boolean is_owner_;
   // Do we own the data.
 };
 
+// ****************************************************************
+
 class TAO_Notify_Any : public TAO_Notify_Event
 {
+  // @@ Pradeep: please document this class...
 public:
   TAO_Notify_Any (void);
   TAO_Notify_Any (const CORBA::Any & data);
@@ -133,8 +148,11 @@ protected:
   // The data
 };
 
+// ****************************************************************
+
 class TAO_Notify_StructuredEvent : public TAO_Notify_Event
 {
+  // @@ Pradeep: please document this class.
 public:
   TAO_Notify_StructuredEvent (void);
   TAO_Notify_StructuredEvent (const CosNotification::StructuredEvent & notification);
@@ -157,6 +175,9 @@ protected:
   // The event type of <data_>
 };
 
+// ****************************************************************
+
+// @@ Pradeep: please change the name of this class...
 class EVENTTYPE_LIST : public ACE_Unbounded_Set <TAO_Notify_EventType>
 {
   // = TITLE
@@ -178,6 +199,13 @@ public:
   void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
   // remove the contents of <event_type_seq> from this object.
 };
+
+// ****************************************************************
+
+// @@ Pradeep, please don't use all CAPS for types, we use all caps
+// for macros only.
+// @@ Pradeep: typedefs or not they should be prefixed, otherwise you
+// are polluting the namespace.
 
 // = typedefs
 typedef ACE_Unbounded_Set<TAO_Notify_Event_Listener*> EVENT_LISTENER_LIST;

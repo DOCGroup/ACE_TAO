@@ -63,6 +63,9 @@ class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotify
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
   // The proxy that we are connected to.
 
+  // @@ Pradeep: you may want to be consitent about your field names,
+  // here is <proxy_id> for the supplier is <my_id_>, for the
+  // TAO_Notify_Proxy is just <myID_>....
   CosNotifyChannelAdmin::ProxyID proxy_id_;
   // The proxy_supplier id.
 

@@ -8,9 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	CosEC \
-	RtEC \
-	Notify
+DIRS  =	Subscribe \
+	Filter
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

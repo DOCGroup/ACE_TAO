@@ -1,5 +1,8 @@
-/* -*- C++ -*- $Id$ */
+// -*- C++ -*-
+// $Id$
 #include "Notify_StructuredPushSupplier.h"
+
+// @@ Pradeep: the RCSID
 
 TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (void)
 {

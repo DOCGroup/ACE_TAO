@@ -12,14 +12,18 @@
 #include "Notify_SequenceProxyPushConsumer_i.h"
 #include "Notify_ProxyPushConsumer_i.h"
 
+// @@ Pradeep: what happened to the RCSID macro?
+
 TAO_Notify_Resource_Manager::TAO_Notify_Resource_Manager (PortableServer::POA_ptr default_POA)
   :default_POA_ (PortableServer::POA::_duplicate (default_POA))
 {
+  // @@ Pradeep: this is a perfectly useless comment, don't you think?
   // No-Op.
 }
 
 TAO_Notify_Resource_Manager::~TAO_Notify_Resource_Manager ()
 {
+  // @@ Pradeep: this is a perfectly useless comment, don't you think?
   // No-Op.
 }
 
@@ -185,6 +189,12 @@ TAO_Notify_Resource_Manager::create_proxy_pushsupplier_POA (PortableServer::POA_
 PortableServer::POA_ptr
 TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr poa, CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: if the Notification service is ever going to be
+  // persistent or fault tolerant you may need to create this stuff
+  // with the persistent policy too, probably you can handle that
+  // using a different 'Resource_Manager' that overrides this
+  // method. Just a thought...
+
   // Create a UNIQUE_ID and USER_ID policy because we want the POA
   // to detect duplicates for us.
   PortableServer::IdUniquenessPolicy_var idpolicy =
@@ -209,6 +219,7 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
   policy_list [1] =
     PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy.in ());
 
+  // @@ Pradeep: is it possible to use a more meaningful name?
   char child_poa_name[BUFSIZ];
 
   CORBA::Long poa_id = this->poa_ids_.get ();
@@ -220,6 +231,8 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
                                                      manager,
                                                      policy_list,
                                                      ACE_TRY_ENV);
+  // @@ Pradeep: these guys take an ACE_TRY_ENV argument, and can
+  // raise exceptions.  WOuld you believe that?
   idpolicy->destroy ();
   assignpolicy->destroy ();
 
@@ -246,6 +259,10 @@ TAO_Notify_Resource_Manager::long_to_ObjectId (const CORBA::Long id)
 
   // Copy the contents
   ACE_OS::memcpy (buffer, (char*)&id, buffer_size);
+
+  // @@ Pradeep: TAO guarantees that Long is 4 bytes wide, but the
+  // standard only guarantees that it is at least 4 bytes wide. You
+  // may want to think about that....
 
   // Create and return a new ID
   PortableServer::ObjectId *obj_id = 0;

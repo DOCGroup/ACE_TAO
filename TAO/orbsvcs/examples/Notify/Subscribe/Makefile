@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_CosNaming -lTAO
+LDLIBS = -lTAO_Notify -lTAO_CosTrading -lTAO_CosNaming -TAO_Svc_Utils -lTAO
 
 LSRC = Subscribe.cpp main.cpp
 

@@ -3,11 +3,16 @@
 #include "orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h"
 #include "Filter.h"
 
+// @@ Pradeep: local #includes should go first.
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
 #define SA_FILTER "threshold > 10"
+// @@ Pradeep: it is 'GRAMMAR' not 'GRAMMER'
 #define TCL_GRAMMER "TCL"
+
+// @@ Pradeep: please don't put classes in the .cpp file...
 
 class PushConsumer : public TAO_Notify_StructuredPushConsumer
 {
@@ -32,6 +37,10 @@ public:
     CORBA::Long val;
 
     notification.remainder_of_body >>= val;
+
+    // @@ Pradeep: for your tests try to make sure that you count the
+    // number of expected and sent events to verify that things work
+    // correctly in an automatic way...
 
     ACE_DEBUG ((LM_DEBUG,
                 "%s received event %d\n", myname_.fast_rep (),
