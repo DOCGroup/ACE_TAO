@@ -33,11 +33,6 @@ CORBA_DomainManager_var::CORBA_DomainManager_var (void) // default constructor
   : ptr_ (CORBA::DomainManager::_nil ())
 {}
 
-ACE_INLINE
-CORBA_DomainManager_var::CORBA_DomainManager_var (CORBA::DomainManager_ptr p)
-  : ptr_ (p)
-{}
-
 ACE_INLINE CORBA::DomainManager_ptr
 CORBA_DomainManager_var::ptr (void) const
 {

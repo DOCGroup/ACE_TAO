@@ -399,7 +399,7 @@
 -  Policy_ptr _retn (void);
 -  Policy_ptr ptr (void) const;
 +  CORBA_Policy_var (void); // default constructor
-+  CORBA_Policy_var (CORBA_Policy_ptr);
++  CORBA_Policy_var (CORBA_Policy_ptr p) : ptr_ (p) {}
 +  CORBA_Policy_var (const CORBA_Policy_var &); // copy constructor
 +  ~CORBA_Policy_var (void); // destructor
 +
