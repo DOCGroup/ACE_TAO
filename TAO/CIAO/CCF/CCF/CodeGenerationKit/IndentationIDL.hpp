@@ -82,13 +82,53 @@ namespace Indentation
 
             ensure_new_line ();
             output_indentation ();
-            result = write (c);
+
+            hold_.push_back (c);
+
+            // result = write (c);
+
+            //ensure_new_line ();
+
+            // Add double newline after '}'.
+            //
+            hold_.push_back ('\n');
+            hold_.push_back ('\n');
+
+
             break;
           }
         case ';':
           {
+            // Handling '};' case.
+            //
+
+            bool brace (false);
+
+            if (hold_.size () > 1 && hold_.back () == '\n')
+            {
+              bool pop_nl (false);
+
+              for (typename Hold::reverse_iterator
+                     i (hold_.rbegin ()), e (hold_.rend ()); i != e; ++i)
+              {
+                if (*i != '\n')
+                {
+                  if (*i == '}') brace = pop_nl = true;
+                  break;
+                }
+              }
+
+              if (pop_nl) while (hold_.back () == '\n') hold_.pop_back ();
+            }
+
             output_indentation ();
             result = write (c);
+
+            if (brace)
+            {
+              hold_.push_back ('\n');
+              hold_.push_back ('\n');
+            }
 
             if (construct_ != STRING_LITERAL && construct_ != CHAR_LITERAL)
             {
