@@ -963,7 +963,8 @@ public:
 
   /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
-  void load_policy_validators (TAO_Policy_Validator &validator);
+  void load_policy_validators (TAO_Policy_Validator &validator
+                               ACE_ENV_ARG_DECL);
 
   /// Return the flushing strategy
   /**
