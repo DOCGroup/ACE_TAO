@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Reactor_Exceptions_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Reactor.h"
@@ -54,7 +54,7 @@ MemoryEx::handle_input (ACE_HANDLE)
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG, "Activity occurred on handle %d!\n",
-	      ACE_SOCK_Dgram::get_handle ()));
+              ACE_SOCK_Dgram::get_handle ()));
 
   ssize_t n = ACE_SOCK_Dgram::recv (buf, sizeof buf, from_addr);
 
@@ -109,7 +109,7 @@ worker (void)
 }
 #endif /* ACE_HAS_EXCEPTIONS */
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_START_TEST ("Reactor_Exceptions_Test");
@@ -125,10 +125,10 @@ main (int argc, char *argv[])
 
   ACE_INET_Addr local_addr (port);
   ACE_INET_Addr remote_addr (port,
-			     ACE_DEFAULT_SERVER_HOST);
+                             ACE_DEFAULT_SERVER_HOST);
   MemoryEx ex (local_addr);
 
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (&ex, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n%a", "register_handler", 1), -1);
 
@@ -136,12 +136,12 @@ main (int argc, char *argv[])
   thr_mgr->spawn (ACE_THR_FUNC (worker));
 #else
   // Need to figure out how to implement this test.
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));  
+  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
 
   ACE_SOCK_Dgram dgram ((ACE_INET_Addr &) ACE_Addr::sap_any);
 
-  for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
     dgram.send ("Hello", 6, remote_addr);
 
   thr_mgr->wait ();
