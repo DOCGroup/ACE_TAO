@@ -2,6 +2,8 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
 
+        * docs/ACE-guidelines.html: strengthened mention of ACE_ASSERT danger.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/Collection_Test.cpp: Added new test for ACE collections.
