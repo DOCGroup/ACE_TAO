@@ -773,30 +773,30 @@ CORBA_Boolean
 XDR_stream::flush_frag (CORBA_Boolean is_last)
 THROWS_NOTHING
 {
-    return CORBA_B_FALSE;
+  return CORBA_B_FALSE;
 
 #if	0
-    int			status;
-    CORBA_ULong		size, header;
+  int			status;
+  CORBA_ULong		size, header;
 
-    size = index * sizeof (CORBA_ULong);	// byte length of msg
-    if (is_last)
-	header = 0x80000000 | size;		// indicates last frag
-    else
-	header = size;
-    buffer [0] = htonl (header);
+  size = index * sizeof (CORBA_ULong);	// byte length of msg
+  if (is_last)
+    header = 0x80000000 | size;		// indicates last frag
+  else
+    header = size;
+  buffer [0] = htonl (header);
 
-    //
-    // XXX for portability, loop until there's no error.  Some
-    // platforms/mode don't guarantee full TCP writes even when
-    // async (or nonblocking) mode was not set on this socket.
-    //
-    size += sizeof (CORBA_ULong);
-    status = ACE_OS::write (fd, &buffer [0], size);
+  //
+  // XXX for portability, loop until there's no error.  Some
+  // platforms/mode don't guarantee full TCP writes even when
+  // async (or nonblocking) mode was not set on this socket.
+  //
+  size += sizeof (CORBA_ULong);
+  status = ACE_OS::write (fd, &buffer [0], size);
 
-    index = 0;
+  index = 0;
 
-    return (status == size);
+  return (status == size);
 #endif
 }
 

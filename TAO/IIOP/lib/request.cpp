@@ -22,7 +22,7 @@ ULONG
 __stdcall
 CORBA_Request::AddRef ()
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
  
   return _refcount++;
 }
@@ -31,14 +31,14 @@ ULONG
 __stdcall
 CORBA_Request::Release ()
 {
-  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
  
   assert (this != 0);
  
   if (--_refcount != 0)
     return _refcount;
   
-  guard.release();
+  guard.release ();
 
   delete this;
   return 0;
@@ -51,16 +51,16 @@ CORBA_Request::QueryInterface (
     void        **ppv
 )
 {
-    *ppv = 0;
+  *ppv = 0;
  
-    if (IID_CORBA_Request == riid || IID_IUnknown == riid)
-        *ppv = this;
+  if (IID_CORBA_Request == riid || IID_IUnknown == riid)
+    *ppv = this;
  
-    if (*ppv == 0)
-        return ResultFromScode (E_NOINTERFACE);
+  if (*ppv == 0)
+    return ResultFromScode (E_NOINTERFACE);
  
-    (void) AddRef ();
-    return NOERROR;
+  (void) AddRef ();
+  return NOERROR;
 }
 
 //
@@ -69,14 +69,14 @@ CORBA_Request::QueryInterface (
 void
 CORBA_release (CORBA_Request_ptr req)
 {
-    if (req)
-        req->Release ();
+  if (req)
+    req->Release ();
 }
 
 CORBA_Boolean
 CORBA_is_nil (CORBA_Request_ptr req)
 {
-    return (CORBA_Boolean)(req == 0);
+  return (CORBA_Boolean)(req == 0);
 }
 
 //
@@ -94,8 +94,8 @@ CORBA_Request::CORBA_Request (
     _flags  	    	    (flags),
     _refcount	    	    (1)
 {
-    _target = CORBA_Object::_duplicate (obj);
-    _opname = CORBA_string_copy (op);
+  _target = CORBA_Object::_duplicate (obj);
+  _opname = CORBA_string_copy (op);
 }
 
 
@@ -106,21 +106,21 @@ CORBA_Request::CORBA_Request (
     _flags			(0),
     _refcount			(1)
 {
-    _target = CORBA_Object::_duplicate (obj);
-    _opname = CORBA_string_copy (op);
+  _target = CORBA_Object::_duplicate (obj);
+  _opname = CORBA_string_copy (op);
 
-    _args = new CORBA_NVList;
-    _result = new CORBA_NamedValue;
+  _args = new CORBA_NVList;
+  _result = new CORBA_NamedValue;
 }
 
 CORBA_Request::~CORBA_Request ()
 {
-    assert (_refcount == 0);
+  assert (_refcount == 0);
 
-    CORBA_release (_target);
-    CORBA_string_free ((CORBA_String)_opname);
-    CORBA_release (_args);
-    CORBA_release (_result);
+  CORBA_release (_target);
+  CORBA_string_free ((CORBA_String)_opname);
+  CORBA_release (_args);
+  CORBA_release (_result);
 }
 
 //
@@ -134,28 +134,28 @@ CORBA_Request::~CORBA_Request ()
 void
 CORBA_Request::invoke ()
 {
-    STUB_Object     *stub;
+  STUB_Object     *stub;
 
-    if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
-        _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return;
-    }
+  if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
+    _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+    return;
+  }
 
-    stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
-                            _args, _result, _flags, _exceptions, _env);
-    stub->Release ();
+  stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
+			 _args, _result, _flags, _exceptions, _env);
+  stub->Release ();
 }
 
 void
 CORBA_Request::send_oneway ()
 {
-    STUB_Object     *stub;
+  STUB_Object     *stub;
 
-    if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
-        _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return;
-    }
-    stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
-                            _args, _result, _flags, _exceptions, _env);
-    stub->Release ();
+  if (_target->QueryInterface (IID_STUB_Object, (void **) &stub) != NOERROR) {
+    _env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+    return;
+  }
+  stub->do_dynamic_call ((char *)_opname, CORBA_B_TRUE,
+			 _args, _result, _flags, _exceptions, _env);
+  stub->Release ();
 }

@@ -1,89 +1,81 @@
 // This may look like C, but it's really -*- C++ -*-
 //
-//
 // Header file for Win32 C/C++/COM interface to CORBA's "Any" type.
-//
-// Class "Any" can wrap values of any type, with the assistance
-// of a TypeCode to describe that type.
-//
-// XXX should find a way to make its memory allocation always go
-// within the appropriate OLE heap...
-//
+
+#if !defined (TAO_ANY_H)
+#define TAO_ANY_H
 
 extern const IID	IID_CORBA_Any;
 
 class CORBA_Any : public IUnknown
+// = TITLE
+// Class "Any" can wrap values of any type, with the assistance
+// of a TypeCode to describe that type.
+//
+// = DESCRIPTION
+// XXX should find a way to make its memory allocation always go
+// within the appropriate OLE heap...
 {
 public:
   // minor codes for exceptional returns
-  enum {
+  enum 
+  {
     uninitialised_type = 0xf000,
     value_without_type,
     unsupported_operation
   };
 
-  CORBA_Any ();
-  CORBA_Any (
-	     CORBA_TypeCode_ptr	type,
-	     void			*value = 0,
-	     CORBA_Boolean		orb_owns_data
-	     = CORBA_B_FALSE
-	     );
+  CORBA_Any (void);
+  CORBA_Any (CORBA_TypeCode_ptr	type,
+	     void *value = 0,
+	     CORBA_Boolean orb_owns_data = CORBA_B_FALSE);
   CORBA_Any (const CORBA_Any &a);
-  virtual ~CORBA_Any ();
+  virtual ~CORBA_Any (void);
 
-  void			*operator new (size_t, const void *p)
+  void *operator new (size_t, const void *p)
   { return (void *) p; }
-  void			*operator new (size_t s)
+  void *operator new (size_t s)
   { return ::operator new (s); }
-  void			operator delete (void *p)
+  void operator delete (void *p)
   { ::operator delete (p); }
 
-  //
-  // NOTE:  94-9-14 has assignment operator plus many insertion,
+  // NOTE: 94-9-14 has assignment operator plus many insertion,
   // extraction operators, various from_xx and to_xx helper classes.
-  //
 
-  void			replace (
-				 CORBA_TypeCode_ptr	type,
-				 const void		*value,
-				 CORBA_Boolean	orb_owns_data,
-				 CORBA_Environment	&env
-				 );
+  void replace (CORBA_TypeCode_ptr type,
+		const void *value,
+		CORBA_Boolean orb_owns_data,
+		CORBA_Environment &env);
 
-  CORBA_TypeCode_ptr		type () const;
-  void			*value () const;
+  CORBA_TypeCode_ptr type (void) const;
+  void *value (void) const;
 
-  //
   // Stuff required for COM IUnknown support
-  //
-  ULONG __stdcall		AddRef ();
-  ULONG __stdcall		Release ();
-  HRESULT __stdcall           QueryInterface (
-					      REFIID	riid,
-					      void	**ppv
-					      );
 
-  //
+  ULONG __stdcall AddRef (void);
+  ULONG __stdcall Release (void);
+  HRESULT __stdcall QueryInterface (REFIID riid,
+				    void **ppv);
+
   // Conversion to/from COM Variant types:  copy constructor,
   // assignment operator, cast.
-  //
+
   CORBA_Any (const VARIANT &src);
-  CORBA_Any			&operator = (const VARIANT &src);
-  operator VARIANT ();
+  CORBA_Any &operator = (const VARIANT &src);
+  operator VARIANT (void);
     
 private:
-  CORBA_TypeCode_ptr		_type;
-  void			*_value;
-  CORBA_Boolean		_orb_owns_data;
+  CORBA_TypeCode_ptr _type;
+  void *_value;
+  CORBA_Boolean _orb_owns_data;
 
   ACE_Thread_Mutex lock_;
-  unsigned			_refcnt;
+  unsigned _refcnt;
 
   // NOT PROVIDED
-  CORBA_Any			&operator = (const CORBA_Any &a);
+  CORBA_Any &operator = (const CORBA_Any &a);
 
-  //
-  // 94-9-14 hides unsigned char insert/extract
-  //
+  // 94-9-14 hides unsigned char insert/extract 
 };
+
+#endif /* TAO_ANY_H */

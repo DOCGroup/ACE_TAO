@@ -704,17 +704,17 @@ request_forwarder (opaque& target_key,
 		   CORBA_Object_ptr& forward_reference,
 		   TAO_Dispatch_Context* helper)
 {
-    CORBA_Environment		env;
+  CORBA_Environment		env;
 
-    assert (helper->check_forward_ != 0);
-    helper->check_forward (target_key, forward_reference, helper->context_, env);
+  assert (helper->check_forward_ != 0);
+  helper->check_forward (target_key, forward_reference, helper->context_, env);
 
-    if (env.exception () != 0)
-	return GIOP::UNKNOWN_OBJECT;
-    else if (forward_reference == 0)
-	return GIOP::OBJECT_HERE;
-    else
-	return GIOP::OBJECT_FORWARD;
+  if (env.exception () != 0)
+    return GIOP::UNKNOWN_OBJECT;
+  else if (forward_reference == 0)
+    return GIOP::OBJECT_HERE;
+  else
+    return GIOP::OBJECT_FORWARD;
 }
 
 #if ! defined(__ACE_INLINE__)
