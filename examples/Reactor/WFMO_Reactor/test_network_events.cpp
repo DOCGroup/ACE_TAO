@@ -134,7 +134,7 @@ Network_Listener::Network_Listener (void)
 {
   this->reactor (ACE_Reactor::instance ());
   int result = this->reactor ()->register_handler (this, 
-                                                   ACE_Event_Handler::ACCEPT_MASK)
+                                                   ACE_Event_Handler::ACCEPT_MASK);
   ACE_ASSERT (result == 0);
 }
 
