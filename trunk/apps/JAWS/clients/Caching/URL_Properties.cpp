@@ -138,7 +138,9 @@ ACE_URL_Offer::dump (void) const
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<ACE_URL_Property>;
 template class ACE_Array<ACE_URL_Property>;
+template class ACE_Array_Base<ACE_URL_Offer>;
 template class ACE_Array<ACE_URL_Offer>;
 template size_t ace_array_size (ACE_Array<ACE_URL_Property> &);
 template size_t ace_array_encode (void *, ACE_Array<ACE_URL_Property> &);
@@ -147,7 +149,9 @@ template size_t ace_array_size (ACE_Array<ACE_URL_Offer> &);
 template size_t ace_array_encode (void *, ACE_Array<ACE_URL_Offer> &);
 template size_t ace_array_decode (void *, ACE_Array<ACE_URL_Offer> &);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Array_Base<ACE_URL_Property>
 #pragma instantiate ACE_Array<ACE_URL_Property>
+#pragma instantiate ACE_Array_Base<ACE_URL_Offer>
 #pragma instantiate ACE_Array<ACE_URL_Offer>
 #pragma instantiate size_t ace_array_size (ACE_Array<ACE_URL_Property> &)
 #pragma instantiate size_t ace_array_encode (void *, ACE_Array<ACE_URL_Property> &)

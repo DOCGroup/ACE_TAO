@@ -1377,34 +1377,42 @@ private:
   // Allocation strategy of the set.
 };
 
+// ****************************************************************
+
 // Forward declaration.
 template <class T> class ACE_Array_Iterator;
 
-template <class T>
-class ACE_Array
+template<class T>
+class ACE_Array_Base
 {
   // = TITLE
-  //     Implement a dynamic array class.
+  //   Implement a simple dynamic array
+  //
+  // = DESCRIPTION
+  //   This parametric class implements a simple dynamic array;
+  //   resizing must be controlled by the user. No comparison or find
+  //   operations are implemented.
+  //
 public:
+
   // Define a "trait"
   typedef T TYPE;
-
-  // = Exceptions.
+  typedef ACE_Array_Iterator<T> ITERATOR;
 
   // = Initialization and termination methods.
 
-  ACE_Array (size_t size = 0);
+  ACE_Array_Base (size_t size = 0);
   // Dynamically create an uninitialized array.
 
-  ACE_Array (size_t size, const T &default_value);
+  ACE_Array_Base (size_t size, const T &default_value);
   // Dynamically initialize the entire array to the <default_value>.
 
-  ACE_Array (const ACE_Array<T> &s);
+  ACE_Array_Base (const ACE_Array_Base<T> &s);
   // The copy constructor performs initialization by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  void operator= (const ACE_Array<T> &s);
+  ACE_Array_Base& operator= (const ACE_Array_Base<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than
@@ -1412,7 +1420,7 @@ public:
   // <max_size_> is < <s.max_size_> we must delete the <array_>,
   // reallocate a new <array_>, and then copy the contents of <s>.
 
-  ~ACE_Array (void);
+  ~ACE_Array_Base (void);
   // Clean up the array (e.g., delete dynamically allocated memory).
 
   // = Set/get methods.
@@ -1443,15 +1451,14 @@ public:
   // It copies the old contents into the new array.
   // Return -1 on failure.
 
-  int operator== (const ACE_Array<T> &s) const;
-  // Compare this array with <s> for equality.  Two arrays are equal
-  // if their size()'s are equal and all the elements from 0 .. size()
-  // are equal.
+  size_t max_size (void) const;
+  // Returns the <max_size_> of the array.
 
-  int operator!= (const ACE_Array<T> &s) const;
-  // Compare this array with <s> for inequality such that <*this> !=
-  // <s> is always the complement of the boolean return value of
-  // <*this> == <s>.
+  int max_size (size_t new_size);
+  // Changes the size of the array to match <new_size>.
+  // It copies the old contents into the new array.
+  // Return -1 on failure.
+  // It does not affect new_size
 
 private:
   int in_range (size_t index) const;
@@ -1475,6 +1482,60 @@ private:
   friend class ACE_Array_Iterator<T>;
 };
 
+// ****************************************************************
+
+template <class T>
+class ACE_Array : public ACE_Array_Base<T>
+{
+  // = TITLE
+  //     Implement a dynamic array class.
+  //
+  // = DESCRIPTION
+  //   This class extends ACE_Array_Base, it provides comparison
+  //   operators.
+  //
+public:
+  // Define a "trait"
+  typedef T TYPE;
+
+  typedef ACE_Array_Iterator<T> ITERATOR;
+
+  // = Exceptions.
+
+  // = Initialization and termination methods.
+
+  ACE_Array (size_t size = 0);
+  // Dynamically create an uninitialized array.
+
+  ACE_Array (size_t size, const T &default_value);
+  // Dynamically initialize the entire array to the <default_value>.
+
+  ACE_Array (const ACE_Array<T> &s);
+  // The copy constructor performs initialization by making an exact
+  // copy of the contents of parameter <s>, i.e., *this == s will
+  // return true.
+
+  void operator= (const ACE_Array<T> &s);
+  // Assignment operator performs an assignment by making an exact
+  // copy of the contents of parameter <s>, i.e., *this == s will
+  // return true.  Note that if the <max_size_> of <array_> is >= than
+  // <s.max_size_> we can copy it without reallocating.  However, if
+  // <max_size_> is < <s.max_size_> we must delete the <array_>,
+  // reallocate a new <array_>, and then copy the contents of <s>.
+
+  // = Compare operators
+
+  int operator== (const ACE_Array<T> &s) const;
+  // Compare this array with <s> for equality.  Two arrays are equal
+  // if their size()'s are equal and all the elements from 0 .. size()
+  // are equal.
+
+  int operator!= (const ACE_Array<T> &s) const;
+  // Compare this array with <s> for inequality such that <*this> !=
+  // <s> is always the complement of the boolean return value of
+  // <*this> == <s>.
+};
+
 template <class T>
 class ACE_Array_Iterator
 {
@@ -1488,7 +1549,7 @@ class ACE_Array_Iterator
   //     odd, and dangerous.
 public:
   // = Initialization method.
-  ACE_Array_Iterator (ACE_Array<T> &);
+  ACE_Array_Iterator (ACE_Array_Base<T> &);
 
   // = Iteration methods.
 
@@ -1513,7 +1574,7 @@ private:
   u_int current_;
   // Pointer to the current item in the iteration.
 
-  ACE_Array<T> &array_;
+  ACE_Array_Base<T> &array_;
   // Pointer to the Array we're iterating over.
 };
 

@@ -301,36 +301,81 @@ ACE_Ordered_MultiSet<T>::size (void) const
   return this->cur_size_;
 }
 
+// ****************************************************************
+
 // Clean up the array (e.g., delete dynamically allocated memory).
 
 template <class T> ACE_INLINE
-ACE_Array<T>::~ACE_Array (void)
+ACE_Array_Base<T>::~ACE_Array_Base (void)
 {
    delete [] this->array_;
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Array<T>::size (void) const
+ACE_Array_Base<T>::size (void) const
 {
   return this->cur_size_;
 }
 
+template <class T> ACE_INLINE size_t
+ACE_Array_Base<T>::max_size (void) const
+{
+  return this->max_size_;
+}
+
 template <class T> ACE_INLINE int
-ACE_Array<T>::in_range (size_t index) const
+ACE_Array_Base<T>::in_range (size_t index) const
 {
   return index < this->cur_size_;
 }
 
 template <class T> ACE_INLINE T &
-ACE_Array<T>::operator[] (size_t index)
+ACE_Array_Base<T>::operator[] (size_t index)
 {
   return this->array_[index];
 }
 
 template <class T> ACE_INLINE const T &
-ACE_Array<T>::operator[] (size_t index) const
+ACE_Array_Base<T>::operator[] (size_t index) const
 {
   return this->array_[index];
+}
+
+// ****************************************************************
+
+template <class T> ACE_INLINE
+ACE_Array<T>::ACE_Array (size_t size)
+  : ACE_Array_Base<T>(size)
+{
+}
+
+template <class T> ACE_INLINE
+ACE_Array<T>::ACE_Array (size_t size,
+                         const T &default_value)
+  : ACE_Array_Base<T> (size, default_value)
+{
+}
+
+// The copy constructor (performs initialization).
+
+template <class T>
+ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
+   : ACE_Array_Base<T> (s)
+{
+}
+
+// Assignment operator (performs assignment).
+
+template <class T> void
+ACE_Array<T>::operator= (const ACE_Array<T> &s)
+{
+  // Check for "self-assignment".
+
+  if (this == &s)
+    return;
+  else {
+    this->ACE_Array_Base<T>::operator= (s);
+  }
 }
 
 // Compare this array with <s> for inequality.
@@ -341,6 +386,8 @@ ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
   return !(*this == s);
 }
 
+// ****************************************************************
+
 template <class T> ACE_INLINE void
 ACE_Array_Iterator<T>::dump (void) const
 {
@@ -348,7 +395,7 @@ ACE_Array_Iterator<T>::dump (void) const
 }
 
 template <class T> ACE_INLINE
-ACE_Array_Iterator<T>::ACE_Array_Iterator (ACE_Array<T> &a)
+ACE_Array_Iterator<T>::ACE_Array_Iterator (ACE_Array_Base<T> &a)
     : current_ (0),
       array_ (a)
 {
@@ -379,6 +426,8 @@ ACE_Array_Iterator<T>::done (void) const
 
   return this->current_ >= array_.size ();
 }
+
+// ****************************************************************
 
 template <class T> ACE_INLINE void
 ACE_DLList<T>::operator= (ACE_DLList<T> &l)

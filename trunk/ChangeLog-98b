@@ -1,3 +1,23 @@
+Fri Jan  1 12:22:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Containers_T.h: 
+	* ace/Containers_T.i: 
+	* ace/Containers_T.cpp: 
+	* bin/Array_Helper: 
+	* bin/Array.pl: 
+	  Moved most of the implementation of ACE_Array into
+	  ACE_Array_Base this class does not require == or != operators
+	  defined for the template parameter.
+	  I also added methods to access and manipulate the capacity of
+	  the array (max_size) as opposed to always changing its size (the
+	  portion actually used).
+
+	* ace/Object_Manager.cpp: 
+	* ace/Template_Instantiations.cpp: 
+	* ace/OS.cpp: 
+	* apps/JAWS/clients/Caching/URL_Properties.cpp: 
+	  Fixed ACE_Array instantiations.
+
 Thu Dec 31 13:25:53 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/019/server[2].cpp: 
