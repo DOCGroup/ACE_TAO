@@ -53,7 +53,7 @@ public:
                     int reuse_addr = 0,
                     int oflag = O_RDWR,
                     struct t_info *info = 0,
-                    int backlog = 5,
+                    int backlog = ACE_DEFAULT_BACKLOG,
                     const char device[] = ACE_TLI_TCP_DEVICE);
   // Initiate a passive mode socket.
 
@@ -61,7 +61,7 @@ public:
                    int reuse_addr = 0,
                    int oflag = O_RDWR,
                    struct t_info *info = 0,
-                   int backlog = 5,
+                   int backlog = ACE_DEFAULT_BACKLOG,
                    const char device[] = ACE_TLI_TCP_DEVICE);
   // Initiate a passive mode socket.
 
