@@ -379,6 +379,10 @@ public:
   // Cancel the <timer_id> and pass back the <act> if an address is
   // passed in.
 
+  int expire (void);
+  // Dispatch all timers whose values are <= <cur_time>.  Returns the
+  // number of timers canceled.
+
   TQ &timer_queue (void);
   // Access the underlying <TIMER_QUEUE>.
 
