@@ -12,7 +12,10 @@ OBJFILES = \
 	$(OBJDIR)\Adapter_Activator.obj \
 	$(OBJDIR)\Forwarder.obj \
 	$(OBJDIR)\ImR_Locator.obj \
-	$(OBJDIR)\ImR_Locator_i.obj
+	$(OBJDIR)\ImR_Locator_i.obj \
+	$(OBJDIR)\Locator_NT_Service.obj \
+	$(OBJDIR)\Locator_Options.obj \
+	$(OBJDIR)\INS_Locator.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
@@ -22,6 +25,7 @@ CFLAGS = \
 	$(TAO_SVC_UTILS_CFLAGS) \
 	$(TAO_VALUETYPE_CFLAGS) \
 	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_STRATEGIES_CFLAGS) \
 	$(TAO_ORT_CFLAGS)
 
 LIBFILES = \
@@ -32,6 +36,7 @@ LIBFILES = \
 	$(TAO_SVC_UTILS_LIB) \
 	$(TAO_VALUETYPE_LIB) \
 	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_STRATEGIES_LIB) \
 	$(TAO_ORT_LIB)
 
 CPPDIR = .
