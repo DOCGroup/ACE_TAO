@@ -1,15 +1,15 @@
---- orig/ImplRepoC.h	Wed Feb  6 10:26:31 2002
-+++ ImplRepoC.h	Wed Feb  6 10:31:23 2002
-@@ -23,7 +23,7 @@
- #define _TAO_IDL_ORIG_IMPLREPOC_H_
+--- orig/ImplRepoC.h	Thu Jan  2 10:12:25 2003
++++ ImplRepoC.h	Thu Jan  2 10:10:22 2003
+@@ -27,7 +27,7 @@
  
  #include "ace/pre.h"
+ 
 -#include "tao/corba.h"
 +#include "tao/corbafwd.h"
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
  # pragma once
-@@ -31,6 +31,11 @@
+@@ -36,6 +36,11 @@
  
  #include "portableserver_export.h"
  
