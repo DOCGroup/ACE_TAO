@@ -3,7 +3,10 @@
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_Thread_Adapter.h"
+
+#if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
+#endif  // ACE_HAS_WINCE
 
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
@@ -1025,15 +1028,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 # endif /* ACE_HAS_PACE && !ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_WINCE)
-FILE *
-ACE_OS::fopen (const ACE_TCHAR *filename,
-               const ACE_TCHAR *mode)
-{
-  return ::_wfopen (filename, mode);
-}
-
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 FILE *
 ACE_OS::fopen (const ACE_TCHAR *filename,
                const ACE_TCHAR *mode)
@@ -1047,6 +1042,37 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)
     {
+# if defined (ACE_HAS_WINCE)
+      FILE *fp = ::_wfdopen (handle, mode);
+      if (fp != NULL)
+      {
+          // Currently, there is no distinction between functions for Unicode files
+          // and ASCII text files in the ACE level function.  Due to the ACE_TCHAR
+          // definition, all default input files, such as svc.conf, have to be in
+          // Unicode format (small endian) on WinCE because ACE has all 'char' converted
+          // into ACE_TCHAR.
+          // However, for TAO, ASCII files, such as IOR file, can still be read and
+          // be written without any error since given buffers are all in 'char' type
+          // instead of ACE_TCHAR.  Therefore, it is user's reponsibility to select
+          // correct buffer type.
+
+        // At this point, check if the file is Unicode or not.
+        WORD first_two_bytes;
+        int numRead = ACE_OS::fread(&first_two_bytes, sizeof(WORD), 1, fp);
+
+        if (numRead == 1)
+        {
+            if ((first_two_bytes != 0xFFFE) &&  // not a small endian Unicode file
+                (first_two_bytes != 0xFEFF))    // not a big endian Unicode file
+            {
+                ACE_OS::fseek(fp, 0, FILE_BEGIN);  // set file pointer back to the beginning
+            }
+        }
+        // if it is a Unicode file, file pointer will be right next to the first two-bytes
+
+        return fp;
+      }
+# else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
       int fd = _open_osfhandle ((long) handle, hmode);
       if (fd != -1)
@@ -1064,6 +1090,8 @@ ACE_OS::fopen (const ACE_TCHAR *filename,
             return fp;
           _close (fd);
         }
+# endif  // ACE_HAS_WINCE
+
       ACE_OS::close (handle);
     }
   return NULL;
@@ -1077,20 +1105,16 @@ int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::fprintf");
-#if defined (ACE_HAS_WINCE)
-  ACE_NOTSUP_RETURN (-1);
-# else /* ACE_HAS_WINCE */
   int result = 0;
   va_list ap;
   va_start (ap, format);
-#  if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE)
   ACE_OSCALL (::pace_vfprintf (fp, format, ap), int, -1, result);
-#  else
+#else
   ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
-#  endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_PACE */
   va_end (ap);
   return result;
-# endif /* ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -7299,112 +7323,126 @@ static ACE_OS_Object_Manager_Manager ACE_OS_Object_Manager_Manager_instance;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
-ACE_CE_Bridge *ACE_CE_Bridge::default_text_bridge_ = 0;
-
-ACE_CE_Bridge::ACE_CE_Bridge (void)
-  : text_output_ (0),
-    notification_ (0),
-    idc_ (0)
+ACE_CE_ARGV::ACE_CE_ARGV(ACE_TCHAR* cmdLine)
+: ce_argv_(0)
+, ce_argc_(0)
 {
+    // Note: ACE has argv parser and processor; however, they cannot be used because of
+    //       dependency.  ACE_OS is now separate from ACE, and ACE depends on ACE_OS.
+    //       Still, using all this array and complicated pointer manipulation should be
+    //       considered to be replaced and use STL (or something) for better readability
+    //       and code management.  Also, string_to_argv() does not work well for CE argv
+    //       because of incorrect '"' identification.
+
+    const ACE_TCHAR* dummyArgv = ACE_TEXT("root");  // dummy for the first argv
+    const ACE_TCHAR* separator = ACE_TEXT(" ");     // blank space is a separator
+
+    int formattedCmdLineLength = ACE_OS::strlen(dummyArgv) +
+                                 ACE_OS::strlen(separator) +
+                                 1;  // 1 is for the NULL at the end
+
+    if (ACE_OS::strlen(cmdLine) > 0) {
+        formattedCmdLineLength += ACE_OS::strlen(cmdLine);
+        formattedCmdLineLength += ACE_OS::strlen(separator);
+    }
+
+    // formattedCmdLine will have dummyArgv and a separator at the beginning of cmdLine
+    // and a separator at the end to generalize format and reduce the amount of code
+    ACE_TCHAR* formattedCmdLine = 0;
+    ACE_NEW(formattedCmdLine, ACE_TCHAR[formattedCmdLineLength]);
+
+    ACE_OS::strcpy(formattedCmdLine, dummyArgv);
+    ACE_OS::strcat(formattedCmdLine, separator);
+
+    int max_possible_argc = 1;  // start with 1 because of the dummyArgv at the beginning
+
+    if (ACE_OS::strlen(cmdLine) > 0) {
+        int formattedPos  = ACE_OS::strlen(formattedCmdLine);
+        int cmdLineLength = ACE_OS::strlen(cmdLine);
+
+        // Inside of this for loop, it does same thing as strcat except it
+        // checks and puts only one single white space between two argv entries.
+        for (int i = 0; i < cmdLineLength; ++i) {
+            if (iswspace(cmdLine[i]) != 0) {
+                ++max_possible_argc;  // counting the number of white spaces
+            }
+
+            formattedCmdLine[formattedPos++] = cmdLine[i];
+
+            if (iswspace(cmdLine[i]) != 0) {
+                // make sure there is only one white space between two argv entries.
+                while ((i < cmdLineLength) && (iswspace(cmdLine[i + 1]) != 0)) {
+                    ++i;
+                }
+            }
+        }
+
+        formattedCmdLine[formattedPos] = 0;
+        ACE_OS::strcat(formattedCmdLine, separator);  // make sure formattedCmdLine ends with a blank
+    }
+
+    int formattedCmdLength = ACE_OS::strlen(formattedCmdLine);
+
+    bool insideQuotation = false;
+    int* argv_strlen = 0;
+    int entry_size = 0;
+    ACE_NEW(argv_strlen, int[max_possible_argc]);
+
+    // determine argc
+    for (int i = 0; i < formattedCmdLength; ++i) {
+        if (formattedCmdLine[i] == '\\') {
+            ++i; // ignore the following character
+            ++entry_size;
+        }
+        else if (formattedCmdLine[i] == '"') {
+            insideQuotation = !insideQuotation;
+        }
+        else if ((!insideQuotation) && (iswspace(formattedCmdLine[i]) != 0)) {
+            // new argv entry end found
+            argv_strlen[ce_argc_++] = entry_size;  // cache the size of this entry
+            entry_size = 0;
+        }
+        else {
+            ++entry_size;
+        }
+    }
+
+    ACE_NEW(ce_argv_, ACE_TCHAR*[ce_argc_ + 1]);
+    ce_argv_[ce_argc_] = 0;  // Last command line entry is a NULL.
+
+    for (int j = 0, cmdLinePos = 0; j < ce_argc_; ++j, ++cmdLinePos) {
+        int length = argv_strlen[j];
+
+        ACE_NEW(ce_argv_[j], ACE_TCHAR[length + 1]);
+        ce_argv_[j][length] = 0;  // string termination null
+
+        if (iswspace(formattedCmdLine[cmdLinePos]) != 0) {
+            // This is where prior argv has trailing '"' at the end.
+            ++cmdLinePos;
+        }
+
+        for (int n = 0; n < length; ++n, ++cmdLinePos) {
+            if ((formattedCmdLine[cmdLinePos] == '\\') || (formattedCmdLine[cmdLinePos] == '"')) {
+                ++cmdLinePos;
+            }
+
+            ce_argv_[j][n] = formattedCmdLine[cmdLinePos];
+        }
+    }
+
+    delete argv_strlen;
+    delete formattedCmdLine;
 }
 
-ACE_CE_Bridge::ACE_CE_Bridge (HWND w, int n, int i)
-  : text_output_ (w),
-    notification_ (n),
-    idc_ (i)
+ACE_CE_ARGV::~ACE_CE_ARGV(void)
 {
+    for (int i = 0; i < ce_argc_; ++i) {
+        delete [] ce_argv_[i];
+    }
+
+    delete [] ce_argv_;
 }
-
-void
-ACE_CE_Bridge::set_window (HWND w, int n, int i)
-{
-  this->text_output_ = w;
-  this->notification_ = n;
-  this->idc_ = i;
-}
-
-ACE_CE_Bridge::~ACE_CE_Bridge (void)
-{
-  // This method needs to be defined because there seems to be a bug
-  // in CE's compiler.
-}
-
-void
-ACE_CE_Bridge::set_self_default (void)
-{
-  ACE_CE_Bridge::default_text_bridge_ = this;
-}
-
-int
-ACE_CE_Bridge::notification (void)
-{
-  return this->notification_;
-}
-
-int
-ACE_CE_Bridge::idc (void)
-{
-  return this->idc_;
-}
-
-HWND
-ACE_CE_Bridge::window (void)
-{
-  return this->text_output_;
-}
-
-ACE_CE_Bridge *
-ACE_CE_Bridge::get_default_winbridge (void)
-{
-  return ACE_CE_Bridge::default_text_bridge_;
-}
-
-int
-ACE_CE_Bridge::write_msg (const ACE_TCHAR *str)
-{
-  ACE_TCHAR *s = ACE_OS::strdup (str);
-  return PostMessage (this->text_output_,
-                      WM_COMMAND,
-                      MAKEWORD (this->idc_,
-                                this->notification_),
-                      (long)((void *) s));
-}
-
-#if 0
-int
-ACE_CE_Bridge::write_msg (CString *s)
-{
-  // Don't ask!
-  return PostMessage (this->text_output_,
-                      WM_COMMAND,
-                      MAKEWORD (this->idc_,
-                                this->notification_),
-                      (long)((void *) s));
-}
-#endif /* 0 */
-
-//          **** Warning ****
-// You should not use the following function under CE at all.  This
-// function is used to make Svc_Conf_l.cpp compile under WinCE.  It
-// might not do what it is expected to do under regular environments.
-//          **** Warning ****
-
-#   if defined (UNDER_CE) && (UNDER_CE < 211)
-void
-exit (int status)
-{
-#     if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
-  // Shut down the ACE_Object_Manager, if it had registered its exit_hook.
-  // With ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
-  // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  if (exit_hook_)
-    (*exit_hook_) ();
-#     endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
-
-  ACE_OS::exit (status);
-}
-#   endif /* UNDER_CE && UNDER_CE < 211 */
-# endif /* ACE_HAS_WINCE */
+# endif // ACE_HAS_WINCE
 
 // You may be asking yourself, why are we doing this?  Well, in winbase.h,
 // MS didn't follow their normal Api_FunctionA and Api_FunctionW style,
@@ -7707,13 +7745,14 @@ ACE_OS::strptime_getnum (char *buf,
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
+#if !defined (ACE_HAS_WINCE)
 ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
                 int *addrlen,
                 const ACE_Accept_QoS_Params &qos_params)
 {
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
                                     addr,
                                     (ACE_SOCKET_LEN *) addrlen,
@@ -7721,12 +7760,12 @@ ACE_OS::accept (ACE_HANDLE handle,
                                     qos_params.callback_data ()),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
-#else
+# else
   ACE_UNUSED_ARG (qos_params);
   return ACE_OS::accept (handle,
                          addr,
                          addrlen);
-#endif /* ACE_HAS_WINSOCK2 */
+# endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_HANDLE
@@ -7735,7 +7774,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                    int namelen,
                    const ACE_QoS_Params &qos_params)
 {
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   QOS qos;
   // Construct the WinSock2 QOS structure.
@@ -7755,13 +7794,13 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
 
-#else
+# else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (namelen);
   ACE_UNUSED_ARG (qos_params);
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
-#endif /* ACE_HAS_WINSOCK2 */
+# endif /* ACE_HAS_WINSOCK2 */
 }
 
 int
@@ -7775,7 +7814,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                    io_control_code,
                                    in_buffer_p,
@@ -7787,7 +7826,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                    func),
                        int,
                        SOCKET_ERROR);
-#else
+# else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
   ACE_UNUSED_ARG (in_buffer_p);
@@ -7798,9 +7837,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WINSOCK2 */
+# endif /* ACE_HAS_WINSOCK2 */
 }
-
 
 
 int
@@ -7813,7 +7851,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
   QOS qos;
   u_long qos_len = sizeof (QOS);
@@ -7897,15 +7935,15 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                     qos->SendingFlowspec.PeakBandwidth,
                                     qos->SendingFlowspec.Latency,
                                     qos->SendingFlowspec.DelayVariation,
-#if defined(ACE_HAS_WINSOCK2_GQOS)
+#  if defined(ACE_HAS_WINSOCK2_GQOS)
                                     qos->SendingFlowspec.ServiceType,
                                     qos->SendingFlowspec.MaxSduSize,
                                     qos->SendingFlowspec.MinimumPolicedSize,
-#else /* ACE_HAS_WINSOCK2_GQOS */
+#  else /* ACE_HAS_WINSOCK2_GQOS */
                                     0,
                                     0,
                                     0,
-#endif /* ACE_HAS_WINSOCK2_GQOS */
+#  endif /* ACE_HAS_WINSOCK2_GQOS */
                                     0,
                                     0);
 
@@ -7914,15 +7952,15 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                       qos->ReceivingFlowspec.PeakBandwidth,
                                       qos->ReceivingFlowspec.Latency,
                                       qos->ReceivingFlowspec.DelayVariation,
-#if defined(ACE_HAS_WINSOCK2_GQOS)
+#  if defined(ACE_HAS_WINSOCK2_GQOS)
                                       qos->ReceivingFlowspec.ServiceType,
                                       qos->ReceivingFlowspec.MaxSduSize,
                                       qos->ReceivingFlowspec.MinimumPolicedSize,
-#else /* ACE_HAS_WINSOCK2_GQOS */
+#  else /* ACE_HAS_WINSOCK2_GQOS */
                                       0,
                                       0,
                                       0,
-#endif /* ACE_HAS_WINSOCK2_GQOS */
+#  endif /* ACE_HAS_WINSOCK2_GQOS */
                                       0,
                                       0);
 
@@ -7934,7 +7972,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
       return result;
     }
 
-#else
+# else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
   ACE_UNUSED_ARG (ace_qos);
@@ -7944,7 +7982,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_WINSOCK2 */
+# endif /* ACE_HAS_WINSOCK2 */
 }
 
 int
@@ -7954,7 +7992,7 @@ ACE_OS::connect (ACE_HANDLE handle,
                  const ACE_QoS_Params &qos_params)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
                                      (const sockaddr *) addr,
                                      (ACE_SOCKET_LEN) addrlen,
@@ -7963,10 +8001,11 @@ ACE_OS::connect (ACE_HANDLE handle,
                                      (QOS *) qos_params.socket_qos (),
                                      (QOS *) qos_params.group_socket_qos ()),
                        int, -1);
-#else
+# else
   ACE_UNUSED_ARG (qos_params);
   return ACE_OS::connect (handle,
                           (sockaddr *) addr,
                           addrlen);
-#endif /* ACE_HAS_WINSOCK2 */
+# endif /* ACE_HAS_WINSOCK2 */
 }
+#endif  // ACE_HAS_WINCE
