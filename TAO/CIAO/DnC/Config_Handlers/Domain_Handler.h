@@ -209,10 +209,6 @@ namespace CIAO
       /// create a document
       DOMDocument* create_document (const char *url);
 
-      /// parse the resource in a HREF format
-      void parse_resource_href_doc (DOMDocument* doc, unsigned long filter,
-                                    Deployment::Resource& domain_resource);
-
       /// parse the property in a HREF format
       void parse_property_href_doc (DOMDocument* doc, unsigned long filter,
                                     Deployment::Property& property);
@@ -232,6 +228,9 @@ namespace CIAO
 
       /// update sr refs
       void update_sr_refs (Deployment::Domain& domain);
+
+      /// process IDREFs
+      void process_refs (DOMNamedNodeMap* named_node_map);
 
     private:
 
