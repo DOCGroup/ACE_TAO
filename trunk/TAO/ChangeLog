@@ -1,3 +1,10 @@
+Wed Oct 27 07:28:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitor.cpp:
+
+	  Changed use of Any_var to Any* in constructor to work around
+	  issue (bug?) in Borland compiler.
+
 Wed Oct 27 07:22:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
