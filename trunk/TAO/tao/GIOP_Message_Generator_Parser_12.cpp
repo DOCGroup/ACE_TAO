@@ -449,7 +449,8 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
 
 
 
-  // Steal the contents in to the reply CDR
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
   params.input_cdr_.steal_data (cdr);
 
   return 0;
@@ -472,7 +473,8 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
 
-  // Steal the contents in to the reply CDR
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
   params.input_cdr_.steal_data (cdr);
 
   return 0;

@@ -310,7 +310,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Create a input CDR stream.
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
-  // copies at all here. The same is alos done in the higher layers.
+  // copies at all here. The same is also done in the higher layers.
   TAO_InputCDR input_cdr (this->message_handler_.steal_data_block (),
                           rd_pos,
                           wr_pos,
@@ -322,6 +322,11 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
+
+  // Once we send the InputCDR stream we need to just forget about
+  // the stream and never touch that again for anything. We basically
+  // loose ownership of the data_block.
+
   switch (this->message_handler_.message_state ().message_type)
     {
     case TAO_GIOP_REQUEST:
@@ -367,6 +372,11 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   // We know we have some reply message. Check whether it is a
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.
+
+  // Once we send the InputCDR stream we need to just forget about
+  // the stream and never touch that again for anything. We basically
+  // loose ownership of the data_block.
+
   switch (this->message_handler_.message_state ().message_type)
     {
     case TAO_GIOP_REPLY:
