@@ -1,3 +1,8 @@
+Mon Sep 10 13:34:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (output_cdr_dblock_allocator): Added a comment
+	  in the code.
+
 Mon Sep 10 12:23:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp (insert_string, get_string):
@@ -16,7 +21,8 @@ Mon Sep 10 12:17:12 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
 	  Moved the libraries around to get proper link line. It was
 	  busted. Further added a realclean so that we remove strange
-	  generated files out of the directory.
+	  generated files out of the directory. This shoudl fix one of the
+	  compile errors in LYNX_PPC builds.
 
 Mon Sep 10 07:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
