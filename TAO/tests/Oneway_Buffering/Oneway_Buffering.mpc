@@ -15,7 +15,6 @@ project(*Server): messaging, taoserver, corba_messaging {
 // succeeds.
 project(*Client): messaging, taoserver, corba_messaging {
   exename   = client
-  after    += *Server
   Source_Files {
     TestC.cpp
     client.cpp
@@ -24,7 +23,6 @@ project(*Client): messaging, taoserver, corba_messaging {
 
 project(*Admin): messaging, taoserver, corba_messaging {
   exename   = admin
-  after    += *Server
   Source_Files {
     Oneway_Buffering_Admin.cpp
     admin.cpp

@@ -766,17 +766,24 @@ be_interface::gen_operation_table (const char *flat_name,
       // collect the input for the gperf program.
       {
         // Temp file name.
+        // We must randomize this a bit in order to avoid problems with
+        // processing more than one idl file (in separate processes) with
+        // the same name (in different directories).
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (idl_global->temp_dir ())
+                              + 11 // The number of possible digits in
+                                   // a 32-bit number plus a dot
                               + ACE_OS::strlen (flat_name)
                               + ACE_OS::strlen (".gperf")
                               + 1],
                         -1);
 
+        ACE_RANDR_TYPE seed = ACE_OS::time();
         ACE_OS::sprintf (temp_file,
-                         "%s%s.gperf",
+                         "%s%d.%s.gperf",
                          idl_global->temp_dir (),
+                         ACE_OS::rand_r(seed),
                          flat_name);
 
         // QNX can't handle individual file names (path components)
