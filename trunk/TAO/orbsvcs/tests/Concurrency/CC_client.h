@@ -10,7 +10,7 @@
 //    CC_client.h
 //
 // = DESCRIPTION
-//      This class implements a client used to test the CosConcuurency
+//      This class implements a client used to test the CosConcurrency
 //      service.
 //
 // = AUTHORS
@@ -24,9 +24,20 @@
 #include "orbsvcs/CosNamingC.h"
 #include "CC_tests.h"
 #include "CC_naming_service.h"
+#include "CC_command.h"
+#include "CC_command.tab.h"
 
 #if !defined(_CC_CLIENT_H_)
 #define _CC_CLIENT_H_
+
+// Stuff to be used by the command file parser
+int CC_commandparse(void);
+int line_no = 1;
+char line_buf[500];
+CC_CommandList *cmdlist;
+extern FILE *CC_commandin;
+// end of parser stuff
+
 
 class CC_Client
 {
@@ -114,6 +125,12 @@ private:
   char *extended_tests_params_;
   // Parameters to the extended tests. The parameters are of the
   // following format: <test>:<parm1>:<parm2>...
+
+  int use_script_file_;
+  // Flag to tell whethter to use a script file to run the tests.
+
+  char *script_file_;
+  // The script file to run
 
   void print_usage (void);
   // Prints out the options to the program.

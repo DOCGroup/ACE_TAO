@@ -26,16 +26,43 @@ CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_e
     orb_ (0),
     factory_ (0)
 {
+  this->Init(orb, _env);
+  instance_ = this;
+}
+
+CC_naming_service::CC_naming_service(void)
+  : naming_context_ (0),
+    cc_factory_key_ (0),
+    orb_ (0),
+    factory_ (0)
+{
+}
+
+void
+CC_naming_service::Init(CORBA::ORB_var orb, CORBA::Environment &_env)
+{
   this->orb_ = orb;
 
   int success = init_naming_service ();
   if(success<0)
     TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
-
 }
 
 CC_naming_service::~CC_naming_service (void)
 {
+  //  if(instance_!=0)
+  // delete instance_;
+  // @TAO somthing went wrong when these lines were uncommented
+}
+
+CC_naming_service *
+CC_naming_service::Instance(void)
+{
+  if(instance_ == 0)
+    {
+      instance_ = new CC_naming_service();
+    }
+  return instance_;
 }
 
 CORBA::Object_var
@@ -146,3 +173,5 @@ CC_naming_service::init_naming_service (void)
 
   return 0;
 }
+
+CC_naming_service* CC_naming_service::instance_ = 0;
