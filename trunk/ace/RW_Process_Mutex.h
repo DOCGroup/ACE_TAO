@@ -38,9 +38,18 @@ class ACE_Export ACE_RW_Process_Mutex
 {
 public:
   /// Create a readers/writer <Process_Mutex>, passing in the optional
-  /// <name>.  If not specified, a name is generated.
+  /// <name>, <flags> and <mode> \sa ACE_File_Lock.  
+  ///  If not specified, a name is generated and flags and mode are set 
+  ///  to default platform values. 
+#if defined (ACE_WIN32)
   ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
-                        int flags = O_CREAT|O_RDWR);
+                        int flags = O_CREAT|O_RDWR,
+                        mode_t mode =  ACE_DEFAULT_OPEN_PERMS);
+#else
+  ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
+                        int flags = O_CREAT|O_RDWR,
+	                    mode_t mode = S_IRUSR | S_IWUSR );
+#endif /* ACE_WIN32 */
 
   ~ACE_RW_Process_Mutex (void);
 
