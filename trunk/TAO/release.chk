@@ -53,7 +53,7 @@ Legend:
 [000xx ] 	SII objref
 
 [11xxx ] 	DII short
-[x1xxx ] 	DII ubstring
+[11xxx ] 	DII ubstring
 [x1xxx ] 	DII fixed_struct
 [x0xxx ] 	DII strseq
 [x0xxx ] 	DII var_struct
