@@ -1,3 +1,41 @@
+Mon Jun 19 15:36:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+	* examples/Content_Server/SMI_Iterator/client.cpp:
+	* examples/Content_Server/SMI_Iterator/server.cpp:
+
+	  Updated to use ACE_FILE_Connector and ACE_Process_Manager to
+	  improve portability.
+
+	* examples/Content_Server/SMI_Iterator/Web_Server.idl:
+
+	  Cleaned up some trailing whitespace.
+
+	* examples/Content_Server/SMI_Iterator/client.dsp:
+	* examples/Content_Server/SMI_Iterator/server.dsp:
+
+	  Corrected tao_idl compiler location.
+
+	* examples/Content_Server/SMI_Iterator/README:
+
+	  Added instructions that explain how to run the example, and
+	  provided some sample output.
+
+	* examples/Content_Server/SMI_Iterator/Makefile:
+
+	  Updated dependencies.
+
+	* examples/Makefile (DIRS):
+
+	  Added Content_Server to list of directories to recurse into.
+
+	* examples/Content_Server/Makefile:
+
+	  Added a top-level Content_Server example Makefile that descends
+	  into each of the Content_Server example directories.
+
 Mon Jun 19 14:22:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simulator/Event_Supplier/Makefile:
