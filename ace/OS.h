@@ -2571,6 +2571,10 @@ typedef void (*ACE_SignalHandlerV)(...);
 #     define ACE_SEH_FINALLY __finally
 #   endif /* __BORLANDC__ */
 #   define ACE_SEH_EXCEPT(X) __except(X)
+typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
+// Prototype of win32 structured exception handler functions.
+// They are used to get the exception handling expression or
+// as exception handlers.
 # endif /* ACE_HAS_WINCE */
 
 // The "null" device on Win32.
@@ -3868,6 +3872,12 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 }
 #endif /* ACE_HAS_SIG_C_FUNC */
 
+#if defined (ACE_WIN32)
+// Default WIN32 structured exception handler.  
+int ACE_SEH_Default_Exception_Selector (void *);
+int ACE_SEH_Default_Exception_Handler (void *);
+#endif /* ACE_WIN32 */
+
 class ACE_Export ACE_Cleanup
 {
   // = TITLE
@@ -3939,7 +3949,12 @@ public:
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
                       ACE_Thread_Manager *thr_mgr = 0,
-                      ACE_Thread_Descriptor *td = 0);
+                      ACE_Thread_Descriptor *td = 0
+#if defined (ACE_WIN32)
+                      , ACE_SEH_EXCEPT_HANDLER selector = 0,
+                      ACE_SEH_EXCEPT_HANDLER handler = 0
+#endif /* ACE_WIN32 */
+                      );
   // Constructor.
 
   void *invoke (void);
@@ -3961,12 +3976,6 @@ private:
   void inherit_log_msg (void);
   // Inherit the logging features if the parent thread has an
   // <ACE_Log_Msg>.
-
-#if defined (ACE_WIN32)
-  int rethrow_w32_structural_exception (void);
-  // This function prints out warning message and pass
-  // the exception on to outer layer.
-#endif /* ACE_WIN32 */
 
   ACE_THR_FUNC user_func_;
   // Thread startup function passed in by the user (C++ linkage).
@@ -4003,6 +4012,11 @@ private:
 
   int trace_depth_;
   // Depth of the nesting for printing traces.
+
+#if defined (ACE_WIN32)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+#endif /* ACE_WIN32 */
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 
   friend class ACE_Thread_Adapter_Has_Private_Destructor;
