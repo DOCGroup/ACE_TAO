@@ -42,7 +42,7 @@
   // invokes iostream::operator>> (int&) then iostream::operator>> (String&)
   //
   // What has happened is that the first >> is invoked on the base class and returns
-  // a reference to iostream.  The second >> has no idea of the ACE_IOStream_T and
+  // a reference to iostream.  The second >> has no idea of the ACE_IOStream and
   // gets invoked on iostream.  Probably NOT what you wanted!
 
 

@@ -7,7 +7,7 @@ int main (int argc, char *argv[])
   const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short server_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
 
-  ACE_IOStream_T<ACE_SOCK_Stream> server;
+  ACE_IOStream<ACE_SOCK_Stream> server;
   ACE_SOCK_Connector connector;
   ACE_INET_Addr addr (server_port, server_host);
 
@@ -49,10 +49,10 @@ int main (int argc, char *argv[])
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_IOStream_T <ACE_SOCK_Stream>;
+template class ACE_IOStream <ACE_SOCK_Stream>;
 template class ACE_Streambuf_T <ACE_SOCK_Stream>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_IOStream_T <ACE_SOCK_Stream>
+#pragma instantiate ACE_IOStream <ACE_SOCK_Stream>
 #pragma instantiate ACE_Streambuf_T <ACE_SOCK_Stream>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
