@@ -1,3 +1,25 @@
+Tue Feb  9 16:39:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_decl.h: 
+	* TAO_IDL/be/be_decl.cpp: 
+	* TAO_IDL/be/be_enum.cpp: 
+	* TAO_IDL/be/be_enum_val.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_field.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_union.cpp: 
+	* TAO_IDL/be/be_union_branch.cpp: 
+	  The name2long() function was using a <long> but it needed a
+	  32-bit type; the right type to use is a ACE_UINT32.  This fixes
+	  some strange problems in 64-bit machines, like Alphas.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	  Fixed the ACE_DEBUG calls, they should be protected by the
+	  TAO_debug_level.
+
 Tue Feb  9 13:47:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/try_macros.h: 

@@ -419,9 +419,9 @@ be_decl::prefix (void)
 
 // converts a string name into an array of 4 byte longs
 int
-be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
+be_decl::tc_name2long (const char *name, ACE_UINT32 *&larr, long &arrlen)
 {
-  static long buf [NAMEBUFSIZE / sizeof (long)];
+  static ACE_UINT32 buf [NAMEBUFSIZE / sizeof (long)];
   long slen;
   long i;
 

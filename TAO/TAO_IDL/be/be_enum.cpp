@@ -110,7 +110,6 @@ be_enum::gen_encapsulation (void)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   long i, arrlen;
-  long *arr;  // an array holding string names converted to array of longs
 
 
   cs = cg->client_stubs ();
@@ -119,6 +118,8 @@ be_enum::gen_encapsulation (void)
   *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+
+  ACE_UINT32 *arr;
   (void)this->tc_name2long (this->repoID (), arr, arrlen);
   for (i=0; i < arrlen; i++)
     {
