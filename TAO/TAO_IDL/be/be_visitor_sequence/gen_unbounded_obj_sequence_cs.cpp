@@ -31,7 +31,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
 
-  // retrieve the base type since we may need to do some code
+  // Retrieve the base type since we may need to do some code
   // generation for the base type.
   bt = be_type::narrow_from_decl (node->base_type ());
 
@@ -43,12 +43,12 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the class name
-  be_type  *pt; // base types
+  // Generate the class name.
+  be_type  *pt;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      // get the primitive base type of this typedef node
+      // Get the primitive base type of this typedef node.
       be_typedef *t = be_typedef::narrow_from_decl (bt);
       pt = t->primitive_base_type ();
     }
@@ -68,6 +68,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
     {
       bt_is_defined = 1;
     }
+  else if (pt->node_type () == AST_Decl::NT_interface_fwd)
+    {
+      AST_InterfaceFwd *ifbt = AST_InterfaceFwd::narrow_from_decl (pt);
+      bt_is_defined = ifbt->full_definition ()->is_defined ();
+    }
   else
     {
       AST_Interface *ibt = AST_Interface::narrow_from_decl (pt);
@@ -77,21 +82,23 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
-  ACE_OS::memset (full_class_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (full_class_name, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
   if (node->is_nested ())
     {
       be_scope *parent = be_scope::narrow_from_scope (node->defined_in ());
 
-      ACE_OS::sprintf (
-          full_class_name, "%s::%s",
-          parent->decl ()->full_name (),
-          class_name
-        );
+      ACE_OS::sprintf (full_class_name, 
+                       "%s::%s",
+                       parent->decl ()->full_name (),
+                       class_name);
     }
   else
     {
-      ACE_OS::sprintf (full_class_name, "%s",
+      ACE_OS::sprintf (full_class_name, 
+                       "%s",
                        class_name);
     }
 
@@ -99,18 +106,20 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  // !! branching in either compile time template instantiation
-  // or manual template instatiation
+  // Branching in either compile time template instantiation
+  // or manual template instatiation.
   os->gen_ifdef_AHETI();
 
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
 
-  // allocate_buffer
-  *os << "// The Base_Sequence functions, please see tao/Sequence.h" << be_nl
+  // allocate_buffer.
+  *os << "// The Base_Sequence functions, please see tao/Sequence.h" 
+      << be_nl
       << "void" << be_nl
-      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" << be_nl
+      << full_class_name << "::_allocate_buffer (CORBA::ULong length)" 
+      << be_nl
       << "{" << be_idt_nl;
 
   bt->accept (visitor);
@@ -161,7 +170,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // deallocate_buffer
+  // deallocate_buffer.
   *os << "void" << be_nl
       << full_class_name << "::_deallocate_buffer (void)" << be_nl
       << "{" << be_idt_nl
@@ -201,14 +210,14 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "}" << be_nl
       << be_nl;
 
-  // destructor
+  // Destructor.
   *os << full_class_name << "::~" << class_name << " (void)" << be_nl
       << "{" << be_idt_nl
       << "this->_deallocate_buffer ();" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
-  // shrink_buffer
+  // shrink_buffer.
   *os << "void" << be_nl
       << full_class_name 
       << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
@@ -251,7 +260,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
        (!ACE_OS::strcmp (prim->local_name ()->get_string (), "Object"))))
     {
-      // Pseudo objects do not require this methods.
+      // Pseudo objects do not require these methods.
       *os << "void " << be_nl
           << full_class_name << "::_downcast (" << be_idt << be_idt_nl
 	        << "void* target," << be_nl
@@ -310,9 +319,9 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 	        << "}" << be_nl;
     }
 
-  os->gen_endif (); // endif macro
+  os->gen_endif ();
 
-  // generate #endif for AHETI
+  // Generate #endif for AHETI.
   os->gen_endif_AHETI();
 
   delete visitor;
