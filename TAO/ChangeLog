@@ -1,3 +1,8 @@
+Sun Feb  1 15:18:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/FL_Cube/FL_Cube.mpc:
+          Added missing file to the server project
+
 Sun Feb  1 15:05:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/FL_Cube/test_i.{h,cpp}:
