@@ -188,11 +188,16 @@ void TAO_FTEC_Group_Manager::add_member (
       new_impl->info_list.length(new_impl->my_position+2);
       new_impl->info_list[new_impl->my_position+1] = info;
 
-      group_info =
+      /// group_info = publisher->set_info(..) should be enough.
+      /// However, GCC 2.96 is not happy with that. 
+
+      GroupInfoPublisherBase::Info_ptr group_info1 = 
         publisher->setup_info(new_impl->info_list,
                               new_impl->my_position
                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
+      group_info.reset(group_info1.release());
+
       last_one = true;
     }
     ACE_ENDTRY;

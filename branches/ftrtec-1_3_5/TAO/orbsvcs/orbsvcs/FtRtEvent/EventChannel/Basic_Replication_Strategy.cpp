@@ -40,10 +40,9 @@ Basic_Replication_Strategy::check_validity(ACE_ENV_SINGLE_ARG_DECL)
     else if (seq_no != this->sequence_num_+1) {
       // out of sync, we missed some set_update() request already
       // throw exception
-      //            client_interceptor_->sequence_num_--;
       FTRT::OutOfSequence exception;
       exception.current = this->sequence_num_;
-      TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence\n");
+      TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence (old sequence_num_ = %d)\n", this->sequence_num_);
       ACE_THROW(FTRT::OutOfSequence(exception));
     }
     else
