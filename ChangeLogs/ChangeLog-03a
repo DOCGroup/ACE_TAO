@@ -1,3 +1,9 @@
+Fri Aug 24 21:55:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * ace/QoS/QoS_Session_Impl.cpp:
+          Check for null parameters in rsvp_callback().
+          Thanks to Yamuna Krishnamurthy <yamuna@cs.wustl.edu>. 
+
 Fri Aug 24 20:32:39 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/MEM_Stream_Test.cpp: Changed this test to use multiple
