@@ -26,6 +26,9 @@ public:
   typedef charT * value_type;
   typedef charT const * const_value_type;
   typedef details::string_traits<charT,true> string_traits;
+  // @@ Carlos, VC6 cannot handle the following typedefs. It simply
+  // says that "string_var" (or string_mgr) is not a member of
+  // "string_traits". I seem to  understand this code better than VC6!
   typedef typename string_traits::string_var string_var;
   typedef typename string_traits::string_mgr string_mgr;
 
@@ -35,7 +38,7 @@ public:
     , release_(release)
   {
   }
-    
+
   string_sequence_element(
       string_sequence_element const & rhs)
     : element_(rhs.element_)
@@ -100,7 +103,7 @@ public:
   {
     return release_;
   }
-  
+
 private:
   // This function is not implemented
   string_sequence_element();
