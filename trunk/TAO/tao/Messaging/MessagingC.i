@@ -64,7 +64,7 @@ Messaging::ReplyHandler::ReplyHandler (
       ),
     the_TAO_ReplyHandler_Proxy_Broker_ (0)
 {
-  this->Messaging_ReplyHandler_setup_collocation (_tao_collocated);
+  this->Messaging_ReplyHandler_setup_collocation ();
 }
 
 ACE_INLINE

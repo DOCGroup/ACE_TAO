@@ -20,11 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @NOTE: Do not include any headers unncessarily here.
+// @NOTE: Do not include any headers unessarily here.
 #include "ace/CORBA_macros.h"
 
 #include "tao/TAO_Export.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/Collocation_Strategy.h"
 
 struct TAO_Exception_Data;
 class TAO_Operation_Details;
@@ -75,7 +76,6 @@ namespace TAO
     /// The only constructor used by the IDL compiler, and only way to
     /// create this adapter.
     /**
-     *
      * @param target Points to the object on which this invocation is
      * being invoked.
      *
@@ -97,7 +97,7 @@ namespace TAO
      * collocated target.
      *
      * @param type The operation type which could be a oneway or two
-     * way operation. this information is available in the IDL file.
+     * way operation. This information is available in the IDL file.
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
@@ -127,42 +127,17 @@ namespace TAO
                          unsigned long ex_count
                          ACE_ENV_ARG_DECL);
   protected:
-
-    /// Make a collocated call.
-    /**
-     * This method checks whether the target is indeed collocated and
-     * if so, creates an object that takes care of making collocated
-     * invocations  and calls invoke () on it. If the invoke ()
-     * returns with a location forwarded reply, this method takes care
-     * of forwarding the request to the new target.
-     *
-     * @note At this point of time the object that is created for
-     * making collocated invocations is too coarse grained to handle
-     * different messaging and invocation policies. This need to
-     * change in the future. Please take a look at the documentation
-     * in Collocated_Invocation.h for details.
-     *
-     * @param stub The stub object on which the invocation is made.
-     *
-     * @param op The operations details of the operation that is being
-     * invoked.
-     */
-    virtual void invoke_collocated (TAO_Stub *stub,
-                                    TAO_Operation_Details &op
-                                    ACE_ENV_ARG_DECL);
-
-    /// Makes a remote calls to the target.
     /**
      * The stub pointer passed to this call has all the details about
-     * the remote object to which the invocation needs to be routed
-     * to. The implementation of this method takes care of reinvoking
-     * the target if it receives forwarding information or if the
-     * first invocation fails for some reason, like a loss of
-     * connection during send () etc.
+     * the object to which the invocation needs to be routed to. The
+     * implementation of this method looks if we are collocated or not
+     * and takes care of reinvoking the target if it receives
+     * forwarding information or if the first invocation fails
+     * for some reason, like a loss of connection during send () etc.
      */
-    virtual void invoke_remote (TAO_Stub *,
-                                TAO_Operation_Details &op
-                                ACE_ENV_ARG_DECL);
+    virtual void invoke_i (TAO_Stub *stub,
+                           TAO_Operation_Details &details
+                           ACE_ENV_ARG_DECL);
 
     /**
      * @name Helper methods for making different types of invocations.
@@ -178,7 +153,7 @@ namespace TAO
 
     /*
      * This method does the following essential activities needed for
-     * a remote  invocation.
+     * a remote invocation.
      *
      * - Extracts the roundtrip timeout policies set in the ORB or
      *   Object or at the thread level
@@ -189,10 +164,28 @@ namespace TAO
      *   delegates the call.
      */
     virtual Invocation_Status invoke_remote_i (
-        TAO_Stub *,
-        TAO_Operation_Details &op,
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
         CORBA::Object_ptr &effective_target,
         ACE_Time_Value *&max_wait_time
+        ACE_ENV_ARG_DECL);
+
+    /// Make a collocated call.
+    /**
+     * This method creates an object that takes care of making collocated
+     * invocations and calls invoke () on it. If the invoke ()
+     * returns with a location forwarded reply we return a restart
+     *
+     * @param stub The stub object on which the invocation is made.
+     *
+     * @param details The operations details of the operation that is being
+     * invoked.
+     */
+    virtual Invocation_Status invoke_collocated_i (
+        TAO_Stub *stub,
+        TAO_Operation_Details &details,
+        CORBA::Object_ptr &effective_target,
+        Collocation_Strategy strat
         ACE_ENV_ARG_DECL);
 
     /// Helper method to make a two way invocation.
@@ -260,9 +253,11 @@ namespace TAO
     /// Collocation proxy broker for this operation.
     Collocation_Proxy_Broker *cpb_;
 
-    /// The invocation type and mode.
-    const Invocation_Type type_;
-    const Invocation_Mode mode_;
+    /// The invocation type
+    Invocation_Type type_;
+
+    /// The invocation mode
+    Invocation_Mode mode_;
 
   private:
     /// Dont allow default initializations

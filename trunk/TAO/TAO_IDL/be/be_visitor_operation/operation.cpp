@@ -429,11 +429,8 @@ be_visitor_operation::gen_stub_operation_body (
           << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
           << be_idt_nl
           << "{" << be_idt_nl
-          << intf->flat_name () << "_setup_collocation ("
-          << be_idt << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
+          << intf->flat_name () << "_setup_collocation ();"
           << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
     }
 
@@ -648,7 +645,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
 {
   AST_Argument *arg = 0;
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
-  
+
   if (ami)
     {
       // Skip the reply handler (first argument).
@@ -693,12 +690,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    TAO_OutStream *os)
 {
   AST_Typedef *alias = 0;
-  
+
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
       alias = AST_Typedef::narrow_from_decl (bt);
     }
-    
+
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)

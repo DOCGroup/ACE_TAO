@@ -215,11 +215,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      EventDef (int collocated = 0);
+      EventDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_EventDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_EventDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       EventDef (
@@ -375,11 +375,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      Container (int collocated = 0);
+      Container (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_Container_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_Container_setup_collocation (void);
       
       // Concrete non-local interface only.
       Container (
@@ -484,11 +484,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      ModuleDef (int collocated = 0);
+      ModuleDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_ModuleDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_ModuleDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       ModuleDef (
@@ -593,11 +593,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      Repository (int collocated = 0);
+      Repository (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_Repository_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_Repository_setup_collocation (void);
       
       // Concrete non-local interface only.
       Repository (
@@ -722,11 +722,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      ProvidesDef (int collocated = 0);
+      ProvidesDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_ProvidesDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_ProvidesDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       ProvidesDef (
@@ -910,11 +910,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      UsesDef (int collocated = 0);
+      UsesDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_UsesDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_UsesDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       UsesDef (
@@ -1089,11 +1089,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      EventPortDef (int collocated = 0);
+      EventPortDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_EventPortDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_EventPortDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       EventPortDef (
@@ -1235,11 +1235,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      EmitsDef (int collocated = 0);
+      EmitsDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_EmitsDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_EmitsDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       EmitsDef (
@@ -1343,11 +1343,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      PublishesDef (int collocated = 0);
+      PublishesDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_PublishesDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_PublishesDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       PublishesDef (
@@ -1451,11 +1451,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      ConsumesDef (int collocated = 0);
+      ConsumesDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_ConsumesDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_ConsumesDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       ConsumesDef (
@@ -1649,11 +1649,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      ComponentDef (int collocated = 0);
+      ComponentDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_ComponentDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_ComponentDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       ComponentDef (
@@ -1962,11 +1962,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      FactoryDef (int collocated = 0);
+      FactoryDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_FactoryDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_FactoryDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       FactoryDef (
@@ -2070,11 +2070,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      FinderDef (int collocated = 0);
+      FinderDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_FinderDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_FinderDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       FinderDef (
@@ -2269,11 +2269,11 @@ namespace CORBA
     
     protected:
       // Concrete interface only.
-      HomeDef (int collocated = 0);
+      HomeDef (void);
       
       // These methods travese the inheritance tree and set the
       // parents piece of the given class in the right mode.
-      virtual void CORBA_ComponentIR_HomeDef_setup_collocation (int collocated);
+      virtual void CORBA_ComponentIR_HomeDef_setup_collocation (void);
       
       // Concrete non-local interface only.
       HomeDef (

@@ -47,7 +47,7 @@ ImplementationRepository::Locator::Locator (
       ),
     the_TAO_Locator_Proxy_Broker_ (0)
 {
-  this->ImplementationRepository_Locator_setup_collocation (_tao_collocated);
+  this->ImplementationRepository_Locator_setup_collocation ();
 }
 
 ACE_INLINE

@@ -244,11 +244,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    IRObject (int collocated = 0);
+    IRObject (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_IRObject_setup_collocation (int collocated);
+    virtual void CORBA_IRObject_setup_collocation (void);
     
     // Concrete non-local interface only.
     IRObject (
@@ -561,11 +561,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    Contained (int collocated = 0);
+    Contained (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_Contained_setup_collocation (int collocated);
+    virtual void CORBA_Contained_setup_collocation (void);
     
     // Concrete non-local interface only.
     Contained (
@@ -2445,11 +2445,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    Container (int collocated = 0);
+    Container (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_Container_setup_collocation (int collocated);
+    virtual void CORBA_Container_setup_collocation (void);
     
     // Concrete non-local interface only.
     Container (
@@ -2540,11 +2540,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    IDLType (int collocated = 0);
+    IDLType (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_IDLType_setup_collocation (int collocated);
+    virtual void CORBA_IDLType_setup_collocation (void);
     
     // Concrete non-local interface only.
     IDLType (
@@ -2649,11 +2649,11 @@ namespace CORBA
   
   protected:
     // Concrete interface only.
-    TypedefDef (int collocated = 0);
+    TypedefDef (void);
     
     // These methods travese the inheritance tree and set the
     // parents piece of the given class in the right mode.
-    virtual void CORBA_TypedefDef_setup_collocation (int collocated);
+    virtual void CORBA_TypedefDef_setup_collocation (void);
     
     // Concrete non-local interface only.
     TypedefDef (
