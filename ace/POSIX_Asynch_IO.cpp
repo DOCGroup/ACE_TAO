@@ -359,7 +359,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
-  (ACE_Handler::Procy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
@@ -2035,7 +2035,7 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
   // general <proactor> interface pointer.
 
   // Open Asynch_Read_File.
-  if (this->rf_.open (*this,
+  if (this->rf_.open (this->proxy (),
                       this->result_->file (),
                       0,
                       0) == -1)
@@ -2044,7 +2044,7 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
                       -1);
 
   // Open Asynch_Write_Stream.
-  if (this->ws_.open (*this,
+  if (this->ws_.open (this->proxy (),
                       this->result_->socket (),
                       0,
                       0) == -1)
