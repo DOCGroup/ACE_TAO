@@ -113,7 +113,7 @@ IR::PrimitiveKind
 TAO_PrimitiveDef_i::kind (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (IR::pk_null);
 
   return this->kind_i (ACE_TRY_ENV);
 }

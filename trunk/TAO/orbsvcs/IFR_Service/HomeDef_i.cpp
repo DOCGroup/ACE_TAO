@@ -98,7 +98,7 @@ IR::ComponentDef_ptr
 TAO_HomeDef_i::managed_component (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::Component::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR::ComponentDef::_nil ());
 
   return this->managed_component_i (ACE_TRY_ENV);
 }
@@ -115,7 +115,7 @@ IR::PrimaryKeyDef_ptr
 TAO_HomeDef_i::primary_key (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::PrimaryDef::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR::PrimaryKeyDef::_nil ());
 
   return this->primary_key_i (ACE_TRY_ENV);
 }
@@ -187,7 +187,7 @@ TAO_HomeDef_i::create_primary_key (const char *id,
                                    CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_WRITE_GUARD_RETURN (IR::PrimaryDef::_nil ());
+  TAO_IFR_WRITE_GUARD_RETURN (IR::PrimaryKeyDef::_nil ());
 
   return this->create_primary_key_i (id,
                                      name,
