@@ -78,6 +78,10 @@ public:
   int is_tail_complete (void);
   int is_head_complete (void);
 
+  /// This method checks whether the last message that was queued up
+  /// was fragmented...
+  int is_tail_fragmented (void);
+
   /// Return the size of data that is missing in tail of the queue.
   size_t missing_data_tail (void) const;
   ///  void missing_data (size_t data);
@@ -123,10 +127,17 @@ public:
   /// Constructor.
   TAO_Queued_Data (ACE_Message_Block *mb);
 
+  /// Copy constructor.
+  TAO_Queued_Data (const TAO_Queued_Data &qd);
+
   /// Creation and deletion of a node in the queue.
   static TAO_Queued_Data* get_queued_data (void);
 
   static void release (TAO_Queued_Data *qd);
+
+  /// Duplicate ourselves. This creates a copy of ourselves on the
+  /// heap and returns a pointer to the duplicated node.
+  static TAO_Queued_Data* duplicate (TAO_Queued_Data &qd);
 
   /// The message block that contains the message.
   ACE_Message_Block *msg_block_;
@@ -142,8 +153,13 @@ public:
   /// information that would be needed to read and decipher the
   /// message.
   CORBA::Octet major_version_;
-
   CORBA::Octet minor_version_;
+
+  /// Some messages can be fragmented by the protocol (this is an ORB
+  /// level fragmentation on top of the TCP/IP fragmentation. This
+  /// member indicates whether the message that we have recd. and
+  /// queue already has more fragments that is missing..
+  CORBA::Octet more_fragments_;
 
   /// The message type of the message
   TAO_Pluggable_Message_Type msg_type_;

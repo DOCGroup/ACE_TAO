@@ -206,6 +206,11 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
   // Make the header for the locate request
   output.write_ulong (status_info.status);
 
+  // Note: We dont align the pointer to an 8 byte boundary for a
+  // locate reply body. This is due to an urgent issue raised by Michi
+  // in the OMG. I discussed this with Michi today (09/07/2001) and I
+  // learn that this has been passed. Hence the change..
+  /*
   if (status_info.status == TAO_GIOP_OBJECT_FORWARD ||
       status_info.status == TAO_GIOP_OBJECT_FORWARD_PERM)
     {
@@ -215,7 +220,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
           return 0;
         }
     }
-
+  */
   switch (status_info.status)
     {
     case TAO_GIOP_OBJECT_FORWARD:
@@ -467,11 +472,15 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
 
     return -1;
 
-  if (cdr.length () > 0)
+  // Note: We dont align the pointer to an 8 byte boundary for a
+  // locate reply body. This is due to an urgent issue raised by Michi
+  // in the OMG. I discussed this with Michi today (09/07/2001) and I
+  // learn that this has been passed. Hence the change..
+  /*if (cdr.length () > 0)
     {
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
-    }
+      }*/
 
   // Steal the contents in to the reply CDR and loose ownership of the
   // data block.
