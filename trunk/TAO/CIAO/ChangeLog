@@ -1,3 +1,11 @@
+Thu Jan 29 14:03:42 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * tools/XML_Helpers/XMLHelpers.mpc:
+
+          Updated these mpc files to work with IDL_Files as a custom build
+          type instead of a built-in build type.
+
 Thu Jan 29 12:30:52 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * step-by-step.html:
@@ -11,37 +19,37 @@ Thu Jan 29 12:30:52 2004  Tao Lu  <lu@dre.vanderbilt.edu>
         * descriptors/multi-receivers-default.cad:
         * descriptors/run_test_multirecv.pl:
 
-	  Following changes have been added to resolve the EI.idl problem.
-	  1. All *EI.idl are removed.
-	  2. All provided facets are implemented by the way of
-	  "composition".
-	  3. Added one more deployment scenario which has 2 instances of
-	  the Receiver.
+          Following changes have been added to resolve the EI.idl problem.
+          1. All *EI.idl are removed.
+          2. All provided facets are implemented by the way of
+          "composition".
+          3. Added one more deployment scenario which has 2 instances of
+          the Receiver.
 
 Thu Jan 29 11:00:50 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Reverted some more changes since they caused the C++ generated
-	  code to break.
+          Reverted some more changes since they caused the C++ generated
+          code to break.
 
 Thu Jan 29 10:03:42 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Debian package libboost-dev apparently does not include regex.
-	  Instead regex is provided as a separate libboost-regex-dev.
-	  Added libboost-regex-dev as a required package to build CCF.
-	  Thanks to Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>
-	  for reporting this.
+          Debian package libboost-dev apparently does not include regex.
+          Instead regex is provided as a separate libboost-regex-dev.
+          Added libboost-regex-dev as a required package to build CCF.
+          Thanks to Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>
+          for reporting this.
 
 Wed Jan 28 17:49:06 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Reverted back to SessionContext since it would be very hard
-	  to fix C++ code to conform to this change. Will have to
-	  do it later as part of C++ code refactoring.
+          Reverted back to SessionContext since it would be very hard
+          to fix C++ code to conform to this change. Will have to
+          do it later as part of C++ code refactoring.
 
 Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -54,178 +62,178 @@ Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Jan 28 13:02:28 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Implemented generation of additional interfaces that allow
-	  separation between executor interfaces and composition type.
+          Implemented generation of additional interfaces that allow
+          separation between executor interfaces and composition type.
 
 Tue Jan 27 12:05:13 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* examples/Hello/Sender/Sender_exec.cpp:
-	* examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Sender/Sender_exec.h:
 
-	  New EI-less implementation.
+          New EI-less implementation.
 
-	* CIDLC/CIDLC.sln:
+        * CIDLC/CIDLC.sln:
         * CIDLC/CIDLC.vcproj:
 
-	  Updated projects to compile with boost out-of-the-box.
+          Updated projects to compile with boost out-of-the-box.
 
 Tue Jan 27 11:33:39 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Hello/Sender/Sender_exec.h:
-	* examples/Hello/Sender/Sender_exec.cpp:
-	* examples/Hello/Sender/Sender.idl:
-	* examples/Hello/Sender/starter.cpp:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/starter.cpp:
 
-	Updated these files.
+        Updated these files.
 
 Tue Jan 27 10:15:59 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Hello/step-by-step.html:
+        * examples/Hello/step-by-step.html:
 
-	Some format and trivial fix.
+        Some format and trivial fix.
 
 Mon Jan 26 20:33:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Hello/step-by-step.html:
+        * examples/Hello/step-by-step.html:
 
-	Updated this file with new font.
+        Updated this file with new font.
 
 Fri Jan 23 10:36:27 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CCF.sln:
-	* CCF/CCF/CIDL/CIDL.vcproj:
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
-	* CCF/CCF/CompilerElements/CompilerElements.vcproj:
-	* CCF/CCF/IDL2/IDL2.vcproj:
-	* CCF/CCF/IDL3/IDL3.vcproj:
+        * CCF/CCF/CCF.sln:
+        * CCF/CCF/CIDL/CIDL.vcproj:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+        * CCF/CCF/CompilerElements/CompilerElements.vcproj:
+        * CCF/CCF/IDL2/IDL2.vcproj:
+        * CCF/CCF/IDL3/IDL3.vcproj:
 
-	  Updated projects to compile with boost out-of-the-box.
+          Updated projects to compile with boost out-of-the-box.
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Added step-by-step instructions for building CCF on
-	  Windows. Thanks to Tao Lu for helping me with this.
+          Added step-by-step instructions for building CCF on
+          Windows. Thanks to Tao Lu for helping me with this.
 
 Thu Jan 22 23:38:32 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/OEP/Display/descriptors/DualDisplay.cad:
+        * examples/OEP/Display/descriptors/DualDisplay.cad:
 
-	  Changed the name of the file.
+          Changed the name of the file.
 
 Wed Jan 21 11:16:31 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/Parsing/Recovery.hpp:
-	* CCF/CCF/IDL2/Traversal/ValueType.tpp:
-	* CCF/CCF/IDL3/Traversal/EventType.tpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
+        * CCF/CCF/IDL2/Parsing/Recovery.hpp:
+        * CCF/CCF/IDL2/Traversal/ValueType.tpp:
+        * CCF/CCF/IDL3/Traversal/EventType.tpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Wed Jan 21 10:17:22 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Makefile:
-	* CCF/CCF/Makefile:
-	* CCF/CCF/CIDL/Makefile:
-	* CCF/CCF/CIDL/Makefile.alt:
-	* CCF/CCF/CIDL/Makefile.archive:
-	* CCF/CCF/CIDL/Makefile.archive.alt:
-	* CCF/CCF/CIDL/SemanticAction/Makefile:
-	* CCF/CCF/CIDL/SemanticAction/Makefile.alt:
-	* CCF/CCF/CIDL/SemanticAction/Makefile.object:
-	* CCF/CCF/CIDL/SemanticAction/Makefile.object.alt:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Makefile:
-	* CCF/CCF/CIDL/SemanticGraph/Makefile:
-	* CCF/CCF/CIDL/Traversal/Makefile:
-	* CCF/CCF/CodeGenerationKit/Makefile:
-	* CCF/CCF/CompilerElements/Makefile:
-	* CCF/CCF/IDL2/Makefile:
-	* CCF/CCF/IDL2/Makefile.alt:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Makefile.archive.alt:
-	* CCF/CCF/IDL2/SemanticAction/Makefile:
-	* CCF/CCF/IDL2/SemanticAction/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticAction/Makefile.object:
-	* CCF/CCF/IDL2/SemanticAction/Makefile.object.alt:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticGraph/Makefile:
-	* CCF/CCF/IDL2/Traversal/Makefile:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL3/Makefile:
-	* CCF/CCF/IDL3/Makefile.alt:
-	* CCF/CCF/IDL3/Makefile.archive:
-	* CCF/CCF/IDL3/Makefile.archive.alt:
-	* CCF/CCF/IDL3/SemanticAction/Makefile:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL3/SemanticGraph/Makefile:
-	* CCF/CCF/IDL3/Traversal/Makefile:
-	* CIDLC/Makefile:
+        * CCF/Makefile:
+        * CCF/CCF/Makefile:
+        * CCF/CCF/CIDL/Makefile:
+        * CCF/CCF/CIDL/Makefile.alt:
+        * CCF/CCF/CIDL/Makefile.archive:
+        * CCF/CCF/CIDL/Makefile.archive.alt:
+        * CCF/CCF/CIDL/SemanticAction/Makefile:
+        * CCF/CCF/CIDL/SemanticAction/Makefile.alt:
+        * CCF/CCF/CIDL/SemanticAction/Makefile.object:
+        * CCF/CCF/CIDL/SemanticAction/Makefile.object.alt:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Makefile:
+        * CCF/CCF/CIDL/SemanticGraph/Makefile:
+        * CCF/CCF/CIDL/Traversal/Makefile:
+        * CCF/CCF/CodeGenerationKit/Makefile:
+        * CCF/CCF/CompilerElements/Makefile:
+        * CCF/CCF/IDL2/Makefile:
+        * CCF/CCF/IDL2/Makefile.alt:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Makefile.archive.alt:
+        * CCF/CCF/IDL2/SemanticAction/Makefile:
+        * CCF/CCF/IDL2/SemanticAction/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticAction/Makefile.object:
+        * CCF/CCF/IDL2/SemanticAction/Makefile.object.alt:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Makefile:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticGraph/Makefile:
+        * CCF/CCF/IDL2/Traversal/Makefile:
+        * CCF/CCF/IDL2/Traversal/Makefile.alt:
+        * CCF/CCF/IDL3/Makefile:
+        * CCF/CCF/IDL3/Makefile.alt:
+        * CCF/CCF/IDL3/Makefile.archive:
+        * CCF/CCF/IDL3/Makefile.archive.alt:
+        * CCF/CCF/IDL3/SemanticAction/Makefile:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Makefile:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL3/SemanticGraph/Makefile:
+        * CCF/CCF/IDL3/Traversal/Makefile:
+        * CIDLC/Makefile:
 
-	  Added ACE-style makefiles.
+          Added ACE-style makefiles.
 
-	* CCF/CCF/CIDL/Parser.hpp:
-	* CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/Token.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/Component.hpp:
-	* CCF/CCF/IDL3/SemanticGraph/Home.hpp:
+        * CCF/CCF/CIDL/Parser.hpp:
+        * CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/Token.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.tpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Exception.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Interface.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Operation.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Translation.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Include.cpp:
+        * CCF/CCF/IDL3/SemanticGraph/Component.hpp:
+        * CCF/CCF/IDL3/SemanticGraph/Home.hpp:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Mon Jan 19 10:08:15 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/Makefile.alt:
-	* CIDLC/cidlc.cpp:
+        * CIDLC/Makefile.alt:
+        * CIDLC/cidlc.cpp:
 
-	  Added --version command line option to CIDL compiler. Thanks
-	  to Craig Rodrigues for the suggestion.
+          Added --version command line option to CIDL compiler. Thanks
+          to Craig Rodrigues for the suggestion.
 
 Thu Jan 15 20:17:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Fixed some typos. Thanks to Craig Rodrigues for reporting
-	  them.
+          Fixed some typos. Thanks to Craig Rodrigues for reporting
+          them.
 
 Thu Jan 15 17:53:38 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Updated build instructions for Debian GNU/Linux and RedHat
-	  OS family.
+          Updated build instructions for Debian GNU/Linux and RedHat
+          OS family.
 
 Thu Jan 15 14:39:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Config.rules:
+        * CCF/Config.rules:
 
-	  Fixed incorrect initialization of UTILITY_BUILD_RULES when
-	  UTILITY_ROOT is set. Thanks to Gary Duzan <gduzan@bbn.com>
-	  for reporting this.
+          Fixed incorrect initialization of UTILITY_BUILD_RULES when
+          UTILITY_ROOT is set. Thanks to Gary Duzan <gduzan@bbn.com>
+          for reporting this.
 
 Thu Jan 15 14:30:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* README:
+        * README:
 
-	  Updated the file with information about CIDLC. Thanks to Gary
-	  Duzan <gduzan@bbn.com> for motivating this.
+          Updated the file with information about CIDLC. Thanks to Gary
+          Duzan <gduzan@bbn.com> for motivating this.
 
 Wed Jan 14 18:50:00 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
@@ -233,59 +241,59 @@ Wed Jan 14 18:50:00 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
 Wed Jan 14 15:22:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/README
-	* CIDLC/README.html:
+        * CIDLC/README
+        * CIDLC/README.html:
 
-	  HTML'ised README into a new file README.html and removed the
-	  ascii equivalent of it.
+          HTML'ised README into a new file README.html and removed the
+          ascii equivalent of it.
 
 Wed Jan 14 11:30:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/releasenotes/index.html:
-	* docs/index.html:
+        * docs/releasenotes/index.html:
+        * docs/index.html:
 
-	  Updated releasenotes.
+          Updated releasenotes.
 
 Wed Jan 14 10:59:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/releasenotes:
+        * docs/releasenotes:
 
-	  New directory.
+          New directory.
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  The actual document is placed here to be consistent with TAO.
+          The actual document is placed here to be consistent with TAO.
 
-	* docs/releasenotes.html:
+        * docs/releasenotes.html:
 
-	  Removed the file since it has been moved into a new directory.
+          Removed the file since it has been moved into a new directory.
 
 Tue Jan 13 20:54:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ChangeLog:
+        * ChangeLog:
 
-	  Lots of entries had gotten removed. Fixed them.
+          Lots of entries had gotten removed. Fixed them.
 
 Tue Jan 13 11:24:55 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Config.rules:
+        * CCF/Config.rules:
 
-	  Added 'default-if-not-set' value for UTILITY_BUILD_RULES to
-	  look into well-known location where RedHat and Debian packages
-	  are installed.
+          Added 'default-if-not-set' value for UTILITY_BUILD_RULES to
+          look into well-known location where RedHat and Debian packages
+          are installed.
 
 Sat Jan 10 11:58:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIAO.mwc:
+        * CIAO.mwc:
 
-	  Fixed a typo in the previous checkin.
+          Fixed a typo in the previous checkin.
 
 Sat Jan 10 11:08:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIAO.mwc:
+        * CIAO.mwc:
 
-	  We removed all the mpc files for CIDLC. Needed to remove that
-	  from the workspace file too.
+          We removed all the mpc files for CIDLC. Needed to remove that
+          from the workspace file too.
 
 Fri Jan  9 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -297,9 +305,9 @@ Fri Jan  9 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jan  9 15:45:33 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Added some clarifications suggested by Tao Lu.
+          Added some clarifications suggested by Tao Lu.
 
 Fri Jan  9 14:46:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -321,112 +329,112 @@ Fri Jan  9 14:46:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jan  9 12:25:37 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
 
-	  Fixed a bug with union member handling in semantic
-	  actions.
+          Fixed a bug with union member handling in semantic
+          actions.
 
 Fri Jan  9 12:20:32 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Config.rules:
-	* CCF/Makefile.alt:
-	* CCF/CCF/Makefile.alt:
-	* CCF/CCF/CIDL/Makefile.alt:
-	* CCF/CCF/CIDL/Makefile.archive:
-	* CCF/CCF/CIDL/SemanticAction/Makefile.alt:
-	* CCF/CCF/CIDL/SemanticAction/Makefile.object:
-	* CCF/CCF/CIDL/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/CIDL/SemanticGraph/Makefile.alt:
-	* CCF/CCF/CIDL/Traversal/Makefile.alt:
-	* CCF/CCF/CodeGenerationKit/Makefile.alt:
-	* CCF/CCF/CompilerElements/Makefile.alt:
-	* CCF/CCF/IDL2/Makefile.alt:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/SemanticAction/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticAction/Makefile.object:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
-	* CCF/CCF/IDL2/Traversal/Makefile.alt:
-	* CCF/CCF/IDL3/Makefile.alt:
-	* CCF/CCF/IDL3/Makefile.archive:
-	* CCF/CCF/IDL3/SemanticAction/Makefile.alt:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL3/SemanticGraph/Makefile.alt:
-	* CCF/CCF/IDL3/Traversal/Makefile.alt:
-	* CCF/Documentation/Build.html:
-	* CCF/Example/Makefile.alt:
-	* CCF/Example/CIDL/Makefile.alt:
-	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Indentation/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Indentation/IDL/Makefile.alt:
-	* CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
-	* CCF/Example/ComponentDeploymentDescriptor/Makefile.alt:
-	* CCF/Example/IDL2/Makefile.alt:
-	* CCF/Example/IDL2/CxxMapping/Makefile.alt:
-	* CCF/Test/Makefile.alt:
-	* CCF/Test/CIDL/Makefile.alt:
-	* CCF/Test/CIDL/Compiler/Makefile.alt:
-	* CCF/Test/CompilerElements/Makefile.alt:
-	* CCF/Test/CompilerElements/CPP/Makefile.alt:
-	* CCF/Test/IDL2/Makefile.alt:
-	* CCF/Test/IDL2/Compiler/Makefile.alt:
-	* CCF/Test/IDL2/SemanticGraph/Makefile.alt:
-	* CCF/Test/IDL2/SemanticGraph/HandBuilt/Makefile.alt:
-	* CCF/Test/IDL2/Traversal/Makefile.alt:
-	* CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
-	* CCF/Test/IDL3/Makefile.alt:
-	* CCF/Test/IDL3/Compiler/Makefile.alt:
-	* CIDLC/Makefile.alt:
+        * CCF/Config.rules:
+        * CCF/Makefile.alt:
+        * CCF/CCF/Makefile.alt:
+        * CCF/CCF/CIDL/Makefile.alt:
+        * CCF/CCF/CIDL/Makefile.archive:
+        * CCF/CCF/CIDL/SemanticAction/Makefile.alt:
+        * CCF/CCF/CIDL/SemanticAction/Makefile.object:
+        * CCF/CCF/CIDL/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/CIDL/SemanticGraph/Makefile.alt:
+        * CCF/CCF/CIDL/Traversal/Makefile.alt:
+        * CCF/CCF/CodeGenerationKit/Makefile.alt:
+        * CCF/CCF/CompilerElements/Makefile.alt:
+        * CCF/CCF/IDL2/Makefile.alt:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/SemanticAction/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticAction/Makefile.object:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+        * CCF/CCF/IDL2/Traversal/Makefile.alt:
+        * CCF/CCF/IDL3/Makefile.alt:
+        * CCF/CCF/IDL3/Makefile.archive:
+        * CCF/CCF/IDL3/SemanticAction/Makefile.alt:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL3/SemanticGraph/Makefile.alt:
+        * CCF/CCF/IDL3/Traversal/Makefile.alt:
+        * CCF/Documentation/Build.html:
+        * CCF/Example/Makefile.alt:
+        * CCF/Example/CIDL/Makefile.alt:
+        * CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+        * CCF/Example/CodeGenerationKit/Makefile.alt:
+        * CCF/Example/CodeGenerationKit/Indentation/Makefile.alt:
+        * CCF/Example/CodeGenerationKit/Indentation/IDL/Makefile.alt:
+        * CCF/Example/CodeGenerationKit/Indentation/XML/Makefile.alt:
+        * CCF/Example/ComponentDeploymentDescriptor/Makefile.alt:
+        * CCF/Example/IDL2/Makefile.alt:
+        * CCF/Example/IDL2/CxxMapping/Makefile.alt:
+        * CCF/Test/Makefile.alt:
+        * CCF/Test/CIDL/Makefile.alt:
+        * CCF/Test/CIDL/Compiler/Makefile.alt:
+        * CCF/Test/CompilerElements/Makefile.alt:
+        * CCF/Test/CompilerElements/CPP/Makefile.alt:
+        * CCF/Test/IDL2/Makefile.alt:
+        * CCF/Test/IDL2/Compiler/Makefile.alt:
+        * CCF/Test/IDL2/SemanticGraph/Makefile.alt:
+        * CCF/Test/IDL2/SemanticGraph/HandBuilt/Makefile.alt:
+        * CCF/Test/IDL2/Traversal/Makefile.alt:
+        * CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
+        * CCF/Test/IDL3/Makefile.alt:
+        * CCF/Test/IDL3/Compiler/Makefile.alt:
+        * CIDLC/Makefile.alt:
 
-	  Added 'flexibility' variables to Config.rules and
-	  updated makefiles to reflect this change.
+          Added 'flexibility' variables to Config.rules and
+          updated makefiles to reflect this change.
 
 Thu Jan  8 15:33:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* CCF/CCF/CCF.mwc
-	* CCF/CCF/CIDL/CIDL.mpc
-	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
-	* CCF/CCF/CompilerElements/CompilerElements.mpc
-	* CCF/CCF/IDL2/IDL2.mpc
-	* CCF/CCF/IDL3/IDL3.mpc
-	* CCF/CCF.mwc
-	* CCF/Example/CIDL/CIDL.mwc
-	* CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc
-	* CCF/Example/Example.mwc
-	* CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc
-	* CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc
-	* CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc
-	* CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc
-	* CIDLC/cidlc.mpc
+        * CCF/CCF/CCF.mwc
+        * CCF/CCF/CIDL/CIDL.mpc
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+        * CCF/CCF/CompilerElements/CompilerElements.mpc
+        * CCF/CCF/IDL2/IDL2.mpc
+        * CCF/CCF/IDL3/IDL3.mpc
+        * CCF/CCF.mwc
+        * CCF/Example/CIDL/CIDL.mwc
+        * CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc
+        * CCF/Example/Example.mwc
+        * CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc
+        * CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc
+        * CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc
+        * CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc
+        * CIDLC/cidlc.mpc
 
-	  Removed all these MPC files since CIDL is not working with MPC yet.
+          Removed all these MPC files since CIDL is not working with MPC yet.
 
 Thu Jan  8 15:10:24 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Makefile.archive:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SemanticGraph.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Union.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
-	* CCF/CCF/IDL2/SemanticGraph/Union.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
-	* CCF/CCF/IDL2/Traversal/Struct.hpp:
-	* CCF/CCF/IDL2/Traversal/Union.cpp:
-	* CCF/CCF/IDL2/Traversal/Union.hpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Makefile.archive:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/SemanticGraph.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Union.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Makefile.alt:
+        * CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+        * CCF/CCF/IDL2/Traversal/Struct.hpp:
+        * CCF/CCF/IDL2/Traversal/Union.cpp:
+        * CCF/CCF/IDL2/Traversal/Union.hpp:
 
-	  Added support for union.
+          Added support for union.
 
 Thu Jan  8 14:47:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -452,8 +460,8 @@ Thu Jan  8 13:49:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-	  since these command line options (include paths) are now part of
-	  the default command line.
+          since these command line options (include paths) are now part of
+          the default command line.
 
 Thu Jan  8 12:00:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -481,27 +489,27 @@ Wed Jan  7 11:20:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jan  7 09:56:39 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Tue Jan  6 18:25:24 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
 
-	  Fixed bug in Scope::add_edge_right (Extends&).
+          Fixed bug in Scope::add_edge_right (Extends&).
 
 Tue Jan  6 17:26:33 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+        * CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
 
-	  Added support for lookup in inherited/supported
-	  scopes.
+          Added support for lookup in inherited/supported
+          scopes.
 
 Tue Jan  6 11:35:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -525,25 +533,25 @@ Tue Jan  6 11:23:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jan  6 10:16:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
 
-	  Fixed a warning using _var.
+          Fixed a warning using _var.
 
 Mon Jan  5 21:38:53 2004  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Fixed uninitialized variable bug that resulted in generation
-	  of unused modules.
+          Fixed uninitialized variable bug that resulted in generation
+          of unused modules.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
 
-	  Added unused module to the test case.
+          Added unused module to the test case.
 
-	* CIDLC/cidlc.cpp:
+        * CIDLC/cidlc.cpp:
 
-	  Cosmetic chnages.
+          Cosmetic chnages.
 
 Mon Jan  5 20:31:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -556,39 +564,39 @@ Mon Jan  5 20:31:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jan  5 19:34:44 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Updated Utility library url.
+          Updated Utility library url.
 
 Mon Jan  5 19:16:40 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/Makefile.alt:
+        * CIDLC/Makefile.alt:
 
-	  Added updated generators to the build.
+          Added updated generators to the build.
 
 Mon Jan  5 18:48:54 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
+        * CCF/Test/IDL2/Traversal/Recreate/Makefile.alt:
 
-	  Fixed a typo.
+          Fixed a typo.
 
 Mon Jan  5 18:27:12 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Config.rules:
+        * CCF/Config.rules:
 
-	  Added default values to the paths.
+          Added default values to the paths.
 
 Mon Jan  5 15:47:04 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/README:
+        * CIDLC/README:
 
-	  Updated build instructions.
+          Updated build instructions.
 
 Mon Jan  5 14:32:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html:
+        * CCF/Documentation/Build.html:
 
-	  Updated build instructions.
+          Updated build instructions.
 
 Mon Jan  5 01:44:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -620,80 +628,80 @@ Mon Jan  5 01:44:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Jan  4 17:48:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
 
-	  Fixed warnings with g++ builds.
+          Fixed warnings with g++ builds.
 
 Sat Jan  3 16:34:35 2004  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/Traversal/Operation.hpp:
-	* CCF/CCF/IDL2/Traversal/Operation.tpp:
-	* CCF/CCF/IDL3/Traversal/Home.cpp:
-	* CCF/CCF/IDL3/Traversal/Home.hpp:
+        * CCF/CCF/IDL2/Traversal/Operation.hpp:
+        * CCF/CCF/IDL2/Traversal/Operation.tpp:
+        * CCF/CCF/IDL3/Traversal/Home.cpp:
+        * CCF/CCF/IDL3/Traversal/Home.hpp:
 
-	  Added receives_none() member function.
+          Added receives_none() member function.
 
 Fri Jan  2 16:09:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ciao/Container_Base.cpp:
+        * ciao/Container_Base.cpp:
 
-	  Fixed a compile error in single threaded configuration.
+          Fixed a compile error in single threaded configuration.
 
-	* tools/Assembly_Deployer/Assembly_Impl.cpp:
-	* tools/Assembly_Deployer/Assembly_Manager.cpp:
-	* tools/ComponentServer/ComponentServer.cpp:
-	* tools/XML_Helpers/RTConfig_Handlers.cpp:
+        * tools/Assembly_Deployer/Assembly_Impl.cpp:
+        * tools/Assembly_Deployer/Assembly_Manager.cpp:
+        * tools/ComponentServer/ComponentServer.cpp:
+        * tools/XML_Helpers/RTConfig_Handlers.cpp:
 
-	  Fixed more warnings with g++, mostly from the wrong usage of
-	  _var's.
+          Fixed more warnings with g++, mostly from the wrong usage of
+          _var's.
 
 Fri Jan  2 15:36:07 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.hpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.hpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.hpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.hpp:
 
-	  Changed pass-by-value to pass-by-const-ref for fs::path argument.
+          Changed pass-by-value to pass-by-const-ref for fs::path argument.
 
 Fri Jan  2 14:41:35 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
 
-	  Fixed small recognition bug.
+          Fixed small recognition bug.
 
-	* CCF/CCF/IDL2/Traversal/Attribute.cpp:
-	* CCF/CCF/IDL2/Traversal/Attribute.hpp:
+        * CCF/CCF/IDL2/Traversal/Attribute.cpp:
+        * CCF/CCF/IDL2/Traversal/Attribute.hpp:
 
-	  Added traversal or readonly attribute.
+          Added traversal or readonly attribute.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 
-	  Added support for readonly attribute.
+          Added support for readonly attribute.
 
-	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
-	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-1.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-1_exec.idl.orig:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+        * CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
 
-	  Updated tests and results.
+          Updated tests and results.
 
-	* CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
 
-	  Added support for readonly attribute.
+          Added support for readonly attribute.
 
 Fri Jan  2 13:44:06 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CCF/CCF/CompilerElements/Preprocessor.cpp:
+        * CCF/CCF/CompilerElements/Preprocessor.cpp:
 
-	  Removed debug print.
+          Removed debug print.
 
-	* CCF/Documentation/TODO:
+        * CCF/Documentation/TODO:
 
-	  Updated.
+          Updated.
 
 Fri Jan  2 12:59:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1317,68 +1325,68 @@ Thu Dec 18 09:57:50 2003  Balachandran  <bala@dre.vanderbilt.edu>
 
 2003-12-17  Tao Lu  <lu@tango.dre.vanderbilt.edu>
 
-	* examples/Hello/step-by-step.html:
+        * examples/Hello/step-by-step.html:
 
-	Added this html file for explaination of the step by step tutorial.
+        Added this html file for explaination of the step by step tutorial.
 
 Tue Dec  16 18:25:01 2003  Tao Lu  <lu@tango.dre.vanderbilt.edu>
 
-	* docs/tutorial/Hello/README:
-	* docs/tutorial/Hello/config:
-	* docs/tutorial/Hello/CIAO_Installation_Data.ini:
-	* docs/tutorial/Hello/hello.idl:
-	* docs/tutorial/Hello/hello.cidl:
-	* docs/tutorial/Hello/hello.mpc:
-	* docs/tutorial/Hello/hello.csd:
-	* docs/tutorial/Hello/hello.ssd:
-	* docs/tutorial/Hello/hello_exec.cpp:
-	* docs/tutorial/Hello/hello_exec.h:
-	* docs/tutorial/Hello/hello_stub_export.h:
-	* docs/tutorial/Hello/hello_svnt_export.h:
-	* docs/tutorial/Hello/hello_exec_export.h:
-	* docs/tutorial/Hello/client.cpp:
-	* docs/tutorial/Hello/simple_client.cpp:
-	* docs/tutorial/Hello/run_test.pl:
-	* docs/tutorial/Hello/run_simple_test.pl:
+        * docs/tutorial/Hello/README:
+        * docs/tutorial/Hello/config:
+        * docs/tutorial/Hello/CIAO_Installation_Data.ini:
+        * docs/tutorial/Hello/hello.idl:
+        * docs/tutorial/Hello/hello.cidl:
+        * docs/tutorial/Hello/hello.mpc:
+        * docs/tutorial/Hello/hello.csd:
+        * docs/tutorial/Hello/hello.ssd:
+        * docs/tutorial/Hello/hello_exec.cpp:
+        * docs/tutorial/Hello/hello_exec.h:
+        * docs/tutorial/Hello/hello_stub_export.h:
+        * docs/tutorial/Hello/hello_svnt_export.h:
+        * docs/tutorial/Hello/hello_exec_export.h:
+        * docs/tutorial/Hello/client.cpp:
+        * docs/tutorial/Hello/simple_client.cpp:
+        * docs/tutorial/Hello/run_test.pl:
+        * docs/tutorial/Hello/run_simple_test.pl:
 
-	Changed Nanbor's handcrafted helloworld example to use the CIDL compiler.
-	Stardard CIAO naming is used (_svnt, _exec etc.).
+        Changed Nanbor's handcrafted helloworld example to use the CIDL compiler.
+        Stardard CIAO naming is used (_svnt, _exec etc.).
 
 Tue Dec  16 14:14:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* docs/tutorial/hello/index.html:
+        * docs/tutorial/hello/index.html:
 
-	Removed this file. We will use Nanbor's Hello example in the tutorial.
-	The step-by-step example will use another name and be kept in CIAO/examples.
+        Removed this file. We will use Nanbor's Hello example in the tutorial.
+        The step-by-step example will use another name and be kept in CIAO/examples.
 
 Mon Dec  8 16:14:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/todo.html:
-	* docs/RT-Extension.html:
+        * docs/todo.html:
+        * docs/RT-Extension.html:
 
-	  Updated files.
+          Updated files.
 
 2003-12-08  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* examples/Hello/Receiver/Receiver_svnt.h:
-	* examples/Hello/Sender/Sender_svnt.h:
+        * examples/Hello/Receiver/Receiver_svnt.h:
+        * examples/Hello/Sender/Sender_svnt.h:
 
-	  Removed two generated files.
+          Removed two generated files.
 
 Sun Dec  7 20:38:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Hello/Sender/starter.cpp:
-	* examples/Hello/Hello_Base/Hello_Base.idl:
+        * examples/Hello/Sender/starter.cpp:
+        * examples/Hello/Hello_Base/Hello_Base.idl:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Sun Dec  7 20:32:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Hello/Receiver/Receiver_svnt.h:
-	* examples/Hello/Sender/Sender_svnt.h:
-	* examples/Hello/descriptors/run_test_default.pl:
+        * examples/Hello/Receiver/Receiver_svnt.h:
+        * examples/Hello/Sender/Sender_svnt.h:
+        * examples/Hello/descriptors/run_test_default.pl:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Wed Dec 3 10:55:41 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
 
@@ -1388,9 +1396,9 @@ Wed Dec 3 10:55:41 2003 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
 
 Wed Dec 3 12:25:20 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/NOTE.txt:
-	* performance-tests/Benchmark/descriptors/NOTE.txt:
-	  Moved file to the right directory and updated name of the .cad file
+        * performance-tests/Benchmark/NOTE.txt:
+        * performance-tests/Benchmark/descriptors/NOTE.txt:
+          Moved file to the right directory and updated name of the .cad file
           to the right one. Thanks to Gautam Thaker for pointing this out.
 
 
@@ -1405,12 +1413,12 @@ Tue Dec  2 18:40:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Tue Dec 2 18:32:23 2003  Tao Lu  <lu@tango.dre.vanderbilt.edu>
 
-	* examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
         * examples/Hello/descriptors/run_test_default.pl:
-	* examples/Hello/descriptors/run_test_remote.pl:
-	  Added two auto run perl scripts and fixed the bug in the
-	  Receiver_exec which caused the OBV run time error when
-	  the Sender and the Receiver are not collocated.
+        * examples/Hello/descriptors/run_test_remote.pl:
+          Added two auto run perl scripts and fixed the bug in the
+          Receiver_exec which caused the OBV run time error when
+          the Sender and the Receiver are not collocated.
 
 Mon Dec  1 17:49:43 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
@@ -1440,9 +1448,9 @@ Sun Nov 30 11:47:29 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 Sat Nov 29 15:57:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/handcrafted/BasicSP/*.mpc:
-	* examples/handcrafted/Display/*.mpc:
-	  Removed all MPC files for this directory and sub directories
+        * examples/handcrafted/BasicSP/*.mpc:
+        * examples/handcrafted/Display/*.mpc:
+          Removed all MPC files for this directory and sub directories
           because these examples are going to be removed and at this moment
           these MPC files cause problems with the MPC generation because
           of duplicate names.

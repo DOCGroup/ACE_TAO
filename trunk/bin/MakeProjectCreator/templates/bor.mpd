@@ -10,10 +10,6 @@ NAME = <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
 <%endif%>
 
 NO_FULL_PATH=1
-<%if(idl_files)%>
-
-TAO_IDL = <%idl_compiler%>
-<%endif%>
 <%if(exename || sharedname || staticname)%>
 <%if(source_files)%>
 
@@ -39,13 +35,6 @@ LIBFILES = \
 <%endfor%>
 <%foreach(libs defaultlibs)%>
 	<%lib%>$(LIB_DECORATOR).lib<%fornotlast(" \\")%>
-<%endfor%>
-<%endif%>
-<%if(idl_files)%>
-
-IDLFILES = \
-<%foreach(idl_files)%>
-        <%idl_file%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(resource_files)%>
@@ -98,11 +87,6 @@ CDIR   = <%cppdir%>
 
 INCDIR_NAME = <%relwd%>
 <%endif%>
-<%if(idl_files)%>
-
-all: idl_src_files
-
-<%endif%>
 
 #
 # Override defaults in outputdir.bor
@@ -148,34 +132,6 @@ includes_install: $(INCLUDES)
 
 includes_install:
 	@echo Nothing to install.
-<%endif%>
-<%if(idl_files)%>
-
-#
-# IDL Build rules
-#
-idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
-
-<%foreach(idl_files)%>
-<%if(flag_overrides(idl_file, idlgendir))%>
-<%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>S.cpp <%flag_overrides(idl_file, idlgendir)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
-<%else%>
-<%if(idlgendir)%>
-<%idlgendir%>\<%basenoextension(idl_file)%>S.cpp <%idlgendir%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%idlgendir%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
-<%else%>
-# IDL File Directory: <%dirname(idl_file)%>
-<%if(dirname_found)%>
-<%dirname(idl_file)%>\<%basenoextension(idl_file)%>S.cpp <%dirname(idl_file)%>\<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
-<%else%>
-<%basenoextension(idl_file)%>S.cpp <%basenoextension(idl_file)%>C.cpp: <%idl_file%>
-	$(TAO_IDL) <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $**
-<%endif%>
-<%endif%>
-<%endif%>
-<%endfor%>
 <%endif%>
 <%foreach(custom_types)%>
 

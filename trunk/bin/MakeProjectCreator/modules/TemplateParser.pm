@@ -348,10 +348,10 @@ sub process_foreach {
   if (defined $values[0]) {
     my($scope) = $self->{'foreach'}->{'scope'}->[$index];
 
-    $$scope{'forlast'}     = 0;
+    $$scope{'forlast'}     = '';
     $$scope{'fornotlast'}  = 1;
     $$scope{'forfirst'}    = 1;
-    $$scope{'fornotfirst'} = 0;
+    $$scope{'fornotfirst'} = '';
 
     ## If the foreach values are mixed (HASH and SCALAR), then
     ## remove the SCALAR values.
@@ -379,12 +379,12 @@ sub process_foreach {
       ## Set the special values that only exist
       ## within a foreach
       if ($i != 0) {
-        $$scope{'forfirst'}    = 0;
+        $$scope{'forfirst'}    = '';
         $$scope{'fornotfirst'} = 1;
       }
       if ($i == $#values) {
         $$scope{'forlast'}    = 1;
-        $$scope{'fornotlast'} = 0;
+        $$scope{'fornotlast'} = '';
       }
       $$scope{'forcount'} = $i + 1;
 
@@ -515,21 +515,39 @@ sub handle_if {
         my($str) = $val;
         $val = undef;
         foreach my $v (split(/\s*\|\|\s*/, $str)) {
-          my($p) = 0;
           if ($v =~ /^!(.*)/) {
-            $p = $self->get_value($v);
-            if (defined $p) {
-              $p = undef;
-            }
-            else {
-              $p = 'some value';
+            my($p) = $self->get_value($1);
+            if (!defined $p || $p eq '') {
+              $val = 'some non-empty value';
+              last;
             }
           }
           else {
-            $p = $self->get_value($v);
+            my($p) = $self->get_value($v);
+            if (defined $p && $p ne '') {
+              $val = $p;
+              last;
+            }
           }
-          if (defined $p && $p ne '') {
-            $val = $p;
+        }
+      }
+      elsif ($val =~ /\&\&/) {
+        my($str) = $val;
+        $val = 'some non-empty value';
+        foreach my $v (split(/\s*\&\&\s*/, $str)) {
+          if ($v =~ /^!(.*)/) {
+            my($p) = $self->get_value($1);
+            if (defined $p && $p ne '') {
+              $val = undef;
+              last;
+            }
+          }
+          else {
+            my($p) = $self->get_value($v);
+            if (!defined $p || $p eq '') {
+              $val = undef;
+              last;
+            }
           }
         }
       }
