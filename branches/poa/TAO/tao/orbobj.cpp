@@ -293,21 +293,32 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 }
 
 CORBA_Object_ptr
+CORBA_ORB::resolve_poa_current (void)
+{
+  // Return the pointer to this thread's POACurrent.
+  //
+  // Somehow we have to morph the TAO_POA_Current* into a
+  // CORBA_Object_ptr!
+  return TAO_ORB_Core_instance ()->poa_current ()->_this ();
+}
+
+CORBA_Object_ptr
 CORBA_ORB::resolve_poa (void)
 {
   // Need to do double-checked locking here to cover the case of
   // multiple threads using a global resource policy.
-  if (TAO_ORB_Core_instance->root_poa() == 0)
+  if (TAO_ORB_Core_instance ()->root_poa() == 0)
     {
       // Construct a new POA
       // Irfan fill this in properly
-      POA* newpoa = new POA ();
+      POA* newpoa = 0;
 
       // set the poa in the orbcore instance
-      TAO_ORB_Core_instance->root_poa (newpoa);
+      TAO_ORB_Core_instance ()->root_poa (newpoa);
     }
   
-  return TAO_ORB_Core_instance()->root_poa();
+  //return TAO_ORB_Core_instance ()->root_poa();
+  return 0;
 }
 
 CORBA_Object_ptr
@@ -447,10 +458,12 @@ CORBA_ORB::resolve_name_service (void)
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name)
 {
-  if (ACE_OS::strcmp (name, "NameService") == 0)
+  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service ();
-  else if (ACE_OS::strcmp (name, "RootPOA") == 0)
+  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_poa ();
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
+    return this->resolve_poa_current ();
   else
     return CORBA_Object::_nil ();
 }

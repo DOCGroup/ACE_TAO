@@ -25,6 +25,14 @@
 
 #include "tao/corba.h"
 
+// ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
+// of course, no guarantees are made that the call will return something
+// useful.
+#define TAO_OBJID_NAMESERVICE   "NameService"
+#define TAO_OBJID_ROOTPOA       "RootPOA"
+#define TAO_OBJID_POACURRENT    "POACurrent"
+#define TAO_OBJID_INTERFACEREP  "InterfaceRepository"
+
 class TAO_Export CORBA_ORB : public TAO_IUnknown
   // = TITLE
   // ORB pseudo-objref.
@@ -164,6 +172,9 @@ private:
 
   CORBA_Object_ptr resolve_poa (void);
   // Resolve the POA.
+
+  CORBA_Object_ptr resolve_poa_current (void);
+  // Resolve the POA current.
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
