@@ -805,6 +805,18 @@ ACE_Log_Msg::log (const char *format_str,
 		  type = SKIP_SPRINTF;
 #if defined (ACE_WIN32)
 		  ACE_OS::sprintf (bp, "%u", ACE_Thread::self ());
+#elif defined (AIX)
+		  // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
+		  // a little ugly to send that through a %u format.  So,
+		  // get the kernel thread ID (tid_t) via thread_self() and
+		  // display that instead.
+		  // This isn't conditionalized on ACE_HAS_THREAD_SELF because
+		  // 1. AIX 4.2 doesn't have that def anymore (it messes up
+		  //    other things)
+		  // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
+		  //   this would have on that.
+		  // -Steve Huston, 19-Aug-97
+		  ACE_OS::sprintf (bp, "%u", thread_self());
 #else
 		  ACE_hthread_t t_id;
 		  ACE_Thread::self (t_id);
