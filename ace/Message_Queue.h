@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/IO_Cntl_Msg.h"
+#include "ace/Synch.h"
 
 // Forward decls.
 class ACE_Notification_Strategy;
