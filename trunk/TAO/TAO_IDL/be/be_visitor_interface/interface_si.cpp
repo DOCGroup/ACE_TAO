@@ -76,19 +76,23 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                              "codegen for base class skeletons failed\n"), -1);
         }
 
-      // generate the TIE class
-      be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
-      ctx.stream (tao_cg->server_template_inline ());
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (idl_global->gen_tie_classes ())
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_sh::"
-                             "visit_interface - "
-                             "codegen for TIE class failed\n"),
-                            -1);
+          // generate the TIE class
+          be_visitor_context ctx (*this->ctx_);
+          ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+          ctx.stream (tao_cg->server_template_inline ());
+          be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "be_visitor_interface_sh::"
+                                 "visit_interface - "
+                                 "codegen for TIE class failed\n"),
+                                -1);
+            }
         }
     }
 

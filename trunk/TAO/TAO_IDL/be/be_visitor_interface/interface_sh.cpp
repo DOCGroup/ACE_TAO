@@ -242,7 +242,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   // No need to generate TIE class for locality constraint interface.
-  if (!idl_global->gen_locality_constraint ())
+  if (!idl_global->gen_locality_constraint () 
+      && idl_global->gen_tie_classes ())
     {
       // generate the TIE class.
       ctx = *this->ctx_;
@@ -257,6 +258,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                              "codegen for TIE class failed\n"),
                             -1);
         }
+
       delete visitor;
     }
 

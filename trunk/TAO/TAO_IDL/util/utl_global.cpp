@@ -151,7 +151,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       gen_locality_constraint_ (I_FALSE),
       opt_tc_ (I_FALSE),
       case_diff_error_ (I_TRUE),
-      ami_call_back_ (I_FALSE)
+      ami_call_back_ (I_FALSE),
+      gen_tie_classes_ (I_TRUE)
 {
 
   // Path for the perfect hash generator(gperf) program.
@@ -1483,4 +1484,16 @@ idl_bool
 IDL_GlobalData::ami_call_back (void)
 {
   return this->ami_call_back_;
+}
+
+void
+IDL_GlobalData::gen_tie_classes (idl_bool val)
+{
+  this->gen_tie_classes_ = val;
+}
+
+idl_bool
+IDL_GlobalData::gen_tie_classes (void)
+{
+  return this->gen_tie_classes_;
 }
