@@ -1,9 +1,17 @@
+Fri Feb 18 08:39:05 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          Fixed several exception specs, i guess it was too much
+          cut&paste ;-)
+
 Fri Feb 18 00:48:43 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/SHMIOP_Factory.cpp (requires_explicit_endpoint): Changed to
-	  return 1, i.e., do not create a SHMIOP endpoint if not
-	  explicitly specified by users.  Thanks to Carlos for pointing
-	  this out.
+        * tao/SHMIOP_Factory.cpp (requires_explicit_endpoint): Changed to
+          return 1, i.e., do not create a SHMIOP endpoint if not
+          explicitly specified by users.  Thanks to Carlos for pointing
+          this out.
 
 Thu Feb 17 21:48:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
