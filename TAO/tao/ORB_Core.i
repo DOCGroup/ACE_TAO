@@ -119,6 +119,14 @@ TAO_ORB_Core::using_collocation (void)
   return this->opt_for_collocation_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::using_collocation (CORBA::Boolean use_col)
+{
+  CORBA::Boolean retv = this->opt_for_collocation_;
+  this->opt_for_collocation_ = use_col;
+  return retv;
+}
+
 // Template specializations that allow the cached connection manager
 // to work better.
 
