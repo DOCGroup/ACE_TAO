@@ -324,14 +324,3 @@ ACE_FlReactor::cancel_timer (long timer_id,
       return 0;
     }
 }
-
-ACE_Reactor_Impl *
-ACE_create_flreactor(void)
-{
-    ACE_Reactor_Impl *reactor = 0;
-
-    ACE_NEW_RETURN (reactor,
-                    ACE_FlReactor,
-                    0);
-    return reactor;
-}

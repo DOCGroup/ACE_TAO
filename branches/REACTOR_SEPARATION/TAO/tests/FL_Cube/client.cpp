@@ -2,7 +2,6 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
-#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(FL_Cube, client, "$Id$")
 

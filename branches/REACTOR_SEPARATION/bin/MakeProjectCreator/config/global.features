@@ -59,22 +59,22 @@ qt            = 0
 gl            = 0
 
 // Features for ACE support for various GUI libraries
-// Build and use QtReactor
+// Use QtReactor
 ace_qtreactor    = 0
-// Build and use XtReactor
+// Use XtReactor
 ace_xtreactor    = 0
-// Build and use TkReactor
+// Use TkReactor
 ace_tkreactor    = 0
-// Build and use FlReactor
+// Use FlReactor
 ace_flreactor    = 0
 
 // Features for TAO support for various GUI libraries
-// Build and use resources for QtReactor
+// Use resources for QtReactor
 tao_qtreactor    = 0
-// Build and use resources XtReactor
+// Use resources XtReactor
 tao_xtreactor    = 0
-// Build and use resources TkReactor. Until tao/Strategies are modified, this is a dummy target
-tao_tkreactor    = 1
-// Build and use resources FlReactor. Until tao/Strategies are modified, this is a dummy target
-tao_flreactor    = 1
+// Use resources TkReactor. 
+tao_tkreactor    = 0
+// Use resources FlReactor.
+tao_flreactor    = 0
 

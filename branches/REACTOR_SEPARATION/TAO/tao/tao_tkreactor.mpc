@@ -1,5 +1,4 @@
 project(TAO_TkReactor) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_tkreactor {
-  requires     += tao_tkreactor
   sharedname   = TAO_TkReactor
   dynamicflags += TAO_TKREACTOR_BUILD_DLL
   Header_Files {

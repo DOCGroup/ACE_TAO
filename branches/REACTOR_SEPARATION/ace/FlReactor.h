@@ -102,8 +102,5 @@ private:
   ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
 
-// Factory method to create an instance of ACE_FlReactor
-extern "C" ACE_FlReactor_Export ACE_Reactor_Impl *ACE_create_flreactor(void);
-
 #include /**/ "ace/post.h"
 #endif /* ACE_FLREACTOR_H */
