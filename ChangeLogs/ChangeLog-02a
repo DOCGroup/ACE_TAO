@@ -1,3 +1,8 @@
+Mon Jun 10 14:50:46 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/DLL/Dll.dsw:
+	* examples/ASX/CCM_App/CCM_App.dsw: Updated project dependencies.
+
 Mon Jun 10 14:23:28 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Reactor.h (ACE_Reactor): Added a comment explaining that
@@ -10,15 +15,15 @@ Mon Jun 10 14:23:28 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  <msearles@base16.com> for reporting this.
 
 Sun Jun  9 20:01:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-  
+
 	* ace/Makefile: Something is wrong with my ACE_ROOT environment variable,
-	  which caused problems with the dependency generation.  This is now 
+	  which caused problems with the dependency generation.  This is now
 	  fixed.
-  
+
 Sun Jun  9 19:31:04 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.h: Added ACE_Export to ACE_SOCK_Dgram_Mcast.
-  
+
 Sun Jun  9 18:57:07 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/Reactor/Ntalker/ntalker.cpp:
@@ -29,7 +34,7 @@ Sun Jun  9 18:47:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Config_Test.cpp (run_tests): Added code to exercise the
 	  new subkey path feature contributed by Eugene Alterman.
-    
+
 	* ace/Configuration.{h,cpp}: Added support for the path separator
 	  ('\\') in key names.  Thanks to Eugene Alterman
  	  <eugalt@myrealbox.com> for contributing this patch.
@@ -45,14 +50,14 @@ Sun Jun  9 18:11:02 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
   	* ace/SOCK_Dgram_Mcast.cpp: Removed the ';' from the end of the
 	  #pragma instantiates.
-  
-	* ace/Makefile: Added SOCK_Dgram_Mcast_T.  
 
-        * ace/SOCK_Dgram_Mcast_T.cpp  
-          ace/SOCK_Dgram_Mcast_T.i    
+	* ace/Makefile: Added SOCK_Dgram_Mcast_T.
+
+        * ace/SOCK_Dgram_Mcast_T.cpp
+          ace/SOCK_Dgram_Mcast_T.i
           ace/SOCK_Dgram_Mcast_T.h:
 	  Minor changes to conform to ACE coding conventions.
-  
+
 Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
 
         * ace/SOCK_Dgram_Mcast.cpp
@@ -121,7 +126,7 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
                   - Whether to bind the address as well as the port#.
               opt_nulliface_*
                   - Defines semantics of passing net_if parameter of NULL;
-                    i.e. use all or only one iface.  
+                    i.e. use all or only one iface.
               opt_dtorunsub_*
                   - Whether destructor explicitly unsubscribes from all
                   groups.
@@ -260,7 +265,7 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
             subscription list could be corrupted if one instance is shared by
             multiple threads, which could lead to undefined behavior/crashes.
 
-          - The class interface is probably too "busy"; there are a _lot_ of 
+          - The class interface is probably too "busy"; there are a _lot_ of
             side-effects that may not be evident.
 
           - Currently only built and tested under Solaris w/ Forte-C++ and
@@ -269,9 +274,9 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
           Implementation Changes:
 
           - Now implemented as a templated class (ACE_SOCK_Dgram_Ex), via the
-            new SOCK_Dgram_Mcast_Ex.* files. The (remaining) SOCK_Dgram_Mcast.* 
+            new SOCK_Dgram_Mcast_Ex.* files. The (remaining) SOCK_Dgram_Mcast.*
             files are vestigial; they remain due to the build rules and
-            documentation conventions, and because existing user code 
+            documentation conventions, and because existing user code
             references the ace/SOCK_Dgram_Mcast.h file.  Note that this
             differs from most other *_Ex.* template source files in ACE, where
             there is still at least some function implemented in the
@@ -319,12 +324,12 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
             Problem: Hard to get a unique signature for the new methods,
             especially for ::unsubscribe.
 
-          - It seems that an ACE_SOCK_Dgram_Mcast_Manager class could be a 
+          - It seems that an ACE_SOCK_Dgram_Mcast_Manager class could be a
             useful "layered" addition, e.g.:
-            - Trap ::subscribe invocations using different port numbers, and 
+            - Trap ::subscribe invocations using different port numbers, and
               create separate instances/sockets for each unique port#.
             - Implement software loopback filtering for environments that do
-              not implement loopback disabling in the IP stack (e.g. older 
+              not implement loopback disabling in the IP stack (e.g. older
               Windows). Also implement per-interface filters for environments
               (like Win/NT) that don't do this right.
             - Implement multicast group "sets" to support easy and atomic
@@ -339,7 +344,7 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
           - Allow the send interface (and default send addr) to be changed,
             after initial setting.  (OS-specific support needed - most stacks
             allow the interface to be changed once set, but I presume that not
-            all do.)  
+            all do.)
             In general; might be worth splitting out the send from the
             ::open/::subscribe methods - e.g. ::send_parameters.  Might add
             optional TTL and loopback parameters to this, too.
@@ -384,34 +389,34 @@ Sun Jun  9 17:50:37 2002  Bill Fulton  <bill_a_fulton@raytheon.com>
             utility vs. added complexity ratio seems low.  (Note that closing
             the socket and reopening another can cause nasty side-effects, so
             probably can't change the bound parameters, anyway.)
-  
+
 Sun Jun  9 16:26:00 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/ATM_Acceptor.cpp: 
-	* ace/ATM_Addr.cpp: 
-	* ace/ATM_Connector.i: 
-	* ace/ATM_QoS.cpp: 
-	* ace/ATM_Stream.cpp: 
-	* ace/CE_Screen_Output.cpp: 
-	* ace/Configuration.cpp: 
-	* ace/Handle_Set.i: 
-	* ace/IOStream.cpp: 
-	* ace/Lib_Find.cpp: 
-	* ace/Log_Msg.cpp: 
-	* ace/Log_Record.cpp: 
-	* ace/MEM_Addr.cpp: 
-	* ace/Malloc_T.i: 
-	* ace/Memory_Pool.cpp: 
-	* ace/Message_Queue.cpp: 
-	* ace/Msg_WFMO_Reactor.cpp: 
-	* ace/OS.cpp: 
-	* ace/OS.i: 
-	* ace/OS_String.cpp: 
-	* ace/Process.cpp: 
-	* ace/SOCK_Connector.i: 
-	* ace/SPIPE_Connector.cpp: 
-	* ace/Sock_Connect.cpp: 
-	* ace/Synch_T.cpp: 
+	* ace/ATM_Acceptor.cpp:
+	* ace/ATM_Addr.cpp:
+	* ace/ATM_Connector.i:
+	* ace/ATM_QoS.cpp:
+	* ace/ATM_Stream.cpp:
+	* ace/CE_Screen_Output.cpp:
+	* ace/Configuration.cpp:
+	* ace/Handle_Set.i:
+	* ace/IOStream.cpp:
+	* ace/Lib_Find.cpp:
+	* ace/Log_Msg.cpp:
+	* ace/Log_Record.cpp:
+	* ace/MEM_Addr.cpp:
+	* ace/Malloc_T.i:
+	* ace/Memory_Pool.cpp:
+	* ace/Message_Queue.cpp:
+	* ace/Msg_WFMO_Reactor.cpp:
+	* ace/OS.cpp:
+	* ace/OS.i:
+	* ace/OS_String.cpp:
+	* ace/Process.cpp:
+	* ace/SOCK_Connector.i:
+	* ace/SPIPE_Connector.cpp:
+	* ace/Sock_Connect.cpp:
+	* ace/Synch_T.cpp:
 	* ace/ace_wchar.inl: Changed improper use of NULL to
 	  0.
 
@@ -423,14 +428,14 @@ Sun Jun  9 15:33:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sat Jun  8 14:46:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Array_Base.h: Replaced 
-	
+	* ace/Array_Base.h: Replaced
+
 	  #include "Global_Macros.h"
-	  
-	  with 
-	  
+
+	  with
+
 	  #include "ace/Global_Macros.h"
-	  
+
 	  Thanks to Bill Fulton <Bill_A_Fulton@raytheon.com> for reporting
  	  this.
 
