@@ -36,7 +36,8 @@ ACE_Timer_List::iter (void)
 
 ACE_Timer_List::ACE_Timer_List (void)
   : head_ (0),
-    iterator_ (*this)
+    iterator_ (*this),
+    timer_id_ (0)
 {
   ACE_TRACE ("ACE_Timer_List::ACE_Timer_List");
 }
