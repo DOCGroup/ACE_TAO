@@ -1,3 +1,9 @@
+Tue Dec  2 16:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_ORB.h:
+          Include ace/Null_Mutex.h when TAO_HAS_NAMED_RT_MUTEXES is defined
+          as 1
+
 Tue Dec  2 14:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* utils/NamingView/NamingViewer.cpp:
@@ -15,7 +21,7 @@ Tue Dec  2 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Object_KeyC.cpp (encode_string_to_sequence):
 
 	  Thanks to Cyrille Chepelov <cyrille@softek.fr> for catching a
-	  buffer overrun in the  for loop. 
+	  buffer overrun in the  for loop.
 
 Tue Dec  2 08:17:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
