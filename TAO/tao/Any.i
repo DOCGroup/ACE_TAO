@@ -250,7 +250,7 @@ operator >>= (const CORBA::Any_var &lhs, CORBA::Double &rhs)
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (const CORBA::Any_var &lhs, CORBA::Any &rhs)
+operator >>= (const CORBA::Any_var &lhs, CORBA::Any *&rhs)
 {
   return lhs.in () >>= rhs;
 }

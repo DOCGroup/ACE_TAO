@@ -399,8 +399,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::LongDouble &);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
-                                       const CORBA::Any &); // non-spec
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::Any *&);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::TypeCode_ptr &);
@@ -420,7 +418,7 @@ TAO_Export void operator<<= (CORBA::Any_var &, CORBA::LongLong);
 TAO_Export void operator<<= (CORBA::Any_var &, CORBA::ULongLong);
 TAO_Export void operator<<= (CORBA::Any_var &, CORBA::Float);
 TAO_Export void operator<<= (CORBA::Any_var &, CORBA::Double);
-TAO_Export void operator<<= (CORBA::Any_var &, const CORBA::Any &);
+TAO_Export void operator<<= (CORBA::Any_var &, const CORBA::Any *&);
 TAO_Export void operator<<= (CORBA::Any_var &, const char *);
 TAO_Export void operator<<= (CORBA::Any_var &, CORBA::TypeCode_ptr);
 TAO_Export void operator<<= (CORBA::Any_var &, const CORBA::Object_ptr);

@@ -257,23 +257,6 @@ namespace TAO
   protected:
     T * value_;
   };
-
-  class Any_Any_Impl : public Any_Dual_Impl_T<CORBA::Any>
-  {
-  public:
-    Any_Any_Impl (void);
-    Any_Any_Impl (const CORBA::Any &);
-    ~Any_Any_Impl (void);
-
-    static void insert_copy (CORBA::Any &,
-                             const CORBA::Any &);
-    static CORBA::Boolean extract_ref (const CORBA::Any &,
-                                       CORBA::Any &);
-    virtual void free_value (void);
-
-  private:
-    CORBA::Any any_holder_;
-  };
 };
 
 #if defined (__ACE_INLINE__)
