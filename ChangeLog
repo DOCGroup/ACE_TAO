@@ -1,3 +1,29 @@
+(not committed)  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.{h cpp}:
+	* ace/Asynch_IO_Impl.h:
+	* ace/POSIX_Asynch_IO.{h cpp}:
+	* ace/POSIX_Proactor.{h cpp}:
+	* ace/Proactor.{h cpp}:
+	* ace/Proactor_Impl.h:
+	* ace/WIN32_Asynch_IO.{h cpp}:
+	* ace/WIN32_Proactor.{h cpp}: All methods that accepted an ACE_Handler
+	  below the user-accessed methods were changed to accept an
+	  ACE_Handler::Proxy_Ptr instead. The ACE_Handler class has a new
+	  Proxy_Ptr typedef which is an ACE_Refcounted_Auto_Ptr for
+	  a Proxy class. When an ACE_Handler is created, it allocates a
+	  Proxy to refer to itself. The Proxy carries a pointer to the
+	  ACE_Handler it proxies for in lower levels of the framework.
+	  When the ACE_Handler is destroyed, it clears the ACE_Handler
+	  pointer in the proxy.
+	  Any part of the framework that dispatches completions gets the
+	  ACE_Handler pointer from the proxy and only dispatches if the
+	  pointer is not 0. This allows ACE_Handlers to be deleted while
+	  operations may be outstanding, a previously vexing issue since one
+	  can never be sure how many operations are outstanding at any given
+	  time. The Proxy remains valid until all references to it are
+	  released.
+
 Wed Jan  5 14:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
