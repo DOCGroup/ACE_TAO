@@ -1,4 +1,4 @@
-// $Id$
+// $id: Exception.cpp,v 1.182 2003/11/10 20:29:26 dhinton Exp $
 
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
@@ -1397,13 +1397,10 @@ TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 // Specializations for CORBA::Exception Any operators.
 
 ACE_TEMPLATE_SPECIALIZATION
-TAO::Any_Dual_Impl_T<CORBA::Exception>::Any_Dual_Impl_T (
-    _tao_destructor destructor,
-    CORBA::TypeCode_ptr tc,
+void
+TAO::Any_Dual_Impl_T<CORBA::Exception>::value (
     const CORBA::Exception & val
   )
-  : Any_Impl (destructor,
-              tc)
 {
   this->value_ = val._tao_duplicate ();
 }

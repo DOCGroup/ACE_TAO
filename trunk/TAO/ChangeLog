@@ -1,3 +1,18 @@
+Mon Dec 22 17:43:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/Any_Dual_Impl_T.{h,cpp}:
+          Added new protected method, value(const T &), and moved the
+          ACE_NEW for value from the ctor to this method.  The ctor now
+          calls this method instead of doing the ACE_NEW it self which
+          allows us the ability to specialize a regular method instead of
+          a ctor since some compiler have trouble specializing ctor's that
+          initialize base classes.
+
+        * tao/Exception.cpp:
+          Removed the ctor specialization for Any_Dual_Impl_T and replaces
+          it with a specialization of value() since some compilers could
+          grok the former.
+
 Mon Dec 22 11:29:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_arg_traits.cpp:
