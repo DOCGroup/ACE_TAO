@@ -5,8 +5,8 @@
 #include "ComponentRepository_i.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (IFRService, 
-           tmplinst, 
+ACE_RCSID (IFRService,
+           tmplinst,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -138,10 +138,7 @@ template class TAO_IFR_Generic_Utils<TAO_EmitsDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_PublishesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
 template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
-template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>;
-template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
-template class TAO_Port_Utils<CORBA::ComponentIR::UsesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>;
@@ -277,10 +274,7 @@ template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_PublishesDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>
 #pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
-#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>
-#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
-#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::UsesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>
