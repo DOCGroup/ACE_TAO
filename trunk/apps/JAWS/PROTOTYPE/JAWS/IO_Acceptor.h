@@ -25,7 +25,7 @@ typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_NULL_MUTEX> JAWS_IO_SOCK_Acceptor;
 typedef ACE_LOCK_SOCK_Acceptor<ACE_SYNCH_MUTEX> JAWS_IO_SOCK_Acceptor;
 #endif /* JAWS_HAS_THREAD_SAFE_ACCEPT */
 
-class JAWS_IO_Acceptor
+class JAWS_Export JAWS_IO_Acceptor
 {
 public:
 
@@ -53,7 +53,7 @@ private:
 
 };
 
-class JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
+class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 
@@ -72,7 +72,7 @@ private:
 };
 
 
-class JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
+class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
 

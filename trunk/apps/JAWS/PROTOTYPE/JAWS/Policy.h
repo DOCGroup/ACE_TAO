@@ -11,7 +11,7 @@ class JAWS_IO;
 class JAWS_IO_Handler;
 class JAWS_IO_Handler_Factory;
 
-class JAWS_Dispatch_Policy
+class JAWS_Export JAWS_Dispatch_Policy
   // = TITLE
   //     Policy mechanism for choosing different concurrency models.
   //
@@ -34,7 +34,7 @@ public:
   virtual void concurrency (JAWS_Concurrency_Base *concp) = 0;
 };
 
-class JAWS_Default_Dispatch_Policy : public JAWS_Dispatch_Policy
+class JAWS_Export JAWS_Default_Dispatch_Policy : public JAWS_Dispatch_Policy
 {
 public:
   JAWS_Default_Dispatch_Policy (void);

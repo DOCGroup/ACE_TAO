@@ -29,7 +29,7 @@ class JAWS_IO_Acceptor;
 
 #include "JAWS/Export.h"
 
-class JAWS_IO
+class JAWS_Export JAWS_IO
   // = TITLE
   //
   //     This class defines the abstract interface for an I/O class in
@@ -92,7 +92,7 @@ protected:
   JAWS_IO_Acceptor *acceptor_;
 };
 
-class JAWS_Synch_IO : public JAWS_IO
+class JAWS_Export JAWS_Synch_IO : public JAWS_IO
   // = TITLE
   //
   //     This class defines the interface for a Synchronous I/O class.
@@ -141,7 +141,7 @@ typedef ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>
 // This only works on Win32
 #if defined (ACE_WIN32)
 
-class JAWS_Asynch_IO : public JAWS_IO
+class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
   // = TITLE
   //
   //     This class defines the interface for a Asynchronous I/O class.

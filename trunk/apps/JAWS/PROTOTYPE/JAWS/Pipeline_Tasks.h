@@ -10,7 +10,7 @@
 #include "JAWS/Pipeline.h"
 #include "JAWS/Data_Block.h"
 
-class JAWS_Pipeline_Handler
+class JAWS_Export JAWS_Pipeline_Handler
   : public JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
 {
 public:

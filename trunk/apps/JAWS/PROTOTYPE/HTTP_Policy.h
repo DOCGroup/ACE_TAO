@@ -5,6 +5,7 @@
 #define HTTP_POLICY_H
 
 #include "JAWS/Concurrency.h"
+#include "JAWS/Policy.h"
 
 /* create a policy */
 class HTTP_Policy : public JAWS_Dispatch_Policy

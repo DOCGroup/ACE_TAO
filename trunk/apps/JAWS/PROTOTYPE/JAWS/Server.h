@@ -10,7 +10,7 @@
 
 class JAWS_IO_Handler_Factory;
 
-class JAWS_Server
+class JAWS_Export JAWS_Server
 {
 public:
   JAWS_Server (void);
