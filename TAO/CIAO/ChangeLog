@@ -1,3 +1,11 @@
+Wed Sep  8 11:52:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        
+          Updated files with changes made to the corresponding files
+          in regular CIAO/ciao.
+
 Tue Sep  7 22:14:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:

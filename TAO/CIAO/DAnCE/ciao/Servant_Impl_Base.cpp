@@ -36,6 +36,19 @@ namespace CIAO
       }
   }
 
+  CORBA::Object_ptr
+  Servant_Impl_Base::lookup_facet (const char *port_name)
+  {
+    ::Components::FacetDescription_var fd;
+    
+    if (this->facet_table_.find (port_name, fd) != 0)
+      {
+        return CORBA::Object::_nil ();
+      }
+      
+    return CORBA::Object::_duplicate (fd.in ()->facet_ref ());
+  }
+
   void
   Servant_Impl_Base::add_consumer (
       const char *port_name,
@@ -57,6 +70,19 @@ namespace CIAO
       }
   }
 
+  ::Components::EventConsumerBase_ptr
+  Servant_Impl_Base::lookup_consumer (const char *port_name)
+  {
+    ::Components::ConsumerDescription_var cd;
+    
+    if (this->consumer_table_.find (port_name, cd) != 0)
+      {
+        return ::Components::EventConsumerBase::_nil ();
+      }
+      
+    return
+      ::Components::EventConsumerBase::_duplicate (cd.in ()->consumer ());
+  }
 
   Components::StandardConfigurator*
   Servant_Impl_Base::get_standard_configurator (
