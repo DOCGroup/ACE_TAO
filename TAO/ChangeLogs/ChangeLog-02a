@@ -1,3 +1,9 @@
+Mon Jun 19 03:27:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/AMI_Observer/Push_Web_Server_i.h:
+
+	  Removed this vestigial file.
+
 Mon Jun 19 03:21:20 2000  Ossama Othman  <ossama@uci.edu>
 
 	* examples/Content_Server/AMI_Iterator/Callback.cpp: 
