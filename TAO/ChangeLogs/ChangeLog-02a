@@ -1,3 +1,11 @@
+Wed May 29 15:25:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Strategies/DIOP_Connector.cpp:
+
+	  Fixed syntax error for compilers that require explicit template
+	  instantiation via preprocessor pragmas.  Thanks to Yigong Liu
+	  <yigongliu@lucent.com> for reporting the problem.
+
 Wed May 29 13:51:50 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CORBA_String.cpp (operator>>):
