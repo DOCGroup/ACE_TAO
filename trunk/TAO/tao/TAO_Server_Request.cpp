@@ -317,7 +317,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
     }
   else if (TAO_debug_level > 0)
     {
-      // It is unfotunate that an exception (probably a system
+      // It is unfortunate that an exception (probably a system
       // exception) was thrown by the upcall code (even by the
       // user) when the client was not expecting a response.
       // However, in this case, we cannot close the connection

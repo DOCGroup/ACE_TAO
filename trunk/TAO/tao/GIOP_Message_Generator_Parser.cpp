@@ -25,9 +25,11 @@ TAO_GIOP_Message_Generator_Parser::parse_reply (
   if (!stream.read_ulong (params.request_id_))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply :")
-                    ACE_TEXT ("extracting request id\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) : TAO_GIOP_Message_Generator_Parser::parse_reply :")
+                      ACE_TEXT ("extracting request id\n")));
+        }
     }
 
   // and the reply status type.  status can be NO_EXCEPTION,

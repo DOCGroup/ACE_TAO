@@ -191,10 +191,12 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
           this->byte_order_ != 1)
         {
           if (TAO_debug_level > 2)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, "
-                        "invalid byte order <%d> for version <1.0>\n",
-                        this->byte_order_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - GIOP_Message_State::get_byte_order_info, "
+                          "invalid byte order <%d> for version <1.0>\n",
+                          this->byte_order_));
+            }
           return -1;
         }
     }
@@ -211,12 +213,14 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
       if ((buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
         {
           if (TAO_debug_level > 2)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d>")
-                      ACE_TEXT (" for version <%d %d> \n"),
-                      buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
-                      this->giop_version_.major,
-                      this->giop_version_.minor));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("TAO (%P|%t) - invalid flags for <%d> ")
+                          ACE_TEXT ("for version <%d %d> \n"),
+                          buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
+                          this->giop_version_.major,
+                          this->giop_version_.minor));
+            }
           return -1;
         }
     }

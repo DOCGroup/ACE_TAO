@@ -293,9 +293,11 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
     return this->_stubobj ()->profile_in_use ()->_key ();
 
   if (TAO_debug_level > 2)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) Null object key return from ")
-                ACE_TEXT ("profile in use\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) Null object key return from ")
+                  ACE_TEXT ("profile in use\n")));
+    }
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
                       CORBA::SystemException::_tao_minor_code (

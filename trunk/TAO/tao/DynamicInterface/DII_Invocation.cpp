@@ -91,9 +91,11 @@ namespace TAO
                      TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - DII_Invocation::"
-                  "handle_user_exception \n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - DII_Invocation::"
+                    "handle_user_exception \n"));
+      }
 
     // Match the exception interface repository id with the
     // exception in the exception list.

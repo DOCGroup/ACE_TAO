@@ -93,9 +93,11 @@ TAO_Codeset_Manager::set_tcs (TAO_Profile &theProfile,
   if (trans.is_tcs_set ())
     {
       if(TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
-                    ACE_LIB_TEXT ("transport already set\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("TAO (%P|%t) - Codeset_Manager::set_tcs, ")
+                      ACE_LIB_TEXT ("transport already set\n")));
+        }
 
       return;
     }

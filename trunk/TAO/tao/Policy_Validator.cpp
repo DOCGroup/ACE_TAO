@@ -31,21 +31,23 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
   // The validator we're adding can't be part of another list
   ACE_ASSERT (validator->next_ == 0);
 
-  // Why would we want to add ourself to our list 
+  // Why would we want to add ourself to our list
   if (this != validator)
     {
       // Get to the end of the list and make sure that the
       // new validator isn't already part of our list
       TAO_Policy_Validator* current = this;
       while (current->next_ != 0)
-        {                        
+        {
           if (current->next_ == validator)
             {
               if (TAO_debug_level > 3)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_LIB_TEXT ("(%P|%t) Skipping validator [0x%x] ")
-                            ACE_LIB_TEXT ("since it would create a circular list\n"),
-                            validator));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_LIB_TEXT ("(%P|%t) Skipping validator [0x%x] ")
+                              ACE_LIB_TEXT ("since it would create a circular list\n"),
+                              validator));
+                }
 
               return;
             }
@@ -89,7 +91,7 @@ TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies
 CORBA::Boolean
 TAO_Policy_Validator::legal_policy (CORBA::PolicyType type)
 {
-  return (this->legal_policy_impl (type) 
-          || ((this->next_ != 0) 
+  return (this->legal_policy_impl (type)
+          || ((this->next_ != 0)
               && this->next_->legal_policy_impl (type)));
 }

@@ -146,10 +146,12 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                "to <%s:%d>\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()), iiop_endpoint->port()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                  "to <%s:%d>\n",
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()), iiop_endpoint->port()));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -187,11 +189,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   if (result == -1 && errno == EWOULDBLOCK)
     {
       if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                    "going to wait for connection completion on local"
-                    "handle [%d]\n",
-                    svc_handler->get_handle ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                      "going to wait for connection completion on local"
+                      "handle [%d]\n",
+                      svc_handler->get_handle ()));
+        }
 
       // Wait for connection completion.  No need to specify timeout
       // to wait() since the correct timeout was passed to the
@@ -285,11 +289,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                "new connection to <%s:%d> on Transport[%d]\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Connector::make_connection, "
+                  "new connection to <%s:%d> on Transport[%d]\n",
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
+                  svc_handler->peer ().get_handle ()));
+    }
 
   TAO_Transport *transport =
     svc_handler->transport ();
