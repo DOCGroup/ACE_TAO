@@ -25,8 +25,9 @@
 
 namespace FTRTEC
 {
-  class Replication_Service : public TAO_FTEC_Become_Primary_Listener,
-                              public ACE_Service_Object
+  class TAO_FTRTEC_Export Replication_Service 
+    : public TAO_FTEC_Become_Primary_Listener
+    , public ACE_Service_Object
   {
   public:
     static Replication_Service* instance();
@@ -52,7 +53,6 @@ namespace FTRTEC
     *
     * @param state The request to be replicated.
     * @param rollback The rollback operation when the replication failed.
-    * @param oid The object id used for rollback operation.
     */
     void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
          RollbackOperation rollback
