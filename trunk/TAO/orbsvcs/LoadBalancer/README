@@ -124,7 +124,7 @@ automatically register whatever CORBA objects you want with the load
 balancer, and override object reference creation methods such as
 _this() and POA::create_reference() so that they return the object
 group reference instead of the individual object's reference.  All of
-this done "behind the scenes," meaning that no modification to your
+this is done "behind the scenes," meaning that no modification to your
 existing code is necessary.
 
 This approach is "experimental" since I'm still tweaking the
