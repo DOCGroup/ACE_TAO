@@ -163,9 +163,9 @@ CosEC_Basic::init_CosEC (void)
 int
 CosEC_Basic::init  (int argc, char *argv [])
 {
-  if (init_ORB (argc, argv) == -1 ||
-      init_RtEC () == -1 ||
-      init_CosEC () == -1)
+  if (init_ORB (argc, argv) == -1 
+      || init_RtEC () == -1 
+      || init_CosEC () == -1)
     return -1;
   else
     return 0;
