@@ -210,6 +210,7 @@ main (int argc, char **argv)
   cout << first_foo_ior.in () << endl;
   cout << second_foo_ior.in () << endl;
 
+  // Set the poa_manager state to active, ready to process requests
   poa_manager->activate (env);
   if (env.exception () != 0)
     {
@@ -217,6 +218,7 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Run the ORB
   if (orb->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
 
