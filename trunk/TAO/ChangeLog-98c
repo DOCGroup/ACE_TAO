@@ -1,3 +1,17 @@
+Fri Nov  7 01:58:30 1997  Nanbor Wang  <nw1@coyote.wolfpack.cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	* TAO_IDL/driver/drv_fork.cpp: Added the (__FreeBSD__) flag to
+ 	  correctly include wait.h file.
+
+	* tao/orb_core.cpp: Replaced ACE_NETBSD with ACE_HAS_THREADS in
+ 	  template instantiation segment.
+
+	* tao/orbconf.h: Added the (__FreeBSD__) flag to exclude inclusion of
+ 	  widec.h.
+
+	* tao/orbobj.cpp (Release): Wrapped ACE_GUARD with ACE_MT macro.
+
 Fri Nov 07 01:46:04 1997    <irfan@TWOSTEP>
 
 	* tests/Cubit/TAO/DII_Cubit/(cubitC.cpp, cubit.cpp): Byte order
