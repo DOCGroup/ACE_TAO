@@ -1,3 +1,10 @@
+Wed May 19 18:28:21 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCORBA\Diffserv: 
+
+	  Renamed TAO_Custom_Network_Priority_Mapping to
+	  Custom_Network_Priority_Mapping.
+
 Wed May 19 09:14:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
