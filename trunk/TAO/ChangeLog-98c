@@ -3,6 +3,9 @@ Sat Jun 13 13:20:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp: added explicit
           template instantiations.
 
+        * tao/POA.i (find_POA): rearranged to avoid use before
+          definition.
+
 Fri Jun 12 20:20:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 
         * tao/{Object_KeyC.cpp, Typecode_Constants.cpp}: Changed the
