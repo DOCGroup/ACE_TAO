@@ -1,3 +1,32 @@
+Mon Dec 13 10:34:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Roland Mueb <Roland dot Meub at avaya dot tenovis dot com>:
+	* ace/OS_NS_sys_socket.inl (getpeername, getsockname):
+
+	  If (the new) ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO preprocessor
+	  symbol is defined, initialize the sockaddr_in::sin_zero field to
+	  zero after the call to get{peer,sock}name() when the address
+	  family is AF_INET.  Some platforms, like older versions of the
+	  Linux kernel, do not initialize the sin_zero field since that
+	  field is generally only used for padding/alignment purposes.  On
+	  those platforms memcmp()-based comparisons of the sockaddr_in
+	  structure, such as the one in the ACE_INET_Addr equality
+	  operator, may fail due to random bytes in the sin_zero field
+	  even though that field is unused.  This fix prevents equality
+	  comparison of two different sockaddr_in instances that refer to
+	  the same socket from failing.
+
+	* ace/OS_NS_macros.h (ACE_SOCKCALL):
+
+	  Added non-returning counterpart to the ACE_SOCKCALL_RETURN
+	  macro.  Used by the above fix.
+
+	* ace/config-linux-common.h:
+
+	  Define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO if Linux kernel
+	  version is less than 2.5.47.  Kernels prior to that version did
+	  not initialize the sockaddr_in::sin_zero field.
+
 Mon Dec 13 10:07:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

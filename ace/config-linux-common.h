@@ -360,4 +360,17 @@
 
 #include /**/ "ace/post.h"
 
+#if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) 
+// detect if getsockname() and getpeername() returns
+// random values in the sin_zero field by evaluation
+// of the kernel version. since version 2.5.47
+// this problem is fixed.
+#include <linux/version.h>
+#  if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
+#    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 0
+#  else
+#    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 1
+#  endif /* (LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,0)) */
+#endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
+
 #endif /* ACE_LINUX_COMMON_H */
