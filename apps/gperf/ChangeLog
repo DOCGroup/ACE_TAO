@@ -1,3 +1,9 @@
+Tue Jan 20 17:13:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* version.texi: Something in the autoconf build thought it wise to
+	  update the date in this file. It matches the last modification
+	  date of gperf.texi.
+
 Thu Jun 19 14:52:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/test-1.exp:
