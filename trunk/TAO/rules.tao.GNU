@@ -34,6 +34,12 @@ ifdef COMSPEC
   endif # ! TAO_IDL_PREPROCESSOR
 endif # COMSPEC
 
+####
+#### TAO libraries
+####
+TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
+TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
+TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
 
 ####
 #### Macro customization.
@@ -120,6 +126,15 @@ else  # smart_proxies
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
 endif # smart_proxies
+
+ifeq ($(interceptors),0)
+  CPPFLAGS += -DTAO_HAS_INTERCEPTORS=0
+else  # interceptors
+  override interceptors = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
+  # CPPFLAGS += -DTAO_HAS_INTERCEPTORS=1
+endif # interceptors
 
 ifeq (1,$(CROSS-COMPILE))
 else

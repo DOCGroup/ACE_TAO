@@ -235,7 +235,7 @@ DRV_drive (const char *s)
   FE_yyparse ();
 
   // If there were any errors, stop.
-  if (idl_global->err_count () > 0) 
+  if (idl_global->err_count () > 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s%s %d %s%s\n",
@@ -246,7 +246,7 @@ DRV_drive (const char *s)
                   idl_global->err_count (),
                   ACE_TEXT ("error"),
                   ACE_TEXT ((idl_global->err_count () > 1 ? "s" : ""))));
-    
+
       // Call BE_abort to allow a BE to clean up after itself.
       BE_abort ();
 
@@ -264,11 +264,11 @@ DRV_drive (const char *s)
                   ACE_TEXT (s)));
     }
 
-  if (idl_global->compile_flags () & IDL_CF_DUMP_AST) 
+  if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Dump of AST:\n")));
-                  
+
       ACE_Log_Msg *log_msg = ACE_Log_Msg::instance ();
       idl_global->root ()->dump (*log_msg->msg_ostream ());
     }
@@ -308,14 +308,14 @@ main (int argc, char *argv[])
   DRV_parse_args (argc, argv);
 
   // If a version message is requested, print it and exit.
-  if (idl_global->compile_flags () & IDL_CF_VERSION) 
+  if (idl_global->compile_flags () & IDL_CF_VERSION)
     {
       DRV_version ();
       ACE_OS::exit (0);
     }
 
   // If a usage message is requested, give it and exit.
-  if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE) 
+  if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
     {
       DRV_usage ();
       ACE_OS::exit (0);
@@ -323,12 +323,12 @@ main (int argc, char *argv[])
 
   // Fork off a process for each file to process. Fork only if
   // there is more than one file to process.
-  if (DRV_nfiles > 1) 
+  if (DRV_nfiles > 1)
     {
       // DRV_fork never returns.
       DRV_fork ();
-    } 
-  else 
+    }
+  else
     {
       // Do the one file we have to parse.
       // Check if stdin and handle file name appropriately.
