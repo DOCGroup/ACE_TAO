@@ -1,3 +1,9 @@
+Fri Aug 13 18:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/IOStream_T.h:
+          When ACE_LACKS_IOSTREAM_FX is defined, also include ace/os_include/
+          os_ctype.h
+
 Fri Aug 13 12:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
