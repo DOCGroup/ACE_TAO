@@ -72,7 +72,7 @@ print_priority_info (const char *const name)
     ACE_DEBUG ((LM_DEBUG,
                 "%s (%lu|%u); policy is %d, priority is %d\n",
                 name,
-                getpid (),
+                ACE_OS::getpid (),
                 _lwp_self (),
                 pthread_self (),
                 policy, param.sched_priority));
@@ -80,7 +80,7 @@ print_priority_info (const char *const name)
     ACE_DEBUG ((LM_DEBUG,
                 "%s (%lu|%u); policy is %d, priority is %d\n",
                 name,
-                getpid (),
+                ACE_OS::getpid (),
                 0,
                 pthread_self (),
                 policy, param.sched_priority ));
