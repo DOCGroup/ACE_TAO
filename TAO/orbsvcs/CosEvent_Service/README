@@ -18,7 +18,8 @@ based federations.
 To run the Event Channel:
 ------------------------
 1. you should have a running Naming Service.
-   if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+   if not, start one as:
+   $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
 
 2. if you want to use the -t option you should have a running
    Real Time Event Channel.
@@ -76,6 +77,24 @@ $TAO_ROOT/docs/cec_options.html
 	-r		Use rebind() to store the object
 			reference in the naming service
 	-x		do not use the naming service
+
+
+
+   Note:
+   ====
+   By default, the Naming Service disables multicast discovery. 
+   The "-m 1" option enables the Naming Service to be resolved via
+   multicast. 
+   
+   If you do not wish to do this, then use the
+   -ORBInitRef option in which case the Naming Service should be started
+   as:
+
+   $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o naming.ior
+
+   and the CosEvent_Service as
+
+   $ CosEvent_Service_Native -ORBInitRef NameService=file://naming.ior
 
 Author:
 -------

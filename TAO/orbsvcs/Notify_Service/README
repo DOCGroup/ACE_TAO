@@ -42,9 +42,15 @@ Command line arguments:
                           created and registered with the Naming Service.
                           This option is disabled by default.
 
-"-ChannelName channel_name": Specifes the <channel_name> to register with the
-                             Naming Service.
-                             The default is "NotifyEventChannel".
+"-ChannelName channel_name" : Specifes the <channel_name> to register with the
+                              Naming Service.
+                              The default is "NotifyEventChannel".
+
+"-ORBRunThreads"            : Number of threads to run the
+                              ORB::run method.
+
+!! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
+option instead.
 
 "-Notify_TPReactor [threads]": Tells the Notify Service that the ORB
                                will use a TP reactor and specifies the
@@ -58,10 +64,30 @@ on this.
 
 Running the Service:
 -------------------
-1. Start the Naming Service from $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service if you are using the "-NameSvc" options.
+1. Start the Naming Service from 
+
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
+
+if you are using the "-NameSvc" options.
 
 2.Start the Notify_Service from this directory. You should see a message saying
   that the service has been started.
+
+   Note:
+   ====
+   By default, the Naming Service disables multicast discovery. 
+   The "-m 1" option enables the Naming Service to be resolved via
+   multicast. 
+   
+   If you do not wish to do this, then use the
+   -ORBInitRef option in which case the Naming Service should be started
+   as:
+
+   $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o naming.ior
+
+   and the CosEvent_Service as
+
+   $ Notify_Service -ORBInitRef NameService=file://naming.ior
 
 Using the Boot option:
 ----------------------
@@ -89,24 +115,19 @@ The "Notify_Default_Event_Manager_Objects_Factory" service object accepts the fo
 
 "-MTDispatching"                     : Enable MT dispatching
 "-DispatchingThreads [thread_count]" : How many threads for MT dispatching.
+
 "-MTSourceEval"                      : Enable MT proxy consumer(source) filter evaluation.
 "-SourceThreads [thread_count]"      : How many threads for source filter evaluation.
+
 "-MTLookup"                          : Enable MT subscription table lookup.
 "-LookupThreads [thread_count]"      : How many lookup threads.
+
 "-MTListenerEval"                    : Enable MT proxy supplier (listener) filter evaluation.
 "-ListenerThreads"                   : How many threads for listener filter evaluation.
-"-Notify_TPReactor [threads]"        : Tells the service that the ORB
-                                       is using a TP reactor and
-                                       specifies the number of worker
-                                       threads to deploy.
-                                       Note that you might have to
-                                       specify  the TP reactor in the
-                                       svc.conf file.
-                                       (see the ORB configutrations
-                                       for details on this)
 
 "-AsynchUpdates"                     : Send subscription and
-                                       publication updates asynchronously.
+                                       publication updates
+                                       asynchronously.
 
 "-AllocateTaskperProxy"              : Allocate worker tasks per
                                        proxy for the following
