@@ -8,6 +8,7 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_string.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
