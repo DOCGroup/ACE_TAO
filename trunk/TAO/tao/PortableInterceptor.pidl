@@ -154,9 +154,9 @@ module PortableInterceptor {
   local interface IORInfo {
     // #pragma version IORInfo x.y
     CORBA::Policy get_effective_policy (in CORBA::PolicyType type);
-    void add_ior_component (in IOP::TaggedComponent component);
+    void add_ior_component (in IOP::TaggedComponent _component);
     void add_ior_component_to_profile (
-      in IOP::TaggedComponent component,
+      in IOP::TaggedComponent _component,
       in IOP::ProfileId profile_id);
 
     // new from orbos/01-01-04 ORT
