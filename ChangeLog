@@ -1,40 +1,41 @@
 Fri Jul 21 00:29:38 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* Receiver_QoS_Event_Handler.h:
-	* Receiver_QoS_Event_Handler.cpp: Added this event handler to
-	  handle QoS and socket data for the receiver.
+	* examples/QOS/Receiver_QoS_Event_Handler.h:
+	* examples/QOS/Receiver_QoS_Event_Handler.cpp: Added this event
+	  handler to handle QoS and socket data for the receiver.
 
-	* Sender_QoS_Event_Handler.h:
-	* Sender_QoS_Event_Handler.cpp: Added this event handler to handle
-	  QoS and socket data for the Sender.
+	* examples/QOS/Sender_QoS_Event_Handler.h:
+	* examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event 
+	  handler to handle QoS and socket data for the Sender.
 	
-	* QoS_Util.h:
-	* QoS_Util.cpp: This class provides utility funtions like parsing
-	  QoS parameters for the QoS enabled applications.
+	* examples/QOS/QoS_Util.h:
+	* examples/QOS/QoS_Util.cpp: This class provides utility funtions 
+	  like parsing QoS parameters for the QoS enabled applications.
 	
-	* QoS_Signal_Handler.h:
-	* QoS_Signal_Handler.cpp: Used to gracefully close QoS sessions
-	  and shutdown RSVP signalling.
+	* examples/QOS/QoS_Signal_Handler.h:
+	* examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close 
+	  QoS sessions and shutdown RSVP signalling.
 	
-	* FlowSpec_Dbase.h: Provides a name-Flowspec mapping for the
-	  standard QoS flowspecs like g711. Typical QoS flowspecs required
-	  for different video encoding/decoding schemes can be listed here.
+	* examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping 
+	  for the standard QoS flowspecs like g711. Typical QoS flowspecs 
+	  required for different video encoding/decoding schemes can be 
+	  listed here.
  	
-	* Fill_ACE_QoS.h:
-	* Fill_ACE_QoS.cpp: This class helps users to add new flow specs
- 	  and provides utility functions for filling up the flow specs
- 	  for simplex/duplex sessions.
+	* examples/QOS/Fill_ACE_QoS.h:
+	* examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add 
+	  new flow specs and provides utility functions for filling up the
+	  flow specs for simplex/duplex sessions.
 
-	* server.cpp: QoS enabled receiver application.
-	* client.cpp: QoS enabled sender application.
+	* examples/QOS/server.cpp: QoS enabled receiver application.
+	* examples/QOS/client.cpp: QoS enabled sender application.
 	
-	* Makefile:
-	* README
-	* QOS.dsw:
-	* client.dsp:
-	* server.dsp: Updated these files to reflect changes to the test.
-	  The above test demonstrates the use of various aspects of AQoSA
-	  (ACE QoS API).
+	* examples/QOS/Makefile:
+	* examples/QOS/README
+	* examples/QOS/QOS.dsw:
+	* examples/QOS/client.dsp:
+	* examples/QOS/server.dsp: Updated these files to reflect changes 
+	  to the test. The above test demonstrates the use of various 
+	  aspects of AQoSA (ACE QoS API).
 	
 Thu Jul 20 23:04:30 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
