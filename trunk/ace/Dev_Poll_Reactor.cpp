@@ -8,7 +8,7 @@ ACE_RCSID (ace,
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
-#if defined (ACE_HAS_EVENT_POLL) && defined (linux)
+#  if defined (ACE_HAS_EVENT_POLL) && defined (linux)
 
 // #undef POLLIN
 // #undef POLLPRI
@@ -17,21 +17,22 @@ ACE_RCSID (ace,
 // #undef POLLHUP
 // #undef POLLNVAL
 
-#  include <asm/page.h>
+#    include <asm/page.h>
   //#  include <asm/poll.h>
   // @@ UGLY HACK ... REMOVE ME
   //    <asm/poll.h> and <sys/poll.h> conflict.
-#define POLLREMOVE      0x1000
-#  include <linux/eventpoll.h>
+#    define POLLREMOVE      0x1000
+#    include <linux/eventpoll.h>
 
 static const char ACE_POLL_DEVICE[] = "/dev/epoll";
 
-#elif defined (ACE_HAS_DEV_POLL)
+#  elif defined (ACE_HAS_DEV_POLL)
 
-#  if defined (sun)
-#    include <sys/devpoll.h>
-#  elif defined (linux)
-#    include <linux/devpoll.h>
+#    if defined (sun)
+#      include <sys/devpoll.h>
+#    elif defined (linux)
+#      include <linux/devpoll.h>
+#    endif  /* sun */
 
 static const char ACE_POLL_DEVICE[] = "/dev/poll";
 
