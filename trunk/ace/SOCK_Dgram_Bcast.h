@@ -19,6 +19,10 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Bcast_Node 
 {
 public:

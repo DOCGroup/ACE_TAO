@@ -21,6 +21,10 @@
 #include "ace/IPC_SAP.h"
 #include "ace/Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_TLI)
 
 // There's not a universal device name for TLI devices.  If the platform

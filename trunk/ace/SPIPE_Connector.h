@@ -20,6 +20,10 @@
 
 #include "ace/SPIPE_Stream.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SPIPE_Connector : public ACE_SPIPE
 {
   // = TITLE

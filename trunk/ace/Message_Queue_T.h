@@ -19,8 +19,12 @@
 
 #include "ace/Synch.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (VXWORKS)
-  class ACE_Message_Queue_Vx;
+class ACE_Message_Queue_Vx;
 #endif /* defined (VXWORKS) */
 
 template <ACE_SYNCH_DECL>

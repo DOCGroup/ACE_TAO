@@ -14,7 +14,12 @@
 // 
 // ============================================================================
 
+// This needs to go outside of the #if !defined() block.  Don't ask...
 #include "ace/Task.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_STREAM_MODULES)
 #define ACE_STREAM_MODULES

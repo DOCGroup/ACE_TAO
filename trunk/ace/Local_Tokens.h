@@ -44,6 +44,10 @@
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // 1.
 class ACE_Export ACE_TOKEN_CONST
 {

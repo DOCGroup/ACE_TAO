@@ -26,6 +26,10 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Time_Value.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Token_Request
 {
   // = TITLE

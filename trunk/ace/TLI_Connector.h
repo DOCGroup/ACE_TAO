@@ -19,6 +19,10 @@
 
 #include "ace/TLI_Stream.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_TLI)
 
 class ACE_Export ACE_TLI_Connector : public ACE_TLI

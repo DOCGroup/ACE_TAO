@@ -19,6 +19,10 @@
 
 #include "ace/DEV_IO.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_DEV_Connector : public ACE_DEV
 {
   // = TITLE

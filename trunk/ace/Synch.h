@@ -21,6 +21,11 @@
 #define ACE_SYNCH_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM))
 #include "ace/SV_Semaphore_Complex.h"
 #endif /* !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)) */

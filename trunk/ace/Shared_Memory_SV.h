@@ -21,6 +21,10 @@
 #include "ace/Shared_Memory.h"
 #include "ace/SV_Shared_Memory.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
 {
   // = TITLE

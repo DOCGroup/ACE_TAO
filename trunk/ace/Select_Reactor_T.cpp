@@ -859,10 +859,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events (ACE_Se
         }
       while (number_of_active_handles == -1 && this->handle_error () > 0);
 
-      // @@ Remove?!
       if (number_of_active_handles > 0)
         {
 #if !defined (ACE_WIN32)
+          // Resynchronize the fd_sets so their "max" is set properly.
           dispatch_set.rd_mask_.sync (this->handler_rep_.max_handlep1 ());
           dispatch_set.wr_mask_.sync (this->handler_rep_.max_handlep1 ());
           dispatch_set.ex_mask_.sync (this->handler_rep_.max_handlep1 ());
@@ -875,10 +875,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events (ACE_Se
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers (void)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers (int &number_dispatched)
 {
-  int number_dispatched = this->timer_queue_->expire ();
-  return this->state_changed_ ? -1 : number_dispatched;
+  number_dispatched += this->timer_queue_->expire ();
+  if (this->state_changed_)
+    return -1;
+  else
+    return 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -993,6 +996,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch (int number_of_active_h
 {
   ACE_TRACE ("ACE_Select_Reactor_T::dispatch");
 
+  int number_of_handlers_dispatched = 0;
+
   // The following do/while loop keeps dispatching as long as there
   // are still active handles.  Note that the only way we should ever
   // iterate more than once through this loop is if signals occur
@@ -1019,14 +1024,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch (int number_of_active_h
       // Handle timers first since they may have higher latency
       // constraints.
 
-      if (this->dispatch_timer_handlers () == -1)
-        // State has changed or timer queue has failed, exit inner
-        // loop.
+      if (this->dispatch_timer_handlers (number_of_handlers_dispatched) == -1)
+        // State has changed or timer queue has failed, exit loop.
         break;
-
       else if (number_of_active_handles <= 0)
-        // Bail out since we got here since select() was interrupted.
         {
+          // Bail out since we got here since select() was
+          // interrupted.
           if (ACE_Sig_Handler::sig_pending () != 0)
             {
               ACE_Sig_Handler::sig_pending (0);
@@ -1046,12 +1050,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch (int number_of_active_h
 
       else if (this->dispatch_notification_handlers (number_of_active_handles,
                                                      dispatch_set) == -1)
-        break; // State has changed, exit inner loop.
+        break; // State has changed, exit loop.
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers (number_of_active_handles,
                                            dispatch_set) == -1)
-        // State has changed, so exit the inner loop.
+        // State has changed, so exit loop.
         break;
     }
   while (number_of_active_handles > 0);
@@ -1105,7 +1109,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i (ACE_Time_Value 
       this->wait_for_multiple_events (dispatch_set,
                                       max_wait_time);
 
-    result = this->dispatch (number_of_active_handles, dispatch_set);
+    result = this->dispatch (number_of_active_handles,
+                             dispatch_set);
   }
   ACE_SEH_EXCEPT (this->release_token ()) {
     // As it stands now, we catch and then rethrow all Win32

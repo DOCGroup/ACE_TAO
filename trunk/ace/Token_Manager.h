@@ -21,6 +21,10 @@
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Local_Mutex;
 class ACE_Mutex_Token;
 

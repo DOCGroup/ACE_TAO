@@ -23,6 +23,10 @@
 #include "ace/Obstack.h"
 #include "ace/Service_Config.h"
 #include "ace/Parse_Node.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
    
 #if defined (DEBUGGING)
 #if defined (ACE_YY_DECL)

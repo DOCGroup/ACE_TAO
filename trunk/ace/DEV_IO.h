@@ -20,6 +20,10 @@
 #include "ace/DEV.h"
 #include "ace/DEV_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_DEV_IO : public ACE_DEV
 {
   // = TITLE

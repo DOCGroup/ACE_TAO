@@ -19,6 +19,10 @@
 
 #include "ace/Message_Block.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {

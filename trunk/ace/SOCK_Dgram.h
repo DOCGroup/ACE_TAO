@@ -20,6 +20,10 @@
 #include "ace/SOCK.h"
 #include "ace/Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
   // = TITLE

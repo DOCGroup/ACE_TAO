@@ -25,6 +25,10 @@
 #include "ace/Time_Value.h"
 #include "ace/SString.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Time_Request
 {
   // = TITLE

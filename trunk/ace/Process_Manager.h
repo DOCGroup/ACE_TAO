@@ -20,6 +20,10 @@
 #include "ace/Synch.h"
 #include "ace/Process.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Process_Descriptor
 {
   // = TITLE

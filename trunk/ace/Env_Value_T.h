@@ -20,6 +20,10 @@
 
 #include "ace/OS.h"		// Need to get ACE_static_cast definition
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class T>
 class ACE_Env_Value
 {

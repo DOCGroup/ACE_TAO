@@ -20,6 +20,10 @@
 #include "ace/Shared_Object.h"
 #include "ace/Event_Handler.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Service_Object : public ACE_Event_Handler, public ACE_Shared_Object
 {
   // = TITLE

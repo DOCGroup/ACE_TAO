@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -17,8 +16,13 @@
 
 #if !defined (ACE_SPIPE_ADDR_H)
 #define ACE_SPIPE_ADDR_H
+
 #include "ace/Addr.h"
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 {

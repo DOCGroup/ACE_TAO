@@ -21,6 +21,10 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
   // = TITLE

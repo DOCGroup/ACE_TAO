@@ -22,6 +22,10 @@
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Date_Time
 {
   // = TITLE

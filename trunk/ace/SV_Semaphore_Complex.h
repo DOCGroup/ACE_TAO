@@ -19,6 +19,10 @@
 
 #include "ace/SV_Semaphore_Simple.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
 {
   // = TITLE

@@ -16,7 +16,12 @@
 
 #if !defined (ACE_UNIX_ADDR_H)
 #define ACE_UNIX_ADDR_H
+
 #include "ace/Addr.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

@@ -23,6 +23,10 @@
 
 #include "ace/Containers.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Containers.i"
 #endif /* __ACE_INLINE__ */

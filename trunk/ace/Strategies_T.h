@@ -24,6 +24,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Hash_Map_Manager.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {

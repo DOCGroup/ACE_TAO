@@ -22,6 +22,10 @@
 #include "ace/Containers.h"
 #include "ace/Name_Proxy.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;
 
 class ACE_Export ACE_Name_Binding

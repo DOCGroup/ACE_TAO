@@ -23,6 +23,10 @@
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
   // = TITLE

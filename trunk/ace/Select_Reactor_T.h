@@ -19,8 +19,9 @@
 
 #include "ace/Select_Reactor_Base.h"
 
-// Forward declaration.
-//template class ACE_Select_Reactor_T<cla
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class ACE_SELECT_REACTOR_MUTEX>
 class ACE_Select_Reactor_Token_T : public ACE_SELECT_REACTOR_MUTEX
@@ -165,9 +166,9 @@ public:
   // application wishes to handle events for some fixed amount of
   // time.
   //
-  // Returns the total number of <ACE_Event_Handler>s that were
-  // dispatched, 0 if the <max_wait_time> elapsed without dispatching
-  // any handlers, or -1 if something goes wrong.
+  // Returns the total number of I/O and Timer <ACE_Event_Handler>s
+  // that were dispatched, 0 if the <max_wait_time> elapsed without
+  // dispatching any handlers, or -1 if something goes wrong.
   //
   // Current <alertable_handle_events> is identical to
   // <handle_events>.
@@ -529,10 +530,11 @@ protected:
   // of <ACE_Event_Handler>s that were dispatched or -1 if something
   // goes wrong.
 
-  virtual int dispatch_timer_handlers (void);
-  // Dispatch any expired timer handlers.  Returns -1 if the state of
-  // the <wait_set_> has changed, else returns number of timer
-  // handlers dispatched.
+  virtual int dispatch_timer_handlers (int &number_dispatched);
+  // Dispatch all timer handlers that have expired.  Returns -1 if the
+  // state of the <wait_set_> has changed, else 0.
+  // <number_dispatched> is set to the number of timer handlers
+  // dispatched.
 
   virtual int dispatch_notification_handlers (int &number_of_active_handles,
                                               ACE_Select_Reactor_Handle_Set &dispatch_set);

@@ -24,6 +24,10 @@
 #include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward decl
 class ACE_Name_Options;
 

@@ -19,6 +19,10 @@
 #include "ace/ACE.h"
 #include "ace/Log_Priority.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (ACE_LOG_RECORD_H)
 #define ACE_LOG_RECORD_H
 

@@ -22,6 +22,10 @@
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward decl.
 class ACE_Service_Repository;
 class ACE_Service_Type;

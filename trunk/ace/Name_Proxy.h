@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -28,6 +27,10 @@
 #include "ace/Service_Config.h"
 #include "ace/Synch_Options.h"
 #include "ace/Name_Request_Reply.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
 {

@@ -21,6 +21,10 @@
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
   // = TITLE

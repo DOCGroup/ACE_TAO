@@ -22,6 +22,10 @@
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
 // preallocate any thread descriptor and never (well, almost never)

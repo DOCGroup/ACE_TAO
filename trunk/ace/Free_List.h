@@ -21,6 +21,10 @@
 #include "ace/OS.h"
 #include "ace/Synch_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class T>
 class ACE_Free_List  
 {

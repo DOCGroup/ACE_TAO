@@ -29,6 +29,10 @@
 
 #include "ace/inc_user_config.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
 #if !defined (ACE_USES_OLD_IOSTREAMS)

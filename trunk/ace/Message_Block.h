@@ -21,6 +21,10 @@
 
 #include "ace/Malloc.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward declaration.
 class ACE_Data_Block;
 class ACE_Lock;

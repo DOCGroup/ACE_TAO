@@ -23,6 +23,10 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 enum ACE_Filecache_Flag
 {
   ACE_NOMAP = 0,

@@ -23,6 +23,10 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Export ACE_UPIPE_Acceptor : public ACE_SPIPE_Acceptor

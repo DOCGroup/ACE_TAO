@@ -18,6 +18,10 @@
 
 #include "ace/SOCK_Acceptor.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class ACE_LOCK>
 class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
 {

@@ -24,6 +24,10 @@ class ACE_Connection_Recycling_Strategy;
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
 {

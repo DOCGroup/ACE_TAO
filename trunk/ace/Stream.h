@@ -17,13 +17,15 @@
 #if !defined (ACE_STREAM_H)
 #define ACE_STREAM_H
 
-//#include "ace/Multiplexor.h"
-
 #include "ace/ACE.h"
 #include "ace/IO_Cntl_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Time_Value.h"
 #include "ace/Module.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;

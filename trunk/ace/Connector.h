@@ -23,6 +23,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class SVC_HANDLER>
 class ACE_Svc_Tuple
 {

@@ -29,6 +29,10 @@
 
 #include "ace/Functor.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class RECEIVER, class ACTION>
 class ACE_Command_Callback : public ACE_Command_Base
 {

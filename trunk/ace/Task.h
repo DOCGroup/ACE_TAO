@@ -20,6 +20,10 @@
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Task_Flags
 {
 public:
