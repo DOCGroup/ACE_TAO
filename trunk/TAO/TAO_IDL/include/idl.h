@@ -72,6 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Main include file for IDL compiler. Includes the rest of the
 // files defining the different units of the compiler
 
+#include        "ace/ACE.h"             // Most important ACE include file
+
 #include	"intlmacros.h"		// Define macros for intl'ion
 
 #include	<stdlib.h>		// POSIX standard defns
@@ -81,8 +83,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	<iostream.h>		// Standard IO library
 
 #include	<sys/types.h>		// POSIX standard types
-
-#include        "ace/OS.h"              // Most important ACE include file
 
 #include	"idl_narrow.h"		// IDL Narrowing mechanism
 

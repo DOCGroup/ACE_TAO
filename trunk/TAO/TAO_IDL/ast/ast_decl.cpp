@@ -84,31 +84,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 AST_Decl::AST_Decl()
-	: pd_node_type(NT_module),
-	  pd_line(-1),
-	  pd_local_name(NULL),
-	  pd_file_name(NULL),
-	  pd_pragmas(NULL),
-	  pd_defined_in(NULL),
-	  pd_imported(I_FALSE),
-	  pd_in_main_file(I_FALSE),
-	  pd_name(NULL),
-	  pd_added(I_FALSE)
+  : pd_imported(I_FALSE),
+    pd_in_main_file(I_FALSE),
+    pd_defined_in(NULL),
+    pd_node_type(NT_module),
+    pd_line(-1),
+    pd_file_name(NULL),
+    pd_name(NULL),
+    pd_local_name(NULL),
+    pd_pragmas(NULL),
+    pd_added(I_FALSE)
 {
 }
 
 AST_Decl::AST_Decl(NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
-	: pd_node_type(nt),
-	  pd_line(idl_global->lineno()),
-	  pd_local_name(n == NULL ? NULL : n->last_component()),
-	  pd_file_name(idl_global->filename()),
-	  pd_pragmas(p),
-	  pd_defined_in(idl_global->scopes()->depth() > 0
-		       ? idl_global->scopes()->top()
-		       : NULL),
-	  pd_imported(idl_global->imported()),
-	  pd_in_main_file(idl_global->in_main_file()),
-	  pd_added(I_FALSE)
+  : pd_imported(idl_global->imported()),
+    pd_in_main_file(idl_global->in_main_file()),
+    pd_defined_in(idl_global->scopes()->depth() > 0
+		  ? idl_global->scopes()->top()
+		  : 0),
+    pd_node_type(nt),
+    pd_line(idl_global->lineno()),
+    pd_file_name(idl_global->filename()),
+    pd_local_name(n == NULL ? 0 : n->last_component()),
+    pd_pragmas(p),
+    pd_added(I_FALSE)
 {
   compute_full_name (n);
 }

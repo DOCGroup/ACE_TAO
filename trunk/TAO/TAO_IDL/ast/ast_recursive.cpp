@@ -93,10 +93,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 idl_bool
 AST_illegal_recursive_type(AST_Decl *t)
 {
-  UTL_ScopeStackActiveIterator *i;
-  UTL_Scope		       *s;
-  AST_Structure		       *st1, *st2;
-  AST_Union		       *un1, *un2;
+  UTL_ScopeStackActiveIterator *i = 0;
+  UTL_Scope		       *s = 0;
+  AST_Structure		       *st1 = 0, *st2 = 0;
+  AST_Union		       *un1 = 0, *un2 = 0;
   idl_bool		       check_for_struct = I_FALSE,
 			       check_for_union = I_FALSE;
 

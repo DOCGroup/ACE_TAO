@@ -84,8 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 FE_Declarator::FE_Declarator(UTL_ScopedName *n, DeclaratorType dt,
 			     AST_Decl *cp)
-	     : pd_name(n),
-	       pd_complex_part(cp),
+	     : pd_complex_part(cp),
+	       pd_name(n),
 	       pd_decl_type(dt)
 {
 }
