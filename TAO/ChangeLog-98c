@@ -1,3 +1,8 @@
+Sat Dec 19 20:12:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Any.cpp (operator<<=): Added a missing "const" keyword.
+	  Thanks to David for noticing this.
+
 Fri Dec 18 00:20:37 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * examples/POA/On_Demand_Loading/Servant_Locator.{h,cpp}:
