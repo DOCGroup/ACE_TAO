@@ -3387,6 +3387,25 @@ SOURCE=.\TimeBaseS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Mux_Strategy.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -4337,6 +4356,14 @@ SOURCE=.\TimeBaseS_T.h
 # Begin Source File
 
 SOURCE=.\Timeprobe.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 
