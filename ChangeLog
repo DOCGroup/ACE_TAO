@@ -1,3 +1,9 @@
+Wed Dec 10 07:18:44 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/depgen.pl:
+
+          Fixed a bug introduced by my change on Tue Dec  9 13:00:30 2003.
+
 Wed Dec 10 13:17:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:

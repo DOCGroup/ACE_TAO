@@ -14,6 +14,7 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # ************************************************************
 
 use strict;
+use Cwd;
 use File::Basename;
 
 my($execPath) = getExecutePath($0);
@@ -68,7 +69,7 @@ sub getExecutePath {
       $loc = dirname($prog);
     }
     else {
-      $loc = Cwd::getcwd() . '/' . dirname($prog);
+      $loc = getcwd() . '/' . dirname($prog);
     }
   }
   else {
@@ -76,7 +77,7 @@ sub getExecutePath {
   }
 
   if ($loc eq '.') {
-    $loc = Cwd::getcwd();
+    $loc = getcwd();
   }
 
   if ($loc ne '') {
