@@ -1,5 +1,8 @@
 Wed Jun 23 15:54:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* orbsvcs/tests/ImplRepo/nestea_i.cpp :
+	* orbsvcs/tests/ImplRepo/nestea_server_i.cpp:	
+	* orbsvcs/tests/ImplRepo/airplane_i.cpp:
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (destroy): Fixed
 	  warnings by remving an extra argument.
 
