@@ -1,3 +1,7 @@
+Tue Aug 18 16:43:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.5.29 released.
+
 Tue Aug 18 14:15:23 1998  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix4.2.GNU: Don't link programs
