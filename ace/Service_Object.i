@@ -42,15 +42,6 @@ ACE_Service_Type::handle (void) const
 }
 
 ACE_INLINE void
-ACE_Service_Type::name (const ACE_TCHAR *n)
-{
-  ACE_TRACE ("ACE_Service_Type::name");
-
-  delete [] (ACE_TCHAR *) this->name_;
-  this->name_ = ACE::strnew (n);
-}
-
-ACE_INLINE void
 ACE_Service_Type::type (const ACE_Service_Type_Impl *o, int enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");

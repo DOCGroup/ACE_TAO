@@ -2,6 +2,7 @@
 
 #include "ace/SOCK_Dgram_Bcast.h"
 #include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram_Bcast.i"
@@ -159,7 +160,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
        n--,
            ((ifr->ifr_addr.sa_len <= sizeof (struct sockaddr)) ?
              ifr++ :
-             ifr = (struct ifreq *) 
+             ifr = (struct ifreq *)
              (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
 #endif /* CHORUS_4 */
     {
