@@ -7,19 +7,19 @@
 CFG=CIAO_Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "CIAO_Server.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "CIAO_Server.mak" CFG="CIAO_Server - Win32 Debug"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "CIAO_Server - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "CIAO_Server - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -81,7 +81,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Serverd.dll" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -92,7 +92,7 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\CIAO_DeploymentC.cpp
+SOURCE=.\CCM_DeploymentC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -100,7 +100,7 @@ SOURCE=.\CIAO_DeploymentC.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\CIAO_DeploymentC.h
+SOURCE=.\CCM_DeploymentC.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -112,20 +112,20 @@ SOURCE=.\CIAO_DeploymentC.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\CIAO_Deployment.pidl
+SOURCE=.\CCM_Deployment.idl
 
 !IF  "$(CFG)" == "CIAO_Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
-InputPath=.\CIAO_Deployment.pidl
-InputName=CIAO_Deployment
+InputPath=.\CCM_Deployment.idl
+InputName=CCM_Deployment
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-	
+
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -141,14 +141,14 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO's IDL Compiler on $(InputName)
-InputPath=.\CIAO_Deployment.pidl
-InputName=CIAO_Deployment
+InputPath=.\CCM_Deployment.idl
+InputName=CCM_Deployment
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).pidl \
+	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_SERVER_Export -Wb,export_include=CIAO_SERVER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-	
+
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -160,7 +160,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group
@@ -169,7 +169,7 @@ BuildCmds= \
 # PROP Default_Filter "i,inl"
 # Begin Source File
 
-SOURCE=.\CIAO_DeploymentC.i
+SOURCE=.\CCM_DeploymentC.i
 # End Source File
 # End Group
 # End Target

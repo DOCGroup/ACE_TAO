@@ -8,15 +8,15 @@
  *          -Wb,export_include=CIAO_export.h \
  *          -Wb,pre_include="ace/pre.h" \
  *          -Wb,post_include="ace/post.h" \
- *          CIAO_Deployment.pidl
+ *          CCM_Deployment.idl
  */
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
-#if !defined (CIAO_DEPLOYMENT_PIDL)
-#define CIAO_DEPLOYMENT_PIDL
+#if !defined (CCM_DEPLOYMENT_IDL)
+#define CCM_DEPLOYMENT_IDL
 
-#include "CIAO_Component.pidl"
+#include "CCM_Component.idl"
 
 // *************** Packaging and Deployment ***************
 
@@ -151,4 +151,4 @@ module Components
 
   };
 };
-#endif /* CIAO_DEPLOYMENT_PIDL */
+#endif /* CCM_DEPLOYMENT_IDL */

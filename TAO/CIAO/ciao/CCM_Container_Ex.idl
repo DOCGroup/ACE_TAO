@@ -8,16 +8,16 @@
  *          -Wb,export_include=CIAO_export.h \
  *          -Wb,pre_include="ace/pre.h" \
  *          -Wb,post_include="ace/post.h" \
- *          CIAO_Container_Ex.pidl
+ *          CCM_Container_Ex.idl
  */
 
 //#define CIAO_HAS_IMPORT_KEYWORD
 
-#if !defined (CIAO_CONTAINER_EX_PIDL)
-#define CIAO_CONTAINER_EX_PIDL
+#if !defined (CCM_CONTAINER_EX_IDL)
+#define CCM_CONTAINER_EX_IDL
 
-#include "CIAO_Container.pidl"
-#include <CosPersistentState.pidl>
+#include "CCM_Container.idl"
+#include <CosPersistentState.idl>
 
 // *************** Extended Container Interfaces ***************
 
@@ -180,4 +180,4 @@ module Components
       raises (InvalidConfiguration);
   };
 };
-#endif /* CIAO_CONTAINER_EX_PIDL */
+#endif /* CCM_CONTAINER_EX_IDL */
