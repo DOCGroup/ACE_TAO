@@ -213,12 +213,13 @@ public:
   { return putq (mblk, to); }
 
   virtual int svc () {
-    for (ACE_Message_Block *mb; getq (mb) != -1; mb->release ()) {
-      if (mb->msg_type () == ACE_Message_Block::MB_STOP) {
-        put_next (mb);
-        break;
-      }
-      ACE::write_n (ACE_STDOUT, mb);
+    int stop = 0;
+    for (ACE_Message_Block *mb; !stop && getq (mb) != -1; ) {
+      if (mb->msg_type () == ACE_Message_Block::MB_STOP)
+        stop = 1;
+      else
+        ACE::write_n (ACE_STDOUT, mb);
+      put_next (mb);
     }
     return 0;
   }
