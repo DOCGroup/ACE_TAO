@@ -1,3 +1,9 @@
+Fri Aug 06 11:13:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/streams.h,OS.h,Log_Msg.h: with ACE_LACKS_IOSTREAM_TOTALLY,
+          removed the hack that re-#defined ostream.  Replaced that
+          with an ACE_OSTREAM_TYPE macro. [Bug 208]
+
 Fri Aug 06 10:49:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated egcs versions that we use
