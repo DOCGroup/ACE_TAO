@@ -647,7 +647,7 @@ IDL_GlobalData::validate_included_idl_files (void)
 #   define FULLPATH(full, partial, maxlen) ::_fullpath (full, partial, maxlen)
     ACE_OS::strcpy (separator, "\\");
 # else
-#   define FULLPATH(full, partial, maxlen) realpath (full, partial)
+#   define FULLPATH(full, partial, maxlen) realpath (partial, full)
     ACE_OS::strcpy (separator, "/");
 # endif
 
