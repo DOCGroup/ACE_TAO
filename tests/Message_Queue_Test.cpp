@@ -91,7 +91,8 @@ iterator_test (void)
   // default of 16 Kb (defined by ACE_Message_Queue_Base::DEFAULT_HWM),
   // so that the test runs on machines with 8Kb pagesizes.
 #if !defined(_UNICOS)
-  QUEUE queue (32 * 1024 * sizeof (ACE_TCHAR));
+  //  QUEUE queue (32 * 1024 * sizeof (ACE_TCHAR));
+  QUEUE queue (sizeof(buffer));
 #else
   // this works on the Cray, where BUFSIZ is defined as 32Kb
   QUEUE queue (ITERATIONS * BUFSIZ - 1);
