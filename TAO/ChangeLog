@@ -1,3 +1,10 @@
+Mon Feb 28 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+          Only try to load the ImR_Client library in a shared build, in a
+          static build we just can't do this, trying to do this will result
+          in an error outputted to the log
+
 Sun Feb 27 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
