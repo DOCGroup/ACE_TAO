@@ -89,7 +89,10 @@ public:
                     ACE_Service_Type_Impl *o,
                     const ACE_DLL &dll,
                     int active);
-
+  ACE_Service_Type (const ACE_TCHAR *n,
+                    ACE_Service_Type_Impl *o,
+                    ACE_SHLIB_HANDLE handle,
+                    int active);
   ~ACE_Service_Type (void);
 
   const ACE_TCHAR *name (void) const;
