@@ -297,10 +297,12 @@ static int n_loops = 100;
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Future<const char *>;
+template class ACE_Future<int>;
 template class ACE_Future<u_long>;
-template class auto_ptr<ACE_Method_Object>;
 template class ACE_Future_Rep<char const *>;
-template class ACE_Future_Rep<unsigned long>;
+template class ACE_Future_Rep<int>;
+template class ACE_Future_Rep<u_long>;
+template class auto_ptr<ACE_Method_Object>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #endif /* ACE_HAS_THREADS */
