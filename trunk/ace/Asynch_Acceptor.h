@@ -80,7 +80,7 @@ public:
   // closed and the all outstanding asynchronous operations have
   // either completed or have been canceled on the old listen handle.
 
-  virtual int accept (size_t bytes_to_read = 0, const void *act);
+  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
   // This initiates a new asynchronous accept through the <AcceptEx>
   // call.
 

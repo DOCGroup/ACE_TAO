@@ -235,6 +235,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
           new_handler->addresses (remote_address, local_address);
         }
 
+      // Pass the ACT
+      if (result.act () != 0)
+        {
+          new_handler->act (result.act ());
+        }
+
       // Initiate the handler
       new_handler->open (result.accept_handle (), 
                          result.message_block ());

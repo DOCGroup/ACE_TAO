@@ -829,6 +829,10 @@ ACE_Asynch_Accept_Handler::ACE_Asynch_Accept_Handler (ACE_Reactor* reactor,
   : reactor_ (reactor),
     proactor_ (proactor)
 {
+  if (this->reactor_ == 0)
+    this->reactor_ = ACE_Reactor::instance ();
+  if (this->proactor_ == 0)
+    this->proactor_ = ACE_Proactor::instance ();
 }  
 
 ACE_Asynch_Accept_Handler::~ACE_Asynch_Accept_Handler (void)
@@ -1171,6 +1175,8 @@ ACE_Asynch_Accept::thread_function (void* arg_reactor)
  
   // Retrieve the reactor pointer from the argument.
   ACE_Reactor* reactor = (ACE_Reactor *) arg_reactor;
+  if (reactor == 0)
+    reactor = ACE_Reactor::instance ();
   
   // For this reactor, this thread is the owner. 
   reactor->owner (ACE_OS::thr_self ());
