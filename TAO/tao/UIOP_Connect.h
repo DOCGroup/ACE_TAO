@@ -37,7 +37,7 @@
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
-class TAO_UIOP_Properties
+class TAO_Export TAO_UIOP_Properties
 {
   // = TITLE
   //   Unix Domain Sockets protocol properties for a set of

@@ -188,7 +188,7 @@ TAO_SHMIOP_Connector::connect (TAO_Base_Connection_Property *prop,
                           __FILE__,
                           __LINE__,
                           buffer,
-                          "errno"));
+                          ACE_TEXT ("errno")));
             }
           return -1;
         }
