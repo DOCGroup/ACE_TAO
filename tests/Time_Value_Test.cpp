@@ -47,7 +47,6 @@
 # endif /* ACE_NO_INLINE */
 #endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && ACE_SIZEOF_LONG == 4) */
 
-#include "test_config.h"
 #include "ace/ACE.h"
 
 #if !defined (ACE_WIN32)  &&  (ACE_SIZEOF_LONG == 4)
