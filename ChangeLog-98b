@@ -11,6 +11,10 @@ Thu Oct 29 18:51:19 1998  Steve Huston  <shuston@riverace.com>
           for building on AIX with g++.  And, once again, thanks to Ian Wright
           for this contribution.
 
+        * ace/NT_Service.i: Added ACE_INLINE to the methods in this file.
+          Thanks to Goran Lowkrantz <Goran.Lowkrantz@infologigruppen.se>
+          for this fix.
+
 Thu Oct 29 17:36:29 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Semaphore_Test: Removed the timed acquire stuff from
