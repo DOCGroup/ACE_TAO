@@ -48,13 +48,14 @@ server_i::run_no_ops (client_ptr remote_partner,
 {
   while (iterations != 0)
     {
+      void *temp = &iterations;
       CORBA::ULong act_for_iterations =
-        ACE_static_cast (CORBA::ULong, &iterations);
+        ACE_reinterpret_cast (CORBA::ULong, tmp);
 
       CORBA::ULong got_reply = 0;
 
       CORBA::ULong act_for_flag =
-        ACE_static_cast (CORBA::ULong, &got_reply);
+        ACE_reinterpret_cast (CORBA::ULong, &got_reply);
 
       remote_partner->oneway_no_op (act_for_iterations,
                                     act_for_flag,
@@ -77,10 +78,10 @@ server_i::no_op (client_ptr remote_partner,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong *iterations =
-    ACE_static_cast (CORBA::ULong *, act_for_iterations);
+    ACE_reinterpret_cast (CORBA::ULong *, act_for_iterations);
 
   CORBA::ULong *flag =
-    ACE_static_cast (CORBA::ULong *, act_for_flag);
+    ACE_reinterpret_cast (CORBA::ULong *, act_for_flag);
 
   ACE_DEBUG ((LM_DEBUG,
               "server_i::no_op: iterations = %d\n",
