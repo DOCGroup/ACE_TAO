@@ -39,6 +39,18 @@ class ACE_Singleton : public ACE_Cleanup
   //     scheme to work, a (static) <cleanup> function must be
   //     provided.  <ACE_Singleton> provides one so that TYPE doesn't
   //     need to.
+  //
+  //     NOTE:  the best types to use for ACE_LOCK are
+  //     ACE_Recursive_Thread_Mutex and ACE_Null_Mutex.
+  //     ACE_Recursive_Thread_Mutex should be used in multi-threaded
+  //     programs in which it is possible for more than one thread to
+  //     access the <ACE_Singleton<TYPE, ACE_LOCK>> instance.
+  //     ACE_Null_Mutex can be used otherwise.  The reason that these
+  //     types of locks are best has to do with their allocation by
+  //     the ACE_Object_Manager.  Single ACE_Recursive_Thread_Mutex
+  //     and ACE_Null_Mutex instances are used for all ACE_Singleton
+  //     instantiations.  However, other types of locks are allocated
+  //     per ACE_Singleton instantiation.
 {
 public:
   static TYPE *instance (void);
