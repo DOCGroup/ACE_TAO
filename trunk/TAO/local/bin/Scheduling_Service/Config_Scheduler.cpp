@@ -252,5 +252,4 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 	}
     }
   ACE_DEBUG ((LM_DEBUG, "schedule prepared\n"));
-  // TODO: Extract data.
 }

@@ -86,7 +86,7 @@ private:
 
 // ************************************************************
 
-class Latency_Supplier : public POA_RtecEventComm::PushSupplier, public POA_RtecEventComm::PushConsumer
+class Latency_Supplier
 // = TITLE
 //    Latency Supplier
 //
@@ -94,12 +94,51 @@ class Latency_Supplier : public POA_RtecEventComm::PushSupplier, public POA_Rtec
 //    Generates event nofications and a shutdown message.
 {
 public:
+
+  //
+  // This class provides IS-A Consumer and Supplier of events. But
+  // inheritance from two skeleton classes is non-complaint (or at
+  // least won't work with TAO). We use smaller implementation classes
+  // that delegate on Latency_Supplier to do the job.
+  //
+  class Supplier : public POA_RtecEventComm::PushSupplier {
+  public:
+    virtual void disconnect_push_supplier (CORBA::Environment &);
+    // The channel is disconnecting.
+
+  private:
+    Supplier (Latency_Supplier* impl);
+    friend class Latency_Supplier;
+
+  private:
+    Latency_Supplier* impl_;
+  };
+
+  class Consumer : public POA_RtecEventComm::PushConsumer {
+  public:
+    virtual void push (const RtecEventComm::EventSet &events,
+		       CORBA::Environment &);
+    // The channel pushed some events to us.
+
+    virtual void disconnect_push_consumer (CORBA::Environment &);
+    // The channel is disconnecting.
+
+  private:
+    Consumer (Latency_Supplier* impl);
+    friend class Latency_Supplier;
+
+  private:
+    Latency_Supplier* impl_;
+  };
+
   Latency_Supplier (const u_int total_messages,
 		    CORBA::Long supplier_id,
                     const int timestamp = 0);
   // Construction.  Requires the total number of messages to be
   // sent.  If the timestamp flag is enabled, then events are
   // timestamped, e.g., for use in measuring jitter.
+
+  ~Latency_Supplier (void);
   
   int open_supplier (RtecEventChannelAdmin::EventChannel_ptr event_channel,
 		     const char *name, int master);
@@ -115,6 +154,11 @@ public:
   virtual void disconnect_push_consumer (CORBA::Environment &);
   // The channel is disconnecting.
 
+  virtual void push (const RtecEventComm::EventSet &events,
+		     CORBA::Environment &);
+  // Takes a timestamp and then pushes event_ to all consumers, either
+  // directly, or via a channel.
+
   int start_generating_events (void);
   // Called when the supplier should start generating events.
   // Registers with the Event Channel to receive timeouts every .25
@@ -128,10 +172,6 @@ public:
   // Print timing statistics.
 
 protected:
-  void push (const RtecEventComm::EventSet &events,
-	     CORBA::Environment &);
-  // Takes a timestamp and then pushes event_ to all consumers, either
-  // directly, or via a channel.
 
   void shutdown (void);
   // Disconnect from the Event Service.
@@ -166,6 +206,9 @@ private:
   int master_;
 
   ACE_CString entry_point_;
+
+  Supplier* supplier_;
+  Consumer* consumer_;
 };
 
 void Latency_Consumer::entry_point(const char* s)
