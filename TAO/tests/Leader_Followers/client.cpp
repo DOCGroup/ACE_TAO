@@ -23,9 +23,6 @@ ACE_RCSID(Leader_Followers, client, "$Id$")
 // Name of file contains ior.
 static const char *IOR = "file://ior";
 
-// Run event loop from the main thread.
-static int run_event_loop_from_main_thread = 1;
-
 // Number of client threads.
 static int number_of_client_threads = 5;
 
@@ -129,7 +126,6 @@ public:
                       work_from_this_thread));
 
           CORBA::ULong result = this->test_->method (work_from_this_thread,
-                                                     ACE_static_cast (CORBA::ULong, ACE_Thread::self ()),
                                                      ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -195,8 +191,10 @@ public:
                       "Client: Event loop thread %t starting event loop for %d milli seconds @ %T\n",
                       event_loop_timeout_for_this_thread));
 
-          if (this->orb_->run (ACE_Time_Value (0,
-                                               event_loop_timeout_for_this_thread * 1000),
+          ACE_Time_Value timeout (0,
+                                  event_loop_timeout_for_this_thread * 1000);
+
+          if (this->orb_->run (timeout,
                                ACE_TRY_ENV) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
           ACE_TRY_CHECK;
