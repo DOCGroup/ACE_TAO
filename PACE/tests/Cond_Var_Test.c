@@ -107,7 +107,7 @@ void *watch_count(void *idp)
 int
 main(int argc, char *argv[])
 {
-  unsigned int i;
+  int i;
   pace_pthread_t threads[3];
   pace_pthread_t pthread;
 
