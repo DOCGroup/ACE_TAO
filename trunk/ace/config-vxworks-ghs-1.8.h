@@ -45,4 +45,11 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
+typedef int key_t;
+// GreenHills 1.8.8 needs the stdarg.h #include early:  it shouldn't
+// hurt other compilers.
+#include <stdarg.h>
+#include <vxWorks.h>
+
+
 #endif /* ACE_CONFIG_H */
