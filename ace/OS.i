@@ -2413,43 +2413,11 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char laddr[length];
-  ACE_OS::memcpy(laddr, addr, (size_t)length);
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (laddr, (ACE_SOCKET_LEN) length, type), 
+  ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type), 
 		       struct hostent *, 0); 
 #else
   ACE_SOCKCALL_RETURN (::gethostbyaddr (addr, (ACE_SOCKET_LEN) length, type), 
 		       struct hostent *, 0); 
-#endif /* ACE_HAS_NONCONST_GETBY */
-}
-
-ACE_INLINE struct hostent *
-ACE_OS::gethostbyname (const char *name)
-{
-  // ACE_TRACE ("ACE_OS::gethostbyname");
-#if defined (VXWORKS)
-  // not thread safe!
-  static hostent ret;
-  static int first_addr;
-  static char *hostaddr[2];
-
-  if ((first_addr = ::hostGetByName ((char *) name)) < 0)
-    return 0;
-  hostaddr[0] = (char *) &first_addr;
-  hostaddr[1] = 0;
-
-  ret.h_name = (char *) name;  /* might not be official: just echo input arg */
-  ret.h_addrtype = AF_INET;
-  ret.h_length = 4;  // VxWorks 5.2/3 doesn't define IP_ADDR_LEN;
-  ret.h_addr_list = hostaddr;
-
-  return &ret;
-#elif defined (ACE_HAS_NONCONST_GETBY)
-  char lname[::strlen (name) + 1];
-  ACE_OS::strcpy (lname, name);
-  ACE_SOCKCALL_RETURN (::gethostbyname (lname), struct hostent *, 0);
-#else
-  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0); 
 #endif /* ACE_HAS_NONCONST_GETBY */
 }
 
@@ -2623,11 +2591,7 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char lsvc[::strlen (svc) + 1];
-  char lproto[::strlen (proto) + 1];
-  ACE_OS::strcpy (lsvc, svc);
-  ACE_OS::strcpy (lproto, proto);
-  ACE_SOCKCALL_RETURN (::getservbyname (lsvc, lproto), 
+  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) lproto), 
 		       struct servent *, 0);
 #else
   ACE_SOCKCALL_RETURN (::getservbyname (svc, proto), 
@@ -2836,9 +2800,7 @@ ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char laddr[length];
-  ACE_OS::memcpy (laddr, addr, (size_t) length);
-  ACE_SOCKCALL_RETURN (::gethostbyaddr (laddr, (ACE_SOCKET_LEN) length, type),
+  ACE_SOCKCALL_RETURN (::gethostbyaddr ((char *) addr, (ACE_SOCKET_LEN) length, type),
 		       struct hostent *, 0); 
 #else
   ACE_UNUSED_ARG(h_errnop);
@@ -2884,9 +2846,7 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char lname[::strlen (name) + 1];
-  ACE_OS::strcpy (lname, name);
-  ACE_SOCKCALL_RETURN (::gethostbyname (lname), struct hostent *, 0); 
+  ACE_SOCKCALL_RETURN (::gethostbyname ((char *) name), struct hostent *, 0); 
 #else
   ACE_UNUSED_ARG(h_errnop);
   ACE_UNUSED_ARG(buffer);
@@ -2930,11 +2890,7 @@ ACE_OS::getservbyname_r (const char *svc, const char *proto,
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 #endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char lsvc[::strlen (svc) + 1];
-  char lproto[::strlen (proto) + 1];
-  ACE_OS::strcpy (lsvc, svc);
-  ACE_OS::strcpy (lproto, proto);
-  ACE_SOCKCALL_RETURN (::getservbyname (lsvc, lproto),
+  ACE_SOCKCALL_RETURN (::getservbyname ((char *) svc, (char *) proto),
 		       struct servent *, 0);
 #else
   ACE_UNUSED_ARG(buf);
@@ -2983,9 +2939,7 @@ ACE_OS::inet_addr (const char *name)
     }
   return valid ? (long) htonl (ret) : -1L;
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  char _name[::strlen (name) + 1];
-  ACE_OS::strcpy (_name, name);
-  return ::inet_addr (_name);
+  return ::inet_addr ((char *) name);
 #else
   return ::inet_addr (name);
 #endif /* ACE_HAS_NONCONST_GETBY */
@@ -3008,23 +2962,14 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     return 1;
 }
 
+#if ! defined (VXWORKS)
 ACE_INLINE char *
 ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   // ACE_TRACE ("ACE_OS::inet_ntoa");
-#if defined (VXWORKS)
-  // the following storage is not thread-specific!
-  static char buf[32];
-  // assumes that addr is already in network byte order
-  sprintf (buf, "%d.%d.%d.%d", addr.s_addr / (256*256*256) & 255,
-	   addr.s_addr / (256*256) & 255,
-	   addr.s_addr / 256 & 255,
-	   addr.s_addr & 255);
-  return buf;
-#else
   ACE_OSCALL_RETURN (::inet_ntoa (addr), char *, 0);
-#endif /* VXWORKS */ 
 }
+#endif /* ! VXWORKS */ 
 
 ACE_INLINE int
 ACE_OS::last_error (void)
@@ -4033,6 +3978,16 @@ ACE_OS::gettimeofday (void)
   // Convert remainder to microseconds;
   tv.tv_usec = long ((_100ns - (tv.tv_sec * (10000 * 1000))) * 10);
 #endif 
+
+#elif defined (ACE_HAS_AIX_HIRES_TIMER)
+  timebasestruct_t tb;
+
+  ::read_real_time(&tb, TIMEBASE_SZ);
+  ::time_base_to_time(&tb, TIMEBASE_SZ);
+
+  tv.tv_sec = tb.tb_high;
+  tv.tv_usec = tb.tb_low / 1000L;
+
 #else
   int result;
 #if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (m88k))
