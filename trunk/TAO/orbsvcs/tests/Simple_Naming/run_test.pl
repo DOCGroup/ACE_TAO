@@ -20,19 +20,29 @@ $sleeptime = 8;
 # variables for parameters
 
 $nsmport = 10000 + uniqueid ();
+$iorfile = "ns.ior";
 
 sub name_server
 {
-  my $args = "-ORBnameserviceport $nsmport";
-  my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."Naming_Service".$DIR_SEPARATOR.
-             "Naming_Service".$Process::EXE_EXT;
+  my $args = "-ORBnameserviceport $nsmport -o $iorfile";
+  my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR".
+    "Naming_Service".$DIR_SEPARATOR.
+      "Naming_Service".$Process::EXE_EXT;
 
+  unlink $iorfile;
   $NS = Process::Create ($prog, $args);
+
+  if (ACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+    print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
+    $NS->Kill (); $NS->TimedWait (1);
+    exit 1;
+  }
 }
 
 sub client
 {
-  my $args = $_[0]." "."-ORBnameserviceport $nsmport";
+  my $args = $_[0]." "."-ORBnameserviceport $nsmport ".
+    "-ORBnameserviceior file://$iorfile";
   my $prog = $EXEPREFIX."client".$Process::EXE_EXT;
 
   $CL = Process::Create ($prog, $args);
@@ -54,7 +64,6 @@ foreach $o (@opts)
 {
   name_server ();
 
-  sleep $sleeptime;
   print STDERR "\n";
   print STDERR "          ".$comments[$test_number];
 
@@ -66,10 +75,10 @@ foreach $o (@opts)
   }
 
 
-  $NS->Kill (); $server = $NS->TimedWait (5);
+  $NS->Terminate (); $server = $NS->TimedWait (5);
   if ($server == -1) {
     print STDERR "ERROR: server timedout\n";
-    $NS->TimedWait (1);
+    $NS->Kill (); $NS->TimedWait (1);
   }
   $test_number++;
 }
@@ -86,6 +95,7 @@ name_server ();
 sleep $sleeptime;
 client ("-m25");
 
+$client = $CL->TimedWait (60);
 if ($client == -1) {
   print STDERR "ERROR: client timedout\n";
   $CL->Kill (); $CL->TimedWait (1);
@@ -97,14 +107,22 @@ close (STDOUT);
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-$NS->Kill (); $server = $NS->TimedWait (5);
+$NS->Terminate (); $server = $NS->TimedWait (5);
 if ($server == -1) {
   print STDERR "ERROR: server timedout\n";
-  $NS->TimedWait (1);
+  $NS->Kill (); $NS->TimedWait (1);
 }
 
+unlink $iorfile;
+
 print STDERR "          Multithreaded Test:\n";
-system ("process-m-output.pl test_run.data 25");
+$FL = Process::Create ($EXEPREFIX."process-m-output.pl",
+                       " test_run.data 25");
+$filter = $FL->TimedWait (60);
+if ($filter == -1) {
+  print STDERR "ERROR: filter timedout\n";
+  $FL->Kill (); $FL->TimedWait (1);
+}
 print STDERR "\n";
 
 # @@ Capture any exit status from the processes.

@@ -977,7 +977,8 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                         "Simple Object key %s. Doing the Table Lookup ...\n",
                         object_id.c_str ()));
 
-          CORBA::Object_ptr object_reference;
+          CORBA::Object_ptr object_reference =
+            CORBA::Object::_nil ();
 
           // Do the Table Lookup.
           int status =
@@ -987,8 +988,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
 
-          if (CORBA::is_nil (object_reference)
-              || status == -1)
+          if (status == -1 || CORBA::is_nil (object_reference))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
 
           // ObjectID present in the table with an associated NON-NULL

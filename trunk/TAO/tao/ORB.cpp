@@ -1363,6 +1363,10 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
 
       // @@ Is BUFSIZ the right size here?
       char buf [ACE_CDR::DEFAULT_BUFSIZE];
+#if defined(ACE_HAS_PURIFY)
+      (void) ACE_OS::memset (buf, '\0', sizeof(buf));
+#endif /* ACE_HAS_PURIFY */
+
       TAO_OutputCDR cdr (buf,  sizeof buf,
                          TAO_ENCAP_BYTE_ORDER,
                          this->orb_core_->output_cdr_buffer_allocator (),
