@@ -80,28 +80,9 @@ single_thread_performance_test (int queue_type = 0)
   // Create a message queue.
   QUEUE *msgq = 0;
 
-  if (queue_type == 0)
-    ACE_NEW_RETURN (msgq,
-                    QUEUE,
-                    -1);
-#if defined (VXWORKS)
-  else
-    {
-      ACE_NEW_RETURN (msgq,
-                      ACE_Message_Queue_Vx (max_messages,
-                                            MAX_MESSAGE_SIZE),
-                      -1);
-      message = "ACE_Message_Queue_Vx, single thread test";
-    }
-#elif defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
-  else
-    {
-      ACE_NEW_RETURN (msgq,
-                      ACE_Message_Queue_NT,
-                      -1);
-      message = ACE_TEXT ("ACE_Message_Queue_NT, single thread test");
-    }
-#endif /* VXWORKS */
+  ACE_NEW_RETURN (msgq,
+                  QUEUE,
+                  -1);
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
@@ -122,25 +103,6 @@ single_thread_performance_test (int queue_type = 0)
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   -1);
-
-#if defined (VXWORKS)
-  // Set up blocks to receive the messages.  Allocate these off the
-  // heap in case messages is large relative to the amount of
-  // stack space available.
-  ACE_Message_Block *receive_block;
-  ACE_NEW_RETURN (receive_block,
-                  ACE_Message_Block[max_messages],
-                  -1);
-
-  for (i = 0; i < max_messages; ++i)
-    {
-      receive_block[i].init (MAX_MESSAGE_SIZE);
-
-      // For VxWorks Message Queues, the receive block pointer must be
-      // assigned.  It will be used by dequeue_head ().
-      receive_block_p[i] = &receive_block[i];
-    }
-#endif /* VXWORKS */
 
   timer->start ();
 
@@ -173,9 +135,6 @@ single_thread_performance_test (int queue_type = 0)
   timer->reset ();
 
   delete [] receive_block_p;
-#if defined (VXWORKS)
-  delete [] receive_block;
-#endif /* VXWORKS */
 
   for (i = 0; i < max_messages; ++i)
     delete send_block[i];
