@@ -28,10 +28,8 @@ DCFLAGS         += +K0 -g
 DLD             = $(CXX)
 LD              = $(CXX)
 
-ifdef exceptions
-  ifneq ($exceptions,0)
-    CCFLAGS += --exceptions
-  endif # ! exceptions
+ifeq (1,$(exceptions))
+  CCFLAGS += --exceptions
 else
   CCFLAGS   += --no_exceptions
   LDFLAGS   += --no_exceptions
@@ -104,7 +102,7 @@ endif # BIN
 #### -g is incompatible with -fast.  If you need -g, you can
 #### use "-fast -O3".
 ####
-ifdef fast
+ifeq (1,$(fast))
   CFLAGS += -fast +K3
   DCFLAGS =
   LDFLAGS += -fast +K3

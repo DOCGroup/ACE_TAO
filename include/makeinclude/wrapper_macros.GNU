@@ -146,17 +146,17 @@ endif # static_libs
 
 #### Let platform just look at whether or not exceptions is defined.
 #### With the following override, it doesn't have to check for 0.
-ifeq ($(exceptions),0)
-  override exceptions =
-endif # exceptions
+#ifeq ($(exceptions),0)
+#  override exceptions =
+#endif # exceptions
 
-ifeq ($(fast),0)
-  override fast =
-endif # fast
+#ifeq ($(fast),0)
+#  override fast =
+#endif # fast
 
-ifeq ($(rtti),0)
-  override rtti =
-endif # rtti
+#ifeq ($(rtti),0)
+#  override rtti =
+#endif # rtti
 
 #### Defined versioned_so = 1 if your platform requires version number
 #### be appended after so library.
@@ -409,7 +409,7 @@ ifneq ($(ssl),)
   LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
 endif # ssl
 
-ifeq ($(exceptions),)
+ifeq ($(exceptions),0)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
     #### Disable the default exception handling of g++ >= 2.8.0.
     ifneq ($(ACE_GNUG_ON_UNIXWARE),)
