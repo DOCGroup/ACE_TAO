@@ -1,9 +1,6 @@
 // $Id$
 #define ACE_BUILD_DLL
 #include "ace/Configuration.h"
-#if defined (ACE_WIN32)
-#include <windows.h>
-#endif // ACE_WIN32 
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Configuration.i"
@@ -104,8 +101,8 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
                                 ACE_Configuration_Section_Key& key_out, 
                                 int create)
 {
-  const ASYS_TCHAR* begin = path_in.rep ();
-  const ASYS_TCHAR* end = 0;
+  const TCHAR* begin = path_in.rep ();
+  const TCHAR* end = 0;
   
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
@@ -146,9 +143,9 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 }
 
 int 
-ACE_Configuration::validate_name (const ASYS_TCHAR* name)
+ACE_Configuration::validate_name (const TCHAR* name)
 {
-  const ASYS_TCHAR* pos = name;
+  const TCHAR* pos = name;
   // make sure it doesn't contain any invalid characters
   while (*pos)
     {
@@ -174,11 +171,11 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
   if (path.length ())
     {
       // Write out the section header
-      ACE_TString header = "[";
+      ACE_TString header = ACE_TEXT ("[");
       header += path;
       header += "]";
       header +="\n";
-      if (ACE_OS::fputs (header.rep (), out) < 0)
+      if (ACE_OS::fputs (ACE_MULTIBYTE_STRING (header.rep ()), out) < 0)
         return -1;
 
       // Write out each value
@@ -186,11 +183,11 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
       ACE_TString name;
       VALUETYPE type;
       ACE_TString line;
-      ASYS_TCHAR int_value[32];
+      TCHAR int_value[32];
       ACE_TString string_value;
       while (!enumerate_values (section, index, name, type))
         {
-          line = name + "=";
+          line = name + ACE_TEXT ("=");
           switch (type)
             {
             case INTEGER:
@@ -199,7 +196,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                 if (get_integer_value (section, name.rep (), value))
                   return -2;
 
-                ACE_OS::sprintf (int_value, "#%d", value);
+                ACE_OS::sprintf (ACE_MULTIBYTE_STRING (int_value), "#%d", value);
                 line += int_value;
                 break;
               }
@@ -210,7 +207,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                                       string_value))
                   return -2;
 
-                line += "\"";
+                line += ACE_TEXT ("\"");
                 line += string_value;
                 break;
               }
@@ -223,8 +220,8 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
               return -3;
             }
 
-          line+="\n";
-          if (ACE_OS::fputs (line.rep (), out) < 0)
+          line += ACE_TEXT ("\n");
+          if (ACE_OS::fputs (ACE_MULTIBYTE_STRING (line.rep ()), out) < 0)
             return -4;
 
           index++;
@@ -241,7 +238,7 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
     {
       ACE_TString sub_section (path);
       if (path.length ())
-        sub_section += "\\";
+        sub_section += ACE_TEXT ("\\");
 
       sub_section += name;
       if (open_section (section, name.rep (), 0, sub_key))
@@ -257,9 +254,9 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
 }
 
 int 
-ACE_Configuration::export_config (const ASYS_TCHAR* filename)
+ACE_Configuration::export_config (const TCHAR* filename)
 {
-  FILE* out = ACE_OS::fopen (filename, "w");
+  FILE* out = ACE_OS::fopen (ACE_MULTIBYTE_STRING (filename), "w");
   if (!out)
     return -1;
 
@@ -269,14 +266,14 @@ ACE_Configuration::export_config (const ASYS_TCHAR* filename)
 }
 
 int 
-ACE_Configuration::import_config (const ASYS_TCHAR* filename)
+ACE_Configuration::import_config (const TCHAR* filename)
 {
-  FILE* in = ACE_OS::fopen (filename, "r");
+  FILE* in = ACE_OS::fopen (ACE_MULTIBYTE_STRING (filename), "r");
   if (!in)
     return -1;
 
   // XXX - change this to a dynamic buffer
-  ASYS_TCHAR buffer[4096];
+  TCHAR buffer[4096];
   ACE_Configuration_Section_Key section;
   while (ACE_OS::fgets (buffer, 4096, in))
     {
@@ -297,7 +294,7 @@ ACE_Configuration::import_config (const ASYS_TCHAR* filename)
         }
 
       // assume this is a value, read in the value name
-      ASYS_TCHAR* end = ACE_OS::strchr (buffer, '=');
+      TCHAR* end = ACE_OS::strchr (buffer, '=');
       if (!end)  // no =, not a value so just skip it
         continue;
 
@@ -314,7 +311,7 @@ ACE_Configuration::import_config (const ASYS_TCHAR* filename)
       else if (*end == '#')
         {
           // number type
-          u_int value = atoi (end + 1);
+          u_int value = atoi (ACE_MULTIBYTE_STRING (end + 1));
           if (set_integer_value (section, buffer, value))
             return -4;
         }
@@ -370,7 +367,7 @@ ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry (void)
 
 int 
 ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_Key& base, 
-                                               const ASYS_TCHAR* sub_section, 
+                                               const TCHAR* sub_section, 
                                                int create, 
                                                ACE_Configuration_Section_Key& result)
 {
@@ -412,7 +409,7 @@ ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_K
 
 int 
 ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section_Key& key, 
-                                                 const ASYS_TCHAR* sub_section, 
+                                                 const TCHAR* sub_section, 
                                                  int recursive)
 {
   if (validate_name (sub_section))
@@ -432,7 +429,7 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
       if (load_key (section, sub_key))
         return -3;
 
-      ASYS_TCHAR name_buffer[DEFBUFSIZE];
+      TCHAR name_buffer[DEFBUFSIZE];
       DWORD buffer_size = DEFBUFSIZE;
       // Note we don't increment the index because the 
       // enumeration becomes invalid if we change the 
@@ -468,7 +465,7 @@ ACE_Configuration_Win32Registry::enumerate_values (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  ASYS_TCHAR name_buffer[DEFBUFSIZE];
+  TCHAR name_buffer[DEFBUFSIZE];
   DWORD buffer_size = DEFBUFSIZE;
   DWORD value_type;
   if (::RegEnumValue (base_key, 
@@ -510,7 +507,7 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
   if (load_key (key, base_key))
     return -1;
 
-  ASYS_TCHAR name_buffer[DEFBUFSIZE];
+  TCHAR name_buffer[DEFBUFSIZE];
   DWORD buffer_size = DEFBUFSIZE;
   if (::RegEnumKeyEx (base_key, 
                       Index, 
@@ -529,7 +526,7 @@ ACE_Configuration_Win32Registry::enumerate_sections (const ACE_Configuration_Sec
   
 int 
 ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Section_Key& key, 
-                                                   const ASYS_TCHAR* name, 
+                                                   const TCHAR* name, 
                                                    const ACE_TString& value)
 {
   if (validate_name (name))
@@ -552,7 +549,7 @@ ACE_Configuration_Win32Registry::set_string_value (const ACE_Configuration_Secti
 
 int 
 ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Section_Key& key, 
-                                                    const ASYS_TCHAR* name, 
+                                                    const TCHAR* name, 
                                                     u_int value)
 {
   if (validate_name (name))
@@ -575,7 +572,7 @@ ACE_Configuration_Win32Registry::set_integer_value (const ACE_Configuration_Sect
 
 int 
 ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Section_Key& key, 
-                                                   const ASYS_TCHAR* name, 
+                                                   const TCHAR* name, 
                                                    const void* data, 
                                                    u_int length)
 {
@@ -599,7 +596,7 @@ ACE_Configuration_Win32Registry::set_binary_value (const ACE_Configuration_Secti
 
 int 
 ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Section_Key& key, 
-                                                   const ASYS_TCHAR* name, 
+                                                   const TCHAR* name, 
                                                    ACE_TString& value)
 {
   if (validate_name (name))
@@ -609,7 +606,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  ASYS_TCHAR buffer[DEFBUFSIZE];
+  TCHAR buffer[DEFBUFSIZE];
   DWORD length = DEFBUFSIZE;
   DWORD type;
   if (::RegQueryValueEx (base_key, 
@@ -629,7 +626,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
 
 int 
 ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Section_Key& key, 
-                                                    const ASYS_TCHAR* name, 
+                                                    const TCHAR* name, 
                                                     u_int& value)
 {
   if (validate_name (name))
@@ -657,7 +654,7 @@ ACE_Configuration_Win32Registry::get_integer_value (const ACE_Configuration_Sect
 
 int 
 ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Section_Key& key, 
-                                                   const ASYS_TCHAR* name, 
+                                                   const TCHAR* name, 
                                                    void*& data, 
                                                    u_int& length)
 {
@@ -694,7 +691,7 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
 int 
 ACE_Configuration_Win32Registry::remove_value (const ACE_Configuration_Section_Key& key, 
-                                               const ASYS_TCHAR* name)
+                                               const TCHAR* name)
 {
   if (validate_name (name))
     return -1;
@@ -725,11 +722,11 @@ ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& 
 
 HKEY 
 ACE_Configuration_Win32Registry::resolve_key (HKEY hKey, 
-                                              const ASYS_TCHAR* path, 
+                                              const TCHAR* path, 
                                               int create)
 {
-  const ASYS_TCHAR* begin = path;
-  const ASYS_TCHAR* end = 0;
+  const TCHAR* begin = path;
+  const TCHAR* end = 0;
   HKEY result = 0;
   
   // Make a copy of hKey
@@ -800,7 +797,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void)
 {
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ASYS_TCHAR* string)
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (TCHAR* string)
   : type_ (ACE_Configuration::STRING),
     data_ (string),
     length_ (0)
@@ -869,7 +866,7 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (void)
 {
 }
 
-ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ASYS_TCHAR* name)
+ACE_Configuration_ExtId::ACE_Configuration_ExtId (const TCHAR* name)
   : name_ (name)
 {
 }
@@ -910,7 +907,7 @@ ACE_Configuration_ExtId::hash (void) const
   return temp.hash ();
 }
 
-const ASYS_TCHAR* 
+const TCHAR* 
 ACE_Configuration_ExtId::name (void)
 {
   return name_;
@@ -965,7 +962,7 @@ ACE_Configuration_Section_IntId::free (ACE_Allocator* allocator)
   allocator->free ((void *)(section_hash_map_));
 }
 
-ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const ASYS_TCHAR* path)
+ACE_Configuration_Section_Key_Heap::ACE_Configuration_Section_Key_Heap (const TCHAR* path)
   : path_ (0),
     value_iter_ (0),
     section_iter_ (0)
@@ -1016,7 +1013,7 @@ ACE_Configuration_Heap::open (int default_map_size)
 
 
 int 
-ACE_Configuration_Heap::open (const ASYS_TCHAR* file_name, 
+ACE_Configuration_Heap::open (const TCHAR* file_name, 
                               void* base_address, 
                               int default_map_size)
 {
@@ -1051,7 +1048,7 @@ ACE_Configuration_Heap::open (const ASYS_TCHAR* file_name,
   // Now check if the backing store has been created successfully.
   if (ACE_OS::access (file_name, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("create_index\n")),
+                       ASYS_TEXT ("create_index\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -1082,7 +1079,7 @@ ACE_Configuration_Heap::create_index (void)
         {
           // Attempt to clean up.
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT("create_index\n")));
+                      ASYS_TEXT("create_index\n")));
           this->allocator_->remove ();
           return -1;
         }
@@ -1118,7 +1115,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
 
 int 
 ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base, 
-                                     const ASYS_TCHAR* sub_section, 
+                                     const TCHAR* sub_section, 
                                      ACE_Configuration_Section_Key& result)
 {
 
@@ -1148,7 +1145,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   section += sub_section;
 
   // Add it to the base section
-  ASYS_TCHAR* pers_name = (ASYS_TCHAR*)allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ASYS_TCHAR));
+  TCHAR* pers_name = (TCHAR*)allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (TCHAR));
   ACE_OS::strcpy (pers_name, sub_section);
   ACE_Configuration_ExtId SSExtId (pers_name);
   if (IntId.section_hash_map_->bind (SSExtId, ignored, allocator_))
@@ -1167,7 +1164,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // Allocate memory for items to be stored in the table.
   size_t section_len = section.length () + 1;
-  ASYS_TCHAR *ptr = (ASYS_TCHAR*) this->allocator_->malloc (section_len);
+  TCHAR *ptr = (TCHAR*) this->allocator_->malloc (section_len);
 
   int return_value = -1;
 
@@ -1266,7 +1263,7 @@ ACE_Configuration_Heap::section_open_helper (size_t hash_table_size,
 
 int 
 ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base, 
-                                      const ASYS_TCHAR* sub_section, 
+                                      const TCHAR* sub_section, 
                                       int create, 
                                       ACE_Configuration_Section_Key& result)
 {
@@ -1279,7 +1276,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 
   // Only add the \\ if were not at the root
   if (section.length ())
-    section += "\\";
+    section += ACE_TEXT ("\\");
 
   section += sub_section;
 
@@ -1304,7 +1301,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 
 int 
 ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key, 
-                                        const ASYS_TCHAR* sub_section, 
+                                        const TCHAR* sub_section, 
                                         int recursive)
 {
   if (validate_name (sub_section))
@@ -1322,7 +1319,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Find this subkey
   if (section.length ())
-    section += "\\";
+    section += ACE_TEXT ("\\");
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.rep ());
@@ -1479,7 +1476,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
 
 int 
 ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& key, 
-                                          const ASYS_TCHAR* name, 
+                                          const TCHAR* name, 
                                           const ACE_TString& value)
 {
   if (validate_name (name))
@@ -1500,9 +1497,9 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ASYS_TCHAR* pers_name = (ASYS_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ASYS_TCHAR));
+      TCHAR* pers_name = (TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ASYS_TCHAR* pers_value = (ASYS_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ASYS_TCHAR));
+      TCHAR* pers_value = (TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (TCHAR));
       ACE_OS::strcpy (pers_value, value.rep ());
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (pers_value);
@@ -1519,7 +1516,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       // Free the old value memory
       VIntIdFind.free (allocator_);
       // Assign a new value
-      ASYS_TCHAR* pers_value = (ASYS_TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (ASYS_TCHAR));
+      TCHAR* pers_value = (TCHAR*)allocator_->malloc ((value.length () + 1) * sizeof (TCHAR));
       ACE_OS::strcpy (pers_value, value.rep ());
       VIntIdFind = ACE_Configuration_Value_IntId (pers_value);
     }
@@ -1529,7 +1526,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
 
 int 
 ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& key, 
-                                           const ASYS_TCHAR* name, 
+                                           const TCHAR* name, 
                                            u_int value)
 {
   if (validate_name (name))
@@ -1552,7 +1549,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
     {
       // it doesn't exist, bind it
-      ASYS_TCHAR* pers_name = (ASYS_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ASYS_TCHAR));
+      TCHAR* pers_name = (TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (TCHAR));
       ACE_OS::strcpy (pers_name, name);
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (value);
@@ -1571,7 +1568,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
 
 int 
 ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& key, 
-                                          const ASYS_TCHAR* name, 
+                                          const TCHAR* name, 
                                           const void* data, 
                                           u_int length)
 {
@@ -1595,9 +1592,9 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
     {
       // it doesn't exist, bind it
-      ASYS_TCHAR* pers_name =  (ASYS_TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ASYS_TCHAR));
+      TCHAR* pers_name =  (TCHAR*)allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (TCHAR));
       ACE_OS::strcpy (pers_name, name);
-      ASYS_TCHAR* pers_value =  (ASYS_TCHAR*)allocator_->malloc (length);
+      TCHAR* pers_value =  (TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId VExtId (pers_name);
       ACE_Configuration_Value_IntId VIntId (pers_value, length);
@@ -1614,7 +1611,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // it does exist, free the old value memory
       VIntIdFind.free (allocator_);
       // Assign a new value
-      ASYS_TCHAR* pers_value =  (ASYS_TCHAR*)allocator_->malloc (length);
+      TCHAR* pers_value =  (TCHAR*)allocator_->malloc (length);
       ACE_OS::memcpy (pers_value, data, length);
       VIntIdFind = ACE_Configuration_Value_IntId (pers_value, length);
     }
@@ -1624,7 +1621,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
 
 int 
 ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& key, 
-                                          const ASYS_TCHAR* name, 
+                                          const TCHAR* name, 
                                           ACE_TString& value)
 {
   if (validate_name (name))
@@ -1652,13 +1649,13 @@ ACE_Configuration_Heap::get_string_value (const ACE_Configuration_Section_Key& k
     return -4;
 
   // everythings ok, return the data
-  value = (ASYS_TCHAR*)VIntId.data_;
+  value = (TCHAR*)VIntId.data_;
   return 0;
 }
 
 int 
 ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& key, 
-                                           const ASYS_TCHAR* name, 
+                                           const TCHAR* name, 
                                            u_int& value)
 {
   if (validate_name (name))
@@ -1693,7 +1690,7 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
 
 int 
 ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& key, 
-                                          const ASYS_TCHAR* name, 
+                                          const TCHAR* name, 
                                           void*& data, 
                                           u_int& length)
 {
@@ -1730,7 +1727,7 @@ ACE_Configuration_Heap::get_binary_value (const ACE_Configuration_Section_Key& k
 
 int 
 ACE_Configuration_Heap::remove_value (const ACE_Configuration_Section_Key& key, 
-                                      const ASYS_TCHAR* name)
+                                      const TCHAR* name)
 {
   if (validate_name (name))
     return -1;
