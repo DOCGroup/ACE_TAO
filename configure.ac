@@ -2761,7 +2761,7 @@ ACE_CACHE_CHECK([for standard template class member specialization],
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 // Some compilers have a hard time with this test since the syntax is
 // too "new" for them.
-1
+
 // general vector type
 template<class T>
 class Vector
