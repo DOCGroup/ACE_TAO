@@ -1,3 +1,23 @@
+Wed Jan  5 15:54:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Fix to new Any extractor to pointer to const Any,
+	  prompted by a SunCC 4.2 compile error.
+
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Removed a couple of unnecessary 'ACE_reinterpret_cast's
+	  in generated code for the new Any extractor to pointer
+	  to const Any. They were causing compile errors with
+	  Kai, SunCC and other compilers.
+
+	* performance-tests/Latency/deferred_synch_client.dsp:
+	  Added missing paths for library linking.
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+	  Put in the complete relative path to tao_idl.exe, as
+	  it is in all other projects with IDL files.
+
 Tue Jan  4 11:46:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
