@@ -10,6 +10,7 @@
 #include "tao/NVList.h"
 #include "tao/Principal.h"
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 #include "tao/Timeprobe.h"
 #include "tao/Any.h"
 
