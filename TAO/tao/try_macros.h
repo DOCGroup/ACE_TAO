@@ -81,6 +81,9 @@
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) do { \
   throw EXCEPTION; \
   return RETURN; } while (0)
+#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) do { \
+  throw EXCEPTION; \
+  return; } while (0)
 #define TAO_RETHROW_RETURN(RETURN) throw; \
   return RETURN
 #define TAO_RETHROW_RETURN_VOID throw; \
@@ -90,6 +93,7 @@
 
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) throw EXCEPTION
+#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) throw EXCEPTION
 #define TAO_RETHROW_RETURN(RETURN) throw
 #define TAO_RETHROW_RETURN_VOID throw
 
@@ -236,6 +240,11 @@ do {\
 do {\
  ENV.exception (new EXCEPTION); \
  return RETURN; } while (0)
+
+#define TAO_THROW_ENV_RETURN_VOID(EXCEPTION, ENV) \
+do {\
+ ENV.exception (new EXCEPTION); \
+ return; } while (0)
 
 #define TAO_RETHROW \
 _env.exception (TAO_TRY_ENV.exception ()); \
