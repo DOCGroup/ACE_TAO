@@ -33,7 +33,7 @@ class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
   // = DESCRIPTION
   //     This class provides a very simple-minded shared memory
   //     manager.  For more a powerful memory allocator please see
-  //     <ACE_Malloc>.  
+  //     <ACE_Malloc>.
 public:
   // = Initialization and termination methods.
   ACE_Shared_Memory_MM (void);
@@ -47,7 +47,7 @@ public:
                         off_t pos = 0);
   // Constructor.
 
-  ACE_Shared_Memory_MM (LPTSTR file_name,
+  ACE_Shared_Memory_MM (LPCTSTR file_name,
                         int len = -1,
                         int flags = O_RDWR | O_CREAT,
                         int mode = ACE_DEFAULT_FILE_PERMS,
@@ -64,7 +64,7 @@ public:
             off_t pos = 0);
   // Open method.
 
-  int open (LPTSTR file_name,
+  int open (LPCTSTR file_name,
             int len = -1,
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
