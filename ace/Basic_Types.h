@@ -304,6 +304,10 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   define ACE_UINT64_LITERAL(n) n ## ull
 # endif /* ! ACE_WIN32 */
 
+#if !defined (ACE_UINT64_FORMAT_SPECIFIER)
+# define ACE_UINT64_FORMAT_SPECIFIER "%llu"
+#endif /* ACE_UINT64_FORMAT_SPECIFIER */
+
 // Cast from UINT64 to a double requires an intermediate cast to INT64
 // on some platforms.
 # if defined (ACE_WIN32)
