@@ -219,7 +219,7 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack (void)
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack");
 
   this->delete_all_nodes ();
-  ACE_DES_FREE_TEMPLATE (this->head_, this->allocator_->free,
+  ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
 			 ACE_Node, <T>);
 }
 
@@ -426,7 +426,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
-  ACE_DES_FREE_TEMPLATE (this->head_, this->allocator_->free,
+  ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
 			 ACE_Node, <T>);
   this->head_ = 0;
 }
@@ -729,7 +729,7 @@ template <class T>
 ACE_Double_Linked_List<T>::~ACE_Double_Linked_List (void)
 {
   this->delete_nodes ();
-  ACE_DES_FREE (this->head_, this->allocator_->free,
+  ACE_DES_FREE (head_, this->allocator_->free,
                 T);
   this->head_ = 0;
 }
@@ -1474,7 +1474,7 @@ ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
   this->delete_nodes ();
 
   // Delete the dummy node.
-  ACE_DES_FREE_TEMPLATE (this->head_, this->allocator_->free,
+  ACE_DES_FREE_TEMPLATE (head_, this->allocator_->free,
 			 ACE_Node, <T>);
   this->head_ = 0;
 }
