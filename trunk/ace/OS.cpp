@@ -539,7 +539,7 @@ ACE_TSS_Cleanup::dump (void)
     key_info->dump ();
 }
 
-#endif // WIN32
+#endif /* WIN32 */
 
 class ACE_Thread_Adapter
   // = TITLE
@@ -651,7 +651,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       sparam.sched_priority = priority > PRIORITY_MAX ? PRIORITY_MAX : priority;
 #elif defined(ACE_HAS_IRIX62_THREADS)
       sparam.sched_priority = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
-#elif defined (PTHREAD_MAX_PRIORITY) // For MIT pthreads...
+#elif defined (PTHREAD_MAX_PRIORITY) /* For MIT pthreads... */
       sparam.prio = priority > PTHREAD_MAX_PRIORITY ? PTHREAD_MAX_PRIORITY : priority;
 #endif /* ACE_HAS_DCETHREADS */
 
@@ -800,7 +800,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ACE_HAS_SETKIND_NP */
 		return -1;
 	      }
-#endif	//  ACE_HAS_FSU_PTHREADS
+#endif	/*  ACE_HAS_FSU_PTHREADS */
 	  }
 
 	if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
@@ -879,8 +879,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // This is the Solaris implementation of pthreads, where
       // ACE_thread_t and ACE_hthread_t are the same.
       if (result != -1)
-	{
-	  *thr_handle = *thr_id;
+	*thr_handle = *thr_id;
 #else
       *thr_handle = ACE_OS::NULL_hthread;
 #endif /* ACE_HAS_STHREADS */
@@ -910,13 +909,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	      if (start_suspended == 0)
 		ACE_OS::thr_continue (*thr_handle);
 	    }
-
+	}
       return result;
 #elif defined (ACE_HAS_WTHREADS)
       ACE_UNUSED_ARG (stack);
       ACE_Thread_Adapter *thread_args;
       ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
-
 #if defined (ACE_HAS_MFC)
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
@@ -1072,7 +1070,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 // more than once, so another call to pthread_init will not adversely
 // affect existing threads.
   pthread_init ();
-#endif 	//  ACE_HAS_FSU_PTHREADS
+#endif 	/*  ACE_HAS_FSU_PTHREADS */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data), ace_result_), 
 		     int, -1);
 #elif defined (ACE_HAS_STHREADS)
@@ -1392,7 +1390,7 @@ ACE_OS::socket_fini (void)
 #if defined (VXWORKS)
 int sys_nerr = ERRMAX + 1;
 
-#include /**/ <usrLib.h>   // for ::sp()
+#include /**/ <usrLib.h>   /* for ::sp() */
 
 // This global function can be used from the VxWorks shell to
 // pass arguments to a C main () function.

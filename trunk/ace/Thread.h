@@ -92,6 +92,12 @@ public:
   static int suspend (ACE_hthread_t);
   // Suspend the execution of a particular thread.
 
+  static int getprio (ACE_hthread_t, int *prio);
+  // Get the priority of a particular thread.
+
+  static int setprio (ACE_hthread_t, int prio);
+  // Set the priority of a particular thread.
+
   static int kill (ACE_thread_t, int signum);
   // Send a signal to the thread.
 

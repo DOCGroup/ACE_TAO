@@ -469,7 +469,7 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 //	If called more than once, pthread_init does nothing
 //	and so does no harm.
    pthread_init ();
-#endif	//  ACE_HAS_FSU_PTHREADS
+#endif	/*  ACE_HAS_FSU_PTHREADS */
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
 }
 
@@ -613,7 +613,7 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 //      If called more than once, pthread_init does nothing
 //      and so does no harm.
    pthread_init ();
-#endif  //  ACE_HAS_FSU_PTHREADS
+#endif  /*  ACE_HAS_FSU_PTHREADS */
 
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, USYNC_THREAD, name, arg) != 0)

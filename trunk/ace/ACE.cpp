@@ -564,7 +564,7 @@ ACE::timestamp (char date_and_time[], int date_and_timelen)
 	     (int) local.wMinute,
 	     (int) local.wSecond,
 	     (int) local.wMilliseconds * 1000);
-#else  // UNIX
+#else  /* UNIX */
   char timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
   time_t secs = cur_time.sec ();

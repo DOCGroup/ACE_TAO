@@ -490,7 +490,7 @@ protected:
   ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
 };
 
-#if defined (ACE_HAS_THREADS) // ACE platform supports some form of threading.
+#if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
 
 class ACE_Export ACE_Event
   // = TITLE
