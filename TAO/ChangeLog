@@ -1,3 +1,8 @@
+Mon Oct 21 21:51:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/DLL_ORB/Makefile.Tests_Client_Module: Added TAO_ROOT
+	  definition to fix the compileation problems.
+
 Mon Oct 21 18:17:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* rules.tao.GNU: Used awk for library versioning instead of
