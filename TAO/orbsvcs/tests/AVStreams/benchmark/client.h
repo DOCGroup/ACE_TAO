@@ -1,8 +1,8 @@
 
 // $Id$
 
-#if !defined (TAO_AV_BENCH_H)
-#define TAO_AV_BENCH_H
+#if !defined (TAO_AV_BENCH_CLIENT_H)
+#define TAO_AV_BENCH_CLIENT_H
 
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
@@ -85,4 +85,4 @@ private:
 
 };
 
-#endif /* TAO_AV_BENCH_H */
+#endif /* TAO_AV_BENCH_CLIENT_H */
