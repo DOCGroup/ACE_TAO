@@ -11,7 +11,7 @@
 #include "default_resource.h"
 
 #include "IIOP_Factory.h"
-
+#include "MCAST_Parser.h"
 #include "CORBANAME_Parser.h"
 #include "CORBALOC_Parser.h"
 #include "FILE_Parser.h"
@@ -212,6 +212,8 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
       // add descriptor to list of static objects.
       ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_MCAST_Parser);
+      ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_CORBANAME_Parser);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_CORBALOC_Parser);
@@ -239,7 +241,7 @@ TAO_Internal::open_services_i (int &argc,
       // Handle RTCORBA library special case.  Since RTCORBA needs
       // its init method call to register several hooks, call it here
       // if it hasn't already been called.
-      TAO_Object_Loader *rt_loader = 
+      TAO_Object_Loader *rt_loader =
         ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
       if (rt_loader != 0)
           rt_loader->init (0, 0);
