@@ -1,3 +1,11 @@
+Tue Jan  9 14:31:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/server_shmiop.conf:
+	  Increased the shared memory size to 1MB by adding
+	  -MMAPFileSize 100000 to prevent an out of memory error
+	  when using SHMIOP.  Thanks to Bala for finding and fixing
+	  this.
+
 Tue Jan  9 13:28:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp:
