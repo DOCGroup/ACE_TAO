@@ -1,3 +1,85 @@
+2002-09-26  ossama  <ossama@SNS060100>
+
+	* CosLoadBalancing.idl:
+	ChangeLogTag:Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* CosLoadBalancing.bor, CosLoadBalancing.dsp, CosLoadBalancing_Static.dsp, LoadBalancing/LB_LeastLoaded.cpp, LoadBalancing/LB_LoadManager.cpp:
+	ChangeLogTag:Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* LoadBalancing/LB_Location_Index_Map.cpp, LoadBalancing/LB_Location_Index_Map.h, LoadBalancing/LB_RoundRobin.cpp, LoadBalancing/LB_RoundRobin.h, Makefile.CosLoadBalancing:
+	ChangeLogTag:Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	  The following files added/amended for the new Logging Service.
+	* /orbsvcs/orbsvcs/Makefile
+
+	  Added Makefile.DsLogAdmin, Makefile.DsEventLogAdmin, Makefile.DsNotifyLogAdmin, Makefile.RTEventLogAdmin
+	
+	* /orbsvcs/orbsvcs/Makefile.DsLogAdmin
+
+	* /orbsvcs/orbsvcs/RTEventLogAdmin.idl
+	* /orbsvcs/orbsvcs/DsEventLogAdmin.idl
+	* /orbsvcs/orbsvcs/DsLogAdmin.idl
+	* /orbsvcs/orbsvcs/DsLogNotification.idl
+	* /orbsvcs/orbsvcs/DsNotifyLogAdmin.idl
+
+
+	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp
+	* /orbsvcs/orbsvcs/Log/BasicLogFactory_i.h
+	* /orbsvcs/orbsvcs/Log/BasicLog_i.cpp
+	* /orbsvcs/orbsvcs/Log/BasicLog_i.h
+	* /orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp
+	* /orbsvcs/orbsvcs/Log/EventLogFactory_i.h
+	* /orbsvcs/orbsvcs/Log/EventLogNotification.cpp
+	* /orbsvcs/orbsvcs/Log/EventLogNotification.h
+	* /orbsvcs/orbsvcs/Log/EventLog_i.cpp
+	* /orbsvcs/orbsvcs/Log/EventLog_i.h
+	* /orbsvcs/orbsvcs/Log/Iterator_i.cpp
+	* /orbsvcs/orbsvcs/Log/Iterator_i.h
+	* /orbsvcs/orbsvcs/Log/LogMgr_i.cpp
+	* /orbsvcs/orbsvcs/Log/LogMgr_i.h
+	* /orbsvcs/orbsvcs/Log/LogNotification.cpp
+	* /orbsvcs/orbsvcs/Log/LogNotification.h
+	* /orbsvcs/orbsvcs/Log/LogRecordStore.cpp
+	* /orbsvcs/orbsvcs/Log/LogRecordStore.h
+	* /orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp
+	* /orbsvcs/orbsvcs/Log/LogRecordStore_persist.h
+	* /orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.cpp
+	* /orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h
+	* /orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+	* /orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
+	* /orbsvcs/orbsvcs/Log/Log_i.cpp
+	* /orbsvcs/orbsvcs/Log/Log_i.h
+	* /orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp
+	* /orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h
+	* /orbsvcs/orbsvcs/Log/NotifyLogNotification.cpp
+	* /orbsvcs/orbsvcs/Log/NotifyLogNotification.h
+	* /orbsvcs/orbsvcs/Log/NotifyLog_i.cpp
+	* /orbsvcs/orbsvcs/Log/NotifyLog_i.h
+	* /orbsvcs/orbsvcs/Log/PersistStore.cpp
+	* /orbsvcs/orbsvcs/Log/PersistStore.h
+	* /orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp
+	* /orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h
+	* /orbsvcs/orbsvcs/Log/RTEventLogNotification.cpp
+	* /orbsvcs/orbsvcs/Log/RTEventLogNotification.h
+	* /orbsvcs/orbsvcs/Log/RTEventLog_i.cpp
+	* /orbsvcs/orbsvcs/Log/RTEventLog_i.h
+	* /orbsvcs/orbsvcs/Log/eventlog_export.h
+	* /orbsvcs/orbsvcs/Log/log_export.h
+	* /orbsvcs/orbsvcs/Log/notifylog_export.h
+	* /orbsvcs/orbsvcs/Log/rteventlog_export.h:
+
+2002-09-26  jwillemsen  <jwillemsen@SNS060100>
+
+	* ESF/ESF_Busy_Lock.h:
+	ChangeLogTag: Thu Sep 26 05:32:45 UTC 2002 Johnny Willemsen <jwillemsen@remedy.nl>
+
+2002-09-25  coryan  <coryan@SNS060100>
+
+	* PortableGroup/UIPMC_Connector.cpp:
+	Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
 2002-09-26  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* /orbsvcs/tests/Log
