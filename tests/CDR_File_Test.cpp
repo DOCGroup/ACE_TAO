@@ -124,7 +124,7 @@ CDR_Test::operator == (const CDR_Test &rhs)
 static int
 run_test (int write_file,
           ACE_FILE_IO &file,
-          const char *filename,
+          LPCTSTR filename,
           CDR_Test &cdr_test)
 {
   if (write_file)
