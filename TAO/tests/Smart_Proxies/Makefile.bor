@@ -4,6 +4,7 @@
 #
 
 DIRS = \
+	Collocation \
         Benchmark \
         On_Demand \
         Policy
