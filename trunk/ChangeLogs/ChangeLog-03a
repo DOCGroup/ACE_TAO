@@ -1,3 +1,23 @@
+Mon May 22 15:26:42 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Synch.(cpp h i): ACE_Process_Mutex, ACE_Process_Semaphore -
+          changed to using ACE_Mutex and ACE_Semaphore for the underlying
+          synch. mechanism (same as Win32 and POSIX semaphores). Process
+          and thread are the same thing (synch-wise) on pSOS, and the
+          underlying mechanisms Do The Right Thing.
+
+Wed May 10 16:47:31 2000  Steve Huston  <shuston@riverace.com>
+        (actually committed on Tue May 23)
+        * ace/OS.(h i): pSOS changes:
+            - Use ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL ()) rather than using
+              return func() == 0 ? 0 : -1 to avoid losing errno values.
+            - ACE_OS::thr_getspecific, copy existing code from the TSS-emulated
+              section to the native TSD-using section.
+            - Use u_long as ACE_condattr_t and set its flags in
+              ACE_OS::condattr_init rather than in ACE_OS::cond_init to
+              avoid strange return errors in other parts of ACE that use
+              ACE_OS::condattr_init and expect it to work.
+
 Mon May 22 15:25:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.{h,cpp} (ACE_Thread_Exit):
