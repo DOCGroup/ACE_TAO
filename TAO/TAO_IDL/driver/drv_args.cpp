@@ -1127,7 +1127,7 @@ DRV_parse_args (long ac, char **av)
   // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
   // us go for DYNAMIC_HASH.
   if ((be_global->lookup_strategy () == BE_GlobalData::TAO_PERFECT_HASH) ||
-      (idl_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
       (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
     {
       be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
