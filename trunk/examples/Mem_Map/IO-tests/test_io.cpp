@@ -3,6 +3,7 @@
 // Test program for different methods of copying files.
 
 #include "ace/OS.h"
+#include "ace/ACE.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Signal.h"
