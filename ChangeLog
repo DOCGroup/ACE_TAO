@@ -10,26 +10,26 @@ Sat Oct 11 21:51:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* Kokyu/Kokyu_defs.{h,i,cpp}:
 	* Kokyu/Default_Dispatcher_Impl.cpp: Fixed some minor bugs related
 	  to setting the dispatcher with the correct sched policy.
-	
+
 	* Kokyu/tests/FIFO/test.cpp: Added some output print statements to
-	  print error messages on dispatcher failure.	
+	  print error messages on dispatcher failure.
 
 Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.i: 
-	* Kokyu/Dispatcher_Task.h: 
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: 
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp: 
+	* Kokyu/Dispatcher_Task.i:
+	* Kokyu/Dispatcher_Task.h:
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
 
 	  Add this-> qualification when referencing instance variables in
 	  base class to get rid of compiler warnings in HPUX build.
-	
+
 	* ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
 	  Botcharnikov <dimab@garant.ru> and Stephan Bettermann
 	  <sbetterm@erggroup.com> for reporting the problem and suggesting
-	  a solution.  Please see 
+	  a solution.  Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605 
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
 
 	  for a description of the problem.
 
@@ -41,20 +41,20 @@ Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{h,i,cpp}: 
-	* Kokyu/Dispatcher_Task.{i,h,cpp}: 
-	* Kokyu/Dispatcher_Impl.h: 
-	* Kokyu/Default_Dispatcher_Impl.cpp: 
-	
+	* Kokyu/Kokyu_defs.{h,i,cpp}:
+	* Kokyu/Dispatcher_Task.{i,h,cpp}:
+	* Kokyu/Dispatcher_Impl.h:
+	* Kokyu/Default_Dispatcher_Impl.cpp:
+
 	  Added allocator, sched scope, sched policy, reordering queue
 	  attributes to the Dispatcher_Attributes class. This will make
 	  the dispatcher more configurable.
-	
-	* Kokyu/tests/FIFO/test.cpp: 
-	* Kokyu/tests/EDF/test.cpp: 
-	 
+
+	* Kokyu/tests/FIFO/test.cpp:
+	* Kokyu/tests/EDF/test.cpp:
+
 	  Added command line options to specify the sched policy.
-	
+
 Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.{h,i}:
