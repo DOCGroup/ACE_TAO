@@ -1,5 +1,14 @@
 Wed Oct 22 21:22:35 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Object_Manager.{h,cpp}: Added support for ACE_RW_Thread_Mutex
+	  ACE_Singleton lock type.  Thanks to Nanbor for suggesting this,
+	  because TAO needs it.
+
+	  Also, removed at_exit registration of dynamically allocated
+	  ACE_Static_Object_Lock because Object_Manager instance isn't
+	  available for registration when it's created.  Instead, handle
+	  this lock as a special case in the Object_Manager destructor.
+
 	* ace/Singleton.cpp,Object_Manager.cpp: check for shutting_down ()
 	  as well as starting_up () when deciding whether to use a
 	  preallocated lock.  Preallocated locks are not available at those
