@@ -24,6 +24,11 @@ SUBDIRS = \
   apps \
   netsvcs \
   tests
+
+if BUILD_TAO
+SUBDIRS += TAO
+endif
+
 ##  man
 
 ##SUBDIRS = \
