@@ -12,6 +12,7 @@ CosEvent_Service::CosEvent_Service (void)
   : service_name ("CosEventService"),
     rt_service_name ("EventService"),
     schedule_name_ ("ScheduleService"),
+    factory_ (0),
     scheduler_ (RtecScheduler::Scheduler::_nil ()),
     rtec_ (RtecEventChannelAdmin::EventChannel::_nil ()),
     cos_ec_ (CosEventChannelAdmin::EventChannel::_nil ()),
@@ -51,13 +52,13 @@ CosEvent_Service::init_ORB  (int argc, char *argv [])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           -1);
 
-      PortableServer::POA_var root_poa =
+      this->root_poa_ =
         PortableServer::POA::_narrow (poa_object.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        this->root_poa_->the_POAManager (ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
 
@@ -263,6 +264,8 @@ CosEvent_Service::start_Scheduler (void)
 
   ACE_NOTREACHED (return 0;)
 }
+
+#if 0
 int
 CosEvent_Service::create_local_RtecService (void)
 {
@@ -286,6 +289,47 @@ CosEvent_Service::create_local_RtecService (void)
                   str.in ()));
 
       this->ec_impl_->activate ();
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception in CosEvent_Service::create_local_RtecService\n");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  ACE_NOTREACHED (return 0;)
+}
+
+#endif
+
+int
+CosEvent_Service::create_local_RtecService (void)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      ACE_NEW_RETURN (this->ec_impl_,
+                      TAO_EC_Event_Channel (this->root_poa_.in (),
+                                            this->root_poa_.in ()),
+                      1);
+
+      ec_impl_->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      this->rtec_ = this->ec_impl_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::String_var str = this->orb_->object_to_string (this->rtec_.in (),
+                                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "CosEvent_Service: The RTEC IOR is <%s>\n",
+                  str.in ()));
 
       return 0;
     }
@@ -550,11 +594,12 @@ CosEvent_Service::startup (int argc, char *argv[])
     }
 
   // see if the user wants a local Rtec..
-  if (this->remote_Rtec_ == 0 && this->create_local_RtecService () == -1)
+  if (this->remote_Rtec_ == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Failed to create a local RtEC.\n"),
-                        -1);
+      if (this->create_local_RtecService () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Failed to create a local RtEC.\n"),
+                          -1);
     }
   else
     // get hold of the Rtec Service via the Naming Service.
@@ -624,8 +669,14 @@ CosEvent_Service::shutdown (void)
           ACE_TRY_CHECK;
         }
 
-      this->ec_impl_->shutdown ();
-      delete ec_impl_;
+      if (this->ec_impl_ != 0)
+        {
+          this->ec_impl_->destroy (ACE_TRY_ENV);
+          this->ec_impl_ = 0;
+        }
+
+      delete this->factory_;
+      this->factory_ = 0;
 
       // shutdown the ORB.
       if (!this->orb_->_nil ())

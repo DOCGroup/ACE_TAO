@@ -28,6 +28,10 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/CosEvent/EventChannel_i.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+
+class TAO_EC_Factory;
 
 class CosEvent_Service
 {
@@ -103,6 +107,9 @@ class CosEvent_Service
   const char* schedule_name_;
   // The name of the scheduler service.
 
+  PortableServer::POA_var root_poa_;
+  // Reference to the root poa.
+
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
@@ -110,8 +117,8 @@ class CosEvent_Service
   // An instance of the name client used for resolving the factory
   // objects.
 
- TAO_Reactive_Module_Factory module_factory_;
-  // The Module_Factory required by the Rtec.
+  TAO_EC_Factory *factory_;
+  // The factory for the new EC.
 
   ACE_Config_Scheduler scheduler_impl_;
   // Scheduler used by the Rtec.
@@ -119,7 +126,7 @@ class CosEvent_Service
   RtecScheduler::Scheduler_var scheduler_;
   // Reference to the Scheduler after activating it in the ORB.
 
-  ACE_EventChannel *ec_impl_;
+  TAO_EC_Event_Channel* ec_impl_;
   // The servant object of the Rtec.
 
   RtecEventChannelAdmin::EventChannel_var rtec_;
