@@ -87,6 +87,8 @@ Event_Handler::~Event_Handler (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::~Event_Handler for %@\n"),
               this));
+
+  this->pipe_.close ();
 }
 
 int

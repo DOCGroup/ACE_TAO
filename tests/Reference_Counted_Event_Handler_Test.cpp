@@ -95,6 +95,8 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
               this->reference_count_.value ()));
+
+  this->pipe_.close ();
 }
 
 int
@@ -467,6 +469,8 @@ Simple_Event_Handler::~Simple_Event_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "~Simple_Event_Handler()\n"));
+
+  this->pipe_.close ();
 }
 
 int
@@ -731,6 +735,8 @@ Closed_In_Upcall_Event_Handler::~Closed_In_Upcall_Event_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "~Closed_In_Upcall_Event_Handler()\n"));
+
+  this->pipe_.close ();
 }
 
 int
