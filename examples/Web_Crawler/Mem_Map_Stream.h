@@ -16,12 +16,15 @@
 
 #ifndef _MEM_MAP_STREAM_H
 #define _MEM_MAP_STREAM_H
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include /**/ "ace/pre.h"
 
 #include "ace/SOCK_Stream.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#define once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
@@ -33,7 +36,7 @@ class Mem_Map_Stream
 {
   // = TITLE
   //   Provides a memory-mapped stream abstraction to simplify parsing
-  //   of tokens.  
+  //   of tokens.
   //
   // = DESCRIPTION
   //   This class makes it possible to treat an connection as a stream
@@ -41,13 +44,13 @@ class Mem_Map_Stream
   //   of the connection are buffered incrementally in a memory-mapped
   //   file.  This class maintains pointers to two positions in the
   //   stream:
-  //   
+  //
   //   1. The <recv> position, which keeps track of the beginning of a
   //      token that is in the stream.
-  //  
+  //
   //   2. The <get> position, which moves along character-by-character
   //      until the end of the token is reached.
-  // 
+  //
   //   Once a token has been located, it can be extracted from the
   //   stream by calling the <recv>.  The length of the token, i.e.,
   //   the <recv_len>, is the length in bytes between the <get>
@@ -57,14 +60,14 @@ class Mem_Map_Stream
 
 public:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
-  
+
   typedef ACE_Strategy_Connector<Svc_Handler,
                                ACE_SOCK_CONNECTOR>
         STRAT_CONNECTOR;
 
   // Mem_Map_Stream (void);
   // constructor added:KIRTHIKA
-  virtual int open (STRAT_CONNECTOR *connector, 
+  virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
   // Initialize this object.
 
@@ -87,7 +90,7 @@ public:
   // Return the next character in the stream and advance the <get>
   // position.  Returns EOF when the <get> position reaches the end of
   // the HTTP stream.
-  
+
   virtual const char *recv (size_t &len);
   // Returns a pointer to array of at most <len> characters starting
   // at the <recv> position.  If the <recv> position + <len> extends
@@ -126,7 +129,7 @@ public:
   // Sets the <get> and <recv> positions as follows:
   //    o If <whence> is <SEEK_SET>, the positions are set to <offset>
   //      bytes from the start of the stream.
-  // 
+  //
   //    o  If <whence> is <SEEK_CUR>, the positions are set to the
   //       current <get> position plus <offset>.
   //
@@ -136,7 +139,7 @@ public:
   virtual int eof (void) const;
   // Returns 1 if we're at the end of the HTTP stream, else 0.
 
-  
+
   /*
   typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
   NULL_CREATION_STRATEGY;
@@ -146,7 +149,7 @@ public:
                                     ACE_SOCK_CONNECTOR,
                                     ACE_SYNCH_NULL_MUTEX>
                                     CACHED_CONNECT_STRATEGY;*/
-  
+
   Svc_Handler *svc_handler (void);
 
 private:
@@ -156,7 +159,7 @@ private:
   // EOF, else 0.
 
   //ACE_SOCK_Stream stream_;
-  
+
   Svc_Handler *svc_handler_;
   // Connection to peer. The granularity is at the Svc_Handler level.
   // The Svc_Handler has an SOCK_Stream.
@@ -168,7 +171,7 @@ private:
   CACHED_CONNECT_STRATEGY caching_connect_strategy_;
 
   STRAT_CONNECTOR *strat_connector_;  */
- 
+
   ACE_Mem_Map mem_map_;
   // Memory-mapped file that we're iterating over.
 
@@ -184,5 +187,5 @@ private:
 
 };
 
+#include /**/ "ace/post.h"
 #endif /* _MEM_MAP_STREAM_H */
- 

@@ -1,3 +1,10 @@
+Wed Sep  3 17:01:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/UUID.cpp (ACE_Utils): 
+	* examples/Web_Crawler/Mem_Map_Stream.h: 
+	* examples/Web_Crawler/URL_Visitor.h : Fixed warnings in g++
+	  builds.  
+
 Wed Sep  3 11:53:53 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
