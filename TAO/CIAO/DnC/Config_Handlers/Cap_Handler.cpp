@@ -15,11 +15,13 @@
 #include <iostream>
 #include "string.h"
 
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+
 BEGIN_DEPLOYMENT_NAMESPACE
 
 void
-CAP_Handler::process_Capability (DOMNodeIterator * iter,
-                                 Deployment::Capability &cap)
+CAP_Handler::process_Capability (Deployment::Capability &cap)
 {
   //Check if the Schema IDs for both the elements match
   for (DOMNode* node = this->iter_->nextNode();
@@ -41,7 +43,7 @@ CAP_Handler::process_Capability (DOMNodeIterator * iter,
           this->id_map_));
       else
         {
-          iter->previousNode ();
+          this->iter_->previousNode ();
           break;
         }
     }

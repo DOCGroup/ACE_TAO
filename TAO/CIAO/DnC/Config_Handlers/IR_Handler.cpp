@@ -5,7 +5,11 @@
 
 #include "IAD_Handler.h"
 #include "IR_Handler.h"
+#include "RUK_Handler.h"
 #include "Utils.h"
+#include "Process_Basic_Type.h"
+#include "Process_Element.h"
+#include "Property_Handler.h"
 
 #include <iostream>
 
@@ -25,8 +29,9 @@ void IR_Handler::process_ImplementationRequirement
       XStr node_name (node->getNodeName());
 
       if (false);
-      else if (node_name == XStr (ACE_TEXT ("resourceUsage")))
-        RUK_Handler::process_ResourceUsageKind (this->iter_, ir.resourceUsage);
+      // TODO:
+      //      else if (node_name == XStr (ACE_TEXT ("resourceUsage")))
+      //        RUK_Handler::process_ResourceUsageKind (this->iter_, ir.resourceUsage);
       else if
         (process_string (this->iter_, node_name, "resourcePort", ir.resourcePort));
       else if
@@ -37,7 +42,7 @@ void IR_Handler::process_ImplementationRequirement
         (process_string (this->iter_, node_name, "name", ir.name));
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
-                                                       node_name, "Property", ir.Property,
+                                                       node_name, "Property", ir.property,
                                                        &Property_Handler::process_Property,
                                                        this->id_map_));
     }

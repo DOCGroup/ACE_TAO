@@ -13,7 +13,7 @@
 
 #include <xercesc/dom/DOM.hpp>
 #include "XercesString.h"
-#include "../DeploymentC.h"
+#include "DeploymentC.h"
 
 using xercesc::DOMNodeIterator;
 using Config_Handler::XStr;

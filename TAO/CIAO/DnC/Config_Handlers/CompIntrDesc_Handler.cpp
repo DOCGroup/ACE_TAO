@@ -8,9 +8,11 @@
 #include "ace/Log_Msg.h"
 
 #include "Process_Basic_Type.h"
+#include "Process_Element.h"
 #include "Property_Handler.h"
 #include "CompIntrDesc_Handler.h"
 #include "DT_Handler.h"
+#include "CPK_Handler.h"
 #include <iostream>
 
 using std::cerr;
@@ -42,7 +44,7 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
                                                        node_name, "configProperty", ccd.configProperty,
-                                                       &PropertyP_Handler::process_Property,
+                                                       &Property_Handler::process_Property,
                                                        this->id_map_));
       else if
         (process_sequence_local<Deployment::ComponentPortDescription>
@@ -57,7 +59,7 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
       else if
         (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
                                                        node_name, "infoProperty", ccd.infoProperty,
-                                                       &PropertyP_Handler::process_Property,
+                                                       &Property_Handler::process_Property,
                                                        this->id_map_));
       else
         {
@@ -70,7 +72,7 @@ void CompIntrDesc_Handler::process_ComponentInterfaceDescription
 
 /// process component property element
 void CompIntrDesc_Handler::process_comp_property (DOMNodeIterator* iter,
-                                         Deployment::ComponentPropertyDescription& property)
+                                                  Deployment::ComponentPropertyDescription& property)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
