@@ -1,3 +1,9 @@
+Mon Apr 28 14:12:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): Hopefully resolved tension
+ 	  btw. priority determination algorithms for IRIX, LinuxThreads, and
+ 	  DEC UNIX 4.0.  Thanks to Thilo for information that lead to this.
+
 Mon Apr 28 11:17:26 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Conn_Test.cpp,Message_{Block,Queue}_Test.cpp,
