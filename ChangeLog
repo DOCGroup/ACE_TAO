@@ -1,3 +1,9 @@
+Fri Jan  7 21:04:44 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+
+          Added the required path settings for SSL.
+
 Fri Jan  7 18:23:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Corrected the check for ACE_HAS_CONFLICTING_XTI_MACROS.
