@@ -1,3 +1,11 @@
+Tue Jul  7 19:25:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* Dii_Cubit_Test.cpp: New file that implements a
+	  "one-button" DII Cubit test.
+	* Makefile: Added a build for dii_cubit_test.exe.
+	* DII_Cubit_Test.dsp: New project in the workspace.
+	* DII_Cubit.dsw: Updated workspace (new project).
+
 Tue Jul  7 08:21:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * TAO_IDL/Makefile:
