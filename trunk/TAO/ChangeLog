@@ -1,3 +1,17 @@
+Tue Dec  3 18:16:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/LF_Connect_Strategy.h:
+	* tao/LF_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h
+	* tao/Reactive_Connect_Strategy.cpp: Implemented the
+	  post_failed_connect () method  to shutdown the connection
+	  handler properly for cases that are not taken care by the asynch 
+	  connect process in ACE_Svc_Handler. This fixes a memory leak
+	  reported by Duane Binder of Veritas. Thanks a lot to Duane
+	  reporting the problem and teaching me how to reproduce this on
+	  solaris. I couldnt reproduce this on Win32 and Linux since the
+	  the TCP stack behaved a bit differently on those platforms. 
+
 Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	Fix for BUG 1382. Please see 
@@ -5,7 +19,8 @@ Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1382
 
 	for details. The problem is basically that we didnt know when and
-        how to do reference counting. The following fix addresses that.
+        how to do reference counting. The following fix addresses
+        that.
 
 	* tao/Transport.h:
 	* tao/Transport.inl (TAO_Transport_Refcount_Guard): A new helper
@@ -23,7 +38,6 @@ Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  the right place to do refcounting. Manipulating refcounts here
 	  is too late between which world of bad things could strike.
 	
-
 Mon Dec  2 18:42:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClient.cpp:
