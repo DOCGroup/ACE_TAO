@@ -17,7 +17,7 @@ Simple_Server_i::test_method (CORBA::Long x,
                               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Structure *tmp;
+  Structure *tmp = 0;
   ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
   the_out_structure = tmp;
 
