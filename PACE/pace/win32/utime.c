@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/utime.c
+ *    pace/win32/utime.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/utime.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/utime.inl"
+# include "pace/win32/utime.inl"
 #endif /* ! PACE_HAS_INLINE */

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/semaphore.inl
+ *    pace/win32/semaphore.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/stat.inl
+ *    pace/win32/stat.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/time.h
+ *    pace/win32/time.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -250,7 +250,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/time.inl"
+# include "pace/win32/time.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_TIME_H */

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/string.c
+ *    pace/win32/string.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/string.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/posix/string.inl"
+# include "pace/win32/string.inl"
 #endif /* ! PACE_HAS_INLINE */

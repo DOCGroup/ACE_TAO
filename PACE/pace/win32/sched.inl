@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/sched.inl
+ *    pace/win32/sched.inl
  *
  * = AUTHOR
  *    Luther Baker

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/utime.h
+ *    pace/win32/utime.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -41,7 +41,7 @@ typedef struct utimbuf pace_utimbuf;
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/utime.inl"
+# include "pace/win32/utime.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_UTIME_H */

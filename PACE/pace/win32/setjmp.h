@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/setjmp.h
+ *    pace/win32/setjmp.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -58,7 +58,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/setjmp.inl"
+# include "pace/win32/setjmp.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_SETJMP_H */

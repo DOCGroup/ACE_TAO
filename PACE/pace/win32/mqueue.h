@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/mqueue.h
+ *    pace/win32/mqueue.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -110,7 +110,7 @@ typedef struct mq_attr pace_mq_attr;
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/posix/mqueue.inl"
+# include "pace/win32/mqueue.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_MQUEUE_H */

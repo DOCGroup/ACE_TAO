@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/posix/utime.inl
+ *    pace/win32/utime.inl
  *
  * = AUTHOR
  *    Luther Baker
