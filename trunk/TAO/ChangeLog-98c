@@ -3,6 +3,12 @@ Fri Mar 20 09:26:28 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/POA/Generic_Servant/MyFooServant.h: added
           #include "generic_servant_export.h".
 
+        * tao/corbacom.{h,cpp},tao/encode.cpp,tao/poa.cpp,
+          TAO_IDL/ast/ast_generator.cpp,TAO_IDL/be/be_generator.cpp:
+          changed CORBA::WChar from platform-dependent type to ACE_UINT16.
+          This may require casts in application code, if they use
+          a native wchar_t, from wchar_t to CORBA::WChar.
+
 Fri Mar 20 02:47:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_server.cpp
