@@ -150,15 +150,15 @@ module PortableInterceptor
       // of the operation.
       //
       // @@ This operation will map to either
-      // <receive_request_service_contexts> or <receive_request> of
+      // &lt;receive_request_service_contexts&gt; or &lt;receive_request&gt; of
       // the standard APIs.  If you are not sure, use
-      // <receive_request>.
+      // &lt;receive_request&gt;.
       //
       // void receive_request_service_contexts (in ServerRequestInfo ri) raises (ForwardRequest);
       // void receive_request (in ServerRequestInfo ri) raises (ForwardRequest);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ServerRequestInfo> interface.
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
 
       void postinvoke (in unsigned long request_id,
                        in boolean response_expected,
@@ -173,15 +173,15 @@ module PortableInterceptor
       // In the future, NVList will contain all out, inout arguments
       // and the return value of the operation.
       //
-      // @@ This operation will map to <send_reply>.
-      // It is not clear whether oneway call will invoke <send_other>
+      // @@ This operation will map to &lt;send_reply&gt;.
+      // It is not clear whether oneway call will invoke &lt;send_other&gt;
       // operation or not.
       //
       // void send_reply (in ServerRequestInfo ri);
       // void send_other (in ServerRequestInfo ri) raises (ForwardRequest);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ServerRequestInfo> interface.
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
 
       void exception_occurred (in unsigned long request_id,
                                in boolean response_expected,
@@ -190,12 +190,12 @@ module PortableInterceptor
                                inout Cookies ck);
       // Exception interception point.
       //
-      // @@ This method will map to <send_exception> method.
+      // @@ This method will map to &lt;send_exception&gt; method.
       //
       // void send_exception (in ServerRequestInfo ri) raises (ForwardRequest);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ServerRequestInfo> interface.
+      // &lt;PortableInterceptor::ServerRequestInfo&gt; interface.
     };
 
   interface ClientRequestInterceptor : Interceptor
@@ -217,13 +217,13 @@ module PortableInterceptor
       // In the future, NVList will contain all in and inout arguments
       // of the operation.
       //
-      // @@ This operation will map to <send_request> of the standard
+      // @@ This operation will map to &lt;send_request&gt; of the standard
       // APIs.
       //
       // void send_request (in ClientRequestInfo) raises (ForwardRequest);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ClientRequestInfo> interface.
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
 
       void postinvoke (in unsigned long request_id,
                        in boolean response_expected,
@@ -238,15 +238,15 @@ module PortableInterceptor
       // In the future, NVList will contain all out, inout arguments
       // and the return value of the operation.
       //
-      // @@ This operation will map to either <receive_reply> or
-      // <receive_other> in the standard APIs depending on whether the
+      // @@ This operation will map to either &lt;receive_reply&gt; or
+      // &lt;receive_other&gt; in the standard APIs depending on whether the
       // operation is oneway or not.
       //
       // void receive_reply (in ClientRequestInfo ri);
       // void receive_other (in ClientRequestInfo ri);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ClientRequestInfo> interface.
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
 
       void exception_occurred (in unsigned long request_id,
                                in boolean response_expected,
@@ -255,12 +255,12 @@ module PortableInterceptor
                                inout Cookies ck);
       // Exception occurred.
       //
-      // @@ This method will map to <receive_exception> method as:
+      // @@ This method will map to &lt;receive_exception&gt; method as:
       //
       //    void receive_exception (in ClientRequestInfo ri) raises (ForwardRequest);
       //
       // @@ Note that all arguments will be accessed thru
-      // <PortableInterceptor::ClientRequestInfo> interface.
+      // &lt;PortableInterceptor::ClientRequestInfo&gt; interface.
     };
 };
 

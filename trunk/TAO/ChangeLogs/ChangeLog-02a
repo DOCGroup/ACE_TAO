@@ -1,3 +1,8 @@
+Tue Mar 07 15:42:41 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/interceptors.html: Fixed some html tag problems.  Thanks to
+	   Chanaka Liyanaarachchi <chanaka@ociweb.com> for reporting this.
+
 Tue Mar 07 10:30:06 2000  bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.15 released.
