@@ -213,7 +213,6 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
                       ACE_reinterpret_cast (u_char *,
                                             buf),
                       msg_len);
-      cout << "We are here " << "jj" <<endl;
     }
   return this->message_handler_.is_message_ready ();
 }
