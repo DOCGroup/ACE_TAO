@@ -159,6 +159,11 @@ Identifier::compare (Identifier *o)
       return I_FALSE;
     }
 
+  if ((this->escaped_ ^ o->escaped_) == 1)
+    {
+      return I_FALSE;
+    }
+
   return (ACE_OS::strcmp (this->pv_string, o->get_string ()) == 0);
 }
 
