@@ -1,3 +1,10 @@
+Wed Mar  7 19:36:45 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple/Makefile: 
+	* orbsvcs/tests/AVStreams/Makefile: 
+
+	  Added the Makefiles to compile the Simple test.
+
 Wed Mar 07 19:19:18 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/PortableServer:
