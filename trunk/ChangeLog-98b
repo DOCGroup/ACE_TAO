@@ -1,3 +1,13 @@
+Mon Jun 01 09:54:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Timeprobe_Test.cpp: removed trailing ; from template
+          instantation pragmas.
+
+        * tests/Conn_Test.cpp,MM_Shared_Memory_Test.cpp,
+          Priority_Reactor_Test.cpp,SOCK_Test.cpp: replaced
+          !defined (ACE_WIN32) && !defined (VXWORKS) with
+          !defined (ACE_LACKS_FORK).
+
 Sun May 31 23:05:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html,include/makeinclude/wrapper_macros.GNU:
@@ -6,9 +16,6 @@ Sun May 31 23:05:10 1998  David L. Levine  <levine@cs.wustl.edu>
           instantiation when building their libraries, because it's
           easiest to avoid link collisions that way.  And it already
           works.
-
-        * tests/Timeprobe_Test.cpp: removed trailing ; from template
-          instantation pragmas.
 
 Sun May 31 18:31:24 1998  James C Hu  <jxh@cs.wustl.edu>
 
