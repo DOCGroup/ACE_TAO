@@ -305,14 +305,13 @@ ace_get_module (ACE_Static_Node *str_rec,
   const ACE_Service_Type *sv = svc_type->record ();
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
-  const char *module_type_name = svc_type->name ();
-  const ASYS_TCHAR *wname = ASYS_WIDE_STRING (module_type_name);
+  ASYS_TCHAR *module_type_name = ACE_const_cast (ASYS_TCHAR *, svc_type->name ());
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  wname,
+                  ASYS_WIDE_STRING (module_type_name),
                   ASYS_WIDE_STRING (str_rec->name ())));
       ace_yyerrno++;
     }
@@ -321,13 +320,13 @@ ace_get_module (ACE_Static_Node *str_rec,
   // Module_Type object from the svc.conf file.
   ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
 
-  if (ACE_OS::strcmp (mp->name (), wname) != 0)
+  if (ACE_OS::strcmp (mp->name (), ASYS_WIDE_STRING (module_type_name)) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  wname,
+                  ASYS_WIDE_STRING (module_type_name),
                   mp->name ()));
-      mp->name (wname);
+      mp->name (ASYS_WIDE_STRING (module_type_name));
     }
 
   return mt;

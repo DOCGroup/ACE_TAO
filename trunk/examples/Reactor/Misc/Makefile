@@ -16,6 +16,7 @@ BIN    	= pingpong \
 	  test_signals_1 \
 	  test_signals_2 \
 	  test_time_value \
+	  test_early_timeouts \
 	  test_timer_queue
 
 LSRC   	= $(addsuffix .cpp,$(BIN))
