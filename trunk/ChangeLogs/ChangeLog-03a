@@ -1,3 +1,12 @@
+Thu Oct 10 13:56:35 2002  Ossama Othman  <ossama@uci.edu>
+
+	* bin/make_release (check_workspace):
+
+	  Ignore platform_macros.GNU and config.h files.  They are
+	  needed when cutting the beta/release.  This isn't a problem
+	  since the ACE/TAO kits are created from a "cvs export"ed
+	  workspace that doesn't include those files.
+
 Thu Oct 10 15:11:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/make_release: A pattern matching issue. The cvs server now
