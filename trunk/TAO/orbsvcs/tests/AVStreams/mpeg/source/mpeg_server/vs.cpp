@@ -48,6 +48,7 @@
 #include "mpeg_shared/com.h"   
 #include "mpeg_shared/sendpt.h"
 #include "server_proto.h"
+#include "Globals.h"
 
 ACE_RCSID(mpeg_server, vs, "$Id$")
 
@@ -650,46 +651,6 @@ static void WriteInfoToFile(void)
   VIDEO_SINGLETON::instance ()->videoFile[fnlen] = 0;
   return;
 }
-
-/*
-#define nextByte  {fileptr ++; \
-		   if (fread(&nb, 1, 1, fp) == 0) \
-		   { \
-		    ACE_OS::perror ("VS Crossed EOF or error while scanning"); \
-		     return 1; \
-		   } }
-
-*/
-
-#define nextByte  {int val; fileptr ++; \
-		   if ((val = getc(VIDEO_SINGLETON::instance ()->fp)) == EOF) \
-		   {\
-		    ACE_OS::perror ("Crossed EOF or error while scanning"); \
-		     return 1; \
-		   } nb = val;}
-
-#define computePicSize \
-	if (inpic) \
-	{ \
-	  if (pictype == 'I') \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxI = max(VIDEO_SINGLETON::instance ()->maxI, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minI = min(VIDEO_SINGLETON::instance ()->minI, (int)(fileptr - picptr - 4)); \
-	  } \
-	  else if (pictype == 'P') \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxP = max(VIDEO_SINGLETON::instance ()->maxP, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minP = min(VIDEO_SINGLETON::instance ()->minP, (int)(fileptr - picptr - 4)); \
-	  } \
-	  else \
-	  { \
-	    VIDEO_SINGLETON::instance ()->maxB = max(VIDEO_SINGLETON::instance ()->maxB, (int)(fileptr - picptr - 4)); \
-	    VIDEO_SINGLETON::instance ()->minB = min(VIDEO_SINGLETON::instance ()->minB, (int)(fileptr - picptr - 4)); \
-	  } \
-	  VIDEO_SINGLETON::instance ()->frameTable[ftptr].type = pictype; \
-	  VIDEO_SINGLETON::instance ()->frameTable[ftptr++].size = (int)(fileptr - picptr - 4); \
-	  inpic = 0; \
-	}
 
 static int init_MPEG1_video_file(void)
 {
