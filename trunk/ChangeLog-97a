@@ -1,3 +1,9 @@
+Mon Jun 23 22:14:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf*: Changed the name of the YYSTYPE field
+ 	  ACE_Static_Node_ to static_node_ to be consistent with the other
+ 	  fields.
+
 Mon Jun 23 18:28:55 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE.cpp: added auto_basic_array_ptr specialization.
@@ -26,8 +32,8 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  /project/adaptive/ACE_wrappers.  Also, "make release" now
 	  adds release entry to latest ChangeLog.
 
-	* ace/Makefile: build shared library before static library.
-	  This appears to fix a problem with Sun C++ 4.{1,2} possibly
+	* ace/Makefile: build shared library before static library. 
+	  This appears to fix a problem with Sun C++ 4.{1,2} possibly 
 	  related to its template instantiation scheme.  If the
 	  static library is built first, then .shobj/Reactor.so
 	  and .shobj/Timer_Hash.so (and possibly others) fail to
@@ -37,16 +43,17 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Satoshi Ueno <satoshi.ueno@gs.com> for reporting this, and
 	  to Satoshi for verifying the fix.
 
-	* ace/ACE.cpp (terminate_process): removed used of ACE_OSCALL_RETURN
-	  macro because its defined in OS.i, and so not available if
-	  inlining is disabled.
+	* ace/ACE.cpp (terminate_process): removed used of
+	  ACE_OSCALL_RETURN macro because its defined in OS.i, and so
+	  not available if inlining is disabled.
 
-	* ace/Auto_Ptr.{h,i}: made "p_" protected instead of private so that
-	  it can be accessed with the new class arrangement.  Also, made the
-	  auto_array_ptr operator-> const.
+	* ace/Auto_Ptr.{h,i}: made "p_" protected instead of private
+	  so that it can be accessed with the new class arrangement.
+	  Also, made the auto_array_ptr operator-> const.
 
-	* ace/Sched_Params.cpp (previous_priority, VxWorks only): removed
-	  ACE_UNUSED_ARG (policy) because policy is used in this function.
+	* ace/Sched_Params.cpp (previous_priority, VxWorks only):
+	  removed ACE_UNUSED_ARG (policy) because policy is used in
+	  this function. 
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): wrapped TCHAR
 	  argument to sizeof in parenthesis.

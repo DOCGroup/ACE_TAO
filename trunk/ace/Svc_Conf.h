@@ -72,7 +72,7 @@ typedef union
   int type_;
   ACE_Location_Node *location_node_;
   ACE_Parse_Node *parse_node_;
-  ACE_Static_Node *ACE_Static_Node_;
+  ACE_Static_Node *static_node_;
   ACE_Service_Record *svc_record_;
   char *ident_; 
 } YYSTYPE;
