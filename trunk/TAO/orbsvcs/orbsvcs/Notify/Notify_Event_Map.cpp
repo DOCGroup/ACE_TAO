@@ -67,10 +67,15 @@ TAO_Notify_Event_Map::shutdown (CORBA::Environment &ACE_TRY_ENV)
        iterator.advance ())
     {
       entry->int_id_->shutdown (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   default_subscription_list_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
+
   subscription_change_listeners_->shutdown (ACE_TRY_ENV);
+  ACE_CHECK;
+
   publication_change_listeners_->shutdown (ACE_TRY_ENV);
 }
 

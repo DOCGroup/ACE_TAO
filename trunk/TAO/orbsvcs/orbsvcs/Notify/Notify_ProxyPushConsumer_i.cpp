@@ -126,6 +126,7 @@ TAO_Notify_ProxyPushConsumer_i::push (const CORBA::Any & data, CORBA::Environmen
   TAO_Notify_Any* notify_event = new TAO_Notify_Any(data_copy);
 
   this->event_manager_->process_event (notify_event, this, ACE_TRY_ENV);
+  ACE_CHECK;
 
   notify_event->_decr_refcnt ();
 }

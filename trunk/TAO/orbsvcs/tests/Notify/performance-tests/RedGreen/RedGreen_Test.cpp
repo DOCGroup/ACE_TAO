@@ -103,7 +103,7 @@ void
 RedGreen_Test::done (void)
 {
   dump_results ();
-	worker_.done ();
+        worker_.done ();
 }
 
 void
@@ -302,7 +302,10 @@ RedGreen_Test::send_events (CORBA::Environment &ACE_TRY_ENV)
   for (int i = 0; i < this->burst_size_; ++i)
     {
       supplier_->send_event (red_event, ACE_TRY_ENV);
+      ACE_CHECK;
+
       supplier_->send_event (green_event, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -602,17 +605,17 @@ Worker::orb (CORBA::ORB_ptr orb)
 void
 Worker::done (void)
 {
-	done_ = 1;
+        done_ = 1;
 }
 
 int
 Worker::svc (void)
 {
   while (!this->done_)
-		if (this->orb_->work_pending ())
-			this->orb_->perform_work ();
-  
-	return 0;
+                if (this->orb_->work_pending ())
+                        this->orb_->perform_work ();
+
+        return 0;
 }
 
 // ****************************************************************

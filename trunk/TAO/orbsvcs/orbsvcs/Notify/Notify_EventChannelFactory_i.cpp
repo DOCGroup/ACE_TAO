@@ -93,10 +93,12 @@ void TAO_Notify_EventChannelFactory_i::shutdown (CORBA::Environment &ACE_TRY_ENV
   if (destroy_children == 1)
     {
       this->poa_factory_->destroy_POA (this->ec_POA_.in (), ACE_TRY_ENV);
+      ACE_CHECK;
 
       this->poa_factory_->deactivate_object(this->default_filter_factory_.in (),
                                             this->my_POA_.in (),
                                             ACE_TRY_ENV);
+      ACE_CHECK;
     }
   // Deactivate ourselves.
   this->poa_factory_->deactivate_object (this,

@@ -91,11 +91,12 @@ Notify_Service::startup (int argc, char *argv[],
   if (this->use_name_svc_)
     {
       // Resolve the naming service.
-      if (this->resolve_naming_service (ACE_TRY_ENV) != 0)
-        return -1;
-
+      int ns_ret = this->resolve_naming_service (ACE_TRY_ENV);
       ACE_CHECK_RETURN (-1);
-  }
+
+      if (ns_ret != 0)
+        return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "\nStarting up the Notification Service...\n"));
@@ -111,6 +112,7 @@ Notify_Service::startup (int argc, char *argv[],
   // Write IOR to a file, if asked.
   CORBA::String_var str =
     this->orb_->object_to_string (this->notify_factory_.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_)
     {

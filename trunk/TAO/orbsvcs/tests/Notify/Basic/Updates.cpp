@@ -26,12 +26,14 @@ Update_StructuredPushConsumer::offer_change (
     {
       test_client_->offers_added_ = added.length ();
       this->test_client_->end_test (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   if (removed.length () > 0)
     {
       test_client_->offers_removed_ = removed.length ();
       this->test_client_->end_test (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -46,7 +48,8 @@ Update_StructuredPushSupplier::~Update_StructuredPushSupplier ()
 {
 }
 
-void Update_StructuredPushSupplier::subscription_change (
+void
+Update_StructuredPushSupplier::subscription_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed,
         CORBA::Environment &ACE_TRY_ENV
@@ -60,12 +63,14 @@ void Update_StructuredPushSupplier::subscription_change (
     {
       test_client_->subscriptions_added_ = added.length ();
       this->test_client_->end_test (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   if (removed.length () > 0)
     {
       test_client_->subscriptions_removed_ = removed.length ();
       this->test_client_->end_test (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -221,7 +226,7 @@ void
 Updates::end_test (CORBA::Environment &ACE_TRY_ENV)
 {
   if (++this->result_count_ == 4)
-    {      
+    {
       this->shutdown (ACE_TRY_ENV);
       ACE_CHECK;
     }
