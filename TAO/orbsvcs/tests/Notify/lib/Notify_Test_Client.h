@@ -32,7 +32,7 @@ class Notify_Test_Client
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 
-  static int main (int argc, char *argv [], Notify_Test_Client& client);
+  static int test_main (int argc, char *argv [], Notify_Test_Client& client);
   // Handles the generic 'main' entry operations.
 
   virtual void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);

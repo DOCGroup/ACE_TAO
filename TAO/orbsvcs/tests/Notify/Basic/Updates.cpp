@@ -164,7 +164,7 @@ main (int argc, char* argv[])
 {
   Notify_Test_Updates_Client client;
 
-  int result = Notify_Test_Client::main (argc, argv, client);
+  int result = Notify_Test_Client::test_main (argc, argv, client);
 
   ACE_DEBUG((LM_DEBUG, "offers_added_ = %d, offers_removed_ = %d, subscriptions_added_= %d, subscriptions_removed_ = %d\n",
              offers_added_, offers_removed_, subscriptions_added_, subscriptions_removed_));
