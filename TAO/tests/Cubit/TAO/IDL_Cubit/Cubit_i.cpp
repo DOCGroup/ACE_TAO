@@ -16,6 +16,7 @@
 #include "tao/corba.h"
 #include "ace/Auto_Ptr.h"
 #include "Cubit_Client.h"
+#include "Cubit_i.h"
 
 #include "tao/Timeprobe.h"
 #include "RTI_IO.h"
