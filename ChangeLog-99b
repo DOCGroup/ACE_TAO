@@ -1,8 +1,16 @@
+Wed Aug 04 02:40:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/run_tests.bat:
+	* tests/tests.dsw:
+	* tests/Malloc_Test.dsp:
+	* tests/version_tests/Malloc_Test.dsp: Added project files for the
+	  Malloc_Test and added the test in run_test.bat.
+
 Tue Aug  3 22:39:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/{Makefile,run_tests.sh}: Added support for the new
  	  Malloc_Test.
-  
+
 	* tests/Malloc_Test.cpp: Added a new test that exercises the new
  	  position-independent ACE_Malloc with ACE_MMAP_Memory_Pool and
  	  ACE_Process_Mutex.
@@ -10,7 +18,7 @@ Tue Aug  3 22:39:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Malloc_T: Added an accessor called mutex() to allow
 	  applications to acquire()/release() the lock used to provide
  	  mutual exclusion to an <ACE_Malloc> allocator.
-	
+
 	* tests/SV_Shared_Memory_Test.cpp: Reformatted this test to
 	  conform to ACE programming guidelines.
 
@@ -18,17 +26,17 @@ Tue Aug  3 22:39:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  ACE_*_Memory_Pool_Options constructors should be const; now they
  	  are!
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp (main): 
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp (main):
 	  Added auto_ptr support to this test, as well.
 
 	* examples/Shared_Malloc/test_multiple_mallocs.cpp: Enhanced
 	  this test so that it uses auto pointers and also now takes
  	  advantage of position-independent malloc, when possible.
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp: 
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
 	  Finished integrating all the features of this test.  It's pretty
 	  cool now!
-	
+
 	* examples/Shared_Malloc/Makefile: Updated the LSRC target so
 	  'make depend' works correctly...
 
@@ -42,7 +50,7 @@ Tue Aug  3 22:39:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/Based_Pointer_T: Added definitions for
 	  ACE_Based_Pointer::operator= and
  	  ACE_Based_Pointer_Basic::operator= to make EGCS happy.
-  
+
 	* ace/Malloc.h: Factored out the common code for
 	  ACE_Based_Pointer<> and the underlying types, thereby reducing
  	  the number of #ifdef's.
@@ -75,7 +83,7 @@ Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Removed purify check over Cached_Accept_Conn_Test and
 	  Cached_Conn_Test since they no longer leak memory when built
 	  using old version of g++.
-	
+
 Tue Aug  3 22:23:18 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Added an ifeq flag for
