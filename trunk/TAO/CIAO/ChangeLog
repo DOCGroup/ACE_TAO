@@ -1,3 +1,10 @@
+Sat Nov 29 15:54:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/handcrafted/BasicSP/*.mpc:
+	  Removed all MPC files because this examples is going to be
+	  removed and at this moment these MPC files cause problems with
+	  the MPC generation because of duplicate names
+
 Fri Nov 28 14:09:56 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello/README:
