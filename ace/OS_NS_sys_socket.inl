@@ -667,6 +667,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
   if (result == SOCKET_ERROR)
     {
       ACE_OS::set_errno_to_wsa_last_error ();
+      return -1;
     }
 # else
   for (int i = 0; i < n; ++i)
