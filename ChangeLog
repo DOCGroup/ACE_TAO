@@ -1,3 +1,9 @@
+Thu Sep  6 12:01:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* ace/OS.h: 
+	  Added a if-def case for IP_MULTICAST_IF. Seems like it is not
+	  defined in some of the OS versions.
+
 Thu Sep 06 12:36:43 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/OS.h: 
