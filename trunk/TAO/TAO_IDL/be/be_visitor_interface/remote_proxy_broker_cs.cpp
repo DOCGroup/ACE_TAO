@@ -79,7 +79,7 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (be_interface *node
       << "::" << node->full_name () << " *," << be_nl
       << "CORBA::Environment &" << be_uidt_nl << ")"
       << be_uidt_nl << "{" << be_idt_nl // idt = 1
-      << "return remote_proxy_impl_;"
+      << "return this->remote_proxy_impl_;"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
 
