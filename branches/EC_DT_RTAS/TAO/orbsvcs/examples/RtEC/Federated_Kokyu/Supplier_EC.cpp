@@ -213,8 +213,7 @@ main (int argc, char* argv[])
 
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_Time_Value tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t START at %u\n",tv.msec()));
+  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -286,12 +285,10 @@ main (int argc, char* argv[])
 
       //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
       //DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_ACTIVATED at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_ACTIVATED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, WORKER_ACTIVATED, 0, 0, NULL);
       //DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, m_id, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_STARTED at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t WORKER_STARTED at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (WORKER_GROUP_FAM, WORKER_STARTED, 0, 0, NULL);
 
 #ifdef ACE_HAS_DSUI
@@ -315,14 +312,12 @@ main (int argc, char* argv[])
 
       //@BT: ORB shutting down; currently, this isn't expected to happen
       //DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t CALL_SERVER_SHUTDOWN at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t CALL_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 0, 0, NULL);
 
       //@BT: Scheduler shuts down with the EC and ORB
       //DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t SCHEDULER_SHUTDOWN at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t SCHEDULER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 0, 0, NULL);
 
       // We should do a lot of cleanup (disconnect from the EC,
@@ -331,8 +326,7 @@ main (int argc, char* argv[])
 
       //@BT: Done clean up
       //DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
-      tv = ACE_OS::gettimeofday();
-      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t AFTER_SERVER_SHUTDOWN at %u\n",tv.msec()));
+      ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t AFTER_SERVER_SHUTDOWN at %u\n",ACE_OS::gettimeofday().msec()));
       DSTRM_EVENT (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
 
     }
@@ -345,8 +339,7 @@ main (int argc, char* argv[])
 
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
-  tv = ACE_OS::gettimeofday();
-  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t STOP at %u\n",tv.msec()));
+  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t STOP at %u\n",ACE_OS::gettimeofday().msec()));
   DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
 
   return 0;
