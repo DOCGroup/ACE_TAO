@@ -1,3 +1,14 @@
+Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	  Changes to prevent modules, interrfaces, structs,
+	  unions, valuetypes and exeptions from being 
+	  redefined immediately inside their own scope. This
+	  closes out Bugzilla bug #417.
+
 Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
