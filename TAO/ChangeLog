@@ -1,4 +1,12 @@
-Tue Oct  8 11:15:04 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Tue Oct  8 09:15:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
+	  (LDLIBS):
+
+	  Explicitly link the TAO_Svc_Utils library to the service
+	  binary.  This is necessary for statically linked builds.
+
+Tue Oct  8 11:15:04 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log/Notify/Makefile: 
 
@@ -83,7 +91,7 @@ Mon Oct  7 17:07:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Remove explicit template instantiations for ACE_Atomic_Op.
 	  They are now being instantiated in ACE.
 
-Mon Oct  7 17:45:02 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+Mon Oct  7 17:45:02 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
 	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
