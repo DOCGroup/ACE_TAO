@@ -68,8 +68,7 @@ TAO_GIOP_Message_State::reset (void)
   this->message_size = 0;
   this->current_offset = 0;
   this->more_fragments = 0;
-  // Does this involve a memory allocation? Could we eliminate it?
-  ACE_Message_Block::release (this->cdr.steal_contents ());
+  this->cdr.reset_contents ();
 }
 
 ACE_INLINE int
