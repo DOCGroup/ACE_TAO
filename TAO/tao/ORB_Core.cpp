@@ -184,10 +184,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
-#if (TAO_HAS_RT_CORBA==1)
-
   ACE_NEW (this->endpoint_selector_factory_,
            TAO_Endpoint_Selector_Factory);
+
+#if (TAO_HAS_RT_CORBA==1)
 
   ACE_NEW (this->priority_endpoint_selector_,
            TAO_Priority_Endpoint_Selector);
