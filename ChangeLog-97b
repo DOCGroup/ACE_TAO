@@ -1,3 +1,15 @@
+Thu Oct  9 11:07:34 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/OS.h: 
+	* ace/OS.i: 
+	  Reverted the change that added support for
+	  pthread_setconcurrency on IRIX, the function was supposed to be
+	  undocumented, but present on the libraries, I could not find it
+	  in any of the SGI machines we have access to.; not even 
+
+	* ace/Thread_Manager.cpp: 
+	  On IRIX/SGIC++ we need to instantiate ACE_Node too.
+
 Thu Oct  9 10:30:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/SOCK.h: 
