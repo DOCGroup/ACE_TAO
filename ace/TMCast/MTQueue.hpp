@@ -156,7 +156,7 @@ namespace TMCast
 
   private:
     auto_ptr<MutexType> mutexp_;
-    mutable MutexType& mutex_;
+    MutexType& mutex_;
     QueueType queue_;
 
     typedef
