@@ -1,3 +1,9 @@
+Wed Apr 18 05:23:53 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Config_Test.cpp: Fixed several warnings related to 
+	  not using ACE_TEXT for wide-strings.  Thanks to Bala for
+	  reporting this.
+
 Wed Apr 18 02:08:16 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Synch/proc_sema.dsp:  Fixed release build settings.
