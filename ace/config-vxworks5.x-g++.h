@@ -18,7 +18,12 @@
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_HAS_LONGLONG_T
+
+// Even though the documentation suggests that g++/VxWorks 5.3.1
+// supports long long, WRS tech support says that it doesn't.  And
+// It causes undefined symbols for math functions.
+// #define ACE_HAS_LONGLONG_T
+
 // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
 // of the Iostream_init class.  That causes all files that #include it
 // to put in the global constructor/destructor hooks.  For files that
@@ -28,6 +33,7 @@
 // compile, though, because of the period!  So, let g++/VxWorks users
 // include iostream.h only where they need it.
 #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_POSIX_NONBLOCK
