@@ -49,12 +49,12 @@ namespace TAO
        */
       static ::SSL * _duplicate (::SSL * st)
       {
-	if (st != 0)
-	  CRYPTO_add (&(st->references),
-		      1,
-		      LOCK_ID);
+        if (st != 0)
+          CRYPTO_add (&(st->references),
+                      1,
+                      LOCK_ID);
 
-	return st;
+        return st;
       }
 
       /// Perform deep copy of the given OpenSSL structure.
