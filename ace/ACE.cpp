@@ -971,6 +971,7 @@ ACE::daemonize (const char pathname[])
     ACE_OS::close (i);
   return 0;
 #else
+  ACE_UNUSED_ARG (pathname);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
@@ -1617,6 +1618,8 @@ ACE::count_interfaces (ACE_HANDLE handle,
   how_many = if_count;
   return 0;
 #else
+   ACE_UNUSED_ARG (handle);
+   ACE_UNUSED_ARG (how_many);
    ACE_NOTSUP_RETURN (-1);; // no implmentation
 #endif /* __SVR4 */
 }
@@ -1897,6 +1900,8 @@ ACE::get_ip_interfaces (size_t &count,
     }
   return 0; 
 #else
+  ACE_UNUSED_ARG (count);
+  ACE_UNUSED_ARG (addrs);
   ACE_NOTSUP_RETURN (-1);;			// no implentation
 #endif /* ACE_WIN32 */
 }
