@@ -14,7 +14,7 @@ endif # ! TAO_ROOT
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-BIN_UNCHECKED = client server 
+BIN_UNCHECKED = client server
 
 SRC = $(addsuffix .cpp, $(BIN) test_i Client_Worker Server_Worker) $(IDL_SRC)
 
@@ -37,6 +37,8 @@ include $(TAO_ROOT)/rules.tao.GNU
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (SSLIOP,$(findstring SSLIOP,$(TAO_ORBSVCS)))
     BIN = $(BIN_UNCHECKED)
+    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+    LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
 endif #SSLIOP
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
