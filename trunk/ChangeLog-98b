@@ -1,3 +1,8 @@
+Mon Aug 24 10:41:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/OS.h: Provided null defitions for all the <wstat> wait
+		status macros for ACE_WIN32 platform. 
+
 Mon Aug 24 00:11:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Reactor/Misc/pingpong.cpp (run_svc): Fixed a subtle
