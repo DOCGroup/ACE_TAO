@@ -72,9 +72,7 @@ public:
   CORBA_Any (void);
 
   /// Constructor.
-  CORBA_Any (CORBA::TypeCode_ptr type,
-             CORBA::Environment &ACE_TRY_ENV
-                 = TAO_default_environment ());
+  CORBA_Any (CORBA::TypeCode_ptr type);
 
   // = TAO extension
   /**
