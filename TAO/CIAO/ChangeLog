@@ -1,3 +1,27 @@
+Fri Nov 28 22:45:13 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* ciao/ServerActivator_Impl.cpp:
+	* ciao/ServerActivator_Impl.h:
+	* tools/Daemon/CIAO_Daemon.cpp: Added support for specifying
+	  optional command line flags for starting ComponentServer.
+
+	* tools/ComponentServer/ComponentServer.cpp: Added support to run
+	  the ComponentServer in FIFO scheduling class.  You can do this
+	  by defining the environment variable CIAO_FIFO_SCHED as 1.
+
+	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.cpp: Fixed
+	  cut-and-paste errors in DLL entry points for creating component
+	  in different rates.
+
+	* tests/RTCCM/Priority_Test/descriptors/basic_test.pl: Enhanced
+	  the script to optionally disable starting of daemon and running
+	  of client controller.
+
+	* tests/RTCCM/Priority_Test/Controllers/client.cpp:
+	* tests/RTCCM/Priority_Test/descriptors/rate_test.pl:
+	* tests/RTCCM/Priority_Test/descriptors/no-rt-3rates.cad: Extended
+	  the test to handle starting and stoping of 3 controller objrefs.
+
 Fri Nov 28 14:32:58 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:

@@ -138,7 +138,8 @@ namespace CIAO
               CORBA::ULong delay,
               const char *installation_ior,
               const char *default_svcconf,
-              const char *svcconf_map_file
+              const char *svcconf_map_file,
+              const char *extra_cmdline_flags
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -236,6 +237,9 @@ namespace CIAO
 
     /// Default svc.conf filename.
     ACE_CString default_svcconf_file_;
+
+    /// Extra command line flags
+    ACE_CString extra_flags_;
 
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     ACE_CString,

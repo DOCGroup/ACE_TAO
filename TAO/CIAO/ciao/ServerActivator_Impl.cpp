@@ -66,7 +66,8 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
                                   CORBA::ULong spawn_delay,
                                   const char *installation_ior,
                                   const char *default_svcconf,
-                                  const char *svc_conf_map
+                                  const char *svc_conf_map,
+                                  const char *extra_flags
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -87,6 +88,9 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
 
   if (default_svcconf != 0)
     this->default_svcconf_file_ = default_svcconf;
+
+  if (extra_flags != 0)
+    this->extra_flags_ = extra_flags;
 
   this->server_path_ = CORBA::string_dup (server_location);
 
@@ -332,6 +336,9 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
           additional_options += ACE_CString (" -r ");
           additional_options += ACE_CString (config_info.rtcad_filename_.in ());
         }
+
+      additional_options += " ";
+      additional_options += this->extra_flags_;
 
       options.command_line ("%s -k %s -ORBInitRef ComponentInstallation=%s "
                             "%s",
