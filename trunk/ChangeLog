@@ -1,3 +1,10 @@
+Fri Oct 15 18:50:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_Thread.cpp: In places where the old ace_result_ part of
+	  the previous incantation of ACE_OSCALL_RETURN was used, create a
+	  local 'result' variable and use that. ace_result_ is only used in
+	  the Win32 version of ACE_OSCALL_RETURN.
+
 Fri Oct 15 17:46:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Added checks for the swab() variants that have:

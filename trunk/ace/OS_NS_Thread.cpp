@@ -3262,13 +3262,15 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #     else
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
-                                         ace_result_),
+                                         result),
                        int, -1);
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 #   elif defined (ACE_HAS_STHREADS)
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
-                                         ace_result_),
+                                         result),
                        int, -1);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
     ACE_UNUSED_ARG (dest);
@@ -3458,13 +3460,15 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
 #      if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_setspecific (key, data), int, -1);
 #       else
+    int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setspecific (key, data),
-                                         ace_result_),
+                                         result),
                        int, -1);
 #       endif /* ACE_HAS_PTHREADS_DRAFT4, 6 */
 
 #     elif defined (ACE_HAS_STHREADS)
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
+      int result;
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
 #    elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
       ACE_hthread_t tid;
       ACE_OS::thr_self (tid);
