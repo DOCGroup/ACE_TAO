@@ -1,62 +1,67 @@
+Thu May 14 15:20:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/Makefile: moved TAO_ROOT definition outside of
+          "ifdef trader" block.
+
 Thu May 14 14:34:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: CosLifeCycle is now compiled
-	  by default.
+        * orbsvcs/orbsvcs/Makefile: CosLifeCycle is now compiled
+          by default.
 
 Thu May 14 14:10:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tests/Quoter/{Factory_Trader.cpp, Factory_Trader.h 
-	  Makefile, run_test.sh}: Factored out the code depending
-	  on the Trading Service. The standard compilation does
-	  now not use the Trading Service. The Makefile has
-	  to be called using the "trader=1" option to activate
-	  compilation of the parts using the Trading Service.
-	  "run_test.sh" will not use by default the 
- 	  creation service "lifecycle service object", instead
-	  it will ask the Generic Factory directly
+        * tests/Quoter/{Factory_Trader.cpp, Factory_Trader.h
+          Makefile, run_test.sh}: Factored out the code depending
+          on the Trading Service. The standard compilation does
+          now not use the Trading Service. The Makefile has
+          to be called using the "trader=1" option to activate
+          compilation of the parts using the Trading Service.
+          "run_test.sh" will not use by default the
+          creation service "lifecycle service object", instead
+          it will ask the Generic Factory directly
 
 Thu May 14 14:10:26 1998  Carlos O'Ryan  <coryan@watusi.cs.wustl.edu>
 
-	* tests/Param_Test/tests.cpp: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	  Added the right .in() or .out() calls for some T_var types
-	  passed to functions expecting a T_ptr or T_out parameter.
+        * tests/Param_Test/tests.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Added the right .in() or .out() calls for some T_var types
+          passed to functions expecting a T_ptr or T_out parameter.
 
 Thu May 14 13:14:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
-	* tests/Cubit/TAO/IDL_Cubit/client.h: 
-	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
-	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
-	  Added a simple test for octet sequences, it tries to compare the
-	  end-to-end cost of a normal sequence (longs) vs an octet
-	  sequence; it compares the cost for a small sequence<long> vs a
-	  small sequence<octet> and then repeats the test for a large
-	  sequence. To make the comparison more acurate it uses the same
-	  number of bytes in the sequence<long> as in the sequence<octet>,
-	  not the same number of elements.
+        * tests/Cubit/TAO/IDL_Cubit/cubit.idl:
+        * tests/Cubit/TAO/IDL_Cubit/client.h:
+        * tests/Cubit/TAO/IDL_Cubit/client.cpp:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.h:
+        * tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp:
+          Added a simple test for octet sequences, it tries to compare the
+          end-to-end cost of a normal sequence (longs) vs an octet
+          sequence; it compares the cost for a small sequence<long> vs a
+          small sequence<octet> and then repeats the test for a large
+          sequence. To make the comparison more acurate it uses the same
+          number of bytes in the sequence<long> as in the sequence<octet>,
+          not the same number of elements.
 
-	* tao/Sequence.h: 
-	* tao/Sequence.i: 
-	  The message block accessor can be constant now.
+        * tao/Sequence.h:
+        * tao/Sequence.i:
+          The message block accessor can be constant now.
 
-	* tao/Typecode.h: 
-	* tao/Typecode.i: 
-	* tao/Typecode.cpp: 
-	  Clean up the destruction code: made the destructor nilpotent to
-	  avoid double destructions. Also removed the redundant operator
-	  new and operator delete; they were not doing any actual work.
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/Typecode.cpp:
+          Clean up the destruction code: made the destructor nilpotent to
+          avoid double destructions. Also removed the redundant operator
+          new and operator delete; they were not doing any actual work.
 
 Thu May 14  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile: Removed PropertyService from the
-	conditional compilation.
+        * orbsvcs/orbsvcs/Makefile: Removed PropertyService from the
+        conditional compilation.
 
 Thu May 14 10:00:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/OctetSeq/OctetSeq.cpp:
-	  Removed signed/unsigned comparison warnings.
+        * tests/OctetSeq/OctetSeq.cpp:
+          Removed signed/unsigned comparison warnings.
 
 Wed May 13 21:48:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
