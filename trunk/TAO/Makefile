@@ -72,7 +72,7 @@ RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
                 TAO/INSTALL
 
 INSTALL: TAO-INSTALL.html
-	lynx -dump $^ > $@
+	lynx -dump $^ > $@; chmod a+r $@
 
 #### If creating the "official" TAO release:
 #### 1) Check that the workspace is up-to-date, and bail out if not.
