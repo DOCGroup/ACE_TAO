@@ -420,8 +420,9 @@ TAO_UIOP_Connector::init_uiop_properties (void)
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  RTCORBA::ProtocolProperties_var properties =
-    RTCORBA::ProtocolProperties::_nil ();
+  int send_buffer_size = 0;
+  int recv_buffer_size = 0;
+  int no_delay = 0;
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -431,26 +432,20 @@ TAO_UIOP_Connector::init_uiop_properties (void)
       const char *protocol_type = protocol;
       int hook_result =
         tph->call_client_protocols_hook (this->orb_core (),
-                                         properties,
+                                         send_buffer_size,
+                                         recv_buffer_size,
+                                         no_delay,
                                          protocol_type);
 
       if(hook_result == -1)
         return -1;
     }
 
-  RTCORBA::UnixDomainProtocolProperties_var uiop_properties =
-    RTCORBA::UnixDomainProtocolProperties::_narrow (properties.in (),
-                                                    ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (!CORBA::is_nil (uiop_properties.in ()))
-  {
     // Extract and locally store properties of interest.
     this->uiop_properties_.send_buffer_size =
-      uiop_properties->send_buffer_size ();
+      send_buffer_size;
     this->uiop_properties_.recv_buffer_size =
-      uiop_properties->recv_buffer_size ();
-  }
+      recv_buffer_size;
 
 #else /* TAO_HAS_RT_CORBA == 1 */
 

@@ -30,17 +30,20 @@ TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
 int
 TAO_RT_Protocols_Hooks::call_client_protocols_hook (
                           TAO_ORB_Core *orb_core,
-                          RTCORBA::ProtocolProperties_var &
-                          properties,
+                          int &send_buffer_size,
+                          int &recv_buffer_size,
+                          int &no_delay,
                           const char *protocol_type)
 {
   if (TAO_RT_Protocols_Hooks::client_protocols_hook_ == 0)
     return -1;
 
   (*TAO_RT_Protocols_Hooks::client_protocols_hook_) (orb_core,
-                                                     properties,
+                                                     send_buffer_size,
+                                                     recv_buffer_size,
+                                                     no_delay,
                                                      protocol_type);
-
+  
   return 0;
 }
 
@@ -56,8 +59,9 @@ TAO_RT_Protocols_Hooks::set_client_protocols_hook (Client_Protocols_Hook hook)
 int
 TAO_RT_Protocols_Hooks::call_server_protocols_hook (
                           TAO_ORB_Core *orb_core,
-                          RTCORBA::ProtocolProperties_var &
-                          properties,
+                          int &send_buffer_size,
+                          int &recv_buffer_size,
+                          int &no_delay,
                           const char *protocol_type)
 {
   if (TAO_RT_Protocols_Hooks::server_protocols_hook_ == 0)
@@ -65,7 +69,9 @@ TAO_RT_Protocols_Hooks::call_server_protocols_hook (
 
   int result_value =
     (*TAO_RT_Protocols_Hooks::server_protocols_hook_) (orb_core,
-                                                       properties,
+                                                       send_buffer_size,
+                                                       recv_buffer_size,
+                                                       no_delay,
                                                        protocol_type);
 
   if (result_value != 0)
@@ -356,7 +362,7 @@ TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
   CORBA::Object_var obj =
     orb_core->priority_mapping_manager ();
 
-  TAO_Priority_Mapping_Manager_var mapping_manager = 
+  TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
 
@@ -382,7 +388,7 @@ TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
   CORBA::Object_var obj =
     orb_core->priority_mapping_manager ();
 
-  TAO_Priority_Mapping_Manager_var mapping_manager = 
+  TAO_Priority_Mapping_Manager_var mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
 
@@ -407,12 +413,12 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
                                               *trf,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
-  /// 
+  ///
   CORBA::Object_var obj =
     orb_core->priority_mapping_manager ();
-      
+
   /// Narrow it down correctly
-  TAO_Priority_Mapping_Manager_var priority_mapping_manager = 
+  TAO_Priority_Mapping_Manager_var priority_mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                            ACE_TRY_ENV);
   ACE_CHECK;
@@ -421,7 +427,7 @@ TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
       priority_mapping_manager->mapping (trf->get_priority_mapping ());
 }
 
-int 
+int
 TAO_RT_Protocols_Hooks::set_default_policies (TAO_ORB_Core *orb_core)
 {
 #if (TAO_HAS_RT_CORBA == 1)

@@ -308,7 +308,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
-                   RTCORBA::ProtocolProperties_var &properties,
+                   int &send_buffer_size,
+                   int &recv_buffer_size,
+                   int &no_delay,
                    const char *protocol_type);
 private:
 
@@ -360,7 +362,9 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   static int hook (TAO_ORB_Core *orb_core,
-                   RTCORBA::ProtocolProperties_var &properties,
+                   int &send_buffer_size,
+                   int &recv_buffer_size,
+                   int &no_delay,
                    const char* protocol_type);
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
