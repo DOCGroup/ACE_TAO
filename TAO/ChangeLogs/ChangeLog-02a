@@ -1,3 +1,17 @@
+Tue May 15 09:38:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.cpp (dotted_decimal_address):
+
+	  If the IP address in the INET_Addr is the INADDR_ANY address,
+	  then force the actual IP address to be used by initializing a
+	  new INET_Addr with the hostname from the original one.  If that
+	  fails then something is seriously wrong with the systems
+	  networking setup.  This fixes a problem on systems that where
+	  network interface probing fails and the
+	  "-ORBDottedDecimalAddresses 1" ORB option is used.  Thanks to
+	  Albert Wijnja <Albert.Wijnja@meco.nl> for reporting the
+	  problem.
+
 Tue Apr 15 10:45:16 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * tao/Invocation.cpp:

@@ -16,7 +16,9 @@
 #include "tao/IIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, IIOP_Acceptor, "$Id$")
+ACE_RCSID(tao,
+          IIOP_Acceptor,
+          "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -410,7 +412,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   u_short requested_port = addr.get_port_number ();
   if (requested_port == 0)
     {
-      // don't care, i.e., le tthe OS choose an ephemeral port
+      // don't care, i.e., let the OS choose an ephemeral port
       if (this->base_acceptor_.open (addr,
                                      this->orb_core_->reactor (this),
                                      this->creation_strategy_,
@@ -545,8 +547,25 @@ int
 TAO_IIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
-  const char *tmp = addr.get_host_addr ();
-  if (tmp == 0)
+  int result = 0;
+  const char *tmp = 0;
+
+  // If the IP address in the INET_Addr is the INADDR_ANY address,
+  // then force the actual IP address to be used by initializing a new
+  // INET_Addr with the hostname from the original one.  If that fails
+  // then something is seriously wrong with the systems networking
+  // setup.
+  if (addr.get_ip_address () == INADDR_ANY)
+    {
+      ACE_INET_Addr new_addr;
+      result = new_addr.set (addr.get_port_number (),
+                             addr.get_host_name ());
+      tmp = new_addr.get_host_addr ();
+    }
+  else
+    tmp = addr.get_host_addr ();
+
+  if (tmp == 0 || result != 0)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -587,7 +606,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
         {
           ACE_DEBUG ((LM_WARNING,
                       ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ACE_TEXT ("interfaces.  Using default.")));
+                      ACE_TEXT ("interfaces.  Using default.\n")));
         }
 
       if_cnt = 1; // Force the network interface count to be one.
