@@ -41,7 +41,7 @@ be_visitor_interface_fwd_ch::~be_visitor_interface_fwd_ch (void)
 {
 }
 
-// visit the Interface_Fwd_Ch node and its scope
+// Visit the interface_fwd_ch node and its scope.
 int
 be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
 {
@@ -55,7 +55,7 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
   // All we do in this is generate a forward declaration of the class.
   *os << "class " << node->local_name () << ";" << be_nl;
 
-  // generate the ifdefined macro for the _ptr type
+  // Generate the ifdefined macro for the _ptr type.
   os->gen_ifdef_macro (node->flat_name (), "_ptr");
 
   // Generate the _ptr typedef.
@@ -106,7 +106,6 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
   os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);
-  bfd->cli_hdr_gen (I_TRUE);
 
   return 0;
 }

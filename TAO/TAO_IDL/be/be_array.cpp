@@ -55,7 +55,7 @@ be_array::~be_array (void)
     delete [] tao_name_;
 }
 
-// create a name for ourselves
+// Create a name for ourselves.
 const char*
 be_array::tao_name (void)
 {
@@ -63,6 +63,7 @@ be_array::tao_name (void)
     return this->tao_name_;
 
   be_type *bt = be_type::narrow_from_decl (this->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -89,8 +90,8 @@ be_array::tao_name (void)
     {
       AST_Expression *expr = this->dims ()[i]; // retrieve the ith
 
-      // dimension value
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+      // Dimension value.
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"
@@ -120,14 +121,14 @@ be_array::create_name (void)
 {
   char namebuf [NAMEBUFSIZE];
   unsigned long i;
-  UTL_ScopedName *n = NULL;
-  be_decl *scope; // scope in which we are defined
+  UTL_ScopedName *n = 0;
+  be_decl *scope;
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
-  // retrieve the base type
-  // the name always starts this way
-
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  // Retrieve the base type.
+  // The name always starts this way.
   be_type *bt = be_type::narrow_from_decl (this->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,13 +139,14 @@ be_array::create_name (void)
     }
 
   ACE_OS::sprintf (namebuf, "_tao_array_%s", bt->local_name ()->get_string ());
-  // now append dimensions
+
+  // Now append dimensions.
   for (i = 0; i < this->n_dims (); i++)
     {
       AST_Expression *expr = this->dims ()[i]; // retrieve the ith
 
-      // dimension value
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+      // Dimension value.
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"
@@ -166,17 +168,17 @@ be_array::create_name (void)
         }
     }
 
-  // now see if we have a fully scoped name and if so, generate one
+  // Now see if we have a fully scoped name and if so, generate one.
   scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
   if (scope)
     {
-      // make a copy of the enclosing scope's  name
+      // Make a copy of the enclosing scope's  name.
       n = (UTL_ScopedName *)scope->name ()->copy () ;
 
-      // add our local name as the last component
+      // Add our local name as the last component.
       n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup (namebuf)),
-                                    NULL));
-      // set the fully scoped name
+                                    0));
+      // Set the fully scoped name.
       this->set_name (n);
     }
   else
@@ -185,10 +187,11 @@ be_array::create_name (void)
       // atleast the ROOT scope.
       return -1;
     }
+
   return 0;
 }
 
-// Code generation
+// Code generation.
 
 int
 be_array::gen_dimensions (TAO_OutStream *os,
@@ -230,19 +233,21 @@ be_array::gen_dimensions (TAO_OutStream *os,
   return 0;
 }
 
-// compute the size type of the node in question
+// Compute the size type of the node in question.
 int
 be_array::compute_size_type (void)
 {
   be_type *type = be_type::narrow_from_decl (this->base_type ());
+
   if (!type)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_array::compute_size_type - "
-                         "bad base type\n"), -1);
+                         "bad base type\n"), 
+                        -1);
     }
 
-  // our size type is the same as our type
+  // Our size type is the same as our type.
   this->size_type (type->size_type ());
 
   return 0;
