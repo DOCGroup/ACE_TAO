@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_Flag_Manip.h"
+#include "ace/Flag_Manip.h"
 
 class ACE_Export ACE_FILE_Addr : public ACE_Addr
 {
