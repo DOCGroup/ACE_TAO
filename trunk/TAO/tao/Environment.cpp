@@ -206,23 +206,7 @@ CORBA::Environment::print_exception (const char *info,
 
       if (x2 != 0)
         {
-
-          // @@ there are a other few "user exceptions" in the CORBA
-          // scope, they're not all standard/system exceptions ... really
-          // need to either compare exhaustively against all those IDs
-          // (yeech) or (preferably) to represent the exception type
-          // directly in the exception value so it can be queried.
-
-          ACE_DEBUG ((LM_ERROR,
-                      "TAO: (%P|%t) system exception, ID '%s'\n",
-                      id));
-          ACE_DEBUG ((LM_ERROR,
-                      "TAO: (%P|%t) minor code = %x, completed = %s\n",
-                      x2->minor (),
-                      (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
-                      (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
-                      (x2->completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-                      "garbage"));
+          x2->print_exception_tao_ ();
         }
       else
         // @@ we can use the exception's typecode to dump all the data
@@ -261,6 +245,3 @@ CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
   this->ptr_ = new CORBA::Environment (*r.ptr_);
   return *this;
 }
-
-
-

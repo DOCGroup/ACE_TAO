@@ -107,23 +107,7 @@ CORBA_Exception::print_exception (const char *info,
 
   if (x2 != 0)
     {
-
-      // @@ there are a other few "user exceptions" in the CORBA
-      // scope, they're not all standard/system exceptions ... really
-      // need to either compare exhaustively against all those IDs
-      // (yeech) or (preferably) to represent the exception type
-      // directly in the exception value so it can be queried.
-
-      ACE_DEBUG ((LM_ERROR,
-                  "(%P|%t) system exception, ID '%s'\n",
-                  id));
-      ACE_DEBUG ((LM_ERROR,
-                  "(%P|%t) minor code = %x, completed = %s\n",
-                  x2->minor (),
-                  (x2->completed () == CORBA::COMPLETED_YES) ? "YES" :
-                  (x2->completed () == CORBA::COMPLETED_NO) ? "NO" :
-                  (x2->completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
-                  "garbage"));
+      x2->print_exception_tao_ ();
     }
   else
     // @@ we can use the exception's typecode to dump all the data
@@ -246,6 +230,77 @@ void
 CORBA_SystemException::_raise (void)
 {
   TAO_RAISE(*this);
+}
+
+CORBA::ULong
+CORBA_SystemException::errno_tao_ (int errno_value)
+{
+  switch (errno_value) {
+    case ETIMEDOUT : return TAO_ETIMEDOUT_MINOR_CODE;
+    case ENFILE : return TAO_ENFILE_MINOR_CODE;
+    case EMFILE : return TAO_EMFILE_MINOR_CODE;
+    default : return TAO_UNKNOWN_MINOR_CODE;
+  }
+}
+
+CORBA::ULong
+CORBA_SystemException::minor_code_tao_ (u_int location, int errno_value)
+{
+  return TAO_DEFAULT_MINOR_CODE  |
+         location  |
+         errno_tao_ (errno_value);
+}
+
+void
+CORBA_SystemException::print_exception_tao_ (FILE *) const
+{
+  // @@ there are a other few "user exceptions" in the CORBA
+  // scope, they're not all standard/system exceptions ... really
+  // need to either compare exhaustively against all those IDs
+  // (yeech) or (preferably) to represent the exception type
+  // directly in the exception value so it can be queried.
+
+  ACE_DEBUG ((LM_ERROR,
+              "(%P|%t) system exception, ID '%s'\n",
+              _id ()));
+
+  const char *location;
+  switch (minor () & 0x00000FF0) {
+    case TAO_INVOCATION_CONNECT_MINOR_CODE :
+      location = "invocation connect failed";
+      break;
+    case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE :
+      location = "location forward failed";
+      break;
+    case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE :
+      location = "send request failed";
+      break;
+    default :
+      location = "unknown location";
+  }
+
+  const char *errno_indication;
+  switch (minor () & 0x0000000F) {
+    case TAO_ETIMEDOUT_MINOR_CODE :
+      errno_indication = "ETIMEOUT";
+      break;
+    case TAO_ENFILE_MINOR_CODE :
+      errno_indication = "ENFILE";
+      break;
+    case TAO_EMFILE_MINOR_CODE :
+      errno_indication = "EMFILE";
+      break;
+    default :
+      errno_indication = "unknown errno";
+  }
+
+  ACE_DEBUG ((LM_ERROR,
+              "(%P|%t) minor code = %x (%s; %s), completed = %s\n",
+              minor (), location, errno_indication,
+              (completed () == CORBA::COMPLETED_YES) ? "YES" :
+              (completed () == CORBA::COMPLETED_NO) ? "NO" :
+              (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+              "garbage"));
 }
 
 
