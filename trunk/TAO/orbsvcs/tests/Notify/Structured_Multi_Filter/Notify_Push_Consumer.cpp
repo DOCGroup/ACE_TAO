@@ -1,5 +1,6 @@
 // $Id$
 #include "Notify_Push_Consumer.h"
+#include "tao/debug.h"
 
 CORBA::Short Notify_Push_Consumer::event_count = 0;
 
@@ -143,13 +144,13 @@ Notify_Push_Consumer::push_structured_event (
                           ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "%s %d (sent recv) %s %s\n",
-              Any_String (event.filterable_data[1].value),
-              event_count,
-              (const char*)event.filterable_data[0].name,
-              Any_String (event.filterable_data[0].value)));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "%s %d (sent recv) %s %s\n",
+                Any_String (event.filterable_data[1].value),
+                event_count,
+                (const char*)event.filterable_data[0].name,
+                Any_String (event.filterable_data[0].value)));
 
   event_count ++;
 }
-

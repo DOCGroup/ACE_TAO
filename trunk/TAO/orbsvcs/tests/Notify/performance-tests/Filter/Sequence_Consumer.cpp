@@ -10,6 +10,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Notify_Sequence_Push_Consumer.h"
 #include "goC.h"
+#include "tao/debug.h"
 
 #include "Notify_Test_Client.h"
 
@@ -221,9 +222,10 @@ int main (int argc, char* argv[])
                                           (double)batch_size);
               difference *= denominator;
 
-              ACE_DEBUG((LM_DEBUG,
-                         "Average of %ds %dus for %u events\n",
-                         difference.sec (), difference.usec (), per));
+              if (TAO_debug_level)
+                ACE_DEBUG((LM_DEBUG,
+                           "Average of %ds %dus for %u events\n",
+                           difference.sec (), difference.usec (), per));
             }
         }
     }

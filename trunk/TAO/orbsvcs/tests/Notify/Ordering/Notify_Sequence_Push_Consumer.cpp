@@ -3,6 +3,7 @@
 #include "Notify_Sequence_Push_Consumer.h"
 #include "orbsvcs/TimeBaseC.h"
 #include "common.h"
+#include "tao/debug.h"
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
                                             const char* name,
@@ -70,17 +71,20 @@ Notify_Sequence_Push_Consumer::push_structured_events (
 
   CORBA::ULong length = events.length ();
 
-  ACE_DEBUG ((LM_DEBUG, "Received %u events:\n", length));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG, "Received %u events:\n", length));
 
   for (CORBA::ULong e = 0; e < length; e++)
     {
       CORBA::ULong hlength = events[e].header.variable_header.length ();
       for (CORBA::ULong hi = 0; hi < hlength; hi++)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s = %s\n",
-                      (const char*)events[e].header.variable_header[hi].name,
-                      Any_String (events[e].header.variable_header[hi].value)));
+          if (TAO_debug_level)
+            ACE_DEBUG ((LM_DEBUG,
+                        "%s = %s\n",
+                        (const char*)events[e].header.variable_header[hi].name,
+                        Any_String (events[e].header.variable_header[hi].value)));
+
           if (this->order_policy_ == CosNotification::PriorityOrder)
             {
               if (ACE_OS::strcmp (
@@ -139,10 +143,12 @@ Notify_Sequence_Push_Consumer::push_structured_events (
       CORBA::ULong flength = events[e].filterable_data.length ();
       for (CORBA::ULong i = 0; i < flength; i++)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s = %s\n",
-                      (const char*)events[e].filterable_data[i].name,
-                      Any_String (events[e].filterable_data[i].value)));
+          if (TAO_debug_level)
+            ACE_DEBUG ((LM_DEBUG,
+                        "%s = %s\n",
+                        (const char*)events[e].filterable_data[i].name,
+                        Any_String (events[e].filterable_data[i].value)));
+
           if (this->order_policy_ == CosNotification::FifoOrder)
             {
               if (ACE_OS::strcmp (events[e].filterable_data[i].name, "enum") == 0)
@@ -169,8 +175,9 @@ Notify_Sequence_Push_Consumer::push_structured_events (
         }
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "-------------------------\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "-------------------------\n"));
 
   this->count_+= events.length ();
 

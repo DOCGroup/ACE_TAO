@@ -1,3 +1,23 @@
+Mon Dec 23 18:21:51 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+ 	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Discarding/Notify_Sequence_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Discarding/Notify_Structured_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Notify_Sequence_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Filter/Structured_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Filter/Structured_Supplier.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Supplier.cpp:
+ 	* orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/performance-tests/Filter/Structured_Consumer.cpp:
+ 	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp:
+	  Debug messages are printed only if the debug level is set.
+
 Mon Dec 23 16:25:08 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Makefile: Added 
