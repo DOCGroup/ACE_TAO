@@ -1,5 +1,8 @@
 Tue Sep  1 10:43:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* TAO/utils/catior/catior.cpp (main): Fixed a minor printing bug
+	  -- a loop wasn't breaking out when '\n' or EOF was reached...
+	
 	* ace/config-linux-common.h,
 	  ace/config-sco-5.0.0-mit-pthread.h,
 	  ace/config-sco-5.0.0.h,
