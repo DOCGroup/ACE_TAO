@@ -6330,7 +6330,7 @@ ACE_OS::getprotobyname (const ACE_TCHAR *name)
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_GETBY)
-  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name),
+  ACE_SOCKCALL_RETURN (::getprotobyname (ACE_const_cast (char *, name)),
                        struct protoent *, 
                        0);
 #else
