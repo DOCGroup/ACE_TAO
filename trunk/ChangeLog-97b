@@ -11,6 +11,11 @@ Tue Sep 30 08:35:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Atomic_Op.i: added CVS header.
 
+	* tests/test_config.h: Added 1 second sleep to ACE_END_TEST to
+	  allow all threads to terminate gracefully.
+	  VxWorks only: removed the hack removal of the log file, because
+	  it no longer appears to be necessary.
+
 	* tests/TSS_Test_Errno.h,TSS_Test.cpp: dynamically allocate
 	  Errno::lock_ to try to avoid problem with cleanup of statics
 	  on VxWorks.  It doesn't solve the problem, all of the time.
@@ -68,9 +73,9 @@ Mon Sep 29 13:28:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	  why the test failed.  Also, disabled test of ACE_U_LongLong
 	  if ACE_HAS_64BIT_LONG.
 
-	* ace/OS.h:  1) Use u_long for ACE_hrtime_t if ACE_HAS_64BIT_LONGS.
+	* ace/OS.h: 1) Use u_long for ACE_hrtime_t if ACE_HAS_64BIT_LONGS.
 	  2) Added ACE_NO_INLINE support to allow wrapper_macros.GNU to
-	  disable inlining from the command line.   3) Added
+	  disable inlining from the command line.  3) Added
 	  ACE_HAS_VERBOSE_NOTSUP support.
 
 	* include/makeinclude/wrapper_macros.GNU: added "inline" flag to
