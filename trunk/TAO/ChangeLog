@@ -1,3 +1,8 @@
+Tue May 10 12:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Transport.cpp:
+          Removed not spaces in debug lines
+
 Tue May 10 12:03:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
