@@ -7189,6 +7189,9 @@ AC_CONFIG_FILES([
   aceConf.sh
   Makefile
   ace/Makefile
+  apps/Makefile
+  apps/gperf/Makefile
+  apps/gperf/src/Makefile
 ])
 
 AC_CONFIG_COMMANDS([default],[
