@@ -1,5 +1,11 @@
+// $Id$
+
 #include "tao/default_server.h"
 #include "tao/ORB_Core.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/default_client.i"
+#endif /* ! __ACE_INLINE__ */
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : thread_flags_ (0),
@@ -102,8 +108,8 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
     {
     case TAO_LINEAR:
       ACE_NEW_RETURN (objtable,
-		      TAO_Linear_ObjTable (this->object_table_size_),
-		      0);
+                      TAO_Linear_ObjTable (this->object_table_size_),
+                      0);
       break;
       // Don't do this one right now until we determine how to deal
       // with its reliance on a global singleton.
@@ -122,15 +128,15 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
       break;
     case TAO_ACTIVE_DEMUX:
       ACE_NEW_RETURN (objtable,
-		      TAO_Active_Demux_ObjTable (this->object_table_size_),
-		      0);
+                      TAO_Active_Demux_ObjTable (this->object_table_size_),
+                      0);
       break;
     case TAO_DYNAMIC_HASH:
     case TAO_NONE:
     default:
       ACE_NEW_RETURN (objtable,
-		      TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
-		      0);
+                      TAO_Dynamic_Hash_ObjTable (this->object_table_size_),
+                      0);
       break;
     }
 
