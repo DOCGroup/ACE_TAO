@@ -1,3 +1,46 @@
+Sun Aug 24 13:09:50 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.RTSched: 
+	* orbsvcs/orbsvcs/RTSched.bor: 
+	* orbsvcs/orbsvcs/RTSched.dsp: 
+	* orbsvcs/orbsvcs/RTSched.mpc: 
+	* orbsvcs/orbsvcs/RtecBase.idl: 
+	* orbsvcs/orbsvcs/RtecScheduler.idl: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h: 
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
+	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
+	  Integrated the scheduler from the Boeing WSOA program into the
+	  main trunk. This scheduler has more interfaces and bug fixes
+	  than the one which existed in the main trunk.
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.{cpp,h}: 
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp: 
+	  Changes to integrate the scheduler with the event channel.  
+	
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.{cpp,h}: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
+	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h: 
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp (main): 
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp (main): 
+	* orbsvcs/tests/Event/Basic/Schedule.cpp (execute_test): 
+	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: 
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	* examples/Simulator/Event_Supplier/DualEC_Sup.{cpp,h}: 
+	  Changes to compute_scheduling, dump_schedule method calls to
+	  reflect changes made to interfaces as part of the WSOA scheduler.
+	
+
 Sun Aug 24 15:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynArray_i.cpp:

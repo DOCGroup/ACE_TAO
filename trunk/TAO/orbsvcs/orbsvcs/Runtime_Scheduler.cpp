@@ -139,6 +139,93 @@ ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
 }
 
 
+void
+ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
+                              RtecScheduler::Criticality_t criticality,
+                              RtecScheduler::Time time,
+                              RtecScheduler::Time typical_time,
+                              RtecScheduler::Time cached_time,
+                              RtecScheduler::Period_t period,
+                              RtecScheduler::Importance_t importance,
+                              RtecScheduler::Quantum_t quantum,
+                              CORBA::Long threads,
+                              RtecScheduler::Info_Type_t info_type
+                              ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
+{
+  // Just go ahead and call the set method
+  this->set (handle, criticality, time, typical_time, cached_time,
+             period, importance, quantum, threads, info_type ACE_ENV_ARG_PARAMETER );
+}
+
+
+void
+ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos
+                                ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+{
+  for (u_int i = 0; i < infos.length (); ++i)
+    {
+      // Call the internal set method.
+      this->set (infos[i].handle,
+                 infos[i].criticality,
+                 infos[i].worst_case_execution_time,
+                 infos[i].typical_execution_time,
+                 infos[i].cached_execution_time,
+                 infos[i].period,
+                 infos[i].importance,
+                 infos[i].quantum,
+                 infos[i].threads,
+                 infos[i].info_type
+                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+}
+
+void
+ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos
+                                    ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+{
+  for (u_int i = 0; i < infos.length (); ++i)
+    {
+      // Call the internal set method.
+      this->set (infos[i].handle,
+                 infos[i].criticality,
+                 infos[i].worst_case_execution_time,
+                 infos[i].typical_execution_time,
+                 infos[i].cached_execution_time,
+                 infos[i].period,
+                 infos[i].importance,
+                 infos[i].quantum,
+                 infos[i].threads,
+                 infos[i].info_type
+                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+}
+
+
+void
+ACE_Runtime_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set& infos
+                                  ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK,
+                      RtecScheduler::INTERNAL,
+                      RtecScheduler::SYNCHRONIZATION_FAILURE))
+{
+  // Just call the set sequence method
+  this->set_seq (infos ACE_ENV_ARG_PARAMETER);
+}
+
+
 // Returns the priority and subpriority values assigned to an RT_Info,
 // based on its handle.
 
@@ -222,6 +309,75 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 #endif
 }
 
+
+// In the reconfig scheduler, this method removes a dependency between
+// two RT_Infos.  In the run time scheduler, this is a no-op.
+
+void
+ACE_Runtime_Scheduler::remove_dependency (RtecScheduler::handle_t handle,
+                                          RtecScheduler::handle_t /* dependency */,
+                                          CORBA::Long /* number_of_calls */,
+                                          RtecScheduler::Dependency_Type_t /* dependency_type */
+                                          ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
+{
+  if (handle <= 0 || handle > entry_count_)
+    ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+}
+
+
+// In the reconfig scheduler, this method enables a dependency between
+// two RT_Infos.  In the run time scheduler, this is a no-op.
+
+void
+ACE_Runtime_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t handle,
+                                                    RtecScheduler::handle_t /* dependency */,
+                                                    CORBA::Long /* number_of_calls */,
+                                                    RtecScheduler::Dependency_Type_t /* dependency_type */,
+                                                    RtecScheduler::Dependency_Enabled_Type_t /* enabled */
+                                                    ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
+{
+  if (handle <= 0 || handle > entry_count_)
+    ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+}
+
+
+// In the reconfig scheduler, this method enables or disables an RT_Info.
+// In the run time scheduler, this is a no-op.
+
+void
+ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
+                                                 RtecScheduler::RT_Info_Enabled_Type_t /* enabled */
+                                                 ACE_ENV_ARG_DECL)
+     ACE_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::UNKNOWN_TASK))
+{
+  if (handle <= 0 || handle > entry_count_)
+    ACE_THROW (RtecScheduler::UNKNOWN_TASK ());
+}
+
+
+virtual void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies
+                                                ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RtecScheduler::SYNCHRONIZATION_FAILURE,
+                   RtecScheduler::UNKNOWN_TASK))
+  // This method sets the enable state of a sequence of dependencies.
+{
+}
+
+virtual void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set
+                                           ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   RtecScheduler::SYNCHRONIZATION_FAILURE,
+                   RtecScheduler::UNKNOWN_TASK));
+// This method enables or disables a sequence of RT_Infos.
+{
+}
+
 // In the config run scheduler, this method causes scheduling information
 // to be computed for all registered RT_Infos.  In the run time scheduler,
 // this is a no-op.
@@ -230,6 +386,7 @@ void
 ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
                                            CORBA::Long /* maximum_priority */,
                                            RtecScheduler::RT_Info_Set_out /* infos */,
+                                           RtecScheduler::Dependency_Set_out /*dependencies */,
                                            RtecScheduler::Config_Info_Set_out /* configs */,
                                            RtecScheduler::Scheduling_Anomaly_Set_out /* anomalies */
                                            ACE_ENV_ARG_DECL_NOT_USED)
@@ -243,6 +400,81 @@ ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long /* minimum_priority */,
   // TODO: fill up the infos.
   return;
 }
+
+// Recomputes the scheduling priorities, etc.
+
+void
+ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
+                                             CORBA::Long maximum_priority,
+                                             RtecScheduler::Scheduling_Anomaly_Set_out anomalies
+                                             ACE_ENV_ARG_DECL)
+
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+                     RtecScheduler::TASK_COUNT_MISMATCH,
+                     RtecScheduler::INTERNAL,
+                     RtecScheduler::DUPLICATE_NAME))
+{
+  // TODO: Right now just do nothing.
+  ACE_UNUSED_ARG(minimum_priority);
+  ACE_UNUSED_ARG(maximum_priority);
+  ACE_UNUSED_ARG(anomalies);
+
+  return;
+}
+
+
+// Returns the set of rt_infos, with their assigned priorities (as
+// of the last schedule re-computation).
+
+void
+ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos
+                                        ACE_ENV_ARG_DECL)
+
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
+{
+  // TODO: Right now just do nothing.
+  ACE_UNUSED_ARG(infos);
+  return;
+}
+
+
+// Returns the set of rt_infos, with their assigned priorities (as
+// of the last schedule re-computation).
+
+void
+ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dependencies
+                                           ACE_ENV_ARG_DECL)
+
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
+{
+  // TODO: Right now just do nothing.
+  ACE_UNUSED_ARG(dependencies);
+  return;
+}
+
+
+// Returns the set of config_infos, describing the appropriate
+// number, types, and priority levels for the dispatching lanes.
+
+void
+ACE_Runtime_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out configs
+                                            ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     RtecScheduler::SYNCHRONIZATION_FAILURE,
+                     RtecScheduler::INTERNAL))
+{
+  // TODO: Right now just do nothing.
+  ACE_UNUSED_ARG(configs);
+  return;
+}
+
 
 // Provides the thread priority and queue type for the given priority
 // level.
