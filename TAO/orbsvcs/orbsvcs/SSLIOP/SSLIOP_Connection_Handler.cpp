@@ -198,6 +198,9 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       // passed to the reactor on ORB destruction.
       this->is_registered (0);
 
+      // Close the handle..
+      this->peer ().close ();
+
       // Decrement the reference count
       this->decr_ref_count ();
     }
