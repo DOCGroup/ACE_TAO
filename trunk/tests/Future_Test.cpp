@@ -17,9 +17,7 @@
 // 
 // ============================================================================
 
-#include <math.h>
 #include "ace/Task.h"
-
 #include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
@@ -47,6 +45,34 @@ static ATOMIC_INT capsule_no (0);
 static ATOMIC_INT methodobject_count (0);
 static ATOMIC_INT methodobject_no (0);
 
+// Function that can burn up noticeable CPU time:  brute-force
+// determination of whether number "n" is prime.  Returns 0 if
+// it is prime, or the smallest factor if it is not prime.
+static
+unsigned long
+is_prime (const unsigned long n,
+          const unsigned long min_factor,
+          const unsigned long max_factor)
+{
+  if (n > 3)
+    {
+      for (unsigned long factor = min_factor; factor <= max_factor; ++factor)
+        {
+          if (n / factor * factor == n)
+            {
+              return factor;
+            }
+        }
+
+      return 0;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+
 class Scheduler : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
   //     Active Object Scheduler.
@@ -54,17 +80,17 @@ class Scheduler : public ACE_Task<ACE_MT_SYNCH>
   friend class Method_ObjectWork;
 public:
   Scheduler (const char *, Scheduler * = 0);
-  ~Scheduler (void);
+  virtual ~Scheduler (void);
 
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
   virtual int svc (void);
 
-  ACE_Future<double> work (double param, int count);
+  ACE_Future<unsigned long> work (unsigned long param, int count = 1);
   ACE_Future<const char*> name (void);
   void end (void);
 
-  double work_i (double, int);
+  unsigned long work_i (unsigned long, int);
   const char *name_i (void);
 
 private:
@@ -78,21 +104,21 @@ class Method_Object_work : public ACE_Method_Object
   //     Reification of the <work> method.
 {
 public:
-  Method_Object_work (Scheduler *, double, int, ACE_Future<double> &);
-  ~Method_Object_work (void);
+  Method_Object_work (Scheduler *, unsigned long, int, ACE_Future<unsigned long> &);
+  virtual ~Method_Object_work (void);
   virtual int call (void);
 
 private:
   Scheduler *scheduler_;
-  double param_;
+  unsigned long param_;
   int count_;
-  ACE_Future<double> future_result_;
+  ACE_Future<unsigned long> future_result_;
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        double new_param, 
+				        unsigned long new_param, 
 				        int new_count, 
-					ACE_Future<double> &new_result)
+					ACE_Future<unsigned long> &new_result)
   :   scheduler_ (new_Scheduler),
       param_ (new_param),
       count_ (new_count),
@@ -120,7 +146,7 @@ class Method_Object_name : public ACE_Method_Object
 {
 public:
   Method_Object_name (Scheduler *, ACE_Future<const char*> &);
-  ~Method_Object_name (void);
+  virtual ~Method_Object_name (void);
   virtual int call (void);
 
 private:
@@ -155,7 +181,7 @@ class Method_Object_end : public ACE_Method_Object
 {
 public:
   Method_Object_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
-  ~Method_Object_end (void) {}
+  virtual ~Method_Object_end (void) {}
   virtual int call (void) { this->scheduler_->close (); return -1; }
 
 private:
@@ -226,22 +252,13 @@ Scheduler::end (void)
 
 
 // Here's where the Work takes place.
-double 
-Scheduler::work_i (double param, 
+unsigned long
+Scheduler::work_i (unsigned long param, 
 		   int count)
 {
-  double x = 0, y = 0;
-  
-  // @@ We should probably do something fun here, like compute the
-  // Fibonacci sequence or something.
+  ACE_UNUSED_ARG (count);
 
-  for (int j = 0; j < count; j++) 
-    {
-      x = x + param;
-      y = y + ::sin (x);
-    }
-
-  return y;
+  return is_prime (param, 2, param / 2);
 }
 
 const char *
@@ -273,14 +290,14 @@ Scheduler::name (void)
     }
 }
 
-ACE_Future<double> 
-Scheduler::work (double newparam, int newcount)
+ACE_Future<unsigned long> 
+Scheduler::work (unsigned long newparam, int newcount)
 {
   if (this->scheduler_) {
     return this->scheduler_->work (newparam, newcount);
   }
   else {
-    ACE_Future<double> new_future;
+    ACE_Future<unsigned long> new_future;
 
     this->activation_queue_.enqueue
       (new Method_Object_work (this, newparam, newcount, new_future));
@@ -289,9 +306,6 @@ Scheduler::work (double newparam, int newcount)
 }
 
 // @@ These values should be set by the command line options!
-
-// Total number of iterations to <work>
-static int n_iterations = 50000;
 
 // Total number of loops.
 static int n_loops = 100;
@@ -327,15 +341,15 @@ main (int, char *[])
   for (int i = 0; i < n_loops; i++) 
     {
       {
-	ACE_Future<double> fresulta, fresultb, fresultc, fresultd, fresulte;
+	ACE_Future<unsigned long> fresulta, fresultb, fresultc, fresultd, fresulte;
 	ACE_Future<const char*> fname;
 
 	ACE_DEBUG ((LM_DEBUG, "(%t) going to do a non-blocking call\n"));
 
-	fresulta = andres->work (0.01, 100 + (n_iterations * (i % 2)));
-	fresultb = peter->work (0.01, 100 + (n_iterations * (i % 2)));
-	fresultc = helmut->work (0.01, 100 + (n_iterations * (i % 2)));
-	fresultd = matias->work (0.02, 100 + (n_iterations * (i % 2)));
+	fresulta = andres->work (9013);
+	fresultb = peter->work (9013);
+	fresultc = helmut->work (9013);
+	fresultd = matias->work (9013);
 	fname = andres->name ();
 
 	// see if the result is available...
@@ -352,13 +366,13 @@ main (int, char *[])
 	  {
 	    // Every 3rd time... disconnect the futures...
 	    // but "fresulte" should still contain the result...
-	    fresulta.cancel (10.0);
-	    fresultb.cancel (20.0);
-	    fresultc.cancel (30.0);
-	    fresultd.cancel (40.0);
+	    fresulta.cancel (10ul);
+	    fresultb.cancel (20ul);
+	    fresultc.cancel (30ul);
+	    fresultd.cancel (40ul);
 	  }
 
-	double resulta = 0, resultb = 0, resultc = 0, resultd = 0, resulte = 0;
+	unsigned long resulta = 0, resultb = 0, resultc = 0, resultd = 0, resulte = 0;
 
 	fresulta.get (resulta);
 	fresultb.get (resultb);
@@ -366,11 +380,11 @@ main (int, char *[])
 	fresultd.get (resultd);
 	fresulte.get (resulte);
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) result a %f\n", resulte));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result b %f\n", resulta));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result c %f\n", resultb));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result d %f\n", resultc));
-	ACE_DEBUG ((LM_DEBUG, "(%t) result e %f\n", resultd));
+	ACE_DEBUG ((LM_DEBUG, "(%t) result a %u\n", (unsigned int) resulte));
+	ACE_DEBUG ((LM_DEBUG, "(%t) result b %u\n", (unsigned int) resulta));
+	ACE_DEBUG ((LM_DEBUG, "(%t) result c %u\n", (unsigned int) resultb));
+	ACE_DEBUG ((LM_DEBUG, "(%t) result d %u\n", (unsigned int) resultc));
+	ACE_DEBUG ((LM_DEBUG, "(%t) result e %u\n", (unsigned int) resultd));
 
 	const char *name;
 
