@@ -1,7 +1,16 @@
+Tue Apr 14 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thread_Manager_Test.cpp (main): don't try to suspend/resume
+          DCE threads, because they don't support it.  Added a start barrier,
+          to ensure that worker threads set up their signal handlers before
+          the main thread tries to signal them.  Drop DEFAULT_ITERATIONS from
+          100000 to 10000 because 100000 takes a long time on a 200 MHz
+          Pentium.
+
 Tue Apr 14 12:59:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Hash_Map_Manager_Test.cpp: Changed the consts to 
-	  size_t, as well...
+        * tests/Hash_Map_Manager_Test.cpp: Changed the consts to
+          size_t, as well...
 
 Tue Apr 14 11:40:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
