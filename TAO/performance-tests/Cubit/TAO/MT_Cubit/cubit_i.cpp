@@ -25,16 +25,7 @@ Cubit_i::cube_octet (CORBA::Octet o,
       ts_->barrier_->wait ();
     }
   
-//   if (ts_->run_server_utilization_test_ == 0)
-//     {
-//       ACE_DEBUG ((LM_DEBUG,
-// 		  "(%t) )))))))) "
-// 		  "test STARTED at %D\n"));
-      
-//       ts_->run_server_utilization_test_ = 1;
-//       this->util_started_ = 1;
-//       this->ts_->timer_.start ();
-//     }
+  ts_->loop_count_++;
 
   return (CORBA::Octet) (o * o * o);
 }
@@ -75,6 +66,9 @@ void Cubit_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) Calling TAO_ORB_Core_instance ()->orb ()->shutdown ()\n"));
+
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
+  // this is to signal the utilization thread to exit its loop.
   ts_->utilization_task_started_ = 0;
 }

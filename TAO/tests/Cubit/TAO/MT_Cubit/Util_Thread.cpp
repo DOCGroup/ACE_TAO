@@ -51,7 +51,7 @@ Util_Thread::svc (void)
   return 0;
 }
 
-double
+u_long
 Util_Thread::get_number_of_computations (void)
 {
   return this->number_of_computations_;
