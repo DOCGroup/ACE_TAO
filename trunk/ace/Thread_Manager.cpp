@@ -1048,9 +1048,9 @@ ACE_Thread_Manager::remove_thr_all (void)
 // Factor out some common behavior to simplify the following methods.
 #define ACE_THR_OP(OP,STATE) \
   int result = OP (td->thr_handle_); \
-  if (result != 0) { \
-    this->thr_to_be_removed_.enqueue_tail (td); \
-    errno = result; \
+  if (result == -1) { \
+    if (errno != ENOTSUP) \
+      this->thr_to_be_removed_.enqueue_tail (td); \
     return -1; \
   } \
   else { \
