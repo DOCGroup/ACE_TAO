@@ -409,16 +409,6 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   else
     ++iterator;
 
-  // A recursive thread lock without using a recursive thread lock.
-  // Non_Servant_Upcall has a magic constructor and destructor.  We
-  // unlock the Object_Adapter lock for the duration of the adapter
-  // activator(s) upcalls; reacquiring once the upcalls complete.
-  // Even though we are releasing the lock, other threads will not be
-  // able to make progress since
-  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  Non_Servant_Upcall non_servant_upcall (*parent);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
   for (;
        iterator != end;
        ++iterator)
@@ -1251,7 +1241,7 @@ TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
   // Adjust the nesting level.
   this->object_adapter_.non_servant_upcall_nesting_level_++;
 
-  // Release the Object Adapter lock.
+  // We always release
   this->object_adapter_.lock ().release ();
 }
 
@@ -1260,11 +1250,10 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
   // Reacquire the Object Adapter lock.
   this->object_adapter_.lock ().acquire ();
 
+  this->object_adapter_.non_servant_upcall_nesting_level_--;
+
   // We are done with this nested upcall.
   this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;
-
-  // Adjust the nesting level.
-  this->object_adapter_.non_servant_upcall_nesting_level_--;
 
   // If we are at the outer nested upcall.
   if (this->object_adapter_.non_servant_upcall_nesting_level_ == 0)
