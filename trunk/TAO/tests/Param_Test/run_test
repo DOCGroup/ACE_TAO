@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PORT=20000
+start_server()
+{
+  ./server -ORBport $PORT &
+}
+
+# Restart the server if we get SIGCHLD, i.e., the server died.
+trap "start_server" 17
+start_server
+
+TYPES="short ubstring fixed_struct var_struct nested_struct struct_seq objref"
+for type in $TYPES
+do
+  echo "BEGIN Testing type $type"
+  sleep 1	# Give the server a chance to start up
+  ./client -p $PORT -t $type
+  echo "END   Testing type $type"
+done 
