@@ -39,6 +39,11 @@
 namespace CORBA
 {
   class ServerRequest;
+  typedef ServerRequest *ServerRequest_ptr;
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ServerRequest_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ServerRequest_ptr);
+
   typedef TAO_Pseudo_Var_T<ServerRequest> ServerRequest_var;
   typedef TAO_Pseudo_Out_T<ServerRequest, ServerRequest_var> ServerRequest_out;
 
