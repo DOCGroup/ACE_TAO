@@ -1,15 +1,30 @@
+Tue May 16 09:53:19 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/CDR_Stream.i:
+          Change swap_8 again, this time it compiles with -O2 and -O3,
+          using the assembly instructions for full performance.
+
+        * tests/CDR_Array_Test.cpp:
+          Fixed several problems reported during the last night builds.
+          Mostly template quirks and the ever annoying problems of Sun/CC
+          4.2 with static_casts
+
+        * tests/CDR_File_Test.cpp:
+          Don't use ?: operators when the arguments are of different
+          types.
+
 Mon May 15 21:00:31 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/CDR_Stream.i:
-	  The swap_8 operator was not working when debugging was
-	  disabled.
+        * ace/CDR_Stream.i:
+          The swap_8 operator was not working when debugging was
+          disabled.
 
 Mon May 15 16:06:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/CORBA_macros.h: 
+        * ace/CORBA_macros.h:
 
-	  Added Support for Exception::_downcast () by modifying _narrow
-	  to _downcast (). Thanks to William Horn <whorn1984@my-deja.com>.
+          Added Support for Exception::_downcast () by modifying _narrow
+          to _downcast (). Thanks to William Horn <whorn1984@my-deja.com>.
 
 
 Mon May 15 15:49:37 2000  Carlos O'Ryan  <coryan@uci.edu>
