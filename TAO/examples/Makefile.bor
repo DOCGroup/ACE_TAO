@@ -10,6 +10,7 @@ DIRS =  \
         Callback_Quoter Simple \
         Content_Server \
         Event_Comm \
+        ior_corbaloc \
         Load_Balancing \
         Load_Balancing_persistent \
         OBV \
@@ -17,8 +18,8 @@ DIRS =  \
         POA \
         Quoter \
         RTCORBA \
+        RTScheduling \
         Simple \
-  	ior_corbaloc \
-	TypeCode_Creation
+        TypeCode_Creation
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
