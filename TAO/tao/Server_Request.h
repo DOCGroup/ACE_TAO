@@ -174,10 +174,6 @@ public:
 
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
-
-  // = Stuff required for memory management.
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
 };
 
 class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
@@ -270,9 +266,10 @@ public:
 
   virtual const TAO_GIOP_ServiceContextList &service_info (void) const;
 
-  // = Stuff required for memory management.
-  virtual CORBA::ULong _incr_refcnt (void);
-  virtual CORBA::ULong _decr_refcnt (void);
+  // The pseudo object methods, not really needed because the class is
+  // not in the spec, but we add them for the sake of completeness.
+  static IIOP_ServerRequest* _duplicate (IIOP_ServerRequest*);
+  static IIOP_ServerRequest* _nil (void);
 
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
@@ -317,14 +314,11 @@ private:
   CORBA::ULong exception_type_;
   // exception type (will be NO_EXCEPTION in the majority of the cases)
 
-  CORBA::ULong refcount_;
-  // Number of things hold references to here.
-
   CORBA::ORB_ptr orb_;
   // The ORB with which this server request is associated.
 
   TAO_POA *poa_;
-  // The object adapter with whicih this server request is associated.
+  // The object adapter with which this server request is associated.
 
   TAO_GIOP_ServiceContextList service_info_;
   // The service context for the request (CORBA Reference?)

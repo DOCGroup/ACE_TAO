@@ -37,7 +37,9 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
          || obj->_servant()->_downcast ("IDL:CORBA/Policy:1.0") == 0
       )
   {
-    CORBA_Policy_ptr new_obj = new CORBA_Policy(obj->_stubobj ());
+    STUB_Object *stub = obj->_stubobj ();
+    stub->_incr_refcnt ();
+    CORBA_Policy_ptr new_obj = new CORBA_Policy(stub);
     return new_obj;
   } // end of if
   STUB_Object *stub = obj->_servant ()->_create_stub (env);

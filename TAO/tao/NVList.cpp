@@ -8,9 +8,12 @@
 # include "tao/NVList.i"
 #endif /* ! __ACE_INLINE__ */
 
+// Reference counting for DII Request object
+
 CORBA::ULong
 CORBA_NamedValue::_incr_refcnt (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return this->refcount_++;
 }
 
@@ -18,29 +21,14 @@ CORBA::ULong
 CORBA_NamedValue::_decr_refcnt (void)
 {
   {
-    ACE_ASSERT (this != 0);
-
-    if (--this->refcount_ != 0)
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
       return this->refcount_;
   }
 
   delete this;
   return 0;
-}
-
-// Reference counting for DII Request object
-
-void
-CORBA::release (CORBA::NamedValue_ptr nv)
-{
-  if (nv)
-    nv->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::NamedValue_ptr nv)
-{
-  return (CORBA::Boolean) (nv == 0);
 }
 
 CORBA_NamedValue::~CORBA_NamedValue (void)
@@ -53,11 +41,12 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
   // the any will be destroyed by itself
 }
 
-// =Methods on class NVList
+// ****************************************************************
 
 CORBA::ULong
 CORBA_NVList::_incr_refcnt (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return this->refcount_++;
 }
 
@@ -65,29 +54,14 @@ CORBA::ULong
 CORBA_NVList::_decr_refcnt (void)
 {
   {
-    ACE_ASSERT (this != 0);
-
-    if (--this->refcount_ != 0)
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
       return this->refcount_;
   }
 
   delete this;
   return 0;
-}
-
-// Reference counting for DII Request object
-
-void
-CORBA::release (CORBA::NVList_ptr nvl)
-{
-  if (nvl)
-    nvl->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::NVList_ptr nvl)
-{
-  return (CORBA::Boolean) (nvl == 0);
 }
 
 CORBA_NVList::~CORBA_NVList (void)

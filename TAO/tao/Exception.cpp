@@ -64,20 +64,16 @@ CORBA_Exception::operator new (size_t s)
 }
 
 CORBA_Exception::CORBA_Exception (CORBA::TypeCode_ptr tc)
-  : type_ (tc),
+  : type_ (CORBA::TypeCode::_duplicate (tc)),
     refcount_ (0)
 {
-  if (this->type_)
-    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 }
 
 CORBA_Exception::CORBA_Exception (const CORBA_Exception &src)
-  : type_ (src.type_),
+  : type_ (CORBA::TypeCode::_duplicate (src.type_)),
     refcount_ (0)
 {
-  if (this->type_)
-    this->type_->_incr_refcnt ();
   assert (this->type_ != 0);
 }
 
@@ -95,10 +91,8 @@ CORBA_Exception &
 CORBA_Exception::operator = (const CORBA_Exception &src)
 {
   if (this->type_)
-    this->type_->_decr_refcnt ();
-  this->type_ = src.type_;
-  if (this->type_)
-    this->type_->_incr_refcnt ();
+    CORBA::release (this->type_);
+  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
   assert (this->type_ != 0);
 
   return *this;
@@ -130,18 +124,23 @@ CORBA_Exception::_is_a (const char* repository_id) const
 CORBA::ULong
 CORBA_Exception::_incr_refcnt (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return ++this->refcount_;
 }
 
 CORBA::ULong
 CORBA_Exception::_decr_refcnt (void)
 {
-  this->refcount_--;
-  if (this->refcount_ != 0)
-    return this->refcount_;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+
+    // release the lock before destroying the object.
+  }
   
   delete this;
-
   return 0;
 }
 
@@ -160,10 +159,8 @@ CORBA_UserException &
 CORBA_UserException::operator = (const CORBA_UserException &src)
 {
   if (this->type_)
-    this->type_->_decr_refcnt ();
-  this->type_ = src.type_;
-  if (this->type_)
-    this->type_->_incr_refcnt ();
+    CORBA::release (this->type_);
+  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
   assert (this->type_ != 0);
 
   return *this;
@@ -209,10 +206,8 @@ CORBA_SystemException &
 CORBA_SystemException::operator = (const CORBA_SystemException &src)
 {
   if (this->type_)
-    this->type_->_decr_refcnt ();
-  this->type_ = src.type_;
-  if (this->type_)
-    this->type_->_incr_refcnt ();
+    CORBA::release (this->type_);
+  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
 
   this->minor_ = src.minor_;
   this->completed_ = src.completed_;

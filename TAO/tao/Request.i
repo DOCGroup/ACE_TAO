@@ -4,6 +4,33 @@
 
 // Return the target of this request.
 
+ACE_INLINE void
+CORBA::release (CORBA::Request_ptr req)
+{
+  if (req)
+    req->_decr_refcnt ();
+}
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Request_ptr req)
+{
+  return (CORBA::Boolean) (req == 0);
+}
+
+ACE_INLINE CORBA_Request*
+CORBA_Request::_duplicate (CORBA_Request* x)
+{
+  if (x != 0)
+    x->_incr_refcnt ();
+  return x;
+}
+
+ACE_INLINE CORBA_Request*
+CORBA_Request::_nil (void)
+{
+  return 0;
+}
+
 ACE_INLINE CORBA::Object_ptr 
 CORBA_Request::target (void) const 
 { 

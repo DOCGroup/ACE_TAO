@@ -146,6 +146,10 @@ private:
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // Protect the reference count, this is OK because we do no
+  // duplicates or releases on the critical path.
+
   // = Unimplemented methods
   CORBA_Object (const CORBA_Object &);
   CORBA_Object &operator = (const CORBA_Object &);

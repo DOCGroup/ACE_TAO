@@ -57,7 +57,11 @@ public:
   void send_oneway (void);
   // Send a oneway request.
 
-  // = Required for COM IUnknown support
+  // Pseudo object methods
+  static CORBA_Request* _duplicate (CORBA_Request*);
+  static CORBA_Request* _nil (void);
+
+  // = Reference counting.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
@@ -100,6 +104,9 @@ private:
 
   CORBA::ULong refcount_;
   // reference counting
+
+  ACE_SYNCH_MUTEX refcount_lock_;
+  // protect the reference count
 };
 
 #if defined (__ACE_INLINE__)

@@ -35,6 +35,10 @@ public:
 
   // @@ add "==", "<", ">" operators
 
+  // The pseudo object operations.
+  static CORBA_Principal* _duplicate (CORBA_Principal*);
+  static CORBA_Principal* _nil (void);
+
   // = Stuff required for memory management.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -42,13 +46,19 @@ public:
   CORBA_Principal (void);
 
 private:
-  CORBA::ULong refcount_;
-
   ~CORBA_Principal (void);
 
   // = these are not provided
   CORBA_Principal &operator = (const CORBA::Principal_ptr &);
   CORBA_Principal (const CORBA::Principal_ptr &);
+
+private:
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
+
+  ACE_SYNCH_MUTEX refcount_mutex_;
+  // Protect the reference count, this is OK because we do no
+  // duplicates or releases on the critical path.
 
 #if defined (__GNUG__)
   // G++ (even 2.6.3) stupidly thinks instances can't be created.
@@ -62,5 +72,9 @@ operator<<(TAO_OutputCDR&, CORBA_Principal*);
 
 extern TAO_Export TAO_InputCDR&
 operator>>(TAO_InputCDR&, CORBA_Principal*&);
+
+#if defined (__ACE_INLINE__)
+# include "tao/Principal.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PRINCIPAL_H */

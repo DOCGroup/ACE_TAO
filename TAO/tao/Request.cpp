@@ -9,36 +9,25 @@
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
   return refcount_++;
 }
 
 CORBA::ULong
 CORBA_Request::_decr_refcnt (void)
 {
-  ACE_ASSERT (this != 0);
-
-  if (--refcount_ != 0)
-    return refcount_;
+  {
+    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
+    this->refcount_--;
+    if (this->refcount_ != 0)
+      return this->refcount_;
+  }
 
   delete this;
   return 0;
 }
 
 // Reference counting for DII Request object
-
-void
-CORBA::release (CORBA::Request_ptr req)
-{
-  if (req)
-    req->_decr_refcnt ();
-}
-
-CORBA::Boolean
-CORBA::is_nil (CORBA::Request_ptr req)
-{
-  return (CORBA::Boolean) (req == 0);
-}
-
 
 // DII Request class implementation
 
@@ -90,7 +79,6 @@ void
 CORBA_Request::invoke (void)
 {
   STUB_Object *stub = this->target_->_stubobj ();
-  stub->_incr_refcnt ();
 
   stub->do_dynamic_call ((char *) opname_,
                          CORBA::B_TRUE,
@@ -99,14 +87,12 @@ CORBA_Request::invoke (void)
                          flags_,
                          exceptions_,
                          env_);
-  stub->_decr_refcnt ();
 }
 
 void
 CORBA_Request::send_oneway (void)
 {
   STUB_Object *stub = this->target_->_stubobj ();
-  stub->_incr_refcnt ();
 
   stub->do_dynamic_call ((char *) opname_,
                          CORBA::B_FALSE,
@@ -115,5 +101,4 @@ CORBA_Request::send_oneway (void)
                          flags_,
                          exceptions_,
                          env_);
-  stub->_decr_refcnt ();
 }
