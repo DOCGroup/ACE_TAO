@@ -758,6 +758,7 @@ TAO_IFR_Service_Utils::check_subsection (
     ACE_Configuration_Section_Key &key
     ACE_ENV_ARG_DECL
   )
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Configuration_Section_Key sub_key;
   int status =
