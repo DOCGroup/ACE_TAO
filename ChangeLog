@@ -1,3 +1,12 @@
+Fri Nov  5 15:36:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+	* include/makeinclude/rules.bin.GNU:
+	  Changes to support VxWorks 5.5.1 linking (both DIAB and GNU toolchains).
+	  With VxWorks 5.5.1 linking is done based on rules/targets defined in the
+          makefile configuration provided with the VxWorks toolset which is embedded
+          in the ACE/TAO structure through the platform_macros.
+
 Fri Nov  5 15:30:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
