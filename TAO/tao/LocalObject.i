@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 // ****************************************************************
@@ -20,27 +22,31 @@ CORBA_LocalObject::_nil (void)
 
 ACE_INLINE CORBA_LocalObject_ptr
 CORBA_LocalObject::_narrow (CORBA_Object_ptr obj,
-                             CORBA_Environment&)
+                            CORBA_Environment &)
 {
   if (obj->_is_local () != 0)
     return
-      ACE_reinterpret_cast (CORBA_LocalObject_ptr,
-                            obj->_tao_QueryInterface
-                              (ACE_reinterpret_cast (ptr_arith_t,
-                                                     &CORBA_LocalObject::_narrow)));
+      ACE_reinterpret_cast (
+        CORBA_LocalObject_ptr,
+        obj->_tao_QueryInterface (
+          ACE_reinterpret_cast (ptr_arith_t,
+                                &CORBA_LocalObject::_narrow)));
+
   return 0;
 }
 
 ACE_INLINE CORBA_LocalObject_ptr
 CORBA_LocalObject::_unchecked_narrow (CORBA_Object_ptr obj,
-                                       CORBA_Environment&)
+                                      CORBA_Environment &)
 {
   if (obj->_is_local () != 0)
     return
-      ACE_reinterpret_cast (CORBA_LocalObject_ptr,
-                            obj->_tao_QueryInterface
-                              (ACE_reinterpret_cast (ptr_arith_t,
-                                                     &CORBA_LocalObject::_narrow)));
+      ACE_reinterpret_cast (
+        CORBA_LocalObject_ptr,
+        obj->_tao_QueryInterface (
+          ACE_reinterpret_cast (ptr_arith_t,
+                                &CORBA_LocalObject::_narrow)));
+
   return 0;
 }
 
@@ -52,7 +58,7 @@ CORBA_LocalObject::CORBA_LocalObject (void)
 
 ACE_INLINE
 TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
-  //  : CORBA_LocalObject ()
+  // : CORBA_LocalObject ()
 {
 }
 
@@ -85,9 +91,9 @@ CORBA_LocalObject_var::ptr (void) const
 
 ACE_INLINE
 CORBA_LocalObject_var::CORBA_LocalObject_var (const CORBA_LocalObject_var &p)
-  // copy constructor
   : ptr_ (CORBA_LocalObject::_duplicate (p.ptr ()))
-{}
+{
+}
 
 ACE_INLINE CORBA_LocalObject_var &
 CORBA_LocalObject_var::operator= (CORBA_LocalObject_ptr p)
@@ -101,10 +107,11 @@ ACE_INLINE CORBA_LocalObject_var &
 CORBA_LocalObject_var::operator= (const CORBA_LocalObject_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_LocalObject::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = CORBA_LocalObject::_duplicate (p.ptr ());
+    }
+
   return *this;
 }
 
@@ -161,23 +168,24 @@ CORBA_LocalObject_var::_retn (void)
 
 ACE_INLINE
 CORBA_LocalObject_out::CORBA_LocalObject_out (CORBA_LocalObject_ptr &p)
-        : ptr_ (p)
+  : ptr_ (p)
 {
   this->ptr_ = CORBA_LocalObject::_nil ();
 }
 
 ACE_INLINE
-CORBA_LocalObject_out::CORBA_LocalObject_out (CORBA_LocalObject_var &p) // constructor from _var
-        : ptr_ (p.out ())
+CORBA_LocalObject_out::CORBA_LocalObject_out (CORBA_LocalObject_var &p)
+  : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
   this->ptr_ = CORBA_LocalObject::_nil ();
 }
 
 ACE_INLINE
-CORBA_LocalObject_out::CORBA_LocalObject_out (const CORBA_LocalObject_out &p) // copy constructor
-        : ptr_ (p.ptr_)
-{}
+CORBA_LocalObject_out::CORBA_LocalObject_out (const CORBA_LocalObject_out &p)
+  : ptr_ (p.ptr_)
+{
+}
 
 ACE_INLINE CORBA_LocalObject_out &
 CORBA_LocalObject_out::operator= (const CORBA_LocalObject_out &p)

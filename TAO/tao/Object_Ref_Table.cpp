@@ -34,14 +34,14 @@ TAO_Object_Ref_Table::register_initial_reference (
   CORBA::Environment &ACE_TRY_ENV)
 {
   if (id == 0)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 24,
+    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
                                  CORBA::COMPLETED_NO));
   else if (ACE_OS_String::strlen (id) == 0)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 24,
+    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
                                  CORBA::COMPLETED_NO));
 
   if (CORBA::is_nil (obj))
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 24,
+    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
                                  CORBA::COMPLETED_NO));
 
   int result = this->bind (id, obj);

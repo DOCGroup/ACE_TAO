@@ -1,3 +1,5 @@
+// -*- IDL -*-
+
 // $Id$
 
 // Included for compatibility with the CORBA 2 specification.
@@ -28,6 +30,13 @@ module CORBA
     NO_EXCEPTION,
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
+  };
+
+  enum ParameterMode
+  {
+    PARAM_IN,
+    PARAM_OUT,
+    PARAM_INOUT
   };
 
   interface Request;
