@@ -1,3 +1,11 @@
+Fri Sep 04 13:56:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.h (ACE_Log_Msg): Added a new ACE_DEBUG format
+	  character 'A' which prints out an ACE_timer_t value.  This is
+	  most useful when you want to print out the timers in
+	  ACE_Profile_Timer::ACE_Elapse_Time.  Thanks to Naga for
+	  providing the brilliant idea.
+	  
 Fri Sep  4 13:53:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Naming_Context.cpp,
