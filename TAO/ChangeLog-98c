@@ -1,20 +1,18 @@
 Sat Oct 25 22:28:42 1997  Carlos O'Ryan  <coryan@MILONGA>
 
-	* TAO_IDL/fe/idl.ll: 
-	  Since yytext may be an "unsigned char*" under HP-UX they define
-	  an "alias"  __yytext. This hack fails miserably when using flex,
-	  since then the yytext thing can change on the fly. I use an
-	  inline function instead.
-	  Added support for #line preprocessor directives.
+	* TAO_IDL/fe/idl.ll: Since yytext may be an "unsigned char*" under
+ 	  HP-UX they define an "alias" __yytext. This hack fails miserably
+ 	  when using flex, since then the yytext thing can change on the
+ 	  fly. I use an inline function instead.  Added support for #line
+ 	  preprocessor directives.
 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	  Documented some of my changes for NT, namely the fact that
-	  unlinking the output file while still open por the parsing fails
-	  on NT.
+	* TAO_IDL/driver/drv_preproc.cpp: Documented some of my changes
+ 	  for NT, namely the fact that unlinking the output file while
+ 	  still open causes the parsing to fail on NT.
 
-	* TAO_IDL/tao_idl.dsp: 
-	  Added new folders for source files, header files, template
-	  files, etc. I modelled this based on the ACE project files.
+	* TAO_IDL/tao_idl.dsp: Added new folders for source files, header
+ 	  files, template files, etc. I modelled this based on the ACE
+ 	  project files.
 
 Sat Oct 25 18:14:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
