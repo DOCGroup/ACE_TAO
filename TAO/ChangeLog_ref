@@ -1,3 +1,12 @@
+Sun Jul 20 10:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: Changed the inclusion from
+	  Invocation_Base to Invocation_Adapter.h. 
+	
+	* TAO_IDL/be/be_visitor_operation/operation.cpp: Changed the
+	  argument in the constructor to pass  a null pointer. This is NOT
+	  right. This is a workaround for the timebeing. 
+
 Sun Jul 20 09:47:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ObjectReferenceTemplate.cpp: 
