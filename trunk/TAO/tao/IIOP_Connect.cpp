@@ -114,7 +114,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
     return -1;
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
-#if defined (TCP_NODELAY)
+#if !defined (ACE_LACKS_TCP_NODELAY)
   int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
 
@@ -123,7 +123,7 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
     return -1;
-#endif /* TCP_NODELAY */
+#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   (void) this->peer ().enable (ACE_CLOEXEC);
   // Set the close-on-exec flag for that file descriptor. If the
@@ -374,7 +374,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
     return -1;
 #endif /* ACE_LACKS_SOCKET_BUFSIZ */
 
-#if defined (TCP_NODELAY)
+#if !defined (ACE_LACKS_TCP_NODELAY)
   int nodelay =
     this->orb_core_->orb_params ()->nodelay ();
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
@@ -384,7 +384,7 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("NODELAY failed\n")),
                       -1);
-#endif /* TCP_NODELAY */
+#endif /* ! ACE_LACKS_TCP_NODELAY */
 
   (void) this->peer ().enable (ACE_CLOEXEC);
   // Set the close-on-exec flag for that file descriptor. If the
