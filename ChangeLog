@@ -1,3 +1,9 @@
+Fri Jun 16 14:40:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+        * bin/auto_run_tests.lst:
+          Add the LongUpcalls to the run_test lists.
+
 Fri Jun 16 16:00:45 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * include/makeinclude/{rules.bin.GNU,wrapper_macros.GNU}:
@@ -15,7 +21,7 @@ Fri Jun 16 14:24:36 2000  Steve Huston  <shuston@riverace.com>
 
 Fri Jun 16 08:40:38 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin/msvc_auto_compile.pl: 
+        * bin/msvc_auto_compile.pl:
 
           Moved the print statement for a project file from Build_Config
           to Build, so it will be executed for the -CORE target.
