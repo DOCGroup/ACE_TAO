@@ -181,8 +181,9 @@ enum Caching_Strategy_Type
 };
 
 // Default number of clients/servers.
-static int default_iterations = 3000;
-static int iterations = default_iterations;
+static int listen_once = 1;
+static int iterations = 2000;
+static int user_has_specified_iterations = 0;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
 
@@ -354,6 +355,23 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                                          &caching_connect_strategy,
                                          &activation_strategy);
 
+  // Connect strategy is required by the <out_of_sockets_handler>.
+  ACCEPT_STRATEGY listen_one_time_accept_strategy (caching_connect_strategy);
+
+  // If <listen_once> is true, only one Acceptor is used for the test.
+  ACCEPTOR listen_one_time_acceptor;
+  ACE_INET_Addr server_addr;
+
+  int result =
+    listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+                                   ACE_Reactor::instance (),
+                                   0,
+                                   &listen_one_time_accept_strategy);
+  ACE_ASSERT (result == 0);
+
+  result = listen_one_time_acceptor.acceptor ().get_local_addr (server_addr);
+  ACE_ASSERT (result == 0);
+
   for (int i = 1; i <= iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -361,37 +379,40 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
                   i));
 
       // Connect strategy is required by the <out_of_sockets_handler>.
-      ACCEPT_STRATEGY accept_strategy (caching_connect_strategy);
+      ACCEPT_STRATEGY listen_multiple_times_accept_strategy (caching_connect_strategy);
 
-      // Acceptor
-      ACCEPTOR acceptor;
-      ACE_INET_Addr server_addr;
+      // If <listen_once> is false, one Acceptor is used for every
+      // iteration.
+      ACCEPTOR listen_multiple_times_acceptor;
 
-      // Bind acceptor to any port and then find out what the port
-      // was.
-      if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
-                         ACE_Reactor::instance (),
-                         0,
-                         &accept_strategy) == -1)
+      if (!listen_once)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("open")));
-          ACE_ASSERT (0);
-        }
+          // Bind acceptor to any port and then find out what the port
+          // was.
+          if (listen_multiple_times_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+                                                   ACE_Reactor::instance (),
+                                                   0,
+                                                   &listen_multiple_times_accept_strategy) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("open")));
+              ACE_ASSERT (0);
+            }
 
-      if (acceptor.acceptor ().get_local_addr (server_addr) == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("get_local_addr")));
-          ACE_ASSERT (0);
-        }
+          if (listen_multiple_times_acceptor.acceptor ().get_local_addr (server_addr) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          ASYS_TEXT ("get_local_addr")));
+              ACE_ASSERT (0);
+            }
 
-      if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("starting server at port %d\n"),
-                    server_addr.get_port_number ()));
+          if (debug)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("starting server at port %d\n"),
+                        server_addr.get_port_number ()));
+        }
 
       // Run the cached blocking test.
       int result = cached_connect (strategy_connector,
@@ -460,7 +481,7 @@ test_caching_strategy_type (void)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:p:c:d");
+  ACE_Get_Opt get_opt (argc, argv, "l:i:p:c:d");
 
   int cc;
 
@@ -470,8 +491,12 @@ parse_args (int argc, char *argv[])
       case 'd':
         debug = 1;
         break;
+      case 'l':
+        listen_once = atoi (get_opt.optarg);
+        break;
       case 'i':
         iterations = atoi (get_opt.optarg);
+        user_has_specified_iterations = 1;
         break;
       case 'p':
         purge_percentage = atoi (get_opt.optarg);
@@ -497,6 +522,7 @@ parse_args (int argc, char *argv[])
                     ASYS_TEXT ("[-t (timeout)] ")
                     ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
                     ASYS_TEXT ("[-i (iterations)] ")
+                    ASYS_TEXT ("[-l (listen once)] ")
                     ASYS_TEXT ("[-d (addition debugging output)] ")
                     ASYS_TEXT ("[-p (purge percent)] "),
                     argv[0]));
@@ -515,6 +541,14 @@ main (int argc,
   if (result != 0)
     return result;
 
+#if defined (ACE_WIN32)
+  // Somehow, on Win32, the <listen once> option allows us to create
+  // more handles.
+  if (!user_has_specified_iterations &&
+      listen_once)
+    iterations *= 2;
+#endif /* ACE_WIN32 */
+
   // Start the test only if options are valid.
   ACE_START_TEST (ASYS_TEXT ("Cached_Accept_Conn_Test"));
 
@@ -528,10 +562,10 @@ main (int argc,
       caching_strategy_type = ACE_LRU;
       test_caching_strategy_type ();
 
-      // Default iterations are too many; we the user hasn't specified
+      // Default iterations are too many; if the user hasn't specified
       // otherwise, we'll shrink the iterations for LFU and FIFO.
-      if (iterations == default_iterations)
-        iterations = default_iterations / 100;
+      if (!user_has_specified_iterations)
+        iterations /= 100;
 
       caching_strategy_type = ACE_LFU;
       test_caching_strategy_type ();
