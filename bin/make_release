@@ -481,11 +481,11 @@ sub update_changelog () {
   my $message = "$now  $signature  <$logname\\\@cs.wustl.edu>\n\n" .
                 "        * $KIT version $version released.\n\n";
 
-  &ex ("perl -pi -e 'BEGIN {\$message_printed = 0;}
-                     if (! \$message_printed) {
-                       print \"$message\";
-                       ++\$message_printed;
-                     }' ChangeLog");
+  &ex ("perl -pi -e 'BEGIN {\$message_printed = 0;} " .
+                     "if (! \$message_printed) { " .
+                       "print \"$message\"; " .
+                       "++\$message_printed; " .
+                     "}' ChangeLog");
   return 1 if $? >> 8;
 
   my $version_h = $kit =~ /^ace/  ?  'ace/Version.h'  :  'tao/Version.h';

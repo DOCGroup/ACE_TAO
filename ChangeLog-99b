@@ -3,6 +3,10 @@ Sat Aug 21 11:52:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* Makefile:
 	  Fixed small problem in the releaseall target.
 
+	* bin/make_release:
+	  The shell did not like the embedded script to print the
+	  ChangeLog entry.
+
 Thu Aug 19 18:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Auto_Ptr.h: modified ACE_AUTO_PTR_RESET macro, to pass the
