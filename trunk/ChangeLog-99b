@@ -1,4 +1,10 @@
-Tue Jun 29 14:45:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Tue Jun 29 18:48:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Functor_T.h (class ACE_Pointer_Hash): Added new class for
+	  hashing pointers on their values.
+
+	* ace/Future_Set: Restored future map to be a
+	  ACE_Hash_Map_Manager_Ex.
 
 	* tests/run_tests.bat: Removed New_Fail_Test from the
 	  run_tests.bat (the script for NT).  This tests takes too long to
