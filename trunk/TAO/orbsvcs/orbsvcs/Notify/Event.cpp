@@ -20,7 +20,7 @@ ACE_RCSID (Notify,
 TAO_Notify_Event::TAO_Notify_Event (void)
   :priority_ (CosNotification::Priority, CosNotification::DefaultPriority),
    timeout_ (CosNotification::Timeout),
-   reliable_ (false),
+   reliable_ (CosNotification::EventReliability, false),
    event_on_heap_ (0)
 {
   //  if (TAO_debug_level > 0)

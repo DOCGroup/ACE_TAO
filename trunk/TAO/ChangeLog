@@ -1,3 +1,12 @@
+Mon Nov 22 09:05:41 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+          Bad initializer for reliability_ property.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp:
+          Misplaced method definition.
+
 Mon Nov 22 08:44:08 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
