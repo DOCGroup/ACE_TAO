@@ -108,7 +108,10 @@ CosECConsumer::push (const CORBA::Any &data,
               "Event count = %d\n",
               this->event_count_));
 
-  if (--this->event_count_ == 0)
+  this->event_count_ = this->event_count_ - 1;
+  // decrement the count
+
+  if (this->event_count_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P):%s\n",
