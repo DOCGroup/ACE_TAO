@@ -1,4 +1,12 @@
-Mon Jun 21 07:07:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Jun 22 08:05:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pl:
+          When using valgrind things go slower, so added code to set the
+          delay factor, so that timeouts get longer. We start with 5, maybe
+          that is enough. Also corrected the setting of the timeout for
+          purify
+
+Tue Jun 22 07:07:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pl:
           Added the option to use valgrind as memory test tool. This can
