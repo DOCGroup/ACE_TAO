@@ -1,142 +1,31 @@
-Tue Jul 27 16:55:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jul 27 16:58:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_kcc.GNU (MATHLIB): KCC needs
-	  to have this defined.
-
-Tue Jul 27 16:18:21 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ACE-INSTALL.html: updated note about shared libraries
-          on VxWorks.  In particular, they don't provide copies
-          of global (static) variables in the library.  So, "programs"
-          that share a library will also share the static variables in
-          the library.
-
-Tue Jul 27 14:26:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/SOCK_Dgram: Removed the QoS_Params from open() and
-	  ACE_SOCK_Dgram since they don't appear to be useful.  Thanks to
- 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
- 	  this.
-
-Tue Jul 27 14:41:26 1999  Steve Huston  <shuston@riverace.com>
-
-        * ace/Codeset_IBM1047.cpp: Added a static variable only for HP aC++
-          to make it stop warning of an empty translation unit.
-
-Tue Jul 27 14:16:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* ace/Thread_Manager.cpp (cancel_thr): This method should return
-	  the result of thread cancel operation if async_cancel is used.
-	  Thanks to Peter Mueller <pmueller@decrc.abb.de> for suggesting
-	  the fix.
-
-Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS: Addded a new pair of priority() fields as place
-	  holders for the forthcoming DiffServ QoS features.  Thanks to
- 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
- 	  this.
-
-Tue Jul 27 13:28:48 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/OS.i (getuid): removed extra ACE_TRACE with
-          ACE_WIN32 or CHORUS.  Thanks to Jerry D. De Master
-          <jdemaste@ipdinc.com> for reporting this.
-
-Tue Jul 27 11:10:39 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * examples/System_V_IPC/Makefile: on VxWorks only, fixed
-          so that make all, etc., work properly (by just printing
-          the message that these examples aren't used on VxWorks).
-
-Tue Jul 27 10:25:41 1999  Steve Huston  <shuston@riverace.com>
-
-        * ACE-INSTALL.html: Added a note about required HP-UX 10.20
-          patch. Updated aC++ versions.
-
-        * ace/Process.{h cpp} (ACE_Process_Options::command_line): Added
-          'const' to make the entire array and contents const. Restores
-          ability for users of pre-5.0 to still pass char **. Thanks to
-          Bill Tovrea <gwtovrea@west.raytheon.com> for reporting this.
-
-        * examples/Connection/non_blocking/Makefile: Re-added LIBS += $(ACELIB)
-          (see ChangeLog, 23-Jul-1999) but did it in the section for AIX
-          C Set++ and IBM C/C++ only (ifdef TEMPINCDIR). This is needed to
-          generate the shared library (libConn) using those compilers.
-
-Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Future.h: Moved the static methods until the bottom
-          of the ACE_Future_Rep class (again) to workaround a bug with
-          Borland's C++ Builder.  Thanks to Christopher Kohlhoff
-          <chris@kohlhoff.com> for reporting this (again).
-
-Mon Jul 26 20:59:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * websvcs/README:
-          Added a brief description of the directory and its current
-          contents.  Thanks to Will Skunk <willskunk@homemail.com>
-          for motivating this.
-
-Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace/Log_Msg.cpp: Added support for the 'W' (UNICODE) option for
-          Win32.  Thanks to Valery Arkhangorodsky
-          <valerya@servicesoft.com> for contributing this.
-
-Mon Jul 26 20:58:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-
-        * ace/POSIX_Asynch_IO.cpp:
-        * ace/WIN32_Asynch_IO.cpp: Fixed the double deletion problem of
-          the result classes. Thanks to David Digby
-          <DWD15274@glaxowellcome.co.uk> and Timothy Schimke
-          <Schimke.Timothy@LittonDSD.com> for reporting this.
-
-Mon Jul 26 18:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * tests/run_tests.sh (Cached_Conn_Test and
-          Cached_Accept_Conn_Test): These two tests are known to leak
-          memory when compiled with old gcc (g++).  Therefore, we skip
-          these tests when using purify and old gcc (g++).  A -p option
-          was added to the script to indicate that we want to run with
-          purify.
-
-Mon Jul 26 17:09:09 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Object_Manager.{h,cpp},Makefile: don't create the
-          ACE_TOKEN_MANAGER_CREATION_LOCK and
-          ACE_TOKEN_INVARIANTS_CREATION_LOCK preallocated objects
-          if the Token component isn't build.  This gets rid of
-          unresolved references to the ACE_Token_Proxy compoents
-          on VxWorks/g++ when Token isn't built.  Thanks to
-          Stephane Chatre <schatre@oresis.com> for reporting this.
-
-Mon Jul 26 17:02:08 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * include/makeinclude/wrapper_macros.GNU: don't override
-          OBJDIRS on VxWorks with shared libs.  This allows
-          make realclean to work properly on VxWorks, when shared
-          lib builds are enabled.
+	* ace/ACE.cpp (out_of_handles): Added bug-fixes for RedHat5.2 and
+	  FreeBSD. Thanks to James Megquier <jmegq@bbn.com> for discovering
+	  and testing out the bug-fix on RedHat5.2 and Russell.L.Carter 
+	  <rcarter@pinyon.org> for sending in a patch for FreeBSD. These
+	  bug fixes are for: $ACE_ROOT/tests/
+	  Cached_Conn_Test  and  Cached_Accept_Conn_Test.
 
 Mon Jul 26 15:06:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * ace/CDR_Stream.i:
-        * ace/Map_Manager.i:
-          Had to cast some return values to avoid MSVC signed/unsigned
-          mismatch type warnings (level 4).
+	* ace/CDR_Stream.i:
+	* ace/Map_Manager.i:
+	  Had to cast some return values to avoid MSVC signed/unsigned
+	  mismatch type warnings (level 4).
 
-        * ace/config-win32.h:
-          Added ACE_HAS_STD_TEMPLATE_SPECIALIZATION define, so that
-          ACE_TEMPLATE_SPECIALIZATION macro adds the necessart
-          'template <>' for MSVC, and so averts many many level 4
-          warnings.
+	* ace/config-win32.h:
+	  Added ACE_HAS_STD_TEMPLATE_SPECIALIZATION define, so that
+	  ACE_TEMPLATE_SPECIALIZATION macro adds the necessart
+	  'template <>' for MSVC, and so averts many many level 4
+	  warnings.
 
 Mon Jul 26 14:10:56 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-        * ace/DLL.cpp (get_handle): Changed the check of <become_owner>
-          flag to now reset <close_on_destruction> only if the
-          <become_owner> is set. Thanks to Bob McWhirter <bob@werken.com>
-          for pointing this out.
+	* ace/DLL.cpp (get_handle): Changed the check of <become_owner>
+	  flag to now reset <close_on_destruction> only if the
+	  <become_owner> is set. Thanks to Bob McWhirter <bob@werken.com>
+	  for pointing this out.
 
 Mon Jul 26 12:32:41 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -144,30 +33,30 @@ Mon Jul 26 12:32:41 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jul 23 18:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * ace/config-irix6.x-sgic++-nothreads.h:
-          Enabled namespaces with MIPSPro 7.2 or higher.
+	* ace/config-irix6.x-sgic++-nothreads.h:
+	  Enabled namespaces with MIPSPro 7.2 or higher.
 
 Fri Jul 23 16:40:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-        * ace/ACE.cpp:
-          Fixed typos in error return values for ACE::execname()
+	* ace/ACE.cpp:
+	  Fixed typos in error return values for ACE::execname()
 
 Fri Jul 23 14:51:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * examples/Service_Configurator/IPC-tests/Handle_L_CODgram,
-          examples/Service_Configurator/IPC-tests/Handle_L_Dgram,
-          examples/Service_Configurator/IPC-tests/Handle_L_Pipe:
-          Cleaned this stuff up so that it builds correctly when
-          ACE_LACKS_UNIX_DOMAIN_SOCKETS is enabled.  Thanks to
-          David for reporting this.
+	* examples/Service_Configurator/IPC-tests/Handle_L_CODgram,
+  	  examples/Service_Configurator/IPC-tests/Handle_L_Dgram,
+    	  examples/Service_Configurator/IPC-tests/Handle_L_Pipe:
+	  Cleaned this stuff up so that it builds correctly when
+	  ACE_LACKS_UNIX_DOMAIN_SOCKETS is enabled.  Thanks to
+	  David for reporting this.
 
-        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe:
-          Made upper_case() a method in the Handle_L_Pipe class.
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe:
+	  Made upper_case() a method in the Handle_L_Pipe class.
 
-        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp,
-          examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.cpp:
-          Removed the bizarre hacks for SunOS4.  This stuff probably
-          hasn't been tested since 1992!
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp,
+	  examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.cpp: 
+	  Removed the bizarre hacks for SunOS4.  This stuff probably
+ 	  hasn't been tested since 1992!
 
 Fri Jul 23 14:16:22 1999  Steve Huston  <shuston@riverace.com>
 
@@ -181,17 +70,17 @@ Fri Jul 23 14:16:22 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Jul 23 12:09:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-        * ace/OS.i: Fixed some mismatched ifdef/endif comments.
+	* ace/OS.i: Fixed some mismatched ifdef/endif comments.
 
-        * ace/ACE.cpp (execname): Fixed some misuses of ACE_HAS_WIN32
-          macros where they should have been ACE_WIN32.  Thanks to Andy
-          for noticing this.
+	* ace/ACE.cpp (execname): Fixed some misuses of ACE_HAS_WIN32
+	  macros where they should have been ACE_WIN32.  Thanks to Andy
+	  for noticing this.
 
 Fri Jul 23 11:28:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/Memory_Pool.cpp (init_acquire): shmat() returns -1 on
-          failure, not 0.  Thanks to Kevin Liu
-          <kliu@fitch.math.uwaterloo.ca> for reporting this.
+	* ace/Memory_Pool.cpp (init_acquire): shmat() returns -1 on
+	  failure, not 0.  Thanks to Kevin Liu
+ 	  <kliu@fitch.math.uwaterloo.ca> for reporting this.
 
 Fri Jul 23 11:35:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -3098,7 +2987,7 @@ Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
 Sun Jun 27 20:50:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        Added support for IBM's VisualAge C++ compiler.
+        Added support for IBM's VisualAge C++ compiler.  
 
         * ace: Added a new config-visualage.h file that automatically
           includes the proper configurations for IBM's VisualAge C++
