@@ -1,7 +1,7 @@
 // $Id$
 
 ACE_INLINE int
-TAO_LF_Event::bind (TAO_Follower *follower)
+TAO_LF_Event::bind (TAO_LF_Follower *follower)
 {
   if (this->follower_ != 0)
     return -1;

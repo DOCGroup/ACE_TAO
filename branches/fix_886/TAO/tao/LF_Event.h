@@ -21,8 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Transport;
-// @todo
-class TAO_Follower;
+class TAO_LF_Follower;
 
 /**
  * @class TAO_LF_Event
@@ -60,7 +59,7 @@ public:
    *
    * @return -1 if the LF_Event is already bound, 0 otherwise
    */
-  int bind (TAO_Follower *follower);
+  int bind (TAO_LF_Follower *follower);
 
   /// Unbind the follower
   int unbind (void);
@@ -114,7 +113,7 @@ private:
   int state_;
 
   /// The bound follower thread
-  TAO_Follower *follower_;
+  TAO_LF_Follower *follower_;
 };
 
 #if defined (__ACE_INLINE__)

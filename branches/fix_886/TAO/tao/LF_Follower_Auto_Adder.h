@@ -21,35 +21,30 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_Follower;
+class TAO_LF_Follower;
 
 /**
- * @brief Implement an auto_adder-like class for the TAO_Followers
+ * @brief Implement an auto_adder-like class for the TAO_LF_Followers
  * allocated via a TAO_Leader_Follower set.
  *
- * The Leader/Follower set is a factory for TAO_Follower objects
+ * The Leader/Follower set is a factory for TAO_LF_Follower objects
  */
 class TAO_Export TAO_LF_Follower_Auto_Adder
 {
 public:
   /// Constructor
   TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &,
-                              TAO_Follower *follower);
+                              TAO_LF_Follower *follower);
 
   /// Destructor
   ~TAO_LF_Follower_Auto_Adder (void);
-
-  /// Implement the smart pointer methods
-  TAO_Follower *get (void);
-  TAO_Follower *operator->(void);
-  operator TAO_Follower *(void);
 
 private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 
   /// The follower
-  TAO_Follower *follower_;
+  TAO_LF_Follower *follower_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -387,11 +387,11 @@ SOURCE=.\Flushing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower.cpp
+SOURCE=.\LF_Follower.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Ptr.cpp
+SOURCE=.\LF_Follower_Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
@@ -1147,19 +1147,19 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower.h
+SOURCE=.\LF_Follower.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower.inl
+SOURCE=.\LF_Follower.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Ptr.h
+SOURCE=.\LF_Follower_Auto_Ptr.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Follower_Auto_Ptr.inl
+SOURCE=.\LF_Follower_Auto_Ptr.inl
 # End Source File
 # Begin Source File
 

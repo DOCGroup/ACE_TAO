@@ -1,3 +1,41 @@
+Tue Jul 31 12:55:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Follower.h:
+	* tao/Follower.inl:
+	* tao/Follower.cpp:
+	* tao/Follower_Auto_Ptr.h:
+	* tao/Follower_Auto_Ptr.inl:
+	* tao/Follower_Auto_Ptr.cpp:
+	* tao/LF_Follower.h:
+	* tao/LF_Follower.inl:
+	* tao/LF_Follower.cpp:
+	* tao/LF_Follower_Auto_Ptr.h:
+	* tao/LF_Follower_Auto_Ptr.inl:
+	* tao/LF_Follower_Auto_Ptr.cpp:
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Renamed TAO_Follower to TAO_LF_Follower and
+	  TAO_Follower_Auto_Ptr to TAO_LF_Follower_Auto_Ptr, I think this
+	  is more consistent with the other files in the project.
+
+	* tao/LF_Follower_Auto_Adder.h:
+	* tao/LF_Follower_Auto_Adder.inl:
+	* tao/LF_Follower_Auto_Adder.cpp:
+	  Remove unused code from the Auto_Adder files.
+
+	* tao/LF_Event.h:
+	* tao/LF_Event.inl:
+	* tao/LF_Event.cpp:
+	* tao/LF_Event_Binder.h:
+	* tao/LF_Event_Binder.inl:
+	* tao/Leader_Follower.h:
+	* tao/Leader_Follower.i:
+	* tao/Leader_Follower.cpp:
+	  Use the new class names and #includes.
+
 Mon Jul 30 14:41:43 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/LF_Follower_Auto_Adder.h:

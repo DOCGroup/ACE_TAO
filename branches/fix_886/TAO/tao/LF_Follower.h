@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Follower.h
+ *  @file LF_Follower.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_FOLLOWER_H
-#define TAO_FOLLOWER_H
+#ifndef TAO_LF_FOLLOWER_H
+#define TAO_LF_FOLLOWER_H
 #include "ace/pre.h"
 
 #include "tao/orbconf.h"
@@ -26,7 +26,7 @@
 class TAO_Leader_Follower;
 
 /**
- * @class TAO_Follower
+ * @class TAO_LF_Follower
  *
  * @brief Represent a thread blocked, as a follower, in the
  *        Leader/Followers set.
@@ -35,14 +35,14 @@ class TAO_Leader_Follower;
  * loop should be implemented by this class.
  *
  */
-class TAO_Export TAO_Follower : public ACE_Intrusive_List_Node<TAO_Follower>
+class TAO_Export TAO_LF_Follower : public ACE_Intrusive_List_Node<TAO_LF_Follower>
 {
 public:
   /// Constructor
-  TAO_Follower (TAO_Leader_Follower &leader_follower);
+  TAO_LF_Follower (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
-  ~TAO_Follower (void);
+  ~TAO_LF_Follower (void);
 
   /// Access the leader follower that owns this follower
   TAO_Leader_Follower &leader_follower (void);
@@ -62,8 +62,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Follower.inl"
+# include "tao/LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif  /* TAO_FOLLOWER_H */
+#endif  /* TAO_LF_FOLLOWER_H */
