@@ -643,7 +643,21 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_forany tmp (ACE_reinterpret_cast (";
+          *os << "_forany tmp (" << be_idt << be_idt_nl;
+          *os << "ACE_const_cast (" << be_idt << be_idt_nl;
+          
+          if (bt->accept (visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                 "visit_node - "
+                                 "base type visit failed\n"),
+                                -1);
+            }
+
+          *os << "_slice *," << be_nl
+              << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+              << "const ";
 
           if (bt->accept (visitor) == -1)
             {
@@ -654,7 +668,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_slice *, _tao_sequence[i]));" << be_nl;
+          *os << "_slice *," << be_nl
+              << "_tao_sequence[i])" << be_uidt_nl
+              << ")" << be_uidt << be_uidt_nl
+              << ");" << be_uidt << be_uidt << be_uidt_nl;
           *os << "_tao_marshal_flag = (strm << tmp";
           break;
         case AST_Decl::NT_string:
