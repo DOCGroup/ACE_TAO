@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//   TAO_LoadBalancing
+//    TAO_LoadBalancing
 //
 // = FILENAME
 //    LoadBalancing.idl
@@ -17,7 +17,10 @@
 #ifndef TAO_LOADBALANCING_IDL
 #define TAO_LOADBALANCING_IDL
 
-module LoadBalancing
+#include "CosNaming.idl"
+#include "orb.idl"
+
+module TAO_LoadBalancing
 {
   // = TITLE
   //   This module defines the interfaces and data types used in TAO's
@@ -32,131 +35,175 @@ module LoadBalancing
   //     example, some applications may choose to load balance access
   //     to multiple dedicated lines, or separate network interfaces,
   //     as well as more traditional load balancing metrics, such as
-  //     CPU or disk load.
+  //     CPU or power load.
 
-  interface ReplicaControl
-    {
-      // = TITLE
-      //    An interface that specifies methods the Load Balancer
-      //    invokes when informing the ReplicaControl of the
-      //    underlying Object's load status.
+  // Specification of Common Types and Exceptions for ReplicationManager
+  interface GenericFactory;
+  interface LoadNotifier;
 
-      // = DESCRIPTION
-      //    The ReplicaControl provides a means to control the load on
-      //    the Object it is controlling without forcing existing
-      //    Objects to change their interface.  The LoadBalancer
-      //    issues advisories to the ReplicaControl when it detects
-      //    load levels that should be handled in a certain way.
+  typedef unsigned long long ObjectGroupId;
+  typedef unsigned long ObjectGroupRefVersion;
 
-      void high_load_advisory ();
-      // When the LoadBalancer detects a "high" load on a given Object
-      // via its ReplicaProxy, it issues a high load advisory to the
-      // ReplicaControl by invoking this method; typically causing the
-      // underlying object to stop accepting requests.
+  typedef CORBA::RepositoryId TypeId;
+  typedef Object ObjectGroup;
+  typedef CosNaming::Name Name;
+  typedef any Value;
 
-      void nominal_load_advisory ();
-      // If a "nominal" load is detected, then a nominal load advisory
-      // is issued, typically causing the Object to once again accept
-      // requests.
-    };
+  struct Property {
+    Name nam;
+    Value val;
+  };
+  typedef sequence<Property> Properties;
 
-  interface ReplicaProxy
-    {
-      // = TITLE
-      //    This interface provides the methods that the
-      //    ReplicaControl object invokes.
+  typedef Name Location;
+  typedef sequence<Location> Locations;
 
-      // = DESCRIPTION
-      //    The ReplicaProxy resides in the LoadBalancer.
-      //    A ReplicaControl object obtains a reference to a
-      //    ReplicaProxy from the LoadBalancer, and invokes the
-      //    methods in the interface to send load information to the
-      //    Load Balancer.
+  typedef Properties Criteria;
 
-      exception InvalidLoad
-        {
-          // = TITLE
-          //    An invalid load was sent to the ReplicaProxy.
-        };
+  struct FactoryInfo {
+    GenericFactory factory;
+    Location the_location;
+    Criteria the_criteria;
+  };
+  typedef sequence<FactoryInfo> FactoryInfos;
 
-      exception NilControl
-        {
-          // = TITLE
-          //    This exception indicates that a nil ReplicaControl
-          //    reference was passed to the ReplicaProxy.
-        };
+  exception InterfaceNotFound {};
+  exception ObjectGroupNotFound {};
+  exception MemberNotFound {};
+  exception ObjectNotFound {};
+  exception MemberAlreadyPresent {};
+  exception BadReplicationStyle {};
+  exception ObjectNotCreated {};
+  exception ObjectNotAdded {};
+  exception PrimaryNotSet {};
+  exception UnsupportedProperty {
+    Name nam;
+  };
+  exception InvalidProperty {
+    Name nam;
+    Value val;
+  };
+  exception NoFactory {
+    Location the_location;
+    TypeId type_id;
+  };
+  exception InvalidCriteria {
+    Criteria invalid_criteria;
+  };
+  exception CannotMeetCriteria {
+    Criteria unmet_criteria;
+  };
 
-      exception NilReplica
-        {
-          // = TITLE
-          //    This exception indicates that the reference to the
-          //    object being load balanced was nil.
-        };
+  // Specification of PropertyManager Interface
+  // which ReplicationManager Inherits
+  interface PropertyManager {
+    void set_default_properties (in Properties props)
+      raises (InvalidProperty,
+              UnsupportedProperty);
 
-      exception NotConnected
-        {
-          // = TITLE
-          //    This exception is thrown when an attempt is made to
-          //    disconnect from the LoadBalancer but no connection is
-          //    currently established.
-        };
+    Properties get_default_properties ();
 
-      oneway void current_load (in float load);
-      // Send current load to the Load Balancer.
-      // The application must ensure that all replicas use the same
-      // notion of load.
+    void remove_default_properties (in Properties props)
+      raises (InvalidProperty,
+              UnsupportedProperty);
 
-      void disconnect () raises (NotConnected);
-      // Disconnect the ReplicaControl from the Load Balancer.  The
-      // Object that the ReplicaControl controls will be no longer be
-      // load balanced.
-    };
+    void set_type_properties (in TypeId type_id,
+                              in Properties overrides)
+      raises (InvalidProperty,
+              UnsupportedProperty);
 
-  interface LoadBalancer
-    {
-      // = TITLE
-      //    The LoadBalancer interface.
+    Properties get_type_properties (in TypeId type_id);
 
-      // = DESCRIPTION
-      //    The LoadBalancer distributes incoming requests for a given
-      //    Object among several replicas of that Object, thus helping
-      //    to ensure that loads are as well balanced across the
-      //    systems the replicas are running on as possible.
+    void remove_type_properties (in TypeId type_id,
+                                 in Properties props)
+      raises (InvalidProperty,
+              UnsupportedProperty);
 
-      exception InvalidReplicaProxy
-        {
-          // = TITLE
-          //    This exception indicates that an attempt was made to
-          //    use a ReplicaProxy that is not registered with the
-          //    LoadBalancer.
-          //    @@ Ossama: where exactly is this exception used?  Who
-          //    can raise it!?
-        };
+    void set_properties_dynamically (in ObjectGroup object_group,
+                                     in Properties overrides)
+      raises (ObjectGroupNotFound,
+              InvalidProperty,
+              UnsupportedProperty);
 
-      ReplicaProxy connect (in ReplicaControl control,
-                            in Object replica)
-        raises (ReplicaProxy::NilControl,
-                ReplicaProxy::NilReplica);
-      // Register ReplicaControl with LoadBalancer, thus allowing the
-      // Object to be load balanced.
+    Properties get_properties (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
+  };
 
-      Object group_identity ();
-      // Return the reference to the object that represents the
-      // Replica group being load balanced.  This "group identity"
-      // object will cause the client to redirect its requests to a
-      // Replica that fits a specific load balancing criteria.
-    };
+  // Specification of ObjectGroupManager Interface
+  // which ReplicationManager Inherits
+  interface ObjectGroupManager {
+    ObjectGroup create_member (in ObjectGroup object_group,
+                               in Location the_location,
+                               in TypeId type_id,
+                               in Criteria the_criteria)
+      raises (ObjectGroupNotFound,
+              MemberAlreadyPresent,
+              NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              CannotMeetCriteria);
 
-  // @@ Ossama: we may want to add interfaces or operations to access
-  // the current list of loads, that would be useful for monitoring
-  // applications, and nice GUI-based demos.
-  // @@ Ossama: another idea: we have been using this stuff to make
-  // all the loads equal, but what if the objective is to keep the
-  // load below some value?  Maybe we should provide some callback
-  // mechanism to let the application know: the load is too high and
-  // there is nothing i can do about it, add more CPUS or reduce the
-  // load!
-  // Such feedback would be very useful for some applications.
+    ObjectGroup add_member (in ObjectGroup object_group,
+                            in Location the_location,
+                            in Object member)
+      raises (ObjectGroupNotFound,
+              // CORBA::INV_OBJREF,  // @@ Missing declaration
+              MemberAlreadyPresent,
+              ObjectNotAdded);
+
+    ObjectGroup remove_member (in ObjectGroup object_group,
+                               in Location the_location)
+      raises (ObjectGroupNotFound,
+              MemberNotFound);
+
+    ObjectGroup set_primary_member (in ObjectGroup object_group,
+                                    in Location the_location)
+      raises (ObjectGroupNotFound,
+              MemberNotFound,
+              PrimaryNotSet,
+              BadReplicationStyle);
+
+    Locations locations_of_members (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
+
+    ObjectGroupId get_object_group_id (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
+
+    ObjectGroup get_object_group_ref (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
+
+    Object get_member_ref (in ObjectGroup object_group,
+                           in Location loc)
+      raises (ObjectGroupNotFound,
+              MemberNotFound);
+  };
+
+  // Specification of GenericFactory Interface
+  // which ReplicationManager Inherits and Application Objects Implement
+  interface GenericFactory {
+    typedef any FactoryCreationId;
+
+    Object create_object (in TypeId type_id,
+                          in Criteria the_criteria,
+                          out FactoryCreationId factory_creation_id)
+      raises (NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              InvalidProperty,
+              CannotMeetCriteria);
+
+    void delete_object (in FactoryCreationId factory_creation_id)
+      raises (ObjectNotFound);
+  };
+
+  // Specification of ReplicationManager Interface
+  interface ReplicationManager : PropertyManager, ObjectGroupManager,
+    GenericFactory {
+    void register_load_notifier (in LoadNotifier load_notifier);
+
+    LoadNotifier get_load_notifier ()
+      raises (InterfaceNotFound);
+  };
 };
 
 #endif /* TAO_LOADBALANCER_IDL */
