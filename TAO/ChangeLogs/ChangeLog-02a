@@ -1,3 +1,15 @@
+Mon Mar  4 11:49:27 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.CosNaming:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* orbsvcs/orbsvcs/Makefile.Security:
+	  Removed links to TAO_Messaging library.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	  Removed #include tao/Messaging/Messaging_Policy_i.h
+	  as that is not used anywhere in the code.
+
 Mon Mar  4 12:24:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao.Any.h:
