@@ -1450,7 +1450,7 @@ ACE_Log_Msg::set (const ACE_TCHAR *filename,
                   ACE_Log_Msg_Callback *c)
 {
   ACE_TRACE ("ACE_Log_Msg::set");
-  this->file (filename); 
+  this->file (filename);
   this->linenum (line);
   this->op_status (status);
   this->errnum (err);
@@ -1749,8 +1749,9 @@ ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
 {
 }
 
+int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
-                                   const ASYS_TCHAR *, 
+                                   const ACE_TCHAR *,
                                    ...)
 {
   return ACE_BIT_ENABLED (this->priority_mask_ |

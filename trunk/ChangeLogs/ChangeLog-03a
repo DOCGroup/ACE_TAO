@@ -1,10 +1,16 @@
+Wed May  3 19:35:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/Log_Msg.cpp:
+	  The implementation of the log_priority_enabled function did not
+	  match its declaration.
+
 Wed May  3 17:21:50 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * ace/config-win32-common.h:  
-          
-          After many reports of not having _MT defined (and then not 
-          quite knowing what to do about it), I felt we needed a bit 
-          more descriptive error and comment.  
+        * ace/config-win32-common.h:
+
+          After many reports of not having _MT defined (and then not
+          quite knowing what to do about it), I felt we needed a bit
+          more descriptive error and comment.
 
         * docs/ACE-FMM.html:
         * docs/ACE-bug-process.html:
@@ -17,43 +23,43 @@ Wed May  3 17:21:50 2000  Darrell Brunsch <brunsch@uci.edu>
         * docs/index.html: (added)
         * docs/usage-bugzilla.html:
 
-          Added an index for the files in this directory.  Added 
+          Added an index for the files in this directory.  Added
           backlinks to the other files.
 
 Wed May  3 18:07:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Malloc_T (memory_pool): Found another bug with SunC++ 5.0...
-	  Moved the ACE_Allocator_Adapter::protect() into the Malloc_T.cpp
-	  file.
-  
+        * ace/Malloc_T (memory_pool): Found another bug with SunC++ 5.0...
+          Moved the ACE_Allocator_Adapter::protect() into the Malloc_T.cpp
+          file.
+
 Wed May  3 17:16:12 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Log_Msg.h (log_priority_enabled):
+        * ace/Log_Msg.h (log_priority_enabled):
 
-	  Corrected use of "ASYS_TCHAR."  "ACE_TCHAR" should be used
-	  instead.
+          Corrected use of "ASYS_TCHAR."  "ACE_TCHAR" should be used
+          instead.
 
 Wed May  3 18:07:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg: Added the new log_priority_enabled() method.  Thanks
-	  to Ossama for reporting this ;-).
+        * ace/Log_Msg: Added the new log_priority_enabled() method.  Thanks
+          to Ossama for reporting this ;-).
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU (CC_VERSION): 
-	  The keywords to check if the version if greater than 5 is "C++"
- 	  on Solaris, not "Compilers."  Thanks to Rick Weisner
- 	  <Rick.Weisner@East.Sun.COM> for reporting this.
+        * include/makeinclude/platform_sunos5_sunc++.GNU (CC_VERSION):
+          The keywords to check if the version if greater than 5 is "C++"
+          on Solaris, not "Compilers."  Thanks to Rick Weisner
+          <Rick.Weisner@East.Sun.COM> for reporting this.
 
 Wed May  3 15:08:03 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_freebsd.GNU: Changed to set
-	  versioned_so only when building on version 2 of FreeBSD.  Thanks
-	  to Henrik Kai <hka@ddk.de> for pointing this out.
+        * include/makeinclude/platform_freebsd.GNU: Changed to set
+          versioned_so only when building on version 2 of FreeBSD.  Thanks
+          to Henrik Kai <hka@ddk.de> for pointing this out.
 
 Wed May  3 12:31:32 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile.am (INLINE_FILES):
+        * ace/Makefile.am (INLINE_FILES):
 
-	  Removed deprecated inline files from the list.
+          Removed deprecated inline files from the list.
 
 Wed May  3 11:59:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -65,15 +71,15 @@ Wed May  3 11:59:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May  3 11:43:05 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg.h: Only call set() in the ACE_{ERROR,DEBUG} macros if
-	  the log_priority_enabled() is non-0, which avoids making
- 	  unecessary strcpy() calls.  Thanks to Ganesh Pai
- 	  <gpai@voicetek.com> for reporting this.
+        * ace/Log_Msg.h: Only call set() in the ACE_{ERROR,DEBUG} macros if
+          the log_priority_enabled() is non-0, which avoids making
+          unecessary strcpy() calls.  Thanks to Ganesh Pai
+          <gpai@voicetek.com> for reporting this.
 
-	* ace/Timer_Queue_Adapters (schedule): Make sure to pass
-	  the act to the schedule() method.  Also, updated the header file
- 	  so that it explains that interval timers aren't implemented.
-  	  Thanks to Umar Syyid for reporting these.
+        * ace/Timer_Queue_Adapters (schedule): Make sure to pass
+          the act to the schedule() method.  Also, updated the header file
+          so that it explains that interval timers aren't implemented.
+          Thanks to Umar Syyid for reporting these.
 
 Wed May  3 09:49:57 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
