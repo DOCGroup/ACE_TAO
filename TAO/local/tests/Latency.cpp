@@ -37,8 +37,9 @@ static int shutting_down = 0;
 // and talk directly to consumers.  For testing only :-)
 static Latency_Consumer **consumer;
 
-// This is a global timer to obtain some performance results.
-ACE_Profile_Timer global_profile_timer;
+// This is a global variable, set up when the Event is created. Used
+// on round trip measurements.
+static ACE_hrtime_t event_push_time;
 
 // ************************************************************
 
@@ -116,28 +117,15 @@ void
 Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
 {
-  ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
+  // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   // @@ ACE_TIMEPROBE ("push event to consumer");
   
-  global_profile_timer.stop ();
-  ACE_Profile_Timer::ACE_Elapsed_Time et;
-  if (global_profile_timer.elapsed_time (et) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, "failure while measuring time\n"));
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "RAW_TIME (real/user/system): %f %f %f", 
-		  et.real_time, et.user_time, et.system_time));
-    }
-
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
-  ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
 #if defined (quantify)
   // If measuring jitter, just Quantify the supplier-consumer path.
@@ -158,13 +146,11 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
 	{
 	  if (measure_jitter_)
 	    {
-	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+	      const ACE_hrtime_t elapsed = ACE_OS::gethrtime () - event_push_time;
 	      // Note: the division by 1 provides transparent support of
 	      // ACE_U_LongLong.
-	      ACE_Time_Value latency (now / 1000000000,
-				      (now / 1 % 1000000000) / 1000);
-	      latency -= ACE_Time_Value (events[0].time_ / 1000000000,
-					 (events[0].time_ / 1 % 1000000000) / 1000);
+	      ACE_Time_Value latency (elapsed / ACE_ONE_SECOND_IN_NSECS,
+				      (elapsed / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
 	      if (! shutting_down)
 		{
@@ -193,9 +179,6 @@ Latency_Consumer::shutdown (void)
 
       CORBA::release (suppliers_);
 
-      // @@ TODO: Do this portably (keeping the ORB_ptr returned from
-      // ORB_init)
-      TAO_ORB_Core_instance ()->orb ()->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
       ACE_CHECK_ENV;
     }
@@ -214,16 +197,16 @@ Latency_Consumer::print_stats () /* const */
 {
   if (measure_jitter_)
     {
+      double lat_min =
+	(min_latency_.sec () * 1000000.0 + min_latency_.usec ()) / 1000.0;
+      double lat_max =
+	(max_latency_.sec () * 1000000.0 + max_latency_.usec ()) / 1000.0;
+      double lat_avg = 
+	(total_latency_.sec () * 1000000.0 +total_latency_.usec ()) / total_pushes_ / 1000.0;
       ACE_DEBUG ((LM_TRACE,
-                  "%s: minimum, maximum, average event latency (msec): "
-                    "%5.3f, %5.3f, %5.3f\n",
-                  entry_point (),
-                  (min_latency_.sec () * 1000000.0 + min_latency_.usec ()) /
-                    1000.0,
-                  (max_latency_.sec () * 1000000.0 + max_latency_.usec ()) /
-                    1000.0,
-                  (total_latency_.sec () * 1000000.0 +
-                   total_latency_.usec ()) / total_pushes_ / 1000.0));
+                  "%s: Latency in msec (min/max/avg): "
+                    "%5.3f/%5.3f/%5.3f\n",
+                  entry_point (), lat_min, lat_max, lat_avg));
     }
 }
 
@@ -397,15 +380,15 @@ void
 Latency_Supplier::push (const RtecEventComm::EventSet &events,
 			CORBA::Environment & _env)
 {
-  ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
+  // ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
   
   if (events.length () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
   for (int i = 0; i < events.length (); ++i)
     {
@@ -424,11 +407,13 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
 	  if (timestamp_)
 	    {
-	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
-	      // @@ David, time_ is now a long.  I'm not sure if this
-	      // calculation correct now.
-	      // event.time_.set (now / 1000000000, (now % 1000000000) / 1000);
-	      event.time_ = now;
+	      // @@ David, event.time_ is now a long.  I'm not sure if
+	      // this calculation is correct now. For the moment beign
+	      // I use a global variable instead.
+	      // const ACE_hrtime_t now = ACE_OS::gethrtime ();
+	      // event.time_.set (now / ACE_ONE_SECOND_IN_NSECS,
+	      // (now % ACE_ONE_SECOND_IN_NSECS) / 1000);
+	      event_push_time = ACE_OS::gethrtime ();
 	    }
 
 	  // @@ ACE_TIMEPROBE_RESET;
@@ -440,7 +425,6 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 		{
 		  for (u_int cons = 0; cons < consumers; ++cons)
 		    {
-		      global_profile_timer.start ();
 		      // This constructor is fast.
 		      const RtecEventComm::EventSet es (1, 1, &event);
 		      consumer [cons]->push (es, ACE_TRY_ENV);
@@ -458,7 +442,6 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
 
 		  // @@ ACE_TIMEPROBE ("time to read high-res clock and "
 		  // @@ "compare an int with 0");
-		  global_profile_timer.start ();
 
 		  RtecEventComm::EventSet events (1);
 		  events.length (1);
@@ -509,7 +492,8 @@ Latency_Supplier::shutdown (void)
   #endif /* quantify */
 
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
-  test_stop_time_.set (now / 1000000000, (now / 1 % 1000000000) / 1000);
+  test_stop_time_.set (now / ACE_ONE_SECOND_IN_NSECS,
+		       (now / 1 % ACE_ONE_SECOND_IN_NSECS) / 1000);
 
   static int total_iterations = 1;
   if (--total_iterations > 0)
@@ -544,7 +528,11 @@ Latency_Supplier::shutdown (void)
       ACE_CHECK_ENV;
 
       if (master_)
-	channel_admin_->destroy (ACE_TRY_ENV);
+	{
+	  // @@ TODO: Do this portably (keeping the ORB_ptr returned from
+	  // ORB_init)
+	  TAO_ORB_Core_instance ()->orb ()->shutdown ();
+	}
       ACE_CHECK_ENV;
     }
   ACE_CATCHANY
@@ -669,40 +657,6 @@ get_options (int argc, char *argv [])
   return 0;
 }
 
-#if 0
-// ************************************************************
-// This function tells the scheduler to generate a schedule.  It will
-// only call it once, so this function can be called multiple times.
-static void
-Generate_Schedule (void)
-{
-  static int once = 0;
-  static ACE_Thread_Mutex m;
-
-  if (once == 0)
-    {
-      ACE_Guard<ACE_Thread_Mutex> ace_mon (m);
-
-      // Double-check.
-      if (once == 0)
-	{
-	  once = 1;
-	  ACE_Scheduler::status_t result = ACE_Scheduler::instance ().schedule ();
-
-	  if (result != ACE_Scheduler::SUCCEEDED)
-	    ACE_ERROR ((LM_ERROR, "ACE_Scheduler::schedule failed.\n"));
-	  else
-            {
-              if (Scheduler_Runtime::config ())
-                {
-	          ACE_DEBUG ((LM_ERROR, "ACE_Scheduler::schedule succeeded.\n"));
-                }
-            }
-	}
-    }
-}
-#endif /* 0 */
-
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // function main
@@ -746,7 +700,6 @@ main (int argc, char *argv [])
 
 
 
-#if 0
       CORBA::Object_ptr objref =
 	orb->resolve_initial_references ("NameService");
       ACE_CHECK_ENV;
@@ -755,18 +708,20 @@ main (int argc, char *argv [])
       ACE_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context);
-#else
-      ACE_Scheduler_Factory::use_config (orb);
-#endif /* 0 */
 
       // Allocate the timeprobe instance now, so we don't measure
       // the cost of doing it later.
       // @@ ACE_TIMEPROBE_RESET;
 
+      CosNaming::Name channel_name (1);
+      channel_name[0].id = CORBA::string_dup ("EventService");
+      channel_name.length (1);
+      
+      CORBA::Object_ptr ec_ptr = 
+	naming_context->resolve (channel_name, ACE_TRY_ENV);
+      ACE_CHECK_ENV;
       RtecEventChannelAdmin::EventChannel_var ec =
-	RtecEventChannelAdmin::EventChannel::_narrow
-	  (orb->resolve_initial_references ("EventService"),
-	   ACE_TRY_ENV);
+	RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr, ACE_TRY_ENV);
       ACE_CHECK_ENV;
 
       // Create supplier(s).
@@ -774,14 +729,19 @@ main (int argc, char *argv [])
       ACE_NEW_RETURN (supplier, Latency_Supplier *[suppliers], -1);
       for (i = 0; i < suppliers; ++i)
 	{
+	  int supplier_timestamps = (i==0);
 	  ACE_NEW_RETURN (supplier [i],
-			  Latency_Supplier (total_messages, measure_jitter),
+			  Latency_Supplier (total_messages,
+					    measure_jitter,
+					    supplier_timestamps),
 			  -1);
 	  char supplier_name [BUFSIZ];
 	  sprintf (supplier_name, "supplier-%d", i+1);
+	  // Only the first supplier timestamps its messages.
+	  int master = (i==0);
 	  if (supplier [i]->open_supplier (ec,
 					   supplier_name,
-					   int (i == 0)) == -1)
+					   master) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "Supplier open failed.\n"), -1);
 	}
 

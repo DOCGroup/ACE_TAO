@@ -31,7 +31,6 @@ int main (int argc, char *argv[])
 			    1);
 	}
 
-#if 0
       CORBA::Object_ptr objref =
 	orb->resolve_initial_references ("NameService");
       ACE_CHECK_ENV;
@@ -40,9 +39,6 @@ int main (int argc, char *argv[])
       ACE_CHECK_ENV;
 
       ACE_Scheduler_Factory::use_config (naming_context);
-#else
-      ACE_Scheduler_Factory::use_config (orb);
-#endif /* 0 */
 
       RtecScheduler::RT_Info_Set* infos;
       ACE_Scheduler_Factory::server ()->compute_scheduling
