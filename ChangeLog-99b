@@ -1,3 +1,15 @@
+Thu Dec 09 15:40:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (mmap): on LynxOS, fixed use of file_mapping
+          argument.  It it was 0, set it equal to the address of
+          an int on the stack.  Thanks to Chad Elliott
+          <elliott_c@ociweb.com> for reporting a problem with
+          ACE_OS::mmap on LynxOS.  And thanks to Chad for an
+          explanation of why Malloc_Test and TAO's Naming_Service -f
+          don't work:  it's because they require that the mapped
+          object be changed.  LynxOS 3.0.x and earlier don't support
+          that.
+
 Thu Dec 09 07:30:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile (CONTROLLED_FILES): added ChangeLog-99a.  Thanks

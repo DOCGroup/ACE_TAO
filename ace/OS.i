@@ -3142,8 +3142,10 @@ ACE_OS::mmap (void *addr,
   // Otherwise, we don't support the incomplete LynxOS mmap implementation.
   // We do support it by creating a hidden shared memory object, and using
   // that for the mapping.
-  if (!file_mapping  ||
-      (*file_mapping = ::shm_open (name,
+  int shm_handle;
+  if (! file_mapping)
+    file_mapping = &shm_handle;
+  if ((*file_mapping = ::shm_open (name,
                                    O_RDWR | O_CREAT | O_TRUNC,
                                    ACE_DEFAULT_FILE_PERMS)) == -1)
     return MAP_FAILED;
@@ -5321,14 +5323,14 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                 bytes_returned,
                                 NULL,
                                 NULL);
-      
-            
+
+
       if (::WSAGetLastError () != WSAENOBUFS)
               errno = ::WSAGetLastError ();
       else
       {
-           
-        QOS *qos = (QOS *) malloc (dwBufferLen);  
+
+        QOS *qos = (QOS *) malloc (dwBufferLen);
 
         result = ::WSAIoctl ((ACE_SOCKET) socket,
                        io_control_code,
@@ -5344,7 +5346,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
         //      -Ossama
         // if (result == SOCKET_ERROR)
         //   ACE_DEBUG ((LM_DEBUG, "SOCKET ERROR\n"));
-      
+
         ACE_Flow_Spec sending_flowspec (qos->SendingFlowspec.TokenRate,
                                         qos->SendingFlowspec.TokenBucketSize,
                                         qos->SendingFlowspec.PeakBandwidth,
