@@ -617,6 +617,54 @@ ImR_Activator_i::reregister_server (const char *server,
   // Get current starting up value
   int starting_up = this->repository_.starting_up (server);
 
+  // Get ready to save the running info
+  ACE_CString location;
+  ACE_CString server_object_ior;
+
+  // Only save the running info if it's still running before we remove it.
+  ACE_TRY
+    {
+      // Get the current running information
+      ACE_CString ping_location;
+      ACE_CString ping_object_ior;
+      this->repository_.get_running_info (server,
+                                          ping_location,
+                                          ping_object_ior);
+
+      // Narrow the server
+      CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
+      CORBA::Object_var object =
+        orb->string_to_object (ping_object_ior.c_str () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      ImplementationRepository::ServerObject_var ping_object =
+        ImplementationRepository::ServerObject::_narrow (object.in ()
+                                                         ACE_ENV_ARG_PARAMETER)
+      ACE_TRY_CHECK;
+
+      if (!CORBA::is_nil (ping_object.in ()))
+        {
+          // Ok, we've found our ior, now we remove the server from the
+          // repository in order to avoid restarting it if it's not
+          // running
+          this->repository_.remove (server);
+
+          // Now ping the object
+          ping_object->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // If the ping succeeded, then we will save the
+          // running information for this server
+          location = ping_location;
+          server_object_ior = ping_object_ior;
+        }
+  }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
+
   // Remove old info
   this->repository_.remove (server);
 
@@ -627,6 +675,10 @@ ImR_Activator_i::reregister_server (const char *server,
                          options.environment,
                          options.working_directory.in (),
                          options.activation);
+
+  // Set the old running info
+  if (location.length () != 0)
+    this->repository_.update (server, location, server_object_ior);
 
   // Set old starting up value, if there was one.
   if (starting_up != -1)
