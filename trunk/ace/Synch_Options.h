@@ -128,6 +128,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+  // ACE_Synch_Options (const ACE_Synch_Options &);
+  ACE_Synch_Options & operator= (const ACE_Synch_Options & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   u_long options_;
   // Keeps track of the enabled options.
 

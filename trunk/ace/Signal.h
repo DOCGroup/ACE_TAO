@@ -287,6 +287,12 @@ public:
   // Called by the <Reactor> to dispatch the signal handler.
 
 private:
+   ACE_Sig_Adapter (const ACE_Sig_Adapter &);
+   ACE_Sig_Adapter & operator= (const ACE_Sig_Adapter & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   int sigkey_;
   // Key for this signal handler (used to remove it).
 

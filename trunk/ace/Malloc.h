@@ -115,6 +115,12 @@ public:
 
   void dump (void) const;
   // Dump the state of the object.
+private:
+  ACE_Name_Node (const ACE_Name_Node &);
+  ACE_Name_Node & operator= (const ACE_Name_Node & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
 };
 
 class ACE_Export ACE_Control_Block
@@ -250,6 +256,14 @@ protected:
 
   size_t offset_;
   // Pointer to the current offset in the <buffer_>.
+
+private:
+   ACE_Static_Allocator_Base (const ACE_Static_Allocator_Base &);
+   ACE_Static_Allocator_Base &
+     operator= (const ACE_Static_Allocator_Base & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
 };
 
 #if defined (__ACE_INLINE__)

@@ -1727,19 +1727,24 @@ ACE_Unbounded_Set_Iterator<T>::next (T *&item)
 }
 
 template <class T> ACE_Unbounded_Set_Iterator<T>
-ACE_Unbounded_Set_Iterator<T>::operator++ (void)
+ACE_Unbounded_Set_Iterator<T>::operator++ (int)
 {
-  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ ()");
+  //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ (int)");
   ACE_Unbounded_Set_Iterator<T> retv (*this);
+
+  // postfix operator
 
   this->advance ();
   return retv;
 }
 
 template <class T> ACE_Unbounded_Set_Iterator<T>&
-ACE_Unbounded_Set_Iterator<T>::operator++ (int)
+ACE_Unbounded_Set_Iterator<T>::operator++ (void)
 {
-  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ (int)");
+  // ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator++ (void)");
+
+  // prefix operator
+
   this->advance ();
   return *this;
 }

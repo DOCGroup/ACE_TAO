@@ -34,7 +34,7 @@ public:
   ACE_SOCK_IO (void);
   // Constructor.
 
-  ~ACE_SOCK_IO (void);
+  virtual ~ACE_SOCK_IO (void);
   // Destructor.
 
   ssize_t send (const void *buf,

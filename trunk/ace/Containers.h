@@ -54,6 +54,13 @@ public:
 
 protected:
   ACE_DLList_Node (void);
+
+private:
+  //ACE_DLList_Node (const ACE_DLList_Node &);
+  ACE_DLList_Node & operator= (const ACE_DLList_Node & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
 };
 
 #if defined (__ACE_INLINE__)

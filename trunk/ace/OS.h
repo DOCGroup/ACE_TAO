@@ -1360,6 +1360,12 @@ public:
   // call to stop.
 
 private:
+  ACE_Countdown_Time (const ACE_Countdown_Time &);
+  ACE_Countdown_Time & operator= (const ACE_Countdown_Time & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   ACE_Time_Value *max_wait_time_;
   // Maximum time we were willing to wait.
 
@@ -4375,6 +4381,12 @@ public:
   // routine.
 
 private:
+   ACE_Thread_Adapter (const ACE_Thread_Adapter &);
+   ACE_Thread_Adapter & operator= (const ACE_Thread_Adapter & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   ~ACE_Thread_Adapter (void);
   // Ensure that this object must be allocated on the heap.
 
@@ -4484,6 +4496,12 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
+   ACE_Thread_Control (const ACE_Thread_Control &);
+   ACE_Thread_Control & operator= (const ACE_Thread_Control & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   ACE_Thread_Manager *tm_;
   // Pointer to the thread manager for this block of code.
 
@@ -4530,6 +4548,12 @@ public:
   // singleton.
 
 private:
+   ACE_Thread_Exit (const ACE_Thread_Exit &);
+   ACE_Thread_Exit & operator= (const ACE_Thread_Exit & rhs);
+  // Explicitly disallow use of implicitly generated copy
+  // constructor and assignment operator to prevent inadvertent
+  // memory leaks.
+
   void *status_;
   // Exit status...
 

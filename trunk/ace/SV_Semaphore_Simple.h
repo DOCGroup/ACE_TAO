@@ -49,7 +49,7 @@ public:
                            int initial_value = 1,
                            u_short nsems = 1,
                            int perms = ACE_DEFAULT_FILE_PERMS);
-  ~ACE_SV_Semaphore_Simple (void);
+  virtual ~ACE_SV_Semaphore_Simple (void);
 
   int open (const char *name,
             int flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
