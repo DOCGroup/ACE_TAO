@@ -21,6 +21,7 @@
 #include "Connection_Handler_Acceptor.h"
 #include "Consumer_Dispatch_Set.h"
 #include "Event_Forwarding_Discriminator.h"
+#include "ace/svc_export.h"
 
 typedef ACE_Null_Mutex MAP_MUTEX;
 

@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/svc_export.h"
+
 class ACE_Svc_Export Options
 {
   // = TITLE

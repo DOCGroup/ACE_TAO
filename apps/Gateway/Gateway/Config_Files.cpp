@@ -98,7 +98,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
     return result;
   else
     {
-      entry.remote_port_ = u_short (port);
+      entry.remote_port_ = (unsigned short) port;
 
       // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
       result = this->getword (buf);
@@ -122,7 +122,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   else if (result != FP::SUCCESS)
     return result;
   else
-    entry.local_port_ = u_short (port);
+    entry.local_port_ = (unsigned short) port;
 
   ACE_INT32 priority;
 
@@ -137,7 +137,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 }
 
 #if defined (DEBUGGING)
-int 
+int
 main (int argc, char *argv[])
 {
   FP_RETURN_TYPE result;
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
                     "Error line %d.\n",
                     line_number));
       else
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "%d\t%s\t%d\t%c\t%d\t%d\t%d\n",
                     entry.connection_id_,
                     entry.host_,
@@ -193,13 +193,13 @@ main (int argc, char *argv[])
                     line_number));
       else
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "%d\t%d\t",
                       entry.connection_id_,
                       entry.type_));
 
           while (--entry.total_consumers_ >= 0)
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "%d,",
                         entry.consumers_[entry.total_consumers_]));
           ACE_DEBUG ((LM_DEBUG,
