@@ -4,6 +4,7 @@
 #include "CIAO_common.h"
 #include "CCM_ComponentC.h"
 #include "CIAO_ValueC.h"
+#include "ace/Env_Value_T.h"
 
 int
 CIAO::Client_init (CORBA::ORB_ptr o)
@@ -33,4 +34,25 @@ CIAO::Client_init (CORBA::ORB_ptr o)
   CIAO_REGISTER_VALUE_FACTORY (o, Components::ComponentPortDescription_init,
                                Components::ComponentPortDescription);
   return 0;
+}
+
+/// This should really be an anonymous namespace, but some compilers
+/// still don't support this features.  Therefore, just use a long
+/// namespace name here.
+namespace ciao_anonymous_namespace
+{
+  int debug_level = -1;
+}
+
+int
+CIAO::debug_level (void)
+{
+  if (ciao_anonymous_namespace::debug_level == -1)
+    {
+      // Initialize the thing.
+      ACE_Env_Value<int> envar ("CIAO_DEBUG_LEVEL", 0);
+      ciao_anonymous_namespace::debug_level = envar;
+    }
+
+  return ciao_anonymous_namespace::debug_level;
 }
