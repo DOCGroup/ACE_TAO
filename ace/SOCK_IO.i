@@ -17,7 +17,7 @@ ACE_SOCK_IO::~ACE_SOCK_IO (void)
   // ACE_TRACE ("ACE_SOCK_IO::~ACE_SOCK_IO");
 }
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf, size_t n, int flags) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
@@ -26,7 +26,7 @@ ACE_SOCK_IO::send (const void *buf, size_t n, int flags) const
 
 // Recv an n byte message from the connected socket.
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf, size_t n, int flags) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
@@ -35,7 +35,7 @@ ACE_SOCK_IO::recv (void *buf, size_t n, int flags) const
 
 // Send an n byte message to the connected socket.
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
@@ -48,7 +48,7 @@ ACE_SOCK_IO::send (const void *buf, size_t n) const
 
 // Recv an n byte message from the connected socket.
 
-ASYS_INLINE ssize_t  
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
@@ -61,17 +61,17 @@ ACE_SOCK_IO::recv (void *buf, size_t n) const
 
 // Send a vector of n byte messages to the connected socket.
 
-ASYS_INLINE ssize_t  
-ACE_SOCK_IO::send (const iovec iov[], size_t n) const
+ASYS_INLINE ssize_t
+ACE_SOCK_IO::sendv (const iovec iov[], size_t n) const
 {
-  ACE_TRACE ("ACE_SOCK_IO::send");
+  ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE_OS::sendv (this->get_handle (), iov, n);
 }
 
-ASYS_INLINE ssize_t  
-ACE_SOCK_IO::send_n (const iovec iov[], size_t n) const
+ASYS_INLINE ssize_t
+ACE_SOCK_IO::sendv_n (const iovec iov[], size_t n) const
 {
-  ACE_TRACE ("ACE_SOCK_IO::send");
+  ACE_TRACE ("ACE_SOCK_IO::sendv_n");
   return ACE::sendv_n (this->get_handle (),
                        iov,
                        n);
@@ -79,10 +79,10 @@ ACE_SOCK_IO::send_n (const iovec iov[], size_t n) const
 
 // Recv an n byte message from the connected socket.
 
-ASYS_INLINE ssize_t  
-ACE_SOCK_IO::recv (iovec iov[], size_t n) const
+ASYS_INLINE ssize_t
+ACE_SOCK_IO::recvv_n (iovec iov[], size_t n) const
 {
-  ACE_TRACE ("ACE_SOCK_IO::recv");
+  ACE_TRACE ("ACE_SOCK_IO::recvv_n");
   return ACE_OS::recvv (this->get_handle (), iov, n);
 }
 
@@ -91,7 +91,7 @@ ACE_SOCK_IO::send (const void *buf, size_t n,
 		   ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
-  return ACE_OS::write (this->get_handle (), 
+  return ACE_OS::write (this->get_handle (),
 			(const char *) buf, n,
 			overlapped);
 }
@@ -105,7 +105,7 @@ ACE_SOCK_IO::recv (void *buf, size_t n,
 		       overlapped);
 }
 
-ASYS_INLINE ssize_t 
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t len,
                    int flags,
@@ -115,7 +115,7 @@ ACE_SOCK_IO::send (const void *buf,
   return ACE::send (this->get_handle (), buf, len, flags, timeout);
 }
 
-ASYS_INLINE ssize_t 
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
                    const ACE_Time_Value *timeout) const
@@ -124,7 +124,7 @@ ACE_SOCK_IO::recv (void *buf,
   return ACE::recv (this->get_handle (), buf, len, timeout);
 }
 
-ASYS_INLINE ssize_t 
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::send (const void *buf,
                    size_t len,
                    const ACE_Time_Value *timeout) const
@@ -133,7 +133,7 @@ ACE_SOCK_IO::send (const void *buf,
   return ACE::send (this->get_handle (), buf, len, timeout);
 }
 
-ASYS_INLINE ssize_t 
+ASYS_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
                    int flags,

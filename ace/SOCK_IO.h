@@ -59,18 +59,25 @@ public:
   // Recv an <n> byte buffer from the connected socket (uses
   // <read(2)>).
 
-  ssize_t send (const iovec iov[],
+  ssize_t sendv (const iovec iov[],
                 size_t n) const;
   // Send an <iovec> of size <n> to the connected socket.
 
-  ssize_t send_n (const iovec iov[],
-                  size_t n) const;
+  ssize_t recvv (iovec *io_vec);
+  // Allows a client to read from a socket without having to provide a
+  // buffer to read.  This method determines how much data is in the
+  // socket, allocates a buffer of this size, reads in the data, and
+  // returns the number of bytes read.  The caller is responsible for
+  // deleting the member in the <iov_base> field of <io_vec>.
+
+  ssize_t sendv_n (const iovec iov[],
+                   size_t n) const;
   // Send an <iovec> of size <n> to the connected socket (uses
   // <ACE::sendv_n>).  Will block until all bytes are sent or an error
   // occurs.
 
-  ssize_t recv (iovec iov[],
-                size_t n) const;
+  ssize_t recvv_n (iovec iov[],
+                   size_t n) const;
   // Receive an <iovec> of size <n> to the connected socket.
 
   ssize_t send (const void *buf,
@@ -124,13 +131,6 @@ public:
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
   // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
-
-  ssize_t recv (iovec *io_vec);
-  // Allows a client to read from a socket without having to provide a
-  // buffer to read.  This method determines how much data is in the
-  // socket, allocates a buffer of this size, reads in the data, and
-  // returns the number of bytes read.  The caller is responsible for
-  // deleting the member in the <iov_base> field of <io_vec>.
 
   void dump (void) const;
   // Dump the state of an object.
