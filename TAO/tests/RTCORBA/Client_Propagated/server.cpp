@@ -1,9 +1,9 @@
 // $Id$
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 #include "testS.h"
 #include "ace/Get_Opt.h"
+
+#if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
 {
