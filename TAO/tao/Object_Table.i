@@ -1,30 +1,5 @@
 // $Id$
 
-// Template specialization....
-ACE_INLINE u_long
-ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>::hash (const PortableServer::ObjectId &id)
-{
-  // Based on hash_pjw function on the ACE library.
-  u_long hash = 0;
-
-  for (CORBA::ULong i = 0;
-       i < id.length ();
-       ++i)
-    {
-      hash = (hash << 4) + (id[i] * 13);
-
-      u_long g = hash & 0xf0000000;
-
-      if (g)
-        {
-          hash ^= (g >> 24);
-          hash ^= g;
-        }
-    }
-
-  return hash;
-}
-
 ACE_INLINE
 TAO_Object_Table_Entry::TAO_Object_Table_Entry (void)
   : id_ (),
@@ -218,27 +193,6 @@ TAO_Dynamic_Hash_ObjTable::find (const PortableServer::Servant servant,
                                  PortableServer::ObjectId_out id)
 {
   return this->TAO_Object_Table_Impl::find (servant, id);
-}
-
-ACE_INLINE int
-TAO_Dynamic_Hash_ObjTable::find (const PortableServer::ObjectId &id,
-                                 PortableServer::Servant &servant)
-{
-  return this->hash_map_.find (id, servant);
-}
-
-ACE_INLINE int
-TAO_Dynamic_Hash_ObjTable::bind (const PortableServer::ObjectId &id,
-                                 PortableServer::Servant servant)
-{
-  return this->hash_map_.bind (id, servant);
-}
-
-ACE_INLINE int
-TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
-                                   PortableServer::Servant &servant)
-{
-  return this->hash_map_.unbind (id, servant);
 }
 
 ACE_INLINE
