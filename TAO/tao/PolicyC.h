@@ -39,6 +39,7 @@ public:
                             CORBA::Environment &);
 
   static CORBA_PolicyError *_narrow (CORBA::Exception *);
+  static void _tao_any_destructor (void*);
 
   CORBA_PolicyError(
     CORBA::PolicyErrorCode _tao_reason);
@@ -87,6 +88,7 @@ public:
                             CORBA::Environment &);
 
   static CORBA_InvalidPolicies *_narrow (CORBA::Exception *);
+  static void _tao_any_destructor (void*);
 
   CORBA_InvalidPolicies(
       const _tao_seq_UShort & _tao_indices);
@@ -158,6 +160,7 @@ public:
         TAO_default_environment ()
     );
   static CORBA_Policy_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
 #if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   virtual CORBA::PolicyType policy_type (
@@ -227,6 +230,8 @@ public:
     );
   CORBA_PolicyList (const CORBA_PolicyList &); // copy ctor
   ~CORBA_PolicyList (void); // dtor
+
+  static void _tao_any_destructor (void*);
 };
 typedef CORBA_PolicyList *CORBA_PolicyList_ptr;
 
@@ -298,6 +303,8 @@ public:
     );
   CORBA_PolicyTypeSeq (const CORBA_PolicyTypeSeq &); // copy ctor
   ~CORBA_PolicyTypeSeq (void); // dtor
+
+  static void _tao_any_destructor (void*);
 };
 typedef CORBA_PolicyTypeSeq *CORBA_PolicyTypeSeq_ptr;
 
@@ -410,6 +417,7 @@ public:
           TAO_default_environment ()
       );
   static CORBA_PolicyManager_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
   virtual CORBA_PolicyList * get_policy_overrides (
         const CORBA_PolicyTypeSeq & ts,
@@ -500,6 +508,7 @@ public:
           TAO_default_environment ()
       );
   static CORBA_PolicyCurrent_ptr _nil (void);
+  static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -523,11 +532,11 @@ private:
 
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::PolicyError &);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyError*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyError *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::PolicyError *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::InvalidPolicies &);
@@ -535,7 +544,7 @@ TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::InvalidPolicies*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::InvalidPolicies *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::InvalidPolicies *&);
 
 // Any operators for interface CORBA::Policy
@@ -549,7 +558,7 @@ TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyList*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyList *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::PolicyList *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              const CORBA::PolicyTypeSeq &);
@@ -557,20 +566,20 @@ TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyTypeSeq*);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyTypeSeq *&);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::PolicyTypeSeq *&);
 TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::SetOverrideType);
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::SetOverrideType &);
 
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyManager_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyManager *&);
-TAO_Export void operator<<= (CORBA::Any &, 
+TAO_Export void operator<<= (CORBA::Any &,
                              CORBA::PolicyCurrent_ptr);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::PolicyCurrent *&);
 
 // ****************************************************************

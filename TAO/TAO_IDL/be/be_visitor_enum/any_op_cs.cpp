@@ -56,22 +56,13 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << " _tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
       << "stream << _tao_elem;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "TAO_ENCAP_BYTE_ORDER," << be_nl
-      << "stream.begin ()," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_uidt_nl
+      << "stream.begin ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "

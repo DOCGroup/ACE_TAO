@@ -47,7 +47,6 @@
     CORBA_Bounds (void); // default ctor
     CORBA_Bounds (const CORBA_Bounds &); // copy ctor
     ~CORBA_Bounds (void); // dtor
-    static void _tao_any_destructor (void*);
     CORBA_Bounds &operator= (const CORBA_Bounds &);
 
 
@@ -59,7 +58,7 @@
                               CORBA::Environment &);
 
     static CORBA_Bounds *_narrow (CORBA::Exception *);
-
+    static void _tao_any_destructor (void*);
 
     // = TAO extension
     static CORBA::Exception *_alloc (void);

@@ -188,6 +188,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RebindPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual RebindMode rebind_mode (
         CORBA::Environment &ACE_TRY_ENV =
@@ -281,6 +282,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static SyncScopePolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual SyncScope synchronization (
         CORBA::Environment &ACE_TRY_ENV =
@@ -310,6 +312,8 @@ TAO_NAMESPACE  Messaging
 
   struct TAO_Export PriorityRange
   {
+    static void _tao_any_destructor (void *);
+
     Priority min;
     Priority max;
   };
@@ -411,6 +415,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestPriorityPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -504,6 +509,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyPriorityPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -597,6 +603,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestStartTimePolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -690,6 +697,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RequestEndTimePolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -783,6 +791,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyStartTimePolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -876,6 +885,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyEndTimePolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
@@ -969,6 +979,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RelativeRequestTimeoutPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1062,6 +1073,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1091,6 +1103,8 @@ TAO_NAMESPACE  Messaging
 
   struct TAO_Export RoutingTypeRange
   {
+    static void _tao_any_destructor (void *);
+
     RoutingType min;
     RoutingType max;
   };
@@ -1192,6 +1206,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static RoutingPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual RoutingTypeRange routing_range (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1285,6 +1300,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static MaxHopsPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual CORBA::UShort max_hops (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1378,6 +1394,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static QueueOrderPolicy_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual Ordering allowed_orders (
         CORBA::Environment &ACE_TRY_ENV =
@@ -1405,6 +1422,8 @@ TAO_NAMESPACE  Messaging
 
   struct TAO_Export PolicyValue
   {
+    static void _tao_any_destructor (void *);
+
     CORBA::PolicyType ptype;
 
     // *************************************************************
@@ -1504,6 +1523,8 @@ TAO_NAMESPACE  Messaging
     );
     PolicyValueSeq (const PolicyValueSeq &); // copy ctor
     ~PolicyValueSeq (void); // dtor
+
+    static void _tao_any_destructor (void *);
   };
   typedef PolicyValueSeq *PolicyValueSeq_ptr;
 
@@ -1875,6 +1896,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static ReplyHandler_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
@@ -1966,6 +1988,7 @@ TAO_NAMESPACE  Messaging
           CORBA::Environment::default_environment ()
       );
     static Poller_ptr _nil (void);
+    static void _tao_any_destructor (void *);
 
     virtual CORBA::Object_ptr operation_target (
         CORBA::Environment &ACE_TRY_ENV =

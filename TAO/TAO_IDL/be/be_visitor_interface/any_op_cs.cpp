@@ -70,8 +70,6 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->full_name () << "_ptr _tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl
       << "TAO_OutputCDR stream;" << be_nl
       << "if (stream << _tao_elem)" << be_nl
       << "{" << be_idt_nl
@@ -81,16 +79,9 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << node->full_name () << "::_duplicate (_tao_elem)," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << node->name () << "::_tao_any_destructor" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_uidt_nl
       << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
@@ -121,10 +112,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << node->name () << "::_tao_any_destructor" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl

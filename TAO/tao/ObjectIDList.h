@@ -58,6 +58,8 @@ public:
                );
  CORBA_ORB_ObjectIdList (const CORBA_ORB_ObjectIdList &); // copy ctor
  ~CORBA_ORB_ObjectIdList (void); // dtor
+
+  static void _tao_any_destructor (void*);
 };
 
 typedef CORBA_ORB_ObjectIdList *CORBA_ORB_ObjectIdList_ptr;

@@ -151,9 +151,7 @@ CORBA_NVList::add_value (const char *name,
           //
           nv->any_._tao_replace (value.type_,
                                  value.byte_order_,
-                                 value.cdr_,
-                                 ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+                                 value.cdr_);
         }
       return nv;
     }

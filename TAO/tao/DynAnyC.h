@@ -96,7 +96,7 @@ private:
   CORBA_DynAny_ptr &ptr_;
 };
 
-class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
+class TAO_Export CORBA_DynAny : public virtual CORBA_Object
 {
 public:
   #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8

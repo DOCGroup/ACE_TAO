@@ -93,39 +93,23 @@ CORBA::Exception *CORBA_Bounds::_alloc (void)
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem)
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    stream << _tao_elem;
-    _tao_any._tao_replace (CORBA::_tc_Bounds,
-                           TAO_ENCAP_BYTE_ORDER,
-                           stream.begin (),
-                           ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
+  TAO_OutputCDR stream;
+  stream << _tao_elem;
+  _tao_any._tao_replace (CORBA::_tc_Bounds,
+                         TAO_ENCAP_BYTE_ORDER,
+                         stream.begin ());
 }
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Bounds *_tao_elem) // non copying
 {
-  ACE_TRY_NEW_ENV
-  {
-    TAO_OutputCDR stream;
-    stream << *_tao_elem;
-    _tao_any._tao_replace (CORBA::_tc_Bounds,
-                           TAO_ENCAP_BYTE_ORDER,
-                           stream.begin (),
-                           1,
-                           _tao_elem,
-                           CORBA::Bounds::_tao_any_destructor,
-                           ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-  }
-  ACE_CATCHANY {}
-  ACE_ENDTRY;
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (CORBA::_tc_Bounds,
+                         TAO_ENCAP_BYTE_ORDER,
+                         stream.begin (),
+                         1,
+                         _tao_elem,
+                         CORBA::Bounds::_tao_any_destructor);
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_elem)
@@ -152,9 +136,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
             CORBA::_tc_Bounds,
             1,
             ACE_reinterpret_cast (void*, _tao_elem),
-            CORBA::Bounds::_tao_any_destructor,
-            ACE_TRY_ENV);
-        ACE_TRY_CHECK;
+            CORBA::Bounds::_tao_any_destructor);
         return 1;
       }
       else
