@@ -1,3 +1,8 @@
+Fri Apr  3 15:35:39 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/client.h, client.cpp: All PropertySet
+	methods and the Iterator class methods tested. 
+	
 Fri Apr  3 08:59:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.cpp: 
