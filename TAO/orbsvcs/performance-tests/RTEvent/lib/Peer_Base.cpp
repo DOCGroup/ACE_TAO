@@ -48,7 +48,7 @@ Peer_Base::Peer_Base (CORBA::ORB_ptr orb,
 
   this->event_channel_ =
     RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ()
-                                                  ACE_ENV_SINGLE_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
