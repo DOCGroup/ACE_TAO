@@ -1,5 +1,9 @@
 Tue Oct 13 00:19:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (sema_destroy): I believe I've fixed the rats nest of
+ 	  #ifdefs to get semaphores to work correctly on Chorus again.
+  	  Thanks to Naga for tracking this down!
+
 	* ace/High_Res_Timer.cpp: Temporarily commented out the
  	  ACE_static_casts so that this will compile with CC.
 

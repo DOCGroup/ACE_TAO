@@ -2342,35 +2342,31 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   // ACE_TRACE ("ACE_OS::sema_destroy");
 # if defined (ACE_HAS_POSIX_SEM)
   int result;
-#   if !defined (ACE_LACKS_NAMED_POSIX_SEM)
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  if (s->name_) 
+    {
+      // Only destroy the semaphore if we're the ones who
+      // initialized it.
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
+      ACE_OS::shm_unlink (s->name_);
+      delete s->name_;
+      return result;
+    }
+#else
   if (s->name_)
     {
       ACE_OS::free ((void *) s->name_);
       ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_unlink (s->name_), result), int, -1, result);
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_close (s->sema_), ace_result_), int, -1);
     }
+#   endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
-#   endif /* ! ACE_LACKS_NAMED_POSIX_SEM */
-#  if defined (CHORUS)
-    {
-      if (s->name_) 
-        {
-          // Only destroy the semaphore if we're the ones who
-          // initialized it.
-          ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
-          ACE_OS::shm_unlink (s->name_);
-          delete s->name_;
-          return result;
-        }
-    }
-#  else
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL (::sem_destroy (s->sema_), result), int, -1, result);
       delete s->sema_;
       s->sema_ = 0;
       return result;
     }
-#endif /* CHORUS */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), ace_result_), int, -1);
