@@ -37,11 +37,6 @@ class TAO_Export TAO_PolicyFactory_Registry
 {
 public:
 
-  typedef ACE_Map_Iterator<
-    CORBA::PolicyType,
-    PortableInterceptor::PolicyFactory_ptr,
-    ACE_Null_Mutex> ITERATOR;
-
   typedef ACE_Map_Manager<
     CORBA::PolicyType,
     PortableInterceptor::PolicyFactory_ptr,
