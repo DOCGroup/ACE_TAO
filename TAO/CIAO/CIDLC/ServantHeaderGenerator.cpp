@@ -553,7 +553,9 @@ namespace
          << "connect_" << d->name ().simple () << " (" << endl
          << d->type ()->name () << "Consumer_ptr c" << endl
          << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_START] << endl
+         << STRS[EXCP_SYS] << "," << endl
+         << STRS[EXCP_AC] << "));" << endl << endl;
 
       os << "virtual " << d->type ()->name () << "Consumer_ptr" << endl
          << "disconnect_" << d->name ().simple () << " (" << endl
