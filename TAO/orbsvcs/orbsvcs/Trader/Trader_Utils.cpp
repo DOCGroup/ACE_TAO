@@ -1464,8 +1464,9 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
     }
   else if (this->policy_ == CosTrading::Lookup::all)
     {
-      CosTrading::Property* props = s_props.get_buffer (0);
-      d_props.replace (length, length, props, 0);
+      d_props = s_props;
+      //      CosTrading::Property* props = s_props.get_buffer (0);
+      //      d_props.replace (length, length, props, 0);
     }
 }
 
