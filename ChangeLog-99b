@@ -1,9 +1,18 @@
+Mon Jul 19 23:04:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Logging_Strategy.cpp (init): The ACE_LOG_MSG->open()
+ 	  call at the end of the ACE_Logging_Strategy::init() method
+ 	  *must* specify the flags and logger key or an application will
+ 	  not connect to the client logger daemon automatically when the
+ 	  ACE_Log_Msg::LOGGER flag is set in a svc.conf file.  Thanks to
+ 	  Jerry De Master <jdemaste@ipdinc.com> for reporting this.
+
 Mon Jul 19 22:11:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: cleaned up instructions for building
           on NT for VxWorks target.  Thanks to Stephane Chatre
-          <schatre@oresis.com> for reporting that the instructions
-          were out of date.
+ 	  <schatre@oresis.com> for reporting that the instructions were
+ 	  out of date.
 
 Mon Jul 19 21:38:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
