@@ -1,3 +1,19 @@
+Mon Aug  2 06:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
+          Changed this class so that AMH Response Handlers can be allocated
+          with an allocator and when the reference count reaches zero we
+          look if we have an allocator, if so, release from the allocator,
+          else just delete
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+          Changed the generation of the allocation of the AMH Response
+          Handler so that we use an allocator.
+
 Mon Aug  2 06:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Object_Map.h:
