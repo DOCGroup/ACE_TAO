@@ -23,15 +23,13 @@ namespace Sender_Impl
   {
 
   public:
-    /// Default constructor.
-    Sender_exec_1_i ()
-        : message_(CORBA::string_dup ("Default Message"))
-    {
-    }
+
 
     /// Secondary construction.
-    Sender_exec_1_i (const char* local_message)
+    Sender_exec_1_i (const char* local_message
+                     SenderSwap_exec_i *e)
       : message_ (CORBA::string_dup (local_message))
+      , base_exec_ (e)
     {
     }
 
@@ -94,6 +92,12 @@ namespace Sender_Impl
 
   private:
     CORBA::String_var message_;
+
+    // my incarnator
+    SenderSwap_exec_i *base_exec_;
+
+    /// Default constructor.
+    Sender_exec_1_i () {};
 
     friend class Message_Impl_1;
   };

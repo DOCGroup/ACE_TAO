@@ -36,16 +36,28 @@ namespace Sender_Impl
 
     ~SenderSwap_exec_i ();
 
-    virtual ::Components::EnterpriseComponent_ptr 
+    virtual ::Components::EnterpriseComponent_ptr
     incarnate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Components::EnterpriseComponent_ptr 
+    virtual ::Components::EnterpriseComponent_ptr
     etherealize (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    void  consumers (::Components::ConsumerDescriptions_ptr p)
+    {
+      this->consumers_ = p;
+    }
+
+    ::Components::ConsumerDescriptions_ptr consumers (void)
+    {
+      return this->consumers_._retn ();
+    }
+
   protected:
     int count_;
+
+    ::Components::ConsumerDescriptions_var consumers_;
   };
 
   class SENDER_EXEC_Export SenderHome_exec_i :
@@ -65,6 +77,8 @@ namespace Sender_Impl
     create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
+
+
   };
 
 }
