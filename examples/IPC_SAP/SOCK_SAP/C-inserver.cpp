@@ -42,7 +42,7 @@ int main (int argc, char *argv[])
 
   /* Associate address with endpoint */
   if (ACE_OS::bind (s_handle,
-		    ACE_reinterpret_cast(struct sockaddr *, &saddr),
+                    ACE_reinterpret_cast(struct sockaddr *, &saddr),
                     sizeof saddr) == -1)
     ACE_OS::perror ("bind"), ACE_OS::exit (1);
 
@@ -63,10 +63,10 @@ int main (int argc, char *argv[])
       /* Create a new endpoint of communication */
       do
         n_handle =
-	  ACE_OS::accept (s_handle,
-			  ACE_reinterpret_cast(struct sockaddr *,
-					       &cli_addr),
-			  &cli_addr_len);
+          ACE_OS::accept (s_handle,
+                          ACE_reinterpret_cast(struct sockaddr *,
+                                               &cli_addr),
+                          &cli_addr_len);
       while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
 
       if (n_handle == ACE_INVALID_HANDLE)
@@ -104,6 +104,6 @@ int main (int argc, char *argv[])
         ACE_OS::perror ("close"), ACE_OS::exit (1);
       ACE_OS::exit (0);
     }
-  /* NOTREACHED */
-  return 0;
+
+  ACE_NOTREACHED (return 0;)
 }
