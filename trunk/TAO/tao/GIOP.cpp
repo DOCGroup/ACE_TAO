@@ -1449,6 +1449,7 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
                         return TAO_GIOP_SYSTEM_EXCEPTION;
                       }
 
+                    break;
                   }
               } // end of loop
             CORBA::string_free (buf);
