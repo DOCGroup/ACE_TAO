@@ -1015,11 +1015,16 @@ protected:
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.
 
-  int run (ACE_Time_Value *tv, 
+  int run (ACE_Time_Value *tv,
            int break_on_timeouts);
   // Implements the run routine
 
 private:
+
+  CORBA_Object_ptr resolve_commandline_ref (const char *& init_ref);
+  // Resolve the Initial reference according to the commandline
+  // option -ORBInitRef <ObjectID>:<IOR>
+
   CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout);
   // Resolve the name service object reference.
 

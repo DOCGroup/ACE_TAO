@@ -230,7 +230,7 @@ CORBA_ORB::open (void)
   TAO_ORB_Core *ocp = TAO_ORB_Core_instance ();
   TAO_Server_Strategy_Factory *f = ocp->server_factory ();
 
-  // @@ For now we simple assume an IIOP handler, in the future 
+  // @@ For now we simple assume an IIOP handler, in the future
   // @@ this has to be more general
   TAO_IIOP_BASE_ACCEPTOR *iiop_acceptor =
     ACE_dynamic_cast(TAO_IIOP_BASE_ACCEPTOR *, ocp->acceptor ()->acceptor ());
@@ -321,7 +321,7 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 }
 
 int
-CORBA_ORB::run (ACE_Time_Value *tv, 
+CORBA_ORB::run (ACE_Time_Value *tv,
                 int break_on_timeouts)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
@@ -461,6 +461,36 @@ CORBA_ORB::resolve_poa_current (void)
 }
 
 CORBA_Object_ptr
+CORBA_ORB::resolve_commandline_ref (const char *& init_ref)
+{
+
+  // @@ Where are the exceptions caught ??
+  CORBA::Environment env;
+
+  // Initialize our return ptr.
+  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
+
+  // Get the commandline initial reference.
+  init_ref = TAO_ORB_Core_instance ()->orb_params ()->init_ref ();
+
+  // Parse the IOR from the given commandline mapping <ObjectId>=<IOR>.
+  char *ior = CORBA::string_dup (init_ref + ACE_OS::strcspn (init_ref,"=") + 1 );
+
+  // Convert the given IOR to object. Note the IOR could be of the form
+  // IOR: ...    / iiop: ...    / iioploc: ...    / iiopname: ...
+
+  return_value = this->string_to_object (ior, env);
+
+  // check for errors
+  if (env.exception () != 0)
+    return_value = CORBA_Object::_nil ();
+
+  CORBA::string_free (ior);
+  return CORBA_Object::_duplicate (return_value);
+}
+
+
+CORBA_Object_ptr
 CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
 {
   CORBA::Environment env;
@@ -497,19 +527,19 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
           // First, determine if the port was supplied on the command line
           u_short port =
             TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
-          
+
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number =
                 ACE_OS::getenv ("NameServicePort");
-              
+
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
             }
-          
+
           this->name_service_ =
             this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
                                         port,
@@ -549,7 +579,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
         {
           this->trading_service_ =
             this->string_to_object (trading_service_ior.c_str (), env);
-          
+
           // check for errors
           if (env.exception () != 0)
             this->trading_service_ = CORBA_Object::_nil ();
@@ -559,25 +589,25 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
           // First, determine if the port was supplied on the command line
           u_short port =
             TAO_ORB_Core_instance ()->orb_params ()->trading_service_port ();
-          
+
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
-              
+
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
-          
+
           this->trading_service_ =
             this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE,
                                         port,
                                         timeout);
         }
     }
-  
+
   return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
@@ -585,7 +615,7 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
 
 // @@ This will have to be sanitized of transport specific calls
 //    in order to support pluggable protocols!  But, it does use
-//    UDP and multicast.  Not all transport protocols may support 
+//    UDP and multicast.  Not all transport protocols may support
 //    this, connectionless and multicast. fredk
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
@@ -697,6 +727,7 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   return return_value;
 }
 
+
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        CORBA_Environment &TAO_IN_ENV)
@@ -709,9 +740,21 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &TAO_IN_ENV)
 {
+  const char *init_ref = TAO_ORB_Core_instance ()->orb_params ()->init_ref ();
+
+  if (ACE_OS::strcmp (init_ref,"") != 0)
+    {
+      // A mapping <ObjectID>:<IOR> was specified through -ORBInitRef parameter.
+      // Are we looking for the same ObjectID.
+      if (ACE_OS::strncmp ((const char *) name,
+                           init_ref,
+                           ACE_OS::strcspn (init_ref,"=")) == 0)
+        return this->resolve_commandline_ref (init_ref);
+    }
+
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service (timeout);
-  if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service (timeout);
   else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     return this->resolve_root_poa ();
