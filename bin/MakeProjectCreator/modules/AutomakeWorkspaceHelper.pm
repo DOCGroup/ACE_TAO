@@ -2,7 +2,7 @@ package AutomakeWorkspaceHelper;
 
 # ************************************************************
 # Description   : An Automake Workspace Helper
-# Author        : J.T. Conklin
+# Author        : Chad Elliott
 # Create Date   : 9/01/2004
 # ************************************************************
 
@@ -19,6 +19,23 @@ use vars qw(@ISA);
 @ISA = qw(WorkspaceHelper);
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my(%vals)  = ('ACE_ROOT'     => '$(top_srcdir)',
+              'TAO_ROOT'     => '$(top_srcdir)',
+              'ACE_BUILDDIR' => '$(top_builddir)',
+              'TAO_BUILDDIR' => '$(top_builddir)',
+              'TAO_IDL'      => '$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
+                                'TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf',
+             );
+my(%addon) = ('ACE_ROOT'     => {'TAO_ROOT'     => '/..',
+                                 'TAO_BUILDDIR' => '/..'},
+              'ACE_BUILDDIR' => {'TAO_ROOT'     => '/..',
+                                 'TAO_BUILDDIR' => '/..'},
+             );
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -31,33 +48,17 @@ sub write_settings {
   my($error)  = undef;
   my($crlf)   = $wsc->crlf();
   my($pfh)    = new FileHandle();
-
-  my($seen_ace_root)     = 0;
-  my($seen_tao_root)     = 0;
-  my($seen_ace_builddir) = 0;
-  my($seen_tao_builddir) = 0;
-  my($seen_tao_idl)      = 0;
+  my(%seen)   = ();
 
   foreach my $local (reverse @locals) {
-    if (open($pfh,$local)) {
+    if (open($pfh, $local)) {
       while(<$pfh>) {
-        if (/ACE_ROOT/) {
-           $seen_ace_root = 1;
-        }
-        if (/TAO_ROOT/) {
-           $seen_tao_root = 1;
-        }
-        if (/ACE_BUILDDIR/) {
-           $seen_ace_builddir = 1;
-        }
-        if (/TAO_BUILDDIR/) {
-           $seen_tao_builddir = 1;
-        }
-        if (/TAO_IDL/) {
-           $seen_tao_idl = 1;
+        foreach my $key (keys %vals) {
+          if (/$key/) {
+            $seen{$key} = $vals{$key};
+          }
         }
       }
-
       close($pfh);
     }
     else {
@@ -66,38 +67,20 @@ sub write_settings {
     }
   }
 
-  if ($seen_ace_root || $seen_ace_builddir ||
-      $seen_tao_root || $seen_tao_builddir) {
-
-    if ($seen_ace_root) {
-      if ($seen_tao_root || $seen_tao_builddir) {
-        print $fh "ACE_ROOT = \$(top_srcdir)/..", $crlf;
-      } else {
-        print $fh "ACE_ROOT = \$(top_srcdir)", $crlf;
+  foreach my $key (sort keys %seen) {
+    print $fh "$key = $seen{$key}";
+    if (defined $addon{$key}) {
+      foreach my $add (keys %{$addon{$key}}) {
+        if ($seen{$add}) {
+          print $fh $addon{$key}->{$add};
+          last;
+        }
       }
     }
-    if ($seen_ace_builddir) {
-      if ($seen_tao_root || $seen_tao_builddir) {
-        print $fh "ACE_BUILDDIR = \$(top_builddir)/..", $crlf;
-      } else {
-        print $fh "ACE_BUILDDIR = \$(top_builddir)", $crlf;
-      }
-    }
-    if ($seen_tao_root) {
-      print $fh "TAO_ROOT = \$(top_srcdir)", $crlf;
-    }
-    if ($seen_tao_builddir) {
-      print $fh "TAO_BUILDDIR = \$(top_builddir)", $crlf;
-    }
-
     print $fh $crlf;
   }
 
-  if ($seen_tao_idl) {
-    print $fh "TAO_IDL = ACE_ROOT=\$(ACE_ROOT) TAO_ROOT=\$(TAO_ROOT) \$(TAO_BUILDDIR)/TAO_IDL/tao_idl", $crlf;
-    print $fh "TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I\$(TAO_ROOT) -I\$(srcdir) -g \$(ACE_BUILDDIR)/apps/gperf/src/gperf", $crlf;
-    print $fh $crlf;
-  }
+  print $fh $crlf;
 
   return $status, $error;
 }

@@ -1,3 +1,16 @@
+Wed Sep 29 09:41:02 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+          Rewrote this module so that the code is generic and completely
+          data driven.
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          When setting the MAKEFILE variable get the non-workspace decorated
+          name.  This will allow GNUmakefile's generated from multiple
+          workspaces within the same directory to work.
+
 Wed Sep 29 14:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
@@ -42,72 +55,72 @@ Wed Sep 29 07:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Sep 28 21:05:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Changed to add TAO to subdirs if BUILD_TAO is defined.
+          Changed to add TAO to subdirs if BUILD_TAO is defined.
 
 Tue Sep 28 15:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/svcconf.mpc:
-	* ACEXML/common/common.mpc:
-	* ACEXML/parser/parser/parser.mpc:
+        * ACEXML/apps/svcconf/svcconf.mpc:
+        * ACEXML/common/common.mpc:
+        * ACEXML/parser/parser/parser.mpc:
 
-	  Changed to inherit from core.mpb, so that libraries will
-	  be installed.
+          Changed to inherit from core.mpb, so that libraries will
+          be installed.
 
 Tue Sep 28 15:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/acedefaults.mpb:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
 
-	  Changed to add $(ACE_BUILDDIR) to include path for automake
-	  builds.
+          Changed to add $(ACE_BUILDDIR) to include path for automake
+          builds.
 
 Tue Sep 28 15:16:54 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* ace/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ace/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
 
-	  Added includedir definitions so headers are installed in
-	  the expected place.
+          Added includedir definitions so headers are installed in
+          the expected place.
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* ace/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
-	* netsvcs/clients/Naming/Client/Makefile.am:
-	* netsvcs/clients/Naming/Dump_Restore/Makefile.am:
-	* netsvcs/lib/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ace/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
+        * netsvcs/clients/Naming/Client/Makefile.am:
+        * netsvcs/clients/Naming/Dump_Restore/Makefile.am:
+        * netsvcs/lib/Makefile.am:
 
-	  Added _LDFLAGS definitions to set shared library version
-	  numbers.
+          Added _LDFLAGS definitions to set shared library version
+          numbers.
 
 Tue Sep 28 14:31:10 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/examples/SAXPrint/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* ACEXML/tests/Makefile.am:
-	* Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* apps/gperf/Makefile.am:
-	* apps/gperf/src/Makefile.am:
-	* apps/gperf/tests/Makefile.am:
-	* configure.ac:
-	* netsvcs/servers/Makefile.am:
-	* tests/Makefile.am:
-	* tests/SSL/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/examples/SAXPrint/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ACEXML/tests/Makefile.am:
+        * Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * apps/gperf/Makefile.am:
+        * apps/gperf/src/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
+        * configure.ac:
+        * netsvcs/servers/Makefile.am:
+        * tests/Makefile.am:
+        * tests/SSL/Makefile.am:
 
-	  Update so things successfully build when srcdir != builddir.
+          Update so things successfully build when srcdir != builddir.
 
 Tue Sep 28 12:48:37 2004  Chad Elliott  <elliott_c@ociweb.com>
 
