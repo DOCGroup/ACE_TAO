@@ -1,3 +1,8 @@
+Fri Sep 26 14:28:36 1997    <nw1@CHA-CHA>
+
+	* ace/SOCK_Stream.cpp (close): Added checking for invalid handle
+	  before shuuting down the write end.
+
 Fri Sep 26 11:55:27 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Malloc.h: Use signed math in the preprocessor calculations
