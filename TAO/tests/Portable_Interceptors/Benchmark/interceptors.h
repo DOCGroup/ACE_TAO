@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #ifndef TAO_INTERCEPTORS_H
@@ -17,8 +19,8 @@
 #endif /* _MSC_VER */
 
 class Vault_Client_Request_Interceptor
-:  public PortableInterceptor::ClientRequestInterceptor//,
-   //  public CORBA::LocalObject
+  : public PortableInterceptor::ClientRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -40,7 +42,7 @@ public:
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr
                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
                              TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -53,22 +55,21 @@ public:
 
   virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr
                               TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ForwardRequest));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri
                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((CORBA::SystemException,
-                    PortableInterceptor::ForwardRequest));
+                     PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;
 };
 
 class Vault_Server_Request_Interceptor
-: public PortableInterceptor::ServerRequestInterceptor//,
-//    public CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -117,8 +118,8 @@ private:
 };
 
 class Vault_Client_Request_Context_Interceptor
-:  public PortableInterceptor::ClientRequestInterceptor//,
-   //  public CORBA::LocalObject
+  : public PortableInterceptor::ClientRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -166,7 +167,8 @@ private:
 };
 
 class Vault_Server_Request_Context_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -216,8 +218,8 @@ private:
 
 
 class Vault_Client_Request_Dynamic_Interceptor
-:  public PortableInterceptor::ClientRequestInterceptor//,
-   //  public CORBA::LocalObject
+  : public PortableInterceptor::ClientRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -265,8 +267,8 @@ private:
 };
 
 class Vault_Server_Request_Dynamic_Interceptor
-  : public PortableInterceptor::ServerRequestInterceptor//,
-//    public CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -316,7 +318,8 @@ private:
 
 
 class Vault_Client_Request_NOOP_Interceptor
-  :  public PortableInterceptor::ClientRequestInterceptor
+  : public PortableInterceptor::ClientRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
@@ -364,8 +367,8 @@ private:
 };
 
 class Vault_Server_Request_NOOP_Interceptor
-: public PortableInterceptor::ServerRequestInterceptor//,
-//    public CORBA::LocalObject
+  : public PortableInterceptor::ServerRequestInterceptor,
+    public CORBA::LocalObject
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:

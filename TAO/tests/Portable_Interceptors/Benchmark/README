@@ -1,7 +1,7 @@
 # $Id$
 
 This test allows you to visually check the correct invocation of
-TAO's pseudo-portable interceptors, especially the Dynamic interface.
+TAO's portable interceptors, especially the Dynamic interface.
 
   To run the test, try:
 
