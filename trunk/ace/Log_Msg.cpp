@@ -140,7 +140,8 @@ void
 ACE_Log_Msg_Manager::atexit (void)
 {
   // The program is exiting, so delete all ACE_Log_Msg instances.
-  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i (ACE_Log_Msg_Manager::instances_);
+  ACE_Unbounded_Set_Iterator <ACE_Log_Msg *> i 
+    (ACE_Log_Msg_Manager::instances_);
 
   for (ACE_Log_Msg **log_msg;
        i.next (log_msg) != 0;
@@ -297,7 +298,7 @@ ACE_Log_Msg::instance (void)
 	ACE_NO_HEAP_CHECK;
 
 	ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
-	ACE_Log_Msg_Manager::insert(tss_log_msg);
+	ACE_Log_Msg_Manager::insert (tss_log_msg);
 
 	// Store the dynamically allocated pointer in thread-specific
 	// storage.
