@@ -9,7 +9,8 @@ Tue Nov 25 19:46:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         
           Fixed servant code generation to output only for components
           and homes that are used in a CIDL composition. Thanks to
-          Gary Duzan <gduzan@bbn.com> for reporting the problem.
+          Gary Duzan <gduzan@bbn.com> for reporting the problem. Also
+          added support for attributes declared in a home.
 
 Tue Nov 25 15:39:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
