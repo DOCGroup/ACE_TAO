@@ -70,7 +70,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
     cdr >> length;
 
     // Ensure there's sufficient room for log record payload.
-    ACE_CDR::grow (payload, length + 8);
+    ACE_CDR::grow (payload, 8 + ACE_CDR::MAX_ALIGNMENT + length);
 
     // Use <recv_n> to obtain the contents.
     if (logging_peer_.recv_n (payload->wr_ptr (), length) > 0) {
