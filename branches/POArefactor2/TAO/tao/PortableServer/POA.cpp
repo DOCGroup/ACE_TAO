@@ -2557,7 +2557,6 @@ TAO_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr
 PortableServer::Servant
 TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::NoServant,
                    PortableServer::POA::WrongPolicy))
 {
   return this->active_policy_strategies_.request_processing_strategy()->

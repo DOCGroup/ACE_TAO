@@ -257,7 +257,6 @@ public:
 
   PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::NoServant,
                      PortableServer::POA::WrongPolicy));
 
   void set_servant (PortableServer::Servant servant
