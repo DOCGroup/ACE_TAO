@@ -1,3 +1,9 @@
+Thu Sep 17 22:52:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp: 
+	  For character constants we print the hex escape sequence if the
+	  character is not printable.
+
 Thu Sep 17 22:22:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/configurations.html: 

@@ -86,7 +86,10 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
         case AST_Expression::EV_longdouble:
           break;
         case AST_Expression::EV_char:
-          this->TAO_OutStream::print ("'%c'", ev->u.cval);
+	  if (isprint (ev->u.cval))
+	    this->TAO_OutStream::print ("'%c'", ev->u.cval);
+	  else
+	    this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:
           break;
