@@ -1,3 +1,15 @@
+Thu Jun 26 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp (visit_interface):
+
+	  To the generation of the typedefs added in
+
+	  Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	  added a global "::" prefix to the scoped name. This eliminates
+	  confusion when a module name reappears at a more deeply nested 
+	  level.
+
 Thu Jun 26 17:35:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Driver.cpp:
