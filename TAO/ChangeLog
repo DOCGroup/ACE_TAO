@@ -1,3 +1,12 @@
+Sat Jun  7 13:45:38 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/PortableServer/Operation_Table.cpp: 
+	* TAO_IDL/be/be_tmplinst.cpp: HP/UX and GCC do some weird things, 
+	  so it's necessary to explicitly instantiate all static template
+ 	  singletons, even when using automatic template instantiation!
+  	  Thanks to Stan Sosnovsky <sosnovsky_stan@emc.com> for reporting
+ 	  this.
+
 Sat Jun 07 09:34:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
