@@ -178,7 +178,7 @@ Video_Global::FBread (char *buf, int size)
 // send a given this->packet pointed by 'this->packet' to the network.
 
 int
-Video_Global::send_to_network (int timeToUse)
+Video_Global::first_packet_send_to_network (int timeToUse)
 {
   int count = 0;
   VideoMessage * msghd = (VideoMessage *) (((char *) this->packet) - sizeof (VideoMessage));
@@ -188,7 +188,7 @@ Video_Global::send_to_network (int timeToUse)
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
   
-  fprintf (stderr, "VS to send pkt %d of size %d.\n",
+  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
            ntohl (msghd->packetsn), ntohl (msghd->packetSize));
   
 
@@ -2092,7 +2092,7 @@ Video_Timer_Global::timerHandler (int sig)
 // send the first packet, given by packet pointed by
 // 'this->packet' to the network.
 int
-Video_Global::first_packet_send_to_network (int timeToUse)
+Video_Global::send_to_network (int timeToUse)
 {
   int count = 0;
   VideoMessage * msghd = (VideoMessage *) (((char *) this->packet) - sizeof (VideoMessage));
@@ -2102,7 +2102,7 @@ Video_Global::first_packet_send_to_network (int timeToUse)
   msghd->packetsn = htonl (this->packetsn ++);
   msghd->packetSize = htonl (packetSize + sizeof (* this->packet));
   
-  fprintf (stderr, "VS to send FIRST pkt %d of size %d.\n",
+  fprintf (stderr, "VS to send pkt %d of size %d.\n",
            ntohl (msghd->packetsn), ntohl (msghd->packetSize));
   
 
