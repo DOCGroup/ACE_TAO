@@ -38,12 +38,11 @@ public:
   ~HTTP_Response (void);
 
   void process_request (void);
+  void error_response (int status, const char *log_message);
 
 private:
 
   static void process_request (HTTP_Response &response);
-
-  void error_response (int status, const char *log_message);
 
   void build_headers (void);
 

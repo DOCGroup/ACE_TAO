@@ -48,11 +48,11 @@ public:
 
   enum { MAX_HEADERS = 100 };
 
-  const int mapped (const char * const header) const;
+  int mapped (const char * const header) const;
 
 private:
-  Map_Item * const find (const char * const header) const;
-  Map_Item * const place (const char * const header);
+  Map_Item * find (const char * const header) const;
+  Map_Item * place (const char * const header);
   static int compare (const void *item1, const void *item2);
 
 private:

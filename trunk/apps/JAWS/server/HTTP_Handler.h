@@ -68,12 +68,6 @@ protected:
   virtual void request_too_long (void);
   // Request too long.
 
-  virtual void serve_error (int status_code);
-  // Send the <status_code> error to the client.
-
-  virtual void serve_directory (void);
-  // The client has asked for a directory listing.
-
   HTTP_Handler_Factory &factory_;
   // Reference to the creating factory.
 
