@@ -1,3 +1,7 @@
+Wed Mar 17 02:06:47 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.12 released.
+
 Tue Mar 17 01:01:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object.cpp (_non_existent): 
