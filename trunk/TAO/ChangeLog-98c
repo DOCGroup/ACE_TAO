@@ -1,3 +1,8 @@
+Tue Oct 13 09:16:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp: changed a handful
+          of == to =.  Thanks, g++ :-)
+
 Mon Oct 12 18:55:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/RtecScheduler.idl
@@ -5,38 +10,38 @@ Mon Oct 12 18:55:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
           orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
           orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, i}: Added a new kind RT_Info
-	  type for EC_Gateway RT_Infos that depend on remote invocations.  This
-	  change facilitates building a distributed schedule without requiring
-	  the use of a single global scheduling service.  Thanks to Tom 
-	  Venturella <thomas.e.venturella@boeing.com> for this idea.
+          type for EC_Gateway RT_Infos that depend on remote invocations.  This
+          change facilitates building a distributed schedule without requiring
+          the use of a single global scheduling service.  Thanks to Tom
+          Venturella <thomas.e.venturella@boeing.com> for this idea.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp
-	  orbsvcs/orbsvcs/Scheduler_Factory.cpp
-	  orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
-	  orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
-	  orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsp}
-	  orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, dsp, h}  (NEW):
-          Fixed a number of problems with correctness and usability of the 
-	  config and runtime schedulers, and the scheduler factory.  Thanks
-	  to Amir Bahmanyari <abahmany@teknowledge.com> for providing detailed
- 	  debugging reports. 
-	
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp
+          orbsvcs/orbsvcs/Scheduler_Factory.cpp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp
+          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf.{cpp, dsp}
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.{cpp, dsp, h}  (NEW):
+          Fixed a number of problems with correctness and usability of the
+          config and runtime schedulers, and the scheduler factory.  Thanks
+          to Amir Bahmanyari <abahmany@teknowledge.com> for providing detailed
+          debugging reports.
+
 Mon Oct 12 18:32:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/try_macros.h: 
-	  Added new macros to support multiple TRY blocks in the same
-	  function. Andy is going to test them.
+        * tao/try_macros.h:
+          Added new macros to support multiple TRY blocks in the same
+          function. Andy is going to test them.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
-	  The file still made references to the -s option.
+        * performance-tests/Cubit/TAO/IDL_Cubit/README:
+          The file still made references to the -s option.
 
 Mon Oct 12 14:55:41 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext): Made
- 	  a mistaken with my Naming_Context change for the
- 	  Hash_Map_Manager.  We need to use the argument to set the size
- 	  of the table, not the data member since it hasn't been assigned
- 	  yet.  Thanks to Chris Gill and Kirthika for reporting this.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (TAO_NamingContext): Made
+          a mistaken with my Naming_Context change for the
+          Hash_Map_Manager.  We need to use the argument to set the size
+          of the table, not the data member since it hasn't been assigned
+          yet.  Thanks to Chris Gill and Kirthika for reporting this.
 
 Mon Oct 12 11:30:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
