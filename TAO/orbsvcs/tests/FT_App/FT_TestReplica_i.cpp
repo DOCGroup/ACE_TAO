@@ -119,8 +119,7 @@ void FT_TestReplica_i::suicide(const char * note)
   std::cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Simulate FAULT_CODE fault: " << note << std::endl;
 
   // Tell the poa we aren't accepting future calls
-  this->poa_->deactivate_object (this->object_id_.in ()
-                 ACE_ENV_ARG_PARAMETER);
+  this->poa_->deactivate_object (this->object_id_.in ());
 }
 
 /////////////////////////////////////////////////////
@@ -215,14 +214,14 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
   return 0;
 }
 
-void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL)
+void FT_TestReplica_i::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   //////////////////////////////////////////////////
   // WARNING: The following call invokes fini then deletes this object
   this->factory_->remove_replica(this->factory_id_, this);
 }
 
-int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL)
+int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return 0;
 }
@@ -231,7 +230,7 @@ int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
-CORBA::Boolean FT_TestReplica_i::is_alive ()
+CORBA::Boolean FT_TestReplica_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   KEVORKIAN(DURING_IS_ALIVE, is_alive)

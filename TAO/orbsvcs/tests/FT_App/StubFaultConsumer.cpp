@@ -18,9 +18,9 @@ StubFaultConsumer::~StubFaultConsumer ()
 {
 }
 
-::PortableServer::POA_ptr StubFaultConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+::PortableServer::POA_ptr StubFaultConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
 
 PortableServer::ObjectId StubFaultConsumer::objectId()const
@@ -246,7 +246,7 @@ int StubFaultConsumer::idle(int & result)
 // CORBA methods
 void StubFaultConsumer::push_structured_event(
   const CosNotification::StructuredEvent &notification
-  ACE_ENV_ARG_DECL
+  ACE_ENV_ARG_DECL_NOT_USED
   )
   throw (CORBA::SystemException, CosEventComm::Disconnected)
 {
@@ -291,7 +291,7 @@ void StubFaultConsumer::push_structured_event(
 void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
@@ -302,7 +302,7 @@ void StubFaultConsumer::offer_change (
   ));
 }
 
-void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL)
+void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_ERROR ((LM_ERROR,

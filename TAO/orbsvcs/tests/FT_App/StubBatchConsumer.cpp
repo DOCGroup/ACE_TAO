@@ -28,9 +28,9 @@ int StubBatchConsumer::parse_args (int argc, char * argv[])
 }
 
 
-::PortableServer::POA_ptr StubBatchConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
+::PortableServer::POA_ptr StubBatchConsumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  return ::PortableServer::POA::_duplicate(this->poa_.in () ACE_ENV_ARG_PARAMETER);
+  return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
 
 PortableServer::ObjectId StubBatchConsumer::objectId()const
@@ -132,7 +132,7 @@ int StubBatchConsumer::idle(int & result)
 //virtual
 void StubBatchConsumer::push_structured_events (
     const CosNotification::EventBatch & notifications
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -146,7 +146,7 @@ void StubBatchConsumer::push_structured_events (
 void StubBatchConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
-    ACE_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException, CosNotifyComm::InvalidEventType))
 {
@@ -160,7 +160,7 @@ void StubBatchConsumer::offer_change (
 
 //virtual
 void StubBatchConsumer::disconnect_sequence_push_consumer (
-    ACE_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
