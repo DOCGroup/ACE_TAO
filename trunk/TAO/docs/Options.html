@@ -56,7 +56,8 @@ Specifies which IOR the Naming Service is listening on.
 <TR>
 <TD><CODE>NameServicePort</CODE> <EM>which</EM></TD>
 <TD>
-Specifies which port the Naming Service is listening on.
+Specifies which port the Naming Service is listening on for multicast
+requests.
 </TD></TR>
 <TR>
 <TD><CODE>TradingServiceIOR</CODE> <EM>which</EM></TD>
@@ -66,7 +67,8 @@ Specifies which IOR the Trading Service is listening on.
 <TR>
 <TD><CODE>TradingServicePort</CODE> <EM>which</EM></TD>
 <TD>
-Specifies which port the Trading Service is listening on.
+Specifies which port the Trading Service is listening on for multicast
+requests.
 </TD></TR>
 </TABLE>
 </P>
@@ -158,7 +160,7 @@ then a default endpoint will be created for the specified protocol.
 <TD><CODE>-ORBhost</CODE> <EM>hostname</EM></TD> <TD><a
 name="-ORBhost"></a>Tells the ORB to listen for requests on the
 interface associated with the host named
-<I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>  
+<I><EM>hostname</EM></I>.  This option is valid only for IIOP endpoints.<BR>
 <STRONG>NOTE:</STRONG> This option has been superceded by the
 <CODE>-ORBendpoint</CODE> option. It will not be supported in the
 future.</TD></TR>
@@ -168,7 +170,7 @@ future.</TD></TR>
 <TD><CODE>-ORBport</CODE> <EM>portspec</EM></TD> <TD>Tells the ORB to
 listen for requests on the port specified by
 <I><EM>portspec</EM></I>. If not specified, the OS gets to choose a
-random empty port.  This option is valid only for IIOP endpoints.<BR>  
+random empty port.  This option is valid only for IIOP endpoints.<BR>
 <STRONG>NOTE:</STRONG> This option has been superceded by the
 <CODE>-ORBendpoint</CODE> option. It will not be supported in the
 future.</TD>
@@ -190,7 +192,8 @@ If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TR>
 <TD><CODE>-ORBnameserviceport</CODE> <EM>portspec</EM></TD>
-<TD>Specifies which port the Naming Service is listening on.</TD></TR>
+<TD>Specifies which port the Naming Service is listening on for
+multicast requests.</TD></TR>
 <TR>
 <TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
 <TD>Specifies the IOR for the Naming Service.</TD></TR>
@@ -199,8 +202,8 @@ If not specified, the ACE_DEFAULT_MAX_SOCKET_BUFSIZ default is used.</TD></TR>
 <TD>Specifiles the IOR for the Trading Service.</TD></TR>
 <TR>
 <TD><CODE>-ORBtradingserviceport"</CODE> <EM>portspec</EM></TD>
-<TD>Specifies to which port the tradingservice is listening
-    on.</TD></TR>
+<TD>Specifies to which port the Trading Service is listening on for
+    multicast requests.</TD></TR>
 <TR>
 <TD><CODE>-ORBcollocation</CODE> <EM>yes/no</EM></TD>
 <TD>Specifies the use of collocation object optimization.  Default is yes.</TD></TR>
