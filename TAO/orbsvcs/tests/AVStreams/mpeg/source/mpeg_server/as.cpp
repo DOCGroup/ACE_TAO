@@ -52,7 +52,7 @@ ACE_RCSID(mpeg_server, as, "$Id$")
 
 //extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
 
-static bytes_sent = 0;
+static int bytes_sent = 0;
 static time_t start_time;
 
 static int conn_tag;
@@ -66,7 +66,7 @@ static AudioParameter audioPara;
 static int totalSamples;
 static int fileSize;
 static unsigned char cmd;
-static live_source = 0;
+static int live_source = 0;
 
 static int CmdRead(char *buf, int psize)
 {
@@ -117,12 +117,12 @@ static int INITaudio(void)
     CmdWrite((char *)&cmd, 1);
     if (Mpeg_Global::session_num > Mpeg_Global::session_limit) {
       sprintf(errmsg,
-	      "Too many sessions being serviced, please try again later.\n");
+              "Too many sessions being serviced, please try again later.\n");
     }
     else {
       sprintf(errmsg, "Version # not match, AS %d.%02d, Client %d.%02d",
-	      VERSION / 100, VERSION % 100,
-	      para.version / 100, para.version % 100);
+              VERSION / 100, VERSION % 100,
+              para.version / 100, para.version % 100);
     }
     write_string(serviceSocket, errmsg);
     return(1);
@@ -130,14 +130,14 @@ static int INITaudio(void)
   ACE_OS::memcpy (&audioPara, &para.para, sizeof(audioPara));
   /*
   fprintf(stderr, "Client Audio para: encode %d, ch %d, sps %d, bps %d.\n",
-	  para.para.encodeType, para.para.channels,
-	  para.para.samplesPerSecond, para.para.bytesPerSample);
+          para.para.encodeType, para.para.channels,
+          para.para.samplesPerSecond, para.para.bytesPerSample);
    */
   audioFile[para.nameLength] = 0;
   {
     int len =ACE_OS::strlen (audioFile);
     if (strncasecmp("LiveAudio", audioFile, 9) &&
-	strcasecmp(".au", audioFile+len-3)) {
+        strcasecmp(".au", audioFile+len-3)) {
       char errmsg[128];
       cmd = CmdFAIL;
       CmdWrite((char *)&cmd, 1);
@@ -206,8 +206,8 @@ static int INITaudio(void)
     cmd = CmdFAIL;
     CmdWrite((char *)&cmd, 1);
     write_string(serviceSocket,
-		 failureType == 0 ? "Failed to open audio file for read." :
-		 "Failed to connect to live audio source.");
+                 failureType == 0 ? "Failed to open audio file for read.":
+                 "Failed to connect to live audio source.");
     return(1);
   }
 }
@@ -242,7 +242,7 @@ static int send_packet(int firstSample, int samples)
     lseek(fd, offset, SEEK_SET);
     while ((len = ACE_OS::read (fd, buf, size)) == -1) {
       if (errno == EINTR)
-	continue;   /* interrupted */
+        continue;   /* interrupted */
      ACE_OS::perror ("AS error on read audio file");
       return(-1);
     }
@@ -265,22 +265,22 @@ static int send_packet(int firstSample, int samples)
   if (conn_tag != 0) {
     while ((sentsize = ACE_OS::write (audioSocket, (char *)pktbuf, segsize)) == -1) {
       if (errno == EINTR) /* interrupted */
-	continue;
+        continue;
       if (errno == ENOBUFS) {
-	if (resent) {
-	 ACE_OS::perror ("AS Warning, pkt discarded because");
-	  break;
-	}
-	else {
-	  resent = 1;
-	  usleep(5000);
-	  continue;
-	}
+        if (resent) {
+         ACE_OS::perror ("AS Warning, pkt discarded because");
+          break;
+        }
+        else {
+          resent = 1;
+          usleep(5000);
+          continue;
+        }
       }
       if (errno != EPIPE) {
-	fprintf(stderr, "AS error on send audio packet %d(%d):",
-		firstSample, samples);
-	perror("");
+        fprintf(stderr, "AS error on send audio packet %d(%d):",
+                firstSample, samples);
+        perror("");
       }
       ACE_OS::exit ((errno != EPIPE));
     }
@@ -289,20 +289,20 @@ static int send_packet(int firstSample, int samples)
     sentsize = wait_write_bytes(audioSocket, (char *)pktbuf, segsize);
     if (sentsize == -1) {
       if (errno != EPIPE) {
-	fprintf(stderr, "AS error on send audio packet %d(%d):",
-		firstSample, samples);
-	perror("");
+        fprintf(stderr, "AS error on send audio packet %d(%d):",
+                firstSample, samples);
+        perror("");
       }
       ACE_OS::exit ((errno != EPIPE));
      }
   }
   if (sentsize < segsize) {
     SFprintf(stderr, "AS warning: message size %dB, sent only %dB\n",
-	    segsize, sentsize);
+            segsize, sentsize);
   }
   /*
   SFprintf(stderr, "AS sent audio packet %d(%d).\n",
-	  firstSample, samples);
+          firstSample, samples);
   */
   return (len < size ? 0 : 1);
 }
@@ -406,29 +406,29 @@ static int PLAYaudio(void)
     
     if (hasdata) {
       if (addSamples < - spp) {  /* slow down by not sending packets */
-	nextTime += upp;
-	addSamples += spp;
+        nextTime += upp;
+        addSamples += spp;
       }
       else {
-	int need_sleep = 0;
-	while (nextTime <= curTime && hasdata) {
-	  if (need_sleep) usleep(5000);
-	  hasdata = SendPacket();
-	  need_sleep = 1;
-	  packets ++;
-	  nextTime += upp;
-	  if (addSamples > 0 && packets % SPEEDUP_SCALE == 0) {
-	    addSamples -= spp;
-	    usleep(5000);
-	    hasdata = SendPacket();
-	    packets ++;
-	  }
-	}
+        int need_sleep = 0;
+        while (nextTime <= curTime && hasdata) {
+          if (need_sleep) usleep(5000);
+          hasdata = SendPacket();
+          need_sleep = 1;
+          packets ++;
+          nextTime += upp;
+          if (addSamples > 0 && packets % SPEEDUP_SCALE == 0) {
+            addSamples -= spp;
+            usleep(5000);
+            hasdata = SendPacket();
+            packets ++;
+          }
+        }
       }
     }
     curTime = nextTime - curTime;
     if (curTime > 5000000) curTime = 5000000; /* limit on 5 second weit time
-						 in case error happens */
+                                                 in case error happens */
     tval.tv_sec = curTime / 1000000;
     tval.tv_usec = curTime % 1000000;
     FD_ZERO(&read_mask);
@@ -453,90 +453,90 @@ static int PLAYaudio(void)
       switch (tmp)
       {
       case CmdSPEED:
-	{
-	  SPEEDaudioPara para;
-	  result = CmdRead((char *)&para, sizeof(para));
+        {
+          SPEEDaudioPara para;
+          result = CmdRead((char *)&para, sizeof(para));
           if (result != 0)
             return result;
 #ifdef NeedByteOrderConversion
-	  para.sn = ntohl(para.sn);
-	  para.samplesPerSecond = ntohl(para.samplesPerSecond);
-	  para.samplesPerPacket = ntohl(para.samplesPerPacket);
-	  para.spslimit = ntohl(para.spslimit);
+          para.sn = ntohl(para.sn);
+          para.samplesPerSecond = ntohl(para.samplesPerSecond);
+          para.samplesPerPacket = ntohl(para.samplesPerPacket);
+          para.spslimit = ntohl(para.spslimit);
 #endif
-	  sps  = para.samplesPerSecond;
-	  spslimit = para.spslimit;
-	  spp = para.samplesPerPacket;
-	  if (spp * audioPara.bytesPerSample > databuf_size) {
-	    spp = databuf_size / audioPara.bytesPerSample;
-	  }
-	  delta_sps = 0;  /* reset compensation value */
-	  upp = (int)(1000000.0 / ((double)sps / (double)spp));
-	  /*
-	  SFprintf(stderr, "AS got CmdSPEED: sps %d\n", sps);
-	  */
-	}
-	break;
+          sps  = para.samplesPerSecond;
+          spslimit = para.spslimit;
+          spp = para.samplesPerPacket;
+          if (spp * audioPara.bytesPerSample > databuf_size) {
+            spp = databuf_size / audioPara.bytesPerSample;
+          }
+          delta_sps = 0;  /* reset compensation value */
+          upp = (int)(1000000.0 / ((double)sps / (double)spp));
+          /*
+          SFprintf(stderr, "AS got CmdSPEED: sps %d\n", sps);
+          */
+        }
+        break;
       case CmdSTOP:
-	{
-	  int val;
-	  cmd = tmp;
-	  /*
-	     fprintf(stderr, "AS: CmdSTOP. . .\n");
-	     */
-	  result = CmdRead((char *)&val, sizeof(int));
+        {
+          int val;
+          cmd = tmp;
+          /*
+             fprintf(stderr, "AS: CmdSTOP. . .\n");
+             */
+          result = CmdRead((char *)&val, sizeof(int));
           if (result != 0)
             return result;
-	  /*
-	  CmdWrite(AUDIO_STOP_PATTERN,ACE_OS::strlen (AUDIO_STOP_PATTERN));
-	  */
-	  if (live_source) {
-	    StopPlayLiveAudio();
-	  }
-	  return 0;  /* return from PLAYaudio() */
-	}
+          /*
+          CmdWrite(AUDIO_STOP_PATTERN,ACE_OS::strlen (AUDIO_STOP_PATTERN));
+          */
+          if (live_source) {
+            StopPlayLiveAudio();
+          }
+          return 0;  /* return from PLAYaudio() */
+        }
       case CmdCLOSE:
-	if (live_source) {
-	  StopPlayLiveAudio();
-	}
-	return(1);  /* The whole AS session terminates */
+        if (live_source) {
+          StopPlayLiveAudio();
+        }
+        return(1);  /* The whole AS session terminates */
       default:
-	if (live_source) {
-	  StopPlayLiveAudio();
-	}
-	fprintf(stderr, "AS error: cmd=%d while expects STOP/SPEED/CLOSE.\n", tmp);
-	return(-1);
+        if (live_source) {
+          StopPlayLiveAudio();
+        }
+        fprintf(stderr, "AS error: cmd=%d while expects STOP/SPEED/CLOSE.\n", tmp);
+        return(-1);
       }
     }
     
     if (FD_ISSET(audioSocket, &read_mask)){  /* Feedback packet */
       int bytes, len;
       for (;;) {
-	if (conn_tag >= 0) {
-	  len = wait_read_bytes(audioSocket, (char *)fbpara, sizeof(*fbpara));
-	  if (len == 0) return(1); /* connection broken */
-	  else if (len < 0) { /* unexpected error */
-	   ACE_OS::perror ("AS read1 FB");
-	    return(-1);
-	  }
-	}
-	else { /* discard mode packet stream, read the whole packet */
-	  len = ACE_OS::read (audioSocket, (char *)fbpara,  FBBUF_SIZE);
-	}
-	if (len == -1) {
-	  if (errno == EINTR) continue; /* interrupt */
-	  else {
-	    if (errno != EPIPE && errno != ECONNRESET)ACE_OS::perror ("AS failed to ACE_OS::read () fbmsg header");
-	    break;
-	  }
-	}
-	break;
+        if (conn_tag >= 0) {
+          len = wait_read_bytes(audioSocket, (char *)fbpara, sizeof(*fbpara));
+          if (len == 0) return(1); /* connection broken */
+          else if (len < 0) { /* unexpected error */
+           ACE_OS::perror ("AS read1 FB");
+            return(-1);
+          }
+        }
+        else { /* discard mode packet stream, read the whole packet */
+          len = ACE_OS::read (audioSocket, (char *)fbpara,  FBBUF_SIZE);
+        }
+        if (len == -1) {
+          if (errno == EINTR) continue; /* interrupt */
+          else {
+            if (errno != EPIPE && errno != ECONNRESET)ACE_OS::perror ("AS failed to ACE_OS::read () fbmsg header");
+            break;
+          }
+        }
+        break;
       }
       if (len < sizeof(*fbpara)) {
-	if (len > 0) fprintf(stderr,
-			 "AS warn ACE_OS::read () len %dB < sizeof(*fbpara) %dB\n",
-			 len, sizeof(*fbpara));
-	continue;
+        if (len > 0) fprintf(stderr,
+                         "AS warn ACE_OS::read () len %dB < sizeof(*fbpara) %dB\n",
+                         len, sizeof(*fbpara));
+        continue;
       }
 #ifdef NeedByteOrderConversion
       fbpara->type = ntohl(fbpara->type);
@@ -545,70 +545,70 @@ static int PLAYaudio(void)
               sizeof(APdescriptor) * (fbpara->type - 1) :
               0;
       if (bytes > 0) {
-	if (conn_tag >= 0) { /* not discard mode packet stream,
-				read the rest of packet */
-	  len = wait_read_bytes(audioSocket,
-				((char *)fbpara) + sizeof(*fbpara),
-				bytes);
-	  if (len == 0) return(1); /* connection broken */
-	  else if (len < 0) { /* unexpected error */
-	   ACE_OS::perror ("AS read2 FB");
-	    return(-1);
-	  }
-	  len += sizeof(*fbpara);
-	}
+        if (conn_tag >= 0) { /* not discard mode packet stream,
+                                read the rest of packet */
+          len = wait_read_bytes(audioSocket,
+                                ((char *)fbpara) + sizeof(*fbpara),
+                                bytes);
+          if (len == 0) return(1); /* connection broken */
+          else if (len < 0) { /* unexpected error */
+           ACE_OS::perror ("AS read2 FB");
+            return(-1);
+          }
+          len += sizeof(*fbpara);
+        }
       }
       bytes += sizeof(*fbpara);
       if (len < bytes) {
-	if (len > 0) fprintf(stderr,
-			     "AS only read partial FBpacket, %dB out of %dB.\n",
-			     len, bytes);
-	continue;
+        if (len > 0) fprintf(stderr,
+                             "AS only read partial FBpacket, %dB out of %dB.\n",
+                             len, bytes);
+        continue;
       }
       if (live_source) {  /* ignore all feedback messags for live source */
-	continue;
+        continue;
       }
       
 #ifdef NeedByteOrderConversion
       fbpara->cmdsn = ntohl(fbpara->cmdsn);
 #endif
       if (len != sizeof(*fbpara) +
-	  (fbpara->type ? (fbpara->type -1) * sizeof(APdescriptor) : 0)) {
-	/* unknown message, discard */
-	SFprintf(stderr, "AS Unkown fb msg: len = %d, type = %d\n",
-		len, fbpara->type);
-	continue;
+          (fbpara->type ? (fbpara->type -1) * sizeof(APdescriptor) : 0)) {
+        /* unknown message, discard */
+        SFprintf(stderr, "AS Unkown fb msg: len = %d, type = %d\n",
+                len, fbpara->type);
+        continue;
       }
       if (fbpara->cmdsn != cmdsn) {  /* discard the outdated message */
-	continue;
+        continue;
       }
 #ifdef NeedByteOrderConversion
       {
-	int i, * ptr = (int *)fbpara + 2;
-	for (i = 0; i < (len >> 2) - 2; i++) *ptr = ntohl(*ptr);
+        int i, * ptr = (int *)fbpara + 2;
+        for (i = 0; i < (len >> 2) - 2; i++) *ptr = ntohl(*ptr);
       }
 #endif
       if (fbpara->type == 0) { /* feedback message */
-	/*
-	SFprintf(stderr, "AS got fbmsg: addsamples %d, addsps %d\n",
-		fbpara->data.fb.addSamples, fbpara->data.fb.addsps);
-	*/
-	addSamples += fbpara->data.fb.addSamples;
-	if (fbpara->data.fb.addsps) {
-	  delta_sps += fbpara->data.fb.addsps;
-	  upp = (int)(1000000.0 / ((double)(sps + delta_sps) / (double)spp));
-	}
+        /*
+        SFprintf(stderr, "AS got fbmsg: addsamples %d, addsps %d\n",
+                fbpara->data.fb.addSamples, fbpara->data.fb.addsps);
+        */
+        addSamples += fbpara->data.fb.addSamples;
+        if (fbpara->data.fb.addsps) {
+          delta_sps += fbpara->data.fb.addsps;
+          upp = (int)(1000000.0 / ((double)(sps + delta_sps) / (double)spp));
+        }
       }
       else { /* resend requests */
-	APdescriptor * req = &(fbpara->data.ap);
-	int i;
-	/*
-	SFprintf(stderr, "AS got %d resend reqs\n", fbpara->type);
-	*/
-	for (i = 0; i < fbpara->type; i ++) {
-	  ResendPacket(req->firstSample, req->samples);
-	  req ++;
-	}
+        APdescriptor * req = &(fbpara->data.ap);
+        int i;
+        /*
+        SFprintf(stderr, "AS got %d resend reqs\n", fbpara->type);
+        */
+        for (i = 0; i < fbpara->type; i ++) {
+          ResendPacket(req->firstSample, req->samples);
+          req ++;
+        }
       }
     }
   }
@@ -623,7 +623,7 @@ static void on_exit_routine(void)
   fprintf(stderr, "An AS session terminated\n");
   */
   if (getpeername(serviceSocket,
-		  (struct sockaddr *)&peeraddr_in, &size) == 0 &&
+                  (struct sockaddr *)&peeraddr_in, &size) == 0 &&
       peeraddr_in.sin_family == AF_INET) {
     if (strncmp(inet_ntoa(peeraddr_in.sin_addr), "129.95.50", 9)) {
       struct hostent *hp;
@@ -633,10 +633,10 @@ static void on_exit_routine(void)
       hp = gethostbyaddr((char *)&(peeraddr_in.sin_addr), 4, AF_INET);
       buf[strlen(buf)-1] = 0;
       printf("%s: %s %3dm%02ds %dB %s\n",
-	     buf,
-	     hp == NULL ? inet_ntoa(peeraddr_in.sin_addr) : hp->h_name,
-	     (val - start_time) / 60, (val - start_time) % 60,
-	     bytes_sent, audioFile);
+             buf,
+             hp == NULL ? inet_ntoa(peeraddr_in.sin_addr) : hp->h_name,
+             (val - start_time) / 60, (val - start_time) % 60,
+             bytes_sent, audioFile);
     }
   }
   ComCloseConn(serviceSocket);
