@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "fixed_array.h"
 
 ACE_RCSID(Param_Test, fixed_array, "$Id$")
@@ -27,7 +25,8 @@ ACE_RCSID(Param_Test, fixed_array, "$Id$")
 // ************************************************************************
 
 Test_Fixed_Array::Test_Fixed_Array (void)
-  : opname_ (CORBA::string_dup ("test_fixed_array"))
+  : opname_ (CORBA::string_dup ("test_fixed_array")),
+    ret_ (new Param_Test::Fixed_Array)
 {
 }
 
@@ -71,6 +70,8 @@ Test_Fixed_Array::reset_parameters (void)
     }
   // free the return value array
   Param_Test::Fixed_Array_free (this->ret_._retn ());
+  // needed for repeated DII calls
+  this->ret_ = new Param_Test::Fixed_Array;
   return 0;
 }
 
@@ -111,42 +112,28 @@ Test_Fixed_Array::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Array,
-                                            this->dii_ret_,
+                                            this->ret_.inout (),
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Fixed_Array::check_validity (CORBA::Request_ptr req)
-{
-  return this->check_validity_engine (this->in_,
-                                      this->inout_,
-                                      this->out_,
-                                      this->dii_ret_);
-}
-
-CORBA::Boolean
 Test_Fixed_Array::check_validity (void)
 {
-  return check_validity_engine (this->in_,
-                                this->inout_,
-                                this->out_,
-                                this->ret_.in ());
-}
-
-CORBA::Boolean
-Test_Fixed_Array::check_validity_engine (const Param_Test::Fixed_Array the_in,
-                                         const Param_Test::Fixed_Array the_inout,
-                                         const Param_Test::Fixed_Array the_out,
-                                         const Param_Test::Fixed_Array the_ret)
-{
-  if (this->compare (the_in, the_inout) &&
-      this->compare (the_in, the_out) &&
-      this->compare (the_in, the_ret))
+  if (this->compare (this->in_, this->inout_) &&
+      this->compare (this->in_, this->out_) &&
+      this->compare (this->in_, this->ret_.in ()))
     return 1;
   else
     return 0;
+}
+
+CORBA::Boolean
+Test_Fixed_Array::check_validity (CORBA::Request_ptr req)
+{
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
 }
 
 CORBA::Boolean

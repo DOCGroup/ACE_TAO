@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "any.h"
 
 ACE_RCSID(Param_Test, any, "$Id$")
@@ -27,7 +25,9 @@ ACE_RCSID(Param_Test, any, "$Id$")
 // ************************************************************************
 
 Test_Any::Test_Any (void)
-  : opname_ (CORBA::string_dup ("test_any"))
+  : opname_ (CORBA::string_dup ("test_any")),
+    out_ (new CORBA::Any),
+    ret_ (new CORBA::Any)
 {
 }
 
@@ -63,8 +63,7 @@ Test_Any::init_parameters (Param_Test_ptr objref,
                            CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  //  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 3);
-  CORBA::ULong index = 2;
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 3);
 
   switch (index)
     {
@@ -120,8 +119,7 @@ int
 Test_Any::reset_parameters (void)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  //  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 2);
-  CORBA::ULong index = 2;
+  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 3);
 
   switch (index)
     {
@@ -172,20 +170,28 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
                     CORBA::NVList_ptr retval,
                     CORBA::Environment &env)
 {
-  CORBA::Any in_arg (CORBA::_tc_any, &this->in_, 0);
-  CORBA::Any inout_arg (CORBA::_tc_any, &this->inout_, 0);
-  CORBA::Any out_arg (CORBA::_tc_any, &this->out_, 0);
+  CORBA::Any in_arg (CORBA::_tc_any,
+                     &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (CORBA::_tc_any,
+                        &this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (CORBA::_tc_any,
+                      &this->out_.inout (),
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
+  param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
+  param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (CORBA::_tc_any,
-                                                  0,
-                                                  CORBA::B_FALSE, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (CORBA::_tc_any,
+                                            &this->ret_.inout (),
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
@@ -246,13 +252,7 @@ Test_Any::check_validity (void)
 CORBA::Boolean
 Test_Any::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-
-  CORBA::Any_ptr out = this->out_;
-  CORBA::Any_ptr ret = this->out_;
-  *req->arguments ()->item (2, env)->value () >>= *out;
-  *req->result ()->value () >>= *ret;
-
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 
@@ -260,4 +260,3 @@ void
 Test_Any::print_values (void)
 {
 }
-
