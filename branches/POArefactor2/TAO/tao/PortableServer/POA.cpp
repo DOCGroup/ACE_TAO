@@ -77,7 +77,7 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
           TAO::Portable_Server::ThreadPolicyFactory,
           ::PortableServer::ThreadPolicy_ptr,
           PortableServer::ThreadPolicyValue>::create (
-            "ThreadPolicyFactoryImpl",
+            "ThreadPolicyFactory",
             ACE_TEXT("dynamic ThreadPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyFactoryImpl()"),
             value);
@@ -94,7 +94,7 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
           TAO::Portable_Server::LifespanPolicyFactory,
           ::PortableServer::LifespanPolicy_ptr,
           PortableServer::LifespanPolicyValue>::create (
-            "LifespanPolicyFactoryImpl",
+            "LifespanPolicyFactory",
             ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
             value);
@@ -109,7 +109,7 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
           TAO::Portable_Server::IdUniquenessPolicyFactory,
           ::PortableServer::IdUniquenessPolicy_ptr,
           PortableServer::IdUniquenessPolicyValue>::create (
-            "IdUniquenessPolicyFactoryImpl",
+            "IdUniquenessPolicyFactory",
             ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactoryImpl()"),
             value);
@@ -124,7 +124,7 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
           TAO::Portable_Server::IdAssignmentPolicyFactory,
           ::PortableServer::IdAssignmentPolicy_ptr,
           ::PortableServer::IdAssignmentPolicyValue>::create (
-            "IdAssignmentPolicyFactoryImpl",
+            "IdAssignmentPolicyFactory",
             ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
             value);
@@ -141,7 +141,7 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
           TAO::Portable_Server::ImplicitActivationPolicyFactory,
           ::PortableServer::ImplicitActivationPolicy_ptr,
           ::PortableServer::ImplicitActivationPolicyValue>::create (
-            "ImplicitActivationPolicyFactoryImpl",
+            "ImplicitActivationPolicyFactory",
             ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
             value);
@@ -171,7 +171,7 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
           TAO::Portable_Server::RequestProcessingPolicyFactory,
           ::PortableServer::RequestProcessingPolicy_ptr,
           ::PortableServer::RequestProcessingPolicyValue>::create (
-            "RequestProcessingPolicyFactoryImpl",
+            "RequestProcessingPolicyFactory",
             ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
             ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
             value);

@@ -45,7 +45,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include "ThreadPolicyFactoryImpl.h"
+#include "ThreadPolicyFactory.h"
 #include "LifespanPolicyFactory.h"
 #include "IdAssignmentPolicyFactory.h"
 #include "IdUniquenessPolicyFactory.h"
@@ -247,7 +247,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::ThreadPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
-              "ThreadPolicyFactoryImpl",
+              "ThreadPolicyFactory",
               ACE_TEXT("dynamic ThreadPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyFactoryImpl()"),
               PortableServer::ORB_CTRL_MODEL);
@@ -261,7 +261,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::LifespanPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
-              "LifespanPolicyFactoryImpl",
+              "LifespanPolicyFactory",
               ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactoryImpl()"),
               PortableServer::TRANSIENT);
@@ -274,7 +274,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::IdUniquenessPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
-              "IdUniquenessPolicyFactoryImpl",
+              "IdUniquenessPolicyFactory",
               ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactoryImpl()"),
               PortableServer::UNIQUE_ID);
@@ -287,7 +287,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::IdAssignmentPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
-              "IdAssignmentPolicyFactoryImpl",
+              "IdAssignmentPolicyFactory",
               ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactoryImpl()"),
               PortableServer::SYSTEM_ID);
@@ -301,7 +301,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::ImplicitActivationPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
-              "ImplicitActivationPolicyFactoryImpl",
+              "ImplicitActivationPolicyFactory",
               ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
               PortableServer::NO_IMPLICIT_ACTIVATION);
@@ -327,7 +327,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             TAO::Portable_Server::RequestProcessingPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
-              "RequestProcessingPolicyFactoryImpl",
+              "RequestProcessingPolicyFactory",
               ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
               ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactoryImpl()"),
               PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
@@ -684,7 +684,7 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
           ::PortableServer::ImplicitActivationPolicyValue>::create (
             "ImplicitActivationPolicyFactory",
             ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactoryImpl()"),
             PortableServer::IMPLICIT_ACTIVATION);
 
   policies.merge_policy (implicit_activation_policy.in()
