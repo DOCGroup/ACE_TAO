@@ -365,7 +365,7 @@ DEP_CPP_ACTIV=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -627,7 +627,7 @@ DEP_CPP_ACTIV=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -900,7 +900,7 @@ DEP_CPP_ANY_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1162,7 +1162,7 @@ DEP_CPP_ANY_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1435,7 +1435,7 @@ DEP_CPP_APPEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1697,7 +1697,7 @@ DEP_CPP_APPEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -1976,7 +1976,7 @@ DEP_CPP_CDR_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2244,7 +2244,7 @@ DEP_CPP_CDR_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2517,7 +2517,7 @@ DEP_CPP_CLIEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -2779,7 +2779,7 @@ DEP_CPP_CLIEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3058,7 +3058,7 @@ DEP_CPP_CONNE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3327,7 +3327,7 @@ DEP_CPP_CONNE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3601,7 +3601,7 @@ DEP_CPP_CURRE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -3863,7 +3863,7 @@ DEP_CPP_CURRE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4136,7 +4136,7 @@ DEP_CPP_CURREN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4398,7 +4398,7 @@ DEP_CPP_CURREN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4671,7 +4671,7 @@ DEP_CPP_DEBUG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -4933,7 +4933,7 @@ DEP_CPP_DEBUG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5206,7 +5206,7 @@ DEP_CPP_DECOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5468,7 +5468,7 @@ DEP_CPP_DECOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -5741,7 +5741,7 @@ DEP_CPP_DEEP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6003,7 +6003,7 @@ DEP_CPP_DEEP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6276,7 +6276,7 @@ DEP_CPP_DEFAU=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6538,7 +6538,7 @@ DEP_CPP_DEFAU=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -6811,7 +6811,7 @@ DEP_CPP_DEFAUL=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7073,7 +7073,7 @@ DEP_CPP_DEFAUL=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7353,7 +7353,7 @@ DEP_CPP_DYNAN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7622,7 +7622,7 @@ DEP_CPP_DYNAN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -7895,7 +7895,7 @@ DEP_CPP_DYNANY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8157,7 +8157,7 @@ DEP_CPP_DYNANY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8430,7 +8430,7 @@ DEP_CPP_DYNANYS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8692,7 +8692,7 @@ DEP_CPP_DYNANYS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -8966,7 +8966,7 @@ DEP_CPP_DYNAR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9229,7 +9229,7 @@ DEP_CPP_DYNAR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9503,7 +9503,7 @@ DEP_CPP_DYNEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -9766,7 +9766,7 @@ DEP_CPP_DYNEN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10040,7 +10040,7 @@ DEP_CPP_DYNSE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10303,7 +10303,7 @@ DEP_CPP_DYNSE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10577,7 +10577,7 @@ DEP_CPP_DYNST=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -10840,7 +10840,7 @@ DEP_CPP_DYNST=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11116,7 +11116,7 @@ DEP_CPP_DYNUN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11381,7 +11381,7 @@ DEP_CPP_DYNUN=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11654,7 +11654,7 @@ DEP_CPP_ENCOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -11916,7 +11916,7 @@ DEP_CPP_ENCOD=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12189,7 +12189,7 @@ DEP_CPP_ENVIR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12451,7 +12451,7 @@ DEP_CPP_ENVIR=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12724,7 +12724,7 @@ DEP_CPP_EXCEP=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -12986,7 +12986,7 @@ DEP_CPP_EXCEP=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13260,7 +13260,7 @@ DEP_CPP_FORWA=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13523,7 +13523,7 @@ DEP_CPP_FORWA=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -13802,7 +13802,7 @@ DEP_CPP_GIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14071,7 +14071,7 @@ DEP_CPP_GIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14175,7 +14175,7 @@ SOURCE=.\IIOP_Connector.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Interpreter.cpp
+SOURCE=.\CDR_Interpreter.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -14375,7 +14375,7 @@ DEP_CPP_IIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14637,7 +14637,7 @@ DEP_CPP_IIOP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -14910,7 +14910,7 @@ DEP_CPP_IIOP_O=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15172,7 +15172,7 @@ DEP_CPP_IIOP_O=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15475,7 +15475,7 @@ DEP_CPP_INCON=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -15737,7 +15737,7 @@ DEP_CPP_INCON=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16016,7 +16016,7 @@ DEP_CPP_INVOC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16285,7 +16285,7 @@ DEP_CPP_INVOC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16559,7 +16559,7 @@ DEP_CPP_MANAG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -16821,7 +16821,7 @@ DEP_CPP_MANAG=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17094,7 +17094,7 @@ DEP_CPP_MARSH=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17356,7 +17356,7 @@ DEP_CPP_MARSH=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17644,7 +17644,7 @@ DEP_CPP_NVLIS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -17906,7 +17906,7 @@ DEP_CPP_NVLIS=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18179,7 +18179,7 @@ DEP_CPP_OBJEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18441,7 +18441,7 @@ DEP_CPP_OBJEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18714,7 +18714,7 @@ DEP_CPP_OBJECT=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -18976,7 +18976,7 @@ DEP_CPP_OBJECT=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19255,7 +19255,7 @@ DEP_CPP_OPERA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19524,7 +19524,7 @@ DEP_CPP_OPERA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -19808,7 +19808,7 @@ DEP_CPP_ORB_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20082,7 +20082,7 @@ DEP_CPP_ORB_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20377,7 +20377,7 @@ DEP_CPP_ORB_CO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20660,7 +20660,7 @@ DEP_CPP_ORB_CO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -20934,7 +20934,7 @@ DEP_CPP_PARAM=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21196,7 +21196,7 @@ DEP_CPP_PARAM=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21491,7 +21491,7 @@ DEP_CPP_POA_C=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -21761,7 +21761,7 @@ DEP_CPP_POA_C=\
 	".\Forwarding_Servant.h"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22035,7 +22035,7 @@ DEP_CPP_POAC_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22297,7 +22297,7 @@ DEP_CPP_POAC_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22585,7 +22585,7 @@ DEP_CPP_POAS_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -22847,7 +22847,7 @@ DEP_CPP_POAS_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23120,7 +23120,7 @@ DEP_CPP_POLIC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23382,7 +23382,7 @@ DEP_CPP_POLIC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23655,7 +23655,7 @@ DEP_CPP_POLICY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -23917,7 +23917,7 @@ DEP_CPP_POLICY=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24190,7 +24190,7 @@ DEP_CPP_PRINC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24452,7 +24452,7 @@ DEP_CPP_PRINC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24725,7 +24725,7 @@ DEP_CPP_REQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -24987,7 +24987,7 @@ DEP_CPP_REQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25260,7 +25260,7 @@ DEP_CPP_SEQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25522,7 +25522,7 @@ DEP_CPP_SEQUE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -25801,7 +25801,7 @@ DEP_CPP_SERVA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26070,7 +26070,7 @@ DEP_CPP_SERVA=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26350,7 +26350,7 @@ DEP_CPP_SERVE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26619,7 +26619,7 @@ DEP_CPP_SERVE=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -26893,7 +26893,7 @@ DEP_CPP_SERVER=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27155,7 +27155,7 @@ DEP_CPP_SERVER=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27428,7 +27428,7 @@ DEP_CPP_SKIP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27690,7 +27690,7 @@ DEP_CPP_SKIP_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -27963,7 +27963,7 @@ DEP_CPP_STUB_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28225,7 +28225,7 @@ DEP_CPP_STUB_=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28498,7 +28498,7 @@ DEP_CPP_TAO_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -28761,7 +28761,7 @@ DEP_CPP_TAO_C=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29035,7 +29035,7 @@ DEP_CPP_TAO_I=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29298,7 +29298,7 @@ DEP_CPP_TAO_I=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29572,7 +29572,7 @@ DEP_CPP_TYPEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -29834,7 +29834,7 @@ DEP_CPP_TYPEC=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30107,7 +30107,7 @@ DEP_CPP_TYPECO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30369,7 +30369,7 @@ DEP_CPP_TYPECO=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30642,7 +30642,7 @@ DEP_CPP_UNION=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -30904,7 +30904,7 @@ DEP_CPP_UNION=\
 	".\Exception.i"\
 	".\giop.h"\
 	".\giop.i"\
-	".\IIOP_Interpreter.h"\
+	".\CDR_Interpreter.h"\
 	".\IIOP_ORB.h"\
 	".\IIOP_ORB.i"\
 	".\InconsistentTypeCodeC.h"\
@@ -31077,7 +31077,7 @@ SOURCE=.\IIOP_Connector.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Interpreter.h
+SOURCE=.\CDR_Interpreter.h
 # End Source File
 # Begin Source File
 

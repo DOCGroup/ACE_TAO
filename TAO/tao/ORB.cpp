@@ -23,7 +23,7 @@
 #include "tao/DynAny_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/IIOP_Interpreter.h"
+#include "tao/CDR_Interpreter.h"
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 
@@ -1041,7 +1041,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &env)
       // initialize the factory for marshaling
       TAO_Marshal::init ();
       // initialize the interpreter
-      TAO_IIOP_Interpreter::init ();
+      TAO_CDR_Interpreter::init ();
       // initialize the system exceptions
       TAO_Exceptions::init (env);
     }

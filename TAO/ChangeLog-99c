@@ -1,3 +1,28 @@
+Tue Mar  9 20:01:40 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile:
+ 	* tao/ORB.cpp:
+ 	* tao/TAO.dsp:
+ 	* tao/TAO4.mak:
+ 	* tao/TAO_Static.dsp:
+ 	* tao/Typecode.cpp:
+ 	* tao/tao.bld:
+
+	Updated these files to use the newly renamed CDR_Interpreter classes
+	and files.
+
+	* tao/IIOP_Interpreter.h
+	* tao/IIOP_Interpreter.cpp
+
+	Renamed these files to:
+
+	* tao/CDR_Interpreter.h
+	* tao/CDR_Interpreter.cpp
+
+	All references to IIOP_Interpreter have been changed to
+	CDR_Interpreter since "IIOP_Interpreter" is no longer an accurate
+	name for the classes and files in question.
+
 Tue Mar  9 19:58:54 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POA.{h,cpp}:
