@@ -1,3 +1,9 @@
+Mon Jun 17 13:40:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/platform_osf1_4.x_cxx.GNU: Removed the hard
+	  override of LDFLAGS. Thanks to Martin Krumpolec
+	  <krumpo@pobox.sk>. 	  
+
 Mon Jun 17 06:20:55 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/Object_Manager.cpp:
