@@ -603,6 +603,10 @@ SOURCE=.\Muxed_TMS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Notify_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\NVList.cpp
 # End Source File
 # Begin Source File
@@ -1412,6 +1416,10 @@ SOURCE=.\MProfile.h
 # Begin Source File
 
 SOURCE=.\Muxed_TMS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Notify_Handler.h
 # End Source File
 # Begin Source File
 
