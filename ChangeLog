@@ -1,3 +1,7 @@
+Tue Oct  1 05:06:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/WIN32_Asynch_IO.cpp: Minor cosmetic changes.
+
 Mon Sep 30 12:21:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	From Christophe Juniet <cjuniet@entreview.com>
