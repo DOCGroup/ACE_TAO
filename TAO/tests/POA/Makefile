@@ -8,11 +8,12 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = \
-	Cubit \
-	POA \
-	Param_Test \
-	Thruput
+DIRS  = Explicit_Activation \
+	FindPOA \
+	Generic_Servant \
+	NewPOA \
+	On_Demand_Activation \
+	RootPOA
 
 # The following test hasn't been updated yet
 # Demux_Test
