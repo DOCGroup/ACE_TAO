@@ -1,3 +1,10 @@
+Mon Feb 18 20:16:27 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Acceptor.cpp (make_svc_handler): 
+  	* ace/Connector.cpp (make_svc_handler):  There doesn't seem to be
+	  anypoint in *conditionally* assigning the Acceptor/Connector's
+ 	  reactor to the Svc_Handler, so we'll just assign it...
+
 Mon Feb 18 18:41:33 2002  Steve Huston  <shuston@riverace.com>
 
        Integrated the following from the ACE 5.2 stream:

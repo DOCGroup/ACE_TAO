@@ -52,8 +52,7 @@ ACE_Connector<SVH, PR_CO_2>::make_svc_handler (SVC_HANDLER *&sh)
 
   // Set the reactor of the newly created <SVC_HANDLER> to the same
   // reactor that this <Connector> is using.
-  if (this->reactor ())
-    sh->reactor (this->reactor ());
+  sh->reactor (this->reactor ());
   return 0;
 }
 
