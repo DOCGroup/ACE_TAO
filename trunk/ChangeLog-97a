@@ -1,5 +1,23 @@
 Wed Apr 30 17:47:11 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.i (getpwnam_r): Changed the expression to check if
+ 	  getpwnam_r() returns -1 for AIX.  Thanks to Chris Lahey for
+ 	  this.
+
+	* ace/Timer_Wheel_T.h: changed
+
+	  // = Don't allow these operations for now.
+	  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T &);
+	  void operator= (const ACE_Timer_Wheel_T &);
+ 
+          to:
+ 
+          // = Don't allow these operations for now.
+	  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
+	  void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
+
+	  Thanks to Chuck Gehr for reporting this.
+
 	* ace/OS.cpp: Made mktime() thread-safe.  If any platforms support
  	  multi-thread safe versions of mktime() please let me know so we
  	  can set the ACE_HAS_MT_SAFE_MKTIME macro for that config file.

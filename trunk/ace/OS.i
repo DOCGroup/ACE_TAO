@@ -3105,7 +3105,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #endif /* (DIGITAL_UNIX) */
   return result;
 #elif defined (AIX)
-  if (::getpwnam_r (name, pwent, buffer, buflen))
+  if (::getpwnam_r (name, pwent, buffer, buflen) == -1)
     return 0;
   else
     return pwent;
@@ -5622,13 +5622,6 @@ ACE_OS::open (const char *filename,
 #else
   ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
 #endif /* ACE_WIN32 */
-}
-
-ACE_INLINE time_t
-ACE_OS::mktime (struct tm *t)
-{
-  // ACE_TRACE ("ACE_OS::asctime");
-  ACE_OSCALL_RETURN (::mktime (t), time_t, -1);
 }
 
 ACE_INLINE char *
