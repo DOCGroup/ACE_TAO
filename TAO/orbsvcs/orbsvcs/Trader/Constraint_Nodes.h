@@ -254,7 +254,7 @@ class TAO_Literal_Constraint : public TAO_Constraint
 		const TAO_Literal_Constraint& right);
   
   friend int
-    operator== (const StringSeq::Manager& left,
+    operator== (const TAO_Sequences::StringSeq::Manager& left,
 		const TAO_Literal_Constraint& right);
   
   // = Arithmetic operators.

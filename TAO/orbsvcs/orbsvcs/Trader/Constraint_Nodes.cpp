@@ -709,7 +709,7 @@ operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 }
 
 int
-operator== (const StringSeq::Manager& left,
+operator== (const TAO_Sequences::StringSeq::Manager& left,
 	    const TAO_Literal_Constraint& right)
 {
   int result =  0;

@@ -6,6 +6,10 @@ TAO_Dynamic_Property::TAO_Dynamic_Property(const char* name)
 {  
 }
 
+TAO_Dynamic_Property::~TAO_Dynamic_Property (void)
+{
+}
+
 CosTradingDynamic::DynamicProp*
 TAO_Dynamic_Property::register_handler(const char* name,
 				       CORBA::TypeCode_ptr returned_type,
