@@ -121,7 +121,7 @@ namespace CIAO_GLUE
 ##end foreach [receptacle name] with [uses type]
 
 ##foreach [event name] with [eventtype] in (list of all event sources) generate:
-    void push_[event name] ([eventtype]_ptr ev
+    void push_[event name] ([eventtype] *ev
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 ##end foreach [event name] with [eventtype]
@@ -336,13 +336,13 @@ namespace CIAO_GLUE
       ~[event type]Consumer_[consumer name]_Servant ();
 
 ##  foreach [type] in ([eventtype] and all its parent eventtype, if any)
-      virtual void push_[type] ([type]_ptr evt
+      virtual void push_[type] ([type] *evt
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 ##  end [type]
 
-      // Inherit from ::Compopnents::EventBConsumerBase
-      virtual void push_event (::Components::EventBase_ptr ev
+      // Inherit from ::Compopnents::EventConsumerBase
+      virtual void push_event (::Components::EventBase *ev
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          ::Components::BadEventType));
@@ -646,7 +646,7 @@ namespace CIAO_GLUE
 
     // We do not support key'ed home at the moment but we might
     // as well generate the mapping.
-    virtual [component name]_ptr create ([key type]_ptr key
+    virtual [component name]_ptr create ([key type] *key
                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::CreationFailure,
@@ -654,21 +654,21 @@ namespace CIAO_GLUE
                        ::Components::InvalidKey));
 
     virtual [component name]_ptr
-    find_by_primary_key ([key type]_ptr key
+    find_by_primary_key ([key type] *key
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::FinderFailure,
                        ::Components::UnknownKeyValue,
                        ::Components::InvalidKey));
 
-    virtual void remove ([key type]_ptr key
+    virtual void remove ([key type] *key
                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::RemoveFailure,
                        ::Components::UnknownKeyValue,
                        ::Components::InvalidKey));
 
-    virtual [key type]_ptr
+    virtual [key type] *
     get_primary_key ([component name]_ptr comp
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));

@@ -61,7 +61,7 @@ namespace CIAO_GLUE_HUDisplay
     // Operations for [component name] event source, and
     // receptacles defined in CCM_[component name]_Context.
 
-    void push_Ready (HUDisplay::tick_ptr ev
+    void push_Ready (HUDisplay::tick *ev
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -169,7 +169,7 @@ namespace CIAO_GLUE_HUDisplay
                                     HUDisplay::CCM_GPS_Context_ptr c);
       ~tickConsumer_Refresh_Servant ();
 
-      virtual void push_tick (HUDisplay::tick_ptr evt
+      virtual void push_tick (HUDisplay::tick *evt
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 

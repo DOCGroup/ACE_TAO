@@ -140,7 +140,7 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
       // Setting home config value here:
       home_config.length (2);
 
-      Components::ConfigValue_ptr item = new OBV_Components::ConfigValue ();
+      Components::ConfigValue *item = new OBV_Components::ConfigValue ();
       item->name (CORBA::string_dup ("CIAO-servant-UUID"));
       item->value () <<= CORBA::string_dup (info.servant_UUID_.c_str ());
       home_config[0] = item;

@@ -28,7 +28,7 @@ MyImpl::GPS_tracing_exec_i::get_MyLocation (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick_ptr
+MyImpl::GPS_tracing_exec_i::push_Refresh (HUDisplay::tick *
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -50,7 +50,7 @@ namespace CIAO_GLUE_HUDisplay
     // Dtor.
     virtual ~RateGen_Context ();
 
-    void push_Pulse (HUDisplay::tick_ptr ev
+    void push_Pulse (HUDisplay::tick *ev
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
