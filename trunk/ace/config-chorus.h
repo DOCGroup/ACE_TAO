@@ -22,11 +22,10 @@
 // Compiler-specific configuration.
 
 #if defined (__GNUG__)
-# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-# define ACE_TEMPLATES_REQUIRE_SOURCE
+# include "ace/config-g++-common.h"
 #elif defined (ghs)
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
+# define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_WCHAR_TYPEDEFS_CHAR
 # define ACE_LACKS_UNISTD_H
 #else  /* ! __GNUG__ && ! ghs */
@@ -38,7 +37,6 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_HAS_IP_MULTICAST
 #define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x2000

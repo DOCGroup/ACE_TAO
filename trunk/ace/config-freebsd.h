@@ -13,6 +13,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#endif /* __GNUG__ */
+
 // ********************************************************
 // uncomment next line if you are using FreeBSD 2.1.x[R]
 // #define FreeBSD_2_1
@@ -156,16 +160,6 @@ ange */
 
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-
-// TDN - adapted from file for SunOS4 platforms using the GNU g++ compiler
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-
-// Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // #define ACE_HAS_SIGWAIT
 
