@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ImplRepo_i.h"
-#include "ace/Get_Opt.h"
+#include "Options.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Process.h"
 #include "tao/IIOP_Profile.h"
@@ -11,11 +11,9 @@
 
 ImplRepo_i::ImplRepo_i (void)
   : forwarder_impl_ (0),
-    activator_ (0),
-    ior_output_file_ (0),
-    server_key_ (0),
-    debug_level_ (1)
+    activator_ (0)
 {
+  // Nothing
 }
 
 // Starts up the server associated with the object pointer and returns
@@ -28,7 +26,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   Implementation_Repository::INET_Addr *new_addr;
   TAO_Stub *new_stub_obj = 0;
 
-  if (this->debug_level_ >= 1)
+  if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
@@ -94,7 +92,7 @@ ImplRepo_i::activate_server (const char *server,
   address->port_ = 0;
   address->host_ = CORBA::string_dup ("");
 
-  if (this->debug_level_ >= 1)
+  if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Server: %s\n",
                 server));
@@ -157,7 +155,7 @@ ImplRepo_i::activate_server (const char *server,
 
       if (status == 0)
         {
-          if (this->debug_level_ >= 1)
+          if (OPTIONS::instance()->debug () >= 1)
             ACE_DEBUG ((LM_DEBUG,
                         "Starting %s\n",
                         server));
@@ -219,6 +217,16 @@ ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  if (OPTIONS::instance()->debug () >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
+                              "Command Line: %s\n"
+                              "Environment: %s\n"
+                              "Working Directory: %s\n\n",
+                              server,
+                              options.command_line_,
+                              options.environment_,
+                              options.working_directory_));
+
   Repository_Record rec (options.command_line_,
                          options.environment_,
                          options.working_directory_,
@@ -237,15 +245,16 @@ ImplRepo_i::register_server (const char *server,
     }
   else
     {
-      if (this->debug_level_ >= 1)
+      if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "register_server: Server %s Successfully Registered\n",
                     server));
-      if (this->debug_level_ >= 2)
+      if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
                               "Environment: %s\n"
                               "Working Directory: %s\n\n",
+                              server,
                               rec.comm_line,
                               rec.env,
                               rec.wdir));
@@ -270,15 +279,16 @@ ImplRepo_i::reregister_server (const char *server,
 
   this->repository_.update (server, rec);
 
-  if (this->debug_level_ >= 1)
+  if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Server %s Successfully Registered\n",
                 server));
-  if (this->debug_level_ >= 2)
+  if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                           "Command Line: %s\n"
                           "Environment: %s\n"
                           "Working Directory: %s\n\n",
+                          server,
                           rec.comm_line,
                           rec.env,
                           rec.wdir));
@@ -292,7 +302,7 @@ ImplRepo_i::remove_server (const char *server,
 {
   if (this->repository_.remove (server) == 0)
     {
-      if (this->debug_level_ >= 1)
+      if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Successfully Removed Server\n"));
     }
@@ -316,7 +326,7 @@ ImplRepo_i::server_is_running (const char *server,
   Implementation_Repository::INET_Addr *new_addr =
     new Implementation_Repository::INET_Addr;
 
-  if (this->debug_level_ >= 1)
+  if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Server <%s> is running\n",
                 server));
@@ -349,7 +359,7 @@ ImplRepo_i::server_is_running (const char *server,
 
   if (this->repository_.update (server, rec) == 0)
     {
-      if (this->debug_level_ >= 1)
+      if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Successful server_is_running () of <%s>\n",
                     server));
@@ -362,7 +372,7 @@ ImplRepo_i::server_is_running (const char *server,
       return new_addr;
     }
 
-  if (this->debug_level_ >= 2)
+  if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The old host/port was: %Lu:%hu\n",
                 rec.host,
@@ -374,7 +384,7 @@ ImplRepo_i::server_is_running (const char *server,
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
   new_addr->port_ = my_addr.get_port_number ();
 
-  if (this->debug_level_ >= 2)
+  if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG,
                 "The new host/port is: %Lu:%hu\n",
                 new_addr->host_.inout (),
@@ -400,7 +410,7 @@ ImplRepo_i::server_is_shutting_down (const char *server,
 
       if (this->repository_.update (server, rec) == 0)
         {
-          if (this->debug_level_ >= 1)
+          if (OPTIONS::instance()->debug () >= 1)
             ACE_DEBUG ((LM_DEBUG,
                         "Successful server_is_shutting_down () of <%s>\n",
                         server));
@@ -421,69 +431,6 @@ ImplRepo_i::server_is_shutting_down (const char *server,
     }
 }
 
-// Reads the Server factory ior from a file
-
-int
-ImplRepo_i::read_ior (char *filename)
-{
-  // Open the file for reading.
-  ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
-
-  if (f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
-  ACE_Read_Buffer ior_buffer (f_handle_);
-  this->server_key_ = ior_buffer.read ();
-
-  if (this->server_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error: Unable to allocate memory to read ior: %p\n"),
-                      -1);
-
-  ACE_OS::close (f_handle_);
-  return 0;
-}
-
-int
-ImplRepo_i::parse_args (void)
-{
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "d:f:o:");
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error: Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
-        break;
-      case 'f': // read the IOR from the file.
-        this->server_input_file_ = ACE::strnew (get_opts.optarg);
-        break;
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s"
-                           " [-d] <debug_level>"
-                           " [-f] <server_ior_file>"
-                           " [-o] <ior_output_file>"
-                           "\n",
-                           argv_ [0]),
-                          1);
-      }
-
-  // Indicates successful parsing of command line.
-  return 0;
-}
-
 int
 ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -501,10 +448,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                           -1);
       ACE_TRY_CHECK;
 
-      this->argc_ = argc;
-      this->argv_ = argv;
-
-      int retval = this->parse_args ();
+      int retval = OPTIONS::instance()->parse_args (argc, argv);
 
       if (retval != 0)
         return retval;
@@ -517,17 +461,17 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 
       CORBA::String_var str  =
         this->orb_manager_.activate (this->forwarder_impl_);
-      if (this->debug_level_ >= 2)
+      if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The server IOR is: <%s>\n",
                     str.in ()));
 
-      if (this->ior_output_file_)
+      if (OPTIONS::instance()->output_file ())
         {
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (OPTIONS::instance()->output_file (),
                            "%s",
                            str.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          ACE_OS::fclose (OPTIONS::instance()->output_file ());
         }
 
       CORBA::String_var ir_var  =
@@ -536,7 +480,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (this->debug_level_ >= 2)
+      if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "The IR IOR is: <%s>\n",
                     ir_var.in ()));
