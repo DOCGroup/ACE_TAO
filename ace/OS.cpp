@@ -1730,23 +1730,24 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // The stack arg is ignored:  if there's a need for it, we'd have to
       // use ::taskInit ()/::taskActivate () instead of ::taskSpawn ().
 
-      // The hard-coded arguments are what ::sp() would use.  ::taskInit()
-      // is used instead of ::sp() so that we can set the priority, flags,
-      // and stacksize.  (::sp() also hardcodes priority to 100, flags
+      // The hard-coded arguments are what ::sp () would use.  ::taskInit ()
+      // is used instead of ::sp () so that we can set the priority, flags,
+      // and stacksize.  (::sp () also hardcodes priority to 100, flags
       // to VX_FP_TASK, and stacksize to 20,000.)  stacksize should be
       // an even integer.
 
-      // If called with thr_create() defaults, use same default values as ::sp():
-      if (stacksize == 0) stacksize = 20000;
+      // If called with thr_create() defaults, use same default values as ::sp ():
       if (priority == 0) priority = 100;
+      if (flags == 0) flags = VX_FP_TASK; // Assumes that there is a
+                                          // floating point coprocessor.
+                                          // As noted above, ::sp () hardcodes
+                                          // this, so we should be safe with it.
+
+      if (stacksize == 0) stacksize = 20000;
 
       ACE_hthread_t tid = ::taskSpawn (thr_id == 0 ? NULL : *thr_id, priority,
                                        (int) flags, (int) stacksize, func,
-                                       ((int *) args)[0], ((int *) args)[1],
-                                       ((int *) args)[2], ((int *) args)[3],
-                                       ((int *) args)[4], ((int *) args)[5],
-                                       ((int *) args)[6], ((int *) args)[7],
-                                       ((int *) args)[8], ((int *) args)[9]);
+                                       (int)args, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
 
       if (tid == ERROR)
         return -1;
