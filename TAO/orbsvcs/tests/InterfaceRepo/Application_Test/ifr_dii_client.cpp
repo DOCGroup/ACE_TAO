@@ -340,19 +340,19 @@ IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::NVList_ptr args = this->req_->arguments ();
 
       const char *artist = 0;
-      ACE_ASSERT ((*args->item (0)->value () >>= artist) == TRUE);
+      ACE_ASSERT ((*args->item (0)->value () >>= artist) == true);
       
       ACE_ASSERT (ACE_OS::strcmp (artist, "the Beatles") == 0);
 
       const char *title = 0;
-      ACE_ASSERT ((*args->item (1)->value () >>= title) == TRUE);
+      ACE_ASSERT ((*args->item (1)->value () >>= title) == true);
       
       const char *correct = "Sgt. Pepper's Lonely Hearts Club Band";
       ACE_ASSERT (ACE_OS::strcmp (title, correct) == 0);
       ACE_UNUSED_ARG (correct);
 
       CORBA::Float price = 0.0f;
-      ACE_ASSERT ((*args->item (2)->value () >>= price) == TRUE);
+      ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
       
       ACE_ASSERT (price == 13.49f);
 
