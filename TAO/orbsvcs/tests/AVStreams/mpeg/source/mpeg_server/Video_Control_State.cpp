@@ -142,21 +142,21 @@ Video_Control_State::stat_stream (CORBA::Char_out ch,
                               CORBA::Long_out size)
                               
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
 CORBA::Boolean 
 Video_Control_State::close (void)
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
 CORBA::Boolean 
 Video_Control_State::stat_sent (void)
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -164,7 +164,7 @@ CORBA::Boolean
 Video_Control_State::fast_forward (const Video_Control::FFpara &para)
                                
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -172,7 +172,7 @@ CORBA::Boolean
 Video_Control_State::fast_backward (const Video_Control::FFpara &para)
                                 
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -180,7 +180,7 @@ CORBA::Boolean
 Video_Control_State::step (const Video_Control::STEPpara &para)
                        
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -189,7 +189,7 @@ Video_Control_State::play (const Video_Control::PLAYpara &para,
                        CORBA::Long_out vts)
                        
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -197,7 +197,7 @@ CORBA::Boolean
 Video_Control_State::position (const Video_Control::POSITIONpara &para)
                            
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -205,7 +205,7 @@ CORBA::Boolean
 Video_Control_State::speed (const Video_Control::SPEEDpara &para)
                         
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 
@@ -213,7 +213,7 @@ CORBA::Boolean
 Video_Control_State::stop (CORBA::Long cmdsn)
                        
 {
-  return 0;
+  return CORBA::B_FALSE;
 }
 
 // ----------------------------------------------------------------------
@@ -315,7 +315,8 @@ Video_Control_Waiting_State::stat_sent (void)
   return 0;
 }
 
-
+// We are in the waiting state - and the client sent us
+// the command fast-forward. 
 CORBA::Boolean 
 Video_Control_Waiting_State::fast_forward (const Video_Control::FFpara &para)
                                
@@ -330,11 +331,19 @@ Video_Control_Waiting_State::fast_forward (const Video_Control::FFpara &para)
 }
 
 
+// We are in the waiting state - and the client sent us
+// the command fast-backward. 
 CORBA::Boolean 
 Video_Control_Waiting_State::fast_backward (const Video_Control::FFpara &para)
                                 
 {
-  return 0;
+  // Many guys in legacy code depend on this variable.
+  VIDEO_SINGLETON::instance ()-> cmd = CmdFB;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Control_Waiting_State::fast_backward () called\n"));
+  VIDEO_SINGLETON::instance ()->init_fast_play (para);
+  this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
+  return CORBA::B_TRUE;
 }
 
 
@@ -538,6 +547,7 @@ Video_Control_Fast_Forward_State::stop (CORBA::Long cmdsn)
   ACE_DEBUG ((LM_DEBUG,
               "Video_Control_Fast_Forward_State::stop ()\n"));
   VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
+  VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
   Video_Timer_Global::StopTimer();
   this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
   return CORBA::B_TRUE;
@@ -549,6 +559,7 @@ Video_Control_Fast_Forward_State::close (void)
   return CORBA::B_TRUE;
 }
 
+// ----------------------------------------------------------------------
 
 Video_Control_Fast_Backward_State::Video_Control_Fast_Backward_State (void)
 {
@@ -587,4 +598,22 @@ Video_Control_Fast_Backward_State::handle_input (ACE_HANDLE h)
   this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
 
   return 0;
+}
+
+CORBA::Boolean
+Video_Control_Fast_Backward_State::stop (CORBA::Long cmdsn)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Fast_Backward_State::stop ()\n"));
+  VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
+  VIDEO_SINGLETON::instance ()->cmdsn = cmdsn;
+  Video_Timer_Global::StopTimer();
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+  return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+Video_Control_Fast_Backward_State::close (void)
+{
+  return CORBA::B_TRUE;
 }

@@ -185,6 +185,10 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the fast_backward state  
+
+  CORBA::Boolean close (void);
+
+  CORBA::Boolean stop (CORBA::Long cmdsn);
 };
 
 // @@ Is there a particular reason we need these to be thread-specific singletons?!
