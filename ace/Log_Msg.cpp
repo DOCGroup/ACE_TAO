@@ -608,7 +608,6 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
       ACE_INT32 dummy = ~0;
       ACE_Log_Msg_Manager::message_queue_->send_n ((const void *) &dummy,
                                                    sizeof (ACE_INT32),
-                                                   0,
                                                    0);
 #endif /* ACE_WIN32 */
       ACE_Log_Msg_Manager::message_queue_->close ();
