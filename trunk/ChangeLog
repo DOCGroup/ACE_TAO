@@ -1,3 +1,11 @@
+Wed Dec  1 15:01:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Threads/Guards.cpp:
+	* examples/APG/Threads/Message_Blocks.cpp: Enabled the code here that
+	  was previously blocked out. Fixed narrow/wide-char spec for a
+	  string to ACE_Log_Msg. Thanks to Johnny Willemsen for pointing
+	  out that none of this code was actually getting compiled.
+
 Wed Dec 1 08:49:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
