@@ -1,3 +1,15 @@
+Thu Nov 27 16:22:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Starter.bor:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Test.bor:
+	  Added Messaging library
+
+	* performance-tests/Latency/DII/client.bor:
+	  Added ValueType lib
+
+	* performance-tests/Latency/Deferred/client.bor:
+	  Added Messaging and PortableServer library
+
 Thu Nov 27 16:03:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
