@@ -1,3 +1,7 @@
+Thu Dec 04 21:20:47 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.2, released Thu Dec 04 21:20:47 1997.
+
 Thu Dec  4 19:45:04 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Object_Manager.cpp (ACE_Object_Manager_Destroyer): Fixed a
