@@ -53,13 +53,13 @@ run_orb_within_thread (void *)
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "perform work");
 
-          return;
+          return 0;
         }
       ACE_ENDTRY;
       ACE_CHECK;
     }
 
-  return;
+  return 0;
 }
 
 int parse_args (int argc, char *argv[]);
