@@ -368,9 +368,6 @@ public:
         TAO_default_environment ()
     );
 
-  /// List of system exceptions.
-  static ACE_Unbounded_Queue<CORBA::TypeCode_ptr> *system_exceptions;
-
   /**
    * This global allocator is used to initialize system exception
    * typecodes.  Since at the time, the ORB is mostly still not

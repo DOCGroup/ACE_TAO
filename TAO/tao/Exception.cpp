@@ -28,7 +28,6 @@ ACE_RCSID (TAO,
 
 // Static initializers.
 
-ACE_Unbounded_Queue<CORBA::TypeCode_ptr> *TAO_Exceptions::system_exceptions;
 ACE_Allocator *TAO_Exceptions::global_allocator_;
 
 // Flag that denotes that the TAO TypeCode constants have been
@@ -946,8 +945,6 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                     CORBA_INITIALIZE ());
   ACE_CHECK;
 
-  TAO_Exceptions::system_exceptions->enqueue_tail (tcp);
-
   ACE_ASSERT (tcp->length_ <= buflen);
   return;
 }
@@ -1029,10 +1026,6 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_NEW (TAO_Exceptions::global_allocator_,
            ACE_New_Allocator);
 
-  // Initialize the list of system exceptions, used when unmarshaling.
-  ACE_NEW (TAO_Exceptions::system_exceptions,
-           ACE_Unbounded_Queue<CORBA::TypeCode_ptr>);
-
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_Exceptions::make_standard_typecode (CORBA::_tc_ ## name, \
                                           #name, \
@@ -1066,12 +1059,6 @@ TAO_Exceptions::create_system_exception (const char *id,
 void
 TAO_Exceptions::fini (void)
 {
-  if (TAO_Exceptions::system_exceptions != 0)
-    {
-      delete TAO_Exceptions::system_exceptions;
-      TAO_Exceptions::system_exceptions = 0;
-    }
-
 #define TAO_SYSTEM_EXCEPTION(name) \
   CORBA::release (CORBA::_tc_ ## name); \
   CORBA::_tc_ ## name = 0;
@@ -1320,17 +1307,3 @@ STANDARD_EXCEPTION_LIST
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
 {}
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<CORBA::TypeCode_ptr>;
-template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
