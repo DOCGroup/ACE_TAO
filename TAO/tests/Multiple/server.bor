@@ -1,35 +1,35 @@
 
 #
-# Makefile for building the Leader_Followers test
+# Makefile for building the Multiple test
 #
 
-NAME = client
+NAME = server
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
-	$(OBJDIR)\testC.obj \
-	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\client.obj
+        $(OBJDIR)\MultipleC.obj \
+        $(OBJDIR)\MultipleS.obj \
+        $(OBJDIR)\Multiple_Impl.obj \
+        $(OBJDIR)\Collocation_Tester.obj \
+	$(OBJDIR)\server.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
-	$(TAO_STRATEGIES_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS)
 
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_STRATEGIES_LIB) \
 	$(TAO_PORTABLESERVER_LIB)
-
-IDLFILES = \
-        $(IDLDIR)\test.idl
 
 CPPDIR = .
 
 IDLDIR = .
+
+IDLFILES = \
+        $(IDLDIR)\Multiple.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
@@ -37,6 +37,6 @@ IDLDIR = .
 # IDL Build rules
 #
 
-$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+$(IDLDIR)\MultipleC.cpp $(IDLDIR)\MultipleS.cpp: $(IDLDIR)\Multiple.idl
 	$(TAO_IDL) $**
 
