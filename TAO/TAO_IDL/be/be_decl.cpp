@@ -371,7 +371,6 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
       shift = 3 - (i%4);
       // store the computed shifted quantity in the appropriate byte of the
       // array to be returned
-
       larr [i/4] |= ((name[i] & 0xff) << (shift*8));
     }
   return 0;
