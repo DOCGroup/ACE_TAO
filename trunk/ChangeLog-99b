@@ -1,14 +1,21 @@
+Fri May 07 23:05:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks5.x.h: added
+          ACE_LACKS_LINEBUFFERED_STREAMBUF for Green Hills 1.8.9.
+
+        * ace/README: added ACE_LACKS_LINEBUFFERED_STREAMBUF.
+
 Fri May  7 19:39:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Message_Block_T.i:
-	  Found little buf in ACE_Locked_Data_Block<> default
-	  constructor.
+        * ace/Message_Block_T.i:
+          Found little buf in ACE_Locked_Data_Block<> default
+          constructor.
 
 Fri May 07 16:54:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}: Reorganized and optimized internal methods,
- 	  added read and write guards, implemented all public find and unbind
-	  methods for the interface comparable to ACE_Hash_Map_Manager_Ex.
+          added read and write guards, implemented all public find and unbind
+          methods for the interface comparable to ACE_Hash_Map_Manager_Ex.
 
 Fri May 07 14:40:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
