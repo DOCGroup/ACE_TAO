@@ -249,8 +249,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i \
- FactoryC_impl.h $(ACE_ROOT)/ace/Get_Opt.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i FactoryC_impl.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -456,7 +457,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -678,7 +680,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i
 
 .obj/FactoryS_impl.o .obj/FactoryS_impl.so .shobj/FactoryS_impl.o .shobj/FactoryS_impl.so: FactoryS_impl.cpp FactoryC_impl.h FactoryC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -875,8 +878,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i \
- FactoryS_impl.h FactoryS.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i FactoryS_impl.h FactoryS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1088,8 +1091,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Pluggable.i \
  $(TAO_ROOT)/tao/MProfile.h \
@@ -1194,8 +1197,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/RequestInfo_Util.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.h \
- $(TAO_ROOT)/tao/ClientRequestInfo.inl \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.h \
+ $(TAO_ROOT)/tao/ClientRequestInfo_i.inl \
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
@@ -1394,7 +1397,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i FactoryC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ FactoryC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1485,7 +1489,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/PICurrent.inl \
- $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
