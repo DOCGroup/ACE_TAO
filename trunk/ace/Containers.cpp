@@ -156,6 +156,8 @@ ACE_Unbounded_Stack<T>::delete_all_nodes (void)
       this->allocator_->free (temp);
     }
 
+  this->cur_size_ = 0;
+
   ACE_ASSERT (this->head_ == this->head_->next_
 	      && this->is_empty ());
 } 
@@ -178,11 +180,13 @@ ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
 		      ACE_Node<T> (s_temp->item_, temp->next_));
       temp = temp->next_;
     }
+  this->cur_size_ = s.cur_size_;
 }
 
 template<class T>
 ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
   : head_ (0),
+    cur_size_ (0),
     allocator_ (s.allocator_)
 {
   if (this->allocator_ == 0)
@@ -229,6 +233,7 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
 			 ACE_Node<T> (new_item, this->head_->next_), -1);
 
   this->head_->next_ = temp;
+  this->cur_size_++;
   return 0;
 }
 
@@ -246,6 +251,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
       this->head_->next_ = temp->next_;
 
       this->allocator_->free (temp);
+      this->cur_size_--;
       return 0;
     }
 }
