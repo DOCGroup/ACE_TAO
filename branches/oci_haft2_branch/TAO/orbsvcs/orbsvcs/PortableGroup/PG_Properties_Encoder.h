@@ -21,18 +21,40 @@
 
 namespace TAO_PG
 {
+  /**
+   * A helper to assemble a set of properties into a PortableGroup::Properties structure.
+   *
+   * To use a Properties_Encoder:
+   *  Create it.
+   *  Add properties to it using the add method.
+   *  Allocate a new PortableGroup::Properties.
+   *  Use the encode method to transfer the properties into the
+   *  PortableGroup::Properties.
+   */
   class TAO_PortableGroup_Export Properties_Encoder
   {
     typedef ACE_Pair< ACE_CString, PortableGroup::Value> NamedValue;
     typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
 
   public:
+    /**
+     * Construct an empty set of properties.
+     */
     Properties_Encoder ();
+
+    /// standard destructor
     ~Properties_Encoder ();
 
+    /**
+     * add a name/value property to the Properties_Encoder.
+     */
     void add (const char * name, const PortableGroup::Value & value);
 
-    void encode (PortableGroup::Properties_var & property_set) const;
+    /**
+     * Encode all properties in this Properties_Encoder into a PortableGroup::Properties.
+     *
+     */
+    void encode (PortableGroup::Properties * property_set) const;
 
   private:
     Properties_Encoder (const Properties_Encoder & rhs);

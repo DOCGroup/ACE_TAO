@@ -277,7 +277,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
         TAO_PG::Properties_Encoder encoder;
 
         PortableGroup::Value value;
-        value <<= notifier_in ();
+        value <<= notifier_.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
 
         value <<= replica.in ();
