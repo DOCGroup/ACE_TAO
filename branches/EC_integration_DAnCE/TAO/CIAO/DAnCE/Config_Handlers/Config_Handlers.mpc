@@ -9,8 +9,7 @@ project (Config_Handlers) : ciao_deployment_stub {
   requires += exceptions
   includes += $(XERCESCROOT)/include 
   libpaths += $(XERCESCROOT)/lib
-  lit_libs += xerces-c
-  libs     += CIAO_DnC_Server TAO_IFR_Client TAO_Valuetype
+  libs     += CIAO_DnC_Server TAO_IFR_Client TAO_Valuetype xerces-c
 
   Source_Files {
     Utils.cpp

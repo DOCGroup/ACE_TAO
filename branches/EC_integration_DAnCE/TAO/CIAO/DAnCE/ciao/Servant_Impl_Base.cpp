@@ -16,6 +16,24 @@ namespace CIAO
   }
 
   // Operations for CCMObject interface.
+  /*
+    void
+    Servant_Impl_Base::component_UUID (
+    const char * new_component_UUID
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      this->component_UUID_ = new_component_UUID;
+    }
+
+    CIAO::CONNECTION_ID
+    Servant_Impl_Base::component_UUID (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      return CORBA::string_dup (this->component_UUID_.c_str ());
+    }
+  */
 
   ::Components::PrimaryKeyBase *
   Servant_Impl_Base::get_primary_key (
