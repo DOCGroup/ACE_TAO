@@ -1,3 +1,9 @@
+Sun Feb 18 02:45:47 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* tests/Smart_Proxies/On_Demand/Makefile (CPPFLAGS):
+
+	Added -I$(TAO_ROOT)/tao to CPPFLAGS to appease cxx on Tru64.
+
 Sat Feb 17 23:08:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Handler.cpp: Fixed a problem that showed up
@@ -5,7 +11,7 @@ Sat Feb 17 23:08:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  the socket and processed, sometime we could be left with
 	  messages that are not even the size of GIOP header length. Added
 	  a conditional check for this case. This fixes the problem in
-	  EC_Throughput. 
+	  EC_Throughput.
 
 Sat Feb 17 20:38:10 2001  Darrell Brunsch <brunsch@uci.edu>
 
