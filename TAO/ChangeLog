@@ -1,6 +1,10 @@
+Sat May 10 10:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/*/Makefile*: More updates. 
+
 Sat May 10 10:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/POA/Makefile*: Updated dependencies. This has been a
+	* examples/POA/*/Makefile*: Updated dependencies. This has been a
 	  problem in our daily builds for almost a week now. 
 
 Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
