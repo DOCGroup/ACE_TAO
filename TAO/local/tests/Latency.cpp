@@ -197,6 +197,37 @@ Latency_Consumer::print_stats () /* const */
 
 // ************************************************************
 
+Latency_Supplier::Supplier::Supplier (Latency_Supplier* impl)
+  :  impl_ (impl)
+{
+}
+
+void Latency_Supplier::Supplier::disconnect_push_supplier
+  (CORBA::Environment &_env)
+{
+  this->impl_->disconnect_push_supplier (_env);
+}
+
+Latency_Supplier::Consumer::Consumer (Latency_Supplier* impl)
+  :  impl_ (impl)
+{
+}
+
+void Latency_Supplier::Consumer::disconnect_push_consumer
+  (CORBA::Environment &_env)
+{
+  this->impl_->disconnect_push_consumer (_env);
+}
+
+void Latency_Supplier::Consumer::push
+  (const RtecEventComm::EventSet &events,
+   CORBA::Environment &_env)
+{
+  this->impl_->push (events, _env);
+}
+
+// ************************************************************
+
 Latency_Supplier::Latency_Supplier (const u_int total_messages,
 				    CORBA::Long supplier_id,
                                     const int timestamp)
@@ -204,8 +235,18 @@ Latency_Supplier::Latency_Supplier (const u_int total_messages,
     supplier_id_ (supplier_id),
     timestamp_ (timestamp),
     total_sent_ (0),
-    master_ (0)
+    master_ (0),
+    supplier_ (new Supplier (this)),
+    consumer_ (new Consumer (this))
 {
+  CORBA::Object::_duplicate (this->supplier_);
+  CORBA::Object::_duplicate (this->consumer_);
+}
+
+Latency_Supplier::~Latency_Supplier (void)
+{
+  CORBA::release (this->supplier_);
+  CORBA::release (this->consumer_);
 }
 
 int
@@ -252,20 +293,15 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 	RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(supplier_admin_->obtain_push_consumer (ACE_TRY_ENV));
       ACE_CHECK_ENV;
 
-      consumers_->connect_push_supplier (this,
+      consumers_->connect_push_supplier (this->supplier_,
                                          publications.get_SupplierQOS (),
                                          ACE_TRY_ENV);
       ACE_CHECK_ENV;
     }
-  ACE_CATCH (const ACE_EventChannel::SUBSCRIPTION_ERROR, se)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Latency_Supplier::open: subscribe failed.\n"), -1);
-    }
   ACE_CATCHANY
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Latency_Supplier::open: unexpected exception.\n"), -1);
+      ACE_TRY_ENV.print_exception ("Latency_Supplier::open");
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -294,9 +330,9 @@ Latency_Supplier::start_generating_events (void)
     {
       ACE_ConsumerQOS_Factory dependencies;
       dependencies.start_disjunction_group ();
-      dependencies.insert (ACE_ES_EVENT_INTERVAL_TIMEOUT,
-			   timeout_interval * 10000, 
-			   rt_info_);
+      dependencies.insert_time (ACE_ES_EVENT_INTERVAL_TIMEOUT,
+				timeout_interval * 10000, 
+				rt_info_);
       if (!master_)
 	dependencies.insert_type (ACE_ES_EVENT_SHUTDOWN, rt_info_);
 
@@ -308,7 +344,7 @@ Latency_Supplier::start_generating_events (void)
 	RtecEventChannelAdmin::ProxyPushSupplier::_duplicate(consumer_admin_->obtain_push_supplier (ACE_TRY_ENV));
       ACE_CHECK_ENV;
 
-      suppliers_->connect_push_consumer (this,
+      suppliers_->connect_push_consumer (this->consumer_,
                                          dependencies.get_ConsumerQOS (),
                                          ACE_TRY_ENV);
       ACE_CHECK_ENV;
@@ -326,7 +362,7 @@ Latency_Supplier::start_generating_events (void)
 
 void 
 Latency_Supplier::push (const RtecEventComm::EventSet &events,
-			CORBA::Environment &)
+			CORBA::Environment & _env)
 {
   if (!master_ && events[0].type_ == ACE_ES_EVENT_SHUTDOWN)
     this->shutdown ();
@@ -687,7 +723,6 @@ main (int argc, char *argv [])
 	  ACE_NEW_RETURN (supplier [i],
 			  Latency_Supplier (total_messages, measure_jitter),
 			  -1);
-	  RtecEventComm::PushSupplier::_duplicate (supplier[i]);
 	  char supplier_name [BUFSIZ];
 	  sprintf (supplier_name, "supplier-%d", i+1);
 	  if (supplier [i]->open_supplier (ec,
@@ -730,7 +765,7 @@ main (int argc, char *argv [])
       for (i = 0; i < suppliers; ++i)
 	{
 	  supplier [i]->print_stats ();
-	  CORBA::release (supplier [i]);
+	  delete supplier[i];
 	  ACE_CHECK_ENV;
 	}
       delete [] supplier;
