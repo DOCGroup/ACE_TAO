@@ -21,6 +21,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"  // for ACE_ASSERT
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace, Malloc_Allocator, "$Id$")
 
