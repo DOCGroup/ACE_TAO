@@ -4,6 +4,9 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBAC.h"
 
+#include "ace/Service_Config.h"
+#include "tao/Strategies/TAO_Strategies_Internal.h"
+
 #if (TAO_HAS_RT_CORBA == 1)
 
 const char *ior1 = "file://test1.ior";
