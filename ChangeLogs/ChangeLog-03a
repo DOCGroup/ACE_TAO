@@ -11,6 +11,11 @@ Tue May 23 17:59:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 	  Changes to pace subdirectory will be noted in
 	  ACE_wrappers/pace/ChangeLog.
 
+Tue May 23 17:55:17 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.cpp (log): For %t on MVS, use the old ACE 5.0 cast.
+          The pthread_t is a struct on MVS.
+
 Tue May 23 16:37:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace directories added to ACE_wrappers:
