@@ -1,3 +1,8 @@
+Sun May 18 07:25:11 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Threads/tss2.cpp: added ACE_TSS<TSS_Data> template
+	  specialization.
+
 Sat May 17 23:24:34 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/OS.i (sigismember): Corrected the code when
@@ -324,7 +329,7 @@ Thu May 15 17:40:06 1997    <irfan@TWOSTEP>
 
 Thu May 15 08:54:53 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* Makefile: '(release, cleanrelease): use -prune option to "find"
+	* Makefile (release, cleanrelease): use -prune option to "find"
 	  instead of filtering its output.  Thanks to Chris Cleeland for
 	  suggesting this.
 
