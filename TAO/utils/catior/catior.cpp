@@ -657,10 +657,10 @@ cat_profile_helper (TAO_InputCDR& stream,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "IIOP Version:\t%d.%d\n",
+              "%s Version:\t%d.%d\n",
+              protocol,
               iiop_version_major,
-              iiop_version_minor,
-              protocol));
+              iiop_version_minor));
 
   // Get host and port.
   CORBA::UShort port_number;
