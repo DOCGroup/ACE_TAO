@@ -2,7 +2,7 @@ Tue Jun 20 12:57:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd-pthread.h: Undefined ACE_LACKS_SETSCHED if we
           are compiling on R4.0 or above.  Thanks to Sergey A. Osokin
-          <osa@freebsd.org.ru> for reporitng this.
+          <osa@freebsd.org.ru> for reporitng this for Nick Logvinov.
 
 Tue Jun 20 07:37:18 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
