@@ -4,6 +4,7 @@
 
 // Exception macros
 #include "poa_macros.h"
+#include "POA_Guard.h"
 #include "tao/Environment.h"
 
 ACE_INLINE CORBA::Boolean

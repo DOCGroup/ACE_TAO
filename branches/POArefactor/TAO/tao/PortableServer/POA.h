@@ -1053,25 +1053,6 @@ protected:
   Key_To_Object_Params key_to_object_params_;
 };
 
-
-/**
- * @class TAO_POA_Guard
- *
- * @brief TAO_POA_Guard
- *
- * TAO_POA_Guard
- */
-class TAO_PortableServer_Export TAO_POA_Guard
-{
-public:
-  TAO_POA_Guard (TAO_POA &poa
-                 ACE_ENV_ARG_DECL,
-                 int check_for_destruction = 1);
-
-private:
-  ACE_Guard<ACE_Lock> guard_;
-};
-
 /**
  * @class TAO_POA_Static_Resources
  *
