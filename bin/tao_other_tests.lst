@@ -135,3 +135,4 @@ TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABL
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC !ST
 TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING
 TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING
+TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl
