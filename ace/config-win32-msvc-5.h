@@ -5,9 +5,9 @@
  *
  *  $Id$
  *
- *  @brief  Microsoft Visual C++ 5.0 configuration file. 
+ *  @brief  Microsoft Visual C++ 5.0 configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ version 5. 
+ *  This file is the ACE configuration file for Microsoft Visual C++ version 5.
  *
  *  @note   Do not include this file directly, include config-win32.h instead.
  *
@@ -55,7 +55,7 @@
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
 // VC5 doesn't support operator placement delete
-# if (_MSC_VER < 1200)  
+# if (_MSC_VER < 1200)
 #  define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* _MSC_VER < 1200 */
 
@@ -85,10 +85,6 @@
 
 # define ACE_LACKS_MODE_MASKS
 # define ACE_LACKS_STRRECVFD
-
-# if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_LLSEEK
-# endif /* ACE_HAS_WINCE */
 
 // Compiler/platform has correctly prototyped header files.
 # define ACE_HAS_CPLUSPLUS_HEADERS
