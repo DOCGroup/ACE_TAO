@@ -106,20 +106,27 @@ General Design Ideas/Decision
             compilers and IfR. This way at some stage if we will need
             to make one of the compilers IfR-integrated (import keyword?)
             then it will be a much easier task than it's now. This internal
-            representation may also be usable in typecodes (@@ boris:
-            not clear to me). 
+            representation may also be usable in typecodes 
+
+            @@ boris: not clear to me. 
             
             @@ jeff: A typecode is like a piece of the Syntax Tree with these
-            exceptions -
+               exceptions -
 
                 (1) There is no typecode for an IDL module.
 
                 (2) Typecodes for interfaces and valuetypes lack some of the
                     information in the corresponding Syntax Tree nodes.
 
-            With these exceptions in mind, a typecode can be composed and
-            traversed in the same manner as a Syntax Tree, perhaps with
-            different classes than used to compose the ST itself.
+               With these exceptions in mind, a typecode can be composed and
+               traversed in the same manner as a Syntax Tree, perhaps with
+               different classes than used to compose the ST itself.
+
+            @@ boris: Ok, let me see if I got it right. So when typecode
+               is kept in parsed state (as opposite to binary) (btw, when 
+               does it happen?) it makes sense to apply the same techniques
+               (if in fact not the same ST nodes and traversal mechs) as
+               for XIDL compilation.
 
 [IDEA]: We should be consistent with the way external compilers that we call
         report errors. For now those are CPP and IDLC.
@@ -129,11 +136,21 @@ Option Parser
 
 [IDEA]: Use Spirit parser framework to generate option parser.
 
-[IDEA]: Option Database is probably a singleton. (@@ jeff: This is a good
-        idea, especially when passing some of the options to a preprocessor
-        or spawned IDL compier. But I think we will still need 'state'
-        classes for the front and back ends (to hold values set by command
-        line options and default values) so we can keep them decoupled). 
+[IDEA]: Option Database is probably a singleton. 
+
+        @@ jeff: This is a good idea, especially when passing some of the 
+           options to a preprocessor or spawned IDL compier. But I think we 
+           will still need 'state' classes for the front and back ends (to 
+           hold values set by command line options and default values) so 
+           we can keep them decoupled).
+
+
+        @@ boris: I understand what you mean. Though I think we will be 
+           able to do with one 'runtime database'. Each 'compiler module'
+           will be able to populate its 'namespace' with (1) default
+           values, (2) with module-specific options and (3) arbitrary 
+           runtime information. I will present prototopy design shortly.
+           
 
 [IDEA]: It seems we will have to execute at least two external programs
         as part of CIDLC execution: CPP and IDLC. Why wouldn't we follow
@@ -169,9 +186,10 @@ C Preprocessor Interfacing
 IDL Compiler Interfacing
 ------------------------
 
-[IDEA]: Same as for CPP: Can we use pipes? (@@ jeff: check with Nanbor on
-        this. I think there may be CCM/CIAO use cases where we need the
-        intermediate IDL file).
+[IDEA]: Same as for CPP: Can we use pipes? 
+
+        @@ jeff: check with Nanbor on this. I think there may be CCM/CIAO 
+           use cases where we need the intermediate IDL file.
 
 [IDEA]: Will need a mechanism to pass options to IDLC from CIDLC command
         line (would be nice to have this ability for CPP as well).
@@ -205,9 +223,14 @@ Parser
         functor's data member) on which Syntax Tree they are working.
         Bad side: semantic rules are defined during grammar construction.
         However we can use a modification of the factory method pattern.
-        Better ideas? (@@ jeff: I think ST node creation with a factory
-        is a good idea - another ST implementation could be plugged in,
-        as long as it uses a factory with the same method names).
+        Better ideas? 
+
+        @@ jeff: I think ST node creation with a factory
+           is a good idea - another ST implementation could be plugged in,
+           as long as it uses a factory with the same method names.
+
+        @@ boris: Right. In fact it's our 'improved' way of handling 'BE' 
+           usecases.
 
 
 
@@ -230,10 +253,11 @@ Syntax Tree
         use, using an n-squared algorithm. We could at least build them only 
         once for each interface/valuetype, perhaps even with a better 
         algorithm. It could be integrated into inheritance/supports error 
-        checking at node creation time, which also be streamlined. @@ boris:
-        Well, I think we should design our Syntax Tree so that every 
-        interface/valuetype has a list (flat?) of interfaces it inherits
-        from/supports.
+        checking at node creation time, which also be streamlined. 
+
+        @@ boris: Well, I think we should design our Syntax Tree so that 
+           every interface/valuetype has a list (flat?) of interfaces it 
+           inherits from/supports.
 
 [IDEA]: We will probably want to use factories to instantiate Syntax Tree
         Nodes (STN). This will allow a concrete code generators to alter (i.e.
@@ -254,11 +278,12 @@ Common Syntax Tree traversal Design Ideas/Decision
 
        - Some traversal agents can change Syntax Tree so that it will be
          unusable by some later traversal agents. So maybe the more 
-         generic approach would be to produce new Syntax Tree? (@@ jeff:
-         Yes, say for example that we were using a common ST representation
-         for the IDL compiler and the IFR. We would not want to send the
-         extra AMI nodes to the IFR so in that case simple modification
-         of the ST might not be best).
+         generic approach would be to produce new Syntax Tree? 
+
+         @@ jeff: Yes, say for example that we were using a common ST 
+            representation for the IDL compiler and the IFR. We would not 
+            want to send the extra AMI nodes to the IFR so in that case 
+            simple modification of the ST might not be best.
 
 [IDEA] Need a generic name for "Syntax Tree Traversal Agents". What about
        "Syntax Tree Traverser"?
@@ -304,20 +329,39 @@ Code Generators
        and "Skeleton Thunk Generator" would be a concrete code generators.
 
 [IDEA] Expression evaluation: currently the result (not the expression)
-       is generated, which may not always be necessary (@@ boris: I would
-       say may not always be correct). However, for purposes of type coercion 
-       and other checking (such as for positive integer values in string, 
-       array and sequence bounds) evaluation must be done internally 
-       (@@ boris: note that evaluation is needed to only verify that things
-       are correct. You don't have to (shouldn't?) substitute original (const)
-       expression with what's been evaluated). (@@ jeff: it may be necessary
-       in some cases to append 'f' or 'U' to a generated number to avoid a C++
-       compiler warning).
+       is generated, which may not always be necessary.
+
+       @@ boris: I would say may not always be correct
+
+
+       However, for purposes of type coercion and other checking (such as 
+       for positive integer values in string, array and sequence bounds) 
+       evaluation must be done internally.
+       
+       @@ boris: note that evaluation is needed to only verify that things
+          are correct. You don't have to (shouldn't?) substitute original 
+          (const) expression with what's been evaluated.
+
+
+       @@ jeff: it may be necessary in some cases to append 'f' or 'U' to 
+          a generated number to avoid a C++ compiler warning.
+
+       @@ boris: shouldn't this 'f' and 'U' be in IDL as well?
 
 [IDEA] I wonder if it's a good idea to use a separate pass over syntax tree
        for semantic checking (e.g. type coercion, positive values for 
-       sequence bounds). (@@ jeff: This may hurt performance a little - more
-       lookups - but it will improve error reporting).
+       sequence bounds). 
+
+       @@ jeff: This may hurt performance a little - more lookups - but it 
+          will improve error reporting.
+      
+       @@ boris:  As we dicussed earlier this pass could be used to do
+          'semantic expansions' (e.g. calculate a flat list of interface's
+          children, etc). Also I don't think we should worry about speed
+          very much here (of course I don't say we have to be stupid ;-)
+          In fact if we are trading better design vs faster compilation
+          at this stage we should always go for better design.
+      
 
 Executor Mapping Generator
 --------------------------
@@ -387,8 +431,9 @@ rather current IDLC design defects:
   be a complete separation of concerns - BE node classes should contain only 
   info related to code generation, and FE node classes should contain only 
   info related to the AST representation. As the front end becomes more 
-  modular and reusable, this will become more and more necessary. (@@ boris: 
-  It doesn't seem we will need two separate and parallel hierarhies)
+  modular and reusable, this will become more and more necessary. 
+
+  @@ boris: It doesn't seem we will need two separate and parallel hierarhies.
 
 * Undefined fwd decls: now that we have dropped support for platforms without
   namespaces, the code generated for fwd declarations not defined in the same 
