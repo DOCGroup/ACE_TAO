@@ -3408,6 +3408,8 @@ ACE::is_sock_error (int error)
     case WSAEISCONN:
       return true;
     }
+#else
+  ACE_UNUSED_ARG (error);
 #endif /* ACE_WIN32 */
   return false;
 }
