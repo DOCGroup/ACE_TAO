@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
 			  1);
 
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
+	PortableServer::POA::_narrow (poa_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
