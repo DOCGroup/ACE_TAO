@@ -39,6 +39,7 @@ class TAO_ORBSVCS_Export ACE_RT_Info : public RtecScheduler::RT_Info
   //   helper to implement those without loosing the performance on
   //   IDL.
 public:
+
   ACE_RT_Info (const char* entry_point,
                RtecScheduler::Time worst_time,
                RtecScheduler::Time typical_time,
@@ -47,11 +48,16 @@ public:
                RtecScheduler::Importance_t importance,
                RtecScheduler::Quantum_t quantum,
                CORBA::Long threads);
+  // Construct a helper class instance from values for
+  // the fields of the IDL struct it wraps.
 
   ACE_RT_Info (const RtecScheduler::RT_Info& rt_info);
+  // Construct a helper class instance from the IDL struct it wraps.
 
   int add_dependency(RtecScheduler::handle_t dep,
                      int number_of_calls = 1);
+  // Add a dependency of one RT_Info upon another.
+
 };
 
 #if defined (__ACE_INLINE__)
