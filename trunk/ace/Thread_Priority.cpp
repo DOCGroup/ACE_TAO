@@ -17,16 +17,12 @@
 // ============================================================================
 
 #include "ace/ACE.h"
-
-#if defined (ACE_HAS_THREADS)
-
 #include "ace/Thread_Priority.h"
 #include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Priority.i"
 #endif /* __ACE_INLINE__ */
-
 
 #if defined (ACE_HAS_STHREADS)
 #include <sys/priocntl.h>
@@ -44,47 +40,44 @@
  */
 
 long
-ACE_Thread_Priority::normalize ()
+ACE_Thread_Priority::normalize (void)
 {
   // Get the priority class ID and attributes.
   pcinfo_t pcinfo;
   ACE_OS::strcpy (pcinfo.pc_clname,
-                  priority_class_ == ACE_HIGH_PRIORITY_CLASS ||
-                  priority_class_ == ACE_REALTIME_PRIORITY_CLASS
-                                      ?  "RT"
-                                      :  "TS");
+                  priority_class_ == ACE_HIGH_PRIORITY_CLASS 
+		  || priority_class_ == ACE_REALTIME_PRIORITY_CLASS
+		  ?  "RT"
+		  :  "TS");
 
-  if (::priocntl (P_ALL /* ignored */, P_MYID /* ignored */, PC_GETCID,
-                  (char *) &pcinfo) < 0)
-    {
-      return -1;
-    }
+  if (::priocntl (P_ALL /* ignored */, 
+		  P_MYID /* ignored */, 
+		  PC_GETCID,
+                  (char *) &pcinfo) == -1)
+    return -1;
 
-  // OK, now we've got the class ID in pcinfo.pc_cid.
-  // In addition, the maximum configured real-time priority is in
-  // ((rtinfo_t *) pcinfo.pc_clinfo)->rt_maxpri.
+  // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
+  // the maximum configured real-time priority is in ((rtinfo_t *)
+  // pcinfo.pc_clinfo)->rt_maxpri.
 
   os_priority_class_ = pcinfo.pc_cid;
 
-  if (ACE_PRIORITY_MIN <= default_thread_priority_  &&
-      default_thread_priority_ <= ACE_PRIORITY_MAX)
+  if (ACE_PRIORITY_MIN <= default_thread_priority_  
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
     {
       os_default_thread_priority_ =
-        priority_class_ == ACE_NORMAL_PRIORITY_CLASS ||
-        priority_class_ == ACE_REALTIME_PRIORITY_CLASS
-          ?  default_thread_priority_ + 7
-          :  default_thread_priority_;
+        priority_class_ == ACE_NORMAL_PRIORITY_CLASS 
+	|| priority_class_ == ACE_REALTIME_PRIORITY_CLASS
+	?  default_thread_priority_ + 7
+	:  default_thread_priority_;
     }
   else
-    {
-      // The user specified a thread priority outside the enum range, so
-      // use it without modification.
-      os_default_thread_priority_ = default_thread_priority_;
-    }
+    // The user specified a thread priority outside the enum range, so
+    // use it without modification.
+    os_default_thread_priority_ = default_thread_priority_;
 
   return 0;
 }
-
 
 #elif defined (ACE_WIN32)
 
@@ -100,7 +93,7 @@ ACE_Thread_Priority::normalize ()
  */
 
 long
-ACE_Thread_Priority::normalize ()
+ACE_Thread_Priority::normalize (void)
 {
   switch (priority_class)
   {
@@ -118,8 +111,8 @@ ACE_Thread_Priority::normalize ()
       break;
   }
 
-  if (ACE_PRIORITY_MIN <= default_thread_priority_  &&
-      default_thread_priority_ <= ACE_PRIORITY_MAX)
+  if (ACE_PRIORITY_MIN <= default_thread_priority_  
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
     {
       switch (default_thread_priority_)
       {
@@ -147,16 +140,13 @@ ACE_Thread_Priority::normalize ()
       }
     }
   else
-    {
-      // The user specified a thread priority outside the enum range, so
-      // use it without modification.  The user had better know what they're
-      // doing on Win32 platforms.
-      os_default_thread_priority_ = default_thread_priority_;
-    }
+    // The user specified a thread priority outside the enum range, so
+    // use it without modification.  The user had better know what they're
+    // doing on Win32 platforms.
+    os_default_thread_priority_ = default_thread_priority_;
 
   return 0;
 }
-
 
 #elif defined (VXWORKS)
 
@@ -171,39 +161,37 @@ ACE_Thread_Priority::normalize ()
  */
 
 long
-ACE_Thread_Priority::normalize ()
+ACE_Thread_Priority::normalize (void)
 {
   os_priority_class_ = -1;  /* unused on this platform */
 
-  if (ACE_PRIORITY_MIN <= default_thread_priority_  &&
-      default_thread_priority_ <= ACE_PRIORITY_MAX)
+  if (ACE_PRIORITY_MIN <= default_thread_priority_  
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
     {
       switch (priority_class)
       {
         case ACE_LOW_PRIORITY_CLASS :
-          os_default_thread_priority_ = ACE_PRIORITY_MAX - 
-                                        default_thread_priority_ + 21;
+          os_default_thread_priority_ = 
+	    ACE_PRIORITY_MAX - default_thread_priority_ + 21;
           break;
         case ACE_NORMAL_PRIORITY_CLASS :
-          os_default_thread_priority_ = ACE_PRIORITY_MAX - 
-                                        default_thread_priority_ + 14;
+          os_default_thread_priority_ = 
+	    ACE_PRIORITY_MAX - default_thread_priority_ + 14;
           break;
         case ACE_HIGH_PRIORITY_CLASS :
-          os_default_thread_priority_ = ACE_PRIORITY_MAX - 
-                                        default_thread_priority_ + 7;
+          os_default_thread_priority_ = 
+	    ACE_PRIORITY_MAX - default_thread_priority_ + 7;
           break;
         case ACE_REALTIME_PRIORITY_CLASS :
-          os_default_thread_priority_ = ACE_PRIORITY_MAX - 
-                                        default_thread_priority_;
+          os_default_thread_priority_ = 
+	    ACE_PRIORITY_MAX - default_thread_priority_;
           break;
       }
     }
   else
-    {
-      // The user specified a thread priority outside the enum range, so
-      // use it without modification.
-      os_default_thread_priority_ = default_thread_priority_;
-    }
+    // The user specified a thread priority outside the enum range, so
+    // use it without modification.
+    os_default_thread_priority_ = default_thread_priority_;
 
   return 0;
 }
@@ -223,12 +211,12 @@ ACE_Thread_Priority::normalize ()
 
 // assumes that priority increases with increasing ACE_pri_t value
 long
-ACE_Thread_Priority::normalize ()
+ACE_Thread_Priority::normalize (void)
 {
   os_priority_class_ = -1;  /* unused on this platform */
 
-  if (ACE_PRIORITY_MIN <= default_thread_priority_  &&
-      default_thread_priority_ <= ACE_PRIORITY_MAX)
+  if (ACE_PRIORITY_MIN <= default_thread_priority_ 
+      && default_thread_priority_ <= ACE_PRIORITY_MAX)
     {
       switch (priority_class)
       {
@@ -247,20 +235,12 @@ ACE_Thread_Priority::normalize ()
       }
     }
   else
-    {
-      // The user specified a thread priority outside the enum range, so
-      // use it without modification.
-      os_default_thread_priority_ = default_thread_priority_;
-    }
+    // The user specified a thread priority outside the enum range, so
+    // use it without modification.
+    os_default_thread_priority_ = default_thread_priority_;
 
   return 0;
 }
 
-
 #endif /* ACE_HAS_STHREADS */
 
-
-#endif /* ACE_HAS_THREADS */
-
-
-// EOF
