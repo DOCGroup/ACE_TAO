@@ -50,7 +50,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, char *msg)
+check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,7 +63,7 @@ check_for_nil (CORBA::Object_ptr obj, char *msg)
 
 void
 exception_test (Test_ptr server,
-                char *msg,
+                const char *msg,
                 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
