@@ -9511,8 +9511,8 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, 0, result) ;
   if (result != 0)
-    *res = *result ;
-  return result ;
+    *res = *result;
+  return *res;
 #else
   // @@ Same as ACE_OS::gmtime (), you need to implement it
   //    yourself.
