@@ -43,6 +43,8 @@
 // parameter.
 #define ACE_HAS_BROKEN_SETRLIMIT
 
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
 
