@@ -32,7 +32,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
 				  int close_on_delete,
 				  ACE_Allocator *alloc)
-  : stream_ (::fdopen (handle, "r")),
+  : stream_ (ACE_OS::fdopen (handle, "r")),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
