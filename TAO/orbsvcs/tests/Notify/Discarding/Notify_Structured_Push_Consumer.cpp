@@ -6,7 +6,7 @@
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             const char* name,
                                             CORBA::Short policy,
-                                            unsigned int expected,
+                                            CORBA::Long expected,
                                             CORBA::Long max_events_per_consumer,
                                             CORBA::Boolean& done)
  : name_ (name),
