@@ -1,3 +1,9 @@
+Mon Feb 18 08:07:59 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/String_Base.{h,i}: Added two new overloaded operators that
+	  work on characters.  Thanks to Martin Krumpolec
+ 	  <krumpolec@asset.sk> for contributing these patches.
+
 Mon Feb 18 13:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/config-all.h:

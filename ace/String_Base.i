@@ -356,3 +356,21 @@ operator+ (const ACE_String_Base<CHAR> &s, const CHAR *t)
   temp += t;
   return temp;
 }
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
+                                  const CHAR c)
+{
+  ACE_String_Base<CHAR> temp (t);
+  temp += c;
+  return temp;
+}
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base<CHAR> operator + (const CHAR c,
+                                  const ACE_String_Base<CHAR> &t)
+{
+  ACE_String_Base<CHAR> temp (c);
+  temp += t;
+  return temp;
+}

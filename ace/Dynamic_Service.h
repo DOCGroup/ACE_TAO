@@ -15,8 +15,6 @@
 #define ACE_DYNAMIC_SERVICE_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-
 #include "ace/Dynamic_Service_Base.h"
 
 class ACE_Service_Object;

@@ -19,6 +19,7 @@ ACE_RCSID(Notify, Subscribe, "$Id$")
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
 
 Subscribe::Subscribe (void)
+  : done_ (0)
 {
   // No-Op.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
