@@ -1,3 +1,8 @@
+Thu Oct 30 11:57:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/tao_orb_tests.lst: Added a couple of Portable_Interceptor
+	  tests to the daily builds.
+
 Thu Oct 30 09:33:15 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
