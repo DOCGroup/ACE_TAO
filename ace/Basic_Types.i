@@ -252,6 +252,14 @@ ACE_U_LongLong::ull_mult (ACE_U_LongLong a, ACE_UINT32 b, ACE_UINT32 *carry)
   return accum;
 }
 
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator* (const ACE_UINT32 n)
+{
+  ACE_UINT32 carry;  // will throw the carry away
+
+  return ull_mult (*this, n, &carry);
+}
+
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator*= (const ACE_UINT32 n)
 {
@@ -345,6 +353,12 @@ ACE_INLINE ACE_UINT32
 ACE_U_LongLong::operator& (const ACE_INT32 n) const
 {
   return lo_ & n;
+}
+
+ACE_INLINE ACE_U_LongLong
+ACE_U_LongLong::operator* (const ACE_INT32 n)
+{
+  return operator* ((ACE_UINT32) n);
 }
 
 ACE_INLINE ACE_U_LongLong &
