@@ -1,3 +1,8 @@
+Wed Feb 18 18:12:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
+	  Added missing include to fix BCB6 compile problem.
+
 Wed Feb 18 18:08:34 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Latency/Collocation/Client_Task.cpp:
