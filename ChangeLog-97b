@@ -1,3 +1,8 @@
+Thu Oct 02 10:46:18 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Malloc.h: added some comments on rationale and use of
+	  ACE_MALLOC_ALIGN.
+
 Wed Oct 01 19:08:26 1997  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/rules.bin.GNU: correctly builds programs
