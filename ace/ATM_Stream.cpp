@@ -25,7 +25,7 @@ ACE_ATM_Stream::dump (void) const
 char*
 ACE_ATM_Stream::get_peer_name (void) const
 {
-  ACE_TRACE ("ACE_ATM_Stream::get_peer_name");
+  ACE_TRACE ("ACE_ATM_Stream::dump");
 #if defined (ACE_HAS_FORE_ATM_XTI)
 //   // Use t_getprotaddr for XTI/ATM
 //   struct t_bind *localaddr = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
@@ -47,8 +47,7 @@ ACE_ATM_Stream::get_peer_name (void) const
 //                   T_BIND);
 //   return (connected_name);
 
-#error "This doesn't seem to work. May need to jimmy-rig something with the"
-#error "/etc/xti_hosts file - Ugh!"
+
   ACE_ATM_Addr sa;
   struct netbuf name;
   name.maxlen = sa.get_size ();
@@ -72,90 +71,6 @@ ACE_ATM_Stream::get_peer_name (void) const
   return ??
 #else
   return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
-}
-
-int
-ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
-                             ACE_UINT16 &vci) const
-{
-  ACE_TRACE ("ACE_ATM_Stream::get_vpi_vci");
-#if defined (ACE_HAS_FORE_ATM_XTI)
-  struct t_atm_conn_prop conn_prop;
-  char* connect_opts = (char *)&conn_prop;
-  int opt_size = sizeof(t_atm_conn_prop);
-  struct t_info info;
-  struct t_optmgmt opt_req, opt_ret;
-
-  if (ACE_OS::t_getinfo(stream_.get_handle(),
-                        &info) < 0)
-    {
-      ACE_OS::t_error("t_getinfo");
-      return -1;
-    }
-
-  char *buf_req = (char *) ACE_OS::malloc(info.options);
-  if (buf_req == (char *) NULL)
-    {
-      ACE_OS::fprintf(stderr,
-                      "Unable to allocate %ld bytes for options\n",
-                      info.options);
-      return -1;
-    }
-
-  char *buf_ret = (char *) ACE_OS::malloc(info.options);
-  if (buf_ret == (char *) NULL)
-    {
-      ACE_OS::fprintf(stderr,
-                      "Unable to allocate %ld bytes for options\n",
-                      info.options);
-      return -1;
-    }
-
-  ACE_OS::memset(&opt_req, 0, sizeof(opt_req));
-  ACE_OS::memset(&opt_ret, 0, sizeof(opt_ret));
-
-  struct t_opthdr *popt = (struct t_opthdr *) buf_req;
-  struct t_opthdr *popt_ret = (struct t_opthdr *) buf_ret;
-
-  popt->len= sizeof(struct t_opthdr) + opt_size;
-
-  // We are only concerned with SVCs so no other check or values are needed
-  //  here.
-  popt->level = T_ATM_SIGNALING;
-  popt->name = T_ATM_CONN_PROP;
-  popt->status = 0;
-
-  opt_req.opt.len = popt->len;
-  opt_req.opt.buf = (char *)popt;
-  opt_req.flags = T_CURRENT;
-
-  popt = T_OPT_NEXTHDR(buf_req,
-                       info.options,
-                       popt);
-  opt_ret.opt.maxlen  = info.options;
-  opt_ret.opt.buf = (char *)popt_ret;
-
-  if (ACE_OS::t_optmgmt(stream_.get_handle(),
-                        &opt_req,
-                        &opt_ret) < 0) {
-    ACE_OS::t_error("t_optmgmt");
-    return -1;
-  }
-
-  ACE_OS::memcpy(connect_opts,
-                 (char *)popt_ret + sizeof(struct t_opthdr),
-                 opt_size);
-
-  ACE_OS::free(buf_ret);
-  ACE_OS::free(buf_req);
-
-  vpi = conn_prop.vpi;
-  vci = conn_prop.vci;
-  return (0);
-#elif defined (ACE_HAS_FORE_ATM_WS2)
-#else
-  return (-1);
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 

@@ -78,12 +78,6 @@ main (int argc, char *argv[])
                   "client %s connected\n",
                   addr.addr_to_string ()));
 
-      ACE_UINT16 vpi, vci;
-      new_stream.get_vpi_vci(vpi, vci);
-      ACE_DEBUG ((LM_DEBUG,
-                  "connected to VPI %d VCI %d\n",
-                  vpi, vci));
-
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected to host\n",
                   new_stream.get_peer_name ()));

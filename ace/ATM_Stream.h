@@ -59,18 +59,10 @@ public:
   char* get_peer_name (void) const;
   // Get the name of the connected host.
 
-  int get_vpi_vci (ACE_UINT16 &vpi,
-                   ACE_UINT16 &vci) const;
-  // Get the VPI and VCI of the stream.
-
-  ssize_t recv (void *buf,
-                size_t n,
-                int *flags = 0) const;
+  ssize_t recv (void *buf, size_t n, int *flags = 0) const;
   // Recv an n byte buffer from the connected transport mechanism
 
-  ssize_t send_n (const void *buf,
-                  size_t n,
-                  int flags) const;
+  ssize_t send_n (const void *buf, size_t n, int flags) const;
   // Send exactly n bytes to the connected transport mechanism
 
   // = Meta-type info
