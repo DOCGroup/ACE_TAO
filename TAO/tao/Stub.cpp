@@ -500,7 +500,12 @@ TAO_Stub::get_policy (CORBA::PolicyType type
     }
 
   if (CORBA::is_nil (result.in ()))
-    result = this->orb_core_->get_policy_including_current (type);
+    {
+      result =
+        this->orb_core_->get_policy_including_current (type
+                                                       ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }

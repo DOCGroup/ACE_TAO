@@ -32,7 +32,7 @@ Thu Sep 30 16:53:48 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Gave the set_dscp_codepoint() method a default no-op
 	  implementation.  This way local protocols will not have to
-	  bother overwritting this method.
+	  bother overwriting this method.
 
 	* tao/Strategies/UIOP_Connection_Handler.{h,cpp}: 
 	* tao/Strategies/SHMIOP_Connection_Handler.{h,cpp}: 
