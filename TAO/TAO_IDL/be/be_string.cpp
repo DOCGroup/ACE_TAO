@@ -158,9 +158,9 @@ be_string::tc_encap_len (void)
 }
 
 int be_string::write_as_return (TAO_OutStream *stream,
-				be_type *type)
+				be_type * /* type */)
 {
-  *stream << type->name () << "_slice *";
+  *stream << "char* ";
   return 0;
 }
 

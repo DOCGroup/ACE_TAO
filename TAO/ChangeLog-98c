@@ -1,3 +1,23 @@
+Sat Jan 17 19:27:12 1998    <coryan@MILONGA>
+
+	* tao/servant_base.h: 
+	  Added the new _is_a() method on TAO_ServantBase.
+
+	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_string.cpp: 
+	* TAO_IDL/be/be_visitor_args.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	* TAO_IDL/be/be_visitor_sequence.cpp: 
+	* TAO_IDL/be_include/be_visitor.h: 
+	* TAO_IDL/be_include/be_visitor_args.h: 
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	  Added a new _is_a to the generated servants, also implemented
+	  the _is_a method on the collocated classes by invoking that
+	  _is_a().
+	  Added support for attributes in collocated classes, thanks to
+	  Irfan for noticing this.
+
 Sat Jan 17 15:44:43 1998    <coryan@MILONGA>
 
 	* tao/corba.h: 

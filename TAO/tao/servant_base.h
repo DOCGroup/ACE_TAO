@@ -19,6 +19,10 @@ public:
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
+  virtual CORBA::Boolean _is_a (const char* logical_type_id,
+				CORBA::Environment &_tao_environment);
+  // Local implementation of the CORBA::Object::_is_a method.
+
   virtual void dispatch (CORBA::ServerRequest &_tao_request,
 			 void *_tao_context,
 			 CORBA::Environment &_tao_environment);

@@ -74,7 +74,12 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
       *os << "POA_";
     }
   *os << node->local_name ()
-      << "_ptr _get_servant (void) const;\n";
+      << "_ptr _get_servant (void) const;" << be_nl;
+  
+  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "const char *logical_type_id," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ");\n" << be_uidt;
 
   if (node->nmembers () > 0)
     {
@@ -88,9 +93,7 @@ int be_visitor_collocated_sh::visit_interface (be_interface *node)
 	  AST_Decl *d = si->item ();
 	  si->next ();
 	  be_decl *bd = be_decl::narrow_from_decl (d);
-	  if (d->imported ()
-	      || bd == 0
-	      || bd->node_type () != AST_Decl::NT_op)
+	  if (d->imported () || bd == 0)
 	    {
 	      continue;
 	    }
@@ -153,6 +156,47 @@ int be_visitor_collocated_sh::visit_operation (be_operation *node)
     }
   *sh << ";\n";
 
+  return 0;
+}
+
+int be_visitor_collocated_sh::visit_attribute (be_attribute *node)
+{
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *sh = cg->server_header ();
+  sh->indent (); // start with the current indentation level
+
+  be_type* bt = be_type::narrow_from_decl (node->field_type ());
+
+  // the retrieve method is defined virtual
+  *sh << "virtual ";
+
+  if (bt->write_as_return (sh, bt) == -1)
+    {
+      return -1;
+    }
+
+  *sh << " " << node->local_name () << " (" << be_idt << be_idt_nl
+      << "CORBA::Environment &env" << be_uidt_nl
+      << ");\n" << be_uidt;
+
+  if (!node->readonly ())
+    {
+      sh->indent ();
+      *sh << "virtual void " << node->local_name ()
+	  << " (" << be_idt << be_idt;
+      
+      be_visitor_args_decl vdecl (sh);
+      vdecl.current_type_name (bt->name ());
+      vdecl.argument_direction (AST_Argument::dir_IN);
+      if (bt->accept (&vdecl) == -1)
+	return -1;
+
+
+      *sh << " _tao_value," << be_nl
+	  << "CORBA::Environment &_tao_environment" << be_uidt_nl
+	  << ");\n" << be_uidt;
+    }
   return 0;
 }
 
@@ -230,6 +274,19 @@ int be_visitor_collocated_ss::visit_interface (be_interface *node)
   *ss << "return this->servant_;\n";
   ss->decr_indent ();
   *ss << "}\n\n";
+
+  ss->indent ();
+  *ss << "CORBA::Boolean " << this->current_interface_->full_skel_name ()
+      << "::_is_a (" << be_idt << be_idt_nl
+      << "const char* logical_type_id," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return this->servant_->_is_a (" << be_idt << be_idt_nl
+      << "logical_type_id," << be_nl
+      << "_tao_environment" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}\n\n";
 
   if (node->nmembers () > 0)
     {
@@ -312,6 +369,57 @@ int be_visitor_collocated_ss::visit_operation (be_operation *node)
   ss->decr_indent (0);
   *ss << "}\n\n";
   
+  return 0;
+}
+
+int be_visitor_collocated_ss::visit_attribute (be_attribute *node)
+{
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  TAO_OutStream *ss = cg->server_skeletons ();
+  ss->indent (); // start with the current indentation level
+
+  be_type* bt = be_type::narrow_from_decl (node->field_type ());
+
+  if (bt->write_as_return (ss, bt) == -1)
+    {
+      return -1;
+    }
+
+  *ss << be_nl << this->current_interface_->full_coll_name ()
+      << "::" << node->local_name () << " (" << be_idt << be_idt_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return this->servant_->"
+      << node->local_name () << "(_tao_environment);" << be_uidt_nl
+      << "}\n";
+
+  if (!node->readonly ())
+    {
+      *ss << be_nl 
+	  << "void "
+	  << this->current_interface_->full_coll_name ()
+	  << "::" << node->local_name ()
+	  << " (" << be_idt << be_idt_nl;
+      
+      be_visitor_args_decl vdecl (ss);
+      vdecl.current_type_name (bt->name ());
+      vdecl.argument_direction (AST_Argument::dir_IN);
+      if (bt->accept (&vdecl) == -1)
+	return -1;
+
+      *ss << "_tao_value," << be_nl
+	  << "CORBA::Environment &_tao_environment" << be_uidt_nl
+	  << ")" << be_uidt_nl
+	  << "{" << be_idt_nl
+	  << "this->servant_->" << node->local_name ()
+	  << " (" << be_idt << be_idt_nl
+	  << "_tao_value," << be_nl
+	  << "_tao_environment" << be_uidt_nl
+	  << ");" << be_uidt << be_uidt_nl
+	  << "}\n\n";
+    }
   return 0;
 }
 
