@@ -12,6 +12,8 @@
 #include "ace/Message_Queue_T.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Strategies.h"	// Need ACE_Notification_Strategy
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)
@@ -737,7 +739,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::ACE_Dynamic_Message_Queue (
                                                       size_t hwm,
                                                       size_t lwm,
                                                       ACE_Notification_Strategy *ns)
-  : ACE_Message_Queue (hwm, lwm, ns)
+  : ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns)
   , message_strategy_ (message_strategy)
 {
   // note, the ACE_Dynamic_Message_Queue assumes full responsibility for the
@@ -757,6 +759,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i");
 
   int result = 0;
+  ACE_Time_Value tv(0);
 
   // refresh dynamic priority of the new message
   result = (*priority_eval_func_ptr_) (*new_item, tv);
@@ -770,20 +773,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
   // reorganize the queue according to the new priorities
   this->refresh_queue (current_time);
 
-  // if there is only one message in the pending list,
-  // the pending list will be empty after a *successful*
-  // dequeue operation
-  int empty_pending = (head_ == pending_list_tail_) ? 1 : 0;
-
   // invoke the base class method
-  result = ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (first_item);
-
-  // null out the pending list tail pointer if
-  // the pending list is now empty
-  if ((empty_pending) && (result > 0))
-  {
-    pending_list_tail_ = 0;
-  }
+  result = ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (new_item);
 
   return result;
 }
@@ -820,7 +811,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
   // if there is only one message in the pending list,
   // the pending list will be empty after a *successful*
   // dequeue operation
-  int empty_pending = (head_ == pending_list_tail_) ? 1 : 0;
+  int empty_pending =
+      (ACE_Message_Queue<ACE_SYNCH_USE>::head_ == pending_list_tail_) ? 1 : 0;
 
   // invoke the base class method
   result = ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (first_item);
@@ -844,7 +836,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_priorities (const ACE_Time_Val
 
   // apply the priority update function to all enqueued
   // messages, starting at the head of the queue
-  ACE_Message_Block *temp = head_;
+  ACE_Message_Block *temp = ACE_Message_Queue<ACE_SYNCH_USE>::head_;
   while (temp)
   {
     result = (*priority_eval_func_ptr_) (*temp, tv);
@@ -870,7 +862,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value & 
   // message block is still pointing to it.
   ACE_Message_Block *temp = (pending_list_tail_)
                             ? pending_list_tail_->next ()
-                            : head_;
+                            : ACE_Message_Queue<ACE_SYNCH_USE>::head_;
 
   while (temp)
   {
@@ -886,23 +878,23 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value & 
       }
 
       temp = remove_tail->next ();
-      if (remove_temp->next ())
+      if (remove_tail->next ())
       {
-        remove_temp->next ()->prev (0);
+        remove_tail->next ()->prev (0);
       }
-      else if (remove_temp->prev ())
+      else if (remove_tail->prev ())
       {
-        remove_temp->prev ()->next (0);
+        remove_tail->prev ()->next (0);
       }
       else
       {
-        head_ = 0;
-        tail_ = 0;
+        ACE_Message_Queue<ACE_SYNCH_USE>::head_ = 0;
+        ACE_Message_Queue<ACE_SYNCH_USE>::tail_ = 0;
       }
-      remove_temp->prev (0);
-      remove_temp->next (0);
+      remove_tail->prev (0);
+      remove_tail->next (0);
 
-      temp = remove_temp->next ();
+      temp = remove_tail->next ();
 
     }
     else
