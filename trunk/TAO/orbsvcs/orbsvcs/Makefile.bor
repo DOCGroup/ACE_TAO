@@ -1,11 +1,11 @@
 #
-# Makefile for building the TAO ORB Services libraries
+# Makefile for building	the TAO	ORB Services libraries
 #
 
 MAKEFILES = \
 	Svc_Utils.bor \
 	CosNaming.bor \
-	CosProperty.bor \
+	CosProperty.bor	\
 	CosTrading.bor \
 	RTSched.bor \
 	RTEvent.bor \
@@ -13,6 +13,8 @@ MAKEFILES = \
 	RTSchedEvent.bor \
 	CosEvent.bor \
 	CosNotification.bor \
+	Security.bor \
+	SSLIOP.bor \
 	AV.bor \
 	CosConcurrency.bor \
 	CosLifeCycle.bor \
