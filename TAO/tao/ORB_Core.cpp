@@ -1912,49 +1912,14 @@ TAO_ORB_Core::set_default_policies (void)
       protocols[i].protocol_type = protocol_type;
       protocols[i].orb_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
-
       // @@ Later, we will likely migrate to using RTCORBA protocol
       // policies for configuration of protocols in nonRT use cases.
       // Then, the code below will change to each protocol factory
       // being responsible for creation of its own default protocol
       // properties.
-      switch (protocol_type)
-        {
-        case TAO_TAG_IIOP_PROFILE:
-          {
-            TAO_TCP_Properties *properties;
-            ACE_NEW_RETURN (properties,
-                            TAO_TCP_Properties,
-                            -1);
-            protocols[i].transport_protocol_properties = properties;
-          }
-          break;
-
-        case TAO_TAG_UIOP_PROFILE:
-          {
-            TAO_Unix_Domain_Properties *properties;
-            ACE_NEW_RETURN (properties,
-                            TAO_Unix_Domain_Properties,
-                            -1);
-            protocols[i].transport_protocol_properties = properties;
-          }
-          break;
-
-        case TAO_TAG_SHMEM_PROFILE:
-          {
-            TAO_SMEM_Properties *properties;
-            ACE_NEW_RETURN (properties,
-                            TAO_SMEM_Properties,
-                            -1);
-            protocols[i].transport_protocol_properties = properties;
-          }
-          break;
-
-        default:
-          protocols[i].transport_protocol_properties =
-            RTCORBA::ProtocolProperties::_nil ();
-          break;
-        }
+      protocols[i].transport_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property
+        (protocol_type);
     }
 
   // Set ServerProtocolPolicy.

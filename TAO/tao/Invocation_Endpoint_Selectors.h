@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //   Strategies for selecting profile/endpoint from an IOR for making an
-//   invocation. 
+//   invocation.
 //
 // = AUTHOR
 //   Marina Spivak <marina@cs.wustl.edu>
@@ -45,7 +45,7 @@ class TAO_Export TAO_Endpoint_Selector_Factory
   //
   // = DESCRIPTION
   //   Used by Invocation classes to intialize its endpoint selection
-  //   strategy and state based on the effective policies.  
+  //   strategy and state based on the effective policies.
   //   Endpoint selection strategies are stateless objects - all the
   //   state they need is contained by Invocation in
   //   <Endpoint_Selection_State>.  Thus, rather than allocating an
@@ -53,7 +53,7 @@ class TAO_Export TAO_Endpoint_Selector_Factory
   //   factory simply returns the appropriate one from the
   //   set preallocated in the ORB_Core.  One endpoint selection
   //   strategy object can be used by many invocations concurrently.
-  // 
+  //
 public:
   TAO_Endpoint_Selector_Factory (void);
   // Constructor.
@@ -68,7 +68,7 @@ public:
   // state.
 
 private:
-  
+
   // = Helpers for <get_selector>.
 
 #if (TAO_HAS_RT_CORBA == 1)
@@ -83,12 +83,12 @@ private:
   void init_client_protocol (TAO_GIOP_Invocation *invocation,
                              CORBA::Environment &ACE_TRY_ENV);
   // Initializes RTCORBA::ClientProtocolPolicy in the endpoint
-  // selection state. 
+  // selection state.
 
   void init_bands (TAO_GIOP_Invocation *invocation,
                    CORBA::Environment &ACE_TRY_ENV);
   // Initializes RTCORBA::PriorityBandsPolicy in the endpoint
-  // selection state. 
+  // selection state.
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 };
@@ -100,7 +100,17 @@ private:
 class TAO_Export TAO_Endpoint_Selection_State
 {
   // = TITLE
-  //   
+  //   Per-Invocation state for endpoint selection activities.
+  //
+  // = DESCRIPTION
+  //   Stores effective policy overrides for an Invocation, as well as
+  //   some state about which endpoint was selected (so we know where
+  //   we left off in case we need to try another endpoint during the
+  //   same invocation).  This class is used by
+  //   1) TAO_Endpoint_Selector_Factory to determine which endpoint
+  //   selection strategy is appropriate for the Invocation
+  //   2) Concrete Invocation_Endpoint_Selectors to look up/store
+  //   selection state.
   //
 public:
 
@@ -114,19 +124,19 @@ public:
 
   // = State.
 
-  // RTCORBA policies that affect profile/endpoint selection.
+  // Effective overrides of the RTCORBA policies that affect
+  // profile/endpoint selection.
   TAO_PriorityModelPolicy *priority_model_policy_;
-  // Can be 0.
   TAO_ClientProtocolPolicy *client_protocol_policy_;
-  // Should never be 0 because of ORB default.
   TAO_PrivateConnectionPolicy *private_connection_;
-  // Can be 0.
   TAO_PriorityBandedConnectionPolicy *bands_policy_;
-  // Can be 0.
 
   CORBA::ULong client_protocol_index_;
-  // Index into the RTCORBA::ProtocolList of the client protocol
-  // policy, identifying the protocol we should attempt using next.
+  // Index into the RTCORBA::ProtocolList of the
+  // <client_protocol_policy_>, identifying the protocol we should
+  // attempt using next.
+  // TAO_Client_Priority_Policy_Selector uses this data member to keep
+  // track of the profile index to try next.
 
   int valid_endpoint_found_;
   // Flag indicating whether at least one endpoint satisfying all the
@@ -138,6 +148,9 @@ public:
 
   CORBA::Short min_priority_;
   CORBA::Short max_priority_;
+  // If we need to select endpoint based on a range of priorities,
+  // e.g., as in TAO_Bands_Endpoint_Selector, cache the target range
+  // here.
 
 };
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -147,17 +160,16 @@ public:
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
   // = TITLE
-  //   Defines the Endpoint interface in the Pluggable Protocol
-  //   framework. 
+  //   Defines the interface for policy-based endpoint selection
+  //   strategies.
   //
   // = DESCRIPTION
-  //   Lightweight encapsulation of addressing information for a
-  //   single acceptor endpoint.  In other words, Endpoint represents
-  //   a single point of contact for the server, and is the smallest
-  //   unit of addressing information necessary for a client to connect
-  //   to a server. 
-  //   A Profile contains one or more Endpoints, i.e., knows of
-  //   one or more ways to contact server(s).  
+  //   Selects/reselects server endpoint for an Invocation.  Different
+  //   concrete strategies perform selection based on different
+  //   policies.
+  //   All endpoint selection strategies are stateless objects - any
+  //   necessary state is stored in Invocation's
+  //   <endpoint_selection_state_>.
   //
 public:
   TAO_Invocation_Endpoint_Selector (void);
@@ -169,31 +181,51 @@ public:
   virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
                                 CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ()) = 0;
-  //
-  
+  // Select the endpoint and set <invocation>'s <profile_> and
+  // <endpoint_> data members accordingly.
+
   virtual void next (TAO_GIOP_Invocation *invocation,
                      CORBA::Environment &ACE_TRY_ENV =
                      TAO_default_environment ()) = 0;
-  //
+  // This method must be called when previously selected endpoint
+  // didn't work out, and we want to try another one, i.e., reselect.
+  // This method performs the necessary state updates, so that next
+  // <select_endpoint> call picks a new endpoint.
 
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV = 
+                        CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ()) = 0;
-  //
+  // This method must be called if the invocation attempt on a
+  // selected endpoint resulted in location forward.  This method
+  // performs the necessary state updates, so that next <select_endpoint>
+  // call picks a new endpoint.
 
   virtual void success (TAO_GIOP_Invocation *invocation) = 0;
-  //
+  // Update the state to indicate that the selected endpoint/profile
+  // were used successfully.
 
   virtual void close_connection (TAO_GIOP_Invocation *invocation) = 0;
-  //
+  // Update the state to reflect that the connection being used for
+  // the invocation has been closed by the server.
 };
 
 // ****************************************************************
 
-class TAO_Export TAO_Default_Endpoint_Selector : 
+class TAO_Export TAO_Default_Endpoint_Selector :
   public TAO_Invocation_Endpoint_Selector
 {
+  // = TITLE
+  //   Default strategy for endpoint selection.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when there are no policies set or when
+  //   the only policy set is RTCORBA::PriorityModelPolicy and its
+  //   value is RTCORBA::SERVER_DECLARED.
+  //   The strategy is to try the first endpoint from the first
+  //   profile in the IOR.  If that doesn't work, try the next
+  //   profile, and so on.
+  //
 public:
   TAO_Default_Endpoint_Selector (void);
   // Constructor.
@@ -209,7 +241,7 @@ public:
                      TAO_default_environment ());
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV = 
+                        CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
@@ -219,9 +251,17 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-class TAO_Export TAO_Priority_Endpoint_Selector : 
+class TAO_Export TAO_Priority_Endpoint_Selector :
   public TAO_Default_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints based on the priority of the
+  //   client thread making the invocation.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when RTCORBA::PriorityModelPolicy is
+  //   set and its value is RTCORBA::CLIENT_PROPAGATED.
+  //
 public:
   TAO_Priority_Endpoint_Selector (void);
   // Constructor.
@@ -239,9 +279,16 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Bands_Endpoint_Selector : 
+class TAO_Export TAO_Bands_Endpoint_Selector :
   public TAO_Default_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints based on the priority range.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when
+  //   RTCORBA::PriorityBandedConnectionPolicy is set.
+  //
 public:
   TAO_Bands_Endpoint_Selector (void);
   // Constructor.
@@ -256,9 +303,17 @@ public:
 
 // ****************************************************************
 
-class TAO_Export TAO_Protocol_Endpoint_Selector : 
+class TAO_Export TAO_Protocol_Endpoint_Selector :
   public TAO_Invocation_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints based on protocols.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when only RTCORBA::ClientProtocolPolicy is
+  //   set or RTCORBA::ClientProtocolPolicy plus
+  //   RTCORBA::SERVER_DECLARED priority model.
+  //
 public:
   TAO_Protocol_Endpoint_Selector (void);
   // Constructor.
@@ -274,7 +329,7 @@ public:
                      TAO_default_environment ());
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV = 
+                        CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
@@ -288,9 +343,19 @@ protected:
 
 // ****************************************************************
 
-class TAO_Export TAO_Client_Priority_Policy_Selector : 
+class TAO_Export TAO_Client_Priority_Policy_Selector :
   public TAO_Invocation_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints when
+  //   TAO::Client_Priority_Policy is set.
+  //
+  // = DESCRIPTION
+  //   TAO::Client_Priority_Policy is deprecated.  Similar (and
+  //   beyond) functionality can be achieved through standard RTCORBA
+  //   policies.  See TAO Real-Time CORBA documentation for more
+  //   information.
+  //
 public:
   TAO_Client_Priority_Policy_Selector (void);
   // Constructor.
@@ -306,7 +371,7 @@ public:
                      TAO_default_environment ());
   virtual void forward (TAO_GIOP_Invocation *invocation,
                         const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV = 
+                        CORBA::Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
@@ -314,9 +379,17 @@ public:
 
 // ****************************************************************
 
-class TAO_Export TAO_Priority_Protocol_Selector : 
+class TAO_Export TAO_Priority_Protocol_Selector :
   public TAO_Protocol_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints based on protocols and the
+  //   priority of the client thread making the invocation.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when RTCORBA::ClientProtocolPolicy is
+  //   set and the priority model is RTCORBA::CLIENT_PROPAGATED.
+  //
 public:
   TAO_Priority_Protocol_Selector (void);
   // Constructor.
@@ -336,9 +409,17 @@ protected:
 
 // ****************************************************************
 
-class TAO_Export TAO_Bands_Protocol_Selector : 
+class TAO_Export TAO_Bands_Protocol_Selector :
   public TAO_Protocol_Endpoint_Selector
 {
+  // = TITLE
+  //   Strategy for selecting endpoints based on protocols and a
+  //   priority range.
+  //
+  // = DESCRIPTION
+  //   This strategy is used when both RTCORBA::ClientProtocolPolicy
+  //   and RTCORBA::PriorityBandedConnectionPolicy are set.
+  //
 public:
   TAO_Bands_Protocol_Selector (void);
   // Constructor.
