@@ -1,3 +1,9 @@
+Thu Jul  6 00:16:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp:
+	* tao/Strategies/TAO_Strategies_Static.dsp: Added the new files
+	  and removed old ones.
+
 Thu Jul  5 23:57:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:
@@ -5,7 +11,7 @@ Thu Jul  5 23:57:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Jul  5 23:49:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.  
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.
 
 Thu Jul  5 23:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -13,7 +19,7 @@ Thu Jul  5 23:44:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.h:
 	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.inl: 
+	* tao/Strategies/GIOP_Message_NonReactive_Handler.inl:
 	* tao/GIOP_Message_Reactive_Handler.h:
 	* tao/GIOP_Message_Reactive_Handler.cpp:
 	* tao/GIOP_Message_Reactive_Handler.inl: Removed them from the
@@ -35,7 +41,7 @@ Thu Jul  5 23:00:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h: Fixed some more
-	  compilation errors in g++.  
+	  compilation errors in g++.
 
 Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -44,7 +50,7 @@ Thu Jul  5 22:35:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  errors in g++. The new IIOP_SSL_Transport classes now does the
 	  functionality of the IIOP_SSL_Connection_Handler classes. The
 	  connection handler classes exist now only to create the
-	  transport. 
+	  transport.
 
 Thu Jul  5 21:44:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -693,7 +699,7 @@ Thu Jul  5 21:16:00 2001  Craig Rodrigues <crodrigu@bbn.com>
          * orbsvcs/orbsvcs/AV/AV_Core.h
 
            Added some Borland compiler pragma options to prevent
-           singleton problems when AV_Core is in a DLL. 
+           singleton problems when AV_Core is in a DLL.
 
 Thu Jul  5 20:41:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -719,7 +725,7 @@ Thu Jul  5 04:53:00 2001  Craig Rodrigues <crodrigu@bbn.com>
           for Advanced_Resource_Factory in svc.conf.
 
         * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp
-          Fix typo 
+          Fix typo
 
         * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl
           Add -ORBSkipServiceConfigOpen to startup of Naming_Service,
