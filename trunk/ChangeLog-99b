@@ -1,3 +1,9 @@
+Tue Nov 30 16:11:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_tests.sh: Made the check for libDLL_Test use a
+          configurable suffix rather than hardcoded .so so it works on
+          platforms like HP-UX (which uses .sl).
+
 Tue Nov 30 14:24:31 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
