@@ -16,7 +16,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:IFRService
 
-ACE_SHLIBS = -lTAO_TypeCodeFactory -lTAO_Svc_Utils -lTAO_IFR_Client -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_Svc_Utils -lTAO_TypeCodeFactory -lTAO_IFR_Client -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

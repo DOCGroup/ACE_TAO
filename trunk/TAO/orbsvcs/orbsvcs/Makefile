@@ -105,8 +105,8 @@ ifndef TAO_ORBSVCS
 
 endif # TAO_ORBSVCS
 
-# The order in this list is important as some libraries depend on
-# others, please keep that in mind when adding or changing libraries.
+# The order in this list is no longer important.  Inter=library dependencies
+# are handled by the targets at the bottom of this file.
 MKLIST = Makefile.Svc_Utils
 ifneq (,$(findstring Naming,$(TAO_ORBSVCS)))
   MKLIST += Makefile.CosNaming
@@ -243,36 +243,21 @@ endif
 ifneq (,$(findstring  RT_Notify, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.CosNotification Makefile.RT_Notification
 endif
+
+thelist = $(sort $(MKLIST))
 #----------------------------------------------------------------------------
 #       Local rules
 #----------------------------------------------------------------------------
 
-## If parallel makes (-j) are invoked , we want to make sure that the order
-## of the Makefiles invoked from this Makefile is preserved.
-## Recursively invoked makes from this file will still be run in parallel.
-.NOTPARALLEL:
+standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean
 
-all: ORBSVCS_COMPONENTS
+$(standard_targets): %: $(addsuffix -%, $(thelist))
+
+Makefile.%:
+	@echo $(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
+	@$(MAKE) -f $(word 1,$(subst -, ,$@)) $(word 2,$(subst -, ,$@))
 
 realclean: ORBSVCS_COMPONENTS_realclean
-
-## Makefile.Svc_Utils.mkfile is a dummy target which will cause
-## $(MAKE) -f Makefile.Svc_Utils to be invoked
-%.mkfile: %
-	@echo $(MAKE) -f $< $(MKFILE_TARGET)
-	@$(MAKE) -f $< $(MKFILE_TARGET)
-
-# This rule invokes make again with the list of .mkfile targets as a
-# parameter.  For example, if the all target is being made, make is invoked
-# as follows:
-#
-# make -f Makefile MKFILE_TARGET=all Makefile.Svc_Utils.mkfile \
-#                                    Makefile.CosNaming.mkfile .....
-all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean:
-ifneq ($(MKLIST),)
-	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
-	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
-endif
 
 .PHONY: ORBSVCS_COMPONENTS
 ORBSVCS_COMPONENTS:
@@ -281,3 +266,29 @@ ORBSVCS_COMPONENTS:
 .PHONY: ORBSVCS_COMPONENTS_realclean
 ORBSVCS_COMPONENTS_realclean:
 	-$(RM) ORBSVCS_COMPONENTS.list
+
+# This list of targets maintains the inter-library dependencies.  Follow this
+# pattern when adding new services.
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.av-)): Makefile.av-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosEvent-)): Makefile.CosEvent-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosLifeCycle-)): Makefile.CosLifeCycle-%: Makefile.CosNaming-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosLoadBalancing-)): Makefile.CosLoadBalancing-%: Makefile.CosNaming-% Makefile.PortableGroup-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosNotification-)): Makefile.CosNotification-%: Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosTime-)): Makefile.CosTime-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.CosTrading-)): Makefile.CosTrading-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsEventLogAdmin-)): Makefile.DsEventLogAdmin-%: Makefile.DsLogAdmin-% Makefile.CosEvent-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsLogAdmin-)): Makefile.DsLogAdmin-%: Makefile.ETCL-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.DsNotifyLogAdmin-)): Makefile.DsNotifyLogAdmin-%: Makefile.DsEventLogAdmin-% Makefile.DsLogAdmin-% Makefile.CosNotification-% Makefile.CosNaming-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.FaultTolerance-)): Makefile.FaultTolerance-%: Makefile.FTORB-% Makefile.CosNaming-% Makefile.CosNotification-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.IFRService-)): Makefile.IFRService-%: Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.Metrics-)): Makefile.Metrics-%: Makefile.RTSched Makefile.CosTime-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.PortableGroup-)): Makefile.PortableGroup-%: Makefile.CosNaming-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTCORBAEvent-)): Makefile.RTCORBAEvent-%: Makefile.RTEvent-% Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTEvent-)): Makefile.RTEvent-%: Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTEventLogAdmin-)): Makefile.RTEventLogAdmin-%: Makefile.RTEvent-% Makefile.DsLogAdmin-% Makefile.CosEvent-% Makefile.CosNaming-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTKokyuEvent-)): Makefile.RTKokyuEvent-%: Makefile.RTEvent-% Makefile.RTSched-% Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RT_Notification-)): Makefile.RT_Notification-%: Makefile.CosNotification-% Makefile.Svc_Utils-% Makefile.ETCL-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTOLDEvent-)): Makefile.RTOLDEvent-%: Makefile.RTEvent-% Makefile.RTSched-% Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTSched-)): Makefile.RTSched-%: Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.RTSchedEvent-)): Makefile.RTSchedEvent-%: Makefile.RTEvent-% Makefile.RTSched-% Makefile.CosNaming-% Makefile.Svc_Utils-%
+$(foreach ext, $(standard_targets), $(addsuffix $(ext),Makefile.SSLIOP-)): Makefile.SSLIOP-%: Makefile.Security-%
