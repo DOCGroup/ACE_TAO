@@ -98,9 +98,6 @@ private:
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-// include the ACE min()/max() functions.
-# include "ace/Min_Max.h"
-
 # if !defined (ACE_ENDLESS_LOOP)
 #  define ACE_ENDLESS_LOOP
 # endif /* ! ACE_ENDLESS_LOOP */
