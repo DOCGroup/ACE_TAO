@@ -77,7 +77,10 @@ private:
   int error_;
 };
 
-#if defined (ACE_HAS_INLINED_OSCALLS)
+// Inlining this class on debug builds with gcc on Solaris can cause
+// deadlocks during static initialization.
+#if defined (ACE_HAS_INLINED_OSCALLS) && \
+    (!defined (__GNUG__) || !defined (__sun__) || defined (ACE_NDEBUG))
 # if defined (ACE_INLINE)
 #  undef ACE_INLINE
 # endif /* ACE_INLINE */
