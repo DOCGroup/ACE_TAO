@@ -596,7 +596,8 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
       char buffer[MAXHOSTNAMELEN + 1];
       if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) failed to resolve local host %p.\n"),
+                           "(%P|%t) failed to resolve local host %p.\n",
+                           "get_host_name"),
                           -1);
       else
         host = buffer;
@@ -606,8 +607,7 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
   if (rendezvous.set (port, host.c_str ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) failed to resolve host %s, %p.\n",
-                       host.c_str (),
-                       "reason"),
+                       host.c_str ()),
                       -1);
 
   // Set up the hostname so that we can put it into object later on.
@@ -620,7 +620,8 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
       if (temphost == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) failed in get_host_addr () %p.\n"),
+                             "(%P|%t) failed in get_host_addr () %p.\n",
+                             host.c_str ()),
                             -1);
         }
       else
@@ -634,7 +635,8 @@ TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
       if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) failed in get_host_name () %p.\n"),
+                             "(%P|%t) failed in get_host_name () %p.\n",
+                             host.c_str ()),
                             -1);
         }
       else
