@@ -19,7 +19,7 @@
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
-#include "Shared_Hash_Map.h"
+#include "Shared_Hash_Map_T.h"
 
 class TAO_ORBSVCS_Export TAO_Persistent_IntId
 {
