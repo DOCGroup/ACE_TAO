@@ -71,7 +71,7 @@ interface child : mother, father
 {
 };
 
-// Test of CORBA 2.3.1 relaxation of forward declared
+// Tests of CORBA 2.3.1 relaxation of forward declared
 // interface restrictions.
 
 // Full definition is in generic_object.idl
@@ -88,4 +88,21 @@ union boik switch (short)
 {
   case 0: forward blik;
 };
+
+// Definition below in file.
+interface later;
+
+interface later_user
+{
+  later op (in later inarg, 
+            inout later inoutarg,
+            out later outarg);
+};
+
+struct later_holder
+{
+  later member;
+};
+
+interface later {};
 
