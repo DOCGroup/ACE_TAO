@@ -1172,8 +1172,8 @@ nobase_include_HEADERS = \
 
 pkgconfigdata_DATA += ACE.pc
 
-ACE.pc: ${top_srcdir}/config.status ${srcdir}/ACE.pc.in
-        ${top_srcdir}/config.status --file $@:${srcdir}/ACE.pc.in
+ACE.pc: ${top_builddir}/config.status ${srcdir}/ACE.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE.pc.in
 
 EXTRA_DIST = \
   ACE.pc.in \
@@ -1208,8 +1208,8 @@ nobase_include_HEADERS += \
 
 pkgconfigdata_DATA += ACE_FlReactor.pc
 
-ACE_FlReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_FlReactor.pc.in
-        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_FlReactor.pc.in
+ACE_FlReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_FlReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_FlReactor.pc.in
 
 endif BUILD_X11
 endif BUILD_GL
@@ -1257,8 +1257,8 @@ nobase_include_HEADERS += \
 
 pkgconfigdata_DATA += ACE_QtReactor.pc
 
-ACE_QtReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_QtReactor.pc.in
-        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_QtReactor.pc.in
+ACE_QtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_QtReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_QtReactor.pc.in
 
 endif BUILD_QT
 
@@ -1292,8 +1292,8 @@ nobase_include_HEADERS += \
 
 pkgconfigdata_DATA += ACE_TkReactor.pc
 
-ACE_TkReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_TkReactor.pc.in
-        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_TkReactor.pc.in
+ACE_TkReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_TkReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_TkReactor.pc.in
 
 endif BUILD_TK
 
@@ -1328,8 +1328,8 @@ nobase_include_HEADERS += \
 
 pkgconfigdata_DATA += ACE_XtReactor.pc
 
-ACE_XtReactor.pc: ${top_srcdir}/config.status ${srcdir}/ACE_XtReactor.pc.in
-        ${top_srcdir}/config.status --file $@:${srcdir}/ACE_XtReactor.pc.in
+ACE_XtReactor.pc: ${top_builddir}/config.status ${srcdir}/ACE_XtReactor.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACE_XtReactor.pc.in
 
 endif BUILD_XT
 endif BUILD_X11
