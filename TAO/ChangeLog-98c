@@ -1,59 +1,63 @@
 Wed Sep  2 14:48:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp (make_logger): Removed all
- 	  vestiges of the exception specification.
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp (make_logger): Removed all
+          vestiges of the exception specification.
 
-	* TAO/utils/catior: Integrated Jeff Hopper's new version of his
- 	  "catior" program, which now parses Orbix "POOP" object
- 	  references.  Made a few minor syntax changes, as well.
+        * TAO/utils/catior: Integrated Jeff Hopper's new version of his
+          "catior" program, which now parses Orbix "POOP" object
+          references.  Made a few minor syntax changes, as well.
 
-	* TAO/orbsvcs/Logger.idl,
-	  TAO/orbsvcs/orbsvcs/Log/Logger_i: Added some minor fixes to get
- 	  rid of the special-purpose exception and use system exceptions.
+        * TAO/orbsvcs/Logger.idl,
+          TAO/orbsvcs/orbsvcs/Log/Logger_i: Added some minor fixes to get
+          rid of the special-purpose exception and use system exceptions.
 
 Wed Sep  2 14:30:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tests/Param_Test/Param_Test.dsw:
-	* tests/Param_Test/client.dsp:
-	* tests/Param_Test/server.dsp:
-	  Updated to use new filenames for TAO_IDL generated files
-	  and also updated to MSVC 6.
+        * tests/Param_Test/Param_Test.dsw:
+        * tests/Param_Test/client.dsp:
+        * tests/Param_Test/server.dsp:
+          Updated to use new filenames for TAO_IDL generated files
+          and also updated to MSVC 6.
 
-	* tests/Param_Test/ub_objref_seq.cpp: 
-	  Fixed warnings on MSVC 6 -- an extra semicolon after a
-	  TAO_CATCHANY and a return 0 needed at the end of a method.
+        * tests/Param_Test/ub_objref_seq.cpp:
+          Fixed warnings on MSVC 6 -- an extra semicolon after a
+          TAO_CATCHANY and a return 0 needed at the end of a method.
 
 Wed Sep  2 14:28:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Sequence.i: 
-	  The replace() method that use a Message_Block was setting the
-	  length of the sequence but not of the message block, this was at
-	  the very least confusing. Thanks to Dave Meyer
-	  <dmeyer@std.saic.com> for reporting this problem and testing the
-	  fix.
+        * tao/Sequence.i:
+          The replace() method that use a Message_Block was setting the
+          length of the sequence but not of the message block, this was at
+          the very least confusing. Thanks to Dave Meyer
+          <dmeyer@std.saic.com> for reporting this problem and testing the
+          fix.
 
 Wed Sep  2 11:38:35 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/tests/Logger/Logging_Test_i.cpp: Now checks for the
-	  new exceptions thrown by make_logger
+        * orbsvcs/tests/Logger/Logging_Test_i.cpp: Now checks for the
+          new exceptions thrown by make_logger
 
-	* orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}:
-	  Logger_Factory_i::make_logger now checks the results of binding
-	  entries into the hash_map_manager and throws exceptions if that
-	  or new fails. Added new macros to Logger_i.h for eventual
-	  incorporation into OS.h. 
+        * orbsvcs/orbsvcs/Log/Logger_i.{h,cpp}:
+          Logger_Factory_i::make_logger now checks the results of binding
+          entries into the hash_map_manager and throws exceptions if that
+          or new fails. Added new macros to Logger_i.h for eventual
+          incorporation into OS.h.
 
 Wed Sep  2 09:37:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Environment.cpp: 
-	  The exception() modifier was trying to _raise() the new
-	  exception even if it was 0. Thanks to J. Russell Noseworthy
-	  <rnosewor@objectsciences.com> for reporting this problem.
+        * tao/Environment.cpp:
+          The exception() modifier was trying to _raise() the new
+          exception even if it was 0. Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for reporting this problem.
 
 Tue Sep 01 21:45:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple: added VBIN so that the executable
           will be built when only shared libs are built.
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: replaced a bunch of
+          static casts with ACE_U64_TO_U32 so that it will compile on
+          platforms that don't have native 64-bit ints.
 
 Tue Sep  1 19:57:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
