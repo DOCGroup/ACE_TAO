@@ -236,11 +236,12 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
 
   start = ++okd;  // increment past the object key separator
 
-  TAO::ObjectKey &ok = ACE_const_cast (TAO::ObjectKey&,
-                                       this->ref_object_key_->object_key ());
-
+  TAO::ObjectKey ok;
   TAO::ObjectKey::decode_string_to_sequence (ok,
-                                             start);
+                                             okd + 1);
+
+  (void) this->orb_core ()->object_key_table ().bind (ok,
+                                                      this->ref_object_key_);
 }
 
 CORBA::Boolean
