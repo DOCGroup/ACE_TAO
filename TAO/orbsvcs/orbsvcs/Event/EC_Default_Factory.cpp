@@ -259,7 +259,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                   if (ACE_OS::strcasecmp (arg, "mt") == 0)
                     synch_type = 0;
                   else if (ACE_OS::strcasecmp (arg, "st") == 0)
-                    synch_type = 0;
+                    synch_type = 1;
                   else if (ACE_OS::strcasecmp (arg, "list") == 0)
                     collection_type = 0;
                   else if (ACE_OS::strcasecmp (arg, "rb_tree") == 0)
@@ -303,7 +303,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                   if (ACE_OS::strcasecmp (arg, "mt") == 0)
                     synch_type = 0;
                   else if (ACE_OS::strcasecmp (arg, "st") == 0)
-                    synch_type = 0;
+                    synch_type = 1;
                   else if (ACE_OS::strcasecmp (arg, "list") == 0)
                     collection_type = 0;
                   else if (ACE_OS::strcasecmp (arg, "rb_tree") == 0)

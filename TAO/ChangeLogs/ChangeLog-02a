@@ -1,228 +1,407 @@
+Sat Feb 12 13:37:48 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Implemented a new version of the COS Event Service. This version
+          is based on the experience gained while implemented the second
+          generation of TAO's Real-time Event Service.  Special care has
+          been taken to make it flexible, scalable, support multiple
+          threads and be exception safe.
+          The current version does not support the Pull model, but soon it
+          will.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+          Implement the CosEventChannelAdmin::EventChannel interface, also
+          serve as a big Mediator among all the other internal classes.
+          All the object it requires are created using an Abstract
+          Factory, in turn this factory is dynamically loaded using the
+          Service Configurator.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+          Implement the CosEventChannelAdmin::ConsumerAdmin interface.
+          The internal collections are implemented using
+          TAO_EC_Proxy_Collection which provide several iteration
+          strategies, underlying data structures and MT-safe vs. lock-free
+          implementations.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+          Implement the CosEventChannelAdmin::SupplierAdmin interface.
+          As the ConsumerAdmin classes they use TAO_EC_Proxy_Collection.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+          Implement the CosEventChannelAdmin::ProxyPushConsumer interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Implement the CosEventChannelAdmin::ProxyPushSupplier interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+          Define the interface for the consumer control strategy, i.e. how
+          does the event channel deal with misbehaving or dead consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+          Ditto for suppliers
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.cpp:
+          The dispatching strategy, it collaborates with the
+          ProxyPushSupplier to efficiently dispatch the events to the
+          consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.cpp:
+          Define the Abstract Factory interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Default implementation of the TAO_CEC_Factory interface. It
+          parses the arguments provided by the service configurator to
+          choose at initialization time the strategies that would be used
+          by the Event Channel.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+          Default values for the various parameters in the Event Channel
+          and its default strategy factory.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+          Implement a multi-threaded dispatching strategy.  Based on a
+          single message queue, each message is a command object that
+          either dispatches the event or shutdowns the dispatching
+          thread.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+          Helper classes to implement the MT dispatching strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+          A simple implementation of the control strategies, they
+          periodically poll all the consumers (or suppliers), if they are
+          not available they are removed from the Event Service.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          Fixed bug in single-threaded configurations for the proxy
+          collections.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Added comments on potential exception handling pitfalls.
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+          Removed uneeded #include
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          The default configuration should be MT-safe, it is easier to
+          explain how the configuration can be optimized for the ST case
+          than explain why it is not safe by default.
+
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/CosEvent/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Basic.dsw:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.h:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.cpp:
+        * orbsvcs/tests/CosEvent/Basic/MT_Disconnect.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.dsp:
+        * orbsvcs/tests/CosEvent/lib/Makefile:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsw:
+        * orbsvcs/tests/CosEvent/lib/CECTest.dsp:
+        * orbsvcs/tests/CosEvent/lib/cectest_export.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+          Tests for the new implementation of the CosEventService.
+          The include tests for:
+          - Event Delivery (multiple threads)
+          - Proper disconnection
+          - Proper disconnection with multiple threads
+          - Shutdown procedures for the Event Channel.
+
+        * orbsvcs/tests/Event/Basic/Wildcard.cpp:
+          This test was not destroying the ORB.
+          Sometimes in our heavily loaded "compilation servers" timer was
+          not expiring the expected number of times, possibly because the
+          host was too loaded and the process was not scheduled often
+          enough.
+          I base the test on the number of messages actually sent, not the
+          number of timeouts expected, this seems to work much better.
+
+        * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+          The bitmask test requires the Prefix_Filter_Builder.
+
+        * orbsvcs/tests/Event/Basic/Complex.cpp:
+        * orbsvcs/tests/Event/Basic/MT_Disconnect.cpp:
+          Cosmetic fixes.
+
+        * orbsvcs/tests/Event/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:
+          If the event channel sends the disconnect callback there is no
+          sense in trying to disconnect from it: the proxy is already
+          destroyed.
+
+        * taoconfig.mk:
+          Removed TSS_ORB_FLAG it has been obsolete for too long to even
+          remember what it was.
+
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          I accidentaly removed some template instantations during my code
+          review.
+
 Sat Feb 12 10:29:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/releasenotes/orbcore.html:
-	* docs/Options.html: Added information about shared memory
-	  transport.
+        * docs/releasenotes/orbcore.html:
+        * docs/Options.html: Added information about shared memory
+          transport.
 
 Fri Feb 11 19:50:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_argument.cpp
-	* TAO_IDL/ast/ast_array.cpp
-	* TAO_IDL/ast/ast_attribute.cpp
-	* TAO_IDL/ast/ast_concrete_type.cpp
-	* TAO_IDL/ast/ast_constant.cpp
-	* TAO_IDL/ast/ast_enum.cpp
-	* TAO_IDL/ast/ast_enum_val.cpp
-	* TAO_IDL/ast/ast_exception.cpp
-	* TAO_IDL/ast/ast_expression.cpp
-	* TAO_IDL/ast/ast_field.cpp
-	* TAO_IDL/ast/ast_interface_fwd.cpp
-	* TAO_IDL/ast/ast_module.cpp
-	* TAO_IDL/ast/ast_native.cpp
-	* TAO_IDL/ast/ast_operation.cpp
-	* TAO_IDL/ast/ast_predefined_type.cpp
-	* TAO_IDL/ast/ast_root.cpp
-	* TAO_IDL/ast/ast_sequence.cpp
-	* TAO_IDL/ast/ast_string.cpp
-	* TAO_IDL/ast/ast_structure.cpp
-	* TAO_IDL/ast/ast_type.cpp
-	* TAO_IDL/ast/ast_typedef.cpp
-	* TAO_IDL/ast/ast_union.cpp
-	* TAO_IDL/ast/ast_union_branch.cpp
-	* TAO_IDL/ast/ast_union_label.cpp
-	* TAO_IDL/include/ast_argument.h
-	* TAO_IDL/include/ast_array.h
-	* TAO_IDL/include/ast_attribute.h
-	* TAO_IDL/include/ast_concrete_type.h
-	* TAO_IDL/include/ast_constant.h
-	* TAO_IDL/include/ast_enum.h
-	* TAO_IDL/include/ast_enum_val.h
-	* TAO_IDL/include/ast_exception.h
-	* TAO_IDL/include/ast_expression.h
-	* TAO_IDL/include/ast_field.h
-	* TAO_IDL/include/ast_interface_fwd.h
-	* TAO_IDL/include/ast_module.h
-	* TAO_IDL/include/ast_native.h
-	* TAO_IDL/include/ast_operation.h
-	* TAO_IDL/include/ast_predefined_type.h
-	* TAO_IDL/include/ast_root.h
-	* TAO_IDL/include/ast_sequence.h
-	* TAO_IDL/include/ast_string.h
-	* TAO_IDL/include/ast_structure.h
-	* TAO_IDL/include/ast_type.h
-	* TAO_IDL/include/ast_typedef.h
-	* TAO_IDL/include/ast_union.h
-	* TAO_IDL/include/ast_union_branch.h
-	* TAO_IDL/include/ast_union_label.h
-	  Took the destructor bodies out of the header file,
-	  in preparation for someday adding some memory
-	  manangement to them.
+        * TAO_IDL/ast/ast_argument.cpp
+        * TAO_IDL/ast/ast_array.cpp
+        * TAO_IDL/ast/ast_attribute.cpp
+        * TAO_IDL/ast/ast_concrete_type.cpp
+        * TAO_IDL/ast/ast_constant.cpp
+        * TAO_IDL/ast/ast_enum.cpp
+        * TAO_IDL/ast/ast_enum_val.cpp
+        * TAO_IDL/ast/ast_exception.cpp
+        * TAO_IDL/ast/ast_expression.cpp
+        * TAO_IDL/ast/ast_field.cpp
+        * TAO_IDL/ast/ast_interface_fwd.cpp
+        * TAO_IDL/ast/ast_module.cpp
+        * TAO_IDL/ast/ast_native.cpp
+        * TAO_IDL/ast/ast_operation.cpp
+        * TAO_IDL/ast/ast_predefined_type.cpp
+        * TAO_IDL/ast/ast_root.cpp
+        * TAO_IDL/ast/ast_sequence.cpp
+        * TAO_IDL/ast/ast_string.cpp
+        * TAO_IDL/ast/ast_structure.cpp
+        * TAO_IDL/ast/ast_type.cpp
+        * TAO_IDL/ast/ast_typedef.cpp
+        * TAO_IDL/ast/ast_union.cpp
+        * TAO_IDL/ast/ast_union_branch.cpp
+        * TAO_IDL/ast/ast_union_label.cpp
+        * TAO_IDL/include/ast_argument.h
+        * TAO_IDL/include/ast_array.h
+        * TAO_IDL/include/ast_attribute.h
+        * TAO_IDL/include/ast_concrete_type.h
+        * TAO_IDL/include/ast_constant.h
+        * TAO_IDL/include/ast_enum.h
+        * TAO_IDL/include/ast_enum_val.h
+        * TAO_IDL/include/ast_exception.h
+        * TAO_IDL/include/ast_expression.h
+        * TAO_IDL/include/ast_field.h
+        * TAO_IDL/include/ast_interface_fwd.h
+        * TAO_IDL/include/ast_module.h
+        * TAO_IDL/include/ast_native.h
+        * TAO_IDL/include/ast_operation.h
+        * TAO_IDL/include/ast_predefined_type.h
+        * TAO_IDL/include/ast_root.h
+        * TAO_IDL/include/ast_sequence.h
+        * TAO_IDL/include/ast_string.h
+        * TAO_IDL/include/ast_structure.h
+        * TAO_IDL/include/ast_type.h
+        * TAO_IDL/include/ast_typedef.h
+        * TAO_IDL/include/ast_union.h
+        * TAO_IDL/include/ast_union_branch.h
+        * TAO_IDL/include/ast_union_label.h
+          Took the destructor bodies out of the header file,
+          in preparation for someday adding some memory
+          manangement to them.
 
 Fri Feb 11 18:20:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/util/utl_scope.cpp:
-	  The prevention of the redefinition of a scope
-	  within itself was preventing that redefinition
-	  not just in the scope immediately within, but
-	  in all contained scopes. Thanks to
-	  Klaus Hofmann <Klaus.Hofmann@astrum.de>
-	  for sending in the example IDL file that pointed
-	  this out.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          The prevention of the redefinition of a scope
+          within itself was preventing that redefinition
+          not just in the scope immediately within, but
+          in all contained scopes. Thanks to
+          Klaus Hofmann <Klaus.Hofmann@astrum.de>
+          for sending in the example IDL file that pointed
+          this out.
 
-	* tests/IDL_Test/reopened_modules:
-	  Added Klaus Hofmann's example IDL file to the group.
+        * tests/IDL_Test/reopened_modules:
+          Added Klaus Hofmann's example IDL file to the group.
 
 Fri Feb 11 14:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp: I forgot to add the initialization for
-	  SHMIOP_Protocol_Factory's static service.  And it was causing
-	  the tests/ORB_init test to fail. Thanks to Bala for reporting
-	  this.
+        * tao/TAO_Internal.cpp: I forgot to add the initialization for
+          SHMIOP_Protocol_Factory's static service.  And it was causing
+          the tests/ORB_init test to fail. Thanks to Bala for reporting
+          this.
 
 Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	  Changes to prevent modules, interrfaces, structs,
-	  unions, valuetypes and exeptions from being
-	  redefined immediately inside their own scope. This
-	  closes out Bugzilla bug #417.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+          Changes to prevent modules, interrfaces, structs,
+          unions, valuetypes and exeptions from being
+          redefined immediately inside their own scope. This
+          closes out Bugzilla bug #417.
 
 Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
-	  I overlooked this fix for valuetypes similar to the
-	  one for attributes in my entry for yesterday.
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+          I overlooked this fix for valuetypes similar to the
+          one for attributes in my entry for yesterday.
 
 Fri Feb 11 09:53:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/reopened_modules.idl:
-	  File had incorrect IDL, but version of IDL compiler
-	  before recent changes was accepting it.
+        * tests/IDL_Test/reopened_modules.idl:
+          File had incorrect IDL, but version of IDL compiler
+          before recent changes was accepting it.
 
 Thu Feb 10 22:14:06 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/Complex.dsp:
-	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
-	  Add new files to the project.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Complex.dsp:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+          Add new files to the project.
 
 Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h;
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/include/ast_decl.h:
-	* TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	  Changes to enable call to 'delete' on the
-	  scoped name member in the destructor of all instances
-	  of AST_Decl.Specifically, code generation for arguments
-	  and attributes had to be modified to avoid double
-	  deletion in those cases. An IDL file with a large number
-	  of enums was causing the IDL comiler to run out of heap
-	  memory. These changes and the changes to utl_string.cpp
-	  in the ChangeLog entry below have fixed that problem.
-	  Thanks to Ted Nolan SRI Augusta GA <ted@ags.ga.erg.sri.com>
-	  for sending in the IDL file.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h;
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          Changes to enable call to 'delete' on the
+          scoped name member in the destructor of all instances
+          of AST_Decl.Specifically, code generation for arguments
+          and attributes had to be modified to avoid double
+          deletion in those cases. An IDL file with a large number
+          of enums was causing the IDL comiler to run out of heap
+          memory. These changes and the changes to utl_string.cpp
+          in the ChangeLog entry below have fixed that problem.
+          Thanks to Ted Nolan SRI Augusta GA <ted@ags.ga.erg.sri.com>
+          for sending in the IDL file.
 
-	* TAO_IDL/util/utl_string.cpp:
-	  Cosmetic changes.
+        * TAO_IDL/util/utl_string.cpp:
+          Cosmetic changes.
 
 Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	  Added scope argument to call to create_module().
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added scope argument to call to create_module().
 
-	* TAO_IDL/include/utl_string.h:
-	  Uninlined destructor (see below).
+        * TAO_IDL/include/utl_string.h:
+          Uninlined destructor (see below).
 
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/include/utl_scope.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/ast/ast_module.cpp:
-	* TAO_IDL/ast/ast_operation.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/util/utl_scope.cpp:
-	  Change in approach to handling reopened modules
-	  in IDL files. The front end used to create a new node
-	  each time a module was reopened, resulting in several
-	  brittle additions to the lookup functions. Now, when a
-	  module is reopened, the original node is returned for
-	  additions to its scope, and the lookup functions have
-	  been simplified. Thanks to Andreas Terstegge
-	  <Andreas.Terstegge@nokia.com> for sending in an example
-	  IDl file that pointed out this bug. This closes out
-	  Bugzilla bug #400
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+          Change in approach to handling reopened modules
+          in IDL files. The front end used to create a new node
+          each time a module was reopened, resulting in several
+          brittle additions to the lookup functions. Now, when a
+          module is reopened, the original node is returned for
+          additions to its scope, and the lookup functions have
+          been simplified. Thanks to Andreas Terstegge
+          <Andreas.Terstegge@nokia.com> for sending in an example
+          IDl file that pointed out this bug. This closes out
+          Bugzilla bug #400
 
-	* TAO_IDL/util/utl_string.cpp:
-	  Added calls to 'delete' in destructor for two char*
-	  members which are always initialized by calls to
-	  'new'.
+        * TAO_IDL/util/utl_string.cpp:
+          Added calls to 'delete' in destructor for two char*
+          members which are always initialized by calls to
+          'new'.
 
 Thu Feb 10 14:10:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/TAO.dsp:
-	* TAO/TAO_Static.dsp: Added SHMIOP_* files.
+        * TAO/TAO.dsp:
+        * TAO/TAO_Static.dsp: Added SHMIOP_* files.
 
 Thu Feb 10 13:25:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO/tao/SHMIOP_Acceptor.h:
-	* TAO/tao/SHMIOP_Acceptor.i:
-	* TAO/tao/SHMIOP_Acceptor.cpp:
-	* TAO/tao/SHMIOP_Connect.h:
-	* TAO/tao/SHMIOP_Connect.i:
-	* TAO/tao/SHMIOP_Connect.cpp:
-	* TAO/tao/SHMIOP_Connector.h:
-	* TAO/tao/SHMIOP_Connector.cpp:
-	* TAO/tao/SHMIOP_Factory.h:
-	* TAO/tao/SHMIOP_Factory.cpp:
-	* TAO/tao/SHMIOP_Profile.h:
-	* TAO/tao/SHMIOP_Profile.i:
-	* TAO/tao/SHMIOP_Profile.cpp:
-	* TAO/tao/SHMIOP_Transport.h:
-	* TAO/tao/SHMIOP_Transport.cpp: Added shmiop:// pluggable protocol.
+        * TAO/tao/SHMIOP_Acceptor.h:
+        * TAO/tao/SHMIOP_Acceptor.i:
+        * TAO/tao/SHMIOP_Acceptor.cpp:
+        * TAO/tao/SHMIOP_Connect.h:
+        * TAO/tao/SHMIOP_Connect.i:
+        * TAO/tao/SHMIOP_Connect.cpp:
+        * TAO/tao/SHMIOP_Connector.h:
+        * TAO/tao/SHMIOP_Connector.cpp:
+        * TAO/tao/SHMIOP_Factory.h:
+        * TAO/tao/SHMIOP_Factory.cpp:
+        * TAO/tao/SHMIOP_Profile.h:
+        * TAO/tao/SHMIOP_Profile.i:
+        * TAO/tao/SHMIOP_Profile.cpp:
+        * TAO/tao/SHMIOP_Transport.h:
+        * TAO/tao/SHMIOP_Transport.cpp: Added shmiop:// pluggable protocol.
 
-	* TAO/tao/corbafwd.h: Uncommented TAO_TAG_SHMEM_PROFILE.
+        * TAO/tao/corbafwd.h: Uncommented TAO_TAG_SHMEM_PROFILE.
 
-	* TAO/tao/default_resource.cpp: Added SHMIOP in
-	  <init_protocol_factories> to be loaded by default if SHMIOP is
-	  enable on this platform.
+        * TAO/tao/default_resource.cpp: Added SHMIOP in
+          <init_protocol_factories> to be loaded by default if SHMIOP is
+          enable on this platform.
 
-	* TAO/tao/orbconf.h: Added macro definition to enable SHMIOP by
-	  default.
+        * TAO/tao/orbconf.h: Added macro definition to enable SHMIOP by
+          default.
 
-	* TAO/tao/Makefile: Added SHMIOP_* files and updated file dependencies.
+        * TAO/tao/Makefile: Added SHMIOP_* files and updated file dependencies.
 
 Wed Feb 09 12:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/ami_test.idl,
-	  tests/AMI/ami_test_i.cpp,
-	  tests/AMI/simple_client.cpp: Made the exception handling
-	  test more descriptive.
+        * tests/AMI/ami_test.idl,
+          tests/AMI/ami_test_i.cpp,
+          tests/AMI/simple_client.cpp: Made the exception handling
+          test more descriptive.
 
 Wed Feb  9 21:26:46 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Core.cpp (init):
+        * tao/ORB_Core.cpp (init):
 
-	  Moved parsing of "-ORBSvcConfDirective" before "-ORBSvcConf"
-	  because "-ORBSvcConf" was interpreting "Directive" as its
-	  argument.  The CORBA spec states that ORB options should be
-	  recognized if there is no space between the option and its
-	  argument.  As such this was an "order of parsing" problem, not
-	  a problem with the option parser itself.  Thanks to Dale Wood
-	  <dale_wood@Mitel.com> for providing a fix.
+          Moved parsing of "-ORBSvcConfDirective" before "-ORBSvcConf"
+          because "-ORBSvcConf" was interpreting "Directive" as its
+          argument.  The CORBA spec states that ORB options should be
+          recognized if there is no space between the option and its
+          argument.  As such this was an "order of parsing" problem, not
+          a problem with the option parser itself.  Thanks to Dale Wood
+          <dale_wood@Mitel.com> for providing a fix.
 
 Wed Feb  9 20:56:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
