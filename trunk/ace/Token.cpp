@@ -322,7 +322,7 @@ ACE_Token::renew (int requeue_position, ACE_Time_Value *timeout)
         }
 
       // Sleep until we've got the token (ignore signals).
-      while (my_entry.wait (0, this->lock_) == -1)
+      while (my_entry.wait (timeout, this->lock_) == -1)
         {
           // Note, this should obey whatever thread-specific
           // interrupt policy is currently in place...

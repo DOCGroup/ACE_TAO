@@ -105,8 +105,18 @@ public:
   int acquire_read (void);
   // Just calls <acquire>.
 
+  int acquire_read (void (*sleep_hook)(void *),
+	       void *arg = 0, 
+	       ACE_Time_Value *timeout = 0);
+  // More sophisticate version of acquire_read.
+
   int acquire_write (void);
   // Just calls <acquire>.
+
+  int acquire_write (void (*sleep_hook)(void *),
+	       void *arg = 0, 
+	       ACE_Time_Value *timeout = 0);
+  // More sophisticate version of acquire_write.
 
   int tryacquire_read (void);
   // Just calls <tryacquire>.
@@ -128,13 +138,6 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-
-private:
-  enum ACE_Token_Op_Type
-  {
-    READ_TOKEN = 1,
-    WRITE_TOKEN
-  };
 
   // = The following structure implements a ACE_FIFO of waiter threads
   // that are asleep waiting to obtain the token.
@@ -165,6 +168,13 @@ private:
 
     int runable_;
     // Ok to run.
+  };
+
+private:
+  enum ACE_Token_Op_Type
+  {
+    READ_TOKEN = 1,
+    WRITE_TOKEN
   };
 
   struct ACE_Token_Queue
