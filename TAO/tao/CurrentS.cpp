@@ -85,7 +85,6 @@ CORBA::Current*
 POA_CORBA::Current::_this (CORBA_Environment &TAO_IN_ENV)
 {
   TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0)
-    return 0;
+  ACE_CHECK_RETURN (0);
   return new POA_CORBA::_tao_collocated_Current (this, stub);
 }

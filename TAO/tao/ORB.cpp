@@ -1165,7 +1165,7 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
 #if defined(ACE_HAS_EXCEPTIONS)
       set_unexpected (CORBA_ORB::_tao_unexpected_exception);
 #endif /* ACE_HAS_EXCEPTIONS */
-      
+
       // initialize the system TypeCodes
       TAO_TypeCodes::init ();
 

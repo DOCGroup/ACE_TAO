@@ -85,23 +85,38 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr _tao_elem)
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_elem)
 {
-  CORBA::Environment _tao_env;
-  _tao_elem = CORBA_Current::_nil ();
-  CORBA::TypeCode_var type = _tao_any.type ();
-  if (!type->equal (CORBA::_tc_Current, _tao_env)) return 0; // not equal
-  TAO_InputCDR stream (_tao_any._tao_get_cdr ());
-  CORBA::Object_ptr *_tao_obj_ptr;
-  ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);
-  if (stream.decode (CORBA::_tc_Current, _tao_obj_ptr, 0, _tao_env)
-    == CORBA::TypeCode::TRAVERSE_CONTINUE)
-  {
-    _tao_elem = CORBA_Current::_narrow (*_tao_obj_ptr, _tao_env);
-    if (_tao_env.exception ()) return 0; // narrow failed
-    CORBA::release (*_tao_obj_ptr);
-    *_tao_obj_ptr = _tao_elem;
-    ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Current, _tao_obj_ptr, 1, _tao_env);
-    if (_tao_env.exception ()) return 0; // narrow failed
-    return 1;
-  }
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      _tao_elem = CORBA_Current::_nil ();
+      CORBA::TypeCode_var type = _tao_any.type ();
+      CORBA::Boolean eq = type->equal (CORBA::_tc_Current,
+                                       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (eq == 0)
+        return 0;
+
+      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      CORBA::Object_ptr *_tao_obj_ptr;
+      ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);
+      if (stream.decode (CORBA::_tc_Current, _tao_obj_ptr, 0, ACE_TRY_ENV)
+          == CORBA::TypeCode::TRAVERSE_CONTINUE)
+        {
+          _tao_elem = CORBA_Current::_narrow (*_tao_obj_ptr, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          CORBA::release (*_tao_obj_ptr);
+          *_tao_obj_ptr = _tao_elem;
+          ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_Current,
+                                              _tao_obj_ptr, 1,
+                                              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      return 1;
+    }
+  ACE_CATCHANY
+    {
+      return 0;
+    }
+  ACE_ENDTRY;
   return 0; // failure
 }

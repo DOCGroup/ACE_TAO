@@ -559,18 +559,19 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     || stream.encode (CORBA::_tc_TypeCode,
                       &CORBA::_tc_ulong, 0,
                       ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
-  ACE_CHECK;
+  ACE_CHECK; // @@ Maybe we should transform this exception
 
   result = result || stream.write_string (completed) == 0
     || stream.encode (CORBA::_tc_TypeCode,
                       &TC_completion_status, 0,
                       ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
-  ACE_CHECK;
+  ACE_CHECK; // @@ Maybe we should transform this exception
 
   if (result)
     ACE_THROW (CORBA::INITIALIZE ());
-  // @@ It is possible to throw an exception at this point?  What if
-  // the exception typecode has not been initialized yet?
+
+  // @@ It is possible to throw an exception at this point?
+  //    What if the exception typecode has not been initialized yet?
 
   CORBA::string_free (full_id);
 
@@ -807,10 +808,9 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
 }
 
 void
-CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &env)
+CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &ACE_TRY_ENV)
 {
-  // unimplemented
-  //  env.clear ();
+  ACE_THROW (CORBA::NO_IMPLEMENT);
 }
 
 CORBA_ExceptionList_ptr
