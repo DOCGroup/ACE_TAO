@@ -204,6 +204,8 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::init (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::recreate_all (void)
 {
+  // We can't use our INDEX typedef here because of the broken old g++!
+
   ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,
     TAO_Persistent_Index_IntId>::ITERATOR * index_iter = 0;
 

@@ -48,20 +48,20 @@ public:
 
   TAO_Naming_Server (CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr poa,
-                     LPCTSTR persistence_location,
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
-                     int resolve_for_existing_naming_service = 1);
+                     int resolve_for_existing_naming_service = 1,
+                     LPCTSTR persistence_location = 0);
   // Either find an existing Naming Service or creates one.  Takes the
   // POA under which to register the Naming Service implementation
   // object.
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
-            LPCTSTR persistence_location = 0,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
-            int resolve_for_existing_naming_service = 1);
+            int resolve_for_existing_naming_service = 1,
+            LPCTSTR persistence_location = 0);
   // Either find an existing Naming Service or creates one.  Takes the
   // POA under which to register the Naming Service implementation
   // object.
