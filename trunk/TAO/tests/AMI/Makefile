@@ -41,7 +41,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
-override TAO_IDLFLAGS += -GC
+override TAO_IDLFLAGS += -Ge 1 -GC
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
