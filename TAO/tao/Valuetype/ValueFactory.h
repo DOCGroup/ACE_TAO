@@ -28,6 +28,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
+#include "ace/CORBA_macros.h"
+#include "tao/Environment.h"
 
 namespace CORBA
 {
