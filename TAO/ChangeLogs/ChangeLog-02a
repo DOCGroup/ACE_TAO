@@ -1,3 +1,17 @@
+Wed Mar 28 13:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/tests/DynAny_Test/test_dynsequence.cpp:
+	* tao/tests/DynAny_Test/test_dynstruct.cpp:
+	* tao/tests/DynAny_Test/test_dynunion.cpp:
+	* tao/tests/Param_Test/bd_long_seq.cpp:
+	* tao/tests/Param_Test/param_test_i.cpp:
+	* tao/tests/Param_Test/typecode.cpp:
+	* tao/DynamicAny/DynAny_i.cpp:
+	* tao/DynamicAny/DynamicAnyC.cpp:
+	* tao/DynamicInterface/Request.cpp:
+
+          Added missing ACE_CHECK/ACE_TRY_CHECK
+
 Wed Mar 28 13:43:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: Fixed
