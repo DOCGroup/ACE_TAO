@@ -473,7 +473,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *
 
   // See if we need to update the earliest time
   if (this->earliest_time () == ACE_Time_Value::zero
-      || this->earliest_time () < expired->get_timer_value ())
+      || expired->get_timer_value () < this->earliest_time ())
     this->earliest_pos_ = pos;
 
   // Insert time into dummy node

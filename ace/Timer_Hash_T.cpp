@@ -303,7 +303,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
                                                   expired->get_interval ());
 
   if (this->table_[this->earliest_position_]->is_empty ()
-      || this->table_[this->earliest_position_]->earliest_time () < this->table_[position]->earliest_time ())
+      || this->table_[position]->earliest_time () < this->table_[this->earliest_position_]->earliest_time ())
     this->earliest_position_ = position;
 }
 
@@ -330,7 +330,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
                                                   interval);
 
   if (this->table_[this->earliest_position_]->is_empty ()
-      || this->table_[this->earliest_position_]->earliest_time () < this->table_[position]->earliest_time ())
+      || this->table_[position]->earliest_time () < this->table_[this->earliest_position_]->earliest_time ())
     this->earliest_position_ = position;
 
   ++this->size_;
