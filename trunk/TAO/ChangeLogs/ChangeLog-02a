@@ -1,8 +1,11 @@
-Mon Feb  7 08:57:21 2000  Darrell Brunsch <brunsch@uci.edu>
+Mon Feb 07 12:15:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-        * docs/implrepo/usersguide.html: As Karl Proese 
-          [karl.proese@mchp.siemens.de] pointed out to me, I was still 
-          using -ORBUseImplRepo instead of -ORBUseIMR.  Fixed.
+	* tests/AMI/run_test.pl: Set the "-x" switch on the client,
+	  this will cause it to shut down properly.
+
+	* tests/AMI/simple_client.cpp: Activated the "-x" switch behavior
+	  to shut down the ORB, also added a more descriptive debugging
+	  output for exception handling.
 
 Sat Feb 05 04:24:09 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
