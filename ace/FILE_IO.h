@@ -92,11 +92,36 @@ public:
   // *total* number of trailing arguments, *not* a couple of the
   // number of tuple pairs!
 
-  ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  ssize_t send (const void *buf,
+                size_t n,
+                ACE_OVERLAPPED *overlapped) const;
   // Send <n> bytes via Win32 WriteFile using overlapped I/O.
 
-  ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  ssize_t recv (void *buf,
+                size_t n,
+                ACE_OVERLAPPED *overlapped) const;
   // Recv <n> bytes via Win32 ReadFile using overlapped I/O.
+
+  ssize_t sendv (const iovec iov[],
+                 size_t n) const;
+  // Send an <iovec> of size <n> to the file.
+
+  ssize_t recvv (iovec *io_vec);
+  // Allows a client to read from a file without having to provide a
+  // buffer to read.  This method determines how much data is in the
+  // file, allocates a buffer of this size, reads in the data, and
+  // returns the number of bytes read.  The caller is responsible for
+  // deleting the member in the <iov_base> field of <io_vec> using
+  // delete [] io_vec->iov_base.
+
+  ssize_t sendv_n (const iovec iov[],
+                   size_t n) const;
+  // Send an <iovec> of size <n> to the file.  Will block until all
+  // bytes are sent or an error occurs.
+
+  ssize_t recvv_n (iovec iov[],
+                   size_t n) const;
+  // Receive an <iovec> of size <n> to the file.
 
   void dump (void) const;
   // Dump the state of an object.

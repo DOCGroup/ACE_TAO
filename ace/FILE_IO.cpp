@@ -55,7 +55,9 @@ ACE_FILE_IO::send (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::writev (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::writev (this->get_handle (), 
+                                   iovp,
+                                   total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -90,7 +92,9 @@ ACE_FILE_IO::recv (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::readv (this->get_handle (), iovp, total_tuples);
+  ssize_t result = ACE_OS::readv (this->get_handle (),
+                                  iovp, 
+                                  total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
   delete [] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
@@ -98,4 +102,29 @@ ACE_FILE_IO::recv (size_t n, ...) const
   return result;
 }
 
+// Allows a client to read from a file without having to provide a
+// buffer to read.  This method determines how much data is in the
+// file, allocates a buffer of this size, reads in the data, and
+// returns the number of bytes read.
+
+ssize_t
+ACE_FILE_IO::recvv (iovec *io_vec)
+{
+  ACE_TRACE ("ACE_FILE_IO::recvv");
+
+  io_vec->iov_base = 0;
+  long length = ACE_OS::filesize (this->get_handle ());
+
+  if (length > 0)
+    {
+      ACE_NEW_RETURN (io_vec->iov_base,
+                      char[length],
+                      -1);
+      io_vec->iov_len = this->recv_n (io_vec->iov_base,
+                                      length);
+      return io_vec->iov_len;
+    }
+  else
+    return length;
+}
 
