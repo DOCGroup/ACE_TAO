@@ -54,7 +54,7 @@ class ACE_Export ACE_Task_Base : public ACE_Service_Object
   //    polymorphically.
 public:
   // = Initialization and termination methods.
-  ACE_Task_Base (ACE_Thread_Manager *);
+  ACE_Task_Base (ACE_Thread_Manager * = 0);
   // Constructor.
 
   virtual ~ACE_Task_Base (void);

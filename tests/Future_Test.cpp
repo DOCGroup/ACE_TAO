@@ -43,7 +43,7 @@ static ATOMIC_INT capsule_count (0);
 // a counter for the method objects...
 static ATOMIC_INT methodobject_count (0);
 
-class Scheduler : public ACE_Task<ACE_MT_SYNCH>
+class Scheduler : public ACE_Task_Base
   // = TITLE
   //     Active Object Scheduler.
 {

@@ -1,3 +1,24 @@
+Sat Mar 14 00:13:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Task.h (ACE_Task_Base): Give a default value of 0 for the
+ 	  Thread Manager so we can use this as a base class.
+
+	* tests/Future_Test.cpp: Since the Scheduler provides its own
+ 	  activation queue it doesn't make sense to inherit from ACE_Task
+ 	  (which provides its own queue) but instead ACE_Task_Base
+	  (which doesn't define its own queue).  Thanks to Loren Rittle
+ 	  <rittle@comm.mot.com> for reporting this.
+
+	* examples/Threads/future[12].cpp: Since the Scheduler provides
+ 	  its own activation queue it doesn't make sense to inherit from
+ 	  ACE_Task (which provides its own queue) but instead
+ 	  ACE_Task_Base (which doesn't define its own queue).  Thanks to
+ 	  Loren Rittle <rittle@comm.mot.com> for reporting this.
+
+	* examples/Threads/future[12].cpp: Removed the explicit call to
+ 	  scheduler_->close() to avoid closing the scheduler down twice.
+  	  Thanks to Loren Rittle <rittle@comm.mot.com> for reporting this.
+
 Fri Mar 13 23:41:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Process.cpp (ACE_Process_Options): Moved column out of
