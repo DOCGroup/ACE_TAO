@@ -762,11 +762,6 @@ ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
 ACE_thread_key_t ACE_OS::NULL_key;
 
-ACE_OS::ACE_OS (void)
-{
-// ACE_TRACE ("ACE_OS::ACE_OS");
-}
-
 #if defined (ACE_WIN32)
 
 // = Static initialization.
