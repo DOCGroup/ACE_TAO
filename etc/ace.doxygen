@@ -57,7 +57,9 @@ INPUT                 = docs \
                         ace/os_include/sys
 FILE_PATTERNS         = *.h *.cpp *.inl *.i *.txt
 RECURSIVE             = NO
-EXCLUDE               = ace/config.h
+EXCLUDE               = ace/config.h \
+                        ace/pre.h \
+                        ace/post.h
 EXCLUDE_PATTERNS      = config-*.h
 EXAMPLE_PATH          =
 EXAMPLE_PATTERNS      =
