@@ -19,6 +19,13 @@ TAO/performance-tests/Latency/AMI/run_test.pl: !MINIMUM !ST
 TAO/performance-tests/Latency/DSI/run_test.pl: !MINIMUM
 TAO/performance-tests/Latency/DII/run_test.pl: !MINIMUM
 TAO/performance-tests/Latency/Deferred/run_test.pl: !MINIMUM
+TAO/performance-tests/Sequence_Latency/Single_Threaded/run_test.pl
+TAO/performance-tests/Sequence_Latency/Thread_Pool/run_test.pl: !ST
+TAO/performance-tests/Sequence_Latency/Thread_Per_Connection/run_test.pl: !ST
+TAO/performance-tests/Sequence_Latency/AMI/run_test.pl: !MINIMUM !ST
+TAO/performance-tests/Sequence_Latency/DSI/run_test.pl: !MINIMUM
+TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM
+TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM
 TAO/performance-tests/Throughput/run_test.pl
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
