@@ -9,6 +9,7 @@
 #----------------------------------------------------------------------------
 
 BIN     = test_dump \
+	  test_get_opt \
 	  test_profile_timer \
 	  test_read_buffer \
 	  test_sstring \
