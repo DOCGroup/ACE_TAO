@@ -419,7 +419,7 @@ int ace_yydebug;                        /*  nonzero means print parse trace     
 #ifndef ACE_YYMAXDEPTH
 #define ACE_YYMAXDEPTH 10000
 #endif
-
+
 /* Define __ace_yy_memcpy.  Note that the size argument
    should be passed with type unsigned int, because that is what the non-GCC
    definitions require.  With GCC, __builtin_memcpy takes an arg
@@ -463,7 +463,7 @@ __ace_yy_memcpy (ACE_TCHAR *to, ACE_TCHAR *from, unsigned int count)
 
 #endif
 #endif
-
+
 
 
 /* The user can define ACE_YYPARSE_PARAM as the name of an argument to be passed
@@ -1040,7 +1040,6 @@ case 41:
 }
    /* the action file gets copied in in place of this dollarsign */
 
-
   ace_yyvsp -= ace_yylen;
   ace_yyssp -= ace_yylen;
 #ifdef ACE_YYLSP_NEEDED

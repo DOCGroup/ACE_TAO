@@ -71,6 +71,9 @@
 /// Enable unicode to generate ACE_Registry_Name_Space
 #define UNICODE
 
+/// Define this so that Svc_Conf_y.cpp is correctly parsed
+#define __cplusplus
+
 /// TAO features that should be documented too
 #define TAO_HAS_RT_CORBA 1
 #define TAO_HAS_MINIMUM_CORBA 0
