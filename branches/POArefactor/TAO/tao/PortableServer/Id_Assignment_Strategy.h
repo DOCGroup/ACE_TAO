@@ -54,6 +54,19 @@ namespace TAO
 
       /// Generate a new id
       void next_id (PortableServer::ObjectId &id) = 0;
+
+      /**
+       * Returns the key type the says which specific policy we have
+       */
+      virtual char id_assignment_key_type (void) const = 0;
+
+      /**
+       * Returns the length of the id_assignment type
+       */
+      char id_assignment_key_type_length (void) const
+      {
+        return sizeof (char);
+      }
     };
 
     class TAO_PortableServer_Export User_Id_Assignment_Strategy :
@@ -61,6 +74,11 @@ namespace TAO
     {
     public:
       virtual ~User_Id_Assignment_Strategy (void);
+
+      virtual char id_assignment_key_type (void) const
+      {
+        return 'U';
+      }
 
     private:
     };
@@ -70,6 +88,11 @@ namespace TAO
     {
     public:
       virtual ~System_Id_Assignment_Strategy (void);
+
+      virtual char id_assignment_key_type (void) const
+      {
+        return 'S';
+      }
     };
   }
 }

@@ -1,3 +1,21 @@
+Thu Sep 30 12:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Id_Assignment_Strategy.h:
+          Added id_assignment_key_type() and id_assignment_key_type_length()
+          methods, for each of the derived classes, implemented this.
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+          Added lifespan_key_type() and lifespan_key_type_length()
+          methods, for each of the derived classes, implemented this.
+
+        * tao/PortableServer/POA.cpp (create_lifespan_policy):
+          Implemented this method, we have to refactor the creation of the
+          policies, to much code duplication
+
+        * tao/PortableServer/Request_Processing_Strategy.h:
+          Added get_servant_manager, set_servant_manager, get_servant and
+          set_servant and implemented these methods for each of the types.
+
 Wed Sep 29 11:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Request_Processing_Strategy.h:

@@ -96,15 +96,29 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-// @johnny
-  /*
-  TAO_Lifespan_Policy *lifespan_policy = 0;
-  ACE_NEW_THROW_EX (lifespan_policy,
-                    TAO_Lifespan_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
-  return lifespan_policy;
-*/
+  TAO::Portable_Server::LifespanPolicyFactory *policy =
+    ACE_Dynamic_Service<TAO::Portable_Server::LifespanPolicyFactory>::instance (
+           "LifespanPolicyFactory");
+
+  // For static libraries try to force load
+  if (policy == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ::TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory);
+
+      policy =
+        ACE_Dynamic_Service<TAO::Portable_Server::LifespanPolicyFactory>::instance (
+           "LifespanPolicyFactory");
+    }
+
+  if (policy == 0)
+    {
+      return ::PortableServer::LifespanPolicy::_nil();
+    }
+  else
+    {
+      return policy->create(value);
+    }
 }
 
 PortableServer::IdUniquenessPolicy_ptr

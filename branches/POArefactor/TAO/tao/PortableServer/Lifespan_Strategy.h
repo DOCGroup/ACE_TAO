@@ -46,9 +46,26 @@ namespace TAO
         // dependent on type create the correct strategy.
       }
 
-      void
-      create (const char *name,
-              const TAO::ObjectKey &key);
+      void create (const char *name,
+                   const TAO::ObjectKey &key);
+
+      /**
+       * Validate the passed object key if it belongs to this POA.
+       */
+      bool validate (TAO::ObjectKey_var& key)
+
+      /**
+       * Returns the key type the says which specific policy we have
+       */
+      virtual char lifespan_key_type (void) = 0;
+
+      /**
+       * Returns the length of the key type
+       */
+      char lifespan_key_type_length (void)
+      {
+        return sizeof (char);
+      }
     };
 
     class TAO_PortableServer_Export Transient_Lifespan_Strategy :
@@ -56,6 +73,11 @@ namespace TAO
     {
     public:
       virtual ~Transient_Lifespan_Strategy (void);
+
+      virtual char lifespan_key_type (void)
+      {
+        return 'T';
+      }
 
     private:
       TAO_Creation_Time creation_time_;
@@ -67,6 +89,10 @@ namespace TAO
     public:
       virtual ~Persistent_Lifespan_Strategy (void);
 
+      virtual char lifespan_key_type (void)
+      {
+        return 'P';
+      }
     };
   }
 }
