@@ -330,8 +330,8 @@ Server_Repository::get_startup_info (
         new XML_ContentHandler (POA_name.c_str ());
 
       ACEXML_Parser parser;
-      ACEXML_InputSource* input = 0;
-      ACE_NEW_RETURN (input, ACEXML_InputSource input(fstm), -1);
+
+      ACEXML_InputSource input(fstm);
 
       parser.setContentHandler (this->handler_);
       parser.setDTDHandler (this->handler_);
