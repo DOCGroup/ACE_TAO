@@ -985,8 +985,8 @@ TAO_Client_Connection_Handler::close (u_long flags)
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define HASH_ADDR CACHED_CONNECT_STRATEGY::HASH_ADDRESS
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR CACHED_CONNECT_STRATEGY::REFCOUNTED_HASH_RECYCLABLE_ADDRESS
+#define HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_INET_Addr> > 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
