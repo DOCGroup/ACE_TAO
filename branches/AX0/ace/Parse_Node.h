@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
 /**
  * @class ACE_Parse_Node
  *
@@ -338,6 +339,7 @@ extern int ace_yyerrno;
 // Global variable used to communicate between the parser and the main
 // program.
 extern ACE_Service_Config *ace_this_svc;
+#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
 
 #include "ace/post.h"
 #endif /* ACE_PARSE_NODE_H */

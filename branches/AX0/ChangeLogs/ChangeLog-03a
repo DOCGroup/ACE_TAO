@@ -1,3 +1,15 @@
+Sun Feb 10 22:11:43 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Parse_Node.cpp:
+	* ace/Parse_Node.h:
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+	* ace/Svc_Conf.h:
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp: Decoupled old Service_Config parser from ACE.
+
 Thu Feb 07 01:48:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/examples/SAXPrint/main.cpp: Added a new test to try the new
