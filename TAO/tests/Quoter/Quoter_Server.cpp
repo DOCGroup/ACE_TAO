@@ -1,6 +1,19 @@
 // $Id$
+// ============================================================================
+//
+// = FILENAME
+//    Quoter_Server.cpp
+//
+// = DESCRIPTION
+//    The Server for the Quoter Factory 
+//
+// = AUTHOR
+//    Darrell Brunsch (brunsch@cs.wustl.edu)
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
-#include "quoter_server.h"
+#include "Quoter_Server.h"
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),
@@ -53,38 +66,30 @@ Quoter_Server::parse_args (void)
 
 int
 Quoter_Server::init (int argc,
-                    char** argv,
+                    char* argv[],
                     CORBA::Environment& env)
 {
-  // Call the init of TAO_ORB_Manager to create a child POA under the
-  // root POA.
-  this->init_child_poa (argc,
-                        argv,
-                        "child_poa",
-                        env);
+  //TAO_ORB_Manager::init();
 
-  TAO_CHECK_ENV_RETURN (env,-1);
+  // copy them, because parse_args expects them there
   this->argc_ = argc;
   this->argv_ = argv;
 
   this->parse_args ();
 
+
+  // activate the object
   CORBA::String_var str  =
-    this->activate_under_child_poa ("factory",
-                                    &this->factory_impl_,
-                                    env);
-  ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
-              str.in ()));
+    this->activate (&this->quoter_Factory_Impl_, env);
+
+  ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in ()));
 
   if (this->ior_output_file_)
-    {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
-    }
-
+  {
+    ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
+    ACE_OS::fclose (this->ior_output_file_);
+  }
+   
   if (this->use_naming_service_)
     return this->init_naming_service (env);
 
@@ -97,7 +102,7 @@ Quoter_Server::init (int argc,
 int
 Quoter_Server::init_naming_service (CORBA::Environment& env)
 {
-  TAO_TRY
+  TAO_TRY 
   {
     CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
     TAO_CHECK_ENV;
@@ -110,49 +115,28 @@ Quoter_Server::init_naming_service (CORBA::Environment& env)
 			   " (%P|%t) Unable to resolve the Name Service.\n"),
          -1);
 
-    CosNaming::NamingContext_var naming_context = 
+    namingContext_var_ = 
       CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
     
-    factory = this->factory_impl_._this (env);
-    TAO_CHECK_ENV_RETURN (env,-1);
-
-    
-    CosNaming::Name quoter_context_name (1);
-    quoter_context_name.length (1);
-    quoter_context_name[0].id = CORBA::string_dup ("IDL_Quoter");
-
-    this->quoter_context_ =
-      naming_context->bind_new_context (quoter_context_name,
-                                    env);
-    TAO_CHECK_ENV_RETURN (env,-1);
+  
+    CosNaming::Name quoterContextName (1);
+    quoterContextName.length (1);
+    quoterContextName[0].id = CORBA::string_dup ("IDL_Quoter");
+    CosNaming::NamingContext_var quoterNameContext =
+      namingContext_var_->bind_new_context (quoterContextName, env);
+    TAO_CHECK_ENV_RETURN (env, -1);
 
     //Register the quoter_factory name with the IDL_quoter Naming
     //Context...
-    CosNaming::Name factory_name (1);
-    factory_name.length (1);
-    factory_name[0].id = CORBA::string_dup ("quoter_factory");
-    this->quoter_context_->bind (factory_name,
-                                 factory.in (),
-                                 env);
-    TAO_CHECK_ENV_RETURN (env,-1);
+    CosNaming::Name quoterFactoryContextName (1);
+    quoterFactoryContextName.length (1);
+    quoterFactoryContextName[0].id = CORBA::string_dup ("quoter_factory");
+    quoterNameContext->bind (quoterFactoryContextName,
+                             quoter_Factory_Impl_._this(env),
+                             env);
+    TAO_CHECK_ENV_RETURN (env, -1);
 
-//    CosNaming::Name quoter_factory_name (2);
-//    quoter_factory_name.length (2);
-//    quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
-//    quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
-//    CORBA::Object_var factory_obj =
-//      naming_context->resolve (quoter_factory_name,TAO_TRY_ENV);
-//    TAO_CHECK_ENV;
-//    
-//    this->factory_ =
-//      Stock::Quoter_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
-//    TAO_CHECK_ENV;
-//    
-//    if (CORBA::is_nil (this->factory_.in ()))
-//      ACE_ERROR_RETURN ((LM_ERROR,
-//      " could not resolve quoter factory in Naming service <%s>\n"),
-//      -1);
   }
   TAO_CATCHANY
   {
@@ -187,19 +171,15 @@ Quoter_Server::~Quoter_Server (void)
       factory_name.length (2);
       factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
       factory_name[1].id = CORBA::string_dup ("quoter_factory");
-      // this->naming_context_->unbind (factory_name,TAO_TRY_ENV);
-      this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
+      this->namingContext_var_->unbind (factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
       factory_name.length (1);
-      //      this->naming_context_->unbind
-      //      (factory_name,TAO_TRY_ENV);
-      this->my_name_server_->unbind (factory_name,TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      // Destroy all the POAs.
+      this->namingContext_var_->unbind (factory_name,TAO_TRY_ENV);
+
       //      this->root_poa_->destroy (CORBA::B_TRUE,
       //                                CORBA::B_TRUE,
       //                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      // TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
