@@ -214,7 +214,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
       return *this;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (*this);
+  return *this;
 }
 
 // Destructor for an "Any" deep-frees memory if needed.
@@ -233,7 +233,7 @@ CORBA_Any::~CORBA_Any (void)
       this->cdr_ = 0;
 
       this->free_value (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       if (this->type_)
         CORBA::release (this->type_);
@@ -547,7 +547,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_short,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -575,7 +575,7 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -585,7 +585,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ushort,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -613,7 +613,7 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -623,7 +623,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_long,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -651,7 +651,7 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -661,7 +661,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ulong,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -689,7 +689,7 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -699,7 +699,7 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_longlong,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -727,7 +727,7 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -737,7 +737,7 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_ulonglong,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -765,7 +765,7 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -775,7 +775,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_float,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -803,7 +803,7 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -813,7 +813,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_double,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -841,7 +841,7 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -851,7 +851,7 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_any,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -868,9 +868,9 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
               TAO_InputCDR stream (this->cdr_);
               // decode the CDR
               CORBA::TypeCode::traverse_status retval =
-                stream.decode (CORBA::_tc_any, 
-                               &a, 
-                               0, 
+                stream.decode (CORBA::_tc_any,
+                               &a,
+                               0,
                                ACE_TRY_ENV);
              return (retval == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
             }
@@ -885,7 +885,7 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -895,7 +895,7 @@ CORBA_Any::operator>>= (char *&s) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_string,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -941,7 +941,7 @@ CORBA_Any::operator>>= (char *&s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -951,7 +951,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_TypeCode,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -985,7 +985,7 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 // = extraction into the special types
@@ -997,7 +997,7 @@ CORBA_Any::operator>>= (to_boolean b) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_boolean,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1025,7 +1025,7 @@ CORBA_Any::operator>>= (to_boolean b) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -1035,7 +1035,7 @@ CORBA_Any::operator>>= (to_octet o) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_octet,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1063,7 +1063,7 @@ CORBA_Any::operator>>= (to_octet o) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -1073,7 +1073,7 @@ CORBA_Any::operator>>= (to_char c) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_char,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1101,7 +1101,7 @@ CORBA_Any::operator>>= (to_char c) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -1111,7 +1111,7 @@ CORBA_Any::operator>>= (to_wchar wc) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_wchar,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1139,7 +1139,7 @@ CORBA_Any::operator>>= (to_wchar wc) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -1149,7 +1149,7 @@ CORBA_Any::operator>>= (to_string s) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_string,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1195,7 +1195,7 @@ CORBA_Any::operator>>= (to_string s) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 CORBA::Boolean
@@ -1205,7 +1205,7 @@ CORBA_Any::operator>>= (to_object obj) const
 
   ACE_TRY
     {
-      CORBA::Boolean result = 
+      CORBA::Boolean result =
         this->type_->equivalent (CORBA::_tc_Object,
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1230,7 +1230,7 @@ CORBA_Any::operator>>= (to_object obj) const
                                   ACE_CDR_BYTE_ORDER,
                                   TAO_ORB_Core_instance ());
 
-              CORBA::TypeCode::traverse_status status = 
+              CORBA::TypeCode::traverse_status status =
                 stream.decode (CORBA::_tc_Object,
                                &obj.ref_,
                                0,
@@ -1252,7 +1252,7 @@ CORBA_Any::operator>>= (to_object obj) const
       return 0;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  return 0;
 }
 
 // this is a copying version for unbounded strings Not inline, to

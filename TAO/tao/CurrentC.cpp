@@ -31,12 +31,12 @@ CORBA_Current_ptr CORBA_Current::_duplicate (CORBA_Current_ptr obj)
 
 CORBA_Current_ptr CORBA_Current::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_Current::_nil ();
-  if (!obj->_is_a ("IDL:CORBA/Current:1.0", env))
+  if (!obj->_is_a ("IDL:CORBA/Current:1.0", ACE_TRY_ENV))
     return CORBA_Current::_nil ();
   TAO_Stub *stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -59,14 +59,14 @@ CORBA_Current_ptr CORBA_Current::_nil (void)
   return (CORBA_Current_ptr)NULL;
 } // end of _nil
 
-CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env); // remote call
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV); // remote call
 }
 
 const char* CORBA_Current::_interface_repository_id (void) const
