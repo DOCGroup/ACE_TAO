@@ -156,7 +156,7 @@ sub report_errors {
   # Now send a summary of the errors to the ADMIN account...
   local $to = $ADMIN;
 
-  open (MAIL, "|".$MAIL.' -s [AUTO_COMPILE] '.$to)
+  open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$BUILD.'" '.$to)
     || mydie "Cannot open mail pipe for: $_\n";
 
   print MAIL 'The following message is brought to you by: ', "\n";
