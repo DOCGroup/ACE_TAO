@@ -203,8 +203,6 @@ ACE_OS::netdb_release (void)
 # define ACE_TSS_BASE_GUARD
 #endif /* ! ACE_MT_SAFE */
 
-ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
-
 // Static constant representing `zero-time'.
 // Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
@@ -1569,80 +1567,6 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
     }
 }
 
-class ACE_TSS_Cleanup
-  // = TITLE
-  //     Singleton that knows how to clean up all the thread-specific
-  //     resources for Win32.
-  //
-  // = DESCRIPTION
-  //     All this nonsense is required since Win32 doesn't
-  //     automatically cleanup thread-specific storage on thread exit,
-  //     unlike real operating systems... ;-)
-{
-public:
-  static ACE_TSS_Cleanup *instance (void);
-
-  ~ACE_TSS_Cleanup (void);
-
-  void exit (void *status);
-  // Cleanup the thread-specific objects.  Does _NOT_ exit the thread.
-
-  int insert (ACE_thread_key_t key, void (*destructor)(void *), void *inst);
-  // Insert a <key, destructor> tuple into the table.
-
-  int remove (ACE_thread_key_t key);
-  // Remove a <key, destructor> tuple from the table.
-
-  int detach (void *inst);
-  // Detaches a tss_instance from its key.
-
-  void key_used (ACE_thread_key_t key);
-  // Mark a key as being used by this thread.
-
-  int free_all_keys_left (void);
-  // Free all keys left in the table before destruction.
-
-  static int lockable () { return instance_ != 0; }
-  // Indication of whether the ACE_TSS_CLEANUP_LOCK is usable, and
-  // therefore whether we are in static constructor/destructor phase
-  // or not.
-
-protected:
-  void dump (void);
-
-  ACE_TSS_Cleanup (void);
-  // Ensure singleton.
-
-private:
-  // Array of <ACE_TSS_Info> objects.
-  typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
-  typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
-
-  ACE_TSS_TABLE table_;
-  // Table of <ACE_TSS_Info>'s.
-
-  ACE_thread_key_t in_use_;
-  // Key for the thread-specific array of whether each TSS key is in use.
-
-  ACE_TSS_Keys *tss_keys ();
-  // Accessor for this threads ACE_TSS_Keys instance.
-
-#if defined (ACE_HAS_TSS_EMULATION)
-  ACE_thread_key_t in_use_key_;
-  // Key that is used by in_use_.  We save this key so that we know
-  // not to call its destructor in free_all_keys_left ().
-#endif /* ACE_HAS_TSS_EMULATION */
-
-  // = Static data.
-  static ACE_TSS_Cleanup *instance_;
-  // Pointer to the singleton instance.
-};
-
-// = Static object initialization.
-
-// Pointer to the singleton instance.
-ACE_TSS_Cleanup *ACE_TSS_Cleanup::instance_ = 0;
-
 ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
 {
   // Zero out the instance pointer to support lockable () accessor.
@@ -1985,22 +1909,13 @@ ACE_TSS_Cleanup::tss_keys ()
 }
 
 # if defined (ACE_HAS_TSS_EMULATION)
-u_int ACE_TSS_Emulation::total_keys_ = 0;
 
-ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
-ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
- = { 0 };
-
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-
-int ACE_TSS_Emulation::key_created_ = 0;
-
-ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
+#   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
 /* static */
-#if defined (ACE_HAS_THR_C_FUNC)
+#     if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
-#endif /* ACE_HAS_THR_C_FUNC */
+#     endif /* ACE_HAS_THR_C_FUNC */
 void
 ACE_TSS_Emulation_cleanup (void *ptr)
 {
@@ -2084,7 +1999,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
 
   return ts_storage  ?  ts_storage  :  old_ts_storage;
 }
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 u_int
 ACE_TSS_Emulation::total_keys ()
@@ -6268,11 +6183,6 @@ ACE_OS_Object_Manager_Internal_Exit_Hook ()
   if (ACE_OS_Object_Manager::instance_)
     ACE_OS_Object_Manager::instance ()->fini ();
 }
-
-ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
-
-void *ACE_OS_Object_Manager::preallocated_object[
-  ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
 ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
 {
