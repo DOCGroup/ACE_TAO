@@ -21,3 +21,7 @@ PRELIB	= (echo "int main() { return 0; }" > gcctemp.c && \
 
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
+OBJDIRS         = .obj
+SHOBJ           = $(addsuffix .o,$(FILES))
+SOEXT           = o
+VSHDIR		= .obj/
