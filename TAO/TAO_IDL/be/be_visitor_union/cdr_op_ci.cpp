@@ -106,6 +106,21 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
                          "visit_union - "
                          "codegen for scope failed\n"), -1);
     }
+
+  // If there is no explicit default case, but there
+  // is an implicit one, and the discriminant is an enum,
+  // we need this to avert warnings in some compilers that
+  // not all case values are included. If there is no
+  // implicit default case, or the discriminator is not
+  // an enum, this does no harm.
+  if (node->default_index () == -1)
+    {
+      os->decr_indent (0);
+      *os << "default:" << be_nl;
+      os->incr_indent ();
+      *os << "break;";
+    }
+
   *os << be_uidt_nl << "}" << be_nl
       << "return result;" << be_uidt_nl
       << "}\n\n";
@@ -160,6 +175,20 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
                          "(%N:%l) be_visitor_union_cdr_op_ci::"
                          "visit_union - "
                          "codegen for scope failed\n"), -1);
+    }
+
+  // If there is no explicit default case, but there
+  // is an implicit one, and the discriminant is an enum,
+  // we need this to avert warnings in some compilers that
+  // not all case values are included. If there is no
+  // implicit default case, or the discriminator is not
+  // an enum, this does no harm.
+  if (node->default_index () == -1)
+    {
+      os->decr_indent (0);
+      *os << "default:" << be_nl;
+      os->incr_indent ();
+      *os << "break;";
     }
 
   *os << be_uidt_nl << "}" << be_nl
