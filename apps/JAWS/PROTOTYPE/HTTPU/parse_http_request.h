@@ -6,7 +6,7 @@
 #include "ace/OS.h"
 #include "HTTPU/http_headers.h"
 
-class Parse_HTTP_Request : public HTTP_HCodes
+class HTTPU_Export Parse_HTTP_Request : public HTTP_HCodes
 {
 public:
   Parse_HTTP_Request (const char *request = 0);
@@ -14,20 +14,19 @@ public:
 
   void init (const char *request);
 
-  int method (void) const { return (int) *this->method_; }
-  const char *method_str (void) const { return (const char *) *this->method_; }
+  int method (void) const;
+  const char *method_str (void) const;
 
-  int major_version (void) const { return this->major_version_; }
-  int minor_version (void) const { return this->minor_version_; }
+  int major_version (void) const;
+  int minor_version (void) const;
 
-  const char *version (void) const
-    { return this->version_ ? this->version_ : "HTTP/0.9"; }
+  const char *version (void) const;
 
-  const char *url (void) const { return this->url_; }
+  const char *url (void) const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_REQUEST, NOT_IMPLEMENTED };
 
-  int error (void) { return this->error_; }
+  int error (void) const;
   // 0 -> ok
 
   void dump (void);
@@ -43,5 +42,13 @@ private:
   int error_;
 
 };
+
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#   if defined (ACE_INLINE)
+#     undef ACE_INLINE
+#   endif /* ACE_INLINE */
+#   define ACE_INLINE inline
+#   include "HTTPU/parse_http_request.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif /* !defined (HTTPU_PARSE_HTTP_REQUEST_H) */

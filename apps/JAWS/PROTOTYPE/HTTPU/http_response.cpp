@@ -43,3 +43,7 @@ HTTP_Response::dump (void)
   HTTP_Base::dump ();
   ACE_DEBUG ((LM_DEBUG, "===== END entera_HTTP_Response::dump =====\n"));
 }
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+#   include "HTTPU/http_response.i"
+# endif /* ACE_HAS_INLINED_OSCALLS */
