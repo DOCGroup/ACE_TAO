@@ -1,4 +1,4 @@
-// $Id:
+// $Id$
 
 // ============================================================================
 //
@@ -39,8 +39,8 @@ Results::print_stats (const char *call_name)
   CORBA::ULong i;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "********** %s *********\n",
-	      call_name));
+              "********** %s *********\n",
+              call_name));
 
   if (this->error_count_ == 0)
     {
