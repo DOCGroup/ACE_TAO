@@ -1,25 +1,32 @@
-This is the cubit example that makes DII requests. It uses the
-server in IDL_Cubit (actually the Cubit factory). A DII request is
-made on the Cubit factory (it's IOR is displayed when the server is run)
-to get the current Cubit object. Then the operations are called on that
-Cubit object usign DII requests.
 
-Open a separate window (in IDL_Cubit) and run the server, then run the 
-client in DII_Cubit. No nameservice functionality yet, so you have to
-manually type in the IOR for now :-(
+This is the cubit example that does everything using DII requests. It uses the server in IDL_Cubit.
 
-In another window (on the same machine or a different machine) type in
-client -i <IOR> where IOR is the displayed factory IOR. To make typing
-a little easier, run the server with [-ORBobjrefstyle url] so the 
-displayed string will be shorter and easier to copy.
+***NOTE: This doesn't work on NT yet. This version was built with SunCC.
 
-Default number of loops for the timing tests is 250, but it can be set
-from the command line following [-n <# of loops>]. Other arguments are 
-supported, as shown in parse_args in client.cpp.
+A one-button test function hasn't been written yet, so you have to manually run the server first (in IDL_Cubit). Then run the client with zero or more of the following args:
+
+	[-d]			Increments TAO_debug_level.
+
+	[-n <# of calls>]	Sets the # of calls per loop (default is 250).
+
+	[-i <factory IOR>]	For passing the IOR by hand.
+
+	[-f <filename>]		If server is run with [-o <filename>] option, 
+				it outputs its factory IOR to a file, which
+				the client can read.
+
+	[-x]			Shuts down server when finished.
+
+	[-s]			Disables use of the TAO naming service (-i and
+				-f options do this automatically).
+
+If using the -i option, you might want to run the server with the option [-ORBobjrefstyle url]. This will cause the server to display its IOR in a more human-readable form. Make sure you use the factory IOR, NOT the nameservice IOR. The server displays both.
+
+The command line options, default calls per loop, order and display format of the stats are all similar to those in the IDL_Cubit tests.
+upported, as shown in parse_args in client.cpp.
 
 On the Unix side, the Makefile will also build IDL_Cubit/server if
 necessary (thanks to David Levine). If the server exits when run on a
 Unix machine, it probbly means that someone else is also running it 
 and the defaults port numbers have collided. Just add the arg
 [-ORBport 0] when running the server and it will get a new port #.
-
