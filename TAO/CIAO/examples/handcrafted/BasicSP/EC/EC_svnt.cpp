@@ -640,7 +640,6 @@ void
 CIAO_GLUE_BasicSP::EC_Servant::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  cout << "Amba Here ?? " << endl;
   // Simply relay to executor.  May not need to return the result...
   this->executor_->start (ACE_ENV_SINGLE_ARG_PARAMETER);
 }

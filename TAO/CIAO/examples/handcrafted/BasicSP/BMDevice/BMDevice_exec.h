@@ -53,6 +53,10 @@ namespace MyImpl
     data_read (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual char *
+    get_data (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     // Operations from Components::SessionComponent
 
     virtual void

@@ -1,3 +1,17 @@
+Sat May 17 16:29:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/descriptors/test.dat
+	* examples/handcrafted/BasicSP/BMClosedED/BMClosedED_exec.cpp
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay_exec.cpp
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp
+	* examples/handcrafted/BasicSP/EC/controller.cpp: Now the demo
+	  works! Fixed a few problems and made debug statements to be more
+	  meaningful. Now that teh CIDL compiler is also ready, we are
+	  ready to storm KSU :-)
+
 Sat May 17 12:40:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/handcrafted/BasicSP/BMDevice/BMDevice_svnt.cpp

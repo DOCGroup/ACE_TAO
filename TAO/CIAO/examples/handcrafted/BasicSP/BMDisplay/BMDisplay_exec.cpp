@@ -27,7 +27,7 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
               "BMDisplay - Doing computations \n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "BMDisplay - Doing data fecth \n"));
+              "BMDisplay - Doing data fetch \n"));
 
   // Refresh position
   BasicSP::ReadData_var dat
@@ -38,7 +38,8 @@ MyImpl::BMDisplay_exec_impl::push_data_ready (
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
   char *str =
-    dat->get_data ();
+    dat->get_data (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "BMDisplay - Display data is [%s] \n",
