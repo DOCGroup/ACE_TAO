@@ -6,13 +6,13 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>NavDisplay Servant Artifact</label>
   <UUID>412f8156-7913-4651-9110-f7a3f98c7a83</UUID>
-  <location>BMDisplay_svnt.so</location>
+  <location>BMDisplay_exec</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
   <dependsOn>
-    <name>BMDisplay_stub</name>
+    <name>BMDisplay_Stub</name>
     <referencedArtifact href="NavDisplay_Stub.iad"/>
   </dependsOn>
   <execParameter>

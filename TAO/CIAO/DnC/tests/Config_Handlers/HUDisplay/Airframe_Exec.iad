@@ -6,9 +6,9 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Airframe Executor Artifact</label>
   <UUID>0f76b3d3-3d50-4d65-88b1-e26b60b624dd</UUID>
-  <location>BMClosedED_exec.so</location>
+  <location>BMClosedED_exec</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
   <dependsOn>

@@ -6,13 +6,13 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Timer Executor Artifact</label>
   <UUID>5e4f2366-3810-4d4c-a269-5788a525cbe1</UUID>
-  <location>EC_svnt.so</location>
+  <location>EC_exec</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
   <dependsOn>
-    <name>EC_stub</name>
+    <name>EC_Stub</name>
     <referencedArtifact href="Timer_Stub.iad"/>
   </dependsOn>
     <execParameter>

@@ -6,9 +6,9 @@
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
   <label>Airframe Stub Artifact</label>
   <UUID>93bbdf7d-d3f7-4227-bb75-b0562ac15b92</UUID>
-  <location>BMClosedED_stub.so</location>
+  <location>BMClosedED_stub</location>
   <dependsOn>
-    <name>ACE_TAO_CIAO</name>
+    <name>ACE</name>
     <referencedArtifact href="Libraries.iad"/>
   </dependsOn>
 </Deployment:ImplementationArtifactDescription>
