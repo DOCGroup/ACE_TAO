@@ -341,27 +341,22 @@ int ACE_INET_Addr::set_usinggetaddrinfo (u_short port_number,
 
   hints.ai_family = address_family;
 
-  error = getaddrinfo(host_name, 0, &hints, &res0);
-  if(error) {
+  error = getaddrinfo (host_name, 0, &hints, &res0);
+  if (error)
     return -1;
-  }
+
   int ret = -1;
-  for(res = res0; res != 0; res = res->ai_next) {
-    if(res->ai_addrlen == sizeof(sockaddr_in)) {
-      sockaddr_in *addr = (sockaddr_in*)res->ai_addr;
-      this->set_address((const char*)&addr->sin_addr,sizeof(addr->sin_addr),0);
-      this->set_port_number(port_number,encode);
-      ret = 0;
-      break;
-    } else if(res->ai_addrlen == sizeof(sockaddr_in6)) {
-      sockaddr_in6 *addr = (sockaddr_in6*)res->ai_addr;
-      this->set_addr((void*)&addr->sin6_addr,sizeof(addr->sin6_addr));
-      this->set_port_number(port_number,encode);
-      ret = 0;
-      break;
+  for(res = res0; res != 0; res = res->ai_next)
+    {
+      if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
+	{
+	  this->set_addr (res->ai_addr, res->ai_addrlen);
+	  this->set_port_number (port_number, encode);
+	  ret = 0;
+	  break;
+	}
     }
-  }
-  freeaddrinfo(res0);
+  freeaddrinfo (res0);
   return ret;
 }
 #endif
