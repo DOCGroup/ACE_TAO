@@ -29,6 +29,7 @@ SUBDIRS = \
         Sched \
         Sched_Conf \
         Simple_Naming \
+        Redundant_Naming \
         Simulator \
         Time \
         Trading \

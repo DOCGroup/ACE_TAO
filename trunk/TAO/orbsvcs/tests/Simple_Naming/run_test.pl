@@ -5,8 +5,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-# This is a Perl script that runs all Naming Service tests.  It starts
-# all the servers and clients as necessary.
+# This is a Perl script that runs some Naming Service tests.
+# It runs all the tests that will run with min CORBA.
+# It starts all the servers and clients as necessary.
 
 use lib '../../../../bin';
 use PerlACE::Run_Test;
@@ -28,7 +29,6 @@ $ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 
 $ns_orb_port = 12000 + PerlACE::uniqueid ();
 $iorfile = PerlACE::LocalFile ("ns.ior");
 $persistent_ior_file = PerlACE::LocalFile ("pns.ior");
-$file_persistent_ior_file = PerlACE::LocalFile ("fpns.ior");
 $persistent_log_file = PerlACE::LocalFile ("test_log");
 $data_file = PerlACE::LocalFile ("test_run.data");
 
@@ -73,37 +73,33 @@ sub client
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBInitRef NameService=file://$iorfile",
          "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          "-s -ORBInitRef NameService=mcast://:$ns_multicast_port\::/NameService",
          "-t -ORBInitRef NameService=file://$iorfile",
          "-i -ORBInitRef NameService=file://$iorfile",
          "-e -ORBInitRef NameService=file://$iorfile",
          "-y -ORBInitRef NameService=file://$iorfile",
          "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
+         );
 
 @server_opts = ("-t 30",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .",
                 "", "", "", "", "",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .");
+                );
 
 @comments = ("Simple Test: \n",
              "mmap() Persistent Test (Part 1): \n",
-             "Flat File Persistent Test (Part 1): \n",
              "Simple Test (using multicast to locate the server): \n",
              "Tree Test: \n",
              "Iterator Test: \n",
              "Exceptions Test: \n",
              "Destroy Test: \n",
              "mmap() Persistent Test (Part 2): \n",
-             "Flat File Persistent Test (Part 2): \n");
+             );
 
 $test_number = 0;
 
-unlink ($persistent_ior_file, $file_persistent_ior_file,
-        $persistent_log_file, "NameService", "NameService_0");
+unlink ($persistent_ior_file, $persistent_log_file);
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
@@ -126,8 +122,7 @@ foreach $o (@opts) {
     $test_number++;
 }
 
-unlink ($persistent_ior_file, $file_persistent_ior_file, \
-        $persistent_log_file, "NameService", "NameService_0");
+unlink ($persistent_ior_file, $persistent_log_file);
 
 # Now run the multithreaded test, sending output to the file.
 print STDERR "\n          Multithreaded Test:\n";

@@ -13,44 +13,6 @@
 //
 // ============================================================================
 
-ACE_INLINE
-TAO_Storable_Base::TAO_Storable_Base()
-{
-}
-
-ACE_INLINE
-TAO_Storable_Base::TAO_Storable_Base (TAO_Reader_Base &)
-{
-}
-
-ACE_INLINE
-TAO_Storable_Base::~TAO_Storable_Base()
-{
-}
-
-ACE_INLINE
-TAO_Writer_Base::TAO_Writer_Base()
-  : delete_bindings_(0)
-{
-}
-
-ACE_INLINE
-TAO_Writer_Base::~TAO_Writer_Base()
-{
-}
-
-ACE_INLINE
-TAO_Reader_Base::TAO_Reader_Base()
-{
-}
-
-ACE_INLINE
-TAO_Reader_Base::~TAO_Reader_Base()
-{
-}
-
-
-
 ACE_INLINE void
 TAO_NS_Persistence_Header::size (unsigned int size)
 {
@@ -64,15 +26,15 @@ TAO_NS_Persistence_Header::size () const
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Header::context_name (const ACE_CString& context_name)
+TAO_NS_Persistence_Header::destroyed (int flag)
 {
-  this->context_name_ = context_name;
+  this->destroyed_ = flag;
 }
 
-ACE_INLINE ACE_CString
-TAO_NS_Persistence_Header::context_name () const
+ACE_INLINE int
+TAO_NS_Persistence_Header::destroyed () const
 {
-  return this->context_name_;
+  return this->destroyed_;
 }
 
 
@@ -113,29 +75,29 @@ TAO_NS_Persistence_Record::kind (const ACE_CString& kind)
 }
 
 ACE_INLINE ACE_CString
-TAO_NS_Persistence_Record::ior () const
+TAO_NS_Persistence_Record::ref () const
 {
-  return this->ior_;
+  return this->ref_;
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::ior (const ACE_CString& ior)
+TAO_NS_Persistence_Record::ref (const ACE_CString& ref)
 {
-  this->ior_ = ior;
-}
-
-
-ACE_INLINE ACE_CString
-TAO_NS_Persistence_Record::context_binding () const
-{
-  return this->context_binding_;
+  this->ref_ = ref;
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::context_binding (const ACE_CString& context_binding)
+TAO_NS_Persistence_Global::counter (unsigned int counter)
 {
-  this->context_binding_ = context_binding;
+  this->counter_ = counter;
 }
+
+ACE_INLINE unsigned int
+TAO_NS_Persistence_Global::counter () const
+{
+  return this->counter_;
+}
+
 
 ACE_INLINE
 TAO_Naming_Service_Persistence_Factory::TAO_Naming_Service_Persistence_Factory()
@@ -146,3 +108,14 @@ ACE_INLINE
 TAO_Naming_Service_Persistence_Factory::~TAO_Naming_Service_Persistence_Factory()
 {
 }
+
+ACE_INLINE
+TAO_Storable_Base::TAO_Storable_Base()
+{
+}
+
+ACE_INLINE
+TAO_Storable_Base::~TAO_Storable_Base()
+{
+}
+

@@ -7,6 +7,53 @@ Mon Jun 23 12:37:48 2003  Chad Elliott  <elliott_c@ociweb.com>
           would also happen if a 'list' command was issued and there were
           more than 10 servers registerd with the ImR.
 
+Mon Jun 23 12:38:54 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+          Buzilla bug #1499 fix applied.
+
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming.bor:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+          Inserted the redundant name service code.  Plus, bug 1499
+          fix applied to Storable_Naming_Context.cpp.
+
+        * orbsvcs/tests/Redundant_Naming:
+        * orbsvcs/tests/Redundant_Naming/README:
+        * orbsvcs/tests/Redundant_Naming/Makefile:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Redundant_Naming/test_object.idl:
+        * orbsvcs/tests/Redundant_Naming/run_test.pl:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.mpc:
+        * orbsvcs/tests/Redundant_Naming/Redundant_Naming.dsw:
+        * orbsvcs/tests/Redundant_Naming/client.dsp:
+        * orbsvcs/tests/Redundant_Naming/makefile.bor:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/tests.dsw:
+          added test for redundant name service
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test_ffp.pl:
+          Moved the flat file persistance test to a separate run test
+          so that it could be disabled on MIN CORBA.  The Redundant
+          Naming Service is build on the same code base as Flat File
+          and uses a Servant Activator which is not available in
+          minimum CORBA.
+
 Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:

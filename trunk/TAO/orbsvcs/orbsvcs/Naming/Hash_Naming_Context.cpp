@@ -493,46 +493,71 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                       CosNaming::NamingContext::_nil ());
 
-  // Stores our new Naming Context.
-  CosNaming::NamingContext_var result =
-    CosNaming::NamingContext::_nil ();
+  // Get the length of the name.
+  CORBA::ULong name_len = n.length ();
 
-  // Create new context.
-  result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+  // Check for invalid name.
+  if (name_len == 0)
+    ACE_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
+                      CosNaming::NamingContext::_nil ());
 
-  // Bind the new context to the name.
-  ACE_TRY
+  // If we received compound name, resolve it to get the context in
+  // which the binding should take place, then perform the operation on
+  // target context.
+  if (name_len > 1)
     {
-      bind_context (n,
-                    result.in ()
-                    ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNaming::NamingContext_var context =
+        get_context (n ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
+      CosNaming::Name simple_name;
+      simple_name.length (1);
+      simple_name[0] = n[name_len - 1];
+      return context->bind_new_context (simple_name ACE_ENV_ARG_PARAMETER);
     }
-  ACE_CATCHANY
-    {
-      // If the bind() operation fails we must destroy the recently
-      // created context, should any exceptions be raised by the
-      // destroy() operation we want to ignore them.
+  // If we received a simple name, we need to bind it in this context.
+  else
+  {
+      // Stores our new Naming Context.
+      CosNaming::NamingContext_var result =
+      CosNaming::NamingContext::_nil ();
+
+      // Create new context.
+      result = new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
+      // Bind the new context to the name.
+      ACE_TRY
       {
-        ACE_DECLARE_NEW_CORBA_ENV;
-        ACE_TRY_EX(DESTROY)
-          {
-            result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK_EX(DESTROY);
-          }
-        ACE_CATCHANY
-          {
-          }
-        ACE_ENDTRY;
+          bind_context (n,
+                        result.in ()
+                        ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
       }
-      // Re-raise the exception in bind_context()
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
-
-  return result._retn ();
+      ACE_CATCHANY
+      {
+          // If the bind() operation fails we must destroy the recently
+          // created context, should any exceptions be raised by the
+          // destroy() operation we want to ignore them.
+          {
+              ACE_DECLARE_NEW_CORBA_ENV;
+              ACE_TRY_EX(DESTROY)
+              {
+                  result->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK_EX(DESTROY);
+              }
+              ACE_CATCHANY
+              {
+              }
+              ACE_ENDTRY;
+          }
+          // Re-raise the exception in bind_context()
+          ACE_RE_THROW;
+      }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+      return result._retn ();
+  }
 }
 
 void

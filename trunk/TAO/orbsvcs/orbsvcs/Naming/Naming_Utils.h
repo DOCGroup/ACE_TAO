@@ -28,6 +28,7 @@
 
 // Forward decl;
 class TAO_Persistent_Context_Index;
+class TAO_Storable_Naming_Context_Activator;
 
 /**
  * @class TAO_Naming_Server
@@ -206,6 +207,23 @@ protected:
 
   /// If not zero use flat file persistence
   int use_storable_context_;
+
+  /**
+   * If not zero use servant activator that uses flat file persistence.
+   */
+  int use_servant_activator_;
+
+  /**
+   * Need to retain the servant activator between calls to
+   * init_with_orb() and init_new_naming().
+   */
+  TAO_Storable_Naming_Context_Activator *servant_activator_;
+
+  /**
+   * If not zero support redundant naming servers.
+   */
+  int use_redundancy_;
+
 };
 
 /**

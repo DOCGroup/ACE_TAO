@@ -27,7 +27,8 @@ OBJFILES = \
         $(OBJDIR)\Flat_File_Persistence.obj \
         $(OBJDIR)\Naming_Service_Container.obj \
         $(OBJDIR)\Storable.obj \
-        $(OBJDIR)\Storable_Naming_Context.obj
+        $(OBJDIR)\Storable_Naming_Context.obj \
+        $(OBJDIR)\Storable_Naming_Context_Activator.obj
 
 RESOURCE = $(OBJDIR)\CosNaming.res
 

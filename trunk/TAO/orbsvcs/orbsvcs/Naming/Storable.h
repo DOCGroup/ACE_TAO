@@ -19,34 +19,18 @@ const int szInt =  sizeof(int);
 const int szChar = sizeof(char);
 const int szBool = sizeof(int);
 
-class TAO_Writer_Base;
-class TAO_Reader_Base;
-
-class TAO_Storable_Base
-{
-public:
-  TAO_Storable_Base();
-
-  TAO_Storable_Base (TAO_Reader_Base&);
-
-  virtual ~TAO_Storable_Base();
-
-  virtual void Write(TAO_Writer_Base&) = 0;
-
-};
-
 class TAO_NS_Persistence_Header
 {
  public:
   void size (unsigned int size);
   unsigned int size () const ;
 
-  void context_name (const ACE_CString& context_name);
-  ACE_CString context_name () const;
+  void destroyed (int flag);
+  int destroyed () const ;
 
   private:
   unsigned int size_;
-  ACE_CString context_name_;
+  int destroyed_;
 };
 
 class TAO_NS_Persistence_Record
@@ -63,63 +47,67 @@ class TAO_NS_Persistence_Record
   ACE_CString kind () const;
   void kind (const ACE_CString& kind);
 
-  ACE_CString ior () const;
-  void ior (const ACE_CString& ior);
-
-  ACE_CString context_binding () const;
-  void context_binding (const ACE_CString& context_binding);
+  ACE_CString ref () const;
+  void ref (const ACE_CString& ior);
 
  private:
   Record_Type type_;
   ACE_CString id_;
   ACE_CString kind_;
-  ACE_CString ior_;
-  ACE_CString context_binding_;
+  ACE_CString ref_;
 };
 
-class TAO_Writer_Base
+class TAO_NS_Persistence_Global
 {
  public:
-  virtual ~TAO_Writer_Base();
-  TAO_Writer_Base();
+  void counter (unsigned int counter);
+  unsigned int counter () const ;
 
-  virtual int open (const char* name) = 0;
+  private:
+  unsigned int counter_;
+};
+  
+class TAO_Storable_Base
+{
+public:
+  TAO_Storable_Base();
+
+  virtual ~TAO_Storable_Base();
+
+  virtual void remove() = 0;
+
+  virtual int exists() = 0;
+
+  virtual int open () = 0;
+
   virtual int close () = 0;
 
-  virtual TAO_Writer_Base& operator << (
+  virtual int flock (int whence, int start, int len) = 0;
+
+  virtual int funlock (int whence, int start, int len) = 0;
+
+  virtual time_t last_changed(void) = 0;
+
+  virtual TAO_Storable_Base& operator << (
               const TAO_NS_Persistence_Header& header)  = 0;
 
-  virtual TAO_Writer_Base& operator << (
+  virtual TAO_Storable_Base& operator << (
               const TAO_NS_Persistence_Record& record) = 0;
 
-
-
- public:
-  /// This is used to indicate to the Writer that the bindings map is now
-  /// empty and therefore now persistence resources are needed for it.
-  int delete_bindings_;
-
-};
-
-class TAO_Reader_Base
-{
- public:
-  TAO_Reader_Base ();
-  virtual ~TAO_Reader_Base ();
-
-  virtual int open (const char* name) = 0;
-  virtual int close () = 0;
-
-  virtual TAO_Reader_Base& operator >> (
+  virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Header& header)  = 0;
 
-  virtual TAO_Reader_Base& operator >> (
+  virtual TAO_Storable_Base& operator >> (
               TAO_NS_Persistence_Record& record) = 0;
 
+  virtual TAO_Storable_Base& operator << (
+              const TAO_NS_Persistence_Global& global) = 0;
 
+  virtual TAO_Storable_Base& operator >> (
+              TAO_NS_Persistence_Global& global)  = 0;
 
 };
-
+  
 class TAO_Naming_Service_Persistence_Factory
 {
 public:
@@ -129,8 +117,8 @@ public:
 
   // Factory Methods
 
-  virtual TAO_Reader_Base *create_reader() = 0;
-  virtual TAO_Writer_Base *create_writer() = 0;
+  virtual TAO_Storable_Base *create_stream(const ACE_CString & file,
+                                           const ACE_TCHAR * mode) = 0;
 };
 
 #if defined (__ACE_INLINE__)
