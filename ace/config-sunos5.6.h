@@ -23,9 +23,6 @@
 
 #define ACE_THREAD_POSIX_SEM
 
-// SunOS 5.6 does support sched_get_priority_{min,max}
-#undef ACE_THR_PRI_FIFO_DEF
-
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
 #endif /* ACE_CONFIG_H */
