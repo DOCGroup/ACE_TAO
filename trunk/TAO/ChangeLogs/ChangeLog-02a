@@ -1,3 +1,13 @@
+Wed Aug  8 15:03:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/DIOP_Transport.cpp (send_request): There was no
+	  reason to idle the transport after a send. In other protocols, 
+	  where the handles are cached the call idle_after_send () does
+	  certain things based on the muxed strategy. But for DIOP, we
+	  dont cache the handles and the call started doing something
+	  really bad like closing the handles. We now just return a 0
+	  after sending the request.
+
 Wed Aug  8 12:16:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Thread_Per_Connection_Latency/svc.conf:
