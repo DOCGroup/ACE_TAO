@@ -20,7 +20,7 @@
 #include "ace/streams.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/corba.h"
-#include "Naming_Server.h"
+#include "Naming_Utils.h"
 
 // Default constructor
 
