@@ -3892,7 +3892,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableSer
 // be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
-#include "PortableServerC.i"
+#include "PortableServerC.inl"
 #endif /* defined INLINE */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

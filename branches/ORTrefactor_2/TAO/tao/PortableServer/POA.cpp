@@ -15,8 +15,8 @@ ACE_RCSID (PortableServer,
 #include "tao/StringSeqC.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
+#include "tao/PortableServer/ORT_Adapter.h"
+#include "tao/PortableServer/ORT_Adapter_Factory.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -419,7 +419,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->ort_adapter_ != 0)
   {
-    TAO_ObjectReferenceTemplate_Adapter_Factory *ort_factory =
+    TAO::ORT_Adapter_Factory *ort_factory =
       this->object_reference_template_adapter_factory ();
 
     ort_factory->destroy (this->ort_adapter_);
@@ -731,7 +731,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  TAO::ObjectReferenceTemplate_Array array_obj_ref_template;
+  TAO::ORT_Array array_obj_ref_template;
 
   CORBA::ULong i = 0;
 
@@ -1022,7 +1022,7 @@ TAO_POA::add_ior_component_to_profile (
 
 void
 TAO_POA::adapter_state_changed (
-   const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+   const TAO::ORT_Array &array_obj_ref_template,
    PortableInterceptor::AdapterState state
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -4065,14 +4065,14 @@ TAO_POA::imr_notify_shutdown (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-TAO_ObjectReferenceTemplate_Adapter_Factory *
+TAO::ORT_Adapter_Factory *
 TAO_POA::object_reference_template_adapter_factory (void)
 {
-  return ACE_Dynamic_Service<TAO_ObjectReferenceTemplate_Adapter_Factory>::instance (
+  return ACE_Dynamic_Service<TAO::ORT_Adapter_Factory>::instance (
            TAO_POA::ort_adapter_factory_name ());
 }
 
-TAO::ObjectReferenceTemplate_Adapter *
+TAO::ORT_Adapter *
 TAO_POA::object_reference_template_adapter (void)
 {
   if (this->ort_adapter_ != 0)
@@ -4089,7 +4089,7 @@ TAO_POA::object_reference_template_adapter (void)
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
-        TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
+        TAO::ORT_Adapter_Factory * ort_ap_factory =
           this->object_reference_template_adapter_factory();
 
         if (!ort_ap_factory)
@@ -4303,7 +4303,7 @@ TAO_POA_Static_Resources::instance (void)
 }
 
 TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
-  : ort_adapter_factory_name_ ("ObjectReferenceTemplate_Adapter_Factory")
+  : ort_adapter_factory_name_ ("ORT_Adapter_Factory")
 {
   // @@Johnny, I don't understand what is the use of this name?
   // Probably, we should nuke this. We shoudl anyway be using the

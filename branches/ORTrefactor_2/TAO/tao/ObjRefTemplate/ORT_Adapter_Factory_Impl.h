@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ObjectReferenceTemplate_Adapter_Factory_Impl.h
+ *  @file    ORT_Adapter_Factory_Impl.h
  *
  *  $Id$
  *
@@ -10,9 +10,8 @@
  */
 //=============================================================================
 
-
-#ifndef TAO_OBJECTREFERENCETEMPLATE_ADAPTER_FACTORY_IMPL_H
-#define TAO_OBJECTREFERENCETEMPLATE_ADAPTER_FACTORY_IMPL_H
+#ifndef TAO_ORT_ADAPTER_FACTORY_IMPL_H
+#define TAO_ORT_ADAPTER_FACTORY_IMPL_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,60 +22,61 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ort_export.h"
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h"
+#include "tao/PortableServer/ORT_Adapter_Factory.h"
 
-// @@ Johnny, can you please put this in TAO namespace?
-//
-/**
- * @class TAO_ObjectReferenceTemplate_Adapter_Factory_Impl
- *
- * @brief TAO_ObjectReferenceTemplate_Adapter_Factory_Impl
- *
- * Class that creates instances of TAO_ObjectReferenceTemplate_Adapter
- * (one per POA). This is the derived class that contains the actual
- * implementation.
- */
-class TAO_ORT_Export TAO_ObjectReferenceTemplate_Adapter_Factory_Impl
-  : public TAO_ObjectReferenceTemplate_Adapter_Factory
+namespace TAO
 {
-public:
-  virtual ~TAO_ObjectReferenceTemplate_Adapter_Factory_Impl (void);
+  /**
+   * @class ORT_Adapter_Factory_Impl
+   *
+   * @brief ORT_Adapter_Factory_Impl
+   *
+   * Class that creates instances of::TAO_ObjectReferenceTemplate_Adapter
+   * (one per POA). This is the derived class that contains the actual
+   * implementation.
+   */
+  class TAO_ORT_Export ORT_Adapter_Factory_Impl
+    : public ORT_Adapter_Factory
+  {
+  public:
+    virtual ~ORT_Adapter_Factory_Impl (void);
 
-  /// Create an adapter
-  virtual TAO::ObjectReferenceTemplate_Adapter * create (
-      ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    /// Create an adapter
+    virtual TAO::ORT_Adapter * create (
+        ACE_ENV_SINGLE_ARG_DECL
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Destroy an adapter that is created by this factory
-  virtual void destroy (
-      TAO::ObjectReferenceTemplate_Adapter * adapter
-      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    /// Destroy an adapter that is created by this factory
+    virtual void destroy (
+        TAO::ORT_Adapter * adapter
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Used to force the initialization of the code.
-  static int Initializer (void);
-};
+    // Used to force the initialization of the code.
+    static int Initializer (void);
+  };
 
-ACE_STATIC_SVC_DECLARE (TAO_ObjectReferenceTemplate_Adapter_Factory_Impl)
-ACE_FACTORY_DECLARE (TAO_ORT, TAO_ObjectReferenceTemplate_Adapter_Factory_Impl)
+  ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
+  ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
 
-#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
+  #if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
 
-typedef int (*TAO_Module_Initializer) (void);
+  typedef int (*TAO_Module_Initializer) (void);
 
-static TAO_Module_Initializer
-TAO_Requires_ORTFactory_Initializer =
-  &TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::Initializer;
+  static TAO_Module_Initializer
+  TAO_Requires_ORTFactory_Initializer =
+    &ORT_Adapter_Factory_Impl::Initializer;
 
-#else
+  #else
 
-static int
-TAO_Requires_ORTFactory_Initializer =
-  TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::Initializer ();
+  static int
+  TAO_Requires_ORTFactory_Initializer =
+    ORT_Adapter_Factory_Impl::Initializer ();
 
-#endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+  #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+}
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_OBJECTREFERENCETEMPLATE_ADAPTER_FACTORY_IMPL_H */
+#endif /* TAO_ORT_ADAPTER_FACTORY_IMPL_H */

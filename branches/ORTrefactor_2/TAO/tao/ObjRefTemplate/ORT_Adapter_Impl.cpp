@@ -1,32 +1,28 @@
 // $Id$
 
-#include "ObjectReferenceTemplate_Adapter_Impl.h"
+#include "ORT_Adapter_Impl.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_methods.h"
 
-#if !defined (__ACE_INLINE__)
-# include "ObjectReferenceTemplate_Adapter_Impl.inl"
-#endif /* ! __ACE_INLINE__ */
-
 ACE_RCSID (ORT,
-           ObjectReferenceTemplate_Adapater_Impl,
+           ORT_Adapter_Impl,
            "$Id$")
 
 namespace TAO
 {
-  ObjectReferenceTemplate_Adapter_Impl::ObjectReferenceTemplate_Adapter_Impl (void)
+  ORT_Adapter_Impl::ORT_Adapter_Impl (void)
     : tao_ort_template_ (0)
   {
   }
 
-  ObjectReferenceTemplate_Adapter_Impl::~ObjectReferenceTemplate_Adapter_Impl (void)
+  ORT_Adapter_Impl::~ORT_Adapter_Impl (void)
   {
   }
 
   char *
-  ObjectReferenceTemplate_Adapter_Impl::server_id (ACE_ENV_SINGLE_ARG_DECL)
+  ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // @@Johnny, just document why duplicate isn't necessary.
@@ -34,7 +30,7 @@ namespace TAO
   }
 
   char *
-  ObjectReferenceTemplate_Adapter_Impl::orb_id (ACE_ENV_SINGLE_ARG_DECL)
+  ORT_Adapter_Impl::tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // @@Johnny, just document why duplicate isn't necessary.
@@ -42,7 +38,7 @@ namespace TAO
   }
 
   PortableInterceptor::AdapterName *
-  ObjectReferenceTemplate_Adapter_Impl::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
+  ORT_Adapter_Impl::tao_adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // @@Johnny, comment for duplicate also applies here..
@@ -50,9 +46,9 @@ namespace TAO
   }
 
   CORBA::Object_ptr
-  ObjectReferenceTemplate_Adapter_Impl::make_object (const char *repo_id,
-                                                     const TAO_PI::ObjectId &id
-                                                     ACE_ENV_ARG_DECL)
+  ORT_Adapter_Impl::make_object (const char *repo_id,
+                                 const PortableInterceptor::ObjectId &id
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->ort_factory_->make_object (repo_id,
@@ -60,16 +56,16 @@ namespace TAO
                                             ACE_ENV_ARG_PARAMETER);
   }
 
-  TAO_PI::ObjectReferenceTemplate *
-  ObjectReferenceTemplate_Adapter_Impl::get_adapter_template (void)
+  PortableInterceptor::ObjectReferenceTemplate *
+  ORT_Adapter_Impl::get_adapter_template (void)
   {
     CORBA::add_ref (ort_template_.in());
 
     return ort_template_;
   }
 
-  TAO_PI::ObjectReferenceFactory *
-  ObjectReferenceTemplate_Adapter_Impl::get_obj_ref_factory (void)
+  PortableInterceptor::ObjectReferenceFactory *
+  ORT_Adapter_Impl::get_obj_ref_factory (void)
   {
     CORBA::add_ref (ort_factory_.in());
 
@@ -77,8 +73,8 @@ namespace TAO
   }
 
   int
-  ObjectReferenceTemplate_Adapter_Impl::set_obj_ref_factory (
-    TAO_PI::ObjectReferenceFactory *cf
+  ORT_Adapter_Impl::set_obj_ref_factory (
+    PortableInterceptor::ObjectReferenceFactory *cf
     ACE_ENV_ARG_DECL)
   {
     ort_factory_ = cf;
@@ -89,11 +85,11 @@ namespace TAO
   }
 
   int
-  ObjectReferenceTemplate_Adapter_Impl::activate (const char *server_id,
-                                                  const char *orb_id,
-                                                  TAO_PI::AdapterName *adapter_name,
-                                                  TAO_POA *poa
-                                                  ACE_ENV_ARG_DECL)
+  ORT_Adapter_Impl::activate (const char *server_id,
+                              const char *orb_id,
+                              PortableInterceptor::AdapterName *adapter_name,
+                              TAO_POA *poa
+                              ACE_ENV_ARG_DECL)
   {
     // @@Johnny, how do you protect against multiple activates. Just
     // for sanity.. Do we need a lock?
@@ -117,7 +113,7 @@ namespace TAO
   }
 
   void
-  ObjectReferenceTemplate_Adapter_Impl::poa (TAO_POA * poa)
+  ORT_Adapter_Impl::poa (TAO_POA * poa)
   {
     // @@ Johnny, why isn't the POA  duplicated here?
     this->tao_ort_template_->poa (poa);

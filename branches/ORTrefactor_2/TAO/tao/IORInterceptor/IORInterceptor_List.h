@@ -24,7 +24,7 @@
 #include "IORInterceptorC.h"
 
 #include "tao/Interceptor_List.h"
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
+#include "tao/PortableServer/ORT_Adapter.h"
 
 /**
  * @class TAO_IORInterceptor_List
@@ -55,7 +55,7 @@ public:
   TYPE & interceptors (void);
 
   void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ORT_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

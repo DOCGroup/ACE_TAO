@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- * @file ObjectReferenceTemplate_Adapter_Impl.h
+ * @file ORT_Adapter_Impl.h
  *
  * $Id$
  *
- * This is the implementation of the TAO_ObjectReferenceTemplate_Adapter
+ * This is the implementation of the TAO::ObjectReferenceTemplate_Adapter
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
 
-#ifndef TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H
-#define TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H
+#ifndef TAO_ORT_ADAPTER_IMPL_H
+#define TAO_ORT_ADAPTER_IMPL_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ObjectReferenceTemplate_Adapter.h"
+#include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 
 #if defined(_MSC_VER)
@@ -35,22 +35,18 @@
 
 class TAO_POA;
 
-/// Local aliasing
-// @@ Johnny see this trick to make things smaller.
-namespace TAO_PI = PortableInterceptor;
-
 namespace TAO
 {
   /**
    * @class ObjectReferenceTemplate_Adapter_Impl
    *
-   * @brief Implementation of the TAO_ObjectReferenceTemplate_Adapter
+   * @brief Implementation of the TAO::ObjectReferenceTemplate_Adapter
    */
-  class TAO_ORT_Export ObjectReferenceTemplate_Adapter_Impl
-    : public ObjectReferenceTemplate_Adapter
+  class TAO_ORT_Export ORT_Adapter_Impl
+    : public ORT_Adapter
   {
   public:
-    ObjectReferenceTemplate_Adapter_Impl (void);
+    ORT_Adapter_Impl (void);
 
     /// Activate this adapter
     virtual int activate (const char *server_id,
@@ -64,32 +60,27 @@ namespace TAO
       PortableInterceptor::ObjectReferenceFactory *current_factory
       ACE_ENV_ARG_DECL);
 
+    /// Accessor methods to ObjectReferenceTemplate template
+    virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
+
+    /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
+    virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void);
+
     /**
-     * @name PortableInterceptor::ObjectReferenceTemplate Methods
-     *
-     * Methods required by the
-     * PortableInterceptor::ObjectReferenceTemplate ValueType.
+     * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
+     * Methods
      */
-    // @@ Johnny, could you please either add a tao_* to the following
-    // or document them that they are adapter methods. This could be
-    // confusing.
     //@{
-    virtual char * server_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual char * orb_id (ACE_ENV_SINGLE_ARG_DECL)
+    virtual char * tao_orb_id (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual TAO_PI::AdapterName * adapter_name (
+    virtual PortableInterceptor::AdapterName * tao_adapter_name (
         ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
-
-    /// Accessor methods to ObjectReferenceTemplate template
-    virtual TAO_PI::ObjectReferenceTemplate *get_adapter_template (void);
-
-    /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-    virtual TAO_PI::ObjectReferenceFactory * get_obj_ref_factory (void);
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -100,7 +91,7 @@ namespace TAO
     //@{
     virtual CORBA::Object_ptr make_object (
         const char * repository_id,
-        const TAO_PI::ObjectId & id
+        const PortableInterceptor::ObjectId & id
         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
@@ -122,10 +113,9 @@ namespace TAO
      * Protected destructor to enforce proper memory management via
      * reference counting.
      */
-    virtual ~ObjectReferenceTemplate_Adapter_Impl (void);
+    virtual ~ORT_Adapter_Impl (void);
 
   private:
-
     /// The ORT Template, this is the factory and its identify
     PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 
@@ -141,10 +131,6 @@ namespace TAO
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-# include "ObjectReferenceTemplate_Adapter_Impl.inl"
-#endif /* ! __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
-#endif /* TAO_OBJECT_REFERENCE_TEMPLATE_ADAPTER_IMPL_H */
+#endif /* TAO_ORT_ADAPTER_IMPL_H */

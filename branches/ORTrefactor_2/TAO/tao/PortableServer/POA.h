@@ -56,7 +56,7 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
-#include "ObjectReferenceTemplate_Adapter.h"
+#include "ORT_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -133,7 +133,7 @@ protected:
 class ServerObject_i;
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
-
+class TAO_IORInfo;
 
 namespace PortableInterceptor
 {
@@ -143,10 +143,9 @@ namespace PortableInterceptor
 
 namespace TAO
 {
-  class ObjectReferenceTemplate_Adapter;
+  class ORT_Adapter;
+  class ORT_Adapter_Factory;
 }
-
-class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
 /**
  * @class TAO_POA
@@ -167,6 +166,7 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
+  friend class TAO_IORInfo;
 
   typedef ACE_CString String;
 
@@ -275,19 +275,6 @@ public:
   /// Adapter. Added wrt to ORT Spec.
   PortableInterceptor::AdapterName *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // @@ Johnny, why are the following two methods public?
-  // Can't you make the IORInfo class private?
-  /// Accessor methods to ObjectReferenceTemplate
-  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
-
-  /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
-
-  /// Set the object reference factory
-  void set_obj_ref_factory (
-    PortableInterceptor::ObjectReferenceFactory *current_factory
-    ACE_ENV_ARG_DECL);
 
   /// Store the given TaggedComponent for eventual insertion into all
   /// object reference profiles.
@@ -621,7 +608,7 @@ protected:
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ORT_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -863,6 +850,17 @@ protected:
   static TAO_POA_Policy_Set &default_poa_policies (void);
 
 protected:
+  /// Accessor methods to ObjectReferenceTemplate
+  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
+
+  /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
+  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
+
+  /// Set the object reference factory
+  void set_obj_ref_factory (
+    PortableInterceptor::ObjectReferenceFactory *current_factory
+    ACE_ENV_ARG_DECL);
+
 
   TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant
@@ -883,10 +881,10 @@ protected:
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  TAO::ObjectReferenceTemplate_Adapter *
+  TAO::ORT_Adapter *
     object_reference_template_adapter (void);
 
-  TAO_ObjectReferenceTemplate_Adapter_Factory *
+  TAO::ORT_Adapter_Factory *
     object_reference_template_adapter_factory (void);
 
   const TAO_Creation_Time &creation_time (void);
@@ -952,7 +950,7 @@ protected:
   CORBA::OctetSeq id_;
 
   /// Pointer to the object reference template adapter.
-  TAO::ObjectReferenceTemplate_Adapter *ort_adapter_;
+  TAO::ORT_Adapter *ort_adapter_;
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
@@ -1116,7 +1114,7 @@ public:
    * objectreferencefactory_adapter_factory_name() will be called to set
    * the value to "Concrete_ObjectReferenceTemplate_Adapter_Factory".
    */
-  CORBA::String_var ort_adapter_factory_name_;
+  ACE_CString ort_adapter_factory_name_;
 
 private:
   /// Constructor.
