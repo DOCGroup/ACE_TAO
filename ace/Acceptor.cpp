@@ -339,6 +339,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
 
   // Default is "timeout (0, 0)," which means "poll."
   ACE_Time_Value timeout;
+#  if defined (ACE_WIN64)
+  // This arg is ignored on Windows and causes pointer truncation
+  // warnings on 64-bit compiles.
+  int select_width = 0;
+#  else
+  int select_width = int (listener) + 1;
+#  endif /* ACE_WIN64 */
 
   // Accept connections from clients.  Note that a loop is used for two
   // reasons:
@@ -404,7 +411,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_input (ACE_HANDLE listene
   // Now, check to see if there is another connection pending and
   // break out of the loop if there is none.
   while (this->use_select_
-         && ACE_OS::select (int (listener) + 1,
+         && ACE_OS::select (select_width,
                             conn_handle,
                             0,
                             0,
