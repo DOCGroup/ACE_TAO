@@ -43,26 +43,32 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
   // The conditions which will raise an alarm follow.
 
   // The first parameter is the origin_id and the second the temperature.
-  Temperature_Criterion_var tc (new Temperature_Criterion_impl (KITCHEN, 32));
+  Temperature_Criterion_var tc (ACE_static_cast(Temperature_Criterion*,
+                                                new Temperature_Criterion_impl (KITCHEN, 32)));
   criterions->store_criterion (tc.in ());
 
-  tc = new Temperature_Criterion_impl (BATHROOM, 27);
+  tc = ACE_static_cast(Temperature_Criterion*,
+                       new Temperature_Criterion_impl (BATHROOM, 27));
   criterions->store_criterion (tc.in ());
 
 
   // Alarm if little Jonas is not in the child's room
 
   Point leftbottom = {1, 2, 3};
-  Position_var leftbottom_v (new Position_impl (leftbottom));
+  Position_var leftbottom_v (ACE_static_cast(Position*,
+                                             new Position_impl (leftbottom)));
   Point topright = {2, 3, 4};
-  Position_var topright_v (new Position_impl (topright));
-  Position_Criterion_var pc (new Position_Criterion_impl (JONAS,
-                                                          leftbottom_v,
-                                                          topright_v));
+  Position_var topright_v (ACE_static_cast(Position*,
+                                           new Position_impl (topright)));
+  Position_Criterion_var pc (ACE_static_cast(Position_Criterion*,
+                                             new Position_Criterion_impl (JONAS,
+                                                                          leftbottom_v,
+                                                                          topright_v)));
   criterions->store_criterion (pc.in ());
 
   // Generic criterion matches every urgent massage
-  Log_Msg_Criterion_var lc (new Log_Msg_Criterion_impl);
+  Log_Msg_Criterion_var lc (ACE_static_cast(Log_Msg_Criterion*,
+                                            new Log_Msg_Criterion_impl));
   // Null id flags to handle every Log_Msg
   lc->origin_id_ (0);
   criterions->store_criterion (lc.in ());
