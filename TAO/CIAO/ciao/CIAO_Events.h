@@ -16,6 +16,8 @@
 #define CIAO_EVENTS_H
 #include /**/ "ace/pre.h"
 
+// @@ George Pragma please..
+
 #include "orbsvcs/CosNotifyCommS.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
@@ -27,6 +29,7 @@
 #include "ace/Active_Map_Manager.h"
 #include "CIAO_EventsS.h"
 
+// @@ George, can't we stuff everything in CIAO namespace?
 namespace CIAO_Events
 {
 
@@ -47,9 +50,18 @@ namespace CIAO_Events
       } disconnect;
   };
 
+  // @@ George, if you accept the suggestion in CIAO_Events.idl, we
+  // should probably add a class per file.
+
   /// An abstract base class. Derived classes will provide appropriate implementations of
   /// the connect, disconnect, and push methods. Each event source has an associated
   /// EventServiceBase, stored in a map in CIAO::Container.
+  /**
+   *  @@ George, doxygen documentation please..
+   */
+  // @@ George, any particular reason that this cannot be a local
+  /// interface in an idl? The above struct  can also be pushed into
+  /// an IDL, unless you don't want to have object semantics.
   class EventServiceBase
   {
 
@@ -196,7 +208,7 @@ namespace CIAO_Events
 
     /// Map of consumers
     ACE_Active_Map_Manager<Components::EventConsumerBase_ptr> consumer_map_;
-    
+
   };
 
   class CosNotifyService :
@@ -264,6 +276,18 @@ namespace CIAO_Events
   /// an RT Event Channel. An object of this type will be returned from
   /// CIAO::Container::_ciao_create_event_consumer_config () when "RTEC" is
   /// specified as the event service type.
+  // @@ George, class documentations are done like this in doxygen
+  //
+  // /**
+  //  * @class name
+  //  *
+  //  * @brief  brief explanation here
+  //  *
+  //  *
+  //  */
+  //
+
+
   class RTEvent_Consumer_Config :
     public virtual POA_CIAO_Events::Consumer_Config
   {
@@ -313,7 +337,7 @@ namespace CIAO_Events
     CONNECTION_ID consumer_id_;
 
     CONNECTION_ID supplier_id_;
-    
+
     Components::EventConsumerBase_var consumer_;
 
     EventServiceType service_type_;
@@ -416,7 +440,7 @@ namespace CIAO_Events
   private:
 
     CONNECTION_ID consumer_id_;
-    
+
     CONNECTION_ID supplier_id_;
 
     Components::EventConsumerBase_var consumer_;
@@ -516,7 +540,7 @@ namespace CIAO_Events
   private:
 
     CONNECTION_ID consumer_id_;
-    
+
     CONNECTION_ID supplier_id_;
 
     Components::EventConsumerBase_var consumer_;
@@ -578,7 +602,8 @@ namespace CIAO_Events
   {
 
   public:
-
+    // @@ George, why don't you initialize with the POA pointer. Just
+    // curious.
     Events_Manager (CORBA::ORB_ptr orb);
 
     Consumer_Config_ptr create_consumer_config (const char * service_type);
@@ -593,6 +618,10 @@ namespace CIAO_Events
 
   private:
 
+    // @George, all these can be moved to a different
+    // library. Further, they probably need to be delegated to the
+    // underlying concrete type to create it for you instead of
+    // providing interfaces.
     void create_rt_event_channel (
         ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((

@@ -13,15 +13,17 @@
 #include /**/ "ace/pre.h"
 
 #include "CCM_BaseC.h"
+
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "CIAO_Container_Export.h"
 #include "CIAO_ValueC.h"
 #include "ace/Active_Map_Manager.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "CIAO_Events.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace CIAO
 {
@@ -70,6 +72,7 @@ namespace CIAO
   };
 
 
+  // @@ George, can this be placed in a different file.
   /**
    * @class ObjectId_Cookie
    *
@@ -99,6 +102,7 @@ namespace CIAO
 
   class ObjectId_Cookie_init : public virtual ::Components::Cookie_init
   {
+
 
   public:
     ObjectId_Cookie_init (void);
