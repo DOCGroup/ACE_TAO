@@ -1,3 +1,50 @@
+Tue Jan 11 21:27:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Messaging.pidl (Messaging): Added two TAO specific SYNC
+	  options that control how buffering takes place in the ORB.
+
+	  (a) SYNC_EAGER_BUFFERING is the same as SYNC_NONE.  These
+	  options will first queue the message in the buffering queue and
+	  then check the buffering constraints.  If the constraints have
+	  been reached, the buffered messages will be delivered to the
+	  server.  If the delivery of the messages to the server times
+	  out, the queued messages will remain queued until the buffering
+	  constraints are reached again.
+
+	  (b) SYNC_DELAYED_BUFFERING will first check the buffering queue.
+	  If the queue already has buffered messages, then this option
+	  will behave the same as the above option, i.e., buffer the
+	  message for later delivery.  However, if the queue is empty, it
+	  will try to deliver the message immediately. If the message
+	  delivery to the server times out, the message will be queued for
+	  later delivery when the buffering constraints are reached.
+
+	* tao: Added code to handle the new options and strategies related
+	  to the above change.  The following files were effected:
+
+	  - Invocation.cpp
+	  - GIOP.cpp
+	  - MessagingC.cpp
+	  - MessagingC.h
+	  - ORB_Core.cpp
+	  - ORB_Core.h
+	  - ORB_Core.i
+	  - Stub.cpp
+	  - Sync_Strategies.cpp
+	  - Sync_Strategies.h
+	  - TAOC.cpp
+	  - TAOC.h
+
+	* tao/GIOP.cpp (write_request_header_std): Comparison with majic
+	  numbers is evil ;-) Changed it to compare against the constants.
+
+	* tao/Pluggable.h (TAO_Transport): Added friendship between the
+	  transport class and the sync classes.
+
+	* tests/Timed_Buffered_Oneways/client.cpp
+	  (setup_buffering_constraints): Added the ability to either
+	  choose eager or delayed buffering.
+
 Tue Jan 11 17:25:16 2000  bala  <bala@cs.wustl.edu>
 
         * TAO version 1.0.12 released.

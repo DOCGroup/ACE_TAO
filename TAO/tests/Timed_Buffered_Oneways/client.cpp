@@ -20,6 +20,9 @@
 
 ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
+// Eager buffering option.
+static int eager_buffering = 0;
+
 // Name of file contains ior.
 static const char *IOR = "file://ior";
 
@@ -45,12 +48,16 @@ static int shutdown_server = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:d:t:w:z:x");
+  ACE_Get_Opt get_opts (argc, argv, "ek:i:d:t:w:z:x");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'e':
+        eager_buffering = 1;
+        break;
+
       case 'k':
         IOR = get_opts.optarg;
         break;
@@ -83,6 +90,7 @@ parse_args (int argc, char **argv)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
+                           "-e eager buffering [default is delayed] "
                            "-k IOR "
                            "-i iterations "
                            "-d data bytes "
@@ -160,33 +168,33 @@ setup_buffering_constraints (CORBA::ORB_ptr orb,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Setup the none sync scope policy, i.e., the ORB will buffer
-  // oneways.
-  Messaging::SyncScope sync_none = Messaging::SYNC_NONE;
+  // Setup the sync scope policy, i.e., the ORB will buffer oneways.
+  Messaging::SyncScope sync =
+    eager_buffering ? Messaging::SYNC_EAGER_BUFFERING : Messaging::SYNC_DELAYED_BUFFERING;
 
-  // Setup the none sync scope any.
-  CORBA::Any sync_none_any;
-  sync_none_any <<= sync_none;
+  // Setup the sync scope any.
+  CORBA::Any sync_any;
+  sync_any <<= sync;
 
-  // Setup the none sync scope policy list.
-  CORBA::PolicyList sync_none_policy_list (1);
-  sync_none_policy_list.length (1);
+  // Setup the sync scope policy list.
+  CORBA::PolicyList sync_policy_list (1);
+  sync_policy_list.length (1);
 
-  // Setup the none sync scope policy.
-  sync_none_policy_list[0] =
+  // Setup the sync scope policy.
+  sync_policy_list[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                        sync_none_any,
+                        sync_any,
                         ACE_TRY_ENV);
   ACE_CHECK;
 
-  // Setup the none sync scope.
-  policy_current->set_policy_overrides (sync_none_policy_list,
+  // Setup the sync scope.
+  policy_current->set_policy_overrides (sync_policy_list,
                                         CORBA::ADD_OVERRIDE,
                                         ACE_TRY_ENV);
   ACE_CHECK;
 
   // We are now done with this policy.
-  sync_none_policy_list[0]->destroy (ACE_TRY_ENV);
+  sync_policy_list[0]->destroy (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Flush buffers.

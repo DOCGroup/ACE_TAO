@@ -105,7 +105,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_called_ (0),
     priority_mapping_ (0),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-    none_sync_strategy_ (0),
+    eager_buffering_sync_strategy_ (0),
+    delayed_buffering_sync_strategy_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
     transport_sync_strategy_ (0),
     svc_config_argc_ (0),
@@ -121,8 +122,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  ACE_NEW (this->none_sync_strategy_,
-           TAO_None_Sync_Strategy);
+  ACE_NEW (this->eager_buffering_sync_strategy_,
+           TAO_Eager_Buffering_Sync_Strategy);
+
+  ACE_NEW (this->delayed_buffering_sync_strategy_,
+           TAO_Delayed_Buffering_Sync_Strategy);
 
   ACE_NEW (this->policy_manager_,
            TAO_Policy_Manager);
@@ -149,7 +153,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  delete this->none_sync_strategy_;
+  delete this->eager_buffering_sync_strategy_;
+  delete this->delayed_buffering_sync_strategy_;
 
   delete this->policy_manager_;
   delete this->default_policies_;

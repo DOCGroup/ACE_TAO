@@ -56,6 +56,10 @@ class TAO_Export TAO_Transport
   //   The transport object is created in the Service handler
   //   constructor and deleted in the Service Handler's destructor!!
 
+  friend class TAO_Transport_Sync_Strategy;
+  friend class TAO_Eager_Buffering_Sync_Strategy;
+  friend class TAO_Delayed_Buffering_Sync_Strategy;
+
 public:
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
