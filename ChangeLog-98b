@@ -24,13 +24,13 @@ Wed Sep 23 14:26:44 EDT 1998  James CE Johnson <jcej@lads.com>
         Fixed explicit template instantiaions in
         tutorials 5, 6, 7.
 
-	Fixed a nasty bug in 9's Makefile (and removed
-	similar comment in 8's Makefile)
+        Fixed a nasty bug in 9's Makefile (and removed
+        similar comment in 8's Makefile)
 
-	Preliminary version of 013 committed.  The code
-	worked before I began "optimizing" and should work
-	again in a couple of days.  The HTML is not yet
-	done but will be by the weekend (I hope).
+        Preliminary version of 013 committed.  The code
+        worked before I began "optimizing" and should work
+        again in a couple of days.  The HTML is not yet
+        done but will be by the weekend (I hope).
 
 Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -42,6 +42,10 @@ Wed Sep 23 12:15:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.cpp: replace ACE_HAS_STHREADS with
           ACE_HAS_PRIOCNTL.  Thanks to Ossama for pointing this out.
+
+        * performance-tests/TTCP/{ACE-C++,C,Orbix}/Makefile: removed
+          old Quantify LINK_COMMANDs.  They don't look like they're used
+          anywhere.
 
 Wed Sep 23 11:30:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
