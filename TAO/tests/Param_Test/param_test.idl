@@ -62,6 +62,7 @@ interface Param_Test
                                   out Fixed_Struct s3);
 
   // sequences and typedefs
+  typedef sequence<string> StrSeq1;
   typedef sequence<string> StrSeq;
   StrSeq test_strseq (in StrSeq s1,
                       inout StrSeq s2,
