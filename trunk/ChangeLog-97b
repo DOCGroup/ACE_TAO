@@ -6,6 +6,24 @@ Tue Sep  2 14:42:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 Tue Sep  2 09:51:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Moved the <ACE_CLEANUP_FUNC> typedef from the
+ 	  ACE_Object_Manager into global scope so that it can also be used
+ 	  by the ACE_Thread_Manager.
+
+	* ace/DEV_IO: Moved the get_remote_addr() and get_local_addr()
+ 	  from the DEV class to the DEV_IO class, which seems to be more
+ 	  consistent with how they should be used.
+
+	* ace/FILE_IO: Added the get_remote_addr() and get_local_addr()
+ 	  methods to FILE_IO.  Now we should be able to use this with the
+ 	  Connector pattern.  Thanks to Stephen Coy
+ 	  <coys@mail.ns.wsa.com.au> for reporting this.
+
+	* ace/DEV_Connector*h, ace/FILE*.h: Added "traits" for PEER_ADDR
+ 	  and PEER_STREAM.  Now we should be able to use this with the
+ 	  Connector pattern.  Thanks to Stephen Coy
+ 	  <coys@mail.ns.wsa.com.au> for reporting this.
+
 	* tests/Async_Timer_Queue_Test.cpp (main): Replaced the use of
  	  fputs() with read() so that it will be signal-safe.  Thanks to
  	  Carlos for pointing out the need for this.
@@ -16,6 +34,9 @@ Tue Sep  2 09:51:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  exit.
 
 Mon Sep 01 21:31:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Makefile: ChangeLog is no longer a symbolic link, but instead
+	  is the most recent ChangeLog file.
 
 	* ace/Timer_Queue_T.cpp (schedule): added ACE_UNUSED_ARGs for act
 	  and interval.
