@@ -14,7 +14,7 @@
 template<class T>
 void
 activate_object_with_id (T * &result,
-                         PortableServer::POA_var poa,
+                         PortableServer::POA_ptr poa,
                          PortableServer::ServantBase *servant,
                          const FtRtecEventComm::ObjectId &oid
                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)

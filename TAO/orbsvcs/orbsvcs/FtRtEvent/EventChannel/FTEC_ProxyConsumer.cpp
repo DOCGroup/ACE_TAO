@@ -35,11 +35,11 @@ TAO_FTEC_ProxyPushConsumer::activate (
 {
   result = RtecEventChannelAdmin::ProxyPushConsumer::_nil();
   ACE_TRY {
-    object_id_ =      Request_Context_Repository().get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
+    object_id_ = Request_Context_Repository().get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     PortableServer::POA_var poa = _default_POA(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    activate_object_with_id(result,                            poa.in(),                            this,                            object_id_.in ()                            ACE_ENV_ARG_PARAMETER);
+    activate_object_with_id(result, poa.in(), this, id() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
@@ -109,7 +109,7 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DE
 
 void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)
 {
-  state.object_id = this->object_id_.in ();
+  state.object_id = this->object_id_;
   if (this->is_connected()) {
     FtRtecEventChannelAdmin::ProxyPushConsumerConnectionInfo info;
     info.push_supplier = this->supplier();

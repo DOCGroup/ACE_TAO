@@ -2,7 +2,7 @@
 #include "activate_with_id.h"
 #include "UUID.h"
 #include "resolve_init.h"
-#include "orbsvcs/FtRtecEventCommS.h"
+#include "orbsvcs/orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (Utils,
@@ -226,17 +226,17 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
 
   RtecEventChannelAdmin::EventChannel_var gateway;
 
-  activate_object_with_id(gateway.out(), impl_->poa, this, oid ACE_ENV_ARG_PARAMETER);
+  activate_object_with_id(gateway.out(), impl_->poa.in(), this, oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   ++oid[9];
   activate_object_with_id(impl_->consumer_admin.out(),
-    impl_->poa,
+    impl_->poa.in(),
     &impl_->consumer_admin_servant,
     oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   ++oid[9];
   activate_object_with_id(impl_->supplier_admin.out(),
-    impl_->poa,
+    impl_->poa.in(),
     &impl_->supplier_admin_servant,
     oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
@@ -326,7 +326,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
-  activate_object_with_id(result, impl_->poa,
+  activate_object_with_id(result, impl_->poa.in(),
                          &impl_->proxy_supplier_servant,
                          local_oid ACE_ENV_ARG_PARAMETER);
   return result;
@@ -356,7 +356,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
   memcpy(&local_oid[0], &remote_proxy_oid_ptr, sizeof(remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
-  activate_object_with_id(result, impl_->poa,
+  activate_object_with_id(result, impl_->poa.in(),
                           &impl_->proxy_consumer_servant,
                           local_oid ACE_ENV_ARG_PARAMETER);
   return result;
