@@ -49,11 +49,11 @@ public:
 
   const BackupList& backups() const;
 
-  Info_ptr setup_info(const FTRT::ManagerInfoList & info_list,
+  Info* setup_info(const FTRT::ManagerInfoList & info_list,
               int my_position
               ACE_ENV_ARG_DECL);
 
-  void update_info(Info_ptr info);
+  void update_info(Info_ptr& info);
 
   const PortableServer::ObjectId& object_id() const;
   const CosNaming::Name& name() const;

@@ -6,6 +6,7 @@
 
 #include "tao/Typecode.h"
 #include "tao/IOP_IORC.h"
+#include "ace/TSS_T.h"
 
 ACE_RCSID (EventChannel,
            Request_Context_Repository,
@@ -18,6 +19,7 @@ PortableInterceptor::SlotId seq_num_slot;
 PortableInterceptor::SlotId ft_request_service_context_slot;
 PortableInterceptor::SlotId transaction_depth_slot;
 CORBA::ORB_ptr orb;
+ACE_TSS<FtRtecEventChannelAdmin::ObjectId> oid;
 }
 
 
@@ -54,6 +56,7 @@ Request_Context_Repository::set_object_id(
   const FtRtecEventChannelAdmin::ObjectId& object_id
   ACE_ENV_ARG_DECL)
 {
+  /*
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
@@ -65,22 +68,25 @@ Request_Context_Repository::set_object_id(
                 ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
+  */
+  *oid = object_id;
 }
 
 FtRtecEventChannelAdmin::ObjectId_var
 get_object_id(CORBA::Any_var a
               ACE_ENV_ARG_DECL)
 {
-  FtRtecEventChannelAdmin::ObjectId* object_id;
+  FtRtecEventChannelAdmin::ObjectId *object_id, *r;
   FtRtecEventChannelAdmin::ObjectId_var result;
 
   if ((a.in() >>= object_id) ==0)
     ACE_THROW_RETURN(CORBA::NO_MEMORY(), result);
 
-
-  ACE_NEW_THROW_EX(result,
+  ACE_NEW_THROW_EX(r,
                    FtRtecEventChannelAdmin::ObjectId(*object_id),
                    CORBA::NO_MEMORY());
+
+  result = r;
   return result;
 }
 
@@ -88,6 +94,7 @@ get_object_id(CORBA::Any_var a
 FtRtecEventChannelAdmin::ObjectId_var
 Request_Context_Repository::get_object_id(ACE_ENV_SINGLE_ARG_DECL)
 {
+  /*
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent"
                                                ACE_ENV_ARG_PARAMETER);
@@ -99,6 +106,12 @@ Request_Context_Repository::get_object_id(ACE_ENV_SINGLE_ARG_DECL)
 
   return ::get_object_id(a
                          ACE_ENV_ARG_PARAMETER);
+  */
+  FtRtecEventChannelAdmin::ObjectId *object_id;
+  ACE_NEW_THROW_EX(object_id,
+                   FtRtecEventChannelAdmin::ObjectId(*oid),
+                   CORBA::NO_MEMORY());
+  return FtRtecEventChannelAdmin::ObjectId_var(*object_id);
 }
 
 FtRtecEventChannelAdmin::ObjectId_var

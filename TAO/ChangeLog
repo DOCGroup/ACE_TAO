@@ -1,3 +1,23 @@
+Fri Nov 19 17:50:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
+
+        * orbsvcs\orbsvcs\FtRtEvent\EventChannel\Dynamic_Bitset.h
+          Remove include <memory.h>
+          
+        * orbsvcs\orbsvcs\FtRtEvent\EventChannel\FtEventServiceInterceptor.cpp
+          Changed to use ACE_OS::strdup() instead of strdup() in standard C library.
+          
+        * orbsvcs\orbsvcs\FtRtEvent\EventChannel\GroupInfoPublisher.h
+        * orbsvcs\orbsvcs\FtRtEvent\EventChannel\GroupInfoPublisher.cpp
+          Changed to use plain pointer instead of auto_ptr<> as function return type. 
+           
+        * orbsvcs\orbsvcs\FtRtEvent\EventChannel\Request_Context_Repository.cpp
+          Fixed the problem of getting corrent object id. Thanks to  Thia Chang Chao 
+          <tchangch@dso.org.sg> for reporting the problem.
+          
+        * orbsvcs\orbsvcs\FtRtEvent\Utils\UUID.cpp
+          Fixed warning in g++ 3.3.
+        
+        
 Thu Nov 18 12:39:59 2004  Ciju John  <john_c@ociweb.com>
 
         * TAO-INSTALL.html:
