@@ -1,3 +1,33 @@
+Fri Jul 27 11:24:50 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Svc_Conf.y: Allow quoted strings as the pathname.  Thanks
+	  to Kevin Burge <kcburge@systemware-inc.com> for suggesting this
+ 	  and providing the fix.
+
+	* ace/Svc_Conf.l: Added support for "~" in pathnames to support
+	  Win32isms.  Thanks to Kevin Burge <kcburge@systemware-inc.com>
+ 	  for suggesting this and providing the fix.
+
+	* ace/Refcounted_Auto_Ptr.i (assign): Fixed the code to avoid a
+	  race condition.  Thanks to Charlie Duke for this fix.
+
+Thu Jul 26 08:15:36 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU: Changed
+	  $PATH to $(PATH).  Thanks to Frank Wolf for reporting this.
+
+Wed Jul 25 17:46:58 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Asynch_Acceptor.{h,cpp}: Added an asynch_accept() accessor
+	  method.  Thanks to Craig L. Ching <cching@mqsoftware.com> for
+ 	  reporting this.
+
+Wed Jul 25 17:36:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Refcounted_Auto_Ptr.i: Added a lock for the reference count
+	  to the assign() method.  Thanks to Charlie Duke
+ 	  <cduke@cuseeme.com> for reporting this.
+
 Fri Jul 27 23:17:31 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_wchar.h: If ACE_HAS_XPG4_MULTIBYTE_CHAR is set, then

@@ -29,7 +29,7 @@ letter	        [a-zA-Z_]
 letter_or_digit	[a-zA-Z_0-9]
 digit           [0-9]
 ident           {letter}{letter_or_digit}*
-pathname        ([A-Za-z\%]:)?[a-zA-Z_0-9/\%\.\\-]+
+pathname        ([A-Za-z\%]:)?[a-zA-Z_0-9/\%\.\\~-]+
 symbol		[ -~]
 string		(\"{symbol}*\"|\'{symbol}*\')
 white_space	[ \t]
