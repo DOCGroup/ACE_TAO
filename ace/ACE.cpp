@@ -1325,7 +1325,7 @@ ACE::sendmsg (ACE_HANDLE handle,
 
 ssize_t
 ACE::readv (ACE_HANDLE handle,
-            struct iovec *iov,
+            ACE_IO_Vector_Base *iov,
             int iovcnt,
             const ACE_Time_Value *timeout)
 {
@@ -1354,7 +1354,7 @@ ACE::readv (ACE_HANDLE handle,
 
 ssize_t
 ACE::writev (ACE_HANDLE handle,
-             const struct iovec *iov,
+             const ACE_IO_Vector_Base *iov,
              int iovcnt,
              const ACE_Time_Value *timeout)
 {
@@ -1383,7 +1383,7 @@ ACE::writev (ACE_HANDLE handle,
 
 ssize_t
 ACE::readv (ACE_HANDLE handle,
-            struct ACE_IO_Vector *iov,
+            ACE_IO_Vector *iov,
             int iovcnt,
             const ACE_Time_Value *timeout)
 {
@@ -1412,7 +1412,7 @@ ACE::readv (ACE_HANDLE handle,
 
 ssize_t
 ACE::writev (ACE_HANDLE handle,
-             const struct ACE_IO_Vector *iov,
+             const ACE_IO_Vector *iov,
              int iovcnt,
              const ACE_Time_Value *timeout)
 {
