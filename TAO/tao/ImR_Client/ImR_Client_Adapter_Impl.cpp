@@ -164,6 +164,13 @@ namespace TAO
           imr_locator->server_is_shutting_down (poa->name().c_str () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+      ACE_CATCH (CORBA::COMM_FAILURE, ex)
+        {
+          // At the moment we call this during ORB shutdown and the ORB is
+          // configured to drop replies during shutdown (it does by default in
+          // the LF model) we get a COMM_FAILURE exception which we ignore
+          ACE_UNUSED_ARG (ex);
+        }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "POA::imr_notify_shutdown()");
