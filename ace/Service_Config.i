@@ -51,6 +51,14 @@ ACE_Static_Svc_Descriptor::operator== (ACE_Static_Svc_Descriptor &d) const
   return ACE_OS::strcmp (name_, d.name_) == 0;
 }
 
+// Compare two service descriptors for inequality.
+
+ACE_INLINE int
+ACE_Static_Svc_Descriptor::operator!= (ACE_Static_Svc_Descriptor &d) const
+{
+  return !(*this == d);
+}
+
 ACE_INLINE void
 ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
 {
