@@ -49,22 +49,22 @@ public:
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::EventChannel_ptr rtec,
-            CORBA::Environment &TAO_TRY_ENV);
+            CORBA::Environment &TAO_IN_ENV);
   // Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   // -1 on error, 0 on success.
 
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &TAO_TRY_ENV);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (CORBA::Environment &TAO_IN_ENV);
   // The for_consumers method will return the same ConsumerAdmin_ptr
   // everytime its called.
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (CORBA::Environment &TAO_TRY_ENV);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (CORBA::Environment &TAO_IN_ENV);
   // The for_suppliers method will return the same SupplierAdmin_ptr
   // everytime its called.
 
-  virtual void destroy (CORBA::Environment &TAO_TRY_ENV);
+  virtual void destroy (CORBA::Environment &TAO_IN_ENV);
   // Destroys this Event Channel object.
 
-  void shutdown (CORBA::Environment &TAO_TRY_ENV);
+  void shutdown (CORBA::Environment &TAO_IN_ENV);
   // destroys this Event Channel object and <delete>s this object.
 
 private:
