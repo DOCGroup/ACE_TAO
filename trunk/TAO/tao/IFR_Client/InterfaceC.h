@@ -29,7 +29,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_Client_Adapter_Impl.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Any.h"
 #include "tao/Object.h"
