@@ -64,6 +64,18 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the sequence
 
+  virtual int gen_var_defn (void);
+  // generate the _var class definition
+
+  virtual int gen_var_impl (void);
+  // generate the implementation for the _var class
+
+  virtual int gen_out_defn (void);
+  // generate the _out class definition
+
+  virtual int gen_out_impl (void);
+  // generate the _out implementation
+
   virtual int gen_typecode (void);
   // generate the typecode
 

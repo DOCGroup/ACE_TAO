@@ -51,18 +51,6 @@ public:
   ~be_decl (void);
   // destructor
 
-  virtual int gen_var_defn (void);
-  // generate the _var class definition
-
-  virtual int gen_var_impl (void);
-  // generate the implementation for the _var class
-
-  virtual int gen_out_defn (void);
-  // generate the _out class definition
-
-  virtual int gen_out_impl (void);
-  // generate the _out implementation
-
   virtual int gen_client_header (void) = 0;
   // Generates the client-side header information for the decl
 
@@ -80,12 +68,6 @@ public:
 
   virtual int gen_server_inline (void) = 0;
   // Generates the server-side inlines for the decl
-
-  virtual idl_bool lookup_seq_name (Identifier *);
-  // lookup a name inside a list of generated seq names
-
-  virtual idl_bool add_seq_name (Identifier *);
-  // add a generated seq name to a list.
 
   virtual void size_type (SIZE_TYPE);
   // set the size type
@@ -144,9 +126,6 @@ protected:
   idl_bool srv_hdr_gen_;
   idl_bool srv_skel_gen_;
   idl_bool srv_inline_gen_;
-
-  UTL_IdList *seq_names_;
-  // list of generated sequence names in the current scope
 
   char *fullname_;
   // our full scoped name

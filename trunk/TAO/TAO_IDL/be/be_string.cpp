@@ -36,18 +36,6 @@ be_string::be_string (AST_Expression *v)
              NULL)
 {
   this->size_type (be_decl::VARIABLE); // we are always variable length
-
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
 }
 
 // overriden method
@@ -76,18 +64,6 @@ be_string::be_string (AST_Expression *v, long wide)
               NULL)
 {
   this->size_type (be_decl::VARIABLE); // always the case
-
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // computes the fully scoped typecode name
-  compute_tc_name ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
 }
 
 // Code generation

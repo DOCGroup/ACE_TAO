@@ -633,9 +633,23 @@ be_operation::gen_server_skeletons (void)
   if (!bpd || (bpd->pt () != AST_PredefinedType::PT_void))
     {
       // not a void type
-      *ss << "result = new CORBA::Any (" << rt->tc_name () <<
-        ", retval, 1); // ORB owns" << nl;
-      *ss << "req.result (result, env);" << nl;
+      switch (rt->node_type ())
+        {
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+          {
+            *ss << "result = new CORBA::Any (" << rt->tc_name () <<
+              ", retval, 0); // ORB does not own" << nl;
+            *ss << "req.result (result, env);" << nl;
+          }
+          break;
+        default:
+          {
+            *ss << "result = new CORBA::Any (" << rt->tc_name () <<
+              ", retval, 1); // ORB owns" << nl;
+            *ss << "req.result (result, env);" << nl;
+          }
+        }
 #if 0
       cg->push (TAO_CodeGen::TAO_OPERATION_RESULT_SS);
       s = cg->make_state ();

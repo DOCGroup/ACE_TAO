@@ -441,6 +441,481 @@ be_array::gen_server_inline (void)
   return 0;
 }
 
+// generate the var defn
+int
+be_array::gen_var_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  be_state *s;       // code gen state
+  char namebuf [NAMEBUFSIZE];  // names
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+
+  // generate the var definition (always in the client header).
+  // Depending upon the data type, there are some differences which we account
+  // for over here.
+
+  ch->indent (); // start with whatever was our current indent level
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+  // default constr
+  *ch << namebuf << " (void); // default constructor" << nl;
+  // constr
+  *ch << namebuf << " (" << local_name () << "_slice *);" << nl;
+  // copy constructor
+  *ch << namebuf << " (const " << namebuf <<
+    " &); // copy constructor" << nl;
+  // destructor
+  *ch << "~" << namebuf << " (void); // destructor" << nl;
+  *ch << nl;
+  // assignment operator from a pointer
+  *ch << namebuf << " &operator= (" << local_name () << "_slice *);" << nl;
+  // assignment from _var
+  *ch << namebuf << " &operator= (const " << namebuf <<
+    " &);" << nl;
+
+  // arrow operator
+  // nothing here
+  *ch << nl;
+
+  // other extra types (cast operators, [] operator, and others)
+  // overloaded [] operator
+  *ch << namebuf << "_slice &operator[] (CORBA::ULong index);" << nl;
+  *ch << "const " << namebuf <<
+    "_slice &operator[] (CORBA::ULong index) const;" << nl;
+
+  // cast operators
+  *ch << "operator const " << local_name () << "_slice *&() const;" << nl;
+  *ch << "operator " << local_name () << "_slice *&();" << nl;
+
+  *ch << "// in, inout, out, _retn " << nl;
+  // the return types of in, out, inout, and _retn are based on the parameter
+  // passing rules and the base type
+  if (this->size_type () == be_decl::FIXED)
+    {
+      *ch << "const " << local_name () << " in (void) const;" << nl;
+      *ch << local_name () << " inout (void);" << nl;
+      *ch << local_name () << " out (void);" << nl;
+      *ch << local_name () << "_slice *_retn (void);" << nl;
+    }
+  else
+    {
+      *ch << "const " << local_name () << " in (void) const;" << nl;
+      *ch << local_name () << " inout (void);" << nl;
+      *ch << local_name () << "_slice *&out (void);" << nl;
+      *ch << local_name () << " *_retn (void);" << nl;
+    }
+
+  // generate an additional member function that returns the underlying pointer
+
+  *ch << local_name () << "_slice *ptr (void) const;\n";
+
+  *ch << "\n";
+  ch->decr_indent ();
+
+  // generate the private section
+  *ch << "private:\n";
+  ch->incr_indent ();
+  *ch << local_name () << "_slice *ptr_;\n";
+
+  ch->decr_indent ();
+  *ch << "};\n\n";
+
+  return 0;
+}
+
+// implementation of the _var class. All of these get generated in the inline
+// file
+int
+be_array::gen_var_impl (void)
+{
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
+
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, "%s_var", this->fullname ());
+
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+  cg->outstream (ci);
+
+  // generate the var implementation in the inline file
+
+  ci->indent (); // start with whatever was our current indent level
+
+  *ci << "// *************************************************************"
+      << nl;
+  *ci << "// Inline operations for class " << fname << nl;
+  *ci << "// *************************************************************\n\n";
+
+  be_array *b;
+
+  b = be_array::narrow_from_decl (this);
+  // default constr
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname <<
+    " (void) // default constructor" << nl;
+  *ci << "\t" << ": ptr_ ((" << name () << "_slice *)0)" << nl;
+  *ci << "{}\n\n";
+
+  // constr from a _slice *
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << name () << "_slice *p)" << nl;
+  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "{}\n\n";
+
+  // copy constructor (deep copy)
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (const " << fname <<
+    " &p) // copy constructor" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = " << this->name () << "_dup (p.ptr_);\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // destructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::~" << lname << " (void) // destructor" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << this->name () << "_free (this->ptr_);\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << this->name () <<
+    "_slice p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "// is what we own the same that is being assigned to us?" <<
+    nl;
+  *ci << "if (this->ptr_ != p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "// delete our stuff and assume ownership of p" << nl;
+  *ci << this->name () << "_free (this->ptr_);" << nl;
+  *ci << "this->ptr_ = p;\n";
+  ci->decr_indent ();
+  *ci << "}" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment operator from _var
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (const " << fname <<
+    " &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "if (this != &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "// not assigning to ourselves" << nl;
+  *ci << this->name () << "_free (this->ptr_); // free old stuff" << nl;
+  *ci << "this->ptr_ = " << this->name () <<
+    "_dup (p.ptr_);// deep copy\n";
+  ci->decr_indent ();
+  *ci << "}" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // other extra methods - cast operators ()
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator const " << name () <<
+    "_slice *&() const // cast" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << name () << "_slice *&() // cast " << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // two operator []s instead of ->
+  ci->indent ();
+  *ci << "ACE_INLINE const" << name () << "_slice &" << nl;
+  *ci << fname << "::operator[] (CORBA::ULong index) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_[index];\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_slice &" << nl;
+  *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_[index];\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // in, inout, out, and _retn
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << nl;
+  *ci << fname << "::in (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << nl;
+  *ci << fname << "::inout (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << nl;
+  *ci << fname << "::out (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_slice " << nl;
+  *ci << fname << "::_retn (void)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->val;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // the additional ptr () member function
+  ci->indent ();
+  *ci << "ACE_INLINE " << name () << "_slice *" << nl;
+  *ci << fname << "::ptr (void) const" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  return 0;
+}
+
+// generate the _out definition
+int
+be_array::gen_out_defn (void)
+{
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ch = cg->client_header ();
+
+  // generate the out definition (always in the client header)
+  ch->indent (); // start with whatever was our current indent level
+
+  *ch << "class " << namebuf << nl;
+  *ch << "{" << nl;
+  *ch << "public:\n";
+  ch->incr_indent ();
+
+  // No default constructor
+
+  // constructor from a pointer
+  *ch << namebuf << " (" << local_name () << "_slice *&);" << nl;
+  // constructor from a _var &
+  *ch << namebuf << " (" << local_name () << "_var &);" << nl;
+  // constructor from a _out &
+  *ch << namebuf << " (" << namebuf << " &);" << nl;
+  // assignment operator from a _out &
+  *ch << namebuf << " &operator= (" << namebuf << " &);" << nl;
+  // assignment operator from a pointer &, cast operator, ptr fn, operator
+  // -> and any other extra operators
+  // assignment from slice *
+  *ch << namebuf << " &operator= (" << local_name () << "_slice *);" << nl;
+  // cast
+  *ch << "operator " << local_name () << "_slice *&();" << nl;
+  // ptr fn
+  *ch << local_name () << "_slice *&ptr (void);" << nl;
+  // operator [] instead of ->
+  *ch << namebuf << "_slice &operator[] (CORBA::ULong index);" << nl;
+  *ch << "const " << namebuf <<
+    "_slice &operator[] (CORBA::ULong index) const;" << nl;
+
+  *ch << "\n";
+  ch->decr_indent ();
+  *ch << "private:\n";
+  ch->incr_indent ();
+  *ch << local_name () << "_slice *&ptr_;" << nl;
+  *ch << "// assignment from T_var not allowed" << nl;
+  *ch << "void operator= (const " << local_name () << "_var &);\n";
+
+  ch->decr_indent ();
+  *ch << "};\n\n";
+  return 0;
+}
+
+int
+be_array::gen_out_impl (void)
+{
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _out names
+
+  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (fname, "%s_out", this->fullname ());
+
+  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
+
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  ci = cg->client_inline ();
+  cg->outstream (ci);
+
+  // generate the out implementation in the inline file
+
+  ci->indent (); // start with whatever was our current indent level
+
+  *ci << "// *************************************************************"
+      << nl;
+  *ci << "// Inline operations for class " << fname << nl;
+  *ci << "// *************************************************************\n\n";
+
+  be_array *b;
+
+  b = be_array::narrow_from_decl (this);
+  // constr from a pointer to slice
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << name () << "_slice *&p)" << nl;
+  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = 0;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // constructor from _var &
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << this->name () <<
+    "_var &p) // constructor from _var" << nl;
+  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << this->name () << "_free (this->ptr_);" << nl;
+  *ci << "this->ptr_ = 0;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // copy constructor
+  ci->indent ();
+  *ci << "ACE_INLINE" << nl;
+  *ci << fname << "::" << lname << " (" << fname <<
+    " &p) // copy constructor" << nl;
+  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "{}\n\n";
+
+  // assignment operator from _out &
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << fname <<
+    " &p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = p.ptr_;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // assignment from _var is not allowed by a private declaration
+
+  // assignment operator from _ptr
+  ci->indent ();
+  *ci << "ACE_INLINE " << fname << " &" << nl;
+  *ci << fname << "::operator= (" << this->name () <<
+    "_slice *p)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "this->ptr_ = p;" << nl;
+  *ci << "return *this;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // other extra methods - cast operator ()
+  ci->indent ();
+  *ci << "ACE_INLINE " << nl;
+  *ci << fname << "::operator " << this->name () <<
+    "_slice *&() // cast" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // ptr function
+  ci->indent ();
+  *ci << "ACE_INLINE " << this->name () << "_slice *&" << nl;
+  *ci << fname << "::ptr (void) // ptr" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_;\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  // operator [] instead of ->
+  ci->indent ();
+  *ci << "ACE_INLINE " << this->name () << "_slice &" << nl;
+  *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
+  *ci << "{\n";
+  ci->incr_indent ();
+  *ci << "return this->ptr_[index];\n";
+  ci->decr_indent ();
+  *ci << "}\n\n";
+
+  return 0;
+}
+
 // generate the _var definition for ourself
 int
 be_array::gen_forany_defn (void)

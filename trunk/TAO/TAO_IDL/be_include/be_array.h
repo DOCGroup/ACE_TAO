@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_array.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_ARRAY_H)
@@ -53,6 +53,24 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the array
 
+  virtual int gen_var_defn (void);
+  // generate the _var class definition
+
+  virtual int gen_var_impl (void);
+  // generate the implementation for the _var class
+
+  virtual int gen_out_defn (void);
+  // generate the _out class definition
+
+  virtual int gen_out_impl (void);
+  // generate the _out implementation
+
+  virtual int gen_forany_defn (void);
+  // the forany class
+
+  virtual int gen_forany_impl (void);
+  // the forany impl
+
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -64,12 +82,6 @@ public:
 
   virtual long tc_encap_len (void);
   // return length of encapsulation
-
-  virtual int gen_forany_defn (void);
-  // the forany class
-
-  virtual int gen_forany_impl (void);
-  // the forany impl
 
   // Narrowing
   DEF_NARROW_METHODS2 (be_array, AST_Array, be_type);
