@@ -356,9 +356,13 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
     timeout = (ACE_Time_Value *) synch_options.time_value ();
 
   // Delegate to connection strategy.
-  if (this->connect_svc_handler (sh, remote_addr, timeout,
-				 local_addr, reuse_addr,
-				 flags, perms) == -1)
+  if (this->connect_svc_handler (sh,
+				 remote_addr,
+				 timeout,
+				 local_addr,
+				 reuse_addr,
+				 flags,
+				 perms) == -1)
     {
       if (use_reactor && errno == EWOULDBLOCK)
 	{
@@ -388,6 +392,25 @@ ACE_Connector<SH, PR_CO_2>::connect (SH *&sh,
   else 
     // Activate immediately if we are connected.
     return this->activate_svc_handler (sh);
+}
+
+// Initiate connection to peer.  
+
+template <class SH, PR_CO_1> int
+ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
+				       SH *sh[],
+				       PR_AD remote_addrs[],
+				       const ACE_Synch_Options &synch_options)
+{
+  size_t i;
+
+  for (i = 0; i < n; i++)
+    if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
+	&& !(synch_options[ACE_Synch_Options::USE_REACTOR]
+	     && errno == EWOULDBLOCK))
+      return -1;
+
+  return i;
 }
 
 // Cancel a <svc_handler> that was started asynchronously.

@@ -38,13 +38,15 @@
 // IPC conduit between sender and client daemon.  This should be
 // included in the <ACE_Log_Msg> class, but due to "order of include"
 // problems it can't be...
-#if defined (ACE_WIN32)
-# include "ace/SPIPE_Connector.h"
-  static ACE_SPIPE_Stream *ACE_Log_Msg_message_queue = 0;
+#if defined (ACE_LACKS_FIFO)
+# include "ace/SOCK_Connector.h"
+typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC;
 #else
 # include "ace/FIFO_Send_Msg.h"
-  static ACE_FIFO_Send_Msg *ACE_Log_Msg_message_queue = 0;
-#endif /* ACE_WIN32 */
+typedef ACE_FIFO_Send_Msg ACE_LOG_MSG_IPC;
+#endif /* ACE_LACKS_FIFO */
+
+static ACE_LOG_MSG_IPC *ACE_Log_Msg_message_queue = 0;
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # include /**/ <iostream.h>
@@ -101,12 +103,8 @@ ACE_Log_Msg_Manager::get_lock (void)
 
       ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::lock_, ACE_Thread_Mutex, 0);
 
-      // Allocated the static message queue instance.
-#     if defined (ACE_WIN32)
-        ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_SPIPE_Stream, 0);
-#     else
-        ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_FIFO_Send_Msg, 0);
-#endif /* ACE_WIN32 */
+      // Allocated the ACE_Log_Msg IPC instance.
+      ACE_NEW_RETURN (ACE_Log_Msg_message_queue, ACE_LOG_MSG_IPC, 0);
     }
 
   return ACE_Log_Msg_Manager::lock_;
@@ -461,13 +459,13 @@ ACE_Log_Msg::open (const char *prog_name,
       if (logger_key == 0)
         status = -1;
       else
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_FIFO)
         {
           if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
             ACE_Log_Msg_message_queue->close ();
-          ACE_SPIPE_Connector con;
+          ACE_SOCK_Connector con;
           status = con.connect (*ACE_Log_Msg_message_queue,
-                                ACE_SPIPE_Addr (logger_key));
+                                ACE_INET_Addr (logger_key));
         }
 #else
         if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)

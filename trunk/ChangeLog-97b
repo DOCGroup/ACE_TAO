@@ -1,5 +1,8 @@
 Tue Sep 16 11:42:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace: Added a new flag called ACE_LACKS_FIFO to distinguish the
+ 	  (lack of) features on Win32...
+
 	* ace/Timer_Queue_T: Added an expire() wrapper for the
 	  Async_Timer_Queue_Adapter.
 
