@@ -14,7 +14,7 @@ $implrepo_ior = "implrepo.ior";
 
 # Make sure the files are gone, so we can wait on them.
 unlink $airplane_ior;
-unlink $nestea_iro;
+unlink $nestea_ior;
 unlink $implrepo_ior;
 
 # The Tests
@@ -95,15 +95,16 @@ sub both_ir_test
   $NSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
                          "-o $airplane_ior -i -r -ORBobjrefstyle url");
 
-  ACE::waitforfile ($airplane_ior);
-
-  $ACL = Process::Create ($EXEPREFIX."airplane_client".$Process::EXE_EXT,
-                          "-k file://$airplane_ior -ORBobjrefstyle url");
-
   ACE::waitforfile ($nestea_ior);
 
-  system($EXEPREFIX."nestea_client -k file://$nestea_ior -ORBobjrefstyle url");
+  $NCL = Process::Create ($EXEPREFIX."nestea_client".$Process::EXE_EXT,
+                          "-k file://$nestea_ior -ORBobjrefstyle url");
 
+  ACE::waitforfile ($airplane_ior);
+
+  system($EXEPREFIX."airplane_client -k file://$airplane_ior -ORBobjrefstyle url");
+
+  $NCL->Kill (); $NCL->Kill ();
   $IR->Kill (); $IR->Wait ();
 }
 
