@@ -5,7 +5,8 @@ Tue Feb 22 20:09:14 2000  Ossama Othman  <ossama@uci.edu>
 	  Added support for QNX Neutrino.  Hosts specifications such as
 	  "i386-nto," "i386-qnx," "i386-qnx-nto," etc, will now be
 	  accepted by the configure script's "--host" command line
-	  option.
+	  option.  A patch has been sent to the upstream maintainers of
+	  this script.
 
 	* ace/OS.cpp (unique_name):
 
