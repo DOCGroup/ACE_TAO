@@ -661,6 +661,7 @@ ACE_OS_String::itoa (int value, char *string, int radix)
 #endif /* ACE_HAS_ITOA */
 }
 
+#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS_String::itoa (int value, wchar_t *string, int radix)
 {
@@ -670,3 +671,4 @@ ACE_OS_String::itoa (int value, wchar_t *string, int radix)
   return ACE_OS_String::itoa_emulation (value, string, radix);
 #endif /* ACE_HAS_ITOA */
 }
+#endif /* ACE_HAS_WCHAR */
