@@ -1,13 +1,22 @@
+Tue Jul 20 21:11:02 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          fixed test of g++ for whether it's egcs.  Thanks to
+          Erik Johannes <ejohannes@oresis.com> for reporting this.
+          (The symptom was that TAO's IORManipulation.cpp wouldn't
+          compile due to an internal compiler error.  Adding
+          -fno-exceptions works around that.)
+
 Tue Jul 20 18:30:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.h:  All functions in
-	  ACE_Cached_Connect_Strategy_Ex and ACE_Cached_Connect_Strategy
-	  that contain specific information about the map used by the
-	  class should not be virtual.
+        * ace/Cached_Connect_Strategy_T.h:  All functions in
+          ACE_Cached_Connect_Strategy_Ex and ACE_Cached_Connect_Strategy
+          that contain specific information about the map used by the
+          class should not be virtual.
 
-	* ace/Future_Set.cpp (next_readable): Removed extra code that was
-	  left behind from a debugging stage.  Thanks to author John
-	  Tucker <jtucker@infoglide.com> for helping with this.
+        * ace/Future_Set.cpp (next_readable): Removed extra code that was
+          left behind from a debugging stage.  Thanks to author John
+          Tucker <jtucker@infoglide.com> for helping with this.
 
 Tue Jul 20 12:02:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
