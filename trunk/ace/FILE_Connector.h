@@ -38,7 +38,7 @@ public:
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = O_RDWR | O_CREAT,
-                      int perms = 0);
+                      int perms = ACE_DEFAULT_FILE_PERMS);
   // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
   // if things go well.  The <remote_sap> is the file that we are
   // trying to create/open.  If it's the default value of
@@ -60,7 +60,7 @@ public:
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR | O_CREAT,
-               int perms = 0);
+               int perms = ACE_DEFAULT_FILE_PERMS);
   // Actively ``connect'' and produce a <new_io> <ACE_FILE_IO> object
   // if things go well.  The <remote_sap> is the file that we are
   // trying to create/open.  If it's the default value of
