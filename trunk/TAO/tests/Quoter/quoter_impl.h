@@ -43,6 +43,19 @@ public:
                                  CORBA::Environment &env);
   
   virtual void destroy (CORBA_Environment &env);
+
+  virtual CosLifeCycle::LifeCycleObject_ptr copy (
+        CosLifeCycle::FactoryFinder_ptr there,
+        const CosLifeCycle::Criteria & the_criteria,
+        CORBA::Environment &_tao_environment);
+
+  virtual void move (
+        CosLifeCycle::FactoryFinder_ptr there,
+        const CosLifeCycle::Criteria & the_criteria,
+        CORBA::Environment &_tao_environment);
+
+  virtual void remove (
+        CORBA::Environment &_tao_environment);
 };
 
 class Quoter_Factory_Impl;

@@ -72,4 +72,22 @@ void Quoter_Impl::destroy (CORBA::Environment &env)
 
 
 
+CosLifeCycle::LifeCycleObject_ptr
+Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
+                   const CosLifeCycle::Criteria & the_criteria,
+                   CORBA::Environment &_tao_environment) {
 
+  return 0;
+}
+
+void
+Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
+                   const CosLifeCycle::Criteria & the_criteria,
+                   CORBA::Environment &_tao_environment) {
+
+}
+
+void
+Quoter_Impl::remove (CORBA::Environment &_tao_environment) {
+
+}
