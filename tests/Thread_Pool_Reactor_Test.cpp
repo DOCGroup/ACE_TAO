@@ -226,7 +226,6 @@ cli_worker (void *arg)
                       ASYS_TEXT ("(%t) conn_worker handle 0x%x, req %d\n"),
                       stream.get_handle (),
                       j+1));
-          // @@ Nanbor, please check the return value here!
           if (stream.send_n (arg, len + sizeof (ASYS_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -280,7 +279,6 @@ worker (void *)
               ASYS_TEXT ("shutdown stream handle = %x\n"),
               stream.get_handle ()));
 
-  // @@ Nanbor, please check the return value here.
   if (stream.send_n (sbuf, ACE_OS::strlen (sbuf) + 1) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("(%t) %p\n"),
