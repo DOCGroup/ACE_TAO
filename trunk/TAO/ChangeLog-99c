@@ -1,3 +1,12 @@
+Mon Aug 23 16:43:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.i:
+	* tao/Asynch_Invocation.cpp:
+	  Fixed compilation problems for AMI code.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Fixed problem in generated code for AMI.
+
 Mon Aug 23 15:30:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp (preconnect): Chagned to use
