@@ -46,7 +46,7 @@ main (int argc, char* argv [])
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      ACE_TRY
+      ACE_TRY_EX (block1)
 	{
 
 	  ACE_DEBUG ((LM_DEBUG,
@@ -61,7 +61,7 @@ main (int argc, char* argv [])
 			  0,
 			  0
 			  ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
+	  ACE_TRY_CHECK_EX (block1);
 	}
       ACE_CATCHANY
 	{

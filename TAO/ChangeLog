@@ -1,3 +1,18 @@
+Wed Jul 23 15:26:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/RTScheduling/DT_Spawn/test.cpp (main): Used ACE_TRY_EX
+	  macro because of nested pseudo-try blocks.  This should fix
+	  compilation problems on non-exception builds.
+
+	* tests/RTScheduling/Scheduler.h (CTOR): Fixed signature so that 
+	  it's consistent with non-exception builds.
+
+	* tests/RTScheduling/DT_Spawn/Thread_Action.h (_cxx_do): 
+
+	  Changed to use proper ACE_CHECK macro rather than
+	  ACE_TRY_CHECK.  This should get rid of compilation problems on
+	  non-expception builds.
+
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/IOR_Multicast.cpp:
@@ -123,13 +138,13 @@ Tue Jul 22 20:44:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Tue Jul 22 18:57:59 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\TAO_Tests.dsw:
+	* tests/TAO_Tests.dsw:
 
 	  Restored DOS style end-of-line markers.
 
 Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Connection_Failure\Connection_Failure.mpc:
+	* tests/Connection_Failure/Connection_Failure.mpc:
 
 	  No need to include messaging.
 
@@ -144,7 +159,7 @@ Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Jul 22 17:51:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Collocation_Opportunities\Makefile:
+	* tests/Collocation_Opportunities/Makefile:
 
 	  Updated dependencies.
 
@@ -179,13 +194,13 @@ Tue Jul 22 16:48:48 2003  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
 
 Tue Jul 22 17:36:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tao\PortableServer\Object_Adapter (get_collocated_servant):
+        * tao/PortableServer/Object_Adapter (get_collocated_servant):
 
           Stub parameter no longer needed.
 
 Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tao\PortableServer\Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
 
           - create_collocated_object() and initialize_collocated_object():
           These methods should create a collocated object irrespective of
@@ -205,15 +220,15 @@ Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
           is not found.  Now this is done in create_collocated_object()
           and initialize_collocated_object().
 
-        * tao\ORB_Core.cpp (create_object):
+        * tao/ORB_Core.cpp (create_object):
 
           Result from create_collocated_object() can be returned directly.
 
-        * tao\PortableServer\Object_Adapter.cpp (previous):
+        * tao/PortableServer/Object_Adapter.cpp (previous):
 
           Returns the previous POA current implementation.
 
-        * tests\Collocation_Opportunities:
+        * tests/Collocation_Opportunities:
 
           A test for making sure the ORB avails all collocation
           opportunities it is presented with.
@@ -245,31 +260,31 @@ Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
           The following files were added:
 
-          - tests\Collocation_Opportunities\Collocation_Opportunities.cpp
-          - tests\Collocation_Opportunities\Collocation_Opportunities.dsp
-          - tests\Collocation_Opportunities\Collocation_Opportunities.dsw
-          - tests\Collocation_Opportunities\Collocation_Opportunities.mpc
-          - tests\Collocation_Opportunities\Makefile
-          - tests\Collocation_Opportunities\Makefile.bor
-          - tests\Collocation_Opportunities\README
-          - tests\Collocation_Opportunities\run_test.pl
-          - tests\Collocation_Opportunities\svc.conf
-          - tests\Collocation_Opportunities\test.idl
+          - tests/Collocation_Opportunities/Collocation_Opportunities.cpp
+          - tests/Collocation_Opportunities/Collocation_Opportunities.dsp
+          - tests/Collocation_Opportunities/Collocation_Opportunities.dsw
+          - tests/Collocation_Opportunities/Collocation_Opportunities.mpc
+          - tests/Collocation_Opportunities/Makefile
+          - tests/Collocation_Opportunities/Makefile.bor
+          - tests/Collocation_Opportunities/README
+          - tests/Collocation_Opportunities/run_test.pl
+          - tests/Collocation_Opportunities/svc.conf
+          - tests/Collocation_Opportunities/test.idl
 
           The following files were modified:
 
-          - tests\TAO_Tests.dsw
-          - tests\Makefile
-          - tests\Makefile.bor
-          - tests\README
-          - $ACE_ROOT\bin\tao_orb_tests.lst
+          - tests/TAO_Tests.dsw
+          - tests/Makefile
+          - tests/Makefile.bor
+          - tests/README
+          - $ACE_ROOT/bin/tao_orb_tests.lst
 
           These changes fix bug 1535.  Thanks to Carlos for reporting this
           bug.
 
 Tue Jul 22 16:57:06 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tao\PortableServer\POA.cpp (locate_servant_i): Initialize <cookie>
+        * tao/PortableServer/POA.cpp (locate_servant_i): Initialize <cookie>
           to zero to avoid uninitialized memory read warnings.  Thanks to
           Martin Habets <mhabets@il0015mhabets1.ih.lucent.com> for
           pointing this out.
