@@ -120,11 +120,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   msghdr send_msg;  
 
-  send_msg.msg_iov          = (iovec *) iov;
-  send_msg.msg_iovlen       = n;
-  send_msg.msg_name	    = (char *) addr.get_addr ();
-  send_msg.msg_namelen      = addr.get_size ();
-  send_msg.msg_accrights    = 0;
+  send_msg.msg_iov = (iovec *) iov;
+  send_msg.msg_iovlen = n;
+  send_msg.msg_name = addr.get_addr ();
+  send_msg.msg_namelen = addr.get_size ();
+  send_msg.msg_accrights = 0;
   send_msg.msg_accrightslen = 0;
   return ACE_OS::sendmsg (this->get_handle (), &send_msg, flags);
 }
@@ -143,7 +143,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
-  recv_msg.msg_name = (char *) addr.get_addr ();
+  recv_msg.msg_name = addr.get_addr ();
   recv_msg.msg_namelen = addr.get_size ();
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;

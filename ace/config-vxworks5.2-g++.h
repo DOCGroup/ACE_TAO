@@ -7,6 +7,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_SYS_NERR
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_RWLOCK_T

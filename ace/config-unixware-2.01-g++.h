@@ -8,6 +8,7 @@
 
 // See README for what the ACE_HAS... and ACE_LACKS... macros mean
 
+#define ACE_LACKS_STRCASECMP
 #define ACE_HAS_SIZET_SOCKET_LEN
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_CPLUSPLUS_HEADERS

@@ -96,8 +96,10 @@ ACE_TTY_IO::control (Control_Mode cmd,
 	      strcmp((char *) arg->paritymode,"odd")==0)
 	    c_cflag |= PARODD;
 	}                 
+#if defined (CRTSCTS)
       if (arg->ctsenb) /* enable CTS/RTS protocoll */
 	c_cflag |= CRTSCTS;
+#endif /* CRTSCTS */
       if (arg->rcvenb) /* enable receiver */
 	c_cflag |= CREAD;
  
