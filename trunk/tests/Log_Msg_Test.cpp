@@ -435,7 +435,7 @@ private:
 void
 Log_Spec_Verify::log (ACE_Log_Record &log_record)
 {
-  ACE_TCHAR *b = log_record.msg_data ();
+  const ACE_TCHAR *b = log_record.msg_data ();
   const ACE_TCHAR *expect = 0;
 
   if (ACE_OS::strncmp (b, ACE_TEXT ("l1:"), 3) == 0)
