@@ -1,3 +1,9 @@
+Fri Jul 17 19:34:11 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tao/ORB.cpp: The return value for acceptor ().enable () is no
+	  longer being checked for -1, since platforms that don't
+	  support it (like NT) will return -1.
+
 Fri Jul 17 18:46:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Logger_i.h: Added new fields for verbosity
