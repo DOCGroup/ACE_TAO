@@ -1,3 +1,8 @@
+Tue Apr 14 07:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (create_kit): ACE+TAO instead of ACE_TAO.
+          Thanks to Doug for reporting this.
+
 Tue Apr 14 00:46:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.40 released.
@@ -43,7 +48,7 @@ Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Apr 13 19:12:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/DEV_Connector.i (ACE_DEV_Connector): 
+	* ace/DEV_Connector.i (ACE_DEV_Connector):
 	* ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
 
 Mon Apr 13 18:05:26 1998  Steve Huston  <shuston@riverace.com>
