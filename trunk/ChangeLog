@@ -1,3 +1,15 @@
+Wed Sep 29 09:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/netinet/os_tcp.h:
+        * ace/README:
+        * ace/config-tandem.h:
+        * ace/config-mvs.h:
+          Removed ACE_LACKS_TCP_H, ACE_LACKS_NETINET_TCP_H is already there
+          and better
+
+        * ace/config-win32-dmc.h:
+          Added ACE_LACKS_NETINET_TCP_H
+
 Wed Sep 29 09:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-dmc.h:
