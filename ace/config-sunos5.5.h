@@ -313,7 +313,12 @@
 #define ACE_HAS_GETPAGESIZE 1
 
 #define ACE_HAS_STL_MAP_CONFLICT
+
+// Sieg - gcc 2.95.1 declares queue in stream.h.  Might want to change
+// the == to >= to allow for future versions
+#if !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) )
 #define ACE_HAS_STL_QUEUE_CONFLICT
+#endif /* !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) ) */
 #define ACE_HAS_IDTYPE_T
 
 #define ACE_HAS_POSITION_INDEPENDENT_MALLOC
