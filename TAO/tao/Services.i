@@ -69,20 +69,20 @@ ACE_INLINE  CORBA::ServiceDetail *
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
  CORBA::ServiceDetail_var::operator const  CORBA::ServiceDetail &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
- CORBA::ServiceDetail_var::operator  CORBA::ServiceDetail &() // cast 
+ACE_INLINE
+ CORBA::ServiceDetail_var::operator  CORBA::ServiceDetail &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
- CORBA::ServiceDetail_var::operator  CORBA::ServiceDetail &() const// cast 
+ACE_INLINE
+ CORBA::ServiceDetail_var::operator  CORBA::ServiceDetail &() const// cast
 {
   return *this->ptr_;
 }
@@ -99,7 +99,7 @@ ACE_INLINE  CORBA::ServiceDetail &
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE  CORBA::ServiceDetail *&
  CORBA::ServiceDetail_var::out (void)
 {
@@ -160,7 +160,7 @@ CORBA::ServiceDetail_out::operator= (CORBA::ServiceDetail *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceDetail_out::operator CORBA::ServiceDetail *&() // cast
 {
   return this->ptr_;
@@ -241,20 +241,20 @@ CORBA::ServiceDetail::_tao_seq_Octet_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceDetail::_tao_seq_Octet_var::operator const CORBA::ServiceDetail::_tao_seq_Octet &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceDetail::_tao_seq_Octet_var::operator CORBA::ServiceDetail::_tao_seq_Octet &() // cast 
+ACE_INLINE
+CORBA::ServiceDetail::_tao_seq_Octet_var::operator CORBA::ServiceDetail::_tao_seq_Octet &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceDetail::_tao_seq_Octet_var::operator CORBA::ServiceDetail::_tao_seq_Octet &() const// cast 
+ACE_INLINE
+CORBA::ServiceDetail::_tao_seq_Octet_var::operator CORBA::ServiceDetail::_tao_seq_Octet &() const// cast
 {
   return *this->ptr_;
 }
@@ -277,7 +277,7 @@ CORBA::ServiceDetail::_tao_seq_Octet_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE CORBA::ServiceDetail::_tao_seq_Octet *&
 CORBA::ServiceDetail::_tao_seq_Octet_var::out (void)
 {
@@ -338,7 +338,7 @@ CORBA::ServiceDetail::_tao_seq_Octet_out::operator= (CORBA::ServiceDetail::_tao_
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceDetail::_tao_seq_Octet_out::operator CORBA::ServiceDetail::_tao_seq_Octet *&() // cast
 {
   return this->ptr_;
@@ -425,20 +425,20 @@ CORBA::ServiceInformation_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation_var::operator const CORBA::ServiceInformation &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation_var::operator CORBA::ServiceInformation &() // cast 
+ACE_INLINE
+CORBA::ServiceInformation_var::operator CORBA::ServiceInformation &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation_var::operator CORBA::ServiceInformation &() const// cast 
+ACE_INLINE
+CORBA::ServiceInformation_var::operator CORBA::ServiceInformation &() const// cast
 {
   return *this->ptr_;
 }
@@ -455,7 +455,7 @@ CORBA::ServiceInformation_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE CORBA::ServiceInformation *&
 CORBA::ServiceInformation_var::out (void)
 {
@@ -516,7 +516,7 @@ CORBA::ServiceInformation_out::operator= (CORBA::ServiceInformation *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation_out::operator CORBA::ServiceInformation *&() // cast
 {
   return this->ptr_;
@@ -536,112 +536,112 @@ CORBA::ServiceInformation_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CI_
 
   // = Static operations.
   ACE_INLINE CORBA::ULong *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (CORBA::ULong size)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     return new CORBA::ULong[size];
   }
-  
-  ACE_INLINE void CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::freebuf (CORBA::ULong *buffer)
+
+  ACE_INLINE void CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::freebuf (CORBA::ULong *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption (void) // Default constructor.
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (maximum))
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum,
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ULong *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption &rhs)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA::ULong *tmp1 = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (this->maximum_);
+    CORBA::ULong *tmp1 = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (this->maximum_);
     CORBA::ULong * const tmp2 = ACE_reinterpret_cast (CORBA::ULong * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     this->buffer_ = tmp1;
   }
-  
-  ACE_INLINE CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::operator= (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption &rhs)
+
+  ACE_INLINE CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption &
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::operator= (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
         CORBA::ULong *tmp = ACE_reinterpret_cast (CORBA::ULong *, this->buffer_);
-        CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::freebuf (tmp);
-        this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (rhs.maximum_);
+        CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::freebuf (tmp);
+        this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (rhs.maximum_);
-    
+      this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (rhs.maximum_);
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::ULong *tmp1 = ACE_reinterpret_cast (CORBA::ULong *, this->buffer_);
     CORBA::ULong * const tmp2 = ACE_reinterpret_cast (CORBA::ULong * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE CORBA::ULong &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::operator[] (CORBA::ULong i)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
     CORBA::ULong* tmp = ACE_reinterpret_cast(CORBA::ULong*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const CORBA::ULong &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::operator[] (CORBA::ULong i) const
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
     CORBA::ULong * const tmp = ACE_reinterpret_cast (CORBA::ULong* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE CORBA::ULong *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::get_buffer (CORBA::Boolean orphan)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ULong *result = 0;
     if (orphan == 0)
@@ -649,7 +649,7 @@ CORBA::ServiceInformation_out::operator-> (void)
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::allocbuf (this->length_);
+        result = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (this->length_);
         this->buffer_ = result;
 	this->release_ = 1;
       }
@@ -673,15 +673,15 @@ CORBA::ServiceInformation_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA::ULong *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::get_buffer (void) const
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ULong * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::replace (CORBA::ULong max,
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::ULong *data,
   CORBA::Boolean release)
@@ -691,16 +691,16 @@ CORBA::ServiceInformation_out::operator-> (void)
     if (this->buffer_ && this->release_ == 1)
     {
       CORBA::ULong *tmp = ACE_reinterpret_cast(CORBA::ULong*,this->buffer_);
-      CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceOption::freebuf (tmp);
+      CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CI_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEOPTION_CI_
@@ -765,20 +765,20 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator const CORBA::ServiceInformation::_tao_seq_ServiceOption &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator CORBA::ServiceInformation::_tao_seq_ServiceOption &() // cast 
+ACE_INLINE
+CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator CORBA::ServiceInformation::_tao_seq_ServiceOption &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator CORBA::ServiceInformation::_tao_seq_ServiceOption &() const// cast 
+ACE_INLINE
+CORBA::ServiceInformation::_tao_seq_ServiceOption_var::operator CORBA::ServiceInformation::_tao_seq_ServiceOption &() const// cast
 {
   return *this->ptr_;
 }
@@ -801,7 +801,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE CORBA::ServiceInformation::_tao_seq_ServiceOption *&
 CORBA::ServiceInformation::_tao_seq_ServiceOption_var::out (void)
 {
@@ -862,7 +862,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator= (CORBA::Service
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator CORBA::ServiceInformation::_tao_seq_ServiceOption *&() // cast
 {
   return this->ptr_;
@@ -891,112 +891,112 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong 
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CI_
 
   // = Static operations.
   ACE_INLINE CORBA::ServiceDetail *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (CORBA::ULong size)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (CORBA::ULong size)
   // Allocate storage for the sequence.
   {
     return new CORBA::ServiceDetail[size];
   }
-  
-  ACE_INLINE void CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::freebuf (CORBA::ServiceDetail *buffer)
+
+  ACE_INLINE void CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::freebuf (CORBA::ServiceDetail *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail (void) // Default constructor.
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (maximum))
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum) // Constructor using a maximum length value.
+    : TAO_Unbounded_Base_Sequence (maximum, CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum,
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (CORBA::ULong maximum,
     CORBA::ULong length,
     CORBA::ServiceDetail *data,
     CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail &rhs)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail &rhs)
   // Copy constructor.
     : TAO_Unbounded_Base_Sequence (rhs)
   {
-    CORBA::ServiceDetail *tmp1 = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (this->maximum_);
+    CORBA::ServiceDetail *tmp1 = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (this->maximum_);
     CORBA::ServiceDetail * const tmp2 = ACE_reinterpret_cast (CORBA::ServiceDetail * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     this->buffer_ = tmp1;
   }
-  
-  ACE_INLINE CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::operator= (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail &rhs)
+
+  ACE_INLINE CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail &
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::operator= (const CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
       {
         // free the old buffer
         CORBA::ServiceDetail *tmp = ACE_reinterpret_cast (CORBA::ServiceDetail *, this->buffer_);
-        CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::freebuf (tmp);
-        this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (rhs.maximum_);
+        CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::freebuf (tmp);
+        this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (rhs.maximum_);
       }
     }
     else
-      this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (rhs.maximum_);
-    
+      this->buffer_ = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (rhs.maximum_);
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::ServiceDetail *tmp1 = ACE_reinterpret_cast (CORBA::ServiceDetail *, this->buffer_);
     CORBA::ServiceDetail * const tmp2 = ACE_reinterpret_cast (CORBA::ServiceDetail * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE CORBA::ServiceDetail &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::operator[] (CORBA::ULong i)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::operator[] (CORBA::ULong i)
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
     CORBA::ServiceDetail* tmp = ACE_reinterpret_cast(CORBA::ServiceDetail*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const CORBA::ServiceDetail &
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::operator[] (CORBA::ULong i) const
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::operator[] (CORBA::ULong i) const
   // operator []
   {
     ACE_ASSERT (i < this->maximum_);
     CORBA::ServiceDetail * const tmp = ACE_reinterpret_cast (CORBA::ServiceDetail* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE CORBA::ServiceDetail *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::get_buffer (CORBA::Boolean orphan)
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::get_buffer (CORBA::Boolean orphan)
   {
     CORBA::ServiceDetail *result = 0;
     if (orphan == 0)
@@ -1004,7 +1004,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong 
       // We retain ownership.
       if (this->buffer_ == 0)
       {
-        result = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::allocbuf (this->length_);
+        result = CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (this->length_);
         this->buffer_ = result;
 	this->release_ = 1;
       }
@@ -1028,15 +1028,15 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong 
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA::ServiceDetail *
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::get_buffer (void) const
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ServiceDetail * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
-  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::replace (CORBA::ULong max,
+  CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::replace (CORBA::ULong max,
   CORBA::ULong length,
   CORBA::ServiceDetail *data,
   CORBA::Boolean release)
@@ -1046,16 +1046,16 @@ CORBA::ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong 
     if (this->buffer_ && this->release_ == 1)
     {
       CORBA::ServiceDetail *tmp = ACE_reinterpret_cast(CORBA::ServiceDetail*,this->buffer_);
-      CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA::ServiceInformation__tao_seq_ServiceDetail::freebuf (tmp);
+      CORBA::ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::freebuf (tmp);
     }
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CI_)
 #define _CORBA_SERVICEINFORMATION__TAO_SEQ_SERVICEDETAIL_CI_
@@ -1120,20 +1120,20 @@ CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator const CORBA::ServiceInformation::_tao_seq_ServiceDetail &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator CORBA::ServiceInformation::_tao_seq_ServiceDetail &() // cast 
+ACE_INLINE
+CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator CORBA::ServiceInformation::_tao_seq_ServiceDetail &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator CORBA::ServiceInformation::_tao_seq_ServiceDetail &() const// cast 
+ACE_INLINE
+CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::operator CORBA::ServiceInformation::_tao_seq_ServiceDetail &() const// cast
 {
   return *this->ptr_;
 }
@@ -1156,7 +1156,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE CORBA::ServiceInformation::_tao_seq_ServiceDetail *&
 CORBA::ServiceInformation::_tao_seq_ServiceDetail_var::out (void)
 {
@@ -1217,7 +1217,7 @@ CORBA::ServiceInformation::_tao_seq_ServiceDetail_out::operator= (CORBA::Service
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA::ServiceInformation::_tao_seq_ServiceDetail_out::operator CORBA::ServiceInformation::_tao_seq_ServiceDetail *&() // cast
 {
   return this->ptr_;
@@ -1243,4 +1243,3 @@ CORBA::ServiceInformation::_tao_seq_ServiceDetail_out::operator[] (CORBA::ULong 
 
 
 #endif /* end #if !defined */
-
