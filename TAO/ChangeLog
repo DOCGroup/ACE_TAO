@@ -1,5 +1,6 @@
 Fri Oct  3 20:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
+        * examples/RTScheduling/rtscheduling.dsw:
 	* tests/RTScheduling/RTScheduling_Tests.dsw: Removed 
 	  from the repo since it was creating a hassle for the 
 	  beta.
