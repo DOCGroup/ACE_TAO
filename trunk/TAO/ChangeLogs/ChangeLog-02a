@@ -1,6 +1,6 @@
 Tue Jun 12 17:31:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * TAO_Internal.cpp:
+        * tao/TAO_Internal.cpp:
 
           For some reason, there was a call to an 'add' method in
           CORBA::StringSeq. Changed the code to conform to the
