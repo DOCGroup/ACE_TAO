@@ -18,6 +18,9 @@
 // functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+// Platform does not support reentrant password file accessor functiions.
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
+
 // Platform does not support reentrant netdb functions (getprotobyname_r,
 // getprotobynumber_r, gethostbyaddr_r, gethostbyname_r,
 // getservbyname_r).
