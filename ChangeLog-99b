@@ -1,5 +1,14 @@
 Sun Jul 18 14:30:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/run_tests.sh: Reenabled the Future_Set_Test.  Hopefully,
+	  this will work on Solaris and the other platforms now!
+
+	* ace/Future*: Added some fixes for Future_Set that should prevent
+	  it from hanging indefinitely on certain platforms.  Also,
+ 	  removed the Future_Node.h and Future_Node.cpp files since they
+ 	  are no longer used.  Thanks to John Tucker
+ 	  <jtucker@infoglide.com> for contributing these fixes.
+
 	* ace/SOCK_Dgram_Mcast: Finished implementing the QoS-enabled APIs for 
 	  socket datagram multicast.  This required refactoring quite a
  	  bit of code and adding some new methods that take the
