@@ -1,3 +1,14 @@
+Mon Jul 10 18:59:49 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.idl (SecurityORBServiceReady):
+
+	  Corrected typo in "SecurityORBServiceRaady."
+
+	* orbsvcs/orbsvcs/SSLIOP.dsp:
+
+	  Added missing TAO_Security{d}.lib to list of libraries to link
+	  in SSLIOP{d}.lib against.  SSLIOP depends on it.
+
 Mon Jul 10 17:28:55 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.dsp:
