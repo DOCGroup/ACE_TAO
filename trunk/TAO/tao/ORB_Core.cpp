@@ -1065,9 +1065,6 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
 {
   // @@ Locking??
 
-  TAO_POA *poa = 0;
-  ACE_UNUSED_ARG (poa);
-  
   int delete_policies = 0;
 
   // Need to do double-checked locking here to cover the case of

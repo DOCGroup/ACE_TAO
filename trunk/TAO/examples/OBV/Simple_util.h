@@ -159,6 +159,9 @@ protected:
   CORBA::Environment env_;
   // Environment variable.
 
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   Var server_;
   // Server object
 
@@ -168,8 +171,6 @@ protected:
   int shutdown_;
   // Flag for shutting down the server
 
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
