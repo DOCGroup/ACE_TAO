@@ -1,3 +1,7 @@
+Sun Mar 21 20:52:58 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.3.14 released.
+
 Sun Mar 21 20:27:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/objref.cpp: 
