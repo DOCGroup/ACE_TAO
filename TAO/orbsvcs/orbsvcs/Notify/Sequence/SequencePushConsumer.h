@@ -70,7 +70,7 @@ public:
   void push (const TAO_NS_Event_Collection event_collection ACE_ENV_ARG_DECL);
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (TAO_NS_QoSProperties& qos_properties);
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
 protected:
   /// When the pacing interval is used, handle_timeout () is called by
