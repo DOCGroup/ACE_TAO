@@ -399,7 +399,6 @@ ACE_TEMPLATE_FILES = \
         Free_List.cpp \
         Functor_T.cpp \
         Future.cpp \
-	Future_Node.cpp \
 	Future_Set.cpp \
         Hash_Map_Manager_T.cpp \
         Hash_Cache_Map_Manager_T.cpp \
@@ -553,7 +552,6 @@ pkginclude_HEADERS = \
         Functor_T.h \
         Functor_T.i \
         Future.h \
-        Future_Node.h \
         Future_Set.h \
         Get_Opt.h \
         Get_Opt.i \
