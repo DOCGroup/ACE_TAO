@@ -40,11 +40,26 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
-ifeq ($(SUPPRESS_DASH_G),1)
-#### Build this target without -g on some platforms.
-$(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
+ifeq ($(CXX),g++)
+  ifeq ($(shell uname),Linux)
+    ifeq ($(shell \
+            g++ --version | grep egcs-1.0.1 | sed 's/.*\(egcs-1.0.1\).*/\1/'),\
+	  egcs-1.0.1)
+      # Build Server_Logging_Handler.so with g++ 2.7.2.3.  egcs 1.0.1
+      # raises an internal compiler error when trying to build it.  This
+      # assumes that g++ 2.7.2.3 is still installed as /usr/bin/g++.
+      $(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
+	/usr/bin/g++ -v `echo $(CCFLAGS) | sed 's/ -fno-exceptions//'` \
+	  -DACE_LINUX_EGCS $(CPPFLAGS) $(PTDIRS) -c -o $@ $<
+    endif # egcs-1.0.1
+  endif # Linux
+else # ! g++
+  ifeq ($(SUPPRESS_DASH_G),1)
+  #### Build this target without -g on some platforms.
+  $(VDIR)Server_Logging_Handler.o $(VSHDIR)Server_Logging_Handler.$(SOEXT):
 	$(COMPILE-NO_DASH_G.cc) -o $@ $<
-endif # SUPPRESS_DASH_G
+  endif # SUPPRESS_DASH_G
+endif # ! g++
 
 #----------------------------------------------------------------------------
 #	Dependencies
