@@ -223,6 +223,10 @@ ACE_Module<ACE_SYNCH_2>::close_i (int which,
       // running in them.
       task->wait ();
 
+      // If this assert happens it is likely because the task was
+      // activated with the THR_DETACHED flag, which means that we
+      // can't join() with the thread.  Not using THR_DETACHED should
+      // solve this problem.
       ACE_ASSERT (task->thr_count () == 0);
 
       delete task;
