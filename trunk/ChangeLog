@@ -1,3 +1,25 @@
+Fri Sep 24 22:35:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Robert S. Iakobashvili <roberti at go-WLAN dot com> and
+	Gonzalo A. Diethelm <gonzalo dot diethelm at aditiva dot com>:
+
+	* ace/ICMP_Socket.cpp:
+	* ace/ICMP_Socket.h:
+	* ace/ICMP_Socket.inl:
+	* ace/Ping_Socket.cpp:
+	* ace/Ping_Socket.h:
+	* ace/Ping_Socket.inl:
+	* tests/Network_Adapters_Test.cpp:
+	* tests/Network_Adapters_Test.h:
+
+	  New ICMP and "ping" support, and accompanying test.
+
+	* ace/ace.mpc:
+	* tests/tests.mpc:
+
+	  Added new ICMP and "ping" sources files to the appropriate
+	  source lists.
+
 Fri Sep 24 13:16:44 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
         * bin/tao_other_tests.lst:
