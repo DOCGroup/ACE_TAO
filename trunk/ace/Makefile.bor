@@ -113,6 +113,7 @@ OBJFILES = \
 	$(OBJDIR)\Naming_Context.obj \
 	$(OBJDIR)\NT_Service.obj \
 	$(OBJDIR)\Object_Manager.obj \
+	$(OBJDIR)\Obchunk.obj \
 	$(OBJDIR)\Obstack.obj \
 	$(OBJDIR)\OS.obj \
 	$(OBJDIR)\OS_Dirent.obj \
