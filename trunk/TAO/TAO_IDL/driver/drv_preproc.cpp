@@ -187,7 +187,7 @@ DRV_cpp_init (void)
           // So we can find OMG IDL files, such as `orb.idl'.
           ACE_OS::strcpy (option, "-I");
 
-#if defined (TAO_IDL_INCLUDE_DIR) && TAO_IDL_INCLUDE_DIR != 0
+#if defined (TAO_IDL_INCLUDE_DIR)
           // TAO_IDL_INCLUDE_DIR should be in quotes,
           // e.g. "/usr/local/include/tao"
 

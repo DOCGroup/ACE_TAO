@@ -1,8 +1,21 @@
+Tue Dec 28 20:54:09 1999  Thomas Lockhart  <Thomas.G.Lockhart@jpl.nasa.gov>
+
+        * TAO_IDL/driver/drv_preproc.cpp,TAO_IDL/fe/idl.ll,
+          TAO_IDL/fe/lex.yy.cpp:
+          It turns out that g++, gcc, and whatever other preprocessor I
+          tried puts an extra numeric field into the generated line
+          labels *only* when the included source file resided in
+          /usr/include or /usr/local/include or
+          /usr/local/include/tao.d/!!  There may be other locations
+          which will provoke this behavior too; I didn't test
+          exhaustively.  I've patched the lexer source code to accept
+          an extra numeric field, which seems to fix the problem.
+
 Tue Dec 28 14:13:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Makefile (ORB_CORE_FILES): Moved TAOC and TAOS from the
-	  corba messaging section to the general section.  These files now
-	  contain more code than what simply belongs to corba messaging.
+        * tao/Makefile (ORB_CORE_FILES): Moved TAOC and TAOS from the
+          corba messaging section to the general section.  These files now
+          contain more code than what simply belongs to corba messaging.
 
 Tue Dec 28 09:31:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
