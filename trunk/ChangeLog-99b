@@ -1,12 +1,24 @@
-Wed Jun  9 15:59:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+Wed Jun  9 15:32:37 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/run_tests.bat:
-	* tests/run_tests.psosim:
-	* tests/run_tests.vxworks:
-	  Added Svc_Handler_Test to these.
+	* ace/Message_Queue_T: Added a lock() accessor method so that
+ 	  other components can access the lock used by a Message Queue.
 
-Wed Jun  9 13:06:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace/Svc_Handler.cpp: Added better support for timeout handling
+ 	  for the ACE_Buffered_Svc_Handler.
+
+	* ace/Svc_Handler: Split the buffering portion of ACE_Svc_Handler
+ 	  off into a separate class called ACE_Buffered_Svc_Handler to
+ 	  avoid adding extra space and complexity to the existing
+ 	  ACE_Svc_Handler.  Thanks to Irfan for suggesting this, as well
+ 	  as also suggesting ways to improve the performance by caching
+ 	  the current size of the buffer.
+
+	* ace/OS.h: Added a patch to work around some problems with macros
+ 	  for USYNCH_THREAD.  Thanks to David Levine and Russ Noseworthy
+ 	  for this.
+
+	* examples/Threads/task_five.cpp (main): Improved the form and
+	  content of this example a bit.
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU,
 	* include/makeinclude/platform_sunos5_g++.GNU,
@@ -19,14 +31,6 @@ Wed Jun  9 13:06:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/SPIPE_Stream: Added sendv(), sendv_n(), and recvv_n()
  	  methods to SPIPE_Stream.  Thank to Carlos for pointing this out.
-
-Wed Jun  9 12:23:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
-
-	* tests/tests.dsw:
-	  Added Svc_Handler_Test.dsp (created and checked in by
-	  Nanbor) to the workspace.
-
-Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/config-mvs.h: Changed the size of the ACE_SIZEOF_DOUBLE and
  	  ACE_SIZEOF_LONG_DOUBLE from 4 and to 8 and 16, respectively.
@@ -62,6 +66,18 @@ Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           ACE_Message_Blocks in an ACE_Message_Queue until (1) the queue
           is "full" or (2) a period of time elapses, at which point the
           queue is "flushed" via sendv_n() to the peer.
+
+Wed Jun  9 12:23:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/run_tests.bat:
+	* tests/run_tests.psosim:
+	* tests/run_tests.vxworks:
+	  Added Svc_Handler_Test to these.
+
+	* tests/tests.dsw:
+	  Added Svc_Handler_Test.dsp (created and checked in by
+	  Nanbor) to the workspace.
 
 Wed Jun  9 10:46:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

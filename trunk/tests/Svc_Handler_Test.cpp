@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    This tests illustrates the "buffering" strategy of the
-//    <ACE_Svc_Handler>.
+//    <ACE_Buffered_Svc_Handler>.
 //
 // = AUTHORS
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
@@ -29,7 +29,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-typedef ACE_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+typedef ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
 static void
 run_test (SVC_HANDLER &svc_handler,
@@ -125,7 +125,7 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
