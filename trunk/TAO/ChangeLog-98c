@@ -1,3 +1,34 @@
+Fri Oct 31 03:00:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.cpp: Moved call to connector's open() into init(),
+ 	thus insuring that it gets called only AFTER all the resources are
+ 	available from the Resource Factory.
+
+	* tao/orb_core.*: Changed data members to be associations rather
+ 	than containment.  This allows decoupling of the
+ 	"thread-specificness" of these resources from the
+ 	thread-specificness of the general TAO_ORB_Core container.  Also
+ 	added set accessors for those resources.
+
+	Added TAO_Resource_Factory class from which the TAO_ORB_Core
+ 	container initializes itself.  For now this remains a singleton
+ 	which is, at compile-time, determined to be either TSS or not.
+  	But, soon, it will be loaded via the Service Configurator and its
+ 	TSS nature determined at runtime.
+
+	* tao/giop.h: Updated to use the new ACE macro
+ 	ACE_CLASS_IS_NAMESPACE.
+
+	* tao/default_server.*: Implemented the new open() method so that
+ 	it initializes the Reactive and Threaded strategies from the
+ 	information in TAO_ORB_Core.
+
+	* tao/server_factory.*: Added open() method to be called after all
+ 	ORB resources are loaded up.  This method can then be used by a
+ 	strategy factory to further initialize its contained strategies if
+ 	they require handles to resources to which the ORB might legislate
+ 	access.  The default implementation does nothing.
+
 Fri Oct 31 01:03:05 1997    <irfan@TWOSTEP>
 
 	* TAO/TAO_IDL/TAO_IDL.{mak,mdp}: Added VC++4.2 make files.

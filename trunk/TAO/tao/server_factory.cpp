@@ -27,6 +27,12 @@ TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
 TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 {}
 
+int
+TAO_Server_Strategy_Factory::open (void)
+{
+  return 0;
+}
+
 TAO_Server_Strategy_Factory::CREATION_STRATEGY *
 TAO_Server_Strategy_Factory::creation_strategy (void)
 {

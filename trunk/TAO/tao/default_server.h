@@ -47,6 +47,9 @@ public:
   TAO_Default_Server_Strategy_Factory (void);
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 
+  virtual int open (void);
+  // Call <open> for our strategies.
+
   // = Server-side ORB Strategy Factory Methods.
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
 
