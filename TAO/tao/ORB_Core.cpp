@@ -33,8 +33,6 @@
 #include "tao/Endpoint_Selector_Factory.h"
 #include "tao/Request_Dispatcher.h"
 
-#include "IORInfo.h"
-
 #include "Flushing_Strategy.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
