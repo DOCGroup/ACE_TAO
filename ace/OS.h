@@ -4792,6 +4792,7 @@ public:
   static int printf (const char *format, ...);
 # if defined (ACE_HAS_WCHAR)
   static int sprintf (wchar_t *buf, const wchar_t *format, ...);
+  static int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
   static int fprintf (FILE *fp, const wchar_t *format, ...);
   static int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 # endif /* ACE_HAS_WCHAR */
