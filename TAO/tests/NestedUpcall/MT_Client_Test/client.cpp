@@ -145,29 +145,31 @@ MT_Client::parse_args (void)
 int
 MT_Client::run (void)
 {
-  TAO_TRY
-  {
-    for (unsigned long i = 0; i < this->iterations_; i++)
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) MT_Client::run: %d of %d\n",
-                  i,
-                  this->iterations_));
+      for (unsigned long i = 0; i < this->iterations_; i++)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) MT_Client::run: %d of %d\n",
+                      i,
+                      this->iterations_));
 
-      // call the recursive object MT_Object for nested upcalls
-      // testing
-      this->mT_Object_var_->yadda (0,
-                                   0,
-                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+          // call the recursive object MT_Object for nested upcalls
+          // testing
+          this->mT_Object_var_->yadda (0,
+                                       0,
+                                       ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
     }
-  }
-  TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("MT_Client:run");
-    return -1;
-  }
-  TAO_ENDTRY;
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "MT_Client:run");
+      return -1;
+    }
+  ACE_ENDTRY;
 
   return 0;
 }

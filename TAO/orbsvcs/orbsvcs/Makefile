@@ -24,7 +24,7 @@ endif
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
-        -I$(TAO_ROOT) -Ge 1\
+        -I$(TAO_ROOT) -Ge 1 \
         -Wb,export_macro=TAO_ORBSVCS_Export \
         -Wb,export_include=orbsvcs_export.h \
         $(TAO_LACKS_EVENT_CHANNEL_ANY)

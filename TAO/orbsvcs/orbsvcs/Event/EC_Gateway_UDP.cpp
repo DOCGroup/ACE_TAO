@@ -51,24 +51,24 @@ TAO_ECG_UDP_Sender::mtu (CORBA::ULong new_mtu)
 }
 
 void
-TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_UDP_Sender::shutdown (CORBA::Environment& ACE_TRY_ENV)
 {
-  this->close (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  this->close (ACE_TRY_ENV);
+  ACE_CHECK;
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 void
 TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
-                          CORBA::Environment &TAO_IN_ENV)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Open gateway\n"));
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
-    this->close (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->close (ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (sub.dependencies.length () == 0)
     return;
@@ -77,24 +77,24 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub,
   //ACE_SupplierQOS_Factory::debug (pub);
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->lcl_ec_->for_consumers (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->lcl_ec_->for_consumers (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+  ACE_CHECK;
 
   RtecEventComm::PushConsumer_var consumer_ref =
-    this->_this (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->_this (ACE_TRY_ENV);
+  ACE_CHECK;
 
   //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Consumer "));
   //ACE_ConsumerQOS_Factory::debug (sub);
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub,
-                                                TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -306,8 +306,8 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                                fragment_count,
                                iov,
                                iovcnt,
-                               TAO_IN_ENV);
-          TAO_CHECK_ENV_RETURN_VOID(TAO_IN_ENV);
+                               ACE_TRY_ENV);
+          ACE_CHECK;
           fragment_id++;
           fragment_offset += fragment_size;
 
@@ -331,7 +331,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                    CORBA::ULong fragment_count,
                                    iovec iov[],
                                    int iovcnt,
-                                   CORBA::Environment& TAO_IN_ENV)
+                                   CORBA::Environment& ACE_TRY_ENV)
 {
   CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)
@@ -369,14 +369,14 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) send failed %p\n", ""));
-      TAO_THROW(CORBA::COMM_FAILURE ());
+      ACE_THROW(CORBA::COMM_FAILURE ());
     }
   else if (n == 0)
     {
       // @@ TODO Use a Event Channel specific exception
       ACE_DEBUG ((LM_DEBUG,
                   "ECG_UDP (%t) EOF on send \n"));
-      TAO_THROW(CORBA::COMM_FAILURE ());
+      ACE_THROW(CORBA::COMM_FAILURE ());
     }
 }
 
@@ -612,11 +612,11 @@ TAO_ECG_UDP_Request_Entry::fragment_buffer (CORBA::ULong fragment_offset)
 
 void
 TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event,
-                                   CORBA::Environment& TAO_IN_ENV)
+                                   CORBA::Environment& ACE_TRY_ENV)
 {
   TAO_InputCDR cdr (&this->payload_,
                     ACE_static_cast(int,this->byte_order_));
-  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, TAO_IN_ENV);
+  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -672,38 +672,38 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 
 void
 TAO_ECG_UDP_Receiver::open (RtecEventChannelAdmin::SupplierQOS& pub,
-                            CORBA::Environment &TAO_IN_ENV)
+                            CORBA::Environment &ACE_TRY_ENV)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
-    this->close (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->close (ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (pub.publications.length () == 0)
     return;
 
   // = Connect as a supplier to the local EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->lcl_ec_->for_suppliers (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->lcl_ec_->for_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    supplier_admin->obtain_push_consumer (ACE_TRY_ENV);
+  ACE_CHECK;
 
   RtecEventComm::PushSupplier_var supplier_ref =
-    this->_this (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+    this->_this (ACE_TRY_ENV);
+  ACE_CHECK;
 
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Receiver (%t) Gateway/Supplier "));
   // ACE_SupplierQOS_Factory::debug (pub);
 
   this->consumer_proxy_->connect_push_supplier (supplier_ref.in (),
                                                 pub,
-                                                TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+                                                ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -739,10 +739,10 @@ TAO_ECG_UDP_Receiver::disconnect_push_supplier (CORBA::Environment &)
 }
 
 void
-TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& ACE_TRY_ENV)
 {
-  this->close (TAO_IN_ENV);
-  if (TAO_IN_ENV.exception () != 0) return;
+  this->close (ACE_TRY_ENV);
+  ACE_CHECK;
 
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 
@@ -925,14 +925,15 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       return 0;
     }
 
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       RtecEventComm::EventSet event;
-      entry->int_id_->decode (event, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      entry->int_id_->decode (event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      this->consumer_proxy_->push (event, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->consumer_proxy_->push (event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       //      ACE_DEBUG ((LM_DEBUG,
       //                  "TAO_ECG_UDP_Received (%P|%t): push %d "
@@ -940,11 +941,12 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       //                  request_id,
       //                  from.get_ip_address (), from.get_port_number ()));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("ECG_UDP_Receive_EH::handle_input");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "ECG_UDP_Receive_EH::handle_input");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -1044,28 +1046,29 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv)
 
 int
 TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec,
-                        CORBA::Environment& TAO_IN_ENV)
+                        CORBA::Environment& ACE_TRY_ENV)
 {
   this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (ec);
   RtecEventChannelAdmin::Observer_var obs =
-    this->observer_._this (TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+    this->observer_._this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  this->handle_ = this->ec_->append_observer (obs.in (), TAO_IN_ENV);
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  this->handle_ = this->ec_->append_observer (obs.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-TAO_ECG_Mcast_EH::close (CORBA::Environment& TAO_IN_ENV)
+TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
 {
   if (this->handle_ == 0)
     return 0;
 
-  this->ec_->remove_observer (this->handle_, TAO_IN_ENV);
+  ACE_HANDLE h = this->handle_;
   this->handle_ = 0;
-  TAO_CHECK_ENV_RETURN (TAO_IN_ENV, -1);
+  this->ec_->remove_observer (h, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   {
     PortableServer::POA_var poa =
@@ -1115,7 +1118,7 @@ TAO_ECG_Mcast_EH::unsubscribe (const ACE_INET_Addr &mcast_addr)
 void
 TAO_ECG_Mcast_EH::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& TAO_IN_ENV)
+    CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG,
@@ -1143,8 +1146,8 @@ TAO_ECG_Mcast_EH::update_consumer (
       must_register = 1;
       RtecUDPAdmin::UDP_Addr addr;
 
-      this->receiver_->get_addr (header, addr, TAO_IN_ENV);
-      TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
+      this->receiver_->get_addr (header, addr, ACE_TRY_ENV);
+      ACE_CHECK;
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       if (this->subscribe (inet_addr) == -1)
@@ -1181,19 +1184,19 @@ TAO_ECG_Mcast_EH::Observer::Observer (TAO_ECG_Mcast_EH* eh)
 void
 TAO_ECG_Mcast_EH::Observer::update_consumer (
     const RtecEventChannelAdmin::ConsumerQOS& sub,
-    CORBA::Environment& TAO_IN_ENV)
+    CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_consumer (sub, TAO_IN_ENV);
+  this->eh_->update_consumer (sub, ACE_TRY_ENV);
 }
 
 void
 TAO_ECG_Mcast_EH::Observer::update_supplier (
     const RtecEventChannelAdmin::SupplierQOS& pub,
-    CORBA::Environment& TAO_IN_ENV)
+    CORBA::Environment& ACE_TRY_ENV)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->eh_->update_supplier (pub, TAO_IN_ENV);
+  this->eh_->update_supplier (pub, ACE_TRY_ENV);
 }
 
 // ****************************************************************

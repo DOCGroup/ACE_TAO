@@ -210,7 +210,7 @@ Event_Service::run (int argc, char* argv[])
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("EC");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "EC");
     }
   ACE_ENDTRY;
 

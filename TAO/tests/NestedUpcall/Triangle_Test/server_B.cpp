@@ -9,7 +9,7 @@
 //    server_B.cpp
 //
 // = DESCRIPTION
-//    This class implements a simple server for the 
+//    This class implements a simple server for the
 //    Nested Upcalls - Triangle test.
 //
 // = AUTHORS
@@ -63,16 +63,16 @@ Object_B_Server::parse_args (void)
 int
 Object_B_Server::init (int argc,
                        char** argv,
-                       CORBA::Environment& env)
+                       CORBA::Environment& ACE_TRY_ENV)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa",
-                                     env);
+                                     ACE_TRY_ENV);
 
-  TAO_CHECK_ENV_RETURN (env,-1);
+  ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -82,7 +82,9 @@ Object_B_Server::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("object_B",
                                                  &this->object_B_i_,
-                                                 env);
+                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
@@ -94,7 +96,6 @@ Object_B_Server::init (int argc,
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
-
 
   return 0;
 }
@@ -121,28 +122,28 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object B Server \n \n"));
-  TAO_TRY
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      if (object_B_Server.init (argc,argv,TAO_TRY_ENV) == -1)
+      if (object_B_Server.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;
       else
         {
-          object_B_Server.run (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          object_B_Server.run (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
-  TAO_CATCH (CORBA::SystemException, sysex)
+  ACE_CATCH (CORBA::SystemException, sysex)
     {
-      ACE_UNUSED_ARG (sysex);
-      TAO_TRY_ENV.print_exception ("System Exception");
+      ACE_PRINT_EXCEPTION (sysex, "System Exception");
       return -1;
     }
-  TAO_CATCH (CORBA::UserException, userex)
+  ACE_CATCH (CORBA::UserException, userex)
     {
-      ACE_UNUSED_ARG (userex);
-      TAO_TRY_ENV.print_exception ("User Exception");
+      ACE_PRINT_EXCEPTION (userex, "User Exception");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
