@@ -1,3 +1,8 @@
+Wed Sep 29 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Config_Handlers/Utils.h:
+          Added missing include of ace/post.h
+
 Mon Sep 27 17:57:08 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
 
         * DAnCE/examples/BasicSP/BasicSP.mpc:
