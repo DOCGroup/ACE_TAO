@@ -523,12 +523,21 @@ template class
       Messaging::PriorityRange
     >;
 
+template class
+  TAO_Var_Base_T<
+      Messaging::PriorityRange
+    >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Fixed_Var_T< \
       Messaging::PriorityRange \
     >
+# pragma instantiate
+  TAO_Var_Base_T<
+      Messaging::PriorityRange
+    >;
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -2312,10 +2321,19 @@ template class
       Messaging::RoutingTypeRange
     >;
 
+template class
+  TAO_Var_Base_T<
+      Messaging::RoutingTypeRange
+    >;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
   TAO_Fixed_Var_T< \
+      Messaging::RoutingTypeRange \
+    >
+# pragma instantiate \
+  TAO_Var_Base_T< \
       Messaging::RoutingTypeRange \
     >
 
