@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib Test_Output.lib /nologo /dll /machine:I386 /libpath:"..\ace"
+# ADD LINK32 ace.lib /nologo /dll /machine:I386 /libpath:"..\ace"
 
 !ELSEIF  "$(CFG)" == "Framework_Component_Test DLL - Win32 Debug"
 
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib Test_Outputd.lib /nologo /dll /debug /machine:I386 /out:"Framework_Component_DLLd.dll" /pdbtype:sept /libpath:"..\ace"
+# ADD LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"Framework_Component_DLLd.dll" /pdbtype:sept /libpath:"..\ace"
 
 !ELSEIF  "$(CFG)" == "Framework_Component_Test DLL - Win32 Static Debug"
 
@@ -111,7 +111,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"DLL_Testd.dll" /pdbtype:sept /libpath:"../ace"
-# ADD LINK32 acesd.lib advapi32.lib Test_Outputsd.lib /nologo /dll /debug /machine:I386 /out:"Framework_Component_DLLd.dll" /pdbtype:sept /libpath:"..\ace"
+# ADD LINK32 acesd.lib advapi32.lib /nologo /dll /debug /machine:I386 /out:"Framework_Component_DLLd.dll" /pdbtype:sept /libpath:"..\ace"
 
 !ELSEIF  "$(CFG)" == "Framework_Component_Test DLL - Win32 Static Release"
 
@@ -139,7 +139,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib /nologo /dll /machine:I386 /out:"DLL_Test.dll" /libpath:"../ace"
-# ADD LINK32 aces.lib advapi32.lib Test_Outputs.lib /nologo /dll /machine:I386 /out:"Framework_Component_DLL.dll" /libpath:"..\ace"
+# ADD LINK32 aces.lib advapi32.lib /nologo /dll /machine:I386 /out:"Framework_Component_DLL.dll" /libpath:"..\ace"
 
 !ENDIF 
 
