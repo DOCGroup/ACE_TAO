@@ -1,3 +1,9 @@
+Fri Jun  9 19:06:10 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/RT_Policy_i.{h,cpp}:
+	  Fixed several incorrect ACE_THROW_SPECs.  Thanks to Darrell for
+	  detecting these.
+
 Fri Jun  9 15:20:11 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.cpp (location_forward):
