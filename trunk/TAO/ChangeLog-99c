@@ -1,3 +1,8 @@
+Mon Apr 26 05:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.{i,cpp} (default_svc_conf_entries): Moved to
+	  .cpp file and remove TAO_Internal.i from repository.
+
 Sun Apr 25 16:59:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp: Added ACE_NOTREACHED to two redundant
