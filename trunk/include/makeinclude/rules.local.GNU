@@ -114,7 +114,7 @@ deinstall.local:
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
 $(INSLIB)/%$(VAR).a \
-$(INSLIB)/%$(VAR).$(SOEXT)$(ACE_LDSO_Major_Minor_Version_Number) \
+$(INSLIB)/%$(VAR).$(SOEXT)$(ACE_LDSO_Version_Number) \
 $(INSMAN)/man1/% \
 $(INSMAN)/man2/% \
 $(INSMAN)/man3/% \
@@ -125,11 +125,13 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test -s $@ ; then \
-		echo "$(@F) already installed" ; \
-	else \
-		echo "Installing $(@F) -> $(@D)" ; \
-		ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Major_Minor_Version_Number)=%.$(SOEXT)) $(@) ; \
+	@if test $(shell pwd) != $(@D) -o -n $(ACE_LDSO_Version_Number) ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F) -> $(@D)" ; \
+			ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+		fi ; \
 	fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
