@@ -25,6 +25,9 @@ ImplRepo_i::ImplRepo_i (void)
 CORBA::Object_ptr
 ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found,
+                     Implementation_Repository::Cannot_Activate))
 {
   /* Implementation_Repository::INET_Addr *new_addr; */
   TAO_Stub *new_stub_obj = 0;
@@ -88,6 +91,9 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
 Implementation_Repository::INET_Addr *
 ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found,
+                     Implementation_Repository::Cannot_Activate))
 {
   int start = 0;
   ASYS_TCHAR *ping_ior;
@@ -221,6 +227,8 @@ void
 ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Already_Registered))
 {
   if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
@@ -273,6 +281,7 @@ void
 ImplRepo_i::reregister_server (const char *server,
                                const Implementation_Repository::Process_Options &options,
                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   Repository_Record rec (options.command_line_,
@@ -304,6 +313,8 @@ ImplRepo_i::reregister_server (const char *server,
 void
 ImplRepo_i::remove_server (const char *server,
                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found))
 {
   if (this->repository_.remove (server) == 0)
     {
@@ -327,6 +338,8 @@ ImplRepo_i::server_is_running (const char *server,
                                const Implementation_Repository::INET_Addr &addr,
                                CORBA::Object_ptr ping,
                                CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found))
 {
   Implementation_Repository::INET_Addr *new_addr =
     new Implementation_Repository::INET_Addr;
@@ -426,6 +439,8 @@ ImplRepo_i::server_is_running (const char *server,
 void
 ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Implementation_Repository::Not_Found))
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   Repository_Record rec;

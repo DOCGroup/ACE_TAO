@@ -24,17 +24,23 @@ public:
   ttcp_sequence_i();
 
   virtual void sendShortSeq (const ttcp_sequence::ShortSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                             CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sendLongSeq (const ttcp_sequence::LongSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                            CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sendDoubleSeq (const ttcp_sequence::DoubleSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                              CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sendCharSeq (const ttcp_sequence::CharSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                            CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sendStructSeq (const ttcp_sequence::StructSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                              CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void sendOctetSeq (const ttcp_sequence::OctetSeq& ttcp_seq,
-        CORBA::Environment &IT_env);
+                             CORBA::Environment &IT_env)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /* Routines to calculate the time required to transfer */
   virtual void start_timer (CORBA::Environment &IT_env);
