@@ -1,181 +1,219 @@
 // -*- C++ -*-
-// $Id$
-
-// ============================================================================
 //
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     GIOP_Message_Base.h
-//
-// = DESCRIPTION
-//     Interface for the GIOP messaging protocol
-//
-// = AUTHOR
-//     Copyright 1994-1995 by Sun Microsystems Inc.,
-//     Based on GIOP.cpp and GIOP.h
-//     Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file GIOP_Message_Base.h
+ *
+ *  $Id$
+ *
+ *  @author Initially Copyrighted by Sun Microsystems Inc., 1994-1995,
+ *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+// ===================================================================
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
 #define TAO_GIOP_MESSAGE_BASE_H
 #include "ace/pre.h"
+#include "tao/Pluggable_Messaging.h"
 
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Utils.h"
 
+class TAO_Pluggable_Reply_Params;
+
+/**
+ * @class TAO_GIOP_Message_Base
+ *
+ * @brief Definitions of GIOP specific stuff
+ *
+ * This class will hold the specific details common to all the GIOP
+ * versions. Some of them which are here may be shifted if things
+ * start changing between versions
+ */
 
 class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 {
-  // = TITLE
-  //   Definitions of GIOP specific stuff
-  //
-  // = DESCRIPTION
-  //   This class will hold the specific details common to all the
-  //   GIOP versions. Some of them which are here may be shifted if
-  //   things start changing between versions
-
 public:
-  TAO_GIOP_Message_Base (void);
 
+  /// Constructor
+  TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core);
+
+  /// Dtor
   virtual ~TAO_GIOP_Message_Base (void);
-  // Dtor
 
-  virtual CORBA::Boolean write_protocol_header (TAO_Pluggable_Message_Type t,
-                                                TAO_OutputCDR &msg);
-  // Writes the GIOP header in to <msg>
+  /// Initialize the underlying state object based on the <major> and
+  /// <minor> revision numbers
+  virtual void init (CORBA::Octet major,
+                     CORBA::Octet minor);
 
-  int handle_input (TAO_Transport *transport,
-                    TAO_ORB_Core *orb_core,
-                    TAO_Message_State_Factory &mesg_state,
-                    ACE_Time_Value *max_time_value = 0);
-  // Reads input from the transport
+  /// Reset the messaging the object
+  virtual void reset (int reset_flag = 1);
 
-  virtual CORBA::Boolean write_message_header   (const TAO_Operation_Details &opdetails,
-                                                 TAO_Pluggable_Header_Type header_type,
-                                                 TAO_Target_Specification &spec,
-                                                 TAO_OutputCDR &msg);
-  // Write the  header defined by <header_type> in to <msg>
+  /// Write the RequestHeader in to the <cdr> stream. The underlying
+  /// implementation of the mesaging should do the right thing.
+  virtual int generate_request_header (TAO_Operation_Details &op,
+                                       TAO_Target_Specification &spec,
+                                       TAO_OutputCDR &cdr);
 
-  int send_message (TAO_Transport *transport,
-                    TAO_OutputCDR &stream,
-                    ACE_Time_Value *max_wait_time = 0,
-                    TAO_Stub *stub = 0,
-                    int two_way = 1);
-  // Sends the encapsulated stream in <stream> on to the transport
+  /// Write the RequestHeader in to the <cdr> stream.
+  virtual int generate_locate_request_header (
+      TAO_Operation_Details &op,
+      TAO_Target_Specification &spec,
+      TAO_OutputCDR &cdr);
 
-  virtual int parse_reply (TAO_Message_State_Factory &mesg_state,
-                           TAO_Pluggable_Reply_Params &params) = 0;
-  // Parse the reply message from the server
+  /// Write the reply header
+  virtual int generate_reply_header (
+      TAO_OutputCDR &cdr,
+      TAO_Pluggable_Reply_Params &params);
 
-  int process_client_message (TAO_Transport *transport,
-                              TAO_ORB_Core *orb_core,
-                              TAO_InputCDR &input,
-                              CORBA::Octet message_type) = 0;
-  // Processes the messages from the connectors so that they can be
-  // passed on to the appropriate states.
+  /// This method reads the message on the connection. Returns 0 when
+  /// there is short read on the connection. Returns 1 when the full
+  /// message is read and handled. Returns -1 on errors. If <block> is
+  /// 1, then reply is read in a blocking manner. <bytes> indicates the
+  /// number of bytes that needs to be read from the connection.
+  /// GIOP uses this read to unmarshall the message details that appear
+  /// on the connection.
+  virtual int read_message (TAO_Transport *transport,
+                            int block = 0,
+                            ACE_Time_Value *max_wait_time = 0);
 
-protected:
 
-#if 0
-  // It would be really cool to have something like this. But, as they
-  // are along the critical path such fancy stuff results in reduced
-  // performance. But let it me here till we get to a time where in we
-  // are forced to use these methods
-  // @@ Bala: we will never need this, right?  Each protocol knows how
-  //    to parse its messages, right?
-  // @@ Carlos: It knows. But what about OMG at one stage deciding to
-  //    change things between versions. For example, today the
-  //    message_type is the 8th byte in the GIOP header. If they
-  //    decide to move that to 10th byte for GIOP2.8. Just
-  //    thinking ahead, that wouldn't cost anything today.
-  // @@ If they change it we implement that in the GIOP_2_8 class, of
-  // course, and BTW, chances that a protocol will be change in such a
-  // non-backwards compatible way are slim...
-  // @@ Furthermore, why you have this methods here if they are not
-  // used?  Do you get paid by the line of code (just kidding ;-)
+  /// Format the message. As we have not written the message length in
+  /// the header, we make use of this oppurtunity to insert and format
+  /// the message.
+  virtual int format_message (TAO_OutputCDR &cdr);
 
-  size_t header_len (void);
-  // This will give the size of the header for different versions of
-  // GIOP.
 
-  size_t message_size_offset (void);
-  // This will give the message_size offset as specified by different
-  // versions of GIOP
+  /// Get the message type. The return value would be one of the
+  /// following:
+  /// TAO_PLUGGABLE_MESSAGE_REQUEST,
+  /// TAO_PLUGGABLE_MESSAGE_REPLY,
+  /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
+  /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
+  virtual TAO_Pluggable_Message_Type message_type (void);
 
-  size_t major_version_offset (void);
-  // This will give the major_version offset as specified by different
-  // versions of GIOP
 
-  size_t minor_version_offset (void);
-  // This will give the minor_version offset as specified by different
-  // versions of GIOP
 
-  size_t flags_offset (void);
-  // This will give the flags  offset as specified by different
-  // versions of GIOP
+  /// Process the request message that we have received on the
+  /// connection
+  virtual int process_request_message (TAO_Transport *transport,
+                                       TAO_ORB_Core *orb_core);
 
-  size_t message_type_offset (void);
-  // This will give the message type offset as specified by different
-  // versions of GIOP
-  // @@The above  methods may not be required. But we have it for a
-  // later date use wherein things can changes in GIOP
+  /// Parse the reply message that we received and return the reply
+  /// information though <reply_info>
+  virtual int process_reply_message (
+      TAO_Pluggable_Reply_Params &reply_info);
 
-#endif /*if 0*/
-
-  int  send_error (TAO_Transport *transport);
-  // Send error messages
-
-  void dump_msg (const char *label,
-                 const u_char *ptr,
-                 size_t len);
-  // Print out a debug messages..
+  /// Generate a reply message with the exception <ex>.
+  virtual int generate_exception_reply (
+      TAO_OutputCDR &cdr,
+      TAO_Pluggable_Reply_Params &params,
+      CORBA::Exception &x);
 
 private:
-  virtual CORBA::Octet major_version (void) = 0;
-  virtual CORBA::Octet minor_version (void) = 0;
-  // These virtual methods need will give the major and minor versions
-  // of the GIOP classes that are active.
 
-  virtual CORBA::Boolean
-      write_request_header (const TAO_Operation_Details &opdetails,
-                            TAO_Target_Specification &spec,
-                            TAO_OutputCDR &msg) = 0;
-  // Write the GIOP request header in to <msg>
+  /// Writes the GIOP header in to <msg>
+  /// NOTE: If the GIOP header happens to change in the future, we can
+  /// push this method in to the generator_parser classes.
+  int write_protocol_header (TAO_GIOP_Message_Type t,
+                             TAO_OutputCDR &msg);
 
-  virtual CORBA::Boolean
-      write_locate_request_header (CORBA::ULong request_id,
-                                   TAO_Target_Specification &spec,
-                                   TAO_OutputCDR &msg) = 0;
-  // Write the GIOP locate request header in to <msg>
+  /// Processes the <GIOP_REQUEST> messages
+  int process_request (TAO_Transport *transport,
+                       TAO_ORB_Core *orb_core,
+                       TAO_InputCDR &input);
 
-  virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
-  // This will do a validation of the versions that arrive in the transport.
+  /// Processes the <GIOP_LOCATE_REQUEST> messages
+  int process_locate_request (TAO_Transport *transport,
+                              TAO_ORB_Core *orb_core,
+                              TAO_InputCDR &input);
 
-  int parse_header (TAO_GIOP_Message_State *state);
-  // Parses the header of the GIOP messages for validity
+  /// Make a <GIOP_LOCATEREPLY> and hand that over to the transport so
+  /// that it can be sent over the connection.
+  /// NOTE:As on date 1.1 & 1.2 seem to have similar headers. Till an
+  /// unmanageable difference comes let them be implemented here.
+  int make_send_locate_reply (TAO_Transport *transport,
+                              TAO_GIOP_Locate_Request_Header &request,
+                              TAO_GIOP_Locate_Status_Msg &status);
 
-  virtual int parse_magic_bytes (TAO_GIOP_Message_State *state);
-  // validates the first 4 bytes that contain the magic word "GIOP"
+  /// Send error messages
+  int  send_error (TAO_Transport *transport);
 
+  /// Parses the header of the GIOP messages for validity
+  int parse_header (void);
+
+  /// Validates the first 4 bytes that contain the magic word
+  /// "GIOP". Also calls the validate_version () on the incoming
+  /// stream.
+  int parse_magic_bytes (void);
+
+  /// This will do a validation of the stream that arrive in the
+  /// transport.
+  int validate_version (void);
+
+  /// Set the state
+  void set_state (CORBA::Octet major,
+                  CORBA::Octet minor);
+
+  /// Close a connection, first sending GIOP::CloseConnection.
   void send_close_connection (const TAO_GIOP_Version &version,
                               TAO_Transport *transport,
                               void *ctx);
-  // Close a connection, first sending GIOP::CloseConnection.
+
+  /// We must send a LocateReply through <transport>, this request
+  /// resulted in some kind of exception.
+  int send_reply_exception (TAO_Transport *transport,
+                            TAO_ORB_Core* orb_core,
+                            CORBA::ULong request_id,
+                            IOP::ServiceContextList *svc_info,
+                            CORBA::Exception *x);
+
+  /// Print out a debug messages..
+  void dump_msg (const char *label,
+                 const u_char *ptr,
+                 size_t len);
+
+  /// Write the locate reply header
+  virtual int generate_locate_reply_header (
+      TAO_OutputCDR & /*cdr*/,
+      TAO_Pluggable_Reply_Params & /*params*/);
+
+private:
+
+  /// The message state. It represents the status of the messages that
+  /// have been read from the connection.
+  TAO_GIOP_Message_State message_state_;
+
+  /// Output CDR
+  TAO_OutputCDR *output_;
+
+  /// Allocators for the output CDR that we hold. As we cannot rely on
+  /// the resources from ORB Core we reserve our own resources. The
+  /// reason that we cannot believe the ORB core is that, for a
+  /// multi-threaded servers it dishes out resources cached in
+  /// TSS. This would be dangerous as TSS gets destroyed before we
+  /// would. So we have our own memory that we can rely on.
+  /// Implementations of GIOP that we have
+  ACE_Allocator *cdr_buffer_alloc_;
+  ACE_Allocator *cdr_dblock_alloc_;
+
+  /// A buffer that we will use to initialise the CDR stream
+  char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// The generator and parser state.
+  TAO_GIOP_Message_Generator_Parser *generator_parser_;
+
+  /// All the implementations of GIOP message generator and parsers
+  TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
 };
 
-// @@ Bala: do you need to put this in the header file?
-const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 
-// This is used by GIOP1.2. This is to align the message body on a
-// 8-octet boundary.
-const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
 
 
 #if defined (__ACE_INLINE__)

@@ -14,6 +14,7 @@
 //
 // = AUTHOR
 //    Fred Kuhns <fredk@cs.wustl.edu>
+//    Modified by Balachandran Natarajan <bala@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -29,46 +30,8 @@
 
 #include "ace/SOCK_Connector.h"
 #include "tao/Pluggable.h"
-#include "tao/IIOP_Connect.h"
-#include "tao/Resource_Factory.h"
-
-
-// ****************************************************************
-class TAO_Export TAO_IIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
-{
-  // = TITLE
-  //   Helper creation strategy
-  //
-  // = DESCRIPTION
-  //   Creates UIOP_Client_Connection_Handler objects but satisfies
-  //   the interface required by the
-  //   ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
-  //
-public:
-  TAO_IIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                      TAO_ORB_Core* orb_core = 0,
-                                      void *arg = 0,
-                                      CORBA::Boolean flag = 0);
-  // Constructor. <arg> parameter is used to pass any special
-  // state/info to the service handler upon creation.  Currently used
-  // by IIOP and UIOP to pass protocol configuration properties.
-
-  ~TAO_IIOP_Connect_Creation_Strategy (void);
-  // Default destructor g++, 2.7.2 seems to be needing this
-
-  virtual int make_svc_handler (TAO_IIOP_Client_Connection_Handler *&sh);
-  // Makes TAO_IIOP_Client_Connection_Handlers
-
-private:
-  TAO_ORB_Core* orb_core_;
-  // The ORB
-
-  void *arg_;
-  // Some info/state to be passed to the service handler we create.
-
-  CORBA::Boolean lite_flag_;
-  // Are we using GIOP lite?
-};
+#include "tao/Connector_Impl.h"
+#include "tao/IIOP_Connection_Handler.h"
 
 // ****************************************************************
 
@@ -107,50 +70,51 @@ public:
 
 protected:
 
-  // = More TAO_Connector methods, please check the documentation on
-  //   Pluggable.h
+  /// = More TAO_Connector methods, please check the documentation on
+  ///   Pluggable.h
   virtual void make_profile (const char *endpoint,
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
+  /// Obtain tcp properties that must be used by this connector, i.e.,
+  /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
-  // Obtain tcp properties that must be used by this connector, i.e.,
-  // initialize <tcp_properties_>.
+
 
 public:
 
-  typedef ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
-          TAO_ACTIVATION_STRATEGY;
+  typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
+          TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
 
-  typedef ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
+  typedef TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
+          TAO_IIOP_CONNECT_CREATION_STRATEGY;
+
+  typedef ACE_Connect_Strategy<TAO_IIOP_Connection_Handler,
                                ACE_SOCK_CONNECTOR>
-          TAO_CONNECT_STRATEGY ;
+          TAO_IIOP_CONNECT_STRATEGY ;
 
-  typedef ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler,
+  typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_BASE_CONNECTOR;
 
 protected:
 
+  /// TCP configuration properties to be used for all
+  /// connections established by this connector.
   TAO_IIOP_Properties tcp_properties_;
-  // TCP configuration properties to be used for all
-  // connections established by this connector.
 
+  /// Do we need to use a GIOP_Lite for sending messages?
   CORBA::Boolean lite_flag_;
-  // Do we need to use a GIOP_Lite for sending messages?
 
 private:
 
-  TAO_ACTIVATION_STRATEGY null_activation_strategy_;
-  // Our activation strategy
+  /// Our connect strategy
+  TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
-  TAO_CONNECT_STRATEGY connect_strategy_;
-  // Our connect strategy
-
+  /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
-  // The connector initiating connection requests for IIOP.
-
 };
+
 
 #include "ace/post.h"
 #endif  /* TAO_IIOP_CONNECTOR_H */

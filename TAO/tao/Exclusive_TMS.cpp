@@ -3,6 +3,7 @@
 #include "tao/Exclusive_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/Pluggable.h"
+#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, Exclusive_TMS, "$Id$")
@@ -12,8 +13,7 @@ TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
     request_id_generator_ (0),
     has_request_ (0),
     request_id_ (0),
-    rd_ (0),
-    message_state_ (transport->orb_core ())
+    rd_ (0)
 {
 }
 
@@ -44,8 +44,8 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
   this->rd_ = rd;
 
   // If there was a previous reply, cleanup its state first.
-  if (this->message_state_.message_size != 0)
-    this->message_state_.reset (0);
+  //  if (this->message_state_.message_size != 0)
+  // this->message_state_.reset (0);
 
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
@@ -62,19 +62,15 @@ TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 }
 
 int
-TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
-                                   CORBA::ULong reply_status,
-                                   const TAO_GIOP_Version& version,
-                                   IOP::ServiceContextList& reply_ctx,
-                                   TAO_GIOP_Message_State* message_state)
+TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
   // Check the ids.
-  if (!this->has_request_ || this->request_id_ != request_id)
+  if (!this->has_request_ || this->request_id_ != params.request_id_)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) TAO_Exclusive_TMS::dispatch_reply - <%d != %d>\n"),
-                    this->request_id_, request_id));
+                    this->request_id_, params.request_id_));
       return 0;
     }
 
@@ -84,15 +80,12 @@ TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
   this->rd_ = 0;
 
   // Dispatch the reply.
-  int result = rd->dispatch_reply (reply_status,
-                                   version,
-                                   reply_ctx,
-                                   message_state);
+  int result = rd->dispatch_reply (params);
 
   return result;
 }
 
-TAO_GIOP_Message_State *
+/*TAO_GIOP_Message_State *
 TAO_Exclusive_TMS::get_message_state (void)
 {
   if (this->rd_ != 0)
@@ -116,6 +109,7 @@ void
 TAO_Exclusive_TMS::destroy_message_state (TAO_GIOP_Message_State *)
 {
 }
+*/
 
 int
 TAO_Exclusive_TMS::idle_after_send (void)

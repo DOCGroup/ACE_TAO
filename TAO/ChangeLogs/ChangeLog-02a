@@ -1,3 +1,230 @@
+Thu Dec  7 17:36:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+          This set of changes aim to satisfy the demands placed for the
+	  inclusion of Bi-Dir GIOP in TAO. The fundamental problem was the
+	  way TAO's protocol layer was structured. The Connector and
+	  Acceptor's had their own connection handler and
+	  transports. Further, the connection handlers had a prior
+	  knowledge of messages that they were sending and receiving. This
+	  does not hold any more with Bi-Dir GIOP. As a first step,
+	  changes have been made so that 
+	
+	  (1) The Acceptors and Connectors make use of the same connection
+	      handler and transports
+
+	  (2) The connection handler and transport does not have a prior
+	      knowledge of the type of messages that they can receive or
+	      send.
+	  
+  	* tao/IIOP_Connection_Handler.h: 
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.i: The new
+	  TAO_IIOP_Connection_Handler class. This replaces the Server and
+	  Client connection handler classes defined in
+	  IIOP_Connect.{h,cpp,i}
+	
+	* tao/IIOP_Acceptor.cpp:
+	* tao/IIOP_Acceptor.h: Removed references to the server connection
+	  handler. Replaced them with the simple connection handler
+	  classes.
+
+	* tao/Connector_Impl.cpp:
+	* tao/Connector_Impl.h:
+	* tao/Connector_Impl.inl: Template helper classes for the
+	  connector implementation. This is similar to the classes
+	  declared and defined in Acceptor_Impl.{h,cpp,i}
+
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h: Used the helper classes for the connector
+	  implemenation 
+
+	* tao/IIOP_Endpoint.cpp:
+	* tao/IIOP_Endpoint.h:
+	* tao/IIOP_Endpoint.i: Removed references to the client connection
+	  handler classes. 
+	
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.i: Removed client and server side
+	  transports. Now, there will be only one transport which will be
+	  used by the connection handler. The methods that were declared
+	  in the server and client side transports have been merged in to
+	  this single class.
+	
+	* tao/Acceptor_Impl.cpp: Cache the connection during the call to
+	  activate_svc_handler ().
+	
+	* tao/Reply_Dispatcher.h:
+	* tao/Synch_Reply_Dispatcher.h:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.h:
+	* tao/Asynch_Reply_Dispatcher.cpp: The call to dispatch_reply ()
+	  had around 4 parameters. They have been changed to have only one
+	  parameter, that has all the necessary information required to
+	  handle the reply. Further, the references to GIOP_Message_State
+	  has been removed. The message state was used to have the reply
+	  that was read from the connection. But the reply dispatcher never
+	  used all the information in the message state. It only used the
+	  CDR stream in the class. We now, pass the CDR stream through the
+	  TAO_Pluggable_Reply_Params class which has other information
+	  necessary for the reply dispatcher. The asynch reply dispatcher
+	  classes will now take a pointer to the ORB_Core as a parameter. 
+
+	* tao/Asynch_Invocation.i: Added ORB_Core to the list of
+	  parameters that are used to construct the reply dispatcher
+	  object. 
+
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Muxed_TMS.h:
+	* tao/Muxed_TMS.cpp:
+	* tao/Exclusive_TMS.h:
+	* tao/Exclusive_TMS.cpp: Made changes similar to the changes for
+	  reply dispatcher. Further, the memory allocation for the GIOP
+	  message state goes away. We now, create a CDR stream on the
+	  stack for every reply that we go to read. Once the reply is
+	  read, we steal the contents from the CDR stream to pass it on to
+	  the reply dispatcher. This seems to work. Moreover, the way
+	  things were done, does not seem to do what it was intended --
+	  ie. create a message state for every thread that goes to read
+	  the reply for the Muxed_TMS case. Please see the comments in the
+	  IIOP_Transport.cpp for more information regarding this. 
+
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.h:
+	* tao/Pluggable.i: Changed the name of the method
+	  handle_client_input () to read_process_message () in
+	  TAO_Transport. 
+
+ 	* tao/Pluggable_Messaging.h:  
+	* tao/Pluggable_Messaging.cpp: The interface to pluggable
+	  messaging has been totally revamped. Incorporated most of the
+	  suggestions/discussions in that file. The interface provides
+	  methods for creating, parsing and reading messages. The
+	  concrete implementations of the interface would do the bulk of
+	  the work ie. preparing message in the format required, making
+	  upcalls, maintaining states of the messages etc. The interface
+	  binds the implementations to use CDR.
+
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/Pluggable_Messaging_Utils.i: Added a CDR stream to hold the
+	  stream appearing on the connection. 
+
+	  Revamped the whole GIOP implementation. The differences between
+	  server and client side have been removed. Most of the code has
+	  been used from the GIOP_Message_Connectors,
+	  GIOP_Message_Acceptors, GIOP_Message_Accept_State classes. This
+	  should help adding Bi-Dir GIOP pretty easily. 
+
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp: Implements all of the interfaces
+	  that are prescribed by Pluggable_Messaging interface. Delegates
+	  the responsibility of generation and parsing of version specific
+	  headers and messages to the right strategies. 
+	
+	* tao/GIOP_Message_Generator_Parser.cpp:
+	* tao/GIOP_Message_Generator_Parser.h:
+	* tao/GIOP_Message_Generator_Parser.inl:  A strategy class for the
+	  generation of GIOP headers and messages. 
+	
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.h:
+	* tao/GIOP_Message_Generator_Parser_10.inl: A concrete strategy
+	  for GIOP v1.0.
+
+	* tao/GIOP_Message_Generator_Parser_11.cpp:
+	* tao/GIOP_Message_Generator_Parser_11.h:
+	* tao/GIOP_Message_Generator_Parser_11.inl: A concrete strategy
+	  for GIOP v1.1.
+	
+	* tao/GIOP_Message_Generator_Parser_12.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.h:
+	* tao/GIOP_Message_Generator_Parser_12.inl: A concrete strategy
+	  for GIOP v1.2.
+	
+	* tao/GIOP_Message_Generator_Parser_Impl.cpp:
+	* tao/GIOP_Message_Generator_Parser_Impl.h:
+	* tao/GIOP_Message_Generator_Parser_Impl.inl: A place holder
+	  class that creates all the GIOP version specific objects on the
+	  stack. 
+
+	* tao/GIOP_Message_Locate_Header.cpp:
+	* tao/GIOP_Message_Locate_Header.h:
+	* tao/GIOP_Message_Locate_Header.i: Changed the name of the file
+	  GIOP_Message_Headers to GIOP_Message_Loacte_Header.
+
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.i: Made the changes to suit the new
+	  interface specified by the Pluggable_Messaging. 
+	
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Utils.h: Addressed some of the comments.
+	
+	* tao/TAO_Server_Request.cpp
+	* tao/TAO_Server_Request.h: Made changes to suit the interface of
+	  the Pluggable_Messaging class.
+
+	* tao/Wait_On_Read.cpp: Changed the call handle_client_input ()
+	  on the transport to read_process_message ().
+
+	* tao/IIOP_Connect.h:
+	* tao/IIOP_Connect.cpp:
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Acceptors.i:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Message_Connectors.i: These files are removed from the
+	  repository. 
+	
+	* tao/Invocation.cpp: Included a header.
+	* tao/Wait_Strategy.h: Changed a comment. 
+	* tao/Makefile: Added new files and removed old ones.
+
+	* tao/Strategies/SHMIOP_Acceptor.h:
+	* tao/Strategies/SHMIOP_Acceptor.cpp
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp
+	* tao/Strategies/SHMIOP_Connection_Handler.h
+	* tao/Strategies/SHMIOP_Connection_Handler.inl
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Endpoint.cpp:
+	* tao/Strategies/SHMIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.i:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Transport.i:
+	* tao/Strategies/UIOP_Acceptor.h:
+	* tao/Strategies/UIOP_Acceptor.cpp
+	* tao/Strategies/UIOP_Connection_Handler.cpp
+	* tao/Strategies/UIOP_Connection_Handler.h
+	* tao/Strategies/UIOP_Connection_Handler.inl
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h:
+	* tao/Strategies/UIOP_Endpoint.cpp:
+	* tao/Strategies/UIOP_Endpoint.h:
+	* tao/Strategies/UIOP_Endpoint.i:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.h:
+	* tao/Strategies/UIOP_Transport.i: All changes to IIOP were
+	  replicated for both SHMIOP and UIOP.
+	
+	* tao/Strategies/TAO_Strategies.dsp: Added the new files.
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp: Added new files and remove old ones. 
+
+	* tao/DynamicInterface/DII_Invocation.inl:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.h: Replicated changes
+	  done in the Asynch_invocation and Asynch_Reply_Dispatcher
+	  classes.  
+	
+	* tao/DII Request.cpp: Added a header.
+
+	* tao/*/Makefile: 
+	* */Makefile:Updated dependencies.
+
 Thu Dec  7 11:59:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Strategies/simple_test.idl:
@@ -63,6 +290,7 @@ Thu Dec  7 13:45:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Regenerated the stub files updated the diff files.
 
+>>>>>>> 1.2150
 Thu Dec  7 03:01:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/TAO_IDL_BE_LIB.dsp:

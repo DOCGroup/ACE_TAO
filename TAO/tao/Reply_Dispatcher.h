@@ -29,6 +29,7 @@
 class TAO_GIOP_Message_State;
 class TAO_GIOP_Version;
 class TAO_Transport;
+class TAO_Pluggable_Reply_Params;
 
 class TAO_Export TAO_Reply_Dispatcher
 {
@@ -55,10 +56,7 @@ public:
   virtual ~TAO_Reply_Dispatcher (void);
   // Destructor.
 
-  virtual int dispatch_reply (CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state) = 0;
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params) = 0;
   // Dispatch the reply. Return 1 on sucess, -1 on error.
   // @@ TODO Pluggable Messaging:  this method has too many arguments,
   //    the "Right Thing"[tm] is for the Transport Object to create a
@@ -70,7 +68,8 @@ public:
   CORBA::ULong reply_status (void) const;
   // Get the reply status.
 
-  virtual TAO_GIOP_Message_State *message_state (void) = 0;
+  // @@ Commented for the time being -  Bala
+  // virtual TAO_GIOP_Message_State *message_state (void) = 0;
   // Get the Message State into which the reply has been read.
 
   virtual void dispatcher_bound (TAO_Transport*) = 0;

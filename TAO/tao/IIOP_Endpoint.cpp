@@ -3,10 +3,11 @@
 
 
 #include "tao/IIOP_Endpoint.h"
-#include "tao/IIOP_Connect.h"
+#include "tao/IIOP_Connection_Handler.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Endpoint, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.i"
@@ -18,7 +19,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
     host_ (),
     port_ (0),
     object_addr_ (addr),
-    hint_ (0),
+    /*    hint_ (0), */
     next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
@@ -31,7 +32,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (addr),
-    hint_ (0),
+    /*    hint_ (0), */
     next_ (0)
 {
   if (host != 0)
@@ -43,7 +44,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
     host_ (),
     port_ (0),
     object_addr_ (),
-    hint_ (0),
+    /*    hint_ (0), */
     next_ (0)
 {
 }
@@ -55,7 +56,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
     host_ (),
     port_ (port),
     object_addr_ (),
-    hint_ (0),
+    /*    hint_ (0),*/
     next_ (0)
 {
   if (host != 0)
@@ -130,8 +131,9 @@ TAO_IIOP_Endpoint::host (const char *h)
 void
 TAO_IIOP_Endpoint::reset_hint (void)
 {
-  if (this->hint_)
-    this->hint_->cleanup_hint ((void **) &this->hint_);
+  // Commented out for the time being....
+  /*  if (this->hint_)
+      this->hint_->cleanup_hint ((void **) &this->hint_); */
 }
 
 TAO_Endpoint *

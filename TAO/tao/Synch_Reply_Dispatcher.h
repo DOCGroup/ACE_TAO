@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Wait_Strategy;
+class TAO_Pluggable_Reply_Params;
 
 class TAO_Export TAO_Synch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
@@ -50,12 +51,10 @@ public:
   int &reply_received (void);
   // A flag to check if the reply
 
-  virtual int dispatch_reply (CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  // Commented for the time being - Bala
+  // virtual TAO_GIOP_Message_State *message_state (void);
 
   virtual void dispatcher_bound (TAO_Transport *);
 
@@ -66,7 +65,7 @@ protected:
   // The service context list
 
 private:
-  TAO_GIOP_Message_State message_state_;
+  //  TAO_GIOP_Message_State message_state_;
   // All the state required to receive the input...
   // @@ Having members of type TAO_GIOP* indicates that we
   // (Reply_despatcher) are aware of the underlying messaging
@@ -82,6 +81,10 @@ private:
   TAO_Wait_Strategy *wait_strategy_;
   // Save the wait strategy to signal the waiting threads (if
   // appropriate).
+
+  TAO_InputCDR reply_cdr_;
+  // CDR stream which has the reply information that needs to be
+  // demarshalled by the stubs
 
   ACE_SYNCH_CONDITION *leader_follower_condition_variable_;
   // The condition variable used to signal the waiting thread in the

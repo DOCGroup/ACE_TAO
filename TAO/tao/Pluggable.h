@@ -53,6 +53,7 @@ class TAO_Operation_Details;
 class TAO_Connection_Descriptor_Interface;
 class TAO_Connection_Handler;
 
+
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
 class TAO_Export TAO_Transport
@@ -98,9 +99,11 @@ public:
                         int two_way,
                         const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0) = 0;
+
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         const ACE_Time_Value *s = 0,
                         size_t *bytes_transferred = 0) = 0;
+
   // Write the complete Message_Block chain to the connection.
   // @@ The ACE_Time_Value *s is just a place holder for now.  It is
   // not clear this this is the best place to specify this.  The actual
@@ -155,6 +158,13 @@ public:
   // This is a request for the transport object to write a request
   // header before it sends out a request
 
+  virtual int send_message (TAO_OutputCDR &stream,
+                            TAO_Stub *stub = 0,
+                            int twoway = 1,
+                            ACE_Time_Value *max_time_wait = 0) = 0;
+  // This method formats the stream and then sends the message on the
+  // transport.
+
   TAO_ORB_Core *orb_core (void) const;
   // Access the ORB that owns this connection.
 
@@ -164,12 +174,12 @@ public:
   TAO_Wait_Strategy *wait_strategy (void) const;
   // Return the Wait strategy used by the Transport.
 
-  virtual int handle_client_input (int block = 0,
-                                   ACE_Time_Value *max_wait_time = 0);
-  // Read and handle the reply. Returns 0 when there is Short Read on
-  // the connection. Returns 1 when the full reply is read and
-  // handled. Returns -1 on errors.
-  // If <block> is 1, then reply is read in a blocking manner.
+  virtual int read_process_message (ACE_Time_Value *max_wait_time = 0,
+                                    int block = 0);
+  // Read and process the message on the connection. If <block> is 1,
+  // then reply is read in a blocking manner. Once the message has
+  // been successfully read, the message is processed by delegating
+  // the responsibility to the underlying messaging object.
 
   virtual int register_handler (void);
   // Register the handler with the reactor. Will be called by the Wait
@@ -215,6 +225,10 @@ public:
   // would take care of the messaging objects.
 
   void dequeue_all (void);
+
+  /// Return the TAO_ORB_Core
+  TAO_ORB_Core *orb_core (void);
+
 protected:
 
   void dequeue_head (void);
@@ -228,7 +242,6 @@ protected:
   void reset_message (ACE_Message_Block *message_block,
                       size_t bytes_delivered,
                       int queued_message);
-
 private:
   // Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))

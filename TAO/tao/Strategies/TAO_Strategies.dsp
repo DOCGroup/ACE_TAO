@@ -114,7 +114,7 @@ SOURCE=.\SHMIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\SHMIOP_Connect.cpp
+SOURCE=.\SHMIOP_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -146,7 +146,7 @@ SOURCE=.\UIOP_Acceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\UIOP_Connect.cpp
+SOURCE=.\UIOP_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -206,6 +206,10 @@ SOURCE=.\SHMIOP_Connect.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Connection_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SHMIOP_Connector.h
 # End Source File
 # Begin Source File
@@ -243,6 +247,10 @@ SOURCE=.\UIOP_Acceptor.h
 # Begin Source File
 
 SOURCE=.\UIOP_Connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -302,6 +310,10 @@ SOURCE=.\SHMIOP_Connect.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\SHMIOP_Connection_Handler.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\SHMIOP_Endpoint.i
 # End Source File
 # Begin Source File
@@ -319,6 +331,10 @@ SOURCE=.\Single_Reactor.i
 # Begin Source File
 
 SOURCE=.\UIOP_Connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\UIOP_Connection_Handler.inl
 # End Source File
 # Begin Source File
 
