@@ -40,10 +40,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
-#include "../include/common.h"
-#include "../mpeg_shared/fileio.h"
-#include "../mpeg_shared/routine.h"
-#include "../mpeg_shared/com.h"
+#include "common.h"
+#include "fileio.h"
+#include "routine.h"
+#include "com.h"
 #include "server_proto.h"
 
 //extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;

@@ -35,11 +35,11 @@
 #include "tao/TAO.h"
 
 #include "Globals.h"
-#include "../mpeg_shared/fileio.h"
-#include "../mpeg_shared/com.h"
-#include "../include/common.h"
-#include "../mpeg_shared/routine.h"
-#include "../mpeg_shared/sendpt.h"
+#include "fileio.h"
+#include "com.h"
+#include "common.h"
+#include "routine.h"
+#include "sendpt.h"
 #include "server_proto.h"
 #include "Video_Control_State.h"
 
