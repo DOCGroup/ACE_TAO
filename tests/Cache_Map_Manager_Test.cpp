@@ -33,21 +33,12 @@
 #include "ace/Pair_T.h"
 #include "ace/Synch.h"
 #include "ace/Get_Opt.h"
+#include "Cache_Map_Manager_Test.h"     // hash_key class defined in here
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
-
-class hash_key
-{
-public:
-  u_long operator () (size_t t) const
-    {
-      // Simply returns t
-      return t;
-    }
-};
 
 typedef size_t KEY;
 typedef size_t VALUE;
