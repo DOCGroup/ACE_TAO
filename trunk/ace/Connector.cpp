@@ -271,6 +271,7 @@ ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::cleanup_AST (
       // Error, entry not found in map.
       errno = ENOENT;
       ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE (%P|%t) - Connector<>::cleanup_AST")
                          ACE_LIB_TEXT ("%p %d not found in map\n"),
                          ACE_LIB_TEXT ("find"),
                          handle),
