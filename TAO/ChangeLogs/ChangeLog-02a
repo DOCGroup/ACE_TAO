@@ -1,3 +1,15 @@
+Fri Jul  7 19:07:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/InterfaceS.cpp:
+
+	  Patched the _dispatch() methods with the new version
+	  checked in by Bruce Trask on Wednesday. The old
+	  code now causes replies to get lost.
+
+	* orbsvcs/IFR_Service/IFR_Service.h:
+
+	  Cosmetic changes.
+
 Fri Jul 07 15:04:43 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	
 	* tao/RT_Policy_i.h: 
