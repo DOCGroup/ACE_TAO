@@ -113,7 +113,8 @@ main (int argc, char *argv[])
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      server_impl->_remove_ref();
+      server_impl->_remove_ref(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
         child_poa->id_to_reference (id.in ()

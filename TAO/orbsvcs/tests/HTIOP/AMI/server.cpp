@@ -88,7 +88,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-	  ACE_OS::socket_init (ACE_ENV_ARG_PARAMETER);
+      ACE_OS::socket_init ();
 
       AMI_Test_i ami_test_i (orb.in ());
 

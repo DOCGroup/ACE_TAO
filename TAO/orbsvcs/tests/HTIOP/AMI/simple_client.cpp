@@ -207,7 +207,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-	  ACE_OS::socket_init (ACE_ENV_ARG_PARAMETER);
+      ACE_OS::socket_init ();
 
       // Instantiate the ReplyHandler and register that with the POA.
       Handler handler;
