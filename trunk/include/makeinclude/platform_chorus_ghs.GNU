@@ -54,7 +54,7 @@ DLD     = $(CXX)
 LD      = $(CXX)
 LDFLAGS = --no_auto_instantiation \
           -u __main -u __premain -u _abort -r \
-          $(MVME_DIR)/lib/CC/ioassign.o \
+          $(MVME_DIR)/lib/CC/ioassign.o $(MVME_DIR)/lib/CC/iostream.o \
           $(COOL_DIR)/lib/libOrb.a  \
           $(MVME_DIR)/lib/CC/libC.a \
           $(GHS_DIR)/ch68/libedg.a \
@@ -66,10 +66,14 @@ ARFLAGS = rv
 RANLIB  = /bin/true
 
 
-POSTLINK = ; $(CC) -groot= -alttools=$(GHS_DIR) -68040 -O -nostartfiles \
+POSTLINK = ; $(MVME_DIR)/dtool/mkctors $@ > ctorsdtors.s; \
+           $(CC) $(CFLAGS) -c ctorsdtors.s -o .obj/ctorsdtors.o; \
+           rm -f ctorsdtors.s; \
+           $(CC) -groot= -alttools=$(GHS_DIR) -68040 -O -nostartfiles \
            -nostdlib -e __start -o $@.final \
            $(MVME_DIR)/lib/crt/crth.s.o $(MVME_DIR)/lib/crt/crt0.o \
            $(MVME_DIR)/lib/crt/crti.o $@ \
+           .obj/ctorsdtors.o \
            $(MVME_DIR)/lib/crt/crtn.o \
            -locatedprogram -r; \
            mv -f $@.final $@
