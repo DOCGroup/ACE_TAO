@@ -1,3 +1,12 @@
+Thu Jan 15 15:36:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp (fe_add_field):
+        
+          Added check for name clash between a valuetype member identifier
+          and the first segment of a scoped name referenced in the same
+          scope where the identifier is found, similar to what is already
+          in place for structs, unions and exceptions.
+
 Thu Jan 15 16:50:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.mpc:
