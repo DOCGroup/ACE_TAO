@@ -71,13 +71,13 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 Protocol_Record *
 PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
 {
-  Protocol_Record *frp = this->ss->insert (protocol_record.get_host (),
+  Protocol_Record *prp = this->ss->insert (protocol_record.get_host (),
                                            MAXHOSTNAMELEN);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
-                                         frp->drwho_list_);
-  int length = ACE_OS::strlen (frp->get_host ());
+                                         prp->drwho_list_);
+  int length = ACE_OS::strlen (prp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 
@@ -89,7 +89,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   if (length > this->max_key_length)
     this->max_key_length = length;
 
-  return frp;
+  return prp;
 }
   
 char *
@@ -121,16 +121,16 @@ PMC_Ruser::process (void)
   else
     get_name = &Drwho_Node::get_real_name;
 
-  for (Protocol_Record *frp;
-       (frp = this->Protocol_Manager::get_each_friend ()) != 0;
+  for (Protocol_Record *prp;
+       (prp = this->Protocol_Manager::get_each_friend ()) != 0;
        )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%-*s ",
                   this->max_key_length,
-                  frp->get_host ()));
+                  prp->get_host ()));
 
-      for (Drwho_Node *np = frp->get_drwho_list (); ;)
+      for (Drwho_Node *np = prp->get_drwho_list (); ;)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
                       "%s",

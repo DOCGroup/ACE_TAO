@@ -16,7 +16,7 @@ PMS_Flo::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMS_Flo::encode"));
 
-  Protocol_Record *frp;
+  Protocol_Record *prp;
   char *buf_ptr = packet;
 
   sprintf (buf_ptr,
@@ -27,11 +27,11 @@ PMS_Flo::encode (char *packet, int &packet_length)
   // We only send back info on friends that we actually see logged in.
 
   for (;
-       (frp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != 0;
        *buf_ptr++ = '\t')
     buf_ptr = this->handle_protocol_entries (ACE::strecpy (buf_ptr,
-                                                           frp->get_login ()),
-                                             frp->get_drwho_list ());
+                                                           prp->get_login ()),
+                                             prp->get_drwho_list ());
   
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
