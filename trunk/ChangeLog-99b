@@ -1,4 +1,9 @@
-Wed Mar 24 12:53:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Mar 24 13:16:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.i (handler):
+	* ace/Select_Reactor_T.cpp (handler_i): Made sure we can safely
+	  pass out the event handler before we do so.  Thanks to Michael
+	  Preobrazhensky <mikep@xpedite.com> for reporting this.
 
 	* tests/run_tests.bat: Do not run Time_Service_Test if
 	  netsvcs/servers/main.exe doesn't exist.  Thanks to
