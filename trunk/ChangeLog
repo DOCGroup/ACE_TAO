@@ -1,3 +1,16 @@
+Thu Dec 16 13:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+        * examples/Reactor/Misc/test_signals_2.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Reactor/Misc/test_reactors.cpp:
+        * examples/Reactor/Misc/test_event_handler_t.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+          Fixed link errors in unicode builds
+
+        * examples/Reactor/Misc/Reactor_Misc.mpc:
+          Added missing test_event_handler_t
+
 Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
