@@ -1,3 +1,8 @@
+Sun Feb 15 08:05:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * server/JAWS_Pipeline.h: added missing ; at end of constructor
+          declaration.
+
 Wed Jan  7 17:26:43 1998  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/Pipeline.cpp: Put base class initialization of
