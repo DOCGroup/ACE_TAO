@@ -21,6 +21,7 @@
 
 #include "test_wrapper.h"
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 
 // Constructor
 template <class T>
