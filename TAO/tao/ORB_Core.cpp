@@ -1458,12 +1458,7 @@ TAO_ORB_Core::service_raise_transient_failure (
                                  ACE_ENV_ARG_PARAMETER);
     }
 
-  ACE_THROW_RETURN (CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_SEND_REQUEST_MINOR_CODE,
-          errno),
-        CORBA::COMPLETED_MAYBE),
-        TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+  return TAO::TAO_INVOKE_FAILURE;
 }
 
 void

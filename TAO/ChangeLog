@@ -1,3 +1,19 @@
+Sun Nov 16 16:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+	* tao/ORB_Core.cpp:
+	* tao/Synch_Invocation.cpp:
+
+	  Fix for [BUG 1384]. Please see
+
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1384
+
+	  for details. The crux of the problem is whether the FTORB
+	  infrastructure should do a reinvocation when it receives a
+	  TRANSIENT over the wire. Opinions were widely different on
+	  this. We finally took the opinion of Jon Biggar who said this
+	  was okay. 
+
 Sun Nov 16 12:40:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:

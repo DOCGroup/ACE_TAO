@@ -183,7 +183,6 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
 
   // As the right tags are not found close the connection and throw an
   // exception
-  //   invoke->close_connection ();
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
@@ -196,20 +195,15 @@ TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_transient_failure (
     IOP::ServiceContextList &service,
     TAO_Profile *profile
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->restart_policy_check (service,
                                   profile))
     return TAO::TAO_INVOKE_RESTART;
 
-  // As the right tags are not found close the connection and throw an
-  // exception
-  ACE_THROW_RETURN (CORBA::TRANSIENT (
-      CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
-          errno),
-      CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+  // Unlike COMM_FAILURE do not raise an exception since the
+  // completion status is not known and no assumption can be made.
+  return TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
 }
 
 CORBA::Boolean
