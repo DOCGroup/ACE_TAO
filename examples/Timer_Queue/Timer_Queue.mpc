@@ -13,6 +13,7 @@ project(*Async) : aceexe {
   exename = Asynch_Timer_Queue_Test
   after  += Timer_Queue_Library
   libs   += tqtd
+  after  += Timer_Queue_Library
   Source_Files {
     main_async.cpp
   }
@@ -22,6 +23,7 @@ project(*Reactor) : aceexe {
   exename = Reactor_Timer_Queue_Test
   after  += Timer_Queue_Library
   libs   += tqtd
+  after  += Timer_Queue_Library
   Source_Files {
     main_reactor.cpp
   }
@@ -31,6 +33,7 @@ project(*Thread) : aceexe {
   exename = Thread_Timer_Queue_Test
   after  += Timer_Queue_Library
   libs   += tqtd
+  after  += Timer_Queue_Library
   Source_Files {
     main_thread.cpp
   }
