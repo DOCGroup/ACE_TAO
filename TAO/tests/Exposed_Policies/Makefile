@@ -246,15 +246,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.i \
- CounterC.h CounterC.i $(ACE_ROOT)/ace/Arg_Shifter.h \
+ CounterC.h CounterC.i \
+ $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(TAO_ROOT)/tao/RT_Policy_i.h \
  $(TAO_ROOT)/tao/RT_Policy_i.i
 
@@ -442,9 +441,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i CounterC.i \
- RT_Properties.h $(ACE_ROOT)/ace/Arg_Shifter.h
+ CounterC.i RT_Properties.h \
+ $(ACE_ROOT)/ace/Arg_Shifter.h
 
 .obj/RT_Properties.o .obj/RT_Properties.so .shobj/RT_Properties.o .shobj/RT_Properties.so: RT_Properties.cpp RT_Properties.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -629,9 +627,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
- $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i
+ $(TAO_ROOT)/tao/PortableInterceptor.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp CounterC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -817,9 +813,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i CounterC.i \
- Policy_Verifier.h RT_Properties.h \
+ CounterC.i Policy_Verifier.h RT_Properties.h \
  $(ACE_ROOT)/ace/Arg_Shifter.h
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Policy_Tester.h RT_Properties.h \
@@ -1006,8 +1000,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \

@@ -1,3 +1,13 @@
+Fri Mar 30 14:08:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/*/Makefile: Updated dependencies
+	
+	* tests/BiDirectional/server.cpp:
+	* tests/BiDirectional/client.cpp:
+	* tests/BiDirectional_NestedUpcall/client.cpp:
+	* tests/BiDirectional_NestedUpcall/server.cpp: Added missing
+	  #includes.  
+
 Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/BiDirPolicy.pidl:
