@@ -187,16 +187,14 @@ oneway		return IDL_ONEWAY;
   // keyword and grab the mapping.  BTW, the reason for the odd
   // regular expression is to handle EBCDIC, as well as ASCII.
 
-  char *tmp = (ace_yytext[0] == '_' ? ace_yytext + 1 : ace_yytext);
-
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
   const TAO_IDL_CPP_Keyword_Entry *entry =
-    cpp_key_tbl.lookup (tmp,
-                        ACE_OS::strlen (tmp));
+    cpp_key_tbl.lookup (ace_yytext,
+                        ACE_OS::strlen (ace_yytext));
   if (entry)
     yylval.strval = ACE_OS::strdup (entry->mapping_);
   else
-    yylval.strval = ACE_OS::strdup (tmp);
+    yylval.strval = ACE_OS::strdup (ace_yytext);
 
   return IDENTIFIER;
 }

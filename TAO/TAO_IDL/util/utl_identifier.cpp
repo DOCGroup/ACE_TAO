@@ -76,25 +76,51 @@ ACE_RCSID(util, utl_identifier, "$Id$")
  */
 
 Identifier::Identifier ()
-  : pv_string (NULL)
+  : pv_string (0),
+    escaped_ (0)
 {
 }
 
-Identifier::Identifier (const char *s, long, long, long)
-  : pv_string (ACE_OS::strdup (s))
+Identifier::Identifier (const char *s)
+{
+  idl_bool shift = 0;
+  this->escaped_ = 0;
+
+  if (*s == '_')
+    {
+      shift = 1;
+      this->escaped_ = 1;
+
+      ACE_CString str (s,
+                       0,
+                       0);
+
+      if (str.find ("_cxx_") == 0)
+        {
+          shift = 0;
+        }
+    }
+
+  if (shift)
+    {
+      this->pv_string = ACE_OS::strdup (s + 1);
+    }
+  else
+    {
+      this->pv_string = ACE_OS::strdup (s);
+    }
+}
+
+Identifier::~Identifier (void) 
 {
 }
 
-Identifier::~Identifier () 
-{
-}
-
-// Operations
+// Operations.
 
 char *
 Identifier::get_string (void)
 {
-  return pv_string;
+  return this->pv_string;
 }
 
 void
@@ -105,17 +131,24 @@ Identifier::replace_string (const char * s)
       ACE_OS::free (this->pv_string);
     }
 
-  pv_string = ACE_OS::strdup (s);
+  this->pv_string = ACE_OS::strdup (s);
 }
 
 // Compare two Identifier *
 long
 Identifier::compare (Identifier *o)
 {
-  if (o == NULL) return I_FALSE;
-  if (pv_string == NULL || o->get_string() == NULL)
-    return I_FALSE;
-  return (ACE_OS::strcmp (pv_string, o->get_string ()) == 0) ? I_TRUE : I_FALSE;
+  if (o == 0) 
+    {
+      return I_FALSE;
+    };
+
+  if (this->pv_string == 0 || o->get_string () == 0)
+    {
+      return I_FALSE;
+    }
+
+  return (ACE_OS::strcmp (this->pv_string, o->get_string ()) == 0);
 }
 
 // Report the appropriate error if the two identifiers differ only in case.
@@ -153,22 +186,30 @@ Identifier::copy (void)
 {
   Identifier *retval = 0;
   ACE_NEW_RETURN (retval,
-                  Identifier (this->pv_string,
-                              1,
-                              0,
-                              I_FALSE),
+                  Identifier (this->pv_string),
                   0);
+
+  retval->escaped_ = this->escaped_;
 
   return retval;
 }
 
-// Dumping
+idl_bool
+Identifier::escaped (void) const
+{
+  return this->escaped_;
+}
+
+// Dumping.
 void
 Identifier::dump (ostream &o)
 {
-  if (pv_string == NULL) return;
+  if (this->pv_string == 0) 
+    {
+      return;
+    }
 
-  o << get_string();
+  o << get_string ();
 }
 
 void

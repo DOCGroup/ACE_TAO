@@ -81,7 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "idl.h"
 #include        "idl_extern.h"
-
 #include        "fe_private.h"
 
 ACE_RCSID(fe, fe_init, "$Id$")
@@ -92,10 +91,7 @@ create_scoped_name (const char *s)
 {
   Identifier *id = 0;
   ACE_NEW_RETURN (id,
-                  Identifier (s, 
-                              1, 
-                              0, 
-                              I_FALSE),
+                  Identifier (s),
                   0);
 
   UTL_ScopedName *retval = 0;
@@ -107,9 +103,9 @@ create_scoped_name (const char *s)
   return retval;
 }
 
-// Populate the global scope with all predefined entities
+// Populate the global scope with all predefined entities.
 void
-fe_populate (AST_Module *m)
+fe_populate_global_scope (AST_Module *m)
 {
   AST_PredefinedType *pdt = 0;
 
@@ -513,6 +509,79 @@ fe_populate (AST_Module *m)
 # endif /* IDL_HAS_VALUETYPE */
 }
 
+// Populate idl_global's hash map with upper case versions of
+// all the IDL keywords
+void
+fe_populate_idl_keywords (void)
+{
+  static const char *keywords[] =
+    {
+      "ABSTRACT",
+      "ANY",
+      "ATTRIBUTE",
+      "BOOLEAN",
+      "CASE",
+      "CHAR",
+      "CONST",
+      "CONTEXT",
+      "CUSTOM",
+      "DEFAULT",
+      "DOUBLE",
+      "EXCEPTION",
+      "ENUM",
+      "FACTORY",
+      "FALSE",
+      "FIXED",
+      "FLOAT",
+      "IN",
+      "INOUT",
+      "INTERFACE",
+      "LOCAL",
+      "LONG",
+      "MODULE",
+      "NATIVE",
+      "OBJECT",
+      "OCTET",
+      "ONEWAY",
+      "OUT",
+      "PRIVATE",
+      "PUBLIC",
+      "RAISES",
+      "READONLY",
+      "SEQUENCE",
+      "SHORT",
+      "STRING",
+      "STRUCT",
+      "SUPPORTS",
+      "SWITCH",
+      "TRUE",
+      "TRUNCATABLE",
+      "TYPEDEF",
+      "UNION",
+      "UNSIGNED",
+      "VALUEBASE",
+      "VALUETYPE",
+      "VOID",
+      "WCHAR",
+      "WSTRING"
+    };
+
+  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &map =
+    idl_global->idl_keywords ();
+
+  u_long length = sizeof (keywords) / sizeof (char *);
+  ACE_CString ext_id;
+  int int_id = 0;
+
+  for (u_long i = 0; i < length; ++i)
+    {
+      ext_id.set (keywords[i], 
+                  0);
+      (void) map.bind (ext_id,
+                       int_id);
+    }
+}
+
 // Initialization stage 1: create global scopes stack.
 void
 FE_init_stage1 (void)
@@ -565,8 +634,11 @@ FE_init_stage2 (void)
   idl_global->scopes ()->push (idl_global->root ());
 
   // Populate it with nodes for predefined types.
-  fe_populate (idl_global->root ());
+  fe_populate_global_scope (idl_global->root ());
 
   // Set flag to indicate we are processing the main file now.
   idl_global->set_in_main_file (I_TRUE);
+
+  // Populate the IDL keyword container, for checking local identifiers.
+  fe_populate_idl_keywords ();
 }

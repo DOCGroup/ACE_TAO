@@ -125,7 +125,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 private:
-  friend void fe_populate (AST_Module *m);
+  friend void fe_populate_global_scope (AST_Module *m);
   friend int tao_yyparse (void);
 
   // Scope Management Protocol

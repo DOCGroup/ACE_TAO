@@ -105,10 +105,7 @@ AST_Root::fe_add_sequence (AST_Sequence *t)
 
   Identifier *id = 0;
   ACE_NEW_RETURN (id,
-                  Identifier ("local type", 
-                              1, 
-                              0, 
-                              I_FALSE),
+                  Identifier ("local type"),
                   0);
 
   UTL_ScopedName *sn = 0;
@@ -133,10 +130,7 @@ AST_Root::fe_add_string (AST_String *t)
 
   Identifier *id = 0;
   ACE_NEW_RETURN (id,
-                  Identifier ("local type", 
-                              1, 
-                              0, 
-                              I_FALSE),
+                  Identifier ("local type"),
                   0);
 
   UTL_ScopedName *sn = 0;
@@ -161,10 +155,7 @@ AST_Root::fe_add_array (AST_Array *t)
 
   Identifier *id = 0;
   ACE_NEW_RETURN (id,
-                  Identifier ("local type", 
-                              1, 
-                              0, 
-                              I_FALSE),
+                  Identifier ("local type"),
                   0);
 
   UTL_ScopedName *sn = 0;

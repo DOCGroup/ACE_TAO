@@ -91,10 +91,7 @@ be_type::compute_tc_name (void)
 
   Identifier *id = 0;
   ACE_NEW (id,
-           Identifier (namebuf,
-                       1,
-                       0,
-                       I_FALSE));
+           Identifier (namebuf));
 
   // Does not exist.
   if (this->tc_name_ == 0)
@@ -164,10 +161,7 @@ be_type::compute_tc_name (const char *prefix,
   
   Identifier *id = 0;
   ACE_NEW_RETURN (id,
-                  Identifier (namebuf,
-                              1,
-                              0,
-                              I_FALSE),
+                  Identifier (namebuf),
                   0);
 
   if (result == 0)

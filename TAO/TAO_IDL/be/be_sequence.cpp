@@ -170,10 +170,7 @@ be_sequence::create_name (be_typedef *node)
 
           Identifier *id = 0;
           ACE_NEW_RETURN (id,
-                          Identifier (ACE_OS::strdup (namebuf),
-                                      1,
-                                      0,
-                                      I_FALSE),
+                          Identifier (ACE_OS::strdup (namebuf)),
                           -1);
 
           UTL_ScopedName *conc_name = 0;

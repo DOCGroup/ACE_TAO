@@ -88,8 +88,7 @@ public:
     EIDL_REDEF,                 // Redefinition
     EIDL_REDEF_SCOPE,           // Redefinition inside defining scope
     EIDL_DEF_USE,               // Definition after use
-    EIDL_MULTIPLE_BRANCH,       // More than one union branch with this
-                                // label
+    EIDL_MULTIPLE_BRANCH,       // More than one union branch with this label
     EIDL_COERCION_FAILURE,      // Coercion failure
     EIDL_SCOPE_CONFLICT,        // Between fwd declare and full declare
     EIDL_ONEWAY_CONFLICT,       // Between op decl and argument direction
@@ -105,6 +104,8 @@ public:
     EIDL_CONSTANT_EXPECTED,     // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
+    EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
+    EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression
@@ -121,78 +122,111 @@ public:
   // Operations
 
   // Report errors with varying numbers of arguments
-  void  error0(ErrorCode e);
-  void  error1(ErrorCode e, AST_Decl *t);
-  void  error2(ErrorCode e, AST_Decl *t1, AST_Decl *t2);
-  void  error3(ErrorCode e, AST_Decl *t1, AST_Decl *t2, AST_Decl *t3);
+  void error0 (ErrorCode e);
+  void error1 (ErrorCode e, 
+               AST_Decl *t);
+  void error2 (ErrorCode e, 
+               AST_Decl *t1, 
+               AST_Decl *t2);
+  void error3 (ErrorCode e, 
+               AST_Decl *t1, 
+               AST_Decl *t2, 
+               AST_Decl *t3);
 
   // Report warnings with varying numbers of arguments
-  void  warning0(ErrorCode e);
-  void  warning1(ErrorCode e, AST_Decl *t);
-  void  warning2(ErrorCode e, AST_Decl *t1, AST_Decl *t2);
-  void  warning3(ErrorCode e, AST_Decl *t1, AST_Decl *t2, AST_Decl *t3);
+  void warning0 (ErrorCode e);
+  void warning1 (ErrorCode e, 
+                 AST_Decl *t);
+  void warning2 (ErrorCode e, 
+                 AST_Decl *t1, 
+                 AST_Decl *t2);
+  void warning3 (ErrorCode e, 
+                 AST_Decl *t1, 
+                 AST_Decl *t2, 
+                 AST_Decl *t3);
 
   // Report a syntax error in IDL input
-  void  syntax_error(IDL_GlobalData::ParseState ps);
+  void syntax_error(IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced indentifiers
-  void redef_error (char *n, char *t);
+  void redef_error (char *n, 
+                    char *t);
 
   // Report a name being used with different spellings
-  void  name_case_error(char *n, char *t);
+  void name_case_error (char *n, 
+                        char *t);
 
-  // Same as above, but don't increment the error count.
-  void  name_case_warning(char *n, char *t);
+  // Same as above, but doesn't increment the error count.
+  void name_case_warning (char *n, 
+                          char *t);
+
+  // Differs from spelling of IDL keyword only by case.
+  void idl_keyword_error (char *n);
+
+  // Same as above, but doesn't increment the error count.
+  void idl_keyword_warning (char *n);
 
   // Report an unsuccesful coercion attempt
-  void  coercion_error(AST_Expression *v, AST_Expression::ExprType t);
+  void coercion_error (AST_Expression *v, 
+                       AST_Expression::ExprType t);
 
   // Report a failed name lookup attempt
-  void  lookup_error(UTL_ScopedName *n);
+  void lookup_error (UTL_ScopedName *n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec
-  void  inheritance_fwd_error(UTL_ScopedName *n, AST_Interface *f);
+  void inheritance_fwd_error  (UTL_ScopedName *n, 
+                               AST_Interface *f);
 
   // Report an attempt to inherit from something other than an interface
-  void  inheritance_error(UTL_ScopedName *n, AST_Decl *d);
+  void inheritance_error (UTL_ScopedName *n, 
+                          AST_Decl *d);
 
-  void  abstract_inheritance_error (UTL_ScopedName *n);
+  void abstract_inheritance_error (UTL_ScopedName *n);
 
   // Report an error while evaluating an expression (division by zero, etc.)
-  void  eval_error(AST_Expression *d);
+  void eval_error (AST_Expression *d);
 
   // Report a situation where a constant was expected but we got
   // something else instead. This most likely is a case where a union
   // label did not evaluate to a constant
-  void  constant_expected(UTL_ScopedName *n, AST_Decl *d);
+  void constant_expected (UTL_ScopedName *n, 
+                          AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum
   // discriminator is being parsed and one of the branch labels is
   // not an enumerator in that enum
-  void  enum_val_expected(AST_Union *t, AST_UnionLabel *l);
+  void enum_val_expected (AST_Union *t, 
+                          AST_UnionLabel *l);
 
   // Report a failed enumerator lookup in an enum
-  void  enum_val_lookup_failure(AST_Union *t, AST_Enum *e, UTL_ScopedName *n);
+  void enum_val_lookup_failure (AST_Union *t, 
+                                AST_Enum *e, 
+                                UTL_ScopedName *n);
 
   // Report an ambiguous name definition
-  void  ambiguous(UTL_Scope *s, AST_Decl *l, AST_Decl *d);
+  void ambiguous (UTL_Scope *s, 
+                  AST_Decl *l, 
+                  AST_Decl *d);
 
   // Report a forward declared interface which was never defined
-  void  fwd_decl_not_defined(AST_Interface *d);
+  void fwd_decl_not_defined (AST_Interface *d);
 
   // Report attempt to lookup in forward declared interface
-  void  fwd_decl_lookup(AST_Interface *d, UTL_ScopedName *n);
+  void fwd_decl_lookup (AST_Interface *d, 
+                        UTL_ScopedName *n);
 
   // Report a redefinition in scope
-  void  redefinition_in_scope(AST_Decl *t, AST_Decl *s);
+  void redefinition_in_scope (AST_Decl *t, 
+                              AST_Decl *s);
 
   // Report not a type error
-  void  not_a_type(AST_Decl *d);
+  void not_a_type (AST_Decl *d);
 
   // Report back-end error
-  void  back_end(long lineno, UTL_String *s);
+  void back_end (long lineno, 
+                 UTL_String *s);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

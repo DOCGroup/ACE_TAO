@@ -46,10 +46,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
     {
       Identifier *corba_id = 0;
       ACE_NEW (corba_id,
-               Identifier ("CORBA", 
-                           1,
-                           0,
-                           I_FALSE));
+               Identifier ("CORBA"));
 
       UTL_ScopedName *new_name = 0;
       ACE_NEW (new_name,
@@ -63,115 +60,67 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
         {
         case AST_PredefinedType::PT_long:
           ACE_NEW (id,
-                   Identifier ("Long", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Long"));
           break;
         case AST_PredefinedType::PT_ulong:
           ACE_NEW (id,
-                   Identifier ("ULong", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("ULong"));
           break;
         case AST_PredefinedType::PT_short:
           ACE_NEW (id,
-                   Identifier ("Short", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Short"));
           break;
         case AST_PredefinedType::PT_ushort:
           ACE_NEW (id,
-                   Identifier ("UShort", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("UShort"));
           break;
         case AST_PredefinedType::PT_float:
           ACE_NEW (id,
-                   Identifier ("Float", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Float"));
           break;
         case AST_PredefinedType::PT_double:
           ACE_NEW (id,
-                   Identifier ("Double", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Double"));
           break;
         case AST_PredefinedType::PT_char:
           ACE_NEW (id,
-                   Identifier ("Char", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Char"));
           break;
         case AST_PredefinedType::PT_octet:
           ACE_NEW (id,
-                   Identifier ("Octet", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Octet"));
           break;
         case AST_PredefinedType::PT_wchar:
           ACE_NEW (id,
-                   Identifier ("WChar", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("WChar"));
           break;
         case AST_PredefinedType::PT_boolean:
           ACE_NEW (id,
-                   Identifier ("Boolean", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Boolean"));
           break;
         case AST_PredefinedType::PT_longlong:
           ACE_NEW (id,
-                   Identifier ("LongLong", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("LongLong"));
           break;
         case AST_PredefinedType::PT_ulonglong:
           ACE_NEW (id,
-                   Identifier ("ULongLong", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("ULongLong"));
           break;
         case AST_PredefinedType::PT_longdouble:
           ACE_NEW (id,
-                   Identifier ("LongDouble", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("LongDouble"));
           break;
         case AST_PredefinedType::PT_any:
           ACE_NEW (id,
-                   Identifier ("Any", 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier ("Any"));
           break;
         case AST_PredefinedType::PT_pseudo:
           ACE_NEW (id,
-                   Identifier (n->last_component ()->get_string (), 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier (n->last_component ()->get_string ()));
           break;
         default:
           ACE_NEW (id,
-                   Identifier (this->local_name ()->get_string (), 
-                               1,
-                               0,
-                               I_FALSE));
+                   Identifier (this->local_name ()->get_string ()));
         }
 
       ACE_NEW (conc_name,
@@ -202,10 +151,7 @@ be_predefined_type::compute_tc_name (void)
   // Start with the head as the CORBA namespace.
   Identifier *corba_id = 0;
   ACE_NEW (corba_id,
-           Identifier ("CORBA", 
-                       1, 
-                       0, 
-                       I_FALSE));
+           Identifier ("CORBA"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (corba_id,
@@ -218,108 +164,63 @@ be_predefined_type::compute_tc_name (void)
     {
     case AST_PredefinedType::PT_void:
       ACE_NEW (id,
-               Identifier ("_tc_void", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_void"));
       break;
     case AST_PredefinedType::PT_long:
       ACE_NEW (id,
-               Identifier ("_tc_long", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_long"));
       break;
     case AST_PredefinedType::PT_longlong:
       ACE_NEW (id,
-               Identifier ("_tc_longlong", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_longlong"));
       break;
     case AST_PredefinedType::PT_ulong:
       ACE_NEW (id,
-               Identifier ("_tc_ulong", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_ulong"));
       break;
     case AST_PredefinedType::PT_ulonglong:
       ACE_NEW (id,
-               Identifier ("_tc_ulonglong", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_ulonglong"));
       break;
     case AST_PredefinedType::PT_short:
       ACE_NEW (id,
-               Identifier ("_tc_short", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_short"));
       break;
     case AST_PredefinedType::PT_ushort:
       ACE_NEW (id,
-               Identifier ("_tc_ushort", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_ushort"));
       break;
     case AST_PredefinedType::PT_float:
       ACE_NEW (id,
-               Identifier ("_tc_float", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_float"));
       break;
     case AST_PredefinedType::PT_double:
       ACE_NEW (id,
-               Identifier ("_tc_double", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_double"));
       break;
     case AST_PredefinedType::PT_longdouble:
       ACE_NEW (id,
-               Identifier ("_tc_longdouble", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_longdouble"));
       break;
     case AST_PredefinedType::PT_char:
       ACE_NEW (id,
-               Identifier ("_tc_char", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_char"));
       break;
     case AST_PredefinedType::PT_wchar:
       ACE_NEW (id,
-               Identifier ("_tc_wchar", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_wchar"));
       break;
     case AST_PredefinedType::PT_octet:
       ACE_NEW (id,
-               Identifier ("_tc_octet", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_octet"));
       break;
     case AST_PredefinedType::PT_boolean:
       ACE_NEW (id,
-               Identifier ("_tc_boolean", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_boolean"));
       break;
     case AST_PredefinedType::PT_any:
       ACE_NEW (id,
-               Identifier ("_tc_any", 
-                           1, 
-                           0, 
-                           I_FALSE));
+               Identifier ("_tc_any"));
     break;
     case AST_PredefinedType::PT_pseudo:
       {
@@ -329,10 +230,7 @@ be_predefined_type::compute_tc_name (void)
                          this->name ()->last_component ()->get_string ());
 
         ACE_NEW (id,
-                 Identifier (tcname, 
-                             1, 
-                             0, 
-                             I_FALSE));
+                 Identifier (tcname));
         break;
       }
     default:

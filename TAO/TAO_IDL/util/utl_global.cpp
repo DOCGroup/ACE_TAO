@@ -861,4 +861,11 @@ const char *
 IDL_GlobalData::idl_flags (void) const
 {
   return idl_flags_.c_str ();
-} 
+}
+
+ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
+IDL_GlobalData::idl_keywords (void)
+{
+  return this->idl_keywords_;
+}
+

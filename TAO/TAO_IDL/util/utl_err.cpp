@@ -128,6 +128,10 @@ error_string(UTL_Error::ErrorCode c)
     return ACE_TEXT ("identifier spellings differ only in case: ");
   case UTL_Error::EIDL_NAME_CASE_WARNING:
     return ACE_TEXT ("Warning - identifier spellings differ only in case: ");
+  case UTL_Error::EIDL_KEYWORD_ERROR:
+    return ACE_TEXT ("spelling differs from IDL keyword only in case: ");
+  case UTL_Error::EIDL_KEYWORD_WARNING:
+    return ACE_TEXT ("Warning - spelling differs from IDL keyword only in case: ");
   case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
     return ACE_TEXT ("enumerator expected: ");
   case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -155,7 +159,9 @@ error_string(UTL_Error::ErrorCode c)
 
 // Print out an error message header on cerr
 static void
-idl_error_header(UTL_Error::ErrorCode c, long lineno, UTL_String *s)
+idl_error_header (UTL_Error::ErrorCode c, 
+                  long lineno, 
+                  UTL_String *s)
 {
   cerr << idl_global->prog_name()
        << ": \""
@@ -166,9 +172,9 @@ idl_error_header(UTL_Error::ErrorCode c, long lineno, UTL_String *s)
        << error_string(c);
 }
 
-// Convert the type of an AST_Expression to a char *
+// Convert the type of an AST_Expression to a char *.
 static const char *
-exprtype_to_string(AST_Expression::ExprType t)
+exprtype_to_string (AST_Expression::ExprType t)
 {
   switch (t) {
   case AST_Expression::EV_short:
@@ -208,9 +214,7 @@ exprtype_to_string(AST_Expression::ExprType t)
   return NULL;
 }
 
-/*
- * Convert a parse state into a possible error message
- */
+// Convert a parse state into a possible error message
 static const char *
 parse_state_to_error_message(IDL_GlobalData::ParseState ps)
 {
@@ -461,64 +465,81 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
     return ACE_TEXT ("Some syntax error");
   }
 }
-/*
- * Public methods
- */
 
-// Report error messages with various numbers of arguments
+// Public methods.
+
+// Report error messages with various numbers of arguments.
 
 void
-UTL_Error::syntax_error(IDL_GlobalData::ParseState ps)
+UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
 {
-  idl_error_header(EIDL_SYNTAX_ERROR,
-                   idl_global->lineno(),
-                   idl_global->filename());
-  cerr << parse_state_to_error_message(ps) << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (EIDL_SYNTAX_ERROR,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  cerr << parse_state_to_error_message (ps) << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::error0(UTL_Error::ErrorCode c)
+UTL_Error::error0 (UTL_Error::ErrorCode c)
 {
-  idl_error_header(c, idl_global->lineno(), idl_global->filename());
+  idl_error_header (c, 
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::error1(UTL_Error::ErrorCode c, AST_Decl *d)
+UTL_Error::error1 (UTL_Error::ErrorCode c, 
+                   AST_Decl *d)
 {
-  idl_error_header(c, d->line(), d->file_name());
-  d->name()->dump(cerr); cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (c, 
+                    d->line (), 
+                    d->file_name ());
+  d->name ()->dump (cerr); cerr << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::error2(UTL_Error::ErrorCode c, AST_Decl *d1, AST_Decl *d2)
+UTL_Error::error2 (UTL_Error::ErrorCode c, 
+                   AST_Decl *d1, 
+                   AST_Decl *d2)
 {
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (c, 
+                    d1->line (), 
+                    d1->file_name ());
+  d1->name ()->dump (cerr); 
+  cerr << ", ";
+  d2->name ()->dump (cerr); 
+  cerr << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::error3(UTL_Error::ErrorCode c,
-                  AST_Decl *d1,
-                  AST_Decl *d2,
-                  AST_Decl *d3)
+UTL_Error::error3 (UTL_Error::ErrorCode c,
+                   AST_Decl *d1,
+                   AST_Decl *d2,
+                   AST_Decl *d3)
 {
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << ", ";
-  d3->name()->dump(cerr); cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (c, 
+                    d1->line (), 
+                    d1->file_name ());
+  d1->name ()->dump (cerr); 
+  cerr << ", ";
+  d2->name ()->dump (cerr); 
+  cerr << ", ";
+  d3->name ()->dump (cerr); 
+  cerr << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
 UTL_Error::warning0 (UTL_Error::ErrorCode c)
 {
-  idl_error_header(c, idl_global->lineno(), idl_global->filename());
+  idl_error_header (c, 
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   cerr << "\n";
 }
 
@@ -526,8 +547,11 @@ void
 UTL_Error::warning1 (UTL_Error::ErrorCode c,
                      AST_Decl *d)
 {
-  idl_error_header(c, d->line(), d->file_name());
-  d->name()->dump(cerr); cerr << "\n";
+  idl_error_header (c, 
+                    d->line(), 
+                    d->file_name());
+  d->name ()->dump (cerr); 
+  cerr << "\n";
 }
 
 void
@@ -535,9 +559,13 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
                      AST_Decl *d1,
                      AST_Decl *d2)
 {
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << "\n";
+  idl_error_header (c, 
+                    d1->line (), 
+                    d1->file_name ());
+  d1->name ()->dump (cerr); 
+  cerr << ", ";
+  d2->name ()->dump (cerr); 
+  cerr << "\n";
 }
 
 void
@@ -546,233 +574,293 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
                      AST_Decl *d2,
                      AST_Decl *d3)
 {
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << ", ";
-  d3->name()->dump(cerr); cerr << "\n";
+  idl_error_header (c, 
+                    d1->line (), 
+                    d1->file_name ());
+  d1->name ()->dump (cerr); 
+  cerr << ", ";
+  d2->name ()->dump (cerr); 
+  cerr << ", ";
+  d3->name ()->dump (cerr); 
+  cerr << "\n";
 }
 
-// Report a failed coercion attempt
+// Report a failed coercion attempt.
 void
-UTL_Error::coercion_error(AST_Expression *v, AST_Expression::ExprType t)
+UTL_Error::coercion_error (AST_Expression *v, 
+                           AST_Expression::ExprType t)
 {
-  idl_error_header(EIDL_COERCION_FAILURE, v->line(), v->file_name());
-  v->dump(cerr);
-  cerr << ACE_TEXT (" to ") << exprtype_to_string(t) << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (EIDL_COERCION_FAILURE, 
+                    v->line (), 
+                    v->file_name ());
+  v->dump (cerr);
+  cerr << ACE_TEXT (" to ") << exprtype_to_string (t) << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report a failed name lookup attempt
+// Report a failed name lookup attempt.
 void
-UTL_Error::lookup_error(UTL_ScopedName *n)
+UTL_Error::lookup_error (UTL_ScopedName *n)
 {
   idl_error_header(EIDL_LOOKUP_ERROR,
-                   idl_global->lineno(),
-                   idl_global->filename());
-  n->dump(cerr);
+                   idl_global->lineno (),
+                   idl_global->filename ());
+  n->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 // Report an attempt to inherit from an interface which was only
-// declared forward but not yet defined
+// declared forward but not yet defined.
 void
-UTL_Error::inheritance_fwd_error(UTL_ScopedName *n, AST_Interface *f)
+UTL_Error::inheritance_fwd_error (UTL_ScopedName *n, 
+                                  AST_Interface *f)
 {
-  idl_error_header(EIDL_INHERIT_FWD_ERROR, f->line(), f->file_name());
+  idl_error_header (EIDL_INHERIT_FWD_ERROR, 
+                    f->line (), 
+                    f->file_name ());
   cerr << "interface ";
-  n->dump(cerr);
+  n->dump (cerr);
   cerr << ACE_TEXT (" cannot inherit from forward declared interface ");
-  f->local_name()->dump(cerr);
+  f->local_name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report an attempt to inherit from something other than an interface
+// Report an attempt to inherit from something other than an interface.
 void
-UTL_Error::inheritance_error(UTL_ScopedName *n, AST_Decl *d)
+UTL_Error::inheritance_error (UTL_ScopedName *n, 
+                              AST_Decl *d)
 {
-  idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
-  /* cerr << " interface "; */
-  n->dump(cerr);
+  idl_error_header (EIDL_CANT_INHERIT, 
+                    idl_global->lineno (), 
+                    idl_global->filename ());
+  n->dump (cerr);
   cerr << ACE_TEXT (" attempts to inherit from ");
-  d->name()->dump(cerr);
+  d->name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report inheritance from non-abstract valuetype
+// Report inheritance from non-abstract valuetype.
 void
 UTL_Error::abstract_inheritance_error (UTL_ScopedName *n)
 {
-  idl_error_header(EIDL_CANT_INHERIT, idl_global->lineno(), idl_global->filename());
+  idl_error_header (EIDL_CANT_INHERIT, 
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   cerr << " abstract valuetype ";
-  n->dump(cerr);
+  n->dump (cerr);
   cerr << ACE_TEXT (" attempts to inherit from nonabstract type\n");
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 
-// Report an error while evaluating an expression
+// Report an error while evaluating an expression.
 void
-UTL_Error::eval_error(AST_Expression *v)
+UTL_Error::eval_error (AST_Expression *v)
 {
-  idl_error_header(EIDL_EVAL_ERROR, v->line(), v->file_name());
-  v->dump(cerr);
+  idl_error_header (EIDL_EVAL_ERROR, 
+                    v->line (), 
+                    v->file_name ());
+  v->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 // Report a situation where a constant was expected but we
 // got something else. This may occur in a union when a label
-// evaluates to a non-constant
+// evaluates to a non-constant.
 void
-UTL_Error::constant_expected(UTL_ScopedName *n, AST_Decl *d)
+UTL_Error::constant_expected (UTL_ScopedName *n, 
+                              AST_Decl *d)
 {
-  idl_error_header(EIDL_CONSTANT_EXPECTED, d->line(), d->file_name());
-  n->dump(cerr);
+  idl_error_header (EIDL_CONSTANT_EXPECTED, 
+                    d->line (), 
+                    d->file_name ());
+  n->dump (cerr);
   cerr << ACE_TEXT (" bound to ");
-  d->dump(cerr);
+  d->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 // Report a situation where an enumerator was expected but we
 // got something else. This may occur in a union with an enum
 // discriminator where a label did not evaluate to a constant
-// enumerator
+// enumerator.
 void
-UTL_Error::enum_val_expected(AST_Union *u, AST_UnionLabel *l)
+UTL_Error::enum_val_expected (AST_Union *u, 
+                              AST_UnionLabel *l)
 {
-  idl_error_header(EIDL_ENUM_VAL_EXPECTED, u->line(), u->file_name());
-  cerr << " union " << u->local_name()->get_string() << ", ";
-  l->dump(cerr);
+  idl_error_header (EIDL_ENUM_VAL_EXPECTED, 
+                    u->line (), 
+                    u->file_name ());
+  cerr << " union " << u->local_name ()->get_string () << ", ";
+  l->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 // Report a situation where an enumerator was received but we
 // could not find it (by name) in an enum. This occurs when
 // a union with an enum discriminator is being parsed, and a
 // label evaluates to an enumerator which is not a member of
-// the enum discriminator type
+// the enum discriminator type.
 void
-UTL_Error::enum_val_lookup_failure(AST_Union *u,
-                                   AST_Enum *e,
-                                   UTL_ScopedName *n)
+UTL_Error::enum_val_lookup_failure (AST_Union *u,
+                                    AST_Enum *e,
+                                    UTL_ScopedName *n)
 {
-  idl_error_header(EIDL_ENUM_VAL_NOT_FOUND, u->line(), u->file_name());
-  cerr << " union " << u->local_name()->get_string() << ", ";
-  cerr << " enum " << e->local_name()->get_string() << ", ";
+  idl_error_header (EIDL_ENUM_VAL_NOT_FOUND, 
+                    u->line (), 
+                    u->file_name ());
+  cerr << " union " << u->local_name ()->get_string () << ", ";
+  cerr << " enum " << e->local_name ()->get_string () << ", ";
   cerr << " enumerator ";
-  n->dump(cerr);
+  n->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report clash between declared and referenced indentifiers
+// Report clash between declared and referenced indentifiers.
 void
-UTL_Error::redef_error (char *b, char *n)
+UTL_Error::redef_error (char *b, 
+                        char *n)
 {
-  idl_error_header(EIDL_REDEF,
-                   idl_global->lineno(),
-                   idl_global->filename());
+  idl_error_header (EIDL_REDEF,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report two or more spellings for an identifier
+// Report two or more spellings for an identifier.
 void
-UTL_Error::name_case_error (char *b, char *n)
+UTL_Error::name_case_error (char *b, 
+                            char *n)
 {
-  idl_error_header(EIDL_NAME_CASE_ERROR,
-                   idl_global->lineno(),
-                   idl_global->filename());
+  idl_error_header (EIDL_NAME_CASE_ERROR,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::name_case_warning (char *b, char *n)
+UTL_Error::name_case_warning (char *b, 
+                              char *n)
 {
-  idl_error_header(EIDL_NAME_CASE_WARNING,
-                   idl_global->lineno(),
-                   idl_global->filename());
+  idl_error_header (EIDL_NAME_CASE_WARNING,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   cerr << "\"" << b << ACE_TEXT ("\" and ") << "\"" << n << "\"\n";
 }
 
-// Report an ambiguous definition of a name
 void
-UTL_Error::ambiguous(UTL_Scope *s, AST_Decl *l, AST_Decl *d)
+UTL_Error::idl_keyword_error (char *n)
 {
-  idl_error_header(EIDL_AMBIGUOUS, d->line(), d->file_name());
+  idl_error_header (EIDL_KEYWORD_ERROR,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  cerr << "\"" << n << "\"\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::idl_keyword_warning (char *n)
+{
+  idl_error_header (EIDL_KEYWORD_WARNING,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  cerr << "\"" << n << "\"\n";
+}
+
+// Report an ambiguous definition of a name.
+void
+UTL_Error::ambiguous (UTL_Scope *s, 
+                      AST_Decl *l, 
+                      AST_Decl *d)
+{
+  idl_error_header (EIDL_AMBIGUOUS, 
+                    d->line (), 
+                    d->file_name ());
   cerr << ACE_TEXT (" scope: ")
-       << (ScopeAsDecl(s))->local_name()->get_string()
+       << (ScopeAsDecl (s))->local_name ()->get_string ()
        << ", ";
   cerr << ACE_TEXT (" collision: ");
-  d->name()->dump(cerr);
+  d->name ()->dump (cerr);
   cerr << " vs. ";
-  l->name()->dump(cerr);
+  l->name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report a forward declared interface which was never defined
+// Report a forward declared interface which was never defined.
 void
-UTL_Error::fwd_decl_not_defined(AST_Interface *d)
+UTL_Error::fwd_decl_not_defined (AST_Interface *d)
 {
-  idl_error_header(EIDL_DECL_NOT_DEFINED, d->line(), d->file_name());
+  idl_error_header (EIDL_DECL_NOT_DEFINED, 
+                    d->line(), 
+                    d->file_name());
   cerr << "interface ";
-  d->local_name()->dump(cerr);
+  d->local_name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report lookup in undefined forward declared but undefined interface
+// Report lookup in undefined forward declared but undefined interface.
 void
-UTL_Error::fwd_decl_lookup(AST_Interface *d, UTL_ScopedName *n)
+UTL_Error::fwd_decl_lookup (AST_Interface *d, 
+                            UTL_ScopedName *n)
 {
-  idl_error_header(EIDL_FWD_DECL_LOOKUP,
-                   idl_global->lineno(),
-                   idl_global->filename());
+  idl_error_header (EIDL_FWD_DECL_LOOKUP,
+                    idl_global->lineno(),
+                    idl_global->filename());
   cerr << ACE_TEXT ("trying to look up ");
-  n->dump(cerr);
+  n->dump (cerr);
   cerr << ACE_TEXT (" in undefined forward declared interface ");
-  d->local_name()->dump(cerr);
+  d->local_name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report a redefinition inside its own scope
+// Report a redefinition inside its own scope.
 void
-UTL_Error::redefinition_in_scope(AST_Decl *d, AST_Decl *s)
+UTL_Error::redefinition_in_scope (AST_Decl *d, 
+                                  AST_Decl *s)
 {
-  idl_error_header(EIDL_REDEF_SCOPE, d->line(), d->file_name());
-  d->name()->dump(cerr);
+  idl_error_header (EIDL_REDEF_SCOPE, 
+                    d->line (), 
+                    d->file_name ());
+  d->name ()->dump (cerr);
   cerr << ", ";
-  s->name()->dump(cerr);
+  s->name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-// Report not a type error
+// Report not a type error.
 void
-UTL_Error::not_a_type(AST_Decl *d)
+UTL_Error::not_a_type (AST_Decl *d)
 {
-  idl_error_header(EIDL_NOT_A_TYPE,
-                   idl_global->lineno(),
+  idl_error_header (EIDL_NOT_A_TYPE,
+                     idl_global->lineno(),
                    idl_global->filename());
-  if (d == NULL || d->name() == NULL)
+  if (d == 0 || d->name () == 0)
     cerr << ACE_TEXT ("unknown symbol");
   else
-    d->name()->dump(cerr);
+    d->name ()->dump (cerr);
   cerr << "\n";
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
 void
-UTL_Error::back_end(long lineno, UTL_String *s)
+UTL_Error::back_end (long lineno, 
+                     UTL_String *s)
 {
-  idl_error_header(EIDL_BACK_END, lineno, s);
-  idl_global->set_err_count(idl_global->err_count() + 1);
+  idl_error_header (EIDL_BACK_END, 
+                    lineno, 
+                    s);
+  idl_global->set_err_count (idl_global->err_count () + 1);
 }

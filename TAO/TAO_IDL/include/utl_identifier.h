@@ -86,10 +86,7 @@ public:
   Identifier ();
   // Default Constructor.
 
-  Identifier (const char *s, 
-              long x = 1, 
-              long y = 0, 
-              long z = I_FALSE);
+  Identifier (const char *s);
   // Constructor.
 
   virtual ~Identifier ();
@@ -115,6 +112,9 @@ public:
   Identifier *copy (void);
   // Create a deep copy.
 
+  idl_bool escaped (void) const;
+  // Accessor for the member.
+
   virtual void  dump (ostream &o);
   // Dump to an ostream.
 
@@ -124,6 +124,9 @@ public:
 private:
     // Storage for data.
     char *pv_string;
+
+    // Did the IDL string have a leading underscore?
+    idl_bool escaped_;
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
