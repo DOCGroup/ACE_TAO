@@ -1,13 +1,13 @@
 OBJS = main.o snmp_agent.o agent_impl.o
-CC=CC
+CC=g++
 INCL = -I$(ACE_ROOT) -I$(ACE_ROOT)/ASNMP
 DEBUG = -g
-CFLAGS =$(INCL) -mt  $(DEBUG)
-RUNPATH = -R $(ACE_ROOT)/ace:$(ACE_ROOT)/ASNMP/asnmp 
-LIBS = -L $(ACE_ROOT)/ASNMP/asnmp -lasnmp -L $(ACE_ROOT)/ace -lACE -lnsl -lsocket
+CFLAGS =$(INCL) $(DEBUG)
+RUNPATH = 
+LIBS = -L $(ACE_ROOT)/ASNMP/asnmp -lasnmp -L $(ACE_ROOT)/ace -lACE -ldl  -lefence
 
 agent: $(OBJS)
-	$(CC) -o agent -mt $(DEBUG) $(OBJS) $(LIBS) $(RUNPATH)
+	$(CC) -o agent $(DEBUG) $(OBJS) $(LIBS) $(RUNPATH)
 
 
 main.o: main.cpp 

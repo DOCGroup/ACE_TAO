@@ -159,6 +159,7 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   TimeTicks timestamp; 
   pdu.get_notify_timestamp( timestamp);
   raw_pdu->time = ( unsigned long) timestamp;
+  return 0;
 }
 
 wpdu::wpdu(const iovec& iov): valid_flag_(FALSE),comm_len(MAX_COMM_STR_LEN)
@@ -305,6 +306,7 @@ int wpdu::convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival )
 	}
       }
     }
+    break;
 
     default:
      ACE_DEBUG((LM_DEBUG, "wpdu::convert_vb_to_smival did not convert vb\n"));

@@ -46,9 +46,9 @@ OctetStr UdpTarget::default_wr_community_(WRITE_COMM_STR);
 //----------------------------------------------------------------------
 //--------[ Abstract SnmpTarget Member Functions ]----------------------
 //----------------------------------------------------------------------
-SnmpTarget::SnmpTarget(): timeout_(default_timeout_), 
-  retries_(default_retries_), validity_(FALSE), version_(default_version_),
-  max_pdu_size_(default_max_pdu_size_)
+SnmpTarget::SnmpTarget(): 
+  validity_(FALSE), timeout_(default_timeout_), retries_(default_retries_), 
+  max_pdu_size_(default_max_pdu_size_), version_(default_version_)
 {
 }
 
@@ -292,7 +292,7 @@ char *UdpTarget::to_string()
   sprintf(output_buffer_,"UdpTarget: [ valid: %d addr: %s rd: %s wr: %s \
 ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",  
 	  valid(), udp_address_.to_string(), read_community_.to_string(),
-	  write_community_.to_string(), version_, timeout_, 
+	  write_community_.to_string(), version_, (int) timeout_, 
           retries_, max_pdu_size_);
   return output_buffer_;
 }

@@ -200,9 +200,10 @@ int Counter64::valid() const
 char * Counter64::to_string()
 {
   if ( high() != 0 )
-    sprintf(output_buffer, "0x%X%08X", high(), low());
+    sprintf(output_buffer, "0x%X%08X", 
+	    (unsigned int)high(), (unsigned int)low());
   else
-    sprintf(output_buffer, "%d", low());
+    sprintf(output_buffer, "%d", (int) low());
   return output_buffer;
 }
 

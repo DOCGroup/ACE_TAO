@@ -28,6 +28,7 @@ inline void reset_receive_buffer(iovec& io)
 
 transaction::transaction(const Pdu& pdu, const UdpTarget& target, 
 			 ACE_SOCK_Dgram& io):
+                         result_(0),
 			 wp_(pdu,target), params_(target), session_(io)
 {
   // last step, convert address (get ride of this once we have merged address
@@ -48,7 +49,7 @@ transaction::~transaction()
 int transaction::run()
 {
   int rc, done = FALSE;
-  unsigned retry_counter = 0;
+  int retry_counter = 0;
   ACE_Time_Value to(params_.get_timeout(), 0); // seconds
   ACE_Reactor reactor;
 
@@ -79,19 +80,63 @@ int transaction::run()
 	return SNMP_CLASS_INTERNAL_ERROR;
     }
    }
+  return SNMP_CLASS_INTERNAL_ERROR;
+}
 
+// implement state machine, send, wait (timeout/results) return
+int transaction::run(transaction_result * r)
+{
+    result_ = r;
+    int rc;
+
+    // 1. register io port for read access
+    ACE_Reactor * reactor = ACE_Reactor::instance();
+    if (reactor->register_handler(session_.get_handle(), 
+				  this, 
+				  READ_MASK) == -1)
+	return SNMP_CLASS_INTERNAL_ERROR;
+
+    retry_counter_ = 0;
+
+    // register a time handler and a socket with this 
+    ACE_Time_Value to = params_.get_timeout();
+    if (reactor->schedule_timer(this, 0, to, to) < 0)
+	return SNMP_CLASS_INTERNAL_ERROR;
+
+    if ((rc = send()) < 0)	// send pkt to agent
+	return rc;
+    return 0;
 }
 
 // got back response from SNMPv1 agent - process it
-int transaction::handle_input (ACE_HANDLE fd)
+int transaction::handle_input (ACE_HANDLE)
 {
   // OS allocates iovec_.iov_base ptr and len
   int rc = session_.recv(&receive_iovec_, receive_addr_, 0); 
   if (rc == -1) {
-    return SNMP_CLASS_RESOURCE_UNAVAIL;
+      if (result_)
+	  result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
+      return SNMP_CLASS_RESOURCE_UNAVAIL;
   }
- 
+  if (result_)
+  {
+      result_->result(this, rc);
+      return 0;
+  }
   return rc;
+}
+
+int transaction::handle_timeout(const ACE_Time_Value &,
+				const void *)
+{
+    int rc;
+    if ((rc = send()) < 0)	// send pkt to agent
+	result_->result(this, 0);
+    else
+	if (retry_counter_++ > params_.get_retry())
+	    result_->result(this, SNMP_CLASS_TIMEOUT);
+
+    return 0;
 }
 
 
@@ -136,3 +181,5 @@ int transaction::send()
   ssize_t rc = session_.send (io.iov_base, io.iov_len, addr_ , 0);
   return rc;                
 }
+
+transaction_result::~transaction_result() {}

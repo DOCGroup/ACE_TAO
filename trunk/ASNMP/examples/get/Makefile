@@ -10,10 +10,10 @@
 
  
 # ACE+SNMP 
-BIN   = get
+BIN   = get get_async
 CCFLAGS = -I$(ACE_ROOT)/ASNMP/
 LSRC   = $(addsuffix .cpp,$(BIN))
-VLDLIBS = -R$(ACE_ROOT)/ASNMP/asnmp -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
+LDLIBS := -L$(ACE_ROOT)/ASNMP/asnmp -lasnmp $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
 

@@ -46,7 +46,7 @@ class ACE_Export Oid: public  SnmpSyntax
   //      Implement RFC 1155 Object Identifier (OID) datatype 
 {
 public:
-  Oid( const char * dotted_oid_string = "", size_t size = -1);
+  Oid( const char * dotted_oid_string = "", size_t size = unsigned(-1) );
   // constructor using a dotted string
 
   Oid ( const Oid &oid);
