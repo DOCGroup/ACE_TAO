@@ -1099,12 +1099,24 @@ template <class charT>
 basic_string_ref<charT>::basic_string_ref (size_t size, capacity cap)
                                            _THROW_ALLOC_LENGTH
 {
+    /* 
+     * This should be correctly scoped
+     *
+     * if (cap == ::reserve)
+     */
+
     if (cap == std::reserve)
     {
        len = 0;
        res = size;
        ptr = new charT [res];
     }
+    /* 
+     * This should be correctly scoped
+     *
+     *     else if ((cap == ::default_size) && (size != NPOS))
+     */
+
     else if ((cap == std::default_size) && (size != NPOS))
     {
        res = len = size;

@@ -1,0 +1,272 @@
+STL2.ZIP
+
+Standard Template Library for Visual C++ 4.0 
+and Related Classes
+
+Revised 10/15/96 - Bug fixes and change to bit_vector.
+
+This version supports DLLs and threading.  You must use critical
+sections around code that uses the same container in different
+threads.  These features come at a price -- since memory
+usage is not optimal, this code may use more memory and
+may be slower.
+
++ General strategy: Remove all statics except the
+  static allocator objects.  
++ Vectors were not affected.
++ Major changes made to tree.h
++ Stability: Very stable.
+
+This code should be considered for experimental use only.  There
+are still statics lurking in some functions; these functions
+are not thread-safe.
+
+-------------------------
+Fix for bit_vector
+-------------------------
+This version also has a fix for bit_vector, which doesn't really
+work with VC++ 4.x.  Please include bvector.cpp in your
+project if you use bit_vector.  This fixes the linker errors
+that occur if you use bector.h in multiple .cpp files.
+
+-------------------------
+Disclaimer
+-------------------------
+Code is provided without warranty, liability, or technical support.
+
+STL.H and PTR.H are freely distributable and can be 
+modified in any way.
+
+--------------------------------
+STRING.H does not compile.
+--------------------------------
+
+"D. Pirzadeh" <ddp@crl.com> Explains how to fix:
+
+First, I got compile errors in "bstring.h"
+and changed it as follows to correct:
+        line 1104               "::reserve" -> "std::reserve"
+        line 1110               "::default_size" -> "std::default_size"
+
+Also, I got an INTERNAL COMPILER ERROR with Visual C++ v4.0 when I did the fol-
+lowing:
+        class xyz : public std::string { }
+
+I fixed it with:
+        typedef std::string XyzString;
+        class xyz : public XyzString { }
+
+--------------------------------
+Changes made to STL distribution
+--------------------------------
+
+These files were modified from the STL distribution shipped with 
+Microsoft Visual C++ 4.0.  The files here are a complete,
+working version of the STL.  These files have been tested with
+MFC applications.
+
+Changes were made to practically all header files.  Look for
+comments like:
+
+*Added by...
+*Changed by...
+ 
+------------------
+Usage Instructions
+------------------
+
+Set the preprocessor variable NOMINMAX.
+
+As Microsoft recommends, the STL is compiled in the std namespace.
+
+When including these files, do **not** do this:
+
+	namespace std
+	{
+	  #include <vector.h>
+	}
+
+Instead, do this:
+
+	#include <vector.h>
+
+Recommended usage:
+
+	First, include:
+
+	#include <afxwin.h>
+	#include <afxext.h>
+	#include <afxtempl.h>
+
+	Then include the STL header files.
+
+-------------------
+Support for CString
+-------------------
+The stl.h file contains code written by me.  The file contains
+operators that will allow you to use CString objects with STL
+containers and functions.
+
+!!!! CString will not work with STL unless you include <stl.h> !!!!
+
+-------------------------------------------
+Helper functions for pointers-in-containers
+-------------------------------------------
+There is a file called stl.h which contains two functions:
+  SequenceDelete
+  MapDelete
+These functions send "delete" to all of the objects in a container.
+
+If you don't like this approach, you can use a supplied "pointer
+wrapper" class.
+
+There is a file called ptr.h which contains a class called Ptr 
+that can be used exactly like a pointer.  The object has a pointer 
+inside it that points to an object of any class.  When a Ptr object 
+is deleted, "delete" is sent to its underlying pointer.  Ptr can be 
+used with any STL container, as it has a copy constructor and 
+assignment operator, which transfers "ownership" of the pointer from 
+the source object to the destination object.  Ptr is from the book 
+Design Patterns by Gamma et al -- see the Proxy pattern.  
+
+The Ptr class makes memory leaks impossible, because it deletes
+objects automatically when the container is deleted, or when 
+functions like "delete" are used.
+
+Example:
+
+  This is a vector of CStrings:
+
+  std::vector< Ptr<CString> > StringVector;
+
+  StringVector.push_back( Ptr( new CString( "hello" ) ) );
+  StringVector.push_back( Ptr( new CString( "This is another string" ) ) );
+
+------------------------
+Common Problems with STL
+------------------------
+
+1) Compiler error: != is ambiguous
+
+   Solution: put the following line at the beginning of the method
+             that caused the error:
+
+   using namespace std;
+
+2) When using maps, the debugger crashes.
+
+   This is because symbols for maps (actually, for the "pair")
+   get truncated to 255 characters.  Solution:  Turn off the
+   variables window in the debugger.  Don't try to look at
+   a symbol that has been truncated.  This is not an STL-specific
+   bug --  It's a bug in the debugger.
+
+3) All sorts of compile errors in STL header files
+
+   Make sure the preprocessor variable NOMINMAX is defined
+
+
+4) Compiler errors about "operator < is not available", etc.
+   The class involved has global comparison operators.
+
+   Solution:
+   Write "routers" in the std namespace to the global namespace.
+   Example (see also stl.h - this is how CString is able
+   to work with STL):
+
+	namespace std
+	{
+		BOOL operator < ( const MyClass & rLhs,
+				  const AnotherClass & rRhs )
+		{
+		return ::operator < ( rLhs, rRhs );
+		}
+	}
+
+   See also 5.
+
+5) When you use find() or another algorithm, the compiler
+   complains that it cannot find the == or < operators.
+
+If your code compiles without any error messages, then disregard
+this section.  However, if you get errors like "cannot convert
+first argument from const class X" then read on. 
+
+I am assuming that your code is calling an STL algorithm like
+std::sort() or std::find().  If you're not, I can't help
+you.
+
+There is apparently a bug in the Microsoft compiler regarding
+namespaces.  Namespaces cannot locate global 
+functions that reside in the global namespace.  For example, 
+the binary == operator.
+
+Maybe this is a bug, maybe it isn't.  This is not clear
+to me.  However, I do know what works and have tried many other
+approaches that do not work.  If you have a better solution I
+would appreciate it if you could let me know about it. 
+
+So, if you declare your own class and want to use algorithms 
+like find() on an STL container, you have two choices:
+
+(1) Declare == as a member function.
+(2) Declare global operators == and !=.
+
+(1) simply works.  There will come a time, however, when (1)
+won't satisfy your needs.  If A == B, then B == A.  You can't
+do this using member functions if A and B are from different 
+classes.
+
+If you choose (2), you must add the != operator to the std
+namespace.  There are two ways to do this.  First, you can do
+this:
+   namespace std
+   { 
+     inline operator != ( const MyClass &rLhs, const MyClass &rRhs )
+     {
+       return ::operator != ( rLhs, rRhs );
+     }
+   }
+This "routes" != from the std namespace to the global namespace.
+
+Note that ( lhs != rhs ) can be derived from the == operator
+as !( lhs == rhs ).  There is a macro in STL.H, 
+STL_DECLARE_GLOBAL_NE, that does this derivation. 
+This derivation will not work when for whatever reason, !(lhs == rhs)
+is not the same as ( lhs != rhs ).
+
+The following example shows what you have to do for find().  Other
+algorithms require you to declare <, <=, and >= too.  See the
+macros STL_DECLARE_GLOBAL_GE, STL_DECLARE_GLOBAL_LT, and
+STL_GLOBAL_LE.  These macros derive new comparison operators
+from "operator <( const T&, const T& )".
+
+class MyClass
+{
+  public:
+  
+  int units;
+  CString description;
+};
+
+// We want to be able to test two MyClass objects against each other
+// in STL.  Need to create a global operator for this purpose.
+// Since we use find(), we need to declare not-equal too.
+bool operator == ( const MyClass &, const MyClass & );
+STL_DECLARE_GLOBAL_NE( MyClass, MyClass )
+
+// These operators test for a matching description.
+// We do A == B and B == A to be consistent.
+bool operator == ( const MyClass&, const CString & );
+bool operator == ( const CString&, const MyClass & );
+STL_DECLARE_GLOBAL_NE( MyClass, CString )
+STL_DECLARE_GLOBAL_NE( CString, MyClass )
+
+6. Errors when creating vectors that have vectors and deques
+   that have deques.
+
+   Solution:  Provide atruments to the constructor.
+
+    std::vector< std::vector<int> >
+      TwoDimensional( 0, std::vector<int>() );
+

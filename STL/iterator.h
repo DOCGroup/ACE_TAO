@@ -130,14 +130,14 @@ protected:
     Container& container;
 public:
     back_insert_iterator(Container& x) : container(x) {}
-    back_insert_iterator<Container>&
+    back_insert_iterator &
     operator=(const Container::value_type& value) { 
 	container.push_back(value);
 	return *this;
     }
-    back_insert_iterator<Container>& operator*() { return *this; }
-    back_insert_iterator<Container>& operator++() { return *this; }
-    back_insert_iterator<Container>& operator++(int) { return *this; }
+    back_insert_iterator & operator*() { return *this; }
+    back_insert_iterator & operator++() { return *this; }
+    back_insert_iterator & operator++(int) { return *this; }
 };
 
 template <class Container>
@@ -151,14 +151,14 @@ protected:
     Container& container;
 public:
     front_insert_iterator(Container& x) : container(x) {}
-    front_insert_iterator<Container>&
+    front_insert_iterator&
     operator=(const Container::value_type& value) { 
 	container.push_front(value);
 	return *this;
     }
-    front_insert_iterator<Container>& operator*() { return *this; }
-    front_insert_iterator<Container>& operator++() { return *this; }
-    front_insert_iterator<Container>& operator++(int) { return *this; }
+    front_insert_iterator& operator*() { return *this; }
+    front_insert_iterator& operator++() { return *this; }
+    front_insert_iterator& operator++(int) { return *this; }
 };
 
 template <class Container>
@@ -174,15 +174,15 @@ protected:
 public:
     insert_iterator(Container& x, Container::iterator i) 
 	: container(x), iter(i) {}
-    insert_iterator<Container>&
+    insert_iterator &
     operator=(const Container::value_type& value) { 
 	iter = container.insert(iter, value);
 	++iter;
 	return *this;
     }
-    insert_iterator<Container>& operator*() { return *this; }
-    insert_iterator<Container>& operator++() { return *this; }
-    insert_iterator<Container>& operator++(int) { return *this; }
+    insert_iterator& operator*() { return *this; }
+    insert_iterator& operator++() { return *this; }
+    insert_iterator& operator++(int) { return *this; }
 };
 
 template <class Container, class Iterator>

@@ -48,11 +48,11 @@ iterators invalidated are those referring to the deleted node.
 #endif
 
 /*
- *Added by d:\Terris\convert.pl --begin--
+ *Added by d:\\convert.pl --begin--
  */
 namespace std {
 /*
- *Added by d:\Terris\convert.pl --end--
+ *Added by d:\\convert.pl --end--
  */
 
 template <class Key, class Value, class KeyOfValue, class Compare>
@@ -204,7 +204,10 @@ public:
         link_type node;
         iterator(link_type x, link_type NIL) : node(x), NIL(NIL) {}
     public:
-        iterator() {}
+/*
+ * Changed by Terris
+ */
+        iterator() { NIL = NULL; }
         bool operator==(const iterator& y) const { return node == y.node; }
         reference operator*() const { return value(node); }
         iterator& operator++() {
@@ -275,8 +278,14 @@ public:
         link_type node;
         const_iterator(link_type x, link_type NIL) : node(x), NIL(NIL) {}
     public:
-        const_iterator() {}
-        const_iterator(const iterator& x) : node(x.node) {}
+/*
+ * Changed by Terris
+ */
+        const_iterator() { NIL = NULL; }
+/*
+ * Changed by Terris
+ */
+        const_iterator(const iterator& x) : node(x.node), NIL(x.NIL) {}
         bool operator==(const const_iterator& y) const { 
             return node == y.node; 
         }
@@ -338,7 +347,7 @@ public:
         reverse_iterator; 
     typedef reverse_bidirectional_iterator<const_iterator, value_type,
                                            const_reference, difference_type>
-	const_reverse_iterator;
+  const_reverse_iterator;
 private:
     iterator __insert(link_type x, link_type y, const value_type& v);
 /*
@@ -410,7 +419,7 @@ public:
             leftmost() = header;
             rightmost() = header;
         } else {
-	    leftmost() = minimum(root());
+      leftmost() = minimum(root());
             rightmost() = maximum(root());
         }
     }
@@ -466,6 +475,17 @@ public:
         std::swap(node_count, t.node_count);
         std::swap(insert_always, t.insert_always);
         std::swap(key_compare, t.key_compare);
+        /*
+         * Added By Terris
+         */
+        std::swap(NIL, t.NIL);
+        std::swap(buffer_list, t.buffer_list);
+        std::swap(free_list, t.free_list);
+        std::swap(next_avail, t.next_avail);
+        std::swap(last, t.last);        
+        /*
+         * Added By Terris
+         */
     }
     
 // insert/erase
@@ -584,7 +604,7 @@ operator=(const rb_tree<Key, Value, KeyOfValue, Compare>& x) {
             leftmost() = header;
             rightmost() = header;
         } else {
-	    leftmost() = minimum(root());
+      leftmost() = minimum(root());
             rightmost() = maximum(root());
         }
         node_count = x.node_count;
@@ -1058,11 +1078,11 @@ rb_tree<Key, Value, KeyOfValue, Compare>::rotate_right(link_type x) {
 
 
 /*
- *Added by d:\Terris\convert.pl --begin--
+ *Added by d:\\convert.pl --begin--
  */
 }
 /*
- *Added by d:\Terris\convert.pl --end--
+ *Added by d:\\convert.pl --end--
  */
 
 #endif
