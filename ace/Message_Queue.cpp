@@ -132,7 +132,7 @@ template <ACE_SYNCH_1>
 ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm, 
                                                    size_t lwm,
                                                    ACE_Notification_Strategy *ns)
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   : not_empty_cond_ (0),
     not_full_cond_ (0),
     enqueue_waiters_ (0),
@@ -140,7 +140,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue (size_t hwm,
 #else
   : not_empty_cond_ (this->lock_),
     not_full_cond_ (this->lock_)
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_2>::ACE_Message_Queue");
 
@@ -188,10 +188,10 @@ ACE_Message_Queue<ACE_SYNCH_2>::deactivate_i (void)
     this->deactivated_ ? WAS_INACTIVE : WAS_ACTIVE;
 
   // Wakeup all waiters.
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   this->not_empty_cond_.broadcast ();
   this->not_full_cond_.broadcast ();
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
   this->deactivated_ = 1;
   return current_status;
@@ -278,7 +278,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
     this->cur_bytes_ += temp->size ();
 
   this->cur_count_++;
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   // Tell any blocked threads that the queue has a new item!
   if (this->not_empty_cond_.signal () != 0)
     return -1;
@@ -288,7 +288,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail_i (ACE_Message_Block *new_item)
       --this->dequeue_waiters_;
       this->not_empty_cond_.release ();
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return this->cur_count_;
 }
 
@@ -320,7 +320,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i (ACE_Message_Block *new_item)
     this->cur_bytes_ += temp->size ();
 
   this->cur_count_++;
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   // Tell any blocked threads that the queue has a new item! 
   if (this->not_empty_cond_.signal () != 0)
     return -1;
@@ -330,7 +330,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head_i (ACE_Message_Block *new_item)
       --this->dequeue_waiters_;
       this->not_empty_cond_.release ();
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return this->cur_count_;
 }
 
@@ -398,7 +398,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i (ACE_Message_Block *new_item)
     this->cur_bytes_ += temp->size ();
 
   this->cur_count_++;
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   // Tell any blocked threads that the queue has a new item! 
   if (this->not_empty_cond_.signal () != 0)
     return -1;
@@ -408,7 +408,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_i (ACE_Message_Block *new_item)
       --this->dequeue_waiters_;
       this->not_empty_cond_.release ();
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return this->cur_count_;
 }
 
@@ -439,7 +439,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
 
   this->cur_count_--;
 
-#if !defined (ACE_LACKS_COND_T)
+#if !defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->not_full_cond_.signal () != 0)
     return -1;
 #else
@@ -448,7 +448,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head_i (ACE_Message_Block *&first_item)
       --this->enqueue_waiters_;
       this->not_full_cond_.release ();
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
   return this->cur_count_;
 }
 
@@ -504,7 +504,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
       return -1;
     }
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->is_full_i ())
     {
       ++this->enqueue_waiters_;
@@ -530,7 +530,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_head (ACE_Message_Block *new_item,
           return -1;
         }
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
   int queue_count = this->enqueue_head_i (new_item);
 
@@ -560,7 +560,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
       return -1;
     }
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->is_full_i ())
     {
       ++this->enqueue_waiters_;
@@ -586,7 +586,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_prio (ACE_Message_Block *new_item,
           return -1;
         }
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
   int queue_count = this->enqueue_i (new_item);
 
@@ -623,7 +623,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
       return -1;
     }
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->is_full_i ())
     {
       ++this->enqueue_waiters_;
@@ -649,7 +649,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::enqueue_tail (ACE_Message_Block *new_item,
           return -1;
         }
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
   int queue_count = this->enqueue_tail_i (new_item);
 
@@ -679,7 +679,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
       return -1;
     }
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_HAS_OPTIMIZED_MESSAGE_QUEUE)
   if (this->is_empty_i ())
     {
       ++this->dequeue_waiters_;
@@ -705,7 +705,7 @@ ACE_Message_Queue<ACE_SYNCH_2>::dequeue_head (ACE_Message_Block *&first_item,
           return -1;
         }
     }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
 
   return this->dequeue_head_i (first_item);
 }
