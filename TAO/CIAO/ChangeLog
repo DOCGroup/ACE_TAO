@@ -4,7 +4,7 @@ Mon Sep 13 15:16:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/tests/NodeApplicationTest/run_test_ex.pl:
 	* DAnCE/tests/NodeApplicationTest/run_test_simple.pl:
 
-	  Fixed the paths in he scripts.
+	  Fixed the paths in the scripts.
 
 Mon Sep 13 07:11:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
