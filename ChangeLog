@@ -1,3 +1,9 @@
+Sat Jun 23 06:19:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.i: Fixed the getpwdnam_r() wrapper so that it conforms to
+	  POSIX on platforms that support POSIX.  Thanks to
+	  Craig L. Ching <cching@mqsoftware.com> for reporting this.
+
 Fri Jun 22 18:35:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS_TLI.inl: Fixed a compile error in win 32.
