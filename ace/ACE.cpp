@@ -23,6 +23,10 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_TLI.h"
 
+#if defined (VXWORKS)
+extern "C" int maxFiles;
+#endif /* VXWORKS */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
 #endif /* __ACE_INLINE__ */
@@ -3105,6 +3109,8 @@ ACE::max_handles (void)
 
 #if defined (_SC_OPEN_MAX)
   return ACE_OS::sysconf (_SC_OPEN_MAX);
+#elif defined (VXWORKS)
+  return maxFiles;
 #elif defined (FD_SETSIZE)
   return FD_SETSIZE;
 #else

@@ -1,16 +1,53 @@
+Fri Sep 17 11:53:10 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ACE.cpp:
+
+          Return the system variable, maxFiles, in ACE::max_handles()
+          instead of the FD_SETSIZE which does not reflect the actual limit.
+
+        * ace/Capabilities.cpp:
+
+          Template instantiations for the ACE_Hash<ACE_TString> and
+          ACE_Equal_To<ACE_TString> were conflicting with template
+          specialization of the same on VxWorks.  I'm not sure if they are
+          required for any compiler, but I wanted to be safe and eclused
+          them in a #if !defined (VXWORKS).
+
+        * ace/Proactor.cpp:
+
+          Moved the template instantiations for
+          auto_ptr<ACE_Asynch_Result_Impl> and
+          auto_ptr<ACE_Asynch_Result_Impl> into the right #if clause.
+
+        * ace/config-vxworks5.x.h:
+
+          The current GNU compiler for VxWorks (2.96) is the only old
+          compiler that could possible build ACE and it supports template
+          specialization, lacks auto_ptr and has various other platform
+          differences.
+
+        * ace/os_include/os_limits.h:
+
+          Define MAXSYMLINKS if it isn't defined by the system headers.
+          I chose 20 which is what I found in other system header files.
+
+        * ace/os_include/sys/os_stat.h:
+
+          Define S_ISLNK if it isn't defined by the system headers.
+
 Fri Sep 17 12:09:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/ASX/CCM_App/CCM_App.cpp:
-	* examples/ASX/CCM_App/SC_Server.cpp:
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/ASX/Event_Server/Event_Server/Options.{h cpp}:
-	* examples/ASX/Event_Server/Event_Server/Supplier_Router.{h cpp}:
-	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.{h cpp}:
-	* examples/ASX/Event_Server/Event_Server/Consumer_Router.{h cpp}:
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
-	* examples/ASX/Event_Server/Transceiver/transceiver.{h cpp}:
-	* examples/ASX/Message_Queue/buffer_stream.cpp:
-	  Char width fixes to build clean with wide-char.
+        * examples/ASX/CCM_App/CCM_App.cpp:
+        * examples/ASX/CCM_App/SC_Server.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Event_Server/Options.{h cpp}:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.{h cpp}:
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.{h cpp}:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.{h cpp}:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.{h cpp}:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+          Char width fixes to build clean with wide-char.
 
 Fri Sep 17 08:42:50 2004  Steve Totten  <totten_s@ociweb.com>
 
@@ -32,10 +69,10 @@ Fri Sep 17 09:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 16 20:40:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Removed SecurityLevel1 test from this list of tests to run.  The
-	  SecurityLevel1 IDL module is longer supported by TAO.
+          Removed SecurityLevel1 test from this list of tests to run.  The
+          SecurityLevel1 IDL module is longer supported by TAO.
 
 Fri Sep 17 00:25:17 2004  Olli Savia  <ops@iki.fi>
 
@@ -45,15 +82,15 @@ Fri Sep 17 00:25:17 2004  Olli Savia  <ops@iki.fi>
 
 Thu Sep 16 14:14:31 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/event_serv.mpb:
+        * bin/MakeProjectCreator/config/event_serv.mpb:
 
-	  Changed to inherit from svc_utils.
+          Changed to inherit from svc_utils.
 
 Thu Sep 16 12:36:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Proactor.{h cpp}: Change the SystemType enumerator value
-	  names to begin with ACE_. This avoids conflicts with other facilities
-	  that use an OS_ prefix.
+        * ace/POSIX_Proactor.{h cpp}: Change the SystemType enumerator value
+          names to begin with ACE_. This avoids conflicts with other facilities
+          that use an OS_ prefix.
 
 Thu Sep 16 09:22:08 2004  Dale Wilson  <wilson_d@ociweb.com>
 

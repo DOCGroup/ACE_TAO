@@ -80,6 +80,15 @@ extern "C"
 
 #endif /* ACE_LACKS_MODE_MASKS */
 
+// Some systems (VxWorks) don't define S_ISLNK
+#if !defined (S_ISLNK)
+# if defined (S_IFLNK)
+#   define S_ISLNK(mode) (((mode)&S_IFLNK) == S_IFLNK)
+# else
+#   define S_ISLNK(mode) 0
+# endif /* S_IFLNK */
+#endif /* S_ISLNK */
+
 #if defined (ACE_HAS_WINCE)
 #  include "ace/Time_Value.h"
 
