@@ -1,3 +1,17 @@
+Tue Nov  7 09:00:08 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          By default build everything under ACE_wrappers and
+          ACE_wrappers/TAO, we used to build just a subset of ACE.
+          We need to provide full coverage because this script is
+          replacing all nightly builds, if auto_compile does not test it,
+          nothing will.
+
+        * bin/show_log_dir.pl:
+          The script was removing the second and third most recent logs
+          from the list, this used to be required to remove the brief and
+          html files, but now we filter those earlier on the script.
+
 Mon Nov  6 16:23:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RMCast/RMCast_Fragment_Test.cpp:

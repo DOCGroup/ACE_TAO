@@ -152,10 +152,6 @@ foreach $log (@log_files) {
 
 $latest = shift @log_files;
 
-# remove the other two files
-shift @log_files;
-shift @log_files;
-
 print "<h2>Latest Log</h2>";
 $latest =~ /(.*)_brief\.html/;
 
