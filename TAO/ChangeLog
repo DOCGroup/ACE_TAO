@@ -1,3 +1,14 @@
+Sun Aug 24 13:53:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/*.cpp:
+        * orbsvcs/tests/Notify/RT_lib/*.cpp:
+        * orbsvcs/tests/Notify/Test_Filter/*.cpp
+          Corrected incorrect Id tags
+
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.cpp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+          Added #include ace/Barrier.h
+
 Sun Aug 24 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:

@@ -2,7 +2,7 @@
 
 #include "Periodic_Supplier_Command.h"
 
-ACE_RCSID(lib, TAO_Periodic_Supplier_Command, "$id$")
+ACE_RCSID(lib, TAO_Periodic_Supplier_Command, "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"

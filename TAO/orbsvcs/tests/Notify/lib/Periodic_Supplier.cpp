@@ -4,6 +4,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Barrier.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -13,7 +14,7 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Supplier, "$id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Supplier, "$Id$")
 
 TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier (void)
   : barrier_ (0),

@@ -12,7 +12,7 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
-ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Consumer, "$id$")
+ACE_RCSID(RT_Notify, TAO_Notify_Tests_Periodic_Consumer, "$Id$")
 
 int WARMUP_COUNT = 10;
 
