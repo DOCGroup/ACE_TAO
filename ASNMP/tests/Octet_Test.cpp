@@ -84,7 +84,7 @@ ACE_RCSID(tests, Octet_Test, "$Id$")
 
 static void TestOctet()
 {
-  char *str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
+  const char *str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
   OctetStr o1;
   ACE_ASSERT(o1.valid() == 1);
   ACE_ASSERT(o1.length() == 0);

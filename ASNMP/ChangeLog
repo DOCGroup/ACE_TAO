@@ -1,3 +1,10 @@
+Fri Aug 29 07:56:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Octet_Test.cpp (TestOctet):
+
+	  Fixed "string literal converted to char *" warning.  String
+	  literals are now considered "const" by standard C++.
+
 Sun Nov 24 17:04:33 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* agent/main.cpp (main): Added ACE::init() to the beginning of
