@@ -50,10 +50,10 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
-#  ace_xtreactor       Build the XtReactor.
-#  ace_flreactor       Build the FlReactor.
-#  ace_tkreactor       Build the TkReactor.
-#  ace_qtreactor       Build the QtReactor.
+#  ace_xtreactor    Build the XtReactor.
+#  ace_flreactor    Build the FlReactor.
+#  ace_tkreactor    Build the TkReactor.
+#  ace_qtreactor    Build the QtReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
 #  stlport          Build with STLPort support
@@ -486,6 +486,19 @@ ifneq ($(ace_qtreactor),)
   override qt=1
   ACE_MAKE_OPTIONS += ace_qtreactor
 endif # ace_qtreactor
+gtk_reactor ?=
+
+ifeq ($(gtk_reactor),0)
+  override gtk_reactor =
+endif # gtk_reactor
+
+ifneq ($(gtk_reactor),)
+  override ace_with_gtk=1
+  CPPFLAGS += -DACE_HAS_GTK $(PLATFORM_GTK_CPPFLAGS)
+  LIBS += $(PLATFORM_GTK_LIBS)
+  LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
+  ACE_MAKE_OPTIONS += gtk_reactor
+endif # gtk_reactor
 
 QTDIR ?=
 ifneq ($(QTDIR),)
