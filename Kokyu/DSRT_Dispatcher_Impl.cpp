@@ -33,11 +33,13 @@ DSRT_Dispatcher_Impl::schedule_i (guid_t guid,
                   const DSRT_QoSDescriptor& qos_info)
 {
   ACE_UNUSED_ARG (guid);
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
 
-  Priority_t prio = this->scheduler_impl_->schedule (guid, qos_info);
-  ACE_OS::thr_setprio (ACE_OS::thr_self (), prio);
+  int prio = this->scheduler_impl_->schedule (guid, qos_info);
+  ACE_OS::thr_setprio (thr_handle, prio);
 
-  return 0;
+  return prio;
 }
 
 int

@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "KOKYU_DLL_EXPORTS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "KOKYU_BUILD_DLL" /FD  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "KOKYU_DLL_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "KOKYU_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -107,6 +107,14 @@ SOURCE=.\Dispatcher_Task.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DSRT_Dispatcher_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Schedulers.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Kokyu.cpp
 # End Source File
 # End Group
@@ -124,6 +132,14 @@ SOURCE=.\Dispatcher_Impl.h
 # Begin Source File
 
 SOURCE=.\Dispatcher_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Schedulers.h
 # End Source File
 # Begin Source File
 
@@ -170,6 +186,19 @@ SOURCE=.\Dispatcher_Impl.i
 # Begin Source File
 
 SOURCE=.\Dispatcher_Task.i
+
+!IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "Kokyu_DLL - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\DSRT_Dispatcher_Impl.i
 
 !IF  "$(CFG)" == "Kokyu_DLL - Win32 Release"
 
