@@ -262,6 +262,7 @@ TAO_GIOP::read_buffer (ACE_SOCK_Stream &peer,
                        char *buf,
                        size_t len)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_READ_BUFFER_START);
   ssize_t bytes_read = bytes_read = peer.recv_n (buf, len);
 
   if (bytes_read == -1 && errno == ECONNRESET)
@@ -1153,6 +1154,7 @@ CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
                                     CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START);
   return (msg.read_ulong (this->request_id)
           && msg.decode (&TC_opaque,
                          &this->object_key,
@@ -1166,6 +1168,7 @@ CORBA::Boolean
 TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
                               CORBA::Environment &env)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_REQUEST_HEADER_INIT_START);
   CORBA::Boolean hdr_status;
 
   // Tear out the service context ... we currently ignore it, but it
