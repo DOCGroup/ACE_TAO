@@ -32,6 +32,7 @@
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Adapter.h"
+#include "tao/Service_Callbacks.h"
 #include "tao/Parser_Registry.h"
 
 #include "ace/Hash_Map_Manager.h"
@@ -54,6 +55,8 @@ class TAO_Priority_Mapping;
 class TAO_Priority_Mapping_Manager;
 class TAO_RT_ORB;
 class TAO_RT_Current;
+class TAO_MProfile;
+class TAO_Profile;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -517,6 +520,33 @@ public:
   // isn't included in the set that is passed to the reactor upon ORB
   // destruction.
 
+  // The following methods would represent the hooks in the ORB
+  // Core. These hooks would be used to call back on the services or
+  // other features that are dynamically loaded.
+
+  CORBA::Boolean service_profile_selection (TAO_MProfile &mprofile,
+                                            TAO_Profile  *&profile);
+  // The loaded service in the ORB_Core would determine if the profile
+  // selection is going to be made by the services or not. If the
+  // services do make the selection they would return the selected
+  // profile through <profile>
+
+  CORBA::Boolean service_profile_reselection (TAO_Stub *stub,
+                                              TAO_Profile *&profile);
+  // The loaded service in the ORB_Core would determine if the profile
+  // reselection is going to be made by the services or not. If the
+  // services do make the reselection they would return the selected
+  // profile through <profile>. The reselction is for the
+  // multi-profile IORS.
+
+  void reset_service_profile_flags (void);
+  // Reset the flags in the loaded services.
+
+  CORBA::Boolean object_is_nil (CORBA::Object_ptr object);
+  // The loaded service would determineif the CORBA::Object_ptr is
+  // actually nill or not. This would be useful to accomodate new
+  // enhanced definitions as defined by the service specification.
+
 protected:
 
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
@@ -547,6 +577,11 @@ protected:
 
   void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
   // Obtain and cache the IORManipulation factory object reference
+
+  void services_callbacks_init (void);
+  // Search the Dynamic service list for well known services that has
+  // callbacks  which can be dynamically loaded.
+
 private:
 
   void resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV);
@@ -644,6 +679,15 @@ protected:
   // Configurator.
   // @@ This is not needed since the server factory factory
   //    is staticaly added to the service configurator.
+
+  // Start of service level hooks
+  // Service level hooks follow.
+  // NOTE: You shouldn't be deleting these. The service layer that
+  // allocated them should be deleting them.
+
+  TAO_Service_Callbacks *ft_service_callbacks_;
+  // ORB level hook to callback on to the service
+  // End of Service level hooks
 
   CORBA::Boolean opt_for_collocation_;
   // TRUE if we want to take advantage of collocation optimization in

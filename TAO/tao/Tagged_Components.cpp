@@ -1,6 +1,8 @@
 // $Id$
 
 #include "tao/Tagged_Components.h"
+#include "tao/Profile.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
