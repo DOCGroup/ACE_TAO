@@ -127,13 +127,19 @@ public:
                         ACE_Reactor_Notify *notify = 0);
   // Initialize <ACE_Select_Reactor> with size <size>.
 
-  virtual int open (size_t size = DEFAULT_SIZE,
+  virtual int open (size_t max_number_of_handles = DEFAULT_SIZE,
                     int restart = 0,
                     ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,
                     int disable_notify_pipe = 0,
                     ACE_Reactor_Notify * = 0);
-  // Initialize <ACE_Select_Reactor> with size <size>.
+  // Initialize the <ACE_Select_Reactor> to manage
+  // <max_number_of_handles>.  If <restart> is non-0 then the
+  // <ACE_Reactor>'s <handle_events> method will be restarted
+  // automatically when <EINTR> occurs.  If <signal_handler> or
+  // <timer_queue> are non-0 they are used as the signal handler and
+  // timer queue, respectively.  If <disable_notify_pipe> is non-0 the
+  // notification pipe is not created, thereby saving two I/O handles.
 
   virtual int current_info (ACE_HANDLE, size_t & /* size */);
   // Returns -1 (not used in this implementation);
