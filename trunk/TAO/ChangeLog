@@ -1,6 +1,13 @@
+Thu May 29 22:24:02 2003  Krishnakumar B  <kitty@spam.invalid.domain>
+
+        * TAOACE.dsw:
+
+          Modified the dependencies to allow building with the new ACEXML
+          libraries.
+
 Thu May 29 19:19:30 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CONV_FRAMEC.cpp: 
+	* tao/CONV_FRAMEC.cpp:
 	* tao/DynamicC.cpp:
 	* tao/PolicyC.cpp:
 	* tao/Tagged_Components.cpp: Fixed duplicate symbols errors in
@@ -8,7 +15,7 @@ Thu May 29 19:19:30 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu May 29 18:47:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp: Another cosmetic change. 
+	* tao/ObjectKey_Table.cpp: Another cosmetic change.
 
 Thu May 29 16:46:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -26,7 +33,7 @@ Thu May 29 11:12:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu May 29 14:30:57 UTC 2003  Gary Duzan <gduzan@bbn.com>
                               Craig Rodrigues  <crodrigu@bbn.com>
 
-	* rules.tao.GNU: 
+	* rules.tao.GNU:
 	  Replace several rules for building stub/skeleton files from an
 	  idl file with a single straightforward rule. The intermediate
 	  rules could cause problems with false dependencies when the
@@ -47,7 +54,7 @@ Wed May 28 11:22:29 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Renamed the <Periodic_Supplier::activate> method to
 	  <activate_task> method. This is done to stop the warnings from
 	  the Borland compiler.
-	
+
 Wed May 28 14:10:50 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/tests/Notify/Driver/Driver.dsp:

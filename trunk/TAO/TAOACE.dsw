@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACEXML_Parser"=..\ACEXML\parser\parser\Parser.dsp - Package Owner=<4>
+Project: "ACEXML DLL"=..\ACEXML\common\ACEXML.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -24,10 +24,22 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name XML_Common
-    End Project Dependency
-    Begin Project Dependency
     Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ACEXML_Parser DLL"=..\ACEXML\parser\parser\ACEXML_Parser.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
     End Project Dependency
 }}}
 
@@ -731,6 +743,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name PortableServer
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1352,18 +1367,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO DLL
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "XML_Common"=..\ACEXML\common\XML_Common.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################
