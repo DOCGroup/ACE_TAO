@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 configurations  = Release Debug
 type_is_binary  = 1

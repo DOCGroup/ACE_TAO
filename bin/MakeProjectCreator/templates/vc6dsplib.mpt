@@ -1,4 +1,5 @@
 conditional_include "idl_compiler_win32"
+conditional_include "common"
 
 type_description      = "Static Library"
 type_code             = 0x0104
