@@ -82,19 +82,21 @@ CDR::grow (ACE_Message_Block *mb, size_t minsize)
     {
       // TODO We should the growth strategy should be controlled using
       // the ORB parameters....
-      if (size < CDR::EXP_GROWTH_MAX)
+      if (newsize == 0)
+        newsize = CDR::DEFAULT_BUFSIZE;
+      else if (size < CDR::EXP_GROWTH_MAX)
         newsize *= 2;
       else
         newsize += CDR::LINEAR_GROWTH_CHUNK;
     }
-  else if (minsize <= size)
+  else if (minsize + CDR::MAX_ALIGNMENT <= size)
     return 0;
   else
     {
       if (newsize == 0)
 	newsize = CDR::DEFAULT_BUFSIZE;
 
-      while (newsize < minsize)
+      while (newsize < minsize + CDR::MAX_ALIGNMENT)
         {
           if (newsize < CDR::EXP_GROWTH_MAX)
             newsize *= 2;
@@ -434,7 +436,7 @@ TAO_OutputCDR::write_array (const void* x,
               return 0;
             }
           char *source = ACE_reinterpret_cast(char*,x);
-          char *end = target + size*length;
+          char *end = source + size*length;
           for (; source != end; source += size, buf += size)
             {
               (*swapper)(source, buf);
