@@ -1,3 +1,15 @@
+Mon Feb 14 12:17:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/RMCast/Link.cpp:
+
+	  Include "ace/OS_NS_sys_socket.h" to pull in ACE_OS::connect()
+	  prototype.
+
+	* ace/RMCast/Protocol.h:
+
+	  Include "ace/OS_NS_string.h" to pull in ACE_OS::memcpy()
+	  prototype.
+
 Mon Feb 14 11:59:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/RMCast/Protocol.h (id):
