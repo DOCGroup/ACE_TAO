@@ -14,6 +14,7 @@
  * ============================================================================= */
 
 #include "pace/pthread.h"
+#include <process.h>
 
 #if !defined (PACE_HAS_INLINE)
 # include "pace/win32/pthread.inl"
@@ -168,8 +169,35 @@ pthread_create (pace_pthread_t * thread,
 		void * (*start_routine) (void*),
 		void * arg)
 {
-  /* not working yet .. fill me in */
-  return -1;
+  unsigned flags = 0x0, thr_addr = 0x0;
+  if (attr->sparam_.priority_ != THREAD_PRIORITY_NORMAL)
+    {
+      // CREATE_SUSPENDED is the only flag win32 currently supports
+      flags = CREATE_SUSPENDED;
+    }
+
+  thread = (pace_pthread_t) _beginthreadex (0,
+                                            attr->stack_size_,
+                                            (unsigned (__stdcall *)(void*))start_routine,
+                                            arg,
+                                            flags,
+                                            &thr_addr);
+
+  if (flags == CREATE_SUSPENDED && thread != 0)
+    {
+      SetThreadPriority (thread, attr->sparam_.priority_);
+      ResumeThread (thread);
+    }
+
+  if (thread == 0)
+    {
+      return 0;
+    }
+  else
+    {
+      PACE_FAIL_RETURN (-1);
+    }
+
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

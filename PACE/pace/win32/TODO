@@ -1,3 +1,5 @@
+----------------------------------------------------------------------
+
 	* Emulation:
 	  - pthreads
 	  - dirent
@@ -16,3 +18,17 @@
 	  OS.cpp:2798 => PACE_PTHREAD_CREATE_JOINABLE
 	  OS.cpp:2801 => PACE_PTHREAD_CREATE_DETACHED
 
+----------------------------------------------------------------------
+
+        * if we fail to build thread correctly, return -1
+          PACE_RETURN_FAILURE ???
+
+----------------------------------------------------------------------
+
+        * get rid of the temp macros / junk in config/constants.h
+
+----------------------------------------------------------------------
+
+        * add MFC support to pthread.c
+
+----------------------------------------------------------------------
