@@ -184,7 +184,7 @@ ACE_Data_Block::size (size_t length)
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
 
-      ACE_OS::memcpy (buf, 
+      ACE_OS::memcpy (buf,
                       this->base_,
                       this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_,
@@ -268,6 +268,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 ACE_Message_Block::ACE_Message_Block (const char *data,
                                       size_t size,
                                       u_long priority)
+  : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -283,11 +284,12 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     ACE_Time_Value::max_time, // absolute time of deadline
                     0,  // data block
                     0) == -1) // data_block allocator
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (void)
+  : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -317,6 +319,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
                                       ACE_Allocator *data_block_allocator)
+  : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -397,6 +400,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const ACE_Time_Value & deadline_time,
                                       ACE_Data_Block *db,
                                       ACE_Allocator *data_block_allocator)
+  : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -417,6 +421,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
+  : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
 
@@ -461,7 +466,12 @@ ACE_Message_Block::init_i (size_t size,
   this->cont_ = msg_cont;
   this->next_ = 0;
   this->prev_ = 0;
-  this->data_block_ = 0;
+
+  if (this->data_block_ != 0)
+    {
+      this->data_block_->release ();
+      this->data_block_ = 0;
+    }
 
   if (db == 0)
     {
