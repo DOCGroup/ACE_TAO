@@ -1,3 +1,13 @@
+Mon Nov  3 01:30:52 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/UNIX_Addr.i (operator ==):
+	* ace/SPIPE_Addr.i (operator ==):
+	* ace/FILE_Addr.i (operator ==):
+	* ace/DEV_Addr.i (operator ==):
+	* ace/INET_Addr.cpp (operator ==):  Added checking for the same
+	  Addr types for addresses under comparison.  Thanks to Stephen
+	  Coy <stevec@magna.com.au> for pointing out the problem.
+
 Sun Nov 02 18:09:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.35, released Sun Nov 02 18:09:14 1997.
