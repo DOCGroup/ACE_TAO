@@ -1,3 +1,14 @@
+Thu Apr 15 09:51:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Introduced PWD. This is used to get the current working
+          directory. When it is not set, it is $(shell pwd). On Windows
+          without cygwin we don't have pwd, so we need to get another
+          way of doing this, this makes it possible to overrule this.
+
+        * include/makeinclude/rules.local.GNU:
+          Use $(PWD) to get the working directory
+
 Thu Apr 15 08:54:33 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_stat.inl:
