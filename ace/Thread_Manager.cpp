@@ -232,7 +232,7 @@ ACE_Thread_Manager::close_singleton (void)
   if (ACE_Thread_Manager::delete_thr_mgr_)
     {
       // First, we clean up the thread descriptor list.
-      ACE_Thread_Manager::thr_mgr_->close (0);
+      ACE_Thread_Manager::thr_mgr_->close (1);
       delete ACE_Thread_Manager::thr_mgr_;
       ACE_Thread_Manager::thr_mgr_ = 0;
       ACE_Thread_Manager::delete_thr_mgr_ = 0;
@@ -249,10 +249,10 @@ ACE_Thread_Manager::close (int automatic_wait)
 
   // Clean up the thread descriptor list.  Theoretically, there shouldn't
   // be any leftover thread at this point.
-#if 0
+#if 1
   // @@ Perhaps we should automatically join our threads when we exit?
   if (automatic_wait)
-    this->wait ();
+    this->wait (0, 1);
   else
 #else
     ACE_UNUSED_ARG (automatic_wait);
@@ -1273,7 +1273,8 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
 // Wait for all the threads to exit.
 
 int
-ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
+ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
+			  int abandon_detached_threads)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait");
 
@@ -1282,6 +1283,24 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     // Just hold onto the guard while waiting.
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
+    if (abandon_detached_threads != 0)
+      {
+	ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
+	for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+	     !iter.done ();
+	     iter.advance ())
+	  if (ACE_BIT_ENABLED (iter.next ()->flags_, (THR_DETACHED | THR_DAEMON)) &&
+	      ACE_BIT_DISABLED (iter.next ()->flags_, THR_JOINABLE))
+	    this->thr_to_be_removed_.enqueue_tail (iter.next ());
+
+	if (! this->thr_to_be_removed_.is_empty ())
+	  {
+	    ACE_Thread_Descriptor *td;
+	    while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+	      this->remove_thr (td);
+	  }
+      }
+	
     while (this->thr_list_.size () > 0)
       if (this->zero_cond_.wait (timeout) == -1)
         return -1;
