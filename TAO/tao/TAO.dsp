@@ -366,6 +366,25 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Bind_Dispatcher_Guard.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3229,6 +3248,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Bind_Dispatcher_Guard.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.h
 # End Source File
 # Begin Source File
@@ -3842,6 +3865,10 @@ SOURCE=.\any.i
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
 
