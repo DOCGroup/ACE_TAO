@@ -30,8 +30,9 @@ namespace TAO
     , response_expected_ (response_expected)
     , otarget_ (ot)
     , target_ (t)
+    , orb_core_ (t->_stubobj ()->orb_core ())
 #if TAO_HAS_INTERCEPTORS == 1
-    , adapter_ (t->_stubobj ()->orb_core ()->client_request_interceptors (),
+    , adapter_ (orb_core_->client_request_interceptors (),
                 this)
     , req_info_ (this)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
@@ -41,12 +42,6 @@ namespace TAO
 
   Invocation_Base::~Invocation_Base (void)
   {
-  }
-
-  TAO_ORB_Core *
-  Invocation_Base::orb_core (void) const
-  {
-    return this->target_->_stubobj ()->orb_core ();
   }
 
   TAO_Service_Context &

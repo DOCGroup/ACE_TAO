@@ -67,6 +67,7 @@ namespace TAO
     //@{
     /// Accessor and mutator methods ..
     TAO_ORB_Core *orb_core (void) const;
+
     TAO_Stub *stub (void) const;
 
     /// Accessor and mutator methods for forwarded object
@@ -152,6 +153,8 @@ namespace TAO
     /// The effective target on which the invocation is on.
     CORBA::Object_ptr target_;
 
+    /// Cache the ORB_Core
+    TAO_ORB_Core *orb_core_;
     //@}
 
     /// Operations invoked by the

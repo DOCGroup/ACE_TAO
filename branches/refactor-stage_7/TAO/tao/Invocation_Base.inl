@@ -2,6 +2,12 @@
 // $Id$
 namespace TAO
 {
+  ACE_INLINE TAO_ORB_Core *
+  Invocation_Base::orb_core (void) const
+  {
+    return this->orb_core_;
+  }
+
   ACE_INLINE TAO_Stub *
   Invocation_Base::stub (void) const
   {
