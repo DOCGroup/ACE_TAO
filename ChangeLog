@@ -1,4 +1,9 @@
-Wed Jun 18 03:22:15 UTC 2003
+Wed Jun 18 06:21:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Added ACE_LACKS_STDINT_H
+
+Wed Jun 18 03:22:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/config-borland-common.h:
         * ace/config-win32-borland.h:
