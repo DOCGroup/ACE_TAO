@@ -71,16 +71,21 @@ public:
 
   void request_id (CORBA::ULong id);
 
+  /// Modify request id's for a BiDirectional setup
+  void modify_request_id (int flag);
+
   /// Get for request id
   CORBA::ULong request_id (void);
   CORBA::ULong request_id (void) const;
+
+
 
   /// Get method        for the addressing mode
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
   TAO_Target_Specification::TAO_Target_Address
   addressing_mode (void)  const;
 
-  /// Set method        for the addressing mode
+  /// Set method for the addressing mode
   void
   addressing_mode (CORBA::Short addr);
 
@@ -91,12 +96,12 @@ private:
   /// Precalculated length of opname_.
   CORBA::ULong opname_len_;
 
-  /// Request ID        of this operation.
+  /// Request ID of this operation.
   CORBA::ULong request_id_;
 
   /**
    * Flag that indicates whether the operation has any arguments. If
-   * there are any arguments the falg will have a value of 1, 0
+   * there are any arguments the flag will have a value of 1, 0
    * otherwise.
    */
   CORBA::Boolean argument_flag_;
