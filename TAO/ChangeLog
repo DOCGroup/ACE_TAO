@@ -1,3 +1,9 @@
+Mon Feb  7 21:54:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynStruct_i.cpp (to_any):
+        
+          Removed unused local variable.
+
 Mon Feb  7 21:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynStruct_i.cpp:
