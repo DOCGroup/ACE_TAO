@@ -1,9 +1,32 @@
+Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}
+	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.{h,cpp}:
+	  Changed the name of the files from Naming_Context.* to
+	  Naming_Context_Interface.*   This is bugzilla bug #340.
+
+	  We can't have two files with the same name if they involve
+	  template instantiations.  orbsvcs/Naming/Naming_Context.cpp
+	  conflicts with ace/Naming_Context.cpp.  Thanks to Greg Holtmeyer
+	  <Greg.Holtmeyer@MW.Boeing.com> for pointing this out.
+
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
+	* orbsvcs/orbsvcs/Naming/README
+	* orbsvcs/orbsvcs/Makefile
+	* orbsvcs/Naming_Service/Makefile
+	* orbsvcs/tests/Simple_Naming/Makefile
+	* tests/InterOp-Naming/Makefile
+	  Updated inclusions and makefile dependencies to reflect the
+	  change above.
+
+
 Mon Oct 04 15:20:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
 	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
 	  tao/MessagingC.h:
-	  Fixed the usage of the "_var_type" typedef on 
+	  Fixed the usage of the "_var_type" typedef on
 	  anonymous sequences.
 
 Mon Oct  4 14:46:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -13,7 +36,7 @@ Mon Oct  4 14:46:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tests/IDL_Test/Makefile:
 	  New IDL file for IDL problem files relating to
 	  function return types and args. The example was
-	  originally sent in by Torsten Kuepper 
+	  originally sent in by Torsten Kuepper
 	  <kuepper2@uni-wuppertal.de> and modified by me
 	  and Michael Kircher <Michael.Kircher@mchp.siemens.de>.
 
