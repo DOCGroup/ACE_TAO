@@ -89,19 +89,19 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\server.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\test_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\callbackC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\callbackS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_i.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -109,15 +109,27 @@ SOURCE=.\callbackS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\test_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\callbackC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\callbackC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\callbackS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\callbackS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Server_i.inl
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -134,10 +146,10 @@ SOURCE=.\callback.idl
 !IF  "$(CFG)" == "Callback Tests Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\release\tao_idl.exe"	
+USERDEP__CALLB="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\callback.idl
-InputName=test
+InputName=callback
 
 BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
@@ -173,10 +185,10 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Callback Tests Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__CALLB="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\callback.idl
-InputName=test
+InputName=callback
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl

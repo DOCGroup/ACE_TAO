@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../ace" /libpath:"../../tao"
+# ADD LINK32 TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../tao/PortableServer"
 
 !ELSEIF  "$(CFG)" == "Callback Tests Client - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"../../../ace" /libpath:"../../tao" /libpath:"../../tao/PortableServer"
 
 !ENDIF 
 
@@ -89,11 +89,19 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\client.cpp
+SOURCE=.\Callback_i.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\callbackC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\callbackS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\client.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -101,7 +109,27 @@ SOURCE=.\callbackC.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\Callback_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Callback_i.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\callbackC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\callbackC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\callbackS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\callbackS.i
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -118,10 +146,10 @@ SOURCE=.\callback.idl
 !IF  "$(CFG)" == "Callback Tests Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\release\tao_idl.exe"	
+USERDEP__CALLB="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\callback.idl
-InputName=test
+InputName=callback
 
 BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
@@ -157,10 +185,10 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Callback Tests Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
+USERDEP__CALLB="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\callback.idl
-InputName=test
+InputName=callback
 
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl

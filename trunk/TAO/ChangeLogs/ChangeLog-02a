@@ -1,8 +1,18 @@
+Sat Oct 28 15:38:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/Event/Event.dsw:
+        * orbsvcs/tests/Event/Performance/ECPerformance.dsw:
+        * performance-tests/TAO_Perf_Tests.dsw:
+        * performance-tests/Callback/client.dsp:
+        * performance-tests/Callback/server.dsp:
+          Add all new projects to their workspaces, and configure them
+          properly.
+
 Sat Oct 28 15:27:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* performance-tests/Callback/Callback_i.h:
-	* performance-tests/Callback/Server_i.cpp:
-	  Fixed throw specs
+        * performance-tests/Callback/Callback_i.h:
+        * performance-tests/Callback/Server_i.cpp:
+          Fixed throw specs
 
 Fri Oct 27 15:54:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
