@@ -1526,6 +1526,8 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
             }
       }
       break;
+    default:
+      break;
     }
   return 0;
 }
