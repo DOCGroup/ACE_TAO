@@ -925,19 +925,18 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
       delete this->concurrency_strategy_;
       this->delete_concurrency_strategy_ = 0;
       this->concurrency_strategy_ = 0;
-
-      // Note that if we aren't actually registered with the
-      // ACE_Reactor then it's ok for this call to fail...
-
-      if (this->reactor ())
-        this->reactor ()->remove_handler
-          (this,
-           ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
-
-      if (this->peer_acceptor_.close () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("close\n")));
     }
+  // Note that if we aren't actually registered with the
+  // ACE_Reactor then it's ok for this call to fail...
+
+  if (this->reactor ())
+    this->reactor ()->remove_handler
+      (this,
+       ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+
+  if (this->peer_acceptor_.close () == -1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("close\n")));
   return 0;
 }
 
