@@ -52,7 +52,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
   if (bound > 0)
     {
       CORBA::TCKind kind = static_cast<CORBA::TCKind> (tc->kind_);
-      static CORBA::Long _oc_buffer [] =
+      CORBA::Long _oc_buffer [] =
         {
           TAO_ENCAP_BYTE_ORDER,
           static_cast<CORBA::Long> (bound)

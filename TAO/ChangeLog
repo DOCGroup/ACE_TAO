@@ -1,3 +1,14 @@
+Wed Nov 17 10:08:41 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Special_Impl_T.cpp (insert):
+        
+          Fixed cut and paste error that made the typecode buffer 
+          created for bounded (w)strings static, thereby using only
+          the bound passed in on the initial creation for every
+          subsequent one. Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn>
+          for reporting the bug, and to Torsten Kuepper for spotting
+          the source of the problem. This fix closes [BUGID:1975].
+
 Tue Nov 16 14:05:33 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (run): 
