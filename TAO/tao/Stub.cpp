@@ -366,14 +366,17 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
               switch (kind)
                 {
-                case CORBA::tk_string:
-                  {
-                    CORBA::string_free (*(char **)ptr);
+                  case CORBA::tk_string:
+                    CORBA::string_free (*(char **) ptr);
                     *(char **)ptr = 0;
-                  }
-                  break;
-                default:
-                  break;
+                    break;
+                  case CORBA::tk_objref:
+                    CORBA::release (*(CORBA::Object_ptr *) ptr);
+                    break;
+                  case CORBA::tk_any:
+                    break;
+                  default:
+                    break;
                 }
             }
 
@@ -671,7 +674,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
                   begin = call.inp_stream ().rd_ptr ();
                   // skip the parameter to get the ending position
-                  retval = temp.skip (any->type_, ACE_TRY_ENV);
+                  retval = temp.skip (any->type_, 
+                                      ACE_TRY_ENV);
                   ACE_CHECK;
 
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -681,7 +685,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
                       TAO_OutputCDR out (any->cdr_);
 
                       retval = out.append (any->type_,
-                                           &call.inp_stream (), ACE_TRY_ENV);
+                                           &call.inp_stream (), 
+                                           ACE_TRY_ENV);
                       ACE_CHECK;
 
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -694,9 +699,34 @@ TAO_Stub::do_dynamic_call (const char *opname,
               else
                 {
                   // the application had allocated the top level
-                  // storage. We simply retrieve the data
+                  // storage. We simply retrieve the data.
+                  // But first we must gracefully release the 'in'
+                  // part if our parameter is INOUT. As with the
+                  // SII counterpart above, this test is incomplete.
+                  if (value->flags () == CORBA::ARG_INOUT)
+                    {
+                      switch (any->type_->kind_)
+                        {
+                          case CORBA::tk_string:
+                            CORBA::string_free (*(char **) any->value_);
+                            break;
+                          case CORBA::tk_objref:
+                            break;
+                          case CORBA::tk_any:
+                            {
+                              CORBA_Any_ptr inside_any = (CORBA_Any *) any->value_;
+                              inside_any->free_value (ACE_TRY_ENV);
+                              ACE_CHECK;
+                            }
+                            break;
+                          default:
+                            break;
+                        }
+                    }
+
                   call.get_value (any->type_,
-                                  (void *) any->value_, ACE_TRY_ENV);
+                                  (void *) any->value_, 
+                                  ACE_TRY_ENV);
                   ACE_CHECK;
                 }
             }
