@@ -1,4 +1,3 @@
-// Malloc.cpp
 // $Id$
 
 #if !defined (ACE_MALLOC_C)
@@ -18,7 +17,8 @@
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 
 // Controls whether the Allocator is deleted when we shut down (we can
-// only delete it safely if we created it!)
+// only delete it safely if we created it!)  This is no longer used;
+// see ACE_Allocator::instance (void).
 int ACE_Allocator::delete_allocator_ = 0;
 
 void
@@ -39,8 +39,8 @@ ACE_Name_Node::ACE_Name_Node (void)
 }
 
 ACE_Name_Node::ACE_Name_Node (const char *name,
-			      void *ptr,
-			      ACE_Name_Node *next)
+                              void *ptr,
+                              ACE_Name_Node *next)
   : pointer_ (ptr),
     next_ (next)
 {
@@ -70,16 +70,45 @@ ACE_Allocator::instance (void)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (), 0));
+                                *ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Allocator::allocator_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Allocator::allocator_,
-			  ACE_New_Allocator,
-			  0);
-	  ACE_Allocator::delete_allocator_ = 1;
-	}
+        {
+          // Have a seat.  We want to avoid ever having to delete the
+          // ACE_Allocator instance, to avoid shutdown order
+          // dependencies.  ACE_New_Allocator never needs to be
+          // destroyed:  it's destructor is empty and its instance
+          // doesn't have any state.  Therefore, sizeof
+          // ACE_New_Allocator is equal to sizeof void *.  It's
+          // instance just contains a pointer to its virtual function
+          // table.
+          //
+          // So, we allocation space for the ACE_New_Allocator
+          // instance in the data segment.  Because its size is the
+          // same as that of a pointer, we allocate it as a pointer so
+          // that it doesn't get constructed statically.  We never
+          // bother to destroy it.
+          static void *allocator_instance = 0;
+
+          // Check this critical assumption . . .
+          ACE_ASSERT (sizeof allocator_instance == sizeof (ACE_New_Allocator));
+
+          // Initialize the allocator_instance by using a placement
+          // new.  The ACE_NEW_RETURN below doesn't actually allocate
+          // a new instance.  It just initializes it in place.
+          ACE_NEW_RETURN (ACE_Allocator::allocator_,
+                          (&allocator_instance) ACE_New_Allocator,
+                          0);
+          // If we ever need to cast the address of
+          // allocator_instance, then expand the ACE_NEW_RETURN above
+          // as follows . . .
+          //
+          // ACE_Allocator::allocator_ =
+          //   (ACE_New_Allocator *)
+          //     new (&allocator_instance) ACE_New_Allocator;
+        }
     }
+
   return ACE_Allocator::allocator_;
 }
 
@@ -88,7 +117,7 @@ ACE_Allocator::instance (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Allocator::instance");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (), 0));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
   // We can't safely delete it since we don't know who created it!
@@ -104,10 +133,11 @@ ACE_Allocator::close_singleton (void)
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::instance ()));
+                     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Allocator::delete_allocator_)
     {
+      // This should never be executed.  See ACE_Allocator::instance (void).
       delete ACE_Allocator::allocator_;
       ACE_Allocator::allocator_ = 0;
       ACE_Allocator::delete_allocator_ = 0;
@@ -132,7 +162,7 @@ ACE_Static_Allocator_Base::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-       
+
 #if defined (ACE_HAS_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats (void)
   : nblocks_ (0),
