@@ -53,6 +53,7 @@ Mon Jun 19 15:56:18 2000  Ossama Othman  <ossama@uci.edu>
 	  provided some sample output.
 
 	* examples/Content_Server/AMI_Iterator/Makefile:
+
 	  Updated dependencies.
 
 Mon Jun 19 15:36:38 2000  Ossama Othman  <ossama@uci.edu>
