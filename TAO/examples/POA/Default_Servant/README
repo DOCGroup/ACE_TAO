@@ -24,7 +24,7 @@ SERVER:
 
 	1. To run the server, type
 	
-	   % server [-ORBport port] [-ORBobjrefstyle URL] [-ORBhost host]
+	   % server [-ORBobjrefstyle URL]
 			
 CLIENT:
 ======

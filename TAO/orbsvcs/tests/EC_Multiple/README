@@ -10,7 +10,7 @@ precomputed schedule, etc.
         A simple test is that uses a pre-computed schedule would be:
 
 # Run the Naming Service
-$ ../../Naming_Service/Naming_Service -ORBport 0 
+$ ../../Naming_Service/Naming_Service
   -p NameService.pid -o NameService.ior
 # If the multicast location does not work for your use:
 #
@@ -22,12 +22,12 @@ $ ../../Naming_Service/Naming_Service -ORBport 0
 
 # Run the first EC, supplier generates events <1> and <2> consumer
 # subscribes to events <1> and <3>
-$ ./EC_Multiple -ORBport 0 -l ECM1 -r ECM2 -s runtime -p ECM1.pid \
+$ ./EC_Multiple -l ECM1 -r ECM2 -s runtime -p ECM1.pid \
   -h 1,1,1,250000,100,1,2,1,3
 
 # Run the second EC, supplier generates events <4> and <3> consumer
 # subscribes to events <4> and <2>
-$ ./EC_Multiple -ORBport 0 -l ECM2 -r ECM1 -s runtime -p ECM2.pid \
+$ ./EC_Multiple -l ECM2 -r ECM1 -s runtime -p ECM2.pid \
   -h 1,1,1,250000,100,4,3,4,2
 
 # Notice how the consumer receives both local and remote events, but

@@ -3,11 +3,6 @@
 # $Id$
 #
 
-if [ -z "$NameServicePort" ]; then
-  NameServicePort=0
-  export NameServicePort
-fi
-
 # The number of messages to send.
 MSG_COUNT=100
 
@@ -37,7 +32,7 @@ trap 'done=1; \
 
 for s in $HP_SUPPLIERS; do
   for c in $LP_CONSUMERS; do
-    ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+    ../../Naming_Service/Naming_Service \
         -ORBobjrefstyle url -o NameService.ior >/dev/null 2>&1 &
     NameServicePID=$!
     sleep 2
@@ -48,11 +43,11 @@ for s in $HP_SUPPLIERS; do
     export NameService
 
     echo Consumers = $c Suppliers = $s
-#    ./EC_Multiple -ORBport 0 -l ECM3 -s local -d sched \
+#    ./EC_Multiple -l ECM3 -s local -d sched \
 #      -h ${s},${s},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,2 \
 #      -w 1,${c},0,${LP_INTERVAL},${MSG_COUNT},3,4,3,4 > \
 #        DYN.LCL.S${s}.C${c}.log 2>&1
-    ./EC_Multiple -ORBport 0 -l ECM3 -s runtime \
+    ./EC_Multiple -l ECM3 -s runtime \
       -h ${s},${s},0,${HP_INTERVAL},${MSG_COUNT},1,2,1,2 \
       -w 1,${c},0,${LP_INTERVAL},${MSG_COUNT},3,4,3,4 > \
         DYN.LCL.S${s}.C${c}.log 2>&1

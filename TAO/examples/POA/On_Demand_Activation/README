@@ -42,7 +42,7 @@ USAGE:
 
 You can use the run_test.pl perl script or follow these directions:
 
-%server [-ORBport port] [-ORBobjrefstyle URL] [-f IOR file]
+%server [-ORBobjrefstyle URL] [-f IOR file]
 
 client:
 ======

@@ -7,8 +7,7 @@ client "resolve_initial_references()" requests.
 To Run:
 ======
 
-% Naming_Service [-ORBport port]
-                 [-ORBobjrefstyle url]
+% Naming_Service [-ORBobjrefstyle url]
                  [-ORBnameserviceport nsport]
                  [-o ior_output_file]
                  [-p pid_file_name]
@@ -86,7 +85,7 @@ all their bindings.  When "-f" option is specified:
 Sample Run:
 ==========
 
-% Naming_Service -ORBport 20000 -ORBobjrefstyle url -ORBnameserviceport 19999
+% Naming_Service -ORBobjrefstyle url -ORBnameserviceport 19999
 starting up daemon <unknown>
 opening dynamic service Resource_Factory
 did dynamic on Resource_Factory, error = 0

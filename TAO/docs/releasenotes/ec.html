@@ -92,13 +92,12 @@ Compile everything under <TT>$TAO_ROOT/orbsvcs</TT>, this needs, obviously,
 and the IDL compiler in <TT>$TAO_ROOT/TAO_IDL</TT>.</LI>
 
 <P>Run the naming service, the scheduling service, the event service and
-the test in <TT>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</TT>; remember
-to give a different port to each one, using the <TT>-ORBport</TT> option.
+the test in <TT>$TAO_ROOT/TAO/orbsvcs/tests/Event_Latency</TT>.
 As in:
 <P><TT>$ cd $TAO_ROOT/orbsvcs</TT>
-<P><TT>$ cd Naming_Service ; ./Naming_Service -ORBport 10000 &amp;</TT>
-<P><TT>$ cd Event_Service ; ./Event_Service -ORBport 0 &amp;</TT>
-<P><TT>$ cd tests/Event_Latency ; ./Event_Latency -ORBport 0 -m 20 -j &amp;</TT>
+<P><TT>$ cd Naming_Service ; ./Naming_Service &amp;</TT>
+<P><TT>$ cd Event_Service ; ./Event_Service &amp;</TT>
+<P><TT>$ cd tests/Event_Latency ; ./Event_Latency -m 20 -j &amp;</TT>
 <P>You may want to run each program in a separate window. Try using a fixed
 port number for the <TT>Naming Service</TT> so you can use the <TT>NameService</TT>
 environment variable.

@@ -78,12 +78,12 @@ ACE_RT_Task::ACE_RT_Task (RtecScheduler::Scheduler_ptr scheduler)
 {
   if (CORBA::is_nil (scheduler))
     {
-      this->scheduler_ = 
+      this->scheduler_ =
         RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
     }
   else
     {
-      this->scheduler_ = 
+      this->scheduler_ =
         RtecScheduler::Scheduler::_duplicate (scheduler);
     }
 }
@@ -102,8 +102,7 @@ ACE_RT_Task::svc (void)
 
 #if 0
       static char* const argv[] = {
-        "task",
-        "-ORBport", "0",
+        "task"
       };
       int argc = sizeof (argv)/sizeof (argv[0]);
       CORBA::ORB_var orb =

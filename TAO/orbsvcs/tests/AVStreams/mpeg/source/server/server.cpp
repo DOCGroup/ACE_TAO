@@ -15,13 +15,13 @@ Audio_MMDevice::Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strat
 {
 }
 
-AVStreams::StreamEndPoint_B_ptr  
-Audio_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
-                        AVStreams::VDev_out the_vdev, 
-                        AVStreams::streamQoS &the_qos, 
-                        CORBA::Boolean_out met_qos, 
-                        char *&named_vdev, 
-                        const AVStreams::flowSpec &the_spec,  
+AVStreams::StreamEndPoint_B_ptr
+Audio_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester,
+                        AVStreams::VDev_out the_vdev,
+                        AVStreams::streamQoS &the_qos,
+                        CORBA::Boolean_out met_qos,
+                        char *&named_vdev,
+                        const AVStreams::flowSpec &the_spec,
                         CORBA::Environment &env)
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
@@ -67,23 +67,23 @@ AV_Server_Sig_Handler::register_handler (void)
 
    if (TAO_ORB_Core_instance ()->reactor ()->register_handler
        (this, ACE_Event_Handler::NULL_MASK) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR, 
-                        "%p\n", 
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "%p\n",
                         "register_handler"),
                        -1);
 
   // handles these signals.
    //   this->sig_set.fill_set ();
-   this->sig_set.sig_add (SIGCHLD);  
-   this->sig_set.sig_add (SIGBUS); 
-   this->sig_set.sig_add (SIGINT); 
+   this->sig_set.sig_add (SIGCHLD);
+   this->sig_set.sig_add (SIGBUS);
+   this->sig_set.sig_add (SIGINT);
    this->sig_set.sig_add (SIGTERM);
 
   // Register the signal handler object to catch the signals.  if
-  if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
+  if (TAO_ORB_Core_instance ()->reactor ()->register_handler
       (this->sig_set, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
                        "register_handler"),
                       -1);
   return 0;
@@ -96,14 +96,14 @@ AV_Server_Sig_Handler::get_handle (void) const
   return this->handle_;
 }
 
-int 
+int
 AV_Server_Sig_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
   return 0;
 }
 
-int 
+int
 AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
@@ -111,7 +111,7 @@ AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // This method handles all the signals that are being caught by this
-// object.  
+// object.
 
 int
 AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
@@ -145,11 +145,11 @@ AV_Server_Sig_Handler::clear_child (int sig)
 {
   int pid;
   int status;
-  
+
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) AV_Server: Reaping the children\n"));
   // reap the children
-  while ((pid = ACE_OS::waitpid (-1, 
-                                 &status, 
+  while ((pid = ACE_OS::waitpid (-1,
+                                 &status,
                                  WNOHANG)) > 0)
   {
     if (pid == AV_Server::current_pid_)
@@ -161,10 +161,10 @@ AV_Server_Sig_Handler::clear_child (int sig)
 
     // decrement the count of number of active children
     Mpeg_Global::session_num --;
-    
-    if (status == 0) 
+
+    if (status == 0)
       continue;
-    
+
     //    ACE_DEBUG ((LM_DEBUG, "(%P|%t) AV_Server: child %d (status %d)\n", pid, status));
   }
   return;
@@ -192,7 +192,7 @@ AV_Server_Sig_Handler::remove_names (void)
   CosNaming::Name video_server_mmdevice_name (1);
   video_server_mmdevice_name.length (1);
   video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
-  
+
   // Register the video control object with the naming server.
   naming_context->unbind (video_server_mmdevice_name,
                           TAO_TRY_ENV);
@@ -201,7 +201,7 @@ AV_Server_Sig_Handler::remove_names (void)
   CosNaming::Name audio_server_mmdevice_name (1);
   audio_server_mmdevice_name.length (1);
   audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
-  
+
   // Register the audio control object with the naming server.
   naming_context->unbind (audio_server_mmdevice_name,
                           TAO_TRY_ENV);
@@ -224,7 +224,7 @@ AV_Server_Sig_Handler::int_handler (int sig)
 
   this->remove_names ();
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV server killed by signal %d\n",
               sig));
 }
@@ -241,8 +241,8 @@ AV_Server::AV_Server (void)
   :video_process_strategy_ (&video_process_options_),
    audio_process_strategy_ (&audio_process_options_)
 {
-  this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
-  this->audio_process_options_.command_line ("./as -ORBport 0 -ORBobjrefstyle url");
+  this->video_process_options_.command_line ("./vs -ORBobjrefstyle url");
+  this->audio_process_options_.command_line ("./as -ORBobjrefstyle url");
 }
 
 // %% move to the destructor or sig handler
@@ -250,13 +250,13 @@ void
 AV_Server::on_exit_routine (void)
 {
   // %% what does the following do
-  if (Mpeg_Global::parentpid != ACE_OS::getpid ()) 
+  if (Mpeg_Global::parentpid != ACE_OS::getpid ())
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Process is exiting\n"));
       return;
     }
-  
+
   // %% what does the following do
   if (Mpeg_Global::live_audio > 1)
     ExitLiveAudio ();
@@ -307,7 +307,7 @@ AV_Server::parse_args (int argc,
   return 0;
 }
 
-        
+
 // Initializes the mpeg server
 int
 AV_Server::init (int argc,
@@ -323,11 +323,11 @@ AV_Server::init (int argc,
                                      env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
-  
-  CORBA::ORB_var orb = 
+
+  CORBA::ORB_var orb =
     this->orb_manager_.orb ();
 
-  PortableServer::POA_var child_poa = 
+  PortableServer::POA_var child_poa =
     this->orb_manager_.child_poa ();
 
   result = this->parse_args (argc, argv);
@@ -339,9 +339,9 @@ AV_Server::init (int argc,
   // Initialize the naming services
   if (my_name_client_.init (this->orb_manager_.orb ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize "
-		       "the TAO_Naming_Client. \n"),
-		      -1);
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
 
   // Register the video mmdevice object with the ORB
   ACE_NEW_RETURN (this->video_mmdevice_,
@@ -360,7 +360,7 @@ AV_Server::init (int argc,
   CosNaming::Name video_server_mmdevice_name (1);
   video_server_mmdevice_name.length (1);
   video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
-  
+
   // Register the video control object with the naming server.
   this->my_name_client_->bind (video_server_mmdevice_name,
                                this->video_mmdevice_->_this (env),
@@ -374,7 +374,7 @@ AV_Server::init (int argc,
                               env);
       TAO_CHECK_ENV_RETURN (env,-1);
     }
-  
+
 
   // Register the audio mmdevice object with the ORB
   ACE_NEW_RETURN (this->audio_mmdevice_,
@@ -393,7 +393,7 @@ AV_Server::init (int argc,
   CosNaming::Name audio_server_mmdevice_name (1);
   audio_server_mmdevice_name.length (1);
   audio_server_mmdevice_name [0].id = CORBA::string_dup ("Audio_Server_MMDevice");
-  
+
   // Register the audio control object with the naming server.
   this->my_name_client_->bind (audio_server_mmdevice_name,
                         this->audio_mmdevice_->_this (env),
@@ -407,7 +407,7 @@ AV_Server::init (int argc,
                               env);
       TAO_CHECK_ENV_RETURN (env,-1);
     }
-  
+
 
 
   // Register the various signal handlers with the reactor.
@@ -442,7 +442,7 @@ AV_Server::run (CORBA::Environment& env){
               "event loop %p\n",
               "run_event_loop"));
   return 0;
-  
+
 }
 
 AV_Server::~AV_Server (void)
@@ -470,9 +470,6 @@ main (int argc, char **argv)
       return -1;
     }
   TAO_ENDTRY;
-  
+
   return 0;
 }
-
-
-
