@@ -93,7 +93,7 @@ In detail,
 *    Test Executables    *
 **************************
 
-You must rely on a different pair of client and server executables
+You must use a different pair of client and server executables
 depending on whether you desire to use the SOCK_STREAM service or the
 SOCK_SEQPACK service.
 
@@ -104,7 +104,9 @@ called SOCK_SEQPACK_clt and SOCK_SEQPACK_srv, respectively.
 Each of these executables uses SCTP as its default protocol.  As an
 extra feature, SOCK_STREAM_clt and SOCK_STREAM_srv offer TCP as an
 alternate protocol.  The choice between TCP and SCTP is exposed via
-the '-t' option.
+the '-t' option.  (Individual instances of SOCK_STREAM_clt and
+SOCK_STREAM_srv must use the same protocol in order to connect and
+function.)
 
 Any of the four executables will show usage information if you run it
 with the '-h' option.  For instance, here is the usage message
@@ -325,7 +327,7 @@ The steps of the walk-through are as follows:
 
 
                                 Histogram ACE Unmarshalled Msg Synchronous Latency Test
-                                        (Message Size 128l, Message Type octet)
+                                        (Message Size 128, Message Type octet)
     version: 1.1
     minimum: 41
     maximum: 60182
@@ -362,13 +364,31 @@ The steps of the walk-through are as follows:
 ******************************************
 
 People who are interested in round-trip latency often want to see a
-"spectrum" of statistics for a range of payload sizes.  This
-distribution includes a script, run_spectrum.pl, that automates
-running SOCK_STREAM_clt or SOCK_SEQPACK_clt multiple times in order to
-generate a spectrum.
+"spectrum" of statistics for a range of payload sizes.  This directory
+includes a script, run_spectrum.pl, that automates running
+SOCK_STREAM_clt or SOCK_SEQPACK_clt multiple times in order to
+generate a spectrum.  (The appropriate server program must be started
+manually.)
 
 The run_spectrum.pl script offers embedded documentation.  To see the
 full documentation, please run
 
    ./run_spectrum.pl --manual
 
+************************
+*    Sample Results    *
+************************
+
+The file sample-spectrum.png plots the spectrum data for a test run at
+LM ATL facilities on the following systems:  two Linux 2.4.18, 1600 MHz
+Pentium 4 machines on an isolated 100Mbps Ethernet network.
+
+The test conditions include several critical parameters that were set
+as follows:
+
+   sctp_rto_initial = 20
+   sctp_rto_min     = 20
+   sctp_rto_max     = 20
+
+Testing has shown that these parameters affect maximum round-trip
+latency.
