@@ -1,90 +1,96 @@
+Sun Aug 30 22:17:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp (dump_schedule):
+          explicitly convert 64 bit RtecScheduler::Times to
+          32 bits with ACE_U64_TO_U32 in ACE_OS::fprintf () call.
+
 Sun Aug 30 15:11:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
-	* tests/Param_Test/Makefile: 
-	* tests/NestedUpcall/Reactor/Makefile: 
-	* tests/Simple/time/Makefile: 
-	  Updated dependencies.
+        * tests/Cubit/TAO/IDL_Cubit/Makefile:
+        * tests/Param_Test/Makefile:
+        * tests/NestedUpcall/Reactor/Makefile:
+        * tests/Simple/time/Makefile:
+          Updated dependencies.
 
-	* utils/Makefile: 
-	  Fixed the directory name for IorParser (again).
+        * utils/Makefile:
+          Fixed the directory name for IorParser (again).
 
 Sun Aug 30 01:57:51 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/GIOP.cpp (recv_request): Fixed type mismatch.
+        * tao/GIOP.cpp (recv_request): Fixed type mismatch.
 
 Sat Aug 29 23:23:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/GIOP.cpp (close_connection): We realized that use of
- 	  CORBA::B_TRUE and CORBA::B_FALSE is not standard.  Therefore, we
- 	  have deprecated CORBA::B_TRUE and CORBA::B_FALSE.  The
- 	  replacements are 1 and 0 respectively.  This script will help in
- 	  the conversion:
+        * tao/GIOP.cpp (close_connection): We realized that use of
+          CORBA::B_TRUE and CORBA::B_FALSE is not standard.  Therefore, we
+          have deprecated CORBA::B_TRUE and CORBA::B_FALSE.  The
+          replacements are 1 and 0 respectively.  This script will help in
+          the conversion:
 
-	  http://www.cs.wustl.edu/~schmidt/ACE_wrappers/bin/corba-boolean.perl
+          http://www.cs.wustl.edu/~schmidt/ACE_wrappers/bin/corba-boolean.perl
 
 Sat Aug 29 20:58:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.h: 
-	* tao/Connect.i: 
-	* tao/Connect.cpp: 
-	* tao/GIOP.h: 
-	* tao/GIOP.cpp: 
-	* tao/Invocation.h: 
-	* tao/Invocation.cpp: 
-	* tao/Server_Request.h: 
-	* tao/Server_Request.i: 
-	* tao/Server_Request.cpp: 
-	* tao/params.h: 
-	* tao/params.i: 
-	* tao/params.cpp: 
-	  Added support for a modified version of IIOP that tries to
-	  minimize overhead in the case of a totally homogeneous system,
-	  for instance:
-	  + It removes the GIOP magic number
-	  + It does not include a protocol version on the header.
-	  + It does not include a byte order on the header.
-	  + It does not include a Service Context or a Principal on the
-	    Requests.
-	  This protocol can be activated by using the -ORBiioplite
-	  option.
-	  Another round trying to minimize calls to the
-	  ORB_Core_instance() function; in general we try to keep the
-	  pointer during the upcalls and downcalls.
+        * tao/Connect.h:
+        * tao/Connect.i:
+        * tao/Connect.cpp:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/Server_Request.h:
+        * tao/Server_Request.i:
+        * tao/Server_Request.cpp:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+          Added support for a modified version of IIOP that tries to
+          minimize overhead in the case of a totally homogeneous system,
+          for instance:
+          + It removes the GIOP magic number
+          + It does not include a protocol version on the header.
+          + It does not include a byte order on the header.
+          + It does not include a Service Context or a Principal on the
+            Requests.
+          This protocol can be activated by using the -ORBiioplite
+          option.
+          Another round trying to minimize calls to the
+          ORB_Core_instance() function; in general we try to keep the
+          pointer during the upcalls and downcalls.
 
-	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
-	  Run the onewau test at the end, otherwise it fills up the pipe
-	  to the server, and the next test gives bad results.
+        * tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+          Run the onewau test at the end, otherwise it fills up the pipe
+          to the server, and the next test gives bad results.
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
-	  Added option to let the user pick the scheduler. Thanks to Dave
-	  Meyer <dmeyer@std.saic.com> for giving us this patch.
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+          Added option to let the user pick the scheduler. Thanks to Dave
+          Meyer <dmeyer@std.saic.com> for giving us this patch.
 
 Sat Aug 29 20:29:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (TAO_Resource_Factory): Changed
-	  use_lock_freed_reactor_ and its access function to
-	  reactor_lock_.  Also declare new enum TAO_NULL_LOCK and
-	  TAO_TOKEN to specify the type of lock to use with
-	  Select_Reactor.
+        * tao/ORB_Core.cpp (TAO_Resource_Factory): Changed
+          use_lock_freed_reactor_ and its access function to
+          reactor_lock_.  Also declare new enum TAO_NULL_LOCK and
+          TAO_TOKEN to specify the type of lock to use with
+          Select_Reactor.
 
 Sat Aug 29 18:56:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/TIE: Change Foo to A, B, and C.  Hopefully g++ can
- 	  gork this.
+        * tests/POA/TIE: Change Foo to A, B, and C.  Hopefully g++ can
+          gork this.
 
 Sat Aug 29 12:40:56 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/POA/TIE/client.cpp:
-	* tests/POA/TIE/server.cpp:
-	  Added missing template instantiations.
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/server.cpp:
+          Added missing template instantiations.
 
-	* tests/POA/Forwarding/MyFooServant.cpp:
-	  A call to is_nil() using a T_var was missing the .in ()
-	  invocation.
+        * tests/POA/Forwarding/MyFooServant.cpp:
+          A call to is_nil() using a T_var was missing the .in ()
+          invocation.
 
-	* tests/POA/Makefile:
-	  Fixed order.  Thanks to David for reporting this problems.
+        * tests/POA/Makefile:
+          Fixed order.  Thanks to David for reporting this problems.
 
 Sat Aug 29 09:15:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
