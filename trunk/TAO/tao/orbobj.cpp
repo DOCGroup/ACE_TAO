@@ -180,8 +180,9 @@ inline static void
 argvec_shift (int& argc, char *const *argv, int numslots)
 {
   ACE_OS::memmove ((void *) &argv[0],
-		   (void *) &argv[numslots],
-		   (argc - numslots - 1) * sizeof argv[0]);
+                   (void *) &argv[numslots],
+                   (argc - numslots - 1) * sizeof argv[0]);
+
   argc -= numslots;
 }
   
@@ -248,11 +249,17 @@ CORBA::ORB_init (int &argc,
           // Specify the name of the svc.conf file to be used
           svc_config_argv[svc_config_argc++] = "-f";
           
+          int shift_amount = 1;
+          
 	  if (i + 1 < argc)
-            // @@ Should we dup the string before assigning?
-	    svc_config_argv[svc_config_argc++] = argv[i + 1];
-
-          argvec_shift (argc, &argv[i], 2);
+            {
+              // @@ Should we dup the string before assigning?
+              svc_config_argv[svc_config_argc++] = argv[i + 1];
+              shift_amount = 2;
+            }
+          
+          argvec_shift (argc, &argv[i], shift_amount);
+          
         }
       else if (ACE_OS::strcmp (argv[i], "-ORBdaemon") == 0)
         {
@@ -271,19 +278,27 @@ CORBA::ORB_init (int &argc,
 	{
           // Specify the name of the host (i.e., interface) on which
           // the server should listen
-	  if (i + 1 < argc)
-	    host = CORBA::string_dup (argv[i + 1]);
 
-          argvec_shift (argc, &argv[i], 2);
+          int shift_amount = 1;
+	  if (i + 1 < argc)
+            {
+              host = CORBA::string_dup (argv[i + 1]);
+              shift_amount = 2;
+            }
+          
+          argvec_shift (argc, &argv[i], shift_amount);
 	}
       else if (ACE_OS::strcmp (argv[i], "-ORBport") == 0)
 	{
           // Specify the port number/name on which we should listen
+          int shift_amount = 1;
 	  if (i + 1 < argc)
-            // @@ We shouldn't limit this to being specified as an int! --cjc
-	    port = ACE_OS::atoi (argv[i + 1]);
-
-          argvec_shift (argc, &argv[i], 2);
+            {
+              // @@ We shouldn't limit this to being specified as an int! --cjc
+              port = ACE_OS::atoi (argv[i + 1]);
+              shift_amount = 2;
+            }
+          argvec_shift (argc, &argv[i], shift_amount);
 	}
       else if (ACE_OS::strcmp (argv[i], "-ORBrcvsock") == 0)
 	{

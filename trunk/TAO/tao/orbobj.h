@@ -95,6 +95,9 @@ public:
   // process does not exit until the ORB has been shut down.
 
   void shutdown (CORBA::Boolean wait_for_completion);
+  // @@ Provide a default as soon as we determine what the current
+  // modus operandi is!  (I think it's CORBA::B_TRUE.)
+  //
   // This operation instructs the ORB to shut down. Shutting down the
   // ORB causes all Object Adapters to be shut down. If the
   // wait_for_completion parameter is TRUE, this operation blocks
