@@ -34,9 +34,15 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
   //     class.
 public:
+  // Initialization and termination methods.
   ACE_SOCK_Stream (void);
+  // Constructor.
+
+  ACE_SOCK_Stream (ACE_HANDLE h);
+  // Constructor (sets the underlying <ACE_HANDLE> with <h>).
+
   ~ACE_SOCK_Stream (void);
-  // Default ctor/dtor.
+  // Destructor.
 
   //= The following two methods use write and read system calls.
   ssize_t send_n (const void *buf, int n) const;

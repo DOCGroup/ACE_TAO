@@ -26,7 +26,7 @@
 class ACE_Export ACE_Handle_Set
 {
   // = TITLE
-  //     C++ wrapper for the socket <FD_SET> abstraction.
+  //     C++ wrapper for the socket <fd_set> abstraction.
 public:
   friend class ACE_Handle_Set_Iterator;
 
@@ -68,7 +68,8 @@ public:
   // Returns the number of the large bit.
 
   void sync (ACE_HANDLE max);
-  // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
+  // Synchronize the underlying <fd_set> with the <max_handle> and the
+  // <size>.
 
   operator fd_set *();
   // Returns a pointer to the underlying <fd_set>.  Returns 0 if

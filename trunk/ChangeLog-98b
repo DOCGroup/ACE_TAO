@@ -1,3 +1,8 @@
+Thu Dec 31 09:40:09 1998  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SOCK_Stream: Added a new ACE_SOCK_Stream constructor that
+ 	  initializes the underlying ACE_HANDLE automagically.
+
 Wed Dec 30 17:07:21 1998  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Containers_T.h: Clarified that the insert() method on
