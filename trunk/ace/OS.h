@@ -2937,6 +2937,79 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 #define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
 #endif /* ACE_HAS_BROKEN_BITSHIFT */
 
+// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
+// be an extern "C" to make certain compilers happy...
+extern "C" void *ace_thread_adapter (void *args);
+
+// Forward decl.
+class ACE_Thread_Manager;
+
+class ACE_Thread_Adapter
+  // = TITLE
+  //     Converts a C++ function into a function <ace_thread_adapter>
+  //     function that can be called from a thread creation routine
+  //     (e.g., <pthread_create> or <_beginthreadex>) that expects an
+  //     extern "C" entry point.  This class also makes it possible to
+  //     transparently provide hooks to register a thread with an
+  //     <ACE_Thread_Manager>.
+  // 
+  // = DESCRIPTION
+  //     This class is used in <ACE_OS::thr_create>.
+{
+public:
+  ACE_Thread_Adapter (ACE_THR_FUNC user_func,
+		      void *arg,
+		      ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
+		      ACE_Thread_Manager *tm = 0);
+  // Constructor.
+
+  void *invoke (void);
+  // Execute the <user_func_> with the <arg>.
+
+  ACE_Thread_Manager *thr_mgr (void);
+  // Accessor for the optional <Thread_Manager>. 
+
+  ACE_THR_C_FUNC entry_point (void);
+  // Accessor for the C entry point function to the OS thread creation
+  // routine.
+
+private:
+  void inherit_log_msg (void);
+  // Inherit the logging features if the parent thread has an
+  // <ACE_Log_Msg>.
+
+  ACE_THR_FUNC user_func_;
+  // Thread startup function passed in by the user (C++ linkage).
+
+  void *arg_;
+  // Argument to thread startup function.
+
+  ACE_THR_C_FUNC entry_point_;
+  // Entry point to the underlying OS thread creation call (C
+  // linkage).
+
+  ACE_Thread_Manager *thr_mgr_;
+  // Optional thread manager.
+
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
+  ostream *ostream_;
+  // Ostream where the new TSS Log_Msg will use.
+
+  u_long priority_mask_;
+  // Priority_mask to be used in new TSS Log_Msg.
+
+  int tracing_enabled_;
+  // Are we allowing tracing in this thread?
+
+  int restart_;
+  // Indicates whether we should restart system calls that are
+  // interrupted.
+
+  int trace_depth_;
+  // Depth of the nesting for printing traces.
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
+};
+
 class ACE_Export ACE_OS
   // = TITLE
   //     This class defines an operating system independent
@@ -3796,36 +3869,47 @@ public:
   static int thr_cancel (ACE_Thread_ID t_id);
 #endif /* 0 */
 
-  // = A set of wrappers for threads (these are non-portable since they use ACE_thread_t and ACE_hthread_t and will go away in a future release).
+  // = A set of wrappers for threads 
+
+  // These are non-portable since they use ACE_thread_t and
+  // ACE_hthread_t and will go away in a future release.
   static int thr_continue (ACE_hthread_t target_thread);
-  static int thr_create (ACE_THR_FUNC,
+  static int thr_create (ACE_THR_FUNC func,
                          void *args,
                          long flags, 
                          ACE_thread_t *thr_id, 
                          ACE_hthread_t *t_handle = 0,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
-                         size_t stacksize = 0);
-  // Creates a new thread having <{flags}> attributes and running <{ACE_THR_FUNC}>
-  // with <{args}>.  <{thr_id}> and <{t_handle}> are set to the thread's ID and handle (?),
-  // respectively.  The thread runs at <{priority}> priority (see below).
+                         size_t stacksize = 0,
+			 ACE_Thread_Adapter *thread_adapter = 0);
+  // Creates a new thread having <flags> attributes and running <func>
+  // with <args> (if <thread_adapter> is non-0 then <func> and <args>
+  // are ignored and are obtained from <thread_adapter>).  <thr_id>
+  // and <t_handle> are set to the thread's ID and handle (?),
+  // respectively.  The thread runs at <priority> priority (see
+  // below).
   //
-  // The <{flags}> are a bitwise-OR of the following:
+  // The <flags> are a bitwise-OR of the following:
   // = BEGIN<INDENT>
-  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED, THR_CANCEL_ASYNCHRONOUS,
-  // THR_BOUND, THR_NEW_LWP, THR_DETACHED, THR_SUSPENDED, THR_DAEMON, THR_JOINABLE,
-  // THR_SCHED_FIFO, THR_SCHED_RR, THR_SCHED_DEFAULT
+  // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
+  // THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
+  // THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
+  // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   // 
-  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
-  // an "appropriate"
-  // priority value for the given scheduling policy (specified in
-  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
-  // calculated dynamically, and is the median value between the
-  // minimum and maximum priority values for the given policy.  If an
-  // explicit value is given, it is used.  Note that actual priority
-  // values are EXTREMEMLY implementation-dependent, and are probably
-  // best avoided.
+  // By default, or if <priority> is set to
+  // ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
+  // the given scheduling policy (specified in <flags}>, e.g.,
+  // <THR_SCHED_DEFAULT>) is used.  This value is calculated
+  // dynamically, and is the median value between the minimum and
+  // maximum priority values for the given policy.  If an explicit
+  // value is given, it is used.  Note that actual priority values are
+  // EXTREMEMLY implementation-dependent, and are probably best
+  // avoided.
+  //
+  // Note that <thread_adapter> is always deleted by <thr_create>,
+  // therefore it must be allocated with global operator new.
 
   static int thr_getprio (ACE_hthread_t thr_id,
 			  int &prio);
@@ -4130,7 +4214,6 @@ ace_main_i
 
 // These need to come here to avoid problems with circular dependencies.
 #include "ace/Log_Msg.h"
-
 
 // The following are some insane macros that are useful in cases when
 // one has to have a string in a certain format.  Both of these macros

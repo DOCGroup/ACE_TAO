@@ -36,13 +36,16 @@ public:
 		    ACE_hthread_t *t_handle = 0,
 		    long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		    void *stack = 0, 
-		    size_t stack_size = 0);
-  // Spawn a new thread having <{flags}> attributes and running
-  // <{func}> with arguments <{args}>.  <{thr_id}> and <{t_handle}>
-  // are set to the thread's ID and handle (?), respectively.  The
-  // thread runs at <{priority}> priority (see below).
+		    size_t stack_size = 0,
+		    ACE_Thread_Adapter *thread_adapter = 0);
+  // Creates a new thread having <flags> attributes and running <func>
+  // with <args> (if <thread_adapter> is non-0 then <func> and <args>
+  // are ignored and are obtained from <thread_adapter>).  <thr_id>
+  // and <t_handle> are set to the thread's ID and handle (?),
+  // respectively.  The thread runs at <priority> priority (see
+  // below).
   //
-  // The <{flags}> are a bitwise-OR of the following:
+  // The <flags> are a bitwise-OR of the following:
   // = BEGIN<INDENT>
   // THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
   // THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
@@ -50,15 +53,18 @@ public:
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   // 
-  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
-  // an "appropriate"
-  // priority value for the given scheduling policy (specified in
-  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
-  // calculated dynamically, and is the median value between the
-  // minimum and maximum priority values for the given policy.  If an
-  // explicit value is given, it is used.  Note that actual priority
-  // values are EXTREMEMLY implementation-dependent, and are probably
-  // best avoided.
+  // By default, or if <priority> is set to
+  // ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
+  // the given scheduling policy (specified in <flags}>, e.g.,
+  // <THR_SCHED_DEFAULT>) is used.  This value is calculated
+  // dynamically, and is the median value between the minimum and
+  // maximum priority values for the given policy.  If an explicit
+  // value is given, it is used.  Note that actual priority values are
+  // EXTREMEMLY implementation-dependent, and are probably best
+  // avoided.
+  //
+  // Note that <thread_adapter> is always deleted by <thr_create>,
+  // therefore it must be allocated with global operator new.
 
   static int spawn_n (size_t n, 
 		      ACE_THR_FUNC func,
@@ -66,15 +72,18 @@ public:
 		      long flags = THR_NEW_LWP,
 		      long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		      void *stack[] = 0, 
-		      size_t stack_size[] = 0);
-  // Spawn N new threads, which execute <func> with argument <arg>.
-  // If <stack> != 0 it is assumed to be an array of <n> pointers to
-  // the base of the stacks to use for the threads being spawned.
-  // Likewise, if <stack_size> != 0 it is assumed to be an array of
-  // <n> values indicating how big each of the corresponding <stack>s
-  // are.  Returns the number of threads actually spawned (if this
-  // doesn't equal the number requested then something has gone wrong
-  // and <errno> will explain...).
+		      size_t stack_size[] = 0,
+		      ACE_Thread_Adapter *thread_adapter = 0);
+  // Spawn N new threads, which execute <func> with argument <arg> (if
+  // <thread_adapter> is non-0 then <func> and <args> are ignored and
+  // are obtained from <thread_adapter>).  If <stack> != 0 it is
+  // assumed to be an array of <n> pointers to the base of the stacks
+  // to use for the threads being spawned.  Likewise, if <stack_size>
+  // != 0 it is assumed to be an array of <n> values indicating how
+  // big each of the corresponding <stack>s are.  Returns the number
+  // of threads actually spawned (if this doesn't equal the number
+  // requested then something has gone wrong and <errno> will
+  // explain...).
   //
   // See also <spawn>.
 
@@ -86,19 +95,22 @@ public:
 		      long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		      void *stack[] = 0,
 		      size_t stack_size[] = 0,
-		      ACE_hthread_t thread_handles[] = 0);
-  // Spawn <n> new threads, which execute <func> with argument <arg>.
-  // The thread_ids of successfully spawned threads will be placed
-  // into the <thread_ids> buffer (which must be the same size as
-  // <n>).  If <stack> != 0 it is assumed to be an array of <n>
-  // pointers to the base of the stacks to use for the threads being
-  // spawned.  If <stack_size> != 0 it is assumed to be an array of
-  // <n> values indicating how big each of the corresponding <stack>s
-  // are.  If <thread_handles> != 0 it is assumed to be an array of
-  // <n> thread_handles that will be assigned the values of the thread
-  // handles being spawned.  Returns the number of threads actually
-  // spawned (if this doesn't equal the number requested then
-  // something has gone wrong and <errno> will explain...).
+		      ACE_hthread_t thread_handles[] = 0,
+		      ACE_Thread_Adapter *thread_adapter = 0);
+  // Spawn <n> new threads, which execute <func> with argument <arg>
+  // (if <thread_adapter> is non-0 then <func> and <args> are ignored
+  // and are obtained from <thread_adapter>).  The thread_ids of
+  // successfully spawned threads will be placed into the <thread_ids>
+  // buffer (which must be the same size as <n>).  If <stack> != 0 it
+  // is assumed to be an array of <n> pointers to the base of the
+  // stacks to use for the threads being spawned.  If <stack_size> !=
+  // 0 it is assumed to be an array of <n> values indicating how big
+  // each of the corresponding <stack>s are.  If <thread_handles> != 0
+  // it is assumed to be an array of <n> thread_handles that will be
+  // assigned the values of the thread handles being spawned.  Returns
+  // the number of threads actually spawned (if this doesn't equal the
+  // number requested then something has gone wrong and <errno> will
+  // explain...).
   //
   // See also <spawn>.
 

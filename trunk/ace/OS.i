@@ -7616,3 +7616,15 @@ ACE_OS::sbrk (int brk)
 #endif /* VXWORKS */
 }
 
+ACE_INLINE ACE_Thread_Manager *
+ACE_Thread_Adapter::thr_mgr (void)
+{
+  return this->thr_mgr_;
+}
+
+ACE_INLINE ACE_THR_C_FUNC
+ACE_Thread_Adapter::entry_point (void)
+{
+  return this->entry_point_;
+}
+

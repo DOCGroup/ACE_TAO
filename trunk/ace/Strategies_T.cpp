@@ -107,23 +107,33 @@ ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER> int
-ACE_DLL_Strategy<SVC_HANDLER>::open (const char svc_dll_info[],
+ACE_DLL_Strategy<SVC_HANDLER>::open (const char dll_name[],
+				     const char factory_function[],
+				     const char svc_name[],
 				     ACE_Service_Repository *svc_rep,
 				     ACE_Thread_Manager *thr_mgr)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::open");
   this->inherited::open (thr_mgr);
+  ACE_OS::strncpy (this->dll_name_, dll_name);
+  ACE_OS::strncpy (this->factory_function_, factory_function);
+  ACE_OS::strncpy (this->svc_name_, svc_name);
   this->svc_rep_ = svc_rep;
   return 0;
 }
 
 template <class SVC_HANDLER> 
-ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char svc_dll_info[],
+ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
+						 const char factory_function[],
+						 const char svc_name[],
 						 ACE_Service_Repository *svc_rep,
 						 ACE_Thread_Manager *thr_mgr)
 {
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy");
-  if (this->open (svc_dll_info, svc_rep, thr_mgr) == -1)
+  if (this->open (dll_name,
+		  factory_function, 
+		  svc_name,
+		  svc_rep, thr_mgr) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 }
 
@@ -157,7 +167,27 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
       // Create an ACE_Service_Record containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      // @@ This remains to be implemented...
+      ACE_Service_Type stp =
+	new ACE_Service_Object_Type (svc_handler, this->svc_name_);
+
+      if (stp == 0)
+	{
+	  errno = ENOMEM;
+	  return -1;
+	}
+
+      ACE_Service_Record *srp =
+	new ACE_Service_Record (this->svc_name_, stp, handle, 1);
+
+      if (srp == 0)
+	{
+	  delete stp;
+	  errno = ENOMEM;
+	  return -1;
+	}
+
+      if (this->svc_rep_->insert (srp) == -1)
+	return -1;
       // @@ Somehow, we need to deal with this->thr_mgr_...
     }
 

@@ -62,7 +62,7 @@ public:
   // information into <open>.
 
   virtual int close (u_long flags = 0);
-  // Hook called from ACE_Task_Exit when during thread exit and from
+  // Hook called from <ACE_Task_Exit> when during thread exit and from
   // the default implemenation of <module_closed>.  In general, this
   // method shouldn't be called directly by an application,
   // particularly if the <Task> is running as an Active Object.
@@ -75,7 +75,7 @@ public:
   // implementation calls forwards the call to close(1).  Please
   // notice the changed value of the default argument of close().
   // This allows tasks to differ between the call has been originated
-  // from ACE_Task_Exit or from module_closed().  Be aware that
+  // from <ACE_Task_Exit> or from <module_closed>.  Be aware that
   // close(0) will be also called when a thread associated with the
   // ACE_Task instance exits.
 
@@ -192,7 +192,7 @@ public:
 class ACE_Export ACE_Task_Exit
   // = TITLE
   //    Keep exit information for a Task in thread specific storage so
-  //    that the Task::close() method will get called no matter how
+  //    that the <Task::close> method will get called no matter how
   //    the thread exits (e.g., via <Thread::exit>, C++ or Win32
   //    exception, "falling off the end" of <Task::svc_run>, etc.).
   //
@@ -233,10 +233,6 @@ private:
 
   void *status_;
   // Exit status...
-
-  ACE_Thread_Control tc_;
-  // This is used to make sure that an ACE_Task registers and
-  // deregisters with the ACE_Thread_Manager correctly.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static ACE_Thread_Mutex ace_task_lock_;

@@ -195,7 +195,6 @@ ACE_Remove_Node::apply (void)
 
 }
 
-
 ACE_Dynamic_Node::ACE_Dynamic_Node (const ACE_Service_Record *sr,
 				    char *parms)
   : ACE_Static_Node (sr->name (), parms),
@@ -260,7 +259,7 @@ ACE_Static_Node::record (void) const
   ACE_Service_Record *sr;
 
   if (ACE_Service_Repository::instance()->find (this->name (),
-					 (const ACE_Service_Record **) &sr) == -1)
+						(const ACE_Service_Record **) &sr) == -1)
     return 0;
   else
     return sr;

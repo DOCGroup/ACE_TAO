@@ -285,7 +285,7 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
       // Encapsulate a ts_obj and it's destructor in an ACE_TSS_Adapter
       ACE_TSS_Adapter *tss_adapter;
       ACE_NEW (tss_adapter, 	
-               ACE_TSS_Adapter ((void *)ts_obj, ACE_TSS<TYPE>::cleanup));
+               ACE_TSS_Adapter ((void *) ts_obj, ACE_TSS<TYPE>::cleanup));
 
       // Put the adapter in thread specific storage
       if (ACE_Thread::setspecific (this->key_, (void *) tss_adapter) != 0)

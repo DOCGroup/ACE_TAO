@@ -111,13 +111,17 @@ public:
   ACE_DLL_Strategy (void);
   // "Do-nothing" constructor.
 
-  ACE_DLL_Strategy (const char svc_dll_info[],
+  ACE_DLL_Strategy (const char dll_name[],
+		    const char factory_function[],
+		    const char svc_name[],
 		    ACE_Service_Repository *,
 		    ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
   // information contained in the <svc_dll_info> string.
 
-  int open (const char svc_dll_info[],
+  int open (const char dll_name[],
+	    const char factory_function[],
+	    const char svc_name[],
 	    ACE_Service_Repository *,
 	    ACE_Thread_Manager * = 0);
   // Initialize the DLL strategy based upon the service's DLL
@@ -137,14 +141,14 @@ public:
 protected:
   typedef ACE_Creation_Strategy<SVC_HANDLER> inherited;
 
-  char shared_library_[MAXPATHLEN];
-  // Name of the shared library to dynamically link.
+  char dll_name_[MAXPATHLEN];
+  // Name of the DLL to dynamically link.
 
   char factory_function_[MAXPATHLEN];
   // Name of the factory function in the shared library to use to
   // obtain a pointer to the new SVC_HANDLER.
 
-  char svc_name[MAXNAMELEN];
+  char svc_name_[MAXNAMELEN];
   // Name of the service.
 
   ACE_Service_Repository *svc_rep_;

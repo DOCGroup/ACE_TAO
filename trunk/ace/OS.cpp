@@ -1271,77 +1271,42 @@ ACE_TSS_Cleanup::dump (void)
 
 #endif /* WIN32 */
 
-#if !defined (VXWORKS) && ( defined (ACE_WIN32) || defined (ACE_HAS_THR_C_FUNC) || !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG))
-class ACE_Thread_Adapter
-  // = TITLE
-  //     Converts a C++ function into a function <ace_thread_adapter>
-  //     function that can be called from a thread creation routine
-  //     (e.g., pthread_create() or _beginthreadex()) that expects an
-  //     extern "C" entry point.
-  // 
-  // = DESCRIPTION
-  //     This is used below in <ACE_OS::thr_create> for Win32 and
-  //     MVS. 
+void
+ACE_Thread_Adapter::inherit_log_msg (void)
 {
-public:
-  ACE_Thread_Adapter (ACE_THR_FUNC f, void *a);
-  // Constructor.
-
-  // private:
-  // = Arguments to thread startup.
-  ACE_THR_FUNC func_;
-  // Thread startup function (C++ linkage).
-
-  void *arg_;
-  // Argument to thread startup function.
-
-#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
-  ostream *ostream_;
-  // Ostream where the new TSS Log_Msg will use.
-
-  u_long priority_mask_;
-  // Priority_mask to be used in new TSS Log_Msg.
-
-  int tracing_enabled_;
-  // Are we allowing tracing in this thread?
-
-  int restart_;
-  // Indicates whether we should restart system calls that are
-  // interrupted.
-
-  int trace_depth_;
-  // Depth of the nesting for printing traces.
-#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
-};
-
-// Run the thread exit point.  This must be an extern "C" to make
-// certain compilers happy...
-
-extern "C" void *
-ace_thread_adapter (void *args)
-{
-  // ACE_TRACE ("ace_thread_adapter");
-  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
-
-  ACE_THR_FUNC func = thread_args->func_;
-
-  // Inherit the logging feature if the parent 
-  // has got an ACE_Log_Msg.
+  // Inherit the logging features if the parent thread has an
+  // <ACE_Log_Msg>.  Note that all of the following operations occur
+  // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
+
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
-  if (thread_args->ostream_)
+  if (this->ostream_)
     {
-	new_log->msg_ostream (thread_args->ostream_);
-	new_log->priority_mask (thread_args->priority_mask_);
-	if (thread_args->tracing_enabled_)
-	  new_log->start_tracing ();
-	new_log->restart (thread_args->restart_);
-	new_log->trace_depth (thread_args->trace_depth_);
+      new_log->msg_ostream (this->ostream_);
+      new_log->priority_mask (this->priority_mask_);
+
+      if (this->tracing_enabled_)
+	new_log->start_tracing ();
+
+      new_log->restart (this->restart_);
+      new_log->trace_depth (this->trace_depth_);
     }
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */  
-  void *arg = thread_args->arg_;
+}
 
-  delete thread_args;
+void *
+ACE_Thread_Adapter::invoke (void)
+{
+  // Inherit the logging features if the parent thread has an
+  // ACE_Log_Msg instance in thread-specific storage.
+  this->inherit_log_msg ();
+
+  // Extract the arguments.
+  ACE_THR_FUNC func = this->user_func_;
+  void *arg = this->arg_;
+
+  // Delete ourselves since we don't need <this> anymore.
+  delete (void *) this;
 
 #if defined (ACE_WIN32)
   void *status = 0;
@@ -1367,9 +1332,27 @@ ace_thread_adapter (void *args)
 #endif /* ACE_WIN32 */
 }
 
-ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
-  : func_(f),
-    arg_(a)
+// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
+// be an extern "C" to make certain compilers happy...
+
+extern "C" void *
+ace_thread_adapter (void *args)
+{
+  // ACE_TRACE ("ace_thread_adapter");
+  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
+
+  // Invoke the user-supplied function with the args.
+  return thread_args->invoke ();
+}
+
+ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func, 
+					void *arg,
+					ACE_THR_C_FUNC entry_point,
+					ACE_Thread_Manager *tm)
+  : user_func_ (user_func),
+    arg_ (arg),
+    entry_point_ (entry_point),
+    thr_mgr_ (tm)
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
     ,
     ostream_ (NULL),
@@ -1392,7 +1375,6 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
     }
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
 }
-#endif /* VXWORKS && ACE_THREADS_DONT_INHERIT_LOG_MSG ... */
 
 int
 ACE_OS::thr_create (ACE_THR_FUNC func,
@@ -1402,21 +1384,25 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		    ACE_hthread_t *thr_handle,
                     long priority,
 		    void *stack,
-		    size_t stacksize)
+		    size_t stacksize,
+		    ACE_Thread_Adapter *thread_adapter)
 {
   // ACE_TRACE ("ACE_OS::thr_create");
 
-#if defined (VXWORKS) || (defined (ACE_THREADS_DONT_INHERIT_LOG_MSG) && (!defined (ACE_WIN32) || !defined (ACE_HAS_THR_C_FUNC)))
+#if defined (ACE_NO_THREAD_ADAPTER)
 #define  ACE_THREAD_FUNCTION  func
 #define  ACE_THREAD_ARGUMENT  args
 #else
-#define  ACE_THREAD_FUNCTION  ace_thread_adapter
+#define  ACE_THREAD_FUNCTION  thread_args->entry_point ()
 #define  ACE_THREAD_ARGUMENT  thread_args
 
   ACE_Thread_Adapter *thread_args;
-  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
+  if (thread_adapter == 0)
+    ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, ace_thread_adapter), -1);
+  else
+    thread_args = thread_adapter;
 
-#endif /* VXWORKS || ACE_THREADS_DONT_INHERIT_LOG_MSG ... */
+#endif /* ACE_NO_THREAD_ADAPTER */
 
 #if defined (ACE_HAS_THREADS)
   ACE_thread_t tmp_thr;
