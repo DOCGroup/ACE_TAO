@@ -184,7 +184,8 @@ main (int, char *[])
     {
       ACE_Time_Value timeout (2);
 
-      for (int iteration = 1;; iteration++)
+      int shutdown = 0;
+      for (int iteration = 1; !shutdown; iteration++)
 	{
 	  // Use a timeout to inform the Reactor when to shutdown.
 	  switch (ACE_Service_Config::reactor ()->handle_events (timeout))
@@ -193,8 +194,8 @@ main (int, char *[])
 	      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), -1);
 	      /* NOTREACHED */
 	    case 0:
-	      ACE_ERROR_RETURN ((LM_ERROR, "(%t) timeout\n"), 0);
-	      /* NOTREACHED */
+              shutdown = 1;
+              break;
 	    default:
 	      // ACE_DEBUG ((LM_DEBUG, "(%t) done dispatching %d\n", iteration));
 	      ;
