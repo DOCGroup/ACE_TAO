@@ -4731,7 +4731,7 @@ typedef double ACE_timer_t;
   // = typedef for the _stat data structure
   typedef pace_stat_s ACE_stat;
 # else
-#   if defined (ACE_WIN32)
+#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
       typedef struct _stat ACE_stat;
 #   else
       typedef struct stat ACE_stat;
