@@ -25,7 +25,7 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Method_Request.h"
 
-// Be compatible with the terminology in the POSA2 book!
+/// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
 
 /**
@@ -136,7 +136,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Stores the <Method_Requests>.
+  /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
   /// Keeps track of whether we need to delete the queue.
