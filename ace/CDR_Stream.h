@@ -950,7 +950,7 @@ public:
   /// Read an array of characters from the stream, converting the
   /// characters from the stream codeset to the native codeset.
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
-                                            const ACE_CDR::Char*,
+                                            ACE_CDR::Char*,
                                             ACE_CDR::ULong) = 0;
 
   /// Write a single character to the stream, converting from the
@@ -1044,7 +1044,7 @@ public:
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
                                          ACE_CDR::WChar *&) = 0;
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR&,
-                                             const ACE_CDR::WChar*,
+                                             ACE_CDR::WChar*,
                                              ACE_CDR::ULong) = 0;
   virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR&,
                                         ACE_CDR::WChar) = 0;
@@ -1055,6 +1055,8 @@ public:
                                               const ACE_CDR::WChar*,
                                               ACE_CDR::ULong) = 0;
 
+  virtual ACE_CDR::ULong ncs () = 0;
+  virtual ACE_CDR::ULong tcs () = 0;
 protected:
   /// Children have access to low-level routines because they cannot
   /// use read_char or something similar (it would recurse).
@@ -1112,8 +1114,6 @@ protected:
   ACE_CDR::Octet major_version (ACE_OutputCDR& output);
   ACE_CDR::Octet minor_version (ACE_OutputCDR& output);
 
-  virtual ACE_CDR::ULong ncs () = 0;
-  virtual ACE_CDR::ULong tcs () = 0;
 };
 
 // @@ These operators should not be inlined since they force SString.h

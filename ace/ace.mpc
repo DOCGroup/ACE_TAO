@@ -224,6 +224,8 @@ project : acelib, core {
       CDR_Base.cpp
       CDR_Stream.cpp
       Codeset_IBM1047.cpp
+      Codeset_Registry.cpp
+      Codeset_Registry_db.cpp
       Message_Queue.cpp
       Reactor_Notification_Strategy.cpp
       Task.cpp

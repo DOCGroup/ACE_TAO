@@ -1,15 +1,48 @@
+Tue Mar  4 13:54:52 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Codeset_Registry.cpp:
+        * ace/Codeset_Registry.h:
+        * ace/Codeset_Registry.inl:
+
+        New files added to support the codeset framework. The Codeset Registry
+        is either a wrapper for dce code and character set registry functions,
+        if the system supports them, or these fucntions are emulated. Only the
+        functions necessary to support TAO's Codeset translation framework are
+        emulated.
+
+        * ace/Codeset_Registry_db.cpp:
+
+        The codeset "database." A minimal list (2 entries) is shipped, see
+        apps/mkcsregdb to build a new list of supported codesets as needed.
+
+        * ace/CDR_Stream.h:
+
+        Changed the interface on the ACE_[W]Char_Codeset_Translator class for
+        the read_[w]char_array to take a non-const array as the out parameter.
+
+        * ace/Makefile.ace:
+        * ace/ace.mpc:
+
+        Added the new codeset files to the makefile.
+
+        * apps/mkcsregdb:
+
+        A new application used to generate custom list of codeset identites.
+        The description of how to run is in a comment at the top of
+        ace/Codeset_Registry_db.cpp.
+
 Tue Jan 24 17:50:32 2003  Gonzalo Diethelm  <gonzalo.diethelm@aditiva.com>
 
-	* ace/INET_Addr.cpp:
-  	  Method string_to_addr() now uses ACE_OS_String::strtol() instead
- 	  of the ugly hack using ACE_OS::strspn() and ACE_OS::atoi().  The
- 	  two set() methods that receive a const char port_name[] now try
- 	  first to parse that port_name as a simple number (like "901"),
- 	  and if that fails they try to resolve the port name as a
- 	  service.  In order to implement this, I added a static helper
- 	  function called get_port_number_from_name() (sorry for the awful
- 	  name).
-	
+        * ace/INET_Addr.cpp:
+           Method string_to_addr() now uses ACE_OS_String::strtol() instead
+           of the ugly hack using ACE_OS::strspn() and ACE_OS::atoi().  The
+           two set() methods that receive a const char port_name[] now try
+           first to parse that port_name as a simple number (like "901"),
+           and if that fails they try to resolve the port name as a
+           service.  In order to implement this, I added a static helper
+           function called get_port_number_from_name() (sorry for the awful
+           name).
+        
 Tue Mar  4 12:53:06 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
