@@ -33,6 +33,8 @@ Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux{,-common}.h: created config-linux-common.h
           and moved alpha-specific defines to it.
 
+        * ace/FILE_Addr.cpp (set): explicitly declare int return type.
+
 Fri Nov 07 10:05:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.40, released Fri Nov 07 10:05:12 1997.
