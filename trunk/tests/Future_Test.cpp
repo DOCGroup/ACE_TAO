@@ -69,7 +69,7 @@ public:
   const char *name_i (void);
 
 private:
-  const char *name_;
+  char *name_;
   ACE_Activation_Queue activation_queue_;
   Scheduler *scheduler_;
 };
@@ -290,7 +290,7 @@ Scheduler::work (double newparam, int newcount)
   else {
     ACE_Future<double> new_future;
 
-    this->activation_queue_.enqueue 
+    this->activation_queue_.enqueue
       (new Method_Object_work (this, newparam, newcount, new_future));
     return new_future;
   }

@@ -108,7 +108,7 @@ producer (void *args)
       mb->wr_ptr (1);
       
       // Enqueue in priority order.
-      if (msg_queue->enqueue (mb) == -1)
+      if (msg_queue->enqueue_prio (mb) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "put_next"), 0);
     }
 

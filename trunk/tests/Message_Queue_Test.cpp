@@ -43,8 +43,8 @@ main (int, char *argv[])
 
       ACE_NEW_RETURN (entry, ACE_Message_Block (buffer, sizeof buffer), -1);
 
-      if (queue.enqueue (entry) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
+      if (queue.enqueue_prio (entry) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue_prio\n"), -1);
     }
   
   ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
