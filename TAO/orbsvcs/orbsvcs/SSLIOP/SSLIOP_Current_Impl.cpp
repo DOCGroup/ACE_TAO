@@ -109,6 +109,7 @@ TAO_SSLIOP_Current_Impl::get_attributes (
               // in the AttributeList.  Drop the length to its
               // previous value.
               // @@ Not exactly exception-safe.  C'est la vie.
+              ::X509_free (cert);
               attribute_list->length (j);
               continue;
             }
