@@ -2651,18 +2651,6 @@ ACE_OS::fopen (const char *filename, const char *mode)
   ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
 }
 
-ACE_INLINE int 
-ACE_OS::fprintf (FILE *fp, const char *format, ...)
-{
-  // ACE_TRACE ("ACE_OS::fprintf");
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vfprintf (fp, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-
 ACE_INLINE size_t 
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
@@ -2959,18 +2947,6 @@ ACE_OS::perror (const char *s)
 }
 
 ACE_INLINE int 
-ACE_OS::printf (const char *format, ...)
-{
-  // ACE_TRACE ("ACE_OS::printf");
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vprintf (format, ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-
-ACE_INLINE int 
 ACE_OS::puts (const char *s)
 {
   // ACE_TRACE ("ACE_OS::puts");
@@ -3232,18 +3208,6 @@ ACE_INLINE ACE_SignalHandler
 ACE_OS::signal (int signum, ACE_SignalHandler func)
 {
   return ::signal (signum, func);
-}
-
-ACE_INLINE int 
-ACE_OS::sprintf (char *buf, const char *format, ...)
-{
-  // ACE_TRACE ("ACE_OS::sprintf");
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vsprintf (buf, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
 }
 
 ACE_INLINE int 
@@ -5468,45 +5432,6 @@ ACE_OS::execvp (const char *file, char *const argv[])
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE int 
-ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
-{
-  // ACE_TRACE ("ACE_OS::execl");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_NOTSUP_RETURN (-1);
-  // Need to write this code.
-  // ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int 
-ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
-{
-  // ACE_TRACE ("ACE_OS::execle");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_NOTSUP_RETURN (-1);
-  // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
-#endif /* ACE_WIN32 */
-}
-
-ACE_INLINE int 
-ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
-{
-  // ACE_TRACE ("ACE_OS::execlp");
-#if defined (ACE_WIN32) || defined (VXWORKS)
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_NOTSUP_RETURN (-1);
-  // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
-#endif /* ACE_WIN32 */
-}
-
 ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 {
@@ -6064,18 +5989,6 @@ ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
 {
   // ACE_TRACE ("ACE_OS::dlopen");
   ACE_OSCALL_RETURN (::LoadLibraryW (filename), void *, 0);
-}
-
-ACE_INLINE int 
-ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
-{
-  // ACE_TRACE ("ACE_OS::sprintf");
-  int result;
-  va_list ap;
-  va_start (ap, format);
-  ACE_OSCALL (::vswprintf (buf, format, ap), int, -1, result);
-  va_end (ap);
-  return result;
 }
 
 ACE_INLINE wchar_t *
