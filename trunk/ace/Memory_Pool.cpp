@@ -12,6 +12,7 @@
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 #include "ace/Based_Pointer_T.h"
+#include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
 ACE_RCSID(ace, Memory_Pool, "$Id$")
@@ -377,7 +378,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
                                                             int guess_on_fault,
                                                             LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (base_addr),
-    use_fixed_addr_ (use_fixed_addr),
+    use_fixed_addr_ (base_addr == 0 ? 0 : use_fixed_addr),
     write_each_page_ (write_each_page),
     minimum_bytes_ (minimum_bytes),
     flags_ (flags),
@@ -385,7 +386,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
     sa_ (sa)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
-// HP-UX 11, 64-bit bug workaround.
+  // HP-UX 11, 64-bit bug workaround.
 #if defined (__hpux) && defined (__LP64__)
   long temp = ACE_DEFAULT_BASE_ADDRL;
   base_addr_ = (void *) temp;
