@@ -106,7 +106,7 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation "Pair_T.cpp"
+#pragma implementation ("Pair_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_PAIR_T_H */
