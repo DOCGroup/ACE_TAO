@@ -35,10 +35,8 @@ class be_visitor_valuetype_cs : public be_visitor_valuetype
   //
 public:
   be_visitor_valuetype_cs (be_visitor_context *ctx);
-  // constructor
 
   ~be_visitor_valuetype_cs (void);
-  // destructor
 
   virtual int is_amh_exception_holder (be_valuetype *node);
   // Test if valuetype is an AMH ExceptionHolder.  Special generation
@@ -46,7 +44,10 @@ public:
   // ExceptionHolder
 
   virtual int visit_valuetype (be_valuetype *node);
-  // set the right context and make a visitor
+  // Set the right context and make a visitor.l
+
+  virtual int visit_operation (be_operation *node);
+  // Called only by AMH exceptions.
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CS_H_ */
