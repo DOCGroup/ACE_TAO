@@ -1,3 +1,7 @@
+Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
+
+	* TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
+
 Mon Feb 23 21:30:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/Makefile: added the g++ options that were picked up
