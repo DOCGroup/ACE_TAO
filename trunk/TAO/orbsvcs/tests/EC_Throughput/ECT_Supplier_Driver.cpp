@@ -199,7 +199,17 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       this->disconnect_suppliers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
+
       // @@ Deactivate the suppliers (as CORBA Objects?)
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "orb and poa destroyed\n"));
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -256,6 +266,9 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
     {
       this->suppliers_[i]->disconnect (ACE_TRY_ENV);
       ACE_CHECK;
+
+      delete this->suppliers_[i];
+      this->suppliers_[i] = 0;
     }
 }
 
