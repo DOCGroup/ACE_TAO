@@ -1,31 +1,36 @@
+Sat Jun 10 11:23:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * rules.tao.GNU:
+          Disable ami with old versions of g++.
+
 Fri Jun 09 21:38:12 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (ObjectId_to_wstring): Carlos's change wasn't quite
-	  accurate since over-allocating can cause problems, e.g., id
-	  contains A0B0; result will be "A0B0??\0?"; though it should be
-	  "A0B0\0?".  This was fixed by only creating/using the extra
-	  space when needed.  The need for the extra space was determined
-	  by using % (modulus) rather than ceil().  Thanks for the help
-	  Carlos.
+        * tao/POA.cpp (ObjectId_to_wstring): Carlos's change wasn't quite
+          accurate since over-allocating can cause problems, e.g., id
+          contains A0B0; result will be "A0B0??\0?"; though it should be
+          "A0B0\0?".  This was fixed by only creating/using the extra
+          space when needed.  The need for the extra space was determined
+          by using % (modulus) rather than ceil().  Thanks for the help
+          Carlos.
 
 Fri Jun  9 19:06:10 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RT_Policy_i.{h,cpp}:
-	  Fixed several incorrect ACE_THROW_SPECs.  Thanks to Darrell for
-	  detecting these.
+        * tao/RT_Policy_i.{h,cpp}:
+          Fixed several incorrect ACE_THROW_SPECs.  Thanks to Darrell for
+          detecting these.
 
 Fri Jun  9 15:20:11 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.cpp (location_forward):
+        * tao/Invocation.cpp (location_forward):
 
-	  Do not copy the TAO_MProfile passed to
-	  TAO_Stub::add_forward_profiles() since that method already
-	  copies it.  This fixes a memory leak.
-	  Reported by Sangwoo Jin <swjinjin@sei.co.kr>
+          Do not copy the TAO_MProfile passed to
+          TAO_Stub::add_forward_profiles() since that method already
+          copies it.  This fixes a memory leak.
+          Reported by Sangwoo Jin <swjinjin@sei.co.kr>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i (disconnect):
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Fri Jun 09 15:45:01 2000  David L. Levine  <levine@cs.wustl.edu>
 
