@@ -1,3 +1,13 @@
+Fri Dec 20 13:47:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile: Too much of cut
+	  and paste. Fixed places where BIN was assigned something
+	  arbitrary. 
+
 Thu Dec 19 13:45:50 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_global.cpp:
