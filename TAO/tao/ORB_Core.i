@@ -14,10 +14,16 @@ TAO_ORB_Core::reactor (ACE_Reactor *r)
   return old_reactor;
 }
 
-ACE_INLINE ACE_Reactor*
+ACE_INLINE ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
   return TAO_OC_RETRIEVE (reactor);
+}
+
+ACE_INLINE TAO_Object_Adapter *
+TAO_ORB_Core::object_adapter (void)
+{
+  return this->resource_factory ()->object_adapter ();
 }
 
 ACE_INLINE ACE_Thread_Manager *

@@ -50,13 +50,11 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  TAO_POA_Manager (void);
+  virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  virtual TAO_POA_Manager *clone (void);
+  TAO_POA_Manager (ACE_Lock &lock);
 
   virtual ~TAO_POA_Manager (void);
-
-  virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 protected:
 
@@ -74,29 +72,19 @@ protected:
                              CORBA::Boolean wait_for_completion,
                              CORBA_Environment &ACE_TRY_ENV);
 
+  virtual PortableServer::POAManager::State get_state_i ();
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   virtual ACE_Lock &lock (void);
 
-  virtual void remove_poa (TAO_POA *poa,
-                           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual int remove_poa (TAO_POA *poa);
 
-  virtual void remove_poa_i (TAO_POA *poa,
-                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void register_poa (TAO_POA *poa,
-                             CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void register_poa_i (TAO_POA *poa,
-                               CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
-
-  virtual void destroy (void);
+  virtual int register_poa (TAO_POA *poa);
 
   PortableServer::POAManager::State state_;
 
-  int closing_down_;
-
-  ACE_Lock *lock_;
+  ACE_Lock &lock_;
 
   typedef ACE_Unbounded_Set<TAO_POA *> POA_COLLECTION;
 
