@@ -1,3 +1,9 @@
+Wed Jul  2 13:16:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-doxygen.h:
+          Added define of __ACE_INLINE__ so that inlining will be turned
+          on in order to help identify unwanted inter-header dependencies.
+
 Tue Jul  1 20:47:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_limits.h:
@@ -421,7 +427,7 @@ Tue Jun 24 15:15:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Tue Jun 24 14:40:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/String_Base.i:
-          Added include of Min_Max.h>  Thanks to Olli Savia <ops@iki.fi>
+          Added include of Min_Max.h.  Thanks to Olli Savia <ops@iki.fi>
           for reporting this and supplying the fix.
 
         * ace/config-lynxos.h:
