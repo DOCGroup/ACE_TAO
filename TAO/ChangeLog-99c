@@ -8,6 +8,9 @@ Fri Dec 17 15:44:13 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  for providing his best guess on a scoping and name
 	  resolution case not explicitly covered by the spec.
 
+	* tests/ IDL_Test/interface.idl:
+	  Added above example to the test suite.
+
 Fri Dec 17 15:39:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/pluggable_protocols/index.html:
