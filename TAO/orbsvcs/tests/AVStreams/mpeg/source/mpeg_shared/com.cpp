@@ -40,7 +40,7 @@
 #include <sys/un.h>
 #include <time.h>
 #include <sys/time.h>
-#include "../include/common.h"
+#include "common.h"
 #include "fileio.h"
 #include "routine.h"
 #include "com.h"
