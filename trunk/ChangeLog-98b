@@ -12,6 +12,10 @@ Fri Nov 20 11:15:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_sunos5_g++.GNU: added support
           for threads=0.
 
+        * ace/OS.cpp (thr_create): added static cast of PTHREAD_STACK_MIN
+          to size_t, to avoid signed/unsigned comparison on
+          g++ 2.7.2.3/Solaris86 2.6.
+
 Thu Nov 19 23:04:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Functor.h (ACE_Command_Base): Added missing ACE_Export.
