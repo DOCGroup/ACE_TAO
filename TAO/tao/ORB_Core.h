@@ -23,6 +23,7 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
+#include "TAO/POAC.h"
 
 class TAO_Client_Connection_Handler;
 class TAO_POA;
