@@ -77,7 +77,7 @@ ACE::HTBP::Environment::open_registry_config ()
 #if defined (ACE_WIN32)
   HKEY root =
     ACE_Configuration_Win32Registry::resolve_key
-    (HKEY_LOCAL_MACHINE,"Software\\HTBP\\Environment");
+    (HKEY_LOCAL_MACHINE,ACE_TEXT("Software\\HTBP\\Environment"));
 
   ACE_NEW_RETURN (this->config_,
                   ACE_Configuration_Win32Registry (root),
