@@ -10,6 +10,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Stats.h"
 
 #if !defined(EC_DISABLE_OLD_EC)
 #include "EC_Scheduler_Info.h"
@@ -759,34 +760,32 @@ EC_Driver::shutdown_consumers (CORBA::Environment &ACE_TRY_ENV)
 void
 EC_Driver::dump_results (void)
 {
-  EC_Driver::Throughput_Stats throughput;
-  EC_Driver::Latency_Stats latency;
+  ACE_Throughput_Stats throughput;
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+  char buf[BUFSIZ];
   for (int j = 0; j < this->n_consumers_; ++j)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02.2d", j);
+      ACE_OS::sprintf (buf, "Consumer [%02.2d]", j);
 
-      this->consumers_[j]->dump_results (buf);
-      this->consumers_[j]->accumulate (throughput, latency);
+      this->consumers_[j]->dump_results (buf, gsf);
+      this->consumers_[j]->accumulate (throughput);
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
 
-  EC_Driver::Throughput_Stats suppliers;
+  ACE_Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "supplier_%02.2d", i);
+      ACE_OS::sprintf (buf, "Supplier [%02.2d]", i);
 
-      this->suppliers_[i]->dump_results (buf);
+      this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (suppliers);
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
-  throughput.dump_results ("EC_Consumer", "throughput");
-  latency.dump_results ("EC_Consumer", "latency");
+  throughput.dump_results ("EC_Consumer/totals", gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  suppliers.dump_results ("EC_Supplier", "accumulated");
+  suppliers.dump_results ("EC_Supplier/totals", gsf);
 }
 
 int
@@ -1124,109 +1123,4 @@ void
 EC_Driver::supplier_disconnect (void*,
                                 CORBA::Environment&)
 {
-}
-
-// ****************************************************************
-
-void
-EC_Driver::Latency_Stats::dump_results (const char *test_name,
-                                        const char *sub_test)
-{
-  if (this->n_ <= 1)
-    return;
-
-  ACE_hrtime_t avg = this->sum_ / this->n_;
-  ACE_hrtime_t dev =
-    this->sum2_ / this->n_ - avg*avg;
-
-  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-
-  double min_usec = ACE_CU64_TO_CU32 (this->min_) / gsf;
-  double max_usec = ACE_CU64_TO_CU32 (this->max_) / gsf;
-  double avg_usec = ACE_CU64_TO_CU32 (avg) / gsf;
-  double dev_usec = ACE_CU64_TO_CU32 (dev) / (gsf * gsf);
-  ACE_DEBUG ((LM_DEBUG,
-              "%s/%s: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2) [usecs]\n",
-              test_name, sub_test,
-              min_usec, avg_usec, max_usec, dev_usec));
-}
-
-void
-EC_Driver::Latency_Stats::accumulate (const Latency_Stats& rhs)
-{
-  if (rhs.n_ == 0)
-    return;
-
-  if (this->n_ == 0)
-    {
-      *this = rhs;
-      return;
-    }
-
-  if (this->min_ > rhs.min_)
-    this->min_ = rhs.min_;
-  if (this->max_ < rhs.max_)
-    this->max_ = rhs.max_;
-
-  this->sum_ += rhs.sum_;
-  this->sum2_ += rhs.sum2_;
-  this->n_ += rhs.n_;
-}
-
-// ****************************************************************
-
-void
-EC_Driver::Throughput_Stats::accumulate (const Throughput_Stats& rhs)
-{
-  if (!this->done_)
-    {
-      this->done_ = 1;
-      this->start_ = rhs.start_;
-      this->stop_ = rhs.stop_;
-      this->n_ = rhs.n_;
-      return;
-    }
-
-  if (this->start_ > rhs.start_)
-    this->start_ = rhs.start_;
-
-  if (this->stop_ < rhs.stop_)
-    this->stop_ = rhs.stop_;
-
-  this->n_ += rhs.n_;
-}
-
-void
-EC_Driver::Throughput_Stats::dump_results (const char *test_name,
-                                           const char *subtest)
-{
-  if (this->n_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s/%s: no events recorded\n",
-                  test_name, subtest));
-      return;
-    }
-
-  if (this->done_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%s/%s: incomplete data,"
-                  " potentially skewed results\n",
-                  test_name, subtest));
-    }
-
-  ACE_Time_Value tv;
-  ACE_High_Res_Timer::hrtime_to_tv (tv, this->stop_ - this->start_);
-
-  double f = 1.0/(tv.sec () + tv.usec () / 1000000.0);
-  double events_per_second = this->n_ * f;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "%s/%s: "
-              "%d / %d.%06.6d = %.3f events/second\n",
-              test_name, subtest,
-              this->n_,
-              tv.sec (), tv.usec (),
-              events_per_second));
 }

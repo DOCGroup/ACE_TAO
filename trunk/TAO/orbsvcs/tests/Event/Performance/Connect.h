@@ -74,10 +74,11 @@ public:
   virtual void disconnect_clients (CORBA::Environment&);
 
 private:
-  EC_Driver::Latency_Stats consumer_connect_;
-  EC_Driver::Latency_Stats supplier_connect_;
-  EC_Driver::Latency_Stats consumer_disconnect_;
-  EC_Driver::Latency_Stats supplier_disconnect_;
+  ACE_hrtime_t start_time_;
+  ACE_Throughput_Stats consumer_connect_;
+  ACE_Throughput_Stats supplier_connect_;
+  ACE_Throughput_Stats consumer_disconnect_;
+  ACE_Throughput_Stats supplier_disconnect_;
 
   int order_;
   // What is connected first?
@@ -99,10 +100,11 @@ public:
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type,
       CORBA::Environment &ACE_TRY_ENV);
-  virtual void dump_results (const char* name);
+  virtual void dump_results (const char* name,
+                             ACE_UINT32 global_scale_factor);
 
 private:
-  EC_Driver::Latency_Stats connect_time_;
+  ACE_Throughput_Stats connect_time_;
 };
 
 // ****************************************************************
@@ -121,10 +123,11 @@ public:
       const RtecEventChannelAdmin::SupplierQOS& qos,
       int shutdown_event_type,
       CORBA::Environment &ACE_TRY_ENV);
-  virtual void dump_results (const char* name);
+  virtual void dump_results (const char* name,
+                             ACE_UINT32 global_scale_factor);
 
 private:
-  EC_Driver::Latency_Stats connect_time_;
+  ACE_Throughput_Stats connect_time_;
 };
 
 #endif /* EC_CONNECT_H */
