@@ -1,3 +1,10 @@
+Fri Feb 14 09:53:43 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-osf1-4.0.h: Tru64 lacks the clearerr
+          function when built without threads (thread=0).
+          Thanks to Abhay Kulkarni <Abhay.Kulkarni@veritas.com> 
+          for reporting the problem.
+
 Thu Feb 13 17:50:07 2003  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * include/makeinclude/rules.lib.GNU: Build static libraries
