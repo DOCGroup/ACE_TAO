@@ -1,6 +1,6 @@
 Mon Dec 22 20:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-        * TAO/orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/Makefile.av:
           Modified this makefile to explicitly include wrapper_macros.GNU,
           etc., so it can test for rapi and sctp and include additional
           files in LSRC if either is defined.  Thanks to Craig Rodrigues
