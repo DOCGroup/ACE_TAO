@@ -87,13 +87,13 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     this->create_exception_holder (node);
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
-  module->be_add_interface (excep_holder, node);
   module->set_has_nested_valuetype ();
 
   // Remember from whom we were cloned
 
   // Create the ResponseHandler class
-  be_interface *response_handler = this->create_response_handler (node);
+  be_interface *response_handler =
+    this->create_response_handler (node, excep_holder);
   if (response_handler == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -110,13 +110,17 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   // Remember from whom we were cloned
   response_handler->original_interface (node);
 
+  // Add the ExceptionHolder after the ResponseHandler, seems to
+  // generate the code in the right order....
+  module->be_add_interface (excep_holder, node);
 
   return 0;
 }
 
 
 be_interface *
-be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
+be_visitor_amh_pre_proc::create_response_handler (be_interface *node,
+                                                  be_valuetype *exception_holder)
 {
   // Generate 'AMH_InterfaceResponseHandler'
   ACE_CString class_name;
@@ -150,7 +154,7 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
   response_handler->set_line (node->line ());
   response_handler->set_file_name (node->file_name ());
 
-  this->add_rh_node_members (node, response_handler);
+  this->add_rh_node_members (node, response_handler, exception_holder);
 
   return response_handler;
 }
@@ -158,7 +162,8 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
 
 int
 be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
-                                               be_interface *response_handler)
+                                               be_interface *response_handler,
+                                               be_valuetype *exception_holder)
 {
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
@@ -196,7 +201,8 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
           if (operation)
             {
               this->create_response_handler_operation (operation,
-                                                       response_handler);
+                                                       response_handler,
+                                                       exception_holder);
             }
         }
     }
@@ -206,20 +212,67 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
 
 int
 be_visitor_amh_pre_proc::create_response_handler_operation (be_operation *node,
-                                                            be_interface *response_handler
-                                                            )
+                                                            be_interface *response_handler,
+                                                            be_valuetype *exception_holder)
 {
   if (!node)
     {
       return -1;
     }
 
+  // @@ Mayur, we do want to generate code for oneways!  This is
+  // needed to support reliable oneways with the SYNC_WITH_TARGET
+  // policy.
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!
       return 0;
     }
 
+  if (this->add_normal_reply (node, response_handler) == -1)
+    return -1;
+
+  return this->add_exception_reply (node, response_handler, exception_holder);
+}
+
+int
+be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
+                                              be_interface *response_handler,
+                                              be_valuetype *exception_holder)
+{
+  // Create the return type, which is "void"
+  be_predefined_type *rt =
+    new be_predefined_type (AST_PredefinedType::PT_void,
+                            new UTL_ScopedName (new Identifier ("void"),
+                                                0));
+
+  // Create the name...
+  UTL_ScopedName *operation_name =
+    node->compute_name ("", "_excep");
+
+  be_operation *node_excep;
+  ACE_NEW_RETURN (node_excep,
+                  be_operation (rt, AST_Operation::OP_noflags,
+                                operation_name, 1, 0),
+                  -1);
+
+  be_argument *argument =
+    new be_argument (AST_Argument::dir_IN,
+                     exception_holder,
+                     new UTL_ScopedName (new Identifier ("holder"), 0));
+  argument->set_defined_in (node_excep);
+  node_excep->add_argument_to_scope (argument);
+
+  node_excep->set_defined_in (response_handler);
+  response_handler->be_add_operation (node_excep);
+
+  return 0;
+}
+
+int
+be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
+                                           be_interface *response_handler)
+{
   // Create the return type, which is "void"
   be_predefined_type *rt =
     new be_predefined_type (AST_PredefinedType::PT_void,
@@ -306,6 +359,9 @@ be_visitor_amh_pre_proc::create_response_handler_operation (be_operation *node,
 int
 be_visitor_amh_pre_proc::visit_operation (be_operation *node)
 {
+  // @@ Mayur, we do want to generate code for oneways!  This is
+  // needed to support reliable oneways with the SYNC_WITH_TARGET
+  // policy.
   // We do nothing for oneways!
   if (node->flags () == AST_Operation::OP_oneway)
     return 0;
@@ -465,20 +521,10 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   // "Messaging" module
   inherit_vt->set_defined_in (msg);
 
-  // Create the excpetion holder name
-  ACE_CString excep_holder_local_name;
-  this->generate_name (excep_holder_local_name,
-                       "AMH_",
-                       node->name ()->last_component ()->get_string(),
-                       "ExceptionHolder");
-
   UTL_ScopedName *excep_holder_name =
-    ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
-  excep_holder_name->last_component ()->replace_string (
-                                                        excep_holder_local_name.rep ()
-                                                        );
+    node->compute_name ("AMH_", "ExceptionHolder");
 
-  AST_Interface_ptr *p_intf = new AST_Interface_ptr[1];
+  AST_Interface **p_intf = new AST_Interface*[1];
   p_intf[0] = ACE_static_cast (AST_Interface *, inherit_vt);
 
   be_valuetype *excep_holder =
@@ -552,6 +598,9 @@ be_visitor_amh_pre_proc::create_raise_operation (be_decl *node,
       orig_op = be_operation::narrow_from_decl (node);
       if (orig_op)
         {
+          // @@ Mayur, we do want to generate code for oneways!  This is
+          // needed to support reliable oneways with the SYNC_WITH_TARGET
+          // policy, the user can raise system exceptions here.
           if (orig_op->flags () == AST_Operation::OP_oneway)
             // We do nothing for oneways!
             return 0;
