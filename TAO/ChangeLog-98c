@@ -1,3 +1,16 @@
+Thu Oct 16 11:15:00 1997  Brian R. Mendel <brian.r.mendel@boeing.com>
+
+        * tao/server_factory.cpp: Added instantiation pragma for VxWorks for
+          ACE_Acceptor.  Added the template to the specialization section, also.
+        
+        * tao/orbobj.cpp: Added instantiation pragma for VxWorks for
+          ACE_Cached_Connect_Strategy and ACE_Hash_Map_Manager for 
+          ACE_Null_Mutex instantiations.  Also, added these to the template
+          specialization sections.
+
+        * tests/Cubit/Build/default.bld: Added TAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+          to defines section of GHS build file.
+
 Tue Oct 14 21:11:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/xdr.h: Changed int _fd to ACE_HANDLE _fd to work on NT.
