@@ -6,18 +6,16 @@
 #include "ace/Cache_Hash_T.h"
 #include "ace/Hash_Bucket_T.h"
 
-ACE_RCSID(ace, Cache_Hash_T, "$Id$")
-
-template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> u_long
+template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> unsigned long
 ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::hash (const EXT_ID &ext_id) const
 {
   return HASH_FUNC (ext_id) % this->size_;
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (u_long number) const
+ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (unsigned long number) const
 {
-  u_long d = 3;
+  unsigned long d = 3;
 
   if (number <= 2) return (number == 2);
 
@@ -63,16 +61,19 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::ACE_Cache_Hash (ACE_Allocator *alloc,
 
   size_t memsize = this->size_ * sizeof (CACHE_BUCKET_MANAGER *);
 
-  // @@ James, can you please use the right ACE_* allocation macro here?
   this->hashtable_
     = (CACHE_BUCKET_MANAGER **) this->allocator_->malloc (memsize);
 
   if (this->hashtable_)
-    for (size_t i = 0; i < this->size_; i++)
-      this->hashtable_[i] = 0;
+    {
+      for (size_t i = 0; i < this->size_; i++)
+        this->hashtable_[i] = 0;
+    }
   else
-    // should indicate something is wrong to the user.
-    this->size_ = 0;
+    {
+      this->size_ = 0;
+      // should indicate something is wrong to the user.
+    }
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
@@ -81,13 +82,14 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~ACE_Cache_Hash (void)
   if (this->hashtable_)
     {
       for (size_t i = 0; i < this->size_; i++)
-        if (this->hashtable_[i])
-          {
-            ACE_DES_FREE (this->hashtable_[i], this->allocator_->free,
-                          CACHE_BUCKET_MANAGER);
-            this->hashtable_[i] = 0;
-          }
-
+        {
+          if (this->hashtable_[i])
+            {
+              ACE_DES_FREE (this->hashtable_[i], this->allocator_->free,
+                            CACHE_BUCKET_MANAGER);
+              this->hashtable_[i] = 0;
+            }
+        }
       this->allocator_->free (this->hashtable_);
       this->hashtable_ = 0;
     }
@@ -98,7 +100,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~ACE_Cache_Hash (void)
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id) const
 {
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     return -1;
@@ -110,7 +112,7 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::find (const EXT_ID &ext_id,
                                                 ACE_Cache_Object *&int_id) const
 {
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     return -1;
@@ -123,7 +125,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
                                                 ACE_Cache_Object *const &int_id)
 {
   int result;
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     {
@@ -145,7 +147,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
                                                    ACE_Cache_Object *&int_id)
 {
   int result;
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     {
@@ -169,7 +171,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
                                                   ACE_Cache_Object *&old_int_id)
 {
   int result;
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     {
@@ -192,7 +194,7 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id)
 {
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     return -1;
@@ -204,7 +206,7 @@ template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
                                                   ACE_Cache_Object *&int_id)
 {
-  u_long hash_idx = this->hash (ext_id);
+  unsigned long hash_idx = this->hash (ext_id);
 
   if (this->hashtable_[hash_idx] == 0)
     return -1;
@@ -218,5 +220,8 @@ ACE_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
 {
   return this->size_;
 }
+
+
+
 
 #endif /* UTL_CACHEHASH_T_CPP */

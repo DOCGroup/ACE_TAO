@@ -1,8 +1,8 @@
 /* -*- c++ -*- */
 // $Id$
 
-#ifndef ACE_CACHE_HEAP_T_H
-#define ACE_CACHE_HEAP_T_H
+#ifndef ACE_CACHE_LIST_T_H
+#define ACE_CACHE_LIST_T_H
 
 #include "ace/Malloc.h"
 #include "ace/Cache_Object.h"
@@ -12,24 +12,27 @@ template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class ACE_Cache_Manager;
 
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-class ACE_Cache_Heap_Item;
+class ACE_Cache_List_Item;
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_Heap
+class ACE_Cache_List
 // Roll my own heap here.  Eventually, a heap should be its own
 // standalone data structure.
+//
+// This version is not a heap, but a doubly linked list.  We are
+// trying to simplify all the heap operations to be O(1).
 {
 public:
 
   typedef ACE_Cache_Manager<EXT_ID, FACT, H_FN, E_FN> Cache_Manager;
-  typedef ACE_Cache_Heap_Item<EXT_ID, FACT, H_FN, E_FN> Cache_Heap_Item;
+  typedef ACE_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN> Cache_List_Item;
 
-  ACE_Cache_Heap (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
+  ACE_Cache_List (ACE_Allocator *alloc = 0, size_t maxsize = 8192);
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~ACE_Cache_Heap (void);
+  ~ACE_Cache_List (void);
 
   int is_empty (void) const;
   int is_full (void) const;
@@ -48,17 +51,17 @@ public:
   // attempt to remove the top element of heap.
 
   int remove (void *item);
-  // treat item as a Cache_Heap_Item, and remove it from the heap
+  // treat item as a Cache_List_Item, and remove it from the heap
 
   int adjust (void *item);
-  // treat item as a Cache_Heap_Item, and alter its heap position
+  // treat item as a Cache_List_Item, and alter its heap position
 
 protected:
 
-  void insert_i (Cache_Heap_Item *item);
+  void insert_i (Cache_List_Item *item);
   // insert item into heap.
 
-  void remove_i (size_t pos);
+  void remove_i (Cache_List_Item *item);
   // remove the element residing at pos, but do not delete it.
 
   void remove_i (void);
@@ -71,20 +74,25 @@ private:
   size_t maxsize_;
   size_t size_;
 
-  Cache_Heap_Item **heap_;
+  Cache_List_Item *item_;
+
+  Cache_List_Item *head_;
+  Cache_List_Item *tail_;
 
 };
 
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
-class ACE_Cache_Heap_Item
+class ACE_Cache_List_Item
 {
 
-  friend class ACE_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
+  friend class ACE_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
 
-  ACE_Cache_Heap_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
+  typedef ACE_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
+
+  ACE_Cache_List_Item (const EXT_ID &ext_id, ACE_Cache_Object *const &int_id);
   unsigned int priority (void);
 
 private:
@@ -92,12 +100,12 @@ private:
   EXT_ID ext_id_;
   ACE_Cache_Object *int_id_;
 
-  size_t heap_idx_;
-
+  ACE_Cache_List_Item *next_;
+  ACE_Cache_List_Item *prev_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Cache_Heap_T.cpp"
+#include "ace/Cache_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-#endif /* ACE_CACHE_HEAP_T_H */
+#endif /* ACE_CACHE_LIST_T_H */

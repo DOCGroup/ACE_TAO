@@ -1,24 +1,15 @@
 /* -*- c++ -*- */
 // $Id$
 
-// @@ James, please add a standard "header" here like you see in all
-// the other ACE headerfiles.
-
 #ifndef ACE_CACHE_HASH_T_H
 #define ACE_CACHE_HASH_T_H
 
 #include "ace/OS.h"
-
-// @@ James, I think that this #include is wrong...
 #include "ace/Cache_Object.h"
 
 // Forward declaration
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 class ACE_Hash_Bucket_Manager;
-
-// @@ James, can you please update ALL of these classes and methods to
-// use the standard ACE commenting style, i.e., add = TITLE and =
-// DESCRIPTION headers and comments for each method.
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
 class ACE_Cache_Hash
@@ -49,8 +40,8 @@ public:
 
 protected:
 
-  virtual u_long hash (const EXT_ID &ext_id) const;
-  int isprime (u_long number) const;
+  virtual unsigned long hash (const EXT_ID &ext_id) const;
+  int isprime (unsigned long number) const;
   int new_cachebucket (size_t idx);
 
 private:
@@ -62,10 +53,6 @@ private:
   CACHE_BUCKET_MANAGER **hashtable_;
 
 };
-
-// @@ James, please also make sure that you add the 
-// #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-// stuff as well... (see other template files to see how this works).
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cache_Hash_T.cpp"

@@ -6,8 +6,9 @@
 #include "ace/Cache_Manager_T.h"
 #include "ace/Cache_Hash_T.h"
 #include "ace/Cache_Heap_T.h"
+#include "ace/Cache_List_T.h"
 
-ACE_RCSID(ace, Cache_Manager_T, "$Id$")
+#include <iostream.h>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -39,8 +40,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (this->lowwater_ > this->highwater_)
     this->lowwater_ = this->highwater_ / 2;
 
-  // @@ James, please don't use "magic numbers" like 1024.  Make sure
-  // you use the same symbolic constants as the other places...
   if (this->maxobjsize_ > (this->highwater_ - this->lowwater_) * 1024)
     this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
 
@@ -57,8 +56,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                   (Cache_Hash *)
                   this->allocator_->malloc (sizeof (Cache_Hash)),
                   Cache_Hash (alloc, hashsize));
-  // @@ James, please check the ACE_NEW_MALLOC macro -- it should do
-  // this check and bailout if this->hash_ == 0...
 
   if (this->hash_ == 0)
     {
@@ -71,9 +68,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                   this->allocator_->malloc (sizeof (Cache_Heap)),
                   Cache_Heap (alloc, maxsize));
 
-  // @@ James, please check the ACE_NEW_MALLOC macro -- it should do
-  // this check and bailout if this->hash_ == 0...
-
   if (this->heap_ == 0)
     {
       this->maxsize_ = 0;
@@ -83,6 +77,7 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       this->hashsize_ = 0;
     }
 }
+
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -127,7 +122,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (this->factory_ == 0)
     this->factory_ = Object_Factory::instance ();
 
-  // @@ James, please use the ACE_NEW_MALLOC_RETURN macro here.
   this->hash_ = (Cache_Hash *) this->allocator_->malloc (sizeof (Cache_Hash));
   if (this->hash_ == 0)
     {
@@ -136,13 +130,9 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
       return -1;
     }
-
-  // @@ James, please use the ACE_NEW_*_RETURN macro here.
   new (this->hash_) Cache_Hash (alloc, hashsize);
 
-  // @@ James, please use the ACE_NEW_MALLOC_RETURN macro here.
   this->heap_ = (Cache_Heap *) this->allocator_->malloc (sizeof (Cache_Heap));
-
   if (this->heap_ == 0)
     {
       errno = ENOMEM;
@@ -154,8 +144,6 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
       return -1;
     }
-
-  // @@ James, please use the ACE_NEW_*_RETURN macro here.
   new (this->heap_) Cache_Heap (alloc, maxsize);
 
   return 0;
@@ -208,26 +196,54 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 {
   int result = 0;
 
-  this->FLUSH_i (key);
+  if (data == 0)
+    {
+      this->FLUSH_i (key);
+      obj = 0;
+      return 0;
+    }
 
   result = this->MAKE (data, size, obj);
   if (result == -1)
-    return -1;
+    {
+      cerr << "MAKE failed.  Bummer!" << endl;
+      return -1;
+    }
 
-  result = this->hash_->bind (key, obj);
+  obj->internal (new KEY (key));
+
+  KEY old_key;
+  ACE_Cache_Object *old_obj;
+
+  result = this->hash_->rebind (key, obj, old_key, old_obj);
   if (result == -1)
     {
+      cerr << "*** hash bind error: " << key << endl;
+      obj->release ();
       this->DROP_i (obj);
       return -1;
+    }
+  else if (result == 1)
+    {
+      this->heap_->remove (old_obj->heap_item ());
+      this->waterlevel_ -= old_obj->size ();
+      old_obj->release ();
+      this->DROP_i (old_obj);
     }
 
   result = this->heap_->insert (key, obj);
   if (result == -1)
     {
+      cerr << "*** heap insertion error: " << key << endl;
       this->hash_->unbind (key);
+      obj->release ();
       this->DROP_i (obj);
       return -1;
     }
+
+#ifdef ENTERA_VERBOSE_TRACE
+  cerr << "*** bound: " << key << endl;
+#endif
 
   this->waterlevel_ += size;
 
@@ -243,13 +259,20 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 {
   ACE_Cache_Object *temp_object;
 
+#ifdef ENTERA_VERBOSE_TRACE
+  cerr << "*** flush key unbinding: " << key << endl;
+#endif
   int result = this->hash_->unbind (key, temp_object);
   if (result == 0)
     {
       this->waterlevel_ -= temp_object->size ();
-      this->heap_->remove (temp_object->heap_item ());
+      if (this->heap_->remove (temp_object->heap_item ()) == -1)
+        cerr << "*** flush key heap remove failed: " << endl;
+      temp_object->release ();
       this->DROP_i (temp_object);
     }
+  else
+    cerr << "*** flush key hash unbind failed: " << key << endl;
 
   return result;
 }
@@ -264,9 +287,20 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   int result = this->heap_->remove (temp_key, temp_object);
   if (result == 0)
     {
+#ifdef ENTERA_VERBOSE_TRACE
+      cerr << "*** flush unbinding: " << temp_key << endl;
+#endif
       result = this->hash_->unbind (temp_key);
+      if (result == -1)
+        cerr << "*** flush hash unbind failed: " << temp_key << endl;
+      result = 0;
       this->waterlevel_ -= temp_object->size ();
+      temp_object->release ();
       this->DROP_i (temp_object);
+    }
+  else
+    {
+      cerr << "*** flush heap remove failed" << endl;
     }
 
   return result;
@@ -274,14 +308,17 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::DROP_i (ACE_Cache_Object *const &obj)
+::DROP_i (ACE_Cache_Object *&obj)
 {
-  int result = obj->release ();
+  int result = 0;
 
-  if (result == 0)
+  if (obj->count () == 0)
     {
-      if (obj->count () == 0)
-        this->factory_->destroy (obj);
+      KEY *key = (KEY *) obj->internal ();
+      this->factory_->destroy (obj);
+      delete key;
+      obj = 0;
+      result = 1;
     }
   else
     result = this->heap_->adjust (obj->heap_item ());
@@ -312,24 +349,59 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::MAKE (const void *data, size_t size, ACE_Cache_Object *&obj)
 {
   // verify object is within cacheable range
-  // @@ James, please don't use these magic numbers...
-  if (size/1024 > this->maxobjsize_ || size/1024 < this->minobjsize_)
-    return -1;
+  if (size/1024 > this->maxobjsize_)
+    {
+#if 0
+      // What we do is cache it anyway, but remove it as soon as the
+      // requester returns it.
+      obj = this->factory_->create (data, size);
+      return 0;
+#else
+      // The above is a little tricky to implement.  Think about it
+      // some more.
+      cerr << "*** " << size << " is too large to cache" << endl;
+      return -1;
 
-  // make sure heap has enough room
-  if (this->heap_->is_full () && this->FLUSH_i () == -1)
-    return -1;
+#endif /* 0 */
+    }
+
+  if (size/1024 < this->minobjsize_)
+
+    {
+      // Don't bother to cache this.
+      cerr << "*** " << size << " is too small to cache" << endl;
+      return -1;
+    }
 
   // make sure we have sufficient memory
   if (this->waterlevel_ + size > this->highwater_ * (1024 * 1024))
-    do
+    {
+      do
+        {
+          if (this->FLUSH_i () == -1)
+            {
+              cerr << "*** cache flooded, flush error" << endl;
+              return -1;
+            }
+        }
+      while (this->waterlevel_ > this->lowwater_ * (1024 * 1024));
+    }
+
+  // make sure heap has enough room
+  if (this->heap_->is_full ())
+    {
+      cerr << "*** heap full, flushing" << endl;
       if (this->FLUSH_i () == -1)
-        return -1;
-    while (this->waterlevel_ > this->lowwater_ * (1024 * 1024));
+        {
+          cerr << "*** heap full, flush error" << endl;
+          return -1;
+        }
+    }
 
   obj = this->factory_->create (data, size);
   if (this->TAKE (obj) == -1)
     {
+      cerr << "*** take error" << endl;
       this->factory_->destroy (obj);
       obj = 0;
       return -1;
@@ -350,15 +422,65 @@ ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 ACE_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::DROP (ACE_Cache_Object *const &obj)
+::DROP (ACE_Cache_Object *&obj)
 {
   if (obj == 0)
     return -1;
 
+#if 0
+  if (obj->size ()/1024 > this->maxobjsize_)
+    {
+      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
+
+      int result = obj->release ();
+      if (result == 0)
+        {
+          if (obj->count () == 0)
+            {
+              KEY *key = (KEY *) obj->internal ();
+#ifdef ENTERA_VERBOSE_TRACE
+              cerr << "*** drop large unbinding: " << key << endl;
+#endif
+              result = this->hash_->unbind (*key);
+              if (result == 0)
+                {
+                  if (this->heap_->remove (obj->heap_item ()) == -1)
+                    cerr << "*** drop large heap remove failed: " << endl;
+                  this->factory_->destroy (obj);
+                  delete key;
+                  obj = 0;
+                  result = 1;
+                }
+              else
+                cerr << "*** drop large hash unbind failed: " << key << endl;
+            }
+        }
+      return result;
+    }
+#endif /* 0 */
+
   {
     ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
 
-    return this->DROP_i (obj);
+    int result = obj->release ();
+
+    if (result == 0)
+      {
+        if (obj->count () == 0)
+          {
+            KEY *key = (KEY *) obj->internal ();
+            this->factory_->destroy (obj);
+            delete key;
+            obj = 0;
+            result = 1;
+          }
+        else
+          {
+            result = this->DROP_i (obj);
+          }
+      }
+
+    return result;
   }
 }
 
@@ -404,14 +526,16 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 template <class KEY, class DATA, class CACHE_MANAGER>
 ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~ACE_Cache_Proxy (void)
 {
+  DATA *data = this->data ();
   this->manager_->DROP (this->object_);
-  this->object_ = 0;
+  if (this->object_ == 0)
+    this->close (data);
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
 ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data (void) const
 {
-  return (DATA *) this->object_->data ();
+  return this->object_ ? (DATA *) this->object_->data () : 0;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
@@ -419,5 +543,12 @@ ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
 {
   return this->data ();
 }
+
+template <class KEY, class DATA, class CACHE_MANAGER> int
+ACE_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
+{
+  return 0;
+}
+
 
 #endif /* ACE_CACHE_MANAGER_T_CPP */
