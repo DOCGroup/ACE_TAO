@@ -1,3 +1,9 @@
+Wed Mar  5 09:41:55 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* tao/Makefile.bor (OBJFILES): 
+
+	Fixed typo in file list.
+
 Wed Mar  5 09:07:02 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* tao/Transport.cpp (assign_translators): 
