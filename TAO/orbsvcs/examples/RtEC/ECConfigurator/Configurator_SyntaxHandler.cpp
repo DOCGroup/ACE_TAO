@@ -21,6 +21,7 @@
 
 Configurator_SyntaxHandler::Configurator_SyntaxHandler (void)
   : root(0)
+  , driver(0)
 {
   this->nametable.open();
   this->eventqostable.open();
@@ -69,10 +70,13 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
 
   // Visit Children
   //events
+  EventTypeVector* ev;
+  ACE_NEW_RETURN(ev,
+                 EventTypeVector,-1);
   EventVector::iterator eiter = vs->events.begin();
   for (; eiter != vs->events.end(); eiter++)
     {
-      (*eiter)->visit(this,NULL);
+      (*eiter)->visit(this,ev);
     }
 
   //timeouts
@@ -108,6 +112,7 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
   for(; keciter != this->kokyuECs.end(); ++keciter)
     {
       KokyuECVector::value_type kokyuEC = *keciter;
+      kokyuEC->setEventTypes(ev); //now it owns ev
 
       Gateway_Initializer *ginit;
       ACE_NEW_RETURN(ginit,
@@ -115,7 +120,7 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
       ginit->init(this->orb,this->poa,kokyuEC,this->driver,
                   kokyuEC->get_name(),remote_ior_files);
       ACE_Time_Value gateway_delay(5,000000);
-      long timer_id = this->orb->orb_core()->reactor()->schedule_timer(this->ginitv[0],0,gateway_delay);
+      long timer_id = this->driver->reactor()->schedule_timer(ginit,0,gateway_delay);
       if (timer_id < 0)
         {
           ACE_CString error("Could not schedule Gateway_Initializer timer for Local EC ");
@@ -144,7 +149,8 @@ int
 Configurator_SyntaxHandler::parseEvent (Event* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG(arg);
+  EventTypeVector* ev = static_cast<EventTypeVector*> (arg);
+  ACE_ASSERT(ev);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Event: %s\n"),vs->name.c_str()));
 
@@ -172,6 +178,7 @@ Configurator_SyntaxHandler::parseEvent (Event* vs, void* arg)
 
   // Set EventType
   schedinfo.type = vs->type;
+  ev->push_back(vs->type);
 
   // Since nametable was OK, eventqostable should be too
   this->eventqostable.bind(vs->name,schedinfo);
@@ -217,8 +224,7 @@ Configurator_SyntaxHandler::parseTimeout (Timeout* vs, void* arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Timeout: %s\n"),vs->name.c_str()));
 
-  if (!(vs->period
-        && vs->phase))
+  if (!vs->period)
     {
       ACE_CString error("Timeout has missing child: ");
       error += vs->name;
@@ -229,7 +235,8 @@ Configurator_SyntaxHandler::parseTimeout (Timeout* vs, void* arg)
 
   // Visit children
   vs->period->visit(this,&schedinfo);
-  vs->phase->visit(this,&schedinfo);
+  if (vs->phase)
+    vs->phase->visit(this,&schedinfo);
 
   // Since nametable was OK, eventqostable should be too
   this->timeoutqostable.bind(vs->name,schedinfo);
@@ -331,7 +338,7 @@ Configurator_SyntaxHandler::parseRemoteEventChannel (RemoteEventChannel* vs, voi
   Gateway_Initializer::FileNameVector *remote_ior_filenames =
     static_cast<Gateway_Initializer::FileNameVector*> (arg);
   ACE_ASSERT(remote_ior_filenames);
-  remote_ior_filenames->push_back(iorfilename.c_str());
+  remote_ior_filenames->push_back(iorfilename.rep()); //copies string
   /* TODO: for now, don't allow consumers and suppliers on remote EC
   // Set up remote EC
   RtEventChannelAdmin::RtSchedEventChannel_var remoteEC;
@@ -373,9 +380,9 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Consumer: %s\n"),vs->name.c_str()));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
 
-  if (!(vs->subscriptions
-        && vs->dependants))
+  if (!vs->subscriptions)
     {
       ACE_CString error("Consumer has missing child: ");
       error += vs->name;
@@ -386,9 +393,12 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   Kokyu_EC::QoSVector subs;
   vs->subscriptions->visit(this,&subs);
 
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
   SupplierVector dependants; //dependants push_back
-  vs->dependants->visit(this,&dependants);
+  if (vs->dependants)
+    vs->dependants->visit(this,&dependants);
 
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
   // Register Consumer
   /*
   RtEventChannelAdmin::RtSchedEventChannel *ec =
@@ -490,8 +500,7 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Supplier: %s\n"),vs->name.c_str()));
 
-  if (!(vs->publications
-        && vs->triggers))
+  if (!vs->publications)
     {
       ACE_CString error("Supplier has missing child: ");
       error += vs->publications ? "Triggers" : "Publications";
@@ -503,7 +512,8 @@ Configurator_SyntaxHandler::parseSupplier (Supplier* vs, void* arg)
   vs->publications->visit(this,&pubs);
 
   Kokyu_EC::QoSVector trigs;
-  vs->triggers->visit(this,&trigs);
+  if (vs->triggers)
+    vs->triggers->visit(this,&trigs);
 
   // Register Supplier
   /*
@@ -608,6 +618,8 @@ Configurator_SyntaxHandler::parseTestDriver (TestDriver* vs, void* arg)
 {
   ACE_UNUSED_ARG(arg);
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting TestDriver: %@\n"),vs));
+
   if (!(vs->startcondition
         && vs->stopcondition))
     {
@@ -643,6 +655,8 @@ int
 Configurator_SyntaxHandler::parseStartCondition (StartCondition* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting StartCondition: %@\n"),vs));
+
   if (!vs->time)
     {
       ACE_CString error("StartCondition has missing child: Time");
@@ -659,6 +673,8 @@ int
 Configurator_SyntaxHandler::parseStopCondition (StopCondition* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting StopCondition: %@\n"),vs));
+
   if (!vs->value)
     {
       ACE_CString error("StopCondition has missing child: Value");
@@ -780,6 +796,8 @@ Configurator_SyntaxHandler::parseTime (Time* vs, void* arg)
   RtEventChannelAdmin::Time *time = static_cast<RtEventChannelAdmin::Time*> (arg);
   ACE_ASSERT(time);
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Time: %@\n"),vs));
+
   // convert ms to 100s of ns
   *time = vs->val*10000;
 
@@ -792,6 +810,8 @@ Configurator_SyntaxHandler::parseValue (Value* vs, void* arg)
 {
   long *value = static_cast<long*> (arg);
   ACE_ASSERT(value);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Value: %@\n"),vs));
 
   *value = vs->val;
 
