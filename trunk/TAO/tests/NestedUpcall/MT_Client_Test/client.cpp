@@ -286,10 +286,15 @@ main (int argc, char **argv)
     {
       TAO_ORB_Manager orb_manager;
 
-      orb_manager.init (argc,
-                        argv,
-                        ACE_TRY_ENV);
+      int r = orb_manager.init (argc,
+                                argv,
+                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (r != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "ERROR: ORB_Manager initialization failed.\n"),
+                          -1);
 
       ACE_DEBUG ((LM_DEBUG,"\n\tMT_Client: client\n\n"));
 
@@ -307,8 +312,17 @@ main (int argc, char **argv)
                                                    argc,
                                                    argv,
                                                    &orb_manager);
-      server->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
-                        ACE_DEFAULT_THREAD_PRIORITY);
+      if (server->activate (THR_BOUND | THR_SCHED_FIFO,
+                            1,
+                            0,
+                            ACE_DEFAULT_THREAD_PRIORITY) != 0)
+        {
+          delete server;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "CLIENT ERROR: Unable to activate "
+                             "MT_Server_Task.\n"),
+                            -1);
+        }
 
       // starting the client threads
       MT_Client_Task **clients = new MT_Client_Task*[threads];
@@ -317,8 +331,14 @@ main (int argc, char **argv)
         clients[i] = new MT_Client_Task (argc, argv, i);
 
       for (i = 0; i < threads; i++)
-        clients[i]->activate (THR_BOUND | THR_SCHED_FIFO, 1, 0,
-                              ACE_DEFAULT_THREAD_PRIORITY);
+        if (clients[i]->activate (THR_BOUND | THR_SCHED_FIFO,
+                                  1,
+                                  0,
+                                  ACE_DEFAULT_THREAD_PRIORITY) != 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                      "CLIENT ERROR: Unable to activate "
+                      "MT_Client_Task.\n"),
+                     -1);  // @@ Memory leak!
 
       int result = ACE_Thread_Manager::instance ()->wait ();
 
