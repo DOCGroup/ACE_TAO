@@ -36,6 +36,9 @@ Mon Sep 28 16:06:05 1998  David L. Levine  <levine@cs.wustl.edu>
           TSS emulation is enabled by default in the ACE configurations
           for VxWorks and LynxOS.
 
+          Many thanks to Arturo Montes <mitosys@colomsat.net.co> for
+          expanding TSS emulation to platform that have native TSS.
+
 Sun Sep 27 20:12:13 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html: Linked in Tutorial 13
