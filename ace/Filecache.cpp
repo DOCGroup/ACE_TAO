@@ -528,7 +528,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const char *filename,
     }
 
   // Can we write?
-  if (ACE_OS::write (this->handle_, "", 1) != 1)
+  if (ACE_OS::pwrite (this->handle_, "", 1) != 1)
     {
       this->error_i (ACE_Filecache_Object::ACE_WRITE_FAILED,
                      "ACE_Filecache_Object::acquire: write");
