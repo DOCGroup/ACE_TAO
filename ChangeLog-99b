@@ -1,5 +1,10 @@
 Thu Jun 17 12:46:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/SOCK_Dgram_Mcast.cpp: We needed to modify the return values
+ 	  of subscribe_i() so that we'd have the ability to differentiate
+ 	  a "short-circuit" return on NT.  Thanks to Marina for reporting
+ 	  this.
+
 	* ace/OS.h: Added an automatic test to check if we're running on
  	  an EBCDIC character set, and if so, set
  	  ACE_STANDARD_CHARACTER_SET_SIZE to 256 rather than 128.  Thanks
