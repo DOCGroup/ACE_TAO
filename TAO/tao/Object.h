@@ -68,10 +68,10 @@ public:
   virtual CORBA::Boolean _is_collocated (void) const;
   // are we collocated with the servant?
 
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
   virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV =
                                           CORBA::default_environment ());
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
   virtual CORBA::ImplementationDef_ptr
       _get_implementation (CORBA_Environment &TAO_IN_ENV =

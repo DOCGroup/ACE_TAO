@@ -146,6 +146,59 @@ CORBA_Object::_is_collocated (void) const
   return this->is_collocated_;
 }
 
+// Quickly hash an object reference's representation data.  Used to
+// create hash tables.
+
+CORBA::ULong
+CORBA_Object::_hash (CORBA::ULong maximum,
+                     CORBA::Environment &env)
+{
+  return this->_stubobj ()->hash (maximum, env);
+}
+
+// Compare two object references to see if they point to the same
+// object.  Used in linear searches, as in hash buckets.
+//
+// XXX would be useful to also have a trivalued comparison predicate,
+// such as strcmp(), to allow more comparison algorithms.
+
+CORBA::Boolean
+CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
+                              CORBA::Environment &env)
+{
+  if (other_obj == this)
+    {
+      env.clear ();
+      return 1;
+    }
+
+  return this->_stubobj ()->is_equivalent (other_obj, env);
+}
+
+// TAO's extensions
+
+TAO_ObjectKey *
+CORBA::Object::_key (CORBA::Environment &env)
+{
+  if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
+    return this->_stubobj ()->profile_in_use ()->_key (env);
+
+  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
+}
+
+
+// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
+void
+CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
+{
+  if ( this->_stubobj () )
+    this->_stubobj ()->use_locate_requests (use_it);
+
+  return;
+}
+
+#if !defined (TAO_HAS_MINIMUM_CORBA)
+
 // NON_EXISTENT ... send a simple call to the object, which will
 // either elicit a FALSE response or a OBJECT_NOT_EXIST exception.  In
 // the latter case, return FALSE.
@@ -201,59 +254,6 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
   return _tao_retval;
 }
-
-// Quickly hash an object reference's representation data.  Used to
-// create hash tables.
-
-CORBA::ULong
-CORBA_Object::_hash (CORBA::ULong maximum,
-                     CORBA::Environment &env)
-{
-  return this->_stubobj ()->hash (maximum, env);
-}
-
-// Compare two object references to see if they point to the same
-// object.  Used in linear searches, as in hash buckets.
-//
-// XXX would be useful to also have a trivalued comparison predicate,
-// such as strcmp(), to allow more comparison algorithms.
-
-CORBA::Boolean
-CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
-                              CORBA::Environment &env)
-{
-  if (other_obj == this)
-    {
-      env.clear ();
-      return 1;
-    }
-
-  return this->_stubobj ()->is_equivalent (other_obj, env);
-}
-
-// TAO's extensions
-
-TAO_ObjectKey *
-CORBA::Object::_key (CORBA::Environment &env)
-{
-  if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
-    return this->_stubobj ()->profile_in_use ()->_key (env);
-
-  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
-}
-
-
-// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
-void
-CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
-{
-  if ( this->_stubobj () )
-    this->_stubobj ()->use_locate_requests (use_it);
-
-  return;
-}
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
