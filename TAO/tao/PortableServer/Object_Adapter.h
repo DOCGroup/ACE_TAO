@@ -750,6 +750,19 @@ public:
     /// Get the priority for the current upcall.
     CORBA::Short priority (void) const;
 
+    enum State
+    {
+      INITIAL_STAGE,
+      OBJECT_ADAPTER_LOCK_ACQUIRED,
+      POA_CURRENT_SETUP,
+      OBJECT_ADAPTER_LOCK_RELEASED,
+      SERVANT_LOCK_ACQUIRED
+    };
+
+    // State accessors.
+    State state (void) const;
+    void state (State);
+
   protected:
 
     void servant_locator_cleanup (void);
@@ -763,15 +776,6 @@ public:
     TAO_POA *poa_;
 
     PortableServer::Servant servant_;
-
-    enum State
-    {
-      INITIAL_STAGE,
-      OBJECT_ADAPTER_LOCK_ACQUIRED,
-      POA_CURRENT_SETUP,
-      OBJECT_ADAPTER_LOCK_RELEASED,
-      SERVANT_LOCK_ACQUIRED
-    };
 
     State state_;
 

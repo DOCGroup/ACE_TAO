@@ -17,6 +17,7 @@ DIRS  = POA_Destruction \
 	Etherealization \
 	Object_Reactivation \
 	Non_Servant_Upcalls \
+	MT_Servant_Locator \
 	Single_Threaded_POA \
 	Persistent_ID \
 	Policies \
