@@ -468,8 +468,20 @@ extern "C"
 // log_msg declarations
 // ============================================================================
 
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
+// Prototype of win32 structured exception handler functions.
+// They are used to get the exception handling expression or
+// as exception handlers.
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
 class ACE_OS_Thread_Descriptor;
-typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&);
+typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                                       , ACE_SEH_EXCEPT_HANDLER selector
+                                       , ACE_SEH_EXCEPT_HANDLER handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                                       );
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*, void*&);
 
 // ============================================================================

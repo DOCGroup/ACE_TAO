@@ -1,3 +1,13 @@
+Mon Jun 19 12:38:58 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/config-all.h:
+        * ace/OS.h:
+        * ace/OS.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.cpp:
+          In Win32 we have to pass the structured exception handlers
+          around.
+
 Mon Jun 19 11:43:43 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Decouple the Log_Msg inheritance from the ACE_OS layer: the
@@ -6,8 +16,8 @@ Mon Jun 19 11:43:43 2000  Carlos O'Ryan  <coryan@uci.edu>
           The callback is used to first copy the state from the current
           thread to a temporary object and then copy (in the created
           thread) the temporary object state to the TSS Log_Msg object.
-	  The temporary holder for the Log_Msg state is allocated in the
-	  heap, and destroyed as soon as we don't need it anymore.
+          The temporary holder for the Log_Msg state is allocated in the
+          heap, and destroyed as soon as we don't need it anymore.
 
         * ace/Log_Msg.h:
         * ace/Log_Msg.cpp:
