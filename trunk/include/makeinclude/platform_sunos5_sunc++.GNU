@@ -4,15 +4,13 @@
 # *not* using Orbix
 #
 # Note: some ACE files might generate these kinds of warnings:
-# 1) "template manager : Warning: No valid template database available.
-#     Creating default repository "Templates.DB"":
-#    self explanatory, and apparently harmless.
-# 2) "Warning: Could not find source for " one of the following:
+# 1) "Warning: Could not find source for " one of the following:
 #    default constructor, copy constructor, destructor, or assignment
 #    operator.  It appears that with +w, Sun C++ 4.x issues this warning
 #    whenever it has to generate one of these functions (because it wasn't
 #    defined by the user).  This isn't really a problem.
-# 3) "Warning: <foo> hides the function " or "hides the same name in an
+#    This warning appears to be fixed by Sun C++ 4.2 jumbo patch 104631-02.
+# 2) "Warning: <foo> hides the function " or "hides the same name in an
 #    outer scope".  A useful warning, perhaps, but not really a problem.
 # There should be no other warnings from Sun C++ when building ACE.
 
@@ -58,6 +56,9 @@ AR              = CC
 ARFLAGS         = -xar -o
 RANLIB          = echo
 SOFLAGS         = -G $(CPPFLAGS)
+
+#### Create these directories to avoid compiler warnings.
+TEMPLATE_REPOSITORY = Templates.DB Templates.DB/Modules.DB
 
 ifdef BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files
