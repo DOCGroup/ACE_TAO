@@ -25,6 +25,9 @@ Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  it can be accessed with the new class arrangement.  Also, made the
 	  auto_array_ptr operator-> const.
 
+	* netsvcs/lib/TS_Clerk_Handler.cpp (parse_args): wrapped TCHAR
+	  argument to sizeof in parenthesis.
+
 Mon Jun 23 09:12:04 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
 	* ace/Auto_Ptr.i (auto_array_ptr): Fixed a typo.
