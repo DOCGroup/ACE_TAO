@@ -1,3 +1,12 @@
+Wed Feb 20 14:18:14 2002  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* ace/Process.cpp:
+	* ace/Process.h: Added a new method
+	ACE_Process_Options::release_handles() to fix the trouble of using
+	a pipe as stdout, where the pipe closes completely when the child
+	terminates. This method replaces some functionality in the Process
+	Options destructor.
+
 Wed Feb 20 13:01:25 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Atomic_Op.i: Fix the return value of the ACE_GUARD_RETURN
