@@ -1,49 +1,70 @@
+Mon Mar 22 13:30:53 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/rpc.mpb:
+
+          Added the -C option to ensure that the generated code can be used
+          by c++ compilers.  Also, changed the output source files and
+          header files to fix a problem with make targets.
+
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+
+          Added a generated target to allow users to invoke a rule to
+          produce just the generated files.
+
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Fixed a bug in these templates where generated files (other than
+          idl stubs) would not be created before attempting to build object
+          files.
+
 Mon Mar 22 14:10:12 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Proactor.cpp: Fix "unused argument" warning. The code
-	  that really uses the signal_number argument_may_ need to be
-	  re-enabled again, so the name is left in the signature.
+        * ace/POSIX_Proactor.cpp: Fix "unused argument" warning. The code
+          that really uses the signal_number argument_may_ need to be
+          re-enabled again, so the name is left in the signature.
 
 Mon Mar 22 13:45:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Timers/CB.cpp (handle_timeout): The reset_interval()
-	  call needs to happen whether ACE_NDEBUG or not; putting it in an
-	  ACE_ASSERT no-ops it out if ACE_NDEBUG.
+        * examples/APG/Timers/CB.cpp (handle_timeout): The reset_interval()
+          call needs to happen whether ACE_NDEBUG or not; putting it in an
+          ACE_ASSERT no-ops it out if ACE_NDEBUG.
 
 Mon Mar 22 10:57:20 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Asynch_Stream.cpp:
-	* ace/SSL/SSL_Asynch_BIO.cpp: Added #include "ace/OS_NS_string.h" to
-	  pick up missing symbols on AIX.
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_BIO.cpp: Added #include "ace/OS_NS_string.h" to
+          pick up missing symbols on AIX.
 
 Sat Mar 20 22:25:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* tests/Multicast_Test.cpp (leave): Replaced 
-	
-	  size_t size = 0;
-  
-          with 
-  
+        * tests/Multicast_Test.cpp (leave): Replaced
+
+          size_t size = 0;
+
+          with
+
           size_t size = this->address_vec_.size ();
-  
+
           Thanks to Valery Salamakha <ccapstan@bigpond.net.au>
-	  for reporting this!
-  
+          for reporting this!
+
 Sat Mar 20 17:01:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Timer_Queue_Adapters.h:
-	* ace/Timer_Queue_Adapters.i:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/Timer_Queue_Adapters.i:
 
-	  Changes from the effect of the following change "Thu Mar 18 
-	  22:47:05 2004 Balachandran Natarajan  <bala@dre.vanderbilt.edu>" 
+          Changes from the effect of the following change "Thu Mar 18
+          22:47:05 2004 Balachandran Natarajan  <bala@dre.vanderbilt.edu>"
 
 Sat Mar 20 18:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/MakeProjectCreator/templates/bor.mpd:
-	  When gendir is set, a \ must be added, not a /. This fixes
-	  problems in the Borland builds that where caused by the fact
-	  that the realclean didn't work and we did compile old generated
-	  files.
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          When gendir is set, a \ must be added, not a /. This fixes
+          problems in the Borland builds that where caused by the fact
+          that the realclean didn't work and we did compile old generated
+          files.
 
 Sat Mar 20 11:15:19 2004  Olli Savia  <ops@iki.fi>
 
