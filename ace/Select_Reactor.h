@@ -66,6 +66,7 @@ class ACE_Export ACE_Select_Reactor_Token : public ACE_SELECT_REACTOR_MUTEX
 {
 public:
   ACE_Select_Reactor_Token (ACE_Select_Reactor &r);
+  ACE_Select_Reactor_Token (void);
 
   virtual void sleep_hook (void);
   // Called just before the ACE_Event_Handler goes to sleep.
@@ -77,7 +78,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  ACE_Select_Reactor &select_reactor_;
+  ACE_Select_Reactor *select_reactor_;
 };
 #else
 // If we're non-MT safe then this is just a no-op...
