@@ -1,3 +1,16 @@
+Thu Oct 15 16:40:41 1998  Steve Huston  <shuston@riverace.com>
+
+	* tests/Thread_Manager_Test.cpp: Allow suspend/resume to be tried on
+	  pthreads, but don't allow any error other than ENOTSUP.  This
+	  catches a bug in Thread_Manager that lost the error values on an
+	  error.
+
+	* ace/Thread_Manager.cpp (ACE_THR_OP macro): Don't remove a thread
+	  from the active threads list if an operation fails with ENOTSUP.
+	  This was causing calls to suspend_grp/resume_grp to erase the list
+	  of threads in a group on pthreads, then wait_grp didn't wait because
+	  it thought there weren't any more threads.
+
 Thu Oct 15 12:43:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Task.cpp (activate): Changed to activate new active objects
