@@ -211,6 +211,7 @@ resolve_poa (PortableInterceptor::AdapterName const&)
 }
 
 
+static
 ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
@@ -354,7 +355,7 @@ ReplicaController::send_reply (
       {
         CORBA::Any_var tmp = target->get_state ();
 
-        if (tmp != 0) state = tmp._retn ();
+        if (tmp.in () != 0) state = tmp._retn ();
       }
     }
 
@@ -365,7 +366,7 @@ ReplicaController::send_reply (
     cdr << ftr->client_id.in ();
     cdr << ftr->retention_id;
     cdr << reply.in ();
-    cdr << *state;
+    cdr << state.in ();
 
     size_t size = cdr.total_length ();
 

@@ -1,3 +1,10 @@
+Wed Feb 18 10:47:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+
+	  Fixed compilation errors on Borland. Thanks to Johnny for pointing
+	  it out. 
+	
 Wed Feb 18 09:32:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
