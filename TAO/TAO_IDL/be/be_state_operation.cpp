@@ -604,7 +604,8 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               if (bt->size_type () == be_decl::VARIABLE)
                 {
-                  *os << bt->name () << " *retval;" << nl;
+                  *os << bt->name () << " *retval = new " << bt->name () << ";"
+                      << nl;
                 }
               else
                 {
