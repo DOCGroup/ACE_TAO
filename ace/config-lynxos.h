@@ -185,4 +185,7 @@ extern "C"
   int putenv (const char *);
 }
 
+
+#define ACE_HAS_AIO_CALLS
+
 #endif /* ACE_CONFIG_H */
