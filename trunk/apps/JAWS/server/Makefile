@@ -18,7 +18,7 @@ FILES  	= \
 	HTTP_Request \
 	HTTP_Response \
 	Parse_Headers \
-	VFS \
+	JAWS_File \
 	IO 
 
 LSRC	= $(addsuffix .cpp,$(FILES))
