@@ -1,3 +1,29 @@
+Sat Apr 21 05:05:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp
+
+          Fixed memory mangement of connection handlers.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp
+
+          Fixed a bug which caused the reactor to call us infinitely.
+
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
+
+          Added dependencies correctly.
+          
+        * examples/PluggableUDP/tests/Basic/client.cpp:
+
+          Fixed a race condition when the client would shutdown.
+
+        * examples/PluggableUDP/tests/Basic/svc.conf
+
+          Added the thread pool reactor as the reactor.
+
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+
+          Added a line invoking shutdown on the server.
+
 Sat Apr 21 01:45:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:

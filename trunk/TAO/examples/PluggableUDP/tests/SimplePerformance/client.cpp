@@ -27,8 +27,8 @@
 #endif 
 
 const char *iorFile = "file://test.ior";
-int niter = 10;
-int SIZE_BLOCK= 256;
+ACE_UINT32 niter = 10;
+ACE_UINT32 SIZE_BLOCK= 256;
 
 class Client
 {
@@ -51,7 +51,7 @@ private:
   Simple_Server_var server_;
   // The server.
 
-  int niterations_;
+  ACE_UINT32 niterations_;
   // The number of iterations on each client thread.
 };
 
@@ -84,7 +84,11 @@ int main (int argc, char *argv[])
                             1);
         }
 
-      CORBA::String_var string =  orb->object_to_string (server.in ());
+      CORBA::String_var string =
+        orb->object_to_string (server.in (), 
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, 
                   "Client: orb->object_to_string:\n%s\n",
                   string.in ()));
@@ -93,7 +97,7 @@ int main (int argc, char *argv[])
 
       client.svc ();
 
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+      //ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -113,13 +117,12 @@ int main (int argc, char *argv[])
 // ****************************************************************
 
 Client::Client (Simple_Server_ptr server,
-                int niterations)
+                ACE_UINT32 niterations)
   :  server_ (Simple_Server::_duplicate (server)),
      niterations_ (niterations)
 {
 }
 
-int client_count=0;
 
 int
 Client::svc (void)
@@ -141,7 +144,8 @@ Client::svc (void)
 
       timer.start ();
       
-      for (int i = 0; i < this->niterations_; ++i)
+      ACE_UINT32 client_count = 0;
+      for (ACE_UINT32 i = 0; i < this->niterations_; ++i)
         {
           client_count++;
 
@@ -156,17 +160,22 @@ Client::svc (void)
 
       ACE_Time_Value measured;
       timer.elapsed_time (measured);
-      ACE_DEBUG ((LM_DEBUG, "...finished\n"));
+
+      //ACE_DEBUG ((LM_DEBUG, "...finished\n"));
+
       long dur = measured.sec () * 1000000 + measured.usec ();
       ACE_DEBUG ((LM_DEBUG, 
-                  "Zeit fuer %u Msgs: %u usec \n",
+                  "Time for %u Msgs: %u usec \n",
                   this->niterations_, 
                   measured.sec () * 1000000 + measured.usec ()));
 
-      ACE_DEBUG ((LM_DEBUG, "Zeit fuer 1 Msg: %u usec, calls/sec %u\n", 
+      ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n", 
                   dur / this->niterations_, 
                   1000000 / (dur / this->niterations_)));
       
+      server_->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {
