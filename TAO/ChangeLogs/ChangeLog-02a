@@ -1,3 +1,10 @@
+Sat Sep 22 11:47:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.cpp (policies):
+
+	  Use the lame "ignore check_for_ace_check" comment hack to
+	  silence fuzz.
+
 Fri Sep 21 22:31:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/default_resource.cpp (get_parser_names): 
