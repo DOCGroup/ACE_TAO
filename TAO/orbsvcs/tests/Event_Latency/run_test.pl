@@ -11,16 +11,16 @@ require Process;
 $NS_ior = "NameService.ior";
 $sleeptime = 3;
 
-$NS = Process::Create ("../../Naming_Service/Naming_Service".
-                       $Process::EXE_EXT." -o $NS_ior ");
+$NS = Process::Create ("../../Naming_Service/Naming_Service".$EXE_EXT,
+		       " -o $NS_ior ");
 
 sleep $sleeptime;
 
-$ES = Process::Create ("../../Event_Service/Event_Service".$Process::EXE_EXT);
+$ES = Process::Create ("../../Event_Service/Event_Service".$EXE_EXT);
 
 sleep $sleeptime;
 
-$status = system ($EXEPREFIX."Event_Latency".$Process::EXE_EXT.
+$status = system ($EXEPREFIX."Event_Latency".$EXE_EXT.
                   " -j -m 100");
 
 $NS->Kill ();

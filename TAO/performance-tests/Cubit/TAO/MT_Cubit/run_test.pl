@@ -54,7 +54,7 @@ $threads = $low_priority_threads + 1;
 # Make sure the file is gone, so we can wait on it.
 unlink $iorfile;
 
-$SV = Process::Create ('.' . $DIR_SEPARATOR . "server" . $Process::EXE_EXT,
+$SV = Process::Create ('.' . $DIR_SEPARATOR . "server" . $EXE_EXT,
                        " $gioplite $thread_per_rate -f $iorfile -t $threads");
 
 sleep $sleeptime;
@@ -65,7 +65,7 @@ if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
   exit 1;
 }
 
-$CL = Process::Create ('.' . $DIR_SEPARATOR . "client" . $Process::EXE_EXT .
+$CL = Process::Create ('.' . $DIR_SEPARATOR . "client" . $EXE_EXT .
                   " $gioplite $thread_per_rate " .
                   "-f $iorfile -n $iterations -t $threads");
 

@@ -11,10 +11,10 @@ require Process;
 
 $iorfile = "echo.ior";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
+$SV = Process::Create ("server$EXE_EXT", "-o $iorfile ");
 
 sleep ($ACE::sleeptime);
-$status = system ("client$Process::EXE_EXT -f $iorfile -x");
+$status = system ("client$EXE_EXT -f $iorfile -x");
 
 $SV->Kill (); $SV->Wait ();
 

@@ -16,7 +16,7 @@ $ior2file = "server2.ior";
 unlink $ior1file;
 unlink $ior2file;
 
-$SV1 = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+$SV1 = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                         " -o $ior1file ");
 
 if (ACE::waitforfile_timed ($ior1file, 5) == -1) {
@@ -25,7 +25,7 @@ if (ACE::waitforfile_timed ($ior1file, 5) == -1) {
     exit 1;
 }
 
-$SV2 = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
+$SV2 = Process::Create ($EXEPREFIX."server".$EXE_EXT,
                         " -o $ior2file ");
 
 if (ACE::waitforfile_timed ($ior2file, 5) == -1) {
@@ -34,7 +34,7 @@ if (ACE::waitforfile_timed ($ior2file, 5) == -1) {
     exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+$CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
                        " -f $ior1file -g $ior2file -n 2 -i 10 -s 5");
 
 $client = $CL->TimedWait (60);

@@ -23,8 +23,8 @@ sub name_server
 {
     my $args = "-ORBnameserviceport $nsport";
     my $prog = "$tao_root/orbsvcs/Naming_Service/Naming_Service "
-	.$Process::EXE_EXT;
-    print ("\nNaming_Service: $prog$Process::EXE_EXT $args\n");
+	.$EXE_EXT;
+    print ("\nNaming_Service: $prog$EXE_EXT $args\n");
     $NS = Process::Create ($prog, $args);
 }
 
@@ -32,8 +32,8 @@ sub name_server
 sub server
 {
     my $args = "-ORBnameserviceport $nsport";
-    print ("\nServer: server$Process::EXE_EXT $args\n");
-    $SV = Process::Create ('.' . $DIR_SEPARATOR . "server " .$Process::EXE_EXT . $args);
+    print ("\nServer: server$EXE_EXT $args\n");
+    $SV = Process::Create ('.' . $DIR_SEPARATOR . "server " .$EXE_EXT . $args);
 }
 
 
@@ -41,7 +41,7 @@ sub client
 {
     my $args = "-ORBnameserviceport $nsport";
     print ("\nclient: client $args\n");
-    $CL = Process::Create ('.' . $DIR_SEPARATOR . "client " .$Process::EXE_EXT . $args);
+    $CL = Process::Create ('.' . $DIR_SEPARATOR . "client " .$EXE_EXT . $args);
 }
 
 name_server ();

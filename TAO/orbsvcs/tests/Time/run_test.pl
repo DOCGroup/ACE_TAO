@@ -23,15 +23,15 @@ $time_dir = "..$DIR_SEPARATOR..".$DIR_SEPARATOR."Time_Service".$DIR_SEPARATOR;
 
 sub time_service_test_using_naming_service
 {
-    $SV1 = Process::Create ($time_dir."server".$Process::EXE_EXT,"");
+    $SV1 = Process::Create ($time_dir."server".$EXE_EXT,"");
 
     sleep 5;
 
-    $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,"-t 2");
+    $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,"-t 2");
 
     sleep 10;
 
-    $status = system ($EXEPREFIX."client".$Process::EXE_EXT.
+    $status = system ($EXEPREFIX."client".$EXE_EXT.
                       "");
 
     $SV1->Kill ();
@@ -42,20 +42,20 @@ sub time_service_test_using_naming_service
 
 sub time_service_test_using_files
 {
-    $SV1 = Process::Create ($time_dir."server".$Process::EXE_EXT,
+    $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
                             "-o $server_ior");
 
     ACE::waitforfile ($server_ior);
     sleep 5;
 
-    $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,
+    $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
                             "-f $server_ior -o clerk_ior -t 2");
 
     ACE::waitforfile ($clerk_ior);
 
     sleep 10;
 
-    $status = system ($EXEPREFIX."client".$Process::EXE_EXT.
+    $status = system ($EXEPREFIX."client".$EXE_EXT.
                       " -f clerk_ior");
 
     $SV1->Kill ();
@@ -70,24 +70,24 @@ sub time_service_test_using_files
 sub time_service_test_using_ir
 {
   $ir_dir = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR;
-  $IR = Process::Create ($ir_dir."ImplRepo_Service".$Process::EXE_EXT,
+  $IR = Process::Create ($ir_dir."ImplRepo_Service".$EXE_EXT,
                          "-ORBsvcconf implrepo.conf -d 1");
 
   ACE::waitforfile ($implrepo_ior);
 
-  $SV1 = Process::Create ($time_dir."server".$Process::EXE_EXT,
+  $SV1 = Process::Create ($time_dir."server".$EXE_EXT,
                          "-o $server_ior -i -r");
 
   ACE::waitforfile ($server_ior);
 
   sleep 10;
 
-  $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,
+  $SV2 = Process::Create ($time_dir."clerk".$EXE_EXT,
                           "-f $server_ior -o clerk_ior");
 
   sleep 10;
 
-  system($EXEPREFIX."client -f $clerk_ior");
+  system($EXEPREFIX."client.$EXE_EXT -f $clerk_ior");
 
   $IR->Kill ();
   $IR->Wait ();

@@ -11,7 +11,7 @@ require ACEutils;
 
 print STDERR "================ Collocated tests, single threaded\n";
 
-$T = Process::Create ($EXEPREFIX."ECT_Throughput".$Process::EXE_EXT,
+$T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
 		      " -ORBsvcconf ec.conf -m new -u 10000 -n 1 -t 0"
 		      . " -c 4");
 
@@ -23,7 +23,7 @@ if ($T->TimedWait (60) == -1) {
 
 print STDERR "================ Collocated tests, single threaded\n";
 
-$T = Process::Create ($EXEPREFIX."ECT_Throughput".$Process::EXE_EXT,
+$T = Process::Create ($EXEPREFIX."ECT_Throughput".$EXE_EXT,
 		      " -ORBsvcconf ec.mt.conf -m new -u 10000 -n 1 -t 0"
 		      . " -c 4");
 
@@ -41,7 +41,7 @@ unlink $ns_ior;
 $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$Process::EXE_EXT,
+                       "Naming_Service".$EXE_EXT,
                        " -o $ns_ior ");
 
 if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
@@ -53,18 +53,18 @@ if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
 $ES = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
                        "Event_Service".$DIR_SEPARATOR.
-                       "Event_Service".$Process::EXE_EXT,
+                       "Event_Service".$EXE_EXT,
                        " -ORBNameServiceIOR file://$ns_ior "
                        ." -ORBSvcConf ec.conf "
 		       . " -t NEW");
 
 sleep 5;
 
-$C = Process::Create ($EXEPREFIX."ECT_Consumer".$Process::EXE_EXT,
+$C = Process::Create ($EXEPREFIX."ECT_Consumer".$EXE_EXT,
 		      " -ORBNameServiceIOR file://$ns_ior "
 		      . " -c 4 -s 1");
 
-$S = Process::Create ($EXEPREFIX."ECT_Supplier".$Process::EXE_EXT,
+$S = Process::Create ($EXEPREFIX."ECT_Supplier".$EXE_EXT,
 		      " -ORBNameServiceIOR file://$ns_ior "
 		      . " -s 1 -u 10000 -n 1 -t 0");
 
