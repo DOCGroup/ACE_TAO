@@ -4,6 +4,7 @@
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
 #include "Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Activator.h"
 #include "Flat_File_Persistence.h"
 #include "orbsvcs/CosNamingC.h"
 
@@ -32,7 +33,9 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
     multicast_ (0),
-    use_storable_context_ (0)
+    use_storable_context_ (0),
+    use_servant_activator_ (0),
+    use_redundancy_(0)
 {
 }
 
@@ -55,7 +58,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
     multicast_ (0),
-    use_storable_context_ (0)
+    use_storable_context_ (use_storable_context),
+    use_servant_activator_ (0),
+    use_redundancy_(0)
 {
   if (this->init (orb,
                   poa,
@@ -143,7 +148,7 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:r:"));
 
   int c;
   int size, result;
@@ -157,6 +162,11 @@ TAO_Naming_Server::parse_args (int argc,
   long int address;
 #endif /* ACE_SIZEOF_VOID_P */
 
+  // Make sure only one persistence option is specified
+  int f_opt_used = 0;
+  int u_opt_used = 0;
+  int r_opt_used = 0;
+
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -166,17 +176,14 @@ TAO_Naming_Server::parse_args (int argc,
       case 'o': // outputs the naming service ior to a file.
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("w"));
-
+        
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("Unable to open %s for writing: %p\n"),
-                             get_opts.opt_arg ()), -1);
+            ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
+            get_opts.opt_arg(), errno, ACE_LIB_TEXT("TAO_Naming_Server::parse_args()")), -1);
         break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
-        break;
-      case 'f':
-        this->persistence_file_name_ = get_opts.opt_arg ();
         break;
       case 's':
         size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -200,9 +207,20 @@ TAO_Naming_Server::parse_args (int argc,
       case 'm':
         this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
         break;
+      case 'f':
+        this->persistence_file_name_ = get_opts.opt_arg ();
+        f_opt_used = 1;
+        break;
+      case 'r':
+        this->use_redundancy_ = 1;
+        this->use_storable_context_ = 1;
+        this->persistence_file_name_ = get_opts.opt_arg ();
+        r_opt_used = 1;
+        break;
       case 'u':
         this->use_storable_context_ = 1;
         this->persistence_file_name_ = get_opts.opt_arg ();
+        u_opt_used = 1;
         break;
       case '?':
       default:
@@ -211,15 +229,23 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_LIB_TEXT ("-d ")
                            ACE_LIB_TEXT ("-o <ior_output_file> ")
                            ACE_LIB_TEXT ("-p <pid_file_name> ")
-                           ACE_LIB_TEXT ("-f <persistence_file_name> ")
                            ACE_LIB_TEXT ("-s <context_size> ")
                            ACE_LIB_TEXT ("-b <base_address> ")
                            ACE_LIB_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
+                           ACE_LIB_TEXT ("-f <persistence_file_name> ")
                            ACE_LIB_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
+                           ACE_LIB_TEXT ("-r <redundant_persistence_directory> ")
                            ACE_LIB_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
+
+  if (f_opt_used + u_opt_used + r_opt_used > 1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("Only one persistence option can be passed")
+                       ACE_LIB_TEXT ("\n")),
+                      -1);
+
   return 0;
 }
 
@@ -248,6 +274,14 @@ TAO_Naming_Server::init_with_orb (int argc,
                             -1);
         }
 
+      // Check the non-ORB arguments.  this needs to come before we
+      // initialize my_naming_server so that we can pass on some of
+      // the command-line arguments.
+      result = this->parse_args (argc, argv);
+
+      if (result < 0)
+        return result;
+
       // Get the POA object.
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
@@ -261,8 +295,20 @@ TAO_Naming_Server::init_with_orb (int argc,
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::PolicyList policies (2);
-      policies.length (2);
+      int numPolicies = 2;
+#if (TAO_HAS_MINIMUM_POA == 0)
+      if (this->use_storable_context_)
+        {
+          this->use_servant_activator_ = 1;
+        }
+
+      if (this->use_servant_activator_) {
+        numPolicies += 2;
+      }
+#endif /* TAO_HAS_MINIMUM_POA */
+
+      CORBA::PolicyList policies (numPolicies);
+      policies.length (numPolicies);
 
       // Id Assignment policy
       policies[0] =
@@ -275,6 +321,21 @@ TAO_Naming_Server::init_with_orb (int argc,
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+      if (this->use_servant_activator_)
+        {
+          // Request Processing Policy
+          policies[2] =
+            this->root_poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+                                                               ACE_ENV_ARG_PARAMETER);
+
+          // Servant Retention Policy
+          policies[3] =
+            this->root_poa_->create_servant_retention_policy (PortableServer::RETAIN
+                                                              ACE_ENV_ARG_PARAMETER);
+        }
+#endif /* TAO_HAS_MINIMUM_POA */
 
       // We use a different POA, otherwise the user would have to change
       // the object key each time it invokes the server.
@@ -295,14 +356,6 @@ TAO_Naming_Server::init_with_orb (int argc,
           policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-
-      // Check the non-ORB arguments.  this needs to come before we
-      // initialize my_naming_server so that we can pass on some of
-      // the command-line arguments.
-      result = this->parse_args (argc, argv);
-
-      if (result < 0)
-        return result;
 
       result = this->init (orb,
                            this->ns_poa_.in (),
@@ -371,19 +424,41 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // Was a location specified?
           if (persistence_location == 0)
             {
-              // No, assign the default location "."
-              persistence_location = ACE_LIB_TEXT(".");
+              // No, assign the default location "NameService"
+              persistence_location = ACE_LIB_TEXT("NameService");
             }
 
+          // Now make sure this directory exists
+          if (ACE_OS::access (persistence_location, W_OK|X_OK))
+            {
+              ACE_ERROR ((LM_ERROR, "Invalid persistence directory\n"));
+              return -1;
+            }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+          if (this->use_servant_activator_)
+            {
+              TAO_Storable_Naming_Context_Activator *servant_activator;
+              ACE_NEW_THROW_EX (servant_activator,
+                                TAO_Storable_Naming_Context_Activator (orb,
+                                                                       persFactory,
+                                                                       persistence_location,
+                                                                       context_size),
+                                CORBA::NO_MEMORY ());
+              this->ns_poa_->set_servant_manager(servant_activator);
+            }
+#endif /* TAO_HAS_MINIMUM_POA */
+
           this->naming_context_ =
-            TAO_Storable_Naming_Context::recreate_all(orb,
-                                                      poa,
-                                                      TAO_ROOT_NAMING_CONTEXT,
-                                                      context_size,
-                                                      0,
-                                                      persFactory,
-                                                      persistence_location
-                                                      ACE_ENV_ARG_PARAMETER);
+            TAO_Storable_Naming_Context::recreate_all (orb,
+                                                       poa,
+                                                       TAO_ROOT_NAMING_CONTEXT,
+                                                       context_size,
+                                                       0,
+                                                       persFactory,
+                                                       persistence_location,
+                                                       use_redundancy_
+                                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else if (persistence_location != 0)

@@ -216,6 +216,10 @@ SOURCE=.\Naming\Storable_Naming_Context.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Storable_Naming_Context_Activator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Naming\Transient_Naming_Context.cpp
 # End Source File
 # End Group
@@ -281,6 +285,10 @@ SOURCE=.\Naming\Storable.h
 # Begin Source File
 
 SOURCE=.\Naming\Storable_Naming_Context.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Storable_Naming_Context_Activator.h
 # End Source File
 # Begin Source File
 

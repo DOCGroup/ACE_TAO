@@ -23,6 +23,7 @@ DIRS = \
 	Property \
         Security \
         Simple_Naming \
+        Redundant_Naming \
         Time \
 	Trading \
 	Log
