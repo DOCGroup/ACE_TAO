@@ -1,3 +1,11 @@
+Thu Oct 11 10:57:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/RB_Tree.h:
+	* ace/RB_Tree.i:
+	* ace/RB_Tree.cpp:
+	  Reverted to the 5.2 release state. The proposed changes were
+	  breaking some builds, and they were not bug fixes in any case.
+
 Wed Oct 10 16:56:18 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/SOCK_Dgram_Mcast.cpp:
