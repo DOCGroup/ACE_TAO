@@ -178,7 +178,7 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
   int result = 0;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vfwprintf (fp, format, ap), int, -1, result);
+  ACE_OSCALL (ACE_STD_NAMESPACE::vfwprintf (fp, format, ap), int, -1, result);
   va_end (ap);
   return result;
 
@@ -249,16 +249,16 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-#  if defined (ACE_WIN32)
+#  if !defined (ACE_WIN32) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
+  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsnprintf (buf, maxlen, format, ap)),
+              int, -1, result);
+#  else
   ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnprintf (buf, maxlen, format, ap)),
               int, -1, result);
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
   if (result == -1)
     buf[maxlen-1] = '\0';
-#  else
-  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsnprintf (buf, maxlen, format, ap)),
-              int, -1, result);
-#  endif /* ACE_WIN32 */
+#  endif /* !ACE_WIN32 || __BORLANDC__ >= 0x600 */
   va_end (ap);
   // In out-of-range conditions, C99 defines vsnprintf to return the number
   // of characters that would have been written if enough space was available.
@@ -337,7 +337,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::sprintf");
 
-# if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
+# if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || (defined ACE_HAS_DINKUM_STL)
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -345,7 +345,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   int result;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vswprintf (buf, ULONG_MAX, format, ap), int, -1, result);
+  ACE_OSCALL (ACE_STD_NAMESPACE::vswprintf (buf, ULONG_MAX, format, ap), int, -1, result);
   va_end (ap);
   return result;
 

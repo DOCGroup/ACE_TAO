@@ -216,7 +216,7 @@ ACE_OS::putenv (const ACE_TCHAR *string)
   ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
 #else /* ! ACE_HAS_WINCE && ! ACE_PSOS */
   // VxWorks declares ::putenv with a non-const arg.
-  ACE_OSCALL_RETURN (::putenv ((char *) string), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv ((char *) string), int, -1);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -343,7 +343,7 @@ ACE_OS::strtod (const char *s, char **endptr)
 ACE_INLINE double
 ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 {
-  return ::wcstod (s, endptr);
+  return ACE_STD_NAMESPACE::wcstod (s, endptr);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
@@ -361,7 +361,7 @@ ACE_OS::strtol (const char *s, char **ptr, int base)
 ACE_INLINE long
 ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 {
-  return ::wcstol (s, ptr, base);
+  return ACE_STD_NAMESPACE::wcstol (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOL */
 
@@ -379,7 +379,7 @@ ACE_OS::strtoul (const char *s, char **ptr, int base)
 ACE_INLINE unsigned long
 ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 {
-  return ::wcstoul (s, ptr, base);
+  return ACE_STD_NAMESPACE::wcstoul (s, ptr, base);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 
