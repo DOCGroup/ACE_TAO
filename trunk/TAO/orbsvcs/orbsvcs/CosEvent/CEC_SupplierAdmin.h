@@ -1,11 +1,15 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   CEC_SupplierAdmin
+ *  @file   CEC_SupplierAdmin.h
  *
  *  $Id$
  *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)Based on previous work by Tim Harrison (harrison@cs.wustl.edu)and other members of the DOC group.More details can be found in:http://www.cs.wustl.edu/~schmidt/oopsla.ps.gzhttp://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/
  */
 //=============================================================================
 

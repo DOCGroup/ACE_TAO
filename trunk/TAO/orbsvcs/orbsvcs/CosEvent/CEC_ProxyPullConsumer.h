@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   CEC_ProxyPullConsumer
+ *  @file   CEC_ProxyPullConsumer.h
  *
  *  $Id$
  *
