@@ -1,3 +1,14 @@
+Wed Dec 24 13:28:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Any_Dual_Impl_T.h:
+        * tao/Any_Impl_T.h:
+        * tao/Any_Special_Impl_T.h:
+        * tao/Basic_Argument_T.h:
+        * tao/IFR_Client_Adapter.h:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.h:
+          Removed not needed ; after c++ namespace closure.
+
 Wed Dec 24 12:41:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
