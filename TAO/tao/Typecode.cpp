@@ -297,7 +297,7 @@ CORBA::Boolean
 CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 			    CORBA::Environment &ACE_TRY_ENV) const
 {
-  const CORBA::TypeCode* rcvr = this;
+  CORBA::TypeCode_var rcvr = CORBA::TypeCode::_duplicate (this);
   CORBA::Boolean status = 0;
 
   if (this->kind_ == CORBA::tk_alias)
@@ -320,17 +320,21 @@ CORBA_TypeCode::equivalent (CORBA::TypeCode_ptr tc,
 
   status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
   ACE_CHECK_RETURN (0);
+  
+  // Added by Bala to check for leaks as content_type duplicates the
+  // pointers 
+  CORBA::TypeCode_var tcvar = CORBA::TypeCode::_duplicate (tc);
 
   while (status)
     {
-      tc = tc->content_type (ACE_TRY_ENV);
+      tcvar = tcvar->content_type (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+      status = (tcvar->kind (ACE_TRY_ENV) == CORBA::tk_alias);
       ACE_CHECK_RETURN (0);
     }
 
-  return rcvr->equal (tc, ACE_TRY_ENV);
+  return rcvr->equal (tcvar.in (), ACE_TRY_ENV);
 }
 
 // Return the i-th member typecode if it exists, else raise an
@@ -342,6 +346,8 @@ CORBA::TypeCode_ptr
 CORBA_TypeCode::member_type (CORBA::ULong slot,
                              CORBA::Environment &ACE_TRY_ENV) const
 {
+  CORBA::TypeCode_ptr typecode = 0;
+
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_type_list_known_)
     {
@@ -351,7 +357,12 @@ CORBA_TypeCode::member_type (CORBA::ULong slot,
         ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 0);
     }
   else
-    return this->private_member_type (slot, ACE_TRY_ENV);
+    {
+      typecode = CORBA::TypeCode::_duplicate (this->private_member_type (slot, 
+                                                                         ACE_TRY_ENV)); 
+    }
+    
+    return typecode;
 }
 
 // Applicable only to struct, union, and except
@@ -397,9 +408,9 @@ CORBA_TypeCode::discriminator_type (CORBA::Environment &ACE_TRY_ENV) const
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), (CORBA::TypeCode_ptr)0);
 
   if (this->private_state_->tc_discriminator_type_known_)
-    return this->private_state_->tc_discriminator_type_;
+    return CORBA_TypeCode::_duplicate (this->private_state_->tc_discriminator_type_);
   else
-    return this->private_discriminator_type (ACE_TRY_ENV);
+    return CORBA_TypeCode::_duplicate (this->private_discriminator_type (ACE_TRY_ENV));
 }
 
 // only applicable to CORBA::tk_unions
@@ -443,12 +454,13 @@ CORBA_TypeCode::content_type (CORBA::Environment &ACE_TRY_ENV) const
       || this->kind_ == CORBA::tk_alias)
     {
       if (this->private_state_->tc_content_type_known_)
-        return this->private_state_->tc_content_type_;
+        return CORBA_TypeCode::_duplicate (this->private_state_->tc_content_type_);
       else
-        return this->private_content_type (ACE_TRY_ENV);
+        return CORBA_TypeCode::_duplicate (this->private_content_type (ACE_TRY_ENV));
     }
   else
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
+
 }
 
 // compute the padded size of the discriminant
@@ -834,14 +846,14 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
         return 0;
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_ptr my_member_tc = this->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_ptr tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       CORBA::Boolean flag =
-        my_member_tc->equal (tc_member_tc, ACE_TRY_ENV);
+        my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (!flag)
         return 0;
@@ -881,13 +893,13 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
     return 0;
 
   // check if the discriminant type is same
-  CORBA::TypeCode_ptr my_discrim = this->discriminator_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var my_discrim = this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_ptr tc_discrim = tc->discriminator_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc_discrim = tc->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  int status = my_discrim->equal (tc_discrim, ACE_TRY_ENV);
+  int status = my_discrim->equal (tc_discrim.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   if (!status)
     return 0;
@@ -930,13 +942,13 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
           return 0;
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_ptr my_member_tc = this->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_ptr tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, ACE_TRY_ENV);
+      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (!flag)
         return 0;
@@ -1036,13 +1048,13 @@ CORBA_TypeCode::private_equal_sequence (CORBA::TypeCode_ptr tc,
 {
   // this involves comparing the typecodes of the element type as well as the
   // bounds
-  CORBA::TypeCode_ptr my_elem = this->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var my_elem = this->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_ptr tc_elem = tc->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc_elem = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  int status = my_elem->equal (tc_elem, ACE_TRY_ENV);
+  int status = my_elem->equal (tc_elem.in (), ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   if (!status)
     return 0;
@@ -1094,13 +1106,13 @@ CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
       return 0;
 
   // now compare element typecodes
-  CORBA::TypeCode_ptr my_elem = this->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var my_elem = this->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_ptr tc_elem = tc->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc_elem = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return my_elem->equal (tc_elem, ACE_TRY_ENV);
+  return my_elem->equal (tc_elem.in (), ACE_TRY_ENV);
 }
 
 CORBA::Boolean
@@ -1155,13 +1167,13 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
           return 0;
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_ptr my_member_tc = this->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_ptr tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc, ACE_TRY_ENV);
+      CORBA::Boolean flag = my_member_tc->equal (tc_member_tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       if (!flag)
         return 0;
@@ -1352,7 +1364,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
   // _know_ we're OK).  Then skip the byte order code.
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
-  CORBA::TypeCode_ptr tc = 0;
+  CORBA::TypeCode_var tc = 0;
 
   switch (kind_)
     {
@@ -1458,7 +1470,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
         // largest size.
         CORBA::Long scratch;
 
-      // get the typecode for the discriminator
+        // get the typecode for the discriminator
         tc = this->discriminator_type (ACE_TRY_ENV);
         // compute the typecodes for all the members and return the
         // required one
@@ -1468,7 +1480,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot,
           // the ith entry will have the typecode of the ith guy
           {
             CORBA::TypeCode::traverse_status status =
-              stream.decode (tc, &scratch, this,  ACE_TRY_ENV);
+              stream.decode (tc.in (), &scratch, this,  ACE_TRY_ENV);
             // member label
             ACE_CHECK_RETURN (0);
 
@@ -1514,7 +1526,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
   // _know_ we're OK).  Then skip the byte order code.
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
-  CORBA::TypeCode_ptr tc = 0;
+  CORBA::TypeCode_var tc = 0;
 
   switch (kind_)
     {
@@ -1656,7 +1668,10 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot,
               {
                 // the ith entry will have the name of the ith member
                 CORBA::TypeCode::traverse_status status =
-                  stream.decode (tc, &scratch, this,  ACE_TRY_ENV); // member label
+                  stream.decode (tc.in (), 
+                                 &scratch, 
+                                 this,  
+                                 ACE_TRY_ENV); // member label
                 ACE_CHECK_RETURN (0);
 
                 if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -1738,7 +1753,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
   ACE_CHECK_RETURN (0);
 
   // get the discriminant TC
-  CORBA::TypeCode_ptr tc = this->discriminator_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc = this->discriminator_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0; i < member_count; i++)
@@ -1753,7 +1768,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
       TAO_InputCDR temp (stream);
 
       char *begin = stream.rd_ptr ();
-      int retval = temp.skip (tc, ACE_TRY_ENV);
+      int retval = temp.skip (tc.in (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)

@@ -559,7 +559,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   // Size of element.
   CORBA::ULong bounds;
 
@@ -581,7 +581,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
       // constant, we compute it only once.
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = dest->append (tc2, src, ACE_TRY_ENV);
+          retval = dest->append (tc2.in (), src, ACE_TRY_ENV);
         }
       // CORBA::release (tc2);
       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -611,7 +611,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
 
   CORBA::ULong  bounds;
 
@@ -625,7 +625,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
 
   while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      retval = dest->append (tc2, src, ACE_TRY_ENV);
+      retval = dest->append (tc2.in (), src, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
     }
 
@@ -649,7 +649,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   // Typecode of the aliased type.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   CORBA::Boolean continue_append = 1;
 
   // Status of decode operation.
@@ -659,7 +659,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   tc2 = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  retval = dest->append (tc2, src, ACE_TRY_ENV);
+  retval = dest->append (tc2.in (), src, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   //  tc2->_decr_refcnt ();

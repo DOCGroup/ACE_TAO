@@ -722,7 +722,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
-  CORBA::TypeCode_ptr discrim_tc;
+  CORBA::TypeCode_var discrim_tc;
   CORBA::TypeCode_ptr member_tc = 0;
   CORBA::Any_ptr member_label;
   CORBA::ULong discrim_size_with_pad;
@@ -741,7 +741,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
 
   // decode the discriminator value
   discrim_val = base_union->_discriminant ();
-  stream->decode (discrim_tc, discrim_val, data2, ACE_TRY_ENV);
+  stream->decode (discrim_tc.in (), discrim_val, data2, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   discrim_size_with_pad = tc->TAO_discrim_pad_size (ACE_TRY_ENV);
@@ -809,7 +809,7 @@ TAO_Marshal_Union::decode (CORBA::TypeCode_ptr  tc,
             CORBA::ULong ul;
             TAO_InputCDR stream ((ACE_Message_Block *)
                                  member_label->_tao_get_cdr ());
-            (void)stream.decode (discrim_tc, &ul, 0, ACE_TRY_ENV);
+            (void)stream.decode (discrim_tc.in (), &ul, 0, ACE_TRY_ENV);
             //@@EXC@@ Rethrow CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE)?
             ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
@@ -965,7 +965,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   // Size of element.
   size_t size;
   CORBA::ULong bounds;
@@ -1124,7 +1124,10 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
               // constant, we compute it only once.
               while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
-                  retval = stream->decode (tc2, value, 0, ACE_TRY_ENV);
+                  retval = stream->decode (tc2.in (), 
+                                           value, 
+                                           0, 
+                                           ACE_TRY_ENV);
                   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                   value += size;
                 }
@@ -1138,7 +1141,10 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                        retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                   {
                     CORBA_Object_ptr ptr;
-                    retval = stream->decode (tc2, &ptr, 0,  ACE_TRY_ENV);
+                    retval = stream->decode (tc2.in (), 
+                                             &ptr, 
+                                             0,  
+                                             ACE_TRY_ENV);
                     ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
                     seq->_downcast (value, ptr, ACE_TRY_ENV);
@@ -1178,7 +1184,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
 
   // Size of element.
   size_t  size;
@@ -1289,7 +1295,7 @@ TAO_Marshal_Array::decode (CORBA::TypeCode_ptr  tc,
       // compute it only once
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = stream->decode (tc2, value, 0, ACE_TRY_ENV);
+          retval = stream->decode (tc2.in (), value, 0, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
           value += size;
@@ -1317,7 +1323,7 @@ TAO_Marshal_Alias::decode (CORBA::TypeCode_ptr  tc,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   // Typecode of the aliased type.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   CORBA::Boolean continue_decoding = 1;
 
   // Context is the CDR stream.
