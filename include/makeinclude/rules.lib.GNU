@@ -67,7 +67,7 @@ ifdef ibmcxx_build
 	then \
 		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
-		$(AR) $(ARFLAGS) $@ tempinc/*.$(OBJEXT); \
+		$(AR) $(ARFLAGS) $@ $(TEMPINCDIR)/*.$(OBJEXT); \
 	fi
 endif
 	-chmod a+r $@

@@ -1,3 +1,20 @@
+Tue Sep 16 13:19:42 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Set the TEMPINCDIR to a subdirectory under the original TEMPINCDIR
+          value.  This will happen only if TEMPINCDIR is defined (for AIX).
+
+        * include/makeinclude/platform_aix4_cset++.GNU:
+        * include/makeinclude/platform_aix_ibm.GNU:
+
+          Set the template include directory via the -qtempinc=<directory>
+          option instead of using the default (tempinc).
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Use $(TEMPINCDIR) instead of tempinc.
+
 Tue Sep 16 11:49:19 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:
