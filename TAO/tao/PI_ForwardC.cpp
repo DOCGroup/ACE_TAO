@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "PI_ForwardC.h"
@@ -38,6 +38,14 @@
 #if !defined (__ACE_INLINE__)
 #include "PI_ForwardC.i"
 #endif /* !defined INLINE */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -74,14 +82,11 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerId (
     sizeof (PortableInterceptor::ServerId)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ServerId,
-    &_tc_TAO_tc_PortableInterceptor_ServerId
-  )
-TAO_NAMESPACE_END
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ServerId =
+    &_tc_TAO_tc_PortableInterceptor_ServerId;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -116,14 +121,11 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBId (
     sizeof (PortableInterceptor::ORBId)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ORBId,
-    &_tc_TAO_tc_PortableInterceptor_ORBId
-  )
-TAO_NAMESPACE_END
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ORBId =
+    &_tc_TAO_tc_PortableInterceptor_ORBId;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -182,14 +184,11 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterName (
     sizeof (PortableInterceptor::AdapterName)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_AdapterName,
-    &_tc_TAO_tc_PortableInterceptor_AdapterName
-  )
-TAO_NAMESPACE_END
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_AdapterName =
+    &_tc_TAO_tc_PortableInterceptor_AdapterName;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -248,12 +247,18 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectId (
     sizeof (PortableInterceptor::ObjectId)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_ObjectId,
-    &_tc_TAO_tc_PortableInterceptor_ObjectId
-  )
-TAO_NAMESPACE_END
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr _tc_ObjectId =
+    &_tc_TAO_tc_PortableInterceptor_ObjectId;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

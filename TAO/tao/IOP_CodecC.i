@@ -53,8 +53,8 @@ CORBA::Boolean operator<< (
 {
   return
     (strm << _tao_aggregate.format) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.major_version)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor_version));
+    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.major_version)) &&
+    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.minor_version));
 }
 
 ACE_INLINE
@@ -65,7 +65,7 @@ CORBA::Boolean operator>> (
 {
   return
     (strm >> _tao_aggregate.format) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.major_version)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor_version));
+    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.major_version)) &&
+    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.minor_version));
 }
 

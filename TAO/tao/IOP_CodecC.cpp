@@ -574,10 +574,15 @@ IOP::Codec::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Codec::_nil ();
+    }
+  
   Codec_ptr proxy =
     dynamic_cast<Codec_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+
+  return Codec::_duplicate (proxy);
 }
 
 IOP::Codec_ptr
@@ -987,10 +992,15 @@ IOP::CodecFactory::_narrow (
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return CodecFactory::_nil ();
+    }
+  
   CodecFactory_ptr proxy =
     dynamic_cast<CodecFactory_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+
+  return CodecFactory::_duplicate (proxy);
 }
 
 IOP::CodecFactory_ptr

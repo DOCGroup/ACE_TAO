@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_POLICY___CI_)
 #define _CORBA_POLICY___CI_
@@ -30,81 +36,42 @@ ACE_INLINE
 CORBA::Policy::Policy (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant
+    TAO_Abstract_ServantBase *servant,
+    TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc),
+    the_TAO_Policy_Proxy_Broker_ (0)
+  
 {
   this->CORBA_Policy_setup_collocation (_tao_collocated);
 }
 
+ACE_INLINE
+CORBA::Policy::Policy (
+    IOP::IOR *ior,
+    TAO_ORB_Core *oc
+  )
+  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+    the_TAO_Policy_Proxy_Broker_ (0)
+  
+{
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_POLICYMANAGER___CI_)
 #define _CORBA_POLICYMANAGER___CI_
 
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyManager>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_CORBA_POLICYCURRENT___CI_)
 #define _CORBA_POLICYCURRENT___CI_
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-template<>
-ACE_INLINE
-CORBA::Boolean
-TAO::Any_Impl_T<CORBA::PolicyCurrent>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 #endif /* end #if !defined */
 
@@ -158,22 +125,22 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
-#if !defined _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_UShort_I_
-#define _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_UShort_I_
+#if !defined _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_CORBA_UShort__I_
+#define _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_CORBA_UShort__I_
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA::InvalidPolicies::_tao_seq_UShort &
+    const CORBA::InvalidPolicies::_tao_seq_CORBA_UShort_ &
   );
 
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA::InvalidPolicies::_tao_seq_UShort &
+    CORBA::InvalidPolicies::_tao_seq_CORBA_UShort_ &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_UShort_I_ */
+#endif /* _TAO_CDR_OP_CORBA_InvalidPolicies__tao_seq_CORBA_UShort__I_ */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
@@ -236,3 +203,4 @@ TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA::Policy_ptr &
   );
+

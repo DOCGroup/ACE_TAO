@@ -1,3 +1,76 @@
+Mon Sep  1 13:51:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/BoundsC.h:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DynamicC.h:
+        * tao/GIOPC.h:
+        * tao/IIOPC.h:
+        * tao/IOPC.h:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/IOP_CodecC.i:
+        * tao/IOP_IORC.h:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/ObjectIdList.pidl:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/ObjectIdListC.i:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/Object_KeyC.i:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/OctetSeq.pidl:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/OctetSeqC.i:
+        * tao/PI_Forward.pidl:
+        * tao/PI_ForwardC.cpp:
+        * tao/PI_ForwardC.h:
+        * tao/PI_ForwardC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/Policy_Forward.pidl:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Policy_ForwardC.i:
+        * tao/Pollable.pidl:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/Services.pidl:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ServicesC.i:
+        * tao/StringSeq.pidl:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
+        * tao/TAO.pidl:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+        * tao/TimeBase.pidl:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/WrongTransaction.pidl:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/WrongTransactionC.i:
+
+	  Finished regeneration of hand-crafted files in 
+	  $TAO_ROOT/tao. Also made minor changes to files
+          regenerated in checkin last night.
+
 Mon Sep  1 13:41:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root_ch.cpp:
