@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // ACE.cpp
 // $Id$
 
@@ -7,6 +8,18 @@
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/INET_Addr.h"
+
+// TESTING ADDITION
+// This is needed for AIX 3.2.5 
+#if defined(_AIX)
+#include <sys/ioctl.h>
+#endif
+#if defined(__sun__) && !defined(_SVR4)
+#include <sys/sockio.h>
+#endif
+// END TESTING ADDITION
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
@@ -32,16 +45,19 @@ ACE::is_process_active (pid_t pid)
   ACE_HANDLE process_handle = ::OpenProcess (PROCESS_QUERY_INFORMATION,
 					     FALSE,
 					     pid);
-  if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
+  if (process_handle == ACE_INVALID_HANDLE 
+      || process_handle == NULL)
     return 0;
   else
     {
       DWORD status;
-      if (GetExitCodeProcess (process_handle, &status) == 0)
+
+      if (::GetExitCodeProcess (process_handle,
+				&status) == 0)
 	return 0;
       else
         {
-	  if(status == STILL_ACTIVE)
+	  if (status == STILL_ACTIVE)
 	    return 1;
 	  else
 	    return 0;
@@ -1397,7 +1413,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 		     ACE_UINT32 host_addr, 
 		     ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_INET_Addr::get_bcast_addr");
+  ACE_TRACE ("ACE::get_bcast_addr");
 
 #if !defined(ACE_WIN32)
   ACE_HANDLE s = handle;
@@ -1418,7 +1434,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   // techniques
   if (ACE_OS::ioctl (s, SIOCGIFCONF, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-                      "ACE_INET_Addr_::get_bcast_addr: ioctl (get interface configuration)"),
+                      "ACE::get_bcast_addr: ioctl (get interface configuration)"),
                       -1);
 
   struct ifreq *ifr = ifc.ifc_req;
@@ -1460,7 +1476,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (ifr->ifr_addr.sa_family != AF_INET)
         {
           ACE_ERROR ((LM_ERROR, "%p\n",
-                      "ACE_INET_Addr::get_bcast_addr: Not AF_INET"));
+                      "ACE::get_bcast_addr: Not AF_INET"));
           continue;
         }
 
@@ -1470,14 +1486,14 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (ACE_OS::ioctl (s, SIOCGIFFLAGS, (char *) &flags) == -1)
         {
           ACE_ERROR ((LM_ERROR, "%p\n",
-                     "ACE_INET_Addr::get_bcast_addr: ioctl (get interface flags)"));
+                     "ACE::get_bcast_addr: ioctl (get interface flags)"));
           continue;
         }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_UP) == 0)
         {
           ACE_ERROR ((LM_ERROR, "%p\n",
-                     "ACE_INET_Addr::get_bcast_addr: Network interface is not up"));
+                     "ACE::get_bcast_addr: Network interface is not up"));
           continue;
         }
 
@@ -1488,7 +1504,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         {
           if (ACE_OS::ioctl (s, SIOCGIFBRDADDR, (char *) &if_req) == -1)
             ACE_ERROR ((LM_ERROR, "%p\n",
-                       "ACE_INET_Addr::get_bcast_addr: ioctl (get broadaddr)"));
+                       "ACE::get_bcast_addr: ioctl (get broadaddr)"));
           else
             { 
               ACE_OS::memcpy ((struct sockaddr_in *) &ip_addr,
@@ -1507,7 +1523,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
       else
         ACE_ERROR ((LM_ERROR, "%p\n",
-                   "ACE_INET_Addr::get_bcast_addr: Broadcast is not enable for this interface."));
+                   "ACE::get_bcast_addr: Broadcast is not enable for this interface."));
 
       if (handle == ACE_INVALID_HANDLE)
 	ACE_OS::close (s);
@@ -1524,3 +1540,356 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   return 0;
 #endif /* !ACE_WIN32 */
 }
+
+// Helper routine for get_ip_interfaces, differs by UNIX platform so
+// put into own subroutine.  perform some ioctls to retrieve ifconf
+// list of ifreq structs.
+
+static int 
+ACE::count_interfaces (ACE_HANDLE handle, 
+		       size_t &how_many)
+{
+#if defined(__SVR4) 
+  if (ACE_OS::ioctl (handle, SIOCGIFNUM, (caddr_t) &how_many) == -1) 
+    ACE_ERROR_RETURN ((LM_ERROR, "ACE::get_ip_interfaces:ioctl - SIOCGIFNUM failed"), -1);
+   return 0;
+#elif defined (__unix__)
+// BSD compatible OS: HP UX, AIX, SunOS 4.x perform some ioctls to
+// retrieve ifconf list of ifreq structs no SIOCGIFNUM on SunOS 4.x,
+// so use guess and scan algorithm
+
+  const int MAX_IF = 10; // probably hard to put this many ifs in a unix box..
+  ACE_HANDLE handle, num_ifs = MAX_IF; // HACK - set to an unreasonable number
+  struct ifconf ifcfg;
+  struct ifreq *p_ifs = NIL;
+  size_t ifreq_size = 0;
+  ACE_UINT32 addr;
+  struct in_addr if_addr, if_test; 
+
+  ifreq_size = num_ifs * sizeof (struct ifreq);
+  p_ifs = (struct ifreq *) ACE_OS:malloc (ifreq_size);
+
+  if (!p_ifs) 
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
+  ACE_OS::memset (p_ifs, 0, ifreq_size);
+  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  ifcfg.ifc_req = p_ifs;
+  ifcfg.ifc_len = ifreq_size; 
+  
+  if (ACE_OS::ioctl (handle, SIOCGIFCONF, (caddr_t) &ifcfg) == -1) 
+    {
+      ACE_OS::free (ifcfg.ifc_req);
+      ACE_ERROR_RETURN (("count_interfaces:ioctl - SIOCGIFCONF failed"), -1);
+    } 
+
+  ACE_OS::close (handle);
+
+  int if_count = 0;
+
+  // get if address out of ifreq buffers.
+  for (i = 0; i < num_ifs; p_ifs++, i++) 
+    {
+      ACE_OS::memcpy ((char *)&addr,
+		      (char *) &p_ifs->ifr_addr.sa_data + 2,
+		      sizeof (addr)); 
+
+      if (addr == 0) 
+	{		// no more addr's found
+	  ACE_OS::free (ifcfg.ifc_req);
+	  return count;
+	}
+      if_count++;
+    }
+
+  free(ifcfg.ifc_req);
+  return if_count;
+#else
+   ACE_NOTSUP_RETURN (-1);; // no implmentation
+#endif /* __SVR4 */
+}
+
+// Routine to return a descriptor from which ioctl() requests can be
+// made.
+
+static ACE_HANDLE
+ACE::get_handle (void)
+{
+// Solaris 2.x
+  ACE_HANDLE handle = ACE_INVALID_HANDLE;
+#if defined(__SVR4)
+  handle = ACE_OS::open ("/dev/ip", O_RDONLY);
+#elif defined(__unix__)
+// BSD compatible OS: HP UX, AIX, SunOS 4.x
+  handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
+#endif /* __SVR4 */
+  return handle;
+}
+
+// helper routine for get_ip_interfaces
+#if defined(ACE_WIN32)
+#include <ace/SString.h>
+#define NIL_STR TEXT("")
+
+#if defined (UNICODE)
+#define STRLEN wcslen
+#else
+#define STRLEN ACE_OS::strlen
+#endif
+
+// Zero terminated strings laid out like argv[], or NT registry
+// MULTI_SZ data type note, this object does not.
+
+class string_array 
+{
+public:
+  string_array (const TCHAR *the_str);
+  ~string_array (void);
+  long count () const;
+  const TCHAR *const operator[] (int idx) const;
+
+private:
+  string_array (const string_array&);
+  void build_object (wchar_t *str, int sz);
+  const TCHAR *buffer_;
+  long count_;
+};
+
+string_array::string_array (const TCHAR * str)
+  : count_(0), buffer_(0)
+{
+  if (str == 0 || *str == '\0')
+    return;
+  
+  buffer_ = str; // 
+
+  const TCHAR *ptr = buffer_;
+  
+  // determine how many items there are (count_)
+  while (*ptr) 
+    {
+      int len = STRLEN (ptr);
+      count_++;  // how may strings
+      ptr += len + 1; // move to start of next string
+    }
+}
+
+string_array::~string_array (void)
+{
+}
+
+// how many strings
+long 
+string_array::count (void) const
+{
+  return count_;
+}
+
+// * return a const only ptr
+
+const TCHAR *const 
+string_array::operator[] (int idx) const
+{
+  if (idx < 0 || idx > count_) 
+    return (TCHAR *) 0;
+
+  const TCHAR *ptr = buffer_;
+
+  for (int j = 0; j < idx; j++) 
+    {
+      int len = STRLEN(ptr);
+      ptr += len + 1; // move to start of next string (skip past null)
+    }
+
+  return (const TCHAR *const) ptr;
+}
+
+// Return value in buffer for a key/name pair from the Windows
+// Registry up to buf_len size.
+
+static int 
+get_reg_value (const TCHAR *key,
+	       const TCHAR *name,
+	       TCHAR *buffer,
+	       DWORD &buf_len)
+{
+  HKEY hk; 
+  DWORD buf_type;
+  LONG rc = RegOpenKeyEx (HKEY_LOCAL_MACHINE, key, 0, KEY_READ, &hk);
+
+  // 1. open key that defines the interfaces used for TCP/IP?
+  if (rc != ERROR_SUCCESS) 
+    // print_error_string(TEXT("RegOpenKeyEx"), rc); 
+    return -1;
+
+  rc = RegQueryValueEx (hk, name, 0, &buf_type, 
+		       (unsigned char *) buffer, &buf_len);
+
+  if (rc != ERROR_SUCCESS) 
+    {
+      // print_error_string(TEXT("RegEnumKeyEx"), rc);
+      RegCloseKey (hk);
+      return -2;
+    }
+
+  RegCloseKey (hk);
+  return 0;
+}
+#endif /* ACE_WIN32 */
+
+// return an array of all configured IP interfaces on this host, count
+// rc = 0 on success (count == number of interfaces else -1 caller is
+// responsible for calling delete [] on parray
+
+int 
+ACE::get_ip_interfaces (ACE_UINT32 &count,
+			ACE_INET_Addr *&addrs)
+{
+  // code for NT
+#if defined (ACE_WIN32)
+
+  // this is ugly but the string classes are not parametrized ...
+#if defined (UNICODE)
+#define NT_STRING ACE_WString
+#else 
+#define NT_STRING ACE_CString
+#endif /* UNICODE */
+
+// TODO: add windows code here
+#define SVCS_KEY1 TEXT("SYSTEM\\CurrentControlSet\\Services\\")
+#define LINKAGE_KEY1 TEXT("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage")
+#define TCP_PARAM_SUBKEY TEXT("\\Parameters\\Tcpip")
+#define BIND_NAME_ID TEXT("Bind")
+#define IPADDR_NAME_ID TEXT("IPAddress")
+#define PERIOD_STR TEXT(".")
+#define BLANK_STR TEXT(" ")
+
+  const int MAX_STRING_SZ = 4096;
+
+  // 1. extract bind=device list 
+  TCHAR buffer[MAX_STRING_SZ]; // 45 chars
+  DWORD buf_len = MAX_STRING_SZ;
+
+  if (::get_reg_value (LINKAGE_KEY1,
+		       BIND_NAME_ID,
+		       buffer,
+		       buf_len))
+    return -1;
+
+  // 2. returned buffer may contain "\\Device\\dev1\0\\device\\dev2\0\0"
+  string_array dev_names ((TCHAR *) buffer); // access raw buffer through this class
+  int n_interfaces = dev_names.count ();
+
+  // case 1. no interfaces present, empty string? OS version change?
+  if (n_interfaces == 0)
+    return 0;
+
+  ACE_NEW_RETURN (addrs, ACE_INET_Addr[n_interfaces], -2);
+  int i;
+  
+  for (i = 0; i < n_interfaces; i++) 
+    {
+
+      // a. construct name to access IPAddress for this interface 
+      NT_STRING ifdevkey (SVCS_KEY1);
+      NT_STRING the_dev = dev_names[i]; // chop off the "\Device" and keep last name
+
+      if (the_dev.length() < 8)
+	return -3;
+      else 
+	{
+	  the_dev = the_dev.substring (8);  // rest of string from offset 8
+	  ifdevkey += the_dev;
+	  ifdevkey += TCP_PARAM_SUBKEY;
+
+	  // b. extract value 
+	  if (get_reg_value (ifdevkey.rep(), IPADDR_NAME_ID, buffer, buf_len)) 
+	    return -4;
+
+	  // c. store in hostinfo object array and up the counter
+#if defined (UNICODE)
+	  const MAX_HOSTNAME_LEN = 256; // per rfc
+	  char c_string[MAX_HOSTNAME_LEN +1];
+	  ::wcstombs(c_string, buffer, MAX_HOSTNAME_LEN);
+	  addrs[i] = ACE_INET_Addr ((unsigned short) 0, c_string);
+#else
+	  addrs[i] = ACE_INET_Addr ((unsigned short) 0, buffer);
+#endif /* UNICODE */
+	  count++;
+	}
+    }
+  return 0;
+#elif defined(__unix__)
+  //  COMMON (SVR4 and BSD) UNIX CODE
+
+  ACE_TRACE ("ACE::get_ip_interfaces");
+  ACE_UINT32 num_ifs;
+
+  const int FUDGE = 2; /* offset into sa_data[] for ip address on sparc */
+
+  ACE_HANDLE handle = get_handle();		// call specific routine as necessary
+
+  if (handle == ACE_INVALID_HANDLE) 
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::get_ip_interfaces:open"), -1);
+ 
+  if (ACE::count_interfaces (handle, num_ifs))
+    {
+      ACE_OS::close (handle);
+      return -1;
+    }
+
+  auto_ptr<struct ifreq> p_ifs (new struct ifreq[num_ifs]);
+
+  if (p_ifs.get() == 0) 
+    {
+      ACE_OS::close (handle);
+      errno = ENOMEM;
+      return -1;
+    }
+ 
+  struct ifconf ifcfg;  
+  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  ifcfg.ifc_req = p_ifs.get ();
+  ifcfg.ifc_len = num_ifs * sizeof (struct ifreq); 
+
+  if (ACE_OS::ioctl (handle, SIOCGIFCONF, (caddr_t) &ifcfg) == -1) 
+    {
+      ACE_OS::close (handle);
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "is_address_local:ioctl - SIOCGIFCONF failed"), -1);
+    }
+
+  ACE_OS::close (handle);
+
+  // ------------ now create and initialize output array -------------
+  count = 0;
+  ACE_NEW_RETURN (addrs, ACE_INET_Addr[num_ifs]); // caller must free
+
+  struct ifreq *pcur = p_ifs.get ();
+  // Get if address out of ifreq buffers have yet to see a non PF_INET
+  // data type, but don't chance it which means allocation might be
+  // larger than actually used
+
+  for (i = 0; i < num_ifs; pcur++, i++) 
+    {
+      ACE_UINT32 tmp_addr; 
+
+      // SPARC w/Solaris 2.x TODO: see if fudge factor can be removed.
+      if (pcur->ifr_addr.sa_family == PF_INET)
+        {
+          ACE_OS::memcpy ((char *) &tmp_addr, 
+			  (char *) &pcur->ifr_addr.sa_data +FUDGE,
+			  sizeof tmp_addr);
+          count++;
+          addrs[i].set ((u_short) 0, tmp_addr, 0); // 0 = data in net byte order
+        }
+    }
+  return 0; 
+#else
+  ACE_NOTSUP_RETURN (-1);;			// no implentation
+#endif /* ACE_WIN32 */
+}
+
+

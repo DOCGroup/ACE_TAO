@@ -44,7 +44,7 @@ Time_Value_Test
 Timer_Queue_Test
 Tokens_Test
 UPIPE_SAP_Test
-
 Reactors_Test
+Enum_Interfaces_Test
 
 @echo Tests complete...

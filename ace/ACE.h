@@ -24,6 +24,7 @@ class ACE_Time_Value;
 class ACE_Thread_Manager;
 class ACE_Reactor;
 class ACE_Event_Handler;
+class ACE_INET_Addr;
 
 class ACE_Export ACE_Stdin_Args
 {
@@ -216,6 +217,22 @@ public:
   // determine our broadcast address, otherwise we'll have to create a
   // socket internally (and free it).  Returns -1 on failure and 0 on
   // success.
+
+  static int get_ip_interfaces (ACE_UINT32 &count, 
+				ACE_INET_Addr *&addr_array);
+  // Return count and array of all configured IP interfaces on this
+  // host, rc = 0 on success (count == number of interfaces else -1).
+  // Caller is responsible for calling delete [] on <addr_array>.
+
+  static int count_interfaces (ACE_HANDLE handle,
+			       size_t &how_many);
+  // Helper routine for get_ip_interfaces, differs by UNIX platform so
+  // put into own subroutine.  perform some ioctls to retrieve ifconf
+  // list of ifreq structs.
+
+  static ACE_HANDLE get_handle (void);
+  // Routine to return a handle from which <ioctl> requests can be
+  // made.  Caller must <close> the handle.
 
   static int handle_timed_accept (ACE_HANDLE listener,
 				  ACE_Time_Value *timeout, 

@@ -92,6 +92,7 @@ run Process_Strategy_Test       # uses ACE_Strategy_Acceptor
 run Service_Config_Test         # uses Service_Config
 run Priority_Task_Test          # uses Task with priorities
 run IOStream_Test               # uses ACE_IOStream and ACE_SOCK_Stream
+run Enum_Interfaces_Test        # uses ACE::get_ip_interfaces()
 
 echo "Tests complete..."
 

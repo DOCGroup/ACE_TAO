@@ -204,6 +204,29 @@ ACE_CString::operator = (const ACE_CString &s)
     }
 }
 
+// Return substring.
+ACE_CString 
+ACE_CString::substring (const size_t offset,
+			const size_t length)
+{
+  ACE_CString nil;
+  size_t count = len_;
+
+  // case 1. empty string
+  if (len_ == 0)
+    return nil;
+
+  // case 2. start pos l
+  if (offset >= len_)
+    return nil;
+
+  // get all remaining bytes
+  if (length == -1)
+    count = len_ - offset;
+
+  return ACE_CString (&rep_[offset], count);
+}
+
 int
 ACE_CString::strstr (const ACE_CString &s) const
 {
@@ -662,6 +685,29 @@ ACE_WString::operator = (const ACE_WString &s)
       ACE_OS::memcpy ((void *) this->rep_, (const void *) s.rep_,
 		      this->len_ * sizeof (ACE_USHORT16));
     }
+}
+
+// return substring
+ACE_WString 
+ACE_WString::substring (const size_t offset,
+			const size_t length)
+{
+  ACE_WString nil;
+  size_t count = len_;
+
+  // case 1. empty string
+  if (len_ == 0)
+    return nil;
+
+  // case 2. start pos l
+  if (offset >= len_)
+    return nil;
+
+  // get all remaining bytes
+  if (length == -1)
+    count = len_ - offset;
+
+  return ACE_WString (&rep_[offset], count);
 }
 
 void 
