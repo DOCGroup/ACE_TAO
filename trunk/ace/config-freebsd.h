@@ -266,6 +266,16 @@ typedef union sigval sigval_t;
 
 #define ACE_LACKS_STROPTS_H
 
+// Needed when ACE_HAS_WCHAR is defined.
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSDUP
+#define ACE_LACKS_ITOW
+#define ACE_HAS_3_PARAM_WCSTOK
+
+// Even though we do have tolower, we have a conflict when ACE_HAS_WCHAR is defined.
+#define ACE_LACKS_TOWLOWER
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_H */

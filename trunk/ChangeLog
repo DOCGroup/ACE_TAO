@@ -1,3 +1,10 @@
+Tue Nov  4 18:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-freebsd.h
+          Added ACE_LACKS_WCSNICMP, ACE_LACKS_WCSICMP, ACE_LACKS_WCSDUP,
+          ACE_LACKS_ITOW, ACE_HAS_3_PARAM_WCSTOK, and ACE_LACKS_TOWLOWER,
+          needed when ACE_HAS_WCHAR is defined.
+
 Tue Nov  4 09:50:47 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Makefile.am
