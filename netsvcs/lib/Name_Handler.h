@@ -117,9 +117,6 @@ private:
   // This is the table of pointers to functions that we use to
   // simplify the handling of list requests.
 
-  ACE_Naming_Context *naming_context_;
-  // ACE_Naming_Context of this Handler.
-
   ACE_Name_Request name_request_;
   // Cache request from the client.
 
