@@ -1,3 +1,20 @@
+Wed Apr  4 08:35:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/BiDir_Adapter.h:
+	* tao/TypeCodeFactory_Adapter.h: Included Exception.h in place of
+	  corbafwd.h. Builds with exceptions=1 like Core builds on Redhat
+	  were complaining about incomplete type for
+	  CORBA::SystemException. 
+
+	* tao/ORB_Core.cpp: 
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: Removed the #include of BiDir_Adapter from
+	  ORB_Core.h and moved it to ORB_Core.cpp. Forward declared that
+	  class in the cpp file. Moved the method that is dependant on the
+	  include in .h file, from .i file to .cpp file -- basically
+	  uninlined that method. The method is not on the critical path
+	  and so shouldn't matter.
+
 Wed Apr  4 08:05:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp: Added a missing
