@@ -17,6 +17,8 @@ main (int argc, char *argv[])
 
   ACE_LSOCK_Acceptor peer_acceptor;
 
+  ACE_OS::unlink (rendezvous);
+
   // Create a server.
 
   if (peer_acceptor.open (server_addr) == -1)

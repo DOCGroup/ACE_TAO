@@ -1,3 +1,10 @@
+Tue Mar  4 16:37:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp (main): Make life
+ 	  easier by doing an unlink(rendezvous) before reopening the
+ 	  UNIX-domain socket.  Thanks to Jeff Morgan
+ 	  <jeff@audioactive.com> for suggesting this.
+
 Sun Mar 02 19:58:00 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config*.h: removed #define of ACE_HAS_INLINED_OSCALLS
