@@ -5,9 +5,9 @@
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 
-ACE_RCSID(ForwardRequest,
-          client,
-          "$Id$")
+ACE_RCSID (ForwardRequest,
+           client,
+           "$Id$")
 
 const char *ior1 = 0;
 const char *ior2 = 0;
@@ -48,6 +48,8 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  int status = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -97,19 +99,43 @@ main (int argc, char *argv[])
       // PortableInterceptor::ForwardRequest exceptions to be thrown,
       // thus causing the request to be forwarded to another object.
 
+      CORBA::Short old_number = 0;  // Previous invocation result.
+      CORBA::Short number = 0;      // New invocation result.
       for (int i = 1; i <= 4; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Issuing request %d.\n",
                       i));
-          
-          CORBA::Short number = server->number (ACE_TRY_ENV);
+
+          if (i > 1)
+            old_number = number;
+
+          number = server->number (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Request %d handled by object %d.\n",
                       i,
                       number));
+
+          // Check if the new result is the same as the previous
+          // result.
+          //
+          // This test is designed so that no two sequential
+          // invocation results are the same.  If they are the same,
+          // then the requests were invoked on the same object, one
+          // after the other.  This means that forwarding did not
+          // occur, which is of course a failure in the
+          // PortableInterceptor::ForwardRequest support.
+          if (i > 1 && old_number == new_number)
+            {
+              status = -1;
+
+              ACE_ERROR ((LM_ERROR,
+                          "TEST FAILED: Request was not "
+                          "forwarded.\n"));
+              break;
+            }
         }
 
       server->shutdown (ACE_TRY_ENV);
@@ -123,5 +149,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  return 0;
+  return status;
 }

@@ -1,3 +1,20 @@
+Wed Jan 24 00:27:47 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp
+	  (receive_request_service_contexts, receive_request):
+
+	  Moved the secure invocation interception code from the
+	  receive_request() interception point to the
+	  receive_request_service_contexts() interception point since it
+	  executed earlier in the request handling path.
+
+	* tests/Portable_Interceptors/ForwardRequest/client.cpp (main):
+
+	  Improved test by verifying no two consecutive invocation results
+	  are the same.  The test is designed so that this situation
+	  should never occur.  If it does, then it is a clear indication
+	  that PortableInterceptor::ForwardRequest support is broken.
+
 Wed Jan 24 08:26:52 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
