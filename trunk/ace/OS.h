@@ -3619,7 +3619,7 @@ struct sigaction
 // negative here so they won't conflict with other values like SIGIO,
 // etc.
 #define ACE_SIGIO -1
-#define ACE_URGENT -2
+#define ACE_SIGURG -2
 #define ACE_CLOEXEC -3
 
 # define LOCALNAME 0
