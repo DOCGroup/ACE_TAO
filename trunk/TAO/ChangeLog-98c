@@ -1,3 +1,9 @@
+1997-10-25  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp: Fixed proper tmp filename
+	creation.
+	
+
 Sat Oct 25 14:14:53 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* TAO_IDL/tao_idl.dsw: 

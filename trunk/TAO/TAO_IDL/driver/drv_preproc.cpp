@@ -231,15 +231,15 @@ DRV_pre_proc(char *myfile)
   else
     {
       strcpy(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
-      strcpy(tmp_file, "tmp");
+      strcat(tmp_file, "tmp");
       strcpy(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
-      strcpy(tmp_ifile, "tmp");
+      strcat(tmp_ifile, "tmp");
     }
 
   strcat(tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
   strcat(tmp_file, "idlf_XXXXXX");
 
-  strcpy(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
+  strcat(tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
   strcat(tmp_ifile, "idli_XXXXXX");
 
   (void) mktemp(tmp_file); strcat(tmp_file, ".cc");
