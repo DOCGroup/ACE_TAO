@@ -76,7 +76,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
   auto_ptr<TAO_Cached_Connector_Lock> new_connector_lock (connector_lock);
 
   ACE_NEW_RETURN (this->cached_connect_strategy_,
-                  CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
+                  TAO_CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
                                            new_connect_creation_strategy.get (),
                                            0,
                                            0,
@@ -419,17 +419,17 @@ TAO_IIOP_Connector::purge_connections (void)
 
 #define TAO_HANDLER TAO_IIOP_Client_Connection_Handler
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_HANDLER>
-#define TAO_ADDR TAO_IIOP_Connector::ADDR
-#define TAO_HASH_KEY TAO_IIOP_Connector::HASH_KEY
-#define TAO_COMPARE_KEYS TAO_IIOP_Connector::COMPARE_KEYS
-#define TAO_ATTRIBUTES TAO_IIOP_Connector::ATTRIBUTES
-#define TAO_CACHED_HANDLER TAO_IIOP_Connector::CACHED_HANDLER
-#define TAO_HASH_MAP TAO_IIOP_Connector::HASH_MAP
-#define TAO_HASH_MAP_ITERATOR TAO_IIOP_Connector::HASH_MAP_ITERATOR
-#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_IIOP_Connector::HASH_MAP_REVERSE_ITERATOR
-#define TAO_CACHING_UTILITY TAO_IIOP_Connector::CACHING_UTILITY
-#define TAO_CACHING_STRATEGY TAO_IIOP_Connector::CACHING_STRATEGY
-#define TAO_CACHED_CONNECT_STRATEGY TAO_IIOP_Connector::CACHED_CONNECT_STRATEGY
+#define TAO_ADDR TAO_IIOP_Connector::TAO_IADDR
+#define TAO_HASH_KEY TAO_IIOP_Connector::TAO_HASH_KEY
+#define TAO_COMPARE_KEYS TAO_IIOP_Connector::TAO_COMPARE_KEYS
+#define TAO_ATTRIBUTES TAO_IIOP_Connector::TAO_ATTRIBUTES
+#define TAO_CACHED_HANDLER TAO_IIOP_Connector::TAO_CACHED_HANDLER
+#define TAO_HASH_MAP TAO_IIOP_Connector::TAO_HASH_MAP
+#define TAO_HASH_MAP_ITERATOR TAO_IIOP_Connector::TAO_HASH_MAP_ITERATOR
+#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_IIOP_Connector::TAO_HASH_MAP_REVERSE_ITERATOR
+#define TAO_CACHING_UTILITY TAO_IIOP_Connector::TAO_CACHING_UTILITY
+#define TAO_CACHING_STRATEGY TAO_IIOP_Connector::TAO_CACHING_STRATEGY
+#define TAO_CACHED_CONNECT_STRATEGY TAO_IIOP_Connector::TAO_CACHED_CONNECT_STRATEGY
 
 typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
         TAO_IIOP_LRU_CACHING_STRATEGY;
