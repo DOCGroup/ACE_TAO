@@ -24,8 +24,22 @@ Performance_Test::init (int argc, char **argv)
 }
 
 int
-Performance_Test::pre_run_test (void)
+Performance_Test::pre_run_test (Benchmark_Base *bb)
 {
+  this->orig_n_lwps_ = ACE_Thread::getconcurrency ();
+  this->n_lwps_ = options.n_lwps ();
+  Benchmark_Performance *bp = (Benchmark_Performance *) bb;
+
+  if (this->n_lwps_ > 0)
+    ACE_Thread::setconcurrency (this->n_lwps_);
+
+      // We should probably use a "barrier" here rather than
+      // THR_SUSPENDED since many OS platforms lack the ability to
+      // create suspended threads...
+  if (ACE_Thread_Manager::instance ()->spawn_n 
+      (options.thr_count (), ACE_THR_FUNC (bp->svc_run), 
+       (void *) bp, options.t_flags () | THR_SUSPENDED) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
   return 0;
 }
 
