@@ -1,3 +1,14 @@
+Wed Aug 11 11:00:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Faults/pong.cpp:
+	  Left hooks to print the exceptions when received. This is useful
+	  when debugging the program.
+
+	* tests/Faults/Faults.dsw:
+	* tests/Faults/pong.dsp:
+	* tests/Faults/ping.dsp:
+	  Added new project files
+
 Wed Aug 11 11:03:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp (recursive_build,
