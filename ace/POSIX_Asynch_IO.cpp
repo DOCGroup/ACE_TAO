@@ -1105,6 +1105,9 @@ ACE_POSIX_Asynch_Accept::close ()
         return 0;
       }
 
+    if (this->handle_ == ACE_INVALID_HANDLE)
+      return 0;
+
     this->task_lock_count_++;
   }
 
