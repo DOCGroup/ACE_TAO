@@ -12,7 +12,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name orbsvcs_lib
+    Project_Dep_Name orbsvcs
     End Project Dependency
 }}}
 
@@ -27,7 +27,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name orbsvcs_lib
+    Project_Dep_Name orbsvcs
     End Project Dependency
 }}}
 
@@ -42,7 +42,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name orbsvcs_lib
+    Project_Dep_Name orbsvcs
     End Project Dependency
 }}}
 
@@ -57,13 +57,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name orbsvcs_lib
+    Project_Dep_Name orbsvcs
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "orbsvcs_lib"=.\orbsvcs\orbsvcs_lib.dsp - Package Owner=<4>
+Project: "orbsvcs"=.\orbsvcs\orbsvcs.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
