@@ -42,6 +42,7 @@ call %0 %dopure% Mem_Map_Test
 call %0 %dopure% Message_Block_Test
 call %0 %dopure% Message_Queue_Notifications_Test
 call %0 %dopure% Message_Queue_Test
+call %0 %dopure% MT_Reactor_Timer_Test
 call %0 %dopure% MM_Shared_Memory_Test
 call %0 %dopure% MT_SOCK_Test
 call %0 %dopure% Naming_Test
