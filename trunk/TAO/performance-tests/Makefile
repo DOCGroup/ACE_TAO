@@ -2,7 +2,7 @@
 #
 #	$Id$
 #
-#	Makefile for the TAO tests
+#	Makefile for the TAO performance-tests
 #
 #----------------------------------------------------------------------------
 
@@ -10,12 +10,11 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = CDR \
-        DynAny_Test \
-	OctetSeq \
-	Param_Test \
-	NestedUpcall \
-	Multiple_Inheritance \
+DIRS  = Cubit \
+	Thruput
+
+# The following tests have not been updated yet
+# 	Demux
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

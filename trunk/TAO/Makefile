@@ -25,13 +25,16 @@ DIRS	= tao \
 	  examples \
 	  performance-tests \
 	  tests \
-	  utils \
+	  utils
 
 CLONE	= Makefile \
 	  tao \
 	  TAO_IDL \
 	  orbsvcs \
+	  examples \
+	  performance-tests \
 	  tests \
+	  utils
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -72,7 +75,10 @@ CONTROLLED_FILES = ChangeLog \
 		   tao \
 		   TAO_IDL \
 		   orbsvcs \
+		   examples \
+		   performance-tests \
 		   tests \
+		   utils \
 		   VERSION
 
 RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
