@@ -487,30 +487,30 @@ struct ACE_Export ACE_rwlock_t
 public:
 //protected:
 
+  /// Serialize access to internal state.
   ACE_mutex_t lock_;
-  // Serialize access to internal state.
 
+  /// Reader threads waiting to acquire the lock.
   ACE_cond_t waiting_readers_;
-  // Reader threads waiting to acquire the lock.
 
+  /// Number of waiting readers.
   int num_waiting_readers_;
-  // Number of waiting readers.
 
+  /// Writer threads waiting to acquire the lock.
   ACE_cond_t waiting_writers_;
-  // Writer threads waiting to acquire the lock.
 
+  /// Number of waiting writers.
   int num_waiting_writers_;
-  // Number of waiting writers.
 
+  /// Value is -1 if writer has the lock, else this keeps track of the
+  /// number of readers holding the lock.
   int ref_count_;
-  // Value is -1 if writer has the lock, else this keeps track of the
-  // number of readers holding the lock.
 
+  /// Indicate that a reader is trying to upgrade
   int important_writer_;
-  // indicate that a reader is trying to upgrade
 
+  /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
-  // condition for the upgrading reader
 };
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 typedef pthread_rwlock_t ACE_rwlock_t;
