@@ -179,7 +179,7 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Unbounded_Queue<int>;
-template class ACE_Unbounded_Queue_Iterator<int>;
-template class ACE_Node<int>;
+template class ACE_Unbounded_Queue<ACE_HANDLE>;
+template class ACE_Unbounded_Queue_Iterator<ACE_HANDLE>;
+template class ACE_Node<ACE_HANDLE>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
