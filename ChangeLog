@@ -1,3 +1,15 @@
+Fri Feb  4 23:12:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added code to
+	  handle the case where all the data isn't available when we do a
+ 	  "recv()" from the socket.  Thanks to David X. Callaway
+ 	  <david.x.callaway@intel.com> for reporting this.
+
+	* ace/Log_Msg.cpp (open): Add a special-purpose case for NT to make sure
+	  that handles are reused in the client logging daemon.  Thanks to
+ 	  David X. Callaway <david.x.callaway@intel.com> for reporting
+ 	  this.
+
 Fri Feb  4 19:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Process.h:
