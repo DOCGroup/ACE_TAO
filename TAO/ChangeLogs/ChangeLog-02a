@@ -15,6 +15,12 @@ Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
           Eliminating the macros removed the need for a sub_state, and I
           was able to remove 1000 lines of code from the IDL compiler.
 
+	* TAO_IDL/driver/drv_prepoc.cpp:
+	  Don't predefine IDL because this is a legal IDL identifier.
+	  Instead we predefine __TAO_IDL and set it to the current ACE
+	  version.  Thanks to Stelios Sfakianakis <ssfak@ics.forth.gr> for
+	  pointing out this problem.
+
 Tue Apr  3 10:54:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/corba.h:
