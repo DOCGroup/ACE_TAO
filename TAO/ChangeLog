@@ -1,3 +1,12 @@
+Wed Nov 26 14:32:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+	  Add missing lib to fix link erros in our SunForte 8 build.
+
 Wed Nov 26 14:21:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Event_Comm/Event_Comm_i.cpp:
@@ -236,7 +245,7 @@ Mon Nov 24 15:24:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/IFR_Service/IFR_Service.dsp:
 	* orbsvcs/orbsvcs/Security.dsp:
 
-	  Set the RTTI options on for these project files. 
+	  Set the RTTI options on for these project files.
 
 Mon Nov 24 14:31:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -257,7 +266,7 @@ Mon Nov 24 12:33:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/Makefile:
 
 	  Add ORBSVCS_COMPONENTS to he standard_targets. This will force
-	  the make to spit the file with the components that were built. 
+	  the make to spit the file with the components that were built.
 
 Mon Nov 24 17:29:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -286,7 +295,7 @@ Mon Nov 24 11:31:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Sun Nov 23 23:22:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	  
+
 	  Modified the test to use the CRC check.
 
 Sun Nov 23 23:16:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -296,13 +305,13 @@ Sun Nov 23 23:16:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  In  TAO_ECG_CDR_Message_Receiver::handle_input (), use the
 	  modified iov.iov_len before calculating the CRC. Thanks to
 	  Keith Nicewarner for providing this patch.
-	
+
 Sun Nov 23 22:53:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RTCORBA_includeC.h:
 
 	  Removed the inclusion of the inlined files since they are are
-	  not required. Thanks to Don for catching the problem. 
+	  not required. Thanks to Don for catching the problem.
 
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
