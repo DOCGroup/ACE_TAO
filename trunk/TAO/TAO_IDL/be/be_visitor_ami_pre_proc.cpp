@@ -328,13 +328,12 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
               operation->set_defined_in (excep_holder);
 
               // @@ Michael: this needs a fix!
-              AST_Operation *op_base = ACE_reinterpret_cast (AST_Operation *,
-                                                             op);
+              be_operation *orig_op = be_operation::narrow_from_decl (op);
 
               // Copy the exceptions.
-              if (op_base->exceptions ())
+              if (orig_op->exceptions ())
                 {
-                  UTL_ExceptList *exceptions = (UTL_ExceptList *)op_base->exceptions ()->copy ();
+                  UTL_ExceptList *exceptions = orig_op->exceptions ();
                   operation->be_add_exceptions (exceptions);
                 }
 
@@ -742,7 +741,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   field_type->set_defined_in (node->defined_in ());
 #endif /* 0 */
   // Create the argument
-  be_argument *arg = new be_argument (AST_Argument::dir_OUT,
+  be_argument *arg = new be_argument (AST_Argument::dir_IN,
                                       excep_holder, // is also a valuetype
                                       new UTL_ScopedName (
                                         new Identifier (
