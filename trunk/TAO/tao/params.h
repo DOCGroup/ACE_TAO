@@ -155,21 +155,6 @@ public:
   void sock_sndbuf_size (int);
   // Set/Get the size to be used for a socket's send buffer.
 
-  int cdr_default_size (void) const;
-  void cdr_default_size (int);
-  // If the user does not specify the size of a CDR stream this is the
-  // size of its internal buffer.
-
-  int cdr_max_exp_size (void) const;
-  void cdr_max_exp_size (int);
-  // CDR streams internal buffers grow exponentially until they reach
-  // this size.
-
-  int cdr_linear_chunk (void) const;
-  void cdr_linear_chunk (int);
-  // After reaching their maximum exponential size limit CDR streams
-  // grow linearly in chunks of this size.
-
   int cdr_memcpy_tradeoff (void) const;
   void cdr_memcpy_tradeoff (int);
   // Octet sequences are marshalled without doing any copies, we
