@@ -32,28 +32,28 @@ class ACE_Export ACE_SV_Semaphore_Complex : private ACE_SV_Semaphore_Simple
   // = DESCRIPTION
   //      This code is a port to C++, inspired by: W. Richard Stevens
   //      from his book: UNIX Network Programming (Prentice Hall, ISBN
-  //      0-13-949876-1 - 1990) ACE_SV_Semaphore Interface: we provide
-  //      a simpler and easier to understand interface to the System V
-  //      ACE_SV_Semaphore calls.  We create and use a 2 + n-member
-  //      set for the requested ACE_SV_Semaphore. The first member,
-  //      [0], is a counter used to know when all processes have
-  //      finished with the ACE_SV_Semaphore. The counter is
-  //      initialized to a large number, decremented on every create
-  //      or open and incremented on every close. This way we can use
-  //      the "adjust" feature provided by System V so that any
-  //      process that exit's without calling <close> is accounted
-  //      for. It doesn't help us if the last process does this (as we
-  //      have no way of getting control to remove the
-  //      ACE_SV_Semaphore) but it will work if any process other than
-  //      the last does an exit (intentional or unintentional).
+  //      0-13-949876-1 - 1990).  We provide a simpler and easier to
+  //      understand interface to the System V Semaphore system calls.
+  //      We create and use a 2 + n-member set for the requested
+  //      <ACE_SV_Semaphore_Complex>. The first member, [0], is a
+  //      counter used to know when all processes have finished with
+  //      the <ACE_SV_Semaphore_Complex>.  The counter is initialized
+  //      to a large number, decremented on every create or open and
+  //      incremented on every close. This way we can use the "adjust"
+  //      feature provided by System V so that any process that exit's
+  //      without calling <close> is accounted for. It doesn't help us
+  //      if the last process does this (as we have no way of getting
+  //      control to remove the <ACE_SV_Semaphore_Complex>) but it
+  //      will work if any process other than the last does an exit
+  //      (intentional or unintentional).
   //
-  //      The second member, [1], of the ACE_SV_Semaphore is used as a
-  //      lock variable to avoid any race conditions in the <create>
-  //      and <close> functions.
+  //      The second member, [1], of the semaphore is used as a lock
+  //      variable to avoid any race conditions in the <create> and
+  //      <close> functions.
   //
-  //      The members beyond [1] are actual ACE_SV_Semaphore values in
-  //      the array of SV_Semaphores (which may be sized by the user
-  //      in the constructor).
+  //      The members beyond [1] are actual semaphore values in the
+  //      array of semaphores, which may be sized by the user in the
+  //      constructor.
 public:
   enum
   {

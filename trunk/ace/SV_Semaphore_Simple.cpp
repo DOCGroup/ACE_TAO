@@ -166,8 +166,13 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
                                                   int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
-  if (this->open (name, flags, initial_value, n, perms) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+  if (this->open (name,
+                  flags,
+                  initial_value,
+                  n,
+                  perms) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
                 ASYS_TEXT ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple")));
 }
 
