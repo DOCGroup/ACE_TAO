@@ -7,6 +7,30 @@
 # include "tao/Connect.i"
 #endif /* ! __ACE_INLINE__ */
 
+const char *TAO_Connect_Timeprobe_Description[] = 
+{ 
+  "Server_Connection_Handler::send_response - start",
+  "Server_Connection_Handler::send_response - end",
+
+  "Server_Connection_Handler::handle_input - start",
+  "Server_Connection_Handler::handle_input - end",
+
+  "Client_Connection_Handler::send_request - start",
+  "Client_Connection_Handler::send_request - end",
+};
+
+enum 
+{
+  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START = 300,
+  TAO_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_END,
+
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START,
+  TAO_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_END,
+
+  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START,
+  TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_END,
+};
+
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager* t)
   : TAO_SVC_HANDLER (t, 0, 0)
 {

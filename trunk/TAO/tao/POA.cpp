@@ -12,6 +12,51 @@
 # include "tao/POA.i"
 #endif /* ! __ACE_INLINE__ */
 
+// Timeprobes class
+#include "tao/Timeprobe.h"
+
+const char *TAO_POA_Timeprobe_Description[] = 
+{ 
+  "POA::locate_poa_i - start",
+  "POA::locate_poa_i - end",
+
+  "POA::locate_poa_and_servant_i - start",
+  "POA::locate_poa_and_servant_i - end",
+
+  "POA::find_servant - start",
+  "POA::find_servant - end",
+
+  "POA::dispatch_servant - start",
+  "POA::dispatch_servant - end",
+
+  "POA::parse_key - start",
+  "POA::parse_key - end",
+
+  "Servant::_dispatch - start",
+  "Servant::_dispatch - end",
+};
+
+enum 
+{
+  TAO_POA_LOCATE_POA_I_START = 200,
+  TAO_POA_LOCATE_POA_I_END,
+
+  TAO_POA_LOCATE_POA_AND_SERVANT_I_START,
+  TAO_POA_LOCATE_POA_AND_SERVANT_I_END,
+
+  TAO_POA_FIND_SERVANT_START,
+  TAO_POA_FIND_SERVANT_END,
+
+  TAO_POA_DISPATCH_SERVANT_START,
+  TAO_POA_DISPATCH_SERVANT_END,
+
+  TAO_POA_PARSE_KEY_START,
+  TAO_POA_PARSE_KEY_END,
+
+  TAO_SERVANT_DISPATCH_START,
+  TAO_SERVANT_DISPATCH_END,
+};
+
 // This is the maximum space require to convert the ulong into a
 // string.
 const int TAO_POA::max_space_required_for_ulong = 24;
@@ -2078,6 +2123,20 @@ TAO_POA::locate_poa_and_servant_i (const TAO_ObjectKey &key,
   CORBA::Exception *exception = new CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO);
   env.exception (exception);
   return 0;
+}
+
+void
+TAO_POA::dispatch_servant (const TAO_ObjectKey &key,
+                           CORBA::ServerRequest &req,
+                           void *context,
+                           CORBA::Environment &env)
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
+
+  // Lock access to the POAManager for the duration of this transaction
+  TAO_POA_READ_GUARD (ACE_Lock, monitor, this->lock (), env);
+
+  this->dispatch_servant_i (key, req, context, env);
 }
 
 void

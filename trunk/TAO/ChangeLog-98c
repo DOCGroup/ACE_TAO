@@ -1,3 +1,9 @@
+Tue May 26 01:46:23 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Timeprobe.h: Broke up this file in small pieces.  The time
+ 	  probe map is now split over many files, reducing the
+ 	  dependencies.
+
 Mon May 25 18:42:25 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: added
