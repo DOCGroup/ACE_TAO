@@ -134,9 +134,9 @@ ACE_Thread_ID::to_string (char* thr_id)
 #if defined (ACE_WIN32)
   ACE_OS::strcpy (fp, "u");
   ACE_OS::sprintf (thr_id,
-		   format,
-		   ACE_static_cast(unsigned,
-				   ACE_OS::thr_self ()));
+                   format,
+                   ACE_static_cast(unsigned,
+                                   ACE_OS::thr_self ()));
 #elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
                   // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
                   // a little ugly to send that through a %u format.  So,
@@ -2032,7 +2032,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
   if (!::SetPriorityClass (::GetCurrentProcess (),
                            (sched_params.policy () == ACE_SCHED_FIFO ||
-			   sched_params.policy () == ACE_SCHED_RR)
+                           sched_params.policy () == ACE_SCHED_RR)
                            ? REALTIME_PRIORITY_CLASS
                            : NORMAL_PRIORITY_CLASS))
     {
