@@ -14,10 +14,9 @@ Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton_Manager.cpp (instance):
 
-	  Fixed this method so that it actually returns a valid pointer to
-	  the TAO_Singleton_Manager.  This fix may address issues
-	  described in bug 908.  However, that still needs to be
-	  confirmed.
+	  Cleaned up this method so that it returns the pointer just set
+	  by the allocation rather than the one that was set indirectly.
+	  It wasn't obvious what was happening otherwise.
 
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
