@@ -2783,17 +2783,21 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
+#   if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+typedef const wchar_t *LPCTSTR;
+typedef wchar_t *LPTSTR;
+typedef wchar_t TCHAR;
+#     if !defined (__TEXT)
+#         define __TEXT(STRING) L##STRING
+#     endif /* __TEXT */
+#   else
 typedef const char *LPCTSTR;
 typedef char *LPTSTR;
 typedef char TCHAR;
-
-#   if !defined (__TEXT)
-#     if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
-#       define __TEXT(STRING) L##STRING
-#     else
-#       define __TEXT(STRING) STRING
-#     endif /* UNICODE && ACE_HAS_UNICODE */
-#   endif /* !defined __TEXT */
+#     if !defined (__TEXT)
+#         define __TEXT(STRING) STRING
+#     endif /* __TEXT */
+#   endif /* ACE_HAS_UNICODE && UNICODE */
 
 #   if defined (m88k)
 #     define RUSAGE_SELF 1

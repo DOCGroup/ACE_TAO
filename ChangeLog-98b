@@ -1,5 +1,8 @@
 Mon Jun 29 14:48:58 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.h: Added UNICODE macros for non-Win32 platforms.  Thanks
+ 	  to Jeff Greif <jmg@trivida.com> for pointing this out.
+
 	* ace/OS.cpp (invoke): Added a return at the end to keep AIX
  	  happy.  Thanks to CLahey@cccis.com for reporting this.
 
