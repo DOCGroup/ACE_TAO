@@ -1,3 +1,11 @@
+Tue Jul 29 07:59:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Remove ACE_ROOT reference in the templates for the depgen.pl
+          script.
+
 Tue Jul 29 07:46:58 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

@@ -159,7 +159,7 @@ $(DEPENDENCIES):
 	touch $(DEPENDENCIES)
 
 depend:
-	perl <%depgen("$(ACE_ROOT)/bin/depgen.pl")%> -t gnu $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
+	perl <%depgen("depgen.pl")%> -t gnu $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
 
 include $(DEPENDENCIES)
 <%marker(bottom)%>
