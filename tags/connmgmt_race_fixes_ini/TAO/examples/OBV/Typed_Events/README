@@ -1,0 +1,31 @@
+// $Id$
+
+Typed Events
+============
+
+This is a demonstration of the CORBA 2.3 valuetype feature.
+Event_Types.idl defines a hierarchy of event classes. The common
+attributes (indeed not CORBA attributes, they're state members) 
+like creation time and id of the origin are in a base class. 
+Concrete events like Temperature, Position and Log Message are derived 
+from this class.
+
+The client sends a few random events to the server. The server has
+suitable implementations of the event classes. So it is able to
+show the incoming events by invoking the do_print () operation, which is
+declared in the Event baseclass. 
+After that the server does an "alarm" check on the event.
+For each possible origin id (KITCHEN, BATHROOM) a criterion has been
+registered. The criterion which equals the origin id of the event is
+searched and then asked with is_critical (event).
+
+Finally a list with all the events which causes an alarm is
+requested by the client.
+
+
+Start with:
+
+% ./server -o ior
+% ./client -f ior [-x]
+
+

@@ -1,0 +1,35 @@
+//
+// $Id$
+//
+
+/// A module to keep the namespace clean
+module Test {
+
+  /// Use 64-bit unsigned longs for the time stamps, most of the time
+  /// we stick the native high resolution timer value there.
+  typedef unsigned long long TimeStamp;
+
+  /// Simulated 
+  typedef sequence<octet> Payload;
+
+  /// Define the callback interface
+  interface Callback {
+    oneway void response (in TimeStamp time_stamp,
+                          in Payload message_payload);
+  };
+
+  /// Define the server interface
+  interface Server {
+
+    /// Save the callback object for later use
+    void set_callback (in Callback callback_object);
+
+    /// Send a request, the Callback::response method is invoked with
+    /// the @param time_stamp value
+    oneway void request (in TimeStamp time_stamp,
+                         in Payload message_payload);
+
+    /// Shutdown the server, just to make cleanup simpler.
+    oneway void shutdown ();
+  };
+};

@@ -1,0 +1,24 @@
+#
+# Makefile for building the ACE QoS library with Borland C++Builder
+#
+
+NAME = ACE_QoS
+
+OBJFILES = \
+       $(OBJDIR)\QoS_Decorator.obj \
+       $(OBJDIR)\QoS_Manager.obj \
+       $(OBJDIR)\QoS_Session_Factory.obj \
+       $(OBJDIR)\QoS_Session_Impl.obj \
+       $(OBJDIR)\SOCK_Dgram_Mcast_QoS.obj
+
+CFLAGS = $(ACE_CFLAGS) $(ACE_QOS_CFLAGS) -DACE_QoS_BUILD_DLL
+
+LIBFILES = $(ACE_LIB)
+
+CPPDIR = .
+
+INCDIR_NAME = ace\QoS
+INCLUDES = *.h *.i
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
