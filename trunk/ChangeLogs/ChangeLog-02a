@@ -1,3 +1,10 @@
+Thu May  2 07:50:29 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/Web_Crawler/URL_Addr.h:
+
+          Include ace/ACE.h to avoid compilation error due to missing
+          method (ACE::hash_pjw) in inline method ACE_URL_Addr::hash().
+
 Thu May  2 07:46:59 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * websvcs/lib/URL_Addr.h:

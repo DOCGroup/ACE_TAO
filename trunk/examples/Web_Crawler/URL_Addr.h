@@ -23,6 +23,8 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
+
 class ACE_URL_Addr : public ACE_INET_Addr
 {
   // = TITLE
