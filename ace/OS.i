@@ -7034,6 +7034,23 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
 #endif /* ACE_HAS_SIGTIMEDWAIT */
 }
 
+ACE_INLINE int
+ACE_OS::sigwaitinfo (const sigset_t *sset,
+                     siginfo_t *info)
+{
+  ACE_OS_TRACE ("ACE_OS::sigwaitinfo");
+  // If this platform has sigtimedwait, it should have sigwaitinfo as well.
+  // If this isn't true somewhere, let me know and I'll fix this.
+  // -Steve Huston <shuston@riverace.com>.
+#if defined (ACE_HAS_SIGTIMEDWAIT)
+  ACE_OSCALL_RETURN (::sigwaitinfo (sset, info), int, -1);
+#else
+  ACE_UNUSED_ARG (sset);
+  ACE_UNUSED_ARG (info);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SIGTIMEDWAIT */
+}
+
 ACE_INLINE void
 ACE_OS::thr_testcancel (void)
 {
