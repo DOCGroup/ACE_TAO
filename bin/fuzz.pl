@@ -710,6 +710,10 @@ sub check_for_ace_check ()
                     $disable = 0;
                 }
 
+                if (/FUZZ\: ignore check_for_ace_check/) {
+                    next;
+                }
+
                 next if m/^\s*\/\//;
                 next if m/^\s*$/;
 
@@ -757,7 +761,7 @@ sub check_for_ace_check ()
 
 ##############################################################################
 
-#our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m, $opt_v);
+use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_m $opt_v/;
 
 if (!getopts ('cdhl:mv') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [file1, file2, ...]\n";
