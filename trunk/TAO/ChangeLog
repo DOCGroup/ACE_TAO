@@ -1,3 +1,9 @@
+Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly: Changed the use of
+	  TMCast to ACE_TMCast.  Thanks to J.T. Conklin for pointing out
+ 	  the inconsistency.
+
 Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):

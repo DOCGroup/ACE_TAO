@@ -1,11 +1,11 @@
-// file      : TMCast/Protocol.hpp
+// file      : ACE_TMCast/Protocol.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
 #ifndef TMCAST_PROTOCOL_HPP
 #define TMCAST_PROTOCOL_HPP
 
-namespace TMCast
+namespace ACE_TMCast
 {
   namespace Protocol
   {

@@ -118,7 +118,7 @@ ReplicaController (CORBA::ORB_ptr orb)
   ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
               uuid.to_string ()->c_str ()));
 
-  ACE_AUTO_PTR_RESET (group_, new TMCast::Group (address, uuid.to_string ()->c_str ()), TMCast::Group);
+  ACE_AUTO_PTR_RESET (group_, new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()), ACE_TMCast::Group);
 
   int r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);
@@ -190,12 +190,12 @@ listener ()
       }
     }
   }
-  catch (TMCast::Group::Failed const&)
+  catch (ACE_TMCast::Group::Failed const&)
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Group failure. Perhaps, I am alone in the group.\n"));
   }
-  catch (TMCast::Group::InsufficienSpace const&)
+  catch (ACE_TMCast::Group::InsufficienSpace const&)
   {
     ACE_DEBUG ((LM_DEBUG, "Group::InsufficienSpace\n"));
   }
@@ -403,13 +403,13 @@ ReplicaController::send_reply (
           ACE_DEBUG ((LM_DEBUG, "Sent log record of length %i\n", size));
           break;
         }
-        catch (TMCast::Group::Aborted const&)
+        catch (ACE_TMCast::Group::Aborted const&)
         {
           ACE_DEBUG ((LM_DEBUG, "Retrying to send log record.\n"));
         }
       }
     }
-    catch (TMCast::Group::Failed const&)
+    catch (ACE_TMCast::Group::Failed const&)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Group failure. Perhaps, I am alone in the group.\n"));

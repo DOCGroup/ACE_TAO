@@ -27,10 +27,9 @@ module Stock
       // = TITLE
       //   Access Stock information.
 
+      // Returns the current stock value or throws an exception.
       long get_quote (in string stock_name) 
         raises (Invalid_Stock, Invalid_Quoter);
-
-      // Returns the current stock value or throws and exception.
 
       // LifeCycleObject copy(in FactoryFinder there, 
       // 	   in Criteria the_criteria)
@@ -58,7 +57,6 @@ module Stock
       // Returns a new Quoter selected by name e.g., "Dow Jones,"
       // "Reuters,", etc
     };
-
 
   interface Quoter_Factory_Finder : CosLifeCycle::FactoryFinder
     {

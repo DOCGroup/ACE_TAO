@@ -1,4 +1,4 @@
-// file      : TMCast/TransactionController.hpp
+// file      : ACE_TMCast/TransactionController.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -11,7 +11,7 @@
 
 #include <typeinfo>
 
-namespace TMCast
+namespace ACE_TMCast
 {
 
   // Messages

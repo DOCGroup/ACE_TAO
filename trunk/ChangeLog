@@ -1,3 +1,9 @@
+Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* examples/TMCast/Member:
+	* TMCast/*: Changed the use of TMCast to ACE_TMCast.  Thanks to
+	  J.T. Conklin for pointing out the inconsistency.
+
 Mon Jan  3 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Thread_Manager_Test.cpp:

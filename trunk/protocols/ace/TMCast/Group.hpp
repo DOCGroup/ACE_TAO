@@ -1,4 +1,4 @@
-// file      : TMCast/Group.hpp
+// file      : ACE_TMCast/Group.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -10,9 +10,9 @@
 
 #include "Export.hpp"
 
-namespace TMCast
+namespace ACE_TMCast
 {
-  class TMCast_Export Group
+  class ACE_TMCast_Export Group
   {
   public:
     class Aborted {};
