@@ -1,3 +1,11 @@
+Wed Nov 12 08:44:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * performance-tests/SCTP/Makefile:
+          Moved the BIN variable up to top of file (above
+          rules.common.GNU), and removed rules.bin.GNU, since the targets
+          are explicitly defined.  Otherwise nothing gets cleanup during
+          realclean.
+
 Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.local.GNU:
