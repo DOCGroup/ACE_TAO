@@ -306,7 +306,7 @@ ACE_Service_Record::dump (void) const
 
 ACE_Service_Record::ACE_Service_Record (const char *n, 
 					ACE_Service_Type *t, 
-					const void *h, 
+					const ACE_SHLIB_HANDLE h, 
 					int active)
   : name_ (0),
     type_ (t), 
@@ -322,7 +322,7 @@ ACE_Service_Record::~ACE_Service_Record (void)
   ACE_TRACE ("ACE_Service_Record::~ACE_Service_Record");
   this->type_->fini ();
   if (this->handle_ != 0)
-    ACE_OS::dlclose ((void *) this->handle_);
+    ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
   delete [] (char *) this->name_;
 }
 
