@@ -7,7 +7,7 @@
 //    TAO/orbsvcs/Naming_Service
 //
 // = FILENAME
-//    Naming_Server.h
+//    Naming_Utils.h
 //
 // = DESCRIPTION
 //      This class implements a Naming Server wrapper class which holds
