@@ -163,7 +163,10 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
       options.avoid_zombies (1);
 
       if (component_server.spawn (options) == -1)
-        ACE_TRY_THROW (::Components::CreateFailure ());
+        {
+          ACE_DEBUG ((LM_ERROR, "Fail to spawn a ComponentServer process\n"));
+          ACE_TRY_THROW (::Components::CreateFailure ());
+        }
 
       // wait for server to pass back its object reference. with a timeout value.
       // using perform_work and stuff.
@@ -185,7 +188,10 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
         }
 
       if (CORBA::is_nil (retval.in ()))
-        ACE_TRY_THROW (::Components::CreateFailure ());
+        {
+          ACE_DEBUG ((LM_ERROR, "Fail to acquire the ComponentServer object\n"));
+          ACE_TRY_THROW (::Components::CreateFailure ());
+        }
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
