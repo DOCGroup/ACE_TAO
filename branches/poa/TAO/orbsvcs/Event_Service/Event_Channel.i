@@ -14,7 +14,8 @@ const unsigned int ACE_INT2BIT[32] =
 ACE_INLINE RtecEventChannelAdmin::ProxyPushConsumer_ptr
 ACE_Push_Supplier_Proxy::get_ref (void)
 {
-  return RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(me_);
+  CORBA::Environment env;
+  return this->_this (env);
 }
 
 ACE_INLINE int

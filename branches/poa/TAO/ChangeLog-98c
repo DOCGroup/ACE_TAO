@@ -1,3 +1,29 @@
+Fri Jan 23 16:43:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.h: 
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.h: 
+	  "Ported" the orbsvcs and the Event_Latency test to POA, with
+	  little success though, things will compile and it seems that the
+	  Naming_Service and Scheduling_Services run properly, but
+	  Event_Service does not.
+	  We use a nested POA with "PERSISTENT" lifespan policy because it
+	  is easier to set an enviroment variable or command line to the
+	  NameService IOR.
+
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: 
+	  Removed some extra (and unwanted) code.
+
 Fri Jan 23 14:47:18 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/POA/{FindPOA,RootPOA,NewPOA}/Makefile: Added

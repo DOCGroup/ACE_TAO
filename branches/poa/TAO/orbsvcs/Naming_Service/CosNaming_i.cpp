@@ -16,14 +16,6 @@
 
 #include "CosNaming_i.h"
 
-NS_NamingContext::NS_NamingContext (const char *key)
-  : POA_CosNaming::NamingContext (key)
-{
-  if (context_.open (NS_MAP_SIZE) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
-  // deal with fault
-}
-
 NS_NamingContext::NS_NamingContext (void)
 {
   if (context_.open (NS_MAP_SIZE) == -1)
@@ -92,7 +84,6 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 {
   IT_env.clear ();
 
-  cout << "sizeof Naming Component = %d\n" << sizeof (CosNaming::NameComponent) << endl;
   // get the length of the name
   CORBA::ULong len = n.length ();
 

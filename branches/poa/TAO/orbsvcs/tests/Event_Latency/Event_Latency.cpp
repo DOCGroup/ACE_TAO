@@ -85,16 +85,21 @@ Latency_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       this->channel_admin_ = ec;
 
       // = Connect as a consumer.
-      consumer_admin_ = 
-	RtecEventChannelAdmin::ConsumerAdmin::_duplicate(channel_admin_->for_consumers (TAO_TRY_ENV));
-      TAO_CHECK_ENV;
-      suppliers_ =
-	RtecEventChannelAdmin::ProxyPushSupplier::_duplicate(consumer_admin_->obtain_push_supplier (TAO_TRY_ENV));
+      this->consumer_admin_ = 
+	channel_admin_->for_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      suppliers_->connect_push_consumer (this,
-                                         dependencies.get_ConsumerQOS (),
-                                         TAO_TRY_ENV);
+      this->suppliers_ =
+	consumer_admin_->obtain_push_supplier (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      RtecEventComm::PushConsumer_var objref =
+	this->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->suppliers_->connect_push_consumer (objref.in (),
+					       dependencies.get_ConsumerQOS (),
+					       TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCH (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR, se)
@@ -217,8 +222,6 @@ Latency_Consumer::shutdown (void)
       // Disconnect from the push supplier.
       suppliers_->disconnect_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      CORBA::release (suppliers_);
 
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
       TAO_CHECK_ENV;
@@ -346,23 +349,19 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
   master_ = master;
   TAO_TRY
     {
+      this->channel_admin_ = ec;
+
       RtecScheduler::Scheduler_ptr server =
 	ACE_Scheduler_Factory::server ();
 
-      rt_info_ = 
+      this->rt_info_ = 
 	server->create (name, TAO_TRY_ENV);
       
       server->set (rt_info_, 1, 1, 1, timeout_interval * 10000,
 		   RtecScheduler::VERY_LOW,
 		   RtecScheduler::NO_QUANTUM, 1,
 		   TAO_TRY_ENV);
-
-#if 0
-      SUPPLIER_NS::RegisterService
-        (entry_point (),
-         //      ACE_Naming::NOBJECT, 
-         NOBJECT, this);
-#endif /* 0 */
+      TAO_CHECK_ENV;
 
       ACE_SupplierQOS_Factory publications;
       publications.insert (supplier_id_,
@@ -372,17 +371,20 @@ Latency_Supplier::open_supplier (RtecEventChannelAdmin::EventChannel_ptr ec,
 			   ACE_ES_EVENT_SHUTDOWN,
 			   rt_info_, 1);
 
-      this->channel_admin_ = ec;
-
       // = Connect as a supplier.
-      supplier_admin_ =
-	RtecEventChannelAdmin::SupplierAdmin::_duplicate(channel_admin_->for_suppliers (TAO_TRY_ENV));
-      TAO_CHECK_ENV;
-      consumers_ =
-	RtecEventChannelAdmin::ProxyPushConsumer::_duplicate(supplier_admin_->obtain_push_consumer (TAO_TRY_ENV));
+      this->supplier_admin_ =
+	channel_admin_->for_suppliers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      consumers_->connect_push_supplier (this->supplier_,
+      this->consumers_ =
+	supplier_admin_->obtain_push_consumer (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      RtecEventComm::PushSupplier_var objref = 
+	this->supplier_->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      consumers_->connect_push_supplier (objref.in (),
                                          publications.get_SupplierQOS (),
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -427,13 +429,17 @@ Latency_Supplier::start_generating_events (void)
 
       // = Connect as a consumer.
       consumer_admin_ = 
-	RtecEventChannelAdmin::ConsumerAdmin::_duplicate(channel_admin_->for_consumers (TAO_TRY_ENV));
+	channel_admin_->for_consumers (TAO_TRY_ENV);
       TAO_CHECK_ENV;
       suppliers_ =
-	RtecEventChannelAdmin::ProxyPushSupplier::_duplicate(consumer_admin_->obtain_push_supplier (TAO_TRY_ENV));
+	consumer_admin_->obtain_push_supplier (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      suppliers_->connect_push_consumer (this->consumer_,
+      RtecEventComm::PushConsumer_var objref = 
+	this->consumer_->_this (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      suppliers_->connect_push_consumer (objref,
                                          dependencies.get_ConsumerQOS (),
                                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -741,11 +747,9 @@ get_options (int argc, char *argv [])
   return 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//
 // function main
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//
 int
 main (int argc, char *argv [])
 {
@@ -763,7 +767,6 @@ main (int argc, char *argv [])
       else
         {
           ACE_DEBUG ((LM_ERROR, "%p\n", "Latency"));
-          ACE_OS::exit (-1);
         }
     }
 
@@ -772,40 +775,56 @@ main (int argc, char *argv [])
   TAO_TRY
     {
       // Initialize ORB.
-      CORBA::ORB_ptr orb = 
+      CORBA::ORB_var orb = 
 	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      CORBA::POA_ptr poa =
-	orb->POA_init(argc, argv, "POA");
+      CORBA::Object_var poa_object = 
+	orb->resolve_initial_references("RootPOA");
+      if (poa_object == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
+
+      PortableServer::POA_var root_poa =
+	PortableServer::POA::_narrow (poa_object, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      PortableServer::POAManager_var poa_manager =
+	root_poa->the_POAManager (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::Object_var naming_obj =
+	orb->resolve_initial_references ("NameService");
+      if (naming_obj == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  1);
+
+      CosNaming::NamingContext_var naming_context = 
+        CosNaming::NamingContext::_narrow (naming_obj, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      ACE_Scheduler_Factory::use_config (naming_context.in ());
 
       if (get_options (argc, argv))
 	ACE_OS::exit (-1);
-
-
-
-      CORBA::Object_ptr objref =
-	orb->resolve_initial_references ("NameService");
-      TAO_CHECK_ENV;
-      CosNaming::NamingContext_var naming_context = 
-        CosNaming::NamingContext::_narrow (objref, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_Scheduler_Factory::use_config (naming_context.ptr ());
 
       // Allocate the timeprobe instance now, so we don't measure
       // the cost of doing it later.
       ACE_TIMEPROBE_RESET;
       
       CosNaming::Name channel_name (1);
-      channel_name[0].id = CORBA::string_dup ("EventService");
       channel_name.length (1);
+      channel_name[0].id = CORBA::string_dup ("EventService");
       
-      CORBA::Object_ptr ec_ptr = 
+      CORBA::Object_var ec_obj = 
 	naming_context->resolve (channel_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
       RtecEventChannelAdmin::EventChannel_var ec =
-	RtecEventChannelAdmin::EventChannel::_narrow (ec_ptr, TAO_TRY_ENV);
+	RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
+						      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Create supplier(s).
@@ -834,7 +853,6 @@ main (int argc, char *argv [])
       for (i = 0; i < consumers; ++i)
 	{
 	  ACE_NEW_RETURN (consumer [i], Latency_Consumer (measure_jitter), -1);
-	  RtecEventComm::PushConsumer::_duplicate (consumer[i]);
 	  char buf [BUFSIZ];
 	  sprintf (buf, "consumer-%d", i+1);
 
@@ -879,7 +897,7 @@ main (int argc, char *argv [])
       ACE_TIMEPROBE_PRINT;
       ACE_TIMEPROBE_FINI;
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
     }

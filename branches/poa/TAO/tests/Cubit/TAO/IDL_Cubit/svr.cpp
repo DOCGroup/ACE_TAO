@@ -109,7 +109,6 @@ main (int argc, char *argv[])
 
       if (TAO_debug_level > 0)
 	{
-#if 1
 	  CORBA::Object_var obj = 
 	    good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
@@ -117,16 +116,7 @@ main (int argc, char *argv[])
 	  CORBA::String_var str =
 	    orb->object_to_string (obj.in (),
 				   TAO_TRY_ENV);
-
-#else
-	  Cubit_Factory_var factory =
-	    factory_impl._this (TAO_TRY_ENV);
-
-	  CORBA::String_var str =
-	    orb->object_to_string (factory.in (),
-				   TAO_TRY_ENV);
-
-#endif
+	  TAO_CHECK_ENV;
 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "The IOR is: <%s>\n", str.in ()));
