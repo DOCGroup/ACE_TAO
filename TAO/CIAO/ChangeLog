@@ -1,3 +1,12 @@
+Thu Jun 10 18:03:28 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/CPK_Handler.cpp:
+	* DnC/Config_Handlers/CompImplDesc_Handler.cpp:
+        * DnC/Config_Handlers/Utils.cpp:
+
+          Fixed compilation errors from improper use of XMLString::release.
+
 Thu Jun 10 18:05:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Process_Element.cpp:
