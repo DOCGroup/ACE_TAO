@@ -207,14 +207,14 @@ bgcolor="#ffffff">
         for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
           spawn ();
         </pre>
-        (though I prefer to always wrap the body of the loop in braces,
-         to avoid surprises when other code or debugging statements are
-         added, and to maintain sanity when the body consists of a macro,
-         such as ACE_ASSERT:)
+        Though, I prefer to always wrap the body of the loop in braces,
+        to avoid surprises when other code or debugging statements are
+        added, and to maintain sanity when the body consists of a macro,
+        such as an ACE_ASSERT without a trailing semicolon:
         <pre>
         for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
           {
-            ACE_ASSERT (spawn () == 0);
+            ACE_ASSERT (spawn () == 0;)
           }
         </pre><p>
 
@@ -707,6 +707,11 @@ bgcolor="#ffffff">
 
   <li>Avoid using the C++ Standard Template Library (STL) in our
       applications.  Some platforms do not support it yet.<p>
+
+  <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It
+      must only be used to check values; it may never be used to
+      wrap a function call, or any other statement.  That's because
+      the statement will disappear when ACE_NDEBUG is enabled.<p>
 </ul>
 
 
