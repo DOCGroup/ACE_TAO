@@ -20,7 +20,6 @@ namespace TAO
     {
     }
 
-    // @@ Johnny, I suspect a
     void
     IdUniquenessStrategyUnique::strategy_init (
       TAO_Root_POA *poa

@@ -63,7 +63,7 @@ namespace TAO
     POA_Current::implementation (void)
     {
       return static_cast <POA_Current_Impl *>
-                              (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
     }
 
     POA_Current_Impl *
