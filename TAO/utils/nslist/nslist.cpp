@@ -24,10 +24,12 @@ CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
 
-static void list_context (CosNaming::NamingContext_ptr nc, int level);
+static void list_context (CosNaming::NamingContext_ptr nc,
+                          int level,
+                          CORBA::Environment &ACE_TRY_ENV);
 
 static void
-get_tag_name(CORBA::ULong tag, ACE_CString& tag_string)
+get_tag_name (CORBA::ULong tag, ACE_CString& tag_string)
 {
   switch(tag)
     {
@@ -52,40 +54,46 @@ get_tag_name(CORBA::ULong tag, ACE_CString& tag_string)
 
 
 static void
-display_endpoint_info(CORBA::Object_ptr obj)
+display_endpoint_info (CORBA::Object_ptr obj)
 {
 
-  TAO_Stub* stub = obj->_stubobj();
-  if( !stub ){
-    ACE_DEBUG((LM_DEBUG, "Invalid stub\n"));
-    return;
-  }
+  TAO_Stub *stub = obj->_stubobj ();
+  if (!stub)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Invalid stub\n"));
+      return;
+    }
 
-  TAO_Profile* profile = stub->profile_in_use();
-  if( !profile ){
-    ACE_DEBUG((LM_DEBUG, "Invalid profile\n"));
-    return;
-  }
+  TAO_Profile* profile = stub->profile_in_use ();
+  if (!profile)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Invalid profile\n"));
+      return;
+    }
 
 
-  TAO_Endpoint* endpoint = profile->endpoint(); 
-  if( !endpoint ){
-    ACE_DEBUG((LM_DEBUG, "Invalid profile\n"));
-    return;
-  }
+  TAO_Endpoint* endpoint = profile->endpoint ();
+  if (!endpoint)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Invalid profile\n"));
+      return;
+    }
 
-  CORBA::ULong tag = endpoint->tag();
+  CORBA::ULong tag = endpoint->tag ();
   ACE_CString tag_name;
-  get_tag_name(tag, tag_name); 
+  get_tag_name (tag, tag_name); 
 
   char buf[255];
-  if(endpoint->addr_to_string(buf, 255) < 0){
-    ACE_DEBUG((LM_DEBUG, "Could not put endpoint address in string.\n"));
-    return;
-  }
+  if (endpoint->addr_to_string (buf, 255) < 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Could not put endpoint address in string.\n"));
+      return;
+    }
     
-  ACE_DEBUG((LM_DEBUG, "Protocol: %s,   Endpoint: %s\n", tag_name.c_str(), buf));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "Protocol: %s,   Endpoint: %s\n",
+              tag_name.c_str(),
+              buf));
 }
 
 // Display NS entries from a finite list.
@@ -93,10 +101,9 @@ display_endpoint_info(CORBA::Object_ptr obj)
 static void
 show_chunk (CosNaming::NamingContext_ptr nc,
             const CosNaming::BindingList &bl,
-            int level)
+            int level,
+            CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-
   for (CORBA::ULong i = 0;
        i < bl.length ();
        i++)
@@ -107,7 +114,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
                   "",
                   bl[i].binding_name[0].id.in ()));
 
-      if (ACE_OS::strlen(bl[i].binding_name[0].kind) > 0)
+      if (ACE_OS::strlen (bl[i].binding_name[0].kind) > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "(%s)",
                     bl[i].binding_name[0].kind.in ()));
@@ -119,7 +126,8 @@ show_chunk (CosNaming::NamingContext_ptr nc,
       Name[0].kind =
         CORBA::string_dup (bl[i].binding_name[0].kind);
 
-      CORBA::Object_var obj = nc->resolve (Name);
+      CORBA::Object_var obj = nc->resolve (Name, ACE_TRY_ENV);
+      ACE_CHECK;
 
       // If this is a context node, follow it down to the next
       // level...
@@ -129,8 +137,11 @@ show_chunk (CosNaming::NamingContext_ptr nc,
                       ": naming context\n"));
 
           CosNaming::NamingContext_var xc =
-            CosNaming::NamingContext::_narrow (obj.in ());
-          list_context (xc.in (), level + 1);
+            CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
+          ACE_CHECK;
+
+          list_context (xc.in (), level + 1, ACE_TRY_ENV);
+          ACE_CHECK;
         }
       // Mark this node as a reference
       else
@@ -140,6 +151,7 @@ show_chunk (CosNaming::NamingContext_ptr nc,
               CORBA::String_var str =
                 orb->object_to_string (obj.in (),
                                        ACE_TRY_ENV);
+              ACE_CHECK;
               ACE_DEBUG ((LM_DEBUG,
                           ": <%s>\n",
                           str.in ()));
@@ -148,22 +160,26 @@ show_chunk (CosNaming::NamingContext_ptr nc,
             {
               ACE_DEBUG ((LM_DEBUG,
                           ": object reference:   "));
-	      display_endpoint_info( obj.in() );
-	    }
+              display_endpoint_info (obj.in());
+            }
         }
     }
 }
 
 static void
 list_context (CosNaming::NamingContext_ptr nc,
-              int level)
+              int level,
+              CORBA::Environment &ACE_TRY_ENV)
 {
   CosNaming::BindingIterator_var it;
   CosNaming::BindingList_var bl;
   const CORBA::ULong CHUNK = 100;
 
-  nc->list (CHUNK, bl, it);
-  show_chunk (nc, bl.in (), level);
+  nc->list (CHUNK, bl, it, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  show_chunk (nc, bl.in (), level, ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (!CORBA::is_nil (it.in ()))
     {
@@ -172,11 +188,13 @@ list_context (CosNaming::NamingContext_ptr nc,
       do
         {
           more = it->next_n (CHUNK, bl);
-          show_chunk (nc, bl.in (), level);
+          show_chunk (nc, bl.in (), level, ACE_TRY_ENV);
+          ACE_CHECK;
         }
       while (more);
 
-      it->destroy();
+      it->destroy (ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -187,10 +205,10 @@ main (int argc, char *argv[])
   showNSonly = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
   ACE_TRY
     {
-      orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       char *pname = argv[0];
 
@@ -200,21 +218,25 @@ main (int argc, char *argv[])
             {
               if (showNSonly)
                 {
-                   ACE_DEBUG ((LM_DEBUG, "Error: --nsior and --ior are both specified\n"));
-                   return 1;
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Error: --nsior and --ior are "
+                              "both specified\n"));
+                  return 1;
                 }
               showIOR = 1;
             }
-          else if (strcmp(*argv, "--nsior") == 0)
+          else if (ACE_OS::strcmp (*argv, "--nsior") == 0)
             {
               if (showIOR)
                 {
-                   ACE_DEBUG ((LM_DEBUG, "Error: --nsior and --ior are both specified\n"));
-                   return 1;
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Error: --nsior and --ior "
+                              "are both specified\n"));
+                  return 1;
                 }
-                showNSonly = 1;
+              showNSonly = 1;
             }
-          else if (strncmp(*argv, "--", 2) == 0)
+          else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Usage: %s [ --ior | --nsior ]\n", pname));
               return 1;
@@ -228,7 +250,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (obj.in ());
+        CosNaming::NamingContext::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
@@ -244,7 +266,7 @@ main (int argc, char *argv[])
       if (showNSonly)
         {
           // ACE_DEBUG ((LM_DEBUG, "%s", str.in ()));
-          printf( "%s", str.in());
+          ACE_OS::printf ("%s", str.in());
         }
       else
         {
@@ -260,7 +282,7 @@ main (int argc, char *argv[])
                           "Naming Service:\n---------\n"));
             }
 
-          list_context (root_nc.in (), 1);
+          list_context (root_nc.in (), 1, ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }
