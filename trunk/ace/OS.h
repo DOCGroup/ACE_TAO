@@ -35,13 +35,15 @@
 #endif /* ACE_HAS_ANSI_CASTS */
 
 #if !defined (ACE_CAST_CONST)
-# define ACE_CAST_CONST
-#elif defined (__SUNPRO_CC)
+# if defined (__SUNPRO_CC)
   // Sun CC 4.2, for example, requires const where it really shouldn't.
   // An example is a reinterpret cast to a local pointer variable in a
   // const member function.
-# define ACE_CAST_CONST const
-#endif /* ACE_CAST_CONST */
+#   define ACE_CAST_CONST const
+# else  /* ! __SUNPRO_CC */
+#   define ACE_CAST_CONST
+# endif /* ! __SUNPRO_CC */
+#endif /* ! ACE_CAST_CONST */
 
 // Deal with MSVC++ insanity for CORBA...
 #if defined (ACE_HAS_BROKEN_NAMESPACES)
