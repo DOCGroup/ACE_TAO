@@ -601,7 +601,7 @@ int
 TAO_SFP::handle_input (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_SFP::handle_input\n"));
-  flowProtocol::MsgType msg_type;
+  flowProtocol::MsgType msg_type = flowProtocol::start;
   ACE_INET_Addr sender;
   char peek_buffer [MAGIC_NUMBER_LEN+2];// 2 is for flags + message_type.
   int peek_len = MAGIC_NUMBER_LEN +2;
@@ -645,6 +645,8 @@ TAO_SFP::handle_input (ACE_HANDLE fd)
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) credit message received\n"));
       msg_type = flowProtocol::Credit;
     }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP:Invalid magic number\n"),0);
   switch (this->state_)
     {
     case ACTIVE_START:
