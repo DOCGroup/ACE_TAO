@@ -240,8 +240,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
               ACE_Thread::self ()));
 
   {
-    //ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
-    TAO_ORB_Core_instance ()->leader_follower_lock ().acquire();
+    ACE_Guard<ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
 
     while (TAO_ORB_Core_instance ()->leader_available ())
     {
@@ -251,7 +250,6 @@ CORBA_ORB::run (ACE_Time_Value *tv)
       this->cond_become_leader_->wait ();     
     }
     TAO_ORB_Core_instance ()->set_leader_thread ();
-    TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
   }
 
   ACE_DEBUG ((LM_DEBUG,

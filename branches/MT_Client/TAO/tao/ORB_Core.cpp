@@ -948,9 +948,6 @@ TAO_ORB_Core::set_leader_thread (void)
              || this->leaders_ == 0);
   this->leaders_++; 
   this->leader_thread_ID_ = ACE_Thread::self (); 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) TAO_ORB_Core: New leader: leaders = %d\n",
-              this->leaders_));
 }
 
 int 
@@ -959,8 +956,6 @@ TAO_ORB_Core::unset_leader_wake_up_follower (void)
 {
   ACE_Guard <ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) TAO_ORB_Core: unset leader\n"));
   this->unset_leader_thread ();
 
   if (TAO_ORB_Core_instance ()->follower_available () 
@@ -972,13 +967,6 @@ TAO_ORB_Core::unset_leader_wake_up_follower (void)
       return -1;
     condition_ptr->signal ();
   }
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) TAO_ORB_Core: no new leader: "
-                "follower = %d leaders = %d  leader_ID = %d\n",
-                TAO_ORB_Core_instance ()->follower_available (),
-                this->leaders_,
-                this->leader_thread_ID_));
   return 0;
 }
 
@@ -1006,9 +994,6 @@ TAO_ORB_Core::add_follower (ACE_SYNCH_CONDITION *follower_ptr)
 // follower model
 // returns 0 on success, -1 on failure
 {
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) TAO_ORB_Core::add_follower: add \n"));
-
   if (this->follower_set_.insert (follower_ptr) != 0)
     return -1;
   return 0;

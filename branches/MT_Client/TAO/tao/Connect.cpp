@@ -576,29 +576,35 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   // connection handler were obtained from a factory, then this could
   // be dynamically linked in (wouldn't that be cool/freaky?)
 
-  // Set the state so that we know we're looking for a response.
-  if (is_twoway)
-    this->expecting_response_ = 1;
-
-  int success  = (int) TAO_GIOP::send_request (this, stream);
-
-  if (!success)
-    return -1;
-
-  if (is_twoway)
+  if (!is_twoway)
   {
-    // remember in which thread the client connection handler was running
-    this->calling_thread_ = ACE_Thread::self ();
+    int success  = (int) TAO_GIOP::send_request (this, stream);
+
+    if (!success)
+      return -1;
+  }
+  else // is_twoway
+  {
     if (TAO_ORB_Core_instance ()->leader_follower_lock ().acquire() == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%P|%t) TAO_Client_Connection_Handler::send_request: "
                          "Failed to get the lock.\n"),
                         -1);
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Client_Connection_Handler::send_request: (%d) starting\n",
-                ACE_Thread::self ()));                
-    
+    // Set the state so that we know we're looking for a response.
+    this->expecting_response_ = 1;
+    // remember in which thread the client connection handler was running
+    this->calling_thread_ = ACE_Thread::self ();
+
+
+    int success  = (int) TAO_GIOP::send_request (this, stream);
+
+    if (!success)
+    {
+      TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
+      return -1;
+    }
+
     // check if there is a leader, but the leader is not us
     if (TAO_ORB_Core_instance ()->leader_available ()
      && !TAO_ORB_Core_instance ()->I_am_the_leader_thread ())
@@ -619,16 +625,14 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // follower queue
       if (this->input_available_)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Client_Connection_Handler::send_request: fake handle_input\n",
-                    ACE_Thread::self ()));
-
-
-
         // there is input waiting for me
-        TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
+        if (TAO_ORB_Core_instance ()->leader_follower_lock ().release () == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) TAO_Client_Connection_Handler::send_request: "
+                             "Failed to release the lock.\n"),
+                            -1);
 
-        int ret = 0; //this->handle_input (); // fake the handle_input
+        int ret = 0; 
         if (ret < 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -655,9 +659,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 
     // become a leader, because there is no leader or we have to update to a leader
     // or we are doing nested upcalls in this case we do increase the refcount
-    ACE_DEBUG ((LM_DEBUG,
-                "Client_Connection_Handler::send_request: (%d) become a leader\n",
-                ACE_Thread::self ()));
+    // on the leader in TAO_ORB_Core.
 
     TAO_ORB_Core_instance ()->set_leader_thread ();
     // this might increase the recount of the leader
@@ -693,6 +695,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
                          "Failed to unset the leader and wake up a new follower.\n"),
                         -1);
 
+    // Make use reusable
     this->input_available_ = 0;
     this->expecting_response_ = 0;
     this->calling_thread_ = 0;
@@ -704,48 +707,30 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 int
 TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  int retval = 0;
-
-
-  TAO_ORB_Core_instance ()->leader_follower_lock ().acquire ();
+  if (TAO_ORB_Core_instance ()->leader_follower_lock ().acquire () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to get the lock.\n"),
+                        -1);
 
   if (!this->expecting_response_)
   {
     // we got something, but did not want  
     // @@ wake up an other thread, we are lost
 
+    if (TAO_ORB_Core_instance ()->leader_follower_lock ().release () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to release the lock.\n"),
+                        -1);
+
     // We're a client, so we're not expecting to see input.  Still
     // we better check what it is!
     char ignored;
     ssize_t ret;
-    ACE_Time_Value tv = ACE_Time_Value::zero;
-    retval = 0;
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Client_Connection_Handler::handle_input: Handler (%d) "
-                "not expected response\n",
-                this->calling_thread_));
-    retval = -1;
-    if (this->calling_thread_ == 0)
-    {
-      ret = this->peer().recv (&ignored, sizeof ignored, MSG_PEEK, &tv);
-      retval = 0;
-      // if -1 is returned, the nested upcalls server crashes,
-      // if the tv value is not specified we will hang in a blocking read
-    }
-    else if (ret = this->peer().recv (&ignored, sizeof ignored, MSG_PEEK) > 0)
-    {
-      ret = this->peer().recv_n (&ignored, sizeof ignored);
-    }
 
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Client_Connection_Handler::handle_input: Handler (%d) "
-                "ret = %d\n",
-                this->calling_thread_,
-                ret));
+    ret = this->peer().recv_n (&ignored, sizeof ignored);
 
-    // We're not expecting input at this time, so we'll always
-    // return -1 for now.
-    // -1 and rec_n with tv = 0 worked
     switch (ret)
     {
       case -1:
@@ -771,64 +756,65 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
         // calls the Svc_Handler<>::handle_close(), the socket will
         // be shutdown properly.
         break;
-     }
+    }
 
-    TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
-    return retval;
+    // We're not expecting input at this time, so we'll always
+    // return -1 for now.
+    return -1;
   }
 
   if (this->calling_thread_ == ACE_Thread::self ())
   {
-     ACE_DEBUG ((LM_DEBUG,
-                 "(%P|%t) Client_Connection_Handler::handle_input: Handler (%d): "
-                 "right thread\n",
-                 this->calling_thread_));
     // we are now a leader getting its response
     // or a follower faking the handle_input
   
     this->input_available_ = 1;
 
-    TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
+    if (TAO_ORB_Core_instance ()->leader_follower_lock ().release () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to release the lock.\n"),
+                        -1);
 
     TAO_ORB_Core_instance ()->reactor ()->suspend_handler (this);
+    // resume_handler is called in TAO_GIOP_Invocation::invoke
 
     return 0;
   }
   else 
   {
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Client_Connection_Handler::handle_input: Handler (%d): "
-                "wrong thread\n",
-                this->calling_thread_));
     // we are a leader, which got a response for one of the followers, 
     // which means we are now a thread running the wrong Client_Connection_Handler
 
-    // Close connection
-    if (this->calling_thread_ == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Client_Connection_Handler::handle_input: calling thread is null: "
-                  "wrong thread\n",
-                  this->calling_thread_));
-
-      //TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
-      //return -1;
-    }
-
     TAO_ORB_Core_instance ()->remove_follower (this->cond_response_available_);
 
-    TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
+    if (TAO_ORB_Core_instance ()->leader_follower_lock ().release () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to release the lock.\n"),
+                        -1);
+
 
     TAO_ORB_Core_instance ()->reactor ()->suspend_handler (this);
+    // @@ Michael: we should wake suspend the thread before we wake him up.
+    // resume_handler is called in TAO_GIOP_Invocation::invoke
 
-    TAO_ORB_Core_instance ()->leader_follower_lock ().acquire ();
+    if (TAO_ORB_Core_instance ()->leader_follower_lock ().acquire () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to acquire the lock.\n"),
+                        -1);
 
     // the thread was already selected to become a leader,
     // so we will be called again.
     this->input_available_ = 1;
     this->cond_response_available_->signal ();
     
-    TAO_ORB_Core_instance ()->leader_follower_lock ().release ();
+    if (TAO_ORB_Core_instance ()->leader_follower_lock ().release () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
+                         "Failed to release the lock.\n"),
+                        -1);
 
 
     return 0;
