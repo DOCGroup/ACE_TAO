@@ -206,6 +206,16 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
+  if (factory == end)
+    {
+      TAO_Protocol_Item *item =
+        new TAO_Protocol_Item ("IIOP_Factory");
+      item->factory (
+          ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory"));
+      this->protocol_factories_.insert (item);
+      return 0;
+    }
+
   for ( ; factory != end ; factory++)
     {
       const ACE_CString name = (*factory)->protocol_name ();

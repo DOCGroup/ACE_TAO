@@ -152,16 +152,18 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           // Now get the list of avaliable protocol factories.
           TAO_ProtocolFactorySetItor end =
                           orb_core->protocol_factories ()->end ();
-          TAO_ProtocolFactorySetItor factory =
-                        orb_core->protocol_factories ()->begin ();
+          
 
-          for (TAO_Acceptor *acceptor = 0;
+          for (TAO_ProtocolFactorySetItor factory =
+                 orb_core->protocol_factories ()->begin ();
                factory != end;
                ++factory)
             {
               if ((*factory)->factory ()->match_prefix (prefix))
                 {
-                  if ((acceptor = (*factory)->factory ()->make_acceptor ()))
+                  TAO_Acceptor *acceptor =
+                    (*factory)->factory ()->make_acceptor ();
+                  if (acceptor != 0)
                     {
                       // add acceptor to list.
                       this->acceptors_.insert (acceptor);
