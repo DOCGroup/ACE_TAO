@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    ClientScheduler_i.cpp
+ *  @file    RTCosScheduling_ClientScheduler_i.cpp
  *
  *  $Id$
  *

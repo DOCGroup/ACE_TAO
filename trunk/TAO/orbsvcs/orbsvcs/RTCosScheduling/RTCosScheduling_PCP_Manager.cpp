@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    PCP_Manager.cpp
+ *  @file    RTCosScheduling_PCP_Manager.cpp
  *
  *  $Id$
  *
