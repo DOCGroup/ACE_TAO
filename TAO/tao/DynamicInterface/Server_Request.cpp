@@ -177,7 +177,7 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       if (this->retval_ != 0)
         {
           this->retval_->impl ()->marshal_value (
-                                      this->orb_server_request_.outgoing ()
+                                      *this->orb_server_request_.outgoing ()
                                     );
         }
 
@@ -185,7 +185,7 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       if (this->params_ != 0)
         {
           this->params_->_tao_encode (
-                             this->orb_server_request_.outgoing (),
+                             *this->orb_server_request_.outgoing (),
                              CORBA::ARG_INOUT | CORBA::ARG_OUT
                              ACE_ENV_ARG_PARAMETER
                            );
@@ -201,7 +201,7 @@ CORBA::ServerRequest::dsi_marshal (ACE_ENV_SINGLE_ARG_DECL)
       this->orb_server_request_.init_reply ();
 
       this->exception_->impl ()->marshal_value (
-                                     this->orb_server_request_.outgoing ()
+                                     *this->orb_server_request_.outgoing ()
                                    );
     }
 
@@ -222,7 +222,7 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   // We know nothing about this exception, so we marshal it as a block
   // of bytes. The outgoing stream's byte order has already been matched
   // to the original source of the reply.
-  this->orb_server_request_.outgoing ().write_octet_array (
+  this->orb_server_request_.outgoing ()->write_octet_array (
       reinterpret_cast<const CORBA::Octet *> (raw_exception.fast_rep ()),
       static_cast<CORBA::ULong> (raw_exception.length () + ACE_CDR::MAX_ALIGNMENT)
     );
