@@ -1,3 +1,16 @@
+Thu Mar 20 01:13:19 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/High_Res_Timer.{cpp,i}: By default, High_Res_Timer is
+	  constructed with a scale_factor == 1.  This allowed me to remove
+	  all the checks for scale_factor == 0 in the code.
+
+	* ace/High_Res_Timer.h (static gettimeofday): If
+	  global_scale_factor_ is not set, and we're on a platform that
+ 	  requires global_scale_factor_ (e.g., Win32),
+ 	  ACE_OS::gettimeofday will be used instead of ACE_OS::gethrtime.
+  	  This allows the scale_factor of 1 to still result in correct
+ 	  values.
+
 Thu Mar 20 00:30:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Svc_Handler.cpp (destroy): Added a state variable to keep
