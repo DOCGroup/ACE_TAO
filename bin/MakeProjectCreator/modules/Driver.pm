@@ -235,15 +235,16 @@ sub run {
   my($orig_dir) = Cwd::getcwd();
 
   ## Generate the files
-  foreach my $file (@{$options->{'input'}}) {
+  foreach my $cfile (@{$options->{'input'}}) {
     ## To correctly reference any pathnames in the input file, chdir to
     ## its directory if there's any directory component to the specified path.
-    my($base) = basename($file);
+    my($base) = basename($cfile);
     foreach my $name (@{$options->{'generators'}}) {
       if (!$loaded{$name}) {
         require "$name.pm";
         $loaded{$name} = 1;
       }
+      my($file) = $cfile;
       my($generator) = $name->new($options->{'global'},
                                   $options->{'include'},
                                   $options->{'template'},
