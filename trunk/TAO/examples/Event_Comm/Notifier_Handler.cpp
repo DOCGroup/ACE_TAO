@@ -13,7 +13,7 @@ Notifier_Handler::Notifier_Handler (void)
 
 Notifier_Handler::~Notifier_Handler (void)
 {
-  this->close ();
+  // No-Op.
 }
 
 int
@@ -27,7 +27,33 @@ Notifier_Handler::close (void)
       this->notifier_ = 0;
     }
 
+  // shutdown the ORB.
+  this->orb_->shutdown ();
   return 0;
+}
+
+void
+Notifier_Handler::shutdown (void)
+{
+  ACE_ASSERT (this->shutdowncallback != 0);
+
+  this->shutdowncallback->close ();
+}
+
+int
+Notifier_Handler::run (void)
+{
+  // Run the ORB.
+  this->orb_->run ();
+  return 0;
+}
+
+ACE_Reactor*
+Notifier_Handler::reactor(void)
+{
+  // @@ Please see if there's a way to get to the Reactor without
+  // using the TAO_ORB_Core_instance().
+  return TAO_ORB_Core_instance ()->reactor ();
 }
 
 Event_Comm::Notifier *
@@ -49,8 +75,13 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 // Init function.
 
 int
-Notifier_Handler::init (int argc, char *argv[])
+Notifier_Handler::init (int argc, 
+			char *argv[], 
+			ShutdownCallback* _shutdowncallback)
 {
+  // set the callback
+ shutdowncallback = _shutdowncallback;
+
  TAO_TRY
     {
       // Retrieve the ORB.

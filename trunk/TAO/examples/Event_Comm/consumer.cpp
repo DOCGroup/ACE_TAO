@@ -5,7 +5,7 @@
 
 ACE_RCSID(Consumer, consumer, "$Id$")
 
-class Consumer : public ACE_Event_Handler, public ConsumerShutdown
+class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
   // = TITLE
   //    Consumer driver for the Publish/Subscribe example.

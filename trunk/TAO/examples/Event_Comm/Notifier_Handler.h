@@ -42,15 +42,24 @@ public:
   virtual ~Notifier_Handler (void);
   // Destructor.
 
-  int init (int argc, char *argv[]);
+  int init (int argc, char *argv[], ShutdownCallback* _shutdowncallback);
   // Initialize the client communication endpoint with server.
 
   // = Accessors.
   Event_Comm::Notifier *notifier (void);
   void notifier (Event_Comm::Notifier *);
 
+  int run (void);
+  // runs the ORB.
+
   int close (void);
   // Close down the handler.
+
+  void shutdown (void);
+  // called to request application shutdown.
+
+  ACE_Reactor *reactor (void);
+  // returns the ORB's reactor.
 
 private:
   Event_Comm::Notifier *notifier_;
@@ -62,6 +71,9 @@ private:
 
   CORBA::ORB_var orb_;
   // Remember our orb.
+
+  ShutdownCallback *shutdowncallback;
+  // The handler to shutdown the app.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"
