@@ -36,7 +36,9 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
   // @@ Fish out the ComponentServer object reference from <options>.
 
   ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in ()),
+                    CIAO::Session_Container (this->orb_.in (),
+                                             this->static_config_flag_,
+                                             this->static_entrypts_maps_),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
@@ -241,31 +243,34 @@ CIAO::Container_Impl::parse_config_values (const char *id,
         }
     }
 
-  component_install_info.executor_dll_ =
-    this->installation_->get_implementation (id
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  component_install_info.servant_dll_ =
-    this->installation_->get_implementation (servant_uuid.in ()
-                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (component_install_info.executor_dll_.in () == 0 ||
-      component_install_info.servant_dll_.in () == 0 ||
-      component_install_info.servant_entrypt_.in () == 0)
+  if (this->static_config_flag_ == 0)
     {
-      Components::InvalidConfiguration *exc = 0;
-      ACE_NEW_THROW_EX (exc,
-                        Components::InvalidConfiguration,
-                        CORBA::NO_MEMORY ());
-      exc->name = CORBA::string_dup ("home_installation_info");
-      exc->reason = Components::ConfigValueRequired;
+      component_install_info.executor_dll_ =
+        this->installation_->get_implementation (id
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      component_install_info.servant_dll_ =
+        this->installation_->get_implementation (servant_uuid.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (component_install_info.executor_dll_.in () == 0 ||
+          component_install_info.servant_dll_.in () == 0 ||
+          component_install_info.servant_entrypt_.in () == 0)
+        {
+          Components::InvalidConfiguration *exc = 0;
+          ACE_NEW_THROW_EX (exc,
+                            Components::InvalidConfiguration,
+                            CORBA::NO_MEMORY ());
+          exc->name = CORBA::string_dup ("home_installation_info");
+          exc->reason = Components::ConfigValueRequired;
 #if defined (ACE_HAS_EXCEPTIONS)
-      auto_ptr<Components::InvalidConfiguration> safety (exc);
-      exc->_raise ();
+          auto_ptr<Components::InvalidConfiguration> safety (exc);
+          exc->_raise ();
 #else
-      ACE_TRY_ENV.exception (exc);
+          ACE_TRY_ENV.exception (exc);
 #endif /*ACE_HAS_EXCEPTIONS*/
+        }
     }
 }

@@ -57,7 +57,9 @@ namespace CIAO
     /// Constructor
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
-                    Components::Deployment::ComponentServer_ptr server);
+                    Components::Deployment::ComponentServer_ptr server,
+                    int static_config_flag,
+                    const Static_Config_EntryPoints_Maps* static_entrypts_maps);
 
     /// Destructor
     virtual ~Container_Impl (void);
@@ -150,6 +152,12 @@ protected:
 
     /// Keep a list of managed CCMHome.
     Object_Set<Components::CCMHome, Components::CCMHome_var> home_set_;
+
+    /// Flag to indicate static configuration.
+    int static_config_flag_;
+
+    /// Reference to CIAO static config entry points map.
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 

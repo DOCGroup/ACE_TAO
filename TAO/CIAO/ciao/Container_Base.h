@@ -80,10 +80,42 @@ namespace CIAO
     PortableServer::POA_var poa_;
   };
 
+  class Session_Container;
+
+  typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
+  typedef ::PortableServer::Servant (*ServantFactory)
+    (::Components::HomeExecutorBase_ptr p,
+     ::CIAO::Session_Container *c
+     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  HomeFactory,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> HOMECREATOR_FUNCPTR_MAP;
+
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  ServantFactory,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex> HOMESERVANTCREATOR_FUNCPTR_MAP;
+
+  struct Static_Config_EntryPoints_Maps
+  {
+    /// Map of home creator entry point name and func ptr
+    HOMECREATOR_FUNCPTR_MAP* home_creator_funcptr_map_;
+
+    /// Map of home servant creator entry point name and func ptr
+    HOMESERVANTCREATOR_FUNCPTR_MAP* home_servant_creator_funcptr_map_;
+  };
+
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
-    Session_Container (CORBA::ORB_ptr o);
+    Session_Container (CORBA::ORB_ptr o,
+                       int static_config_flag,
+                       const Static_Config_EntryPoints_Maps* static_entrypts_maps
+                       );
 
     virtual ~Session_Container (void);
 
@@ -157,13 +189,10 @@ namespace CIAO
     long number_;
 
     static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
-  };
 
-  typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
-  typedef ::PortableServer::Servant (*ServantFactory)
-    (::Components::HomeExecutorBase_ptr p,
-     ::CIAO::Session_Container *c
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    int static_config_flag_;
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
+  };
 }
 
 #if defined (__ACE_INLINE__)
