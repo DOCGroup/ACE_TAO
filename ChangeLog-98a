@@ -42,6 +42,9 @@ Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Time_Value_Test.cpp: added tests of ACE_U_LongLong
           operator/ and operator%.
 
+        * ACE-INSTALL.html: added link to Cygus repo patches.  Thanks
+          to Achint Sandhu <sandhu@nortel.ca> for providing the URL.
+
 Sun Jan 04 17:19:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.15, released Sun Jan 04 17:19:31 1998.
