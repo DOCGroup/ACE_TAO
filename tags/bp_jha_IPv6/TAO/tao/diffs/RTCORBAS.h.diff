@@ -1,0 +1,36 @@
+--- orig/RTCORBAS.h	Tue Jan 30 18:58:33 2001
++++ RTCORBAS.h	Tue Jan 30 19:07:55 2001
+@@ -23,6 +23,10 @@
+ #define _TAO_IDL_ORIG_RTCORBAS_H_
+ 
+ #include "ace/pre.h"
++#include "orbconf.h"
++
++#if (TAO_HAS_RT_CORBA == 1)
++
+ #include "IOPS.h"
+ #include "TimeBaseS.h"
+ #include "RTCORBAC.h"
+@@ -32,13 +36,6 @@
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/PortableServer/PortableServer.h"
+-#include "tao/PortableServer/Servant_Base.h"
+-#include "tao/PortableServer/Collocated_Object.h"
+-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
+-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
+-#include "tao/PortableServer/ServerRequestInfo.h"
+-
+ #if defined(_MSC_VER)
+ #if (_MSC_VER >= 1200)
+ #pragma warning(push)
+@@ -68,6 +65,8 @@
+ #if defined (__BORLANDC__)
+ #pragma option pop
+ #endif /* __BORLANDC__ */
++
++#endif /* TAO_HAS_RT_CORBA == 1 */
+ 
+ #include "ace/post.h"
+ #endif /* ifndef */

@@ -1,0 +1,57 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/OctetSeq
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//   Simple IDL file to test octet sequences.
+//
+// = AUTHORS
+//   Carlos O'Ryan <coryan@cs.wustl.edu>
+//
+// ============================================================================
+
+module Test
+{
+  typedef sequence<octet> OctetSeq;
+  typedef sequence<char> CharSeq;
+
+  typedef unsigned short Index;
+
+  exception OutOfRange {
+    Index min_index;
+    Index max_index;
+  };
+
+  interface Database
+  {
+    // = TITLE
+    //   A database of octet sequences
+    //
+    // = DESCRIPTION
+    //   Just a silly IDL file to test if the ORB can hold octet
+    //   sequences intact between calls.  Regularly this wouldn't be a
+    //   problem, but TAO optimizations for octet sequences make that
+    //   a little trickier to ensure.
+    //
+    void set (in Index i,
+              in OctetSeq value,
+              in double verification_token,
+              out double returned_token)
+      raises (OutOfRange);
+
+    OctetSeq get (in Index i)
+      raises (OutOfRange);
+
+    unsigned long get_crc (in Index i)
+      raises (OutOfRange);
+
+    oneway void shutdown ();
+    // shutdown the ORB
+  };
+};
