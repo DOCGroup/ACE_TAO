@@ -182,7 +182,6 @@ TAO_StructDef_i::members (const IR::StructMemberSeq &members,
 
   CORBA::ULong count = members.length ();
 
-  int index = 0;
   ACE_TString section_name;
   ACE_Configuration_Section_Key refs_key;
 
