@@ -278,6 +278,20 @@ public:
   virtual unsigned long		n_include_file_names();	// How many
   virtual void			set_n_include_file_names(unsigned long n);
 
+  // = Access methods to deal with other IDL files included in the main
+  //   IDL file. These IDL files are exactly the same strings that are
+  // "#include"d in the main IDL file, not the ones after CC
+  // preprocessor parsed the file.
+  
+  // Just storing the pointer. No memory will be allocated.
+  virtual void add_to_included_idl_files (char* file_name);
+  
+  // Get all the files. 
+  virtual char** included_idl_files (void);
+  
+  // The number of currently availabe include files.
+  virtual size_t n_included_idl_files (void);
+  
   virtual ParseState		parse_state();		// What state we're in
   virtual void			set_parse_state(ParseState s); // Set it
 
@@ -441,6 +455,15 @@ private:
   unsigned long			pd_n_include_file_names;// How many.
   unsigned long			pd_n_alloced_file_names;// How many alloced.
 
+  char** included_idl_files_;
+  // IDL files that are "#include'd.
+  
+  size_t n_included_idl_files_;
+  // The number of such idl files that are currently stored.
+  
+  size_t n_allocated_idl_files_;
+  // For char*'s have been allocated for this.
+  
   ParseState			pd_parse_state;		// Parse state we're in.
 
   // Operations

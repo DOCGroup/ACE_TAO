@@ -201,7 +201,18 @@ DRV_copy_input(FILE *fin, char *fn, const char *orig_filename)
 #endif /* ! ACE_WIN32 */
 
   while (DRV_get_line(fin))
-    fprintf(f, "%s\n", drv_line);
+    {
+      // We really need to know whether this line is a "#include
+      // ...". If so, we would like to separate the "file name" and
+      // keep that in the idl_global. We need them to produce
+      // "#include's in the stubs and skeletons.
+      DRV_check_for_include (drv_line);
+     
+      // Print the line to the temp file.
+      fprintf (f, "%s\n", drv_line);
+    }
+  
+  // Close the temp file.
   fclose(f);
 }
 
@@ -380,8 +391,101 @@ DRV_pre_proc(char *myfile)
     exit(0);
 }
 
+// We really need to know whether this line is a "#include ...". If
+// so, we would like to separate the "file name" and keep that in the
+// idl_global. We need them to produce "#include's in the stubs and
+// skeletons. 
+void
+DRV_check_for_include (const char* buf)
+{
+  const char* r = buf;
+  const char* h;
+  UTL_String* nm;
+
+  // Skip initial '#'.
+  if (*r != '#')
+    return;
+  else
+    r++;
+
+  // Skip the tabs and spaces.
+  while (*r == ' ' || *r == '\t')
+    r++;
+  
+  // Probably we are at the word `include`. If not return. 
+  if (*r != 'i')
+    return;
+  
+  // Check whether this word is `include` or no.
+  char* include_str = "include";
+  for (size_t ii = 0; ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t'; r++, ii++)
+    // Return if it doesn't match.
+    if (include_str [ii] != *r)
+      return;
+  
+  // Next thing is finding the file that has been `#include'd. Skip
+  // all the blanks and tabs and reach the startng " character.
+  for (; *r != '"'; r++)
+    if (*r == '\n' || *r == '\0')
+      return;
+  
+  // Skip this ".
+  r++;
+  
+  // Store this position.
+  h = r;
+  
+  // Found this in idl.ll. Decides the file to be standard input. 
+  if (*h == '\0')
+    return;
+
+  // Find the closing " character.
+  for (; *r != '"'; r++)
+    continue;
+  
+  // Make a new string for this file name.
+  char* file_name = 0;
+  ACE_NEW (file_name, 
+           char [r - h + 1]);
+  
+  // Copy the char's.
+  for (size_t fi = 0; h != r; fi++, h++)
+    file_name [fi] = *h;
+  
+  // Terminate the string.
+  file_name [fi] = '\0';
+
+  // Put Microsoft-style pathnames into a canonical form.
+  for (size_t i = 0, j = 0; file_name [j] != '\0'; i++, j++)
+    {
+      if (file_name [j] == '\\' && file_name [j + 1] == '\\')
+        j++;
+      
+      file_name [i] = file_name [j];
+    }
+  
+  // Terminate this string.
+  file_name [i] = '\0';
+  
+  // Store in the idl_global. 
+  idl_global->add_to_included_idl_files (file_name);
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class ACE_Env_Value<char*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate  ACE_Env_Value<char*>
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
