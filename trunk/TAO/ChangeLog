@@ -1,3 +1,8 @@
+Tue Mar  9 11:39:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+	  Changed export macro to use, this fixes a link error with VC71
+
 Mon Mar  8 21:47:39 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.cpp: An application that linked against TAO
@@ -13,7 +18,7 @@ Mon Mar  8 13:53:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Added a NEWS file which tracks user visible changes between
 	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
-	  this. 	
+	  this.
 
 Sun Mar  7 17:47:16 2004  Olli Savia  <ops@iki.fi>
 
@@ -55,8 +60,8 @@ Fri Mar  5 15:56:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  priority of the invoking thread and transfers it to the thread
 	  that it is about to create. This feature was broken before,
 	  ie. TAO never honored the priority of the invoking thread at
-	  all. 
-	
+	  all.
+
 	* tao/Acceptor_Impl.cpp:
 
 	  Use activate_threads () instead of activate ().
@@ -64,7 +69,7 @@ Fri Mar  5 15:56:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  These changes were due to a bug report submitted by Abhi
 	  <abhi@qualcomm.com> and thanks to him for reporting the
 	  problem and also providing patches that were useful for this
-	  fix. 
+	  fix.
 
 Fri Mar  5 18:36:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
