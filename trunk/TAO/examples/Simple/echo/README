@@ -15,7 +15,7 @@ Options:
 -o    Outputs the ior to the file
       The ior is the reference using which the client can interact with
       the target server object.
--s    Use the naming service
+-n    Use the naming service
 
 When the server is started, you should see as the first line of output
 something that looks like
@@ -41,11 +41,10 @@ Options:
 -d    Debug flag
 -x    Tells the server to shutdown at the end of the test.
 -f    Reads the server ior from the file
--n    no. of iterations
 -k    IOR or The IOR can also be given in the format like file://[file.ior]
       with the full path
 
--s    Use the naming service
+-n    Use the naming service
 
 You can either cut and paste the IOR from the server to the client
 (with the -k option), have the client read the IOR from a file using
