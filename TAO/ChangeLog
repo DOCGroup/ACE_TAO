@@ -160,7 +160,6 @@ Sun Sep  7 13:59:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed typo and added #include of OperationDef_i.h.
 
->>>>>>> 1.2515
 Sun Sep  7 09:50:38 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
