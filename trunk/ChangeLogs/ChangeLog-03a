@@ -1,3 +1,9 @@
+Wed Feb 13 11:46:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/parser/parser/Makefile: Added a library (-lACEXML) to link
+	  to.  Thanks to John Michael Zorko <j.zorko@att.net> for
+	  reporting this.
+
 Tue Feb 12 20:30:53 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/WIN32_Proactor.cpp (handle_events): When the proactor
@@ -15,7 +21,7 @@ Tue Feb 12 20:30:53 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Tue Feb 12 16:18:59 2002  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Proactor_Test.cpp (logflag): 
+	* tests/Proactor_Test.cpp (logflag):
 	* tests/TP_Reactor_Test.cpp (logflag):
 
 	  Removed these unused global variables.  Fixes an unused variable
