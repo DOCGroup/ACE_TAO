@@ -1,3 +1,16 @@
+Tue Dec 02 15:29:41 1997    <nw1@CHA-CHA>
+
+	* tao/{connect,orb_core}.h: Moved Win32 specific template
+	  specialization declaration from connect.h to orb_core.h because
+	  the definition had moved to orb_core.i.
+
+	* tao/object.cpp: Removed conditional directives around
+	  DEFINE_GUID for IID_IUnknown.  This is now defined for Win32
+	  also.
+ 	
+	* tao/TAO.dsp: Removed macro definition __IIOP_BUILD.  It was not
+	  used anywhere.
+
 Tue Dec  2 10:25:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/corba.h: 
