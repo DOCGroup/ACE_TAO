@@ -336,9 +336,20 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
         {
           if (!failures[slot])
             {
-              handlers[slot]->idle ();
-              // Add it to cache..
+              TAO_IIOP_Endpoint endpoint (remote_addrs[slot],
+                                          0);
+              TAO_Base_Connection_Property prop (&endpoint);
+
+              // Add the handler to Cache
+              int retval =
+                this->orb_core ()->connection_cache ().cache_handler (&prop,
+                                                                      handlers[slot]);
               successes++;
+
+              if (retval != 0 && TAO_debug_level > 4)
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) Unable to add handles\n"),
+                            ACE_TEXT ("to cache \n")));
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
