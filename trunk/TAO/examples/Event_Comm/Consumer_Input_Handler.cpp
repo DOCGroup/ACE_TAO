@@ -15,7 +15,7 @@ Consumer_Input_Handler::Consumer_Input_Handler (void)
 
 Consumer_Input_Handler::~Consumer_Input_Handler (void)
 {
-  // No-Op.
+  //this->close ();
 }
 
 int
@@ -31,7 +31,7 @@ Consumer_Input_Handler::consumer_initiated_shutdown (int c)
 }
 
 int
-Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Consumer_Input_Handler::close (void)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "closing down Consumer::Input_Handler\n"));
@@ -50,6 +50,7 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
         {
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
+
 	  if (notifier != 0)
 	    notifier->unsubscribe (receiver,
 				   "",
@@ -63,13 +64,13 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
       TAO_ENDTRY;
     }
 
-	// Make sure to cleanup the STDIN handler.
-	if (ACE_Event_Handler::remove_stdin_handler
-		  (TAO_ORB_Core_instance ()->reactor (),
-		   TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-		ACE_ERROR ((LM_ERROR,
-				   "%p\n",
-				   "remove_stdin_handler"));
+  // Make sure to cleanup the STDIN handler.
+  if (ACE_Event_Handler::remove_stdin_handler
+      (TAO_ORB_Core_instance ()->reactor (),
+       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "remove_stdin_handler"));
 
   return 0;
 }

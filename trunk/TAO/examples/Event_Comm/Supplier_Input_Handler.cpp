@@ -17,10 +17,11 @@ Supplier_Input_Handler::~Supplier_Input_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
+  this->close ();
 }
 
 int
-Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Supplier_Input_Handler::close (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier::Supplier_Input_Handler\n"));
@@ -32,7 +33,6 @@ Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
     ACE_ERROR ((LM_ERROR,
 		       "%p\n",
 		       "remove_stdin_handler"));
-
    return 0;
 }
 

@@ -50,8 +50,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   // Dispatch the callback when events occur.
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  int close (void);
   // Close down the handler.
 
   int consumer_initiated_shutdown (void);

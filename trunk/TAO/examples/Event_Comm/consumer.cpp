@@ -45,8 +45,7 @@ Consumer::Consumer (void)
 
 Consumer::~Consumer (void)
 {
-  // Allow the handlers to clean up.
-  this->ih_.handle_close ();  
+  // No-Op.
 }
 
 int
@@ -62,6 +61,7 @@ Consumer::handle_signal (int signum,
   this->ih_.consumer_initiated_shutdown (1);
 
   // Shut down the ORB
+  ih_.close ();
   ch_.close ();
 
   return 0;
@@ -71,7 +71,6 @@ int
 Consumer::run (void)
 {
   // Run the <Consumer_Handler>'s ORB.
-
   return ch_.run ();
 }
 

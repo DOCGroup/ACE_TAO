@@ -57,9 +57,6 @@ Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
               "%S\n",
               signum));
 
-  this->ih_.handle_close ();
-  this->nh_.handle_close ();
-
   ACE_Reactor::end_event_loop ();
   return 0;
 }
