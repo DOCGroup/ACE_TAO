@@ -99,10 +99,7 @@
         </componentinstantiation>
       </homeplacement>
      <destination>UCAVGSHost</destination>
-    </processcollocation>                  
-                  
-                  
-    <processcollocation>                    
+                
       <homeplacement id="a_UCAVHome">
         <componentfileref idref="com-UCAV"/>
           <componentinstantiation id="a_UCAV">
