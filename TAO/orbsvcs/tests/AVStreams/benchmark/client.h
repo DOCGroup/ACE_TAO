@@ -13,6 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Acceptor.h"
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
 #include "ace/Get_Opt.h"
