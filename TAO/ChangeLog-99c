@@ -1,3 +1,11 @@
+Mon Aug 23 11:59:33 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* TAO/examples/Load_Balancing/Load_Balancer_i.cpp
+	* TAO/examples/Load_Balancing/Identity_Server.cpp
+	* TAO/examples/Load_Balancing/Identity_Client.cpp:
+	  Added explicit template instantiations and fixed a few other
+	  compilation warnings.
+
 Mon Aug 23 08:43:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile: for QNX Neutrino only, always compile
