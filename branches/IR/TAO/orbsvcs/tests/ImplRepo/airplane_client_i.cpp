@@ -89,7 +89,6 @@ Airplane_Client_i::get_planes (size_t count)
           CORBA::String_var response =
             this->server_->get_plane (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          ACE_OS::sleep (1);
 
           ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
         }
