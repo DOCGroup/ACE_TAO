@@ -137,7 +137,7 @@ TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_Components_Deployment_AssemblyState[] =
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
+  TAO_ENCAP_BYTE_ORDER, // byte order
   52,
   ACE_NTOHL (0x49444c3a), 
   ACE_NTOHL (0x6f6d672e), 
@@ -152,17 +152,17 @@ static const CORBA::Long _oc_Components_Deployment_AssemblyState[] =
   ACE_NTOHL (0x6c795374), 
   ACE_NTOHL (0x6174653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/Components/Deployment/AssemblyState:1.0
-  14,
+14,
   ACE_NTOHL (0x41737365), 
   ACE_NTOHL (0x6d626c79), 
   ACE_NTOHL (0x53746174), 
   ACE_NTOHL (0x65000000),  // name = AssemblyState
   2, // member count
-  9,
+9,
   ACE_NTOHL (0x494e4143), 
   ACE_NTOHL (0x54495645), 
   ACE_NTOHL (0x0),  // name = INACTIVE
-  10,
+10,
   ACE_NTOHL (0x494e5345), 
   ACE_NTOHL (0x52564943), 
   ACE_NTOHL (0x45000000),  // name = INSERVICE
