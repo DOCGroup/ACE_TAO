@@ -173,7 +173,7 @@ sub check_workspace () {
   }
 
   my @out_of_date = ();
-  open (CVS, "$cvs -nq checkout $module |")  ||
+  open (CVS, "$cvs -nq checkout -P $module |")  ||
     die "$0: unable to open $cvs\n";
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
