@@ -1,3 +1,9 @@
+Mon Jan  3 09:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Conn_Test.cpp:
+          Fixed compile errors with VxWorks and ACE_HAS_PTHREADS
+
 Mon Jan  3 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks5.x.h:
