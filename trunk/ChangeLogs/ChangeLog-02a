@@ -15,7 +15,8 @@ Tue Mar 05 09:26:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Renamed "error" to "h_errno" where appropriate to make it
 	  more obvious that errno should not be set to the value of
-	  h_errno.
+	  h_errno.  Thanks to Felix Wyss <Felix.Wyss@inin.com> for
+          reporting this.
 
 Tue Mar  5 05:51:44 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
