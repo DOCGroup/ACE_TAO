@@ -39,14 +39,14 @@ $client_args =
 if ($^O eq "MSWin32") {
     $server_args =
         "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf $server_conf "
-       ."-p 1 -w 7 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=2 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=4 "
-       ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=6 ";
+        ."-p 1 -w 6 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
+        ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 ";
 
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 "
-       ."-a 2 -b 4 -c 6 ";
+        ."-a 1 -b 3 -c 6";
 }
 
 if ($^O eq "dec_osf") {
