@@ -59,5 +59,7 @@
 #include "be_visitor_operation/ami_exception_holder_operation_cs.h"
 #include "be_visitor_operation/smart_proxy_ch.h"
 #include "be_visitor_operation/smart_proxy_cs.h"
-
+#include "be_visitor_operation/interceptors_ch.h"
+#include "be_visitor_operation/interceptors_cs.h"
+#include "be_visitor_operation/interceptors_arglist.h"
 #endif // TAO_BE_VISITOR_OPERATION_H
