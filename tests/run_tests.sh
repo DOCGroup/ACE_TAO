@@ -158,18 +158,8 @@ if [ ! "$chorus" ]; then
 fi # ! chorus
 
 ACE_BUILD_COMPONENTS=`$ACE_ROOT/bin/ace_components --ace`
-echo $ACE_BUILD_COMPONENTS | egrep ' Other ' > /dev/null
-if [ $? ]; then
-  OTHER=1
-else
-  OTHER=0
-fi
-echo $ACE_BUILD_COMPONENTS | egrep ' Token ' > /dev/null
-if [ $? ]; then
-  TOKEN=1
-else
-  TOKEN=0
-fi
+OTHER=`echo $ACE_BUILD_COMPONENTS | egrep ' Other '`
+TOKEN=`echo $ACE_BUILD_COMPONENTS | egrep ' Token '`
 
 libDLL_Test=
 if [ -f libDLL_Test$shlib_suffix ]; then
@@ -193,9 +183,8 @@ if [ $sysname != 'procnto' ]; then
   ulimit -d 65536
 fi # ! procnto
 
-IFS=" 	
-"
-for i in `cat run_tests.lst`; do
+# Redirection gets confused when rsh is involved (Chorus)
+for i in `cat run_tests.lst | tr "\012" "$IFS"`; do
 
   case $i in
     */*)

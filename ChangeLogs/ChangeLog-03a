@@ -1,3 +1,8 @@
+Wed Mar 23 15:10:01 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/run_tests.sh
+          Fixed my fix for Chorus.  It, again, supports FOR_TAO subset.
+
 Thu Mar 23 15:09:22 2000  Jody Hagins <jody@atdesk.com>
 
         * ace/Object_Manager.cpp (ACE_Static_Object_Lock::instance):
