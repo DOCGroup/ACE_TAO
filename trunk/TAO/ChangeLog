@@ -1,3 +1,13 @@
+Tue Apr  8 23:52:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          Added 'using namespace TAO' and removed 'TAO::' from template
+          specializations at the top of the file, which were confusing
+          Sun Forte. Thanks to Bala <bala@isis-server.isis.vanderbilt.edu>
+          for coming up with the fix and to Irfan Pyarali <ifran@oomworks.com>
+          for reporting the problem.
+
 Tue Apr  8 18:46:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_ch.cpp:
