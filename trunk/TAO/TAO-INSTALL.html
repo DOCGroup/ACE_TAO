@@ -21,17 +21,17 @@
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
     <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC 5.0 and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0
-        and 5.0, and IRIX 6.x
+        and 5.0, IRIX 6.x, and QNX Neutrino 2.0
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, HP/UX 10.x and 11.x, AIX 4.x, Chorus
+   <td>Windows 95, HP/UX 10.x and 11.x, AIX 4.x
    </td>
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> FreeBSD, NetBSD, SunOS 4.x
+    <td> FreeBSD, NetBSD, SunOS 4.x, Chorus
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -48,7 +48,7 @@ platforms shown above please send email to either <A
 HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
 try to help you fix the problems.  You can also submit bug reports and
-enhancement requests in our 
+enhancement requests in our
 <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/usage-bugzilla.html">bug tracking system</a>.<P>
 
 TAO can be obtained <A
@@ -187,20 +187,20 @@ target.<p>
 <P><CODE>TAO_IDL</CODE> does not contain its own preprocessor, so it
 needs to use an external preprocessor.  Depending on which compiler was
 used to build <CODE>TAO_IDL</CODE>, the default preprocessor will change.
-For example, if compiled with MSVC, <CODE>TAO_IDL</CODE> will look for 
+For example, if compiled with MSVC, <CODE>TAO_IDL</CODE> will look for
 CL.EXE in the path. There are cases where this will not work, such as in cross-compiling
-or if the preprocessor is not in the path.  These situations require that 
+or if the preprocessor is not in the path.  These situations require that
 environment variables are set on the machine to override the
-built-in settings.  More information about these environment variables can 
+built-in settings.  More information about these environment variables can
 be found in the <a href="docs/compiler.html#idl_env">TAO_IDL documentation.</a></P>
 
-<P>It is also advisable to set either the <CODE>ACE_ROOT</CODE> environment 
-variable as outlined in the 
+<P>It is also advisable to set either the <CODE>ACE_ROOT</CODE> environment
+variable as outlined in the
 <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
-installation notes</A> or the <code>TAO_ROOT</code> environment variable.  
-This is only required if you are planning to use the &lt;orb.idl&gt; 
-standard include in your IDL code.  Notice that some of the TAO services 
-use this feature, so you are better off definining the environment variable 
+installation notes</A> or the <code>TAO_ROOT</code> environment variable.
+This is only required if you are planning to use the &lt;orb.idl&gt;
+standard include in your IDL code.  Notice that some of the TAO services
+use this feature, so you are better off definining the environment variable
 in all cases.  </P>
 
 <p><a href="http://www.torus-software.com/">Barry
@@ -408,7 +408,7 @@ by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
    symbols.<p>
 
    If using egcs2.95 as the compiler the <code>-fsquangle</code>
-   option could be used which shortens the symbol names. 
+   option could be used which shortens the symbol names.
    Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a>
    for trying it out and <a href="mailto:othman@cs.wustl.edu">Ossama
    Othman</a> for discovering the option with egcs. Note: Both the ACE
