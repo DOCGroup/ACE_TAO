@@ -147,8 +147,8 @@ Distributer::bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
 }
 
 int
-Distributer::init (int argc,
-                   char **argv,
+Distributer::init (int /*argc*/,
+                   char *[] /*argv*/,
                    CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize the naming services
