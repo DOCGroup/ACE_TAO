@@ -26,6 +26,7 @@ namespace CCF
       struct TypePrefix;
       struct Union;
       struct ValueType;
+      struct ValueTypeFactory;
       struct ValueTypeMember;
 
       //
@@ -80,6 +81,9 @@ namespace CCF
 
         virtual ValueType&
         value_type () = 0;
+
+        virtual ValueTypeFactory&
+        value_type_factory () = 0;
 
         virtual ValueTypeMember&
         value_type_member () = 0;

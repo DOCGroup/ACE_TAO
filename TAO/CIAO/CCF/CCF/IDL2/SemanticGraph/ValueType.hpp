@@ -7,6 +7,7 @@
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 #include "CCF/IDL2/SemanticGraph/Operation.hpp"
+#include "CCF/IDL2/SemanticGraph/Interface.hpp" // Supports
 
 namespace CCF
 {
@@ -20,6 +21,47 @@ namespace CCF
       class ValueType : public virtual Type,
                         public virtual Scope
       {
+        typedef
+        std::vector <Inherits*>
+        Inherits_;
+
+        typedef
+        std::vector <Supports*>
+        Supports_;
+
+      public:
+        typedef
+        Inherits_::const_iterator
+        InheritsIterator;
+
+        InheritsIterator
+        inherits_begin () const
+        {
+          return inherits_.begin ();
+        }
+
+        InheritsIterator
+        inherits_end () const
+        {
+          return inherits_.end ();
+        }
+
+        typedef
+        Supports_::const_iterator
+        SupportsIterator;
+
+        SupportsIterator
+        supports_begin () const
+        {
+          return supports_.begin ();
+        }
+
+        SupportsIterator
+        supports_end () const
+        {
+          return supports_.end ();
+        }
+
       public:
         virtual bool
         complete () const
@@ -40,6 +82,27 @@ namespace CCF
 
         using Type::add_edge_right;
         using Scope::add_edge_left;
+
+        void
+        add_edge_left (Inherits& e)
+        {
+          inherits_.push_back (&e);
+        }
+
+        void
+        add_edge_right (Inherits&)
+        {
+        }
+
+        void
+        add_edge_left (Supports& e)
+        {
+          supports_.push_back (&e);
+        }
+
+      private:
+        Inherits_ inherits_;
+        Supports_ supports_;
       };
 
 
@@ -61,9 +124,6 @@ namespace CCF
         }
       };
 
-      // @@ TODO: value type member
-      // @@ TODO: value type factory
-      //
 
       //
       //

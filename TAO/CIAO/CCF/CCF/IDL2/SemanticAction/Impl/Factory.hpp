@@ -29,6 +29,7 @@
 #include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Union.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/ValueType.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/ValueTypeFactory.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/ValueTypeMember.hpp"
 
 namespace CCF
@@ -135,6 +136,12 @@ namespace CCF
             return value_type_;
           }
 
+          virtual ValueTypeFactory&
+          value_type_factory ()
+          {
+            return value_type_factory_;
+          }
+
           virtual SemanticAction::ValueTypeMember&
           value_type_member ()
           {
@@ -160,6 +167,7 @@ namespace CCF
           TypePrefix type_prefix_;
           Union union__;
           ValueType value_type_;
+          ValueTypeFactory value_type_factory_;
           ValueTypeMember value_type_member_;
         };
       }
