@@ -12,13 +12,12 @@
 // = DESCRIPTION
 //
 // = AUTHOR
-//    Douglas C. Schmidt
+//    Douglas C. Schmidt <schmidt@uci.edu>
 //
 // ============================================================================
 
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
-#include "ace/pre.h"
 
 #include "ace/OS.h"
 
@@ -59,6 +58,11 @@ public:
     int readtimeoutmsec;
     int ctsenb;
     int rcvenb;
+    int rtsenb;  // enable & set rts mode (win32)
+    int xinenb;  // enable xon/xoff  reception
+    int xoutenb;  // enable xon/xoff transmission
+    int xonlim;  // min bytes in input buffer before xon 
+    int xofflim; // max bytes in input buffer before xoff
   };
 
   int control (Control_Mode cmd,
@@ -71,5 +75,4 @@ public:
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
 
-#include "ace/post.h"
 #endif /* ACE_TTY_IO_H */

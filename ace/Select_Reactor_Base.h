@@ -190,8 +190,8 @@ private:
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
   // Keeps track of all free buffers.
 
-  ACE_SYNCH_MUTEX notify_queue_lock_;
-  // synchronization for handling of queues
+  ACE_SYNCH_RW_MUTEX notify_queue_lock_;
+  // Synchronization for handling of queues.
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
