@@ -95,13 +95,12 @@ be_string::compute_tc_name (void)
       // We have a bounded string.  Generate a TypeCode name that is
       // meant for internal use alone.
 
-//       Identifier * tao_id = 0;
-//       ACE_NEW (tao_id,
-//                Identifier ("TAO"));
-
       Identifier * tao_id = 0;
       ACE_NEW (tao_id,
-               Identifier (""));
+               Identifier ("TAO"));
+
+      //   ACE_NEW (tao_id,
+      //            Identifier (""));
 
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (tao_id,
@@ -113,15 +112,24 @@ be_string::compute_tc_name (void)
 //                        "_%u",
 //                        this->max_size ()->ev ()->u.ulval);
 
-//       ACE_CString local_tc_name =
-//         ACE_CString (this->width () == 1
-//                      ? "_tc_string"
-//                      : "_tc_wstring")
+      ACE_CString local_tc_name =
+        ACE_CString ("tc_")
+        + ACE_CString (this->flat_name ());
 //         + ACE_CString (bound);
 
-      ACE_NEW (id,
-               Identifier (this->flat_name ()));
+      Identifier * typecode_scope = 0;
+      ACE_NEW (typecode_scope,
+               Identifier ("TypeCode"));
 
+      UTL_ScopedName * tc_scope_conc_name = 0;
+      ACE_NEW (tc_scope_conc_name,
+               UTL_ScopedName (typecode_scope,
+                               0));
+
+      this->tc_name_->nconc (tc_scope_conc_name);
+
+      ACE_NEW (id,
+               Identifier (local_tc_name.c_str ()));
     }
 
   UTL_ScopedName *conc_name = 0;
