@@ -107,6 +107,10 @@ SOURCE=.\Param_TestCli.h
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ".i"
+# Begin Source File
+
+SOURCE=.\param_testCli.i
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
@@ -114,8 +118,6 @@ SOURCE=.\Param_TestCli.h
 # Begin Source File
 
 SOURCE=.\param_test.idl
-USERDEP__PARAM="..\..\..\bin\tao_idl.exe"	
-# PROP Ignore_Default_Tool 1
 # End Source File
 # End Group
 # End Target
