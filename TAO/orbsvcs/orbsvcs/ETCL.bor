@@ -10,7 +10,7 @@ OBJFILES = \
         $(OBJDIR)\ETCL_l.obj \
         $(OBJDIR)\ETCL_y.obj
 
-#RESOURCE = $(OBJDIR)\ETCL.res
+RESOURCE = $(OBJDIR)\ETCL.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -24,6 +24,7 @@ MAKEFILES = \
 	LoadBalancing.bor \
         FT_ORB.bor \
         FaultTolerance.bor \
-        PortableGroup.bor
+        PortableGroup.bor \
+        IFRService.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
