@@ -688,8 +688,23 @@ TAO::FT_ReplicationManager::create_member (
                    PortableGroup::CannotMeetCriteria))
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
-TODO
-//@@  TODO
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (object_group, group))
+  {
+    group->create_member (the_location, type_id, the_criteria ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+    result = group->reference ();
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::create_member in unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+  }
   return result._retn();
 }
 
@@ -712,12 +727,6 @@ TAO::FT_ReplicationManager::add_member (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-
-    ///////////////////////
-    // Now we do it again using
-    // our own object group collection
-    // @@ TODO: if this fails, we're out of synch with the OGM
-    // @@ unified object group management will fix this someday.
     group->add_member (
       the_location,
       member
@@ -738,7 +747,6 @@ TAO::FT_ReplicationManager::add_member (
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
   }
   METHOD_RETURN (TAO::FT_ReplicationManager::add_member) result._retn ();
-
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -774,9 +782,27 @@ TAO::FT_ReplicationManager::locations_of_members (
   ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
-  TODO
-  return 0;
+  PortableGroup::Locations * result = 0;
 
+  // Find the object group corresponding to this IOGR
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (object_group, group))
+  {
+    result = group->locations_of_members (
+      ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::locations_of_members: unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), 0);
+  }
+  return result;
 }
 
 PortableGroup::ObjectGroups *
@@ -786,7 +812,8 @@ TAO::FT_ReplicationManager::groups_at_location (
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
   TODO
-  return 0;
+  ACE_UNUSED_ARG (the_location);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 PortableGroup::ObjectGroupId
@@ -796,8 +823,25 @@ TAO::FT_ReplicationManager::get_object_group_id (
   ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
-  TODO
-  return 0;
+  PortableGroup::ObjectGroupId result = 0;
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (object_group, group))
+  {
+    group->get_object_group_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (result);
+    result = group->get_object_group_id ();
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_id: unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result);
+  }
+  return result;
 }
 
 PortableGroup::ObjectGroup_ptr
@@ -807,8 +851,24 @@ TAO::FT_ReplicationManager::get_object_group_ref (
   ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
-  PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
-  TODO
+  PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
+
+  // Find the object group corresponding to this IOGR
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (object_group, group))
+  {
+    result = group->reference ();
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref: unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+  }
   return result._retn();
 }
 
@@ -821,8 +881,24 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
     , PortableGroup::ObjectGroupNotFound
   ))
 {
-  PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
-  TODO
+  PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil ();
+
+  // Find the object group corresponding to this IOGR
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (group_id, group))
+  {
+    result = group->reference ();
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_object_group_ref_from_id: unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+  }
   return result._retn();
 }
 
@@ -836,7 +912,24 @@ TAO::FT_ReplicationManager::get_member_ref (
                    PortableGroup::MemberNotFound))
 {
   CORBA::Object_var result = CORBA::Object::_nil();
-  TODO
+
+  // Find the object group corresponding to this IOGR
+  TAO::PG_Object_Group * group = 0;
+  if (this->group_factory_.find_group (object_group, group))
+  {
+    result = group->get_member_reference (the_location ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (CORBA::Object::_nil());
+  }
+  else
+  {
+    if (TAO_debug_level > 0)
+    {
+      ACE_ERROR ( (LM_ERROR,
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::get_member_ref: unknown group\n")
+        ));
+    }
+    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
+  }
   return result._retn();
 }
 

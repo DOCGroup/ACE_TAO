@@ -10,6 +10,10 @@
 #include <orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
 #include <orbsvcs/PortableGroup/PG_Utils.h>
 
+#define TODO int todo;
+//#define TODO
+
+
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
     const PortableGroup::Location & location)
@@ -554,6 +558,42 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
         ));
     }
   }
+}
+
+void TAO::PG_Object_Group::create_member (
+    const PortableGroup::Location & the_location,
+    const char * type_id,
+    const PortableGroup::Criteria & the_criteria
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ( (CORBA::SystemException,
+    PortableGroup::MemberAlreadyPresent,
+    PortableGroup::NoFactory,
+    PortableGroup::ObjectNotCreated,
+    PortableGroup::InvalidCriteria,
+    PortableGroup::CannotMeetCriteria))
+{
+  TODO
+}
+
+PortableGroup::Locations * TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableGroup::Locations * result = 0;
+  TODO
+  return result;
+}
+
+CORBA::Object_ptr TAO::PG_Object_Group::get_member_reference (
+    const PortableGroup::Location & the_location
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    PortableGroup::ObjectGroupNotFound,
+    PortableGroup::MemberNotFound))
+{
+  CORBA::Object_var result = CORBA::Object::_nil ();
+  TODO
+  return result._retn ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

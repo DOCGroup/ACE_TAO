@@ -631,8 +631,6 @@ TAO_PG_ObjectGroupManager::member_count (
 int
 TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 {
-  int result = 0;
-
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
   this->orb_ = CORBA::ORB::_duplicate (orb);
