@@ -27,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Object_Manager_Base.h"
+
 /**
  * @class ACE_Singleton
  *

@@ -55,6 +55,7 @@ UTILS_FILES = \
   Message_Block \
   Method_Request \
   Object_Manager \
+  Object_Manager_Base \
   Registry \
   String_Base_Const \
   SString \

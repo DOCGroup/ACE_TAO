@@ -16,7 +16,9 @@
 #define ACE_OBJECT_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/OS.h" //for ACE_Object_Manager_Base, etc...
+//#include "ace/OS.h" //for ACE_Object_Manager_Base, etc...
+
+#include "ace/Object_Manager_Base.h"
 #include "ace/Service_Object.h"
 #include "ace/ACE_export.h"
 

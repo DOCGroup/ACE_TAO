@@ -1,8 +1,31 @@
+Thu May  2 09:11:17 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Init_ACE.cpp:
+	* ace/OS_Thread_Adapter.cpp:
+	* ace/Object_Manager.h:
+	* ace/Signal.i:
+	* ace/Singleton.h:
+	* ace/Thread_Hook.cpp:
+	* ace/Trace.cpp:
+	
+	  Fixed includes related to moved classes below.
+
+	* ace/Object_Manager_Base.{h,cpp}:
+	* ace/OS.{h,cpp,i}:
+	* ace/Makefile
+
+	  Moved ACE_Cleanup*, ACE_Object_Manager_Base, and ACE_OS_Object_Manager
+	  from OS.h to new files.
+	
+	* ace/Object_Manager_Base.{h,cpp}:
+
+	  Added new files.
+
 Fri Apr 26 12:31:10 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/*.{h,i,cpp}: 
 
-	  Move included in cpp after include of inline.
+	  Moved includes in cpp after include of inline.
 
 	  Reorded includes in *.cpp files so that all includes, except
 	  for the corresponding *.h file, come after the conditional 

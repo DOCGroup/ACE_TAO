@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Object_Manager_Base.h"
+
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
   // : sigset_ ()

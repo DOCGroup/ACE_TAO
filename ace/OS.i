@@ -7,6 +7,7 @@
 # include "ace/ace_sys_shm.h"
 # include "ace/ace_sys_uio.h"
 # include "ace/ace_string.h"
+#include "ace/Object_Manager_Base.h"
 
 #if defined (__CYGWIN32__)
 # include /**/ <getopt.h>
@@ -10472,11 +10473,6 @@ fileno (FILE *fp)
   return (ACE_HANDLE) fp;
 }
 # endif /* defined (ACE_PSOS) */
-
-ACE_INLINE
-ACE_Cleanup::ACE_Cleanup (void)
-{
-}
 
 ACE_INLINE void *
 ACE_OS::bsearch (const void *key,
