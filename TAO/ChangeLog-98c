@@ -1,20 +1,7 @@
-Mon Aug 24 14:45:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
-
-	* orbsvcs/tests/Property/run_test.pl: Now uses uniqueid for the
-	  -ORBnameserviceport argument 
-
-Mon Aug 24 14:36:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* tao/Environment.cpp: 
-	  When the ORB is getting destroyed the Environment created with
-	  it should *not* pop itself from the environment stack.
-
-Mon Aug 24 14:00:43 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
-
-	* orbsvcs/tests/Property/run_test.pl: New file. Script to execute
-	  the test (Naming_Service + server + client).   
-
 Mon Aug 24 10:53:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp (cube_rti_data): Improved
+	  the I/O printing a bit more.
 
 	* tests/Cubit/TAO/IDL_Cubit/RTI_IO.cpp (operator<<): Only
 	  print out the RTI structure of TAO_debug_level is > 0.
@@ -23,7 +10,19 @@ Mon Aug 24 10:53:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  consistent.  Also, integrated the RTI test operation.  Thanks to
  	  Dave Meyer <dmeyer@std.saic.com> for contributing this.
 
+Mon Aug 24 14:45:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Property/run_test.pl: Now uses uniqueid for the
+	  -ORBnameserviceport argument 
+
+	* orbsvcs/tests/Property/run_test.pl: New file. Script to execute
+	  the test (Naming_Service + server + client).   
+
 Mon Aug 24 10:31:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Environment.cpp: 
+	  When the ORB is getting destroyed the Environment created with
+	  it should *not* pop itself from the environment stack.
 
 	* The IDL compiler support #pragma prefix
 
@@ -62,8 +61,6 @@ Mon Aug 24 10:31:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Added the #pragma "omg.org" directive.  This should allow
 	  TAO's services to interoperate seamlessly with other standard
 	  CORBA ORBs. 
-
-Mon Aug 24 09:47:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Makefile: 
 	  More dependencies were outdated.
