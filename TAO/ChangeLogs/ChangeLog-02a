@@ -1,3 +1,12 @@
+Fri Sep 21 22:31:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/default_resource.cpp (get_parser_names): 
+
+	  Fixed bug where the "corbaname" parser's name was not properly
+	  inserted into the list of names of registered parsers.  Instead
+	  the "corbaloc" IOR's parser name was inserted.  "corbaname" IORs
+	  should now be supported by default, as was originally designed.
+
 Fri Sep 21 22:23:11 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Profile.cpp (policies):
