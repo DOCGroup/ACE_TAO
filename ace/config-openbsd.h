@@ -168,6 +168,8 @@
 
 #define ACE_HAS_MKSTEMP
 
+#define ACE_HAS_SNPRINTF
+
 // OpenBSD supports IPv6 by default, but ACE IPv6 code
 // has compile errors.
 //#define ACE_HAS_IPV6

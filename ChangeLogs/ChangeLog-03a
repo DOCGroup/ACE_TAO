@@ -1,3 +1,10 @@
+Sat Jan 25 20:31:56 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* ace/config-openbsd.h:
+	* ace/config-openbsd-pthread.h: Added ACE_HAS_SNPRINTF since
+	  OpenBSD has snprintf() and to fix buffer overflow tested for by
+	  tests/Log_Msg_Test.
+
 Sat Jan 25 18:15:48 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added a new test to the daily builds.
