@@ -1391,7 +1391,7 @@ ACE_OS::strdup (const char *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
   // @@ Should we provide this function on WinCE?
-#if defined (VXWORKS) || defined (CHORUS) || defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_STRDUP_EMULATION)
   char *t = (char *) ::malloc (::strlen (s) + 1);
   if (t == 0)
     return 0;
@@ -1399,7 +1399,7 @@ ACE_OS::strdup (const char *s)
     return ACE_OS::strcpy (t, s);
 #else
   return ::strdup (s);
-#endif /* VXWORKS */
+#endif /* ACE_HAS_STRDUP_EMULATION */
 }
 
 ACE_INLINE char *
