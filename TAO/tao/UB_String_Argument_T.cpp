@@ -6,7 +6,7 @@
 #include "tao/UB_String_Argument_T.h"
 
 ACE_RCSID (tao,
-           String_Argument_T,
+           UB_String_Argument_T,
            "$Id$")
 
 template<typename S>

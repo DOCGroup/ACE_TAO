@@ -17,7 +17,7 @@ TAO_Array_Var_Base_T<T,T_slice,T_life>::TAO_Array_Var_Base_T (
     const TAO_Array_Var_Base_T & p
   )
 {
-  this->ptr_ = TAO::Array_Tratis<T,T_slice, T_forany>::tao_dup (p.in ());
+  this->ptr_ = TAO::Array_Traits<T,T_slice>::tao_dup (p.in ());
 }
 
 template<typename T, typename T_slice, typename T_life>
