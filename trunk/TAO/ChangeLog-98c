@@ -1,3 +1,18 @@
+Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
+
+        * tao/{default.bld, tao.bld}: Updated VxWorks GHS Build files.
+
+        * orbsvcs/default.bld,
+          orbsvcs/orbsvcs/orbsvcs.bld,
+          orbsvcs/Event_Service/Event_Service.bld,
+          orbsvcs/Scheduling_Service/Scheduling_Service.bld,
+          orbsvcs/Naming_Service/Naming_Service.bld,
+          orbsvcs/Dump_Schedule/Dump_Schedule.bld:
+              Updated VxWorks GHS Build files.
+
+        * tests/Cubit/TAO/IDL_Cubit/{default.bld,IDL_Cubit.bld}: 
+              Updated VxWorks GHS Build files.
+
 Wed Apr 08 00:31:08 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): If the host is not supplied by the
