@@ -7,7 +7,7 @@ Fri Jun 26 14:52:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Makefile: Temporarily removed Synch-Benchmark
 	  from the targets.  It should be added back once the work is
-	  done. 
+	  done.
 
 Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,6 +25,13 @@ Fri Jun 26 11:50:03 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Queue_T.*,Makefile: split Message_Queue into
           template and non-template files.
+
+        * ace/Basic_Types.h: added ACE_CU64_TO_CU32 conversion macro,
+          for converting const ACE_UINT64 to const ACE_UINT32.  The old
+          ACE_U64_TO_U32 wouldn't work with Sun C++'s ANSI casts.
+
+        * performance-tests/Misc/basic_perf.cpp (per_iteration): use
+          ACE_CU64_TO_CU32 for narrowing the const ACE_UIN64 argument.
 
 Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
