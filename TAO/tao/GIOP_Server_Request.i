@@ -113,7 +113,7 @@ TAO_GIOP_ServerRequest::service_info (void)
 
 ACE_INLINE void
 TAO_GIOP_ServerRequest::
-service_info (IOP::ServiceContextList &service_info) 
+service_info (IOP::ServiceContextList &service_info)
 {
   this->service_info_ = service_info;
 }
@@ -142,7 +142,7 @@ TAO_GIOP_ServerRequest::requesting_principal (CORBA_Principal_ptr
 //{
 //  this->header_len_ = len;
 //}
-// 
+//
 //ACE_INLINE void
 //TAO_GIOP_ServerRequest::message_size_offset (size_t len)
 //{

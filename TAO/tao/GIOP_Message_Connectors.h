@@ -10,7 +10,7 @@
 //     GIOP_Message_Connectors.h
 //
 // = DESCRIPTION
-//   Interface for the client side of the GIOP classes  
+//   Interface for the client side of the GIOP classes
 //
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
@@ -23,6 +23,10 @@
 
 #include "tao/GIOP_Message_Base.h"
 
+// @@ Bala: why are this class called "Connector" does it have
+// @@ anything to do with establishing connection? It looks more like
+// @@ request parsing or something like that!
+
 class TAO_Export TAO_GIOP_Message_Connectors: public TAO_GIOP_Message_Base
 {
   // = TITLE
@@ -32,15 +36,15 @@ class TAO_Export TAO_GIOP_Message_Connectors: public TAO_GIOP_Message_Base
   //   This class provides methods and code for the connector specific
   //   functionality of GIOP.The motivation for this class is to hold
   //   common code between different versions of GIOP in a single
-  //   class. 
-  
+  //   class.
+
 protected:
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
   // Parse the reply message from the server
 
 private:
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   write_locate_request_header (CORBA::ULong request_id,
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &msg) = 0;
@@ -48,7 +52,7 @@ private:
 
 
   int validate_version (TAO_GIOP_Message_State *state);
-  
+
   CORBA::Octet major_version (void) = 0;
   CORBA::Octet minor_version (void) = 0;
   // Virtual methods that will be implemented by the version specific
@@ -67,7 +71,8 @@ private:
 // Version specific classes of GIOP
 //////////////////////////////////////////////////
 
-/**************************************************************/
+// ****************************************************************
+
 class TAO_Export TAO_GIOP_Message_Connector_10: public TAO_GIOP_Message_Connectors
 {
   // = TITLE
@@ -79,9 +84,9 @@ public:
 
   TAO_GIOP_Message_Connector_10 (void);
   // Ctor
-  
+
 protected:
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
   write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg);
@@ -92,7 +97,7 @@ protected:
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &msg);
   // Write the locate request header in to the <msg>
-  
+
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
   // Parse the reply messages from the server
@@ -102,8 +107,8 @@ protected:
   // Our minor and major versions
 };
 
+// ****************************************************************
 
-/*************************************************************/
 class TAO_Export TAO_GIOP_Message_Connector_11: public TAO_GIOP_Message_Connector_10
 {
   // = TITLE
@@ -127,4 +132,3 @@ private:
 
 #include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_CONNECTORS_H*/
-

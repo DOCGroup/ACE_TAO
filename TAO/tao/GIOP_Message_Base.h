@@ -38,7 +38,7 @@ class TAO_Export TAO_GIOP_Message_Base : public TAO_Pluggable_Messaging
 
 public:
   TAO_GIOP_Message_Base (void);
-  
+
   virtual ~TAO_GIOP_Message_Base (void);
   // Dtor
 
@@ -50,8 +50,8 @@ public:
                     TAO_ORB_Core *orb_core,
                     TAO_Message_State_Factory &mesg_state,
                     ACE_Time_Value *max_time_value = 0);
-  // Reads input from the transport 
-  
+  // Reads input from the transport
+
   virtual CORBA::Boolean write_message_header   (const TAO_Operation_Details &opdetails,
                                                  TAO_Pluggable_Header_Type header_type,
                                                  TAO_Target_Specification &spec,
@@ -64,7 +64,7 @@ public:
                     TAO_Stub *stub = 0,
                     int two_way = 1);
   // Sends the encapsulated stream in <stream> on to the transport
-  
+
   virtual int parse_reply (TAO_Message_State_Factory &mesg_state,
                            TAO_Pluggable_Reply_Params &params) = 0;
   // Parse the reply message from the server
@@ -90,10 +90,15 @@ protected:
   //    message_type is the 8th byte in the GIOP header. If they
   //    decide to move that to 10th byte for GIOP2.8. Just
   //    thinking ahead, that wouldn't cost anything today.
+  // @@ If they change it we implement that in the GIOP_2_8 class, of
+  // course, and BTW, chances that a protocol will be change in such a
+  // non-backwards compatible way are slim...
+  // @@ Furthermore, why you have this methods here if they are not
+  // used?  Do you get paid by the line of code (just kidding ;-)
 
   size_t header_len (void);
   // This will give the size of the header for different versions of
-  // GIOP. 
+  // GIOP.
 
   size_t message_size_offset (void);
   // This will give the message_size offset as specified by different
@@ -102,11 +107,11 @@ protected:
   size_t major_version_offset (void);
   // This will give the major_version offset as specified by different
   // versions of GIOP
-  
+
   size_t minor_version_offset (void);
   // This will give the minor_version offset as specified by different
   // versions of GIOP
-  
+
   size_t flags_offset (void);
   // This will give the flags  offset as specified by different
   // versions of GIOP
@@ -131,20 +136,20 @@ private:
   virtual CORBA::Octet major_version (void) = 0;
   virtual CORBA::Octet minor_version (void) = 0;
   // These virtual methods need will give the major and minor versions
-  // of the GIOP classes that are active. 
+  // of the GIOP classes that are active.
 
-  virtual CORBA::Boolean 
+  virtual CORBA::Boolean
       write_request_header (const TAO_Operation_Details &opdetails,
                             TAO_Target_Specification &spec,
                             TAO_OutputCDR &msg) = 0;
   // Write the GIOP request header in to <msg>
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
       write_locate_request_header (CORBA::ULong request_id,
                                    TAO_Target_Specification &spec,
                                    TAO_OutputCDR &msg) = 0;
   // Write the GIOP locate request header in to <msg>
-  
+
   virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
   // This will do a validation of the versions that arrive in the transport.
 
@@ -160,6 +165,7 @@ private:
   // Close a connection, first sending GIOP::CloseConnection.
 };
 
+// @@ Bala: do you need to put this in the header file?
 const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
 const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
 const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
@@ -173,4 +179,3 @@ const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
 
 #include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_BASE_H*/
-

@@ -10,7 +10,7 @@ TAO_Target_Specification::TAO_Target_Specification (void)
   //no-op
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
 {
   this->specifier_ = TAO_Target_Specification::Key_Addr;
@@ -18,12 +18,16 @@ TAO_Target_Specification::target_specifier (const TAO_ObjectKey &key)
   //    the stack or is otherwise destroyed then you are in big
   //    trouble.
   // @@ Carlos: As suggested by you I have documented that in the
-  //    headerfile. 
+  //    headerfile.
+  // @@ Bala: beware, documentation is good, code that works in
+  // general is better....  but you are probably right in this case, i
+  // suspect this stuff goes right in the critical path, right? So
+  // making a copy of the object key would be too expensive..
   this->u_.object_key_ = ACE_const_cast (TAO_ObjectKey *,
                                          &key);
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 TAO_Target_Specification::target_specifier (IOP::TaggedProfile *profile)
 
 {
@@ -35,7 +39,7 @@ TAO_Target_Specification::target_specifier (IOP::TaggedProfile *profile)
 }
 
 ACE_INLINE void
-TAO_Target_Specification::target_specifier (IOP::IOR *ior, 
+TAO_Target_Specification::target_specifier (IOP::IOR *ior,
                                             CORBA::ULong prof_index)
 { if (ior)
     {
@@ -45,12 +49,12 @@ TAO_Target_Specification::target_specifier (IOP::IOR *ior,
     }
 }
 
-ACE_INLINE const TAO_ObjectKey* 
+ACE_INLINE const TAO_ObjectKey*
 TAO_Target_Specification::object_key (void)
 {
   if (this->specifier_ == TAO_Target_Specification::Key_Addr)
     return this->u_.object_key_;
-  
+
   return 0;
 }
 
@@ -63,7 +67,7 @@ TAO_Target_Specification::profile (void)
   return 0;
 }
 
-ACE_INLINE CORBA::ULong 
+ACE_INLINE CORBA::ULong
 TAO_Target_Specification::iop_ior (IOP::IOR *& ior)
 {
   if (this->specifier_ == TAO_Target_Specification::Reference_Addr)
@@ -76,9 +80,8 @@ TAO_Target_Specification::iop_ior (IOP::IOR *& ior)
   return 0;
 }
 
-ACE_INLINE TAO_Target_Specification::TAO_Target_Address 
+ACE_INLINE TAO_Target_Specification::TAO_Target_Address
 TAO_Target_Specification::specifier (void)
 {
   return this->specifier_;
 }
-

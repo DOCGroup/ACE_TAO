@@ -33,7 +33,7 @@
 // places. That would help us when we do the next iteration to attack
 // these places. IMHO, your idea of internal table to map request_ids
 // to different request tokens can be extended to other data in the
-// class. 
+// class.
 class TAO_Export TAO_Pluggable_Reply_Params
 {
   // = TITLE
@@ -41,7 +41,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
   //
   // = DESCRIPTION
   //   This represents a set of data that would be received by the
-  //   connector from the acceptor. 
+  //   connector from the acceptor.
 public:
   TAO_Pluggable_Reply_Params (void);
   // Ctor
@@ -50,7 +50,7 @@ public:
   // The IOP service context list
 
   CORBA::ULong request_id_;
-  // The request id for which the reply we (connector) has received 
+  // The request id for which the reply we (connector) has received
 
   // @@ Bala: this is (again) an GIOPism (to coin a word).  Other
   // protocol may choose to send different *messages* instead.
@@ -74,7 +74,7 @@ enum TAO_Pluggable_Header_Type
 {
   // = TITLE
   // = DESCRIPTION
-  // 
+  //
   TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER = 0,
   TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER
 };
@@ -93,16 +93,16 @@ enum TAO_Pluggable_Message_Type
   //   messaging framework to denote  existing message types. This has
   //   an inspiration from GIOP. So if anybody wants to add more message
   //   types you are welcome but please do not change the numbering
-  //   scheme as this would affect GIOP. 
-  
+  //   scheme as this would affect GIOP.
+
   TAO_PLUGGABLE_MESSAGE_REQUEST = 0,                // sent by client.
   TAO_PLUGGABLE_MESSAGE_REPLY = 1,                  // by server.
   TAO_PLUGGABLE_MESSAGE_CANCELREQUEST = 2,          // by client.
   TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST = 3,          // by client.
   TAO_PLUGGABLE_MESSAGE_LOCATEREPLY = 4,
-  TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION = 5,        
-  TAO_PLUGGABLE_MESSAGE_MESSAGERROR = 6,         
-  TAO_PLUGGABLE_MESSAGE_FRAGMENT = 7             
+  TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION = 5,
+  TAO_PLUGGABLE_MESSAGE_MESSAGERROR = 6,
+  TAO_PLUGGABLE_MESSAGE_FRAGMENT = 7
 };
 
 // @@ Bala: This is a hopeless GIOPism.
@@ -115,7 +115,7 @@ enum TAO_Pluggable_Message_Exception_Type
   //   messaging framework to denote  existing Exception types. This has
   //   an inspiration from GIOP. So if anybody wants to add more message
   //   types you are welcome but please do not change the numbering
-  //   scheme as this would affect GIOP. 
+  //   scheme as this would affect GIOP.
   TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION = 0,
   // Request completed successfully
 
@@ -127,12 +127,12 @@ enum TAO_Pluggable_Message_Exception_Type
 
   TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD,
   // Reply is a location forward type
-  
+
   TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM,
   // PLUGGABLE_MESSAGE 1.2, Reply is a location forward perm type..
 
   TAO_PLUGABLE_MESSAGE_NEEDS_ADDRESSING_MODE
-  // GIOP1.2, 
+  // GIOP1.2,
 };
 
 #if defined (__ACE_INLINE__)
@@ -141,4 +141,3 @@ enum TAO_Pluggable_Message_Exception_Type
 
 #include "ace/post.h"
 #endif /*TAO_PLUGGABLE_MESSAGING_UTILS_H*/
-

@@ -1,3 +1,40 @@
+Tue Mar 28 14:40:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Accept_State.i:
+	* tao/GIOP_Message_Accept_State.cpp:
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Acceptors.i:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Connectors.i:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Message_Headers.h:
+	* tao/GIOP_Message_Headers.i:
+	* tao/GIOP_Message_Headers.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.i:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_State.h:
+	* tao/GIOP_Message_State.i:
+	* tao/GIOP_Message_State.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Utils.h:
+	* tao/GIOP_Utils.cpp:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging.i:
+	* tao/Pluggable_Messaging.cpp:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/target_specification.h:
+	* tao/target_specification.i:
+	* tao/target_specification.cpp:
+	  Another pass making a code review for Bala.
+
 Tue Mar 28 14:29:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:

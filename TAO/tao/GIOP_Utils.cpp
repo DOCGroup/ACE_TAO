@@ -8,6 +8,7 @@
 # include "tao/GIOP_Utils.i"
 #endif /* __ACE_INLINE__ */
 
+// @@ Bala: what happened to the RCSID macro?
 
 int
 TAO_GIOP_Utils::
@@ -19,7 +20,7 @@ TAO_GIOP_Utils::
   // Grow the size of CDR stream
   if (input.grow (read_size) == -1)
     return -1;
-  
+
   // Read until all the header is received.  There should be no
   // problems with locking, the header is only a few bytes so they
   // should all be available on the socket, otherwise there is a
@@ -27,7 +28,7 @@ TAO_GIOP_Utils::
   // problems than just this small loop.
   char *buf = input.rd_ptr ();
   ssize_t n = 0;
-  
+
   for (int t = read_size;
        t != 0;
        t -= n)
@@ -80,7 +81,7 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
 
 TAO_GIOP_Reply_Status_Type
 TAO_GIOP_Utils::
-  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)  
+  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)
 {
 
   switch (corba_type)

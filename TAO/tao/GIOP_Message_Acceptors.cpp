@@ -13,9 +13,9 @@
 
 ACE_RCSID(tao, GIOP_Message_Acceptors, "$Id$")
 
-int 
+int
 TAO_GIOP_Message_Acceptors::
-  process_client_message (TAO_Transport *transport, 
+  process_client_message (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
                           TAO_InputCDR &input,
                           CORBA::Octet message_type)
@@ -43,7 +43,7 @@ TAO_GIOP_Message_Acceptors::
     default:
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) Illegal message received by server\n"))); 
+                    ASYS_TEXT ("TAO (%P|%t) Illegal message received by server\n")));
       return this->send_error (transport);
     }
 
@@ -52,7 +52,7 @@ TAO_GIOP_Message_Acceptors::
 
 int
 TAO_GIOP_Message_Acceptors::
-  process_client_request (TAO_Transport *transport, 
+  process_client_request (TAO_Transport *transport,
                           TAO_ORB_Core* orb_core,
                           TAO_InputCDR &input)
 {
@@ -60,8 +60,8 @@ TAO_GIOP_Message_Acceptors::
   TAO_GIOP_Version version (this->major_version (),
                             this->minor_version ());
 
-  
-  
+
+
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
   TAO_GIOP_ServerRequest request (this,
@@ -69,9 +69,9 @@ TAO_GIOP_Message_Acceptors::
                                   this->output_,
                                   orb_core,
                                   version);
-  
+
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
-  
+
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
   CORBA::Boolean sync_with_server = 0;
@@ -80,10 +80,10 @@ TAO_GIOP_Message_Acceptors::
 
   ACE_TRY
     {
-      parse_error = 
+      parse_error =
         this->accept_state_->parse_request_header (request);
-     
-      // Throw an exception if the 
+
+      // Throw an exception if the
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
@@ -91,11 +91,11 @@ TAO_GIOP_Message_Acceptors::
 
       response_required = request.response_expected ();
       sync_with_server = request.sync_with_server ();
-      
+
 #if (TAO_NO_IOR_TABLE == 0)
       const CORBA::Octet *object_key =
         request.object_key ().get_buffer ();
-      
+
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
@@ -105,7 +105,7 @@ TAO_GIOP_Message_Acceptors::
                                  request.object_key ().length (),
                                  0,
                                  0);
-          
+
           // @@ This debugging output should *NOT* be used since the
           //    object key string is not null terminated, nor can it
           //    be null terminated without copying.  No copying should
@@ -129,21 +129,21 @@ TAO_GIOP_Message_Acceptors::
 
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
-          
+
           if (status == -1 || CORBA::is_nil (object_reference.in ()))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
-          
+
           // ObjectID present in the table with an associated NON-NULL
           // reference.  Throw a forward request exception.
 
           /*CORBA::Object_ptr dup =
             CORBA::Object::_duplicate (object_reference);*/
-          
+
           // @@ We could simply write the response at this point...
           ACE_TRY_THROW (PortableServer::ForwardRequest (object_reference.in ()));
         }
 #endif /* TAO_NO_IOR_TABLE */
-      
+
       // Do this before the reply is sent.
       orb_core->object_adapter ()->dispatch_servant (
                                                      request.object_key (),
@@ -158,9 +158,9 @@ TAO_GIOP_Message_Acceptors::
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       // Make the GIOP header and Reply header
-      this->make_reply (request_id, 
+      this->make_reply (request_id,
                         this->output_);
-      
+
       this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
       CORBA::Object_ptr object_ptr =
@@ -267,9 +267,9 @@ TAO_GIOP_Message_Acceptors::
   if ((response_required && !sync_with_server)
       || (sync_with_server && location_forward))
     {
-      result = this->send_message (transport, 
+      result = this->send_message (transport,
                                    this->output_);
-                                   
+
       if (result == -1)
         {
           if (TAO_debug_level > 0)
@@ -295,7 +295,7 @@ TAO_GIOP_Message_Acceptors::
   // Get the revision info
   TAO_GIOP_Version version (this->major_version (),
                             this->minor_version ());
-  
+
   // This will extract the request header, set <response_required> as
   // appropriate.
   TAO_GIOP_Locate_Request_Header locate_request (input);
@@ -310,7 +310,7 @@ TAO_GIOP_Message_Acceptors::
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int parse_error = 
+      int parse_error =
         this->accept_state_->parse_locate_header (locate_request);
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
@@ -319,14 +319,14 @@ TAO_GIOP_Message_Acceptors::
 
       const CORBA::Octet *object_key =
         locate_request.target_address ().object_key ().get_buffer ();
-      
+
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         {
-          CORBA::ULong len = 
+          CORBA::ULong len =
             locate_request.target_address ().object_key ().length ();
-          
+
           ACE_CString object_id (ACE_reinterpret_cast (const char *,
                                                        object_key),
                                  len,
@@ -335,7 +335,7 @@ TAO_GIOP_Message_Acceptors::
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"), 
+                        ASYS_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"),
                         object_id.c_str ()));
 
           CORBA::Object_ptr object_reference;
@@ -379,7 +379,7 @@ TAO_GIOP_Message_Acceptors::
       // Set it to an error state
       parse_error = 1;
       CORBA::ULong req_id = locate_request.request_id ();
-      
+
       TAO_GIOP_ServerRequest server_request (this,
                                              req_id,
                                              response_required,
@@ -392,9 +392,9 @@ TAO_GIOP_Message_Acceptors::
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
-      
+
       orb_core->object_adapter ()->dispatch_servant
-        (server_request.object_key (), 
+        (server_request.object_key (),
          server_request,
          transport,
          0,
@@ -492,11 +492,11 @@ TAO_GIOP_Message_Acceptors::
   // Make the GIOP & reply header. They are version specific.
   this->make_reply (request_id,
                     output);
-  
+
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       // Write the exception
@@ -510,13 +510,13 @@ TAO_GIOP_Message_Acceptors::
 
       // write the reply_status
       output.write_ulong
-        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));  
+        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));
 
       // @@ Any way to implement this without interpretive
       //    marshaling???
       x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       /*output.encode (except_tc,
                      x,
                      0,
@@ -558,10 +558,10 @@ int
 TAO_GIOP_Message_Acceptors::
   validate_version (TAO_GIOP_Message_State *state)
 {
-  char *buf = state->cdr.rd_ptr (); 
-  CORBA::Octet incoming_major = 
+  char *buf = state->cdr.rd_ptr ();
+  CORBA::Octet incoming_major =
     buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
-  CORBA::Octet incoming_minor = 
+  CORBA::Octet incoming_minor =
     buf[TAO_GIOP_VERSION_MINOR_OFFSET];
 
   if (this->implementations_.check_revision (incoming_major,
@@ -582,7 +582,7 @@ TAO_GIOP_Message_Acceptors::
   // Sets the state
   this->set_state (incoming_major,
                    incoming_minor);
-  
+
   return 0;
 }
 
@@ -593,10 +593,10 @@ TAO_GIOP_Message_Acceptors::
                           TAO_GIOP_Locate_Status_Msg &status_info)
 {
   // Note here we are making the Locate reply header which is *QUITE*
-  // different from the reply header made by the make_reply () call.. 
+  // different from the reply header made by the make_reply () call..
   // Make the GIOP message header
   this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_LOCATEREPLY,
-                               this->output_);             
+                               this->output_);
 
   // This writes the header & body
   this->accept_state_->write_locate_reply_mesg (this->output_,
@@ -606,7 +606,7 @@ TAO_GIOP_Message_Acceptors::
   // Send the message
   int result = this->send_message (transport,
                                    this->output_);
-                   
+
   // Print out message if there is an error
   if (result == -1)
     {
@@ -616,13 +616,13 @@ TAO_GIOP_Message_Acceptors::
                       ASYS_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
                       ASYS_TEXT ("TAO_GIOP::process_server_message")));
         }
-    }   
-  
+    }
+
   return result;
 }
 
 ////////////////////////////////////////////////////////////
-// Methods that should not be called from the acceptor side 
+// Methods that should not be called from the acceptor side
 ////////////////////////////////////////////////////////////
 
 CORBA::Boolean
@@ -635,7 +635,7 @@ write_request_header (const TAO_Operation_Details & /**/,
 }
 
 CORBA::Boolean
-TAO_GIOP_Message_Acceptors:: 
+TAO_GIOP_Message_Acceptors::
   write_locate_request_header (CORBA::ULong /*request_id*/,
                                TAO_Target_Specification & /*spec*/,
                                TAO_OutputCDR & /*msg*/)

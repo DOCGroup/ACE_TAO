@@ -36,14 +36,14 @@ TAO_GIOP_Message_Connectors::
   //    IMHO the right approach is to factor out common functionality
   //    and interfaces 'a posteriori', otherwise we will define
   //    ackward interfaces that will have to be changed anyway!
-  
+
   // @@ Carlos: I agree. But I see a problem. Other than the transport
   //    classes, we store state information in our Reply despatcers,
   //    Transport Mux Strategy etc. I would only love to have the
   //    Message States local to GIOP or say some other protocol. One
   //    example that spoils this idea is the Mux_Strategies that we
   //    have. I am ready to hear anything you suggest to get around
-  //    this.   
+  //    this.
 
 
   // Cast to the GIOP Message state
@@ -86,12 +86,12 @@ TAO_GIOP_Message_Connectors::
     case TAO_GIOP_NO_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
       break;
-      
+
       // Request terminated with user exception
     case TAO_GIOP_USER_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
       break;
-      // Request terminated with system exception        
+      // Request terminated with system exception
     case TAO_GIOP_SYSTEM_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
       break;
@@ -104,14 +104,14 @@ TAO_GIOP_Message_Connectors::
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("(%N|%l) Unknown reply status \n")));
     }
-  
+
   return 0;
 }
 
 
 int
 TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
-  
+
 {
   // Grab the read pointer
   char *buf = state->cdr.rd_ptr ();
@@ -119,16 +119,16 @@ TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
   if ((buf[TAO_GIOP_VERSION_MAJOR_OFFSET] != this->major_version ()) ||
        (buf[TAO_GIOP_VERSION_MINOR_OFFSET] != this->minor_version ()))
     return -1;
-  
+
   state->giop_version.major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
   state->giop_version.minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
-  
+
   return 0;
 }
 
 int
 TAO_GIOP_Message_Connectors::
-process_client_message (TAO_Transport * /*transport*/, 
+process_client_message (TAO_Transport * /*transport*/,
                         TAO_ORB_Core * /*orb_core*/,
                         TAO_InputCDR & /*input*/,
                         CORBA::Octet /*message_type*/)
@@ -167,13 +167,13 @@ TAO_GIOP_Message_Connector_10::
            response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << CORBA::Any::from_octet (0);
-  
+
   else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
     // Return before dispatching servant.  We're also setting the high
     // bit here. This is a temporary fix until the rest of GIOP 1.2 is
     // implemented in TAO.
     msg << CORBA::Any::from_octet (129);
-  
+
   else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
     // Return after dispatching servant.
     msg << CORBA::Any::from_octet (3);
@@ -199,9 +199,9 @@ TAO_GIOP_Message_Connector_10::
       return 0;
     }
 
-  msg.write_string (opdetails.opname_len (), 
+  msg.write_string (opdetails.opname_len (),
                     opdetails.opname ());
-  
+
   // Last element of request header is the principal; no portable way
   // to get it, we just pass empty principal (convention: indicates
   // "anybody").  Steps upward in security include passing an
@@ -243,7 +243,7 @@ TAO_GIOP_Message_Connector_10::
                     ASYS_TEXT ("(%N | %l) Unable to handle this request \n")));
       return 0;
     }
- 
+
   return 1;
 }
 
@@ -252,7 +252,7 @@ int
 TAO_GIOP_Message_Connector_10::
   parse_reply (TAO_Message_State_Factory &mesg_state,
                TAO_Pluggable_Reply_Params &params)
-       
+
 {
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
@@ -273,7 +273,7 @@ TAO_GIOP_Message_Connector_10::
     case TAO_GIOP_CLOSECONNECTION:
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ") 
+                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
                            ASYS_TEXT ("wrong message.\n")),
                           -1);
     case TAO_GIOP_LOCATEREPLY:
@@ -294,9 +294,9 @@ TAO_GIOP_Message_Connector_10::
       // Never happens: why??
       break;
     }
-  
+
   if (TAO_GIOP_Message_Connectors::parse_reply (*state,
-                                                params) 
+                                                params)
       == -1)
     return -1;
 
