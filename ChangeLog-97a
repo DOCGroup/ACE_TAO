@@ -1,3 +1,11 @@
+Sat Feb 08 15:19:50 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ReactorEx.h: commented out ACE_ReactorEx_Notify::message_queue_
+	  declaration if not ACE_WIN32 because Sun C++ chokes on it.
+
+	* examples/IPC_SAP/{FILE,SPIPE}_SAP/client.cpp: declare "len" as
+	  ssize_t to avoid signed/unsigned comparison.
+
 Fri Feb  7 17:29:40 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.cpp (set_sched_params): added support for POSIX
