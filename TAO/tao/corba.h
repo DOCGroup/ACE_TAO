@@ -243,7 +243,9 @@ if (ACE_TRY_ENV.exception () != 0)
 
 // The first "while" closes the local scope.  The second "while"
 // closes the ACE_TRY_ENV scope.
-#define ACE_ENDTRY } while (0); } while (0)
+#define ACE_ENDTRY \
+} while (0); \
+} while (0)
 
 // If continue is called, control will skip to the next ACE_CATCHANY
 // statement.
@@ -262,14 +264,20 @@ if ( X . exception () != 0) return Y
 #define ACE_THROW(EXCEPTION) \
 do {\
  _env.exception (new EXCEPTION); \
- return; } while (0)
+  return; } while (0)
 
 #define ACE_THROW_RETURN(EXCEPTION, RETURN) \
 do {\
  _env.exception (new EXCEPTION); \
  return RETURN; } while (0)
 
-#define ACE_RETHROW _env.exception (ACE_TRY_ENV.exception ())
+#define ACE_RETHROW \
+_env.exception (ACE_TRY_ENV.exception ()); \
+return
+
+#define ACE_RETHROW_RETURN (RETURN) \
+_env.exception (ACE_TRY_ENV.exception ()); \
+return RETURN
 
 #define ACE_THROW_SPEC(X)
 
