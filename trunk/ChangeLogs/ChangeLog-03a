@@ -1,3 +1,21 @@
+Wed May 23 15:55:21 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Containers_T.h: Fixed comment directing reader to include
+          ace/Unbounded_Queue.h (rather than _Set.h) for ACE_Unbounded_Queue.
+
+        * ace/Timer_Heap_T.{cpp h}: Changed the free IDs list from a stack
+          to a round-robin list. Newly-allocated IDs keep increasing til
+          there aren't any more, then wrap around to the lowest numbered
+          free ID and start again. This is a ease-of-use improvement to
+          help applications catch their timer-related errors easier,
+          which is apparantly important, especially in multi-threaded
+          applications.
+          Also, when remove_first() is called, remove the ACE_Timer_Node
+          from the heap, but do not release its ID back to the free list.
+          remove_first() must be followed by a call to reschedule() or
+          remove(). The latter just reinserts the timer node in the heap,
+          and the latter cleans up the timer ID.
+
 Wed May 23 14:41:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* netsvcs/ACE-netsvcs.html:
