@@ -14,7 +14,7 @@ ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.ACEXML.am 
-noinst_LTLIBRARIES = libACEXML.la
+lib_LTLIBRARIES = libACEXML.la
 
 libACEXML_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -53,7 +53,7 @@ libACEXML_la_LDFLAGS = \
 libACEXML_la_LIBADD = \
  $(top_builddir)/ace/libACE.la
 
-noinst_HEADERS = \
+nobase_include_HEADERS = \
   ACEXML_Export.h \
   Attributes.h \
   AttributesImpl.h \

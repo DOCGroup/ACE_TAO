@@ -14,7 +14,7 @@ ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
 
 ## Makefile.ACEXML_Parser.am 
-noinst_LTLIBRARIES = libACEXML_Parser.la
+lib_LTLIBRARIES = libACEXML_Parser.la
 
 libACEXML_Parser_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -34,7 +34,7 @@ libACEXML_Parser_la_LIBADD = \
  $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
  $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
+nobase_include_HEADERS = \
   Entity_Manager.h \
   Parser.h \
   ParserContext.h \
