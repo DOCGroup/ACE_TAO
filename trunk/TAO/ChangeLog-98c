@@ -43,6 +43,9 @@ Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>
           changed local "ior_file" to "ior_f" because it shadowed
           the global and caused compile failure with g++.
 
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
+          check return values of activate calls.
+
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (run_tests):
           added default case to switch statement.
 
