@@ -45,6 +45,10 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
     ));
   ACE_DEBUG ((
