@@ -70,6 +70,8 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
+    $self->{VALGRIND_CMD} = $ENV{"ACE_RUN_VALGRIND_CMD"};
+    $self->{VALGRIND_OPT} = $ENV{"ACE_RUN_VALGRIND_OPT"};
 
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
 #         if (defined $self->{PURIFY_CMD}) {
@@ -210,6 +212,25 @@ sub Spawn ()
         }
     }
 
+    my $cmdline = "";
+    my $executable = "";
+
+    if (defined $self->{VALGRIND_CMD}) {
+        my $orig_cmdline = $self->CommandLine();
+        $executable = $self->{VALGRIND_CMD};
+        my $basename = basename ($self->{EXECUTABLE});
+
+        my $valgrindoptions = $self->{VALGRIND_OPT};
+        if (!defined $valgrindoptions) {
+           $valgrindoptions = "-q --leak-check=yes --trace-children=yes";
+        }
+        $cmdline = "$executable $valgrindoptions $orig_cmdline"; 
+    }
+    else {
+        $executable = $self->Executable();
+        $cmdline = $self->CommandLine();
+    }
+
     FORK:
     {
         if ($self->{PROCESS} = fork) {
@@ -218,8 +239,8 @@ sub Spawn ()
         }
         elsif (defined $self->{PROCESS}) {
             #child here
-            exec $self->CommandLine ();
-            die "ERROR: exec failed for <" . $self->CommandLine () . ">";
+            exec $cmdline;
+            die "ERROR: exec failed for <" . $cmdline . ">";
         }
         elsif ($! =~ /No more process/) {
             #EAGAIN, supposedly recoverable fork error
@@ -228,7 +249,7 @@ sub Spawn ()
         }
         else {
             # weird fork error
-            print STDERR "ERROR: Can't fork <" . $self->CommandLine () . ">: $!\n";
+            print STDERR "ERROR: Can't fork <" . $cmdline . ">: $!\n";
         }
     }
     $self->{RUNNING} = 1;
