@@ -365,19 +365,21 @@ ACE_Service_Config::process_directives_i (void)
   ace_yyerrno = 0;
   ace_yylineno = 1;
 
-  // Use an auto_ptr to make sure that we release this memory
-  // regardless of how we exit...
+  ACE_Obstack *oldstack = ace_obstack;
+
   ACE_NEW_RETURN (ace_obstack,
                   ACE_Obstack,
                   -1);
 
-  auto_ptr<ACE_Obstack> holder (ace_obstack);
-
   ace_yyparse ();
+
+  delete ace_obstack;
+  ace_obstack = oldstack;
 
   if (ace_yyerrno > 0)
     {
-      errno = EINVAL; // This is a hack, better errors should be provided...
+      // This is a hack, better errors should be provided...
+      errno = EINVAL; 
       return ace_yyerrno;
     }
   else
