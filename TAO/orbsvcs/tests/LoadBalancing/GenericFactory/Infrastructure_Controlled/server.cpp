@@ -9,15 +9,15 @@ ACE_RCSID (Infrastructure_Controlled,
 int
 main (int argc, char *argv[])
 {
-  const char *loc1 = "MyLocation 1";
-  const char *loc2 = "MyLocation 2";
+  const char *location1 = "MyLocation 1";
+  const char *location2 = "MyLocation 2";
 
   LB_server lb_server (argc, argv);
 
   if (lb_server.start_orb_and_poa () == -1)
     return 1;
 
-  if (lb_server.create_object_group (loc1, loc2) == -1)
+  if (lb_server.create_object_group (location1, location2) == -1)
     return 1;
 
   lb_server.run ();
