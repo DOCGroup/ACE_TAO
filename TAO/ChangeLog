@@ -1,3 +1,10 @@
+Wed Jan 14 09:47:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* */*_Static.ds[p,w]:
+
+	  All teh Win32 static projects and workspaces have been
+	  removed. Please use MPC to generate them. 
+
 Tue Jan 13 21:37:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/Options.html: 
