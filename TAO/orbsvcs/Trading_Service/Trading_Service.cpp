@@ -48,6 +48,12 @@ Trading_Service::Trading_Service (void)
       localhost.get_host_name (host_name, MAXHOSTNAMELEN);
       ACE_OS::sprintf (trader_name, "%s_%d", host_name, ACE_OS::getpid ());
 
+      char* dot = 0;
+      while ((dot = ACE_OS::strchr (trader_name, '.')) != 0)
+        *dot = '_';
+                   
+      ACE_DEBUG ((LM_DEBUG, "*** Trading Service %s initializing.\n", trader_name));
+      
       this->name_ = trader_name;
     }
 }
