@@ -12,6 +12,7 @@
 
 DIRS  = CDR \
         DynAny_Test \
+	IDL_Test \
         OctetSeq \
         Param_Test \
         InterOp-Naming \
