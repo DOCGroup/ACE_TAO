@@ -1,3 +1,9 @@
+Tue Jan  4 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/WStringSeqC.{h,cpp,inl}:
+        * tao/WStringSeqS.h:
+          Regenerated with the latest version of the TAO_IDL compiler
+
 Tue Jan  4 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FloatSeq.pidl:
