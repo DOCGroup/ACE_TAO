@@ -656,8 +656,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // iterators, which if traversed in its entirety is probably hugely
   // inefficient, but oh well, I can't think of a better solution.
   TAO_Offer_Iterator_Collection* offer_iter_collection;
-  ACE_NEW_RETURN (offer_iter_collection,
-		  TAO_Offer_Iterator_Collection,);
+  ACE_NEW (offer_iter_collection, TAO_Offer_Iterator_Collection);
 
   offer_iter_collection->add_offer_iterator (offer_iter);
   total_returned = offers->length () +
