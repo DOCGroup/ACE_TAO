@@ -103,7 +103,6 @@ Reactor_Registration_Test
 Reactor_Timer_Test
 Reactors_Test
 Reader_Writer_Test
-Recursive_Condition_Bug_Test: !ST
 Recursive_Condition_Test: !ST
 Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test: !VxWorks
@@ -153,3 +152,4 @@ SOCK_Dgram_Test
 SOCK_Dgram_Bcast_Test
 SOCK_Test_IPv6
 Process_Strategy_Test: !chorus !LynxOS !VxWorks
+Recursive_Condition_Bug_Test: !ST
