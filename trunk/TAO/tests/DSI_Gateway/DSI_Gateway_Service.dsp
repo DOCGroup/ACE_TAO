@@ -95,14 +95,6 @@ SOURCE=.\gateway.cpp
 
 SOURCE=.\test_dsi.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\testC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -111,14 +103,6 @@ SOURCE=.\testS.cpp
 
 SOURCE=.\test_dsi.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\testC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.h
-# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -126,103 +110,6 @@ SOURCE=.\testS.h
 # Begin Source File
 
 SOURCE=.\test_dsi.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\testC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\testS.i
-# End Source File
-# End Group
-# Begin Group "IDL Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\test.idl
-
-!IF  "$(CFG)" == "DSI_Gateway_Service - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
-InputPath=.\test.idl
-InputName=test
-
-BuildCmds= \
-	..\..\..\bin\Release\tao_idl.exe -Ge 1 $(InputName).idl
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "DSI_Gateway_Service - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
-InputPath=.\test.idl
-InputName=test
-
-BuildCmds= \
-	..\..\..\bin\tao_idl.exe -Ge 1 $(InputName).idl
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target

@@ -57,7 +57,8 @@ CORBA_ServerRequest::CORBA_ServerRequest (
     retval_ (0),
     exception_ (0),
     refcount_ (1),
-    orb_server_request_ (orb_server_request)
+    orb_server_request_ (orb_server_request),
+    sent_gateway_exception_ (0)
 {
   this->orb_server_request_.is_dsi ();
 }
@@ -153,6 +154,12 @@ CORBA_ServerRequest::set_exception (const CORBA::Any &value,
 void
 CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
 {
+  // There was a user exception, no need to marshal any parameters.
+  if (this->sent_gateway_exception_)
+    {
+      return;
+    }
+
   if (this->orb_server_request_.exception_type () == TAO_GIOP_NO_EXCEPTION)
     {
       // In DSI, we can't rely on the skeleton to do this.
@@ -201,6 +208,31 @@ CORBA_ServerRequest::dsi_marshal (CORBA::Environment &ACE_TRY_ENV)
                           );
       ACE_CHECK;
     }
+
+  this->orb_server_request_.tao_send_reply ();
+}
+
+void
+CORBA_ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
+{
+  // This defaults to 1, but just to be safe...
+  this->orb_server_request_.argument_flag (1);
+
+  // This reply path handles only user exceptions.
+  this->orb_server_request_.exception_type (TAO_GIOP_USER_EXCEPTION);
+
+  this->orb_server_request_.init_reply ();
+
+  // We know nothing about this exception, so we marshal it as a block
+  // of bytes. The outgoing stream's byte order has already been matched
+  // to the original source of the reply.
+  this->orb_server_request_.outgoing ().write_octet_array (
+      ACE_static_cast (CORBA::Octet *, raw_exception.fast_rep ()),
+      raw_exception.length () + ACE_CDR::MAX_ALIGNMENT
+    );
+
+  // This will prevent the marshaling of any parameters into this reply.
+  this->sent_gateway_exception_ = 1;
 
   this->orb_server_request_.tao_send_reply ();
 }
