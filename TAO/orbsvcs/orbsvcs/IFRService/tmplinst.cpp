@@ -148,6 +148,8 @@ template class POA_CORBA::OperationDef_tie<TAO_OperationDef_i>;
 template class POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i>;
 template class POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i>;
 template class POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i>;
+template class POA_CORBA::ExtValueDef_tie<TAO_ExtValueDef_i>;
+template class POA_CORBA::ComponentIR::ModuleDef_tie<TAO_ModuleDef_i>;
 
 template class auto_ptr<TAO_Repository_i>;
 template class ACE_Auto_Basic_Ptr<TAO_Repository_i>;
@@ -236,6 +238,7 @@ template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FinderDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FactoryDef_i>;
 template class TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>;
+template class TAO_IFR_Generic_Utils<CORBA::InitializerSeq>;
 template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
@@ -296,6 +299,8 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate POA_CORBA::InterfaceDef_tie<TAO_>
 #pragma instantiate POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i>
 #pragma instantiate POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i>
+#pragma instantiate POA_CORBA::ExtValueDef_tie<TAO_ExtValueDef_i>
+#pragma instantiate POA_CORBA::ComponentIR::ModuleDef_tie<TAO_ModuleDef_i>
 
 #pragma instantiate auto_ptr<TAO_Repository_i>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Repository_i>
@@ -384,6 +389,7 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FinderDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FactoryDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>
+#pragma instantiate TAO_IFR_Generic_Utils<CORBA::InitializerSeq>
 #pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>
