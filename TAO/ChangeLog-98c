@@ -1,23 +1,27 @@
 Sun Aug 16 17:15:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.h: 
-	* tao/Connect.cpp: 
-	  Fixed incosistent use of response_required, sometimes it was an
-	  int and other it was a CORBA_Boolean. Thanks to Naga for
-	  reporting this problem.
+        * tao/Connect.h:
+        * tao/Connect.cpp:
+          Fixed incosistent use of response_required, sometimes it was an
+          int and other it was a CORBA_Boolean. Thanks to Naga for
+          reporting this problem.
 
 Sun Aug 16 11:52:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.h: 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp: 
-	  Fixed unproper use of private typedefs and of ACE_TYPENAME
-	  macro, thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
-	  this patches.
+        * orbsvcs/orbsvcs/Trader/Offer_Database.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+          Fixed unproper use of private typedefs and of ACE_TYPENAME
+          macro, thanks to John Mulhern <9107@mn3.lawson.lawson.com> for
+          this patches.
 
 Sun Aug 16 09:11:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Trader.cpp: added #include
           "Trader_Interfaces.h", for use by instantiation pragmas.
+
+        * orbsvcs/orbsvcs/Trader/Trader.cpp: only instantiate
+          ACE_Unbounded_Queue<char *>, etc., if ACE_HAS_MOSTLY_UNICODE_APIS.
+          Otherwise, they're in ace/ARGV.cpp.
 
 Sat Aug 15 12:00:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
