@@ -51,7 +51,7 @@ struct Synchronizers
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:m:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:m:z:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -66,27 +66,33 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior =
+          get_opts.optarg;
         break;
 
       case 'r':
-        rates_file = get_opts.optarg;
+        rates_file =
+          get_opts.optarg;
         break;
 
       case 'c':
-        continuous_workers = ACE_OS::atoi (get_opts.optarg);
+        continuous_workers =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'w':
-        work = ACE_OS::atoi (get_opts.optarg);
+        work =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 't':
-        time_for_test = ACE_OS::atoi (get_opts.optarg);
+        time_for_test =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'p':
-        set_priority = ACE_OS::atoi (get_opts.optarg);
+        set_priority =
+          ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
@@ -96,6 +102,11 @@ parse_args (int argc, char *argv[])
 
       case 'm':
         print_missed_invocations =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
+      case 'z':
+        max_throughput_timeout =
           ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -113,6 +124,7 @@ parse_args (int argc, char *argv[])
                            "-p <set priorities> "
                            "-i <print stats of individual continuous workers> "
                            "-m <print missed invocations for paced workers> "
+                           "-z <timeout for max throughput measurement> "
                            "\n",
                            argv [0]),
                           -1);
