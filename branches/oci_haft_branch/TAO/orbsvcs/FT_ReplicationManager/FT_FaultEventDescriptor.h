@@ -34,7 +34,10 @@ namespace TAO
     /// Default constructor.
     FT_FaultEventDescriptor ();
 
-    ////////
+    /// Debugging support.
+    void dump ();
+
+    /////////////////
     /// Data members.
 
     /// Flags indicating the "extent" of the fault.
@@ -57,6 +60,9 @@ namespace TAO
     FT::ReplicationStyleValue replication_style;
     FT::MinimumNumberReplicasValue minimum_number_replicas;
     FT::InitialNumberReplicasValue initial_number_replicas;
+
+    /// The object group's factories.
+    FT::FactoryInfos_var factories;
 
   };
 

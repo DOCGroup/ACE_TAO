@@ -25,12 +25,19 @@
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
 #include "orbsvcs/FT_CORBAC.h"
 
+// Forward declarations.
+template <class T> class ACE_Unbounded_Set;
+template <class T> class ACE_Unbounded_Set_Iterator;
+
 namespace TAO
 {
 
   ///////////////////////
   // Forward declarations
   class FT_ReplicationManager;
+  struct FT_FaultEventDescriptor;
+
+  typedef ACE_Unbounded_Set<FT::Location> FT_Location_Set;
 
   /**
   * Replication Manager's fault analyzer.
@@ -90,32 +97,78 @@ namespace TAO
   protected:
 
     /// Helper functions for fault analysis.
-    char* extract_type_id (const CORBA::Any& val);
-    FT::ObjectGroupId extract_object_group_id (const CORBA::Any& val);
 
+    // Extract the type id from a CORBA any.
+    int get_type_id (const CORBA::Any& val, FT::TypeId_out type_id);
+
+    // Extract the ObjectGroupId from a CORBA any.
+    int get_object_group_id (const CORBA::Any& val, FT::ObjectGroupId& id);
+
+    // Extract the FT::Location from a CORBA any.
+    int get_location (const CORBA::Any& val, FT::Location_out location);
+
+    // Get the MembershipStyle property.
     int get_membership_style (
       const FT::Properties & properties,
       FT::MembershipStyleValue & membership_style);
 
+    // Get the ReplicationStyle property.
     int get_replication_style (
       const FT::Properties & properties,
       FT::ReplicationStyleValue & replication_style);
 
+    // Get the MinimumNumberReplicas property.
     int get_minimum_number_replicas (
       const FT::Properties & properties,
       FT::MinimumNumberReplicasValue & minimum_number_replicas);
 
+    // Get the InitialNumberReplicas property.
     int get_initial_number_replicas (
       const FT::Properties & properties,
       FT::InitialNumberReplicasValue & initial_number_replicas);
 
-    // Is the replica at location the primary member of iogr?
-    // Sets is_primary and returns 0 on success.
+    // Get the Factories property.
+    int get_factories (
+      const FT::Properties & properties,
+      FT::FactoryInfos_out factories);
+
+    // Handle a single replica failure.
+    int single_replica_failure (
+      TAO::FT_FaultEventDescriptor & fault_event_desc);
+
+    // Handle a location failure.
+    int location_failure (
+      TAO::FT_FaultEventDescriptor & fault_event_desc);
+
+    // Handle a type at location failure.
+    int type_failure (
+      TAO::FT_FaultEventDescriptor & fault_event_desc);
+
+    // Is the replica at location the primary member of its ObjectGroup?
+    // Sets <is_primary> and returns 0 on success.
     // Returns -1 on failure.
     int is_primary_member (
       const FT::ObjectGroup_ptr iogr,
-      const FT::Location_var & location,
+      const FT::Location & location,
       int & object_is_primary);
+
+    // Choose a new primary member for the ObjectGroup.
+    // Sets <new_iogr> and returns 0 on success.
+    // Returns -1 on failure.
+    int set_new_primary (
+      FT::ObjectGroup_ptr iogr,
+      TAO::FT_FaultEventDescriptor & fault_event_desc,
+      FT::ObjectGroup_out new_iogr);
+
+    // While the number of replicas in the object group is less than
+    // the MinimumNumberReplicas property, add new members.
+    // Sets <new_iogr> and returns 0 on success.
+    // Returns -1 on failure.
+    int add_members (
+      FT::ObjectGroup_ptr iogr,
+      TAO::FT_FaultEventDescriptor & fault_event_desc,
+      FT::ObjectGroup_out new_iogr);
+
 
     ///////////////
     // Data Members
