@@ -1253,7 +1253,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
   int copy_count = 0;
-  ACE_Thread_Descriptor *copy_table = 0;
+  ACE_Thread_Descriptor_Base *copy_table = 0;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock.  Therefore we make a copy of all
@@ -1261,7 +1261,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-    ACE_NEW_RETURN (copy_table, ACE_Thread_Descriptor [this->thr_list_.size ()], -1);
+    ACE_NEW_RETURN (copy_table, ACE_Thread_Descriptor_Base [this->thr_list_.size ()], -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1517,7 +1517,7 @@ int
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
   int copy_count = 0;
-  ACE_Thread_Descriptor *copy_table = 0;
+  ACE_Thread_Descriptor_Base *copy_table = 0;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock. Therefore we make a copy of all
@@ -1526,7 +1526,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor [this->thr_list_.size ()],
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
