@@ -1,3 +1,10 @@
+Sun Feb 28 08:37:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): replaced call
+          to ACE_Thread::self () with call to ACE_OS::thr_self (),
+          so that we don't need to #include ace/Thread.h.  Thanks
+          to Russ Noseworthy for reporting this.
+
 Sat Feb 27 17:25:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: updated dependencies.  They didn't have
