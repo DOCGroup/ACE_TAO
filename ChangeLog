@@ -1,3 +1,10 @@
+Wed Apr 28 09:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+          Added special way of pwd retrieval for mingw because the normal
+          way gives problems under mingw. Thanks to Martin Corino
+          <mcorino@remedy.nl> for creating this patch.
+
 Wed Apr 28 06:19:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp (DllMain):
