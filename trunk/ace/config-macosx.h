@@ -184,12 +184,8 @@
 // gperf seems to need this
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
-// gcc 3.1 is broken, gcc 3.3 is a bit better
-#if defined(__GNUC__) && (__GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 3))
-#  define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES 
-   // Remove the following when Apple fixes static template member problem
-   // in their compiler
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 0
-#endif
+#if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
+#error "Compiler must be upgraded, see http://developer.apple.com"
+#endif /* __APPLE_CC__ */
 
 #endif /* ACE_CONFIG_MACOSX_H */
