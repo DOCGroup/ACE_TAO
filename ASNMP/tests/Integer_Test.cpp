@@ -46,12 +46,14 @@ ACE_RCSID (tests,
            Integer_Test,
            "$Id$")
 
+#if !defined (ACE_WIN32)
 static long l = LONG_MAX, nl = LONG_MIN;  // limits.h
 static unsigned long ul = ULONG_MAX, def = 0;
 static int i = INT_MAX, ni = INT_MIN;
 static unsigned int ui = UINT_MAX;
 static unsigned short us = 10;
 static unsigned short si = 32768;
+ #endif /*ACE_WIN32*/
 
 /*
      SnmpInt32( void);
