@@ -1,3 +1,43 @@
+Mon Jul 26 18:20:33 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Updated UIOP BNF to be more like "iioploc" BNF, and reorganized
+	  some text.
+
+	* tao/IIOP_Acceptor.cpp (open, open_default):
+
+	  TAO now properly sets the host using the fully qualified domain
+	  name (FQDN) when only a port is specified in an iiop endpoint.
+	  [Bug 43]
+
+	  Added some error checks when setting the host and port.
+
+	* tao/{IIOP,UIOP}_Connector.cpp (check_prefix):
+
+	  Make sure only certain prefixes are accepted.  Previously, we
+	  were only checking if the there the first few characters
+	  matched.
+
+	* tao/{IIOP,UIOP}_Factory.cpp (match_prefix):
+
+	  {iiop,uiop}loc should not be accepted as a proper prefix for
+	  server endpoints.
+
+	* tao/{IIOP,UIOP}_Profile.cpp (to_string):
+
+	  URL style IOR prefix should be "iioploc" for IIOP and "uioploc"
+	  for UIOP (although there is no "uioploc" standardized
+	  specification yet).
+
+	* tao/Acceptor_Registry.h:
+
+	  Comment update.
+
+	* tao/Acceptor_Registry.cpp (open):
+
+	  Corrected typo in error message.
+
 Mon Jul 26 17:11:16 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp (handle_input):
@@ -30,7 +70,7 @@ Mon Jul 26 15:30:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* DynAny_i.cpp:
 	* GIOP.cpp:
 	* GIOP_Server_Request.cpp:
-	* IIOP_Connect.cpp:
+	* IIOP_Connector.cpp:
 	* Object.cpp:
 	* ORB.cpp:
 	* ORB_Core.cpp:
