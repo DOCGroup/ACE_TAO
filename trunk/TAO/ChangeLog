@@ -80,11 +80,13 @@ Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
 	* examples/AMI/FL_Callback/Progress_i.cpp (Module):
 	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
 	* docs/Options.html (Module):
-	Changes related with separation of GUI reactors.
-	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch.
+
+	  Changes related with separation of GUI reactors. The additional
+	  information is avalaible in ChangeLog at REACTOR_SEPARATION
+	  branch.
 
 	* .cvsignore:
-	To make cvs silent.
+	  To make cvs silent.
 
 Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
