@@ -18,6 +18,7 @@
 #define ACE_STRATEGIES_T_H
 
 #include "ace/Service_Config.h"
+#include "ace/Reactor.h"
 #include "ace/Synch_Options.h"
 #include "ace/Hash_Map_Manager.h"
 
@@ -370,11 +371,12 @@ class ACE_Accept_Strategy
 {
 public:
   // = Initialization and termination methods.
-  ACE_Accept_Strategy (void);
+  ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Default constructor.
 
   ACE_Accept_Strategy (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		       int restart = 0);
+		       int restart = 0,
+                       ACE_Reactor *reactor = ACE_Reactor::instance ());
   // Initialize the <peer_acceptor_> with <local_addr>.
 
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr, 
@@ -403,6 +405,9 @@ public:
 protected:
   ACE_PEER_ACCEPTOR acceptor_;     
   // Factory that establishes connections passively.
+  
+  ACE_Reactor *reactor_;
+  // Pointer to the reactor used by the Acceptor.
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>

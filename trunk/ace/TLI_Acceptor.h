@@ -70,6 +70,7 @@ public:
 	      ACE_Addr *remote_addr = 0, 
 	      ACE_Time_Value *timeout = 0, 
 	      int restart = 1, 
+              int reset_new_handle = 0,
 	      int rwflag = 1,
 	      netbuf *udata = 0,
 	      netbuf *opt = 0);

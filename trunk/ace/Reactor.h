@@ -399,10 +399,16 @@ public:
 			 int ops);
   // GET/SET/ADD/CLR the ready "bit" bound with the <handle> and <mask>.
 
+  virtual ACE_Reactor_Impl *implementation (void);
+  // Get the implementation class
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
 protected:
+
+  virtual void implementation (ACE_Reactor_Impl *implementation);
+  // Set the implementation class
 
   ACE_Reactor_Impl *implementation_;
   // Delegation/implementation class that all methods will be

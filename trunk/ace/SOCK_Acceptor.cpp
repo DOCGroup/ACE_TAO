@@ -22,11 +22,19 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (void)
 // General purpose routine for accepting new connections. 
 
 int
-ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream, ACE_Addr *remote_addr, 
-			   ACE_Time_Value *timeout, int restart) const
+ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream, 
+                           ACE_Addr *remote_addr, 
+			   ACE_Time_Value *timeout, 
+                           int restart,
+                           int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::accept");
-  ACE_HANDLE new_handle = this->shared_accept (remote_addr, timeout, restart);
+
+  ACE_HANDLE new_handle = 
+    this->shared_accept (remote_addr, 
+                         timeout, 
+                         restart, 
+                         reset_new_handle);
   new_stream.set_handle (new_handle);
   return new_handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
@@ -87,9 +95,12 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 ACE_HANDLE
 ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr, 
 				  ACE_Time_Value *timeout, 
-				  int restart) const
+				  int restart,
+                                  int reset_new_handle) const
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_accept");
+  ACE_UNUSED_ARG (reset_new_handle);
+
   sockaddr *addr = 0;
   int *len_ptr = 0;
   int len;
@@ -113,14 +124,13 @@ ACE_SOCK_Acceptor::shared_accept (ACE_Addr *remote_addr,
 	new_handle = ACE_OS::accept (this->get_handle (), addr, len_ptr);
       while (new_handle == ACE_INVALID_HANDLE && restart && errno == EINTR);
       
-#if 0
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-      // Reset the event association inherited by the new handle
-      ::WSAEventSelect ((SOCKET) new_handle,
-                        NULL,
-                        0);      
+      if (reset_new_handle)
+        // Reset the event association inherited by the new handle
+        ::WSAEventSelect ((SOCKET) new_handle,
+                          NULL,
+                          0);      
 #endif /* ACE_WIN32 */
-#endif /* 0 */
 
       // Reset the size of the addr (really only necessary for the
       // UNIX domain sockets).

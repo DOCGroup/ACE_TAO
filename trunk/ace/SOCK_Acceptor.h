@@ -47,7 +47,8 @@ public:
   int accept (ACE_SOCK_Stream &new_stream, 
 	      ACE_Addr *remote_addr = 0,
 	      ACE_Time_Value *timeout = 0, 
-	      int restart = 1) const;
+	      int restart = 1,
+              int reset_new_handle = 0) const;
   // Accept a new data transfer connection.  A <timeout> of 0 means
   // block forever, a <timeout> of {0, 0} means poll.  <restart> == 1
   // means "restart if interrupted."
@@ -65,7 +66,8 @@ public:
 protected:
   ACE_HANDLE shared_accept (ACE_Addr *remote_addr, 
 			    ACE_Time_Value *, 
-			    int restart) const;
+			    int restart,
+                            int reset_new_handle) const;
   // Shared by both the ACE_LSOCK_Acceptor and ACE_SOCK_Acceptor.
 
 private:

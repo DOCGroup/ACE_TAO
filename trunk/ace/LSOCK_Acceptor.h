@@ -51,7 +51,8 @@ public:
   int accept (ACE_LSOCK_Stream &new_ipc_sap, 
 	      ACE_Addr * = 0, 
 	      ACE_Time_Value *timeout = 0, 
-	      int restart = 1) const;
+	      int restart = 1,
+              int reset_new_handle = 0) const;
   // Accept a new data transfer connection.
 
   int remove (void);

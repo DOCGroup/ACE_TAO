@@ -1,3 +1,48 @@
+Sat Sep 27 17:04:48 1997    <irfan@TWOSTEP>
+
+	* ace/Reactor: Added new methods to be able to set and get the
+ 	  implementation class being used by the reactor. The set method
+ 	  is protected and should be used with care, specially while
+ 	  changing the implementation class midway through an
+ 	  application. Also both the methods are virtual, and user can
+ 	  subclass to change their behavior. The internal code of the
+ 	  reactor also changed to now use these methods exclusively rather
+ 	  than the the raw data variables.	
+
+	* ace/Acceptor.cpp (handle_input): When using the WFMO_Reactor, we
+ 	  need to reset the event association for the newly created
+ 	  handle. This is because the newly created handle will inherit
+ 	  the properties of the listen handle, including its event
+ 	  associations. Therefore two changes were made:
+
+	  - A new directive (flag) was added to all the acceptors
+ 	    (LSOCK_Acceptor, SOCK_Acceptor, SPIPE_Acceptor, TLI_Acceptor,
+ 	    and UPIPE_Acceptor) to reset the event associations of the
+ 	    newly created handle. Currently only the SOCK_Acceptor pays
+ 	    attentions to this directive, others just ignore it. This flag
+ 	    had to be added to all the acceptors for interface
+ 	    compatibility and also to make sure that the Acceptor template
+ 	    code works correctly.
+
+	  - A dynamic_cast was necessary to determine at run-time which
+ 	    implementation of the Reactor we are using. But because this
+ 	    code is limited to Win32, there should be no problems doing
+ 	    the dynamic_cast.
+	    
+	  The same thing as above needed to be done to:
+	
+	  - ACE_Accept_Strategy::accept_svc_handler (ace/Strategies_T.cpp)
+
+ 	  - ACE_Service_Manager::handle_input (ace/Service_Manager.cpp)
+	  
+	  - LOCK_SOCK_Acceptor::accept (apps/JAWS/server/HTTP_Server_T.h)
+
+	  - Logging_Acceptor.cpp::handle_input (examples/Logger/simple-server/Logging_Acceptor.cpp)
+
+	  - Network_Listener::handle_input (examples/Reactor/ReactorEx/test_network_events.cpp)
+
+	  - Handle_R_Stream::handle_input (examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i)
+
 Sat Sep 27 20:03:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++_orbix.GNU: 
