@@ -1,0 +1,27 @@
+- fix current tests
+- finish persistance
+- create a couple more tests
+- create test for tao_ir
+- finish shutdown
+- address @@'s
+- integrate Irfan's changes to the IR_Adapter_Activator
+- change the default_environment stuff
+- make sure the ACE_TRY_SPEC stuff is in
+
+---
+-Check code for memory allocations and make sure that the NO_MEMORY exception
+ is thrown if it fails.
+
+-Implement Multicast code in ImplRepo_Service
+
+-Use ACE_Arg_Shifter in TAO_ir
+
+-Check for persistent IORs before creating them
+
+-purify
+
+-search for @@
+
+-more documents
+
+-return Cannot_Activate from activate_server () if the server is already running
