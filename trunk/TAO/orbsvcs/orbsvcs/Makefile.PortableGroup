@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:PortableGroup
 
-ACE_SHLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO_Messaging -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -30,6 +30,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 override TAO_IDLFLAGS += \
         -I$(TAO_ROOT) \
 	-Ge 1 \
+	-GC \
         -Wb,export_macro=TAO_PortableGroup_Export \
         -Wb,export_include=PortableGroup/portablegroup_export.h \
         -Wb,pre_include=ace/pre.h \
