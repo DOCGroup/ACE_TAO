@@ -32,6 +32,10 @@ Fri Nov 07 15:14:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/FILE_Addr.cpp (set): explicitly declare int return type.
 
+        * performance-tests/Misc/preempt.cpp (get_options): DEC CXX didn't
+          like conversion of -1 to u_int, so changed return type to int and
+          all ACE_ERROR_RETURNs to return -1.
+
 Fri Nov 07 10:05:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.40, released Fri Nov 07 10:05:12 1997.
