@@ -60,12 +60,13 @@ public class NS_Resolve
 	  // Create a message with the port and service name in it,
 	  // length and port number are in network byte order
 	  ByteArrayOutputStream msg = new ByteArrayOutputStream();
-	  int dataLength = TAO_SERVICEID_NAMESERVICE.length() + 2;
+	  int dataLength = TAO_SERVICEID_NAMESERVICE.length() + 3;
 	  msg.write((dataLength >> 8) & 0xff);
 	  msg.write(dataLength & 0xff);
 	  msg.write((listenSocket.getLocalPort() >> 8) & 0xff);
 	  msg.write(listenSocket.getLocalPort() & 0xff);
 	  msg.write(TAO_SERVICEID_NAMESERVICE.getBytes());
+	  msg.write(0);
 
 	  // Define the group for the multicast
 	  InetAddress group = InetAddress.getByName(ACE_DEFAULT_MULTICAST_ADDR);
@@ -97,7 +98,7 @@ public class NS_Resolve
 	  replySocket.close();
 
 	  // Convert the String into ??
-	  return orb.string_to_object(new String(reply, 0, length));
+	  return orb.string_to_object(new String(reply, 2, length-2));
 	}
       catch (SocketException e)
 	{

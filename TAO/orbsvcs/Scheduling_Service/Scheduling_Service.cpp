@@ -181,7 +181,7 @@ TAO_Scheduling_Service::run (CORBA_Environment& ACE_TRY_ENV)
 int
 TAO_Scheduling_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:p:s:");
+  ACE_Get_Opt get_opt (argc, argv, "n:p:o:s:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

@@ -41,10 +41,10 @@ idltojava RtecEventComm.idl
 idltojava RtecEventChannelAdmin.idl
 idltojava RtecScheduler.idl
 idltojava CosNaming.idl
-idltojava CosTimeBase.idl
+idltojava TimeBase.idl
 javac CosNaming\NamingContextPackage\*.java
 javac CosNaming\*.java
-javac CosTimeBase\*.java
+javac TimeBase\*.java
 javac RtecScheduler\*.java
 javac RtecEventComm\*.java
 javac RtecEventComm\EventChannelPackage\*.java
@@ -59,7 +59,9 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\CosTimeBase.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
+@mkdir tao
+@xcopy ..\..\..\tao\TimeBase.pidl tao\
 @xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
@@ -73,7 +75,9 @@ javac *.java
 
 @del *.idl
 @xcopy ..\NavWeap.idl
-@xcopy ..\..\..\orbsvcs\orbsvcs\CosTimeBase.idl
+@xcopy ..\..\..\orbsvcs\orbsvcs\TimeBase.idl
+@mkdir tao
+@xcopy ..\..\..\tao\TimeBase.pidl tao\
 @xcopy ..\..\..\orbsvcs\orbsvcs\CosNaming.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventComm.idl
 @xcopy ..\..\..\orbsvcs\orbsvcs\RtecEventChannelAdmin.idl
@@ -114,9 +118,9 @@ javac *.java
 @rd CosNaming\NamingContextPackage
 @rd CosNaming
 
-@REM del CosTimeBase\*.java
-@REM del CosTimeBase\*.class
-@REM rd CosTimeBase
+@REM del TimeBase\*.java
+@REM del TimeBase\*.class
+@REM rd TimeBase
 
 @del TimeBase\*.java
 @del TimeBase\*.class
@@ -138,8 +142,8 @@ REM This part build with VB
 @idl2java RtecScheduler.idl
 @echo idl2java CosNaming.idl
 @idl2java CosNaming.idl
-@echo idl2java CosTimeBase.idl
-@idl2java CosTimeBase.idl
+@echo idl2java TimeBase.idl
+@idl2java TimeBase.idl
 
 :VBJAVA
 

@@ -167,6 +167,16 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
           System.err.println ("Demo_Consumer.open_consumer: Duplicate names");
           System.err.println (e);
         }
+  catch (RtecScheduler.INTERNAL e)
+        {
+          System.err.println ("Demo_Consumer.open_consumer: internal scheduler error");
+          System.err.println (e);
+        }
+  catch (RtecScheduler.SYNCHRONIZATION_FAILURE e)
+        {
+          System.err.println ("Demo_Consumer.open_consumer: scheduler synchronization failure");
+          System.err.println (e);
+        }
   catch(org.omg.CORBA.SystemException e)
         {
           System.err.println(e);
