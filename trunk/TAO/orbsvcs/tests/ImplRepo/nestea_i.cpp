@@ -1,6 +1,5 @@
 // $Id$
 
-#include "time.h"
 #include "nestea_i.h"
 #include "tao/corba.h"
 
