@@ -1126,12 +1126,12 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
-private:
 #if defined (ACE_WIN32)
-  static const DWORDLONG Time_To_The_Beginning;
+  static const DWORDLONG FILETIME_to_timval_skew;
   // Const time difference between FILETIME and POSIX time.
 #endif /* ACE_WIN32 */
 
+private:
   void normalize (void);
   // Put the timevalue into a canonical form.
 
