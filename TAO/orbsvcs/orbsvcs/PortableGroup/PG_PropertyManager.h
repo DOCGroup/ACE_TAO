@@ -26,9 +26,10 @@
 #include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
+#include "ace/SStringfwd.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
 
 
 /// Forward declarations.
