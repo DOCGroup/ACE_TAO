@@ -23,6 +23,7 @@ use FileHandle;
 $config_list = new PerlACE::ConfigList;
 
 $set_vx_defgw = 1;
+$do_vx_init = 1;
 
 ################################################################################
 
@@ -176,6 +177,16 @@ sub run_vxworks_command ($)
         return;
     }
 
+	## initialize VxWorks kernel (reboot!) if starting first test
+    if ($do_vx_init) {
+        ## reboot VxWorks kernel to cleanup
+        $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
+        $P->SpawnWaitKill (60);
+		$set_vx_defgw = 1;
+		$do_vx_init = 0;
+    }
+
+
     my $oh = new FileHandle();
     if (!open($oh, ">run_test.vxs")) {
         print STDERR "ERROR: Unable to write to run_test.vxs\n";
@@ -185,7 +196,7 @@ sub run_vxworks_command ($)
     print $oh "?\n" .
               "proc aceRunTest {fname} {\n" .
               "  shParse \"ld 1,0,\\\"\$fname\\\"\"\n" .
-              "  set procId [shParse { taskSpawn 0,100,0,50000,ace_main }]\n" .
+              "  set procId [shParse { taskSpawn 0,100,0x0008,64000,ace_main }]\n" .
               "  while { [shParse \"taskIdFigure \$procId\"] != -1 } {\n" .
               "    shParse { taskDelay (sysClkRateGet ()) }\n" .
               "  }\n" .
@@ -230,6 +241,7 @@ sub run_vxworks_command ($)
         ## reboot VxWorks kernel to cleanup leftover module
         $P = new PerlACE::Process ($WINDSH, "-e \"shParse {reboot}; shParse{exit}\" " . $ENV{"ACE_RUN_VX_TGTSVR"});
         $P->SpawnWaitKill (60);
+		$set_vx_defgw = 1;
     }
 
     print "\nauto_run_tests_finished: test/$program Time:$time"."s Result:$status\n";
@@ -559,6 +571,7 @@ if (defined $opt_v && defined $opt_o) {
 }
 else {
   $set_vx_defgw = 1;
+  $do_vx_init = 1;
 
   foreach $test (@tests) {
     if (defined $opt_d) {
