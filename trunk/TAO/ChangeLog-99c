@@ -8,6 +8,26 @@ Tue Jun 22 11:39:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
 	  Fixed some of the new egcs warnings
 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+	  Don't raise an exception if the supplier is already there, it
+	  may be because another thread added, because it was
+	  connected/disconnected multiple times while the operations where 
+	  delayed, etc.
+
+	* orbsvcs/tests/Event/lib/Consumer.h:
+	* orbsvcs/tests/Event/lib/Consumer.cpp:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	* orbsvcs/tests/Event/lib/Supplier.h:
+	* orbsvcs/tests/Event/lib/Supplier.cpp:
+	  Be more careful with object deactivation, there is no need to
+	  deactivate the consumers and suppliers after each disconnect,
+	  only on shutdown, that is not only more efficient, but it avoids 
+	  problems with the POA:  if an object is deactivated it cannot be
+	  deactivated until all its pending requests have finished.  This
+	  is specially problematic when the object is deactivated while
+	  performing an upcall on the same object....
+
 Tue Jun 22 11:11:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_structure.cpp:

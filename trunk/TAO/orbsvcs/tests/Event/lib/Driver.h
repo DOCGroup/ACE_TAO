@@ -96,6 +96,10 @@ public:
   // By default disconnect the suppliers and then the consumers, other
   // orders should work too.
 
+  virtual void shutdown_clients (CORBA::Environment &env);
+  // By default deactivate the suppliers and then the consumers, other
+  // orders should work too.
+
   virtual void connect_consumers (CORBA::Environment& env);
   // Connect all the consumers, by default it lets each consumer
   // connect itself.
@@ -143,6 +147,12 @@ public:
 
   virtual void disconnect_suppliers (CORBA::Environment& env);
   // Disconnect all the suppliers.
+
+  virtual void shutdown_consumers (CORBA::Environment& env);
+  // Deactivate all the consumers.
+
+  virtual void shutdown_suppliers (CORBA::Environment& env);
+  // Deactivate all the suppliers.
 
   virtual void destroy_ec (CORBA::Environment& env);
   // Call EC->destroy

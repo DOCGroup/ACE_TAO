@@ -139,6 +139,9 @@ EC_Driver::run_cleanup (CORBA::Environment &ACE_TRY_ENV)
   this->disconnect_clients (ACE_TRY_ENV);
   ACE_CHECK;
 
+  this->shutdown_clients (ACE_TRY_ENV);
+  ACE_CHECK;
+
   this->destroy_ec (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -501,6 +504,16 @@ EC_Driver::disconnect_clients (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
+EC_Driver::shutdown_clients (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->shutdown_suppliers (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->shutdown_consumers (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
 EC_Driver::connect_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
@@ -717,6 +730,30 @@ EC_Driver::disconnect_consumers (CORBA::Environment &ACE_TRY_ENV)
     }
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers disconnected\n"));
+}
+
+void
+EC_Driver::shutdown_suppliers (CORBA::Environment &ACE_TRY_ENV)
+{
+  for (int i = 0; i < this->n_suppliers_; ++i)
+    {
+      this->suppliers_[i]->shutdown (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) suppliers deactivated\n"));
+}
+
+void
+EC_Driver::shutdown_consumers (CORBA::Environment &ACE_TRY_ENV)
+{
+  for (int i = 0; i < this->n_consumers_; ++i)
+    {
+      this->consumers_[i]->shutdown (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+  if (this->verbose ())
+    ACE_DEBUG ((LM_DEBUG, "EC_Driver (%P|%t) consumers deactivated\n"));
 }
 
 void
