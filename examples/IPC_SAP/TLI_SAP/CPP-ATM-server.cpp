@@ -11,10 +11,31 @@ ACE_RCSID(TLI_SAP, CPP_ATM_server, "$Id$")
 int 
 main (int argc, char *argv[])
 {
-  ACE_Time_Value timeout (argc > 1 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
+
+  unsigned char selector = ACE_ATM_Addr::DEFAULT_SELECTOR;
+  int selector_specified = 0;
+  int opt;
+  while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
+    {
+    switch(opt)
+      {
+      case 's':
+        selector = ACE_OS::atoi (optarg);
+        selector_specified = 1;
+        break;
+      case '?':
+      case 'h':
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Usage: %s [-s selector]\n", argv[0]),
+                          1);
+      } // switch
+    } // while getopt
 
   // Create a server address. 
   ACE_ATM_Addr addr;
+  if (selector_specified)
+    addr.set_selector(selector);
 
   // Create a server, reuse the addr. 
   ACE_TLI_Acceptor peer_acceptor;
@@ -44,7 +65,7 @@ main (int argc, char *argv[])
   for (;;) 
     {
       char buf[BUFSIZ];                                          
-                                                                     
+
       // Create a new ACE_TLI_Stream endpoint (note automatic restart
       // if errno == EINTR).
       if (peer_acceptor.accept (new_stream, 
@@ -56,7 +77,7 @@ main (int argc, char *argv[])
                       "accept"));
 	  continue;
 	}          
-                                                                 
+
       ACE_DEBUG ((LM_DEBUG,
                   "client %s connected\n",
                   addr.addr_to_string ()));
