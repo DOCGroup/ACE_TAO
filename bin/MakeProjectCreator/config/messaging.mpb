@@ -1,4 +1,4 @@
-project : portableserver {
+project : valuetype, portableserver {
   after   += Messaging
   libs    += TAO_Messaging
 }

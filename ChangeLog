@@ -1,3 +1,16 @@
+Fri Oct 31 07:50:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/dynamicinterface.mpb:
+	* bin/MakeProjectCreator/config/iorinterceptor.mpb:
+	* bin/MakeProjectCreator/config/messaging.mpb:
+	* bin/MakeProjectCreator/config/objreftemplate.mpb:
+	* bin/MakeProjectCreator/config/valuetype.mpb:
+
+	  The dependencies were not right. For long the weak links between
+	  libraries allowed us to get away without proper
+	  dependencies. With the refactoring the dependencies got explicit
+	  and we need the dependencies set right.
+
 Fri Oct 31 07:38:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
