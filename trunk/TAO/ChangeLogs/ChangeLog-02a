@@ -1,3 +1,8 @@
+Mon May 27 10:46:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Remote_Object_Proxy_Impl.cpp: Fixed gcc warnings on invalid
+	  type conversion.
+
 Mon May 27 08:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTCORBA/Activity/Makefile.bor:
