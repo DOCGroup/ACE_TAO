@@ -1,5 +1,6 @@
 // $Id$
 
+
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
@@ -25,6 +26,7 @@
 ACE_RCSID (TAO,
            Exception,
            "$Id$")
+
 
 // Static initializers.
 

@@ -18,8 +18,9 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
+// #include "tao/GIOP_Message_Lite.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Transport.i"
@@ -29,7 +30,7 @@ ACE_RCSID (tao, DIOP_Transport, "$Id$")
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag)
+                                        CORBA::Boolean /*flag*/)
   : TAO_Transport (TAO_TAG_UDP_PROFILE,
                    orb_core)
   , connection_handler_ (handler)
@@ -37,14 +38,14 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 {
   // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
   //             we read the whole UDP packet on a single read.
-  if (flag)
+  /*  if (flag)
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core,
                                       ACE_MAX_DGRAM_SIZE));
-    }
-    else
+                                      }
+                                      else*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -109,6 +110,30 @@ TAO_DIOP_Transport::recv_i (char *buf,
                   errno));
     }
 
+  // Most of the errors handling is common for
+  // Now the message has been read
+  if (n == -1 && TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - %p \n"),
+                  ACE_TEXT ("TAO - read message failure ")
+                  ACE_TEXT ("recv_i () \n")));
+    }
+
+  // Error handling
+  if (n == -1)
+    {
+      if (errno == EWOULDBLOCK)
+        return 0;
+
+      return -1;
+    }
+  // @@ What are the other error handling here??
+  else if (n == 0)
+    {
+      return -1;
+    }
+
   // Remember the from addr to eventually use it as remote
   // addr for the reply.
   this->connection_handler_->addr (from_addr);
@@ -116,42 +141,82 @@ TAO_DIOP_Transport::recv_i (char *buf,
   return n;
 }
 
-
 int
-TAO_DIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
-                                          int block)
+TAO_DIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
+                                    ACE_Time_Value *max_wait_time,
+                                    int /*block*/)
 {
-  // Read the message of the socket
-  int result =  this->messaging_object_->read_message (this,
-                                                       block,
-                                                       max_wait_time);
+  // If there are no messages then we can go ahead to read from the
+  // handle for further reading..
 
-  if (result == -1)
+  // The buffer on the stack which will be used to hold the input
+  // messages
+  char buf [ACE_MAX_DGRAM_SIZE];
+
+#if defined (ACE_HAS_PURIFY)
+  (void) ACE_OS::memset (buf,
+                         '\0',
+                         sizeof buf);
+#endif /* ACE_HAS_PURIFY */
+
+  // Create a data block
+  ACE_Data_Block db (sizeof (buf),
+                     ACE_Message_Block::MB_DATA,
+                     buf,
+                     this->orb_core_->message_block_buffer_allocator (),
+                     this->orb_core_->locking_strategy (),
+                     ACE_Message_Block::DONT_DELETE,
+                     this->orb_core_->message_block_dblock_allocator ());
+
+  // Create a message block
+  ACE_Message_Block message_block (&db,
+                                   ACE_Message_Block::DONT_DELETE,
+                                   this->orb_core_->message_block_msgblock_allocator ());
+
+
+  // Align the message block
+  ACE_CDR::mb_align (&message_block);
+
+
+  // Read the message into the  message block that we have created on
+  // the stack.
+  ssize_t n = this->recv (message_block.rd_ptr (),
+                          message_block.space (),
+                          max_wait_time);
+
+  // If there is an error return to the reactor..
+  if (n <= 0)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("DIOP_Transport::read_process_message, failure in read_message ()")));
+      if (n == -1)
+        this->tms_->connection_closed ();
 
-      this->tms_->connection_closed ();
-      return -1;
-    }
-  if (result < 2)
-    return result;
-
-  // Now we know that we have been able to read the complete message
-  // here.. We loop here to see whether we have read more than one
-  // message in our read.
-  // Set the result state
-  result = 1;
-
-  // See we use the reactor semantics again
-  while (result > 0)
-    {
-      result = this->process_message ();
+      return n;
     }
 
-  return result;
+  // Set the write pointer in the stack buffer
+  message_block.wr_ptr (n);
+
+  // Parse the incoming message for validity. The check needs to be
+  // performed by the messaging objects.
+  if (this->parse_incoming_messages (message_block) == -1)
+    return -1;
+
+  // NOTE: We are not performing any queueing nor any checking for
+  // missing data. We are assuming that ALL the data would be got in a
+  // single read.
+
+  // Make a node of the message block..
+  TAO_Queued_Data qd (&message_block);
+
+  // Extract the data for the node..
+  this->messaging_object ()->get_message_data (&qd);
+
+  // Resume before starting to process the request..
+  rh.resume_handle ();
+
+  // Process the message
+  return this->process_parsed_messages (&qd);
+
 }
 
 
@@ -275,130 +340,7 @@ TAO_DIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 }
 */
 
-int
-TAO_DIOP_Transport::process_message (void)
-{
-  // Check whether we have messages for processing
-  int retval =
-    this->messaging_object_->more_messages ();
 
-  if (retval <= 0)
-    return retval;
-
-  // Get the <message_type> that we have received
-  TAO_Pluggable_Message_Type t =
-    this->messaging_object_->message_type ();
-
-
-  int result = 0;
-  if (t == TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("Close Connection Message recd \n")));
-
-      this->tms_->connection_closed ();
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST)
-    {
-      if (this->messaging_object_->process_request_message (this,
-                                                            this->orb_core ()) == -1)
-        return -1;
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
-    {
-      TAO_Pluggable_Reply_Params params (this->orb_core ());
-      if (this->messaging_object_->process_reply_message (params)  == -1)
-        {
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                        ACE_TEXT ("DIOP_Transport::process_message, process_reply_message ()")));
-
-          this->messaging_object_->reset ();
-          this->tms_->connection_closed ();
-          return -1;
-        }
-
-
-      result =
-        this->tms_->dispatch_reply (params);
-
-      // @@ Somehow it seems dangerous to reset the state *after*
-      //    dispatching the request, what if another threads receives
-      //    another reply in the same connection?
-      //    My guess is that it works as follows:
-      //    - For the exclusive case there can be no such thread.
-      //    - The the muxed case each thread has its own message_state.
-      //    I'm pretty sure this comment is right.  Could somebody else
-      //    please look at it and confirm my guess?
-
-      // @@ The above comment was found in the older versions of the
-      //    code. The code was also written in such a way that, when
-      //    the client thread on a call from handle_input () from the
-      //    reactor a call would be made on the handle_client_input
-      //    (). The implementation of handle_client_input () looked so
-      //    flaky. It used to create a message state upon entry in to
-      //    the function using the TMS and destroy that on exit. All
-      //    this was fine _theoretically_ for multiple threads. But
-      //    the flakiness was originating in the implementation of
-      //    get_message_state () where we were creating message state
-      //    only once and dishing it out for every thread till one of
-      //    them destroy's it. So, it looked broken. That has been
-      //    changed. Why?. To my knowledge, the reactor does not call
-      //    handle_input () on two threads at the same time. So, IMHO
-      //    that defeats the purpose of creating a message state for
-      //    every thread. This is just my guess. If we run in to
-      //    problems this place needs to be revisited. If someone else
-      //    is going to take a look please contact bala@cs.wustl.edu
-      //    for details on this-- Bala
-
-
-
-      if (result == -1)
-        {
-          // Something really critical happened, we will forget about
-          // every reply on this connection.
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : DIOP_Transport::")
-                        ACE_TEXT ("process_message - ")
-                        ACE_TEXT ("dispatch reply failed\n")));
-
-          this->messaging_object_->reset ();
-          this->tms_->connection_closed ();
-          return -1;
-        }
-
-      if (result == 0)
-        {
-          this->messaging_object_->reset ();
-
-          // The reply dispatcher was no longer registered.
-          // This can happened when the request/reply
-          // times out.
-          // To throw away all registered reply handlers is
-          // not the right thing, as there might be just one
-          // old reply coming in and several valid new ones
-          // pending. If we would invoke <connection_closed>
-          // we would throw away also the valid ones.
-          //return 0;
-        }
-
-
-      // This is a NOOP for the Exclusive request case, but it actually
-      // destroys the stream in the muxed case.
-      //this->tms_->destroy_message_state (message_state);
-    }
-  else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
-    {
-      return -1;
-    }
-
-  return 1;
-}
 
 // @@ Frank: Hopefully DIOP doesn't need this
 /*

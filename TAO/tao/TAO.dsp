@@ -411,15 +411,7 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Locate_Header.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Reactive_Handler.cpp
 # End Source File
 # Begin Source File
 
@@ -484,6 +476,10 @@ SOURCE=.\IIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\IIOPC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Incoming_Message_Queue.cpp
 # End Source File
 # Begin Source File
 
@@ -708,6 +704,10 @@ SOURCE=.\RequestInfo_Util.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resume_Handle.cpp
 # End Source File
 # Begin Source File
 
@@ -1143,15 +1143,7 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Locate_Header.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_Reactive_Handler.h
 # End Source File
 # Begin Source File
 
@@ -1216,6 +1208,10 @@ SOURCE=.\IIOP_Transport.h
 # Begin Source File
 
 SOURCE=.\IIOPC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Incoming_Message_Queue.h
 # End Source File
 # Begin Source File
 
@@ -1488,6 +1484,10 @@ SOURCE=.\RequestInfo_Util.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resume_Handle.h
 # End Source File
 # Begin Source File
 
@@ -1859,19 +1859,11 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Lite.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Reactive_Handler.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_State.i
+SOURCE=.\GIOP_Message_State.inl
 # End Source File
 # Begin Source File
 
@@ -1920,6 +1912,10 @@ SOURCE=.\IIOP_Transport.i
 # Begin Source File
 
 SOURCE=.\IIOPC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Incoming_Message_Queue.inl
 # End Source File
 # Begin Source File
 
@@ -2100,6 +2096,10 @@ SOURCE=.\Reactor_Registry.i
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Resume_Handle.inl
 # End Source File
 # Begin Source File
 

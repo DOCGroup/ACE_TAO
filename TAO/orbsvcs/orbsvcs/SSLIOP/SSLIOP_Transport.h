@@ -82,6 +82,10 @@ protected:
 
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_wait_time = 0,
+                              int block = 0);
+
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send_i (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
@@ -92,11 +96,13 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
-  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
-                                    int block =0);
+  /// Overload of the handle_input_i () in the TAO_Transport
+  /// class. This is required to set up the state guard. The
+  /// thread-per-connection and wait on RW strategies call this
+  /// handle_input_i ().
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
+                              ACE_Time_Value *max_time_value = 0,
+                              int block =0);
 
   virtual int register_handler_i (void);
 
@@ -137,9 +143,6 @@ public:
   //@}
 
 private:
-
-  /// Process the message that we have read
-  int process_message (void);
 
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);

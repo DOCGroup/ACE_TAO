@@ -82,9 +82,6 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
-                                    int block =0);
-
   virtual int register_handler_i (void);
 
   /// Method to do whatever it needs to do when the connection
@@ -117,9 +114,6 @@ public:
   //@}
 
 private:
-
-  /// Process the message that we have read
-  int process_message (void);
 
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);

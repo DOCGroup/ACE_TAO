@@ -2,6 +2,7 @@
 //
 // $Id$
 
+
 #include "Object_Ref_Table.h"
 #include "Object.h"
 #include "Exception.h"
@@ -12,6 +13,7 @@
 ACE_RCSID (tao,
            Object_Ref_Table,
            "$Id$")
+
 
 // ****************************************************************
 

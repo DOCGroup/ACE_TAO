@@ -1,17 +1,18 @@
 // $Id$
 
-#include "tao/IIOP_Connection_Handler.h"
-#include "tao/Timeprobe.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/CDR.h"
-#include "tao/Messaging_Policy_i.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Endpoint.h"
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Base_Transport_Property.h"
+#include "IIOP_Connection_Handler.h"
+#include "Timeprobe.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "ORB.h"
+#include "CDR.h"
+#include "Messaging_Policy_i.h"
+#include "Server_Strategy_Factory.h"
+#include "IIOP_Transport.h"
+#include "IIOP_Endpoint.h"
+#include "Transport_Cache_Manager.h"
+#include "Base_Transport_Property.h"
+#include "Resume_Handle.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connection_Handler.i"
@@ -45,7 +46,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 {
   TAO_IIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
-          TAO_IIOP_Transport(this, orb_core, 0));
+          TAO_IIOP_Transport (this, orb_core, 0));
 
   // store this pointer (indirectly increment ref count)
   this->transport(specific_transport);
@@ -196,12 +197,12 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    in turn take appropiate action (such as sending exceptions to
   //    all waiting reply handlers).
   if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("IIOP_Connection_Handler::handle_close ")
-                 ACE_TEXT ("(%d, %d)\n"),
-                 handle,
-                 rm));
+  ACE_DEBUG  ((LM_DEBUG,
+               ACE_TEXT ("TAO (%P|%t) ")
+               ACE_TEXT ("IIOP_Connection_Handler::handle_close ")
+               ACE_TEXT ("(%d, %d)\n"),
+               handle,
+               rm));
 
   --this->pending_upcalls_;
   if (this->pending_upcalls_ <= 0)
@@ -244,8 +245,18 @@ TAO_IIOP_Connection_Handler::fetch_handle (void)
 }
 
 int
+TAO_IIOP_Connection_Handler::resume_handler (void)
+{
+  return TAO_RESUMES_CONNECTION_HANDLER;
+}
+
+int
 TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
+  // Instantiate the resume handle here.. This will automatically
+  // resume the handle once data is written..
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->fetch_handle ());
   return this->transport ()->handle_output ();
 }
 
@@ -310,43 +321,23 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
 {
-  return this->handle_input_i (h);
-}
-
-
-int
-TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
-                                             ACE_Time_Value *max_wait_time)
-{
+  // Increase the reference count on the upcall that have passed us.
   this->pending_upcalls_++;
 
-  // Call the transport read the message
-  int result = this->transport ()->read_process_message (max_wait_time);
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->fetch_handle ());
 
-  // Now the message has been read
-  if (result == -1 && TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("IIOP_Connection_Handler::read_message \n")));
-
-    }
+  int retval = this->transport ()->handle_input_i (resume_handle);
 
   // The upcall is done. Bump down the reference count
   if (--this->pending_upcalls_ <= 0)
-    result = -1;
+    retval = -1;
 
-  if (result == -1 ||
-      result == 1)
-    return result;
-
-  return 0;
+  return retval;
 }
-
-
 
 
 

@@ -68,8 +68,8 @@ protected:
   /// Overridden method that invalidates the TSS SSL state for the
   /// current upcall, and restores the previous state once the upcall
   /// is done.
-  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Time_Value *max_wait_time = 0);
+  // virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE);
+
 
 };
 
