@@ -1523,7 +1523,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 // Note: these three objects require static construction.
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
-#if defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   ACE_thread_key_t ACE_OS::NULL_key = ACE_static_cast (ACE_thread_key_t, -1);
 #else  /* ! ACE_HAS_TSS_EMULATION */
   ACE_thread_key_t ACE_OS::NULL_key;
@@ -1544,7 +1544,7 @@ int ACE_OS::socket_initialized_;
 
 #endif /* WIN32 */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
 
 // Moved class ACE_TSS_Ref declaration to OS.h so it can be visible to
 // the single file of template instantiations.
@@ -1859,7 +1859,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     // persistant system wide.
     for (int i = 0; i < index; i++)
       {
-# if defined (ACE_WIN32)
+# if defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
         // Calling thr_keyfree here ensure the key
         // gets removed appropriately.  Notice that
         // a key should be removed before freeing it.
@@ -1904,6 +1904,10 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
     if (key_arr[i] != ACE_OS::NULL_key)
 #if defined (ACE_HAS_TSS_EMULATION)
       ACE_OS::thr_keyfree (key_arr[i]);
+#elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+      // Don't call ACE_OS::thr_keyfree here.  It will try to use
+      // <in_use_> which has already been cleaned up here.
+      ::tsd_delete (key_arr[i]);
 #else /* ACE_WIN32 */
       // Don't call ACE_OS::thr_keyfree here.  It will try to use
       // <in_use_> which has already been cleaned up here.
@@ -2032,13 +2036,15 @@ ACE_TSS_Cleanup::detach (void *inst)
     {
       // Mark the key as no longer being used.
       key_info->key_in_use (0);
-# if defined (ACE_WIN32)
+# if defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
       ACE_thread_key_t temp_key = key_info->key_;
 # endif /* ACE_WIN32 */
       int retv = this->remove (key_info->key_);
 
 # if defined (ACE_WIN32)
       ::TlsFree (temp_key);
+# elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+      ::tsd_delete (temp_key);
 # endif /* ACE_WIN32 */
       return retv;
     }
@@ -2124,16 +2130,16 @@ ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
  = { 0 };
 
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
 int ACE_TSS_Emulation::key_created_ = 0;
 
 ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 
 /* static */
-#if defined (ACE_HAS_THR_C_FUNC)
+#     if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
-#endif /* ACE_HAS_THR_C_FUNC */
+#     endif /* ACE_HAS_THR_C_FUNC */
 void
 ACE_TSS_Emulation_cleanup (void *ptr)
 {
@@ -2217,7 +2223,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
 
   return ts_storage  ?  ts_storage  :  old_ts_storage;
 }
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 u_int
 ACE_TSS_Emulation::total_keys ()
@@ -2240,12 +2246,12 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
 
   if (total_keys_ < ACE_TSS_THREAD_KEYS_MAX)
     {
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
+#   if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
       ACE_OS::memset (&key, 0, sizeof (ACE_thread_key_t));
       ACE_OS::memcpy (&key, &total_keys_, sizeof (u_int));
-# else
+#   else
       key = total_keys_;
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
+#   endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
       ++total_keys_;
       return 0;
@@ -2324,10 +2330,10 @@ ACE_TSS_Emulation::tss_close ()
 void
 ACE_OS::cleanup_tss (const u_int main_thread)
 {
-#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32)
+#if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   // Call TSS destructors for current thread.
   ACE_TSS_Cleanup::instance ()->exit (0);
-#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 */
+#endif /* ACE_HAS_TSS_EMULATION || ACE_WIN32 || ACE_PSOS_HAS_TSS */
 
   if (main_thread)
     {
@@ -2339,8 +2345,8 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       ACE_Log_Msg::close ();
 #endif /* ! ACE_HAS_TSS_EMULATION  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
+#if ! defined (ACE_HAS_TSS_EMULATION)
       // Don't do this with TSS_Emulation, because the the
       // ACE_TSS_Cleanup::instance () has already exited ().  We can't
       // safely access the TSS values that were created by the main
@@ -2348,12 +2354,12 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 
       // Remove all TSS_Info table entries.
       ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
-#endif /* ACE_WIN32 */
+#endif /* ! ACE_HAS_TSS_EMULATION */
 
       // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
       // called by the ACE_Object_Manager.
       delete ACE_TSS_Cleanup::instance ();
-#endif /* WIN32 || ACE_HAS_TSS_EMULATION */
+#endif /* WIN32 || ACE_HAS_TSS_EMULATION || ACE_PSOS_HAS_TSS */
 
 #if defined (ACE_HAS_TSS_EMULATION)
       ACE_TSS_Emulation::tss_close ();
@@ -3642,6 +3648,12 @@ ACE_TRACE ("ACE_OS::thr_exit");
 #   elif defined (ACE_PSOS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);
+
+#     if defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+    // Call TSS destructors.
+    ACE_OS::cleanup_tss (0 /* not main thread */);
+#     endif /* ACE_PSOS && ACE_PSOS_HAS_TSS */
+
     *((u_long *) status) = ::t_delete (tid);
 #   endif /* ACE_HAS_PTHREADS */
 # else
@@ -3795,6 +3807,13 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 
 #   elif defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), ace_result_), int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+    ACE_hthread_t tid;
+    ACE_OS::thr_self (tid);
+    if (::tsd_setval (key, tid, data) != 0)
+     return -1;
+    ACE_TSS_Cleanup::instance ()->key_used (key);
+    return 0;
 #   elif defined (ACE_HAS_WTHREADS)
     ::TlsSetValue (key, data);
     ACE_TSS_Cleanup::instance ()->key_used (key);
@@ -3833,6 +3852,11 @@ ACE_TRACE ("ACE_OS::thr_keyfree");
     // the key and destructor.
     ACE_TSS_Cleanup::instance ()->remove (key);
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
+#   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+    // Extract out the thread-specific table instance and free up
+    // the key and destructor.
+    ACE_TSS_Cleanup::instance ()->remove (key);
+    return (::tsd_delete (key) == 0) ? 0 : -1;
 #   else
     ACE_UNUSED_ARG (key);
     ACE_NOTSUP_RETURN (-1);
@@ -3870,7 +3894,6 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
                                          ace_result_),
                        int, -1);
 #       endif /* ACE_HAS_STDARG_THR_DEST */
-
 #     elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
@@ -3943,6 +3966,19 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
                                          ace_result_),
                        int, -1);
+#     elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
+
+    static u_long unique_name = 0;
+    void *tsdanchor;
+
+    ++unique_name;
+    if (::tsd_create (ACE_reinterpret_cast (char *, unique_name),
+                      0, TSD_NOALLOC, &tsdanchor, key) != 0)
+      {
+        return -1;
+      }
+
+    return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);
 #   elif defined (ACE_HAS_WTHREADS)
     *key = ::TlsAlloc ();
 
@@ -3972,19 +4008,19 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 int
 ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
-# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   ACE_TSS_Cleanup::instance ()->key_used (key);
   return 0;
 # else
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
+# endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION || ACE_PSOS_HAS_TSS */
 }
 
 int
 ACE_OS::thr_key_detach (void *inst)
 {
-# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+# if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   if (ACE_TSS_Cleanup::lockable ())
     return ACE_TSS_Cleanup::instance()->detach (inst);
   else
