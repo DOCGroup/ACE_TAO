@@ -810,6 +810,11 @@ struct cancel_state
 #if defined (ACE_HAS_STHREADS)
 #include /**/ <synch.h>
 #include /**/ <thread.h>
+#define ACE_SCOPE_PROCESS P_PID
+#define ACE_SCOPE_LWP P_LWPID
+#else
+#define ACE_SCOPE_PROCESS 0
+#define ACE_SCOPE_LWP 1
 #endif /* ACE_HAS_STHREADS */
 
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
@@ -955,6 +960,11 @@ struct ACE_sema_t
 };
 #endif /* !ACE_HAS_POSIX_SEM */
 
+#if !defined (VXWORKS) && !defined (ACE_WIN32)
+typedef short ACE_id_t;
+typedef short ACE_pri_t;
+#endif /* ! VXWORKS) && ! ACE_WIN32 */
+
 #else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
@@ -962,6 +972,9 @@ typedef rwlock_t ACE_rwlock_t;
 #if !defined (ACE_HAS_POSIX_SEM)
 typedef sema_t ACE_sema_t;
 #endif /* !ACE_HAS_POSIX_SEM */
+#include <sys/priocntl.h>
+typedef id_t ACE_id_t;
+typedef pri_t ACE_pri_t;
 #endif /* !ACE_HAS_STHREADS */
 #elif defined (ACE_HAS_STHREADS)
 // Typedefs to help compatibility with Windows NT and Pthreads.
@@ -1020,6 +1033,8 @@ typedef semaphore * ACE_sema_t;
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
 typedef int ACE_thread_key_t;
+typedef short ACE_id_t;
+typedef short ACE_pri_t;
 
 #elif defined (ACE_HAS_WTHREADS)
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
@@ -1511,6 +1526,9 @@ struct iovec
   char *iov_base; // data to be read/written
   size_t iov_len; // byte count to read/write
 };
+
+typedef DWORD ACE_id_t;
+typedef DWORD ACE_pri_t;
 
 #else /* !defined (ACE_WIN32) */
 
@@ -2191,6 +2209,9 @@ extern "C" int _xti_error(char *);
 #endif /* UNIXWARE */
 #endif /* ACE_REDEFINES_XTI_FUNCTIONS */
 
+// forward declaration
+class ACE_Scheduling_Params;
+
 class ACE_Export ACE_OS
   // = TITLE
   //     This class defines an operating system independent
@@ -2476,6 +2497,9 @@ public:
   static int semctl (int int_id, int semnum, int cmd, semun);
   static int semget (key_t key, int nsems, int flags);
   static int semop (int int_id, struct sembuf *sops, size_t nsops); 
+
+  // = Thread scheduler interface.
+  static int set_sched_params (const ACE_Scheduling_Params &);
 
   // = A set of wrappers for System V shared memory.
   static void *shmat (int int_id, void *shmaddr, int shmflg);

@@ -3,6 +3,7 @@
 // OS.cpp
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
+#include "ace/Scheduling_Params.h"
 
 #if defined (ACE_WIN32)
 #include "ace/ARGV.h"
@@ -446,6 +447,98 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
   // Need to write this code.
   //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
 #endif /* ACE_WIN32 */
+}
+
+#if defined (ACE_HAS_STHREADS)
+#include <sys/rtpriocntl.h>
+#include <sys/tspriocntl.h>
+#endif /* ACE_HAS_STHREADS */
+
+int
+ACE_OS::set_sched_params (const ACE_Scheduling_Params &scheduling_params)
+{
+  // ACE_TRACE ("ACE_OS::set_sched_params");
+#if defined (ACE_HAS_STHREADS)
+  // Set priority class, priority, and quantum of this LWP or process as
+  // specified in scheduling_params.
+
+  pcparms_t pcparms;
+  pcparms.pc_cid = scheduling_params.priority ().os_priority_class ();
+
+  if (scheduling_params.priority ().priority_class () ==
+        ACE_Thread_Priority::ACE_HIGH_PRIORITY_CLASS  ||
+      scheduling_params.priority ().priority_class () ==
+        ACE_Thread_Priority::ACE_REALTIME_PRIORITY_CLASS)
+    {
+      rtparms_t rtparms;
+      rtparms.rt_pri =
+        scheduling_params.priority ().os_default_thread_priority ();
+      if (scheduling_params.quantum () == ACE_Time_Value::zero)
+        {
+          rtparms.rt_tqsecs = 0ul;
+          rtparms.rt_tqnsecs = RT_TQINF;
+        }
+      else
+        {
+          rtparms.rt_tqsecs = (ulong) scheduling_params.quantum ().sec ();
+          rtparms.rt_tqnsecs = scheduling_params.quantum ().usec () * 1000;
+        }
+
+      // Package up the RT class ID and parameters for the ::priocntl () call.
+      ACE_OS::memcpy (pcparms.pc_clparms, &rtparms, sizeof rtparms);
+    }
+  else
+    {
+      tsparms_t tsparms;
+      // Don't bother changing ts_uprilim (user priority limit) from its
+      // default of 0.
+      tsparms.ts_uprilim = 0;
+      tsparms.ts_upri =
+        scheduling_params.priority ().os_default_thread_priority ();
+
+      // Package up the TS class ID and parameters for the ::priocntl () call.
+      ACE_OS::memcpy (pcparms.pc_clparms, &tsparms, sizeof tsparms);
+    }
+
+  if (::priocntl ((idtype_t) scheduling_params.scope (), P_MYID, PC_SETPARMS,
+                  (char *) &pcparms) < 0)
+    {
+      return ACE_OS::last_error ();
+    }
+
+#elif defined (ACE_WIN32)
+  // Set the priority class of this process to the real-time process class.
+  if (! ::SetPriorityClass (::GetCurrentProcess (),
+                            scheduling_params.priority ().os_priority_class ())
+    {
+      return -1;
+    }
+
+  // Set the thread priority on the current thread.
+  if (! ::SetThreadPriority (
+          ::GetCurrentThread (),
+          scheduling_params.priority ().os_default_thread_priority ())
+    {
+      return -1;
+    }
+
+
+#elif defined (VXWORKS)
+  // There is only one class of priorities on VxWorks, and no
+  // time quanta.  So, just set the current thread's priority.
+
+  ACE_htread_t my_thread_id;
+  ACE_OS::thr_self (&my_thread_id);
+  ACE_OS::thr_setprio (
+                  my_thread_id,
+                  scheduling_params.priority ().os_default_thread_priority ());
+
+
+#else
+  ACE_NOTSUP_RETURN (ENOTSUP);
+#endif /* ACE_HAS_STHREADS */
+
+  return 0;
 }
 
 // = Static initialization.
