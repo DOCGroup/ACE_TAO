@@ -14,8 +14,8 @@ TAO_Protocol_Factory::~TAO_Protocol_Factory (void)
 }
 
 int
-TAO_Protocol_Factory::init (int /* argc */, 
-                            char * /* argv[] */)
+TAO_Protocol_Factory::init (int /* argc */,
+                            char * /* argv */ [])
 {
  return -1;
 }
