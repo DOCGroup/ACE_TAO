@@ -1,3 +1,11 @@
+Thu Aug 26 08:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp,i}:
+          Shorted some method names, also added a get_adapter_template_i()
+          with which I can try to get an ORT Adapter without that it tries to
+          grep the POA lock, we also have the lock in destroy_i() and we can't
+          grep it another time because it is non recursive.
+
 Wed Aug 25 13:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp (object_reference_template_adapter):
