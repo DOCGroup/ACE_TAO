@@ -34,7 +34,7 @@ public:
   // = The skeleton methods
   virtual void started (Test::Process_ptr the_process,
                         CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException,Test::Spawn_Failed));
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   /// Synchronize changes to the internal data
