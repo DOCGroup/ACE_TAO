@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Fixed_Priority_Scheduler"=.\Fixed_Priority_Scheduler\Fixed_Priority_Scheduler.dsp - Package Owner=<4>
+Project: "Fixed_Priority_Scheduler"=.\fixed_priority_scheduler\Fixed_Priority_Scheduler.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
