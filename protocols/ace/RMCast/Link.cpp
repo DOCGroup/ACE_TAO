@@ -2,7 +2,9 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/RMCast/Link.h>
+#include "Link.h"
+
+#include "ace/OS_NS_sys_socket.h"
 
 namespace ACE_RMCast
 {
