@@ -542,7 +542,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
   if (!Request_Context_Repository().is_executed_request()) {
     TAO_InputCDR cdr((const char*)s.get_buffer(), s.length());
 
-    TAO_FTRTEC::Log(3, " state message length = %d\n", s.length());
+    ACE_HEX_DUMP((LM_DEBUG, (const char*)s.get_buffer(), s.length(), "  receiving state "));
 
     FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
     if (!(cdr >> *op)) {
