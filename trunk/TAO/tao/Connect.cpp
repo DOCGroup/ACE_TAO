@@ -83,7 +83,8 @@ TAO_IIOP_Handler_Base::resume_handler (ACE_Reactor *)
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_Handler_Base (t ? t : TAO_ORB_Core_instance()->thr_mgr ()),
-    orb_core_ (TAO_ORB_Core_instance ())
+    orb_core_ (TAO_ORB_Core_instance ()),
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
@@ -91,7 +92,8 @@ TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager
 // @@ For pluggable protocols, added a reference to the corresponding transport obj.
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_IIOP_Handler_Base (orb_core),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    tss_resources_ (TAO_ORB_CORE_TSS_RESOURCES::instance ())
 {
   iiop_transport_ = new TAO_IIOP_Server_Transport(this);
 }
@@ -211,19 +213,8 @@ TAO_Server_Connection_Handler::svc (void)
   // thread with this method as the "worker function".
   int result = 0;
 
-  // Inheriting the ORB_Core stuff from the parent thread.  WARNING:
-  // this->orb_core_ is *not* the same as TAO_ORB_Core_instance(),
-  // this thread was just created and we are in fact *initializing*
-  // the ORB_Core based on the resources of the ORB that created
-  // us....
-
-  TAO_ORB_Core *tss_orb_core = TAO_ORB_Core_instance ();
-  tss_orb_core->inherit_from_parent_thread (this->orb_core_);
-
-  // We need to change this->orb_core_ so it points to the TSS ORB
-  // Core, but we must preserve the old value
-  TAO_ORB_Core* old_orb_core = this->orb_core_;
-  this->orb_core_ = tss_orb_core;
+  // Inheriting the ORB_Core tss stuff from the parent thread.
+  this->orb_core_->inherit_from_parent_thread (this->tss_resources_);
 
   if (TAO_orbdebug)
     ACE_DEBUG ((LM_DEBUG,
@@ -239,8 +230,6 @@ TAO_Server_Connection_Handler::svc (void)
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
                  "(%P|%t) TAO_Server_Connection_Handler::svc end\n"));
-
-  this->orb_core_ = old_orb_core;
 
   return result;
 }

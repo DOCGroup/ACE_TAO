@@ -823,43 +823,17 @@ TAO_ORB_Core::arl_same_port_connect (void)
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
 int
-TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
+TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
 {
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  Stuff inherited here must already exist
   // in the "parent" orbcore.
 
-  this->reactor (p->reactor ());
+  this->reactor (tss_resources->reactor_);
   // We'll use the spawning thread's reactor.
 
-  this->thr_mgr (p->thr_mgr ());
-  // We should use the same thread_manager.
-
-  this->connector_registry (p->connector_registry ());
-  // We'll use the spawning thread's connector.
-
-  this->orb (p->orb ());
-  // We'll use the spawning thread's ORB.
-
-  this->root_poa (p->root_poa ());
-  // And its root_poa.
-
-  this->orb_params_ = p->orb_params ();
-  // We also need its ORB_Params.
-
-  this->acceptor (p->acceptor ());
-  // Also grab the acceptor passively listening for connection
-  // requests.
-
-  this->using_collocation (p->using_collocation ());
-  // Use the same collocation settings
-
-  this->resource_factory_ = p->resource_factory ();
-  this->client_factory_ = p->client_factory ();
-  this->server_factory_ = p->server_factory ();
-  // Inherit the factories.  Notice that they will not be destroyed by
-  // this orb_core because *_factory_from_service_config_'s all
-  // default to FALSE.
+  // this->connection_cache (tss_resources->connection_cache_);
+  // Inherit connection cache?
 
   return 0;
 }

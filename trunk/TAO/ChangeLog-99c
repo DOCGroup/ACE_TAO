@@ -1,4 +1,13 @@
-Fri May 21 16:34:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri May 21 20:50:54 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp (svc):
+	* tao/ORB_Core.cpp (inherit_from_parent_thread):
+
+	  Redid (with the help of Carlos) these methods in view of the new
+	  architecture.  ORB_Core is no longer TSS, only
+	  TAO_ORB_Core_TSS_Resources is.  This will fix a bug in all
+	  applications using the new architecture, TSS resources and
+	  thread per connection (like the ImplRepo).
 
 	* tao/Connect.cpp (handle_message): Changed the length of the INS
 	  lookup string from <TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE> to
