@@ -21,43 +21,45 @@ Legend:
 	x = not attempted or unknown
 
 
-[111   ]   libTAO and TAO_IDL compile.
-[111   ]   IDL_Cubit compiles
-        [11    ] Runs
-[11x   ]   Param_Test compiles and runs for
-        [x1    ] DII short
-        [x1    ] DII ubstring
-        [x0    ] DII fixed_struct
-        [x1    ] DII strseq
-        [x1    ] DII var_struct
-        [x1    ] DII nested_struct
-        [x0    ] DII struct_seq
-        [x0    ] DII objref
-
-        [11    ] SII short
-        [11    ] SII ubstring
-        [10    ] SII fixed_struct
-        [11    ] SII strseq
-        [11    ] SII var_struct
-        [11    ] SII nested_struct
-        [00    ] SII struct_seq
-        [00    ] SII objref
-[111   ] MT_Cubit compiles
-        [100   ] runs for Octet
-        [100   ] runs for Short
-        [100   ] runs for Long
-        [100   ] runs for Struct
-[110   ] orbsvcs compiles
-        [10    ] Event_Latency runs
-	[0x    ] Simple_Naming runs
-	[xx    ] Logger runs
+[1111  ]   libTAO and TAO_IDL compile.
+[1111  ]   IDL_Cubit compiles
+        [11 1  ] Runs
+[11x1  ]   Param_Test compiles and runs for
+        [x1 1  ] DII short
+        [x1 1  ] DII ubstring
+        [x0 1  ] DII fixed_struct
+        [x1 0  ] DII strseq
+        [x1 0  ] DII var_struct
+        [x1 0  ] DII nested_struct
+        [x0 0  ] DII struct_seq
+        [x0 0  ] DII objref
+	     
+        [11 1  ] SII short
+        [11 1  ] SII ubstring
+        [10 1  ] SII fixed_struct
+        [11 1  ] SII strseq
+        [11 1  ] SII var_struct
+        [11 1  ] SII nested_struct
+        [00 0  ] SII struct_seq
+        [00 0  ] SII objref
+[1110  ] MT_Cubit compiles
+        [100x  ] runs for Octet
+        [100x  ] runs for Short
+        [100x  ] runs for Long
+        [100x  ] runs for Struct
+[1101  ] orbsvcs compiles
+        [10 x  ] Event_Latency runs
+	[0x x  ] Simple_Naming runs
+	[xx x  ] Logger runs
 
 NOTES
 * Solaris/CC
+
 * NT
 ** Warnings on libTAO and tao_idl compilation.
 ** Param_Test with struct_seq segfaults server.
 ** MT_Cubit client segfaults after transactions made.
+
 * Solaris/g++
 ** Warnings during tao_idl compilation.
 ** orbsvcs fails with missing stuff in ACE_Map_Manager.
@@ -67,6 +69,12 @@ NOTES
    unsigned int *): referenced in ./svr
 
 * IRIX
+** Event Latency won't work because unproper detection of failures for
+   priority change.
+   MT_Cubit does not compile due to extra library (-lposix4) only 
+   present in Solaris; IMHO that should go into the platform file for
+   Solaris/CC
+
 * Linux/g++
 * Other (Linux/egcs, Solaris/egcs, etc.)
 
