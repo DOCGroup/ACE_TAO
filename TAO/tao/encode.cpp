@@ -669,7 +669,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
-  CORBA::TypeCode_ptr    tc2;  // typecode of the element
+  CORBA::TypeCode_var    tc2;  // typecode of the element
   size_t  size; // size of element
   CORBA::ULong  len = seq ? seq->length_ : 0;
   char *value;
@@ -818,7 +818,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                   // is constant, we compute it only once
                   while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                     {
-                      retval = stream->encode (tc2, value, 0, ACE_TRY_ENV);
+                      retval = stream->encode (tc2.in (), value, 0, ACE_TRY_ENV);
                       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                       value += size;
                     }
@@ -835,7 +835,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                       {
                         CORBA_Object_ptr ptr =
                           seq->_upcast (value);
-                        retval = stream->encode (tc2, &ptr, 0,  ACE_TRY_ENV);
+                        retval = stream->encode (tc2.in (), &ptr, 0,  ACE_TRY_ENV);
                         ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
                         value += size;
                       }
@@ -886,7 +886,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // get element typecode.
-  CORBA::TypeCode_ptr tc2 = tc->content_type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc2 = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   size = tc2->size (ACE_TRY_ENV);
@@ -992,7 +992,7 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
       // compute it only once
       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
-          retval = stream->encode (tc2, value, 0, ACE_TRY_ENV);
+          retval = stream->encode (tc2.in (), value, 0, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
           value += size;
         }
@@ -1019,7 +1019,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
                            void *context,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::TypeCode_ptr tc2;  // typecode of the aliased type
+  CORBA::TypeCode_var tc2;  // typecode of the aliased type
   CORBA::Boolean continue_encoding = 1;
   TAO_OutputCDR *stream = (TAO_OutputCDR *) context;
   CORBA::TypeCode::traverse_status   retval =
@@ -1076,7 +1076,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
     case CORBA::tk_alias:
     case CORBA::tk_except:
     case CORBA::tk_wstring:
-      retval = stream->encode (tc2, data, 0, ACE_TRY_ENV);
+      retval = stream->encode (tc2.in (), data, 0, ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
       break;
     default:

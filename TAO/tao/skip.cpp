@@ -539,7 +539,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   // Size of element.
   CORBA::ULong bounds;
 
@@ -560,7 +560,7 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 
           while (bounds-- && continue_skipping == 1)
             {
-              continue_skipping = (CORBA::Boolean) stream->skip (tc2, ACE_TRY_ENV);
+              continue_skipping = (CORBA::Boolean) stream->skip (tc2.in (), ACE_TRY_ENV);
               ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
             }
           if (continue_skipping)
@@ -582,14 +582,14 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
 
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
-                           void *context,
-                           CORBA::Environment &ACE_TRY_ENV)
+                         void *context,
+                         CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Boolean continue_skipping = 1;
   TAO_InputCDR *stream = ACE_static_cast (TAO_InputCDR *, context);
 
   // Typecode of the element.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
 
   // retrieve the bounds of the array
   CORBA::ULong  bounds = tc->length (ACE_TRY_ENV);
@@ -623,7 +623,7 @@ TAO_Marshal_Alias::skip (CORBA::TypeCode_ptr  tc,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // Typecode of the aliased type.
-  CORBA::TypeCode_ptr tc2;
+  CORBA::TypeCode_var tc2;
   CORBA::Boolean continue_skipping = 1;
 
   // Context is the CDR stream.
