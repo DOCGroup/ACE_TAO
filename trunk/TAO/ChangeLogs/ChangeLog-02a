@@ -1,3 +1,10 @@
+Thu Jan 17 23:31:13 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added missing ObjectReferenceTemplateC.* files.
+
 Fri Jan 18 07:55:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
