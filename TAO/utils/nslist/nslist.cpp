@@ -19,6 +19,10 @@
 #include "tao/TAO.h"
 #include "orbsvcs/CosNamingC.h"
 
+CORBA::ORB_var orb;
+int showIOR = 0;
+int showNSonly = 0;
+
 static void list_context (CosNaming::NamingContext_ptr nc, int level);
 
 // Display NS entries from a finite list.
@@ -28,6 +32,8 @@ show_chunk (CosNaming::NamingContext_ptr nc,
             const CosNaming::BindingList &bl,
             int level)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   for (CORBA::ULong i = 0;
        i < bl.length ();
        i++)
@@ -42,6 +48,13 @@ show_chunk (CosNaming::NamingContext_ptr nc,
         ACE_DEBUG ((LM_DEBUG,
                     "(%s)",
                     bl[i].binding_name[0].kind.in ()));
+
+      CosNaming::Name Name;
+      Name.length (1);
+      Name[0].id =
+        CORBA::string_dup (bl[i].binding_name[0].id);
+
+      CORBA::Object_var obj = nc->resolve (Name);
 
       // If this is a context node, follow it down to the next
       // level...
@@ -65,9 +78,23 @@ show_chunk (CosNaming::NamingContext_ptr nc,
         }
       // Mark this node as a reference
       else
-        // The next version should resolve and show the IOR...
-        ACE_DEBUG ((LM_DEBUG,
-                    ": reference\n"));
+        {
+          if (showIOR)
+            {
+              CORBA::Object_var obj = nc->resolve (Name);
+              CORBA::String_var str =
+                orb->object_to_string (obj.in (),
+                                       ACE_TRY_ENV);
+              ACE_DEBUG ((LM_DEBUG,
+                          ": <%s>\n",
+                          str.in ()));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ": reference\n"));
+            }
+        }
     }
 }
 
@@ -100,12 +127,45 @@ list_context (CosNaming::NamingContext_ptr nc,
 int
 main (int argc, char *argv[])
 {
+  showIOR = 0;
+  showNSonly = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (argc, argv);
+
+      char *pname = argv[0];
+
+      while (argc > 0)
+        {
+          if (strcmp(*argv, "--ior") == 0)
+            {
+              if (showNSonly)
+                {
+                   ACE_DEBUG ((LM_DEBUG, "Error: --nsior and --ior are both specified\n"));
+                   return 1;
+                }
+              showIOR = 1;
+            }
+          else if (strcmp(*argv, "--nsior") == 0)
+            {
+              if (showIOR)
+                {
+                   ACE_DEBUG ((LM_DEBUG, "Error: --nsior and --ior are both specified\n"));
+                   return 1;
+                }
+                showNSonly = 1;
+            }
+          else if (strncmp(*argv, "--", 2) == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Usage: %s [ --ior | --nsior ]\n", pname));
+              return 1;
+            }
+          argc--;
+          argv++;
+        }
 
       CORBA::Object_var obj;
       obj = orb->resolve_initial_references ("NameService");
@@ -125,11 +185,28 @@ main (int argc, char *argv[])
                            "Naming Service not found"),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Naming Service: <%s> ---------\n",
-                  str.in ()));
-
-      list_context (root_nc.in (), 1);
+      if (showNSonly)
+        {
+          // ACE_DEBUG ((LM_DEBUG, "%s", str.in ()));
+          printf( "%s", str.in());
+        }
+      else
+        {
+          if (showIOR)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Naming Service: <%s>\n---------\n",
+                          str.in ()));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Naming Service:\n---------\n"));
+            }
+  
+          list_context (root_nc.in (), 1);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

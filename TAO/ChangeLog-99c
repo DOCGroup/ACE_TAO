@@ -1,3 +1,8 @@
+Thu Nov 04 08:20:55 1999  Thomas Lockhart  <Thomas.G.Lockhart@jpl.nasa.gov>
+
+        * utils/nslist/nslist.cpp,README: added support for
+          --ior and --nsior options.
+
 Tue Nov  2 21:19:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/ORB.h:
@@ -12,21 +17,21 @@ Tue Nov  2 21:19:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
           Also, there was the possiblity of the IR starting up a
           server more than once, if its information was updated
-          during a startup.  Thanks to Karl Proese 
+          during a startup.  Thanks to Karl Proese
           <karl.proese@mchp.siemens.de> for reporting this and a
           fix. [Bug 368]
-          
+
         * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
         * orbsvcs/tests/ImplRepo/airplane_server_i.h:
         * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
         * orbsvcs/tests/ImplRepo/nestea_server_i.h:
           Based on a request from David Dunn <dunn@tripos.com>, the code
           for the POA names and server names usage in the tests were made
-          more detailed.  [Bug 362].  While I was there, I also removed 
+          more detailed.  [Bug 362].  While I was there, I also removed
           the usage of TAO's ORB Manager and replaced with native calls.
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
-          The server names changed somewhat, so the test needed to be 
+          The server names changed somewhat, so the test needed to be
           changed to accomodate that.  Also, it seems that the both_ir
           option was broken since it was using the wrong name for the
           nestea server.
@@ -37,17 +42,17 @@ Tue Nov  2 21:19:42 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * tao/params.h:
         * tao/params.i:
         * docs/Options.html:
-          Added a new option to the ORB, -ORBMulticast 0/1 which allows 
-          someone to turn off the use of multicast in resolve_init_refs ().  
-          This will be more important once the IR is integrated into the 
+          Added a new option to the ORB, -ORBMulticast 0/1 which allows
+          someone to turn off the use of multicast in resolve_init_refs ().
+          This will be more important once the IR is integrated into the
           POA.
 
 Mon Nov  1 16:19:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* docs/releasenotes/TODO.html:
-	  Moved item about IDL compiler adding extra value to
-	  force enums to be 32 bits wide to the 'Tasks
-	  Completed' list.
+        * docs/releasenotes/TODO.html:
+          Moved item about IDL compiler adding extra value to
+          force enums to be 32 bits wide to the 'Tasks
+          Completed' list.
 
 Mon Nov 01 14:30:19 1999  David L. Levine  <levine@cs.wustl.edu>
 
