@@ -473,9 +473,6 @@ void POA_CORBA_DomainManager::get_domain_policy_skel (
   POA_CORBA_DomainManager *_tao_impl =
     ACE_static_cast (POA_CORBA_DomainManager *, _tao_object_reference);
 
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-
     CORBA::Policy_var _tao_retval;
   CORBA::PolicyType policy_type;
   if (!(
@@ -485,6 +482,10 @@ void POA_CORBA_DomainManager::get_domain_policy_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -548,6 +549,8 @@ void POA_CORBA_DomainManager::get_domain_policy_skel (
       (_tao_out << _tao_retval.in ())
     ))
     ACE_THROW (CORBA::MARSHAL());
+
+  ACE_UNUSED_ARG (_tao_servant_upcall);
 
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
@@ -1130,9 +1133,6 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
   POA_CORBA_ConstructionPolicy *_tao_impl =
     ACE_static_cast (POA_CORBA_ConstructionPolicy *, _tao_object_reference);
 
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-
   _tao_server_request.argument_flag (0);
     CORBA::InterfaceDef_var object_type;
   CORBA::Boolean constr_policy;
@@ -1144,6 +1144,10 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -1199,6 +1203,8 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
 #endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply ();
+
+  ACE_UNUSED_ARG (_tao_servant_upcall);
 
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);

@@ -1,3 +1,10 @@
+Thu May 31 17:45:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Domain/DomainS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+
+	  Cleaned up warnings about unused arguments.
+
 Thu May 31 16:21:54 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Static.dsp:
