@@ -19,7 +19,7 @@
 
 #include "Object_Loader.h"
 
-#include "ObjectIDListC.h"
+#include "ObjectIdListC.h"
 
 #include "Services_Activate.h"
 #include "Invocation.h"
