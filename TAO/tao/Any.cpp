@@ -418,15 +418,25 @@ CORBA_Any::operator<<= (from_string s)
     tc = CORBA::_tc_string; // unbounded.
 
   CORBA::Environment env;
+
+  char **tmp;
+  // Non-copying.
   if (s.nocopy_)
-    this->replace (tc, new char* (s.val_), 1, env);
-  else // copying.
-    this->replace (tc,
-                   // @@ Jeff, shouldn't we be checking to see if
-                   // "new" fails?!
-                   new char *(CORBA::string_dup (s.val_)),
-                   1,
-                   env);
+    {
+      ACE_NEW(tmp,
+              char* (s.val_));
+    }
+  // Copying.
+  else
+    {
+      ACE_NEW(tmp,
+              char* (CORBA::string_dup (s.val_)));
+    }
+
+  this->replace (tc,
+                 tmp,
+                 1,
+                 env);
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -643,6 +653,7 @@ CORBA_Any::operator>>= (char *&s) const
       if (this->any_owns_data_ && this->value_)
         {
           s = *(char **) this->value_;
+
           return 1;
         }
       else
@@ -652,11 +663,18 @@ CORBA_Any::operator>>= (char *&s) const
             {
               ACE_const_cast (CORBA_Any *,
                               this)->any_owns_data_ = 1;
-              // @@ Jeff, shouldn't we check if "new" fails?
-              char** tmp = new char*;
+
+              char **tmp;
+
+              ACE_NEW_RETURN (tmp,
+                              char *,
+                              0);
+
               *tmp = s;
+
               ACE_const_cast (CORBA_Any *,
                               this)->value_ = tmp;
+
               return 1;
             }
 
@@ -865,9 +883,14 @@ void
 CORBA_Any::operator<<= (const char* s)
 {
   CORBA::Environment env;
+
+  char **tmp;
+
+  ACE_NEW (tmp,
+           char * (CORBA::string_dup (s)));
+
   this->replace (CORBA::_tc_string,
-                 // @@ Jeff, shouldn't we be checking if "new" failed?
-                 new char* (CORBA::string_dup (s)),
+                 tmp,
                  1, 
                  env);
 }
@@ -892,13 +915,19 @@ CORBA_Any_var::operator= (CORBA::Any *p)
 CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
+  // @@ Jeff, if this call can fail then maybe we shouldn't be returning
+  // Any_var & but instead be making this a "void" function?
+  CORBA_Any_ptr tmp;
+
+  ACE_NEW_RETURN (tmp,
+                  CORBA::Any (*r.ptr_),
+                  *this);
+
   if (this->ptr_ != 0)
     delete this->ptr_;
 
-  // @@ Jeff, shouldn't we be checking to see if "new" failed?  BTW,
-  // if this call can fail then maybe we shouldn't be returning
-  // Any_var & but instead be making this a "void" function?
-  this->ptr_ = new CORBA::Any (*r.ptr_);
+  this->ptr_ = tmp;
+
   return *this;
 }
 
