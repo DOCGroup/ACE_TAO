@@ -104,7 +104,7 @@ main (int argc, char* argv[])
       {
         ACE_ConsumerQOS_Factory consumer_qos;
         consumer_qos.start_bitmask (0x00001111, 0x11110000);
-        consumer_qos.start_disjunction_group ();
+        consumer_qos.start_disjunction_group (1);
         consumer_qos.insert (0x01100000, 0x00000110, 0);
 
         consumer_bitmask_reject.connect (consumer_admin.in (),
@@ -155,7 +155,7 @@ main (int argc, char* argv[])
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
-        consumer_qos.start_disjunction_group ();
+        consumer_qos.start_disjunction_group (1);
         consumer_qos.insert_bitmasked_value (0x11110000, 0x00001111,
                                              0x01100000, 0x00000110);
 
@@ -173,7 +173,7 @@ main (int argc, char* argv[])
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
-        consumer_qos.start_disjunction_group ();
+        consumer_qos.start_disjunction_group (1);
         consumer_qos.insert_bitmasked_value (0x11111111, 0x11111111,
                                              0x01100000, 0x00000110);
 

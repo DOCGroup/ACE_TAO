@@ -526,6 +526,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
   // The reference count was incremented just before delegating on the
   // dispatching strategy, in this can we need to decrement it *now*.
   this->refcount_--;
+  // @@ What if it reaches 0???
 }
 
 CORBA::Boolean

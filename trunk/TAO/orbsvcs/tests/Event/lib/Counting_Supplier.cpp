@@ -108,8 +108,11 @@ EC_Counting_Supplier::connect (
 void
 EC_Counting_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (!CORBA::is_nil (this->consumer_proxy_.in ()))
+    {
+      this->consumer_proxy_->disconnect_push_consumer (ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
   PortableServer::POA_var supplier_poa =
     this->_default_POA (ACE_TRY_ENV);
@@ -153,6 +156,8 @@ EC_Counting_Supplier::disconnect_push_supplier (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->disconnect_count++;
+  this->consumer_proxy_ =
+    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 // ****************************************************************
