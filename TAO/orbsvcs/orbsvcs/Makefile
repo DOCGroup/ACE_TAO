@@ -50,8 +50,7 @@ ifndef TAO_ORBSVCS
                 Sched \
                 Event \
                 CosEvent \
-                Event2 \
-		Log
+                Event2
 
 ifndef minimum_corba
 
@@ -62,7 +61,7 @@ ifndef minimum_corba
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle depend on Trader so don't build
 # them either.
-  TAO_ORBSVCS += Trader LifeCycle
+  TAO_ORBSVCS += Trader LifeCycle Log
 
 endif # minimum_corba
 
