@@ -707,6 +707,8 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         ACE_NOTSUP.  Useful for
                                         tracking down origin of
                                         ACE_NOTSUP.
+ACE_HAS_{,U}INT{8,16,32,64}_T		Platform/compiler supports the
+					{,u}int{8,16,32,64}_t types.
 ACE_HAS_VOIDPTR_GETTIMEOFDAY            Platform/compiler supports
                                         void * as second parameter
                                         to gettimeofday
