@@ -33,7 +33,7 @@ Tue Jul 30 09:07:29 2002  Ossama Othman  <ossama@uci.edu>
 	  Fixed call to ACE_Location_Node::handle().  This method no
 	  longer exists.  The correct call is ACE_Location_Node::dll().
 	  For some reason, Svc_Conf_y.cpp (a generated file!!!) was
-	  "fixed" but the parser grammer file was never fixed.
+	  "fixed" but the parser grammar file was never fixed.
 
 	* ace/Svc_Conf.l:
 
