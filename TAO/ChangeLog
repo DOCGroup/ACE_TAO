@@ -1323,8 +1323,8 @@ Mon Oct 21 23:17:32 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 Mon Oct 21 22:45:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	Bug fix for [BUGID 1269]. Thanks to Carlos O'Ryan for donating
-	this patch.
+	Bug fix for [BUGID 1269,1270]. Thanks to Carlos O'Ryan for
+        donating this patch.
 
 	* tao/Connection_Handler.cpp:
 	* tao/Connection_Handler.h:
