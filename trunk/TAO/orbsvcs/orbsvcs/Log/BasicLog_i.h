@@ -51,8 +51,7 @@ public:
   // Destructor.
 
   void
-  destroy (CORBA::Environment &ACE_TRY_ENV =
-	   CORBA::default_environment ())
+  destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the log object and all contained records.
 

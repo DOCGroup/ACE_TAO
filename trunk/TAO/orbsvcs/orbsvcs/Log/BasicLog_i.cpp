@@ -22,6 +22,7 @@ BasicLog_i::~BasicLog_i ()
 
 void
 BasicLog_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_); // check for error?

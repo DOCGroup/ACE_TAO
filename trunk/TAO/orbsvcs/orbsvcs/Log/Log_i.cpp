@@ -47,6 +47,7 @@ DsLogAdmin::LogMgr_ptr
 Log_i::my_factory (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return DsLogAdmin::LogMgr::_duplicate (factory_.in ());
 }
 
@@ -54,6 +55,7 @@ DsLogAdmin::LogId
 Log_i::id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return logid_;
 }
 
@@ -101,6 +103,7 @@ CORBA::ULong
 Log_i::get_max_record_life (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return max_record_life_;
 }
 
@@ -120,6 +123,7 @@ CORBA::ULongLong
 Log_i::get_max_size (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return recordstore_.get_max_size ();
 }
 
@@ -147,6 +151,7 @@ CORBA::ULongLong
 Log_i::get_current_size (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->recordstore_.get_current_size ();
 }
 
@@ -154,6 +159,7 @@ CORBA::ULongLong
 Log_i::get_n_records (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->recordstore_.get_n_records ();
 }
 
@@ -161,6 +167,7 @@ DsLogAdmin::LogFullAction
 Log_i::get_log_full_action (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return log_full_action_;
 }
 
@@ -169,6 +176,7 @@ Log_i::set_log_full_action (DsLogAdmin::LogFullAction action,
                             CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   log_full_action_ = action;
 }
 
@@ -176,6 +184,7 @@ DsLogAdmin::AdministrativeState
 Log_i::get_administrative_state (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return admin_state_;
 }
 
@@ -184,6 +193,7 @@ Log_i::set_administrative_state (DsLogAdmin::AdministrativeState state,
                                  CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->admin_state_ = state;
 }
 
@@ -191,6 +201,7 @@ DsLogAdmin::ForwardingState
 Log_i::get_forwarding_state (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->forward_state_;
 }
 
@@ -199,6 +210,7 @@ Log_i::set_forwarding_state (DsLogAdmin::ForwardingState state,
                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->forward_state_ = state;
 }
 
@@ -206,6 +218,7 @@ DsLogAdmin::OperationalState
 Log_i::get_operational_state (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->op_state_;
 }
 
@@ -213,6 +226,7 @@ DsLogAdmin::TimeInterval
 Log_i::get_interval (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->interval_;
 }
 
@@ -226,13 +240,14 @@ Log_i::set_interval (const DsLogAdmin::TimeInterval &interval,
   //@@ TODO: validate the time.
   //         modify the timer settings to the new values.
   this->interval_ = interval;
-  ACE_THROW (CORBA::NO_IMPLEMENT);
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 DsLogAdmin::AvailabilityStatus
 Log_i::get_availability_status (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // TODO:
   // "on duty" => "enabled" AND "unlocked" AND current time within log
   // duration time AND current time within log scheduling times.
@@ -267,6 +282,7 @@ Log_i::set_capacity_alarm_thresholds (const
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::InvalidThreshold))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // @@ TODO: validate thresholds
   //          How do we implement thresholds in DsLogAdmin !?
   //          According to the spec, the log must "notify" when threshold
@@ -276,6 +292,7 @@ Log_i::set_capacity_alarm_thresholds (const
 
 DsLogAdmin::WeekMask_ptr
 Log_i::get_week_mask (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   DsLogAdmin::WeekMask_ptr ret_val;
   ACE_NEW_THROW_EX (ret_val,
@@ -289,7 +306,12 @@ Log_i::get_week_mask (CORBA::Environment &ACE_TRY_ENV)
 void
 Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks,
                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidTime,
+                   DsLogAdmin::InvalidTimeInterval,
+                   DsLogAdmin::InvalidMask))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // @@ TODO: validate masks.
   //           Activate various timers to trigger appropriate acition.
   this->weekmask_ = masks;
@@ -312,7 +334,7 @@ Log_i::query_i (const char *constraint,
   // meet the constraints.
 
   // get the underlying storage.
-  LOG_RECORD_STORE &store =
+  LogRecordStore::LOG_RECORD_STORE &store =
     this->recordstore_.get_storage ();
 
   // Create an iterator
@@ -335,7 +357,8 @@ Log_i::query_i (const char *constraint,
 
   CORBA::ULong count = 0; // count of matches found.
   CORBA::Boolean done = 0; // flag to end "for" operation.
-  for (CORBA::ULong i = 0;
+  CORBA::ULong i = 0;
+  for (;
        i < len && count < how_many;
        ++i)
     {
@@ -401,11 +424,8 @@ Log_i::query (const char *grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  // Verify that the grammer is "TCL".
-  // The spec. asks for "extended TCL"
-  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
-                      0);
+  this->check_grammar (grammar, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   DsLogAdmin::RecordList_ptr rec_list =
     this->query_i (constraint,
@@ -466,9 +486,6 @@ Log_i::match_i (const char *constraint,
   // Iterate over and populate the list.
   LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
-  DsLogAdmin::RecordList_ptr rec_list;
-  // Figure out the length of the list.
-
   CORBA::ULong count = 0; // count of matches found.
 
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -504,11 +521,8 @@ Log_i::match (const char* grammar,
                    DsLogAdmin::InvalidGrammar,
                    DsLogAdmin::InvalidConstraint))
 {
-  // Verify that the grammer is "TCL".
-  // The spec. asks for "extended TCL"
-  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
-                      0);
+  this->check_grammar (grammar, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong count =
     this->match_i (constraint, 0, ACE_TRY_ENV);
@@ -525,11 +539,8 @@ Log_i::delete_records (const char *grammar,
                      DsLogAdmin::InvalidGrammar,
                      DsLogAdmin::InvalidConstraint))
 {
-  // Verify that the grammer is "TCL".
-  // The spec. asks for "extended TCL"
-  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
-    ACE_THROW_RETURN (DsLogAdmin::InvalidGrammar,
-                      0);
+  this->check_grammar (grammar, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::ULong count =
     this->match_i (constraint, 1, ACE_TRY_ENV);
@@ -544,6 +555,8 @@ Log_i::delete_records_by_id (const
                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   CORBA::ULong numdone (0);
 
   for (CORBA::ULong i = 0; i < ids.length (); i++)
@@ -682,6 +695,10 @@ Log_i::set_records_attribute (const char *grammar,
                      DsLogAdmin::InvalidConstraint,
                      DsLogAdmin::InvalidAttribute))
 {
+  ACE_UNUSED_ARG (grammar);
+  ACE_UNUSED_ARG (constraint);
+  ACE_UNUSED_ARG (attr_list);
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
@@ -694,7 +711,7 @@ Log_i::get_record_attribute (DsLogAdmin::RecordId id,
   DsLogAdmin::LogRecord rec;
   if (this->recordstore_.retrieve (id, rec) == -1)
     {
-      ACE_THROW_RETURN(DsLogAdmin::InvalidRecordId,
+      ACE_THROW_RETURN(DsLogAdmin::InvalidRecordId (),
                        0);
     }
 
@@ -713,6 +730,7 @@ Log_i::copy (DsLogAdmin::LogId_out id,
              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_UNUSED_ARG (id);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
@@ -722,6 +740,7 @@ Log_i::copy_with_id (DsLogAdmin::LogId id,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::LogIdAlreadyExists))
 {
+  ACE_UNUSED_ARG (id);
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
@@ -749,4 +768,16 @@ Log_i::scheduled (void)
 {
   // TBD: lie for now.
   return 1;
+}
+
+void
+Log_i::check_grammar (const char* grammar,
+                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   DsLogAdmin::InvalidGrammar))
+{
+  // Verify that the grammar is "TCL".
+  // The spec. asks for "extended TCL"
+  if (ACE_OS::strcmp (grammar, QUERY_LANG_SUPPORTED_BY_LOG) != 0)
+    ACE_THROW (DsLogAdmin::InvalidGrammar ());
 }

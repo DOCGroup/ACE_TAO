@@ -53,7 +53,7 @@ public:
             DsLogAdmin::LogId_out id,
             CORBA_Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::NoResources,
+                     DsLogAdmin::NoResources
                      ));
   // Allows clients to create new BasicLog objects. Raises
   // DsLogAdmin::NoResources and DsLogAdmin::InvalidThreshold
@@ -66,7 +66,7 @@ public:
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      DsLogAdmin::NoResources,
-                     DsLogAdmin::LogIdAlreadyExists,
+                     DsLogAdmin::LogIdAlreadyExists
                      ));
   // Same as create (), but allows clients to specify the id.
 

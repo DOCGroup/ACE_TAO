@@ -56,6 +56,8 @@ LogMgr_i::find_log (DsLogAdmin::LogId id,
                    CORBA::SystemException
                    ))
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
+
   DsLogAdmin::BasicLog_var v_return;
 
   if (hash_map_.find (id,
@@ -87,8 +89,8 @@ LogMgr_i::list_logs_by_id (CORBA::Environment &ACE_TRY_ENV)
                    CORBA::SystemException
                    ))
 {
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
   // Later: We need to maintain a sorted list of logids to do this efficiently.
-  return 0;
 }
 
 int
