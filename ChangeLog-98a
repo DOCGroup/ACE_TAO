@@ -1,3 +1,8 @@
+Thu Apr 09 10:50:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp (dump): Fixed signed/unsigned mismatched
+ 	  warnings on NT.
+
 Thu Apr  9 09:37:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T: Moved the ACE_Static_Allocator::dump() method into
