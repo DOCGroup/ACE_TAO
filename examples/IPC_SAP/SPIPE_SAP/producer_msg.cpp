@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/OS_main.h"
-#include "ace/OS_memory.h"
+#include "ace/OS_Memory.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
