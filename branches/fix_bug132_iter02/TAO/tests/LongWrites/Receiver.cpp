@@ -38,8 +38,11 @@ Receiver::receive_data (const Test::Payload &payload,
   this->message_count_++;
   this->byte_count_ += payload.length ();
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Receiver::receive_data %d\n",
-              this->message_count_));
+  if (this->message_count_ % 100 == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Receiver::receive_data %d\n",
+                  this->message_count_));
+    }
 }
 
 void

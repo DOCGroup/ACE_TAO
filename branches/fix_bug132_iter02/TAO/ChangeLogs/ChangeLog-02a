@@ -1,3 +1,65 @@
+Thu Mar  8 19:12:48 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.cpp:
+          Had to manually merge Bala's changes from Sat Feb 17 23:08:44
+          2001.
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Cosmetic fixes.
+
+        * tao/IIOP_Transport.cpp:
+          Print debugging messages when output is scheduled, and alse when
+          it is canceled.
+          Do not register the handler more than once on the reactor.
+
+        * tao/Queued_Message.inl:
+          The done() condition was reversed.
+
+        * tao/Transport.cpp:
+          Add a ton of debugging mesages, including detailed messages of
+          outgoing and incoming data, information about each queued
+          message, etc.
+
+        * tao/Transport.cpp (send_message_block_chain):
+          Always add the number of bytes transferred on each send() call,
+          even when it returns an error.
+
+        * tao/Transport.cpp (send_message_i):
+          Use easier to read code when deciding what messages are queued.
+          Before calling schedule_output() and returning we must queue the
+          message, forgot to do that in the previous version.
+
+        * tests/LongWrites/Receiver.cpp:
+        * tests/LongWrites/Sender.cpp:
+        * tests/LongWrites/Sender.h:
+        * tests/LongWrites/Sender_Task.cpp:
+        * tests/LongWrites/Sender_Task.h:
+        * tests/LongWrites/client.cpp:
+          I'm tweaking the test trying to make the termination condition
+          more reliable.  Unfortunately after one of the clients finishes
+          the rest does not receive all the required messages.
+          I will probably have to change the protocol, which is probably a
+          good idea anyway, so we can control the number of threads too.
+
+        * tests/LongWrites/run_test.pl:
+          In the haste to merge the fix_bug132 bug I forgot to incorporate
+          the support for the multiple test types.
+
+        * tao/Makefile:
+        * tao/Domain/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/DynamicInterface/Makefile:
+        * tao/IFR_Client/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/SmartProxies/Makefile:
+        * tao/Strategies/Makefile:
+        * tests/LongWrites/Makefile:
+          Update dependencies.
+
 Wed Mar 07 08:48:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.inl:

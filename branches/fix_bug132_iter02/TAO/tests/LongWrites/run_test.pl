@@ -26,16 +26,16 @@ if (defined $opt_p) {
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 
-foreach my $i ("ONEWAY", "WRITE", "READ_WRITE") {
+foreach my $i ("ONEWAY") { # , "WRITE", "READ_WRITE") {
 
   print "================ Running test $i ================\n";
 
 
   unlink $iorfile;
   $SV  = new PerlACE::Process ("server", "-o $iorfile $server_args");
-  $CL1 = new PerlACE::Process ("client", " -k file://$iorfile ");
-  $CL2 = new PerlACE::Process ("client", " -k file://$iorfile ");
-  $CL3 = new PerlACE::Process ("client", " -k file://$iorfile ");
+  $CL1 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
+  $CL2 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
+  $CL3 = new PerlACE::Process ("client", " -k file://$iorfile -t $i");
 
 
   $SV->Spawn ();
@@ -46,9 +46,9 @@ foreach my $i ("ONEWAY", "WRITE", "READ_WRITE") {
     exit 1;
   }
 
-  $CL1->Spawn (120);
-  $CL2->Spawn (120);
-  $CL3->Spawn (120);
+  $CL1->Spawn (1200);
+  $CL2->Spawn (1200);
+  $CL3->Spawn (1200);
 
   $client1 = $CL1->WaitKill (60);
 

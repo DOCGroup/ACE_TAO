@@ -2,7 +2,6 @@
 // $Id$
 //
 #include "Sender.h"
-#include "Sender_Task.h"
 
 ACE_RCSID(LongWrites, Sender, "$Id$")
 
@@ -12,6 +11,7 @@ Sender::Sender (int test_type)
   , receiver_length_ (16)
   , shutdown_called_ (0)
   , event_count_ (0)
+  , sender_task_ (this)
 {
   ACE_NEW (this->receivers_, Test::Receiver_var[this->receiver_length_]);
 }
@@ -70,32 +70,14 @@ Sender::send_events (CORBA::Long event_count,
     ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
     this->event_count_ = event_count;
   }
-  ACE_Thread_Manager thr_mgr;
-  Sender_Task task (this,
-                    event_count,
-                    event_size,
-                    &thr_mgr);
 
-  if (task.activate (THR_NEW_LWP | THR_JOINABLE,
-                     4, 1) == -1)
-    return;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Sender::send_events - starting threads\n"));
 
-  ACE_TRY
-    {
-      int argc = 0;
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 0, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  this->sender_task_.run_test (4, event_count, event_size);
 
-      ACE_Time_Value tv (60, 0);
-      orb->run (tv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  thr_mgr.wait ();
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Sender::send_events - threads are active\n"));
 }
 
 int
@@ -105,9 +87,12 @@ Sender::run_test (CORBA::Long event_count,
   ACE_DECLARE_NEW_CORBA_ENV;
 
   Test::Payload payload(event_size); payload.length(event_size);
+  for (CORBA::ULong j = 0; j != event_size; ++j)
+    {
+      payload[j] = CORBA::Octet(j % 256);
+    }
   for (CORBA::Long i = 0; i != event_count; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - running iteration %d\n", i));
       for (size_t j = 0; j != this->receiver_count_; ++j)
         {
           ACE_TRY
@@ -131,6 +116,9 @@ Sender::run_test (CORBA::Long event_count,
                                                       ACE_TRY_ENV);
                   ACE_TRY_CHECK;
                 }
+            }
+          ACE_CATCH (CORBA::TRANSIENT, ignored)
+            {
             }
           ACE_CATCHANY
             {

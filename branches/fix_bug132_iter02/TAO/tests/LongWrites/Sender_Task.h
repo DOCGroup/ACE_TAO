@@ -20,10 +20,12 @@ class Sender_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Sender_Task (Sender *sender,
-               CORBA::Long event_count,
-               CORBA::ULong event_size,
-               ACE_Thread_Manager *thr_mgr);
+  Sender_Task (Sender *sender);
+
+  /// Run the experiment using the configuration below
+  int run_test (int thread_count,
+                CORBA::Long event_count,
+                CORBA::ULong event_size);
 
   /// Thread entry point
   int svc (void);

@@ -147,6 +147,21 @@ TAO_IIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 int
 TAO_IIOP_Transport::register_handler (void)
 {
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d\n",
+                  this->handle ()));
+    }
+  if (this->connection_handler_->is_registered ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport::register_handler %d"
+                  ", already registered\n",
+                  this->handle ()));
+      return 0;
+    }
+
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -319,7 +334,9 @@ TAO_IIOP_Transport::schedule_output (void)
 {
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - schedule_output\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport[%d]::schedule_output\n",
+                  this->handle ()));
     }
   ACE_Reactor *r =
     this->connection_handler_->reactor ();
@@ -332,7 +349,9 @@ TAO_IIOP_Transport::cancel_output (void)
 {
   if (TAO_debug_level > 4)
     {
-      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - cancel_output\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - IIOP_Transport[%d]::schedule_output\n",
+                  this->handle ()));
     }
   ACE_Reactor *r =
     this->connection_handler_->reactor ();

@@ -203,12 +203,6 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
 int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
 {
-  // Get the header length
-  const size_t header_len = TAO_GIOP_MESSAGE_HEADER_LEN ;
-
-  // Get the message size offset
-  const size_t offset = TAO_GIOP_MESSAGE_SIZE_OFFSET;
-
   // Ptr to first buffer.
   char *buf = (char *) stream.buffer ();
 
@@ -223,27 +217,27 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream)
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
 
-  CORBA::ULong bodylen = total_len - header_len;
+  CORBA::ULong bodylen = total_len - TAO_GIOP_MESSAGE_HEADER_LEN;
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-  *ACE_reinterpret_cast (CORBA::ULong *, buf + offset) = bodylen;
+  *ACE_reinterpret_cast (CORBA::ULong *, buf +
+                         TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
 #else
   if (!stream.do_byte_swap ())
     *ACE_reinterpret_cast (CORBA::ULong *,
-                           buf + offset) = bodylen;
+                           buf + TAO_GIOP_MESSAGE_SIZE_OFFSET) = bodylen;
   else
     ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
                                            &bodylen),
-                     buf + offset);
+                     buf + TAO_GIOP_MESSAGE_SIZE_OFFSET);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
-
 
   if (TAO_debug_level > 2)
     {
       this->dump_msg ("send",
                       ACE_reinterpret_cast (u_char *,
                                             buf),
-                      bodylen);
+                      total_len);
     }
 
   return 0;
@@ -320,7 +314,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   TAO_InputCDR input_cdr (&msg_block,
                           this->message_handler_.message_state ().byte_order,
                           orb_core);
-
 
   // Send the message state for the service layer like FT to log the
   // messages
@@ -496,7 +489,6 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
     {
       parse_error =
         this->generator_parser_->parse_request_header (request);
-
 
       // Throw an exception if the
       if (parse_error != 0)
@@ -1073,21 +1065,22 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                                  const u_char *ptr,
                                  size_t len)
 {
-  static const char digits [] = "0123456789ABCD";
-  static const char *names [] =
-  {
-    "Request",
-    "Reply",
-    "CancelRequest",
-    "LocateRequest",
-    "LocateReply",
-    "CloseConnection",
-    "MessageError"
-    "Fragment"
-  };
 
   if (TAO_debug_level >= 5)
     {
+      static const char digits [] = "0123456789ABCD";
+      static const char *names [] =
+      {
+        "Request",
+        "Reply",
+        "CancelRequest",
+        "LocateRequest",
+        "LocateReply",
+        "CloseConnection",
+        "MessageError"
+        "Fragment"
+      };
+
       // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];

@@ -9,7 +9,7 @@ TAO_Queued_Message::mb (void) const
 ACE_INLINE int
 TAO_Queued_Message::done (void) const
 {
-  return this->current_block_ != 0;
+  return this->current_block_ == 0;
 }
 
 ACE_INLINE TAO_Queued_Message *

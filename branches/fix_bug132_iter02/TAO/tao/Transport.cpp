@@ -72,7 +72,7 @@ TAO_Transport::handle_output ()
   if (TAO_debug_level > 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - handle_output (%d)\n",
+                  "TAO (%P|%t) - Transport[%d]::handle_output\n",
                   this->handle ()));
     }
 
@@ -86,10 +86,10 @@ TAO_Transport::handle_output ()
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - send_current_message (%d) %d/%d\n",
+                      "TAO (%P|%t) - Transport[%d]::handle_output, "
+                      "send_current_message returns %d/%d\n",
                       this->handle (),
-                      retval,
-                      errno));
+                      retval, errno));
         }
 
       if (retval == 1)
@@ -110,6 +110,46 @@ TAO_Transport::handle_output ()
 
   // Any errors are returned directly to the Reactor
   return retval;
+}
+
+static void
+dump_iov (iovec *iov, int iovcnt, ACE_HANDLE handle, size_t current_transfer)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) - Transport[%d]::send_message_block_chain"
+              " sending %d buffers\n",
+              handle, iovcnt));
+  for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
+    {
+      size_t iov_len = iov[i].iov_len;
+
+      // Possibly a partially sent iovec entry.
+      if (current_transfer < iov_len)
+        iov_len = current_transfer;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Transport[%d]::send_message_block_chain"
+                  " buffer %d/%d has %d bytes\n",
+                  handle, 
+                  i, iovcnt,
+                  iov_len));
+      size_t len;
+      for (size_t offset = 0; offset < iov_len; offset += len)
+        {
+          len = iov_len - offset;
+          if (len > 512)
+            len = 512;
+          ACE_HEX_DUMP ((LM_DEBUG,
+                         ACE_static_cast(char*,iov[i].iov_base) + offset,
+                         len,
+                         "TAO (%P|%t) - Transport::send_message_block_chain "));
+        }
+      current_transfer -= iov_len;
+    }
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) - Transport[%d]::send_mesage_block_chain"
+              " end of data\n",
+              handle));
 }
 
 int
@@ -148,13 +188,17 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
               ssize_t result =
                 this->send (iov, iovcnt, current_transfer, timeout);
 
+              if (TAO_debug_level > 6)
+                {
+                  dump_iov (iov, iovcnt, this->handle (), current_transfer);
+                }
+
+              // Add to total bytes transferred.
+              bytes_transferred += current_transfer;
 
               // Errors.
               if (result == -1 || result == 0)
                 return result;
-
-              // Add to total bytes transferred.
-              bytes_transferred += current_transfer;
 
               // Reset iovec counter.
               iovcnt = 0;
@@ -173,12 +217,18 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
 
       ssize_t result =
         this->send (iov, iovcnt, current_transfer, timeout);
-      // Errors.
-      if (result == -1 || result == 0)
-        return result;
+
+      if (TAO_debug_level > 6)
+        {
+          dump_iov (iov, iovcnt, this->handle (), current_transfer);
+        }
 
       // Add to total bytes transferred.
       bytes_transferred += current_transfer;
+
+      // Errors.
+      if (result == -1 || result == 0)
+        return result;
     }
 
   // Return total bytes transferred.
@@ -270,15 +320,28 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   // Let's figure out if the message should be queued without trying
   // to send first:
-  int non_queued_message =
-    (this->current_message_ == 0) // There is an outgoing message already
-    && (twoway_flag
-        || !stub->sync_strategy ().must_queue (queue_empty));
-
+  int must_queue = 0;
+  if (this->current_message_ != 0)
+    must_queue = 1;
+  else if (!twoway_flag
+           && stub->sync_strategy ().must_queue (queue_empty))
+    {
+      must_queue = 1;
+    }
+    
   TAO_Queued_Message *queued_message = 0;
-  if (non_queued_message == 0)
+  if (must_queue)
     {
       // ... simply queue the message ...
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      "message is queued\n",
+                      this->handle ()));
+        }
+
       size_t length = message_block->total_length ();
       ACE_Message_Block *copy =
         new ACE_Message_Block (length);
@@ -295,6 +358,14 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
     {
       // ... in this case we must try to send the message first ...
 
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      "trying to send the message\n",
+                      this->handle ()));
+        }
+
       size_t byte_count;
 
       // @@ I don't think we want to hold the mutex here, however if
@@ -305,14 +376,15 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
                                                   byte_count,
                                                   max_wait_time);
       if (n == 0)
-        return -1;
+        return -1; // EOF
       else if (n == -1)
         {
-          if (errno == EWOULDBLOCK)
+          // ... if this is just an EWOULDBLOCK we must schedule the
+          // message for later ...
+          if (errno != EWOULDBLOCK)
             {
-              return this->schedule_output ();
+              return -1;
             }
-          return -1;
         }
 
       // ... let's figure out if the complete message was sent ...
@@ -355,7 +427,33 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         }
       // @@ Revisit message queue allocations
 
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      " queued anyway, %d bytes sent\n",
+                      this->handle (),
+                      byte_count));
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      " queued message contains %d bytes, %d transferred\n",
+                      this->handle (),
+                      queued_message->mb ()->total_length (),
+                      byte_count));
+        }
+
       queued_message->bytes_transferred (byte_count);
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      " queued message still has %d bytes to go\n",
+                      this->handle (),
+                      queued_message->mb ()->total_length ()));
+        }
+
       this->current_message_ = queued_message;
     }
 

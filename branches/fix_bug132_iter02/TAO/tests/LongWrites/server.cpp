@@ -36,9 +36,9 @@ parse_args (int argc, char *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-o <iorfile>"
-			   "-p <payload_size>"
-			   "-i <test_iterations>"
+			   "-o <iorfile> "
+			   "-p <payload_size> "
+			   "-i <test_iterations> "
                            "\n",
                            argv [0]),
                           -1);
