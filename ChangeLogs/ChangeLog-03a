@@ -1,3 +1,9 @@
+Wed Oct  4 09:15:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/RMCast/RMCast.dsp:
+
+          Added new files.
+
 Tue Oct  3 17:07:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/Makefile:
