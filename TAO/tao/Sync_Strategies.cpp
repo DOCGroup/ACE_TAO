@@ -148,8 +148,8 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (TAO_Transport 
   if (buffering_constraint_policy == 0)
     return 1;
 
-  TAO::BufferingConstraint buffering_constraint =
-    buffering_constraint_policy->buffering_constraint ();
+  TAO::BufferingConstraint buffering_constraint;
+  buffering_constraint_policy->get_buffering_constraint (buffering_constraint);
 
   this->timer_check (transport,
                      buffering_constraint);

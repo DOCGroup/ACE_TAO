@@ -65,7 +65,7 @@ public:
   // = The TAO::Buffering_Constraint_Policy methods
 
   virtual TAO::BufferingConstraint buffering_constraint (CORBA::Environment &ACE_TRY_ENV);
-  virtual TAO::BufferingConstraint buffering_constraint (void);
+  void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
