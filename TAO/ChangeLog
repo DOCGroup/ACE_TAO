@@ -1,3 +1,9 @@
+Wed Dec  1 12:00:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
+
+	  Correct typo in client's server IOR parameter.
+
 Wed Dec  1 11:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
