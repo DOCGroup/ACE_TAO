@@ -4,16 +4,9 @@
 #include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Reactor.h"
 #include "ace/XtReactor.h"
 
 #if defined (ACE_HAS_XT)
-
-struct ACE_XtReactorID 
-{
-  XtInputId id_;
-  int good_id_;
-};
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
 
@@ -25,7 +18,6 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
   : ACE_Select_Reactor (size, restart, h),
     context_ (context),
     ids_ (0),
-    id_len_ (0),
     timeout_ (0)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
@@ -41,18 +33,24 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.close ();
-  this->notify_handler_.open (this, 0);
-  // @@ The notify pipe is always enabled, check this...
+  this->notify_handler_.open (this);
 #endif /* ACE_MT_SAFE */
 }
 
 ACE_XtReactor::~ACE_XtReactor (void)
 {
-  delete [] this->ids_;
+  // Delete the remaining items in the linked list.
+
+  while (this->ids_)
+    {
+      ACE_XtReactorID *XtID = this->ids_->next_;
+      delete this->ids_;
+      this->ids_ = XtID;
+    }
 }
 
-// This is just the wait_for_multiple_events from ace/Reactor.cpp but
-// we use the Xt functions to wait for an event, not select ()
+// This is just the <wait_for_multiple_events> from ace/Reactor.cpp
+// but we use the Xt functions to wait for an event, not <select>
 
 int 
 ACE_XtReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
@@ -92,8 +90,6 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
   self->timeout_ = 0;
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_XtReactor::Timer on id %d\n"), (int) *id));
-
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
   self->dispatch (0, handle_set);
@@ -101,24 +97,23 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
 }
 
 // This could be made shorter if we know which *kind* of event we were
-// about to get.  Here we use select () to find out which one might be
+// about to get.  Here we use <select> to find out which one might be
 // available.
 
 void 
 ACE_XtReactor::InputCallbackProc (XtPointer closure, 
-				  int *source,
+				  int *source, 
 				  XtInputId *)
 {
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
   ACE_HANDLE handle = (ACE_HANDLE) *source;
 
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_XtReactor::Input on fd %d\n"), *source));
-
-  ACE_Time_Value zero = ACE_Time_Value::zero; // my copy isn't const
+  // my copy isn't const.
+  ACE_Time_Value zero = ACE_Time_Value::zero; 
 
   ACE_Select_Reactor_Handle_Set wait_set;
 
-  // Deal with one file event
+  // Deal with one file event.
     
   // - read which kind of event
   if (self->wait_set_.rd_mask_.is_set (handle))
@@ -128,14 +123,14 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int result = ACE_OS::select (int (handle) + 1,
+  int result = ACE_OS::select (*source + 1,
 			       wait_set.rd_mask_,
 			       wait_set.wr_mask_,
 			       wait_set.ex_mask_, &zero);
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
-  // - Use only that one file event (removes events for other files)
+  // - Use only that one file event (removes events for other files).
   if (result > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
@@ -165,13 +160,14 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
 		      (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     return -1; // Bad file arguments...
 
-  // Instead of waiting using select, just use the Xt mechanism to wait
-  // for a single event.
+  // Instead of waiting using <select>, just use the Xt mechanism to
+  // wait for a single event.
 
   // Wait for something to happen.
   ::XtAppProcessEvent (context_, XtIMAll);
 
-  // Now actually read the result needed by the Select_Reactor using select.
+  // Now actually read the result needed by the <Select_Reactor> using
+  // <select>.
   return ACE_OS::select (width,
 			 wait_set.rd_mask_,  
 			 wait_set.wr_mask_,  
@@ -191,36 +187,15 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 				   ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::register_handler_i");
-#if defined (ACE_WIN32)
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++%d\n"), handle));
-  int result = ACE_Select_Reactor::register_handler_i (handle, handler, mask);
 
+  int result = ACE_Select_Reactor::register_handler_i (handle,
+                                                       handler, mask);
   if (result == -1)
     return -1;
 
-  // Ensure the list of InputId's is big enough
-  if (this->ids_ == 0 || this->id_len_ < handle + 1)
-    {
-      ACE_XtReactorID *more;
-      ACE_NEW_RETURN (more, ACE_XtReactorID[handle + 1], -1);
-
-      int i;
-
-      for (i = 0; i < this->id_len_; i++)
-	more[i] = ids_[i];
-
-      for (i = this->id_len_; i < handle + 1; i++)
-	more[i].good_id_ = 0;
-
-      id_len_ = handle + 1;
-      delete [] this->ids_;
-      ids_ = more;
-    }
-
   int condition = 0;
 
+#if !defined ACE_WIN32
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, XtInputReadMask);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
@@ -229,26 +204,59 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
     ACE_SET_BITS (condition, XtInputExceptMask);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (condition, XtInputReadMask);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
-    {
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
       ACE_SET_BITS (condition, XtInputWriteMask); // connected, you may write
       ACE_SET_BITS (condition, XtInputReadMask);  // connected, you have data/err
-    }
+  }
+#else
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+    ACE_SET_BITS (condition, XtInputReadWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+    ACE_SET_BITS (condition, XtInputWriteWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+    ACE_NOTSUP_RETURN(-1);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_SET_BITS (condition, XtInputReadWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
+      ACE_SET_BITS (condition, XtInputWriteWinsock); // connected, you may write
+      ACE_SET_BITS (condition, XtInputReadWinsock);  // connected, you have data/err
+  }
+#endif /* !ACE_WIN32 */
 
   if (condition != 0)
     {
-      if (ids_[handle].good_id_)
-	::XtRemoveInput (ids_[handle].id_);
+      ACE_XtReactorID *XtID = this->ids_;
 
-      ids_[handle].id_ = ::XtAppAddInput (context_, 
-					  handle, 
-					  (XtPointer) condition, 
-					  InputCallbackProc, 
-					  (XtPointer) this);
-      ids_[handle].good_id_ = 1;
+      while(XtID)
+        {
+          if (XtID->handle_ == handle)
+            {
+              ::XtRemoveInput (XtID->id_);
+
+              XtID->id_ = ::XtAppAddInput (context_, 
+                                           (int) handle, 
+                                           (XtPointer) condition, 
+                                           InputCallbackProc, 
+                                           (XtPointer) this);
+              return 0;
+            }
+          else
+            XtID = XtID->next_;
+        }
+
+      ACE_NEW_RETURN (XtID,
+                      ACE_XtReactorID,
+                      -1);
+      XtID->next_ = this->ids_;
+      XtID->handle_ = handle;
+      XtID->id_ = ::XtAppAddInput (context_,
+				  (int) handle, 
+				  (XtPointer) condition, 
+				  InputCallbackProc, 
+				  (XtPointer) this);
+      this->ids_ = XtID;
     }
   return 0;
-#endif /* ACE_WIN32 */
 }
 
 int
@@ -256,7 +264,9 @@ ACE_XtReactor::register_handler_i (const ACE_Handle_Set &handles,
 				   ACE_Event_Handler *handler, 
 				   ACE_Reactor_Mask mask)
 {
-  return ACE_Select_Reactor::register_handler_i (handles, handler, mask);
+  return ACE_Select_Reactor::register_handler_i (handles,
+                                                 handler,
+                                                 mask);
 }
 
 int
@@ -265,28 +275,51 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
 
-#if defined (ACE_WIN32)
-  ACE_NOTSUP_RETURN (-1);
-#else
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("---%d\n"), handle));
-  int result = ACE_Select_Reactor::remove_handler_i (handle, mask);
+  int result = ACE_Select_Reactor::remove_handler_i (handle,
+                                                     mask);
 
-  if (handle <= id_len_)
-    { 
-      if (ids_[handle].good_id_)
-	::XtRemoveInput (ids_[handle].id_);
-      else
-	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Handle id is not good %d\n"), handle));
-      ids_[handle].good_id_ = 0;
+  ACE_XtReactorID *XtID = this->ids_;
+
+  if (XtID)
+    {
+      if (XtID->handle_ == handle)
+        {
+          ::XtRemoveInput (XtID->id_);
+          this->ids_ = XtID->next_;
+          delete XtID;
+          if (result == -1)
+            return result;
+          else
+            return 0;
+        }
+
+      ACE_XtReactorID *NextID = XtID->next_;
+
+      while (NextID)
+        {
+          if (NextID->handle_ == handle)
+            {
+              ::XtRemoveInput(NextID->id_);
+              XtID->next_ = NextID->next_;
+              delete NextID;
+
+              if (result == -1)
+                return result;
+              else
+                return 0;
+            }
+          else
+            {
+              XtID = NextID;
+              NextID = NextID->next_;
+            }
+        }
     }
-  else 
-    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Handle out of range %d\n"), handle));
 
   if (result == -1)
     return result;
   else
     return 0;
-#endif /* ACE_WIN32 */
 }
 
 int 
@@ -311,14 +344,10 @@ ACE_XtReactor::reset_timeout (void)
     this->timer_queue_->calculate_timeout (0);
 
   if (max_wait_time)
-    {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("       %ld\n"), max_wait_time->msec ()));
-
-      timeout_ = ::XtAppAddTimeOut (context_, 
-				    max_wait_time->msec (), 
-				    TimerCallbackProc, 
-				    (XtPointer) this);
-    }
+    timeout_ = ::XtAppAddTimeOut (context_, 
+                                  max_wait_time->msec (), 
+                                  TimerCallbackProc, 
+                                  (XtPointer) this);
 }
 
 long
@@ -330,9 +359,10 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
-  long result = 
-    ACE_Select_Reactor::schedule_timer (handler, arg, delta_time, interval);
-
+  long result = ACE_Select_Reactor::schedule_timer (handler,
+                                                    arg,
+                                                    delta_time,
+                                                    interval);
   if (result == -1)
     return -1;
   else

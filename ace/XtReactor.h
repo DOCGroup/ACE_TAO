@@ -10,7 +10,9 @@
 //    XtReactor.h
 //
 // = AUTHOR
-//    Eric C. Newton's <ecn@clark.net> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//    Eric C. Newton's <ecn@clark.net>,
+//    Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>, and
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,17 +23,30 @@
 
 #if defined (ACE_HAS_XT)
 
-#define String XtString
+//#define String XtString
 #include /**/ <X11/Intrinsic.h>
-#undef String
+//#undef String
 
-// Forward decl.
-struct ACE_XtReactorID;
+class ACE_Export ACE_XtReactorID
+{
+  // = TITLE
+  //     This little class is necessary due to the way that Microsoft
+  //     implements sockets to be pointers rather than indices.
+public:
+  XtInputId id_;
+  // Magic cookie.
+
+  ACE_HANDLE handle_;
+  // Underlying handle.
+
+  ACE_XtReactorID *next_;
+  // Pointer to next node in the linked list.
+};
 
 class ACE_Export ACE_XtReactor : public ACE_Select_Reactor
 {
   // = TITLE
-  //     An object oriented event demultiplexor and event handler
+  //     An object-oriented event demultiplexor and event handler
   //     dispatcher that uses the X Toolkit functions.
 public:
   // = Initialization and termination methods.
@@ -85,8 +100,7 @@ protected:
 				       ACE_Time_Value *);
 
   XtAppContext context_;
-  struct ACE_XtReactorID *ids_;
-  int id_len_;
+  ACE_XtReactorID *ids_;
   XtIntervalId timeout_;
 
 private:
