@@ -1,3 +1,21 @@
+Wed Aug  2 17:47:59 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosNotification.bor:
+
+       	* Makefile.bor:
+       	* orbsvcs/orbsvcs/Makefile.bor:
+       	* orbsvcs/orbsvcs/Security.bor:
+       	* orbsvcs/orbsvcs/SSLIOP.bor: Add makefile support for the SSL and
+	  security libraries in ACE and TAO.
+
+     	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h: Added a post.h at
+	  the end of the file.
+
+	  The above patches were taken from
+	  http://www.tenermerx.com/programming/corba/tao_bcb/patch.html,
+	  which is the site maintained by Chistopher Kohlhoff
+	  <chris@kohlhoff.com>.
+
 Wed Aug  2 14:03:28 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/ORB_destroy/run_test.pl:
@@ -39,7 +57,7 @@ Tue Aug 01 03:11:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Aug  1 01:48:52 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.{h,cpp}: 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.{h,cpp}:
 	  Juggled header files to fix VxWorks warnings.
 
 Mon Jul 31 22:51:47 2000  Balachandran  <bala@cs.wustl.edu>
@@ -57,8 +75,8 @@ Sun Jul 30 16:13:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
 	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp: 
-	  
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+
 	  Should fix the rest of the problems in vxworks compilation.
 
 Sun Jul 30 09:15:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -70,17 +88,17 @@ Sun Jul 30 06:48:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (get_vdev): Reverted
 	  the change that I made yesterday as it was complaining on
-	  Linux. 
+	  Linux.
 
 Sat Jul 29 22:01:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h: 
-	  
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+
 	  Hopefully some of the errors in vxworks for Notification
-	  services and g++ in AV should be fixed. 
+	  services and g++ in AV should be fixed.
 
 Sat Jul 29 16:46:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -109,7 +127,7 @@ Thu Jul 27 11:05:13 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Wed Jul 26 23:20:46 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/README: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:
 	  Fixed minor typo
 
 Wed Jul 26 20:56:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -121,9 +139,9 @@ Wed Jul 26 20:56:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/DynStruct_i.cpp:
 	* tao/DynUnion_i.cpp:
 
-	  Francois Bernier <fbernier@gel.ulaval.ca> reported some 
+	  Francois Bernier <fbernier@gel.ulaval.ca> reported some
   	  memory leaks in TAO_DynAny_i. Upon checking this out
-	  and making a pass through all the Dyn*_i files, I found a 
+	  and making a pass through all the Dyn*_i files, I found a
 	  lot more cases that needed fixing, stemming mostly from
 	  recent changes to CORBA::Any's TypeCode member
 	  and accessor. There were also some Dyn* accessors that
@@ -162,16 +180,16 @@ Tue Jul 25 08:21:03 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jul 24 16:22:02 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	  
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+
 	  Fixed compile warnings on KCC 3.4
 
 Mon Jul 24 16:07:25 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
-        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp: 
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
 	  fixes for errors building on vxworks - added #pragma
 	  instantiate, missing class keyword.
-	
+
 Mon Jul 24 14:03:59 2000  Chad Elliott  <elliott_c@ociweb.com>
         * rules.tao.GNU
         * orbsvcs/orbsvcs/Makefile
@@ -254,9 +272,9 @@ Sun Jul 23 22:01:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sun Jul 23 18:18:35 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
 
 	Fixed Compile Warnings
 
@@ -269,7 +287,7 @@ Sat Jul 22 17:36:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* orbsvcs/IFR_Service/ModuleDef_i.cpp:
 
 	  Fixed several places where wrapper function (instead of
-	  the '_i' unlocked wrapped version) was called from inside 
+	  the '_i' unlocked wrapped version) was called from inside
 	  a critical section.
 
 Sat Jul 22 16:30:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -317,15 +335,15 @@ Sat Jul 22 16:30:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Sat Jul 22 09:53:02 2000  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
 
-	Fixed compile warnings	
+	Fixed compile warnings
 
 Fri Jul 21 17:54:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Invocation.cpp (reset_reply_received): 
+	* tao/Invocation.cpp (reset_reply_received):
 	* tao/Invocation.h: Added a new method reset_reply_received
 	  (). This method resets the reply_received field in the
 	  Invocation classes.
@@ -387,46 +405,46 @@ Thu Jul 20 04:53:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Jul 20 19:49:06 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-		
-	  Fixed Compilation Errors and Warning	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+	  Fixed Compilation Errors and Warning
 
 Thu Jul 20 18:37:46 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
-	
-	  Replaced the TAO_AV_Core run with the orb run	
-	
-	* orbsvcs/tests/AVStreams/Full_Profile/README: 
+
+	  Replaced the TAO_AV_Core run with the orb run
+
+	* orbsvcs/tests/AVStreams/Full_Profile/README:
 
 	  Added the README for the test
-		
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	  
-	  Replaced the TAO_AV_Core run with the orb run	
-		
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/README: 
-	  
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+
+	  Replaced the TAO_AV_Core run with the orb run
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/README:
+
 	  Added the REAME file for the test
-		
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	  
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+
 	  Added a default multicast address and replaced the TAO_AV_Core
 	  run with the orb run
-		
-	* orbsvcs/tests/AVStreams/Multicast/README: 
-	  
+
+	* orbsvcs/tests/AVStreams/Multicast/README:
+
 	  Added the README file for the test
-	
-	* AVStreams_i.cpp: 
-	  
+
+	* AVStreams_i.cpp:
+
 	  Duplicated the flow device and flow endpoints before binding
 	  them to the corresponding hash maps to fix the AVStreams tests.
 
 	  Made the above changes to get the Multicast,
 	  Multicast_Full_Profile and Full_Profile tests running. Thanks to
-	  Craig Rodrigues <crodrigu@bbn.com> for pointing them out. 
-	
+	  Craig Rodrigues <crodrigu@bbn.com> for pointing them out.
+
 
 Thu Jul 20 15:28:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -438,7 +456,7 @@ Thu Jul 20 14:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Advanced/ch_21/{server,client}.cpp: Removed the need
 	  for the ostream extraction operator, which TAO doesn't need.
-  	  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this.	  
+  	  Thanks to Alex Hornby <alex@anvil.co.uk> for reporting this.
 
 Thu Jul 20 13:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -455,7 +473,7 @@ Thu Jul 20 13:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  was removed, along with the command line option (-So) to
 	  suppress this generation. The ostream operator in the
 	  base class CORBA::Exception works fine and produces
-	  the same output. Thanks to Hans Utz 
+	  the same output. Thanks to Hans Utz
 	  <hans.utz@student.uni-ulm.de> for pointing this out.
 
 	* docs/compiler.html:
@@ -498,17 +516,17 @@ Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	* examples/Simple/chat/Makefile:
 	  Added missing Broadcaster.idl to the IDL_FILES declaration
 	  and updates dependencies.
-	
+
 Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
 	  updated #notify to reflect recent additions.
-	
+
 Wed Jul 19 14:41:06 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
 	  Added new Notify files, updated dependencies.
-	
+
 Wed Jul 19 11:32:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Adapter_Activator/server.cpp (unknown_adapter):
@@ -521,12 +539,12 @@ Wed Jul 19 11:29:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Jul 18 23:09:19 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp
 	  use shorter paths in #include directive.
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
 	  updated dependencies.
-  	
+
 Tue Jul 18 21:39:39 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	Modified Files:
@@ -539,98 +557,98 @@ Tue Jul 18 21:39:39 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	  This framework will allow implementation of QoS properties.
 	4. (Almost) all memory allocations are via factory interfaces.
 	   Default factories are provided.
-	
+
  	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h
  	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h 
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h
  	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h
  	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h
 	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h
-	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h
  	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h
  	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h
 	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.h
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.h 
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h 
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h 
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i 
+	* orbsvcs/orbsvcs/Notify/Notify_Proxy_T.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushSupplier_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.i
 
 	Added Files:
-	* orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Collection.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Collection_Factory.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Command.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Collection.h
+	* orbsvcs/orbsvcs/Notify/Notify_Collection_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h
 	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h
-	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h
 	* orbsvcs/orbsvcs/Notify/Notify_Event.h
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.h
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h
-	* orbsvcs/orbsvcs/Notify/Notify_Factory.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Factory.h
 	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.h
-	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h
 	* orbsvcs/orbsvcs/Notify/Notify_POA_Factory.h
-	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h
 	* orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.h
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h 
+	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Factory.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.cpp
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp 
+	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.i 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Map.i
 
 	Removed Files:
-	* orbsvcs/orbsvcs/Notify/Notify_Types.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Types.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.h 
-	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp 
-		
+	* orbsvcs/orbsvcs/Notify/Notify_Types.h
+	* orbsvcs/orbsvcs/Notify/Notify_Types.cpp
+	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.h
+	* orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp
+
 	Modified Files:
-	* orbsvcs/Notify_Service/Notify_Service.cpp 
+	* orbsvcs/Notify_Service/Notify_Service.cpp
 	* orbsvcs/orbsvcs/CosNotification.dsp
 	* orbsvcs/tests/Notify/lib/Notify_Test_Client.h
-	* orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp 
-	* orbsvcs/tests/Notify/Subscribe/Subscribe.h 
-	* orbsvcs/tests/Notify/Subscribe/Subscribe.cpp 
-	* orbsvcs/tests/Notify/Filter/Filter.h 
-	* orbsvcs/tests/Notify/Filter/Filter.cpp 
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp
+	* orbsvcs/tests/Notify/Subscribe/Subscribe.h
+	* orbsvcs/tests/Notify/Subscribe/Subscribe.cpp
+	* orbsvcs/tests/Notify/Filter/Filter.h
+	* orbsvcs/tests/Notify/Filter/Filter.cpp
 
 	Added Files:
 	orbsvcs/Notify_Service/svc.conf
@@ -760,7 +778,7 @@ Tue Jul 18 11:41:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Jul 18 10:45:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Client_Priority_Policy.cpp: 
+	* tao/Client_Priority_Policy.cpp:
 	* tao/Client_Priority_Policy.h:
 	* tao/Buffering_Constraint_Policy.cpp:
 	* tao/Buffering_Constraint_Policy.h:
@@ -854,7 +872,7 @@ Mon Jul 17 13:26:53 2000  Ossama Othman  <ossama@uci.edu>
 
 Mon Jul 17 12:14:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp (destroy): 
+	* tao/RT_Policy_i.cpp (destroy):
 	* tao/RT_Policy_i.h:
 	* tao/Policy_Manager.h:
 	* tao/Policy_Manager.i:
@@ -869,28 +887,28 @@ Mon Jul 17 11:17:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/IDL_Test.dsp:
 
-	  Updated project settings for the two newest IDL files in the 
+	  Updated project settings for the two newest IDL files in the
 	  release version.
 
 Mon Jul 17 10:50:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServerC.cpp: Fixed some link errors in Minimum CORBA
-	  builds. 
+	  builds.
 
 Sun Jul 16 16:17:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * tao/POA.cpp:  
+        * tao/POA.cpp:
 
           Thanks to the help of Alex Hornby <alex@anvil.co.uk>, one of
           my @@ TODO comments about the server_object has been resolved.
           Irfan suggested a long time back to put the servant object in
           the root_poa instead of the current poa.  I tried an initial
-          implementation, but wasn't using the correct API's, and 
-          deadlocks occurred on non-windows platforms (IOW, those that 
-          do not use recursive mutex's by default).  So I put in a 
+          implementation, but wasn't using the correct API's, and
+          deadlocks occurred on non-windows platforms (IOW, those that
+          do not use recursive mutex's by default).  So I put in a
           comment to look at later.
 
-          Alex then noticed that this change needed to be done to use 
+          Alex then noticed that this change needed to be done to use
           the H&V Evictor pattern with the ImR, and submitted a patch
           to do this.
 
@@ -907,7 +925,7 @@ Sun Jul 16 13:58:01 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/POA.h:
 	* tao/POA.cpp: Fixed a few compile errors from SunCC5 and Minimum
 	  CORBA builds. They were mostly due to mismatched exception
-	  specifications. 
+	  specifications.
 
 Fri Jul 14 21:37:16 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
