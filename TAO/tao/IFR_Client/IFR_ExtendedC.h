@@ -143,7 +143,7 @@ namespace CORBA
     
     static FixedDef_ptr _nil (void)
     {
-      return (FixedDef_ptr)0;
+      return static_cast<FixedDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -386,7 +386,7 @@ namespace CORBA
     
     static ValueMemberDef_ptr _nil (void)
     {
-      return (ValueMemberDef_ptr)0;
+      return static_cast<ValueMemberDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -548,7 +548,7 @@ namespace CORBA
     
     static ValueDef_ptr _nil (void)
     {
-      return (ValueDef_ptr)0;
+      return static_cast<ValueDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -963,7 +963,7 @@ namespace CORBA
     
     static ExtValueDef_ptr _nil (void)
     {
-      return (ExtValueDef_ptr)0;
+      return static_cast<ExtValueDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -1167,7 +1167,7 @@ namespace CORBA
     
     static ValueBoxDef_ptr _nil (void)
     {
-      return (ValueBoxDef_ptr)0;
+      return static_cast<ValueBoxDef_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
