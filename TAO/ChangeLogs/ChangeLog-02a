@@ -1,3 +1,24 @@
+Mon Dec 31 15:55:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_module.cpp:
+        * tests/IDL_Test/reopened_modules.idl:
+        * tests/IDL_Test/reopen_include2.idl:
+
+          Removed empty module declarations from IDL_Test IDL
+          files. Carlos recently brought to my attention that
+          empty modules are illegal in IDL. Also fixed a bug in
+          the IDL compiler related to this. In the case where a
+          module contains a full interface definition, and then
+          is reopened and contains a forward declaration of the
+          same interface (legal but useless), the IDL compiler 
+          was seeing the second module as empty.
+
+        * tests/IDL_Test/union.idl:
+
+          Removed union with wchar discriminator, since it was
+          recently brought to my attention by Carlos that such
+          a thing is illegal IDL.
+
 Mon Dec 31 11:48:26 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * TAO_IDL/TAO_IDL_FE.bor:
