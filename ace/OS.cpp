@@ -4653,7 +4653,7 @@ ACE_Thread_ID::to_string (char* thr_id)
                                           );
 #else
                   ACE_hthread_t t_id;
-                  ACE_Thread::self (t_id);
+                  ACE_OS::thr_self (t_id);
 
 #  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
