@@ -214,7 +214,9 @@
 // VC++.
 
 #if defined (__WIN32__)
-# define _WIN32
+# if !defined(_WIN32)
+#   define _WIN32
+# endif /* !defined(_WIN32) */
 #endif /* __WIN32__ */
 
 // Define to `int' if <sys/types.h> doesn't define.
