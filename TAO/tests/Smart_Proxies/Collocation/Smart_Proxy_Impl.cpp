@@ -22,7 +22,7 @@ Smart_Diamond_Top_Factory::create_proxy (Diamond::Top_ptr proxy,
  }
 
 Smart_Diamond_Top_Proxy::Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy)
-  : TAO_Diamond_Top_Smart_Proxy_Base (proxy)
+  : TAO_Smart_Proxy_Base (proxy)
 {
 }
 
