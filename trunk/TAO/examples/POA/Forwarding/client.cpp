@@ -127,7 +127,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       foo->shutdown (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

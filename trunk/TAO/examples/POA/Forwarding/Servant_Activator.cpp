@@ -15,15 +15,13 @@ MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb,
 PortableServer::Servant
 MyFooServantActivator::incarnate (const PortableServer::ObjectId &,
                                   PortableServer::POA_ptr
-                                  TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   this->orb_->shutdown (0,
                         ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Throw forward exception
   ACE_THROW_RETURN (
@@ -38,7 +36,7 @@ MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
                                     PortableServer::Servant servant,
                                     CORBA::Boolean,
                                     CORBA::Boolean
-                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   delete servant;

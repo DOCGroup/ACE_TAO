@@ -74,17 +74,17 @@ setup_poa (PortableServer::POA_ptr root_poa,
   policies[0] =
     root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER,
                                                 ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Allow implicit activation.
   policies[1] =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
                                                  ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Create POA as child of RootPOA with the above policies.  This POA
   // will use a SERVANT_ACTIVATOR because of RETAIN policy.
@@ -93,7 +93,7 @@ setup_poa (PortableServer::POA_ptr root_poa,
                           poa_manager.in (),
                           policies,
                           ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Creation of childPOAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
@@ -101,7 +101,7 @@ setup_poa (PortableServer::POA_ptr root_poa,
        ++i)
     {
       policies[i]->destroy (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
     }
 
   return child_poa._retn ();
@@ -118,7 +118,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
       forward_to =
         orb->string_to_object (forward_to_ior,
                                ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
     }
 
   MyFooServantActivator *activator = 0;
@@ -129,7 +129,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
 
   child_poa->set_servant_manager (activator,
                                   ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   MyFooServant *servant = 0;
   ACE_NEW_RETURN (servant,
@@ -143,12 +143,12 @@ create_servant_manager (CORBA::ORB_ptr orb,
 
   Foo_var foo =
     servant->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   CORBA::String_var ior =
     orb->object_to_string (foo.in (),
                            ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
   if (output_file == 0)
