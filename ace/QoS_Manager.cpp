@@ -36,12 +36,4 @@ ACE_QoS_Manager::qos_session_set (void)
   return this->qos_session_set_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<ACE_QoS_Session *>;
-template class ACE_Node<ACE_QoS_Session *>;
-template class ACE_Unbounded_Set_Iterator<ACE_QoS_Session *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Set<ACE_QoS_Session *>
-#pragma instantiate ACE_Node<ACE_QoS_Session *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_QoS_Session *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

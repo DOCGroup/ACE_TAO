@@ -40,6 +40,21 @@ ACE_RAPI_Session::session_id (const int session_id)
   this->session_id_ = session_id;
 }
 
+// Get the End Point Type (Sender/Receiver/Both).
+ACE_INLINE ACE_End_Point_Type 
+ACE_RAPI_Session::flags (void) const
+{
+  return this->flags_;
+}
+
+// Set the End Point Type (Sender/Receiver/Both).
+ACE_INLINE void 
+ACE_RAPI_Session::flags (const ACE_End_Point_Type flags)
+{
+  this->flags_ = flags;
+}
+
+
 // Get the destination address for this RAPI session.
 ACE_INLINE ACE_INET_Addr 
 ACE_RAPI_Session::dest_addr (void) const
@@ -96,6 +111,20 @@ ACE_INLINE void
 ACE_GQoS_Session::session_id (const int session_id)
 {
   this->session_id_ = session_id;
+}
+
+// Get the End Point Type (Sender/Receiver/Both).
+ACE_INLINE ACE_QoS_Session::ACE_End_Point_Type 
+ACE_GQoS_Session::flags (void) const
+{
+  return this->flags_;
+}
+
+// Set the End Point Type (Sender/Receiver/Both).
+ACE_INLINE void 
+ACE_GQoS_Session::flags (const ACE_End_Point_Type flags)
+{
+  this->flags_ = flags;
 }
 
 // Get the destination address for this GQoS session.
