@@ -1,3 +1,15 @@
+Thu Sep 25 15:25:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Object_Manager.cpp: added socket_init to Object_Manager ctor
+	  and socket_fini to Object_Manager dtor, to be sure that WinSock
+	  gets initialized early and closed late.
+
+	* ace/SOCK.{h,cpp}: removed dummy_ static now that the
+	  Object_Manager initializes WinSock.
+
+	  No, I'm not a Win32 wizard.  Thanks to Irfan and Nanbor for
+	  directing these changes.
+
 Thu Sep 25 03:50:27 1997    <irfan@TWOSTEP>
 
 	* ace/OS.i (thr_getspecific): Must restore errno if no errors have
