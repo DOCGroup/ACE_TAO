@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
+#include "ip.h"
 
 #include "kokyu_dsrt_config.h"
 #include "kokyu_dsrt_dsui_families.h"
@@ -377,21 +378,20 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 #endif
     }
   //Fill the guid in the SC Qos struct
-
-  if(int_guid==1) {
-
-    long long_guid = (long) int_guid+1;
+    int my_ip = get_ip_addr();
+    if(my_ip < 0) return;
+    long long_guid = (long) int_guid+ my_ip*100;
+#ifdef KOKYU_DSRT_LOGGING
     ACE_DEBUG((LM_DEBUG,"The long guid is %d\n",long_guid));
+#endif
     sc_qos.guid.length (sizeof(long));
     ACE_OS::memcpy (sc_qos.guid.get_buffer (),
                     &long_guid,
                     sizeof(long));
-  }
-  else {
+/*
     sc_qos.guid.length (this->current_->id ()->length ());
     guid_copy (sc_qos.guid, *(this->current_->id ()));
-  }
-
+*/
   sc_qos.deadline = deadline;
   sc_qos.importance = importance;
   sc_qos.task_id = task_id;
