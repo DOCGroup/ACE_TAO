@@ -1,3 +1,11 @@
+Wed Nov  3 09:40:21 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          TAO/tests/Bug_1568_Regression/run_test.pl and
+          TAO/tests/Bug_1670_Regression/run_test.pl can not be run with
+          CORBA Messaging disabled.
+
 Wed Nov  3 08:49:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:

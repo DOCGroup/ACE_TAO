@@ -27,8 +27,8 @@ TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM
 TAO/tests/Bug_1495_Regression/run_test.pl: !MINIMUM !ST !DISABLE_INTERCEPTORS
-TAO/tests/Bug_1568_Regression/run_test.pl
-TAO/tests/Bug_1670_Regression/run_test.pl
+TAO/tests/Bug_1568_Regression/run_test.pl: !NO_MESSAGING
+TAO/tests/Bug_1670_Regression/run_test.pl: !NO_MESSAGING
 TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM
 TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
 TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
