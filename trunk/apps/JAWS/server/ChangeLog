@@ -1,3 +1,26 @@
+Fri May 30 23:19:03 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* main.cpp (handler): Added a signal handler for SIGINT, and also
+	  set SIG_IGN for SIGCLD.  The first handler calls exit (0) if
+	  SIGINT is received, so that static destructors are called.  The
+	  second is so that zombies are not formed.
+
+	* HTTP_Response.cpp (cgi_response): Debugging.  (1) The CGI
+	  program spewed output on the server side instead of the client.
+	  (2) The CGI program had environment variable being set even
+	  though there was no associated value.  (3) The client connection
+	  was not being closed after the CGI program executed.  Problem
+	  (1) was fixed by using set_handles () in cgi_options.  Problem
+	  (2) was fixed by testing to see if the header had an associated
+	  value before assigning it to the environment.  Problem (3) was
+	  fixed by sending an empty confirmation message after waiting for
+	  the CGI process to exit.
+
+	* HTTP_Request.cpp (cgi): Debugging.  It was not looking for a
+	  ".cgi" extension during the stage of determining if a URI is a
+	  CGI script.  This will later be fixed when a full mime-type
+	  facility is implemented.
+
 Fri May 23 00:45:24 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* JAWS/server: Debugged HTTP/0.9 GET requests, and HTTP/1.0 PUT
