@@ -49,27 +49,34 @@ namespace CIAO
     virtual ~Servant_Impl_Base (void);
 
     /// Operation to set attributes on the component.
-    virtual void set_attributes (
-        const Components::ConfigValues &descr
-        ACE_ENV_ARG_DECL) = 0;
+    virtual void set_attributes (const Components::ConfigValues &descr
+                                 ACE_ENV_ARG_DECL) = 0;
 
     //Creates and returns the StandardConfigurator for the component
-    virtual Components::StandardConfigurator*
-        get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL);
+    virtual Components::StandardConfigurator *get_standard_configurator (
+        ACE_ENV_SINGLE_ARG_DECL
+      );
 
         /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered
     /// to that POA when _this() is called.
     virtual PortableServer::POA_ptr _default_POA (
-          ACE_ENV_SINGLE_ARG_DECL);
+        ACE_ENV_SINGLE_ARG_DECL
+      );
 
   protected:
     void add_facet (const char *port_name,
                     CORBA::Object_ptr port_ref);
 
+    CORBA::Object_ptr lookup_facet (const char *port_name);
+
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
-
+                       
+    ::Components::EventConsumerBase_ptr lookup_consumer (
+        const char *port_name
+      );
+                       
   protected:
     typedef ACE_Hash_Map_Manager_Ex<const char *,
                                     ::Components::FacetDescription_var,
