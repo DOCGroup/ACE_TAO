@@ -1,3 +1,8 @@
+Fri Jan 12 15:34:28 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Managed_Object.h: Added <TYPE> to the unimplemented operator=
+          declaration. Fixes compile w/ IBM C/C++ 3.6 on AIX.
+
 Fri Jan 12 07:59:19 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * Makefile:
