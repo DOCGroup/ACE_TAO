@@ -386,7 +386,343 @@ CORBA_Any::free_value (CORBA::Environment &ACE_TRY_ENV)
   this->value_ = 0;
 }
 
-// Insertion of typecode.
+// insertion operators
+
+void
+CORBA_Any::operator<<= (CORBA::Short s)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Short *ns;
+      ACE_NEW (ns,
+               CORBA::Short (s));
+      this->replace (CORBA::_tc_short,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Short insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::UShort s)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::UShort *ns;
+      ACE_NEW (ns,
+               CORBA::UShort (s));
+      this->replace (CORBA::_tc_ushort,
+                     ns,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::UShort insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::Long l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Long *nl;
+      ACE_NEW (nl,
+               CORBA::Long (l));
+      this->replace (CORBA::_tc_long,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Long insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::ULong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ULong *nl;
+      ACE_NEW (nl,
+               CORBA::ULong (l));
+      this->replace (CORBA::_tc_ulong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::ULong insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::LongLong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::LongLong *nl;
+      ACE_NEW (nl,
+               CORBA::LongLong (l));
+      this->replace (CORBA::_tc_longlong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::LongLong insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::ULongLong l)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::ULongLong *nl;
+      ACE_NEW (nl,
+               CORBA::ULongLong (l));
+      this->replace (CORBA::_tc_ulonglong,
+                     nl,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::ULongLong insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::Float f)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Float *nf;
+      ACE_NEW (nf,
+               CORBA::Float (f));
+      this->replace (CORBA::_tc_float,
+                     nf,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Float insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (CORBA::Double d)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Double *nd;
+      ACE_NEW (nd,
+               CORBA::Double (d));
+      this->replace (CORBA::_tc_double,
+                     nd,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Double insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// insertion of Any - copying
+void
+CORBA_Any::operator<<= (const CORBA_Any& a)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA_Any_ptr na;
+      ACE_NEW (na,
+               CORBA::Any (a));
+      this->replace (CORBA::_tc_any,
+                     na,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Any copying insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// insertion of Any - non-copying
+void
+CORBA::Any::operator<<= (CORBA::Any_ptr anyptr)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->replace (CORBA::_tc_any,
+                     anyptr,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Any non-copying insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// implementing the special types
+
+void
+CORBA_Any::operator<<= (from_boolean b)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Boolean *nb;
+      ACE_NEW (nb,
+               CORBA::Boolean (b.val_));
+      this->replace (CORBA::_tc_boolean,
+                     nb,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Boolean insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (from_octet o)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Octet *no;
+      ACE_NEW (no,
+               CORBA::Octet (o.val_));
+      this->replace (CORBA::_tc_octet,
+                     no,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // do nothing
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (from_char c)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::Char *nc;
+      ACE_NEW (nc,
+               CORBA::Char (c.val_));
+      this->replace (CORBA::_tc_char,
+                     nc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Octet insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (from_wchar wc)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::WChar *nwc;
+      ACE_NEW (nwc,
+               CORBA::WChar (wc.val_));
+      this->replace (CORBA::_tc_wchar,
+                     nwc,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::WChar insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
 
 void
 CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
@@ -409,7 +745,8 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
     }
   ACE_CATCHANY
     {
-      // do nothing...
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::TypeCode_ptr insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -435,7 +772,8 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
     }
   ACE_CATCHANY
     {
-      // do nothing...
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Exception insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -475,7 +813,8 @@ CORBA::Any::operator<<= (CORBA::Object_ptr *objptr)
     }
   ACE_CATCHANY
     {
-      // do nothing...
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Object_ptr insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -538,7 +877,70 @@ CORBA_Any::operator<<= (from_string s)
     }
   ACE_CATCHANY
     {
-      // do nothing...
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in bounded string insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+CORBA_Any::operator<<= (from_wstring ws)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      // If the inserted string is bounded, we create a typecode.
+      static CORBA::Long _oc_wstring [] =
+      {
+        // CDR typecode octets
+        TAO_ENCAP_BYTE_ORDER,   // native endian + padding; "tricky"
+        0                       // ... unbounded string to start with
+      };
+
+      CORBA::TypeCode_ptr tc = 0;
+
+      if (ws.bound_ > 0)
+        {
+          // Bounded string.
+          _oc_wstring [1] = ws.bound_;
+          ACE_NEW (tc,
+                   CORBA::TypeCode (CORBA::tk_wstring,
+                                    sizeof _oc_wstring,
+                                    (char *) &_oc_wstring,
+                                    1,
+                                    sizeof (CORBA::WString_var)));
+        }
+      else
+        {
+          tc = CORBA::_tc_wstring; // unbounded.
+        }
+
+      CORBA::WChar **tmp;
+      // Non-copying.
+      if (ws.nocopy_)
+        {
+          ACE_NEW(tmp,
+                  CORBA::WChar* (ws.val_));
+        }
+      // Copying.
+      else
+        {
+          ACE_NEW(tmp,
+                  CORBA::WChar* (CORBA::wstring_dup (ws.val_)));
+        }
+
+      this->replace (tc,
+                     tmp,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in bounded wstring insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -580,7 +982,8 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Short extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -619,7 +1022,8 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::UShort extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -658,7 +1062,8 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Long extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -697,7 +1102,8 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::ULong extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -736,7 +1142,8 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::LongLong extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -775,7 +1182,8 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::ULongLong extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -814,7 +1222,8 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Float extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -853,7 +1262,8 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Double extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -900,7 +1310,8 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Any extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -957,7 +1368,66 @@ CORBA_Any::operator>>= (char *&s) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in unbounded string extraction\n"));
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (CORBA::WChar *&ws) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_wstring,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          if (this->any_owns_data_ && this->value_)
+            {
+              ws = *(CORBA::WChar **) this->value_;
+              return 1;
+            }
+          else
+            {
+              TAO_InputCDR stream (this->cdr_);
+              if (stream.read_wstring (ws))
+                {
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->any_owns_data_ = 1;
+
+                  CORBA::WChar **tmp;
+
+                  ACE_NEW_RETURN (tmp,
+                                  CORBA::WChar *,
+                                  0);
+
+                  *tmp = ws;
+
+                  ACE_const_cast (CORBA_Any *,
+                                  this)->value_ = tmp;
+
+                  return 1;
+                }
+              return 0;
+            }
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in unbounded wstring extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1004,7 +1474,8 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::TypeCode_ptr extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1045,7 +1516,8 @@ CORBA_Any::operator>>= (to_boolean b) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Boolean extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1084,7 +1556,8 @@ CORBA_Any::operator>>= (to_octet o) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Octet extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1123,7 +1596,8 @@ CORBA_Any::operator>>= (to_char c) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Char extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1162,7 +1636,8 @@ CORBA_Any::operator>>= (to_wchar wc) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::WChar extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1219,7 +1694,66 @@ CORBA_Any::operator>>= (to_string s) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in bounded string extraction\n"));
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+CORBA_Any::operator>>= (to_wstring ws) const
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::Boolean result =
+        this->type_->equivalent (CORBA::_tc_wstring,
+                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (result)
+        {
+          CORBA::ULong bound = this->type_->length (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          if (ws.bound_ == bound) // bounds are same
+            {
+              if (this->any_owns_data_ && this->value_)
+                {
+                  ws.val_ = *(CORBA::WChar **) this->value_;
+                  return 1;
+                }
+              else
+                {
+                  TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+                  if (stream.read_wstring (ws.val_))
+                    {
+                      ACE_const_cast (CORBA_Any *,
+                                      this)->any_owns_data_ = 1;
+                      return 1;
+                    }
+                  else
+                    {
+                      return 0;
+                    }
+                }
+            }
+          else
+            {
+              return 0;
+            }
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in bounded wstring extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1279,7 +1813,8 @@ CORBA_Any::operator>>= (to_object obj) const
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in CORBA::Object_ptr extraction\n"));
     }
   ACE_ENDTRY;
 
@@ -1309,7 +1844,36 @@ CORBA_Any::operator<<= (const char* s)
     }
   ACE_CATCHANY
     {
-      // do nothing
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in unbounded string insertion\n"));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+// and the version for unbounded wide string
+void
+CORBA_Any::operator<<= (const CORBA::WChar* s)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::WChar **tmp;
+
+      ACE_NEW (tmp,
+               CORBA::WChar * (CORBA::wstring_dup (s)));
+
+      this->replace (CORBA::_tc_wstring,
+                     tmp,
+                     1,
+                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception in unbounded wstring insertion\n"));
     }
   ACE_ENDTRY;
   ACE_CHECK;

@@ -155,6 +155,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
   return ACE_static_cast (ACE_OutputCDR &, os) << x;
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const CORBA::WChar* x)
+{
+  return ACE_static_cast (ACE_OutputCDR &, os) << x;
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -213,6 +219,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x)
+{
+  return ACE_static_cast (ACE_InputCDR &, is) >> x;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      CORBA::WChar* &x)
 {
   return ACE_static_cast (ACE_InputCDR &, is) >> x;
 }
