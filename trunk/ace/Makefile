@@ -481,9 +481,9 @@ Svc_Conf_l.cpp: Svc_Conf.l
           touch $@; \
         fi
 
-#Some compilation for the QtReactor stuff. We need to run moc
-#ie. (Meta Object compiler) for our QtReactor.h. So, let me do it
-#here.
+# Some compilation for the QtReactor stuff. We need to run moc
+# ie. (Meta Object compiler) for our QtReactor.h. So, let me do it
+# here.
 
 ifneq ($(qt_reactor),)
 QtReactor_moc.cpp: QtReactor.h

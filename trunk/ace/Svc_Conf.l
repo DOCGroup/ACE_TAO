@@ -31,7 +31,7 @@ digit           [0-9]
 ident           {letter}{letter_or_digit}*
 pathname        ([A-Za-z\%]:)?[a-zA-Z_0-9/\%\.\\-]+
 symbol		[ -~]
-string		\"{symbol}*\"
+string		(\"{symbol}*\"|\'{symbol}*\')
 white_space	[ \t]
 newline         \n
 other		.
@@ -56,8 +56,18 @@ inactive	      { return token (ACE_INACTIVE); }
 ")"                   { return token (ACE_RPAREN); }
 "{"                   { return token (ACE_LBRACE); }
 "}"                   { return token (ACE_RBRACE); }
-{string}	      { // Eliminate the opening and closing double quotes
-		        *strrchr (yytext, '"') = '\0';
+{string}	      { // Check for first type of string, i.e.,
+                        // "double quotes" delimited.  
+                        char *s = strrchr (yytext, '"');
+                        if (s == 0)
+                          // Check for second type of string, i.e.,
+                          // 'single quotes' delimited.
+                          s = strrchr (yytext, '\'');
+
+                        ACE_ASSERT (s != 0);
+                        // Eliminate the opening and closing double or
+                        // single quotes.
+                        *s = '\0';
 			yyleng -= 1;
                         yylval.ident_ = ace_obstack->copy (yytext + 1, yyleng);
 			return token (ACE_STRING); }
@@ -71,7 +81,11 @@ inactive	      { return token (ACE_INACTIVE); }
 		      }
 {white_space}+	      ; /* EMPTY */
 {newline}	      { yylineno++; }
-{other}		      { ACE_ERROR ((LM_ERROR, "unknown char = %d\n", *yytext)); }
+{other}		      { ACE_ERROR ((LM_ERROR, "unknown character = (%d", *yytext));
+                        if (isprint (*yytext))
+                          ACE_ERROR ((LM_ERROR, "|%c", *yytext));
+                        ACE_ERROR ((LM_ERROR, ")\n"));
+                      }
 <<EOF>>               { YY_NEW_FILE; yyterminate(); }
 %%
 int
