@@ -23,7 +23,6 @@
 
 #include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
-#include "ace/QoS_Session.h"
 
 /**
  * @class ACE_SOCK
