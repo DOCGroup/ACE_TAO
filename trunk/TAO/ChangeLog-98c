@@ -8,6 +8,10 @@ Fri Jul 17 11:47:42 1998  David L. Levine  <levine@cs.wustl.edu>
           works around that problem.  We haven't seen this elsewhere
           with va_arg, or with later versions of g++.
 
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          fixed supplier id (it was the same for all suppliers) and other
+          very minor cleanup.
+
 Fri Jul 17 11:02:29 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * tao/POAC.h: unclosed comments.
