@@ -107,4 +107,3 @@ private:
 #include "ace/post.h"
 
 #endif /* TAO_PSEUDO_VAROUT_T_H */
-

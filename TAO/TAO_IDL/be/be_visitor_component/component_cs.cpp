@@ -358,7 +358,7 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   // Generating _tao_QueryInterface method.
   *os << "void *" << node->full_name ()
-      << "::_tao_QueryInterface (ptr_arith_t type)" << be_nl
+      << "::_tao_QueryInterface (ptrdiff_t type)" << be_nl
       << "{" << be_idt_nl
       << "void *retv = 0;" << be_nl << be_nl
       << "if ";
@@ -377,7 +377,7 @@ be_visitor_component_cs::visit_component (be_component *node)
 
   *os << "(type == ACE_reinterpret_cast ("
       << be_idt << be_idt << be_idt << be_idt << be_idt << be_idt_nl
-      << " ptr_arith_t," << be_nl;
+      << " ptrdiff_t," << be_nl;
 
   if (node->is_abstract ())
     {

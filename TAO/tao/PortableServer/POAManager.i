@@ -108,12 +108,12 @@ TAO_POA_Manager::generate_manager_id (void) const
   if (sizeof (this) == 4)       // 32 bit address
     id =
       ACE_static_cast (PortableInterceptor::AdapterManagerId,
-                       ACE_reinterpret_cast (ptr_arith_t, this));
+                       ACE_reinterpret_cast (ptrdiff_t, this));
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
     id =
       ACE_static_cast (PortableInterceptor::AdapterManagerId,
-                       ACE_reinterpret_cast (ptr_arith_t, this) & 0xFFFFFFFFu);
+                       ACE_reinterpret_cast (ptrdiff_t, this) & 0xFFFFFFFFu);
 
   // @@ If we ever hit a platform where neither of the above cases are
   //    satisfied, we're up the creek!

@@ -31,8 +31,8 @@ TAO_Collocated_Object::_narrow (CORBA::Object_ptr object
   if (object == 0)
     return 0;
 
-  ptr_arith_t type =
-    ACE_reinterpret_cast(ptr_arith_t,TAO_Collocated_Object::_narrow);
+  ptrdiff_t type =
+    ACE_reinterpret_cast(ptrdiff_t,TAO_Collocated_Object::_narrow);
   void *downcast =
     object->_tao_QueryInterface (type);
 
@@ -96,8 +96,8 @@ TAO_Collocated_Object::_is_equivalent (CORBA::Object_ptr other_obj
   if (equivalent)
     return 1;
 
-  ptr_arith_t type =
-    ACE_reinterpret_cast(ptr_arith_t,TAO_Collocated_Object::_narrow);
+  ptrdiff_t type =
+    ACE_reinterpret_cast(ptrdiff_t,TAO_Collocated_Object::_narrow);
   void *down =
     other_obj->_tao_QueryInterface (type);
 
@@ -204,10 +204,10 @@ TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 void*
-TAO_Collocated_Object::_tao_QueryInterface (ptr_arith_t query_type)
+TAO_Collocated_Object::_tao_QueryInterface (ptrdiff_t query_type)
 {
-  ptr_arith_t type =
-    ACE_reinterpret_cast(ptr_arith_t,TAO_Collocated_Object::_narrow);
+  ptrdiff_t type =
+    ACE_reinterpret_cast(ptrdiff_t,TAO_Collocated_Object::_narrow);
 
   if (query_type == type)
     {

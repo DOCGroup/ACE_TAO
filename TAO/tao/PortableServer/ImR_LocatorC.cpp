@@ -2314,7 +2314,7 @@ ImplementationRepository::Locator::_unchecked_narrow (
           Locator_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Locator::_tao_class_id
                 )
             )
@@ -2364,19 +2364,19 @@ ImplementationRepository::Locator::_is_a (
     }
 }
 
-void *ImplementationRepository::Locator::_tao_QueryInterface (ptr_arith_t type)
+void *ImplementationRepository::Locator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::ImplementationRepository, Locator)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &::ImplementationRepository::Administration::_tao_class_id)
             )
     {
@@ -2390,7 +2390,7 @@ void *ImplementationRepository::Locator::_tao_QueryInterface (ptr_arith_t type)
           );
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

@@ -348,7 +348,7 @@ IORTable::Table::_unchecked_narrow (
           Table_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Table::_tao_class_id
                 )
             )
@@ -366,19 +366,19 @@ IORTable::Table::_duplicate (Table_ptr obj)
   return obj;
 }
 
-void *IORTable::Table::_tao_QueryInterface (ptr_arith_t type)
+void *IORTable::Table::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -523,7 +523,7 @@ IORTable::Locator::_unchecked_narrow (
           Locator_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &Locator::_tao_class_id
                 )
             )
@@ -541,19 +541,19 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
   return obj;
 }
 
-void *IORTable::Locator::_tao_QueryInterface (ptr_arith_t type)
+void *IORTable::Locator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {

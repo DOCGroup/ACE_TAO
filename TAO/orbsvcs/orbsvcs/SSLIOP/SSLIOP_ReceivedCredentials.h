@@ -110,7 +110,7 @@ public:
       return (TAO_SSLIOP_ReceivedCredentials_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
   //@}
 
 };

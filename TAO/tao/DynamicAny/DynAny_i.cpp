@@ -195,7 +195,7 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr obj
              TAO_DynAny_i*,
              obj->_tao_QueryInterface (
                       ACE_reinterpret_cast (
-                          ptr_arith_t,
+                          ptrdiff_t,
                           &TAO_DynAny_i::_narrow
                         )
                     )
@@ -203,10 +203,10 @@ TAO_DynAny_i::_narrow (CORBA::Object_ptr obj
 }
 
 void*
-TAO_DynAny_i::_tao_QueryInterface (ptr_arith_t type)
+TAO_DynAny_i::_tao_QueryInterface (ptrdiff_t type)
 {
-  ptr_arith_t mytype =
-    ACE_reinterpret_cast (ptr_arith_t,
+  ptrdiff_t mytype =
+    ACE_reinterpret_cast (ptrdiff_t,
                           &TAO_DynAny_i::_narrow);
   if (type == mytype)
     {

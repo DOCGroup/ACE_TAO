@@ -153,7 +153,7 @@ TAO_SSLIOP_Current::_unchecked_narrow (
            (
              ACE_reinterpret_cast
              (
-                ptr_arith_t,
+                ptrdiff_t,
                 &TAO_SSLIOP_Current::_tao_class_id
              )
            )
@@ -170,15 +170,15 @@ TAO_SSLIOP_Current::_duplicate (TAO_SSLIOP_Current_ptr obj)
 }
 
 void *
-TAO_SSLIOP_Current::_tao_QueryInterface (ptr_arith_t type)
+TAO_SSLIOP_Current::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-      (ptr_arith_t,
+      (ptrdiff_t,
        &TAO_SSLIOP_Current::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
-           (ptr_arith_t,
+           (ptrdiff_t,
             &::SSLIOP::Current::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
@@ -190,7 +190,7 @@ TAO_SSLIOP_Current::_tao_QueryInterface (ptr_arith_t type)
         )
        );
   else if (type == ACE_reinterpret_cast
-           (ptr_arith_t,
+           (ptrdiff_t,
             &::CORBA::Current::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
@@ -201,7 +201,7 @@ TAO_SSLIOP_Current::_tao_QueryInterface (ptr_arith_t type)
         this
         )
        );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t,
+  else if (type == ACE_reinterpret_cast (ptrdiff_t,
                                          &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
                                  ACE_static_cast (CORBA::Object_ptr, this));
