@@ -1480,8 +1480,8 @@ Client_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       return 0;
     case SIGINT:
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
-      ACE_Reactor::instance ()->end_event_loop ();
       this->command_handler_->close ();
+      ACE_Reactor::instance ()->end_event_loop ();
       return 0;
     default: 
       ACE_DEBUG ((LM_DEBUG, 
