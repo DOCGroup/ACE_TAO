@@ -15,21 +15,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Service_Object.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/SystemException.h"
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
@@ -117,22 +107,6 @@ public:
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
                                                     CORBA::Object_ptr) = 0;
 };
-
-// ****************************************************************
-
-class TAO_Export TAO_Adapter_Factory : public ACE_Service_Object
-{
-public:
-  /// Destructor
-  virtual ~TAO_Adapter_Factory (void);
-
-  /// Create a new adapter
-  virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;
-};
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 

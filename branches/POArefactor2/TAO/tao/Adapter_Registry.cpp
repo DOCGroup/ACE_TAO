@@ -1,5 +1,7 @@
 // $Id$
+
 #include "Object.h"
+#include "Adapter_Registry.h"
 #include "Adapter.h"
 #include "SystemException.h"
 #include "debug.h"

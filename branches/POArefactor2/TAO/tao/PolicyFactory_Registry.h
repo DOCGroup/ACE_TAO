@@ -91,7 +91,7 @@ public:
     ACE_ENV_ARG_DECL);
 
   /// Construct a policy of the given type with the information
-  /// contained in the CORBA::Any <value>.
+  /// contained in the CORBA::Any @a value.
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    const CORBA::Any &value
                                    ACE_ENV_ARG_DECL);

@@ -29,6 +29,7 @@
 #include "Endpoint_Selector_Factory.h"
 #include "Client_Strategy_Factory.h"
 #include "Adapter.h"
+#include "Adapter_Factory.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 # include "ClientRequestInfo.h"
