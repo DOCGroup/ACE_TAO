@@ -677,6 +677,9 @@ protected:
   // Allocation Strategy of the queue.
 };
 
+
+#if ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
+
 //
 // I found ACE_Double_Linked_List really difficult to use.  So, I create
 // another layer of abstraction on top of it to make it easier to use.
@@ -820,6 +823,7 @@ public:
 
 };
 
+#endif /* ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER) */
 
 template <class T>
 class ACE_Unbounded_Set_Iterator

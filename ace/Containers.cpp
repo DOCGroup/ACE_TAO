@@ -2127,6 +2127,8 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
   return 0;
 }
 
+#if ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
+
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Node)
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList)
 
@@ -2181,6 +2183,8 @@ ACE_DLList<T>::delete_tail (void)
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_DLList_Iterator)
+
+#endif /* ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER) */
 
 // Dynamically initialize an array.
 
