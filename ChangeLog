@@ -1,3 +1,11 @@
+Sun Jan 20 16:25:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Added new Framework_Component
+
+        * tests/Makefile.bor:
+          Added new Framework_Component_Test
+
 Sun Jan 20 00:00:30 2002 UTC  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Vector_T.cpp (dump): Commented out the contents of this
@@ -6,7 +14,7 @@ Sun Jan 20 00:00:30 2002 UTC  Don Hinton  <dhinton@ieee.org>
 	  the case.
 
 	* tests/Vector_Test.cpp: Changed a few data types from signed
-	  to unsigned, size_t, to get rid of compiler warnings. 
+	  to unsigned, size_t, to get rid of compiler warnings.
 
 Sat Jan 19 17:29:50 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
@@ -19,29 +27,29 @@ Sat Jan 19 17:29:50 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
 
 Sat Jan 19 22:30:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* apps/JAWS2/JAWS/Hash_Bucket_T.h: 
-	* apps/JAWS2/JAWS/Assoc_Array.h: Added missing keyword "class" to 
+	* apps/JAWS2/JAWS/Hash_Bucket_T.h:
+	* apps/JAWS2/JAWS/Assoc_Array.h: Added missing keyword "class" to
 	  friend declarations.
-	
+
 	* ace/SString.cpp: Removed unneeded include of Service_Config.h.
 
 	* ace/Service_Config.{h|cpp}:
 	* examples/Connection/misc/Connection_Handler.cpp:
 
-	  Removed static methods from ACE_Service_Config that delegated to 
-	  ACE_Reactor::instance(), and fixed a few instances where they were 
-	  still called. 
-		
-	* ace/Object_Manager.cpp:
-	* ace/Service_Config.cpp: 
-	* ace/Proactor.cpp:
-	* ace/Reactor.cpp:  
+	  Removed static methods from ACE_Service_Config that delegated to
+	  ACE_Reactor::instance(), and fixed a few instances where they were
+	  still called.
 
-	  Added call to instance() methods that registers the singleton with 
+	* ace/Object_Manager.cpp:
+	* ace/Service_Config.cpp:
+	* ace/Proactor.cpp:
+	* ace/Reactor.cpp:
+
+	  Added call to instance() methods that registers the singleton with
 	  the new ACE_Framework_Repository so it can handle destruction, and
 	  replaced explicit references to ACE_Reactor and ACE_Proactor with
-	  calls to ACE_Framework_Repository.  
-	
+	  calls to ACE_Framework_Repository.
+
 	* ace/Framework_Component.{h|inl|cpp}:
 	* ace/Framework_Component_T.{h|inl|cpp}:
 	* ace/Makefile:
@@ -61,7 +69,7 @@ Sat Jan 19 22:30:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 Sat Jan 19 10:23:39 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Makefile (TEMPLATE_FILES): 
+	* ace/Makefile (TEMPLATE_FILES):
 	* tests/Makefile.bor:
   	* tests/Makefile:
     	* tests/run_test.lst:
@@ -133,7 +141,7 @@ Thu Jan 17 13:11:27 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Jan 16 11:24:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* THANKS: 
+	* THANKS:
 	  Updated to add Gerhard Voss <Gerhard_Voss@t-online.de>.
 
 Wed Jan 16 06:19:01 2002  Douglas C. Schmidt  <schmidt@siesta.cs.wustl.edu>
