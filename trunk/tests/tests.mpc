@@ -61,6 +61,18 @@ project(ACE Test) : aceexe {
   }
 }
 
+project(ACE Init Test) : aceexe {
+  exename = ACE_Init_Test
+  libs    += Test_Output
+  depends += Test_Output
+  Source_Files {
+    ACE_Init_Test.cpp
+    Main.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Aio Platform Test) : aceexe {
   exename = Aio_Platform_Test
   libs    += Test_Output
