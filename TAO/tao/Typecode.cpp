@@ -2521,6 +2521,14 @@ CORBA_TypeCode::parameter (const CORBA::Long /* slot */,
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
+  if (x == 0)
+    {
+      ACE_DECLARE_NEW_CORBA_ENV;
+      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                        CORBA::COMPLETED_MAYBE),
+                        0);
+    }
+
   CORBA::ULong kind =
     x->kind_;
 
