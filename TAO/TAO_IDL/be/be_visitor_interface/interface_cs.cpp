@@ -752,7 +752,8 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
   if (! node->is_local ())
     {
       // Remote _unchecked_narrow implementation.
-      *os << "if (! obj->_is_local ())" << be_idt_nl
+      *os << "if (! obj->_is_local () &&" << be_idt_nl
+          << "obj->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
           << "TAO_Stub* stub = obj->_stubobj ();" << be_nl << be_nl
           << "if (stub != 0)" << be_idt_nl
@@ -825,7 +826,7 @@ be_visitor_interface_cs::gen_concrete_unchecked_narrow (be_interface *node,
       *os << be_idt;
     }
 
-  // Local _unchecked_narrow.
+  // Local  & lazily evaluated _unchecked_narrow.
   *os << "return" << be_idt_nl
       << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
       << node->local_name () << "_ptr," << be_nl
