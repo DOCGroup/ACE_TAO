@@ -296,7 +296,7 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
   if (grp_id == -1)
     grp_id = this->grp_id_++; // Increment the group id.
 
-  for (int i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       // @@ What should happen if this fails?! e.g., should we try to
       // cancel the other threads that we've already spawned or what?

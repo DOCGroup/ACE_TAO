@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -101,12 +100,6 @@ public:
   virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
   // Provide a default implementation to simplify ancestors...
 
-  ACE_Reactor *reactor (void) const;
-  // Get the underlying Reactor *.
-
-  void reactor (ACE_Reactor *);
-  // Set the underlying Reactor *.
-
   virtual void destroy (void);
   // Call this instead of <delete> to free up dynamically allocated
   // <Svc_Handler>.  This method knows whether or not the object was
@@ -135,9 +128,6 @@ private:
 
   ACE_PEER_STREAM peer_; 
   // Maintain connection with client.
-
-  ACE_Reactor *reactor_;
-  // Event demultiplex associated with this object.
 
   static ACE_Dynamic *instance (void);
   // Point of access to the singleton.

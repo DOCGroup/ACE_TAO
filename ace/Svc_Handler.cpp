@@ -87,11 +87,12 @@ template <PR_ST_1, ACE_SYNCH_1>
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
 							ACE_Message_Queue<ACE_SYNCH_2> *mq,
 							ACE_Reactor *reactor)
-  : ACE_Task<ACE_SYNCH_2> (tm, mq),
-    reactor_ (reactor)
+  : ACE_Task<ACE_SYNCH_2> (tm, mq)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler");
   
+  this->reactor (reactor);
+
   // This clever idiom transparently checks if we were allocated
   // dynamically.  This information is used by the <destroy> method to
   // decide if we need to delete <this>...  The idiom is based on a
@@ -123,9 +124,9 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::open (void *)
   ACE_DEBUG ((LM_DEBUG, "connected to %s on fd %d\n", 
 	     buf, this->peer_.get_handle ()));
 #endif /* DEBUGGING */
-  if (this->reactor_ 
-      && this->reactor_->register_handler (this, 
-					   ACE_Event_Handler::READ_MASK) == -1)
+  if (this->reactor () 
+      && this->reactor ()->register_handler (this, 
+					     ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p", 
 		      "unable to register client handler"), -1);
   return 0;
@@ -138,37 +139,20 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::shutdown");
   // Deregister this handler with the ACE_Reactor.
-  if (this->reactor_)
+  if (this->reactor ())
     {
       ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | 
 	                      ACE_Event_Handler::READ_MASK  | 
 			      ACE_Event_Handler::DONT_CALL;
 
-      // Remove self from reactor.
-      this->reactor_->remove_handler (this, mask);
-      
       // Make sure there are no timers.
-      this->reactor_->cancel_timer( this );
+      this->reactor ()->cancel_timer( this );
 
-      // Note the fact that the Reactor has shut down.
-      this->reactor_ = 0;
+      // Remove self from reactor.
+      this->reactor ()->remove_handler (this, mask);
     }
 
   this->peer ().close ();
-}
-
-template <PR_ST_1, ACE_SYNCH_1> ACE_Reactor *
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::reactor (void) const
-{
-  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::reactor");
-  return this->reactor_;
-}
-
-template <PR_ST_1, ACE_SYNCH_1> void
-ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::reactor (ACE_Reactor *r)
-{
-  ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::reactor");
-  this->reactor_ = r;
 }
 
 template <PR_ST_1, ACE_SYNCH_1> void

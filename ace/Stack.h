@@ -240,9 +240,14 @@ public:
   // construction.
 
   int enqueue (const TYPE &new_item);
-  // Returns 0 on success -1 on failure.
+  // Addes <new_item> to the queue.  Returns 0 on success -1 on failure.
 
   int dequeue (TYPE &item);
+  // Removes and returns the first <item> on the queue.  Returns 0 on
+  // success -1 if nothing was found.
+
+  int peek (TYPE &item);
+  // Returns the first <item> on the queue without removing it.
   // Returns 0 on success -1 if nothing was found.
 
   int size (void) const;

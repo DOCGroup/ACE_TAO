@@ -262,7 +262,7 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
-  size_t avail_chunks (size_t size) const;
+  ssize_t avail_chunks (size_t size) const;
   // Returns a count of the number of available chunks that can hold
   // <size> byte allocations.  Function can be used to determine if you
   // have reached a water mark. This implies a fixed amount of allocated 

@@ -1,10 +1,15 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work
-// for SunOS4 platforms using the SunC++ 3.0.x compiler.
+// The following configuration file is designed to work for SunOS4
+// platforms using the SunC++ 3.0.x compiler.
 
 #if !defined (ACE_CONFIG_H)
+#define ACE_LACKS_POSIX_PROTO
+#define ACE_HAS_UNION_WAIT
+#define ACE_HAS_SPARCWORKS_401_SIGNALS
+#define ACE_HAS_SYSV_SPRINTF
+
 #define ACE_CONFIG_H
 
 #define ACE_HAS_SYS_ERRLIST

@@ -75,7 +75,7 @@
 // Just to be safe we'll do it with pthreads, too -- jwr
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 extern "C" {
-#include <pthread.h>
+#include /**/ <pthread.h>
 #if defined (DIGITAL_UNIX)
 #define pthread_self __pthread_self
 extern "C" pthread_t pthread_self (void);
@@ -89,14 +89,14 @@ extern "C" pthread_t pthread_self (void);
 #define ACE_TRACE(X) ACE_Trace ____ (X, __LINE__, __FILE__)
 #endif /* ACE_NTRACE */
 
-#include <time.h>
+#include /**/ <time.h>
 #if defined (ACE_NEEDS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
 // will get it from <time.h>
 #if defined (VXWORKS)
-#include <sys/times.h>
+#include /**/ <sys/times.h>
 #else
-#include <sys/time.h>
+#include /**/ <sys/time.h>
 #endif /* VXWORKS */
 #endif /* ACE_NEEDS_SYSTIME_H */
 
@@ -109,7 +109,7 @@ typedef struct timespec
 } timespec_t;
 #elif defined (ACE_HAS_BROKEN_POSIX_TIME)
 // OSF/1 defines struct timespec in <sys/timers.h> - Tom Marrs
-#include <sys/timers.h>
+#include /**/ <sys/timers.h>
 #endif /* ACE_HAS_POSIX_TIME */
 
 // #if (!defined (timespec) && !defined (m88k))
