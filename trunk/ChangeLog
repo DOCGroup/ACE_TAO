@@ -1,13 +1,22 @@
+Mon May 12 07:39:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added code to compare the output project with the existing
+          project.  If they are the same then do not overwrite the project
+          file.  This is very helpful when your workspace is loaded in vc6
+          or vc7.
+
 Fri May  9 16:55:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Thomas Wiegert to the hal of fame.
+        * THANKS: Added Thomas Wiegert to the hal of fame.
 
 Fri May 09 12:57:09 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * bin/MakeProjectCreator/config/ciao_client.mpb:
         * bin/MakeProjectCreator/config/ciao_component.mpb: Added more
-	  directories into libpaths to reflect recent TAO subsetting
-	  efforts.
+          directories into libpaths to reflect recent TAO subsetting
+          efforts.
 
 Fri May  9 12:49:42 2003  Chad Elliott  <elliott_c@ociweb.com>
 
