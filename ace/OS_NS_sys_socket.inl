@@ -531,11 +531,11 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
     }
   else
     return (ssize_t) bytes_sent;
-# elif defined (ACE_LACKS_POSIX_PROTOTYPES) ||  defined (ACE_PSOS)
+# elif defined (ACE_PSOS)
   ACE_SOCKCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
 # else
   ACE_SOCKCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
-# endif /* ACE_LACKS_POSIX_PROTOTYPES */
+# endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (msg);

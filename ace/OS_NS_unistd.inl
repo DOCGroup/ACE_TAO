@@ -290,8 +290,6 @@ ACE_OS::execv (const char *path,
 # else
   return ::_execv (path, (const char *const *) argv);
 # endif /* __BORLANDC__ */
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::execv (path, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
 #endif /* ACE_LACKS_EXEC */
@@ -323,8 +321,6 @@ ACE_OS::execve (const char *path,
 # else
   return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
 # endif /* __BORLANDC__ */
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::execve (path, (const char **) argv, (char **) envp), int, -1);
 #else
   ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
 #endif /* ACE_LACKS_EXEC */
@@ -354,8 +350,6 @@ ACE_OS::execvp (const char *file,
 # else
   return ::_execvp (file, (const char *const *) argv);
 # endif /* __BORLANDC__ */
-#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::execvp (file, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
 #endif /* ACE_LACKS_EXEC */
@@ -537,8 +531,6 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_LACKS_GETOPT_PROTO)
   ACE_OSCALL_RETURN (::getopt (argc, (char**) argv, optstring), int, -1);
-# elif defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
 # else
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
 # endif /* VXWORKS */
@@ -855,11 +847,11 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 
   int result;
 
-# if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_CHARPTR_SOCKOPT)
+# if defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL (::read (handle, (char *) buf, len), ssize_t, -1, result);
 # else
   ACE_OSCALL (::read (handle, buf, len), ssize_t, -1, result);
-# endif /* ACE_LACKS_POSIX_PROTOTYPES */
+# endif /* ACE_HAS_CHARPTR_SOCKOPT */
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
   // Optimize this code out if we can detect that EAGAIN ==
@@ -1318,15 +1310,13 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
     return -1;
 # endif /* defined (ACE_PSOS_LACKS_PHILE) */
 #else
-# if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::write (handle, (const char *) buf, nbyte), ssize_t, -1);
-# elif defined (ACE_PSOS)
+# if defined (ACE_PSOS)
   ACE_OSCALL_RETURN (::write_f(handle, (void *) buf, nbyte), ssize_t, -1);
 # elif defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::write (handle, (char *) buf, nbyte), ssize_t, -1);
 # else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
-# endif /* ACE_LACKS_POSIX_PROTOTYPES */
+# endif /* ACE_PSOS */
 #endif /* ACE_WIN32 */
 }
 

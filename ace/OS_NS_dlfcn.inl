@@ -220,7 +220,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL_RETURN (::_dlsym (handle, symbolname), void *, 0);
 #   else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
-#   endif /* ACE_LACKS_POSIX_PROTOTYPES */
+#   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
 
 # elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 
