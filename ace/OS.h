@@ -2154,13 +2154,12 @@ typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
 #  if defined (ACE_WIN32)
 // Windows has recursive mutexes, but doesn't have condition variables,
 // so there's no built-in support for this. Thus, the condition-related
-// save/restore is handled in ACE.
+// unlock/relock is augmented in ACE.
 struct ACE_recursive_mutex_state
 {
-  // On windows the mutex is a CRITICAL_SECTION, and these members
-  // match those in the CRITICAL_SECTION struct.
-  LONG lock_count_;
-  LONG recursion_count_;
+  // On Windows the augmented processing is simply unlocking/relocking
+  // the recursive locks - the condition handles a single lock ok.
+  LONG relock_count_;
 };
 #  else
 // No need for special handling; just need a type for method signatures.
