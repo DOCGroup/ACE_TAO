@@ -15,27 +15,32 @@ ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
+template class ACE_Node<ACE_INET_Addr>;
+template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
-template class ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
-template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
-template class ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>;
 template class ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>;
-
+template class ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>;
+template class ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Node<ACE_INET_Addr>
+#pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
 #pragma instantiate ACE_Connector<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_Connector>
 #pragma instantiate ACE_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
-
+#pragma instantiate ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler> *, ACE_SYNCH_RW_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
@@ -193,6 +198,10 @@ TAO_IIOP_Connector::connect (TAO_Base_Connection_Property *prop,
       // Add the handler to Cache
       int retval = this->add_handler (prop,
                                       svc_handler);
+
+      if (retval)
+        {
+        }
     }
 
   if (result == -1)
