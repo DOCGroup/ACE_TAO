@@ -40,10 +40,15 @@ sub time_service_test_using_naming_service
       $CL->Kill (); $CL->TimedWait (1);
     }
 
-    $SV1->Kill ();
-    $SV2->Kill ();
-    $SV1->TimedWait (1);
-    $SV2->TimedWait (1);
+    $SV1->Terminate ();
+    $SV2->Terminate ();
+    if ($SV1->TimedWait (5) == -1 ||
+        $SV2->TimedWait (5) == -1) {
+      print STDERR "ERROR: couldn't shutdown the servers nicely\n";
+      $status = 1;
+      $SV1->Kill (); $SV2->Kill ();
+      $SV1->TimedWait (1); $SV2->TimedWait (1);
+    }
 }
 
 sub time_service_test_using_files
@@ -80,10 +85,15 @@ sub time_service_test_using_files
           $CL->Kill (); $CL->TimedWait (1);
         }
       
-        $SV1->Kill ();
-        $SV2->Kill ();
-        $SV1->TimedWait (1);
-        $SV2->TimedWait (1);
+        $SV1->Terminate ();
+        $SV2->Terminate ();
+        if ($SV1->TimedWait (5) == -1 ||
+            $SV2->TimedWait (5) == -1) {
+          print STDERR "ERROR: couldn't shutdown the servers nicely\n";
+          $status = 1;
+          $SV1->Kill (); $SV2->Kill ();
+          $SV1->TimedWait (1); $SV2->TimedWait (1);
+        }
       }
     }
     unlink $clerk_ior;
@@ -127,12 +137,22 @@ sub time_service_test_using_ir
     $CL->Kill (); $CL->TimedWait (1);
   }
     
-  $IR->Kill ();
-  $IR->TimedWait (1);
-  $SV1->Kill ();
-  $SV1->TimedWait (1);
-  $SV2->Kill ();
-  $SV2->TimedWait (1);
+  $IR->Terminate ();
+  if ($IR->TimedWait (5) == -1) {
+    print STDERR "ERROR: couldn't shutdown repository nicely\n";
+    $status = 1;
+    $IR->Kill (); $IR->TimedWait (1);
+  }
+
+  $SV1->Terminate ();
+  $SV2->Terminate ();
+  if ($SV1->TimedWait (5) == -1 ||
+      $SV2->TimedWait (5) == -1) {
+    print STDERR "ERROR: couldn't shutdown the servers nicely\n";
+    $status = 1;
+    $SV1->Kill (); $SV2->Kill ();
+    $SV1->TimedWait (1); $SV2->TimedWait (1);
+  }
 
   unlink $clerk_ior;
   unlink $server_ior;
