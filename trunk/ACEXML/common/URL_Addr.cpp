@@ -5,7 +5,7 @@
 #include "ACEXML/common/URL_Addr.h"
 
 
-ACE_RCSID(common, ACEXML_URL_Addr, "$Id$");
+ACE_RCSID(common, ACEXML_URL_Addr, "$Id$")
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (void)
   : path_name_ (0),
@@ -15,7 +15,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (void)
 }
 
 int
-ACEXML_URL_Addr::addr_to_string (ACE_TCHAR *s,
+ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
                               size_t size,
                               int ipaddr_format) const
 {
@@ -43,7 +43,7 @@ ACEXML_URL_Addr::addr_to_string (ACE_TCHAR *s,
     }
 }
 
-const ACE_TCHAR *
+const ACEXML_Char *
 ACEXML_URL_Addr::addr_to_string (int ipaddr_format) const
 {
   ACEXML_URL_Addr *this_ptr = ACE_const_cast (ACEXML_URL_Addr *,
@@ -62,7 +62,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format) const
   if (size > this->addr_string_len_)
     {
       ACE_ALLOCATOR_RETURN (this_ptr->addr_string_,
-                            (ACE_TCHAR *) ACE_OS::realloc ((void *) this->addr_string_,
+                            (ACEXML_Char *) ACE_OS::realloc ((void *) this->addr_string_,
                                                            size),
                             0);
       this_ptr->addr_string_len_ = size;
@@ -78,7 +78,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format) const
 }
 
 int
-ACEXML_URL_Addr::string_to_addr (const ACE_TCHAR *s)
+ACEXML_URL_Addr::string_to_addr (const ACEXML_Char *s)
 {
   if (s == 0)
     return -1;
@@ -90,7 +90,7 @@ ACEXML_URL_Addr::string_to_addr (const ACE_TCHAR *s)
   if (ACE_OS::strncmp (http, s, http_len) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Invalid URL %s\n", s), -1);
 
-  const ACE_TCHAR* url = 0;
+  const ACEXML_Char* url = 0;
   // Get the host name
   for (url = s + http_len; *url != '\0' && *url != ':' && *url != '/'; ++url)
     ;
@@ -98,16 +98,16 @@ ACEXML_URL_Addr::string_to_addr (const ACE_TCHAR *s)
   int host_len = url - s;
   host_len -= http_len;
 
-  ACE_TCHAR* host_name = 0;
-  ACE_NEW_RETURN (host_name, ACE_TCHAR[host_len + 1], -1);
+  ACEXML_Char* host_name = 0;
+  ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
   ACE_OS::strncpy (host_name, s + http_len, host_len);
   host_name[host_len] = '\0';
-  ACE_Auto_Array_Ptr<ACE_TCHAR> cleanup_host_name (host_name);
+  ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_host_name (host_name);
 
   // Get the port number (if any)
-  u_short port = ACE_DEFAULT_HTTP_PORT;
+  unsigned short port = ACE_DEFAULT_HTTP_PORT;
   if (*url == ':')
-      port = (u_short) ACE_OS::atoi (++url); // Skip over ':'
+      port = (unsigned short) ACE_OS::atoi (++url); // Skip over ':'
 
   // Set the addr
   int result = this->ACE_INET_Addr::set (port, host_name);
@@ -116,7 +116,7 @@ ACEXML_URL_Addr::string_to_addr (const ACE_TCHAR *s)
     return -1;
 
   // Get the path name
-  const ACE_TCHAR* path_name = 0;
+  const ACEXML_Char* path_name = 0;
   if (*url == '\0')
     path_name = "/";
   else
@@ -199,9 +199,9 @@ ACEXML_URL_Addr::operator!= (const ACEXML_URL_Addr &addr) const
   return !(*this == addr);
 }
 
-ACEXML_URL_Addr::ACEXML_URL_Addr (const ACE_TCHAR *host_name,
-                            const ACE_TCHAR *path_name,
-                            u_short port)
+ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
+                            const ACEXML_Char *path_name,
+                            unsigned short port)
   : ACE_INET_Addr (port, host_name),
     path_name_ (ACE_OS::strdup (path_name)),
     addr_string_ (0),
@@ -209,7 +209,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACE_TCHAR *host_name,
 {
 }
 
-const ACE_TCHAR *
+const ACEXML_Char *
 ACEXML_URL_Addr::get_path_name (void) const
 {
   return this->path_name_;
@@ -218,10 +218,10 @@ ACEXML_URL_Addr::get_path_name (void) const
 ACEXML_URL_Addr::~ACEXML_URL_Addr (void)
 {
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (ACE_TCHAR *,
+                                      ACE_const_cast (ACEXML_Char *,
                                                       this->path_name_)));
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (ACE_TCHAR *,
+                                      ACE_const_cast (ACEXML_Char *,
                                                       this->addr_string_)));
   this->path_name_ = 0;
 }

@@ -27,9 +27,6 @@ public:
   /// Default constructor.
   ACEXML_FileCharStream (void);
 
-  /// Construct and opening a file.
-  ACEXML_FileCharStream (const ACEXML_Char *name);
-
   /// Destructor
   virtual ~ACEXML_FileCharStream (void);
 

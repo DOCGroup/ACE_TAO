@@ -9,14 +9,6 @@ ACEXML_FileCharStream::ACEXML_FileCharStream (void)
 {
 }
 
-ACEXML_FileCharStream::ACEXML_FileCharStream (const ACEXML_Char *name)
-  : filename_ (),
-    infile_ (NULL)
-{
-  this->open (name);
-}
-
-
 ACEXML_FileCharStream::~ACEXML_FileCharStream (void)
 {
   if (this->infile_ != NULL)
