@@ -1,166 +1,174 @@
+Wed Oct  1 11:02:12 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Inherit from the crosscompile base project to disallow building
+          this when crosscompiling for the target os.
+
 Wed Oct  1 08:19:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor: 
-	  Applied patches that Johnny sent me to fix compile errors in the
-	  static builds.
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
+          Applied patches that Johnny sent me to fix compile errors in the
+          static builds.
 
 Tue Sep 30 10:31:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosTypedEventChannelAdmin.idl:
-	* orbsvcs/orbsvcs/CosTypedEventComm.idl:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
-	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/CosTypedEventChannelAdmin.idl:
+        * orbsvcs/orbsvcs/CosTypedEventComm.idl:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
           Fixed fuzz errors.
 
 Tue Sep 30 09:51:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp (test_i): 
-	* tao/RTScheduling/RTSchedulerC.h: 
-	  
-	  Fixed fuzz errors.
+        * tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp (test_i):
+        * tao/RTScheduling/RTSchedulerC.h:
+
+          Fixed fuzz errors.
 
 Tue Sep 30 09:15:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Fixed a
-	  compile error with static builds on BCB6.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Fixed a
+          compile error with static builds on BCB6.
 
 Sun Sep 28 21:46:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
 
-	  Fixed warnings in Borland builds that were caused due to
-	  improper exception  specifications.
+          Fixed warnings in Borland builds that were caused due to
+          improper exception  specifications.
 
 Sun Sep 28 11:01:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:  
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
 
-	  Initialized the UUID generator before generating an UUID for the
-	  interceptor. 
+          Initialized the UUID generator before generating an UUID for the
+          interceptor.
 
 Thu Sep 25 23:15:06 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.cpp:
 
-	  Added CORBA environment variable parameter to constructor
-	  calls.
+          Added CORBA environment variable parameter to constructor
+          calls.
 
 Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/Object_Adapter.cpp (servant_cleanup): 
+        * tao/PortableServer/Object_Adapter.cpp (servant_cleanup):
 
-	  Changed ACE_CATCHANY to ACE_CATCHALL.  This will ensure that all
-	  exceptions will be caught properly.  This means that unknown
-	  exceptions and structural exceptions on Windows will also be
-	  caught and handled rather than only CORBA exceptions.  Thus, if
-	  an application servant throws a non-CORBA exception while being
-	  cleaned up from a call to POA::cleanup_servant(), a multithread
-	  ORB will no longer deadlock itself.  This fixes bug 1524.
-	  Thanks to Bruce Mcintosh <bruce.mcintosh@boeing.com> and later
-	  Russell Noseworthy <j.russell.noseworthy@objectsciences.com> for
-	  reporting this problem.
+          Changed ACE_CATCHANY to ACE_CATCHALL.  This will ensure that all
+          exceptions will be caught properly.  This means that unknown
+          exceptions and structural exceptions on Windows will also be
+          caught and handled rather than only CORBA exceptions.  Thus, if
+          an application servant throws a non-CORBA exception while being
+          cleaned up from a call to POA::cleanup_servant(), a multithread
+          ORB will no longer deadlock itself.  This fixes bug 1524.
+          Thanks to Bruce Mcintosh <bruce.mcintosh@boeing.com> and later
+          Russell Noseworthy <j.russell.noseworthy@objectsciences.com> for
+          reporting this problem.
 
-	* tao/PortableServer/POA.cpp: 
+        * tao/PortableServer/POA.cpp:
 
-	  Made the following POA accessors public:
+          Made the following POA accessors public:
 
-	  - outstanding_requests
-	  - active_object_map
-	  - waiting_destruction
+          - outstanding_requests
+          - active_object_map
+          - waiting_destruction
 
-	* tests/UNKNOWN_Exception:
+        * tests/UNKNOWN_Exception:
 
-	  Added test for ensuring that UNKNOWN exceptions raised by the
-	  server are handling correctly by the ORB.  There are two places
-	  where this example tests for UNKNOWN exceptions: (a) UNKNOWN
-	  exception raised in an upcall and (b) UNKNOWN exception raised
-	  while a servant is being cleaned up after deactivation.  The
-	  number of outstanding requests in the POA are checked after each
-	  unit of work performed by the server.  The assumption is that if
-	  the number of outstanding requests are correct, then the server
-	  correctly handled the UNKNOWN exceptions.
+          Added test for ensuring that UNKNOWN exceptions raised by the
+          server are handling correctly by the ORB.  There are two places
+          where this example tests for UNKNOWN exceptions: (a) UNKNOWN
+          exception raised in an upcall and (b) UNKNOWN exception raised
+          while a servant is being cleaned up after deactivation.  The
+          number of outstanding requests in the POA are checked after each
+          unit of work performed by the server.  The assumption is that if
+          the number of outstanding requests are correct, then the server
+          correctly handled the UNKNOWN exceptions.
 
           The following files were added:
 
-	  - tests/UNKNOWN_Exception/README
-	  - tests/UNKNOWN_Exception/UNKNOWN_Exception.dsw
-	  - tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc
-	  - tests/UNKNOWN_Exception/client.cpp
-	  - tests/UNKNOWN_Exception/client.dsp
-	  - tests/UNKNOWN_Exception/run_test.pl
-	  - tests/UNKNOWN_Exception/server.cpp
-	  - tests/UNKNOWN_Exception/server.dsp
-	  - tests/UNKNOWN_Exception/test.idl
-	  - tests/UNKNOWN_Exception/Makefile
-	  - tests/UNKNOWN_Exception/Makefile.bor
-	  - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Client
-	  - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Server
-	  - tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor
-	  - tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor
-        
+          - tests/UNKNOWN_Exception/README
+          - tests/UNKNOWN_Exception/UNKNOWN_Exception.dsw
+          - tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc
+          - tests/UNKNOWN_Exception/client.cpp
+          - tests/UNKNOWN_Exception/client.dsp
+          - tests/UNKNOWN_Exception/run_test.pl
+          - tests/UNKNOWN_Exception/server.cpp
+          - tests/UNKNOWN_Exception/server.dsp
+          - tests/UNKNOWN_Exception/test.idl
+          - tests/UNKNOWN_Exception/Makefile
+          - tests/UNKNOWN_Exception/Makefile.bor
+          - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Client
+          - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Server
+          - tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor
+          - tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor
+
           The following files were modified:
 
           - tests/TAO_Tests.dsw
           - tests/Makefile
           - tests/Makefile.bor
           - tests/README
-          - $ACE_ROOT/bin/tao_orb_tests.lst	
+          - $ACE_ROOT/bin/tao_orb_tests.lst
 
 Thu Sep 25 11:54:42 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
-	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
 
-	Renamed the <init> method to <_init>. This avoids warnings on
-	solaris regarding hiding the ACE_Shared_Object::init signature.
-	
+        Renamed the <init> method to <_init>. This avoids warnings on
+        solaris regarding hiding the ACE_Shared_Object::init signature.
+
 Thu Sep 25 10:08:12 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
-	  Added .in() to use of an object reference to fix warnings on GNU
-	  compiler platforms.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+          Added .in() to use of an object reference to fix warnings on GNU
+          compiler platforms.
 
 Thu Sep 25 05:51:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FT_ORB.bor: Added FT_ServerRequest_Interceptor
-	  to the borland makefile. This should fix problems in the daily
-	  builds. 
+        * orbsvcs/orbsvcs/FT_ORB.bor: Added FT_ServerRequest_Interceptor
+          to the borland makefile. This should fix problems in the daily
+          builds.
 
 Wed Sep 24 22:32:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FT_ORB.dsp: Added FT_ServerRequest_Interceptor
-	  to the project file.
+        * orbsvcs/orbsvcs/FT_ORB.dsp: Added FT_ServerRequest_Interceptor
+          to the project file.
 
 Wed Sep 24 09:12:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Do not link the
-	  server wih the FT library since it is not required.
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile: Do not link the
+          server wih the FT library since it is not required.
 
-	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Remove the file from
-	  the repo. 
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Remove the file from
+          the repo.
 
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
-	  Added a test for extracting the IOGR version info from the
-	  profile.
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+          Added a test for extracting the IOGR version info from the
+          profile.
 
 Wed Sep 24 09:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
-	  set_component () created problems if we don't send a constant
-	  version of TAO_Tagged_Components. 
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp: The
+          set_component () created problems if we don't send a constant
+          version of TAO_Tagged_Components.
 
-	  Integrated from the oci_haft_branch. Some of the ideas that have
-	  been used in the development mentioned below were influenced by
-	  Huang-Ming Huang and Didier Becu
-	  <didier.becu@fr.thalesgroup.com>. 
-	  
-	Sat Sep 20 16:46:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Integrated from the oci_haft_branch. Some of the ideas that have
+          been used in the development mentioned below were influenced by
+          Huang-Ming Huang and Didier Becu
+          <didier.becu@fr.thalesgroup.com>.
+
+        Sat Sep 20 16:46:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
           Added explicit template specifications.
@@ -172,7 +180,7 @@ Wed Sep 24 09:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
           Test for get_tagged_components () added.
 
-	Fri Sep 19 20:02:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+        Fri Sep 19 20:02:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
@@ -190,7 +198,7 @@ Wed Sep 24 09:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp: Fixed
           compilation errors and unused variable warnings with g++.
 
-	Fri Sep 19 19:49:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+        Fri Sep 19 19:49:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
@@ -232,113 +240,113 @@ Wed Sep 24 09:04:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Wed Sep 24 09:02:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
-	* tao/Buffering_Constraint_Policy.cpp:
-	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
-	* tao/RTCORBA/RT_Policy_i.cpp:
-	* tao/PortableServer/POA_Policies.cpp: Fix for [Bug 1587]. Please
-	  see  the documentation of the bug at 
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/PortableServer/POA_Policies.cpp: Fix for [Bug 1587]. Please
+          see  the documentation of the bug at
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1587
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1587
 
-	  for more details. Thanks to Carlos O'Ryan for the patches. 
+          for more details. Thanks to Carlos O'Ryan for the patches.
 
-	* tao/MProfile.cpp: Fix for [BUG 1589]. Please see the
-	  documentation of the bug at 
-	  
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1589
+        * tao/MProfile.cpp: Fix for [BUG 1589]. Please see the
+          documentation of the bug at
 
-	  Thanks to Huang-Ming Huang for the patch
-	
-	* tao/CORBALOC_Parser.cpp: Added explicit (char*) cast to fix
-	  compile error.
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1589
 
-	  Thanks to Olli Savia <ops@iki.fi> for the patches.
+          Thanks to Huang-Ming Huang for the patch
+
+        * tao/CORBALOC_Parser.cpp: Added explicit (char*) cast to fix
+          compile error.
+
+          Thanks to Olli Savia <ops@iki.fi> for the patches.
 
 Tue Sep 23 14:50:30 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/OBV/Supports/Supports_Test_impl.h:
-	* tests/OBV/Supports/Supports_Test_impl.cpp:
-	* tests/OBV/Supports/client.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.h:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/client.cpp:
 
-	  Added an ACE_ENV_ARG_DECL to vt_graph_impl argumented CTORs so
-	  that the CTOR can pass out exception information when emulated
-	  exceptions are in use.
+          Added an ACE_ENV_ARG_DECL to vt_graph_impl argumented CTORs so
+          that the CTOR can pass out exception information when emulated
+          exceptions are in use.
 
-	  Also did minor reformatting to bring code in line for code
-	  formatting standards.
+          Also did minor reformatting to bring code in line for code
+          formatting standards.
 
 Mon Sep 22 23:39:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Removed redundant dependencies from "Metrics" project.  Fixes
-	  "__NULL_IMPORT_DESCRIPTOR already defined" MSVC++ 6 link
-	  warnings.
+          Removed redundant dependencies from "Metrics" project.  Fixes
+          "__NULL_IMPORT_DESCRIPTOR already defined" MSVC++ 6 link
+          warnings.
 
 Mon Sep 22 17:04:50 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/Current.h:
-	* tao/RTScheduling/Request_Interceptor.cpp: 
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Request_Interceptor.cpp:
 
-	  Changed guid_counter from a global variable to a public class
-	  member scoped within TAO_RTScheduling_Current.   This should get
-	  rid of compiler errors on statically-linked platforms.
+          Changed guid_counter from a global variable to a public class
+          member scoped within TAO_RTScheduling_Current.   This should get
+          rid of compiler errors on statically-linked platforms.
 
 Mon Sep 22 15:02:39 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* TAO_IDL/be/be_interface.cpp (gen_operation_table):
+        * TAO_IDL/be/be_interface.cpp (gen_operation_table):
 
-	  Changed the elements used to seed the random number generator
-	  for creating a temporary file for gperf's output.  There were
-	  strange situations on certain multiprocessor parallel-make
-	  scoreboard builds where skeleton files were completely missing
-	  gperf output in them.  I'm hoping this avoids the problem in the
-	  future, but I can't guarantee.  Thanks to Chad Elliott for
-	  suggesting this as a possible source of the problem.
+          Changed the elements used to seed the random number generator
+          for creating a temporary file for gperf's output.  There were
+          strange situations on certain multiprocessor parallel-make
+          scoreboard builds where skeleton files were completely missing
+          gperf output in them.  I'm hoping this avoids the problem in the
+          future, but I can't guarantee.  Thanks to Chad Elliott for
+          suggesting this as a possible source of the problem.
 
 Mon Sep 22 11:57:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
 
-	  Declared the environment variable in send_poll method as unused
-	  as it was not used in the method. This should remove the warning
-	  on Redhat Explicit Template build.
-	
+          Declared the environment variable in send_poll method as unused
+          as it was not used in the method. This should remove the warning
+          on Redhat Explicit Template build.
+
 Fri Sep 19 07:49:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/RTScheduling/Current/Makefile (SRC):
+        * tests/RTScheduling/Current/Makefile (SRC):
 
-	  Corrected this Make variable.  It previously listed non-existent
-	  files, which caused the dependency generation step to fail.
-	  This should alleviate some bogus test failures showing up in
-	  some automated builds.
+          Corrected this Make variable.  It previously listed non-existent
+          files, which caused the dependency generation step to fail.
+          This should alleviate some bogus test failures showing up in
+          some automated builds.
 
-	  (LIBS, TEST_LIBS):
+          (LIBS, TEST_LIBS):
 
-	  Replaced LIBS variable with TEST_LIBS, where the latter only
-	  contains the TAO_RTScheduler library.  There is no need to
-	  explicitly list the core ACE/TAO/RTCORBA libraries since they
-	  already exist in the RT_TAO_CLNT_LIBS variable used during the
-	  link step.
+          Replaced LIBS variable with TEST_LIBS, where the latter only
+          contains the TAO_RTScheduler library.  There is no need to
+          explicitly list the core ACE/TAO/RTCORBA libraries since they
+          already exist in the RT_TAO_CLNT_LIBS variable used during the
+          link step.
 
 Fri Sep 19 07:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.h:
 
           Explicitly #undef IOR in this file to work around an HPUX
           namespace conflict.
 
-	* orbsvcs/tests/IOR_MCast/server_i.h (enable_multicast):
-	* orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
+        * orbsvcs/tests/IOR_MCast/server_i.h (enable_multicast):
+        * orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
 
-	  Removed CORBA::Environment parameter and accompanying
-	  ACE_TRY/CATCH blocks.  They were not used.  Fixes an unused
-	  "ACE_TRY_LABEL" warning in non-inline builds.
+          Removed CORBA::Environment parameter and accompanying
+          ACE_TRY/CATCH blocks.  They were not used.  Fixes an unused
+          "ACE_TRY_LABEL" warning in non-inline builds.
 
-	* orbsvcs/tests/IOR_MCast/Makefile:
+        * orbsvcs/tests/IOR_MCast/Makefile:
 
-	  Updated dependencies.  They were missing altogether
+          Updated dependencies.  They were missing altogether
 
 Thu Sep 18 14:11:53 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
@@ -387,20 +395,20 @@ Thu Sep 18 14:11:53 MST 2003 Trevor Fields <fields_t@ociweb.com>
           Added requires += ami
 
 Thurs Sep 18 17:15:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
-	
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h: 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp: 	
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h: 
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp: 
 
-	  Added the missing send_poll method to the MIF_Scheduler and
-	  FP_Scheduler to make it consistent with the following change
-	  made earlier:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
 
-	  Mon Sep 15 15:50:35 2003 Yamuna Krishnamurthy <yamuna@oomworks.com>
-	
-	  This should fix the compile errors on linux and
-	  solaris.
+          Added the missing send_poll method to the MIF_Scheduler and
+          FP_Scheduler to make it consistent with the following change
+          made earlier:
+
+          Mon Sep 15 15:50:35 2003 Yamuna Krishnamurthy <yamuna@oomworks.com>
+
+          This should fix the compile errors on linux and
+          solaris.
 
 Thu Sep 18 13:25:13 2003  George Edwards  <g.edwards@vanderbilt.edu>
 
@@ -410,19 +418,19 @@ Thu Sep 18 13:25:13 2003  George Edwards  <g.edwards@vanderbilt.edu>
 
 Wed Sep 17 16:05:13 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* tests/Bug_1551_Regression/README
-	* tests/Bug_1551_Regression/run_test.pl
+        * tests/Bug_1551_Regression/README
+        * tests/Bug_1551_Regression/run_test.pl
 
-	  Added the README file about this regression test.
-	  Modified the testing times in the run_test.pl file. 
+          Added the README file about this regression test.
+          Modified the testing times in the run_test.pl file.
 
 Wed Sep 17 15:24:01 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
-	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
 
-	Renamed the <init> method to <_init>. This avoids warnings on
-	solaris regarding hiding the ACE_Shared_Object::init signature.
+        Renamed the <init> method to <_init>. This avoids warnings on
+        solaris regarding hiding the ACE_Shared_Object::init signature.
 
 Wed Sep 17 13:29:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -500,8 +508,8 @@ Mon Sep 15 15:50:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
         * tests/RTScheduling/Scheduler.cpp:
 
           The send_poll operation on the Scheduler interface was
-	  missing. This was required to interact with the scheduler when
-	  the send_poll interception occurs. Hence, it was added.
+          missing. This was required to interact with the scheduler when
+          the send_poll interception occurs. Hence, it was added.
 
 Mon Sep 15 11:58:35 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
@@ -767,8 +775,8 @@ Tue Sep  9 14:30:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
 Mon Sep  8 16:01:08 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tao/Adapter.cpp (find_adapter): Fixed some mistakes in coding
-	  style.  Thanks to Gan Deng for reporting this.
+        * tao/Adapter.cpp (find_adapter): Fixed some mistakes in coding
+          style.  Thanks to Gan Deng for reporting this.
 
 Mon Sep  8 23:29:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
