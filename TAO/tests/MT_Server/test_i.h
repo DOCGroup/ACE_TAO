@@ -32,10 +32,10 @@ public:
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Long x, CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (CORBA::Environment&)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   CORBA::ORB_var orb_;
