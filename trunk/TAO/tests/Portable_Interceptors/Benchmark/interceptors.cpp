@@ -90,14 +90,16 @@ Vault_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientRequ
 }
 
 void 
-Vault_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
+Vault_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
                                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException, 
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ClientRequest_Info *ri = ACE_dynamic_cast (TAO_ClientRequest_Info *,
+                                                 rinfo);
   // As of now, there is no way to extract an exception from an Any in TAO.
   CORBA::Exception *e = ri->_received_exception ();
-
+  
   ACE_ASSERT (ACE_OS::strcmp (ri->received_exception_id (), e->_id ())== 0);
 
 }
@@ -181,11 +183,13 @@ Vault_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequest
 }
 
 void 
-Vault_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
+Vault_Server_Request_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ServerRequest_Info *ri = ACE_dynamic_cast (TAO_ServerRequest_Info *,
+                                                 rinfo);
   CORBA::Exception *e = ri->_sending_exception ();
   
 }
@@ -259,11 +263,14 @@ Vault_Client_Request_Context_Interceptor::receive_reply (PortableInterceptor::Cl
 }
 
 void 
-Vault_Client_Request_Context_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
+Vault_Client_Request_Context_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
                                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException, 
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ClientRequest_Info *ri = ACE_dynamic_cast (TAO_ClientRequest_Info *,
+                                                 rinfo);
+
   // As of now, there is no way to extract an exception from an Any in TAO.
   CORBA::Exception *e = ri->_received_exception ();
 
@@ -336,11 +343,13 @@ Vault_Server_Request_Context_Interceptor::send_reply (PortableInterceptor::Serve
 }
 
 void 
-Vault_Server_Request_Context_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
+Vault_Server_Request_Context_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ServerRequest_Info *ri = ACE_dynamic_cast (TAO_ServerRequest_Info *,
+                                                  rinfo);
   CORBA::Exception *e = ri->_sending_exception ();
   
 }
@@ -425,11 +434,14 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (PortableInterceptor::Cl
 }
 
 void 
-Vault_Client_Request_Dynamic_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
+Vault_Client_Request_Dynamic_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
                                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException, 
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ClientRequest_Info *ri = ACE_dynamic_cast (TAO_ClientRequest_Info *,
+                                                 rinfo);
+
   // As of now, there is no way to extract an exception from an Any in TAO.
   CORBA::Exception *e = ri->_received_exception ();
 
@@ -515,11 +527,13 @@ Vault_Server_Request_Dynamic_Interceptor::send_reply (PortableInterceptor::Serve
 }
 
 void 
-Vault_Server_Request_Dynamic_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
+Vault_Server_Request_Dynamic_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ServerRequest_Info *ri = ACE_dynamic_cast (TAO_ServerRequest_Info *,
+                                                 rinfo);
   CORBA::Exception *e = ri->_sending_exception ();
   
 }
@@ -574,11 +588,13 @@ Vault_Client_Request_NOOP_Interceptor::receive_reply (PortableInterceptor::Clien
 }
 
 void 
-Vault_Client_Request_NOOP_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
+Vault_Client_Request_NOOP_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr rinfo,
                                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException, 
                      PortableInterceptor::ForwardRequest))
 {
+  TAO_ClientRequest_Info *ri = ACE_dynamic_cast (TAO_ClientRequest_Info *,
+                                                 rinfo);
   // As of now, there is no way to extract an exception from an Any in TAO.
   CORBA::Exception *e = ri->_received_exception ();
 
@@ -637,11 +653,14 @@ Vault_Server_Request_NOOP_Interceptor::send_reply (PortableInterceptor::ServerRe
 }
 
 void 
-Vault_Server_Request_NOOP_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
+Vault_Server_Request_NOOP_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr rinfo,
                                                  CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ServerRequest_Info *ri = ACE_dynamic_cast (TAO_ServerRequest_Info *,
+                                                 rinfo);
+  
   CORBA::Exception *e = ri->_sending_exception ();
   
 }
