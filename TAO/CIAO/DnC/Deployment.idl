@@ -26,10 +26,17 @@ module Deployment {
 
   typedef sequence < SatisfierProperty > SatisfierProperties;
 
+  struct Property {
+    string name;
+    any value;
+  };
+
+  typedef sequence < Property > Properties;
+
   struct SharedResource {
     string name;
     ::CORBA::StringSeq resourceType;
-    ::CORBA::ULongSeq nodeRef;
+    Nodes node;
     SatisfierProperties property;
   };
 
@@ -46,8 +53,8 @@ module Deployment {
   struct Node {
     string name;
     string label;
-    ::CORBA::ULongSeq sharedResourceRef;
-    ::CORBA::ULongSeq connectionRef;
+    Interconnects connection;
+    SharedResources sharedResource;
     Resources resource;
   };
 
@@ -56,8 +63,8 @@ module Deployment {
   struct Interconnect {
     string name;
     string label;
-    ::CORBA::ULongSeq connectionRef;
-    ::CORBA::ULongSeq connectRef;
+    Bridges connection;
+    Nodes connect;
     Resources resource;
   };
 
@@ -66,18 +73,11 @@ module Deployment {
   struct Bridge {
     string name;
     string label;
-    ::CORBA::ULongSeq connectRef;
+    Interconnects connect;
     Resources resource;
   };
 
   typedef sequence < Bridge > Bridges;
-
-  struct Property {
-    string name;
-    any value;
-  };
-
-  typedef sequence < Property > Properties;
 
   struct Domain {
     string UUID;
@@ -86,7 +86,7 @@ module Deployment {
     Nodes node;
     Interconnects interconnect;
     Bridges bridge;
-    Properties info_property;
+    Properties infoProperty;
   };
 
   enum CCMComponentPortKind {
