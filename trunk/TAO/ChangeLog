@@ -1,3 +1,9 @@
+Tue Nov 11 11:03:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+          Added missing ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION macros.
+
 Tue Nov 11 16:13:42 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/ImplRepo_Service/implrepo.dsp:
