@@ -501,7 +501,8 @@ public:
              long priority = ACE_DEFAULT_THREAD_PRIORITY,
              int grp_id = -1,
              void *stack = 0,
-             size_t stack_size = 0);
+             size_t stack_size = 0,
+             bool inherit_priority = false);
 
   /**
    * Spawn N new threads, which execute <func> with argument <arg>.
@@ -528,6 +529,11 @@ public:
    * The argument <task> is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
    * threads with an ACE_Task instance, which defaults to <this>.
+   *
+   * The argument <inherit_priority> is used to assign the priority of
+   * the calling thread on the spawned thread. The spawned thread will
+   * inherit the priority and scheduling policy of the invoking thread
+   * if the value of the <inherit_priority> is set to true.
    *
    * @retval -1 on failure (<errno> will explain...), otherwise returns the
    * group id of the threads.
@@ -541,7 +547,8 @@ public:
                ACE_Task_Base *task = 0,
                ACE_hthread_t thread_handles[] = 0,
                void *stack[] = 0,
-               size_t stack_size[] = 0);
+               size_t stack_size[] = 0,
+               bool inherit_priority = false);
 
   /**
    * Spawn N new threads, which execute <func> with argument <arg>.
@@ -568,6 +575,11 @@ public:
    * The argument <task> is usually assigned by
    * <ACE_Task_Base::activate>.  It associates the newly spawned
    * threads with an ACE_Task instance, which defaults to <this>.
+   *
+   * The argument <inherit_priority> is used to assign the priority of
+   * the calling thread on the spawned thread. The spawned thread will
+   * inherit the priority and scheduling policy, of the invoking
+   * thread if the value of the <inherit_priority> is set to true.
    *
    * @retval -1 on failure (<errno> will explain...), otherwise returns the
    * group id of the threads.
@@ -582,7 +594,8 @@ public:
                void *stack[] = 0,
                size_t stack_size[] = 0,
                ACE_hthread_t thread_handles[] = 0,
-               ACE_Task_Base *task = 0);
+               ACE_Task_Base *task = 0,
+               bool inherit_priority = false);
 
   /**
    * Called to clean up when a thread exits.
@@ -726,7 +739,7 @@ public:
    * True if <t_id> has terminated (i.e., is no longer running),
    * but the slot in the thread manager hasn't been reclaimed yet,
    * else false.  Always return false if <t_id> is not managed by the
-   * Thread_Manager.  
+   * Thread_Manager.
    */
   int testterminate (ACE_thread_t t_id);
 
@@ -954,7 +967,8 @@ protected:
                        int grp_id = -1,
                        void *stack = 0,
                        size_t stack_size = 0,
-                       ACE_Task_Base *task = 0);
+                       ACE_Task_Base *task = 0,
+                       bool inherit_priority = false);
 
   /// Run the registered hooks when the thread exits.
   void run_thread_exit_hooks (int i);

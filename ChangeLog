@@ -1,3 +1,47 @@
+Fri Mar  5 23:09:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ace/OS_NS_sys_socket.inl (closesocket):
+
+	  Win32 distinguishes between shutting down a socket connection
+	  and closing a socket.  Therefore call shutdown on the socket
+	  before closing down the socket. Thanks to Kitty for digging up
+	  the MSDN documentation and the patch. 
+
+	* ace/Task.cpp (activate):
+	* ace/Task.h (activate):
+	  
+	  Added an extra argument, inherit_priority which tells the thread
+	  manager to inherit the priority of the calling thread or use the
+	  priority passed in. 
+	
+	* ace/Thread_Manager.cpp:
+	* ace/Thread_Manager.h (spawn, spawn_n, spawn_i):
+
+  	  Added an extra argument, inherit_priority which tells the thread
+	  manager to inherit the priority of the calling thread or use the
+	  value of the priority passed in. This argument is set to false
+	  by default, which would retain the classical behaviour. 
+
+          Thanks to Abhi <abhi@qualcomm.com> for reporting the bug. Thanks
+	  to Dr. Schmidt and Kitty for motivating me to add the fix in
+	  ACE. 
+
+	  I am not still certain whether the above fix is okay. Folks who
+	  call ACE_Thread::spawn* and ACE_OS::thr_create () will not get
+	  this feature. Still wondering whether we should propogate this
+	  feature down to ACE_Thread or ACE_OS level. Willing to hear any
+	  advise or motivation on this.
+	  
+	* ace/Thread.cpp:
+
+	  Cosmetic formatting fixes. 
+
+	* ace/os_include/os_langinfo.h:
+	* ace/os_include/os_spawn.h:
+
+	  Fixed typos in the included file names. Thanks to Robert
+	  Schiele<robert.schiele@t-online.de> for reporting the problem. 
+
 Fri Mar  5 18:12:24 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_Acceptor.cpp (open): If any of the steps in the open fail,
@@ -13,7 +57,7 @@ Fri Mar  5 22:56:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
 Fri Mar  5 16:56:25 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* bin\tao_other_tests.lst: 
+	* bin/tao_other_tests.lst: 
 
 	  Replaced the string 'RTP/UDP' with 'RTP_UDP' where specified as
 	  a command line argument to the AVStreams tests run_test.pl. This
