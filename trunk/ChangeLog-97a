@@ -6,6 +6,10 @@ Mon Jun 23 09:42:08 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Jun 23 09:18:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* Makefile: added up-to-date check for "make release" from
+	  /project/adaptive/ACE_wrappers.  Also, "make release" now
+	  adds release entry to latest ChangeLog.
+
 	* ace/Makefile: build shared library before static library.
 	  This appears to fix a problem with Sun C++ 4.{1,2} possibly
 	  related to its template instantiation scheme.  If the
