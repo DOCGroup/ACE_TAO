@@ -1,3 +1,9 @@
+Sat Jan 23 17:25:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.{h,cpp}: Reverted changes made since the
+          ACE_Hash_Map_Manager_Ex was getting used in shared memory and
+	  hence could not have "virtual" methods.
+	
 Sat Jan 23 04:53:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager: Added a new associative container (map
