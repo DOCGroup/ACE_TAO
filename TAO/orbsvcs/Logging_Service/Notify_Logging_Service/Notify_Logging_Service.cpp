@@ -90,7 +90,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
                             ACE_ENV_ARG_PARAMETER);
 
   ACE_NEW_THROW_EX (this->notify_log_factory_,
-                      NotifyLogFactory_i (this->notify_factory_.in ()),
+                      TAO_NotifyLogFactory_i (this->notify_factory_.in ()),
                       CORBA::NO_MEMORY ());
 
   DsNotifyLogAdmin::NotifyLogFactory_var obj =

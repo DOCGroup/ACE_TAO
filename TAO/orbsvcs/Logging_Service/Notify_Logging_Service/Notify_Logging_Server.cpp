@@ -8,7 +8,7 @@ ACE_RCSID (Notify_Logging_Service,
 // Driver function for the TAO Notify Service.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Notify_Logging_Service notify_logging_service;
 

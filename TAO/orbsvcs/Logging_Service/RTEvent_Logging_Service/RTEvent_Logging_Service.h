@@ -91,7 +91,7 @@ private:
   const char* child_poa_name_;
   // The name of the Child POA.
 
-  RTEventLogFactory_i *factory_servant_;
+  TAO_RTEventLogFactory_i *factory_servant_;
   // The factory servant.
 
   CORBA::ORB_var orb_;

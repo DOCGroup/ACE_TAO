@@ -72,7 +72,7 @@ protected:
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
   // The Factory.
 
-  NotifyLogFactory_i *notify_log_factory_;
+  TAO_NotifyLogFactory_i *notify_log_factory_;
   // The Notify Log Factory.
 
   CORBA::ORB_var orb_;
