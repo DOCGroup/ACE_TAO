@@ -1,3 +1,7 @@
+Mon Jun 30 12:00:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.2.13, released Mon Jun 30 12:00:02 1997.
+
 Sat Jun 28 08:27:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added definitions of ACE_SHLIB_HANDLE and
