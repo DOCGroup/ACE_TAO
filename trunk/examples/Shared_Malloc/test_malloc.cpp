@@ -98,7 +98,8 @@ spawn (void)
 	  ACE_OS::sprintf (iterations, "%d", Options::instance ()->iteration_count ());
 	  ACE_OS::sprintf (msg_size, "%d", Options::instance ()->max_msg_size ());
 
-	  const char *const argv[] = {
+	  char *argv[] = 
+	  {
             Options::instance ()->slave_name (),
             "-p",
             "-n",
@@ -106,7 +107,8 @@ spawn (void)
             "-L",
             msg_size,
             Options::instance ()->debug () ? "-d" : "",
-            (const char *) 0 };
+            (const char *) 0 
+	  };
 
 	  if (ACE_OS::execv (Options::instance ()->program_name (),
                              (char *const *) argv) == -1)

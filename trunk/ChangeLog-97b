@@ -1,3 +1,14 @@
+Tue Sep  9 04:35:35 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
+
+	* ace/OS.h: Added a "fake" #define for SIGALRM so that programs
+ 	  will *compile* on platforms like Chorus.  Thanks to Wei Chiang
+ 	  for reporting this.
+
+	* examples/Shared_Malloc/test_malloc.cpp (spawn): HP/UX doesn't
+ 	  seem to like const char *const argv[] being given an initializer
+ 	  list.  I've fixed this to be just plain ol' char *argv[].
+  	  Thanks to Sandro Doro for reporting this.
+
 Mon Sep  8 18:38:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Handle_Set_Test.cpp: It is possible for the order to get
