@@ -15,6 +15,7 @@ autoconf or Larry Wall's metaconfig...
 Macro                                   Description
 -----                                   -----------
 
+ACE_DISABLE_DEBUG_DLL_CHECK             Define this if you don't want debug version ACE search for debug version DLLs first before looking for the DLL names specified.
 ACE_CAST_CONST                          Used to work around broken SunCC ANSI casts that require an extra const.
 ACE_HAS_ANSI_CASTS                      Platform supports new C++ style casts (dynamic_cast, static_cast, reinterpret_cast and const_cast)
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with ACE_HAS_TSS_EMULATION _only_.  Defaults to 64.
