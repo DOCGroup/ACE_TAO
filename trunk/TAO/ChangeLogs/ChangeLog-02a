@@ -47,13 +47,13 @@ Fri Jun  1 11:28:41 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           - Changed behavior of tao_ifr to remove an existing
             IFR entry, if it detects a clash. Essentially, the
-            question of how to determine if there is an actual
-            error in redefinition of an interface, or if we are
+            undecidable question of how to determine if there is an
+            actual error in redefinition of an interface, or if we are
             defining a forward declared interface from another
             IDL file has been resolved by adopting the behavior
             of the IFR loaders of other ORB vendors.
 
-          Bug reports and feature requests all thanks to
+          Bug reports and feature requests thanks to
           Philippe Merle <Philippe.Merle@lifl.fr>, who is testing
           the TAO IFR's compatibility with CorbaScript.
 
