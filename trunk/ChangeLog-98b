@@ -1,3 +1,10 @@
+Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* .cvsignore: Added "build" to make CVS happy.  Thanks to 
+	  David for this info.
+
+        * ace/CLASSIX: Reran "make depend."
+
 Wed Jun 24 13:34:32 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 
         * tests/CLASSIX/*
