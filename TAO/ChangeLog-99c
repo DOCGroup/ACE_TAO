@@ -1,3 +1,10 @@
+Wed May 12 18:02:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.{h,i}:
+	  Added a non-copying version of <<= for Any into Any, as
+	  required by the CORBA spec (see CORBA 2.3a, section 20.16.2,
+	  page 20-58).
+
 Wed May 12 16:26:14 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references): 
