@@ -37,7 +37,8 @@ namespace TAO
     public:
       virtual ~Policy_Strategy (void) {};
 
-      virtual void strategy_init(CORBA::PolicyList *policy_list) = 0;
+      virtual void strategy_init(TAO_POA *poa,
+                                 CORBA::PolicyList *policy_list) = 0;
     };
   }
 }

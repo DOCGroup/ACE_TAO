@@ -42,7 +42,7 @@ namespace TAO
     public:
       virtual ~Servant_Retention_Strategy (void);
 
-      virtual void strategy_init (CORBA::PolicyList *policy_list)
+      virtual void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }

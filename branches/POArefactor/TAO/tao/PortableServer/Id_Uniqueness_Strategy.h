@@ -41,7 +41,7 @@ namespace TAO
     public:
       virtual ~Id_Uniqueness_Strategy (void);
 
-      void strategy_init(CORBA::PolicyList *policy_list);
+      void strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list);
     };
 
     class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy :

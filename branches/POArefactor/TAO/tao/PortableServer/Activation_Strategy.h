@@ -42,7 +42,7 @@ namespace TAO
     public:
       virtual ~Thread_Strategy (void);
 
-      void init(CORBA::PolicyList *policy_list)
+      void init (TAO_POA *poa, CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }

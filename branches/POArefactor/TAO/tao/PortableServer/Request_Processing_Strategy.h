@@ -42,6 +42,8 @@ namespace PortableServer
   typedef TAO_Objref_Var_T<ServantActivator> ServantActivator_var;
 }
 
+class TAO_POA;
+
 namespace TAO
 {
   namespace Portable_Server
@@ -52,7 +54,7 @@ namespace TAO
     public:
       virtual ~Request_Processing_Strategy (void);
 
-      void strategy_init(CORBA::PolicyList *policy_list);
+      void strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list);
 
       virtual
       PortableServer::ServantManager_ptr
@@ -86,6 +88,8 @@ namespace TAO
       locate_servant (const PortableServer::ObjectId &system_id,
                       PortableServer::Servant &servant
                       ACE_ENV_ARG_DECL) = 0;
+    protected:
+      TAO_POA* poa_;
     };
 
     class TAO_PortableServer_Export AOM_Only_Request_Processing_Strategy :

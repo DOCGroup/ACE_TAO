@@ -48,6 +48,8 @@ ACE_RCSID (PortableServer,
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include "Request_Processing_Strategy.h"
+
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
@@ -1141,7 +1143,9 @@ TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
                    PortableServer::POA::NoServant,
                    PortableServer::POA::WrongPolicy))
 {
-  // This operation requires the USE_DEFAULT_SERVANT policy; if not
+  return this->active_policy_strategies_.request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+/*  // This operation requires the USE_DEFAULT_SERVANT policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
     {
@@ -1183,7 +1187,7 @@ TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_THROW_RETURN (PortableServer::POA::NoServant (),
                         0);
-    }
+    }*/
 }
 
 void
@@ -1192,6 +1196,8 @@ TAO_POA::set_servant_i (PortableServer::Servant servant
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
+  this->active_policy_strategies_.request_processing_strategy()->set_servant (servant ACE_ENV_ARG_PARAMETER);
+/*
   // This operation requires the USE_DEFAULT_SERVANT policy; if not
   // present, the WrongPolicy exception is raised.
   if (this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
@@ -1223,7 +1229,7 @@ TAO_POA::set_servant_i (PortableServer::Servant servant
 
       servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-    }
+    }*/
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

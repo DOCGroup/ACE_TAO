@@ -12,6 +12,8 @@
 #include "Request_Processing_Strategy.h"
 #include "ServantActivatorC.h"
 #include "ServantLocatorC.h"
+#include "Non_Servant_Upcall.h"
+#include "POA.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -29,8 +31,9 @@ namespace TAO
     }
 
     void
-    Request_Processing_Strategy::strategy_init(CORBA::PolicyList *policy_list)
+    Request_Processing_Strategy::strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list)
     {
+      poa_ = poa;
       // dependent on type create the correct strategy.
     }
 
@@ -47,74 +50,70 @@ namespace TAO
                         PortableServer::ServantManager::_nil ());
     }
 
-      void
-      AOM_Only_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
-                           ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
-      {
-        ACE_UNUSED_ARG (imgr);
-
-        ACE_THROW (PortableServer::POA::WrongPolicy ());
-      }
-
-      PortableServer::Servant
-      AOM_Only_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::NoServant,
-                         PortableServer::POA::WrongPolicy))
-      {
-        ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                          0);
-      }
-
-      void
-      AOM_Only_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
-                   ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
-      {
-        ACE_UNUSED_ARG (servant);
-
-        ACE_THROW (PortableServer::POA::WrongPolicy ());
-      }
-
-      TAO_SERVANT_LOCATION
-      AOM_Only_Request_Processing_Strategy::locate_servant (const PortableServer::ObjectId &system_id,
-                        PortableServer::Servant &servant
-                        ACE_ENV_ARG_DECL)
-      {
-        // todo code from POA::locate_servant_i, should handle this dependent on servant_retation
-        /**
-
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+    void
+    AOM_Only_Request_Processing_Strategy::set_servant_manager (PortableServer::ServantManager_ptr imgr
+                         ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
     {
-      // Find user id from system id.
-      PortableServer::ObjectId user_id;
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id,
-                                        user_id) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            TAO_SERVANT_NOT_FOUND);
-        }
+      ACE_UNUSED_ARG (imgr);
 
-      TAO_Active_Object_Map::Map_Entry *entry = 0;
-      int result = this->active_object_map ().
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
-                                                  servant,
-                                                  entry);
-      if (result == 0)
-        {
-          // Success
-          return TAO_SERVANT_FOUND;
-        }
-
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
-      return TAO_SERVANT_NOT_FOUND;
 
-         */
+    PortableServer::Servant
+    AOM_Only_Request_Processing_Strategy::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::NoServant,
+                       PortableServer::POA::WrongPolicy))
+    {
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
+    }
+
+    void
+    AOM_Only_Request_Processing_Strategy::set_servant (PortableServer::Servant servant
+                 ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
+    {
+      ACE_UNUSED_ARG (servant);
+
+      ACE_THROW (PortableServer::POA::WrongPolicy ());
+    }
+
+    TAO_SERVANT_LOCATION
+    AOM_Only_Request_Processing_Strategy::locate_servant (
+      const PortableServer::ObjectId &system_id,
+      PortableServer::Servant &servant
+      ACE_ENV_ARG_DECL)
+    {
+      if (this->poa_->cached_policies().servant_retention () ==
+            PortableServer::RETAIN)
+        {
+          // Find user id from system id.
+          PortableServer::ObjectId user_id;
+          if (this->poa_->active_object_map ().
+              find_user_id_using_system_id (system_id,
+                                            user_id) != 0)
+            {
+              ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                                TAO_SERVANT_NOT_FOUND);
+            }
+
+          TAO_Active_Object_Map::Map_Entry *entry = 0;
+          int result = this->poa_->active_object_map ().
+            find_servant_using_system_id_and_user_id (system_id,
+                                                      user_id,
+                                                      servant,
+                                                      entry);
+          if (result == 0)
+            {
+              // Success
+              return TAO_SERVANT_FOUND;
+            }
+        }
+        return TAO_SERVANT_NOT_FOUND;
     }
 
     Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
@@ -152,8 +151,7 @@ namespace TAO
       PortableServer::Servant result = this->default_servant_.in ();
       if (result != 0)
         {
-// todo
-/*          // A recursive thread lock without using a recursive thread
+          // A recursive thread lock without using a recursive thread
           // lock.  Non_Servant_Upcall has a magic constructor and
           // destructor.  We unlock the Object_Adapter lock for the
           // duration of the servant activator upcalls; reacquiring once
@@ -161,7 +159,7 @@ namespace TAO
           // other threads will not be able to make progress since
           // <Object_Adapter::non_servant_upcall_in_progress_> has been
           // set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // The POA invokes _add_ref once on the Servant before returning
@@ -172,7 +170,7 @@ namespace TAO
           // Servant if the type of the Servant uses the default reference
           // counting inherited from ServantBase.
           result->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);*/
+          ACE_CHECK_RETURN (0);
 
           return result;
         }
@@ -210,13 +208,11 @@ namespace TAO
           // other threads will not be able to make progress since
           // <Object_Adapter::non_servant_upcall_in_progress_> has been
           // set.
-// todo
-/*
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+          Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;*/
+          ACE_CHECK;
         }
     }
 

@@ -52,7 +52,7 @@ namespace TAO
     public:
       virtual ~Lifespan_Strategy (void);
 
-      void strategy_init (CORBA::PolicyList *policy_list)
+      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }

@@ -28,6 +28,7 @@ namespace TAO
   {
     class Cached_Policies;
     class Thread_Strategy;
+    class Request_Processing_Strategy;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -40,9 +41,13 @@ namespace TAO
       void update (Cached_Policies &policies
                    ACE_ENV_ARG_DECL);
 
-      Thread_Strategy* thread_strategy (void) const;
+      Thread_Strategy *thread_strategy (void) const;
+
+      Request_Processing_Strategy *request_processing_strategy (void) const;
+
     private:
       Thread_Strategy* thread_strategy_;
+      Request_Processing_Strategy* request_processing_strategy_;
     };
   }
 }

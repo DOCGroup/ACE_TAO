@@ -51,7 +51,7 @@ namespace TAO
 
       virtual int exit () = 0;
 
-      void strategy_init (CORBA::PolicyList *policy_list);
+      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
     };
 
     class TAO_PortableServer_Export Single_Thread_Strategy :

@@ -17,7 +17,7 @@ namespace TAO
     }
 
     void
-    Thread_Strategy::strategy_init (CORBA::PolicyList *policy_list)
+    Thread_Strategy::strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
     {
       // dependent on type create the correct strategy.
     }
