@@ -94,6 +94,20 @@
     Recently Completed Work:
 
     <UL>
+      <li>Began the process of changing the internals of TAO to use
+      the "underbar" namespace mapping.  This should be completed
+      soon.</li>
+
+      <li>The ORBs manipulation of object keys and object ids is now
+      consistent.  Canonically, everything is managed as an opaque
+      sequence of octets.  Conversion to/from strings is permitted,
+      with non-printables turning into a trigraph <b>\hl</b> where
+      <b>h</b> is the high nibble digit in hex, and <b>l</b> is the
+      low nibble in hex.</li>
+
+      <li><code>CORBA_ORB::run()</code> should be able to be called
+      multiply in the same execution path now.</li>
+
       <li>Fixed the <b>LOCATION_FORWARD</b> capabilities to work as
       described in the CORBA 2.1 and the POA specification.</li>
       
