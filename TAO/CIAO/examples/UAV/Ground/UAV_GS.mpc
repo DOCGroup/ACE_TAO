@@ -3,6 +3,7 @@
 
 project(UAV_GS_stub): ciao_client {
   
+  after += BBN_UAV_stub
   sharedname = UAV_GS_stub
   idlflags += -Wb,stub_export_macro=UAV_GS_STUB_Export -Wb,stub_export_include=UAV_GS_stub_export.h -Wb,skel_export_macro=UAV_GS_SVNT_Export -Wb,skel_export_include=UAV_GS_svnt_export.h
   dynamicflags   = UAV_GS_STUB_BUILD_DLL
@@ -17,7 +18,7 @@ project(UAV_GS_stub): ciao_client {
 }
 
 project(UAV_GS_svnt) : ciao_servant {
-  after +=  UAV_GS_stub
+  after +=  BBN_UAV_svnt UAV_GS_stub
   sharedname  = UAV_GS_svnt
   libs    += UAV_GS_stub 
   
@@ -41,7 +42,7 @@ project(UAV_GS_svnt) : ciao_servant {
 
 
 project(UAV_GS_exec) : ciao_component {
-  after   += UAV_GS_svnt
+  after   += BBN_UAV_svnt UAV_GS_svnt
   sharedname = UAV_GS_exec
   libs      += UAV_GS_stub UAV_GS_svnt 
   
