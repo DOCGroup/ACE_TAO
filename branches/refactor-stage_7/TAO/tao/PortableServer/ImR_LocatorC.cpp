@@ -719,37 +719,20 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::AlreadyRegistered
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::CannotActivate
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        ImplementationRepository::NotFound
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        ImplementationRepository::ActivationMode
-      >;
+  template class TAO::Objref_Traits<ImplementationRepository::Locator>;
 
   template class
     TAO_Objref_Var_T<
-        ImplementationRepository::Locator,
-        TAO::Objref_Traits<ImplementationRepository::Locator>
+        ImplementationRepository::Locator
       >;
 
   template class
     TAO_Objref_Out_T<
-        ImplementationRepository::Locator,
-        TAO::Objref_Traits<ImplementationRepository::Locator>
+        ImplementationRepository::Locator
       >;
+
+  template class
+    TAO::Narrow_Utils<ImplementationRepository::Locator>;
 
   template class
     TAO::Any_Impl_T<
@@ -758,37 +741,20 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::AlreadyRegistered \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::CannotActivate \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        ImplementationRepository::NotFound \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        ImplementationRepository::ActivationMode \
-      >
+# pragma instantiate TAO::Objref_Traits<ImplementationRepository::Locator>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        ImplementationRepository::Locator, \
-        TAO::Objref_Traits<ImplementationRepository::Locator> \
+        ImplementationRepository::Locator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        ImplementationRepository::Locator, \
-        TAO::Objref_Traits<ImplementationRepository::Locator> \
+        ImplementationRepository::Locator
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<ImplementationRepository::Locator>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \

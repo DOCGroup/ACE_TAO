@@ -3789,8 +3789,9 @@ operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
+/*template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
                                          CORBA::TypeCode_var>;
+*/
 
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
@@ -3822,9 +3823,10 @@ template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
 template class TAO::Objref_Traits<CORBA::TypeCode>;
 template class TAO::Arg_Traits<CORBA::TypeCode>;
-template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+/*template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                         CORBA::TypeCode_var,
                                         CORBA::TypeCode_out>;
+*/
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

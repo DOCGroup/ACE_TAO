@@ -7155,262 +7155,18 @@ CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::PolicyList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::PolicyList,
-        CORBA::PolicyList_var,
-        CORBA::PolicyList_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::OctetSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::OctetSeq,
-        CORBA::OctetSeq_var,
-        CORBA::OctetSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::TCKind
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::exception_type
-      >;
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
-
-#if !defined (_PORTABLESERVER_POA__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POA__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::POA>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::POA_ptr,
-        PortableServer::POA_var,
-        PortableServer::POA_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::AdapterAlreadyExists
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::AdapterNonExistent
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::InvalidPolicy
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::NoServant
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::ObjectAlreadyActive
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::ObjectNotActive
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::ServantAlreadyActive
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::ServantNotActive
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::WrongAdapter
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POA::WrongPolicy
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::POA_ptr,
-        PortableServer::POA_var
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableServer::POAManager_ptr
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::ThreadPolicy_ptr,
-        PortableServer::ThreadPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::ThreadPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::LifespanPolicy_ptr,
-        PortableServer::LifespanPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::LifespanPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::IdUniquenessPolicy_ptr,
-        PortableServer::IdUniquenessPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::IdUniquenessPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::IdAssignmentPolicy_ptr,
-        PortableServer::IdAssignmentPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::IdAssignmentPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::ImplicitActivationPolicy_ptr,
-        PortableServer::ImplicitActivationPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::ImplicitActivationPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::ServantRetentionPolicy_ptr,
-        PortableServer::ServantRetentionPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::ServantRetentionPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::RequestProcessingPolicy_ptr,
-        PortableServer::RequestProcessingPolicy_var
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        PortableServer::RequestProcessingPolicyValue
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        PortableServer::ServantManager_ptr,
-        PortableServer::ServantManager_var
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableServer::ServantManager_ptr
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        CORBA::sequence,
-        CORBA::sequence_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        PortableServer::IDs,
-        PortableServer::IDs_var
-      >;
+  template class TAO::Objref_Traits<PortableServer::POA>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::POA,
-        TAO::Objref_Traits<PortableServer::POA>
+        PortableServer::POA
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::POA,
-        TAO::Objref_Traits<PortableServer::POA>
+        PortableServer::POA
       >;
 
   template class
@@ -7418,24 +7174,10 @@ CORBA::Boolean operator>> (
         PortableServer::POA
       >;
 
-#if !defined (_PORTABLESERVER_POALIST__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POALIST__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::POAList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        PortableServer::POAList,
-        PortableServer::POAList_var,
-        PortableServer::POAList_out
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO_Object_Manager<
         PortableServer::POA,
-        PortableServer::POA_va,
+        PortableServer::POA_var
       >;
 
   template class
@@ -7466,8 +7208,8 @@ CORBA::Boolean operator>> (
           >
       >;
 
-#if !defined (_PORTABLESERVER_POALIST_CS_)
-#define _PORTABLESERVER_POALIST_CS_
+#if !defined (_PORTABLESERVER_POALIST__EXPLICIT_CS_)
+#define _PORTABLESERVER_POALIST__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Object_Sequence<
@@ -7481,30 +7223,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Dual_Impl_T<
         PortableServer::POAList
       >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::ForwardRequest
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::NotAGroupObject
-      >;
-
-#if !defined (_PORTABLESERVER_IDS__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDS__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::IDs>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        PortableServer::IDs,
-        PortableServer::IDs_var,
-        PortableServer::IDs_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO_VarSeq_Var_T<
@@ -7525,8 +7243,8 @@ CORBA::Boolean operator>> (
         PortableServer::ObjectId
       >;
 
-#if !defined (_PORTABLESERVER_IDS_CS_)
-#define _PORTABLESERVER_IDS_CS_
+#if !defined (_PORTABLESERVER_IDS__EXPLICIT_CS_)
+#define _PORTABLESERVER_IDS__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -7540,44 +7258,21 @@ CORBA::Boolean operator>> (
         PortableServer::IDs
       >;
 
-#if !defined (_PORTABLESERVER_THREADPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_THREADPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ThreadPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::ThreadPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::ThreadPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_THREADPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_THREADPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ThreadPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::ThreadPolicy_ptr,
-        PortableServer::ThreadPolicy_var,
-        PortableServer::ThreadPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::ThreadPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::ThreadPolicy,
-        TAO::Objref_Traits<PortableServer::ThreadPolicy>
+        PortableServer::ThreadPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ThreadPolicy,
-        TAO::Objref_Traits<PortableServer::ThreadPolicy>
+        PortableServer::ThreadPolicy
       >;
 
   template class
@@ -7585,44 +7280,21 @@ CORBA::Boolean operator>> (
         PortableServer::ThreadPolicy
       >;
 
-#if !defined (_PORTABLESERVER_LIFESPANPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_LIFESPANPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::LifespanPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::LifespanPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::LifespanPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_LIFESPANPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_LIFESPANPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::LifespanPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::LifespanPolicy_ptr,
-        PortableServer::LifespanPolicy_var,
-        PortableServer::LifespanPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::LifespanPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::LifespanPolicy,
-        TAO::Objref_Traits<PortableServer::LifespanPolicy>
+        PortableServer::LifespanPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::LifespanPolicy,
-        TAO::Objref_Traits<PortableServer::LifespanPolicy>
+        PortableServer::LifespanPolicy
       >;
 
   template class
@@ -7630,44 +7302,21 @@ CORBA::Boolean operator>> (
         PortableServer::LifespanPolicy
       >;
 
-#if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDUNIQUENESSPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::IdUniquenessPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::IdUniquenessPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::IdUniquenessPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDUNIQUENESSPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::IdUniquenessPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::IdUniquenessPolicy_ptr,
-        PortableServer::IdUniquenessPolicy_var,
-        PortableServer::IdUniquenessPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::IdUniquenessPolicy,
-        TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>
+        PortableServer::IdUniquenessPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::IdUniquenessPolicy,
-        TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>
+        PortableServer::IdUniquenessPolicy
       >;
 
   template class
@@ -7675,44 +7324,21 @@ CORBA::Boolean operator>> (
         PortableServer::IdUniquenessPolicy
       >;
 
-#if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDASSIGNMENTPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::IdAssignmentPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::IdAssignmentPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::IdAssignmentPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDASSIGNMENTPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::IdAssignmentPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::IdAssignmentPolicy_ptr,
-        PortableServer::IdAssignmentPolicy_var,
-        PortableServer::IdAssignmentPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::IdAssignmentPolicy,
-        TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>
+        PortableServer::IdAssignmentPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::IdAssignmentPolicy,
-        TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>
+        PortableServer::IdAssignmentPolicy
       >;
 
   template class
@@ -7720,44 +7346,21 @@ CORBA::Boolean operator>> (
         PortableServer::IdAssignmentPolicy
       >;
 
-#if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IMPLICITACTIVATIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ImplicitActivationPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::ImplicitActivationPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::ImplicitActivationPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ImplicitActivationPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::ImplicitActivationPolicy_ptr,
-        PortableServer::ImplicitActivationPolicy_var,
-        PortableServer::ImplicitActivationPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::ImplicitActivationPolicy,
-        TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>
+        PortableServer::ImplicitActivationPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ImplicitActivationPolicy,
-        TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>
+        PortableServer::ImplicitActivationPolicy
       >;
 
   template class
@@ -7765,44 +7368,21 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicy
       >;
 
-#if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTRETENTIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ServantRetentionPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::ServantRetentionPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::ServantRetentionPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ServantRetentionPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::ServantRetentionPolicy_ptr,
-        PortableServer::ServantRetentionPolicy_var,
-        PortableServer::ServantRetentionPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::ServantRetentionPolicy,
-        TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>
+        PortableServer::ServantRetentionPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ServantRetentionPolicy,
-        TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>
+        PortableServer::ServantRetentionPolicy
       >;
 
   template class
@@ -7810,44 +7390,21 @@ CORBA::Boolean operator>> (
         PortableServer::ServantRetentionPolicy
       >;
 
-#if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_REQUESTPROCESSINGPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::RequestProcessingPolicyValue>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::RequestProcessingPolicyValue>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::RequestProcessingPolicyValue
       >;
 
-#if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::RequestProcessingPolicy>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::RequestProcessingPolicy_ptr,
-        PortableServer::RequestProcessingPolicy_var,
-        PortableServer::RequestProcessingPolicy_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::RequestProcessingPolicy,
-        TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>
+        PortableServer::RequestProcessingPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::RequestProcessingPolicy,
-        TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>
+        PortableServer::RequestProcessingPolicy
       >;
 
   template class
@@ -7855,54 +7412,21 @@ CORBA::Boolean operator>> (
         PortableServer::RequestProcessingPolicy
       >;
 
-#if !defined (_PORTABLESERVER_POAMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POAMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::POAManager>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::POAManager_ptr,
-        PortableServer::POAManager_var,
-        PortableServer::POAManager_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::POAManager::AdapterInactive
-      >;
-
-#if !defined (_PORTABLESERVER_POAMANAGER_STATE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POAMANAGER_STATE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::POAManager::State>;
-
-  template class TAO::Basic_Arg_Traits_T<PortableServer::POAManager::State>;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Basic_Impl_T<
         PortableServer::POAManager::State
       >;
 
-  template class
-    TAO::Ret_Basic_Argument_T<
-        PortableServer::POAManager::State
-      >;
+  template class TAO::Objref_Traits<PortableServer::POAManager>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::POAManager,
-        TAO::Objref_Traits<PortableServer::POAManager>
+        PortableServer::POAManager
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::POAManager,
-        TAO::Objref_Traits<PortableServer::POAManager>
+        PortableServer::POAManager
       >;
 
   template class
@@ -7910,35 +7434,16 @@ CORBA::Boolean operator>> (
         PortableServer::POAManager
       >;
 
-#if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::AdapterActivator>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::AdapterActivator_ptr,
-        PortableServer::AdapterActivator_var,
-        PortableServer::AdapterActivator_out
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::In_Object_Argument_T<
-        PortableServer::POA_ptr
-      >;
+  template class TAO::Objref_Traits<PortableServer::AdapterActivator>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::AdapterActivator,
-        TAO::Objref_Traits<PortableServer::AdapterActivator>
+        PortableServer::AdapterActivator
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::AdapterActivator,
-        TAO::Objref_Traits<PortableServer::AdapterActivator>
+        PortableServer::AdapterActivator
       >;
 
   template class
@@ -7946,30 +7451,16 @@ CORBA::Boolean operator>> (
         PortableServer::AdapterActivator
       >;
 
-#if !defined (_PORTABLESERVER_SERVANTMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<PortableServer::ServantManager>;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        PortableServer::ServantManager_ptr,
-        PortableServer::ServantManager_var,
-        PortableServer::ServantManager_out
-      >;
-
-#endif /* end #if !defined */
+  template class TAO::Objref_Traits<PortableServer::ServantManager>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::ServantManager,
-        TAO::Objref_Traits<PortableServer::ServantManager>
+        PortableServer::ServantManager
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ServantManager,
-        TAO::Objref_Traits<PortableServer::ServantManager>
+        PortableServer::ServantManager
       >;
 
   template class
@@ -7977,16 +7468,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantManager
       >;
 
+  template class TAO::Objref_Traits<PortableServer::ServantActivator>;
+
   template class
     TAO_Objref_Var_T<
-        PortableServer::ServantActivator,
-        TAO::Objref_Traits<PortableServer::ServantActivator>
+        PortableServer::ServantActivator
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ServantActivator,
-        TAO::Objref_Traits<PortableServer::ServantActivator>
+        PortableServer::ServantActivator
       >;
 
   template class
@@ -7994,16 +7485,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantActivator
       >;
 
+  template class TAO::Objref_Traits<PortableServer::ServantLocator>;
+
   template class
     TAO_Objref_Var_T<
-        PortableServer::ServantLocator,
-        TAO::Objref_Traits<PortableServer::ServantLocator>
+        PortableServer::ServantLocator
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::ServantLocator,
-        TAO::Objref_Traits<PortableServer::ServantLocator>
+        PortableServer::ServantLocator
       >;
 
   template class
@@ -8011,21 +7502,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantLocator
       >;
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        PortableServer::Current::NoContext
-      >;
+  template class TAO::Objref_Traits<PortableServer::Current>;
 
   template class
     TAO_Objref_Var_T<
-        PortableServer::Current,
-        TAO::Objref_Traits<PortableServer::Current>
+        PortableServer::Current
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableServer::Current,
-        TAO::Objref_Traits<PortableServer::Current>
+        PortableServer::Current
       >;
 
   template class
@@ -8035,213 +7521,22 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::PolicyList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::PolicyList, \
-        CORBA::PolicyList_var, \
-        CORBA::PolicyList_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::OctetSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::OctetSeq, \
-        CORBA::OctetSeq_var, \
-        CORBA::OctetSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::TCKind \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
-      >
-
-#if !defined (_PORTABLESERVER_POA__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POA__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::POA>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::POA_ptr, \
-        PortableServer::POA_var, \
-        PortableServer::POA_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::AdapterAlreadyExists \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::AdapterNonExistent \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::InvalidPolicy \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::NoServant \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::ObjectAlreadyActive \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::ObjectNotActive \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::ServantAlreadyActive \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::ServantNotActive \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::WrongAdapter \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POA::WrongPolicy \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableServer::POAManager_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::ThreadPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::LifespanPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::IdUniquenessPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::IdAssignmentPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::ImplicitActivationPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::ServantRetentionPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        PortableServer::RequestProcessingPolicyValue \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableServer::ServantManager_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableServer::POA>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::POA, \
-        TAO::Objref_Traits<PortableServer::POA> \
+        PortableServer::POA
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::POA, \
-        TAO::Objref_Traits<PortableServer::POA> \
+        PortableServer::POA
       >
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         PortableServer::POA \
       >
-
-#if !defined (_PORTABLESERVER_POALIST__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POALIST__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::POAList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        PortableServer::POAList, \
-        PortableServer::POAList_var, \
-        PortableServer::POAList_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_MngSeq_Var_T< \
@@ -8271,8 +7566,8 @@ CORBA::Boolean operator>> (
           > \
       >
 
-#if !defined (_PORTABLESERVER_POALIST_CS_)
-#define _PORTABLESERVER_POALIST_CS_
+#if !defined (_PORTABLESERVER_POALIST__EXPLICIT_CS_)
+#define _PORTABLESERVER_POALIST__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Object_Sequence< \
@@ -8286,30 +7581,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Dual_Impl_T< \
         PortableServer::POAList \
       >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::ForwardRequest \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::NotAGroupObject \
-      >
-
-#if !defined (_PORTABLESERVER_IDS__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDS__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::IDs>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        PortableServer::IDs, \
-        PortableServer::IDs_var, \
-        PortableServer::IDs_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO_VarSeq_Var_T< \
@@ -8330,8 +7601,8 @@ CORBA::Boolean operator>> (
         PortableServer::ObjectId \
       >
 
-#if !defined (_PORTABLESERVER_IDS_CS_)
-#define _PORTABLESERVER_IDS_CS_
+#if !defined (_PORTABLESERVER_IDS__EXPLICIT_CS_)
+#define _PORTABLESERVER_IDS__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -8345,44 +7616,21 @@ CORBA::Boolean operator>> (
         PortableServer::IDs \
       >
 
-#if !defined (_PORTABLESERVER_THREADPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_THREADPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ThreadPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::ThreadPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::ThreadPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_THREADPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_THREADPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ThreadPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::ThreadPolicy_ptr, \
-        PortableServer::ThreadPolicy_var, \
-        PortableServer::ThreadPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::ThreadPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ThreadPolicy, \
-        TAO::Objref_Traits<PortableServer::ThreadPolicy> \
+        PortableServer::ThreadPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ThreadPolicy, \
-        TAO::Objref_Traits<PortableServer::ThreadPolicy> \
+        PortableServer::ThreadPolicy
       >
 
 # pragma instantiate \
@@ -8390,44 +7638,21 @@ CORBA::Boolean operator>> (
         PortableServer::ThreadPolicy \
       >
 
-#if !defined (_PORTABLESERVER_LIFESPANPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_LIFESPANPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::LifespanPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::LifespanPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::LifespanPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_LIFESPANPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_LIFESPANPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::LifespanPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::LifespanPolicy_ptr, \
-        PortableServer::LifespanPolicy_var, \
-        PortableServer::LifespanPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::LifespanPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::LifespanPolicy, \
-        TAO::Objref_Traits<PortableServer::LifespanPolicy> \
+        PortableServer::LifespanPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::LifespanPolicy, \
-        TAO::Objref_Traits<PortableServer::LifespanPolicy> \
+        PortableServer::LifespanPolicy
       >
 
 # pragma instantiate \
@@ -8435,44 +7660,21 @@ CORBA::Boolean operator>> (
         PortableServer::LifespanPolicy \
       >
 
-#if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDUNIQUENESSPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::IdUniquenessPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::IdUniquenessPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::IdUniquenessPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_IDUNIQUENESSPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDUNIQUENESSPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::IdUniquenessPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::IdUniquenessPolicy_ptr, \
-        PortableServer::IdUniquenessPolicy_var, \
-        PortableServer::IdUniquenessPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::IdUniquenessPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::IdUniquenessPolicy, \
-        TAO::Objref_Traits<PortableServer::IdUniquenessPolicy> \
+        PortableServer::IdUniquenessPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::IdUniquenessPolicy, \
-        TAO::Objref_Traits<PortableServer::IdUniquenessPolicy> \
+        PortableServer::IdUniquenessPolicy
       >
 
 # pragma instantiate \
@@ -8480,44 +7682,21 @@ CORBA::Boolean operator>> (
         PortableServer::IdUniquenessPolicy \
       >
 
-#if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDASSIGNMENTPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::IdAssignmentPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::IdAssignmentPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::IdAssignmentPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_IDASSIGNMENTPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IDASSIGNMENTPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::IdAssignmentPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::IdAssignmentPolicy_ptr, \
-        PortableServer::IdAssignmentPolicy_var, \
-        PortableServer::IdAssignmentPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::IdAssignmentPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::IdAssignmentPolicy, \
-        TAO::Objref_Traits<PortableServer::IdAssignmentPolicy> \
+        PortableServer::IdAssignmentPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::IdAssignmentPolicy, \
-        TAO::Objref_Traits<PortableServer::IdAssignmentPolicy> \
+        PortableServer::IdAssignmentPolicy
       >
 
 # pragma instantiate \
@@ -8525,44 +7704,21 @@ CORBA::Boolean operator>> (
         PortableServer::IdAssignmentPolicy \
       >
 
-#if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IMPLICITACTIVATIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ImplicitActivationPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::ImplicitActivationPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::ImplicitActivationPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ImplicitActivationPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::ImplicitActivationPolicy_ptr, \
-        PortableServer::ImplicitActivationPolicy_var, \
-        PortableServer::ImplicitActivationPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ImplicitActivationPolicy, \
-        TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy> \
+        PortableServer::ImplicitActivationPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ImplicitActivationPolicy, \
-        TAO::Objref_Traits<PortableServer::ImplicitActivationPolicy> \
+        PortableServer::ImplicitActivationPolicy
       >
 
 # pragma instantiate \
@@ -8570,44 +7726,21 @@ CORBA::Boolean operator>> (
         PortableServer::ImplicitActivationPolicy \
       >
 
-#if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTRETENTIONPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ServantRetentionPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::ServantRetentionPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::ServantRetentionPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTRETENTIONPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ServantRetentionPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::ServantRetentionPolicy_ptr, \
-        PortableServer::ServantRetentionPolicy_var, \
-        PortableServer::ServantRetentionPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::ServantRetentionPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ServantRetentionPolicy, \
-        TAO::Objref_Traits<PortableServer::ServantRetentionPolicy> \
+        PortableServer::ServantRetentionPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ServantRetentionPolicy, \
-        TAO::Objref_Traits<PortableServer::ServantRetentionPolicy> \
+        PortableServer::ServantRetentionPolicy
       >
 
 # pragma instantiate \
@@ -8615,44 +7748,21 @@ CORBA::Boolean operator>> (
         PortableServer::ServantRetentionPolicy \
       >
 
-#if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_REQUESTPROCESSINGPOLICYVALUE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::RequestProcessingPolicyValue>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::RequestProcessingPolicyValue>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::RequestProcessingPolicyValue \
       >
 
-#if !defined (_PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_REQUESTPROCESSINGPOLICY__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::RequestProcessingPolicy>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::RequestProcessingPolicy_ptr, \
-        PortableServer::RequestProcessingPolicy_var, \
-        PortableServer::RequestProcessingPolicy_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::RequestProcessingPolicy>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::RequestProcessingPolicy, \
-        TAO::Objref_Traits<PortableServer::RequestProcessingPolicy> \
+        PortableServer::RequestProcessingPolicy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::RequestProcessingPolicy, \
-        TAO::Objref_Traits<PortableServer::RequestProcessingPolicy> \
+        PortableServer::RequestProcessingPolicy
       >
 
 # pragma instantiate \
@@ -8660,49 +7770,21 @@ CORBA::Boolean operator>> (
         PortableServer::RequestProcessingPolicy \
       >
 
-#if !defined (_PORTABLESERVER_POAMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POAMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::POAManager>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::POAManager_ptr, \
-        PortableServer::POAManager_var, \
-        PortableServer::POAManager_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::POAManager::AdapterInactive \
-      >
-
-#if !defined (_PORTABLESERVER_POAMANAGER_STATE__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_POAMANAGER_STATE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::POAManager::State>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<PortableServer::POAManager::State>
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         PortableServer::POAManager::State \
       >
 
+# pragma instantiate TAO::Objref_Traits<PortableServer::POAManager>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::POAManager, \
-        TAO::Objref_Traits<PortableServer::POAManager> \
+        PortableServer::POAManager
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::POAManager, \
-        TAO::Objref_Traits<PortableServer::POAManager> \
+        PortableServer::POAManager
       >
 
 # pragma instantiate \
@@ -8710,35 +7792,16 @@ CORBA::Boolean operator>> (
         PortableServer::POAManager \
       >
 
-#if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::AdapterActivator>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::AdapterActivator_ptr, \
-        PortableServer::AdapterActivator_var, \
-        PortableServer::AdapterActivator_out \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        PortableServer::POA_ptr \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableServer::AdapterActivator>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::AdapterActivator, \
-        TAO::Objref_Traits<PortableServer::AdapterActivator> \
+        PortableServer::AdapterActivator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::AdapterActivator, \
-        TAO::Objref_Traits<PortableServer::AdapterActivator> \
+        PortableServer::AdapterActivator
       >
 
 # pragma instantiate \
@@ -8746,30 +7809,16 @@ CORBA::Boolean operator>> (
         PortableServer::AdapterActivator \
       >
 
-#if !defined (_PORTABLESERVER_SERVANTMANAGER__ARG_TRAITS_TMPLINST_CS_)
-#define _PORTABLESERVER_SERVANTMANAGER__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<PortableServer::ServantManager>
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        PortableServer::ServantManager_ptr, \
-        PortableServer::ServantManager_var, \
-        PortableServer::ServantManager_out \
-      >
-
-#endif /* end #if !defined */
+# pragma instantiate TAO::Objref_Traits<PortableServer::ServantManager>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ServantManager, \
-        TAO::Objref_Traits<PortableServer::ServantManager> \
+        PortableServer::ServantManager
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ServantManager, \
-        TAO::Objref_Traits<PortableServer::ServantManager> \
+        PortableServer::ServantManager
       >
 
 # pragma instantiate \
@@ -8777,16 +7826,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantManager \
       >
 
+# pragma instantiate TAO::Objref_Traits<PortableServer::ServantActivator>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ServantActivator, \
-        TAO::Objref_Traits<PortableServer::ServantActivator> \
+        PortableServer::ServantActivator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ServantActivator, \
-        TAO::Objref_Traits<PortableServer::ServantActivator> \
+        PortableServer::ServantActivator
       >
 
 # pragma instantiate \
@@ -8794,16 +7843,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantActivator \
       >
 
+# pragma instantiate TAO::Objref_Traits<PortableServer::ServantLocator>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::ServantLocator, \
-        TAO::Objref_Traits<PortableServer::ServantLocator> \
+        PortableServer::ServantLocator
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::ServantLocator, \
-        TAO::Objref_Traits<PortableServer::ServantLocator> \
+        PortableServer::ServantLocator
       >
 
 # pragma instantiate \
@@ -8811,21 +7860,16 @@ CORBA::Boolean operator>> (
         PortableServer::ServantLocator \
       >
 
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        PortableServer::Current::NoContext \
-      >
+# pragma instantiate TAO::Objref_Traits<PortableServer::Current>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        PortableServer::Current, \
-        TAO::Objref_Traits<PortableServer::Current> \
+        PortableServer::Current
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        PortableServer::Current, \
-        TAO::Objref_Traits<PortableServer::Current> \
+        PortableServer::Current
       >
 
 # pragma instantiate \

@@ -1,3 +1,35 @@
+Fri Oct 24 19:18:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any.cpp:
+	* tao/Basic_Arguments.cpp:
+	* tao/CurrentC.cpp:
+	* tao/DLL_ORB.cpp:
+	* tao/DomainC.cpp:
+	* tao/DynamicC.cpp:
+	* tao/Dynamic_ParameterC.cpp:
+	* tao/Exception.cpp:
+	* tao/IIOPC.cpp:
+	* tao/IIOP_EndpointsC.cpp:
+	* tao/IOP_CodecC.cpp:
+	* tao/IOP_IORC.cpp:
+	* tao/Messaging_PolicyValueC.cpp:
+	* tao/ORBInitInfo.cpp:
+	* tao/Object.cpp:
+	* tao/Object_T.cpp:
+	* tao/PolicyC.cpp:
+	* tao/Policy_ForwardC.cpp:
+	* tao/PollableC.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PredefinedType_Seq_Tmplinst.cpp:
+	* tao/Special_Basic_Arguments.cpp:
+	* tao/TAOC.cpp:
+	* tao/TAO_Internal.cpp:
+	* tao/Typecode.cpp:
+	* tao/UB_String_Arguments.cpp:
+
+	  More fixes for the explicit template instantiation. Ones in
+	  PortableServer still doesn't compile well. 
+
 Fri Oct 24 18:28:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Context.h:

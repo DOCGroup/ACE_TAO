@@ -35,32 +35,6 @@ namespace TAO
     return TAO::Narrow_Utils<T>::unchecked_narrow (obj, pbf);
   }
 
-  template<typename T>
-  T *
-  Narrow_Utils<T>::narrow (CORBA::AbstractBase_ptr obj,
-                           const char *repo_id,
-                           Proxy_Broker_Factory pbf
-                           ACE_ENV_ARG_DECL)
-  {
-    if (CORBA::is_nil (obj))
-      {
-        return T::_nil ();
-      }
-
-    CORBA::Boolean is_it =
-      obj->_is_a (
-          repo_id
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_CHECK_RETURN (T::_nil ());
-
-    if (is_it == 0)
-      {
-        return T::_nil ();
-      }
-
-    return Narrow_Utils<T>::unchecked_narrow (obj, pbf);
-  }
 
   template<typename T>
   T *
@@ -97,43 +71,6 @@ namespace TAO
                        collocated ? 1 : 0,
                        obj->_servant ()),
                     T::_nil ());
-
-    return proxy;
-  }
-
-  template<typename T>
-  T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::AbstractBase_ptr obj,
-                                     Proxy_Broker_Factory pbf)
-  {
-    if (obj == 0)
-      {
-        return T::_nil ();
-      }
-
-    T_ptr proxy = T::_nil ();
-
-    if (obj->_is_objref ())
-      {
-        TAO_Stub* stub = obj->_stubobj ();
-
-        bool collocated =
-          !CORBA::is_nil (stub->servant_orb_var ().ptr ())
-          && stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ()
-          && obj->_is_collocated ()
-          && pbf != 0;
-
-        ACE_NEW_RETURN (proxy,
-                        T (obj->_stubobj (),
-                           collocated ? 1 : 0,
-                           obj->_servant ()),
-                        T::_nil ());
-      }
-    else
-      {
-        proxy = T::_downcast (obj);
-        proxy->_add_ref ();
-      }
 
     return proxy;
   }

@@ -991,7 +991,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // not scale as more native sets have to be supported
 
   ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (buffer, 
+  TAO_OutputCDR stream (buffer,
                         buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
@@ -1000,7 +1000,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                         &translator);
 #else
-  TAO_OutputCDR stream (buffer, 
+  TAO_OutputCDR stream (buffer,
                         buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
@@ -1368,13 +1368,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
@@ -1477,3 +1471,12 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
     );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

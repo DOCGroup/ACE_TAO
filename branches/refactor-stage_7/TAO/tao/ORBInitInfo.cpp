@@ -354,13 +354,11 @@ const char* TAO_ORBInitInfo::_interface_repository_id (void) const
   return "IDL:TAO_ORBInitInfo:1.0";
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Objref_Var_T<TAO_ORBInitInfo, tao_TAO_ORBInitInfo_life>;
-template class TAO_Objref_Out_T<TAO_ORBInitInfo, tao_TAO_ORBInitInfo_life>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate \
-    TAO_Objref_Var_T<TAO_ORBInitInfo, tao_TAO_ORBInitInfo_life>
-# pragma instantiate \
-    TAO_Objref_Out_T<TAO_ORBInitInfo, tao_TAO_ORBInitInfo_life>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Objref_Var_T<TAO_ORBInitInfo>;
+template class TAO_Objref_Out_T<TAO_ORBInitInfo>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO_Objref_Var_T<TAO_ORBInitInfo>
+# pragma instantiate TAO_Objref_Out_T<TAO_ORBInitInfo>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

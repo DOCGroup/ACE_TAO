@@ -698,7 +698,8 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T<
         CORBA::Policy_ptr,
         CORBA::Policy_var,
-        CORBA::Policy_out
+        CORBA::Policy_out,
+        TAO::Objref_Traits<CORBA::Policy>
       >;
 
 #endif /* end #if !defined */
@@ -712,7 +713,8 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T<
         CORBA::InterfaceDef_ptr,
         CORBA::InterfaceDef_var,
-        CORBA::InterfaceDef_out
+        CORBA::InterfaceDef_out,
+        TAO::Objref_Traits<CORBA::InterfaceDef>
       >;
 
 #endif /* end #if !defined */
@@ -725,14 +727,12 @@ CORBA::Boolean operator>> (
 
   template class
     TAO_Objref_Var_T<
-        CORBA::DomainManager,
-        TAO::Objref_Traits<CORBA::DomainManager>
+        CORBA::DomainManager
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::DomainManager,
-        TAO::Objref_Traits<CORBA::DomainManager>
+        CORBA::DomainManager
       >;
 
   template class
@@ -742,20 +742,18 @@ CORBA::Boolean operator>> (
 
   template class
     TAO_Objref_Var_T<
-        CORBA::ConstructionPolicy,
-        TAO::Objref_Traits<CORBA::ConstructionPolicy>
+        CORBA::ConstructionPolicy
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::ConstructionPolicy,
-        TAO::Objref_Traits<CORBA::ConstructionPolicy>
+        CORBA::ConstructionPolicy
       >;
 
   template class
     TAO_Object_Manager<
         CORBA::DomainManager,
-        CORBA::DomainManager_va,
+        CORBA::DomainManager_var
       >;
 
   template class

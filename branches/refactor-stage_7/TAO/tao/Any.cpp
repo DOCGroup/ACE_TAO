@@ -768,15 +768,16 @@ template class TAO::Any_Special_Impl_T<
 
 template class TAO::Any_Dual_Impl_T<CORBA::Any>;
 template class TAO::Any_Impl_T<CORBA::TypeCode>;
-template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
+
 template class TAO::Any_Impl_T<char>;
 template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
 
 template class TAO::Arg_Traits<CORBA::Any>;
-template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
+/*template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
                                           CORBA::Any_var,
                                           CORBA::Any_out>;
+*/
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -794,7 +795,7 @@ template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
 
 #pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Any>
 #pragma instantiate TAO::Any_Impl_T<CORBA::TypeCode>
-#pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Exception>
+
 #pragma instantiate TAO::Any_Impl_T<char>
 #pragma instantiate TAO::Any_Impl_T<CORBA::WChar>
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>

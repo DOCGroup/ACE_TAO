@@ -31,7 +31,7 @@
 
 #include "PortableInterceptorC.h"
 #include "DynamicC.h"
-#include "tao/Any_Impl_T.h"
+#include "Any_Impl_T.h"
 #include "Any_Dual_Impl_T.h"
 #include "tao/Typecode.h"
 
@@ -3379,12 +3379,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<CORBA::OctetSeq>;
 
+/*
   template class
     TAO::Var_Size_Arg_Traits<
         CORBA::OctetSeq,
         CORBA::OctetSeq_var,
         CORBA::OctetSeq_out
       >;
+*/
 
 #endif /* end #if !defined */
 
@@ -3407,15 +3409,18 @@ operator>>= (
 
   template class TAO::Arg_Traits<CORBA::Policy>;
 
+/*
   template class
     TAO::Object_Arg_Traits_T<
         CORBA::Policy_ptr,
         CORBA::Policy_var,
         CORBA::Policy_out
       >;
+*/
 
 #endif /* end #if !defined */
 
+/*
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -3445,18 +3450,21 @@ operator>>= (
     TAO::Any_Basic_Impl_T<
         CORBA::ParameterMode
       >;
+*/
 
 #if !defined (_DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _DYNAMIC_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<Dynamic::ParameterList>;
 
+/*
   template class
     TAO::Var_Size_Arg_Traits<
         Dynamic::ParameterList,
         Dynamic::ParameterList_var,
         Dynamic::ParameterList_out
       >;
+*/
 
 #endif /* end #if !defined */
 
@@ -3479,12 +3487,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<IOP::TaggedProfile>;
 
+/*
   template class
     TAO::Var_Size_Arg_Traits<
         IOP::TaggedProfile,
         IOP::TaggedProfile_var,
         IOP::TaggedProfile_out
       >;
+*/
 
 #endif /* end #if !defined */
 
@@ -3493,12 +3503,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<IOP::TaggedComponent>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         IOP::TaggedComponent,
         IOP::TaggedComponent_var,
         IOP::TaggedComponent_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
@@ -3507,12 +3519,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<IOP::TaggedComponentSeq>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         IOP::TaggedComponentSeq,
         IOP::TaggedComponentSeq_var,
         IOP::TaggedComponentSeq_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
@@ -3521,15 +3535,18 @@ operator>>= (
 
   template class TAO::Arg_Traits<IOP::ServiceContext>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         IOP::ServiceContext,
         IOP::ServiceContext_var,
         IOP::ServiceContext_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Any_Dual_Impl_T<
         IOP::Codec::InvalidTypeForEncoding
@@ -3544,12 +3561,14 @@ operator>>= (
     TAO::Any_Dual_Impl_T<
         IOP::Codec::TypeMismatch
       >;
+#endif /*if 0*/
 
 #if !defined (_IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_)
 #define _IOP_CODECFACTORY__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<IOP::CodecFactory>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         IOP::CodecFactory_ptr,
@@ -3557,50 +3576,49 @@ operator>>= (
         IOP::CodecFactory_out
       >;
 
-#endif /* end #if !defined */
-
   template class
     TAO::Any_Dual_Impl_T<
         IOP::CodecFactory::UnknownEncoding
       >;
 
-  template class
-    TAO_Objref_Var_T<
-        PortableInterceptor::Interceptor,
-        TAO::Objref_Traits<PortableInterceptor::Interceptor>
-      >;
+#endif /*if 0*/
 
-  template class
-    TAO_Objref_Out_T<
-        PortableInterceptor::Interceptor,
-        TAO::Objref_Traits<PortableInterceptor::Interceptor>
-      >;
+#endif /* end #if !defined */
 
-  template class
-    TAO::Any_Impl_T<
-        PortableInterceptor::Interceptor
-      >;
-
-  template class
+ template class
     TAO::Any_Dual_Impl_T<
         PortableInterceptor::ForwardRequest
       >;
+
 
   template class
     TAO::Any_Dual_Impl_T<
         PortableInterceptor::InvalidSlot
       >;
 
+
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::Current,
-        TAO::Objref_Traits<PortableInterceptor::Current>
+        PortableInterceptor::Interceptor
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::Current,
-        TAO::Objref_Traits<PortableInterceptor::Current>
+        PortableInterceptor::Interceptor
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        PortableInterceptor::Interceptor
+      >;
+  template class
+    TAO_Objref_Var_T<
+        PortableInterceptor::Current
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        PortableInterceptor::Current
       >;
 
   template class
@@ -3608,22 +3626,22 @@ operator>>= (
         PortableInterceptor::Current
       >;
 
+#if 0
   template class
     TAO::Ret_Var_Size_Argument_T<
         IOP::ServiceContext,
         IOP::ServiceContext_var
       >;
+#endif
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::RequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::RequestInfo>
+        PortableInterceptor::RequestInfo
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::RequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::RequestInfo>
+        PortableInterceptor::RequestInfo
       >;
 
   template class
@@ -3636,15 +3654,18 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInfo>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::ClientRequestInfo_ptr,
         PortableInterceptor::ClientRequestInfo_var,
         PortableInterceptor::ClientRequestInfo_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Ret_Var_Size_Argument_T<
         IOP::TaggedComponent,
@@ -3657,6 +3678,14 @@ operator>>= (
         IOP::sequence_var
       >;
 
+
+  template class
+    TAO::In_Var_Size_Argument_T<
+        IOP::ServiceContext
+      >;
+
+#endif
+
   template class
     TAO::Ret_Object_Argument_T<
         CORBA::Policy_ptr,
@@ -3664,20 +3693,13 @@ operator>>= (
       >;
 
   template class
-    TAO::In_Var_Size_Argument_T<
-        IOP::ServiceContext
-      >;
-
-  template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ClientRequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>
+        PortableInterceptor::ClientRequestInfo
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ClientRequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInfo>
+        PortableInterceptor::ClientRequestInfo
       >;
 
   template class
@@ -3690,25 +3712,25 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInfo>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::ServerRequestInfo_ptr,
         PortableInterceptor::ServerRequestInfo_var,
         PortableInterceptor::ServerRequestInfo_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ServerRequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>
+        PortableInterceptor::ServerRequestInfo
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ServerRequestInfo,
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInfo>
+        PortableInterceptor::ServerRequestInfo
       >;
 
   template class
@@ -3721,12 +3743,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::ClientRequestInterceptor>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::ClientRequestInterceptor_ptr,
         PortableInterceptor::ClientRequestInterceptor_var,
         PortableInterceptor::ClientRequestInterceptor_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
@@ -3737,14 +3761,12 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ClientRequestInterceptor,
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>
+        PortableInterceptor::ClientRequestInterceptor
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ClientRequestInterceptor,
-        TAO::Objref_Traits<PortableInterceptor::ClientRequestInterceptor>
+        PortableInterceptor::ClientRequestInterceptor
       >;
 
   template class
@@ -3757,12 +3779,14 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::ServerRequestInterceptor>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::ServerRequestInterceptor_ptr,
         PortableInterceptor::ServerRequestInterceptor_var,
         PortableInterceptor::ServerRequestInterceptor_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
@@ -3773,14 +3797,12 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ServerRequestInterceptor,
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>
+        PortableInterceptor::ServerRequestInterceptor
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ServerRequestInterceptor,
-        TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>
+        PortableInterceptor::ServerRequestInterceptor
       >;
 
   template class
@@ -3793,25 +3815,25 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::PolicyFactory>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::PolicyFactory_ptr,
         PortableInterceptor::PolicyFactory_var,
         PortableInterceptor::PolicyFactory_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::PolicyFactory,
-        TAO::Objref_Traits<PortableInterceptor::PolicyFactory>
+        PortableInterceptor::PolicyFactory
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::PolicyFactory,
-        TAO::Objref_Traits<PortableInterceptor::PolicyFactory>
+        PortableInterceptor::PolicyFactory
       >;
 
   template class
@@ -3824,36 +3846,43 @@ operator>>= (
 
   template class TAO::Arg_Traits<PortableInterceptor::IORInterceptor>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::IORInterceptor_ptr,
         PortableInterceptor::IORInterceptor_var,
         PortableInterceptor::IORInterceptor_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
   template class TAO::Objref_Traits<PortableInterceptor::IORInterceptor>;
 
+#if 0
   template class
     TAO::Any_Impl_T<
         PortableInterceptor::IORInterceptor
       >;
+#endif
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<PortableInterceptor::ORBInitInfo>;
 
+#if 0
   template class
     TAO::Object_Arg_Traits_T<
         PortableInterceptor::ORBInitInfo_ptr,
         PortableInterceptor::ORBInitInfo_var,
         PortableInterceptor::ORBInitInfo_out
       >;
+#endif
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Any_Dual_Impl_T<
         PortableInterceptor::ORBInitInfo::DuplicateName
@@ -3862,6 +3891,17 @@ operator>>= (
   template class
     TAO::Any_Dual_Impl_T<
         PortableInterceptor::ORBInitInfo::InvalidName
+      >;
+#endif
+
+  template class
+    TAO::Any_Impl_T<
+        PortableInterceptor::ORBInitInfo
+      >;
+
+  template class
+    TAO::Any_Impl_T<
+        PortableInterceptor::ORBInitializer
       >;
 
   template class
@@ -3874,10 +3914,12 @@ operator>>= (
         PortableInterceptor::ServerRequestInterceptor_ptr
       >;
 
+#if 0
   template class
     TAO::In_Object_Argument_T<
         PortableInterceptor::IORInterceptor_ptr
       >;
+#endif
 
   template class
     TAO::In_Object_Argument_T<
@@ -3886,20 +3928,14 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ORBInitInfo,
-        TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>
+        PortableInterceptor::ORBInitInfo
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ORBInitInfo,
-        TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>
-      >;
-
-  template class
-    TAO::Any_Impl_T<
         PortableInterceptor::ORBInitInfo
       >;
+
 
   template class
     TAO::In_Object_Argument_T<
@@ -3908,20 +3944,14 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        PortableInterceptor::ORBInitializer,
-        TAO::Objref_Traits<PortableInterceptor::ORBInitializer>
+        PortableInterceptor::ORBInitializer
       >;
 
   template class
     TAO_Objref_Out_T<
-        PortableInterceptor::ORBInitializer,
-        TAO::Objref_Traits<PortableInterceptor::ORBInitializer>
-      >;
-
-  template class
-    TAO::Any_Impl_T<
         PortableInterceptor::ORBInitializer
       >;
+
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

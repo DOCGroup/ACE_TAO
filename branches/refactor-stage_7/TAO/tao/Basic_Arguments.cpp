@@ -2,22 +2,31 @@
 
 #include "tao/Basic_Arguments.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// Inclusions only if explicit templates are enabled.
+#include "Basic_Types.h"
+#include "CDR.h"
+#endif /*ACE_HAS_TEMPLATE_INSTANTIATION ||
+         ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA*/
+
+
 ACE_RCSID (tao,
            Basic_Arguments,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO::Arg_Traits_T<void>;
-template class TAO::Arg_Traits_T<CORBA::Short>;
-template class TAO::Arg_Traits_T<CORBA::Long>;
-template class TAO::Arg_Traits_T<CORBA::UShort>;
-template class TAO::Arg_Traits_T<CORBA::ULong>;
-template class TAO::Arg_Traits_T<CORBA::Float>;
-template class TAO::Arg_Traits_T<CORBA::Double>;
-template class TAO::Arg_Traits_T<CORBA::LongLong>;
-template class TAO::Arg_Traits_T<CORBA::ULongLong>;
-template class TAO::Arg_Traits_T<CORBA::LongDouble>;
+template class TAO::Arg_Traits<void>;
+template class TAO::Arg_Traits<CORBA::Short>;
+template class TAO::Arg_Traits<CORBA::Long>;
+template class TAO::Arg_Traits<CORBA::UShort>;
+template class TAO::Arg_Traits<CORBA::ULong>;
+template class TAO::Arg_Traits<CORBA::Float>;
+template class TAO::Arg_Traits<CORBA::Double>;
+template class TAO::Arg_Traits<CORBA::LongLong>;
+template class TAO::Arg_Traits<CORBA::ULongLong>;
+template class TAO::Arg_Traits<CORBA::LongDouble>;
 
 template class TAO::Basic_Arg_Traits_T<CORBA::Short>;
 template class TAO::Basic_Arg_Traits_T<CORBA::Long>;
@@ -73,6 +82,7 @@ template class TAO::In_Basic_Argument_T<CORBA::LongDouble>;
 template class TAO::Inout_Basic_Argument_T<CORBA::LongDouble>;
 template class TAO::Out_Basic_Argument_T<CORBA::LongDouble>;
 template class TAO::Ret_Basic_Argument_T<CORBA::LongDouble>;
+
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

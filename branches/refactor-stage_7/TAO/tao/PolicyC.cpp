@@ -1712,7 +1712,6 @@ CORBA::Boolean operator>> (
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_TMPLINST_CS_)
@@ -1724,8 +1723,8 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T<
         CORBA::Policy_ptr,
         CORBA::Policy_var,
-        CORBA::Policy_out
-      >;
+        CORBA::Policy_out,
+        TAO::Objref_Traits<CORBA::Policy> >;
 
 #endif /* end #if !defined */
 
@@ -1735,106 +1734,36 @@ CORBA::Boolean operator>> (
         CORBA::Policy_var
       >;
 
+  template class TAO::Objref_Traits<CORBA::Policy>;
+
   template class
     TAO_Objref_Var_T<
-        CORBA::Policy,
-        TAO::Objref_Traits<CORBA::Policy>
+        CORBA::Policy
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::Policy,
-        TAO::Objref_Traits<CORBA::Policy>
+        CORBA::Policy
       >;
+
+  template class
+    TAO::Narrow_Utils<CORBA::Policy>;
 
   template class
     TAO::Any_Impl_T<
         CORBA::Policy
       >;
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::PolicyList>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::PolicyList,
-        CORBA::PolicyList_var,
-        CORBA::PolicyList_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::PolicyTypeSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits<
-        CORBA::PolicyTypeSeq,
-        CORBA::PolicyTypeSeq_var,
-        CORBA::PolicyTypeSeq_out
-      >;
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SETOVERRIDETYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SETOVERRIDETYPE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::SetOverrideType>;
-
-  template class TAO::Basic_Arg_Traits_T<CORBA::SetOverrideType>;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
-      >;
-
-  template class
-    TAO::Ret_Var_Size_Argument_T<
-        CORBA::sequence,
-        CORBA::sequence_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::In_Basic_Argument_T<
-        CORBA::SetOverrideType
-      >;
+  template class TAO::Objref_Traits<CORBA::PolicyManager>;
 
   template class
     TAO_Objref_Var_T<
-        CORBA::PolicyManager,
-        TAO::Objref_Traits<CORBA::PolicyManager>
+        CORBA::PolicyManager
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::PolicyManager,
-        TAO::Objref_Traits<CORBA::PolicyManager>
+        CORBA::PolicyManager
       >;
 
   template class
@@ -1842,16 +1771,16 @@ CORBA::Boolean operator>> (
         CORBA::PolicyManager
       >;
 
+  template class TAO::Objref_Traits<CORBA::PolicyCurrent>;
+
   template class
     TAO_Objref_Var_T<
-        CORBA::PolicyCurrent,
-        TAO::Objref_Traits<CORBA::PolicyCurrent>
+        CORBA::PolicyCurrent
       >;
 
   template class
     TAO_Objref_Out_T<
-        CORBA::PolicyCurrent,
-        TAO::Objref_Traits<CORBA::PolicyCurrent>
+        CORBA::PolicyCurrent
       >;
 
   template class
@@ -1870,105 +1799,41 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T< \
         CORBA::Policy_ptr, \
         CORBA::Policy_var, \
-        CORBA::Policy_out \
-      >
+        CORBA::Policy_out, \
+        TAO::Objref_Traits<CORBA::Policy>  \>
 
 #endif /* end #if !defined */
 
+# pragma instantiate TAO::Objref_Traits<CORBA::Policy>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::Policy, \
-        TAO::Objref_Traits<CORBA::Policy> \
+        CORBA::Policy
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::Policy, \
-        TAO::Objref_Traits<CORBA::Policy> \
+        CORBA::Policy
       >
+
+# pragma instantiate \
+    TAO::Narrow_Utils<CORBA::Policy>
 
 # pragma instantiate \
     TAO::Any_Impl_T< \
         CORBA::Policy \
       >
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::PolicyList>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::PolicyList, \
-        CORBA::PolicyList_var, \
-        CORBA::PolicyList_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::PolicyTypeSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits< \
-        CORBA::PolicyTypeSeq, \
-        CORBA::PolicyTypeSeq_var, \
-        CORBA::PolicyTypeSeq_out \
-      >
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_SETOVERRIDETYPE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SETOVERRIDETYPE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::SetOverrideType>
-
-# pragma instantiate TAO::Basic_Arg_Traits_T<CORBA::SetOverrideType>
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::SetOverrideType \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate \
-    TAO::In_Basic_Argument_T< \
-        CORBA::SetOverrideType \
-      >
+# pragma instantiate TAO::Objref_Traits<CORBA::PolicyManager>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::PolicyManager, \
-        TAO::Objref_Traits<CORBA::PolicyManager> \
+        CORBA::PolicyManager
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::PolicyManager, \
-        TAO::Objref_Traits<CORBA::PolicyManager> \
+        CORBA::PolicyManager
       >
 
 # pragma instantiate \
@@ -1976,16 +1841,16 @@ CORBA::Boolean operator>> (
         CORBA::PolicyManager \
       >
 
+# pragma instantiate TAO::Objref_Traits<CORBA::PolicyCurrent>
+
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::PolicyCurrent, \
-        TAO::Objref_Traits<CORBA::PolicyCurrent> \
+        CORBA::PolicyCurrent
       >
 
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::PolicyCurrent, \
-        TAO::Objref_Traits<CORBA::PolicyCurrent> \
+        CORBA::PolicyCurrent
       >
 
 # pragma instantiate \

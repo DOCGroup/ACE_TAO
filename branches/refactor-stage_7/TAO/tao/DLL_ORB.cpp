@@ -166,6 +166,7 @@ ACE_FACTORY_DEFINE (TAO, TAO_DLL_ORB)
 // Template instantiations necessary for use when dynamically load the
 // TAO_DLL_ORB.
 
+#if 0
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_DLL_ORB>;
@@ -175,3 +176,5 @@ template class ACE_Dynamic_Service<TAO_DLL_ORB>;
 #pragma instantiate ACE_Dynamic_Service<TAO_DLL_ORB>
 
 #endif
+
+#endif /*if 0*/

@@ -2264,6 +2264,7 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -2293,6 +2294,13 @@ CORBA::Boolean operator>> (
     TAO::Any_Basic_Impl_T<
         CORBA::ParameterMode
       >;
+#endif /*if 0*/
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        IOP::TaggedProfile
+      >;
+
 
   template class
     TAO_Var_Var_T<
@@ -2310,13 +2318,9 @@ CORBA::Boolean operator>> (
         IOP::TaggedProfile_var
       >;
 
-  template class
-    TAO::Any_Dual_Impl_T<
-        IOP::TaggedProfile
-      >;
 
-#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CS_)
-#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__CS_
+#if !defined (_IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__SEQUENCE_CS_)
+#define _IOP_IOR__TAO_SEQ_IOP_TAGGEDPROFILE__SEQUENCE_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -2350,6 +2354,7 @@ CORBA::Boolean operator>> (
     TAO::Any_Dual_Impl_T<
         IOP::IOR
       >;
+
 
   template class
     TAO_Var_Var_T<
@@ -2391,15 +2396,14 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent
       >;
 
-#if !defined (_IOP_MULTIPLECOMPONENTPROFILE_CS_)
-#define _IOP_MULTIPLECOMPONENTPROFILE_CS_
+#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
+#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
         IOP::TaggedComponent
       >;
-
-#endif /* end #if !defined */
+#endif /*#!if */
 
   template class
     TAO::Any_Dual_Impl_T<
@@ -2425,8 +2429,8 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent
       >;
 
-#if !defined (_IOP_TAGGEDCOMPONENTLIST_CS_)
-#define _IOP_TAGGEDCOMPONENTLIST_CS_
+#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
+#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -2459,14 +2463,13 @@ CORBA::Boolean operator>> (
         IOP::TaggedComponent
       >;
 
-#if !defined (_IOP_TAGGEDCOMPONENTSEQ_CS_)
-#define _IOP_TAGGEDCOMPONENTSEQ_CS_
+#if !defined (_IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_)
+#define _IOP_TAGGEDCOMPONENTLIST_EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
         IOP::TaggedComponent
       >;
-
 #endif /* end #if !defined */
 
   template class
@@ -2519,8 +2522,8 @@ CORBA::Boolean operator>> (
         IOP::ServiceContext
       >;
 
-#if !defined (_IOP_SERVICECONTEXTLIST_CS_)
-#define _IOP_SERVICECONTEXTLIST_CS_
+#if !defined (_IOP_SERVICECONTEXTLIST_SEQUENCE_CS_)
+#define _IOP_SERVICECONTEXTLIST_SEQUENCE_CS_
 
   template class
     TAO_Unbounded_Sequence<

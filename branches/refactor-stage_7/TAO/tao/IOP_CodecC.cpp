@@ -1288,6 +1288,7 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
@@ -1302,21 +1303,25 @@ operator>>= (
     TAO::Any_Dual_Impl_T<
         CORBA::InvalidPolicies
       >;
+#endif /*if 0*/
 
 #if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<CORBA::OctetSeq>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         CORBA::OctetSeq,
         CORBA::OctetSeq_var,
         CORBA::OctetSeq_out
       >;
+#endif /*if 0*/
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::TCKind
@@ -1326,6 +1331,7 @@ operator>>= (
     TAO::Any_Basic_Impl_T<
         CORBA::exception_type
       >;
+#endif /*if 0*/
 
 #if !defined (_IOP_CODEC__ARG_TRAITS_TMPLINST_CS_)
 #define _IOP_CODEC__ARG_TRAITS_TMPLINST_CS_
@@ -1336,11 +1342,13 @@ operator>>= (
     TAO::Object_Arg_Traits_T<
         IOP::Codec_ptr,
         IOP::Codec_var,
-        IOP::Codec_out
+        IOP::Codec_out,
+        TAO::Objref_Traits<IOP::Codec>
       >;
 
 #endif /* end #if !defined */
 
+#if 0
   template class
     TAO::Any_Dual_Impl_T<
         IOP::Codec::InvalidTypeForEncoding
@@ -1366,33 +1374,36 @@ operator>>= (
     TAO::In_Var_Size_Argument_T<
         CORBA::sequence
       >;
-
-  template class
-    TAO_Objref_Var_T<
-        IOP::Codec,
-        TAO::Objref_Traits<IOP::Codec>
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        IOP::Codec,
-        TAO::Objref_Traits<IOP::Codec>
-      >;
+#endif /*if 0*/
 
   template class
     TAO::Any_Impl_T<
         IOP::Codec
       >;
 
+
+  template class
+    TAO_Objref_Var_T<
+        IOP::Codec
+      >;
+
+  template class
+    TAO_Objref_Out_T<
+        IOP::Codec
+      >;
+
+
 #if !defined (_IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_)
 #define _IOP_ENCODING__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<IOP::Encoding>;
 
+#if 0
   template class
     TAO::Fixed_Size_Arg_Traits<
         IOP::Encoding
       >;
+#endif /*if 0*/
 
 #endif /* end #if !defined */
 
@@ -1406,21 +1417,26 @@ operator>>= (
         IOP::Encoding
       >;
 
+
   template class
     TAO::Any_Dual_Impl_T<
         IOP::Encoding
       >;
 
+#if 0
   template class
     TAO::Any_Dual_Impl_T<
         IOP::CodecFactory::UnknownEncoding
       >;
+#endif /*if 0*/
 
+#if 0
   template class
     TAO::Ret_Object_Argument_T<
         IOP::Codec_ptr,
         IOP::Codec_var
       >;
+#endif /*if 0*/
 
   template class
     TAO::In_Fixed_Size_Argument_T<
@@ -1429,14 +1445,12 @@ operator>>= (
 
   template class
     TAO_Objref_Var_T<
-        IOP::CodecFactory,
-        TAO::Objref_Traits<IOP::CodecFactory>
+        IOP::CodecFactory
       >;
 
   template class
     TAO_Objref_Out_T<
-        IOP::CodecFactory,
-        TAO::Objref_Traits<IOP::CodecFactory>
+        IOP::CodecFactory
       >;
 
   template class

@@ -4019,21 +4019,20 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T<
         ImplementationRepository::ServerObject_ptr,
         ImplementationRepository::ServerObject_var,
-        ImplementationRepository::ServerObject_out
+        ImplementationRepository::ServerObject_out,
+        TAO::Objref_Traits<ImplementationRepository::ServerObject>
       >;
 
 #endif /* end #if !defined */
 
   template class
     TAO_Objref_Var_T<
-        ImplementationRepository::ServerObject,
-        TAO::Objref_Traits<ImplementationRepository::ServerObject>
+        ImplementationRepository::ServerObject
       >;
 
   template class
     TAO_Objref_Out_T<
-        ImplementationRepository::ServerObject,
-        TAO::Objref_Traits<ImplementationRepository::ServerObject>
+        ImplementationRepository::ServerObject
       >;
 
   template class
@@ -4120,14 +4119,14 @@ CORBA::Boolean operator>> (
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_TMPLINST_CS_
 
   template class TAO::Arg_Traits<ImplementationRepository::StartupOptions>;
-
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         ImplementationRepository::StartupOptions,
         ImplementationRepository::StartupOptions_var,
         ImplementationRepository::StartupOptions_out
       >;
-
+#endif
 #endif /* end #if !defined */
 
   template class
@@ -4156,13 +4155,14 @@ CORBA::Boolean operator>> (
 
   template class TAO::Arg_Traits<ImplementationRepository::ServerInformation>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         ImplementationRepository::ServerInformation,
         ImplementationRepository::ServerInformation_var,
         ImplementationRepository::ServerInformation_out
       >;
-
+#endif /*if 0*/
 #endif /* end #if !defined */
 
   template class
@@ -4191,13 +4191,14 @@ CORBA::Boolean operator>> (
 
   template class TAO::Arg_Traits<ImplementationRepository::ServerInformationList>;
 
+#if 0
   template class
     TAO::Var_Size_Arg_Traits<
         ImplementationRepository::ServerInformationList,
         ImplementationRepository::ServerInformationList_var,
         ImplementationRepository::ServerInformationList_out
       >;
-
+#endif /*if 0*/
 #endif /* end #if !defined */
 
   template class
@@ -4243,7 +4244,8 @@ CORBA::Boolean operator>> (
     TAO::Object_Arg_Traits_T<
         ImplementationRepository::ServerInformationIterator_ptr,
         ImplementationRepository::ServerInformationIterator_var,
-        ImplementationRepository::ServerInformationIterator_out
+        ImplementationRepository::ServerInformationIterator_out,
+        TAO::Objref_Traits<ImplementationRepository::ServerObject>
       >;
 
 #endif /* end #if !defined */
@@ -4256,14 +4258,12 @@ CORBA::Boolean operator>> (
 
   template class
     TAO_Objref_Var_T<
-        ImplementationRepository::ServerInformationIterator,
-        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>
+        ImplementationRepository::ServerInformationIterator
       >;
 
   template class
     TAO_Objref_Out_T<
-        ImplementationRepository::ServerInformationIterator,
-        TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>
+        ImplementationRepository::ServerInformationIterator
       >;
 
   template class
@@ -4295,14 +4295,12 @@ CORBA::Boolean operator>> (
 
   template class
     TAO_Objref_Var_T<
-        ImplementationRepository::Administration,
-        TAO::Objref_Traits<ImplementationRepository::Administration>
+        ImplementationRepository::Administration
       >;
 
   template class
     TAO_Objref_Out_T<
-        ImplementationRepository::Administration,
-        TAO::Objref_Traits<ImplementationRepository::Administration>
+        ImplementationRepository::Administration
       >;
 
   template class
