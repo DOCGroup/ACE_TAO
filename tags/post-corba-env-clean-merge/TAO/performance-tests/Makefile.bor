@@ -1,0 +1,20 @@
+#
+# $Id$
+#
+
+DIRS = \
+	AMI_Latency \
+        Callback \
+        Cubit \
+	DII_Latency \
+	Deferred_Latency \
+	DSI_Latency \
+        Pluggable \
+        POA \
+        RTCorba \
+	Single_Threaded_Latency \
+	Thread_Pool_Latency \
+	Thread_Per_Connection_Latency \
+	Throughput
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

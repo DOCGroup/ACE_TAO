@@ -1,0 +1,29 @@
+/* -*- C++ -*- */
+// $Id$
+
+interface UDP
+{
+  // = TITLE
+  //    Defines an interface that encapsulates operations that 
+  //    return the current time of day and shuts down the server.
+
+  struct LongStruct
+  {
+    long x;
+    string str;
+  };
+
+  typedef sequence<LongStruct> LongSeq;
+
+  oneway void setResponseHandler (in UDP udpHandler);
+
+  oneway void reset (in string client_name);
+
+  oneway void invoke (in string client_name,
+                      in long request_id);
+
+  oneway void shutdown ();
+  // Shutdown the application.
+};
+
+

@@ -1,0 +1,16 @@
+$Id$
+
+Description:
+
+This test makes sure that:
+
+- For POAs using the default thread pool, the user can continue to use
+-ORBEndpoint option.
+
+- Makes sure that if the user tries to combine thread pools and
+persistence, an InvalidPolicy exception is thrown.
+
+- Makes sure that for POAs using thread pools, the user can specify
+the protocol selection, protocol version, and other protocol specific
+options (basically everything other than the endpoint address)
+through the -ORBEndpoint option.

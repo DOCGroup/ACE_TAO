@@ -1,0 +1,29 @@
+
+#
+# Makefile for building the Buffered_Oneways example
+#
+
+NAME = server
+
+OBJFILES = \
+	$(OBJDIR)\TestC.obj \
+	$(OBJDIR)\TestS.obj \
+	$(OBJDIR)\Test_i.obj \
+	$(OBJDIR)\server.obj
+
+IDLFILES = \
+        $(IDLDIR)\Test.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\TestC.cpp $(IDLDIR)\TestS.cpp: $(IDLDIR)\Test.idl
+	$(TAO_IDL) $**
+
