@@ -1805,6 +1805,7 @@ private:
 #endif /* ACE_HAS_RECURSIVE_MUTEXES */
 };
 
+#if defined (ACE_HAS_THREADS)
 template <class ACE_LOCK>
 class ACE_Condition;
 
@@ -1880,6 +1881,7 @@ public:
   ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m):
     ACE_Condition<ACE_Recursive_Thread_Mutex> (m) {}
 };
+#endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_LEGACY_MODE)
 # include "ace/File_Lock.h"

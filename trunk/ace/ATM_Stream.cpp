@@ -94,12 +94,13 @@ ACE_ATM_Stream::get_peer_name (void) const
     // Convert the line to lower case to ease comparison
     for (index = 0; index < ACE_OS::strlen (line); ++index) 
       line[index] = tolower (line[index]);
-    if (strstr (line, buffer) != 0) 
+    if (ACE_OS::strstr (line, buffer) != 0) 
       {
+        char *strtok_p;
         // Grab the second token which is the host name
-        strtok (line, " \t");
-        host_ptr = strtok (0, " \t");
-        strcpy (host_name, host_ptr);
+        ACE_OS::strtok_r (line, " \t", &strtok_p);
+        host_ptr = strtok (0, " \t", &strtok_p);
+        ACE_OS::strcpy (host_name, host_ptr);
         break;
       }
   }

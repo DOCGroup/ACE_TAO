@@ -936,18 +936,17 @@ ACE_recursive_mutex_state::restore (ACE_recursive_thread_mutex_t &m)
 ACE_recursive_mutex_state::ACE_recursive_mutex_state (ACE_Recursive_Thread_Mutex &m)
   : mutex_ (m)
 {
-  if (ACE_OS::mutex_lock (&mutex_.get_nesting_mutex ()) == 0)
+  if (ACE_OS::thread_mutex_lock (&mutex_.get_nesting_mutex ()) == 0)
     {
       this->save (mutex_.mutex ());
       this->reset (mutex_.mutex ());
     }
 }
 
-
 ACE_recursive_mutex_state::~ACE_recursive_mutex_state (void)
 {
   this->restore (mutex_.mutex ());
-  ACE_OS::mutex_unlock (&mutex_.get_nesting_mutex ());
+  ACE_OS::thread_mutex_unlock (&mutex_.get_nesting_mutex ());
 }    
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION int
@@ -977,7 +976,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
 
 ACE_TEMPLATE_METHOD_SPECIALIZATION int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex, 
-                                                 const ACE_Time_Value *abstime)
+                                             const ACE_Time_Value *abstime)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, guard, mutex, -1);
   ACE_recursive_mutex_state mutex_state_holder (mutex);
