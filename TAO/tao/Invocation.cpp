@@ -584,11 +584,11 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
 
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->data_->handler ()->handle_close ();
       // FALLTHROUGH
 
     case TAO_GIOP::EndOfFile:
+      // @@ This should only refer to "getting GIOP MessageError" message only.
+      this->data_->handler ()->handle_close ();
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
@@ -863,11 +863,11 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
 
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->data_->handler ()->handle_close ();
       // FALLTHROUGH
 
     case TAO_GIOP::EndOfFile:
+      // @@ This should only refer to "getting GIOP MessageError" message only.
+      this->data_->handler ()->handle_close ();
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
@@ -1135,12 +1135,11 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &env)
       // Couldn't read it for some reason ... exception's set already,
       // so just tell the other end about the trouble (closing the
       // connection) and return.
-
-      // @@ This should only refer to "getting GIOP MessageError" message only.
-      this->data_->handler ()->handle_close ();
       // FALLTHROUGH
 
     case TAO_GIOP::EndOfFile:
+      // @@ This should only refer to "getting GIOP MessageError" message only.
+      this->data_->handler ()->handle_close ();
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
       return TAO_GIOP_SYSTEM_EXCEPTION;
     }
