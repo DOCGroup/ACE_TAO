@@ -17,7 +17,8 @@ LDFLAGS += -L$(TAO_ROOT)/tao
 
 PROG_SRCS = \
 	client.cpp \
-	server.cpp 
+	server.cpp \
+	RTProperties.cpp
 
 LSRC = $(PROG_SRCS)
 
