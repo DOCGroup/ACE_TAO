@@ -907,28 +907,28 @@ TAO_CDR_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
 
   if (temp == ~0u)
     {
-      // Get indirection, sanity check it, set up new stream pointing
-      // there.
-      //
-      // XXX access to "real" size limit for this typecode and use it
-      // to check for errors before indirect and to limit the new
-      // stream's length.  ULONG_MAX is too much!
       CORBA::Long offset;
       if (!stream->read_long (offset)
-          || offset >= -8
+          || offset >= -4
           || ((-offset) & 0x03) != 0)
         {
           env.exception (new CORBA::BAD_TYPECODE ());
           return 0;
         }
+
       // Notice how we change the sign of the offset to estimate the
       // maximum size.
-      TAO_InputCDR indirected_stream (*stream, -offset, offset);
+      // Also note that the offset is computed starting from the offset
+      // field. However, by this time, we have already read the offset field i.e.,
+      // we have already moved ahead by 4 bytes (size of CORBA::Long). So we should
+      // increase our offset by this amount.
+      ACE_Message_Block *mb = (ACE_Message_Block *) stream->start ();
 
-      // Fetch indirected-to TCKind; this *cannot* be an indirection
-      // again because multiple indirections are non-complaint.
-      if (indirected_stream.read_ulong (temp) == 0
-          || temp == ~0u)
+      TAO_InputCDR indirected_stream (mb->rd_ptr () + offset - 4,
+                                      -1 * (offset - 4));
+
+      // Fetch indirected-to TCKind.
+      if (!indirected_stream.read_ulong (temp))
         {
           env.exception (new CORBA::BAD_TYPECODE ());
           return 0;
