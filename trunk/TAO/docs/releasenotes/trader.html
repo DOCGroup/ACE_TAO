@@ -1040,16 +1040,6 @@ definition will be necessary. Two additional lines of code will suffice--- a cal
 and either <tt>CosTrading::Lookup::_narrow</tt> or <tt>CosTrading::Register::_narrow</tt>
 depending on the field of LinkInfo.</p>
 
-<p><strong>Problem: </strong><tt>CORBA::TypeCodes</tt> currently leak memory. Although the
-Trading Service itself doesn't have any memory leaks, the <tt>TypeCodes</tt> it heavily
-relies on do.<br>
-<strong>Workaround: </strong>This problem is currently being addressed.&nbsp; </p>
-
-<p><strong>Problem:</strong> g++ version 2.7.2 has link errors when compiling the Trading
-Service applications and tests; the profuse use of virtual inheritence requires explicit
-copy constructors in the skeleton classes for g++ to link properly.<br>
-<strong>Workaround:</strong> This problem is currently being addressed.</p>
-
 <hr>
 
 <h1><a name="FutureWork">Future Work</a></h1>
