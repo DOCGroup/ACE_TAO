@@ -1,3 +1,17 @@
+Fri Aug 15 16:41:37 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (start_server_i):
+
+          Removed avoid zombies option. Was causing exception on various
+          Unix flavours. Thanks to Torsten Kuepper for reporting the problem.
+          This closes bug #1557.
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (list):
+
+          Added initialisation to prevent problem when list attempt is made
+          before an activator has been registered. Thanks to <jones_s@ociweb.com>
+          for reporting this. This closes bug #1562.
+
 Fri Aug 15 14:58:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp:

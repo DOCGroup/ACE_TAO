@@ -298,7 +298,6 @@ ImR_Activator_i::start_server_i (const char *server
 
       proc_opts.command_line (startup.c_str ());
       proc_opts.working_directory (working.c_str ());
-      proc_opts.avoid_zombies (1);
       proc_opts.handle_inheritence (0);
 
       // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
