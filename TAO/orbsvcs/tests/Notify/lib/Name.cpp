@@ -2,7 +2,7 @@
 
 #include "Name.h"
 
-ACE_RCSID(lib, TAO_Name, "$id$")
+ACE_RCSID(lib, TAO_Name, "$Id$")
 
 #define TAO_Notify_Tests_DECLARE_NAME(target, name) \
 const char* const TAO_Notify_Tests_Name::target = ACE_TEXT (name);

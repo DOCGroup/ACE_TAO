@@ -2,11 +2,12 @@
 
 #include "Activation_Manager.h"
 
-ACE_RCSID(lib, TAO_Activation_Manager, "$id$")
+ACE_RCSID(lib, TAO_Activation_Manager, "$Id$")
 
 #include "LookupManager.h"
 #include "Command_Builder.h"
 #include "Name.h"
+#include "ace/Barrier.h"
 
 TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager (void)
   : barrier_ (0)
