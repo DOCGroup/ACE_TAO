@@ -2129,8 +2129,8 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
           if (entry->parse (flow_spec[i]) == -1)
 	  {
-            if(TAO_debug_level > 0); 
-              ACE_DEBUG((LM_DEBUG, "%N:%l Error parsing flow_spec: %s\n", flow_spec[i].in() ));
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG, "%N:%l Error parsing flow_spec: %s\n", flow_spec[i].in() ));
             return 0;
 	  }
           if (TAO_debug_level > 0)
