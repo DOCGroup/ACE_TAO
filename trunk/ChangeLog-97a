@@ -1,6 +1,7 @@
 Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* examples/Threads/{context_switch_time.cpp,Makefile}:
+	* tests/Priority_Task_Test.cpp,
+	  examples/Threads/{context_switch_time.cpp,Makefile}:
 	  adapted to new thread priority/ACE_Sched_Params.
 
 Wed Mar  5 14:33:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
