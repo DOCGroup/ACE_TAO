@@ -95,6 +95,12 @@ main (int argc, char *argv[])
       //set priority on the platform
       set_priority();
 
+      if (parse_args(argc, argv) == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Error parsing Arguments\n"));
+          return -1;
+        }
+
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
 
