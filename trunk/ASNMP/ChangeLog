@@ -1,3 +1,7 @@
+Fri Jan 30 15:29:42 CST 1998
+    * fix vb.cpp to handle Gauge/uInt the same way. While retrieving
+      ifTable found the bug.
+ 
 Wed Dec 10 12:09:36 CST 1997
        * sagent.cpp, Eric Newton fix. result not checked. v1.8
   
