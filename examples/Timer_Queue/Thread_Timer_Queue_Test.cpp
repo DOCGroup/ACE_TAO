@@ -143,18 +143,8 @@ Input_Task::list_timer (void *argument)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (argument);
 
-  // Thread cancellation point, if ACE supports it.
-#if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_PUSH (&this->queue_->lock ());
-#endif /* ACE_LACKS_PTHREAD_CANCEL */
-
   // Dump the timer queue contents.
   this->dump ();
-
-  // Thread cancellation point (POP)
-#if !defined (ACE_LACKS_PTHREAD_CANCEL)
-  ACE_PTHREAD_CLEANUP_POP (1);
-#endif /* ACE_LACKS_PTHREAD_CANCEL */
 
   return 0;
 }
