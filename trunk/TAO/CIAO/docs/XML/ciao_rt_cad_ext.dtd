@@ -7,9 +7,17 @@
   <hostcollocation>, <processcollocation> as
 
     <extension class="RT-CAD-EXT"
-               origin="CIAO">full_pathname_to_xml_file.xml</extension>
+               origin="CIAO">pathname_to_xml_file.xml</extension>
 
   The root element is <rtcad-ext>.
+
+  The <extension> tag under <homeplacement> element can be used to
+  specify the <rtpolicyset> named in this file (using rtpolicyset's
+  id attribute.)  For example,
+
+    <extension class="RT-CAD-EXT"
+               origin="CIAO">IDREF_of_some_rtpolicyset</extension>
+
 -->
 
 <!ELEMENT rtcad-ext ( rtresources*, rtpolicyset* ) >
