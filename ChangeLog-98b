@@ -7,6 +7,9 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           added #include of ace/streams.h, because the dump ()
           method uses ofstream.
 
+        * examples/Connection/non_blocking/CPP-acceptor.cpp (handle_close):
+          added ACE_UNUSED_ARG's.
+
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.2.x.h: Added ACE_HAS_GPERF.
