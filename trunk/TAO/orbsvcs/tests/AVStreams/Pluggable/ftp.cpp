@@ -171,9 +171,11 @@ Client::init (int argc,
                                 TAO_AV_CORE::instance ()->poa ());
 
   // Parse the command line arguments
-  this->parse_args (argc,
-		    argv);
+  int result = this->parse_args (argc,
+                                 argv);
 
+  if (result != 0)
+    return result;
 
   // Open file to read.
   this->fp_ = ACE_OS::fopen (this->filename_,
@@ -184,12 +186,15 @@ Client::init (int argc,
 		       this->filename_),
 		      -1);
 
+  result 
+    = this->bind_to_server (ACE_TRY_ENV);
+  
   // Resolve the object reference of the server from the Naming Service.
-  if (this->bind_to_server (ACE_TRY_ENV) == -1)
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-
+  
   // Create the Flow protocol name
   char flow_protocol_str [BUFSIZ];
   if (this->use_sfp_)
@@ -226,16 +231,20 @@ Client::init (int argc,
   flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
   flow_spec.length (1);
 
+  AVStreams::MMDevice_var client_mmdevice = 
+    this->client_mmdevice_._this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   // Bind/Connect  the client and server MMDevices.
-  CORBA::Boolean result =
-    this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
+  CORBA::Boolean bind_result =
+    this->streamctrl_.bind_devs (client_mmdevice.in (),
 				 this->server_mmdevice_.in (),
 				 the_qos.inout (),
 				 flow_spec,
 				 ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  if (result == 0)
+  if (bind_result == 0)
     ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
 
   return 0;

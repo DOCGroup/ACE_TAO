@@ -94,7 +94,9 @@ Server::init (int argc,
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice1");
-          AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_TRY_EX (bind)
         {
           // Register the video control object with the naming server.

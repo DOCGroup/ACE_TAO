@@ -316,8 +316,13 @@ Client::run (void)
                                         &addr);
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
       flow_spec.length (1);
+      
+      AVStreams::MMDevice_var client_mmdevice =
+        this->client_mmdevice_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       CORBA::Boolean result =
-        this->streamctrl_.bind_devs (this->client_mmdevice_._this (ACE_TRY_ENV),
+        this->streamctrl_.bind_devs (client_mmdevice.in (),
                                      AVStreams::MMDevice::_nil (),
                                      the_qos.inout (),
                                      flow_spec,
