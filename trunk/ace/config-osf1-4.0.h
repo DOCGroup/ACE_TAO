@@ -1,14 +1,17 @@
 /* -*- C++ -*- */
 // $Id$
 
+// NOTE:  if you are using Digital UNIX V4.0f or later, you must
+// use config-osf1.h instead of directly using this config file.
+
 // The following configuration file is designed to work for the
-// Digital UNIX V4.0a and later platforms with either the GNU g++, DEC
+// Digital UNIX V4.0a through V4.0d with either the GNU g++, DEC
 // cxx 5.4 and later, Rational RCC (2.4.1) compilers, or KAI 3.3
 // compilers.  It is configured to use the IEEE Std 1003.1c-1995,
 // POSIX System Application Program Interface, or DCE threads (with
 // cxx only); it automatically selects the proper thread interface
 // depending on whether the cxx -pthread or -threads option was
-// specified.  By 4.0a the version is meant that is called "V4.0 464"
+// specified.  By 4.0a, the version is meant that is called "V4.0 464"
 // by uname -a.
 
 #ifndef ACE_CONFIG_H
@@ -80,7 +83,7 @@
 #     pragma message disable intconlosbit
 #   endif /* __DECCXX_VER >= 60190029 */
 
-#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 5
+#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 0x50
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
 #     pragma message disable declbutnotref
 #   endif /* DIGITAL_UNIX 5 */
@@ -119,7 +122,7 @@
 # define ACE_LACKS_T_ERRNO
 # define ACE_POLL_IS_BROKEN
 # if !defined (DIGITAL_UNIX)
-#   define DIGITAL_UNIX
+#   define DIGITAL_UNIX 0x40
 # endif /* ! DIGITAL_UNIX */
   // DJT removed this due to some minor issues related to the
   // definitions of timestruc_t and tid_t in procfs.h not sure what
