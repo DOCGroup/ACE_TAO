@@ -127,7 +127,11 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_ptr proxy);" << be_nl
     // Just to keep Old g++ complier (version: 2.7.2.3) happy its necessary 
     // to declare and define the destructor explicitly.
-      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"<<be_uidt_nl;
+      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base (void);"<<be_nl
+    // This method will delegate thsi method to the <base_proxy_>
+    // member of the smart proxy and so the smart proxy's (nil)
+    // stubobj will not be returned.
+      << "virtual TAO_Stub *_stubobj (void) const;"<<be_uidt_nl;
   
   // generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
