@@ -1,3 +1,9 @@
+Mon Oct 22 07:54:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Security/SecurityLevel1/makefile:
+	* orbsvcs/tests//Security/Secure_Invocation/Makefile: 
+          Updated dependencies.  
+
 Mon Oct 22 14:21:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/LifeCycle_Service/*.bor
