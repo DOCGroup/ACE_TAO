@@ -1,3 +1,14 @@
+Sun Feb 11 18:33:47 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+
+          The problem with the nestea test on Redhat was that the server
+          was crashing (but the perl script seemed to hide that).  Thanks 
+          to Mountain Dew <mountaindew@mountaindew.com> for assisting in
+          this debugging session.
+
+          [Bug 495]
+
 Sun Feb 11 17:06:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Priority_Mapping_Manager.h (~TAO_Priority_Mapping_Manager):
