@@ -1633,11 +1633,22 @@ Cubit_Client::run ()
 
           this->print_stats ("cube_any_struct",
                              elapsed_time);
-        }
+	}
 
       this->shutdown_server (this->shutdown_
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      
+      ACE_TRY_EX (SHM)
+	{
+	  this->cubit_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
+	  ACE_TRY_CHECK_EX (SHM);
+	}
+      ACE_CATCHANY
+	{
+	  // Dont do anything..
+	}
+      ACE_ENDTRY;
     }
   ACE_CATCHANY
     {
