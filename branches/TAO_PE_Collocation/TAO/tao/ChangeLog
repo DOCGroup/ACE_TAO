@@ -1,0 +1,72 @@
+Tue Jan  4 09:17:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Object.cpp:
+
+          Removed remoting code from these classes. Additionally, the
+          checks to determine if a reference is remote have also been
+          removed.
+
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Acceptor.cpp:
+
+         Factored out code for creation, acceptance and concurrency
+         control with the ORB core. These are removed as in collocation
+         mode, no remote invocations are serviced.
+
+       * tao/Connection_Handler.cpp:
+       * tao/Connection_Handler.h:
+       * tao/Connection_Handler.inl:
+
+         Factored out dependency on the transport for Connection handler
+         classes if two objects are collocated. The transport is not
+         needed as no remote requests are serviced.
+
+       * tao/IIOP_Connector.h:
+       * tao/IIOP_Connector.cpp:
+
+         Factored out remoting code that does opens the socket to connect
+         to a remote host. This functionality is not needed as objects
+         are collocated.
+
+       * tao/Profile_Transport_Resolver.cpp:
+       * tao/Profile_Transport_Resolver.h:
+       * tao/Transport_Cache_Manager.h:
+       * tao/Transport_Cache_Manager.cpp:
+       * tao/Transport_Cache_Manager.inl:
+       * tao/Thread_Lane_Resources.cpp:
+       * tao/Thread_Per_Connection_Handler.cpp:
+       * tao/Transport.h:
+       * tao/Transport.cpp:
+       * tao/Transport_Connector.h:
+       * tao/Transport_Connector.cpp:
+       * default_client.cpp:
+       * default_client.h:
+
+         Factored out functionality and state when in collocated state as
+         these are needed only to service remote requests.
+
+       * tao/Strategies/DIOP_Connection_Handler.h:
+       * tao/Strategies/DIOP_Connector.cpp:
+       * tao/Strategies/DIOP_Factory.h:
+       * tao/Strategies/DIOP_Factory.cpp:
+       * tao/Strategies/DIOP_Transport.h:
+       * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+       * tao/Strategies/SHMIOP_Connector.cpp:
+       * tao/Strategies/UIOP_Connection_Handler.cpp:
+       * tao/Strategies/UIOP_Connector.cpp:
+
+         Factored out remoting code from the strategy classes,
+         particularly, transport dependecies.
+
+       * tao/TAO.mpc:
+         Modified mpc file to add the macro TAO_HAS_COLLOCATION that
+         factores out remoting code. Additionally, several classes that
+         are not needed in this mode have been added in an excludes
+         directive. Eventually, this file can be generated out from a tool
+         based on the macro defined. Using this functionality results in a
+         reduction of ~90 KB in size of libTAO library and improvement of
+         ~95% in throughput for the collocation tests
+         ($TAO_ROOT/performance-tests/Latency/Collocation) measured on 1GHz dual
+         cpu box running redhat linux with 1GB of memory.
