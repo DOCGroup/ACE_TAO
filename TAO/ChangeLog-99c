@@ -1,3 +1,12 @@
+Tue Jun  8 16:06:15 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* examples/Event_Comm/Consumer_Handler.h:
+	* examples/Event_Comm/Notifier_Handler.h:
+	* examples/Simple/chat/Client_i.h:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
+	  Reordered the CORBA::ORB_var declaration in these files so that
+	  the ORB_var is destroyed after all the other "_var" members.
+
 Tue Jun 08 15:47:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Object.i:
