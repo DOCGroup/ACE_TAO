@@ -150,16 +150,22 @@ class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 
 public:
 
-  virtual void handle_stop (const AVStreams::flowSpec &the_spec,
+  virtual int handle_open (void) = 0;
+  // called when streamendpoint is instantiated
+
+  virtual int handle_close (void) = 0;
+  // called when streamendpoint is being destructed
+
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
                             CORBA::Environment &env) = 0;
   // Application needs to define this
   
-  virtual void handle_start (const AVStreams::flowSpec &the_spec,  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env) = 0;
   // Application needs to define this
 
   
-  virtual void handle_destroy (const AVStreams::flowSpec &the_spec,  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
                                CORBA::Environment &env) = 0;
   // Application needs to define this
 };
@@ -179,10 +185,7 @@ class TAO_ORBSVCS_Export TAO_Server_Base_StreamEndPoint
   : public virtual TAO_Base_StreamEndPoint
 {
 public:
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::StreamEndPoint_ptr initiator, 
-                                                      CORBA::Boolean is_mcast, 
-                                                      AVStreams::streamQoS &qos, 
-                                                      AVStreams::flowSpec &the_spec,  
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                       CORBA::Environment &env) = 0;
   // Application needs to define this
 };
@@ -420,6 +423,24 @@ class TAO_ORBSVCS_Export TAO_MMDevice
                                                  const AVStreams::flowSpec &the_spec,
                                                  CORBA::Environment &env);
   // Multicast bind
+
+  virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "A" type streamandpoint and vdev
+  
+  virtual AVStreams::StreamEndPoint_B_ptr  create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                                                     AVStreams::VDev_out the_vdev, 
+                                                     AVStreams::streamQoS &the_qos, 
+                                                     CORBA::Boolean_out met_qos, 
+                                                     char *&named_vdev, 
+                                                     const AVStreams::flowSpec &the_spec,  
+                                                     CORBA::Environment &env);
+  // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
   virtual void destroy (AVStreams::StreamEndPoint_ptr the_ep,
                         const char *vdev_name,

@@ -649,6 +649,35 @@ TAO_MMDevice::bind_mcast (AVStreams::MMDevice_ptr first_peer,
   return 0;
 }
 
+AVStreams::StreamEndPoint_A_ptr  
+TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr the_requester, 
+                                   AVStreams::VDev_out the_vdev, 
+                                   AVStreams::streamQoS &the_qos, 
+                                   CORBA::Boolean_out met_qos, 
+                                   char *&named_vdev, 
+                                   const AVStreams::flowSpec &the_spec,  
+                                   CORBA::Environment &env)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     "(%P|%t) Cannot create a A device on the server side!\n"),
+                    0);
+}
+
+
+AVStreams::StreamEndPoint_B_ptr  
+TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr the_requester, 
+                        AVStreams::VDev_out the_vdev, 
+                        AVStreams::streamQoS &the_qos, 
+                        CORBA::Boolean_out met_qos, 
+                        char *&named_vdev, 
+                        const AVStreams::flowSpec &the_spec,  
+                        CORBA::Environment &env)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+                     "(%P|%t) Cannot create a B device on the client side!\n"),
+                    0);
+}
+
 void 
 TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr the_ep,
                        const char *vdev_name,
