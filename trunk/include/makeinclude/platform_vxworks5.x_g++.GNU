@@ -24,13 +24,9 @@ endif # ! optimize
 ifndef rtti
   rtti =
 endif # ! rtti
-ifndef shared_libs
-  shared_libs =
-endif # ! shared_libs
-ifndef static_libs
-  static_libs = 1
-endif # ! static_libs
 
+shared_libs =
+static_libs = 1
 
 ifeq (,$(WIND_BASE))
   default:
