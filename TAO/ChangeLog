@@ -1,3 +1,11 @@
+Tue Mar 18 16:54:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAOC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+
+          Added 'template<>' to specializations in hand-crafted code
+          that were overlooked in a previous checkin.
+
 Tue Mar 18 15:45:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
