@@ -1,3 +1,9 @@
+Fri Jan 30 01:55:59 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Thruput/TAO/Makefile: Updated to use rules.tao.GNU.  and
+ 	taoconfig.mk.  This was suggested by a change Carlos O'Ryan did to
+ 	the long lost Thruput_test directory.
+
 Thu Jan 29 23:10:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/clnt.cpp (CosNaming_Client):
