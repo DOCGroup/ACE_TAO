@@ -7,21 +7,21 @@
 CFG=Fault Tolerance - Win32 MFC Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Fault_Tolerance.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "Fault_Tolerance.mak" CFG="Fault Tolerance - Win32 MFC Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "Fault Tolerance - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "Fault Tolerance - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "Fault Tolerance - Win32 mfc Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "Fault Tolerance - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_CosNotification.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_CosNotification.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 Debug"
 
@@ -83,7 +83,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServerd.lib TAO_CosNamingd.lib TAO_CosNotificationd.lib TAO_Svc_Utilsd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNamingd.lib TAO_CosNotificationd.lib TAO_CosEventd.lib TAO_Svc_Utilsd.lib TAO_PortableServerd.lib TAOd.lib TAO_IORManipd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 mfc Release"
 
@@ -111,8 +112,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib TAO_CosNotificationmfc.lib TAO_Svc_Utilsmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerancemfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_IORManipmfc.lib TAO_PortableServermfc.lib TAO_CosNamingmfc.lib TAO_CosNotificationmfc.lib TAO_Svc_Utilsmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerancemfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 MFC Debug"
 
@@ -140,10 +141,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_PortableServermfcd.lib TAO_CosNamingmfcd.lib TAO_CosNotificationmfcd.lib TAO_Svc_Utilsmfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerancemfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Toleranced.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNamingmfcd.lib TAO_CosNotificationmfcd.lib TAO_CosEventmfcd.lib TAO_Svc_Utilsmfcd.lib TAO_PortableServermfcd.lib TAO_IORManipmfcd.lib TAOmfcd.lib acemfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerancemfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -165,6 +166,10 @@ SOURCE=.\FT_CORBAS.cpp
 # Begin Source File
 
 SOURCE=.\FaultTolerance\FT_IOGR_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_Policy_i.cpp
 # End Source File
 # Begin Source File
 
@@ -192,6 +197,10 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_Policy_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_Service_Activate.h
 # End Source File
 # Begin Source File
@@ -216,6 +225,10 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_Policy_i.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_Service_Callbacks.i
 # End Source File
 # End Group
@@ -229,7 +242,7 @@ SOURCE=.\FT_CORBA.idl
 !IF  "$(CFG)" == "Fault Tolerance - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FT_CO="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__FT_CO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\FT_CORBA.idl
 InputName=FT_CORBA
@@ -268,7 +281,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__FT_CO="..\..\..\bin\tao_idl.exe"
+USERDEP__FT_CO="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\FT_CORBA.idl
 InputName=FT_CORBA
@@ -308,7 +321,7 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
-USERDEP__FT_CO="..\..\..\bin\Release\tao_idl.exe"
+USERDEP__FT_CO="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\FT_CORBA.idl
 InputName=FT_CORBA
@@ -349,7 +362,8 @@ BuildCmds= \
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
 
-!ENDIF
+!ENDIF 
+
 # End Source File
 # End Group
 # End Target
