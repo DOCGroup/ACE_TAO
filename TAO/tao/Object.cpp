@@ -114,6 +114,10 @@ CORBA::Boolean
 CORBA_Object::_is_a (const CORBA::Char *type_id,
 		     CORBA::Environment &env)
 {
+  // If the object is collocated then try locally....
+  if (this->is_collocated_ && this->servant_ != 0)
+    return this->servant_->_is_a (type_id, env);
+
   // At this time, we only have a single generic way to check the type
   // of an object.
   STUB_Object *istub;

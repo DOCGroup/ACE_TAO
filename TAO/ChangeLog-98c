@@ -1,3 +1,11 @@
+Wed Mar 25 22:55:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Servant_Base.h: 
+	* tao/Object.cpp: 
+	  Collocated objects (even if their dynamic type is simply
+	  CORBA_Object) can use the servant to resolve the _is_a()
+	  calls.
+
 Wed Mar 25 22:06:19 1998  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/TAO.cpp: Added accessors for child/root poa.
