@@ -51,7 +51,9 @@ apc_callback (DWORD)
 void
 queue_apc (void)
 {
-  DWORD result = ::QueueUserAPC (&apc_callback,          // pointer to APC function
+  DWORD result = ::QueueUserAPC (ACE_reinterpret_cast (PAPCFUNC,
+                                                       &apc_callback),
+                                                         // pointer to APC function
                                  ::GetCurrentThread (),  // handle to the thread
                                  0);                     // argument for the APC function
   if (result == FALSE)

@@ -47,7 +47,7 @@ void
 write_to_pipe (ACE_Pipe &pipe)
 {
   char *data = "hello";
-  int len = ACE_OS::strlen (data);
+  size_t len = ACE_OS::strlen (data);
 
   int result = ACE::send (pipe.write_handle (),
                           data,
