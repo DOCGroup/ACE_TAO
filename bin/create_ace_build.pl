@@ -217,29 +217,23 @@ foreach $build (@builds) {
 sub wanted {
     my ($dev,$ino,$mode,$nlink,$uid,$gid);
 
-    $matches = ! (/^CVS\z/s &&
-    ($File::Find::prune = 1)
+    $matches = ! (
+    /^CVS\z/s && ($File::Find::prune = 1)
     ||
-    /^build\z/s &&
-    ($File::Find::prune = 1)
+    /^build\z/s && ($File::Find::prune = 1)
     ||
-    /^\..*obj\z/s &&
-    ($File::Find::prune = 1)
+    /^\..*obj\z/s && ($File::Find::prune = 1)
     ||
-    /^Templates\.DB\z/s &&
-    ($File::Find::prune = 1)
+    /^Templates\.DB\z/s && ($File::Find::prune = 1)
     ||
-    /^Debug\z/s &&
-    ($File::Find::prune = 1)
+    /^Debug\z/s && ($File::Find::prune = 1)
     ||
-    /^Release\z/s &&
-    ($File::Find::prune = 1)
+    /^Release\z/s && ($File::Find::prune = 1)
     ||
-    /^Static_Debug\z/s &&
-    ($File::Find::prune = 1)
+    /^Static_Debug\z/s && ($File::Find::prune = 1)
     ||
-    /^Static_Release\z/s &&
-    ($File::Find::prune = 1));
+    /^Static_Release\z/s && ($File::Find::prune = 1)
+    );
 
     $matches = $matches &&
     ( 
@@ -259,7 +253,9 @@ sub wanted {
     );
 
     if ($mpc && $matches) {
-      $matches = (
+      $matches = 
+        ($File::Find::dir =~ /include\/makeinclude*/) ||
+        (
         ! /^.*\.dsp\z/s && 
         ! /^.*\.vcproj\z/s && 
         ! /^.*\.bor\z/s && 
@@ -276,6 +272,9 @@ sub wanted {
         ! /^.*\.ncb\z/s &&
         ! /^.*\.opt\z/s &&
         ! /^.*\.bak\z/s &&
+        ! /^.*\.ilk\z/s &&
+        ! /^.*\.exp\z/s &&
+        ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^Makefile.*\z/s
       );

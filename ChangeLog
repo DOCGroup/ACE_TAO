@@ -1,3 +1,10 @@
+Wed Jul 16 15:29:37 2003  Justin Michel  <michel_j@ociweb.com>
+
+	* bin\create_ace_build.pl:
+ 
+          Fixed to link include\makeinclude\*.bor files.
+          A few more link exclusions were added. 
+
 Wed Jul 16 15:27:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* ace\Dev_Poll_Reactor.h (find_handler): 
