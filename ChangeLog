@@ -1,3 +1,10 @@
+Sat Mar 22 11:58:12 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Message_Queue_T.cpp: Moved the notify() hook calls within
+	  the protection of the guard lock critical section to prevent
+ 	  race conditions on cleanup.  Thanks to Ron Muck <rlm@sdiusa.com> 
+	  for this suggestion.
+ 
 Fri Mar 21 13:07:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
