@@ -14,6 +14,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 CORBA_Context::CORBA_Context (void)
+  : refcount_ (1)
 {
 }
 
