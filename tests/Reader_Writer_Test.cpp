@@ -53,7 +53,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
+              "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
 
@@ -108,12 +108,12 @@ reader (void *)
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield ();
+          ACE_Thread::yield ();
 
-	  if (!ACE_OS::thr_equal (shared_data, data))
+          if (!ACE_OS::thr_equal (shared_data, data))
             ACE_DEBUG ((LM_DEBUG,
-			" (%t) somebody changed %d to %d\n",
-			data, shared_data));
+                        " (%t) somebody changed %d to %d\n",
+                        data, shared_data));
         }
 
       --current_readers;
@@ -158,12 +158,12 @@ writer (void *)
 
       for (size_t loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield ();
+          ACE_Thread::yield ();
 
-	  if (!ACE_OS::thr_equal (shared_data, self))
+          if (!ACE_OS::thr_equal (shared_data, self))
             ACE_DEBUG ((LM_DEBUG,
-			" (%t) somebody wrote on my data %d\n",
-			shared_data));
+                        " (%t) somebody wrote on my data %d\n",
+                        shared_data));
         }
 
       --current_writers;
@@ -175,6 +175,19 @@ writer (void *)
     }
   return 0;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_Guard<ACE_RW_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Guard<ACE_RW_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_THREADS */
 
@@ -193,14 +206,14 @@ int main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
-					       ACE_THR_FUNC (reader),
-					       0,
-					       THR_NEW_LWP) == -1)
+                                               ACE_THR_FUNC (reader),
+                                               0,
+                                               THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
-						    ACE_THR_FUNC (writer),
-						    0,
-						    THR_NEW_LWP) == -1)
+                                                    ACE_THR_FUNC (writer),
+                                                    0,
+                                                    THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -214,14 +227,3 @@ int main (int argc, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Read_Guard<ACE_RW_Mutex>;
-template class ACE_Write_Guard<ACE_RW_Mutex>;
-template class ACE_Guard<ACE_RW_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
-#pragma instantiate ACE_Guard<ACE_RW_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

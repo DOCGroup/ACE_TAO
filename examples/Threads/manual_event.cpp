@@ -4,10 +4,10 @@
 // Pseudo_Barrier. Multiple threads are created which do the
 // following:
 //
-//	1. work 
-//	2. synch with other threads
-//	3. more work
-// 
+//      1. work
+//      2. synch with other threads
+//      3. more work
+//
 // ACE_Manual_Event is use to synch with other
 // threads. ACE_Manual_Event::signal() is used for broadcasting.
 
@@ -23,9 +23,9 @@ class Pseudo_Barrier
   //    A barrier class using ACE manual-reset events.
   //
   // = DESCRIPTION
-  //    This is *not* a real barrier. 
+  //    This is *not* a real barrier.
   //    Pseudo_Barrier is more like a ``one shot'' barrier.
-  //    All waiters after the Nth waiter are allowed to go. 
+  //    All waiters after the Nth waiter are allowed to go.
   //    The barrier does not reset after the Nth waiter.
   //    For an example of a real barrier, please see class ACE_Barrier.
 {
@@ -34,8 +34,8 @@ public:
 
   int wait (void);
 
-private: 
-  ACE_Atomic_Op <ACE_Thread_Mutex, int> counter_; 
+private:
+  ACE_Atomic_Op <ACE_Thread_Mutex, int> counter_;
   ACE_Manual_Event event_;
 };
 
@@ -44,12 +44,12 @@ Pseudo_Barrier::Pseudo_Barrier (u_long count)
 {
 }
 
-int 
+int
 Pseudo_Barrier::wait (void)
 {
   if (--this->counter_ == 0)
     return this->event_.signal ();
-  else 
+  else
     return this->event_.wait ();
 }
 
@@ -57,7 +57,7 @@ static void *
 worker (void *arg)
 {
   Pseudo_Barrier &barrier = *(Pseudo_Barrier *) arg;
-  
+
   // work
   ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", ++::amount_of_work));
   ACE_OS::sleep (::amount_of_work.value ());
@@ -75,13 +75,13 @@ worker (void *arg)
   return 0;
 }
 
-int 
+int
 main (int argc, char **argv)
 {
   int n_threads = argc == 2 ? atoi (argv[1]) : 5;
 
   ACE_Thread_Manager &tm = *ACE_Thread_Manager::instance ();
-  
+
   // synch object shared by all threads
   Pseudo_Barrier barrier (n_threads);
 
@@ -92,13 +92,20 @@ main (int argc, char **argv)
   // wait for all workers to exit
   if (tm.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
-  else 
+  else
     ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
