@@ -1,9 +1,9 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(GenericFactory, client, "$Id$")
+ACE_RCSID (Application_Controlled,
+           client,
+           "$Id$")
 
 const char *ior = "file://obj.ior";
 

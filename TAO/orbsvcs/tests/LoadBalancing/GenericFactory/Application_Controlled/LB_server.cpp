@@ -3,7 +3,7 @@
 
 #include "TestC.h"
 
-ACE_RCSID (GenericFactory,
+ACE_RCSID (Application_Controlled,
            LB_server,
            "$Id$")
 
