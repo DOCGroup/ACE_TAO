@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-$status = system ($EXEPREFIX."EC_Basic".$Process::EXE_EXT, "");
+$status = system ($EXEPREFIX."EC_Basic".$EXE_EXT, "");
 
 # @@ Capture any errors from the server too.
 exit $status;

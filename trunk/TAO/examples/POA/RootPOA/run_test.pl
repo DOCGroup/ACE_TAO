@@ -9,7 +9,7 @@ unshift @INC, '../../../bin';
 require Process;
 require ACEutils;
 
-$T = Process::Create ($EXEPREFIX."RootPOA");
+$T = Process::Create ($EXEPREFIX."RootPOA".$EXE_EXT);
 
 $client = $T->TimedWait (60);
 if ($client == -1) {

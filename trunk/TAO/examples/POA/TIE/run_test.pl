@@ -24,7 +24,7 @@ unlink $iorfile_4;
 unlink $iorfile_5;
 unlink $iorfile_6;
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT");
 
 # In this example all the files are written out at the same time. So  make a
 # check only for the first file
@@ -35,10 +35,10 @@ if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
 }
 
 ACE::waitforfile ($iorfile_1);
-$status  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT  -a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
+$status  = Process::Create ($EXEPREFIX."client$EXE_EXT  -a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
 
 if (ACE::waitforfile_timed ($iorfile_5,1) == 0) {
-$status  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT  -e file://$iorfile_5 -f file://$iorfile_6");
+$status  = Process::Create ($EXEPREFIX."client$EXE_EXT  -e file://$iorfile_5 -f file://$iorfile_6");
 }
 
 unlink $iorfile_1;

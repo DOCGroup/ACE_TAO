@@ -19,7 +19,7 @@ sub service
 {
   my $args = "";
   my $prog = $EXEPREFIX."$tao_root/orbsvcs/Logging_Service/Logging_Service"
-      .$Process::EXE_EXT;
+      .$EXE_EXT;
   $SV = Process::Create ($prog, $args);
 }
 
@@ -27,7 +27,7 @@ sub service
 sub test
 {
   my $args = "";
-  my $prog = $EXEPREFIX."Logging_Test".$Process::EXE_EXT;
+  my $prog = $EXEPREFIX."Logging_Test".$EXE_EXT;
 
   system ("$prog $args");
 }

@@ -16,17 +16,17 @@ $ev_count = 8;
 sub cosec_multiple_test2
 {
     # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$Process::EXE_EXT,"");
+    $SV1 = Process::Create ($EXEPREFIX."../../Naming_Service/Naming_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$Process::EXE_EXT,"");
+    $SV2 = Process::Create ($EXEPREFIX."../../Event_Service/Event_Service".$EXE_EXT,"");
 
     sleep 10;
 
     # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$Process::EXE_EXT);
+    $SV3 = Process::Create ($EXEPREFIX."../../CosEvent_Service/CosEvent_Service".$EXE_EXT);
 
     sleep 10;
 
@@ -34,7 +34,7 @@ sub cosec_multiple_test2
     for ($cntr1 = 0; $cntr1 < $con_count ; $cntr1+=1)
     {
         print "creating consumer# $cntr1\n";
-        $CONS = Process::Create ($EXEPREFIX."consumer".$Process::EXE_EXT,
+        $CONS = Process::Create ($EXEPREFIX."consumer".$EXE_EXT,
                                  "-c $ev_count");
         sleep 10;
     }
@@ -44,7 +44,7 @@ sub cosec_multiple_test2
     for ($cntr2 = 0; $cntr2 < $con_count ; $cntr2+=1)
     {
         print "creating supplier# $cntr2\n";
-        $SUPP = Process::Create ($EXEPREFIX."supplier".$Process::EXE_EXT,
+        $SUPP = Process::Create ($EXEPREFIX."supplier".$EXE_EXT,
                                  "-c $ev_count");
         sleep 10;
     }

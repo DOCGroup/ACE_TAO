@@ -18,7 +18,7 @@ $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
 		       "orbsvcs".$DIR_SEPARATOR.
                        "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$Process::EXE_EXT,
+                       "Naming_Service".$EXE_EXT,
                        " -o $ns_ior ");
 
 if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {

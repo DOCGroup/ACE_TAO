@@ -11,11 +11,11 @@ require Process;
 
 $iorfile = "time.ior";
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-o $iorfile ");
+$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile ");
 
 ACE::waitforfile ($iorfile);
 
-$status  = system ($EXEPREFIX."client$Process::EXE_EXT -f $iorfile -x");
+$status  = system ($EXEPREFIX."client$EXE_EXT -f $iorfile -x");
 
 $SV->Kill (); $SV->Wait ();
 

@@ -22,7 +22,7 @@ sub run_test
     my $args = shift (@argslist);
 
     print STDERR "\n$brace $test $args test BEGUN\n";
-    $TST = Process::Create  ($EXEPREFIX."$test".$Process::EXE_EXT,
+    $TST = Process::Create  ($EXEPREFIX."$test".$EXE_EXT,
                              "$args");
     print STDERR "\t$test RUNNING\n";
     $retval = ($TST->Wait ()) / 256;

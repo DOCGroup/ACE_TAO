@@ -1,3 +1,8 @@
+Thu Jun 17 10:05:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* */run_test.pl:
+	  Fixed several problems with the EXE_EXT variable.
+
 Thu Jun 17 00:47:30 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_decl.cpp:

@@ -27,7 +27,7 @@ sub name_server
   my $args = "-ORBnameserviceport $nsmport -o $iorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR".
     "Naming_Service".$DIR_SEPARATOR.
-      "Naming_Service".$Process::EXE_EXT;
+      "Naming_Service".$EXE_EXT;
 
   unlink $iorfile;
   $NS = Process::Create ($prog, $args);
@@ -43,7 +43,7 @@ sub client
 {
   my $args = $_[0]." "."-ORBnameserviceport $nsmport ".
     "-ORBnameserviceior file://$iorfile";
-  my $prog = $EXEPREFIX."client".$Process::EXE_EXT;
+  my $prog = $EXEPREFIX."client".$EXE_EXT;
 
   $CL = Process::Create ($prog, $args);
 }
