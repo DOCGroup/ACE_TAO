@@ -375,7 +375,7 @@ CORBA_PolicyTypeSeq::CORBA_PolicyTypeSeq (CORBA::ULong max) // uses max size
 CORBA_PolicyTypeSeq::CORBA_PolicyTypeSeq (CORBA::ULong max, CORBA::ULong length, CORBA::ULong *buffer, CORBA::Boolean release)
   : TAO_Unbounded_Sequence<CORBA::ULong> (max, length, buffer, release)
 {}
-CORBA_PolicyTypeSeq::CORBA_PolicyTypeSeq (const PolicyTypeSeq &seq)
+CORBA_PolicyTypeSeq::CORBA_PolicyTypeSeq (const CORBA_PolicyTypeSeq &seq)
   : TAO_Unbounded_Sequence<CORBA::ULong> (seq)
 {}
 CORBA_PolicyTypeSeq::~CORBA_PolicyTypeSeq (void)
@@ -931,14 +931,14 @@ template class TAO_Unbounded_Sequence<CORBA::ULong>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Policy>;
 template class TAO_Object_Manager<CORBA_Policy>;
 
-  template class TAO_Object_Field_T<CORBA_Policy>;
-  template class TAO_Object_Field_T<CORBA_PolicyManager>;
-  template class TAO_Object_Field_T<CORBA_PolicyCurrent>;
+//  template class TAO_Object_Field_T<CORBA_Policy>;
+//  template class TAO_Object_Field_T<CORBA_PolicyManager>;
+//  template class TAO_Object_Field_T<CORBA_PolicyCurrent>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
-#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>
-#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_Policy>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager>
+//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
