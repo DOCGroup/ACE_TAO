@@ -1,3 +1,9 @@
+Thu Sep 14 01:43:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tests/Portable_Interceptors/Benchmark/client.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp: Fixed
+          more unused argument warnings.
+
 Wed Sep 13 22:11:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * */Makefile:
