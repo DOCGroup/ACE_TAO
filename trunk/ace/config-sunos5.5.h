@@ -100,7 +100,6 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 #define ACE_HAS_UALARM
 #define ACE_LACKS_UALARM_PROTOTYPE
 
