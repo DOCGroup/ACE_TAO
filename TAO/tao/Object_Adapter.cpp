@@ -342,23 +342,14 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
                                         TAO_POA *&poa)
 {
   int result = 0;
-  if (root)
-    {
-      poa = this->orb_core_.root_poa ();
-    }
-  else
-    {
-      result = this->transient_poa_map_->find (system_name,
-                                               poa);
-    }
 
-  if (result == 0)
-    {
-      if (poa->creation_time () != poa_creation_time)
-        {
-          result = -1;
-        }
-    }
+  if (root)
+    poa = this->orb_core_.root_poa ();
+  else
+    result = this->transient_poa_map_->find (system_name,
+                                             poa);
+  if (result == 0 && poa->creation_time () != poa_creation_time)
+    result = -1;
 
   return result;
 }
