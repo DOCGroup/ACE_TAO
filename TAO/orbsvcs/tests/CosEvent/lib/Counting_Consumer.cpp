@@ -174,8 +174,10 @@ CEC_Pull_Counting_Consumer::try_pull (CORBA::Boolean_out has_event,
       has_event = 0;
       return 0;
     }
+
   CORBA::Any_var event =
     this->supplier_proxy_->try_pull (has_event, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   if (has_event)
     this->event_count++;

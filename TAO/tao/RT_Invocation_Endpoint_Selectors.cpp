@@ -39,6 +39,7 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       this->next (invocation, ACE_TRY_ENV);
       ACE_CHECK;
       this->select_endpoint (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 
   else if (invocation->profile_->endpoint_count () == 1)
@@ -146,10 +147,11 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       this->next (invocation, ACE_TRY_ENV);
       ACE_CHECK;
       this->select_endpoint (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
     }
-
   else
     {
+
       // Find the endpoint for the band of interest.
       TAO_Endpoint *endpoint = 0;
       for (TAO_Endpoint *endp = invocation->profile_->endpoint ();
@@ -272,12 +274,14 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
       // protocol, try another protocol.
       invocation->endpoint_selection_state_.client_protocol_index_++;
       this->select_endpoint (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
       // Found the profile - get the endpoint.
       invocation->profile_ = profile;
       this->endpoint (invocation, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 
@@ -292,10 +296,8 @@ TAO_Protocol_Endpoint_Selector::endpoint (TAO_GIOP_Invocation *invocation,
 void
 TAO_Protocol_Endpoint_Selector::next (TAO_GIOP_Invocation
                                      *invocation,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   invocation->endpoint_selection_state_.client_protocol_index_++;
   // If we ran out of profiles to try - this will be detected and
   // exception thrown once <endpoint> is called.
@@ -427,10 +429,8 @@ TAO_Client_Priority_Policy_Selector::select_endpoint (TAO_GIOP_Invocation
 void
 TAO_Client_Priority_Policy_Selector::next (TAO_GIOP_Invocation
                                            *invocation,
-                                           CORBA::Environment &ACE_TRY_ENV)
+                                           CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   invocation->endpoint_selection_state_.client_protocol_index_++;
   // If we ran out of profiles to try - this will be detected and
   // exception thrown once <endpoint> is called.

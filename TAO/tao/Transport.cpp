@@ -237,9 +237,10 @@ TAO_Transport::connection_handler_closing (void)
   this->transition_handler_state ();
 
   // purge_entry on the Transport_Cache
-  if (this->cache_map_entry_ != 0) {
-    this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
-  }
+  if (this->cache_map_entry_ != 0)
+    {
+      this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+    }
 
   // This should be the last thing we do here
   TAO_Transport::release(this);
@@ -252,48 +253,58 @@ TAO_Transport::connection_handler (void) const
 }
 
 TAO_Transport*
-TAO_Transport::_duplicate(TAO_Transport* transport)
+TAO_Transport::_duplicate (TAO_Transport* transport)
 {
-  if (transport != 0) {
-    transport->increment();
+  if (transport != 0)
+    {
+      transport->increment();
 #if 0
-ACE_hthread_t self;
-ACE_OS::thr_self(self);
-printf("DEBUG: Thread == %2d %s (%x) storing %8x TAO_Transport::_duplicate count == %d\n", self, what, who, transport, transport->refcount());
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) TAO_Transport::duplicate, "
+                  "%s (%x) releasing %8x "
+                  "TAO_Transport::release count == %d\n",
+                  what, who, transport, count));
 #endif
   }
   return transport;
 }
 
 void
-TAO_Transport::release(TAO_Transport* transport)
+TAO_Transport::release (TAO_Transport* transport)
 {
-  if (transport != 0) {
-    int count = transport->decrement();
+  if (transport != 0)
+    {
+      int count = transport->decrement ();
 #if 0
-ACE_hthread_t self;
-ACE_OS::thr_self(self);
-printf("DEBUG: Thread == %2d %s (%x) releasing %8x TAO_Transport::release count == %d\n", self, what, who, transport, count);
-#endif
-    if (count == 0) {
-      delete transport;
-    }
-    else if (count < 0) {
       ACE_DEBUG ((LM_DEBUG,
-                  "Refrence count in TAO_Transport::release "
-                  "is less than zero: %d\n", count));
-      ACE_OS::abort ();
+                  "(%P|%t) TAO_Transport::release, "
+                  "%s (%x) releasing %8x "
+                  "TAO_Transport::release count == %d\n",
+                  what, who, transport, count));
+#endif
+      if (count == 0)
+        {
+          delete transport;
+        }
+      else if (count < 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) TAO_Transport::release, "
+                      "reference countis less than zero: %d\n",
+                      count));
+          ACE_OS::abort ();
+        }
     }
-  }
 }
 
 int
 TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 {
   // First purge our entry
-  if (this->cache_map_entry_ != 0) {
-    this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
-  }
+  if (this->cache_map_entry_ != 0)
+    {
+      this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
+    }
 
   // Then add ourselves to the cache
   return this->orb_core_->transport_cache ().cache_transport (desc,

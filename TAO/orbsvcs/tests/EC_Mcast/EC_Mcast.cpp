@@ -841,7 +841,7 @@ ECM_Consumer::disconnect (CORBA::Environment& ACE_TRY_ENV)
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  
+
   RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
     this->supplier_proxy_._retn ();
   tmp->disconnect_push_supplier (ACE_TRY_ENV);
@@ -851,9 +851,20 @@ ECM_Consumer::disconnect (CORBA::Environment& ACE_TRY_ENV)
 void
 ECM_Consumer::close (CORBA::Environment &ACE_TRY_ENV)
 {
-  this->disconnect (ACE_TRY_ENV);
-  this->consumer_admin_ =
-    RtecEventChannelAdmin::ConsumerAdmin::_nil ();
+  ACE_TRY
+    {
+      this->disconnect (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      this->consumer_admin_ =
+        RtecEventChannelAdmin::ConsumerAdmin::_nil ();
+    }
+  ACE_CATCHANY
+    {
+      this->consumer_admin_ =
+        RtecEventChannelAdmin::ConsumerAdmin::_nil ();
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
 }
 
 void

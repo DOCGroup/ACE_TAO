@@ -325,6 +325,8 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
     {
       // lock the lock
       cc_lock_set_->lock (mode_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock set\n",
                   get_lock_mode_name (mode_)));
