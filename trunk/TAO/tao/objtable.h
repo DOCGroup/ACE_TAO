@@ -22,13 +22,13 @@ class TAO_Object_Table
   //     to pointers to CORBA objects.
 {
 public:
-  virtual int find (const CORBA::OctetSeq &key, 
+  virtual int find (const TAO_opaque &key, 
 		    CORBA::Object_ptr &obj) = 0;
   // Find object associated with <{key}>, setting <{obj}> to the
   // pointer and returning a non-negative integer.  If not found,
   // <{obj}> is unchanged and the value <-1> is returned.
 
-  virtual int bind (const CORBA::OctetSeq &key, 
+  virtual int bind (const TAO_opaque &key, 
 		    CORBA::Object_ptr obj) = 0;
   // Associated <{key}> with <{obj}>, returning 0 if object is
   // registered successfully, 1 if it's already registered, and -1 if
@@ -54,13 +54,13 @@ public:
   ~TAO_Dynamic_Hash_ObjTable (void);
   // destructor
 
-  virtual int bind (const CORBA::OctetSeq &key, 
+  virtual int bind (const TAO_opaque &key, 
 		    CORBA::Object_ptr obj);
   // Registers a CORBA::Object into the object table and associates
   // the key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA::OctetSeq &key, 
+  virtual int find (const TAO_opaque &key, 
 		    CORBA::Object_ptr &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
@@ -98,13 +98,13 @@ public:
 
   ~TAO_Linear_ObjTable (void);
 
-  virtual int bind (const CORBA::OctetSeq &key,
+  virtual int bind (const TAO_opaque &key,
 		    CORBA::Object_ptr obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA::OctetSeq &key, 
+  virtual int find (const TAO_opaque &key, 
 		    CORBA::Object_ptr &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.
@@ -139,13 +139,13 @@ public:
 
   ~TAO_Active_Demux_ObjTable (void);
 
-  virtual int bind (const CORBA::OctetSeq &key,
+  virtual int bind (const TAO_opaque &key,
 		    CORBA::Object_ptr obj);
   // Registers a CORBA::Object into the object table and associates
   // the key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA::OctetSeq &key,
+  virtual int find (const TAO_opaque &key,
 		    CORBA::Object_ptr &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.

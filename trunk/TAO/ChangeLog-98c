@@ -1,3 +1,23 @@
+Fri Jan 16 18:01:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* The Event Service works on Solaris/SunCC again.
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	* tao/objtable.h: 
+	* tao/objtable.cpp: 
+	* tao/connect.cpp: 
+	  The object table, and POA use a real TAO_Unbounded_Sequence,
+	  removing some nasty casts.
+
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  Fixed some memory allocation problems in operator=
+
+	* TAO_IDL/be/be_interface.cpp: 
+	  No need to cast the object key when calling POA::bind(), it
+	  takes a TAO_opaque now.
+
 Thu Jan 15 17:15:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO/TAO_IDL/be/be_interface.cpp: 

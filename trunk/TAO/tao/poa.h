@@ -47,7 +47,7 @@ public:
   // @@ Hum, does this still make sense now that it's in POA?
 
   /* virtual */
-  CORBA::Object_ptr create (CORBA::OctetSeq& obj_id,
+  CORBA::Object_ptr create (TAO_opaque& obj_id,
                             CORBA::String type_id,
                             CORBA::Environment& env);
   // Create a reference to an object, using identifying information
@@ -159,26 +159,26 @@ public:
   // are administered using system-specific mechanisms and policies.
 
   CORBA::OctetSeq *get_key (CORBA::Object_ptr obj,
-			   CORBA::Environment &env);
+			    CORBA::Environment &env);
   // NON-STANDARD CALL.  When dispatching a request to an object, you
   // need to be able to get the object key you used to create the
   // reference.  It's the main way servers distinguish two object
   // references from each other.
     
-  void dispatch (CORBA::OctetSeq &key, 
+  void dispatch (TAO_opaque &key, 
 		 CORBA::ServerRequest &req, 
 		 void *context, 
 		 CORBA::Environment &env);
   // Find the object for the request and pass it up the chain.  Errors
   // are returned in <env>.
 
-  virtual int bind (const CORBA::OctetSeq &key, 
+  virtual int bind (const TAO_opaque &key, 
 		    CORBA::Object_ptr obj);
   // Registers a CORBA::Object into the object table and associates the
   // key with it.  Returns -1 on failure, 0 on success, 1 on
   // duplicate.
 
-  virtual int find (const CORBA::OctetSeq &key, 
+  virtual int find (const TAO_opaque &key, 
 		    CORBA::Object_ptr &obj);
   // Looks up an object in the object table using <{key}>.  Returns
   // non-negative integer on success, or -1 on failure.

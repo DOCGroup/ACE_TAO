@@ -49,25 +49,25 @@ TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::bind (const CORBA::OctetSeq &key,
+TAO_Dynamic_Hash_ObjTable::bind (const TAO_opaque &key,
 				 CORBA::Object_ptr obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name. Hence we must first convert
   // it to a string and then save a copy of the string in the table.
-  ACE_CString objkey ((char *)key.buffer, key.length);
+  ACE_CString objkey ((char *)&key[0], key.length ());
   return this->hash_.bind (CORBA::string_dup (objkey.rep ()), obj);
 }
 
 int
-TAO_Dynamic_Hash_ObjTable::find (const CORBA::OctetSeq &key,
+TAO_Dynamic_Hash_ObjTable::find (const TAO_opaque &key,
 				 CORBA::Object_ptr &obj)
 {
   // the key is an octet sequence. Hence, we cannot simply cast the buffer to a
   // char* as it may result in an arbitrary name due to absence of a NULL
   // terminating character. Hence we must first convert it to a string of the
   // specified length.
-  ACE_CString objkey ((char *)key.buffer, key.length);
+  ACE_CString objkey ((char *)&key[0], key.length ());
   return this->hash_.find (objkey.rep(), obj); // no string_dup necessary here
 }
 
@@ -85,7 +85,7 @@ TAO_Linear_ObjTable::~TAO_Linear_ObjTable (void)
 }
 
 int
-TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
+TAO_Linear_ObjTable::bind (const TAO_opaque &key,
 			   CORBA::Object_ptr obj)
 {
   CORBA::ULong i = this->next_;
@@ -93,10 +93,12 @@ TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
   if (i < this->tablesize_)
     {
       // store the string and the corresponding object pointer
-      this->tbl_[i].opname_ = CORBA::string_alloc (key.length); // allocates one
+      this->tbl_[i].opname_ = CORBA::string_alloc (key.length ()); // allocates one
       // more
-      ACE_OS::memset (this->tbl_[i].opname_, '\0', key.length+1);
-      ACE_OS::strncpy (this->tbl_[i].opname_, (char *)key.buffer, key.length);
+      ACE_OS::memset (this->tbl_[i].opname_, '\0', key.length ()  + 1);
+      ACE_OS::strncpy (this->tbl_[i].opname_,
+		       (char *)&key[0],
+		       key.length ());
       this->tbl_[i].obj_ = obj;
       this->next_++; // point to the next available slot
       return 0; // success
@@ -107,16 +109,17 @@ TAO_Linear_ObjTable::bind (const CORBA::OctetSeq &key,
 
 // find if the key exists
 int
-TAO_Linear_ObjTable::find (const CORBA::OctetSeq &key,
+TAO_Linear_ObjTable::find (const TAO_opaque &key,
 			   CORBA::Object_ptr &obj)
 {
   ACE_ASSERT (this->next_ <= this->tablesize_);
 
-  //  ACE_CString objkey ((char *)key.buffer, key.length);
+  //  ACE_CString objkey ((char *)&key[0], key.length ());
   for (CORBA::ULong i = 0; i < this->next_; i++)
     {
       // linearly search thru the table
-      if (!ACE_OS::strncmp (this->tbl_[i].opname_, (char *)key.buffer, key.length))
+      if (!ACE_OS::strncmp (this->tbl_[i].opname_, (char *)&key[0],
+			    key.length ()))
 	{
 	  // keys match. Return the object pointer
 	  obj = this->tbl_[i].obj_;
@@ -158,12 +161,12 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 
 // bind the object based on the key
 int
-TAO_Active_Demux_ObjTable::bind (const CORBA::OctetSeq &key,
+TAO_Active_Demux_ObjTable::bind (const TAO_opaque &key,
 				 CORBA::Object_ptr obj)
 {
   // The active demux strategy works on the assumption that the key is a
   // stringified form of an index into the table
-  ACE_CString objkey ((char *)key.buffer, key.length);
+  ACE_CString objkey ((char *)&key[0], key.length ());
   CORBA::ULong i = ACE_OS::atoi (objkey.rep ());
 
   if (i < this->tablesize_)
@@ -183,10 +186,10 @@ TAO_Active_Demux_ObjTable::bind (const CORBA::OctetSeq &key,
 }
 
 int
-TAO_Active_Demux_ObjTable::find (const CORBA::OctetSeq &key,
+TAO_Active_Demux_ObjTable::find (const TAO_opaque &key,
 				 CORBA::Object_ptr& obj)
 {
-  ACE_CString objkey ((char *)key.buffer, key.length);
+  ACE_CString objkey ((char *)&key[0], key.length ());
   CORBA::ULong i = ACE_OS::atoi (objkey.rep ());
 
   ACE_ASSERT (i < this->tablesize_); // cannot be equal to
