@@ -45,25 +45,13 @@ namespace CIAO
   {
   public:
 
-    // @@ (OO) In general, we only use _WITH_DEFAULTS for IDL defined
-    ///        methods.  Please remove _WITH_DEFAULT from the emulated
-    ///        exception parameter below.
     /// Constructor
     NodeDaemon_Impl (const char *name,
                      CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr p,
                      const char * nodeapp_loc,
-                     int spawn_delay
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                     int spawn_delay)
                 ACE_THROW_SPEC ((CORBA::SystemException));
-
-    // @@ (OO) Since this class is reference counted, please make this
-    //         destructor protected to enforce proper memory managment
-    //         through the reference counting mechanism (i.e. to
-    //         disallow calling operator delete() on an instance of
-    //         this class.
-    /// Destructor
-    virtual ~NodeDaemon_Impl (void);
 
     /// Get the containing POA.  This operation does *not*
     /// increase the reference count of the POA.
@@ -100,6 +88,14 @@ namespace CIAO
                        Deployment::StopError));
 
   protected:
+    // Since this class is reference counted, making this
+    // destructor protected to enforce proper memory managment
+    // through the reference counting mechanism (i.e. to
+    // disallow calling operator delete() on an instance of
+    // this class.
+    /// Destructor
+    virtual ~NodeDaemon_Impl (void);
+
     // Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 

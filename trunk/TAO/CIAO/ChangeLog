@@ -1,3 +1,14 @@
+Thu Jul  1 12:16:41 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/ExecutionManager/Execution_Manager.cpp:
+        * DnC/ExecutionManager/ExecutionManager_Impl.h:
+        * DnC/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DnC/NodeManager/Node_Daemon.cpp:
+        * DnC/NodeManager/NodeDaemon_Impl.h:
+        * DnC/NodeManager/NodeDaemon_Impl.cpp:
+
+          Addressed comments left by Ossama after his code review.
+
 Thu Jul  1 12:02:05 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CAD_Handler.cpp:

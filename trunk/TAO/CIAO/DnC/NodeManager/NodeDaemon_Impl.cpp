@@ -7,11 +7,10 @@
 //         versions of emulated exception parameters.  Please remove
 //         the "_WITH_DEFAULTS"
 CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
-                                    CORBA::ORB_ptr orb,
-                                    PortableServer::POA_ptr poa,
-                                    const char * nodapp_loc,
-                                    int spawn_delay
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        CORBA::ORB_ptr orb,
+                                        PortableServer::POA_ptr poa,
+                                        const char * nodapp_loc,
+                                        int spawn_delay)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -72,43 +71,29 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
-// @@ (OO) In this case, you should use the "_NOT_USED" version
-//         instead.
 void
 CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
-                               Deployment::TargetManager_ptr ,
-                               Deployment::Logger_ptr
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   Deployment::TargetManager_ptr ,
+                                   Deployment::Logger_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
-// @@ (OO) In this case, you should use the "_NOT_USED" version
-//         instead.
 void
-CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
-                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                 Deployment::StartError,
-                 Deployment::PlanError))
+                   Deployment::StartError,
+                   Deployment::PlanError))
 {
   // Return cached manager
   ACE_TRY
@@ -125,7 +110,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 
       PortableServer::ServantBase_var safe (app_mgr);
 
-           //@@ Note: after the init call the servant ref count would become 2. so
+     //@@ Note: after the init call the servant ref count would become 2. so
      //   we can leave the safeservant along and be dead. Also note that I added
       this->manager_ =
             app_mgr->init (this->nodeapp_location_,
@@ -163,12 +148,8 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
   ACE_CHECK_RETURN (0);
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
-CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
-                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr)
   ACE_THROW_SPEC ((CORBA::SystemException, Deployment::StopError))
 {
   ACE_TRY
