@@ -6,7 +6,6 @@
 #include "DIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 

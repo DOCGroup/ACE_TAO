@@ -19,15 +19,11 @@
 #define TAO_DIOP_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/Connector.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
 #include "tao/Pluggable.h"
-#include "tao/Connector_Impl.h"
 #include "DIOP_Connection_Handler.h"
 #include "diop_export.h"
 
@@ -76,22 +72,6 @@ protected:
   /// Obtain tcp properties that must be used by this connector, i.e.,
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
-
-public:
-
-  typedef TAO_Connect_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
-          TAO_DIOP_CONNECT_CONCURRENCY_STRATEGY;
-
-  typedef TAO_Connect_Creation_Strategy<TAO_DIOP_Connection_Handler>
-          TAO_DIOP_CONNECT_CREATION_STRATEGY;
-
-  typedef ACE_Connect_Strategy<TAO_DIOP_Connection_Handler,
-                               ACE_SOCK_CONNECTOR>
-          TAO_DIOP_CONNECT_STRATEGY ;
-
-  typedef ACE_Strategy_Connector<TAO_DIOP_Connection_Handler,
-                                 ACE_SOCK_CONNECTOR>
-          TAO_DIOP_BASE_CONNECTOR;
 
 protected:
 

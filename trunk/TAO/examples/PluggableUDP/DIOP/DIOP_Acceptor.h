@@ -28,8 +28,6 @@
 #include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
-#include "ace/Acceptor.h"
-#include "ace/SOCK_Acceptor.h"
 #include "tao/GIOP_Message_State.h"
 #include "diop_export.h"
 
