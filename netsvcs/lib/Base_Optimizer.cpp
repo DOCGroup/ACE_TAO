@@ -4,6 +4,22 @@
 
 #include "Base_Optimizer.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Base_Optimizer.i"
-#endif /* __ACE_INLINE__ */
+template<class Base, class Member> ACE_INLINE
+Base_Optimizer<Base, Member>::Base_Optimizer (void)
+{
+}
+
+template<class Base, class Member> ACE_INLINE
+Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base,
+                                              const Member &member)
+  : Base (base),
+    m_ (member)
+{
+}
+
+template<class Base, class Member> ACE_INLINE
+Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base)
+  : Base (base)
+{
+}
+

@@ -16,6 +16,10 @@ ACE_SVC_FACTORY_DEFINE (ACE_Server_Logging_Acceptor)
 ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  template class Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString>;
+  template class Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY>;
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 template class Log_Message_Receiver_Impl<ACE_NULL_SYNCH>;
 template class Static_Log_Message_Receiver<ACE_NULL_SYNCH>;
 template class ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
@@ -110,6 +114,10 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   // here.
   #endif /* ACE_HAS_TLI */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  #pragma instantiate Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString>
+  #pragma instantiate Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY>
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 #pragma instantiate Log_Message_Receiver_Impl<ACE_NULL_SYNCH>
 #pragma instantiate Static_Log_Message_Receiver<ACE_NULL_SYNCH>
 #pragma instantiate ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>
