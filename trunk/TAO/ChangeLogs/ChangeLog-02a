@@ -1,3 +1,8 @@
+Mon Mar 11 19:29:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.bor:
+          Added new Muxed_GIOP_Versions test
+
 Sun Mar 10 13:55:55 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
@@ -14,13 +19,13 @@ Sun Mar 10 13:55:55 2002  Carlos O'Ryan  <coryan@uci.edu>
 Sun Mar 10 08:33:10 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/test_i.cpp: Fixed a unused variable
-	  warning. 
+	  warning.
 
 Sun Mar 10 08:05:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLUIOP_Transport.cpp: Pass the CDR
 	  stream to check whether BiDirectional GIOP can be enabled or
-	  not. 
+	  not.
 
 Sun Mar 10 05:48:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -31,15 +36,15 @@ Sun Mar 10 05:48:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Sun Mar 10 00:00:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Muxed_GIOP_Versions/server.dsp:
-	* tests/Muxed_GIOP_Versions/client.dsp: Cosmetic fixes. 
+	* tests/Muxed_GIOP_Versions/client.dsp: Cosmetic fixes.
 	* tests/Muxed_GIOP_Versions/MT_Server)and_Client.dsw: Removed this
-	  file from the repo. 
+	  file from the repo.
 	* tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.dsw: Added this
-	  workspace file. 
+	  workspace file.
 
 Sat Mar  9 21:00:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Muxed_GIOP_Versions/*: 
+	* tests/Muxed_GIOP_Versions/*:
 	* tests/Muxed_GIOP_Versions/client.bor:
 	* tests/Muxed_GIOP_Versions/Makefile.bor:
         * tests/Muxed_GIOP_Versions/run_test.pl:
@@ -63,32 +68,32 @@ Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/GIOP_Message_Base.h:
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.cpp: 
+	* tao/GIOP_Message_Lite.cpp:
 	* tao/IIOP_Transport.cpp:
 	* tao/Pluggable_Messaging.h: The state of the GIOP version that
 	  got shared between threads created problems if the threads
 	  processed messages of different GIOP versions. With muxed
 	  connections one could expect different GIOP versions on the same
-	  connection which is perfectly valid with latest CORBA specs. 
+	  connection which is perfectly valid with latest CORBA specs.
 
 	  Removed shared state information of the GIOP version from the
 	  GIOP_Message_Base class. All the state information is now on the
 	  stack of the thread processing the request. In places where we
 	  dont have the version information ready, we use the CDR stream
 	  created by the thread to check for GIOP versions. This should
-	  fix [BUG 1159]. 
-	
+	  fix [BUG 1159].
+
 	* tao/TAO_Server_Request.cpp: If the upcall thread sends an
 	  exception to the client, we were creating a new output CDR
 	  stream instead of using the one that was already
-	  created. Removed creation of a new CDR stream. 
+	  created. Removed creation of a new CDR stream.
 
 	  The above two fixes should solve the problem reported in
 	  tao-users newsgroup under the thread "wide-strings in
 	  exceptions". Thanks to Val Dumitrescu
 	  <val.dumitrescu@am-beo.com> for reporting the problem and Duane
 	  Binder <duane.binder@veritas.com> for helping me to narrow down
-	  the problem. 
+	  the problem.
 
 Sat Mar  9 16:22:25 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
