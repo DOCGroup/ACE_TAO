@@ -1,3 +1,8 @@
+Wed Jun 18 11:25:14 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* examples/Threads/{task_four,token}.cpp: Changed the use of
+	  cerr/cout to ACE_DEBUG macro. 
+	
 Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-sunos5.5-sunc++-4.x.h,
