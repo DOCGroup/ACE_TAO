@@ -160,8 +160,14 @@ ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
     }
   // Normal event entries.
   else
-    // Make sure that the <to_be_removed_masks> is the NULL_MASK 
-    to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    {
+      if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL))
+        // Preserve DONT_CALL
+        to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+      else
+        // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+        to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
   
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
@@ -202,8 +208,14 @@ ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
     }
   // Normal event entries.
   else
-    // Make sure that the <to_be_removed_masks> is the NULL_MASK 
-    to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    {
+      if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::DONT_CALL))
+        // Preserve DONT_CALL
+        to_be_removed_masks = ACE_Event_Handler::DONT_CALL;
+      else
+        // Make sure that the <to_be_removed_masks> is the NULL_MASK 
+        to_be_removed_masks = ACE_Event_Handler::NULL_MASK;
+    }
   
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the

@@ -49,6 +49,10 @@ class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
   
 public:
   ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
+  // Constructor
+  
+  ~ACE_Proactor_Timer_Handler (void);
+  // Destructor
   
 protected:
   virtual int svc (void);
@@ -61,12 +65,31 @@ protected:
   
   ACE_Proactor &proactor_;
   // Proactor 
+
+  int shutting_down_;
+  // Flag used to indicate when we are shutting down.
 };
   
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
-  : proactor_ (proactor),
-    ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_)
+  : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
+    proactor_ (proactor),
+    shutting_down_ (0)
 {
+}
+
+ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
+{
+  // Mark for closing down
+  this->shutting_down_ = 1;
+
+  // Signal timer event
+  this->timer_event_.signal ();  
+
+  // Don't bother to wait (since the thread may have already
+  // gone). But make sure to close up the descriptor.  This may not be
+  // necessary in the future when THR_DETACHED is correctly
+  // implemented.
+  this->thr_mgr ()->close (0);
 }
 
 int
@@ -75,7 +98,7 @@ ACE_Proactor_Timer_Handler::svc (void)
   u_long time;
   ACE_Time_Value absolute_time;
 
-  for (;;)
+  for (; !this->shutting_down_;)
     {
       // default value
       time = INFINITE;
@@ -226,7 +249,7 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   ACE_NEW (this->timer_handler_, ACE_Proactor_Timer_Handler (*this));
 
   // activate <timer_handler>
-  if (this->timer_handler_->activate () == -1)
+  if (this->timer_handler_->activate (THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p Could not create thread\n", "Task::activate"));
 
 }
