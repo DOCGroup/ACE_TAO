@@ -1,3 +1,7 @@
+Wed May  8 23:57:32 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuilds/builds.lst: Move Redhat 7.1 Core build to new scoreboard.
+
 Wed May  8 15:15:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Merged in the XML-based Service Configurator framework.  The
