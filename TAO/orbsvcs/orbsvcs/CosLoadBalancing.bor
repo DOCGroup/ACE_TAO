@@ -65,7 +65,7 @@ INCLUDES = LoadBalancing\*.h LoadBalancing\*.i
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
-	$(TAO_PORTABLESERVER_LIB)
+	$(TAO_PORTABLESERVER_LIB) \
         $(TAO_MESSAGING_LIB) \
 	$(TAO_NAMING_LIB) \
 	$(TAO_PORTABLEGROUP_LIB)
