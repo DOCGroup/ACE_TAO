@@ -88,6 +88,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   //
   // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
 
+  if (this->is_local_)
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
                          this->_stubobj ()->type_id.in ()) == 0)

@@ -1,3 +1,13 @@
+Mon Jun 26 15:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.cpp: Removed _is_a method from LocalObject.
+          Otherwise, we get inheritance ambiguity when a local interface
+          inherits from another non-local interface.
+
+        * tao/Object.cpp: Merged the _is_a implementation for local
+          interface into regular Object.
+
 Mon Jun 26 12:44:40 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.cpp.h:
