@@ -1,3 +1,21 @@
+Tue Oct 31 17:34:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+	
+	* tao/PortableInterceptorC.h: 
+	  Removed the unnecessary TAO_HAS_CORBA_MESSAGING Guard.
+
+	* tao/Stub.h (TAO_Stub): 
+	* tao/Stub.cpp (buffering_constraint): 
+
+	* tao/ORB_Core.i: 
+	* tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout): 
+	  Added the TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY adn
+	  TAO_HAS_SYNC_SCOPE_POLICY guards around the related functions.
+	
+	* tao/Messaging_Policy_i.h: 
+	  Added the missing TAO_HAS_CORBA_MESSAGING Guard around the
+	  class.
+	
+
 Tue Oct 31 18:50:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Dynamic_Adapter.cpp:

@@ -426,13 +426,9 @@ private:
   //   2. we can search for the servant/POA's status starting from
   //      the ORB's RootPOA.
 
-  #if (TAO_HAS_CORBA_MESSAGING == 1)
-
   TAO_Policy_Manager_Impl *policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
-
-  #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   CORBA::Short addressing_mode_;
   // The addressing mode.
