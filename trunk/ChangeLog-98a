@@ -1,14 +1,25 @@
-Mon Apr 13 19:12:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Apr 13 19:19:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/DEV_Connector.i (ACE_DEV_Connector): 
-	* ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
+	* ace/Log_Record.cpp (print): Added VERBOSE_LITE support to the
+ 	  code so we don't spew out quite so much information.
 
-Mon Apr 13 18:05:26 1998  Steve Huston  <shuston@riverace.com>
+	* ace/Log_Msg.cpp (log): Replaced all calls to
+ 	  ACE_Log_Record::print() so that they pass the
+ 	  ACE_Log_Msg::flags_ parameter.
 
-	* tests/Thread_Manager_Test.cpp: Disabled the suspend/resume action
-	  for Pthreads platforms.
+	* ace/Log_Record.h: Changed the 'int verbose' parameter to 'u_long
+ 	  verbose_flag' parameter so that we can pass in the
+ 	  ACE_Log_Msg::flags_ and check to see what they are enabled with!
 
-Mon Apr 13 16:56:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* tests/test_config.h: Changed VERBOSE to VERBOSE_LITE so we don't
+ 	  have quite so much junk printed out for the tests!
+
+	* ace/Log_{Priority,Record}: Added a new flag called VERBOSE_LITE
+ 	  that isn't quite as verbose as VERBOSE (it only prints things
+ 	  that can change between calls to the ACE_Log_Msg::log() method).
+  	  In addition, also changed the ACE_Log_Record::print() method so
+ 	  it prints the string format for the ACE_Log_Priority types.
+  	  This is a lot more legible than printing the numbers.
 
 	* ace: Removed all uses of ACE_HAS_WILDCARD_BIND.  This is now the
  	  default behavior.  If there's some weird platform that DOESN'T
@@ -18,6 +29,16 @@ Mon Apr 13 16:56:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace/OS.cpp (invoke): Removed the (void *) cast on delete this.
   	  It wasn't necessary.  Thanks to Steve Huston and David Levine
  	  for reporting this.
+
+Mon Apr 13 19:12:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/DEV_Connector.i (ACE_DEV_Connector): 
+	* ace/Asynch_IO.cpp (accept,addresses): UNICODE changes.
+
+Mon Apr 13 18:05:26 1998  Steve Huston  <shuston@riverace.com>
+
+	* tests/Thread_Manager_Test.cpp: Disabled the suspend/resume action
+	  for Pthreads platforms.
 
 Mon Apr 13 10:18:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
