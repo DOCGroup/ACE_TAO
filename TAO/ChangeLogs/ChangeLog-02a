@@ -1,3 +1,13 @@
+Wed Jul 25 12:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Strategies/DIOP_Factory.cpp:
+
+	  Changed the return value of requires_explicit_endpoint () to 0
+	  and documented that this return code is not reflecting that 
+	  the endpoints are not cleaned-up but that we disable it by default
+	  because DIOP is only suitable for certain use cases, e.g. it only
+	  supports one-ways.
+
 Wed Jul 25 08:41:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
