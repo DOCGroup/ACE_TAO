@@ -33,8 +33,8 @@ There's not much to the header, so I've included it and the cpp file
 on this one page.
 <P>
 <HR WIDTH="100%">
-<PRE>
 <HR width=50%><P><center>task.h</center><HR width=50%>
+<PRE>
 
 <font color=red>// $Id$</font>
 
@@ -68,8 +68,12 @@ public:
     Task (int sub_tasks = 0);
     ~Task (void);
 
-        <font color=red>// Open the Task with the proper thread-pool size</font>
-    int open (int threads = 1);
+        <font color=red>/*
+          I really wanted this to be called open() but that was already
+          claimed by the Task framework.  start() will kick off our thread 
+          pool for us.
+        */</font>
+    int start (int threads = 1);
 
         <font color=red>// Take Unit_Of_Work objects from the thread pool and invoke</font>
         <font color=red>// their process() and/or fini() as appropriate.</font>
@@ -89,8 +93,8 @@ protected:
 
 <font color=blue>#endif</font>
 </PRE>
-<PRE>
 <HR width=50%><P><center>task.cpp</center><HR width=50%>
+<PRE>
 
 <font color=red>// $Id$</font>
 
@@ -130,11 +134,11 @@ protected:
    enabled, they inherit the thread-pool size.  Make sure that the subtasks can 
    be opened before we open our own threadpool. 
  */</font>
-int <font color=#008888>Task::open</font> (int threads)
+int <font color=#008888>Task::start</font> (int threads)
 {
     if (next_)
     {
-        if (next_->open (threads) == -1)
+        if (next_->start (threads) == -1)
         {
             return -1;
         }

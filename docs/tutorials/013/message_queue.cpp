@@ -14,9 +14,9 @@ int run_test (int iterations, int threads, int subtasks)
         // task.{h|cpp} for more details.
     Task *task = new Task (subtasks);
 
-    if (task->open (threads) == -1)
+    if (task->start (threads) == -1)
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "start"), -1);
     }
 
         // Give the threads a chance to get ready.

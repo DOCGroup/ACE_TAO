@@ -44,7 +44,7 @@ u_int Barrier::threads(void)
  */
 int Barrier::threads( u_int _threads, int _wait )
 {
-    if( ACE_OS::thr_equal(ACE_OS::thr_self(), owner_) )
+    if( ! ACE_OS::thr_equal(ACE_OS::thr_self(), owner_) )
     {
         return -1;
     }

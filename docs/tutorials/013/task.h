@@ -31,8 +31,12 @@ public:
     Task (int sub_tasks = 0);
     ~Task (void);
 
-        // Open the Task with the proper thread-pool size
-    int open (int threads = 1);
+        /*
+          I really wanted this to be called open() but that was already
+          claimed by the Task framework.  start() will kick off our thread 
+          pool for us.
+        */
+    int start (int threads = 1);
 
         // Take Unit_Of_Work objects from the thread pool and invoke
         // their process() and/or fini() as appropriate.

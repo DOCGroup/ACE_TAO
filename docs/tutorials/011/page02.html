@@ -34,9 +34,9 @@ int run_test (int iterations, int threads)
 {
     Task task;
 
-    if (task.open (threads) == -1)
+    if (task.start (threads) == -1)
     {
-        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>start</font>"), -1);
     }
 
     <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (1));
