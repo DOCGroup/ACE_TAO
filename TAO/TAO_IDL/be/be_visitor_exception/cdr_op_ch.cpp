@@ -47,7 +47,7 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
   if (node->cli_hdr_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_header ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the Cdr <<= and >>= operator declarations
   os->indent ();

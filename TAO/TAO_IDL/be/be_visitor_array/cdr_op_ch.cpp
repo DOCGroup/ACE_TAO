@@ -48,7 +48,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   if (node->cli_hdr_cdr_op_gen () || node->imported ())
     return 0;
 
-  TAO_OutStream *os = tao_cg->client_header ();
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // generate the CDR << and >> operator declarations
   *os << "CORBA::Boolean " << idl_global->export_macro ()
