@@ -1,3 +1,13 @@
+Fri Jun  9 13:02:26 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/*.h pace/posix/*.inl,c
+
+	  See config/types.h from previous ChangeLog. All these
+	  types are altered in the source code. (ie: pthread_t
+	  became pace_pthread_t).
+
+	  perl -pi -e `s/pid_t/pace_pid_t/` *.h posix/*.inl posix/*.c
+
 Fri Jun  9 12:20:23 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/types.h:
@@ -6,6 +16,10 @@ Fri Jun  9 12:20:23 2000  Luther J Baker  <luther@cs.wustl.edu>
 	  They are macro definitions. The actual types are not
 	  available until the appropriate file is included.
 	  Thus, I didn't put them into pace/sys/types.h.
+
+	* pace/pace/defines.h
+
+	  Added pace/config/types.h.
 
 Thu Jun  8 15:10:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 

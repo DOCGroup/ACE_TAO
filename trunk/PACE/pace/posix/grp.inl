@@ -16,14 +16,14 @@
 
 PACE_INLINE
 struct group *
-pace_getgrgid (gid_t gid)
+pace_getgrgid (pace_gid_t gid)
 {
   return getgrgid (gid);
 }
 
 PACE_INLINE
 int
-pace_getgrgid_r (gid_t gid,
+pace_getgrgid_r (pace_gid_t gid,
                  struct group * grp,
                  char * buffer,
                  size_t bufsize,
