@@ -5,6 +5,11 @@
 
 #include <openssl/err.h>
 
+#if defined (ACE_WIN32)
+#  include "ace/Reactor.h"
+#endif  /* ACE_WIN32 */
+
+
 ACE_RCSID (ACE_SSL,
            SSL_Connect_Handler,
            "$Id$")
