@@ -182,6 +182,12 @@ public:
   int seed_file (const char * seed_file, long bytes = -1);
   //@}
 
+  /// Print SSL error corresponding to the given error code.
+  static void report_error (unsigned long error_code);
+
+  /// Print the last SSL error for the current thread.
+  static void report_error (void);
+
 private:
 
   /// Verify if the context has been initialized or not.

@@ -1,3 +1,31 @@
+Fri Sep 28 09:37:28 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.h (report_error):
+	* ace/SSL/SSL_Context.cpp (report_error):
+
+	  New SSL error reporting functions that use the ACE_Log_Msg
+	  facilities to dump error information.
+
+	* ace/SSL/SSL_Context.cpp (set_mode):
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL/SSL_SOCK_Stream.i (send_i, recv_i):
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
+	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
+
+	  Use the new report_error() static method to display error
+	  information instead of OpenSSL's ERR_print_error_fp().
+
+	* ace/SSL/SSL_SOCK_Connector.cpp:
+
+	  Include 'ace/Log_Msg.h' to pull ACE_ERROR macro definitions.
+	  Fixes compile-time problems on Tru64.  Thanks to Martin
+	  Krumpolec for providing this fix.  [Bug 1034]
+
+	  (ACE_SSL_SOCK_Connector):
+
+	  Wrap format specifier string in ACE_ERROR call with ACE_TEXT.
+	  Fixes mismatched Unicode/non-unicode strings.
+
 Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for "already_connected_"
