@@ -1,3 +1,9 @@
+Fri Apr 28 14:41:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Xt_Stopwatch/Makefile: Ran a make depend on the
+	  file. Thanks to Bill Tonseth <tonseth@shamra.mv.com> for
+	  reporting this. 
+
 Fri Apr 28 13:40:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/diffs/InterceptorC.h.diff:
