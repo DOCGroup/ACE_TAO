@@ -1,9 +1,8 @@
-// This short program prints the contents of stdin to stdout sorted by
 // $Id$
 
+// This short program prints the contents of stdin to stdout sorted by
 // the length of each line via the use of an ASX Message_Queue.  It
 // illustrates how priorities can be used for ACE Message_Queues.
-
 
 #include "ace/Message_Queue.h"
 #include "ace/Read_Buffer.h"
@@ -74,11 +73,16 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       // Allocate a new buffer.
       char *buffer = rb.read ('\n');
 
+      ACE_Message_Block *mb;
+
       if (buffer == 0)
         {
           // Send a 0-sized shutdown message to the other thread and
           // exit.
-          if (msg_queue->enqueue_tail (new ACE_Message_Block ((size_t) 0)) == -1)
+
+	  ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), 0);
+
+          if (msg_queue->enqueue_tail (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
           break;
         }
@@ -88,15 +92,17 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         {
           // Allocate a new message, but have it "borrow" its memory
           // from the buffer.
-          ACE_Message_Block *mb = new ACE_Message_Block (rb.size (),
-                                                         ACE_Message_Block::MB_DATA,
-                                                         0,
-                                                         buffer);
+	  ACE_NEW_RETURN (mb, ACE_Message_Block (rb.size (),
+						 ACE_Message_Block::MB_DATA,
+						 0,
+						 buffer));
           mb->msg_priority (rb.size ());
           mb->wr_ptr (rb.size ());
 
-          ACE_DEBUG ((LM_DEBUG, "enqueueing message of size %d\n", 
+          ACE_DEBUG ((LM_DEBUG,
+		      "enqueueing message of size %d\n", 
                       mb->msg_priority ()));
+
           // Enqueue in priority order.
           if (msg_queue->enqueue_prio (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));

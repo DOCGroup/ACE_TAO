@@ -1,13 +1,12 @@
-// This short program copies stdin to stdout via the use of an ASX
 // $Id$
 
-// STREAM.  It illustrates an implementation of the classic "bounded
-// buffer" program using an ASX STREAM containing two Modules.  Each
+// This short program copies stdin to stdout via the use of an ASX
+// Stream.  It illustrates an implementation of the classic "bounded
+// buffer" program using an ASX Stream containing two Modules.  Each
 // ACE_Module contains two Tasks.  Each ACE_Task contains a
 // ACE_Message_Queue and a pointer to a ACE_Thread_Manager.  Note how
 // the use of these reusable components reduces the reliance on global
 // variables, as compared with the bounded_buffer.C example.
-
 
 #include "ace/Synch.h"
 #include "ace/Service_Config.h"
@@ -92,7 +91,7 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) thread is exiting with status %d in module %s\n",
-	     exit_status, this->name ()));
+      exit_status, this->name ()));
 
   // Can do anything here that is required when a thread exits, e.g.,
   // storing thread-specific information in some other storage
@@ -113,8 +112,12 @@ Producer::svc (void)
 
   for (int n; ; )
     {
-      // Allocate a new message.
-      ACE_Message_Block *mb = new ACE_Message_Block (BUFSIZ);
+      // Allocate a new message (add one to avoid nasty boundary
+      // conditions).
+      
+      ACE_Message_Block *mb;
+
+      ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ + 1), -1);
 
       n = ACE_OS::read (ACE_STDIN, mb->rd_ptr (), mb->size ());
 
@@ -125,13 +128,16 @@ Producer::svc (void)
 
           if (this->put_next (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
-      	  break;
+	  break;
         }
 
       // Send the message to the other thread.
       else
 	{
 	  mb->wr_ptr (n);
+	  // NUL-terminate the string (since we use strlen() on it
+	  // later).
+          mb->rd_ptr ()[n] = '\0';
 
 	  if (this->put_next (mb) == -1)
 	    ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
@@ -175,9 +181,11 @@ Consumer::svc (void)
 	break;
 
       int length = mb->length ();
-      
+
       if (length > 0)
-	ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), ACE_OS::strlen (mb->rd_ptr ()));
+	ACE_OS::write (ACE_STDOUT,
+		       mb->rd_ptr (),
+		       ACE_OS::strlen (mb->rd_ptr ()));
 
       mb->release ();
 
@@ -186,14 +194,18 @@ Consumer::svc (void)
     }
 
   if (result == -1 && errno == EWOULDBLOCK)
-    ACE_ERROR ((LM_ERROR, "(%t) %p\n%a", "timed out waiting for message", 1));
+    ACE_ERROR ((LM_ERROR,
+		"(%t) %p\n%a",
+		"timed out waiting for message",
+		1));
   return 0;
 }
 
 // The filter prepends a line number in front of each line.
 
 int
-Filter::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+Filter::put (ACE_Message_Block *mb,
+	     ACE_Time_Value *tv)
 { 
   if (mb->length () == 0)
     return this->put_next (mb, tv);
@@ -205,14 +217,15 @@ Filter::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
       ACE_OS::strncpy (buf, mb->rd_ptr (), sizeof buf);
 
       // Increase the size of the buffer large enough that it will be
-      // reallocated.
+      // reallocated (in order to test the reallocation mechanisms).
 
       mb->size (mb->length () + BUFSIZ);
       mb->length (mb->size ());
 
       // Prepend the line count in front of the buffer.
       ACE_OS::sprintf (mb->rd_ptr (), "%d: %s", 
-		       this->count_++, buf);
+         this->count_++, buf);
+
       return this->put_next (mb, tv);
     }
 }
@@ -224,14 +237,19 @@ main (int, char *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
-  // Control hierachically-related active objects
+  // This Stream controls hierachically-related active objects.
   MT_Stream stream;
-  MT_Module *pm = new MT_Module ("Consumer", new Consumer);
-  MT_Module *fm = new MT_Module ("Filter", new Filter);
-  MT_Module *cm = new MT_Module ("Producer", new Producer);
+
+  MT_Module *pm;
+  MT_Module *fm; 
+  MT_Module *cm; 
+
+  ACE_NEW_RETURN (pm, MT_Module ("Consumer", new Consumer), -1);
+  ACE_NEW_RETURN (fm, MT_Module ("Filter", new Filter), -1);
+  ACE_NEW_RETURN (cm, MT_Module ("Producer", new Producer), -1);
 
   // Create Producer and Consumer Modules and push them onto the
-  // STREAM.  All processing is performed in the STREAM.
+  // Stream.  All processing is performed in the Stream.
 
   if (stream.push (pm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "push"), 1);
