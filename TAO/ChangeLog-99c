@@ -1,3 +1,12 @@
+Fri Jun 11 19:03:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/TIE/run_test.pl: Added a new file.
+	* examples/POA/TIE/server.cpp : To facilitate usage of a perl
+	script for running the test, made the server to ior to a file.
+	* examples/POA/TIE/client.cpp: To facilitate reading the ior by
+	the perl script, change was made to read the ior from the command
+	line in "file://" format . 
+
 Fri Jun 11 18:33:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/server.cpp:
