@@ -1,8 +1,8 @@
 // $Id$
 
-#include "common/DTDManager.h"
+#include "common/DTD_Manager.h"
 
-ACEXML_DTDManager::~ACEXML_DTDManager ()
+ACEXML_DTD_Manager::~ACEXML_DTD_Manager ()
 {
 
 }
