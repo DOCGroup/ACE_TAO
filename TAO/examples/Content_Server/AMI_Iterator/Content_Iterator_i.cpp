@@ -125,7 +125,8 @@ Content_Iterator_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Decrease the reference count on our selves.
-  this->_remove_ref ();
+  this->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 int

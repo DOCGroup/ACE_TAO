@@ -1,3 +1,11 @@
+Fri Oct 31 07:59:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Buffered_Oneways/Makefile:
+	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+
+	  Fixed simple compilation errors in static builds.
+
 Fri Oct 31 13:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Parser_Registry.h:
