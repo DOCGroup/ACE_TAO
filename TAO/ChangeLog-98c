@@ -1,3 +1,18 @@
+Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl (enum discrim): Deleted
+	enumerations not used.
+	
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (please_exit): Fixed 
+	unused variable.
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (Cubit_Factory_i): 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h (objrefs): Fixed invalid 
+	comparison between a signed and unsigned variable.
+	
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of 
+	">=" on an unsigned variable to compare only ">".
+	
 Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
 
 	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
@@ -36,14 +51,6 @@ Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 	  tc_name_ and type_name_ were not initialized, producing some
 	  segfaults under NT.
 
-Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
-
-	* cubit_i.h (objrefs): Fixed invalid comparison between a signed
-	and unsigned variable.
-	
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp (main): Fixed comparison of 
-	">=" on an unsigned variable to compare only ">".
-		
 Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
 
 	* TAO_IDL/fe/y.tab.cpp: Commented out include <values.h>.  This
