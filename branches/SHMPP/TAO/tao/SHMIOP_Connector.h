@@ -20,12 +20,15 @@
 #ifndef TAO_SHMIOP_CONNECTOR_H
 #define TAO_SHMIOP_CONNECTOR_H
 
-#include "ace/Connector.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
+#include "ace/Connector.h"
 #include "ace/MEM_Connector.h"
 #include "tao/Pluggable.h"
 #include "tao/SHMIOP_Connect.h"
@@ -201,5 +204,7 @@ private:
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 };
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #endif  /* TAO_SHMIOP_CONNECTOR_H */

@@ -356,9 +356,6 @@ enum MCAST_SERVICEID
 // OBV is in experimental stage
 #define TAO_HAS_VALUETYPE
 
-// UIOP support (GIOP over UNIX domain sockets)
-// #define TAO_HAS_UIOP
-
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
@@ -418,6 +415,10 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #endif /* !TAO_HAS_UIOP &&
           !ACE_LACKS_UNIX_DOMAIN_SOCKETS &&
           !TAO_HAS_MINIMUM_CORBA */
+
+#if !defined (TAO_HAS_SHMIOP)
+# define TAO_HAS_SHMIOP 1
+#endif /* TAO_HAS_SHMIOP */
 
 // Policies are not locality constraint by default.
 #if !defined (TAO_HAS_REMOTE_POLICIES)

@@ -16,11 +16,15 @@
 #ifndef TAO_SHMIOP_FACTORY_H
 #define TAO_SHMIOP_FACTORY_H
 
-#include "tao/Protocol_Factory.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
+#include "tao/Protocol_Factory.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -59,5 +63,7 @@ private:
 
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_SHMIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #endif /* TAO_SHMIOP_FACTORY_H */

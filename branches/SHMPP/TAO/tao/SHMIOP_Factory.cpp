@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/SHMIOP_Factory.h"
+
+#if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
+
 #include "tao/SHMIOP_Acceptor.h"
 #include "tao/SHMIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
@@ -83,3 +86,5 @@ ACE_STATIC_SVC_DEFINE (TAO_SHMIOP_Protocol_Factory,
                        0)
 
 ACE_FACTORY_DEFINE (TAO, TAO_SHMIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
