@@ -42,11 +42,14 @@ public:
   virtual int notify (ACE_Event_Handler *,
                       ACE_Reactor_Mask mask);
 
-  // Get/Set the reactor
+  /// Get the reactor
   ACE_Reactor *reactor (void);
+
+  /// Set the reactor
   void reactor (ACE_Reactor *r);
 
 protected:
+  /// The Reactor
   ACE_Reactor *reactor_;
 };
 

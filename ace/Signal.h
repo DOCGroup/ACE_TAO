@@ -184,22 +184,30 @@ public:
   /// Retrieve the current disposition into <this>.
   int retrieve_action (int signum);
 
-  // = Set/get current signal action.
+  /// Set current signal action.
   void set (struct sigaction *);
+
+  /// Get current signal action.
   struct sigaction *get (void);
   operator ACE_SIGACTION *();
 
-  // = Set/get current signal flags.
+  /// Set current signal flags.
   void flags (int);
+
+  /// Get current signal flags.
   int flags (void);
 
-  // = Set/get current signal mask.
+  /// Set current signal mask.
   void mask (sigset_t *);
   void mask (ACE_Sig_Set &);
+
+  /// Get current signal mask.
   sigset_t *mask (void);
 
-  // = Set/get current signal handler (pointer to function).
+  /// Set current signal handler (pointer to function).
   void handler (ACE_SignalHandler);
+
+  /// Get current signal handler (pointer to function).
   ACE_SignalHandler handler (void);
 
   /// Dump the state of an object.

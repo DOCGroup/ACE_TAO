@@ -1,3 +1,20 @@
+Wed Apr 17 14:30:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added define UNICODE to generate ACE_Registry_Name_Space
+
+        * ace/Proactor.h:
+        * ace/Proactor_Impl.h:
+        * ace/RB_Tree.h:
+        * ace/Reactor_Notification_Strategy.h:
+        * ace/Recyclable.h:
+        * ace/Registry.h:
+        * ace/Service_Types.h:
+        * ace/Signal.h:
+        * ace/Token_Request_Reply.h:
+        * ace/Typed_SV_Message.h:
+          Doxygen-ized some of the comments
+
 Wed Apr 17 12:27:23 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
