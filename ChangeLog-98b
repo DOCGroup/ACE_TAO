@@ -18,6 +18,10 @@ Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR because it caused compilation
           failure with egcs 1.0.2.
 
+        * ace/config-g++-common.h: added ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR,
+          with egcs >= 1.1 only.  Thanks to James Johnson for helping
+          to sort this out.
+
         * ace/IOStream_T.i (eof): fixed return value calculation
           logic.  Thanks to Arturo and James Johnson for providing
           and verifying the fix.
@@ -33,10 +37,6 @@ Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
           is also defined (presumably in netinet/in.h).  This allows
           compilation to succeed on GHS 1.8.9/VxWorks.  Thanks to
           Steve Kay <slk1@icore.ih.lucent.com> for reporting it.
-
-        * ace/config-g++-common.h: added ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR,
-          with egcs >= 1.1 only.  Thanks to James Johnson for helping
-          to sort this out.
 
 Tue Nov 17 09:12:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
