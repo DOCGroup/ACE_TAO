@@ -187,8 +187,6 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) In read \n"));
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
@@ -212,8 +210,6 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    File::IOError))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) In lseek \n"));
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
