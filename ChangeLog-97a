@@ -1,5 +1,12 @@
 Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
 
+	* ACE.cpp (is_process_active): Added this method which checks if a
+ 	  process is still alive. Thanks to Chris (CLahey@cccis.com) for
+	  this code. 
+
+	* ace/OS.i (kill): Changed PROCESS_ALL_ACCESS to
+ 	  PROCESS_TERMINATE.
+
 	* ace/ACE.cpp (bind_port): Changed the implementation of this
  	  method such that a recently used port is not used again in the
  	  next call to this method on Win32, i.e., upper limit is

@@ -6366,7 +6366,7 @@ ACE_OS::kill (pid_t pid, int signum)
 
   // Create a handle for the given process id.
   ACE_HANDLE process_handle = 
-    ::OpenProcess (PROCESS_ALL_ACCESS,
+    ::OpenProcess (PROCESS_TERMINATE,
 		   FALSE, // New handle is not inheritable.
 		   pid);
 
