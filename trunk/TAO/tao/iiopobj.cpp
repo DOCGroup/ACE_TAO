@@ -46,7 +46,7 @@ IIOP::ProfileBody::ProfileBody (const IIOP::ProfileBody &src)
 IIOP::ProfileBody::ProfileBody (const IIOP::Version &v,
                                 const CORBA::String &h,
                                 const CORBA::UShort &p,
-                                const opaque &key)
+                                const TAO_opaque &key)
   : iiop_version (v),
     port (p)
 {

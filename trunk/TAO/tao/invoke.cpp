@@ -90,9 +90,9 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
 {
   ACE_Synchronous_Cancellation_Required NOT_USED;
 
-  GIOP::Invocation call (this,
-			 info->opname,
-			 info->is_roundtrip);
+  TAO_GIOP_Invocation call (this,
+                            info->opname,
+                            info->is_roundtrip);
 
   // We may need to loop through here more than once if we're
   // forwarded to some other object reference.
@@ -162,7 +162,7 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
       // "oneway" calls can't return any exceptions except system
       // ones.
 
-      GIOP::ReplyStatusType status;
+      TAO_GIOP_ReplyStatusType status;
       CORBA::ExceptionList exceptions;
 
       exceptions.length = exceptions.maximum = info->except_count;
@@ -178,14 +178,14 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
           return;
         }
       if (!info->is_roundtrip
-          || status == GIOP::SYSTEM_EXCEPTION
-          || status == GIOP::USER_EXCEPTION)
+          || status == TAO_GIOP_SYSTEM_EXCEPTION
+          || status == TAO_GIOP_USER_EXCEPTION)
         return;
 
       // Now, get all the "return", "out", and "inout" parameters from
       // the response message body.
 
-      if (status == GIOP::NO_EXCEPTION)
+      if (status == TAO_GIOP_NO_EXCEPTION)
         {
           va_start (param_vector, info);
           for (i = 0, pdp = info->params;
@@ -229,7 +229,7 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
 
       // ... or maybe this request got forwarded to someplace else; send
       // the request there instead.
-      assert (status == GIOP::LOCATION_FORWARD);
+      assert (status == TAO_GIOP_LOCATION_FORWARD);
     }
 }
 
@@ -249,7 +249,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 {
   ACE_Synchronous_Cancellation_Required NOT_USED;
 
-  GIOP::Invocation call (this, opname, is_roundtrip);
+  TAO_GIOP_Invocation call (this, opname, is_roundtrip);
 
   // Loop as needed for forwarding; see above.
 
@@ -290,7 +290,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
       // Make the call ... blocking for response if needed.  Note that
       // "oneway" calls can't return any exceptions except system ones.
 
-      GIOP::ReplyStatusType status;
+      TAO_GIOP_ReplyStatusType status;
 
       status = call.invoke (exceptions, env);
       if (env.exception ())
@@ -299,8 +299,8 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
           return;
         }
       if (!is_roundtrip
-          || status == GIOP::SYSTEM_EXCEPTION
-          || status == GIOP::USER_EXCEPTION)
+          || status == TAO_GIOP_SYSTEM_EXCEPTION
+          || status == TAO_GIOP_USER_EXCEPTION)
         return;
 
       // Now, get all the "return", "out", and "inout" parameters from the
@@ -308,7 +308,7 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
       // in the order defined in the IDL spec (which is also the order that
       // DII users are required to use).
 
-      if (status == GIOP::NO_EXCEPTION)
+      if (status == TAO_GIOP_NO_EXCEPTION)
         {
           if (result != 0)
             {
@@ -381,6 +381,6 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
         }
 
       // ... or maybe this request got forwarded to someplace else.
-      assert (status == GIOP::LOCATION_FORWARD);
+      assert (status == TAO_GIOP_LOCATION_FORWARD);
     }
 }

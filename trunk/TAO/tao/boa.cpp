@@ -177,3 +177,105 @@ CORBA_BOA::bind (const CORBA::OctetSeq &key,
   return objtable_->bind (key, obj);
 }
 
+void
+CORBA_BOA::handle_request (TAO_GIOP_RequestHeader hdr,
+                           CDR &request_body,
+                           CDR &response,
+                           TAO_Dispatch_Context *some_info,
+                           CORBA::Environment &env)
+{
+  IIOP_ServerRequest svr_req (&request_body, this->orb (), this);
+
+  svr_req._opname = hdr.operation; // why are we copying this when we can just pass in
+                                   // a handle to the hdr?
+
+  this->dispatch (hdr.object_key, svr_req, 0 /* this is IIOP residue */, env);
+
+  svr_req.release ();
+
+  // If no reply is necessary (i.e., oneway), then return!
+  if (! hdr.response_expected)
+    return;
+  
+    // Otherwise check for correct parameter handling, and reply as
+  // appropriate.
+  //
+  // NOTE: if "env" is set, it takes precedence over exceptions
+  // reported using the mechanism of the ServerRequest.  Only system
+  // exceptions are reported that way ...
+  //
+  // XXX Exception reporting is ambiguous; it can be cleaner than
+  // this.  With both language-mapped and dynamic/explicit reporting
+  // mechanisms, one of must be tested "first" ... so an exception
+  // reported using the other mechanism could be "lost".  Perhaps only
+  // the language mapped one should be used for system exceptions.
+
+  TAO_GIOP::start_message (TAO_GIOP_Reply, response);
+  
+  CORBA::TypeCode_ptr tc;
+  const void *value;
+
+  if (!svr_req._params && env.exception () == 0) 
+    {
+      dmsg ("DSI user error, didn't supply params");
+      env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
+    }
+
+  if (env.exception () != 0) 
+    {	// standard exceptions only
+      CORBA::Environment	env2;
+      CORBA::Exception *x = env.exception ();
+      CORBA::TypeCode_ptr except_tc = x->type ();
+
+      response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      (void) response.encode (except_tc, x, 0, env2);
+    }
+  else if (svr_req._exception)
+    {	// any exception at all
+      CORBA::Exception *x;
+      CORBA::TypeCode_ptr except_tc;
+
+      x = (CORBA::Exception *) svr_req._exception->value ();
+      except_tc = svr_req._exception->type ();
+
+      // Finish the GIOP Reply header, then marshal the exception.
+      //
+      // XXX x->type () someday ...
+      if (svr_req._ex_type == CORBA::SYSTEM_EXCEPTION)
+	response.put_ulong (TAO_GIOP_SYSTEM_EXCEPTION);
+      else
+	response.put_ulong (TAO_GIOP_USER_EXCEPTION);
+
+      (void) response.encode (except_tc, x, 0, env);
+    }
+  else
+    {				// normal reply
+      // First finish the GIOP header ...
+      response.put_ulong (TAO_GIOP_NO_EXCEPTION);
+
+      // ... then send any return value ...
+      if (svr_req._retval)
+	{
+	  tc = svr_req._retval->type ();
+	  value = svr_req._retval->value ();
+	  (void) response.encode (tc, value, 0, env);
+	}
+
+      // ... followed by "inout" and "out" parameters, left to right
+      for (u_int i = 0; i < svr_req._params->count (); i++)
+	{
+	  CORBA::NamedValue_ptr	nv = svr_req._params->item (i);
+	  CORBA::Any_ptr any;
+
+	  if (!(nv->flags () & (CORBA::ARG_INOUT|CORBA::ARG_OUT)))
+	    continue;
+
+	  any = nv->value ();
+	  tc = any->type ();
+	  value = any->value ();
+	  (void) response.encode (tc, value, 0, env);
+	}
+    }
+}
+
+

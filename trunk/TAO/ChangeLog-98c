@@ -1,35 +1,67 @@
+Fri Sep 12 05:40:50 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* params.h: Renamed oa() method to be root_poa() in preparation
+ 	for the future.
+
+	* orbobj.cpp: Adjusted the FAKE_SVC_ENTRY macro to catch up to
+ 	recent changes in ACE.
+
+	* giop.*: Major surgery including elimination of GIOP as a giant
+ 	namespace (now only static methods are in it).  Changed names of
+ 	things to TAO_*.
+
+	* {encode,decode,iiopobj,invoke,roa}.*: Name changes resulting
+ 	from giop.cpp surgery.
+
+	* corbacom.h: Moved TAO_opaque decl into here.
+
+	* corba.h: Re-ordered the inline #includes so that the stuff that
+ 	is ALWAYS inlined is included prior to the stuff that's only
+ 	inlined when __ACE_INLINE__ is turned on.
+
+	* connect.*: Modified handle_input() substantially.  Added 3
+ 	template methods: read_message, handle_message, and send_response.
+
+	* {cdr,marshal,object,typecode}.h: Removed the old "always include
+ 	inlines" hackery.
+
+	* boa.*: Added handle_request() method.
+
 Wed Sep 03 06:15:00 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
-   * tao/default_client.cpp:  Added conditional sections around the code for setting the
-     socket options for VxWorks.  VxWorks does not support a 64K buffer size.
+	* tao/default_client.cpp:  Added conditional sections around the code for setting the
+	socket options for VxWorks.  VxWorks does not support a 64K buffer size.
 
 Tue Sep 02 18:32:12 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
-   * tao/orbobj.cpp:  Added include for Service_Repository.h to orbobj.h
+	* tao/orbobj.cpp:  Added include for Service_Repository.h to orbobj.h
    
-   * tao/debug.cpp:  Removed the TAO_NEEDS_UNUSED_VARIABLES #defines 
-     around the debug_stream declaration.  debug_stream is used by 
-     dmsg_filter in debug.cpp.  Changed SYSTEM_EXCEPTION to 
-     CORBA::SYSTEM_EXCEPTION. 
+	* tao/debug.cpp: Removed the TAO_NEEDS_UNUSED_VARIABLES #defines
+ 	around the debug_stream declaration.  debug_stream is used by
+ 	dmsg_filter in debug.cpp.  Changed SYSTEM_EXCEPTION to
+ 	CORBA::SYSTEM_EXCEPTION.
 
-   * tao/default_client.cpp: Removed extra parameter from ACE_Hash_Map_Entry
-     #pragma instantiate statement.
+	* tao/default_client.cpp: Removed extra parameter from
+ 	ACE_Hash_Map_Entry #pragma instantiate statement.
 
-   * tao/objtable.cpp:  Deleted pragmas for instantiating ACE_Guard,
-     ACE_Read_Guard, and ACE_Write_Guard to eliminate duplicate
-     instantiations.  Also, removed the instantiations from 
-     ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for the same reason.
+	* tao/objtable.cpp: Deleted pragmas for instantiating ACE_Guard,
+ 	ACE_Read_Guard, and ACE_Write_Guard to eliminate duplicate
+ 	instantiations.  Also, removed the instantiations from
+ 	ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for the same reason.
 
-   * tao/orbobj.cpp: Added a typecast to void * in argvec_shift method.
+	* tao/orbobj.cpp: Added a typecast to void * in argvec_shift
+ 	method.
 
-   * tao/default.bld - Modified VxWorks Build File to change template instantiation
-     modes.
+	* tao/default.bld - Modified VxWorks Build File to change template
+ 	instantiation modes.
 
-   * tao/tao.bld - Added default_client.cpp, default_server.cpp, client_factory.cpp, and
-     server_factory.cpp to the VxWorks build file.
+	* tao/tao.bld - Added default_client.cpp, default_server.cpp,
+ 	client_factory.cpp, and server_factory.cpp to the VxWorks build
+ 	file.
 
-   * tao/tao.dsp - Added default_client.cpp, default_server.cpp, client_factory.cpp, and 
-     server_factory.cpp to the Win NT project file.
+	* tao/tao.dsp - Added default_client.cpp, default_server.cpp,
+ 	client_factory.cpp, and server_factory.cpp to the Win NT project
+ 	file.
 
 Tue Sep  2 07:31:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 

@@ -5,7 +5,7 @@ TAO_OA_Parameters::TAO_OA_Parameters (void)
     context_p_ (0),
     upcall_ (0),
     forwarder_ (0),
-    oa_ (0)
+    root_poa_ (0)
 {
 }
 
@@ -58,15 +58,15 @@ TAO_OA_Parameters::forwarder (TAO_OA_Parameters::ForwardFunc f)
 }
 
 ACE_INLINE CORBA::BOA_ptr
-TAO_OA_Parameters::oa (void)
+TAO_OA_Parameters::root_poa (void)
 {
-  return oa_;
+  return root_poa_;
 }
 
 ACE_INLINE void
-TAO_OA_Parameters::oa (CORBA::BOA_ptr anOA)
+TAO_OA_Parameters::root_poa (CORBA::BOA_ptr a_poa)
 {
-  oa_ = anOA;
+  root_poa_ = a_poa;
 }
 
 ACE_INLINE u_int

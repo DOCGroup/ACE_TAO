@@ -572,7 +572,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           // get the profile ID tag
           stream->get_ulong (tmp);
 
-          if (tmp != IOP::TAG_INTERNET_IOP || objdata != 0) 
+          if (tmp != TAO_IOP_TAG_INTERNET_IOP || objdata != 0) 
             {
               continue_decoding = stream->skip_string ();
               continue;
