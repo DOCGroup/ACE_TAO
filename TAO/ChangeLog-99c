@@ -1,10 +1,12 @@
-Fri May 28 01:36:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri May 28 01:50:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orb.idl: Added macros to avoid including this file twice.
 
 	* tao/GIOP_Server_Request.i (principal): Changed to return
 	  Principal_var::ptr() directly to avoid type ambiguity.
 
-	* tao/Stub.i: Reordered function definitions to avoid using inline
-	  functions before being declared inlined.
+	* tao/Stub.i: Reordered function definitions to avoid inline
+	  functions being used before declared inlined.
 
 Thu May 27 23:15:53 1999  Marina Spivak  <marina@cs.wustl.edu>
 
