@@ -285,14 +285,15 @@ Client::svc (void)
       policy->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // @@ We should use "validate_connection" for this
       // Use a loop here before TSS connectors are implemented to
       // increase the likelihood that each thread will have its own
       // connection.  (This is not an issue when all threads&endpoints
       // are of different priorities).
       for (int j = 0; j < 100; ++j)
         {
-          server_->_non_existent (ACE_TRY_ENV);
+          CORBA::PolicyList_var pols;
+          server_->_validate_connection (pols.out (),
+                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
