@@ -1,10 +1,19 @@
+Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/test_config.h:
+          Removed #include of streams.h.
+
+        * tests/CDR_File_Test.cpp:
+          Added #include of streams.h.  This is the only test that needs
+          it.
+
 Tue Nov  4 14:22:00 2003  Justin Michel <michel_j@ociweb.com
 
         * ace/OS.i:
         * ace/OS_NS_stdio.inl:
 
           Moved default_win32_security_attributes() function definition from
-        OS.i to the other file. 
+          OS.i to the other file. 
 
 Tue Nov  4 18:54:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
