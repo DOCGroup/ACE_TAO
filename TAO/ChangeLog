@@ -2,8 +2,8 @@ Sat Jul 31 07:00:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
 
-	  Added missing "tao/ORB_Constants.h" include.  Fixes "no inline"
-	  builds.
+	  Added missing "tao/ORB_Constants.h" include.  Fixes compile-time
+	  error in builds where inlining is disabled.
 
 Sat Jul 31 00:43:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
