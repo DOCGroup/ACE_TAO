@@ -45,6 +45,7 @@ project : acelib, core {
       Functor.cpp
       Get_Opt.cpp
       Hash_Map_Manager.cpp
+      Hash_Map_Manager_RT.cpp
       Connection_Recycling_Strategy.cpp
       Hashable.cpp
       Notification_Strategy.cpp
@@ -312,6 +313,7 @@ project : acelib, core {
       Future.cpp
       Future_Set.cpp
       Hash_Map_Manager_T.cpp
+      Hash_Map_Manager_RT_T.cpp
       Hash_Map_With_Allocator_T.cpp
       Hash_Cache_Map_Manager_T.cpp
       IOStream_T.cpp
