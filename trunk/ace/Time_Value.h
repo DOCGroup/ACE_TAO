@@ -152,9 +152,22 @@ public:
 # endif /* ACE_WIN32 */
 
   /// Converts from ACE_Time_Value format into milli-seconds format.
+  /**
+   * @return Sum of second field (in milliseconds) and microsecond field
+   *         (in milliseconds).
+   *
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
   long msec (void) const;
 
   /// Converts from milli-seconds format into ACE_Time_Value format.
+  /**
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
   void msec (long);
 
   /// Returns the value of the object as a timespec_t.
@@ -174,12 +187,24 @@ public:
   // = The following are accessor/mutator methods.
 
   /// Get seconds.
+  /**
+   * @return The second field/component of this ACE_Time_Value.
+   *
+   * @note The semantics of this method differs from the msec()
+   *       method.
+   */
   long sec (void) const;
 
   /// Set seconds.
   void sec (long sec);
 
   /// Get microseconds.
+  /**
+   * @return The microsecond field/component of this ACE_Time_Value.
+   *
+   * @note The semantics of this method differs from the msec()
+   *       method.
+   */
   long usec (void) const;
 
   /// Set microseconds.
@@ -196,29 +221,29 @@ public:
   /// Multiply the time value by the @a d factor, which must be >= 0.
   ACE_Time_Value &operator *= (double d);
 
+  /// Increment microseconds as postfix.
   /**
-   * Increment microseconds as postfix.
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */
   ACE_Time_Value operator++ (int);
 
+  /// Increment microseconds as prefix.
   /**
-   * Increment microseconds as prefix.
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */
   ACE_Time_Value &operator++ (void);
 
+  /// Decrement microseconds as postfix.
   /**
-   * Decrement microseconds as postfix.
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */
   ACE_Time_Value operator-- (int);
 
+  /// Decrement microseconds as prefix.
   /**
-   * Decrement microseconds as prefix.
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */

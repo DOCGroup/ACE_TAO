@@ -1,6 +1,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Basic_Types.h"
 
+
 ACE_RCSID (ace,
            Time_Value,
            "$Id$")
@@ -33,17 +34,17 @@ ACE_Time_Value
 ACE_Time_Value::operator ++ (int)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (int)");
-  usec (usec () + 1);
-  normalize ();
-  return *this;
+  ACE_Time_Value tv (*this);
+  ++*this;
+  return tv;
 }
 
 ACE_Time_Value &
 ACE_Time_Value::operator ++ (void)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
-  usec (usec () + 1);
-  normalize ();
+  this->usec (this->usec () + 1);
+  this->normalize ();
   return *this;
 }
 
@@ -54,17 +55,17 @@ ACE_Time_Value
 ACE_Time_Value::operator -- (int)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator -- (int)");
-  usec (usec () - 1);
-  normalize ();
-  return *this;
+  ACE_Time_Value tv (*this);
+  --*this;
+  return tv;
 }
 
 ACE_Time_Value &
 ACE_Time_Value::operator -- (void)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
-  usec (usec () - 1);
-  normalize ();
+  this->usec (this->usec () - 1);
+  this->normalize ();
   return *this;
 }
 
@@ -164,7 +165,7 @@ void
 ACE_Time_Value::normalize (void)
 {
   // // ACE_OS_TRACE ("ACE_Time_Value::normalize");
-  // New code from Hans Rohnert...
+  // From Hans Rohnert...
 
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
     {
