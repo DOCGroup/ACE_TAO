@@ -75,10 +75,12 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (db == 0)
     {
       if (TAO_debug_level > 2)
-        ACE_ERROR ((
-          LM_ERROR,
-          "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply "
-          "clone_from failed \n"));
+        {
+          ACE_ERROR ((
+            LM_ERROR,
+            "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply "
+            "clone_from failed \n"));
+        }
       return -1;
     }
 

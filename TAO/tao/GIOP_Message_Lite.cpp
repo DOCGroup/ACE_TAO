@@ -110,8 +110,10 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
                                     cdr))
     {
       if (TAO_debug_level > 3)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
+        }
 
       return -1;
     }
@@ -143,8 +145,10 @@ TAO_GIOP_Message_Lite::generate_reply_header (
                                     cdr))
     {
       if (TAO_debug_level > 3)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
+        }
 
       return -1;
     }

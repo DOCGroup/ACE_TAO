@@ -89,11 +89,13 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
       if (tmp == 0)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("IIOP_Endpoint::set ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("IIOP_Endpoint::set ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+            }
           return -1;
         }
       else

@@ -14,8 +14,8 @@
 # include "tao/Leader_Follower.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Leader_Follower, 
+ACE_RCSID (tao,
+           Leader_Follower,
            "$Id$")
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
@@ -191,7 +191,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   size_t t_id = 0;
 
   if (TAO_debug_level)
-    t_id = transport->id ();
+    {
+      t_id = transport->id ();
+    }
 
   {
     // Calls this->set_client_thread () on construction and
