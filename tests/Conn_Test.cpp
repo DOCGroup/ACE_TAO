@@ -6,17 +6,16 @@
 //    tests
 // 
 // = FILENAME
-//    SOCK_Test.cpp
+//    Conn_Test.cpp
 //
 // = DESCRIPTION
-//     This is a simple test of the ACE_SOCK_Acceptor and
-//     ACE_SOCK_Connector classes. The test forks two processes or
-//     spawns two threads (depending upon the platform) and then
-//     executes client and server allowing them to connect and
-//     exchange data.
+//     This is a simple test of the Acceptor and Connector
+//     classes. The test forks two processes or spawns two threads
+//     (depending upon the platform) and then executes client and
+//     server allowing them to connect and exchange data.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Doug Schmidt
 // 
 // ============================================================================
 
@@ -24,9 +23,27 @@
 #include "ace/Thread.h"
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Acceptor.h"                             
+#include "ace/SOCK_Acceptor.h"
+#include "ace/Connector.h"
+#include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "test_config.h"
+
+class Svc_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+{
+public:
+  virtual int open (void *);
+};
+
+int
+Svc_Handler::open (void *)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) opening Svc_Handler\n"));
+  return 0;
+}
+
+typedef ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
 
 static void *
 client (void *arg)
@@ -39,54 +56,38 @@ client (void *arg)
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), "localhost");
-  ACE_SOCK_Stream cli_stream;
-  ACE_SOCK_Connector con;
+  CONNECTOR con;
+  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
+  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
+
+  Svc_Handler *svc_handler;
+  ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting non-blocking connect\n"));
   // Initiate timed, non-blocking connection with server.
   
-  // Attempt a non-blocking connect to the server, reusing the local
-  // addr if necessary.
-  if (con.connect (cli_stream, server_addr,
-		   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-    {
-      if (errno != EWOULDBLOCK)
-	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting timed connect\n"));
-
-      // Check if non-blocking connection is in progress, 
-      // and wait up to ACE_DEFAULT_TIMEOUT seconds for it to complete.
-      ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
-
-      if (con.complete (cli_stream, &server_addr, &tv) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "connection failed"), 0);
-      else
-	ACE_DEBUG ((LM_DEBUG, "(%P|%t) connected to %s\n", 
-		    server_addr.get_host_name ()));
-    }
-
-  if (cli_stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "disable"));    
+  // Attempt a non-blocking connect to the server.
+  if (con.connect (svc_handler, server_addr, options) == -1)
+    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "connection failed"));
 
   // Send data to server (correctly handles "incomplete writes").
   
   for (char c = 'a'; c <= 'z'; c++)
-    if (cli_stream.send_n (&c, 1) == -1) 
+    if (svc_handler->peer ().send_n (&c, 1) == -1) 
       ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 
   // Explicitly close the writer-side of the connection.
-  if (cli_stream.close_writer () == -1)
+  if (svc_handler->peer ().close_writer () == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close_writer"));
 
   char buf[1];
 
   // Wait for handshake with server.
-  if (cli_stream.recv_n (buf, 1) != 1)
+  if (svc_handler->peer ().recv_n (buf, 1) != 1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "recv_n"));
 
   // Close the connection completely.
-  if (cli_stream.close () == -1) 
+  if (svc_handler->close () == -1) 
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 
   return 0;
@@ -101,18 +102,17 @@ server (void *arg)
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
-  ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
-
-  if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "enable"));
+  ACCEPTOR *acceptor = (ACCEPTOR *) arg;
 
   // Keep these objects out here to prevent excessive constructor
   // calls...
-  ACE_SOCK_Stream new_stream;                                   
   ACE_INET_Addr cli_addr;
-  ACE_Handle_Set handle_set;
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
+  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
+
+  Svc_Handler *svc_handler;
+  ACE_NEW_RETURN (svc_handler, Svc_Handler, 0);
 
   // Performs the iterative server activities.
 
@@ -120,35 +120,25 @@ server (void *arg)
     {
       char buf[BUFSIZ];                                     
       char t = 'a';
-      
-      handle_set.reset ();
-      handle_set.set_bit (peer_acceptor->get_handle ());
-      
-      int result = ACE_OS::select (int (peer_acceptor->get_handle ()) + 1,
-				   handle_set,
-				   0, 0, &tv);
-      ACE_ASSERT (tv == def_timeout);
-
-      if (result == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "select"), 0);
-      else if (result == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) select timed out, shutting down\n"));
-	  return 0;
-	}
+      int result;
+      ACE_Handle_Set handle_set;
 
       // Create a new ACE_SOCK_Stream endpoint (note automatic restart
       // if errno == EINTR).
       
-      while ((result = peer_acceptor->accept (new_stream, &cli_addr)) != -1)
+      while ((result = acceptor->accept (svc_handler, 
+					 &cli_addr,
+					 options)) != -1)
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client %s connected from %d\n", 
 		      cli_addr.get_host_name (), cli_addr.get_port_number ()));
 	  
 	  // Enable non-blocking I/O.
-	  if (new_stream.enable (ACE_NONBLOCK) == -1)
+	  if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "enable"), 0);
 	  
+	  ACE_SOCK_Stream &new_stream = svc_handler->peer ();
+
 	  handle_set.reset ();
 	  handle_set.set_bit (new_stream.get_handle ());
 	  
@@ -177,7 +167,7 @@ server (void *arg)
 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "send_n"));
 
 		  // Close endpoint.
-		  if (new_stream.close () == -1) 
+		  if (svc_handler->close () == -1) 
 		    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "close"));
 		  return 0;
 		}
@@ -193,8 +183,8 @@ server (void *arg)
 
       if (result == -1)
 	{
-	  if (errno == EWOULDBLOCK)
-	    ACE_DEBUG ((LM_DEBUG, "(%P|%t) no connections available, going back to accepting\n"));
+	  if (errno == ETIMEDOUT)
+	    ACE_ERROR_RETURN ((LM_DEBUG, "(%P|%t) accept timedout, shutting down\n"), 0);
 	  else
 	    ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "accept"));
 	}
@@ -206,14 +196,14 @@ static void
 spawn (void)
 {
   // Acceptor
-  ACE_SOCK_Acceptor peer_acceptor;
+  ACCEPTOR acceptor;
 
   // Create a server address.
   ACE_INET_Addr server_addr;
 
   // Bind listener to any port and then find out what the port was.
-  if (peer_acceptor.open (ACE_Addr::sap_any) == -1
-      || peer_acceptor.get_local_addr (server_addr) == -1)
+  if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1
+      || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n", "open"));
   else 
     {
@@ -229,12 +219,12 @@ spawn (void)
 	case 0: 
 	  client (&server_addr);
 	default:
-	  server ((void *) &peer_acceptor);
+	  server ((void *) &acceptor);
 	  ACE_OS::wait ();
 	}
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Service_Config::thr_mgr ()->spawn 
-	  (ACE_THR_FUNC (server), (void *) &peer_acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
+	  (ACE_THR_FUNC (server), (void *) &acceptor, THR_NEW_LWP | THR_DETACHED) == -1)
 	ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
       if (ACE_Service_Config::thr_mgr ()->spawn 
@@ -252,7 +242,7 @@ spawn (void)
 int
 main (int, char *[])
 {
-  ACE_START_TEST ("SOCK_Test");
+  ACE_START_TEST ("Conn_Test");
 
   spawn ();
 

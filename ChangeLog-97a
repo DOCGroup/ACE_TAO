@@ -1,3 +1,15 @@
+Thu Mar 20 00:30:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp (destroy): Added a state variable to keep
+ 	  track of when we are closing down the Svc_Handler.  This is
+ 	  necessary to prevent endless recursive calls to handle_close()
+ 	  due to the recent enhancements to ACE_Timer_{List,Heap}.  Thanks
+ 	  to Bert Craytor <Bert_Craytor@peoplesoft.com> for reporting
+ 	  this.
+
+	* tests/Conn_Test.cpp: Added a new test that makes sure the
+ 	  Acceptor, Connector, and Svc_Handler are working correctly.
+
 Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Added zillions of minor changes so that ACE will compile on
