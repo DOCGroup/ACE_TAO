@@ -28,12 +28,14 @@ ACE_ATM_Stream::get_peer_name (void) const
   ACE_TRACE ("ACE_ATM_Stream::get_peer_name");
 #if defined (ACE_HAS_FORE_ATM_XTI)
 //   // Use t_getprotaddr for XTI/ATM
-//   struct t_bind *localaddr = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
-//                                                                 T_BIND,
-//                                                                 T_ADDR);
-//   struct t_bind *peeraddr = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
-//                                                                T_BIND,
-//                                                                T_ADDR);
+//   struct t_bind *localaddr 
+//     = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+//                                          T_BIND,
+//                                          T_ADDR);
+//   struct t_bind *peeraddr 
+//      = (struct t_bind *) ACE_OS::t_alloc (get_handle (),
+//                                           T_BIND,
+//                                           T_ADDR);
 //   ::t_getprotaddr(get_handle (),
 //                   localaddr,
 //                   peeraddr);
@@ -49,6 +51,7 @@ ACE_ATM_Stream::get_peer_name (void) const
 
 #error "This doesn't seem to work. May need to jimmy-rig something with the"
 #error "/etc/xti_hosts file - Ugh!"
+
   ACE_ATM_Addr sa;
   struct netbuf name;
   name.maxlen = sa.get_size ();
@@ -60,19 +63,36 @@ ACE_ATM_Stream::get_peer_name (void) const
   return (name.buf);
 
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  // Use getpeername for WinSock2
-  struct sockaddr name;
-  socklen_t nameSize = sizeof(name);
+  // Use getpeername for WinSock2.
+  struct sockaddr_in name;
+  int nameSize = sizeof(name);
+  struct hostent *peerhost;
+
   if (ACE_OS::getpeername(this->get_handle (),
-                          &name,
+                          (struct sockaddr *) &name,
                           &nameSize) != 0)
     {
       return 0;
     }
-  return ??
+  peerhost = ACE_OS::gethostbyaddr(( char *)name.sin_addr.S_un.S_addr, 
+                                   sizeof( unsigned long ), 
+                                   PF_INET );
+
+  return peerhost -> h_name;
 #else
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI */
+}
+
+ACE_HANDLE
+ACE_ATM_Stream::get_handle (void) const
+{
+  ACE_TRACE ("ACE_ATM_Stream::get_handle");
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
+  return stream_.get_handle ();
+#else
+  return 0;
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 }
 
 int
@@ -154,9 +174,30 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   vci = conn_prop.vci;
   return (0);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
+  ATM_CONNECTION_ID connID;
+  DWORD bytes = 0;
+  
+  if ( ::WSAIoctl(( int )this -> get_handle(), 
+                   SIO_GET_ATM_CONNECTION_ID, 
+                   NULL, 
+                   0, 
+                   (LPVOID) &connID, 
+		               sizeof(ATM_CONNECTION_ID), 
+                   &bytes, 
+                   NULL, 
+                   NULL) 
+      == SOCKET_ERROR) {
+    ACE_OS::printf("Error: WSAIoctl %d\n", WSAGetLastError());
+	}
+
+	vpi = ( ACE_UINT16 )connID.VPI;
+  vci = ( ACE_UINT16 )connID.VCI;
+
+  return 0;
 #else
   return (-1);
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 #endif /* ACE_HAS_ATM */
+
