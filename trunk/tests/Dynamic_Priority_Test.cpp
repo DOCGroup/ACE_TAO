@@ -360,7 +360,7 @@ performance_consumer (void * args)
   ACE_DEBUG ((LM_INFO, "%6u, %6u, %f",
               local_count,
               tv.msec (),
-              (double) tv.msec () / local_count));
+              (ACE_timer_t) tv.msec () / local_count));
 
   ACE_ASSERT (local_count == expected_count);
   return 0;
@@ -418,7 +418,7 @@ performance_producer (void *args)
   ACE_DEBUG ((LM_INFO, "%6u, %6u, %f, ",
               local_count,
               tv.msec (),
-              (double) tv.msec () / local_count));
+              (ACE_timer_t) tv.msec () / local_count));
 
   ACE_ASSERT (local_count == expected_count);
   return 0;
