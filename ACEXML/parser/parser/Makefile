@@ -183,6 +183,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ACEXML/common/ContentHandler.h \
   $(ACE_ROOT)/ACEXML/common/Env.h \
   $(ACE_ROOT)/ACEXML/common/XML_Macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ACEXML/common/Exception.h \
   $(ACE_ROOT)/ACEXML/common/XML_Types.h \
   $(ACE_ROOT)/ace/OS.h \
