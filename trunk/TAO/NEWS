@@ -50,8 +50,7 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (JTC) Split ORB Services into stub, skeleton, and implementation libraries.
 
-  Naming, Trading, Event, and Notification Services ready to commit 
-  as soon as library naming issues are resolved.
+  Naming, Trading, Event, Notification, and Logging Services have commited.
 
 - (OCI) Install common utilities (tao_imr, tao_ifr, nslist, nsadd,
   nsdel, NamingViewer) in $ACE_ROOT/bin.
