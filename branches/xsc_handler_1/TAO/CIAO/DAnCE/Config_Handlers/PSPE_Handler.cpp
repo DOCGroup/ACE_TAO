@@ -48,6 +48,8 @@ namespace CIAO
         {
           dest.provider = 0;
         }
+
+      dest.instanceRef = 0;
       
       if (src.kind () == CCMComponentPortKind::Facet)
         dest.kind = Deployment::Facet;
