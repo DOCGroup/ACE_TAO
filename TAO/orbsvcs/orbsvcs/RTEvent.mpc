@@ -70,10 +70,22 @@ project(RTEvent) : orbsvcslib, core {
       Event_Utilities.cpp
       Event/EC_Gateway.cpp
       Event/EC_UDP_Out_Endpoint.cpp
-      Event/EC_Gateway_UDP.cpp
       Event/ECG_Mcast_EH.cpp
       Event/ECG_UDP_Sender.cpp
       Event/EC_UDP_Admin.cpp
+      Event/EC_Channel_Destroyer.cpp
+      Event/EC_Lifetime_Utils.cpp
+      Event/EC_Proxy_Disconnector.cpp
+      Event/ECG_Adapters.cpp
+      Event/ECG_Address_Server_Base.cpp
+      Event/ECG_CDR_Message_Receiver.cpp
+      Event/ECG_CDR_Message_Sender.cpp
+      Event/ECG_Complex_Address_Server.cpp
+      Event/ECG_Mcast_Gateway.cpp
+      Event/ECG_Simple_Address_Server.cpp
+      Event/ECG_Simple_Mcast_EH.cpp
+      Event/ECG_UDP_EH.cpp
+      Event/ECG_UDP_Receiver.cpp
     }
   }
 }
