@@ -258,7 +258,7 @@ public:
   virtual int make_changes (void);
   // Make changes to the handle set
 
-  int scheduled_for_deletion (int index) const;
+  int scheduled_for_deletion (size_t index) const;
   // Check to see if <index> has been scheduled for deletion
 
   int add_network_events_i (ACE_Reactor_Mask mask,
@@ -325,19 +325,19 @@ protected:
   Suspended_Info *current_suspended_info_;
   // Currently suspended handles
   
-  int suspended_handles_;
+  size_t suspended_handles_;
   // Number of currently suspended handles
   
-  int handles_to_be_suspended_;
+  size_t handles_to_be_suspended_;
   // Number of records to be suspended
   
-  int handles_to_be_resumed_;
+  size_t handles_to_be_resumed_;
   // Number of records to be resumed
 
-  int handles_to_be_deleted_;
+  size_t handles_to_be_deleted_;
   // Number of records to be deleted
 
-  int handles_to_be_added_;
+  size_t handles_to_be_added_;
   // Number of records to be added
 };
 
@@ -799,7 +799,7 @@ protected:
   // The changing thread waits on this event, till all threads are not
   // active anymore 
 
-  int active_threads_;
+  size_t active_threads_;
   // Count of currently active threads
 
   ACE_thread_t owner_;
@@ -829,6 +829,44 @@ private:
   ACE_ReactorEx &operator = (const ACE_ReactorEx &);
   // Deny access since member-wise won't work...
 };
+
+// if we don't have WinSOCK2, we need these defined
+#if !defined (ACE_HAS_WINSOCK2)
+/*
+ * WinSock 2 extension -- bit values and indices for FD_XXX network events
+ */
+#define FD_READ_BIT      0
+#define FD_WRITE_BIT     1
+#define FD_OOB_BIT       2
+#define FD_ACCEPT_BIT    3
+#define FD_CONNECT_BIT   4
+#define FD_CLOSE_BIT     5
+#define FD_QOS_BIT       6
+#define FD_GROUP_QOS_BIT 7
+
+#define FD_QOS           (1 << FD_QOS_BIT)
+#define FD_GROUP_QOS     (1 << FD_GROUP_QOS_BIT)
+
+#define FD_MAX_EVENTS    8
+#define FD_ALL_EVENTS    ((1 << FD_MAX_EVENTS) - 1)
+
+#define WSAEVENT                HANDLE
+
+typedef struct _WSANETWORKEVENTS 
+{
+  long lNetworkEvents;
+  int iErrorCode[FD_MAX_EVENTS];
+} WSANETWORKEVENTS, FAR * LPWSANETWORKEVENTS;
+
+int WSAEventSelect (SOCKET s,
+		    WSAEVENT hEventObject,
+		    long lNetworkEvents);
+
+int WSAEnumNetworkEvents (SOCKET s,
+			  WSAEVENT hEventObject,
+			  LPWSANETWORKEVENTS lpNetworkEvents);
+
+#endif /* !defined ACE_HAS_WINSOCK2 */
 
 #else /* NOT win32 */
 class ACE_Export ACE_ReactorEx

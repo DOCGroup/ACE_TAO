@@ -442,7 +442,7 @@ int
 ACE_ReactorEx_Handler_Repository::handle_additions (void)
 {
   // Go through the <to_be_added_*> arrays
-  for (int i = 0; i < this->handles_to_be_added_; i++)
+  for (int i = 0; i < (int) this->handles_to_be_added_; i++)
     {
       // Add to the end of the current handles set
       this->current_handles_[this->max_handlep1_] = this->to_be_added_info_[i].event_handle_;
@@ -1327,4 +1327,32 @@ ACE_ReactorEx::max_notify_iterations (void)
   return this->notify_handler_.max_notify_iterations ();
 }
 
+// No-op WinSOCK2 methods to help ReactorEx compile
+#if !defined (ACE_HAS_WINSOCK2)
+int 
+WSAEventSelect (SOCKET s,
+		WSAEVENT hEventObject,
+		long lNetworkEvents)
+{
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (hEventObject);
+  ACE_UNUSED_ARG (lNetworkEvents);
+
+  return -1;
+}
+
+int 
+WSAEnumNetworkEvents (SOCKET s,
+		      WSAEVENT hEventObject,
+		      LPWSANETWORKEVENTS lpNetworkEvents)
+{ 
+  ACE_UNUSED_ARG (s);
+  ACE_UNUSED_ARG (hEventObject);
+  ACE_UNUSED_ARG (lpNetworkEvents);
+
+  return -1;
+}
+#endif /* !defined ACE_HAS_WINSOCK2 */
+
 #endif /* ACE_WIN32 */
+
