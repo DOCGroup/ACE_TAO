@@ -1,3 +1,20 @@
+Mon Dec  6 18:16:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/config_h.m4: Added AH_TEMPLATE for ACE_HAS_POSIX_REALTIME_SIGNALS.
+
+	* m4/aio.m4: Split the realtime-signals check out of the AIO
+	  functionality check. If the basic AIO calls are available and
+	  functional, then check if the signal-based AIO test works. If so,
+	  set ACE_HAS_POSIX_REALTIME_SIGNALS.
+
+	* tests/Makefile.am: Include the run_test.pl script in TESTS and
+	  note it as a dist_check_SCRIPTS, not noinst_SCRIPTS. This lets
+	  "make check" run it.
+
+	* tests/run_test.pl: Add $top_srcdir to the path for locating
+	  Perl auxiliary modules. For automake builds, this is needed since
+	  the script isn't linked into the build tree.
+
 Mon Dec  6 16:34:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* ACE-INSTALL.html: Removed mention and instructions for the 'clone'
