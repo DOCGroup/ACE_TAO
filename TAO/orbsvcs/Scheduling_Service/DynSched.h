@@ -28,14 +28,16 @@
 #include "ace/SString.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "SchedEntry.h"
 
 class ACE_Scheduler
   // = TITLE
   //    Thread scheduler interface.
   //
   // = DESCRIPTION
-  //    This virtual base class is the interface to either an off-line
-  //    scheduler, or to the necessary on-line component of the Scheduler.
+  //    This abstract base class provides the majority of the 
+  //    implementation of either an off-line scheduler, or the
+  //    necessary on-line component of the Scheduler.
 {
 public:
 
@@ -46,7 +48,7 @@ public:
   typedef RtecScheduler::handle_t handle_t;
   typedef RtecScheduler::Dependency_Info Dependency_Info;
   typedef RtecScheduler::Preemption_Priority Preemption_Priority;
-  typedef RtecScheduler::OS_Priority OS_Thread_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
   typedef RtecScheduler::Sub_Priority Sub_Priority;
   typedef RtecScheduler::RT_Info RT_Info;
   typedef RtecScheduler::Time Time;
@@ -66,7 +68,7 @@ public:
   enum status_t {
     // The following are used both by the runtime Scheduler and during
     // scheduling.
-    NOT_SCHEDULED = -1        // the schedule () method has not been called yet
+      NOT_SCHEDULED = -1    // the schedule () method has not been called yet
     , FAILED = -1
     , SUCCEEDED
     , ST_UNKNOWN_TASK
@@ -77,6 +79,7 @@ public:
 
     // The following are only used by the runtime Scheduler.
     , TASK_COUNT_MISMATCH     // only used by schedule ()
+    , THREAD_COUNT_MISMATCH   // only used by schedule ()
     , INVALID_PRIORITY        // only used by schedule (): mismatch of
                               // (off-line, maybe) Scheduler output to
                               // the runtime Scheduler component.
@@ -92,190 +95,6 @@ public:
   };
 
 
-    // forward declaration of task entry class
-  class Task_Entry;
-
-  class Dispatch_Entry
-  {
-  public:
-
-    // ctor
-	Dispatch_Entry (Preemption_Priority priority,
-                    Time arrival,
-                    Time deadline,
-                    Time execution_time,
-                    Task_Entry &task_entry);
-
-    // copy ctor
-    Dispatch_Entry (const Dispatch_Entry &d);
-
-    u_long dispatch_id ();
-    Preemption_Priority priority ();
-    Time arrival ();
-    Time deadline ();
-    Time execution_time ();
-    Task_Entry &task_entry ();    
-    Dispatch_Entry *previous_instance ();
-    void previous_instance (Dispatch_Entry *p);
-
-  private:
-
-    // stores the next dispatch entry id to be used
-    static u_long next_id_;
-
-    // the id of the current dispatch entry
-    u_long dispatch_id_;
-
-    // the scheduler priority of the current dispatch entry
-    Preemption_Priority priority_;
-
-    // the arrival time of the current dispatch entry
-    Time arrival_;
-
-    // the deadline of the current dispatch entry
-    Time deadline_;
-
-    // the execution time of the current dispatch entry
-    // (used for timelines: this may only be a portion of
-    // total total execution time of the task)
-    Time execution_time_;
-
-    // stores the id of the current dispatch entry
-    Task_Entry &task_entry_;
-
-    Dispatch_Entry *previous_instance_;
-  };
-
-  class Task_Entry_Link
-  {
-  public:
-
-    // ctor
-    Task_Entry_Link (Task_Entry &caller,
-                     Task_Entry &called,
-                     CORBA::Long number_of_calls,
-                     Dependency_Type dependency_type);
-
-    // accessor: number of calls
-	CORBA::Long number_of_calls () const;
-
-    // accessor: dependency type
-	Dependency_Type dependency_type () const;
-
-	// accessor: calling task entry
-    Task_Entry &caller () const;
-    
-	// accessor: called task entry
-	Task_Entry &called () const;
-
-  private:
-
-	// 
-    CORBA::Long number_of_calls_;
-
-    // the calling operation
-    Task_Entry &caller_;
-
-    // the called operation
-    Task_Entry &called_;
-
-	// the type of call dependency
-	Dependency_Type dependency_type_;
-  };
-
-  typedef ACE_Unbounded_Set <Task_Entry_Link *> LINK_SET;
-
-    // Wrapper for the RT_Info, which aggregates all its dispatches
-  class Task_Entry
-  {
-  public:
-    // info for DFS traversal, topological sort of call graph
-    enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
-
-    // ctor
-    Task_Entry ();
-
-    // dtor
-    ~Task_Entry ();
-
-    // merge oneway calls according to info type, update
-    // relevant scheduling characteristics for this entry
-    void merge_oneway_calls ();
-
-    // get pointer to underlying RT_Info
-    RT_Info *rt_info ();
-
-    // get effective period for the task entry
-    Period effective_period ();
-
-    // set/get time when node was discovered in DFS traversal
-    void discovered (long l);
-    long discovered ();
-
-    // set/get time when node was finished in DFS traversal
-    void finished (long l);
-    long finished ();
-   
-    // set/get DFS traversal status of node
-    void dfs_status (DFS_Status ds);
-    DFS_Status dfs_status ();
-
-    // set/get flag indicating whether node is a thread delineator
-    void is_thread_delineator (int i);
-    int is_thread_delineator ();
-
-    // get set of links to Task Entries which this entry calls
-    LINK_SET & calls ();
-
-    // get set of links to Task Entries which call this entry
-    LINK_SET & callers ();
-
-    // get the type of Info the entry wraps
-    Info_Type info_type ();
-
-    // effective execution time for the task entry
-    double effective_execution_time ();
-
-  private:
-
-    // perform disjunctive merge of arrival times of oneway calls:
-    // all arrival times of all oneway callers are duplicated by the
-    // multiplier and repetition over the new frame size and merged
-    void disjunctive_merge ();
-
-    // perform conjunctive merge of arrival times of oenway calls:
-    // all arrival times of all oneway callers are duplicated by the
-    // multiplier and repetition over the new frame size and then
-    // iteratively merged by choosing the maximal arrival time at
-    // the current position in each queue (iteration is in lockstep
-    // over all queues, and ends when any queue ends).
-    void conjunctive_merge ();
-
-    // pointer to the underlying RT_Info
-    RT_Info *rt_info_;
-
-    // effective period for the task entry
-    Period effective_period_;
-
-    // queue of arrivals in the effective period
-    ACE_Unbounded_Queue<Dispatch_Entry *> dispatch_queue_;
-        
-    // count of the arrivals in the effective period
-    u_long arrival_count_;
-
-    DFS_Status dfs_status_;
-    long discovered_;
-    long finished_;
-
-    // info for identifying threads in the oneway call graph
-    int is_thread_delineator_;
-
-    // get set of links to Task Entries which this entry calls
-    LINK_SET calls_;
-
-    // get set of links to Task Entries which call this entry
-    LINK_SET callers_;
-  };
 
   /////////////////////////////
   // public member functions //
@@ -289,11 +108,11 @@ public:
   static void output (FILE *, const status_t);
 
   // = Initialize the scheduler.
-  virtual void init (const int minimum_priority,
-                     const int maximum_priority,
-                     const char *runtime_filename = 0,
-                     const char *rt_info_filename = 0,
-                     const char *timeline_filename = 0);
+  void init (const OS_Priority minimum_priority,
+             const OS_Priority maximum_priority,
+             const char *runtime_filename = 0,
+             const char *rt_info_filename = 0,
+             const char *timeline_filename = 0);
   // The minimum and maximum priority are the OS-specific priorities that
   // are used when creating the schedule (assigning priorities).  The
   // minimum_priority is the priority value of the lowest priority.
@@ -321,14 +140,14 @@ public:
   // scheduler implementation, followed by generation of a new schedule).
 
   // = Registers a task.
-  virtual status_t register_task (RT_Info *, handle_t &handle);
+  status_t register_task (RT_Info *, handle_t &handle);
   // If the Task registration succeeds, this function returns SUCCEEDED
   // and sets "handle" to a unique identifier for the task.
   // Otherwise, it returns either VIRTUAL_MEMORY_EXHAUSTED or
   // TASK_ALREADY_REGISTERED sets the handle to 0.  (A task may
   // only be registered once.)
 
-  virtual status_t get_rt_info (Object_Name name, RT_Info* &rtinfo);
+  status_t get_rt_info (Object_Name name, RT_Info* &rtinfo);
   // Tries to find the RT_Info corresponding to <name> in the RT_Info
   // database.  Returns SUCCEEDED if <name> was found and <rtinfo> was
   // set.  Returns UNKNOWN_TASK if <name> was not found, but <rtinfo>
@@ -345,21 +164,26 @@ public:
   // deleted (deleting their RT_Infos with them), this->schedule will
   // fail.
 
-  virtual status_t lookup_rt_info (handle_t handle, RT_Info* &rtinfo);
+  status_t lookup_rt_info (handle_t handle, RT_Info* &rtinfo);
   // Obtains an RT_Info based on its "handle".
 
-  virtual status_t schedule (void);
+  status_t schedule (void);
   // This sets up the data structures, invokes the internal scheduling method.
 
+  status_t output_timeline (const char *filename);
+  // this prints the entire set of timeline outputs to the specified file
+
   // = Access a thread priority.
-// CDG - TBD - put this back in, but with dynamic subpriority as well as static
-//  virtual int priority (const handle_t handle,
-//                        OS_Thread_Priority &priority,
-//                        Sub_Priority &subpriority,
-//                        Preemption_Priority &preemption_prio);
+//  TBD - put this back in, but with dynamic subpriority as well as static
+//  int priority (const handle_t handle,
+//                OS_Priority &OS_priority,
+//                 Preemption_Priority &preemption_priority,
+//                 Sub_Priority &dynamic_subpriority,
+//                 Sub_Priority &static_subpriority);
   // Defines "priority" as the priority that was assigned to the Task that
-  // was assigned "handle".  Defines "subpriority"
-  // as the relative ordering (due to oneway call graph) within the priority.
+  // was assigned "handle".  Defines "dynamic subpriority" as the strategy
+  // specific assignment of dynamic subpriority within a priority level, and
+  // "static subpriority" as the minimal importance and topological ordering.
   // Returns 0 on success, or -1 if an invalid handle was supplied.
   // Queue numbers are platform-independent priority values, ranging from
   // a highest priority value of 0 to the lowest priority value, which is
@@ -368,7 +192,7 @@ public:
   // = Access the platform-independent priority value of the lowest-priority
   //   thread.
 
-  u_int minimum_priority_queue () const;
+   Preemption_Priority minimum_priority_queue () const;
   // This is intended for use by the Event Channel, so it can determine the
   // number of priority dispatch queues to create.
 
@@ -396,16 +220,9 @@ public:
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
 
-// CDG - TBD - modify these to take a Task_Entry and show all its dispatches
+  // TBD - modify these to take a Task_Entry and show all its dispatches
   static void export(RT_Info*, FILE* file);
   static void export(RT_Info&, FILE* file);
-
-  //////////////////////////////////////////
-  // public pure virtual member functions //
-  //////////////////////////////////////////
-
-  virtual void print_schedule () = 0;
-    // Display the schedule, task-by-task.
 
 protected:
 
@@ -416,16 +233,16 @@ protected:
   ACE_Scheduler ();
 
 
-  virtual status_t schedule_threads (void);
+  status_t schedule_threads (void);
   // thread scheduling method: sets up array of pointers to task 
   // entries that are threads, calls internal thread scheduling method
 
-  virtual status_t schedule_dispatches (void);
+  status_t schedule_dispatches (void);
   // dispatch scheduling method: sets up an array of dispatch entries,
   // calls internal dispatch scheduling method.
 
   // = Set the minimum priority value.
-  void minimum_priority_queue (const u_int minimum_priority_queue_number);
+  void minimum_priority_queue (const Preemption_Priority minimum_priority_queue_number);
 
   // = Set the number of tasks.
   void tasks (const u_int tasks);
@@ -440,23 +257,29 @@ protected:
   // protected pure virtual member functions //
   /////////////////////////////////////////////
 
-  virtual status_t schedule_threads_i (void) = 0;
-  // internal thread scheduling method: this orders the threads, assigns
-  // static priority and dynamic and static subpriority to them.
+  virtual status_t sort_dispatches (Dispatch_Entry *, u_int) = 0;
+  // internal sorting method: this orders the dispatches by
+  // static priority and dynamic and static subpriority.
 
-  virtual status_t schedule_dispatches_i (void) = 0;
-  // internal dispatch scheduling method: this actually orders the dispatches.
+  virtual status_t assign_priorities (Dispatch_Entry_Link *dispatches,
+                                      u_int count) = 0;
+    // = assign priorities to the sorted dispatches
+
+  virtual status_t assign_subpriorities (Dispatch_Entry_Link *dispatches, 
+                                         u_int count) = 0;
+    // = assign dynamic and static sub-priorities to the sorted dispatches
+
 
   ////////////////////////////
   // protected data members //
   ////////////////////////////
 
-  int minimum_priority_;
-  // The minimum priority value that the application specified (in
+  OS_Priority minimum_priority_;
+  // The minimum OS thread priority value that the application specified (in
   // its call to init ()).
 
-  int maximum_priority_;
-  // The maximum priority value that the application specified (in
+  OS_Priority maximum_priority_;
+  // The maximum OS thread priority value that the application specified (in
   // its call to init ()).
 
   Task_Entry *task_entries_;
@@ -468,43 +291,32 @@ protected:
   // over the call graph is used both to check for call chain cycles and
   // to correctly propagate scheduling information away from the threads.
 
-  ACE_Unbounded_Set <Task_Entry *> *thread_delineators_;
-    // identifies task entries whose underlying RT_Infos delineate threads
+  ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_;
+    // identifies dispatch entries whose underlying
+    // Task Entries delineate threads
 
-  Task_Entry **ordered_thread_entries_;
+  Dispatch_Entry **ordered_thread_dispatch_entries_;
   // An array of pointers to task entries which initiate call chains.
   // It is sorted by the schedule_threads method defined in the derived class.
 
   ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_;
-    // identifies task entries whose underlying RT_Infos delineate threads
+    // the set of dispatch entries
 
   Dispatch_Entry **ordered_dispatch_entries_;
-  // An array of pointers to  dispatch entries. It is sorted by the 
-  // schedule_dispatches method defined in the derived class.
+  // An array of pointers to  dispatch entries. It is  
+  // sorted by the schedule_dispatches method.
+
+  u_int dispatch_entry_count_;
+  // the number of dispatch entries in the schedule
+
+  u_int threads_;
+  // the number of dispatch entries in the schedule
 
 private:
 
   ///////////////////////////////
   // private type declarations //
   ///////////////////////////////
-
-  struct Timeline_Entry
-  {
-    u_long handle_;
-    const char *entry_point_;
-    u_long start_;  // microseconds
-    u_long stop_;   // microseconds
-    u_long next_start_;
-
-    Timeline_Entry (const u_long handle = 0,
-                    const char *entry_point = 0,
-                    const u_long start = 0,
-                    const u_long stop = 0,
-                    const u_long next_start = 0)
-      : handle_ (handle), entry_point_ (entry_point), start_ (start),
-        stop_ (stop), next_start_ (next_start) {}
-  };
- 
 
   typedef ACE_CString EXT;
   typedef RT_Info *INT;
@@ -525,8 +337,14 @@ private:
   // private member functions //
   //////////////////////////////
 
-  virtual status_t create_timeline (const char *filename);
+  status_t create_timeline ();
   // Create a timeline.
+
+  status_t output_dispatch_timeline (const char *filename);
+  // this prints the entire set of timeline outputs to the specified file
+
+  status_t output_preemption_timeline (const char *filename);
+  // this prints the entire set of timeline outputs to the specified file
 
   // = Set up the task entry data structures
   status_t setup_task_entries (void);
@@ -605,16 +423,14 @@ private:
 
   u_int tasks_;
 
-  u_int threads_;
-
   status_t status_;
 
   u_int output_level_;
 
-  u_long frame_size_; /* millisec */
+  u_long frame_size_; /* 100 microsec */
     // minimum frame size for all tasks
 
-  u_long critical_set_frame_size_; /* millisec */
+  u_long critical_set_frame_size_; /* 100 microsec */
     // minimum frame size for guaranteed schedulable tasks
 
   double utilization_;
@@ -623,18 +439,19 @@ private:
   double critical_set_utilization_;
     // minimum frame size for guaranteed schedulable tasks
 
-  ACE_Sched_Priority minimum_priority_queue_;
+  Preemption_Priority minimum_priority_queue_;
     // The platform-independent priority value of the Event Channel's
     // minimum priority dispatch queue.  The value of the maximum priority
     // dispatch queue is always 0.
 
-  ACE_Sched_Priority minimum_guaranteed_priority_queue_;
+  Preemption_Priority minimum_guaranteed_priority_queue_;
     // The platform-independent priority value of the minimum priority dispatch
     // queue whose operations are guaranteed to be schedulable.  The value of 
-    // the maximum priority dispatch queue is always 0.
+    // the maximum priority dispatch queue is always 0, -1 indicates none can
+    // be guaranteed.
 
-  ACE_Unbounded_Queue <Timeline_Entry> *timeline_;
-  // For storing timelines.
+  ACE_Unbounded_Queue <TimeLine_Entry_Link> *timeline_;
+    // Queue of timeline entries.
 
   u_int up_to_date_;
     // indicates whether the a valid schedule has been generated since the last
