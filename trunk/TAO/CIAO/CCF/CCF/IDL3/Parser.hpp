@@ -33,6 +33,7 @@ namespace CCF
       KeywordParser HOME;
       KeywordParser FINDER;
       KeywordParser MANAGES;
+      KeywordParser MULTIPLE;
       KeywordParser PROVIDES;
       KeywordParser PUBLISHES;
       KeywordParser USES;
@@ -125,6 +126,9 @@ namespace CCF
 
       // Uses
       //
+      NoArgAction<SemanticAction::Uses>
+      act_uses_multiple;
+
       OneArgAction<IdentifierPtr, SemanticAction::Uses>
       act_uses_type;
 

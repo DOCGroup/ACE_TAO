@@ -22,14 +22,21 @@ namespace CCF
 
         Uses::
         Uses (Context& c)
-            : Base (c)
+            : Base (c), multiple_ (false)
         {
+        }
+
+        void Uses::
+        multiple ()
+        {
+          multiple_ = true;
         }
 
         void Uses::
         type (IdentifierPtr const& id)
         {
-          if (ctx.trace ()) cerr << "uses " << id;
+          if (ctx.trace ())
+            cerr << "uses " << (multiple_ ? "multiple ": "") << id;
 
           type_ = 0;
 
@@ -70,11 +77,16 @@ namespace CCF
 
           if (type_)
           {
-            User& u (ctx.tu ().new_node<User> ());
+            User* u;
 
-            ctx.tu ().new_edge<Belongs> (u, *type_);
-            ctx.tu ().new_edge<Defines> (ctx.scope (), u, id->lexeme ());
+            if (multiple_) u = &ctx.tu ().new_node<MultiUser> ();
+            else u = &ctx.tu ().new_node<SingleUser> ();
+
+            ctx.tu ().new_edge<Belongs> (*u, *type_);
+            ctx.tu ().new_edge<Defines> (ctx.scope (), *u, id->lexeme ());
           }
+
+          multiple_ = false;
         }
       }
     }

@@ -27,6 +27,7 @@ namespace CCF
           HOME      ("home"     ),
           FINDER    ("finder"   ),
           MANAGES   ("manages"  ),
+          MULTIPLE  ("multiple" ),
           PROVIDES  ("provides" ),
           PUBLISHES ("publishes"),
           USES      ("uses"     ),
@@ -64,6 +65,7 @@ namespace CCF
 
           // Uses
           //
+          act_uses_multiple (f.uses (), &SemanticAction::Uses::multiple),
           act_uses_type (f.uses (), &SemanticAction::Uses::type),
           act_uses_name (f.uses (), &SemanticAction::Uses::name),
 
@@ -269,6 +271,7 @@ namespace CCF
 
       uses_decl =
            USES
+        >> !(MULTIPLE[act_uses_multiple])
         >> identifier[act_uses_type]
         >> simple_identifier[act_uses_name]
         >> SEMI

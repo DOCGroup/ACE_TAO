@@ -146,6 +146,46 @@ namespace CCF
       //
       //
       typedef
+      PortTemplate<SemanticGraph::MultiUser>
+      MultiUser;
+
+      typedef
+      PortGetTemplate<SemanticGraph::MultiUser>
+      MultiUserGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::MultiUser>
+      MultiUserSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::MultiUser>
+      MultiUserData;
+
+
+      //
+      //
+      //
+      typedef
+      PortTemplate<SemanticGraph::SingleUser>
+      SingleUser;
+
+      typedef
+      PortGetTemplate<SemanticGraph::SingleUser>
+      SingleUserGet;
+
+      typedef
+      PortSetTemplate<SemanticGraph::SingleUser>
+      SingleUserSet;
+
+      typedef
+      PortDataTemplate<SemanticGraph::SingleUser>
+      SingleUserData;
+
+
+      //
+      //
+      //
+      typedef
       PortTemplate<SemanticGraph::Publisher>
       Publisher;
 
