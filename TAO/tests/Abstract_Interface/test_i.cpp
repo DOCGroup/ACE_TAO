@@ -63,18 +63,8 @@ passer_i::pass_ops (base_out outarg
   ACE_NEW (servant,
            foo_i);
   PortableServer::ServantBase_var safety (servant);
-
-  ACE_TRY_NEW_ENV
-    {
-      outarg = servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER)
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Exception caught in passer_i::pass_op\n"));
-    }
-  ACE_ENDTRY;
+  outarg = servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void 

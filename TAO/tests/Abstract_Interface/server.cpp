@@ -145,7 +145,7 @@ main (int argc, char *argv[])
 
       ACE_Time_Value tv (10);
       orb->run (tv 
-                TAO_ENV_SINGLE_ARG_PARAMETER);
+                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Destroy the POA, waiting until the destruction terminates
