@@ -1,3 +1,10 @@
+Wed Apr  9 23:23:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/server.cpp:
+
+          Added 'const' to a static char& definition which has a string
+          literal on the rhs. SunOS FORTE complained about it.
+
 Wed Apr  9 23:09:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/tmplinst.cp:
