@@ -113,6 +113,9 @@ private:
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
 
+  /// Helper method for object_addr ().
+  void object_addr_i (void) const;
+
   /// String representing the host name.
   CORBA::String_var host_;
 

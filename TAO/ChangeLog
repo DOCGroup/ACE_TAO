@@ -1,3 +1,40 @@
+Thu Dec 25 18:56:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FTORB.mpc:
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+
+	  Set right the dependancies in the MPC files.
+
+	The remainder of this checkin is for an optimization. The point is
+        to cache the hash value of the endpoints. I am sure there are
+        people who believe that with latest versions of the kernels,
+        stacks and quantum computing these optimizations are a
+        waste. Whatever it is, my profiler showed a bit of time spent
+        trying to calculate hash values in every call path. Hence the
+        decision to cache the value.
+	
+	* tao/Endpoint.h:
+	* tao/Endpoint.i:
+
+	  Added a varaible to hold the cached hash value. 
+	
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+
+	* tao/IIOP_Endpoint.cpp:
+	* tao/IIOP_Endpoint.h:
+	* tao/Strategies/DIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Endpoint.cpp:
+	* tao/Strategies/SCIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.cpp:
+	* tao/Strategies/UIOP_Endpoint.cpp:
+
+	  Double checked locking optimizations to cache the hash value. 
+	
+	* tests/MT_Client/client.global.conf:
+
+	  Removed a svc.conf option that has long been retired.
+
 Thu Dec 25 17:41:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
