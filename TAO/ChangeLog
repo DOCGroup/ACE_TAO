@@ -1,3 +1,13 @@
+Tue Aug 13 16:19:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+
+          Added a temporary hack to make VC7 happy, which consists
+          of adding the initialization to zero of a boolean
+          out argument in the generated skeleton body. Thanks to
+          Vincent Nicolas <vincent.nicolas@radiometer.dk> for
+          pointing out the problem.
+
 Tue Aug 13 14:03:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/README:
