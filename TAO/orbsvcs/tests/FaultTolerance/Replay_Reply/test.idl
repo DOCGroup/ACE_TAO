@@ -1,0 +1,20 @@
+// -*- IDL -*-
+//$Id$
+module Replay_Reply
+{
+  const unsigned long SPECIFIC_CONTEXT = 1070;
+  
+  struct tagged_component
+  {
+    long id;
+  };
+
+  interface test
+  {
+    /// A simple test operation
+    short number (inout string m);
+
+    oneway void shutdown ();
+  };
+
+};
