@@ -66,22 +66,26 @@ sub new {
   my($inc)       = shift;
   my($template)  = shift;
   my($ti)        = shift;
+  my($dynamic)   = shift;
+  my($static)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, 'project');
   my($typecheck) = $self->{'type_check'};
 
-  $self->{$typecheck}             = 0;
-  $self->{'global_assign'}        = {};
-  $self->{'files_written'}        = [];
-  $self->{'project_info'}         = [];
-  $self->{'reading_global'}       = 0;
-  $self->{'reading_parent'}       = [];
-  $self->{'dexe_template_input'}  = undef;
-  $self->{'lexe_template_input'}  = undef;
-  $self->{'lib_template_input'}   = undef;
-  $self->{'dll_template_input'}   = undef;
-  $self->{'idl_defaulted'}        = 0;
-  $self->{'writing_type'}         = 0;
+  $self->{$typecheck}              = 0;
+  $self->{'global_assign'}         = {};
+  $self->{'files_written'}         = [];
+  $self->{'project_info'}          = [];
+  $self->{'reading_global'}        = 0;
+  $self->{'reading_parent'}        = [];
+  $self->{'dexe_template_input'}   = undef;
+  $self->{'lexe_template_input'}   = undef;
+  $self->{'lib_template_input'}    = undef;
+  $self->{'dll_template_input'}    = undef;
+  $self->{'idl_defaulted'}         = 0;
+  $self->{'writing_type'}          = 0;
+  $self->{'want_dynamic_projects'} = $dynamic;
+  $self->{'want_static_projects'}  = $static;
 
   ## Valid component names within a project along with the valid file extensions
   my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
@@ -1049,12 +1053,14 @@ sub write_project {
   my($prjname)  = $self->get_assignment('project_name');
 
   ## Writing the non-static file so set it to 0
-  $self->{'writing_type'} = 0;
-  $self->process_assignment('project_name',
-                            $prjname . $self->get_type_append());
-  ($status, $error) = $self->write_output_file($name);
+  if ($self->{'want_dynamic_projects'}) {
+    $self->{'writing_type'} = 0;
+    $self->process_assignment('project_name',
+                              $prjname . $self->get_type_append());
+    ($status, $error) = $self->write_output_file($name);
+  }
 
-  if ($status &&
+  if ($status && $self->{'want_static_projects'} &&
       $self->separate_static_project()) {
     ## Set the project name back to what it originally was
     $self->process_assignment('project_name', $prjname);

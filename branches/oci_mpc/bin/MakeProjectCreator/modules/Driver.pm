@@ -23,7 +23,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 0.6,
+                         'version'  => 0.7,
                          'types'    => {},
                          'creators' => \@creators,
                         }, $class;
@@ -41,8 +41,10 @@ sub usageAndExit {
   }
   print STDERR "$base v$self->{'version'}\n" .
                "Usage: $base [-global <file>] [-include <directory>]\n" .
-               (" " x (length($base) + 8)) . "[-template <file>] " .
+               (" " x (length($base) + 8)) .
                "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
+               (" " x (length($base) + 8)) . "[-template <file>] " .
+               "[-dynamic_only] [-static_only]\n" .
                (" " x (length($base) + 8)) . "[-type <";
   my($t)    = $self->{'types'};
   my(@keys) = sort keys %$t;
@@ -55,17 +57,20 @@ sub usageAndExit {
   print STDERR ">] [files]\n\n";
 
   print STDERR
-"       -global     Specifies the global input file.  Values stored\n" .
-"                   within this file are applied to all projects.\n" .
-"       -include    Specifies a directory to search when looking for base\n" .
-"                   projects, template input files and templates.  This\n" .
-"                   option can be used multiple times to add directories.\n" .
-"       -ti         Specifies the template input file (with no extension)\n" .
-"                   for the specific type as shown above\n" .
-"                   (ex. -ti dll_exe:vc8exe)\n" .
-"       -type       Specifies the type of project file to generate.  This\n" .
-"                   option can be used multiple times to generate multiple\n" .
-"                   types.\n";
+"       -global       Specifies the global input file.  Values stored\n" .
+"                     within this file are applied to all projects.\n" .
+"       -include      Specifies a directory to search when looking for base\n" .
+"                     projects, template input files and templates.  This\n" .
+"                     option can be used multiple times to add directories.\n" .
+"       -ti           Specifies the template input file (with no extension)\n" .
+"                     for the specific type as shown above\n" .
+"                     (ex. -ti dll_exe:vc8exe)\n" .
+"       -template     Specifies the template name (with no extension).\n" .
+"       -dynamic_only Specifies that only dynamic projects will be generated.\n" .
+"       -static_only  Specifies that only static projects will be generated.\n" .
+"       -type         Specifies the type of project file to generate.  This\n" .
+"                     option can be used multiple times to generate multiple\n" .
+"                     types.\n";
 
   exit(0);
 }
@@ -101,6 +106,8 @@ sub run {
   my($default)    = undef;
   my($template)   = undef;
   my(%ti)         = ();
+  my($dynamic)    = 1;
+  my($static)     = 1;
   my($signif)     = 3;
 
   ## Dynamically load in each perl module and set up
@@ -175,6 +182,14 @@ sub run {
         }
       }
     }
+    elsif ($arg eq '-dynamic_only') {
+      $static  = 0;
+      $dynamic = 1;
+    }
+    elsif ($arg eq '-static_only') {
+      $static  = 1;
+      $dynamic = 0;
+    }
     elsif ($arg =~ /^-/) {
       $self->usageAndExit();
     }
@@ -201,7 +216,8 @@ sub run {
   ## Generate the files
   foreach my $file (@input) {
     foreach my $name (@generators) {
-      my($generator) = $name->new($global, \@include, $template, \%ti);
+      my($generator) = $name->new($global, \@include, $template,
+                                  \%ti, $dynamic, $static);
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
       print "Start Time: " . scalar(localtime(time())) . "\n";

@@ -10,21 +10,24 @@ projects for each one found.
 
 
 Usage: mwc.pl [-global <file>] [-include <directory>]
-              [-template <file>] [-ti <dll | exe | lib>:<file>]
+              [-ti <dll | lib | dll_exe | lib_exe>:<file>]
+              [-template <file>] [-dynamic_only] [-static_only]
               [-type <gnu | nma | vc6 | vc7>] [files]
 
-       -global     Specifies the global input file.  Values stored
-                   within this file are applied to all projects.
-       -include    Specifies a directory to search when looking for base
-                   projects, template input files and templates.  This
-                   option can be used multiple times to add directories.
-       -ti         Specifies the template input file (with no extension)
-                   for the specific type as shown above
-                   (ex. -ti exe:vc8exe)
-       -type       Specifies the type of project file to generate.  This
-                   option can be used multiple times to generate multiple
-                   types.
-
+       -global       Specifies the global input file.  Values stored
+                     within this file are applied to all projects.
+       -include      Specifies a directory to search when looking for base
+                     projects, template input files and templates.  This
+                     option can be used multiple times to add directories.
+       -ti           Specifies the template input file (with no extension)
+                     for the specific type as shown above
+                     (ex. -ti dll_exe:vc8exe)
+       -template     Specifies the template name (with no extension).
+       -dynamic_only Specifies that only dynamic projects will be generated.
+       -static_only  Specifies that only static projects will be generated.
+       -type         Specifies the type of project file to generate.  This
+                     option can be used multiple times to generate multiple
+                     types.
 
 The default global input file
 (ACE_wrappers/bin/MakeProjectCreator/config/global.mpb) is used if -global
@@ -35,11 +38,22 @@ Two include directories are used by default
 ACE_wrappers/bin/MakeProjectCreator/templates) if -include is not used.
 
 Each project creator has a default template input file for each type of
-project (exe, dll, lib).  You can override the default template input file
-name with the -ti option.  The file must have a 'mpt' extension and must
-reside within the include search directories.  NOTE: the 'lib' template
-input file is only used if the project creator makes a separate project file
-for dynamic libraries and static libraries.
+project (dll_exe, lib_exe, dll, lib).  You can override the default template
+input file name with the -ti option.  The file must have a 'mpt' extension
+and must reside within the include search directories.  NOTE: the 'lib' and
+the 'lib_exe' template input files are only used if the project creator makes
+a separate project file for dynamic libraries and static libraries.
+
+The -template option is used to override the default template name.  This
+file should have a .mpd extension and sit in one of the include search
+directores.  NOTE: The -template option overrides the template file for all
+types specified.
+
+The -dynamic_only option can be used to avoid generating static project
+files.  This currently only applies to the vc6 type.
+
+The -static_only option can be used to avoid generating dynamic project
+files.  This currently only applies to the vc6 type.
 
 The -type option can be used multiple times on the same command line to
 generate projects of different types per mpc file.  NOTE: The -ti option
@@ -56,17 +70,21 @@ project in the directory from which the script was started.
 
 
 Usage: mpc.pl [-global <file>] [-include <directory>]
-              [-template <file>] [-ti <dll | exe | lib>:<file>]
+              [-ti <dll | lib | dll_exe | lib_exe>:<file>]
+              [-template <file>] [-dynamic_only] [-static_only]
               [-type <bor | ghs | gnu | nma | vc6 | vc7>] [files]
 
-       -global     Specifies the global input file.  Values stored
-                   within this file are applied to all projects.
-       -include    Specifies a directory to search when looking for base
-                   projects, template input files and templates.  This
-                   option can be used multiple times to add directories.
-       -ti         Specifies the template input file (with no extension)
-                   for the specific type as shown above
-                   (ex. -ti exe:vc8exe)
-       -type       Specifies the type of project file to generate.  This
-                   option can be used multiple times to generate multiple
-                   types.
+       -global       Specifies the global input file.  Values stored
+                     within this file are applied to all projects.
+       -include      Specifies a directory to search when looking for base
+                     projects, template input files and templates.  This
+                     option can be used multiple times to add directories.
+       -ti           Specifies the template input file (with no extension)
+                     for the specific type as shown above
+                     (ex. -ti dll_exe:vc8exe)
+       -template     Specifies the template name (with no extension).
+       -dynamic_only Specifies that only dynamic projects will be generated.
+       -static_only  Specifies that only static projects will be generated.
+       -type         Specifies the type of project file to generate.  This
+                     option can be used multiple times to generate multiple
+                     types.
