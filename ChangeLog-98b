@@ -1,3 +1,15 @@
+Wed Sep 16 20:09:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h: 
+	* ace/OS.i: 
+	  ACE_OS::rand_r() is easier to use now. Just define a variable of
+	  that type and invoke ACE_OS::rand_r() with it, it even works on
+	  broken platforms that define it as a non-pointer.
+	  This is a brief example on how to use it:
+	  ACE_RANDR_TYPE seed;
+	  int r1 = ACE_OS::rand_r (seed);
+	  int r2 = ACE_OS::rand_r (seed);
+
 Wed Sep 16 17:46:23 PDT 1998  James Hu <jxh@entera.com>
 
 	* ace/Containers.{h,i}: Added comments to DLList as per Doug's
