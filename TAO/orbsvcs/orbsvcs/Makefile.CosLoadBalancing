@@ -48,6 +48,9 @@ IDL_FILES += \
 
 CPP_SRCS += \
 	LoadBalancing/LB_LeastLoaded \
+	LoadBalancing/LB_LoadMinimum \
+	LoadBalancing/LB_LoadAverage \
+	LoadBalancing/LB_MinimumDispersion \
 	LoadBalancing/LB_LoadAlert \
 	LoadBalancing/LB_LoadAlertInfo \
 	LoadBalancing/LB_LoadAlertMap \
@@ -69,7 +72,8 @@ CPP_SRCS += \
 	LoadBalancing/LB_ObjectReferenceFactory \
 	LoadBalancing/LB_ORBInitializer \
 	LoadBalancing/LB_Component \
-	LoadBalancing/LB_CPU_Monitor
+        LoadBalancing/LB_CPU_Load_Average_Monitor \
+        LoadBalancing/LB_CPU_Utilization_Monitor
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))

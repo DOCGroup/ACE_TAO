@@ -1,3 +1,12 @@
+Tue Apr 20 19:11:16 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+
+          As a result of the new CPU utilization monitor,
+          the old CPU load average monitor is moved to this new
+          file and new class definitions.
+
 Tue Apr 20 19:05:02 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h:
