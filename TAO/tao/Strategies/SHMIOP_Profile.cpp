@@ -169,7 +169,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   ACE_OS::strncpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
-  if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+  if (ACE_OS::strspn (tmp.in (), "1234567890") == length)
     {
       this->endpoint_.port_ =
         ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
