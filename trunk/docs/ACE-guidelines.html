@@ -276,6 +276,9 @@ bgcolor="#ffffff">
          set.insert (2 * i + 1);
        </pre><p>
 
+    <li>When a class provides operator==, it must also provide
+        operator!=.  Also, both these operators must be const.
+
     <li>Avoid unnecessary parenthesis.  We're not writing Lisp :-)<p>
 
     <li>Put inline member functions in a <strong><code>.i</code></strong>
@@ -752,8 +755,8 @@ bgcolor="#ffffff">
 
   <li>Never put side effects in <code>ACE_DEBUG</code> code:
       <pre>
-      ACE_DEBUG ((LM_DEBUG, 
-                 "handling signal: %d iterations left\n", 
+      ACE_DEBUG ((LM_DEBUG,
+                 "handling signal: %d iterations left\n",
                  --this-&gt;iterations_));        // BAD CODE!
       </pre>
 
