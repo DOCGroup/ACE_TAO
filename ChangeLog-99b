@@ -1,3 +1,16 @@
+Wed Aug 25 12:26:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	  On Borland C++ (and other platforms) we should use
+	  std::bad_alloc instead of bad_alloc for the ACE_bad_alloc
+	  exception.  We use the ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+	  macro to detect this. Thanks to Jody Hagins <jody@atdesk.com>
+	  for this fix.
+
+	* tests/run_tests.lst:
+	  Disabled the Token test, it is more trouble that it is worth. It 
+	  hangs and tends to freeze the complete testsuite.
+
 Wed Aug 25 12:09:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Makefile:

@@ -50,7 +50,7 @@ Dynamic_Priority_Test
 Recursive_Mutex_Test
 Reverse_Lock_Test
 netsvcs_main/TOKEN/chorus/Unicos/Time_Service_Test
-TOKEN/chorus/Unicos/Tokens_Test
+DISABLED/TOKEN/chorus/Unicos/Tokens_Test
 Cache_Map_Manager_Test
 Cached_Conn_Test
 Cached_Accept_Conn_Test

@@ -7249,7 +7249,8 @@ private:
     // introduces other stuff that breaks things, like <memory>, which
     // screws up auto_ptr.
 #     include /**/ <new>
-#     if defined (__HP_aCC) && !defined (RWSTD_NO_NAMESPACE)
+#     if (defined (__HP_aCC) && !defined (RWSTD_NO_NAMESPACE)) \
+         || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #       define ACE_bad_alloc std::bad_alloc
 #     else
 #       define ACE_bad_alloc bad_alloc
