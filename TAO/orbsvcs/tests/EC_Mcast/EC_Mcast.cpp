@@ -1231,9 +1231,7 @@ main (int argc, char *argv [])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
 template class ACE_PushConsumer_Adapter<ECM_Supplier>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
 #pragma instantiate ACE_PushConsumer_Adapter<ECM_Supplier>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
