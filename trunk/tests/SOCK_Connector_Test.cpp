@@ -259,7 +259,7 @@ succeed_nonblocking (void)
         {
           // Reset the status _before_ doing the printout, in case the
           // printout overwrites errno.
-          if (errno == ECONNREFUSED || errno == ENOTCONN)
+          if (errno == ECONNREFUSED) // ENOTCONN should not happen any more || errno == ENOTCONN)
             status = 0;
 
           ACE_DEBUG ((LM_DEBUG,

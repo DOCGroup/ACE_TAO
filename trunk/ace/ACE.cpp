@@ -2570,18 +2570,13 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       return ACE_INVALID_HANDLE;
     }
 
-  // Check if the handle is ready for reading and the handle is *not*
-  // ready for writing, which may indicate a problem.  But we need to
-  // make sure...
+  // Usually, a ready-for-write handle is successfully connected, and
+  // ready-for-read (exception on Win32) is a failure. On fails, we
+  // need to grab the error code via getsockopt. On possible success for
+  // any platform where we can't tell just from select() (e.g. AIX),
+  // we also need to check for success/fail.
 #if defined (ACE_WIN32)
   if (ex_handles.is_set (h))
-    h = ACE_INVALID_HANDLE;
-  else
-    // There's a funky time window on some Win32 versions (pre-Win2000)
-    // where the socket is marked complete, but operations will still
-    // fail. We need to find if this is one of those and return an error
-    // if so - the caller will then need to decide to ignore it or sleep
-    // and retry (see SOCK_Connector.cpp)
     need_to_check = 1;
 #elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
@@ -2596,7 +2591,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
-  need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
+    need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
   else
@@ -2615,6 +2610,17 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
   if (need_to_check)
     {
+#if defined (SOL_SOCKET) && defined (SO_ERROR)
+      int sock_err = 0;
+      int sock_err_len = sizeof (sock_err);
+      ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
+                          (char *)&sock_err, &sock_err_len);
+      if (sock_err != 0)
+        {
+          h = ACE_INVALID_HANDLE;
+          errno = sock_err;
+        }
+#else
       char dummy;
 
       // The following recv() won't block provided that the
@@ -2634,6 +2640,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
           else if (errno != EWOULDBLOCK && errno != EAGAIN)
             h = ACE_INVALID_HANDLE;
         }
+#endif
     }
 
   // 1. The HANDLE is ready for writing and doesn't need to be checked or

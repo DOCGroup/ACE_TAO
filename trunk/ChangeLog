@@ -1,3 +1,17 @@
+Mon Apr 23 17:18:35 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (ACE::handle_timed_complete): Set need_to_check for
+          any non-success result, or on a system where you can't tell (AIX).
+          Also, to check, use getsockopt to retrieve the status/error if
+          SOL_SOCKET and SO_ERROR are defined; else use the old recv method.
+          This gets you a real error code on a failed connect, if the platform
+          supports it.
+
+        * tests/SOCK_Connector_Test.cpp: For an expected success, allow test
+          to pass if socket gets a reset but not if it says ENOTCONN. If there
+          are platforms that can't do SOL_SOCKET/SO_ERROR (above) then this
+          other code may need to be re-enabled.
+
 Mon Apr 23 13:36:27 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (ACE::handle_timed_complete): Winsock (ACE_WIN32) sets
