@@ -1,78 +1,66 @@
-/* -*- C++ -*- */
+// $Id$
+#include "PortableServer.h"
+#include "Object_Adapter_Factory.h"
 
-//=============================================================================
-/**
- *  @file    PortableServer.cpp
- *
- *  $Id$
- *
- *  @author Carlos O'Ryan <coryan@uci.edu>
- */
-//=============================================================================
+#include "ThreadPolicyFactoryImpl.h"
+#include "LifespanPolicyFactoryImpl.h"
+#include "IdAssignmentPolicyFactoryImpl.h"
+#include "IdUniquenessPolicyFactoryImpl.h"
+#include "ImplicitActivationPolicyFactoryImpl.h"
+#include "RequestProcessingPolicyFactoryImpl.h"
+#include "ServantRetentionPolicyFactoryImpl.h"
 
+#include "ThreadStrategyFactoryImpl.h"
+#include "LifespanStrategyFactoryImpl.h"
+#include "IdAssignmentStrategyFactoryImpl.h"
+#include "IdUniquenessStrategyFactoryImpl.h"
+#include "ImplicitActivationStrategyFactoryImpl.h"
+#include "RequestProcessingStrategyFactoryImpl.h"
+#include "ServantRetentionStrategyFactoryImpl.h"
 
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Object_Adapter_Factory.h"
+#include "ThreadPolicyValueORBControl.h"
+#include "ThreadPolicyValueSingle.h"
 
-#include "tao/PortableServer/ThreadPolicyFactoryImpl.h"
-#include "tao/PortableServer/LifespanPolicyFactoryImpl.h"
-#include "tao/PortableServer/IdAssignmentPolicyFactoryImpl.h"
-#include "tao/PortableServer/IdUniquenessPolicyFactoryImpl.h"
-#include "tao/PortableServer/ImplicitActivationPolicyFactoryImpl.h"
-#include "tao/PortableServer/RequestProcessingPolicyFactoryImpl.h"
-#include "tao/PortableServer/ServantRetentionPolicyFactoryImpl.h"
+#include "ThreadStrategyORBControl.h"
+#include "ThreadStrategySingle.h"
+#include "ThreadStrategySingleFactoryImpl.h"
 
-#include "tao/PortableServer/ThreadStrategyFactoryImpl.h"
-#include "tao/PortableServer/LifespanStrategyFactoryImpl.h"
-#include "tao/PortableServer/IdAssignmentStrategyFactoryImpl.h"
-#include "tao/PortableServer/IdUniquenessStrategyFactoryImpl.h"
-#include "tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h"
-#include "tao/PortableServer/RequestProcessingStrategyFactoryImpl.h"
-#include "tao/PortableServer/ServantRetentionStrategyFactoryImpl.h"
+#include "LifespanPolicyValueTransient.h"
+#include "LifespanPolicyValuePersistent.h"
 
-#include "tao/PortableServer/ThreadPolicyValueORBControl.h"
-#include "tao/PortableServer/ThreadPolicyValueSingle.h"
+#include "IdAssignmentPolicyValueSystem.h"
+#include "IdAssignmentPolicyValueUser.h"
+#include "IdAssignmentStrategySystem.h"
+#include "IdAssignmentStrategyUser.h"
 
-#include "tao/PortableServer/ThreadStrategyORBControl.h"
-#include "tao/PortableServer/ThreadStrategySingle.h"
-#include "tao/PortableServer/ThreadStrategySingleFactoryImpl.h"
+#include "IdUniquenessPolicyValueMultiple.h"
+#include "IdUniquenessPolicyValueUnique.h"
 
-#include "tao/PortableServer/LifespanPolicyValueTransient.h"
-#include "tao/PortableServer/LifespanPolicyValuePersistent.h"
+#include "IdUniquenessStrategyMultiple.h"
+#include "IdUniquenessStrategyUnique.h"
 
-#include "tao/PortableServer/IdAssignmentPolicyValueSystem.h"
-#include "tao/PortableServer/IdAssignmentPolicyValueUser.h"
-#include "tao/PortableServer/IdAssignmentStrategySystem.h"
-#include "tao/PortableServer/IdAssignmentStrategyUser.h"
+#include "ImplicitActivationPolicyValueExplicit.h"
+#include "ImplicitActivationPolicyValueImplicit.h"
 
-#include "tao/PortableServer/IdUniquenessPolicyValueMultiple.h"
-#include "tao/PortableServer/IdUniquenessPolicyValueUnique.h"
+#include "ImplicitActivationStrategyExplicit.h"
+#include "ImplicitActivationStrategyImplicit.h"
 
-#include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
-#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
+#include "RequestProcessingPolicyValueAOMOnly.h"
+#include "RequestProcessingPolicyValueDefaultServant.h"
+#include "RequestProcessingPolicyValueServantManager.h"
 
-#include "tao/PortableServer/ImplicitActivationPolicyValueExplicit.h"
-#include "tao/PortableServer/ImplicitActivationPolicyValueImplicit.h"
+#include "RequestProcessingStrategyAOMOnly.h"
+#include "RequestProcessingStrategyDefaultServant.h"
+#include "RequestProcessingStrategyServantManager.h"
 
-#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
-#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+#include "ServantRetentionPolicyValueRetain.h"
+#include "ServantRetentionPolicyValueNonRetain.h"
 
-#include "tao/PortableServer/RequestProcessingPolicyValueAOMOnly.h"
-#include "tao/PortableServer/RequestProcessingPolicyValueDefaultServant.h"
-#include "tao/PortableServer/RequestProcessingPolicyValueServantManager.h"
+#include "ServantRetentionStrategyNonRetainFactoryImpl.h"
+#include "ServantRetentionStrategyRetainFactoryImpl.h"
 
-#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
-#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
-#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
-
-#include "tao/PortableServer/ServantRetentionPolicyValueRetain.h"
-#include "tao/PortableServer/ServantRetentionPolicyValueNonRetain.h"
-
-#include "tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.h"
-#include "tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h"
-
-#include "tao/PortableServer/RequestProcessingStrategyDefaultServantFactoryImpl.h"
-#include "tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h"
+#include "RequestProcessingStrategyDefaultServantFactoryImpl.h"
+#include "RequestProcessingStrategyAOMOnlyFactoryImpl.h"
 
 ACE_RCSID (PortableServer,
            PortableServer,

@@ -207,8 +207,9 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// @todo At the moment to POAManagerFactory is implemented and the POAManager
-  /// has the get_id method this can be zapped, IORInfo can then just call get_id
+  /// @todo At the moment to POAManagerFactory is implemented and the
+  /// POAManager has the get_id method this can be zapped, IORInfo can
+  /// then just call get_id
   PortableInterceptor::AdapterManagerId get_manager_id (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

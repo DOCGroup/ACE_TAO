@@ -35,10 +35,10 @@ namespace TAO
         system_id_ (),
         user_id_ (0),
         current_context_ (),
-    #if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0)
         cookie_ (0),
         operation_ (0),
-    #endif /* TAO_HAS_MINIMUM_POA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
         active_object_map_entry_ (0)
     {
       TAO_Adapter *adapter = oc->poa_adapter ();
@@ -135,33 +135,32 @@ namespace TAO
       ACE_TRY
         {
           // Lookup the servant.
-          this->servant_ = this->poa_->locate_servant_i (operation,
-                                                         this->system_id_,
-                                                         *this,
-                                                         this->current_context_,
-                                                         wait_occurred_restart_call
-                                                         ACE_ENV_ARG_PARAMETER);
+          this->servant_ =
+            this->poa_->locate_servant_i (operation,
+                                          this->system_id_,
+                                          *this,
+                                          this->current_context_,
+                                          wait_occurred_restart_call
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (wait_occurred_restart_call)
-            {
-              return TAO_Adapter::DS_FAILED;
-            }
+            return TAO_Adapter::DS_FAILED;
         }
-    #if (TAO_HAS_MINIMUM_CORBA == 0)
+#if (TAO_HAS_MINIMUM_CORBA == 0)
       ACE_CATCH (PortableServer::ForwardRequest, forward_request)
         {
           forward_to =
             CORBA::Object::_duplicate (forward_request.forward_reference.in ());
           return TAO_Adapter::DS_FORWARD;
         }
-    #else
+#else
       ACE_CATCHANY
         {
           ACE_UNUSED_ARG (forward_to);
           ACE_RE_THROW;
         }
-    #endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_CORBA */
       ACE_ENDTRY;
 
       // Now that we know the servant.
@@ -342,7 +341,7 @@ namespace TAO
     void
     Servant_Upcall::single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL)
     {
-    #if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0)
       // Serialize servants (if necessary).
       //
       // Note that this lock must be acquired *after* the object adapter
@@ -356,18 +355,22 @@ namespace TAO
         if (result == -1)
           // Locking error.
           ACE_THROW (CORBA::OBJ_ADAPTER ());
-    #else
-      ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
-    #endif /* !TAO_HAS_MINIMUM_POA == 0 */
+#else
+        ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
+#endif /* !TAO_HAS_MINIMUM_POA == 0 */
     }
 
     void
     Servant_Upcall::single_threaded_poa_cleanup (void)
     {
-    #if (TAO_HAS_MINIMUM_POA == 0)
+      int result = 0;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
       // Since the servant lock was acquired, we must release it.
-      int result = this->poa_->exit ();
-    #endif /* TAO_HAS_MINIMUM_POA == 0 */
+      result = this->poa_->exit ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+      ACE_UNUSED_ARG (result);
     }
 
     void
@@ -385,16 +388,18 @@ namespace TAO
       if (this->active_object_map_entry_ != 0)
         {
           // Decrement the reference count.
-          CORBA::UShort new_count = --this->active_object_map_entry_->reference_count_;
+          CORBA::UShort new_count =
+            --this->active_object_map_entry_->reference_count_;
 
           if (new_count == 0)
             {
               ACE_DECLARE_NEW_CORBA_ENV;
               ACE_TRY
                 {
-                  this->poa_->cleanup_servant (this->active_object_map_entry_->servant_,
-                                               this->active_object_map_entry_->user_id_
-                                               ACE_ENV_ARG_PARAMETER);
+                  this->poa_->cleanup_servant (
+                    this->active_object_map_entry_->servant_,
+                    this->active_object_map_entry_->user_id_
+                    ACE_ENV_ARG_PARAMETER);
 
                   ACE_TRY_CHECK;
                 }
@@ -441,7 +446,9 @@ namespace TAO
           // non-servant upcalls to be in progress at this point.
           if (this->poa_->waiting_destruction_)
             {
-              ACE_TRY_NEW_ENV
+              ACE_DECLARE_NEW_CORBA_ENV;
+
+              ACE_TRY
                 {
                   this->poa_->complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;
@@ -449,9 +456,11 @@ namespace TAO
               ACE_CATCHANY
                 {
                   // Ignore exceptions
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
+                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                                       "TAO_POA::~complete_destruction_i");
                 }
               ACE_ENDTRY;
+              ACE_CHECK;
 
               this->poa_ = 0;
             }
@@ -459,4 +468,3 @@ namespace TAO
     }
   }
 }
-

@@ -1,32 +1,38 @@
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/Regular_POA.h"
+// $Id$
+#include "Root_POA.h"
+#include "Regular_POA.h"
 
-ACE_RCSID (PortableServer,
-           POA,
-           "$Id$")
 
-//
+#include "ThreadPolicyFactory.h"
+#include "LifespanPolicyFactory.h"
+#include "IdAssignmentPolicyFactory.h"
+#include "IdUniquenessPolicyFactory.h"
+#include "ImplicitActivationPolicyFactory.h"
+#include "RequestProcessingPolicyFactory.h"
+#include "ServantRetentionPolicyFactory.h"
+#include "Active_Object_Map.h"
+#include "Default_Acceptor_Filter.h"
+#include "ORT_Adapter.h"
+#include "ORT_Adapter_Factory.h"
+#include "Policy_Creator_T.h"
+#include "POA_Current_Impl.h"
+#include "Servant_Upcall.h"
+#include "AdapterActivatorC.h"
+#include "Non_Servant_Upcall.h"
+#include "POAManager.h"
+#include "ServantManagerC.h"
+#include "poa_macros.h"
+#include "POA_Guard.h"
+#include "Creation_Time.h"
+#include "RequestProcessingStrategy.h"
+#include "LifespanStrategy.h"
+#include "IdUniquenessStrategy.h"
+#include "IdAssignmentStrategy.h"
+#include "ServantRetentionStrategy.h"
+#include "ImplicitActivationStrategy.h"
+#include "ThreadStrategy.h"
+
 #include "tao/StringSeqC.h"
-
-#include "tao/PortableServer/ThreadPolicyFactory.h"
-#include "tao/PortableServer/LifespanPolicyFactory.h"
-#include "tao/PortableServer/IdAssignmentPolicyFactory.h"
-#include "tao/PortableServer/IdUniquenessPolicyFactory.h"
-#include "tao/PortableServer/ImplicitActivationPolicyFactory.h"
-#include "tao/PortableServer/RequestProcessingPolicyFactory.h"
-#include "tao/PortableServer/ServantRetentionPolicyFactory.h"
-#include "tao/PortableServer/Active_Object_Map.h"
-
-#include "tao/PortableServer/Default_Acceptor_Filter.h"
-#include "tao/PortableServer/ORT_Adapter.h"
-#include "tao/PortableServer/ORT_Adapter_Factory.h"
-#include "tao/PortableServer/Policy_Creator_T.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/AdapterActivatorC.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/POAManager.h"
-#include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Core.h"
@@ -41,28 +47,21 @@ ACE_RCSID (PortableServer,
 #include "tao/TSS_Resources.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "poa_macros.h"
-#include "POA_Guard.h"
-#include "Creation_Time.h"
-
-#include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/LifespanStrategy.h"
-#include "tao/PortableServer/IdUniquenessStrategy.h"
-#include "tao/PortableServer/IdAssignmentStrategy.h"
-#include "tao/PortableServer/ServantRetentionStrategy.h"
-#include "tao/PortableServer/ImplicitActivationStrategy.h"
-#include "tao/PortableServer/ThreadStrategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Root_POA.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (PortableServer,
+           POA,
+           "$Id$")
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
 // It's an array of octets representing ^t^a^o/0 in octal.
@@ -78,7 +77,7 @@ TAO_Root_POA::objectkey_prefix [TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
 
 PortableServer::ThreadPolicy_ptr
 TAO_Root_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
-                               ACE_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::Portable_Server::Policy_Creator<

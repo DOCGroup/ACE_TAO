@@ -1,13 +1,12 @@
-// -*- C++ -*-
-
+// $Id$
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/RequestProcessingStrategyServantActivator.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Servant_Upcall.h"
+#include "ServantActivatorC.h"
+#include "RequestProcessingStrategyServantActivator.h"
+#include "Servant_Base.h"
+#include "Non_Servant_Upcall.h"
+#include "Root_POA.h"
+#include "POA_Current_Impl.h"
+#include "Servant_Upcall.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -29,14 +28,15 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup(
+    RequestProcessingStrategyServantActivator::strategy_cleanup (
       ACE_ENV_SINGLE_ARG_DECL)
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
-        this->servant_activator_ = PortableServer::ServantActivator::_nil ();
+        this->servant_activator_ =
+          PortableServer::ServantActivator::_nil ();
       }
 
       RequestProcessingStrategy::strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -55,8 +55,8 @@ namespace TAO
     RequestProcessingStrategyServantActivator::set_servant_manager (
       PortableServer::ServantManager_ptr imgr
       ACE_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         PortableServer::POA::WrongPolicy))
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableServer::POA::WrongPolicy))
     {
       // This operation sets the default servant manager associated with the
       // POA. This operation may only be invoked once after a POA has been
@@ -69,11 +69,13 @@ namespace TAO
                                            CORBA::COMPLETED_NO));
         }
 
-      this->servant_activator_ = PortableServer::ServantActivator::_narrow (imgr
-                                                                            ACE_ENV_ARG_PARAMETER);
+      this->servant_activator_ =
+        PortableServer::ServantActivator::_narrow (imgr
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
+      this->validate_servant_manager (this->servant_activator_.in ()
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -141,11 +143,13 @@ namespace TAO
       // reference.
       //
 
-      this->validate_servant_manager (this->servant_activator_.in () ACE_ENV_ARG_PARAMETER);
+      this->validate_servant_manager (this->servant_activator_.in ()
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       servant =
-        this->incarnate_servant (poa_current_impl.object_id () ACE_ENV_ARG_PARAMETER);
+        this->incarnate_servant (poa_current_impl.object_id ()
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // If the incarnate operation returns a servant that is
@@ -155,7 +159,8 @@ namespace TAO
       // will raise an OBJ_ADAPTER system exception for the
       // request.
       bool may_activate =
-        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant,
+                                                   wait_occurred_restart_call);
 
       if (!may_activate)
         {
@@ -291,11 +296,17 @@ namespace TAO
       // have completed. If there is a ServantActivator, the Servant is
       // consumed by the call to ServantActivator::etherealize instead.
 
-  // @bala, is this order correct, see 11.3.9.17 of the spec, it says first
-  // remove from the map, then etherealize. not the other way around
+      // @bala, is this order correct, see 11.3.9.17 of the spec, it
+      // says first remove from the map, then etherealize. not the
+      // other way around
+      // @@ Johnny, you are right! This will not show up until a
+      // thread is trying to activate the object in another thread
+      // using activate_object_with_id (). A test case is a must for
+      // atleast this issue.
       if (servant)
         {
-          if (this->etherealize_objects_ && !CORBA::is_nil (this->servant_activator_))
+          if (this->etherealize_objects_ &&
+              !CORBA::is_nil (this->servant_activator_.in ()))
             {
               this->etherealize_servant (user_id,
                                          servant,
@@ -320,9 +331,7 @@ namespace TAO
       int result = this->poa_->unbind_using_user_id (user_id);
 
       if (result != 0)
-        {
-          ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
+        ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 
     void
@@ -342,4 +351,3 @@ namespace TAO
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-

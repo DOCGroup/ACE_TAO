@@ -1,3 +1,21 @@
+Sat Jan 22 23:08:08 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/PortableServer.cpp:
+	* tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+	* tao/PortableServer/Root_POA.cpp:
+	* tao/PortableServer/Root_POA.h:
+	* tao/PortableServer/Servant_Upcall.cpp:
+	* tao/PortableServer/ThreadPolicy.h:
+	* tao/PortableServer/ThreadPolicyFactoryImpl.cpp:
+	* tao/PortableServer/ThreadPolicyValue.cpp:
+	* tao/PortableServer/ThreadPolicyValueORBControl.cpp:
+
+	  Mostly cosmetic fixes and changes.
+
+	* tao/PortableServer/ThreadPolicy.pidl:	
+
+	  Added a enum which is missing from the spec.
+
 Wed Jan 19 12:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Active_Policy_Strategies.cpp:

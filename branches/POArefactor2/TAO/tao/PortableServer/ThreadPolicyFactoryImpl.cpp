@@ -62,17 +62,16 @@ namespace TAO
 
     ACE_FACTORY_DEFINE (TAO_PortableServer, ThreadPolicyFactoryImpl)
 
-    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<ThreadPolicyFactoryImpl>;
+      template class ACE_Dynamic_Service<ThreadPolicyFactoryImpl>;
 
-    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<ThreadPolicyFactoryImpl>
+#pragma instantiate ACE_Dynamic_Service<ThreadPolicyFactoryImpl>
 
-    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-

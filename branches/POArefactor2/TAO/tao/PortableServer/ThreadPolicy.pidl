@@ -28,7 +28,8 @@ module PortableServer
   enum ThreadPolicyValue
   {
     ORB_CTRL_MODEL,
-    SINGLE_THREAD_MODEL
+    SINGLE_THREAD_MODEL,
+    MAIN_THREAD_MODEL
   };
 
   local interface ThreadPolicy : CORBA::Policy
