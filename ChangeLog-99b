@@ -1,14 +1,20 @@
+Tue Mar 23 22:29:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.7.h: undef ACE_HAS_ONLY_SCHED_OTHER, because
+          other scheduling policies are supported by SunOS 5.7.  Thanks
+          to Ossama and autoconf for noticing this.
+
 Tue Mar 23 20:42:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tests/Cache_Manager_Test.cpp (main): Added missing ACE_START_TEST
-	  and ACE_END_TEST macros.
+        * tests/Cache_Manager_Test.cpp (main): Added missing ACE_START_TEST
+          and ACE_END_TEST macros.
 
-	* m4/threads.m4: Modified UNIX International threads check to include
-	  check for rwlock_destroy() in -lthread since thr_create() was
-	  found without explicitly linking to -lthread on Solaris 2.5.1.
-  	  rwlock_destroy() should be found only by linking to -lthread which
- 	  will cause the configure script to add -lthread to the library link
-	  list.
+        * m4/threads.m4: Modified UNIX International threads check to include
+          check for rwlock_destroy() in -lthread since thr_create() was
+          found without explicitly linking to -lthread on Solaris 2.5.1.
+          rwlock_destroy() should be found only by linking to -lthread which
+          will cause the configure script to add -lthread to the library link
+          list.
 
 Tue Mar 23 16:25:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
