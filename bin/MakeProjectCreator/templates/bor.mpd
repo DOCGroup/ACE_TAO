@@ -26,9 +26,15 @@ EXTERNAL_LIBS =<%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%>
 EXTERNAL_LIBS =
 <%endif%>
 
+LFLAGS = \
+<%foreach(libpaths)%>
+	-L<%libpath%>\$(CONFIG_SUBDIR) -L<%libpath%> \
+<%endfor%>
+  -L$(CORE_BINDIR)
+
 LIBFILES = \
 <%foreach(libs defaultlibs)%>
-	$(CORE_BINDIR)\<%lib%>$(LIB_DECORATOR).lib \
+	<%lib%>$(LIB_DECORATOR).lib \
 <%endfor%>
 	$(EXTERNAL_LIBS)
 <%if(idl_files)%>
@@ -83,19 +89,23 @@ INCDIR_NAME = <%include_dir%>
 all: idl_src_files
 <%endif%>
 <%if(exename)%>
-<%if(core)%>
-
-!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
-<%else%>
 <%if(install)%>
 
 BASE_BINDIR = <%install%>
 <%endif%>
+<%if(core)%>
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+<%else%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 <%endif%>
 <%endif%>
 <%if(sharedname)%>
+<%if(dllout)%>
+
+BASE_BINDIR = <%dllout%>
+<%endif%>
 <%if(core)%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
