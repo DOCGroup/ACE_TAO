@@ -34,7 +34,15 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
 #include "MEM_Stream_Test.h"         // Defines Echo_Handler
 
-#define NO_OF_CONNECTION 3
+#define NO_OF_REACTIVE_CONNECTION 3
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+# define NO_OF_MT_CONNECTION 3
+#else
+  // We will use SysV Semaphore in this case which is not very scalable
+  // and can only handle one connection.
+# define NO_OF_MT_CONNECTION 1
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+
 #define NO_OF_ITERATION 100
 
 static int opt_wfmo_reactor = 1;
@@ -50,9 +58,10 @@ static u_short connection_count = 0;
 typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
 typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
 
-static void reset_handler (void)
+static void reset_handler (int conn)
 {
-  (*Waiting::instance ()) = NO_OF_CONNECTION;
+  // Reset the number of connection the test should perform.
+  (*Waiting::instance ()) = conn;
   connection_count = 0;
 }
 
@@ -223,7 +232,7 @@ int test_reactive (ACE_MEM_Addr &server_addr)
 
   u_short sport = local_addr.get_port_number ();
 
-  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_CONNECTION,
+  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_REACTIVE_CONNECTION,
                                             connect_client,
                                             &sport);
   ACE_Time_Value tv(60, 0);
@@ -282,7 +291,7 @@ int test_multithreaded (ACE_MEM_Addr &server_addr)
 
   u_short sport = local_addr.get_port_number ();
 
-  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_CONNECTION,
+  ACE_Thread_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
                                             connect_client,
                                             &sport);
   ACE_Time_Value tv(60, 0);
@@ -318,17 +327,21 @@ main (int, ACE_TCHAR *[])
   unsigned short port = 0;
   ACE_MEM_Addr server_addr (port);
 
-  reset_handler ();
+  reset_handler (NO_OF_REACTIVE_CONNECTION);
 
   test_reactive (server_addr);
 
   ACE_Reactor::instance ()->reset_event_loop ();
 
-  reset_handler ();
+
+  reset_handler (NO_OF_MT_CONNECTION);
 
   test_multithreaded (server_addr);
 
-  // Now testing
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("\n *** Platform only support non-scalable SysV semaphores ***\n\n")));
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 
   ACE_END_TEST;
   return 0;
