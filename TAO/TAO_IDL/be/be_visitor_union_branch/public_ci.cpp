@@ -351,6 +351,11 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
+      *os << "if (!u_." << ub->local_name () << "_)" << be_idt_nl;
+      *os << "{" << be_idt_nl;
+      *os << "u_." << ub->local_name () << "_ = new TAO_Object_Field_T<"
+          << bt->nested_type_name (bu, "") << ">;" << be_uidt_nl;
+      *os << "}" << be_uidt_nl;
       *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// release old storage and make a copy" << be_nl;
@@ -436,6 +441,11 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
+      *os << "if (!u_." << ub->local_name () << "_)" << be_idt_nl;
+      *os << "{" << be_idt_nl;
+      *os << "u_." << ub->local_name () << "_ = new TAO_Object_Field_T<"
+          << bt->nested_type_name (bu, "") << ">;" << be_uidt_nl;
+      *os << "}" << be_uidt_nl;
       *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// release old storage and make a copy" << be_nl;

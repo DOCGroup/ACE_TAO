@@ -1,3 +1,10 @@
+Fri Jan  8 15:05:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao_idl/be/be_visitor_union_branch/public_ci.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_reset_cs.cpp.cpp:
+          Further attempt to correct bug report by Ron Barack. I will ask
+          Andy to check my changes.
+
 Fri Jan  8 13:49:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp (run): Changed to
