@@ -1,3 +1,24 @@
+Thu Dec  9 12:37:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IFR_Client/IFR_Components.pidl:
+        
+          Moved the "omg.org" typeprefix directive from the
+          ComponentIR module to the enclosing CORBA module.
+          This move does not affect any of the C++ generated
+          code, but it eliminates an error when the IFR loader
+          is loading this file into the repository. Seeing
+          the CORBA module without a typeprefix gives it a
+          repository id (which we don't generate for modules
+          in C++) that doesn't include the prefix. The IFR
+          loader looks up this id in the repository, doesn't
+          find it (one including the prefix is already there)
+          and so tries to create an entry for the module again.
+          This causes a BAD_PARAM exception to be thrown due
+          to the resulting local name clash. Thanks to Arjun
+          Thounaojam <arjun.thounaojam@wipro.com> for reporting
+          the problem when loading the file into the repository
+          for use with CorbaScript.
+
 Thu Dec  9 18:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ParameterMode.pidl:

@@ -58,10 +58,10 @@
 
 module CORBA
 {
+  typeprefix CORBA "omg.org";
+
   module ComponentIR
   {
-    typeprefix ComponentIR "omg.org";
-
     interface ComponentDef;
     interface HomeDef;
 
