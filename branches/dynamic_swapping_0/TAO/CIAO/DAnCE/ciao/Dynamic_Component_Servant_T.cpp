@@ -7,28 +7,32 @@
 
 namespace CIAO
 {
-  template <typename COMP_SERVANT,
+  template <typename COMP_SVNT,
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename EXEC,
+            typename EXEC_VAR,
             typename COMP>
-  Dynamic_Component_Servant<COMP_SERVANT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>
+  Dynamic_Component_Servant<COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
+                            EXEC, EXEC_VAR, COMP>
     ::Dynamic_Component_Servant 
         (EXEC *exe, Components::CCMHome_ptr home,
-         Session_Container *c)
+         Swapping_Container *c)
       :Dynamic_Component_Servant_Base (c),
-       executor_ (EXEC::_duplicate (exe),
-       home_ (Components::CCMHome::_duplicate (home.in ())))
+       executor_ (EXEC::_duplicate (exe)),
+       home_ (Components::CCMHome::_duplicate (home))
   {
   }
 
-  template <typename COMP_SERVANT,
+  template <typename COMP_SVNT,
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename EXEC,
+            typename EXEC_VAR,
             typename COMP>
   PortableServer::Servant Dynamic_Component_Servant
-    <COMP_SERVANT, COMP_EXEC, COMP_EXEC_VAR, EXEC, COMP>::create (void)
+    <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, 
+     EXEC, EXEC_VAR, COMP>::create (void)
   {
     ::Components::EnterpriseComponent_var ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -38,14 +42,13 @@ namespace CIAO
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    COMP_SERVANT *svt = 0;
+    COMP_SVNT *svt;
     ACE_NEW_RETURN (svt,
-                    COMP_SERVANT (ciao_comp.in (),
-                                  this->home_.in (),
-                                  this->container_),
+                    COMP_SVNT (ciao_comp,
+                               this->home_.in (),
+                               this->container_),
                     COMP::_nil ());
-
-    return svt._retn ();
+    PortableServer::ServantBase_var safe (svt);
   }
 }
 

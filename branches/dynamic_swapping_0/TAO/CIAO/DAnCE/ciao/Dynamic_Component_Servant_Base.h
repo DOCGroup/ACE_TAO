@@ -26,7 +26,7 @@
 
 namespace CIAO
 {
-  class Session_Container;
+  class Swapping_Container;
   class CIAO_SERVER_Export Dynamic_Component_Servant_Base
   {
   public:
@@ -39,7 +39,7 @@ namespace CIAO
     virtual PortableServer::Servant create (void) = 0;
 
   protected:
-    Session_Container *container_;
+    Swapping_Container *container_;
   };
 
 }
