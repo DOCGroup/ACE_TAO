@@ -4,7 +4,8 @@ Tue Sep  2 13:38:37 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
 	  Fixed incorrect inter-project dependencies for PortableServer,
 	  ObjRefTemplate, and IORInterceptor projects.  Fixes "duplicate
-	  definition" link-time errors.
+	  definition" link-time errors.  Thanks to Alexander Jasper
+	  <alexander.jasper@gmx.net> for pointing out the problem.
 
 Tue Sep  2 07:20:13 2003  Chad Elliott  <elliott_c@ociweb.com>
 
