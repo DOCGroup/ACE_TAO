@@ -1,8 +1,23 @@
+Wed Mar 14 17:28:19 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/NestedUpcall/MT_Client_Test/client.cpp (main): Not sure
+	  why the author was using (THR_BOUND | THR_SCHED_FIFO) as <flags>
+	  to the Task::activate() call.  THR_SCHED_FIFO is for realtime
+	  threads and does not work for regular users (e.g., bugzilla),
+	  specially on Linux.  Once Ossama error checked the activate call
+	  in:
+
+	  Sat Mar 10 18:17:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	I the test started reporting the failed activate call because of
+	  the flags and the test no longer worked.  Once I switched the
+	  Task::activate() call to use the default flags, the test started
+	  working again.
+
 Wed Mar 14 16:25:52 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-        * orbsvcs/tests/AVStreams: 
-
-	  Fixed broken dsps for the release build.
+        * orbsvcs/tests/AVStreams: Fixed broken dsps for the release
+	  build.
 
 Wed Mar 14 16:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
