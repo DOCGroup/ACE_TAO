@@ -240,6 +240,9 @@ sub msvc_compiler_output ()
     {
         last LOOP if (/^####################/);
 
+        s/</&lt;/g if !$opt_p;
+        s/>/&gt;/g if !$opt_p;
+
         my $is_warning = is_warning ();
         my $is_error = is_error ();
 
@@ -350,6 +353,9 @@ sub makefile_compiler_output ()
     {
         last LOOP if (/^####################/);
 
+        s/</&lt;/g if !$opt_p;
+        s/>/&gt;/g if !$opt_p;
+
         my $is_warning = is_warning ();
         my $is_error = is_error ();
 
@@ -427,6 +433,9 @@ sub tests_output ()
     LOOP: while (<>) {
         last LOOP if (/^####################/);
 
+        s/</&lt;/g if !$opt_p;
+        s/>/&gt;/g if !$opt_p;
+
         if (/auto_run_tests: (.*)/) {
             check_result ();
 
@@ -458,7 +467,7 @@ sub tests_output ()
     print "\nTest Failures: $tests_failed\n\n$line_break";
 }
 
-################################################################################
+##############################################################################
 if ($opt_p) {
     set_text_output ();
 }
