@@ -194,9 +194,6 @@ else  # ! CROSS-COMPILE
               -DCPP_LOCATION=\"$(strip $(CXX))\" \
               -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
-  clean:
-	rm -f tao_idl
-
   realclean:
 	rm -f tao_idl TAGS
 endif # ! CROSS-COMPILE
