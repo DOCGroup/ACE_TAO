@@ -1267,12 +1267,9 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   // A random 4-bytes will prefix the sequence number space for each
   // trader, making it extremely unlikely that the sequence spaces for
   // two traders will over lap.
+  // @@ TODO: This is a bad way to generate pseudo random numbers.
   size_t time_value = ACE_OS::time ();
-# if defined (ACE_HAS_BROKEN_RANDR)
-  ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) time_value;
-# else
-  ACE_RANDR_TYPE seed = (ACE_RANDR_TYPE) &time_value;
-# endif /* ACE_HAS_BROKEN_RANDR */
+  ACE_RANDR_TYPE seed = ACE_static_cast(ACE_RANDR_TYPE, time_value);
 
   this->stem_id_.length (8);
   this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand_r (seed) %  256);

@@ -198,8 +198,8 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
 int ACE_Scheduler::add_dependency(RT_Info* rt_info,
                               const Dependency_Info& d)
 {
-  ACE_DEBUG ((LM_DEBUG, "adding dependecy to: %s\n",
-              (const char*)rt_info->entry_point));
+  // ACE_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
+  //              (const char*)rt_info->entry_point));
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
   int l = set.length();
   set.length(l + 1);
