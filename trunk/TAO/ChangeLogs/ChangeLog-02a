@@ -1,3 +1,8 @@
+Mon Sep 11 09:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Updated dependencies to Makefiles in orbsvcs/orbsvcs to take
+	  care of the compile errors in these directories.
+
 Mon Sep 11 08:51:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:
