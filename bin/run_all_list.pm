@@ -46,6 +46,7 @@ if ($^O eq "MSWin32") {
       'TAO/examples/Simple/grid , run_test.pl',
       'TAO/examples/Simple/time-date , run_test.pl',
       'TAO/examples/Simple/time , run_test.pl',
+      'TAO/examples/Load_Balancing , run_test.pl',
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
       'TAO/orbsvcs/tests/Trading , run_test.pl',
       'TAO/orbsvcs/tests/Event/Basic , run_test.pl',
