@@ -44,6 +44,57 @@ sub pre_workspace {
 }
 
 
+sub print_inner_project {
+  #my($self)  = shift;
+  #my($fh)    = shift;
+  #my($gen)   = shift;
+  #my($pguid) = shift;
+  #my($deps)  = shift;
+}
+
+
+sub print_configs {
+  my($self)    = shift;
+  my($fh)      = shift;
+  my($configs) = shift;
+  my($crlf)    = $self->crlf();
+  my($count)   = 0;
+
+  foreach my $key (sort keys %$configs) {
+    print $fh "\t\tConfigName.$count = $key$crlf";
+    $count++;
+  }
+}
+
+
+sub print_dependencies {
+  my($self) = shift;
+  my($fh)   = shift;
+  my($gen)  = shift;
+  my($list) = shift;
+  my($pjs)  = shift;
+  my($crlf) = $self->crlf();
+
+  ## Project Dependencies
+  print $fh "\tGlobalSection(ProjectDependencies) = postSolution$crlf";
+  foreach my $project (@$list) {
+    my($name, $deps, $pguid) = @{$$pjs{$project}};
+    if (defined $deps && $deps ne '') {
+      my($darr) = $self->create_array($deps);
+      my($i)    = 0;
+      foreach my $dep (@$darr) {
+        my($val) = $gen->specific_lookup($dep);
+        if (defined $val && $pguid ne $val) {
+          print $fh "\t\t{$pguid}.$i = {$val}$crlf";
+          $i++;
+        }
+      }
+    }
+  }
+  print $fh "\tEndGlobalSection$crlf";
+}
+
+
 sub write_comps {
   my($self)     = shift;
   my($fh)       = shift;
@@ -58,13 +109,13 @@ sub write_comps {
 
   ## Project Information
   foreach my $project (sort @list) {
-    my($pi) = $$pjs{$project};
-    my($name, $deps, $pguid) = @$pi;
+    my($name, $deps, $pguid) = @{$$pjs{$project}};
 
     ## Convert all /'s to \
     my($cpy) = $self->slash_to_backslash($project);
-    print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"$crlf" .
-              "EndProject$crlf";
+    print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"$crlf";
+    $self->print_inner_project($fh, $gen, $pguid, $deps);
+    print $fh "EndProject$crlf";
   }
 
   ## Project Configurations
@@ -73,44 +124,22 @@ sub write_comps {
 
   my(%configs) = ();
   foreach my $project (@list) {
-    my($pi) = $$pjs{$project};
-    my($name, $deps, $pguid, @cfgs) = @$pi;
+    my($name, $deps, $pguid, @cfgs) = @{$$pjs{$project}};
     foreach my $cfg (@cfgs) {
       $cfg =~ s/\|.*//;
       $configs{$cfg} = 1;
     }
   }
-  my($count) = 0;
-  foreach my $key (sort keys %configs) {
-    print $fh "\t\tConfigName.$count = $key$crlf";
-    $count++;
-  }
+  $self->print_configs($fh, \%configs);
+  print $fh "\tEndGlobalSection$crlf";
 
-  ## Project Dependencies
-  print $fh "\tEndGlobalSection$crlf" .
-            "\tGlobalSection(ProjectDependencies) = postSolution$crlf";
-  foreach my $project (@list) {
-    my($pi) = $$pjs{$project};
-    my($name, $deps, $pguid) = @$pi;
-    if (defined $deps && $deps ne '') {
-      my($darr) = $self->create_array($deps);
-      my($i)    = 0;
-      foreach my $dep (@$darr) {
-        my($val) = $gen->specific_lookup($dep);
-        if (defined $val && $pguid ne $val) {
-          print $fh "\t\t{$pguid}.$i = {$val}$crlf";
-          $i++;
-        }
-      }
-    }
-  }
-  print $fh "\tEndGlobalSection$crlf" .
-            "\tGlobalSection(ProjectConfiguration) = postSolution$crlf";
+  ## Print dependencies if there are any
+  $self->print_dependencies($fh, $gen, \@list, $pjs);
 
   ## Project Configuration Names
+  print $fh "\tGlobalSection(ProjectConfiguration) = postSolution$crlf";
   foreach my $project (sort @list) {
-    my($pi) = $$pjs{$project};
-    my($name, $deps, $pguid, @cfgs) = @$pi;
+    my($name, $deps, $pguid, @cfgs) = @{$$pjs{$project}};
     foreach my $cfg (sort @cfgs) {
       my($c) = $cfg;
       $c =~ s/\|.*//;

@@ -1,40 +1,60 @@
+Thu Apr 17 11:45:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Fixed a usage of undefined reference.
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/VC71ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC71WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Visual Studio .NET 7.1 is not 100% compatible with 7.0.  So in
+          order to avoid requiring the user to generate projects for 7.0 and
+          then converting them, a new type has been added that generates
+          projects that are directly compatible with 7.1.
+
 Thu Apr 17 15:32:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-	* ace/Configuration.h: Made NULL_String public instead of protected
-	  member variable.
+        * ace/Configuration.h: Made NULL_String public instead of protected
+          member variable.
 
 Thu Apr 17 08:23:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Local_Name_Space.h (ACE_NS_String):
-	* ace/Local_Name_Space.cpp (ACE_NS_String):
-	* ace/Local_Name_Space_T.cpp (shared_rebind_i):
-	* ace/Name_Request_Reply.h:
-	* ace/Name_Request_Reply.cpp:
-	* ace/Remote_Name_Space.cpp:
-	* netsvcs/lib/Name_Handler.cpp:
+        * ace/Local_Name_Space.h (ACE_NS_String):
+        * ace/Local_Name_Space.cpp (ACE_NS_String):
+        * ace/Local_Name_Space_T.cpp (shared_rebind_i):
+        * ace/Name_Request_Reply.h:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * netsvcs/lib/Name_Handler.cpp:
 
-	  The underlying string is now an ACE_WCHAR_T instead of an
-	  ACE_USHORT16.  Not all platforms represent wide characters with
-	  16 bit unsigned integers.  Adjusted all members, return types
-	  and parameters accordingly.  This change was prompted by the
-	  consistency fixes made to ace/Basic_Types.h the "Wed Apr 16
-	  13:35:34 2003  Ossama Othman  <ossama@uci.edu>" ChangeLog
-	  entry.
+          The underlying string is now an ACE_WCHAR_T instead of an
+          ACE_USHORT16.  Not all platforms represent wide characters with
+          16 bit unsigned integers.  Adjusted all members, return types
+          and parameters accordingly.  This change was prompted by the
+          consistency fixes made to ace/Basic_Types.h the "Wed Apr 16
+          13:35:34 2003  Ossama Othman  <ossama@uci.edu>" ChangeLog
+          entry.
 
-	  Use rep() instead of ushort_rep() when copying an
-	  ACE_NS_WString.  The latter only works for platforms with 16 bit
-	  wide characters.
+          Use rep() instead of ushort_rep() when copying an
+          ACE_NS_WString.  The latter only works for platforms with 16 bit
+          wide characters.
 
-	* ace/Name_Request_Reply.h:
+        * ace/Name_Request_Reply.h:
 
-	  No need to include "ace/Time_Value.h" and "ace/SString.h".  The
-	  latter isn't need at all, and a forward declaration for
-	  ACE_Time_Value is sufficient.
+          No need to include "ace/Time_Value.h" and "ace/SString.h".  The
+          latter isn't need at all, and a forward declaration for
+          ACE_Time_Value is sufficient.
 
-	* ace/Name_Request_Reply.cpp:
+        * ace/Name_Request_Reply.cpp:
 
-	  Include "ace/Time_Value.h" to pull in ACE_Time_Value class
-	  declaration.
+          Include "ace/Time_Value.h" to pull in ACE_Time_Value class
+          declaration.
 
 Thu Apr 17 13:26:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
