@@ -1,3 +1,9 @@
+Thu Dec 19 11:40:00 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace\win32\unistd.c:
+
+	  Added pace_ prefix to emulation functions.
+
 Thu Oct 26 04:00:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/win32/schedtypes.h:
