@@ -1,6 +1,6 @@
-// This example illustrates the performance impact of using the
 // $Id$
 
+// This example illustrates the performance impact of using the
 // Double-Checked Locking pattern compared with using the "standard"
 // practice of acquiring and releasing a lock on every instance()
 // call.  In addition, we compare the performance of using the

@@ -24,7 +24,7 @@
 #if defined (ACE_WIN32)
 #define EXEC_NAME "c:\\WINNT35\\system32\\MORE.COM"
 #else
-#define EXEC_NAME "/usr/bin/cat";
+#define EXEC_NAME "cat";
 #endif /* ACE_WIN32 */
 
 int
@@ -33,8 +33,8 @@ main (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     ACE_ERROR ((LM_ERROR, "cannot open logger!!!\n"));
 
-  char *executable = argc > 1 ? argv[1] : EXEC_NAME;
-  char *input_file = argc > 2 ? argv[2] : "process.cpp";
+  const char *executable = argc > 1 ? argv[1] : EXEC_NAME;
+  const char *input_file = argc > 2 ? argv[2] : "process.cpp";
 
   ACE_HANDLE infile = ACE_OS::open (input_file, O_RDONLY);
 

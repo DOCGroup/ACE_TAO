@@ -1,9 +1,7 @@
 README for the JAWS server
 --------------------------
 
-
 This is the README file for the JAWS server. 
-
 
 Compiling
 ---------
@@ -11,16 +9,11 @@ Compiling
 JAWS is an ACE application, and it can be compiled using the Makefile,
 or jaws.mdp file, as any other ACE application.
 
-
-
 Running
 -------
 
-
 To run JAWS, simply execute "main". It supports the following
 command-line arguments.
-
-
 
         -p port         Start JAWS on the specified port
         -n num_threads  Use num_threads as the maximum number of threads

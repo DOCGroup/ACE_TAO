@@ -10,12 +10,14 @@
 
 INFO  = README
 
-DIRS  = Gateway
+DIRS  = Gateway \
+	JAWS
 
-# The following directory isn't compiled by default since haven't
+# The following directories aren't compiled by default since haven't
 # finished integrating it into ACE...
 #
-# Orbix-Examples 
+# Orbix-Examples
+# gperf
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

@@ -184,7 +184,7 @@ ACE_Process::start (char *argv[], char *envp[])
 	  int result;
       
 	  if (envp == 0)
-	    result = ACE_OS::execv (argv[0], argv);
+	    result = ACE_OS::execvp (argv[0], argv);
 	  else
 	    result = ACE_OS::execve (argv[0], argv, envp);
 
