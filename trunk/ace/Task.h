@@ -224,6 +224,9 @@ public:
   static ACE_Task_Exit *instance (void);
   // Singleton access point.
 
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+
 private:
   ACE_Task_Base *t_;
   // Pointer to the captured Task.
