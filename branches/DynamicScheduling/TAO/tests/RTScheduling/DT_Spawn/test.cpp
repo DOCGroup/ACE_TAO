@@ -1,5 +1,4 @@
 //$Id$
-#include "Thread_Task.h"
 #include "tao/RTScheduling/Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "Thread_Action.h"
@@ -58,7 +57,7 @@ main (int argc, char* argv [])
       ACE_TRY_CHECK;
       
 	  current->spawn (&thread_action,
-		      "Harry Potter",
+		      (void*)"Harry Potter",
 		      name,
 		      sched_param,
 		      implicit_sched_param,
