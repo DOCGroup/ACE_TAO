@@ -371,7 +371,7 @@ pace_pipe (PACE_HANDLE fildes[2])
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 pace_ssize_t
-pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
+pace_read (PACE_HANDLE fildes, void * buf, pace_size_t nbyte)
 {
   return pace_win32_read (fildes, buf, nbyte);
 }

@@ -117,7 +117,7 @@ pace_win32_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
   DWORD bytes_written; /* This is set to 0 byte WriteFile. */
 
-  if (::WriteFile (fildes, buf, nbyte, &bytes_written, 0))
+  if (WriteFile (fildes, buf, nbyte, &bytes_written, 0))
     {
       return (pace_ssize_t) bytes_written;
     }
@@ -130,13 +130,13 @@ pace_win32_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 
 #if (PACE_HAS_POSIX_DI_UOF)
 pace_ssize_t
-pace_win32_read (PACE_HANDLE fildes, const void * buf, size_t nbyte)
+pace_win32_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
   DWORD ok_len;
 
-  if (::ReadFile (handle, buf, len, &ok_len, 0))
+  if (ReadFile (fildes, buf, nbyte, &ok_len, 0))
     {
-      return (ssize_t) ok_len;
+      return (pace_ssize_t) ok_len;
     }
   else
     {
