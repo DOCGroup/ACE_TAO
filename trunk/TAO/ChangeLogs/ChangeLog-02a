@@ -1,7 +1,8 @@
 Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simple/time/README: added note that this example
-          will not work with -DTAO_HAS_MINIMUM_CORBA.
+          will not work with -DTAO_HAS_MINIMUM_CORBA.  Thanks to
+          Dave Hall <David.Hall@grc.nasa.gov> for this suggestion.
 
 Mon Mar 13 22:20:11 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
