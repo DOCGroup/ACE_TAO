@@ -14,22 +14,22 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_SRC	= Simple_ObjectC.cpp Simple_ObjectS.cpp
+IDL_SRC	= TimeC.cpp TimeS.cpp
 PROG_SRCS = client.cpp \
 	client_impl.cpp \
 	server.cpp \
 	server_impl.cpp \
-	simple_object_impl.cpp \
+	time_impl.cpp \
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
-SIMPLE_CLT_OBJS = Simple_ObjectC.o \
-		Simple_ObjectS.o \
+SIMPLE_CLT_OBJS = TimeC.o \
+		TimeS.o \
 		client_impl.o \
 		client.o
-SIMPLE_SVR_OBJS = Simple_ObjectC.o \
-		Simple_ObjectS.o \
-		simple_object_impl.o \
+SIMPLE_SVR_OBJS = TimeC.o \
+		TimeS.o \
+		time_impl.o \
 		server_impl.o \
 		server.o
 
@@ -58,9 +58,9 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS +=  -L$(TAO_ROOT)/tao
 CPPFLAGS +=
 
-.PRECIOUS: Simple_ObjectC.cpp Simple_ObjectC.i Simple_ObjectC.h
-.PRECIOUS: Simple_ObjectS.cpp Simple_ObjectS.i Simple_ObjectS.h
-.PRECIOUS: Simple_ObjectS_T.cpp Simple_ObjectS_T.i Simple_ObjectS_T.h
+.PRECIOUS: TimeC.cpp TimeC.i TimeC.h
+.PRECIOUS: TimeS.cpp TimeS.i TimeS.h
+.PRECIOUS: TimeS_T.cpp TimeS_T.i TimeS_T.h
 
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
@@ -69,12 +69,12 @@ client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Simple_ObjectC.* Simple_ObjectS.* Simple_ObjectS_T.* 
+	-/bin/rm -rf TimeC.* TimeS.* TimeS_T.* 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Simple_ObjectC.o .obj/Simple_ObjectC.so .shobj/Simple_ObjectC.o .shobj/Simple_ObjectC.so: Simple_ObjectC.cpp Simple_ObjectC.h \
+.obj/TimeC.o .obj/TimeC.so .shobj/TimeC.o .shobj/TimeC.so: TimeC.cpp TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -301,9 +301,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i Simple_ObjectS.h Simple_ObjectS_T.h \
- Simple_ObjectS_T.i Simple_ObjectS_T.cpp Simple_ObjectS.i
-.obj/Simple_ObjectS.o .obj/Simple_ObjectS.so .shobj/Simple_ObjectS.o .shobj/Simple_ObjectS.so: Simple_ObjectS.cpp Simple_ObjectS.h Simple_ObjectC.h \
+ TimeC.i TimeS.h TimeS_T.h \
+ TimeS_T.i TimeS_T.cpp TimeS.i
+.obj/TimeS.o .obj/TimeS.so .shobj/TimeS.o .shobj/TimeS.so: TimeS.cpp TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -530,9 +530,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i Simple_ObjectS_T.h Simple_ObjectS_T.i \
- Simple_ObjectS_T.cpp Simple_ObjectS.i
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_impl.h Simple_ObjectC.h \
+ TimeC.i TimeS_T.h TimeS_T.i \
+ TimeS_T.cpp TimeS.i
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client_impl.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -759,8 +759,8 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i
-.obj/client_impl.o .obj/client_impl.so .shobj/client_impl.o .shobj/client_impl.so: client_impl.cpp client_impl.h Simple_ObjectC.h \
+ TimeC.i
+.obj/client_impl.o .obj/client_impl.so .shobj/client_impl.o .shobj/client_impl.so: client_impl.cpp client_impl.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -987,11 +987,11 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i \
+ TimeC.i \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/Read_Buffer.i
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server_impl.h simple_object_impl.h \
- Simple_ObjectS.h Simple_ObjectC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server_impl.h time_impl.h \
+ TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1218,11 +1218,11 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i Simple_ObjectS_T.h Simple_ObjectS_T.i \
- Simple_ObjectS_T.cpp Simple_ObjectS.i \
+ TimeC.i TimeS_T.h TimeS_T.i \
+ TimeS_T.cpp TimeS.i \
  $(TAO_ROOT)/tao/TAO.h
-.obj/server_impl.o .obj/server_impl.so .shobj/server_impl.o .shobj/server_impl.so: server_impl.cpp server_impl.h simple_object_impl.h \
- Simple_ObjectS.h Simple_ObjectC.h \
+.obj/server_impl.o .obj/server_impl.so .shobj/server_impl.o .shobj/server_impl.so: server_impl.cpp server_impl.h time_impl.h \
+ TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1449,11 +1449,11 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i Simple_ObjectS_T.h Simple_ObjectS_T.i \
- Simple_ObjectS_T.cpp Simple_ObjectS.i \
+ TimeC.i TimeS_T.h TimeS_T.i \
+ TimeS_T.cpp TimeS.i \
  $(TAO_ROOT)/tao/TAO.h
-.obj/simple_object_impl.o .obj/simple_object_impl.so .shobj/simple_object_impl.o .shobj/simple_object_impl.so: simple_object_impl.cpp simple_object_impl.h \
- Simple_ObjectS.h Simple_ObjectC.h \
+.obj/time_impl.o .obj/time_impl.so .shobj/time_impl.o .shobj/time_impl.so: time_impl.cpp time_impl.h \
+ TimeS.h TimeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1680,7 +1680,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.i \
  $(TAO_ROOT)/tao/singletons.h \
- Simple_ObjectC.i Simple_ObjectS_T.h Simple_ObjectS_T.i \
- Simple_ObjectS_T.cpp Simple_ObjectS.i
+ TimeC.i TimeS_T.h TimeS_T.i \
+ TimeS_T.cpp TimeS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
