@@ -528,66 +528,6 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-<<<<<<< Hash_Naming_Context.cpp
-=======
-TAO_Hash_Binding_Iterator::TAO_Hash_Binding_Iterator (TAO_Hash_Naming_Context::HASH_MAP::ITERATOR *hash_iter,
-                                                      PortableServer::POA_ptr poa,
-                                                      ACE_Lock *lock)
-  : hash_iter_ (hash_iter),
-    lock_ (lock),
-    poa_ (PortableServer::POA::_duplicate (poa))
-
-{
-}
-
-TAO_Hash_Binding_Iterator::~TAO_Hash_Binding_Iterator (void)
-{
-  delete hash_iter_;
-}
-
-// Return the Default POA of this Servant
-PortableServer::POA_ptr
-TAO_Hash_Binding_Iterator::_default_POA (CORBA::Environment &/*env*/)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
-}
-
-CORBA::Boolean
-TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
-                                     CORBA::Environment &ACE_TRY_ENV)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  CosNaming::Binding *binding;
-
-  // Allocate a binding to be returned (even if there no more
-  // bindings, we need to allocate an out parameter.)
-  ACE_NEW_THROW_EX (binding,
-                    CosNaming::Binding,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-  b = binding;
-
-  ACE_GUARD_THROW_EX (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
-  // If there are no more bindings.
-  if (hash_iter_->done ())
-    return 0;
-  else
-    {
-      TAO_Hash_Naming_Context::HASH_MAP::ENTRY *hash_entry;
-      hash_iter_->next (hash_entry);
-
-      if (TAO_Hash_Naming_Context::populate_binding (hash_entry, *binding) == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
-
-      hash_iter_->advance ();
-      return 1;
-    }
-}
-
 int
 TAO_Hash_Naming_Context::root (void)
 {
