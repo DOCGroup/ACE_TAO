@@ -21,9 +21,12 @@
 
 #include "IFR_ComponentsC.h"
 
-#include "tao/ClientRequestInfo.h"
+#include "tao/PortableInterceptor.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo.h"
+#include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
@@ -38,19 +41,19 @@ static const CORBA::Long _oc_IR_Identifier[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f49), 
-  ACE_NTOHL (0x64656e74), 
-  ACE_NTOHL (0x69666965), 
-  ACE_NTOHL (0x723a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f49),
+  ACE_NTOHL (0x64656e74),
+  ACE_NTOHL (0x69666965),
+  ACE_NTOHL (0x723a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
   11,
-  ACE_NTOHL (0x4964656e), 
-  ACE_NTOHL (0x74696669), 
+  ACE_NTOHL (0x4964656e),
+  ACE_NTOHL (0x74696669),
   ACE_NTOHL (0x65720000),  // name = Identifier
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 
@@ -71,19 +74,19 @@ static const CORBA::Long _oc_IR_ScopedName[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f53), 
-  ACE_NTOHL (0x636f7065), 
-  ACE_NTOHL (0x644e616d), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f53),
+  ACE_NTOHL (0x636f7065),
+  ACE_NTOHL (0x644e616d),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/ScopedName:1.0
   11,
-  ACE_NTOHL (0x53636f70), 
-  ACE_NTOHL (0x65644e61), 
+  ACE_NTOHL (0x53636f70),
+  ACE_NTOHL (0x65644e61),
   ACE_NTOHL (0x6d650000),  // name = ScopedName
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 
@@ -104,20 +107,20 @@ static const CORBA::Long _oc_IR_RepositoryId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f52), 
-  ACE_NTOHL (0x65706f73), 
-  ACE_NTOHL (0x69746f72), 
-  ACE_NTOHL (0x7949643a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f52),
+  ACE_NTOHL (0x65706f73),
+  ACE_NTOHL (0x69746f72),
+  ACE_NTOHL (0x7949643a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
   13,
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72794964), 
+  ACE_NTOHL (0x5265706f),
+  ACE_NTOHL (0x7369746f),
+  ACE_NTOHL (0x72794964),
   ACE_NTOHL (0x0),  // name = RepositoryId
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 
@@ -145,37 +148,37 @@ TAO_NAMESPACE_END
 IR::RepositoryIdSeq::RepositoryIdSeq (void)
 {}
 IR::RepositoryIdSeq::RepositoryIdSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_String_Sequence
+TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_String_Sequence
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::RepositoryIdSeq::RepositoryIdSeq (CORBA::ULong max, CORBA::ULong length, char * *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_String_Sequence
+TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_String_Sequence
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::RepositoryIdSeq::RepositoryIdSeq (const RepositoryIdSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  TAO_Unbounded_String_Sequence
+TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_String_Sequence
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::RepositoryIdSeq::~RepositoryIdSeq (void) // dtor
 {}
-void IR::RepositoryIdSeq::_tao_any_destructor (void *x)
+void IR::RepositoryIdSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  RepositoryIdSeq *tmp = ACE_static_cast (RepositoryIdSeq*,x);
+  RepositoryIdSeq *tmp = ACE_static_cast (RepositoryIdSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -186,19 +189,19 @@ static const CORBA::Long _oc_IR_RepositoryIdSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f52), 
-  ACE_NTOHL (0x65706f73), 
-  ACE_NTOHL (0x69746f72), 
-  ACE_NTOHL (0x79496453), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f52),
+  ACE_NTOHL (0x65706f73),
+  ACE_NTOHL (0x69746f72),
+  ACE_NTOHL (0x79496453),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/RepositoryIdSeq:1.0
   16,
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72794964), 
+  ACE_NTOHL (0x5265706f),
+  ACE_NTOHL (0x7369746f),
+  ACE_NTOHL (0x72794964),
   ACE_NTOHL (0x53657100),  // name = RepositoryIdSeq
   CORBA::tk_sequence, // typecode kind
   84, // encapsulation length
@@ -207,20 +210,20 @@ static const CORBA::Long _oc_IR_RepositoryIdSeq[] =
     68, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       32,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f52), 
-      ACE_NTOHL (0x65706f73), 
-      ACE_NTOHL (0x69746f72), 
-      ACE_NTOHL (0x7949643a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f52),
+      ACE_NTOHL (0x65706f73),
+      ACE_NTOHL (0x69746f72),
+      ACE_NTOHL (0x7949643a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
       13,
-      ACE_NTOHL (0x5265706f), 
-      ACE_NTOHL (0x7369746f), 
-      ACE_NTOHL (0x72794964), 
+      ACE_NTOHL (0x5265706f),
+      ACE_NTOHL (0x7369746f),
+      ACE_NTOHL (0x72794964),
       ACE_NTOHL (0x0),  // name = RepositoryId
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
 
     0U,
@@ -244,19 +247,19 @@ static const CORBA::Long _oc_IR_VersionSpec[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f56), 
-  ACE_NTOHL (0x65727369), 
-  ACE_NTOHL (0x6f6e5370), 
-  ACE_NTOHL (0x65633a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f56),
+  ACE_NTOHL (0x65727369),
+  ACE_NTOHL (0x6f6e5370),
+  ACE_NTOHL (0x65633a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
   12,
-  ACE_NTOHL (0x56657273), 
-  ACE_NTOHL (0x696f6e53), 
+  ACE_NTOHL (0x56657273),
+  ACE_NTOHL (0x696f6e53),
   ACE_NTOHL (0x70656300),  // name = VersionSpec
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 
@@ -275,97 +278,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_COMPONENTDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::ComponentDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::ComponentDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::ComponentDef **old = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::ComponentDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
-    
+    IR::ComponentDef **old = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ComponentDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::ComponentDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ComponentDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::ComponentDef **tmp = ACE_static_cast (IR::ComponentDef**, target);
-    *tmp = IR::ComponentDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_upcast (void *src) const
-  {
-    IR::ComponentDef **tmp = ACE_static_cast (IR::ComponentDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ComponentDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::ComponentDef **tmp = ACE_reinterpret_cast (IR::ComponentDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ComponentDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::ComponentDef **tmp = ACE_static_cast (IR::ComponentDef**, target);
+  *tmp = IR::ComponentDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq::_upcast (void *src) const
+{
+  IR::ComponentDef **tmp = ACE_static_cast (IR::ComponentDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_COMPONENTDEFSEQ_CS_)
 #define _IR_COMPONENTDEFSEQ_CS_
@@ -377,37 +380,37 @@ TAO_NAMESPACE_END
 IR::ComponentDefSeq::ComponentDefSeq (void)
 {}
 IR::ComponentDefSeq::ComponentDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::ComponentDefSeq::ComponentDefSeq (CORBA::ULong max, CORBA::ULong length, IR::ComponentDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::ComponentDefSeq::ComponentDefSeq (const ComponentDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ComponentDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ComponentDef,IR::ComponentDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::ComponentDefSeq::~ComponentDefSeq (void) // dtor
 {}
-void IR::ComponentDefSeq::_tao_any_destructor (void *x)
+void IR::ComponentDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ComponentDefSeq *tmp = ACE_static_cast (ComponentDefSeq*,x);
+  ComponentDefSeq *tmp = ACE_static_cast (ComponentDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -418,19 +421,19 @@ static const CORBA::Long _oc_IR_ComponentDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
-  ACE_NTOHL (0x44656653), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6d706f),
+  ACE_NTOHL (0x6e656e74),
+  ACE_NTOHL (0x44656653),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ComponentDefSeq:1.0
   16,
-  ACE_NTOHL (0x436f6d70), 
-  ACE_NTOHL (0x6f6e656e), 
-  ACE_NTOHL (0x74446566), 
+  ACE_NTOHL (0x436f6d70),
+  ACE_NTOHL (0x6f6e656e),
+  ACE_NTOHL (0x74446566),
   ACE_NTOHL (0x53657100),  // name = ComponentDefSeq
   CORBA::tk_sequence, // typecode kind
   76, // encapsulation length
@@ -439,18 +442,18 @@ static const CORBA::Long _oc_IR_ComponentDefSeq[] =
     60, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       32,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f43), 
-      ACE_NTOHL (0x6f6d706f), 
-      ACE_NTOHL (0x6e656e74), 
-      ACE_NTOHL (0x4465663a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f43),
+      ACE_NTOHL (0x6f6d706f),
+      ACE_NTOHL (0x6e656e74),
+      ACE_NTOHL (0x4465663a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/ComponentDef:1.0
       13,
-      ACE_NTOHL (0x436f6d70), 
-      ACE_NTOHL (0x6f6e656e), 
-      ACE_NTOHL (0x74446566), 
+      ACE_NTOHL (0x436f6d70),
+      ACE_NTOHL (0x6f6e656e),
+      ACE_NTOHL (0x74446566),
       ACE_NTOHL (0x0),  // name = ComponentDef
 
     0U,
@@ -472,97 +475,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PROVIDESDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::ProvidesDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::ProvidesDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::ProvidesDef **old = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::ProvidesDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
-    
+    IR::ProvidesDef **old = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ProvidesDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::ProvidesDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ProvidesDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::ProvidesDef **tmp = ACE_static_cast (IR::ProvidesDef**, target);
-    *tmp = IR::ProvidesDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_upcast (void *src) const
-  {
-    IR::ProvidesDef **tmp = ACE_static_cast (IR::ProvidesDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ProvidesDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::ProvidesDef **tmp = ACE_reinterpret_cast (IR::ProvidesDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ProvidesDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::ProvidesDef **tmp = ACE_static_cast (IR::ProvidesDef**, target);
+  *tmp = IR::ProvidesDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq::_upcast (void *src) const
+{
+  IR::ProvidesDef **tmp = ACE_static_cast (IR::ProvidesDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_PROVIDESDEFSEQ_CS_)
 #define _IR_PROVIDESDEFSEQ_CS_
@@ -574,37 +577,37 @@ TAO_NAMESPACE_END
 IR::ProvidesDefSeq::ProvidesDefSeq (void)
 {}
 IR::ProvidesDefSeq::ProvidesDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::ProvidesDefSeq::ProvidesDefSeq (CORBA::ULong max, CORBA::ULong length, IR::ProvidesDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::ProvidesDefSeq::ProvidesDefSeq (const ProvidesDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ProvidesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ProvidesDef,IR::ProvidesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::ProvidesDefSeq::~ProvidesDefSeq (void) // dtor
 {}
-void IR::ProvidesDefSeq::_tao_any_destructor (void *x)
+void IR::ProvidesDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ProvidesDefSeq *tmp = ACE_static_cast (ProvidesDefSeq*,x);
+  ProvidesDefSeq *tmp = ACE_static_cast (ProvidesDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -615,19 +618,19 @@ static const CORBA::Long _oc_IR_ProvidesDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x726f7669), 
-  ACE_NTOHL (0x64657344), 
-  ACE_NTOHL (0x65665365), 
-  ACE_NTOHL (0x713a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x726f7669),
+  ACE_NTOHL (0x64657344),
+  ACE_NTOHL (0x65665365),
+  ACE_NTOHL (0x713a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/ProvidesDefSeq:1.0
   15,
-  ACE_NTOHL (0x50726f76), 
-  ACE_NTOHL (0x69646573), 
-  ACE_NTOHL (0x44656653), 
+  ACE_NTOHL (0x50726f76),
+  ACE_NTOHL (0x69646573),
+  ACE_NTOHL (0x44656653),
   ACE_NTOHL (0x65710000),  // name = ProvidesDefSeq
   CORBA::tk_sequence, // typecode kind
   72, // encapsulation length
@@ -636,17 +639,17 @@ static const CORBA::Long _oc_IR_ProvidesDefSeq[] =
     56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f50), 
-      ACE_NTOHL (0x726f7669), 
-      ACE_NTOHL (0x64657344), 
-      ACE_NTOHL (0x65663a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f50),
+      ACE_NTOHL (0x726f7669),
+      ACE_NTOHL (0x64657344),
+      ACE_NTOHL (0x65663a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDef:1.0
       12,
-      ACE_NTOHL (0x50726f76), 
-      ACE_NTOHL (0x69646573), 
+      ACE_NTOHL (0x50726f76),
+      ACE_NTOHL (0x69646573),
       ACE_NTOHL (0x44656600),  // name = ProvidesDef
 
     0U,
@@ -668,97 +671,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_USESDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::UsesDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::UsesDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::UsesDef **old = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::UsesDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
-    
+    IR::UsesDef **old = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::UsesDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::UsesDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::UsesDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::UsesDef **tmp = ACE_static_cast (IR::UsesDef**, target);
-    *tmp = IR::UsesDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_upcast (void *src) const
-  {
-    IR::UsesDef **tmp = ACE_static_cast (IR::UsesDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::UsesDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::UsesDef **tmp = ACE_reinterpret_cast (IR::UsesDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::UsesDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::UsesDef **tmp = ACE_static_cast (IR::UsesDef**, target);
+  *tmp = IR::UsesDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq::_upcast (void *src) const
+{
+  IR::UsesDef **tmp = ACE_static_cast (IR::UsesDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_USESDEFSEQ_CS_)
 #define _IR_USESDEFSEQ_CS_
@@ -770,37 +773,37 @@ TAO_NAMESPACE_END
 IR::UsesDefSeq::UsesDefSeq (void)
 {}
 IR::UsesDefSeq::UsesDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::UsesDefSeq::UsesDefSeq (CORBA::ULong max, CORBA::ULong length, IR::UsesDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::UsesDefSeq::UsesDefSeq (const UsesDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_UsesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::UsesDef,IR::UsesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::UsesDefSeq::~UsesDefSeq (void) // dtor
 {}
-void IR::UsesDefSeq::_tao_any_destructor (void *x)
+void IR::UsesDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  UsesDefSeq *tmp = ACE_static_cast (UsesDefSeq*,x);
+  UsesDefSeq *tmp = ACE_static_cast (UsesDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -811,17 +814,17 @@ static const CORBA::Long _oc_IR_UsesDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f55), 
-  ACE_NTOHL (0x73657344), 
-  ACE_NTOHL (0x65665365), 
-  ACE_NTOHL (0x713a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f55),
+  ACE_NTOHL (0x73657344),
+  ACE_NTOHL (0x65665365),
+  ACE_NTOHL (0x713a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/UsesDefSeq:1.0
   11,
-  ACE_NTOHL (0x55736573), 
-  ACE_NTOHL (0x44656653), 
+  ACE_NTOHL (0x55736573),
+  ACE_NTOHL (0x44656653),
   ACE_NTOHL (0x65710000),  // name = UsesDefSeq
   CORBA::tk_sequence, // typecode kind
   64, // encapsulation length
@@ -830,15 +833,15 @@ static const CORBA::Long _oc_IR_UsesDefSeq[] =
     48, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       27,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f55), 
-      ACE_NTOHL (0x73657344), 
-      ACE_NTOHL (0x65663a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f55),
+      ACE_NTOHL (0x73657344),
+      ACE_NTOHL (0x65663a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDef:1.0
       8,
-      ACE_NTOHL (0x55736573), 
+      ACE_NTOHL (0x55736573),
       ACE_NTOHL (0x44656600),  // name = UsesDef
 
     0U,
@@ -860,97 +863,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_HOMEDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::HomeDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::HomeDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::HomeDef **old = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::HomeDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
-    
+    IR::HomeDef **old = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::HomeDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::HomeDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::~_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::HomeDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::HomeDef **tmp = ACE_static_cast (IR::HomeDef**, target);
-    *tmp = IR::HomeDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_upcast (void *src) const
-  {
-    IR::HomeDef **tmp = ACE_static_cast (IR::HomeDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::HomeDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::~_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::HomeDef **tmp = ACE_reinterpret_cast (IR::HomeDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::HomeDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::HomeDef **tmp = ACE_static_cast (IR::HomeDef**, target);
+  *tmp = IR::HomeDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq::_upcast (void *src) const
+{
+  IR::HomeDef **tmp = ACE_static_cast (IR::HomeDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_HOMEDEFSEQ_CS_)
 #define _IR_HOMEDEFSEQ_CS_
@@ -962,37 +965,37 @@ TAO_NAMESPACE_END
 IR::HomeDefSeq::HomeDefSeq (void)
 {}
 IR::HomeDefSeq::HomeDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
+_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::HomeDefSeq::HomeDefSeq (CORBA::ULong max, CORBA::ULong length, IR::HomeDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
+_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::HomeDefSeq::HomeDefSeq (const HomeDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
+_TAO_Unbounded_Object_Sequence_IR_HomeDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::HomeDef,IR::HomeDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::HomeDefSeq::~HomeDefSeq (void) // dtor
 {}
-void IR::HomeDefSeq::_tao_any_destructor (void *x)
+void IR::HomeDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  HomeDefSeq *tmp = ACE_static_cast (HomeDefSeq*,x);
+  HomeDefSeq *tmp = ACE_static_cast (HomeDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1003,17 +1006,17 @@ static const CORBA::Long _oc_IR_HomeDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f48), 
-  ACE_NTOHL (0x6f6d6544), 
-  ACE_NTOHL (0x65665365), 
-  ACE_NTOHL (0x713a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f48),
+  ACE_NTOHL (0x6f6d6544),
+  ACE_NTOHL (0x65665365),
+  ACE_NTOHL (0x713a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/HomeDefSeq:1.0
   11,
-  ACE_NTOHL (0x486f6d65), 
-  ACE_NTOHL (0x44656653), 
+  ACE_NTOHL (0x486f6d65),
+  ACE_NTOHL (0x44656653),
   ACE_NTOHL (0x65710000),  // name = HomeDefSeq
   CORBA::tk_sequence, // typecode kind
   64, // encapsulation length
@@ -1022,15 +1025,15 @@ static const CORBA::Long _oc_IR_HomeDefSeq[] =
     48, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       27,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f48), 
-      ACE_NTOHL (0x6f6d6544), 
-      ACE_NTOHL (0x65663a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f48),
+      ACE_NTOHL (0x6f6d6544),
+      ACE_NTOHL (0x65663a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/HomeDef:1.0
       8,
-      ACE_NTOHL (0x486f6d65), 
+      ACE_NTOHL (0x486f6d65),
       ACE_NTOHL (0x44656600),  // name = HomeDef
 
     0U,
@@ -1052,97 +1055,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_EMITSDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::EmitsDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::EmitsDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::EmitsDef **old = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::EmitsDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
-    
+    IR::EmitsDef **old = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::EmitsDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::EmitsDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::~_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::EmitsDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::EmitsDef **tmp = ACE_static_cast (IR::EmitsDef**, target);
-    *tmp = IR::EmitsDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_upcast (void *src) const
-  {
-    IR::EmitsDef **tmp = ACE_static_cast (IR::EmitsDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::EmitsDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::~_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::EmitsDef **tmp = ACE_reinterpret_cast (IR::EmitsDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::EmitsDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::EmitsDef **tmp = ACE_static_cast (IR::EmitsDef**, target);
+  *tmp = IR::EmitsDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq::_upcast (void *src) const
+{
+  IR::EmitsDef **tmp = ACE_static_cast (IR::EmitsDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_EMITSDEFSEQ_CS_)
 #define _IR_EMITSDEFSEQ_CS_
@@ -1154,37 +1157,37 @@ TAO_NAMESPACE_END
 IR::EmitsDefSeq::EmitsDefSeq (void)
 {}
 IR::EmitsDefSeq::EmitsDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
+_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::EmitsDefSeq::EmitsDefSeq (CORBA::ULong max, CORBA::ULong length, IR::EmitsDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
+_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::EmitsDefSeq::EmitsDefSeq (const EmitsDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
+_TAO_Unbounded_Object_Sequence_IR_EmitsDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::EmitsDef,IR::EmitsDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::EmitsDefSeq::~EmitsDefSeq (void) // dtor
 {}
-void IR::EmitsDefSeq::_tao_any_destructor (void *x)
+void IR::EmitsDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EmitsDefSeq *tmp = ACE_static_cast (EmitsDefSeq*,x);
+  EmitsDefSeq *tmp = ACE_static_cast (EmitsDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1195,17 +1198,17 @@ static const CORBA::Long _oc_IR_EmitsDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f45), 
-  ACE_NTOHL (0x6d697473), 
-  ACE_NTOHL (0x44656653), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f45),
+  ACE_NTOHL (0x6d697473),
+  ACE_NTOHL (0x44656653),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/EmitsDefSeq:1.0
   12,
-  ACE_NTOHL (0x456d6974), 
-  ACE_NTOHL (0x73446566), 
+  ACE_NTOHL (0x456d6974),
+  ACE_NTOHL (0x73446566),
   ACE_NTOHL (0x53657100),  // name = EmitsDefSeq
   CORBA::tk_sequence, // typecode kind
   68, // encapsulation length
@@ -1214,16 +1217,16 @@ static const CORBA::Long _oc_IR_EmitsDefSeq[] =
     52, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       28,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f45), 
-      ACE_NTOHL (0x6d697473), 
-      ACE_NTOHL (0x4465663a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f45),
+      ACE_NTOHL (0x6d697473),
+      ACE_NTOHL (0x4465663a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/EmitsDef:1.0
       9,
-      ACE_NTOHL (0x456d6974), 
-      ACE_NTOHL (0x73446566), 
+      ACE_NTOHL (0x456d6974),
+      ACE_NTOHL (0x73446566),
       ACE_NTOHL (0x0),  // name = EmitsDef
 
     0U,
@@ -1245,97 +1248,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_PUBLISHESDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::PublishesDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::PublishesDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::PublishesDef **old = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::PublishesDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
-    
+    IR::PublishesDef **old = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::PublishesDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::PublishesDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::PublishesDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::PublishesDef **tmp = ACE_static_cast (IR::PublishesDef**, target);
-    *tmp = IR::PublishesDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_upcast (void *src) const
-  {
-    IR::PublishesDef **tmp = ACE_static_cast (IR::PublishesDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::PublishesDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::PublishesDef **tmp = ACE_reinterpret_cast (IR::PublishesDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::PublishesDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::PublishesDef **tmp = ACE_static_cast (IR::PublishesDef**, target);
+  *tmp = IR::PublishesDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq::_upcast (void *src) const
+{
+  IR::PublishesDef **tmp = ACE_static_cast (IR::PublishesDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_PUBLISHESDEFSEQ_CS_)
 #define _IR_PUBLISHESDEFSEQ_CS_
@@ -1347,37 +1350,37 @@ TAO_NAMESPACE_END
 IR::PublishesDefSeq::PublishesDefSeq (void)
 {}
 IR::PublishesDefSeq::PublishesDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::PublishesDefSeq::PublishesDefSeq (CORBA::ULong max, CORBA::ULong length, IR::PublishesDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::PublishesDefSeq::PublishesDefSeq (const PublishesDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_PublishesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::PublishesDef,IR::PublishesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::PublishesDefSeq::~PublishesDefSeq (void) // dtor
 {}
-void IR::PublishesDefSeq::_tao_any_destructor (void *x)
+void IR::PublishesDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  PublishesDefSeq *tmp = ACE_static_cast (PublishesDefSeq*,x);
+  PublishesDefSeq *tmp = ACE_static_cast (PublishesDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1388,19 +1391,19 @@ static const CORBA::Long _oc_IR_PublishesDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x75626c69), 
-  ACE_NTOHL (0x73686573), 
-  ACE_NTOHL (0x44656653), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x75626c69),
+  ACE_NTOHL (0x73686573),
+  ACE_NTOHL (0x44656653),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/PublishesDefSeq:1.0
   16,
-  ACE_NTOHL (0x5075626c), 
-  ACE_NTOHL (0x69736865), 
-  ACE_NTOHL (0x73446566), 
+  ACE_NTOHL (0x5075626c),
+  ACE_NTOHL (0x69736865),
+  ACE_NTOHL (0x73446566),
   ACE_NTOHL (0x53657100),  // name = PublishesDefSeq
   CORBA::tk_sequence, // typecode kind
   76, // encapsulation length
@@ -1409,18 +1412,18 @@ static const CORBA::Long _oc_IR_PublishesDefSeq[] =
     60, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       32,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f50), 
-      ACE_NTOHL (0x75626c69), 
-      ACE_NTOHL (0x73686573), 
-      ACE_NTOHL (0x4465663a), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f50),
+      ACE_NTOHL (0x75626c69),
+      ACE_NTOHL (0x73686573),
+      ACE_NTOHL (0x4465663a),
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/PublishesDef:1.0
       13,
-      ACE_NTOHL (0x5075626c), 
-      ACE_NTOHL (0x69736865), 
-      ACE_NTOHL (0x73446566), 
+      ACE_NTOHL (0x5075626c),
+      ACE_NTOHL (0x69736865),
+      ACE_NTOHL (0x73446566),
       ACE_NTOHL (0x0),  // name = PublishesDef
 
     0U,
@@ -1442,97 +1445,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_CONSUMESDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::ConsumesDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::ConsumesDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::ConsumesDef **old = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::ConsumesDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
-    
+    IR::ConsumesDef **old = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ConsumesDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::ConsumesDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::ConsumesDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::ConsumesDef **tmp = ACE_static_cast (IR::ConsumesDef**, target);
-    *tmp = IR::ConsumesDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_upcast (void *src) const
-  {
-    IR::ConsumesDef **tmp = ACE_static_cast (IR::ConsumesDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ConsumesDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::~_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::ConsumesDef **tmp = ACE_reinterpret_cast (IR::ConsumesDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::ConsumesDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::ConsumesDef **tmp = ACE_static_cast (IR::ConsumesDef**, target);
+  *tmp = IR::ConsumesDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq::_upcast (void *src) const
+{
+  IR::ConsumesDef **tmp = ACE_static_cast (IR::ConsumesDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_CONSUMESDEFSEQ_CS_)
 #define _IR_CONSUMESDEFSEQ_CS_
@@ -1544,37 +1547,37 @@ TAO_NAMESPACE_END
 IR::ConsumesDefSeq::ConsumesDefSeq (void)
 {}
 IR::ConsumesDefSeq::ConsumesDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::ConsumesDefSeq::ConsumesDefSeq (CORBA::ULong max, CORBA::ULong length, IR::ConsumesDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::ConsumesDefSeq::ConsumesDefSeq (const ConsumesDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
+_TAO_Unbounded_Object_Sequence_IR_ConsumesDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::ConsumesDef,IR::ConsumesDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::ConsumesDefSeq::~ConsumesDefSeq (void) // dtor
 {}
-void IR::ConsumesDefSeq::_tao_any_destructor (void *x)
+void IR::ConsumesDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ConsumesDefSeq *tmp = ACE_static_cast (ConsumesDefSeq*,x);
+  ConsumesDefSeq *tmp = ACE_static_cast (ConsumesDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1585,19 +1588,19 @@ static const CORBA::Long _oc_IR_ConsumesDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6e7375), 
-  ACE_NTOHL (0x6d657344), 
-  ACE_NTOHL (0x65665365), 
-  ACE_NTOHL (0x713a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6e7375),
+  ACE_NTOHL (0x6d657344),
+  ACE_NTOHL (0x65665365),
+  ACE_NTOHL (0x713a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/ConsumesDefSeq:1.0
   15,
-  ACE_NTOHL (0x436f6e73), 
-  ACE_NTOHL (0x756d6573), 
-  ACE_NTOHL (0x44656653), 
+  ACE_NTOHL (0x436f6e73),
+  ACE_NTOHL (0x756d6573),
+  ACE_NTOHL (0x44656653),
   ACE_NTOHL (0x65710000),  // name = ConsumesDefSeq
   CORBA::tk_sequence, // typecode kind
   72, // encapsulation length
@@ -1606,17 +1609,17 @@ static const CORBA::Long _oc_IR_ConsumesDefSeq[] =
     56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       31,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f43), 
-      ACE_NTOHL (0x6f6e7375), 
-      ACE_NTOHL (0x6d657344), 
-      ACE_NTOHL (0x65663a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f43),
+      ACE_NTOHL (0x6f6e7375),
+      ACE_NTOHL (0x6d657344),
+      ACE_NTOHL (0x65663a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ConsumesDef:1.0
       12,
-      ACE_NTOHL (0x436f6e73), 
-      ACE_NTOHL (0x756d6573), 
+      ACE_NTOHL (0x436f6e73),
+      ACE_NTOHL (0x756d6573),
       ACE_NTOHL (0x44656600),  // name = ConsumesDef
 
     0U,
@@ -1638,97 +1641,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FACTORYDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::FactoryDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::FactoryDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::FactoryDef **old = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::FactoryDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
-    
+    IR::FactoryDef **old = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::FactoryDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::FactoryDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::~_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::FactoryDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::FactoryDef **tmp = ACE_static_cast (IR::FactoryDef**, target);
-    *tmp = IR::FactoryDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_upcast (void *src) const
-  {
-    IR::FactoryDef **tmp = ACE_static_cast (IR::FactoryDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::FactoryDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::~_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::FactoryDef **tmp = ACE_reinterpret_cast (IR::FactoryDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::FactoryDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::FactoryDef **tmp = ACE_static_cast (IR::FactoryDef**, target);
+  *tmp = IR::FactoryDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq::_upcast (void *src) const
+{
+  IR::FactoryDef **tmp = ACE_static_cast (IR::FactoryDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_FACTORYDEFSEQ_CS_)
 #define _IR_FACTORYDEFSEQ_CS_
@@ -1740,37 +1743,37 @@ TAO_NAMESPACE_END
 IR::FactoryDefSeq::FactoryDefSeq (void)
 {}
 IR::FactoryDefSeq::FactoryDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::FactoryDefSeq::FactoryDefSeq (CORBA::ULong max, CORBA::ULong length, IR::FactoryDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::FactoryDefSeq::FactoryDefSeq (const FactoryDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FactoryDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FactoryDef,IR::FactoryDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::FactoryDefSeq::~FactoryDefSeq (void) // dtor
 {}
-void IR::FactoryDefSeq::_tao_any_destructor (void *x)
+void IR::FactoryDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  FactoryDefSeq *tmp = ACE_static_cast (FactoryDefSeq*,x);
+  FactoryDefSeq *tmp = ACE_static_cast (FactoryDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1781,19 +1784,19 @@ static const CORBA::Long _oc_IR_FactoryDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f46), 
-  ACE_NTOHL (0x6163746f), 
-  ACE_NTOHL (0x72794465), 
-  ACE_NTOHL (0x66536571), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f46),
+  ACE_NTOHL (0x6163746f),
+  ACE_NTOHL (0x72794465),
+  ACE_NTOHL (0x66536571),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/FactoryDefSeq:1.0
   14,
-  ACE_NTOHL (0x46616374), 
-  ACE_NTOHL (0x6f727944), 
-  ACE_NTOHL (0x65665365), 
+  ACE_NTOHL (0x46616374),
+  ACE_NTOHL (0x6f727944),
+  ACE_NTOHL (0x65665365),
   ACE_NTOHL (0x71000000),  // name = FactoryDefSeq
   CORBA::tk_sequence, // typecode kind
   72, // encapsulation length
@@ -1802,17 +1805,17 @@ static const CORBA::Long _oc_IR_FactoryDefSeq[] =
     56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       30,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f46), 
-      ACE_NTOHL (0x6163746f), 
-      ACE_NTOHL (0x72794465), 
-      ACE_NTOHL (0x663a312e), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f46),
+      ACE_NTOHL (0x6163746f),
+      ACE_NTOHL (0x72794465),
+      ACE_NTOHL (0x663a312e),
       ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/FactoryDef:1.0
       11,
-      ACE_NTOHL (0x46616374), 
-      ACE_NTOHL (0x6f727944), 
+      ACE_NTOHL (0x46616374),
+      ACE_NTOHL (0x6f727944),
       ACE_NTOHL (0x65660000),  // name = FactoryDef
 
     0U,
@@ -1834,97 +1837,97 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_IR_FINDERDEFSEQ_CS_
 
-  // The Base_Sequence functions, please see tao/Sequence.h
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_allocate_buffer (CORBA::ULong length)
+// The Base_Sequence functions, please see tao/Sequence.h
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::FinderDef **tmp = 0;
+  tmp = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::FinderDef **tmp = 0;
-    tmp = _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::FinderDef **old = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        {
-          if (!this->release_)
-            {
-              tmp[i] = IR::FinderDef::_duplicate (old[i]);
-            }
-          else
-            {
-              tmp[i] = old[i];
-            }
-        }
-      
-      if (this->release_)
-        {
-          delete[] old;
-        }
-    }
-    this->buffer_ = tmp;
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
-    
+    IR::FinderDef **old = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::FinderDef::_nil ();
+        if (!this->release_)
+          {
+            tmp[i] = IR::FinderDef::_duplicate (old[i]);
+          }
+        else
+          {
+            tmp[i] = old[i];
+          }
       }
-    
-    _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  }
-  
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::~_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  void
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
-  {
-    IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
-    
-    for (CORBA::ULong i = nl; i < ol; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = IR::FinderDef::_nil ();
-      }
-  }
-  
-  void 
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_downcast (
-      void* target,
-      CORBA_Object *src,
-      CORBA_Environment &ACE_TRY_ENV
-    )
-  {
-    IR::FinderDef **tmp = ACE_static_cast (IR::FinderDef**, target);
-    *tmp = IR::FinderDef::_narrow (src, ACE_TRY_ENV);
-    ACE_CHECK;
-  }
 
-  CORBA_Object*
-  IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_upcast (void *src) const
-  {
-    IR::FinderDef **tmp = ACE_static_cast (IR::FinderDef**, src);
-    return *tmp;
+    if (this->release_)
+      {
+        delete[] old;
+      }
   }
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
+
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::FinderDef::_nil ();
+    }
+
+  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::~_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq (void)
+{
+  this->_deallocate_buffer ();
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
+{
+  IR::FinderDef **tmp = ACE_reinterpret_cast (IR::FinderDef**, this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i)
+    {
+      CORBA::release (tmp[i]);
+      tmp[i] = IR::FinderDef::_nil ();
+    }
+}
+
+void
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_downcast (
+    void* target,
+    CORBA_Object *src,
+    CORBA_Environment &ACE_TRY_ENV
+  )
+{
+  IR::FinderDef **tmp = ACE_static_cast (IR::FinderDef**, target);
+  *tmp = IR::FinderDef::_narrow (src, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+CORBA_Object*
+IR::_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq::_upcast (void *src) const
+{
+  IR::FinderDef **tmp = ACE_static_cast (IR::FinderDef**, src);
+  return *tmp;
+}
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_FINDERDEFSEQ_CS_)
 #define _IR_FINDERDEFSEQ_CS_
@@ -1936,37 +1939,37 @@ TAO_NAMESPACE_END
 IR::FinderDefSeq::FinderDefSeq (void)
 {}
 IR::FinderDefSeq::FinderDefSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::FinderDefSeq::FinderDefSeq (CORBA::ULong max, CORBA::ULong length, IR::FinderDef_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::FinderDefSeq::FinderDefSeq (const FinderDefSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
+_TAO_Unbounded_Object_Sequence_IR_FinderDefSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Object_Sequence<IR::FinderDef,IR::FinderDef_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::FinderDefSeq::~FinderDefSeq (void) // dtor
 {}
-void IR::FinderDefSeq::_tao_any_destructor (void *x)
+void IR::FinderDefSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  FinderDefSeq *tmp = ACE_static_cast (FinderDefSeq*,x);
+  FinderDefSeq *tmp = ACE_static_cast (FinderDefSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1977,18 +1980,18 @@ static const CORBA::Long _oc_IR_FinderDefSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f46), 
-  ACE_NTOHL (0x696e6465), 
-  ACE_NTOHL (0x72446566), 
-  ACE_NTOHL (0x5365713a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f46),
+  ACE_NTOHL (0x696e6465),
+  ACE_NTOHL (0x72446566),
+  ACE_NTOHL (0x5365713a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/FinderDefSeq:1.0
   13,
-  ACE_NTOHL (0x46696e64), 
-  ACE_NTOHL (0x65724465), 
-  ACE_NTOHL (0x66536571), 
+  ACE_NTOHL (0x46696e64),
+  ACE_NTOHL (0x65724465),
+  ACE_NTOHL (0x66536571),
   ACE_NTOHL (0x0),  // name = FinderDefSeq
   CORBA::tk_sequence, // typecode kind
   72, // encapsulation length
@@ -1997,17 +2000,17 @@ static const CORBA::Long _oc_IR_FinderDefSeq[] =
     56, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       29,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f46), 
-      ACE_NTOHL (0x696e6465), 
-      ACE_NTOHL (0x72446566), 
-      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f46),
+      ACE_NTOHL (0x696e6465),
+      ACE_NTOHL (0x72446566),
+      ACE_NTOHL (0x3a312e30),
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/FinderDef:1.0
       10,
-      ACE_NTOHL (0x46696e64), 
-      ACE_NTOHL (0x65724465), 
+      ACE_NTOHL (0x46696e64),
+      ACE_NTOHL (0x65724465),
       ACE_NTOHL (0x66000000),  // name = FinderDef
 
     0U,
@@ -2118,7 +2121,7 @@ IR::ComponentRepository_var::operator const ::IR::ComponentRepository_ptr &() co
   return this->ptr_;
 }
 
-IR::ComponentRepository_var::operator ::IR::ComponentRepository_ptr &() // cast 
+IR::ComponentRepository_var::operator ::IR::ComponentRepository_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -2194,7 +2197,7 @@ IR::ComponentRepository_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::ComponentRepository_out
+// Operations for class IR::ComponentRepository_out
 // *************************************************************
 
 IR::ComponentRepository_out::ComponentRepository_out (ComponentRepository_ptr &p)
@@ -2265,24 +2268,24 @@ public:
       const char * version,
       IR::ComponentDef_ptr base_component,
       const CORBA_InterfaceDefSeq & supports_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -2309,7 +2312,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::TAO_ClientRequest
     const char * version,
     IR::ComponentDef_ptr base_component,
     const CORBA_InterfaceDefSeq & supports_interfaces,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -2327,36 +2330,28 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_base_component = parameter_list->length ();
-  parameter_list->length (length_base_component + 1);
-  (*parameter_list)[length_base_component].argument <<=  this->base_component_;
-  
-  (*parameter_list)[length_base_component].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_supports_interfaces = parameter_list->length ();
-  parameter_list->length (length_supports_interfaces + 1);
-  (*parameter_list)[length_supports_interfaces].argument <<=  this->supports_interfaces_;
-  
-  (*parameter_list)[length_supports_interfaces].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (5);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->base_component_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->supports_interfaces_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -2368,12 +2363,12 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentRepository_create_component::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2382,17 +2377,17 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_component::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentRepository_create_component::result (IR::ComponentDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -2408,24 +2403,24 @@ public:
       IR::HomeDef_ptr base_home,
       IR::ComponentDef_ptr managed_component,
       CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -2454,7 +2449,7 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::TAO_ClientRequestInfo_
     IR::HomeDef_ptr base_home,
     IR::ComponentDef_ptr managed_component,
     CORBA_ValueDef_ptr primary_key,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -2473,42 +2468,31 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::arguments (CORBA::Envi
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_base_home = parameter_list->length ();
-  parameter_list->length (length_base_home + 1);
-  (*parameter_list)[length_base_home].argument <<=  this->base_home_;
-  
-  (*parameter_list)[length_base_home].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_managed_component = parameter_list->length ();
-  parameter_list->length (length_managed_component + 1);
-  (*parameter_list)[length_managed_component].argument <<=  this->managed_component_;
-  
-  (*parameter_list)[length_managed_component].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_primary_key = parameter_list->length ();
-  parameter_list->length (length_primary_key + 1);
-  (*parameter_list)[length_primary_key].argument <<=  this->primary_key_;
-  
-  (*parameter_list)[length_primary_key].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (6);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->base_home_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->managed_component_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->primary_key_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -2520,12 +2504,12 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::exceptions (CORBA::Env
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentRepository_create_home::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -2534,24 +2518,24 @@ TAO_ClientRequestInfo_IR_ComponentRepository_create_home::result (CORBA::Environ
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentRepository_create_home::result (IR::HomeDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_ComponentRepository_Proxy_Impl::_TAO_ComponentRepository_Proxy_Impl (void)
@@ -2575,16 +2559,16 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
     CORBA::SystemException
   ))
 {
-  
+
   IR::ComponentDef_ptr _tao_retval = IR::ComponentDef::_nil ();
   IR::ComponentDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_component",
@@ -2593,17 +2577,21 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentRepository_create_component ri (
         &_tao_call,
@@ -2616,31 +2604,40 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -2653,20 +2650,33 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -2676,74 +2686,55 @@ IR::ComponentDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_comp
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
@@ -2760,16 +2751,16 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
     CORBA::SystemException
   ))
 {
-  
+
   IR::HomeDef_ptr _tao_retval = IR::HomeDef::_nil ();
   IR::HomeDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_home",
@@ -2778,17 +2769,21 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentRepository_create_home ri (
         &_tao_call,
@@ -2802,31 +2797,40 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -2840,20 +2844,33 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -2863,79 +2880,60 @@ IR::HomeDef_ptr IR::_TAO_ComponentRepository_Remote_Proxy_Impl::create_home (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::HomeDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::HomeDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -3005,13 +3003,13 @@ IR::ComponentRepository::IR_ComponentRepository_setup_collocation (int collocate
   else
     this->the_TAO_ComponentRepository_Proxy_Broker_ =
       ::IR::_TAO_ComponentRepository_Remote_Proxy_Broker::the_TAO_ComponentRepository_Remote_Proxy_Broker ();
-  
+
   this->CORBA_Repository_setup_collocation (collocated);
 }
 
-void IR::ComponentRepository::_tao_any_destructor (void *x)
+void IR::ComponentRepository::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ComponentRepository *tmp = ACE_static_cast (ComponentRepository*,x);
+  ComponentRepository *tmp = ACE_static_cast (ComponentRepository*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -3058,14 +3056,14 @@ IR::ComponentRepository_ptr IR::ComponentRepository::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           ComponentRepository::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::ComponentRepository (stub, 0, obj->_servant ()), ComponentRepository::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -3148,7 +3146,7 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3171,10 +3169,10 @@ IR::ComponentDef_ptr IR::ComponentRepository::create_component (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentRepository_Proxy_Impl &proxy = 
+  _TAO_ComponentRepository_Proxy_Impl &proxy =
     this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_component (
       this,
       id,
@@ -3199,10 +3197,10 @@ IR::HomeDef_ptr IR::ComponentRepository::create_home (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentRepository_Proxy_Impl &proxy = 
+  _TAO_ComponentRepository_Proxy_Impl &proxy =
     this->the_TAO_ComponentRepository_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_home (
       this,
       id,
@@ -3219,21 +3217,21 @@ static const CORBA::Long _oc_IR_ComponentRepository[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72793a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6d706f),
+  ACE_NTOHL (0x6e656e74),
+  ACE_NTOHL (0x5265706f),
+  ACE_NTOHL (0x7369746f),
+  ACE_NTOHL (0x72793a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ComponentRepository:1.0
   20,
-  ACE_NTOHL (0x436f6d70), 
-  ACE_NTOHL (0x6f6e656e), 
-  ACE_NTOHL (0x74526570), 
-  ACE_NTOHL (0x6f736974), 
+  ACE_NTOHL (0x436f6d70),
+  ACE_NTOHL (0x6f6e656e),
+  ACE_NTOHL (0x74526570),
+  ACE_NTOHL (0x6f736974),
   ACE_NTOHL (0x6f727900),  // name = ComponentRepository
 };
 
@@ -3341,7 +3339,7 @@ IR::ProvidesDef_var::operator const ::IR::ProvidesDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::ProvidesDef_var::operator ::IR::ProvidesDef_ptr &() // cast 
+IR::ProvidesDef_var::operator ::IR::ProvidesDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3417,7 +3415,7 @@ IR::ProvidesDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::ProvidesDef_out
+// Operations for class IR::ProvidesDef_out
 // *************************************************************
 
 IR::ProvidesDef_out::ProvidesDef_out (ProvidesDef_ptr &p)
@@ -3483,24 +3481,24 @@ public:
   TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -3517,7 +3515,7 @@ private:
 TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -3530,7 +3528,7 @@ TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::arguments (CORBA::Envir
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -3542,12 +3540,12 @@ TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::exceptions (CORBA::Envi
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -3556,24 +3554,24 @@ TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA::Environm
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get::result (CORBA_InterfaceDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_ProvidesDef_Proxy_Impl::_TAO_ProvidesDef_Proxy_Impl (void)
@@ -3592,16 +3590,16 @@ CORBA_InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
   CORBA_InterfaceDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_interface_type",
@@ -3610,17 +3608,21 @@ CORBA_InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ProvidesDef_interface_type_get ri (
         &_tao_call,
@@ -3628,43 +3630,66 @@ CORBA_InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -3674,79 +3699,60 @@ CORBA_InterfaceDef_ptr IR::_TAO_ProvidesDef_Remote_Proxy_Impl::interface_type (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -3816,13 +3822,13 @@ IR::ProvidesDef::IR_ProvidesDef_setup_collocation (int collocated)
   else
     this->the_TAO_ProvidesDef_Proxy_Broker_ =
       ::IR::_TAO_ProvidesDef_Remote_Proxy_Broker::the_TAO_ProvidesDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_Contained_setup_collocation (collocated);
 }
 
-void IR::ProvidesDef::_tao_any_destructor (void *x)
+void IR::ProvidesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ProvidesDef *tmp = ACE_static_cast (ProvidesDef*,x);
+  ProvidesDef *tmp = ACE_static_cast (ProvidesDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -3869,14 +3875,14 @@ IR::ProvidesDef_ptr IR::ProvidesDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           ProvidesDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::ProvidesDef (stub, 0, obj->_servant ()), ProvidesDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -3946,7 +3952,7 @@ void *IR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -3964,10 +3970,10 @@ CORBA_InterfaceDef_ptr IR::ProvidesDef::interface_type (
     CORBA::SystemException
   ))
 {
-  _TAO_ProvidesDef_Proxy_Impl &proxy = 
+  _TAO_ProvidesDef_Proxy_Impl &proxy =
     this->the_TAO_ProvidesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.interface_type (
       this,
       ACE_TRY_ENV
@@ -3978,17 +3984,17 @@ static const CORBA::Long _oc_IR_ProvidesDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x726f7669), 
-  ACE_NTOHL (0x64657344), 
-  ACE_NTOHL (0x65663a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x726f7669),
+  ACE_NTOHL (0x64657344),
+  ACE_NTOHL (0x65663a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDef:1.0
   12,
-  ACE_NTOHL (0x50726f76), 
-  ACE_NTOHL (0x69646573), 
+  ACE_NTOHL (0x50726f76),
+  ACE_NTOHL (0x69646573),
   ACE_NTOHL (0x44656600),  // name = ProvidesDef
 };
 
@@ -4009,43 +4015,43 @@ static const CORBA::Long _oc_IR_ProvidesDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x726f7669), 
-  ACE_NTOHL (0x64657344), 
-  ACE_NTOHL (0x65736372), 
-  ACE_NTOHL (0x69707469), 
-  ACE_NTOHL (0x6f6e3a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x726f7669),
+  ACE_NTOHL (0x64657344),
+  ACE_NTOHL (0x65736372),
+  ACE_NTOHL (0x69707469),
+  ACE_NTOHL (0x6f6e3a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDescription:1.0
   20,
-  ACE_NTOHL (0x50726f76), 
-  ACE_NTOHL (0x69646573), 
-  ACE_NTOHL (0x44657363), 
-  ACE_NTOHL (0x72697074), 
+  ACE_NTOHL (0x50726f76),
+  ACE_NTOHL (0x69646573),
+  ACE_NTOHL (0x44657363),
+  ACE_NTOHL (0x72697074),
   ACE_NTOHL (0x696f6e00),  // name = ProvidesDescription
   5, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -4054,90 +4060,90 @@ static const CORBA::Long _oc_IR_ProvidesDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   15,
-  ACE_NTOHL (0x696e7465), 
-  ACE_NTOHL (0x72666163), 
-  ACE_NTOHL (0x655f7479), 
+  ACE_NTOHL (0x696e7465),
+  ACE_NTOHL (0x72666163),
+  ACE_NTOHL (0x655f7479),
   ACE_NTOHL (0x70650000),  // name = interface_type
   CORBA::tk_objref, // typecode kind
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f496e), 
-    ACE_NTOHL (0x74657266), 
-    ACE_NTOHL (0x61636544), 
-    ACE_NTOHL (0x65663a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f496e),
+    ACE_NTOHL (0x74657266),
+    ACE_NTOHL (0x61636544),
+    ACE_NTOHL (0x65663a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
     13,
-    ACE_NTOHL (0x496e7465), 
-    ACE_NTOHL (0x72666163), 
-    ACE_NTOHL (0x65446566), 
+    ACE_NTOHL (0x496e7465),
+    ACE_NTOHL (0x72666163),
+    ACE_NTOHL (0x65446566),
     ACE_NTOHL (0x0),  // name = InterfaceDef
 
 };
@@ -4155,9 +4161,9 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ProvidesDescription, &_tc_TAO_tc_IR_ProvidesDescription)
 TAO_NAMESPACE_END
 
-void IR::ProvidesDescription::_tao_any_destructor (void *x)
+void IR::ProvidesDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ProvidesDescription *tmp = ACE_static_cast (ProvidesDescription*,x);
+  ProvidesDescription *tmp = ACE_static_cast (ProvidesDescription*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -4252,7 +4258,7 @@ IR::UsesDef_var::operator const ::IR::UsesDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::UsesDef_var::operator ::IR::UsesDef_ptr &() // cast 
+IR::UsesDef_var::operator ::IR::UsesDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4328,7 +4334,7 @@ IR::UsesDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::UsesDef_out
+// Operations for class IR::UsesDef_out
 // *************************************************************
 
 IR::UsesDef_out::UsesDef_out (UsesDef_ptr &p)
@@ -4394,24 +4400,24 @@ public:
   TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -4428,7 +4434,7 @@ private:
 TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::TAO_ClientRequestInfo_IR_UsesDef_interface_type_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -4441,7 +4447,7 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::arguments (CORBA::Environme
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -4453,12 +4459,12 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::exceptions (CORBA::Environm
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -4467,17 +4473,17 @@ TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA::Environment 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_UsesDef_interface_type_get::result (CORBA_InterfaceDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -4487,24 +4493,24 @@ public:
   TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -4521,7 +4527,7 @@ private:
 TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -4534,7 +4540,7 @@ TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::arguments (CORBA::Environment 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -4546,12 +4552,12 @@ TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::exceptions (CORBA::Environment
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -4560,24 +4566,24 @@ TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA::Environment &AC
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get::result (CORBA::Boolean result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_UsesDef_Proxy_Impl::_TAO_UsesDef_Proxy_Impl (void)
@@ -4596,16 +4602,16 @@ CORBA_InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA_InterfaceDef_ptr _tao_retval = CORBA_InterfaceDef::_nil ();
   CORBA_InterfaceDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_interface_type",
@@ -4614,17 +4620,21 @@ CORBA_InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_UsesDef_interface_type_get ri (
         &_tao_call,
@@ -4632,43 +4642,66 @@ CORBA_InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -4678,74 +4711,55 @@ CORBA_InterfaceDef_ptr IR::_TAO_UsesDef_Remote_Proxy_Impl::interface_type (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA_InterfaceDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 CORBA::Boolean IR::_TAO_UsesDef_Remote_Proxy_Impl::is_multiple (
@@ -4756,15 +4770,15 @@ CORBA::Boolean IR::_TAO_UsesDef_Remote_Proxy_Impl::is_multiple (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_is_multiple",
@@ -4773,17 +4787,21 @@ CORBA::Boolean IR::_TAO_UsesDef_Remote_Proxy_Impl::is_multiple (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_UsesDef_is_multiple_get ri (
         &_tao_call,
@@ -4791,43 +4809,66 @@ CORBA::Boolean IR::_TAO_UsesDef_Remote_Proxy_Impl::is_multiple (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN  (_tao_retval);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
@@ -4837,78 +4878,59 @@ CORBA::Boolean IR::_TAO_UsesDef_Remote_Proxy_Impl::is_multiple (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA::Boolean  _tao_retval_info = _tao_retval;
-               ri.result (_tao_retval_info);
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN  (_tao_retval);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_retval;
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA::Boolean _tao_retval_info = _tao_retval;
+          ri.result (_tao_retval_info);
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_retval;
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -4978,13 +5000,13 @@ IR::UsesDef::IR_UsesDef_setup_collocation (int collocated)
   else
     this->the_TAO_UsesDef_Proxy_Broker_ =
       ::IR::_TAO_UsesDef_Remote_Proxy_Broker::the_TAO_UsesDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_Contained_setup_collocation (collocated);
 }
 
-void IR::UsesDef::_tao_any_destructor (void *x)
+void IR::UsesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  UsesDef *tmp = ACE_static_cast (UsesDef*,x);
+  UsesDef *tmp = ACE_static_cast (UsesDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -5031,14 +5053,14 @@ IR::UsesDef_ptr IR::UsesDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           UsesDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::UsesDef (stub, 0, obj->_servant ()), UsesDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -5108,7 +5130,7 @@ void *IR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5126,10 +5148,10 @@ CORBA_InterfaceDef_ptr IR::UsesDef::interface_type (
     CORBA::SystemException
   ))
 {
-  _TAO_UsesDef_Proxy_Impl &proxy = 
+  _TAO_UsesDef_Proxy_Impl &proxy =
     this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.interface_type (
       this,
       ACE_TRY_ENV
@@ -5143,10 +5165,10 @@ CORBA::Boolean IR::UsesDef::is_multiple (
     CORBA::SystemException
   ))
 {
-  _TAO_UsesDef_Proxy_Impl &proxy = 
+  _TAO_UsesDef_Proxy_Impl &proxy =
     this->the_TAO_UsesDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.is_multiple (
       this,
       ACE_TRY_ENV
@@ -5157,15 +5179,15 @@ static const CORBA::Long _oc_IR_UsesDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   27,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f55), 
-  ACE_NTOHL (0x73657344), 
-  ACE_NTOHL (0x65663a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f55),
+  ACE_NTOHL (0x73657344),
+  ACE_NTOHL (0x65663a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDef:1.0
   8,
-  ACE_NTOHL (0x55736573), 
+  ACE_NTOHL (0x55736573),
   ACE_NTOHL (0x44656600),  // name = UsesDef
 };
 
@@ -5186,41 +5208,41 @@ static const CORBA::Long _oc_IR_UsesDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f55), 
-  ACE_NTOHL (0x73657344), 
-  ACE_NTOHL (0x65736372), 
-  ACE_NTOHL (0x69707469), 
-  ACE_NTOHL (0x6f6e3a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f55),
+  ACE_NTOHL (0x73657344),
+  ACE_NTOHL (0x65736372),
+  ACE_NTOHL (0x69707469),
+  ACE_NTOHL (0x6f6e3a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDescription:1.0
   16,
-  ACE_NTOHL (0x55736573), 
-  ACE_NTOHL (0x44657363), 
-  ACE_NTOHL (0x72697074), 
+  ACE_NTOHL (0x55736573),
+  ACE_NTOHL (0x44657363),
+  ACE_NTOHL (0x72697074),
   ACE_NTOHL (0x696f6e00),  // name = UsesDescription
   6, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -5229,95 +5251,95 @@ static const CORBA::Long _oc_IR_UsesDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   15,
-  ACE_NTOHL (0x696e7465), 
-  ACE_NTOHL (0x72666163), 
-  ACE_NTOHL (0x655f7479), 
+  ACE_NTOHL (0x696e7465),
+  ACE_NTOHL (0x72666163),
+  ACE_NTOHL (0x655f7479),
   ACE_NTOHL (0x70650000),  // name = interface_type
   CORBA::tk_objref, // typecode kind
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f496e), 
-    ACE_NTOHL (0x74657266), 
-    ACE_NTOHL (0x61636544), 
-    ACE_NTOHL (0x65663a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f496e),
+    ACE_NTOHL (0x74657266),
+    ACE_NTOHL (0x61636544),
+    ACE_NTOHL (0x65663a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
     13,
-    ACE_NTOHL (0x496e7465), 
-    ACE_NTOHL (0x72666163), 
-    ACE_NTOHL (0x65446566), 
+    ACE_NTOHL (0x496e7465),
+    ACE_NTOHL (0x72666163),
+    ACE_NTOHL (0x65446566),
     ACE_NTOHL (0x0),  // name = InterfaceDef
 
   12,
-  ACE_NTOHL (0x69735f6d), 
-  ACE_NTOHL (0x756c7469), 
+  ACE_NTOHL (0x69735f6d),
+  ACE_NTOHL (0x756c7469),
   ACE_NTOHL (0x706c6500),  // name = is_multiple
   CORBA::tk_boolean,
 
@@ -5336,60 +5358,60 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UsesDescription, &_tc_TAO_tc_IR_UsesDescription)
 TAO_NAMESPACE_END
 
-void IR::UsesDescription::_tao_any_destructor (void *x)
+void IR::UsesDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  UsesDescription *tmp = ACE_static_cast (UsesDescription*,x);
+  UsesDescription *tmp = ACE_static_cast (UsesDescription*, _tao_void_pointer);
   delete tmp;
 }
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IR_PROVIDESDESCSEQ_CS_
 
-  void
-  IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_allocate_buffer (CORBA::ULong length)
+void
+IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::ProvidesDescription* tmp = 0;
+  tmp = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::ProvidesDescription* tmp = 0;
-    tmp = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::ProvidesDescription *old = ACE_reinterpret_cast (IR::ProvidesDescription *,this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp[i] = old[i];
-      
-      if (this->release_)
-        _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (old);
-      
-    }
-    this->buffer_ = tmp;
+    IR::ProvidesDescription *old = ACE_reinterpret_cast (IR::ProvidesDescription *,this->buffer_);
+
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp[i] = old[i];
+
+    if (this->release_)
+      _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (old);
+
   }
-  
-  void
-  IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    
-    IR::ProvidesDescription *tmp = ACE_reinterpret_cast (IR::ProvidesDescription *,this->buffer_);
-    
-    _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  } 
-  
-  IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::~_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void) // Dtor.
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+
+  IR::ProvidesDescription *tmp = ACE_reinterpret_cast (IR::ProvidesDescription *,this->buffer_);
+
+  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Sequence_IR_ProvidesDescSeq::~_TAO_Unbounded_Sequence_IR_ProvidesDescSeq (void) // Dtor.
+{
+  this->_deallocate_buffer ();
+}
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_PROVIDESDESCSEQ_CS_)
 #define _IR_PROVIDESDESCSEQ_CS_
@@ -5401,37 +5423,37 @@ void IR::UsesDescription::_tao_any_destructor (void *x)
 IR::ProvidesDescSeq::ProvidesDescSeq (void)
 {}
 IR::ProvidesDescSeq::ProvidesDescSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq
+_TAO_Unbounded_Sequence_IR_ProvidesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::ProvidesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::ProvidesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::ProvidesDescSeq::ProvidesDescSeq (CORBA::ULong max, CORBA::ULong length, IR::ProvidesDescription *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq
+_TAO_Unbounded_Sequence_IR_ProvidesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::ProvidesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::ProvidesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::ProvidesDescSeq::ProvidesDescSeq (const ProvidesDescSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_ProvidesDescSeq
+_TAO_Unbounded_Sequence_IR_ProvidesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::ProvidesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::ProvidesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::ProvidesDescSeq::~ProvidesDescSeq (void) // dtor
 {}
-void IR::ProvidesDescSeq::_tao_any_destructor (void *x)
+void IR::ProvidesDescSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ProvidesDescSeq *tmp = ACE_static_cast (ProvidesDescSeq*,x);
+  ProvidesDescSeq *tmp = ACE_static_cast (ProvidesDescSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -5442,19 +5464,19 @@ static const CORBA::Long _oc_IR_ProvidesDescSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x726f7669), 
-  ACE_NTOHL (0x64657344), 
-  ACE_NTOHL (0x65736353), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x726f7669),
+  ACE_NTOHL (0x64657344),
+  ACE_NTOHL (0x65736353),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDescSeq:1.0
   16,
-  ACE_NTOHL (0x50726f76), 
-  ACE_NTOHL (0x69646573), 
-  ACE_NTOHL (0x44657363), 
+  ACE_NTOHL (0x50726f76),
+  ACE_NTOHL (0x69646573),
+  ACE_NTOHL (0x44657363),
   ACE_NTOHL (0x53657100),  // name = ProvidesDescSeq
   CORBA::tk_sequence, // typecode kind
   528, // encapsulation length
@@ -5463,43 +5485,43 @@ static const CORBA::Long _oc_IR_ProvidesDescSeq[] =
     512, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       39,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f50), 
-      ACE_NTOHL (0x726f7669), 
-      ACE_NTOHL (0x64657344), 
-      ACE_NTOHL (0x65736372), 
-      ACE_NTOHL (0x69707469), 
-      ACE_NTOHL (0x6f6e3a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f50),
+      ACE_NTOHL (0x726f7669),
+      ACE_NTOHL (0x64657344),
+      ACE_NTOHL (0x65736372),
+      ACE_NTOHL (0x69707469),
+      ACE_NTOHL (0x6f6e3a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDescription:1.0
       20,
-      ACE_NTOHL (0x50726f76), 
-      ACE_NTOHL (0x69646573), 
-      ACE_NTOHL (0x44657363), 
-      ACE_NTOHL (0x72697074), 
+      ACE_NTOHL (0x50726f76),
+      ACE_NTOHL (0x69646573),
+      ACE_NTOHL (0x44657363),
+      ACE_NTOHL (0x72697074),
       ACE_NTOHL (0x696f6e00),  // name = ProvidesDescription
       5, // member count
       5,
-      ACE_NTOHL (0x6e616d65), 
+      ACE_NTOHL (0x6e616d65),
       ACE_NTOHL (0x0),  // name = name
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f49), 
-        ACE_NTOHL (0x64656e74), 
-        ACE_NTOHL (0x69666965), 
-        ACE_NTOHL (0x723a312e), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f49),
+        ACE_NTOHL (0x64656e74),
+        ACE_NTOHL (0x69666965),
+        ACE_NTOHL (0x723a312e),
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
         11,
-        ACE_NTOHL (0x4964656e), 
-        ACE_NTOHL (0x74696669), 
+        ACE_NTOHL (0x4964656e),
+        ACE_NTOHL (0x74696669),
         ACE_NTOHL (0x65720000),  // name = Identifier
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       3,
@@ -5508,90 +5530,90 @@ static const CORBA::Long _oc_IR_ProvidesDescSeq[] =
       68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f52), 
-        ACE_NTOHL (0x65706f73), 
-        ACE_NTOHL (0x69746f72), 
-        ACE_NTOHL (0x7949643a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f52),
+        ACE_NTOHL (0x65706f73),
+        ACE_NTOHL (0x69746f72),
+        ACE_NTOHL (0x7949643a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
         13,
-        ACE_NTOHL (0x5265706f), 
-        ACE_NTOHL (0x7369746f), 
-        ACE_NTOHL (0x72794964), 
+        ACE_NTOHL (0x5265706f),
+        ACE_NTOHL (0x7369746f),
+        ACE_NTOHL (0x72794964),
         ACE_NTOHL (0x0),  // name = RepositoryId
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       11,
-      ACE_NTOHL (0x64656669), 
-      ACE_NTOHL (0x6e65645f), 
+      ACE_NTOHL (0x64656669),
+      ACE_NTOHL (0x6e65645f),
       ACE_NTOHL (0x696e0000),  // name = defined_in
       CORBA::tk_alias, // typecode kind for typedefs
       68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f52), 
-        ACE_NTOHL (0x65706f73), 
-        ACE_NTOHL (0x69746f72), 
-        ACE_NTOHL (0x7949643a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f52),
+        ACE_NTOHL (0x65706f73),
+        ACE_NTOHL (0x69746f72),
+        ACE_NTOHL (0x7949643a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
         13,
-        ACE_NTOHL (0x5265706f), 
-        ACE_NTOHL (0x7369746f), 
-        ACE_NTOHL (0x72794964), 
+        ACE_NTOHL (0x5265706f),
+        ACE_NTOHL (0x7369746f),
+        ACE_NTOHL (0x72794964),
         ACE_NTOHL (0x0),  // name = RepositoryId
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       8,
-      ACE_NTOHL (0x76657273), 
+      ACE_NTOHL (0x76657273),
       ACE_NTOHL (0x696f6e00),  // name = version
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         31,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f56), 
-        ACE_NTOHL (0x65727369), 
-        ACE_NTOHL (0x6f6e5370), 
-        ACE_NTOHL (0x65633a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f56),
+        ACE_NTOHL (0x65727369),
+        ACE_NTOHL (0x6f6e5370),
+        ACE_NTOHL (0x65633a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
         12,
-        ACE_NTOHL (0x56657273), 
-        ACE_NTOHL (0x696f6e53), 
+        ACE_NTOHL (0x56657273),
+        ACE_NTOHL (0x696f6e53),
         ACE_NTOHL (0x70656300),  // name = VersionSpec
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       15,
-      ACE_NTOHL (0x696e7465), 
-      ACE_NTOHL (0x72666163), 
-      ACE_NTOHL (0x655f7479), 
+      ACE_NTOHL (0x696e7465),
+      ACE_NTOHL (0x72666163),
+      ACE_NTOHL (0x655f7479),
       ACE_NTOHL (0x70650000),  // name = interface_type
       CORBA::tk_objref, // typecode kind
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f496e), 
-        ACE_NTOHL (0x74657266), 
-        ACE_NTOHL (0x61636544), 
-        ACE_NTOHL (0x65663a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f496e),
+        ACE_NTOHL (0x74657266),
+        ACE_NTOHL (0x61636544),
+        ACE_NTOHL (0x65663a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
         13,
-        ACE_NTOHL (0x496e7465), 
-        ACE_NTOHL (0x72666163), 
-        ACE_NTOHL (0x65446566), 
+        ACE_NTOHL (0x496e7465),
+        ACE_NTOHL (0x72666163),
+        ACE_NTOHL (0x65446566),
         ACE_NTOHL (0x0),  // name = InterfaceDef
 
 
@@ -5614,52 +5636,52 @@ TAO_NAMESPACE_END
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_IR_USESDESCSEQ_CS_
 
-  void
-  IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_allocate_buffer (CORBA::ULong length)
+void
+IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_allocate_buffer (CORBA::ULong length)
+{
+  IR::UsesDescription* tmp = 0;
+  tmp = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (length);
+
+  if (this->buffer_ != 0)
   {
-    IR::UsesDescription* tmp = 0;
-    tmp = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (length);
-    
-    if (this->buffer_ != 0)
-    {
-      IR::UsesDescription *old = ACE_reinterpret_cast (IR::UsesDescription *,this->buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp[i] = old[i];
-      
-      if (this->release_)
-        _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (old);
-      
-    }
-    this->buffer_ = tmp;
+    IR::UsesDescription *old = ACE_reinterpret_cast (IR::UsesDescription *,this->buffer_);
+
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp[i] = old[i];
+
+    if (this->release_)
+      _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (old);
+
   }
-  
-  void
-  IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_deallocate_buffer (void)
-  {
-    if (this->buffer_ == 0 || this->release_ == 0)
-      return;
-    
-    IR::UsesDescription *tmp = ACE_reinterpret_cast (IR::UsesDescription *,this->buffer_);
-    
-    _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
-    this->buffer_ = 0;
-  } 
-  
-  IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::~_TAO_Unbounded_Sequence_IR_UsesDescSeq (void) // Dtor.
-  {
-    this->_deallocate_buffer ();
-  }
-  
-  
+  this->buffer_ = tmp;
+}
+
+void
+IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::_deallocate_buffer (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+
+  IR::UsesDescription *tmp = ACE_reinterpret_cast (IR::UsesDescription *,this->buffer_);
+
+  _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
+  this->buffer_ = 0;
+}
+
+IR::_TAO_Unbounded_Sequence_IR_UsesDescSeq::~_TAO_Unbounded_Sequence_IR_UsesDescSeq (void) // Dtor.
+{
+  this->_deallocate_buffer ();
+}
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_IR_USESDESCSEQ_CS_)
 #define _IR_USESDESCSEQ_CS_
@@ -5671,37 +5693,37 @@ TAO_NAMESPACE_END
 IR::UsesDescSeq::UsesDescSeq (void)
 {}
 IR::UsesDescSeq::UsesDescSeq (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_UsesDescSeq
+_TAO_Unbounded_Sequence_IR_UsesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::UsesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::UsesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 IR::UsesDescSeq::UsesDescSeq (CORBA::ULong max, CORBA::ULong length, IR::UsesDescription *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_UsesDescSeq
+_TAO_Unbounded_Sequence_IR_UsesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::UsesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::UsesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 IR::UsesDescSeq::UsesDescSeq (const UsesDescSeq &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  _TAO_Unbounded_Sequence_IR_UsesDescSeq
+_TAO_Unbounded_Sequence_IR_UsesDescSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-  TAO_Unbounded_Sequence<IR::UsesDescription>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+TAO_Unbounded_Sequence<IR::UsesDescription>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 IR::UsesDescSeq::~UsesDescSeq (void) // dtor
 {}
-void IR::UsesDescSeq::_tao_any_destructor (void *x)
+void IR::UsesDescSeq::_tao_any_destructor (void *_tao_void_pointer)
 {
-  UsesDescSeq *tmp = ACE_static_cast (UsesDescSeq*,x);
+  UsesDescSeq *tmp = ACE_static_cast (UsesDescSeq*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -5712,17 +5734,17 @@ static const CORBA::Long _oc_IR_UsesDescSeq[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f55), 
-  ACE_NTOHL (0x73657344), 
-  ACE_NTOHL (0x65736353), 
-  ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f55),
+  ACE_NTOHL (0x73657344),
+  ACE_NTOHL (0x65736353),
+  ACE_NTOHL (0x65713a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDescSeq:1.0
   12,
-  ACE_NTOHL (0x55736573), 
-  ACE_NTOHL (0x44657363), 
+  ACE_NTOHL (0x55736573),
+  ACE_NTOHL (0x44657363),
   ACE_NTOHL (0x53657100),  // name = UsesDescSeq
   CORBA::tk_sequence, // typecode kind
   540, // encapsulation length
@@ -5731,41 +5753,41 @@ static const CORBA::Long _oc_IR_UsesDescSeq[] =
     524, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       35,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49522f55), 
-      ACE_NTOHL (0x73657344), 
-      ACE_NTOHL (0x65736372), 
-      ACE_NTOHL (0x69707469), 
-      ACE_NTOHL (0x6f6e3a31), 
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x6f6d672e),
+      ACE_NTOHL (0x6f72672f),
+      ACE_NTOHL (0x49522f55),
+      ACE_NTOHL (0x73657344),
+      ACE_NTOHL (0x65736372),
+      ACE_NTOHL (0x69707469),
+      ACE_NTOHL (0x6f6e3a31),
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDescription:1.0
       16,
-      ACE_NTOHL (0x55736573), 
-      ACE_NTOHL (0x44657363), 
-      ACE_NTOHL (0x72697074), 
+      ACE_NTOHL (0x55736573),
+      ACE_NTOHL (0x44657363),
+      ACE_NTOHL (0x72697074),
       ACE_NTOHL (0x696f6e00),  // name = UsesDescription
       6, // member count
       5,
-      ACE_NTOHL (0x6e616d65), 
+      ACE_NTOHL (0x6e616d65),
       ACE_NTOHL (0x0),  // name = name
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f49), 
-        ACE_NTOHL (0x64656e74), 
-        ACE_NTOHL (0x69666965), 
-        ACE_NTOHL (0x723a312e), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f49),
+        ACE_NTOHL (0x64656e74),
+        ACE_NTOHL (0x69666965),
+        ACE_NTOHL (0x723a312e),
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
         11,
-        ACE_NTOHL (0x4964656e), 
-        ACE_NTOHL (0x74696669), 
+        ACE_NTOHL (0x4964656e),
+        ACE_NTOHL (0x74696669),
         ACE_NTOHL (0x65720000),  // name = Identifier
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       3,
@@ -5774,95 +5796,95 @@ static const CORBA::Long _oc_IR_UsesDescSeq[] =
       68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f52), 
-        ACE_NTOHL (0x65706f73), 
-        ACE_NTOHL (0x69746f72), 
-        ACE_NTOHL (0x7949643a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f52),
+        ACE_NTOHL (0x65706f73),
+        ACE_NTOHL (0x69746f72),
+        ACE_NTOHL (0x7949643a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
         13,
-        ACE_NTOHL (0x5265706f), 
-        ACE_NTOHL (0x7369746f), 
-        ACE_NTOHL (0x72794964), 
+        ACE_NTOHL (0x5265706f),
+        ACE_NTOHL (0x7369746f),
+        ACE_NTOHL (0x72794964),
         ACE_NTOHL (0x0),  // name = RepositoryId
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       11,
-      ACE_NTOHL (0x64656669), 
-      ACE_NTOHL (0x6e65645f), 
+      ACE_NTOHL (0x64656669),
+      ACE_NTOHL (0x6e65645f),
       ACE_NTOHL (0x696e0000),  // name = defined_in
       CORBA::tk_alias, // typecode kind for typedefs
       68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f52), 
-        ACE_NTOHL (0x65706f73), 
-        ACE_NTOHL (0x69746f72), 
-        ACE_NTOHL (0x7949643a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f52),
+        ACE_NTOHL (0x65706f73),
+        ACE_NTOHL (0x69746f72),
+        ACE_NTOHL (0x7949643a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
         13,
-        ACE_NTOHL (0x5265706f), 
-        ACE_NTOHL (0x7369746f), 
-        ACE_NTOHL (0x72794964), 
+        ACE_NTOHL (0x5265706f),
+        ACE_NTOHL (0x7369746f),
+        ACE_NTOHL (0x72794964),
         ACE_NTOHL (0x0),  // name = RepositoryId
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       8,
-      ACE_NTOHL (0x76657273), 
+      ACE_NTOHL (0x76657273),
       ACE_NTOHL (0x696f6e00),  // name = version
       CORBA::tk_alias, // typecode kind for typedefs
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         31,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f56), 
-        ACE_NTOHL (0x65727369), 
-        ACE_NTOHL (0x6f6e5370), 
-        ACE_NTOHL (0x65633a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f56),
+        ACE_NTOHL (0x65727369),
+        ACE_NTOHL (0x6f6e5370),
+        ACE_NTOHL (0x65633a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
         12,
-        ACE_NTOHL (0x56657273), 
-        ACE_NTOHL (0x696f6e53), 
+        ACE_NTOHL (0x56657273),
+        ACE_NTOHL (0x696f6e53),
         ACE_NTOHL (0x70656300),  // name = VersionSpec
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       15,
-      ACE_NTOHL (0x696e7465), 
-      ACE_NTOHL (0x72666163), 
-      ACE_NTOHL (0x655f7479), 
+      ACE_NTOHL (0x696e7465),
+      ACE_NTOHL (0x72666163),
+      ACE_NTOHL (0x655f7479),
       ACE_NTOHL (0x70650000),  // name = interface_type
       CORBA::tk_objref, // typecode kind
       64, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         35,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f496e), 
-        ACE_NTOHL (0x74657266), 
-        ACE_NTOHL (0x61636544), 
-        ACE_NTOHL (0x65663a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f496e),
+        ACE_NTOHL (0x74657266),
+        ACE_NTOHL (0x61636544),
+        ACE_NTOHL (0x65663a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/InterfaceDef:1.0
         13,
-        ACE_NTOHL (0x496e7465), 
-        ACE_NTOHL (0x72666163), 
-        ACE_NTOHL (0x65446566), 
+        ACE_NTOHL (0x496e7465),
+        ACE_NTOHL (0x72666163),
+        ACE_NTOHL (0x65446566),
         ACE_NTOHL (0x0),  // name = InterfaceDef
 
       12,
-      ACE_NTOHL (0x69735f6d), 
-      ACE_NTOHL (0x756c7469), 
+      ACE_NTOHL (0x69735f6d),
+      ACE_NTOHL (0x756c7469),
       ACE_NTOHL (0x706c6500),  // name = is_multiple
       CORBA::tk_boolean,
 
@@ -5975,7 +5997,7 @@ IR::EventDef_var::operator const ::IR::EventDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::EventDef_var::operator ::IR::EventDef_ptr &() // cast 
+IR::EventDef_var::operator ::IR::EventDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -6051,7 +6073,7 @@ IR::EventDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::EventDef_out
+// Operations for class IR::EventDef_out
 // *************************************************************
 
 IR::EventDef_out::EventDef_out (EventDef_ptr &p)
@@ -6118,24 +6140,24 @@ public:
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * event_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -6154,7 +6176,7 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::TAO_ClientRequestInfo_IR_EventDef_is_a (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
     const char * event_id,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     event_id_ (event_id)
@@ -6168,14 +6190,16 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::arguments (CORBA::Environment &ACE_TRY_E
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_event_id = parameter_list->length ();
-  parameter_list->length (length_event_id + 1);
-  (*parameter_list)[length_event_id].argument <<= event_id_;
-  (*parameter_list)[length_event_id].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= event_id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -6187,12 +6211,12 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::exceptions (CORBA::Environment &ACE_TRY_
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_EventDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6201,17 +6225,17 @@ TAO_ClientRequestInfo_IR_EventDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_EventDef_is_a::result (CORBA::Boolean result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -6221,24 +6245,24 @@ public:
   TAO_ClientRequestInfo_IR_EventDef_event_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -6255,7 +6279,7 @@ private:
 TAO_ClientRequestInfo_IR_EventDef_event_get::TAO_ClientRequestInfo_IR_EventDef_event_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -6268,7 +6292,7 @@ TAO_ClientRequestInfo_IR_EventDef_event_get::arguments (CORBA::Environment &ACE_
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -6280,12 +6304,12 @@ TAO_ClientRequestInfo_IR_EventDef_event_get::exceptions (CORBA::Environment &ACE
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -6294,24 +6318,24 @@ TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA::Environment &ACE_TRY
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_EventDef_event_get::result (CORBA_ValueDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_EventDef_Proxy_Impl::_TAO_EventDef_Proxy_Impl (void)
@@ -6331,15 +6355,15 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_a",
@@ -6348,17 +6372,21 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_EventDef_is_a ri (
         &_tao_call,
@@ -6367,31 +6395,40 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN  (_tao_retval);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << event_id)
@@ -6400,20 +6437,33 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
               CORBA::MARSHAL (),
               _tao_retval
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
@@ -6423,73 +6473,54 @@ CORBA::Boolean IR::_TAO_EventDef_Remote_Proxy_Impl::is_a (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA::Boolean  _tao_retval_info = _tao_retval;
-               ri.result (_tao_retval_info);
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN  (_tao_retval);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_retval;
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA::Boolean _tao_retval_info = _tao_retval;
+          ri.result (_tao_retval_info);
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_retval;
 }
 
 CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
@@ -6500,16 +6531,16 @@ CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
   CORBA_ValueDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_event",
@@ -6518,17 +6549,21 @@ CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_EventDef_event_get ri (
         &_tao_call,
@@ -6536,43 +6571,66 @@ CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -6582,79 +6640,60 @@ CORBA_ValueDef_ptr IR::_TAO_EventDef_Remote_Proxy_Impl::event (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -6724,13 +6763,13 @@ IR::EventDef::IR_EventDef_setup_collocation (int collocated)
   else
     this->the_TAO_EventDef_Proxy_Broker_ =
       ::IR::_TAO_EventDef_Remote_Proxy_Broker::the_TAO_EventDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_Contained_setup_collocation (collocated);
 }
 
-void IR::EventDef::_tao_any_destructor (void *x)
+void IR::EventDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EventDef *tmp = ACE_static_cast (EventDef*,x);
+  EventDef *tmp = ACE_static_cast (EventDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -6777,14 +6816,14 @@ IR::EventDef_ptr IR::EventDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           EventDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::EventDef (stub, 0, obj->_servant ()), EventDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -6854,7 +6893,7 @@ void *IR::EventDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -6873,10 +6912,10 @@ CORBA::Boolean IR::EventDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_EventDef_Proxy_Impl &proxy = 
+  _TAO_EventDef_Proxy_Impl &proxy =
     this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.is_a (
       this,
       event_id,
@@ -6891,10 +6930,10 @@ CORBA_ValueDef_ptr IR::EventDef::event (
     CORBA::SystemException
   ))
 {
-  _TAO_EventDef_Proxy_Impl &proxy = 
+  _TAO_EventDef_Proxy_Impl &proxy =
     this->the_TAO_EventDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.event (
       this,
       ACE_TRY_ENV
@@ -6905,16 +6944,16 @@ static const CORBA::Long _oc_IR_EventDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f45), 
-  ACE_NTOHL (0x76656e74), 
-  ACE_NTOHL (0x4465663a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f45),
+  ACE_NTOHL (0x76656e74),
+  ACE_NTOHL (0x4465663a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/EventDef:1.0
   9,
-  ACE_NTOHL (0x4576656e), 
-  ACE_NTOHL (0x74446566), 
+  ACE_NTOHL (0x4576656e),
+  ACE_NTOHL (0x74446566),
   ACE_NTOHL (0x0),  // name = EventDef
 };
 
@@ -6935,42 +6974,42 @@ static const CORBA::Long _oc_IR_EventDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f45), 
-  ACE_NTOHL (0x76656e74), 
-  ACE_NTOHL (0x44657363), 
-  ACE_NTOHL (0x72697074), 
-  ACE_NTOHL (0x696f6e3a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f45),
+  ACE_NTOHL (0x76656e74),
+  ACE_NTOHL (0x44657363),
+  ACE_NTOHL (0x72697074),
+  ACE_NTOHL (0x696f6e3a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/EventDescription:1.0
   17,
-  ACE_NTOHL (0x4576656e), 
-  ACE_NTOHL (0x74446573), 
-  ACE_NTOHL (0x63726970), 
-  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x4576656e),
+  ACE_NTOHL (0x74446573),
+  ACE_NTOHL (0x63726970),
+  ACE_NTOHL (0x74696f6e),
   ACE_NTOHL (0x0),  // name = EventDescription
   5, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -6979,86 +7018,86 @@ static const CORBA::Long _oc_IR_EventDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   6,
-  ACE_NTOHL (0x76616c75), 
+  ACE_NTOHL (0x76616c75),
   ACE_NTOHL (0x65000000),  // name = value
   CORBA::tk_objref, // typecode kind
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5661), 
-    ACE_NTOHL (0x6c756544), 
-    ACE_NTOHL (0x65663a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5661),
+    ACE_NTOHL (0x6c756544),
+    ACE_NTOHL (0x65663a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ValueDef:1.0
     9,
-    ACE_NTOHL (0x56616c75), 
-    ACE_NTOHL (0x65446566), 
+    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x65446566),
     ACE_NTOHL (0x0),  // name = ValueDef
 
 };
@@ -7076,9 +7115,9 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EventDescription, &_tc_TAO_tc_IR_EventDescription)
 TAO_NAMESPACE_END
 
-void IR::EventDescription::_tao_any_destructor (void *x)
+void IR::EventDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EventDescription *tmp = ACE_static_cast (EventDescription*,x);
+  EventDescription *tmp = ACE_static_cast (EventDescription*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -7173,7 +7212,7 @@ IR::EmitsDef_var::operator const ::IR::EmitsDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::EmitsDef_var::operator ::IR::EmitsDef_ptr &() // cast 
+IR::EmitsDef_var::operator ::IR::EmitsDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -7249,7 +7288,7 @@ IR::EmitsDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::EmitsDef_out
+// Operations for class IR::EmitsDef_out
 // *************************************************************
 
 IR::EmitsDef_out::EmitsDef_out (EmitsDef_ptr &p)
@@ -7312,7 +7351,7 @@ IR::EmitsDef_out::operator-> (void)
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_EmitsDef_Proxy_Impl::_TAO_EmitsDef_Proxy_Impl (void)
@@ -7325,7 +7364,7 @@ IR::_TAO_EmitsDef_Remote_Proxy_Impl::_TAO_EmitsDef_Remote_Proxy_Impl (void)
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -7395,13 +7434,13 @@ IR::EmitsDef::IR_EmitsDef_setup_collocation (int collocated)
   else
     this->the_TAO_EmitsDef_Proxy_Broker_ =
       ::IR::_TAO_EmitsDef_Remote_Proxy_Broker::the_TAO_EmitsDef_Remote_Proxy_Broker ();
-  
+
   this->IR_EventDef_setup_collocation (collocated);
 }
 
-void IR::EmitsDef::_tao_any_destructor (void *x)
+void IR::EmitsDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EmitsDef *tmp = ACE_static_cast (EmitsDef*,x);
+  EmitsDef *tmp = ACE_static_cast (EmitsDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -7448,14 +7487,14 @@ IR::EmitsDef_ptr IR::EmitsDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           EmitsDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::EmitsDef (stub, 0, obj->_servant ()), EmitsDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -7538,7 +7577,7 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -7553,16 +7592,16 @@ static const CORBA::Long _oc_IR_EmitsDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f45), 
-  ACE_NTOHL (0x6d697473), 
-  ACE_NTOHL (0x4465663a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f45),
+  ACE_NTOHL (0x6d697473),
+  ACE_NTOHL (0x4465663a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/EmitsDef:1.0
   9,
-  ACE_NTOHL (0x456d6974), 
-  ACE_NTOHL (0x73446566), 
+  ACE_NTOHL (0x456d6974),
+  ACE_NTOHL (0x73446566),
   ACE_NTOHL (0x0),  // name = EmitsDef
 };
 
@@ -7670,7 +7709,7 @@ IR::PublishesDef_var::operator const ::IR::PublishesDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::PublishesDef_var::operator ::IR::PublishesDef_ptr &() // cast 
+IR::PublishesDef_var::operator ::IR::PublishesDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -7746,7 +7785,7 @@ IR::PublishesDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::PublishesDef_out
+// Operations for class IR::PublishesDef_out
 // *************************************************************
 
 IR::PublishesDef_out::PublishesDef_out (PublishesDef_ptr &p)
@@ -7809,7 +7848,7 @@ IR::PublishesDef_out::operator-> (void)
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_PublishesDef_Proxy_Impl::_TAO_PublishesDef_Proxy_Impl (void)
@@ -7822,7 +7861,7 @@ IR::_TAO_PublishesDef_Remote_Proxy_Impl::_TAO_PublishesDef_Remote_Proxy_Impl (vo
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -7892,13 +7931,13 @@ IR::PublishesDef::IR_PublishesDef_setup_collocation (int collocated)
   else
     this->the_TAO_PublishesDef_Proxy_Broker_ =
       ::IR::_TAO_PublishesDef_Remote_Proxy_Broker::the_TAO_PublishesDef_Remote_Proxy_Broker ();
-  
+
   this->IR_EventDef_setup_collocation (collocated);
 }
 
-void IR::PublishesDef::_tao_any_destructor (void *x)
+void IR::PublishesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  PublishesDef *tmp = ACE_static_cast (PublishesDef*,x);
+  PublishesDef *tmp = ACE_static_cast (PublishesDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -7945,14 +7984,14 @@ IR::PublishesDef_ptr IR::PublishesDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           PublishesDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::PublishesDef (stub, 0, obj->_servant ()), PublishesDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -8035,7 +8074,7 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -8050,18 +8089,18 @@ static const CORBA::Long _oc_IR_PublishesDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x75626c69), 
-  ACE_NTOHL (0x73686573), 
-  ACE_NTOHL (0x4465663a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x75626c69),
+  ACE_NTOHL (0x73686573),
+  ACE_NTOHL (0x4465663a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/PublishesDef:1.0
   13,
-  ACE_NTOHL (0x5075626c), 
-  ACE_NTOHL (0x69736865), 
-  ACE_NTOHL (0x73446566), 
+  ACE_NTOHL (0x5075626c),
+  ACE_NTOHL (0x69736865),
+  ACE_NTOHL (0x73446566),
   ACE_NTOHL (0x0),  // name = PublishesDef
 };
 
@@ -8169,7 +8208,7 @@ IR::ConsumesDef_var::operator const ::IR::ConsumesDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::ConsumesDef_var::operator ::IR::ConsumesDef_ptr &() // cast 
+IR::ConsumesDef_var::operator ::IR::ConsumesDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -8245,7 +8284,7 @@ IR::ConsumesDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::ConsumesDef_out
+// Operations for class IR::ConsumesDef_out
 // *************************************************************
 
 IR::ConsumesDef_out::ConsumesDef_out (ConsumesDef_ptr &p)
@@ -8308,7 +8347,7 @@ IR::ConsumesDef_out::operator-> (void)
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_ConsumesDef_Proxy_Impl::_TAO_ConsumesDef_Proxy_Impl (void)
@@ -8321,7 +8360,7 @@ IR::_TAO_ConsumesDef_Remote_Proxy_Impl::_TAO_ConsumesDef_Remote_Proxy_Impl (void
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -8391,13 +8430,13 @@ IR::ConsumesDef::IR_ConsumesDef_setup_collocation (int collocated)
   else
     this->the_TAO_ConsumesDef_Proxy_Broker_ =
       ::IR::_TAO_ConsumesDef_Remote_Proxy_Broker::the_TAO_ConsumesDef_Remote_Proxy_Broker ();
-  
+
   this->IR_EventDef_setup_collocation (collocated);
 }
 
-void IR::ConsumesDef::_tao_any_destructor (void *x)
+void IR::ConsumesDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ConsumesDef *tmp = ACE_static_cast (ConsumesDef*,x);
+  ConsumesDef *tmp = ACE_static_cast (ConsumesDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -8444,14 +8483,14 @@ IR::ConsumesDef_ptr IR::ConsumesDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           ConsumesDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::ConsumesDef (stub, 0, obj->_servant ()), ConsumesDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -8534,7 +8573,7 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -8549,17 +8588,17 @@ static const CORBA::Long _oc_IR_ConsumesDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6e7375), 
-  ACE_NTOHL (0x6d657344), 
-  ACE_NTOHL (0x65663a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6e7375),
+  ACE_NTOHL (0x6d657344),
+  ACE_NTOHL (0x65663a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ConsumesDef:1.0
   12,
-  ACE_NTOHL (0x436f6e73), 
-  ACE_NTOHL (0x756d6573), 
+  ACE_NTOHL (0x436f6e73),
+  ACE_NTOHL (0x756d6573),
   ACE_NTOHL (0x44656600),  // name = ConsumesDef
 };
 
@@ -8667,7 +8706,7 @@ IR::ComponentDef_var::operator const ::IR::ComponentDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::ComponentDef_var::operator ::IR::ComponentDef_ptr &() // cast 
+IR::ComponentDef_var::operator ::IR::ComponentDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -8743,7 +8782,7 @@ IR::ComponentDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::ComponentDef_out
+// Operations for class IR::ComponentDef_out
 // *************************************************************
 
 IR::ComponentDef_out::ComponentDef_out (ComponentDef_ptr &p)
@@ -8809,24 +8848,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -8843,7 +8882,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -8856,7 +8895,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -8868,12 +8907,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -8882,17 +8921,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get::result (CORBA_InterfaceDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -8903,24 +8942,24 @@ public:
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const CORBA_InterfaceDefSeq & supported_interfaces,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -8930,14 +8969,14 @@ private:
   void operator= (const TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set &);
 
   const CORBA_InterfaceDefSeq & supported_interfaces_;
-  
+
 };
 
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
     const CORBA_InterfaceDefSeq & supported_interfaces,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     supported_interfaces_ (supported_interfaces)
@@ -8951,15 +8990,16 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::arguments (CORBA
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_supported_interfaces = parameter_list->length ();
-  parameter_list->length (length_supported_interfaces + 1);
-  (*parameter_list)[length_supported_interfaces].argument <<=  this->supported_interfaces_;
-  
-  (*parameter_list)[length_supported_interfaces].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<=  this->supported_interfaces_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -8971,12 +9011,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::exceptions (CORB
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -8985,7 +9025,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set::result (CORBA::E
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -8995,24 +9035,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_base_component_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9029,7 +9069,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::TAO_ClientRequestInfo_IR_ComponentDef_base_component_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9042,7 +9082,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::arguments (CORBA::Envi
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9054,12 +9094,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::exceptions (CORBA::Env
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9068,17 +9108,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::result (CORBA::Environ
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_base_component_get::result (IR::ComponentDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9088,24 +9128,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9122,7 +9162,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9135,7 +9175,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::arguments (CORBA:
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9147,12 +9187,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::exceptions (CORBA
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9161,17 +9201,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::result (CORBA::En
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get::result (IR::ProvidesDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9181,24 +9221,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9215,7 +9255,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9228,7 +9268,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::arguments (CORBA::Env
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9240,12 +9280,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::exceptions (CORBA::En
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9254,17 +9294,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::result (CORBA::Enviro
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get::result (IR::UsesDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9274,24 +9314,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9308,7 +9348,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9321,7 +9361,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::arguments (CORBA::Enviro
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9333,12 +9373,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::exceptions (CORBA::Envir
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9347,17 +9387,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::result (CORBA::Environme
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get::result (IR::EmitsDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9367,24 +9407,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9401,7 +9441,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9414,7 +9454,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::arguments (CORBA::En
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9426,12 +9466,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::exceptions (CORBA::E
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9440,17 +9480,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::result (CORBA::Envir
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get::result (IR::PublishesDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9460,24 +9500,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9494,7 +9534,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9507,7 +9547,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::arguments (CORBA::Env
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9519,12 +9559,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::exceptions (CORBA::En
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9533,17 +9573,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::result (CORBA::Enviro
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get::result (IR::ConsumesDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9553,24 +9593,24 @@ public:
   TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9587,7 +9627,7 @@ private:
 TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -9600,7 +9640,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::arguments (CORBA::Environmen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -9612,12 +9652,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::exceptions (CORBA::Environme
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9626,17 +9666,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Environment &
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get::result (CORBA::Boolean result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9650,24 +9690,24 @@ public:
       const char * name,
       const char * version,
       CORBA_InterfaceDef_ptr interface_type,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9692,7 +9732,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::TAO_ClientRequestInfo_IR_
     const char * name,
     const char * version,
     CORBA_InterfaceDef_ptr interface_type,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -9709,30 +9749,25 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::arguments (CORBA::Environ
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_interface_type = parameter_list->length ();
-  parameter_list->length (length_interface_type + 1);
-  (*parameter_list)[length_interface_type].argument <<=  this->interface_type_;
-  
-  (*parameter_list)[length_interface_type].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (4);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->interface_type_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -9744,12 +9779,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::exceptions (CORBA::Enviro
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_create_provides::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9758,17 +9793,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_provides::result (CORBA::Environmen
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_create_provides::result (IR::ProvidesDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9783,24 +9818,24 @@ public:
       const char * version,
       CORBA_InterfaceDef_ptr interface_type,
       const CORBA::Boolean & is_multiple,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9827,7 +9862,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::TAO_ClientRequestInfo_IR_Comp
     const char * version,
     CORBA_InterfaceDef_ptr interface_type,
     const CORBA::Boolean & is_multiple,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -9845,35 +9880,28 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::arguments (CORBA::Environment
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_interface_type = parameter_list->length ();
-  parameter_list->length (length_interface_type + 1);
-  (*parameter_list)[length_interface_type].argument <<=  this->interface_type_;
-  
-  (*parameter_list)[length_interface_type].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_is_multiple = parameter_list->length ();
-  parameter_list->length (length_is_multiple + 1);
-  (*parameter_list)[length_is_multiple].argument <<= CORBA::Any::from_boolean (this->is_multiple_);
-  (*parameter_list)[length_is_multiple].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (5);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->interface_type_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= CORBA::Any::from_boolean (this->is_multiple_);
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -9885,12 +9913,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::exceptions (CORBA::Environmen
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_create_uses::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -9899,17 +9927,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_uses::result (CORBA::Environment &A
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_create_uses::result (IR::UsesDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -9923,24 +9951,24 @@ public:
       const char * name,
       const char * version,
       CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -9965,7 +9993,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::TAO_ClientRequestInfo_IR_Com
     const char * name,
     const char * version,
     CORBA_ValueDef_ptr value,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -9982,30 +10010,25 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::arguments (CORBA::Environmen
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_value = parameter_list->length ();
-  parameter_list->length (length_value + 1);
-  (*parameter_list)[length_value].argument <<=  this->value_;
-  
-  (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (4);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->value_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -10017,12 +10040,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::exceptions (CORBA::Environme
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_create_emits::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -10031,17 +10054,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_emits::result (CORBA::Environment &
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_create_emits::result (IR::EmitsDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -10055,24 +10078,24 @@ public:
       const char * name,
       const char * version,
       CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -10097,7 +10120,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::TAO_ClientRequestInfo_IR
     const char * name,
     const char * version,
     CORBA_ValueDef_ptr value,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -10114,30 +10137,25 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::arguments (CORBA::Enviro
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_value = parameter_list->length ();
-  parameter_list->length (length_value + 1);
-  (*parameter_list)[length_value].argument <<=  this->value_;
-  
-  (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (4);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->value_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -10149,12 +10167,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::exceptions (CORBA::Envir
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -10163,17 +10181,17 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::result (CORBA::Environme
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_create_publishes::result (IR::PublishesDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -10187,24 +10205,24 @@ public:
       const char * name,
       const char * version,
       CORBA_ValueDef_ptr value,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -10229,7 +10247,7 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::TAO_ClientRequestInfo_IR_
     const char * name,
     const char * version,
     CORBA_ValueDef_ptr value,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -10246,30 +10264,25 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::arguments (CORBA::Environ
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_value = parameter_list->length ();
-  parameter_list->length (length_value + 1);
-  (*parameter_list)[length_value].argument <<=  this->value_;
-  
-  (*parameter_list)[length_value].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (4);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->value_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -10281,12 +10294,12 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::exceptions (CORBA::Enviro
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -10295,24 +10308,24 @@ TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::result (CORBA::Environmen
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_ComponentDef_create_consumes::result (IR::ConsumesDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_ComponentDef_Proxy_Impl::_TAO_ComponentDef_Proxy_Impl (void)
@@ -10331,15 +10344,15 @@ CORBA_InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inter
     CORBA::SystemException
   ))
 {
-  
+
   CORBA_InterfaceDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, CORBA_InterfaceDefSeq, _tao_retval);
   CORBA_InterfaceDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10350,17 +10363,21 @@ CORBA_InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inter
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_get ri (
         &_tao_call,
@@ -10368,43 +10385,66 @@ CORBA_InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inter
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -10414,74 +10454,55 @@ CORBA_InterfaceDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_inter
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA_InterfaceDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA_InterfaceDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
@@ -10493,15 +10514,15 @@ void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_supported_interfaces",
@@ -10510,17 +10531,21 @@ void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_supported_interfaces_set ri (
         &_tao_call,
@@ -10529,31 +10554,40 @@ void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
         ACE_TRY_ENV
       );
       ACE_CHECK;
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK;
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK;
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK;
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << supported_interfaces)
@@ -10561,79 +10595,76 @@ void IR::_TAO_ComponentDef_Remote_Proxy_Impl::supported_interfaces (
             TAO_INTERCEPTOR_THROW (
               CORBA::MARSHAL ()
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK;
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
               );
-              
+
             }
-          
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
                 _tao_vfr.receive_other (
                   &ri,
                   ACE_TRY_ENV
                 );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK;
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK;
-      
-#endif /* TAO_HAS_INTERCEPTORS */
+                ACE_TRY_CHECK;
+              )
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  
+              continue;
+            }
+
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK;
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK;
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+
 }
 
 IR::ComponentDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::base_component (
@@ -10644,16 +10675,16 @@ IR::ComponentDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::base_component (
     CORBA::SystemException
   ))
 {
-  
+
   IR::ComponentDef_ptr _tao_retval = IR::ComponentDef::_nil ();
   IR::ComponentDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_base_component",
@@ -10662,17 +10693,21 @@ IR::ComponentDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::base_component (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_base_component_get ri (
         &_tao_call,
@@ -10680,43 +10715,66 @@ IR::ComponentDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::base_component (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -10726,74 +10784,55 @@ IR::ComponentDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::base_component (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::ProvidesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::provides_interfaces (
@@ -10804,15 +10843,15 @@ IR::ProvidesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::provides_interface
     CORBA::SystemException
   ))
 {
-  
+
   IR::ProvidesDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::ProvidesDefSeq, _tao_retval);
   IR::ProvidesDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10823,17 +10862,21 @@ IR::ProvidesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::provides_interface
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_provides_interfaces_get ri (
         &_tao_call,
@@ -10841,43 +10884,66 @@ IR::ProvidesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::provides_interface
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -10887,74 +10953,55 @@ IR::ProvidesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::provides_interface
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ProvidesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ProvidesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::UsesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::uses_interfaces (
@@ -10965,15 +11012,15 @@ IR::UsesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::uses_interfaces (
     CORBA::SystemException
   ))
 {
-  
+
   IR::UsesDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::UsesDefSeq, _tao_retval);
   IR::UsesDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -10984,17 +11031,21 @@ IR::UsesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::uses_interfaces (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_uses_interfaces_get ri (
         &_tao_call,
@@ -11002,43 +11053,66 @@ IR::UsesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::uses_interfaces (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -11048,74 +11122,55 @@ IR::UsesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::uses_interfaces (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::UsesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::UsesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::EmitsDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::emits_events (
@@ -11126,15 +11181,15 @@ IR::EmitsDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::emits_events (
     CORBA::SystemException
   ))
 {
-  
+
   IR::EmitsDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::EmitsDefSeq, _tao_retval);
   IR::EmitsDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11145,17 +11200,21 @@ IR::EmitsDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::emits_events (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_emits_events_get ri (
         &_tao_call,
@@ -11163,43 +11222,66 @@ IR::EmitsDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::emits_events (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -11209,74 +11291,55 @@ IR::EmitsDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::emits_events (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::EmitsDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::EmitsDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::PublishesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::publishes_events (
@@ -11287,15 +11350,15 @@ IR::PublishesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::publishes_events 
     CORBA::SystemException
   ))
 {
-  
+
   IR::PublishesDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::PublishesDefSeq, _tao_retval);
   IR::PublishesDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11306,17 +11369,21 @@ IR::PublishesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::publishes_events 
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_publishes_events_get ri (
         &_tao_call,
@@ -11324,43 +11391,66 @@ IR::PublishesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::publishes_events 
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -11370,74 +11460,55 @@ IR::PublishesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::publishes_events 
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::PublishesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::PublishesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::ConsumesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::consumes_events (
@@ -11448,15 +11519,15 @@ IR::ConsumesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::consumes_events (
     CORBA::SystemException
   ))
 {
-  
+
   IR::ConsumesDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::ConsumesDefSeq, _tao_retval);
   IR::ConsumesDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -11467,17 +11538,21 @@ IR::ConsumesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::consumes_events (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_consumes_events_get ri (
         &_tao_call,
@@ -11485,43 +11560,66 @@ IR::ConsumesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::consumes_events (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -11531,74 +11629,55 @@ IR::ConsumesDefSeq * IR::_TAO_ComponentDef_Remote_Proxy_Impl::consumes_events (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ConsumesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ConsumesDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 CORBA::Boolean IR::_TAO_ComponentDef_Remote_Proxy_Impl::is_basic (
@@ -11609,15 +11688,15 @@ CORBA::Boolean IR::_TAO_ComponentDef_Remote_Proxy_Impl::is_basic (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_is_basic",
@@ -11626,17 +11705,21 @@ CORBA::Boolean IR::_TAO_ComponentDef_Remote_Proxy_Impl::is_basic (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_is_basic_get ri (
         &_tao_call,
@@ -11644,43 +11727,66 @@ CORBA::Boolean IR::_TAO_ComponentDef_Remote_Proxy_Impl::is_basic (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN  (_tao_retval);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
@@ -11690,73 +11796,54 @@ CORBA::Boolean IR::_TAO_ComponentDef_Remote_Proxy_Impl::is_basic (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA::Boolean  _tao_retval_info = _tao_retval;
-               ri.result (_tao_retval_info);
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN  (_tao_retval);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_retval;
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA::Boolean _tao_retval_info = _tao_retval;
+          ri.result (_tao_retval_info);
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_retval;
 }
 
 IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
@@ -11771,16 +11858,16 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
     CORBA::SystemException
   ))
 {
-  
+
   IR::ProvidesDef_ptr _tao_retval = IR::ProvidesDef::_nil ();
   IR::ProvidesDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_provides",
@@ -11789,17 +11876,21 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_create_provides ri (
         &_tao_call,
@@ -11811,31 +11902,40 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -11847,20 +11947,33 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -11870,74 +11983,55 @@ IR::ProvidesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_provides (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ProvidesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ProvidesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
@@ -11953,16 +12047,16 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
     CORBA::SystemException
   ))
 {
-  
+
   IR::UsesDef_ptr _tao_retval = IR::UsesDef::_nil ();
   IR::UsesDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_uses",
@@ -11971,17 +12065,21 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_create_uses ri (
         &_tao_call,
@@ -11994,31 +12092,40 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -12031,20 +12138,33 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -12054,74 +12174,55 @@ IR::UsesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_uses (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::UsesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::UsesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
@@ -12136,16 +12237,16 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
     CORBA::SystemException
   ))
 {
-  
+
   IR::EmitsDef_ptr _tao_retval = IR::EmitsDef::_nil ();
   IR::EmitsDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_emits",
@@ -12154,17 +12255,21 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_create_emits ri (
         &_tao_call,
@@ -12176,31 +12281,40 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -12212,20 +12326,33 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -12235,74 +12362,55 @@ IR::EmitsDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_emits (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::EmitsDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::EmitsDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
@@ -12317,16 +12425,16 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
     CORBA::SystemException
   ))
 {
-  
+
   IR::PublishesDef_ptr _tao_retval = IR::PublishesDef::_nil ();
   IR::PublishesDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_publishes",
@@ -12335,17 +12443,21 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_create_publishes ri (
         &_tao_call,
@@ -12357,31 +12469,40 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -12393,20 +12514,33 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -12416,74 +12550,55 @@ IR::PublishesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_publishes (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::PublishesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::PublishesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
@@ -12498,16 +12613,16 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
     CORBA::SystemException
   ))
 {
-  
+
   IR::ConsumesDef_ptr _tao_retval = IR::ConsumesDef::_nil ();
   IR::ConsumesDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_consumes",
@@ -12516,17 +12631,21 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_ComponentDef_create_consumes ri (
         &_tao_call,
@@ -12538,31 +12657,40 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -12574,20 +12702,33 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -12597,79 +12738,60 @@ IR::ConsumesDef_ptr IR::_TAO_ComponentDef_Remote_Proxy_Impl::create_consumes (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ConsumesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ConsumesDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -12739,13 +12861,13 @@ IR::ComponentDef::IR_ComponentDef_setup_collocation (int collocated)
   else
     this->the_TAO_ComponentDef_Proxy_Broker_ =
       ::IR::_TAO_ComponentDef_Remote_Proxy_Broker::the_TAO_ComponentDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_InterfaceDef_setup_collocation (collocated);
 }
 
-void IR::ComponentDef::_tao_any_destructor (void *x)
+void IR::ComponentDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ComponentDef *tmp = ACE_static_cast (ComponentDef*,x);
+  ComponentDef *tmp = ACE_static_cast (ComponentDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -12792,14 +12914,14 @@ IR::ComponentDef_ptr IR::ComponentDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           ComponentDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::ComponentDef (stub, 0, obj->_servant ()), ComponentDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -12908,7 +13030,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -12926,10 +13048,10 @@ CORBA_InterfaceDefSeq * IR::ComponentDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.supported_interfaces (
       this,
       ACE_TRY_ENV
@@ -12944,10 +13066,10 @@ void IR::ComponentDef::supported_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   proxy.supported_interfaces (
       this,
       supported_interfaces,
@@ -12962,10 +13084,10 @@ IR::ComponentDef_ptr IR::ComponentDef::base_component (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.base_component (
       this,
       ACE_TRY_ENV
@@ -12979,10 +13101,10 @@ IR::ProvidesDefSeq * IR::ComponentDef::provides_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.provides_interfaces (
       this,
       ACE_TRY_ENV
@@ -12996,10 +13118,10 @@ IR::UsesDefSeq * IR::ComponentDef::uses_interfaces (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.uses_interfaces (
       this,
       ACE_TRY_ENV
@@ -13013,10 +13135,10 @@ IR::EmitsDefSeq * IR::ComponentDef::emits_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.emits_events (
       this,
       ACE_TRY_ENV
@@ -13030,10 +13152,10 @@ IR::PublishesDefSeq * IR::ComponentDef::publishes_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.publishes_events (
       this,
       ACE_TRY_ENV
@@ -13047,10 +13169,10 @@ IR::ConsumesDefSeq * IR::ComponentDef::consumes_events (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.consumes_events (
       this,
       ACE_TRY_ENV
@@ -13064,10 +13186,10 @@ CORBA::Boolean IR::ComponentDef::is_basic (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.is_basic (
       this,
       ACE_TRY_ENV
@@ -13085,10 +13207,10 @@ IR::ProvidesDef_ptr IR::ComponentDef::create_provides (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_provides (
       this,
       id,
@@ -13111,10 +13233,10 @@ IR::UsesDef_ptr IR::ComponentDef::create_uses (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_uses (
       this,
       id,
@@ -13137,10 +13259,10 @@ IR::EmitsDef_ptr IR::ComponentDef::create_emits (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_emits (
       this,
       id,
@@ -13162,10 +13284,10 @@ IR::PublishesDef_ptr IR::ComponentDef::create_publishes (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_publishes (
       this,
       id,
@@ -13187,10 +13309,10 @@ IR::ConsumesDef_ptr IR::ComponentDef::create_consumes (
     CORBA::SystemException
   ))
 {
-  _TAO_ComponentDef_Proxy_Impl &proxy = 
+  _TAO_ComponentDef_Proxy_Impl &proxy =
     this->the_TAO_ComponentDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_consumes (
       this,
       id,
@@ -13205,18 +13327,18 @@ static const CORBA::Long _oc_IR_ComponentDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
-  ACE_NTOHL (0x4465663a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6d706f),
+  ACE_NTOHL (0x6e656e74),
+  ACE_NTOHL (0x4465663a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/ComponentDef:1.0
   13,
-  ACE_NTOHL (0x436f6d70), 
-  ACE_NTOHL (0x6f6e656e), 
-  ACE_NTOHL (0x74446566), 
+  ACE_NTOHL (0x436f6d70),
+  ACE_NTOHL (0x6f6e656e),
+  ACE_NTOHL (0x74446566),
   ACE_NTOHL (0x0),  // name = ComponentDef
 };
 
@@ -13237,44 +13359,44 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f43), 
-  ACE_NTOHL (0x6f6d706f), 
-  ACE_NTOHL (0x6e656e74), 
-  ACE_NTOHL (0x44657363), 
-  ACE_NTOHL (0x72697074), 
-  ACE_NTOHL (0x696f6e3a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f43),
+  ACE_NTOHL (0x6f6d706f),
+  ACE_NTOHL (0x6e656e74),
+  ACE_NTOHL (0x44657363),
+  ACE_NTOHL (0x72697074),
+  ACE_NTOHL (0x696f6e3a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/ComponentDescription:1.0
   21,
-  ACE_NTOHL (0x436f6d70), 
-  ACE_NTOHL (0x6f6e656e), 
-  ACE_NTOHL (0x74446573), 
-  ACE_NTOHL (0x63726970), 
-  ACE_NTOHL (0x74696f6e), 
+  ACE_NTOHL (0x436f6d70),
+  ACE_NTOHL (0x6f6e656e),
+  ACE_NTOHL (0x74446573),
+  ACE_NTOHL (0x63726970),
+  ACE_NTOHL (0x74696f6e),
   ACE_NTOHL (0x0),  // name = ComponentDescription
   13, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -13283,116 +13405,116 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   15,
-  ACE_NTOHL (0x62617365), 
-  ACE_NTOHL (0x5f636f6d), 
-  ACE_NTOHL (0x706f6e65), 
+  ACE_NTOHL (0x62617365),
+  ACE_NTOHL (0x5f636f6d),
+  ACE_NTOHL (0x706f6e65),
   ACE_NTOHL (0x6e740000),  // name = base_component
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   20,
-  ACE_NTOHL (0x73757070), 
-  ACE_NTOHL (0x6f727473), 
-  ACE_NTOHL (0x5f696e74), 
-  ACE_NTOHL (0x65726661), 
+  ACE_NTOHL (0x73757070),
+  ACE_NTOHL (0x6f727473),
+  ACE_NTOHL (0x5f696e74),
+  ACE_NTOHL (0x65726661),
   ACE_NTOHL (0x63657300),  // name = supports_interfaces
   CORBA::tk_alias, // typecode kind for typedefs
   156, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x79496453), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x79496453),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/RepositoryIdSeq:1.0
     16,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x53657100),  // name = RepositoryIdSeq
     CORBA::tk_sequence, // typecode kind
     84, // encapsulation length
@@ -13401,48 +13523,48 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       68, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f52), 
-        ACE_NTOHL (0x65706f73), 
-        ACE_NTOHL (0x69746f72), 
-        ACE_NTOHL (0x7949643a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f52),
+        ACE_NTOHL (0x65706f73),
+        ACE_NTOHL (0x69746f72),
+        ACE_NTOHL (0x7949643a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
         13,
-        ACE_NTOHL (0x5265706f), 
-        ACE_NTOHL (0x7369746f), 
-        ACE_NTOHL (0x72794964), 
+        ACE_NTOHL (0x5265706f),
+        ACE_NTOHL (0x7369746f),
+        ACE_NTOHL (0x72794964),
         ACE_NTOHL (0x0),  // name = RepositoryId
-        CORBA::tk_string, 
+        CORBA::tk_string,
         0U, // string length
 
       0U,
 
 
   20,
-  ACE_NTOHL (0x70726f76), 
-  ACE_NTOHL (0x69646573), 
-  ACE_NTOHL (0x5f696e74), 
-  ACE_NTOHL (0x65726661), 
+  ACE_NTOHL (0x70726f76),
+  ACE_NTOHL (0x69646573),
+  ACE_NTOHL (0x5f696e74),
+  ACE_NTOHL (0x65726661),
   ACE_NTOHL (0x63657300),  // name = provides_interfaces
   CORBA::tk_alias, // typecode kind for typedefs
   144, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     34,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f50), 
-    ACE_NTOHL (0x726f7669), 
-    ACE_NTOHL (0x64657344), 
-    ACE_NTOHL (0x65665365), 
-    ACE_NTOHL (0x713a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f50),
+    ACE_NTOHL (0x726f7669),
+    ACE_NTOHL (0x64657344),
+    ACE_NTOHL (0x65665365),
+    ACE_NTOHL (0x713a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/ProvidesDefSeq:1.0
     15,
-    ACE_NTOHL (0x50726f76), 
-    ACE_NTOHL (0x69646573), 
-    ACE_NTOHL (0x44656653), 
+    ACE_NTOHL (0x50726f76),
+    ACE_NTOHL (0x69646573),
+    ACE_NTOHL (0x44656653),
     ACE_NTOHL (0x65710000),  // name = ProvidesDefSeq
     CORBA::tk_sequence, // typecode kind
     72, // encapsulation length
@@ -13451,42 +13573,42 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       56, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         31,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f50), 
-        ACE_NTOHL (0x726f7669), 
-        ACE_NTOHL (0x64657344), 
-        ACE_NTOHL (0x65663a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f50),
+        ACE_NTOHL (0x726f7669),
+        ACE_NTOHL (0x64657344),
+        ACE_NTOHL (0x65663a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ProvidesDef:1.0
         12,
-        ACE_NTOHL (0x50726f76), 
-        ACE_NTOHL (0x69646573), 
+        ACE_NTOHL (0x50726f76),
+        ACE_NTOHL (0x69646573),
         ACE_NTOHL (0x44656600),  // name = ProvidesDef
 
       0U,
 
 
   16,
-  ACE_NTOHL (0x75736573), 
-  ACE_NTOHL (0x5f696e74), 
-  ACE_NTOHL (0x65726661), 
+  ACE_NTOHL (0x75736573),
+  ACE_NTOHL (0x5f696e74),
+  ACE_NTOHL (0x65726661),
   ACE_NTOHL (0x63657300),  // name = uses_interfaces
   CORBA::tk_alias, // typecode kind for typedefs
   128, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f55), 
-    ACE_NTOHL (0x73657344), 
-    ACE_NTOHL (0x65665365), 
-    ACE_NTOHL (0x713a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f55),
+    ACE_NTOHL (0x73657344),
+    ACE_NTOHL (0x65665365),
+    ACE_NTOHL (0x713a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/UsesDefSeq:1.0
     11,
-    ACE_NTOHL (0x55736573), 
-    ACE_NTOHL (0x44656653), 
+    ACE_NTOHL (0x55736573),
+    ACE_NTOHL (0x44656653),
     ACE_NTOHL (0x65710000),  // name = UsesDefSeq
     CORBA::tk_sequence, // typecode kind
     64, // encapsulation length
@@ -13495,44 +13617,44 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       48, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         27,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f55), 
-        ACE_NTOHL (0x73657344), 
-        ACE_NTOHL (0x65663a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f55),
+        ACE_NTOHL (0x73657344),
+        ACE_NTOHL (0x65663a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/UsesDef:1.0
         8,
-        ACE_NTOHL (0x55736573), 
+        ACE_NTOHL (0x55736573),
         ACE_NTOHL (0x44656600),  // name = UsesDef
 
       0U,
 
 
   11,
-  ACE_NTOHL (0x61747472), 
-  ACE_NTOHL (0x69627574), 
+  ACE_NTOHL (0x61747472),
+  ACE_NTOHL (0x69627574),
   ACE_NTOHL (0x65730000),  // name = attributes
   CORBA::tk_alias, // typecode kind for typedefs
   1852, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     41,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4174), 
-    ACE_NTOHL (0x74724465), 
-    ACE_NTOHL (0x73637269), 
-    ACE_NTOHL (0x7074696f), 
-    ACE_NTOHL (0x6e536571), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4174),
+    ACE_NTOHL (0x74724465),
+    ACE_NTOHL (0x73637269),
+    ACE_NTOHL (0x7074696f),
+    ACE_NTOHL (0x6e536571),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/AttrDescriptionSeq:1.0
     19,
-    ACE_NTOHL (0x41747472), 
-    ACE_NTOHL (0x44657363), 
-    ACE_NTOHL (0x72697074), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x41747472),
+    ACE_NTOHL (0x44657363),
+    ACE_NTOHL (0x72697074),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x65710000),  // name = AttrDescriptionSeq
     CORBA::tk_sequence, // typecode kind
     1768, // encapsulation length
@@ -13541,47 +13663,47 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       1752, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4174), 
-        ACE_NTOHL (0x74726962), 
-        ACE_NTOHL (0x75746544), 
-        ACE_NTOHL (0x65736372), 
-        ACE_NTOHL (0x69707469), 
-        ACE_NTOHL (0x6f6e3a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f4174),
+        ACE_NTOHL (0x74726962),
+        ACE_NTOHL (0x75746544),
+        ACE_NTOHL (0x65736372),
+        ACE_NTOHL (0x69707469),
+        ACE_NTOHL (0x6f6e3a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AttributeDescription:1.0
         21,
-        ACE_NTOHL (0x41747472), 
-        ACE_NTOHL (0x69627574), 
-        ACE_NTOHL (0x65446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
+        ACE_NTOHL (0x41747472),
+        ACE_NTOHL (0x69627574),
+        ACE_NTOHL (0x65446573),
+        ACE_NTOHL (0x63726970),
+        ACE_NTOHL (0x74696f6e),
         ACE_NTOHL (0x0),  // name = AttributeDescription
         8, // member count
         5,
-        ACE_NTOHL (0x6e616d65), 
+        ACE_NTOHL (0x6e616d65),
         ACE_NTOHL (0x0),  // name = name
         CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4964),
+          ACE_NTOHL (0x656e7469),
+          ACE_NTOHL (0x66696572),
+          ACE_NTOHL (0x3a312e30),
           ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
           11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
+          ACE_NTOHL (0x4964656e),
+          ACE_NTOHL (0x74696669),
           ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
         3,
         ACE_NTOHL (0x69640000),  // name = id
@@ -13589,255 +13711,255 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
         72, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
           13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
+          ACE_NTOHL (0x5265706f),
+          ACE_NTOHL (0x7369746f),
+          ACE_NTOHL (0x72794964),
           ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
         11,
-        ACE_NTOHL (0x64656669), 
-        ACE_NTOHL (0x6e65645f), 
+        ACE_NTOHL (0x64656669),
+        ACE_NTOHL (0x6e65645f),
         ACE_NTOHL (0x696e0000),  // name = defined_in
         CORBA::tk_alias, // typecode kind for typedefs
         72, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
           13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
+          ACE_NTOHL (0x5265706f),
+          ACE_NTOHL (0x7369746f),
+          ACE_NTOHL (0x72794964),
           ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
         8,
-        ACE_NTOHL (0x76657273), 
+        ACE_NTOHL (0x76657273),
         ACE_NTOHL (0x696f6e00),  // name = version
         CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5665),
+          ACE_NTOHL (0x7273696f),
+          ACE_NTOHL (0x6e537065),
+          ACE_NTOHL (0x633a312e),
           ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
           12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
+          ACE_NTOHL (0x56657273),
+          ACE_NTOHL (0x696f6e53),
           ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
-          0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
         5,
-        ACE_NTOHL (0x74797065), 
+        ACE_NTOHL (0x74797065),
         ACE_NTOHL (0x0),  // name = type
         CORBA::tk_TypeCode,
 
         5,
-        ACE_NTOHL (0x6d6f6465), 
+        ACE_NTOHL (0x6d6f6465),
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
         104, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4174), 
-          ACE_NTOHL (0x74726962), 
-          ACE_NTOHL (0x7574654d), 
-          ACE_NTOHL (0x6f64653a), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4174),
+          ACE_NTOHL (0x74726962),
+          ACE_NTOHL (0x7574654d),
+          ACE_NTOHL (0x6f64653a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/AttributeMode:1.0
           14,
-          ACE_NTOHL (0x41747472), 
-          ACE_NTOHL (0x69627574), 
-          ACE_NTOHL (0x654d6f64), 
+          ACE_NTOHL (0x41747472),
+          ACE_NTOHL (0x69627574),
+          ACE_NTOHL (0x654d6f64),
           ACE_NTOHL (0x65000000),  // name = AttributeMode
           2, // member count
           12,
-          ACE_NTOHL (0x41545452), 
-          ACE_NTOHL (0x5f4e4f52), 
+          ACE_NTOHL (0x41545452),
+          ACE_NTOHL (0x5f4e4f52),
           ACE_NTOHL (0x4d414c00),  // name = ATTR_NORMAL
           14,
-          ACE_NTOHL (0x41545452), 
-          ACE_NTOHL (0x5f524541), 
-          ACE_NTOHL (0x444f4e4c), 
+          ACE_NTOHL (0x41545452),
+          ACE_NTOHL (0x5f524541),
+          ACE_NTOHL (0x444f4e4c),
           ACE_NTOHL (0x59000000),  // name = ATTR_READONLY
 
         15,
-        ACE_NTOHL (0x6765745f), 
-        ACE_NTOHL (0x65786365), 
-        ACE_NTOHL (0x7074696f), 
+        ACE_NTOHL (0x6765745f),
+        ACE_NTOHL (0x65786365),
+        ACE_NTOHL (0x7074696f),
         ACE_NTOHL (0x6e730000),  // name = get_exceptions
-        CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
         556, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
-          ACE_NTOHL (0x63446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4578),
+          ACE_NTOHL (0x63446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
           18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
+          ACE_NTOHL (0x45786344),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
           ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
-          CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
           476, // encapsulation length
-            TAO_ENCAP_BYTE_ORDER, // byte order
+      TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
             460, // encapsulation length
-              TAO_ENCAP_BYTE_ORDER, // byte order
+        TAO_ENCAP_BYTE_ORDER, // byte order
               43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
-              ACE_NTOHL (0x63657074), 
-              ACE_NTOHL (0x696f6e44), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f4578),
+              ACE_NTOHL (0x63657074),
+              ACE_NTOHL (0x696f6e44),
+              ACE_NTOHL (0x65736372),
+              ACE_NTOHL (0x69707469),
+              ACE_NTOHL (0x6f6e3a31),
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
               21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
+              ACE_NTOHL (0x45786365),
+              ACE_NTOHL (0x7074696f),
+              ACE_NTOHL (0x6e446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
               ACE_NTOHL (0x0),  // name = ExceptionDescription
               5, // member count
               5,
-              ACE_NTOHL (0x6e616d65), 
+              ACE_NTOHL (0x6e616d65),
               ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
                 33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
                 11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               3,
               ACE_NTOHL (0x69640000),  // name = id
               CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
+        TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-                13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+        13,
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               11,
-              ACE_NTOHL (0x64656669), 
-              ACE_NTOHL (0x6e65645f), 
+              ACE_NTOHL (0x64656669),
+              ACE_NTOHL (0x6e65645f),
               ACE_NTOHL (0x696e0000),  // name = defined_in
-              CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               8,
-              ACE_NTOHL (0x76657273), 
+              ACE_NTOHL (0x76657273),
               ACE_NTOHL (0x696f6e00),  // name = version
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5665),
+                ACE_NTOHL (0x7273696f),
+                ACE_NTOHL (0x6e537065),
+                ACE_NTOHL (0x633a312e),
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
                 12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
+                ACE_NTOHL (0x56657273),
+                ACE_NTOHL (0x696f6e53),
                 ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               5,
-              ACE_NTOHL (0x74797065), 
+              ACE_NTOHL (0x74797065),
               ACE_NTOHL (0x0),  // name = type
               CORBA::tk_TypeCode,
 
@@ -13846,29 +13968,29 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
 
 
         15,
-        ACE_NTOHL (0x7075745f), 
-        ACE_NTOHL (0x65786365), 
-        ACE_NTOHL (0x7074696f), 
+        ACE_NTOHL (0x7075745f),
+        ACE_NTOHL (0x65786365),
+        ACE_NTOHL (0x7074696f),
         ACE_NTOHL (0x6e730000),  // name = put_exceptions
         CORBA::tk_alias, // typecode kind for typedefs
         556, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
-          ACE_NTOHL (0x63446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4578),
+          ACE_NTOHL (0x63446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
           18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
+          ACE_NTOHL (0x45786344),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
           ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
           CORBA::tk_sequence, // typecode kind
           476, // encapsulation length
@@ -13877,46 +13999,46 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
             460, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
-              ACE_NTOHL (0x63657074), 
-              ACE_NTOHL (0x696f6e44), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
+              ACE_NTOHL (0x49444c3a),
+              ACE_NTOHL (0x6f6d672e),
+              ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f4578),
+              ACE_NTOHL (0x63657074),
+              ACE_NTOHL (0x696f6e44),
+              ACE_NTOHL (0x65736372),
+              ACE_NTOHL (0x69707469),
+              ACE_NTOHL (0x6f6e3a31),
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
               21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
+              ACE_NTOHL (0x45786365),
+              ACE_NTOHL (0x7074696f),
+              ACE_NTOHL (0x6e446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
               ACE_NTOHL (0x0),  // name = ExceptionDescription
               5, // member count
               5,
-              ACE_NTOHL (0x6e616d65), 
+              ACE_NTOHL (0x6e616d65),
               ACE_NTOHL (0x0),  // name = name
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
                 11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               3,
@@ -13925,73 +14047,73 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               11,
-              ACE_NTOHL (0x64656669), 
-              ACE_NTOHL (0x6e65645f), 
+              ACE_NTOHL (0x64656669),
+              ACE_NTOHL (0x6e65645f),
               ACE_NTOHL (0x696e0000),  // name = defined_in
               CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               8,
-              ACE_NTOHL (0x76657273), 
+              ACE_NTOHL (0x76657273),
               ACE_NTOHL (0x696f6e00),  // name = version
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5665),
+                ACE_NTOHL (0x7273696f),
+                ACE_NTOHL (0x6e537065),
+                ACE_NTOHL (0x633a312e),
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
                 12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
+                ACE_NTOHL (0x56657273),
+                ACE_NTOHL (0x696f6e53),
                 ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               5,
-              ACE_NTOHL (0x74797065), 
+              ACE_NTOHL (0x74797065),
               ACE_NTOHL (0x0),  // name = type
               CORBA::tk_TypeCode,
 
@@ -14004,25 +14126,25 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
 
 
   13,
-  ACE_NTOHL (0x656d6974), 
-  ACE_NTOHL (0x735f6576), 
-  ACE_NTOHL (0x656e7473), 
+  ACE_NTOHL (0x656d6974),
+  ACE_NTOHL (0x735f6576),
+  ACE_NTOHL (0x656e7473),
   ACE_NTOHL (0x0),  // name = emits_events
   CORBA::tk_alias, // typecode kind for typedefs
   132, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f45), 
-    ACE_NTOHL (0x6d697473), 
-    ACE_NTOHL (0x44656653), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f45),
+    ACE_NTOHL (0x6d697473),
+    ACE_NTOHL (0x44656653),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/EmitsDefSeq:1.0
     12,
-    ACE_NTOHL (0x456d6974), 
-    ACE_NTOHL (0x73446566), 
+    ACE_NTOHL (0x456d6974),
+    ACE_NTOHL (0x73446566),
     ACE_NTOHL (0x53657100),  // name = EmitsDefSeq
     CORBA::tk_sequence, // typecode kind
     68, // encapsulation length
@@ -14031,44 +14153,44 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       52, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         28,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f45), 
-        ACE_NTOHL (0x6d697473), 
-        ACE_NTOHL (0x4465663a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f45),
+        ACE_NTOHL (0x6d697473),
+        ACE_NTOHL (0x4465663a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/EmitsDef:1.0
         9,
-        ACE_NTOHL (0x456d6974), 
-        ACE_NTOHL (0x73446566), 
+        ACE_NTOHL (0x456d6974),
+        ACE_NTOHL (0x73446566),
         ACE_NTOHL (0x0),  // name = EmitsDef
 
       0U,
 
 
   17,
-  ACE_NTOHL (0x7075626c), 
-  ACE_NTOHL (0x69736865), 
-  ACE_NTOHL (0x735f6576), 
-  ACE_NTOHL (0x656e7473), 
+  ACE_NTOHL (0x7075626c),
+  ACE_NTOHL (0x69736865),
+  ACE_NTOHL (0x735f6576),
+  ACE_NTOHL (0x656e7473),
   ACE_NTOHL (0x0),  // name = publishes_events
   CORBA::tk_alias, // typecode kind for typedefs
   148, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f50), 
-    ACE_NTOHL (0x75626c69), 
-    ACE_NTOHL (0x73686573), 
-    ACE_NTOHL (0x44656653), 
-    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f50),
+    ACE_NTOHL (0x75626c69),
+    ACE_NTOHL (0x73686573),
+    ACE_NTOHL (0x44656653),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/PublishesDefSeq:1.0
     16,
-    ACE_NTOHL (0x5075626c), 
-    ACE_NTOHL (0x69736865), 
-    ACE_NTOHL (0x73446566), 
+    ACE_NTOHL (0x5075626c),
+    ACE_NTOHL (0x69736865),
+    ACE_NTOHL (0x73446566),
     ACE_NTOHL (0x53657100),  // name = PublishesDefSeq
     CORBA::tk_sequence, // typecode kind
     76, // encapsulation length
@@ -14077,45 +14199,45 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f50), 
-        ACE_NTOHL (0x75626c69), 
-        ACE_NTOHL (0x73686573), 
-        ACE_NTOHL (0x4465663a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f50),
+        ACE_NTOHL (0x75626c69),
+        ACE_NTOHL (0x73686573),
+        ACE_NTOHL (0x4465663a),
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/PublishesDef:1.0
         13,
-        ACE_NTOHL (0x5075626c), 
-        ACE_NTOHL (0x69736865), 
-        ACE_NTOHL (0x73446566), 
+        ACE_NTOHL (0x5075626c),
+        ACE_NTOHL (0x69736865),
+        ACE_NTOHL (0x73446566),
         ACE_NTOHL (0x0),  // name = PublishesDef
 
       0U,
 
 
   16,
-  ACE_NTOHL (0x636f6e73), 
-  ACE_NTOHL (0x756d6573), 
-  ACE_NTOHL (0x5f657665), 
+  ACE_NTOHL (0x636f6e73),
+  ACE_NTOHL (0x756d6573),
+  ACE_NTOHL (0x5f657665),
   ACE_NTOHL (0x6e747300),  // name = consumes_events
   CORBA::tk_alias, // typecode kind for typedefs
   144, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     34,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f43), 
-    ACE_NTOHL (0x6f6e7375), 
-    ACE_NTOHL (0x6d657344), 
-    ACE_NTOHL (0x65665365), 
-    ACE_NTOHL (0x713a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f43),
+    ACE_NTOHL (0x6f6e7375),
+    ACE_NTOHL (0x6d657344),
+    ACE_NTOHL (0x65665365),
+    ACE_NTOHL (0x713a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/ConsumesDefSeq:1.0
     15,
-    ACE_NTOHL (0x436f6e73), 
-    ACE_NTOHL (0x756d6573), 
-    ACE_NTOHL (0x44656653), 
+    ACE_NTOHL (0x436f6e73),
+    ACE_NTOHL (0x756d6573),
+    ACE_NTOHL (0x44656653),
     ACE_NTOHL (0x65710000),  // name = ConsumesDefSeq
     CORBA::tk_sequence, // typecode kind
     72, // encapsulation length
@@ -14124,25 +14246,25 @@ static const CORBA::Long _oc_IR_ComponentDescription[] =
       56, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         31,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f43), 
-        ACE_NTOHL (0x6f6e7375), 
-        ACE_NTOHL (0x6d657344), 
-        ACE_NTOHL (0x65663a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f43),
+        ACE_NTOHL (0x6f6e7375),
+        ACE_NTOHL (0x6d657344),
+        ACE_NTOHL (0x65663a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/ConsumesDef:1.0
         12,
-        ACE_NTOHL (0x436f6e73), 
-        ACE_NTOHL (0x756d6573), 
+        ACE_NTOHL (0x436f6e73),
+        ACE_NTOHL (0x756d6573),
         ACE_NTOHL (0x44656600),  // name = ConsumesDef
 
       0U,
 
 
   9,
-  ACE_NTOHL (0x69735f62), 
-  ACE_NTOHL (0x61736963), 
+  ACE_NTOHL (0x69735f62),
+  ACE_NTOHL (0x61736963),
   ACE_NTOHL (0x0),  // name = is_basic
   CORBA::tk_boolean,
 
@@ -14161,9 +14283,9 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ComponentDescription, &_tc_TAO_tc_IR_ComponentDescription)
 TAO_NAMESPACE_END
 
-void IR::ComponentDescription::_tao_any_destructor (void *x)
+void IR::ComponentDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ComponentDescription *tmp = ACE_static_cast (ComponentDescription*,x);
+  ComponentDescription *tmp = ACE_static_cast (ComponentDescription*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -14258,7 +14380,7 @@ IR::PrimaryKeyDef_var::operator const ::IR::PrimaryKeyDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::PrimaryKeyDef_var::operator ::IR::PrimaryKeyDef_ptr &() // cast 
+IR::PrimaryKeyDef_var::operator ::IR::PrimaryKeyDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -14334,7 +14456,7 @@ IR::PrimaryKeyDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::PrimaryKeyDef_out
+// Operations for class IR::PrimaryKeyDef_out
 // *************************************************************
 
 IR::PrimaryKeyDef_out::PrimaryKeyDef_out (PrimaryKeyDef_ptr &p)
@@ -14401,24 +14523,24 @@ public:
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
       const char * primary_key_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -14437,7 +14559,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::TAO_ClientRequestInfo_IR_PrimaryKey
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
     const char * primary_key_id,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     primary_key_id_ (primary_key_id)
@@ -14451,14 +14573,16 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::arguments (CORBA::Environment &ACE_
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_primary_key_id = parameter_list->length ();
-  parameter_list->length (length_primary_key_id + 1);
-  (*parameter_list)[length_primary_key_id].argument <<= primary_key_id_;
-  (*parameter_list)[length_primary_key_id].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (1);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= primary_key_id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -14470,12 +14594,12 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::exceptions (CORBA::Environment &ACE
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14484,17 +14608,17 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Environment &ACE_TRY
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a::result (CORBA::Boolean result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -14504,24 +14628,24 @@ public:
   TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -14538,7 +14662,7 @@ private:
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -14551,7 +14675,7 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::arguments (CORBA::Enviro
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -14563,12 +14687,12 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::exceptions (CORBA::Envir
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -14577,24 +14701,24 @@ TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA::Environme
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get::result (CORBA_ValueDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_PrimaryKeyDef_Proxy_Impl::_TAO_PrimaryKeyDef_Proxy_Impl (void)
@@ -14614,15 +14738,15 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_a",
@@ -14631,17 +14755,21 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_PrimaryKeyDef_is_a ri (
         &_tao_call,
@@ -14650,31 +14778,40 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN  (_tao_retval);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << primary_key_id)
@@ -14683,20 +14820,33 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
               CORBA::MARSHAL (),
               _tao_retval
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
@@ -14706,73 +14856,54 @@ CORBA::Boolean IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::is_a (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA::Boolean  _tao_retval_info = _tao_retval;
-               ri.result (_tao_retval_info);
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN  (_tao_retval);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_retval;
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA::Boolean _tao_retval_info = _tao_retval;
+          ri.result (_tao_retval_info);
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_retval;
 }
 
 CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
@@ -14783,16 +14914,16 @@ CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA_ValueDef_ptr _tao_retval = CORBA_ValueDef::_nil ();
   CORBA_ValueDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_primary_key",
@@ -14801,17 +14932,21 @@ CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_PrimaryKeyDef_primary_key_get ri (
         &_tao_call,
@@ -14819,43 +14954,66 @@ CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -14865,79 +15023,60 @@ CORBA_ValueDef_ptr IR::_TAO_PrimaryKeyDef_Remote_Proxy_Impl::primary_key (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA_ValueDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -15007,13 +15146,13 @@ IR::PrimaryKeyDef::IR_PrimaryKeyDef_setup_collocation (int collocated)
   else
     this->the_TAO_PrimaryKeyDef_Proxy_Broker_ =
       ::IR::_TAO_PrimaryKeyDef_Remote_Proxy_Broker::the_TAO_PrimaryKeyDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_Contained_setup_collocation (collocated);
 }
 
-void IR::PrimaryKeyDef::_tao_any_destructor (void *x)
+void IR::PrimaryKeyDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  PrimaryKeyDef *tmp = ACE_static_cast (PrimaryKeyDef*,x);
+  PrimaryKeyDef *tmp = ACE_static_cast (PrimaryKeyDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -15060,14 +15199,14 @@ IR::PrimaryKeyDef_ptr IR::PrimaryKeyDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           PrimaryKeyDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::PrimaryKeyDef (stub, 0, obj->_servant ()), PrimaryKeyDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -15137,7 +15276,7 @@ void *IR::PrimaryKeyDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -15156,10 +15295,10 @@ CORBA::Boolean IR::PrimaryKeyDef::is_a (
     CORBA::SystemException
   ))
 {
-  _TAO_PrimaryKeyDef_Proxy_Impl &proxy = 
+  _TAO_PrimaryKeyDef_Proxy_Impl &proxy =
     this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.is_a (
       this,
       primary_key_id,
@@ -15174,10 +15313,10 @@ CORBA_ValueDef_ptr IR::PrimaryKeyDef::primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_PrimaryKeyDef_Proxy_Impl &proxy = 
+  _TAO_PrimaryKeyDef_Proxy_Impl &proxy =
     this->the_TAO_PrimaryKeyDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.primary_key (
       this,
       ACE_TRY_ENV
@@ -15188,19 +15327,19 @@ static const CORBA::Long _oc_IR_PrimaryKeyDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x72696d61), 
-  ACE_NTOHL (0x72794b65), 
-  ACE_NTOHL (0x79446566), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x72696d61),
+  ACE_NTOHL (0x72794b65),
+  ACE_NTOHL (0x79446566),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/PrimaryKeyDef:1.0
   14,
-  ACE_NTOHL (0x5072696d), 
-  ACE_NTOHL (0x6172794b), 
-  ACE_NTOHL (0x65794465), 
+  ACE_NTOHL (0x5072696d),
+  ACE_NTOHL (0x6172794b),
+  ACE_NTOHL (0x65794465),
   ACE_NTOHL (0x66000000),  // name = PrimaryKeyDef
 };
 
@@ -15221,45 +15360,45 @@ static const CORBA::Long _oc_IR_PrimaryKeyDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f50), 
-  ACE_NTOHL (0x72696d61), 
-  ACE_NTOHL (0x72794b65), 
-  ACE_NTOHL (0x79446573), 
-  ACE_NTOHL (0x63726970), 
-  ACE_NTOHL (0x74696f6e), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f50),
+  ACE_NTOHL (0x72696d61),
+  ACE_NTOHL (0x72794b65),
+  ACE_NTOHL (0x79446573),
+  ACE_NTOHL (0x63726970),
+  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/PrimaryKeyDescription:1.0
   22,
-  ACE_NTOHL (0x5072696d), 
-  ACE_NTOHL (0x6172794b), 
-  ACE_NTOHL (0x65794465), 
-  ACE_NTOHL (0x73637269), 
-  ACE_NTOHL (0x7074696f), 
+  ACE_NTOHL (0x5072696d),
+  ACE_NTOHL (0x6172794b),
+  ACE_NTOHL (0x65794465),
+  ACE_NTOHL (0x73637269),
+  ACE_NTOHL (0x7074696f),
   ACE_NTOHL (0x6e000000),  // name = PrimaryKeyDescription
   5, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -15268,87 +15407,87 @@ static const CORBA::Long _oc_IR_PrimaryKeyDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   12,
-  ACE_NTOHL (0x7072696d), 
-  ACE_NTOHL (0x6172795f), 
+  ACE_NTOHL (0x7072696d),
+  ACE_NTOHL (0x6172795f),
   ACE_NTOHL (0x6b657900),  // name = primary_key
   CORBA::tk_objref, // typecode kind
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5661), 
-    ACE_NTOHL (0x6c756544), 
-    ACE_NTOHL (0x65663a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5661),
+    ACE_NTOHL (0x6c756544),
+    ACE_NTOHL (0x65663a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ValueDef:1.0
     9,
-    ACE_NTOHL (0x56616c75), 
-    ACE_NTOHL (0x65446566), 
+    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x65446566),
     ACE_NTOHL (0x0),  // name = ValueDef
 
 };
@@ -15366,9 +15505,9 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PrimaryKeyDescription, &_tc_TAO_tc_IR_PrimaryKeyDescription)
 TAO_NAMESPACE_END
 
-void IR::PrimaryKeyDescription::_tao_any_destructor (void *x)
+void IR::PrimaryKeyDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  PrimaryKeyDescription *tmp = ACE_static_cast (PrimaryKeyDescription*,x);
+  PrimaryKeyDescription *tmp = ACE_static_cast (PrimaryKeyDescription*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -15463,7 +15602,7 @@ IR::FactoryDef_var::operator const ::IR::FactoryDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::FactoryDef_var::operator ::IR::FactoryDef_ptr &() // cast 
+IR::FactoryDef_var::operator ::IR::FactoryDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -15539,7 +15678,7 @@ IR::FactoryDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::FactoryDef_out
+// Operations for class IR::FactoryDef_out
 // *************************************************************
 
 IR::FactoryDef_out::FactoryDef_out (FactoryDef_ptr &p)
@@ -15602,7 +15741,7 @@ IR::FactoryDef_out::operator-> (void)
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_FactoryDef_Proxy_Impl::_TAO_FactoryDef_Proxy_Impl (void)
@@ -15615,7 +15754,7 @@ IR::_TAO_FactoryDef_Remote_Proxy_Impl::_TAO_FactoryDef_Remote_Proxy_Impl (void)
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -15685,13 +15824,13 @@ IR::FactoryDef::IR_FactoryDef_setup_collocation (int collocated)
   else
     this->the_TAO_FactoryDef_Proxy_Broker_ =
       ::IR::_TAO_FactoryDef_Remote_Proxy_Broker::the_TAO_FactoryDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_OperationDef_setup_collocation (collocated);
 }
 
-void IR::FactoryDef::_tao_any_destructor (void *x)
+void IR::FactoryDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  FactoryDef *tmp = ACE_static_cast (FactoryDef*,x);
+  FactoryDef *tmp = ACE_static_cast (FactoryDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -15738,14 +15877,14 @@ IR::FactoryDef_ptr IR::FactoryDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           FactoryDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::FactoryDef (stub, 0, obj->_servant ()), FactoryDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -15828,7 +15967,7 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -15843,17 +15982,17 @@ static const CORBA::Long _oc_IR_FactoryDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f46), 
-  ACE_NTOHL (0x6163746f), 
-  ACE_NTOHL (0x72794465), 
-  ACE_NTOHL (0x663a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f46),
+  ACE_NTOHL (0x6163746f),
+  ACE_NTOHL (0x72794465),
+  ACE_NTOHL (0x663a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/FactoryDef:1.0
   11,
-  ACE_NTOHL (0x46616374), 
-  ACE_NTOHL (0x6f727944), 
+  ACE_NTOHL (0x46616374),
+  ACE_NTOHL (0x6f727944),
   ACE_NTOHL (0x65660000),  // name = FactoryDef
 };
 
@@ -15961,7 +16100,7 @@ IR::FinderDef_var::operator const ::IR::FinderDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::FinderDef_var::operator ::IR::FinderDef_ptr &() // cast 
+IR::FinderDef_var::operator ::IR::FinderDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -16037,7 +16176,7 @@ IR::FinderDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::FinderDef_out
+// Operations for class IR::FinderDef_out
 // *************************************************************
 
 IR::FinderDef_out::FinderDef_out (FinderDef_ptr &p)
@@ -16100,7 +16239,7 @@ IR::FinderDef_out::operator-> (void)
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_FinderDef_Proxy_Impl::_TAO_FinderDef_Proxy_Impl (void)
@@ -16113,7 +16252,7 @@ IR::_TAO_FinderDef_Remote_Proxy_Impl::_TAO_FinderDef_Remote_Proxy_Impl (void)
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -16183,13 +16322,13 @@ IR::FinderDef::IR_FinderDef_setup_collocation (int collocated)
   else
     this->the_TAO_FinderDef_Proxy_Broker_ =
       ::IR::_TAO_FinderDef_Remote_Proxy_Broker::the_TAO_FinderDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_OperationDef_setup_collocation (collocated);
 }
 
-void IR::FinderDef::_tao_any_destructor (void *x)
+void IR::FinderDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  FinderDef *tmp = ACE_static_cast (FinderDef*,x);
+  FinderDef *tmp = ACE_static_cast (FinderDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -16236,14 +16375,14 @@ IR::FinderDef_ptr IR::FinderDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           FinderDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::FinderDef (stub, 0, obj->_servant ()), FinderDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -16326,7 +16465,7 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -16341,17 +16480,17 @@ static const CORBA::Long _oc_IR_FinderDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f46), 
-  ACE_NTOHL (0x696e6465), 
-  ACE_NTOHL (0x72446566), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f46),
+  ACE_NTOHL (0x696e6465),
+  ACE_NTOHL (0x72446566),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/FinderDef:1.0
   10,
-  ACE_NTOHL (0x46696e64), 
-  ACE_NTOHL (0x65724465), 
+  ACE_NTOHL (0x46696e64),
+  ACE_NTOHL (0x65724465),
   ACE_NTOHL (0x66000000),  // name = FinderDef
 };
 
@@ -16459,7 +16598,7 @@ IR::HomeDef_var::operator const ::IR::HomeDef_ptr &() const // cast
   return this->ptr_;
 }
 
-IR::HomeDef_var::operator ::IR::HomeDef_ptr &() // cast 
+IR::HomeDef_var::operator ::IR::HomeDef_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -16535,7 +16674,7 @@ IR::HomeDef_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class IR::HomeDef_out
+// Operations for class IR::HomeDef_out
 // *************************************************************
 
 IR::HomeDef_out::HomeDef_out (HomeDef_ptr &p)
@@ -16601,24 +16740,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_base_home_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -16635,7 +16774,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_base_home_get::TAO_ClientRequestInfo_IR_HomeDef_base_home_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -16648,7 +16787,7 @@ TAO_ClientRequestInfo_IR_HomeDef_base_home_get::arguments (CORBA::Environment &A
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -16660,12 +16799,12 @@ TAO_ClientRequestInfo_IR_HomeDef_base_home_get::exceptions (CORBA::Environment &
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_base_home_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16674,17 +16813,17 @@ TAO_ClientRequestInfo_IR_HomeDef_base_home_get::result (CORBA::Environment &ACE_
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_base_home_get::result (IR::HomeDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -16694,24 +16833,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_managed_component_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -16728,7 +16867,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::TAO_ClientRequestInfo_IR_HomeDef_managed_component_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -16741,7 +16880,7 @@ TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::arguments (CORBA::Enviro
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -16753,12 +16892,12 @@ TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::exceptions (CORBA::Envir
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16767,17 +16906,17 @@ TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::result (CORBA::Environme
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_managed_component_get::result (IR::ComponentDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -16787,24 +16926,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_primary_key_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -16821,7 +16960,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::TAO_ClientRequestInfo_IR_HomeDef_primary_key_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -16834,7 +16973,7 @@ TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::arguments (CORBA::Environment 
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -16846,12 +16985,12 @@ TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::exceptions (CORBA::Environment
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16860,17 +16999,17 @@ TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::result (CORBA::Environment &AC
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_primary_key_get::result (IR::PrimaryKeyDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -16880,24 +17019,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_factories_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -16914,7 +17053,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_factories_get::TAO_ClientRequestInfo_IR_HomeDef_factories_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -16927,7 +17066,7 @@ TAO_ClientRequestInfo_IR_HomeDef_factories_get::arguments (CORBA::Environment &A
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -16939,12 +17078,12 @@ TAO_ClientRequestInfo_IR_HomeDef_factories_get::exceptions (CORBA::Environment &
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_factories_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -16953,17 +17092,17 @@ TAO_ClientRequestInfo_IR_HomeDef_factories_get::result (CORBA::Environment &ACE_
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_factories_get::result (IR::FactoryDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -16973,24 +17112,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_finders_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -17007,7 +17146,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_finders_get::TAO_ClientRequestInfo_IR_HomeDef_finders_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -17020,7 +17159,7 @@ TAO_ClientRequestInfo_IR_HomeDef_finders_get::arguments (CORBA::Environment &ACE
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -17032,12 +17171,12 @@ TAO_ClientRequestInfo_IR_HomeDef_finders_get::exceptions (CORBA::Environment &AC
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_finders_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17046,17 +17185,17 @@ TAO_ClientRequestInfo_IR_HomeDef_finders_get::result (CORBA::Environment &ACE_TR
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_finders_get::result (IR::FinderDefSeq * result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -17066,24 +17205,24 @@ public:
   TAO_ClientRequestInfo_IR_HomeDef_is_basic_get (
       TAO_GIOP_Invocation *_tao_invocation,
       CORBA::Object_ptr _tao_target,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -17100,7 +17239,7 @@ private:
 TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::TAO_ClientRequestInfo_IR_HomeDef_is_basic_get (
     TAO_GIOP_Invocation *_tao_invocation,
     CORBA::Object_ptr _tao_target,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target)
 {}
@@ -17113,7 +17252,7 @@ TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::arguments (CORBA::Environment &AC
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -17125,12 +17264,12 @@ TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::exceptions (CORBA::Environment &A
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17139,17 +17278,17 @@ TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Environment &ACE_T
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= CORBA::Any::from_boolean (this->_result);
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_is_basic_get::result (CORBA::Boolean result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -17163,24 +17302,24 @@ public:
       const char * name,
       const char * version,
       CORBA_ValueDef_ptr primary_key,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -17205,7 +17344,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::TAO_ClientRequestInfo_IR_Ho
     const char * name,
     const char * version,
     CORBA_ValueDef_ptr primary_key,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -17222,30 +17361,25 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::arguments (CORBA::Environme
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_primary_key = parameter_list->length ();
-  parameter_list->length (length_primary_key + 1);
-  (*parameter_list)[length_primary_key].argument <<=  this->primary_key_;
-  
-  (*parameter_list)[length_primary_key].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (4);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->primary_key_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -17257,12 +17391,12 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::exceptions (CORBA::Environm
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17271,17 +17405,17 @@ TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::result (CORBA::Environment 
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_create_primary_key::result (IR::PrimaryKeyDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -17296,24 +17430,24 @@ public:
       const char * version,
       const CORBA_ParDescriptionSeq & params,
       const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -17340,7 +17474,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::TAO_ClientRequestInfo_IR_HomeDe
     const char * version,
     const CORBA_ParDescriptionSeq & params,
     const CORBA_ExceptionDefSeq & exceptions,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -17358,36 +17492,28 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::arguments (CORBA::Environment &
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_params = parameter_list->length ();
-  parameter_list->length (length_params + 1);
-  (*parameter_list)[length_params].argument <<=  this->params_;
-  
-  (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_exceptions = parameter_list->length ();
-  parameter_list->length (length_exceptions + 1);
-  (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
-  (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (5);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->params_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -17399,12 +17525,12 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::exceptions (CORBA::Environment 
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_create_factory::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17413,17 +17539,17 @@ TAO_ClientRequestInfo_IR_HomeDef_create_factory::result (CORBA::Environment &ACE
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_create_factory::result (IR::FactoryDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
@@ -17438,24 +17564,24 @@ public:
       const char * version,
       const CORBA_ParDescriptionSeq & params,
       const CORBA_ExceptionDefSeq & exceptions,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
   virtual Dynamic::ParameterList * arguments (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual Dynamic::ExceptionList * exceptions (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Any * result (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -17482,7 +17608,7 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::TAO_ClientRequestInfo_IR_HomeDef
     const char * version,
     const CORBA_ParDescriptionSeq & params,
     const CORBA_ExceptionDefSeq & exceptions,
-    CORBA::Environment &    
+    CORBA::Environment &
   )
   : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
     id_ (id),
@@ -17500,36 +17626,28 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::arguments (CORBA::Environment &A
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-    
-  CORBA::ULong length_id = parameter_list->length ();
-  parameter_list->length (length_id + 1);
-  (*parameter_list)[length_id].argument <<= id_;
-  (*parameter_list)[length_id].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_name = parameter_list->length ();
-  parameter_list->length (length_name + 1);
-  (*parameter_list)[length_name].argument <<= name_;
-  (*parameter_list)[length_name].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_version = parameter_list->length ();
-  parameter_list->length (length_version + 1);
-  (*parameter_list)[length_version].argument <<= version_;
-  (*parameter_list)[length_version].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_params = parameter_list->length ();
-  parameter_list->length (length_params + 1);
-  (*parameter_list)[length_params].argument <<=  this->params_;
-  
-  (*parameter_list)[length_params].mode = Dynamic::PARAM_IN;
-    
-  CORBA::ULong length_exceptions = parameter_list->length ();
-  parameter_list->length (length_exceptions + 1);
-  (*parameter_list)[length_exceptions].argument <<=  this->exceptions_;
-  
-  (*parameter_list)[length_exceptions].mode = Dynamic::PARAM_IN;
-  
+
+  parameter_list->length (5);
+  CORBA::ULong len = 0;
+
+    (*parameter_list)[len].argument <<= id_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= name_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<= version_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->params_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+    (*parameter_list)[len].argument <<=  this->exceptions_;
+  (*parameter_list)[len].mode = CORBA::PARAM_IN;
+  len++;
+
   return safe_parameter_list._retn ();
 }
 
@@ -17541,12 +17659,12 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::exceptions (CORBA::Environment &
   Dynamic::ExceptionList *exception_list =
     TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return exception_list;
 }
 
 
-CORBA::Any * 
+CORBA::Any *
 TAO_ClientRequestInfo_IR_HomeDef_create_finder::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -17555,24 +17673,24 @@ TAO_ClientRequestInfo_IR_HomeDef_create_finder::result (CORBA::Environment &ACE_
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   CORBA::Any_var safe_result_any = result_any;
-  
+
   (*result_any) <<= this->_result;
   return safe_result_any._retn ();
 }
 
-void 
+void
 TAO_ClientRequestInfo_IR_HomeDef_create_finder::result (IR::FinderDef_ptr result)
 {
-  // update the result 
+  // update the result
   this->_result = result;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 ///////////////////////////////////////////////////////////////////////
-//                Base & Remote Proxy  Implementation. 
+//                Base & Remote Proxy  Implementation.
 //
 
 IR::_TAO_HomeDef_Proxy_Impl::_TAO_HomeDef_Proxy_Impl (void)
@@ -17591,16 +17709,16 @@ IR::HomeDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::base_home (
     CORBA::SystemException
   ))
 {
-  
+
   IR::HomeDef_ptr _tao_retval = IR::HomeDef::_nil ();
   IR::HomeDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_base_home",
@@ -17609,17 +17727,21 @@ IR::HomeDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::base_home (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_base_home_get ri (
         &_tao_call,
@@ -17627,43 +17749,66 @@ IR::HomeDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::base_home (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -17673,74 +17818,55 @@ IR::HomeDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::base_home (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::HomeDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::HomeDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::ComponentDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::managed_component (
@@ -17751,16 +17877,16 @@ IR::ComponentDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::managed_component (
     CORBA::SystemException
   ))
 {
-  
+
   IR::ComponentDef_ptr _tao_retval = IR::ComponentDef::_nil ();
   IR::ComponentDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_managed_component",
@@ -17769,17 +17895,21 @@ IR::ComponentDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::managed_component (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_managed_component_get ri (
         &_tao_call,
@@ -17787,43 +17917,66 @@ IR::ComponentDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::managed_component (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -17833,74 +17986,55 @@ IR::ComponentDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::managed_component (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::ComponentDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::primary_key (
@@ -17911,16 +18045,16 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::primary_key (
     CORBA::SystemException
   ))
 {
-  
+
   IR::PrimaryKeyDef_ptr _tao_retval = IR::PrimaryKeyDef::_nil ();
   IR::PrimaryKeyDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_primary_key",
@@ -17929,17 +18063,21 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::primary_key (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_primary_key_get ri (
         &_tao_call,
@@ -17947,43 +18085,66 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::primary_key (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -17993,74 +18154,55 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::primary_key (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::PrimaryKeyDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::PrimaryKeyDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::FactoryDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::factories (
@@ -18071,15 +18213,15 @@ IR::FactoryDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::factories (
     CORBA::SystemException
   ))
 {
-  
+
   IR::FactoryDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::FactoryDefSeq, _tao_retval);
   IR::FactoryDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -18090,17 +18232,21 @@ IR::FactoryDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::factories (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_factories_get ri (
         &_tao_call,
@@ -18108,43 +18254,66 @@ IR::FactoryDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::factories (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -18154,74 +18323,55 @@ IR::FactoryDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::factories (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::FactoryDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::FactoryDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::FinderDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::finders (
@@ -18232,15 +18382,15 @@ IR::FinderDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::finders (
     CORBA::SystemException
   ))
 {
-  
+
   IR::FinderDefSeq *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, IR::FinderDefSeq, _tao_retval);
   IR::FinderDefSeq_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -18251,17 +18401,21 @@ IR::FinderDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::finders (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_finders_get ri (
         &_tao_call,
@@ -18269,43 +18423,66 @@ IR::FinderDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::finders (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -18315,74 +18492,55 @@ IR::FinderDefSeq * IR::_TAO_HomeDef_Remote_Proxy_Impl::finders (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::FinderDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::FinderDefSeq * _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 CORBA::Boolean IR::_TAO_HomeDef_Remote_Proxy_Impl::is_basic (
@@ -18393,15 +18551,15 @@ CORBA::Boolean IR::_TAO_HomeDef_Remote_Proxy_Impl::is_basic (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_is_basic",
@@ -18410,17 +18568,21 @@ CORBA::Boolean IR::_TAO_HomeDef_Remote_Proxy_Impl::is_basic (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_is_basic_get ri (
         &_tao_call,
@@ -18428,43 +18590,66 @@ CORBA::Boolean IR::_TAO_HomeDef_Remote_Proxy_Impl::is_basic (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN  (_tao_retval);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
@@ -18474,73 +18659,54 @@ CORBA::Boolean IR::_TAO_HomeDef_Remote_Proxy_Impl::is_basic (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 _tao_retval
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              CORBA::Boolean  _tao_retval_info = _tao_retval;
-               ri.result (_tao_retval_info);
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN  (_tao_retval);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_retval;
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          CORBA::Boolean _tao_retval_info = _tao_retval;
+          ri.result (_tao_retval_info);
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN  (_tao_retval);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_retval;
 }
 
 IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
@@ -18555,16 +18721,16 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
     CORBA::SystemException
   ))
 {
-  
+
   IR::PrimaryKeyDef_ptr _tao_retval = IR::PrimaryKeyDef::_nil ();
   IR::PrimaryKeyDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_primary_key",
@@ -18573,17 +18739,21 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_create_primary_key ri (
         &_tao_call,
@@ -18595,31 +18765,40 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -18631,20 +18810,33 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -18654,74 +18846,55 @@ IR::PrimaryKeyDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_primary_key (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::PrimaryKeyDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::PrimaryKeyDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
@@ -18737,16 +18910,16 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
     CORBA::SystemException
   ))
 {
-  
+
   IR::FactoryDef_ptr _tao_retval = IR::FactoryDef::_nil ();
   IR::FactoryDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_factory",
@@ -18755,17 +18928,21 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_create_factory ri (
         &_tao_call,
@@ -18778,31 +18955,40 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -18815,20 +19001,33 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -18838,74 +19037,55 @@ IR::FactoryDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_factory (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::FactoryDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::FactoryDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
@@ -18921,16 +19101,16 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
     CORBA::SystemException
   ))
 {
-  
+
   IR::FinderDef_ptr _tao_retval = IR::FinderDef::_nil ();
   IR::FinderDef_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_finder",
@@ -18939,17 +19119,21 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
       istub->orb_core ()
     );
 
+  int _invoke_status;
+
 #if (TAO_HAS_INTERCEPTORS == 1)
   TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-      istub->orb_core ()->client_request_interceptors ()
+      istub->orb_core ()->client_request_interceptors (),
+      &_tao_call,
+      _invoke_status
     );
-  
+
 #endif  /* TAO_HAS_INTERCEPTORS */
-  
+
   for (;;)
     {
-      int _invoke_status = TAO_INVOKE_EXCEPTION;
-      
+      _invoke_status = TAO_INVOKE_EXCEPTION;
+
 #if TAO_HAS_INTERCEPTORS == 1
       TAO_ClientRequestInfo_IR_HomeDef_create_finder ri (
         &_tao_call,
@@ -18962,31 +19146,40 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
         ACE_TRY_ENV
       );
       ACE_CHECK_RETURN (0);
-      
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
+      TAO_INTERCEPTOR (ri.response_expected (1));
+
+#if TAO_HAS_INTERCEPTORS == 1
+
       ACE_TRY
         {
+          _tao_vfr.send_request (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
 #endif /* TAO_HAS_INTERCEPTORS */
-        
+
           _tao_call.start (ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-          CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-          TAO_INTERCEPTOR (ri.response_expected (1));
-          
-          TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
-              ACE_TRY_ENV
-            )
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           _tao_call.prepare_header (
               ACE_static_cast (CORBA::Octet, _tao_response_flag),
               ACE_TRY_ENV
             );
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
           if (!(
                             (_tao_out << id) &&
@@ -18999,20 +19192,33 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
               CORBA::MARSHAL (),
               0
             );
-            
+
           _invoke_status =
             _tao_call.invoke (0, 0, ACE_TRY_ENV);
           TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
+
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
-              
+
             }
-          
+          else if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              TAO_INTERCEPTOR (
+                ri.reply_status (_invoke_status);
+                _tao_vfr.receive_other (
+                  &ri,
+                  ACE_TRY_ENV
+                );
+                ACE_TRY_CHECK;
+              )
+
+              continue;
+            }
+
           TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
           if (!(
                             (_tao_in >> _tao_safe_retval.inout ())
@@ -19022,79 +19228,60 @@ IR::FinderDef_ptr IR::_TAO_HomeDef_Remote_Proxy_Impl::create_finder (
                 CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
                 0
               );
-              
-            }
-          
-          TAO_INTERCEPTOR (
-              IR::FinderDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
-              ri.result (_tao_retval_info);
-              _tao_safe_retval = _tao_retval_info;
-            );
-          
-          TAO_INTERCEPTOR (
-            ri.reply_status (_invoke_status);
-            if (_invoke_status == TAO_INVOKE_OK)
-              {
-                _tao_vfr.receive_reply (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            else
-              {
-                _tao_vfr.receive_other (
-                  &ri,
-                  ACE_TRY_ENV
-                );
-              }
-            
-          );
-          TAO_INTERCEPTOR_CHECK_RETURN (0);
-          
-#if TAO_HAS_INTERCEPTORS == 1
-        }
-      ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
-        {
-          _invoke_status =
-            _tao_call.location_forward (exc.forward.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          
-          ri.forward_reference (exc); 
-          _tao_vfr.receive_other (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          ri.exception (&ACE_ANY_EXCEPTION);
-          _tao_vfr.receive_exception (
-            &ri,
-            ACE_TRY_ENV
-          );
-          ACE_TRY_CHECK;
-          ACE_RE_THROW;
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (0);
-      
-#endif /* TAO_HAS_INTERCEPTORS */
 
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      
-      break;
-    }
-  return _tao_safe_retval._retn ();
+            }
+
+#if TAO_HAS_INTERCEPTORS == 1
+          IR::FinderDef_ptr _tao_retval_info = _tao_safe_retval._retn ();
+          ri.result (_tao_retval_info);
+          _tao_safe_retval = _tao_retval_info;
+
+          ri.reply_status (_invoke_status);
+          _tao_vfr.receive_reply (
+            &ri,
+            ACE_TRY_ENV
+          );
+          ACE_TRY_CHECK;
+
+      }
+    ACE_CATCHANY
+      {
+        ri.exception (&ACE_ANY_EXCEPTION);
+        _tao_vfr.receive_exception (
+          &ri,
+          ACE_TRY_ENV
+        );
+        ACE_TRY_CHECK;
+
+        PortableInterceptor::ReplyStatus _tao_status =
+          ri.reply_status (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+
+        if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION
+            || _tao_status == PortableInterceptor::USER_EXCEPTION)
+          ACE_RE_THROW;
+      }
+    ACE_ENDTRY;
+    ACE_CHECK_RETURN (0);
+
+    PortableInterceptor::ReplyStatus _tao_status =
+      ri.reply_status (ACE_TRY_ENV);
+    ACE_CHECK_RETURN (0);
+
+    if (_tao_status == PortableInterceptor::LOCATION_FORWARD
+        || _tao_status == PortableInterceptor::TRANSPORT_RETRY)
+      continue;
+
+#endif  /* TAO_HAS_INTERCEPTORS */
+
+    break;
+  }
+return _tao_safe_retval._retn ();
 }
 
 
 //
-//            End  Base & Remote  Proxy Implemeentation. 
+//            End  Base & Remote  Proxy Implemeentation.
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -19164,13 +19351,13 @@ IR::HomeDef::IR_HomeDef_setup_collocation (int collocated)
   else
     this->the_TAO_HomeDef_Proxy_Broker_ =
       ::IR::_TAO_HomeDef_Remote_Proxy_Broker::the_TAO_HomeDef_Remote_Proxy_Broker ();
-  
+
   this->CORBA_InterfaceDef_setup_collocation (collocated);
 }
 
-void IR::HomeDef::_tao_any_destructor (void *x)
+void IR::HomeDef::_tao_any_destructor (void *_tao_void_pointer)
 {
-  HomeDef *tmp = ACE_static_cast (HomeDef*,x);
+  HomeDef *tmp = ACE_static_cast (HomeDef*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -19217,14 +19404,14 @@ IR::HomeDef_ptr IR::HomeDef::_unchecked_narrow (
             stub,
             1,
             obj->_servant ()),
-            
+
           HomeDef::_nil ());
         }
       if (CORBA::is_nil (default_proxy))
         ACE_NEW_RETURN (default_proxy, ::IR::HomeDef (stub, 0, obj->_servant ()), HomeDef::_nil ());
         return default_proxy;
       }
-    else 
+    else
       return
         ACE_reinterpret_cast
           (
@@ -19333,7 +19520,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -19351,10 +19538,10 @@ IR::HomeDef_ptr IR::HomeDef::base_home (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.base_home (
       this,
       ACE_TRY_ENV
@@ -19368,10 +19555,10 @@ IR::ComponentDef_ptr IR::HomeDef::managed_component (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.managed_component (
       this,
       ACE_TRY_ENV
@@ -19385,10 +19572,10 @@ IR::PrimaryKeyDef_ptr IR::HomeDef::primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.primary_key (
       this,
       ACE_TRY_ENV
@@ -19402,10 +19589,10 @@ IR::FactoryDefSeq * IR::HomeDef::factories (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.factories (
       this,
       ACE_TRY_ENV
@@ -19419,10 +19606,10 @@ IR::FinderDefSeq * IR::HomeDef::finders (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.finders (
       this,
       ACE_TRY_ENV
@@ -19436,10 +19623,10 @@ CORBA::Boolean IR::HomeDef::is_basic (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.is_basic (
       this,
       ACE_TRY_ENV
@@ -19457,10 +19644,10 @@ IR::PrimaryKeyDef_ptr IR::HomeDef::create_primary_key (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_primary_key (
       this,
       id,
@@ -19483,10 +19670,10 @@ IR::FactoryDef_ptr IR::HomeDef::create_factory (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_factory (
       this,
       id,
@@ -19510,10 +19697,10 @@ IR::FinderDef_ptr IR::HomeDef::create_finder (
     CORBA::SystemException
   ))
 {
-  _TAO_HomeDef_Proxy_Impl &proxy = 
+  _TAO_HomeDef_Proxy_Impl &proxy =
     this->the_TAO_HomeDef_Proxy_Broker_->select_proxy (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return proxy.create_finder (
       this,
       id,
@@ -19529,15 +19716,15 @@ static const CORBA::Long _oc_IR_HomeDef[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   27,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f48), 
-  ACE_NTOHL (0x6f6d6544), 
-  ACE_NTOHL (0x65663a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f48),
+  ACE_NTOHL (0x6f6d6544),
+  ACE_NTOHL (0x65663a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/HomeDef:1.0
   8,
-  ACE_NTOHL (0x486f6d65), 
+  ACE_NTOHL (0x486f6d65),
   ACE_NTOHL (0x44656600),  // name = HomeDef
 };
 
@@ -19558,41 +19745,41 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49522f48), 
-  ACE_NTOHL (0x6f6d6544), 
-  ACE_NTOHL (0x65736372), 
-  ACE_NTOHL (0x69707469), 
-  ACE_NTOHL (0x6f6e3a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x49522f48),
+  ACE_NTOHL (0x6f6d6544),
+  ACE_NTOHL (0x65736372),
+  ACE_NTOHL (0x69707469),
+  ACE_NTOHL (0x6f6e3a31),
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/HomeDescription:1.0
   16,
-  ACE_NTOHL (0x486f6d65), 
-  ACE_NTOHL (0x44657363), 
-  ACE_NTOHL (0x72697074), 
+  ACE_NTOHL (0x486f6d65),
+  ACE_NTOHL (0x44657363),
+  ACE_NTOHL (0x72697074),
   ACE_NTOHL (0x696f6e00),  // name = HomeDescription
   12, // member count
   5,
-  ACE_NTOHL (0x6e616d65), 
+  ACE_NTOHL (0x6e616d65),
   ACE_NTOHL (0x0),  // name = name
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f49), 
-    ACE_NTOHL (0x64656e74), 
-    ACE_NTOHL (0x69666965), 
-    ACE_NTOHL (0x723a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f49),
+    ACE_NTOHL (0x64656e74),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x723a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/Identifier:1.0
     11,
-    ACE_NTOHL (0x4964656e), 
-    ACE_NTOHL (0x74696669), 
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
     ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   3,
@@ -19601,163 +19788,163 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   11,
-  ACE_NTOHL (0x64656669), 
-  ACE_NTOHL (0x6e65645f), 
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
   ACE_NTOHL (0x696e0000),  // name = defined_in
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   8,
-  ACE_NTOHL (0x76657273), 
+  ACE_NTOHL (0x76657273),
   ACE_NTOHL (0x696f6e00),  // name = version
   CORBA::tk_alias, // typecode kind for typedefs
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f56), 
-    ACE_NTOHL (0x65727369), 
-    ACE_NTOHL (0x6f6e5370), 
-    ACE_NTOHL (0x65633a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f56),
+    ACE_NTOHL (0x65727369),
+    ACE_NTOHL (0x6f6e5370),
+    ACE_NTOHL (0x65633a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IR/VersionSpec:1.0
     12,
-    ACE_NTOHL (0x56657273), 
-    ACE_NTOHL (0x696f6e53), 
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
     ACE_NTOHL (0x70656300),  // name = VersionSpec
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   10,
-  ACE_NTOHL (0x62617365), 
-  ACE_NTOHL (0x5f686f6d), 
+  ACE_NTOHL (0x62617365),
+  ACE_NTOHL (0x5f686f6d),
   ACE_NTOHL (0x65000000),  // name = base_home
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   18,
-  ACE_NTOHL (0x6d616e61), 
-  ACE_NTOHL (0x6765645f), 
-  ACE_NTOHL (0x636f6d70), 
-  ACE_NTOHL (0x6f6e656e), 
+  ACE_NTOHL (0x6d616e61),
+  ACE_NTOHL (0x6765645f),
+  ACE_NTOHL (0x636f6d70),
+  ACE_NTOHL (0x6f6e656e),
   ACE_NTOHL (0x74000000),  // name = managed_component
   CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f52), 
-    ACE_NTOHL (0x65706f73), 
-    ACE_NTOHL (0x69746f72), 
-    ACE_NTOHL (0x7949643a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f52),
+    ACE_NTOHL (0x65706f73),
+    ACE_NTOHL (0x69746f72),
+    ACE_NTOHL (0x7949643a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/RepositoryId:1.0
     13,
-    ACE_NTOHL (0x5265706f), 
-    ACE_NTOHL (0x7369746f), 
-    ACE_NTOHL (0x72794964), 
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
     ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   16,
-  ACE_NTOHL (0x7072696d), 
-  ACE_NTOHL (0x6172795f), 
-  ACE_NTOHL (0x6b65795f), 
+  ACE_NTOHL (0x7072696d),
+  ACE_NTOHL (0x6172795f),
+  ACE_NTOHL (0x6b65795f),
   ACE_NTOHL (0x64656600),  // name = primary_key_def
   CORBA::tk_objref, // typecode kind
   64, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f50), 
-    ACE_NTOHL (0x72696d61), 
-    ACE_NTOHL (0x72794b65), 
-    ACE_NTOHL (0x79446566), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f50),
+    ACE_NTOHL (0x72696d61),
+    ACE_NTOHL (0x72794b65),
+    ACE_NTOHL (0x79446566),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/PrimaryKeyDef:1.0
     14,
-    ACE_NTOHL (0x5072696d), 
-    ACE_NTOHL (0x6172794b), 
-    ACE_NTOHL (0x65794465), 
+    ACE_NTOHL (0x5072696d),
+    ACE_NTOHL (0x6172794b),
+    ACE_NTOHL (0x65794465),
     ACE_NTOHL (0x66000000),  // name = PrimaryKeyDef
 
   10,
-  ACE_NTOHL (0x66616374), 
-  ACE_NTOHL (0x6f726965), 
+  ACE_NTOHL (0x66616374),
+  ACE_NTOHL (0x6f726965),
   ACE_NTOHL (0x73000000),  // name = factories
   CORBA::tk_alias, // typecode kind for typedefs
   144, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     33,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f46), 
-    ACE_NTOHL (0x6163746f), 
-    ACE_NTOHL (0x72794465), 
-    ACE_NTOHL (0x66536571), 
-    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f46),
+    ACE_NTOHL (0x6163746f),
+    ACE_NTOHL (0x72794465),
+    ACE_NTOHL (0x66536571),
+    ACE_NTOHL (0x3a312e30),
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/FactoryDefSeq:1.0
     14,
-    ACE_NTOHL (0x46616374), 
-    ACE_NTOHL (0x6f727944), 
-    ACE_NTOHL (0x65665365), 
+    ACE_NTOHL (0x46616374),
+    ACE_NTOHL (0x6f727944),
+    ACE_NTOHL (0x65665365),
     ACE_NTOHL (0x71000000),  // name = FactoryDefSeq
     CORBA::tk_sequence, // typecode kind
     72, // encapsulation length
@@ -19766,41 +19953,41 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
       56, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f46), 
-        ACE_NTOHL (0x6163746f), 
-        ACE_NTOHL (0x72794465), 
-        ACE_NTOHL (0x663a312e), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f46),
+        ACE_NTOHL (0x6163746f),
+        ACE_NTOHL (0x72794465),
+        ACE_NTOHL (0x663a312e),
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IR/FactoryDef:1.0
         11,
-        ACE_NTOHL (0x46616374), 
-        ACE_NTOHL (0x6f727944), 
+        ACE_NTOHL (0x46616374),
+        ACE_NTOHL (0x6f727944),
         ACE_NTOHL (0x65660000),  // name = FactoryDef
 
       0U,
 
 
   8,
-  ACE_NTOHL (0x66696e64), 
+  ACE_NTOHL (0x66696e64),
   ACE_NTOHL (0x65727300),  // name = finders
   CORBA::tk_alias, // typecode kind for typedefs
   140, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
+  TAO_ENCAP_BYTE_ORDER, // byte order
     32,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49522f46), 
-    ACE_NTOHL (0x696e6465), 
-    ACE_NTOHL (0x72446566), 
-    ACE_NTOHL (0x5365713a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x49522f46),
+    ACE_NTOHL (0x696e6465),
+    ACE_NTOHL (0x72446566),
+    ACE_NTOHL (0x5365713a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IR/FinderDefSeq:1.0
     13,
-    ACE_NTOHL (0x46696e64), 
-    ACE_NTOHL (0x65724465), 
-    ACE_NTOHL (0x66536571), 
+    ACE_NTOHL (0x46696e64),
+    ACE_NTOHL (0x65724465),
+    ACE_NTOHL (0x66536571),
     ACE_NTOHL (0x0),  // name = FinderDefSeq
     CORBA::tk_sequence, // typecode kind
     72, // encapsulation length
@@ -19809,45 +19996,45 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
       56, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         29,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49522f46), 
-        ACE_NTOHL (0x696e6465), 
-        ACE_NTOHL (0x72446566), 
-        ACE_NTOHL (0x3a312e30), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x49522f46),
+        ACE_NTOHL (0x696e6465),
+        ACE_NTOHL (0x72446566),
+        ACE_NTOHL (0x3a312e30),
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IR/FinderDef:1.0
         10,
-        ACE_NTOHL (0x46696e64), 
-        ACE_NTOHL (0x65724465), 
+        ACE_NTOHL (0x46696e64),
+        ACE_NTOHL (0x65724465),
         ACE_NTOHL (0x66000000),  // name = FinderDef
 
       0U,
 
 
   11,
-  ACE_NTOHL (0x6f706572), 
-  ACE_NTOHL (0x6174696f), 
+  ACE_NTOHL (0x6f706572),
+  ACE_NTOHL (0x6174696f),
   ACE_NTOHL (0x6e730000),  // name = operations
   CORBA::tk_alias, // typecode kind for typedefs
   2036, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
+  TAO_ENCAP_BYTE_ORDER, // byte order
     39,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4f70), 
-    ACE_NTOHL (0x44657363), 
-    ACE_NTOHL (0x72697074), 
-    ACE_NTOHL (0x696f6e53), 
-    ACE_NTOHL (0x65713a31), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4f70),
+    ACE_NTOHL (0x44657363),
+    ACE_NTOHL (0x72697074),
+    ACE_NTOHL (0x696f6e53),
+    ACE_NTOHL (0x65713a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OpDescriptionSeq:1.0
     17,
-    ACE_NTOHL (0x4f704465), 
-    ACE_NTOHL (0x73637269), 
-    ACE_NTOHL (0x7074696f), 
-    ACE_NTOHL (0x6e536571), 
+    ACE_NTOHL (0x4f704465),
+    ACE_NTOHL (0x73637269),
+    ACE_NTOHL (0x7074696f),
+    ACE_NTOHL (0x6e536571),
     ACE_NTOHL (0x0),  // name = OpDescriptionSeq
     CORBA::tk_sequence, // typecode kind
     1956, // encapsulation length
@@ -19856,176 +20043,176 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
       1940, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4f70), 
-        ACE_NTOHL (0x65726174), 
-        ACE_NTOHL (0x696f6e44), 
-        ACE_NTOHL (0x65736372), 
-        ACE_NTOHL (0x69707469), 
-        ACE_NTOHL (0x6f6e3a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f4f70),
+        ACE_NTOHL (0x65726174),
+        ACE_NTOHL (0x696f6e44),
+  ACE_NTOHL (0x65736372),
+  ACE_NTOHL (0x69707469),
+  ACE_NTOHL (0x6f6e3a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OperationDescription:1.0
         21,
-        ACE_NTOHL (0x4f706572), 
-        ACE_NTOHL (0x6174696f), 
-        ACE_NTOHL (0x6e446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
+        ACE_NTOHL (0x4f706572),
+        ACE_NTOHL (0x6174696f),
+        ACE_NTOHL (0x6e446573),
+        ACE_NTOHL (0x63726970),
+        ACE_NTOHL (0x74696f6e),
         ACE_NTOHL (0x0),  // name = OperationDescription
         9, // member count
-        5,
-        ACE_NTOHL (0x6e616d65), 
-        ACE_NTOHL (0x0),  // name = name
-        CORBA::tk_alias, // typecode kind for typedefs
+  5,
+  ACE_NTOHL (0x6e616d65),
+  ACE_NTOHL (0x0),  // name = name
+  CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4964),
+          ACE_NTOHL (0x656e7469),
+          ACE_NTOHL (0x66696572),
+          ACE_NTOHL (0x3a312e30),
           ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-          11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
-          ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
+    11,
+    ACE_NTOHL (0x4964656e),
+    ACE_NTOHL (0x74696669),
+    ACE_NTOHL (0x65720000),  // name = Identifier
+    CORBA::tk_string,
+    0U, // string length
 
-        3,
-        ACE_NTOHL (0x69640000),  // name = id
-        CORBA::tk_alias, // typecode kind for typedefs
+  3,
+  ACE_NTOHL (0x69640000),  // name = id
+  CORBA::tk_alias, // typecode kind for typedefs
         72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
+    13,
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
+    ACE_NTOHL (0x0),  // name = RepositoryId
+    CORBA::tk_string,
+    0U, // string length
 
-        11,
-        ACE_NTOHL (0x64656669), 
-        ACE_NTOHL (0x6e65645f), 
-        ACE_NTOHL (0x696e0000),  // name = defined_in
-        CORBA::tk_alias, // typecode kind for typedefs
+  11,
+  ACE_NTOHL (0x64656669),
+  ACE_NTOHL (0x6e65645f),
+  ACE_NTOHL (0x696e0000),  // name = defined_in
+  CORBA::tk_alias, // typecode kind for typedefs
         72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-          13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
-          ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
-          0U, // string length
+    13,
+    ACE_NTOHL (0x5265706f),
+    ACE_NTOHL (0x7369746f),
+    ACE_NTOHL (0x72794964),
+    ACE_NTOHL (0x0),  // name = RepositoryId
+    CORBA::tk_string,
+    0U, // string length
 
-        8,
-        ACE_NTOHL (0x76657273), 
-        ACE_NTOHL (0x696f6e00),  // name = version
-        CORBA::tk_alias, // typecode kind for typedefs
+  8,
+  ACE_NTOHL (0x76657273),
+  ACE_NTOHL (0x696f6e00),  // name = version
+  CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5665),
+          ACE_NTOHL (0x7273696f),
+          ACE_NTOHL (0x6e537065),
+          ACE_NTOHL (0x633a312e),
           ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-          12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
-          ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
-          0U, // string length
+    12,
+    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x696f6e53),
+    ACE_NTOHL (0x70656300),  // name = VersionSpec
+    CORBA::tk_string,
+    0U, // string length
 
         7,
-        ACE_NTOHL (0x72657375), 
+        ACE_NTOHL (0x72657375),
         ACE_NTOHL (0x6c740000),  // name = result
         CORBA::tk_TypeCode,
 
         5,
-        ACE_NTOHL (0x6d6f6465), 
+        ACE_NTOHL (0x6d6f6465),
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
         100, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4f70), 
-          ACE_NTOHL (0x65726174), 
-          ACE_NTOHL (0x696f6e4d), 
-          ACE_NTOHL (0x6f64653a), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4f70),
+          ACE_NTOHL (0x65726174),
+          ACE_NTOHL (0x696f6e4d),
+          ACE_NTOHL (0x6f64653a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/OperationMode:1.0
           14,
-          ACE_NTOHL (0x4f706572), 
-          ACE_NTOHL (0x6174696f), 
-          ACE_NTOHL (0x6e4d6f64), 
+          ACE_NTOHL (0x4f706572),
+          ACE_NTOHL (0x6174696f),
+          ACE_NTOHL (0x6e4d6f64),
           ACE_NTOHL (0x65000000),  // name = OperationMode
           2, // member count
-          10,
-          ACE_NTOHL (0x4f505f4e), 
-          ACE_NTOHL (0x4f524d41), 
+  10,
+          ACE_NTOHL (0x4f505f4e),
+          ACE_NTOHL (0x4f524d41),
           ACE_NTOHL (0x4c000000),  // name = OP_NORMAL
           10,
-          ACE_NTOHL (0x4f505f4f), 
-          ACE_NTOHL (0x4e455741), 
+          ACE_NTOHL (0x4f505f4f),
+          ACE_NTOHL (0x4e455741),
           ACE_NTOHL (0x59000000),  // name = OP_ONEWAY
 
         9,
-        ACE_NTOHL (0x636f6e74), 
-        ACE_NTOHL (0x65787473), 
+        ACE_NTOHL (0x636f6e74),
+        ACE_NTOHL (0x65787473),
         ACE_NTOHL (0x0),  // name = contexts
         CORBA::tk_alias, // typecode kind for typedefs
         236, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f436f), 
-          ACE_NTOHL (0x6e746578), 
-          ACE_NTOHL (0x74496453), 
-          ACE_NTOHL (0x65713a31), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f436f),
+          ACE_NTOHL (0x6e746578),
+          ACE_NTOHL (0x74496453),
+          ACE_NTOHL (0x65713a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ContextIdSeq:1.0
           13,
-          ACE_NTOHL (0x436f6e74), 
-          ACE_NTOHL (0x65787449), 
-          ACE_NTOHL (0x64536571), 
+          ACE_NTOHL (0x436f6e74),
+          ACE_NTOHL (0x65787449),
+          ACE_NTOHL (0x64536571),
           ACE_NTOHL (0x0),  // name = ContextIdSeq
           CORBA::tk_sequence, // typecode kind
           164, // encapsulation length
@@ -20034,546 +20221,546 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
             148, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               40,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f436f), 
-              ACE_NTOHL (0x6e746578), 
-              ACE_NTOHL (0x74496465), 
-              ACE_NTOHL (0x6e746966), 
-              ACE_NTOHL (0x6965723a), 
+              ACE_NTOHL (0x49444c3a),
+              ACE_NTOHL (0x6f6d672e),
+              ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f436f),
+              ACE_NTOHL (0x6e746578),
+              ACE_NTOHL (0x74496465),
+              ACE_NTOHL (0x6e746966),
+              ACE_NTOHL (0x6965723a),
               ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ContextIdentifier:1.0
               18,
-              ACE_NTOHL (0x436f6e74), 
-              ACE_NTOHL (0x65787449), 
-              ACE_NTOHL (0x64656e74), 
-              ACE_NTOHL (0x69666965), 
+              ACE_NTOHL (0x436f6e74),
+              ACE_NTOHL (0x65787449),
+              ACE_NTOHL (0x64656e74),
+              ACE_NTOHL (0x69666965),
               ACE_NTOHL (0x72000000),  // name = ContextIdentifier
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
+  CORBA::tk_alias, // typecode kind for typedefs
+  68, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
                 33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
                 11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
+    CORBA::tk_string,
+    0U, // string length
 
 
             0U,
 
 
         11,
-        ACE_NTOHL (0x70617261), 
-        ACE_NTOHL (0x6d657465), 
+        ACE_NTOHL (0x70617261),
+        ACE_NTOHL (0x6d657465),
         ACE_NTOHL (0x72730000),  // name = parameters
-        CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
         496, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5061), 
-          ACE_NTOHL (0x72446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5061),
+          ACE_NTOHL (0x72446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParDescriptionSeq:1.0
           18,
-          ACE_NTOHL (0x50617244), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
+          ACE_NTOHL (0x50617244),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
           ACE_NTOHL (0x71000000),  // name = ParDescriptionSeq
           CORBA::tk_sequence, // typecode kind
           416, // encapsulation length
-            TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
             CORBA::tk_struct, // typecode kind
             400, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f5061), 
-              ACE_NTOHL (0x72616d65), 
-              ACE_NTOHL (0x74657244), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f5061),
+              ACE_NTOHL (0x72616d65),
+              ACE_NTOHL (0x74657244),
+              ACE_NTOHL (0x65736372),
+              ACE_NTOHL (0x69707469),
+              ACE_NTOHL (0x6f6e3a31),
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ParameterDescription:1.0
               21,
-              ACE_NTOHL (0x50617261), 
-              ACE_NTOHL (0x6d657465), 
-              ACE_NTOHL (0x72446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
+              ACE_NTOHL (0x50617261),
+              ACE_NTOHL (0x6d657465),
+              ACE_NTOHL (0x72446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
               ACE_NTOHL (0x0),  // name = ParameterDescription
               4, // member count
               5,
-              ACE_NTOHL (0x6e616d65), 
+              ACE_NTOHL (0x6e616d65),
               ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+    ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-                11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+        11,
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               5,
-              ACE_NTOHL (0x74797065), 
+              ACE_NTOHL (0x74797065),
               ACE_NTOHL (0x0),  // name = type
               CORBA::tk_TypeCode,
 
               9,
-              ACE_NTOHL (0x74797065), 
-              ACE_NTOHL (0x5f646566), 
+              ACE_NTOHL (0x74797065),
+              ACE_NTOHL (0x5f646566),
               ACE_NTOHL (0x0),  // name = type_def
               CORBA::tk_objref, // typecode kind
               52, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
                 30,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4944), 
-                ACE_NTOHL (0x4c547970), 
-                ACE_NTOHL (0x653a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4944),
+                ACE_NTOHL (0x4c547970),
+                ACE_NTOHL (0x653a312e),
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/IDLType:1.0
                 8,
-                ACE_NTOHL (0x49444c54), 
+                ACE_NTOHL (0x49444c54),
                 ACE_NTOHL (0x79706500),  // name = IDLType
 
               5,
-              ACE_NTOHL (0x6d6f6465), 
+              ACE_NTOHL (0x6d6f6465),
               ACE_NTOHL (0x0),  // name = mode
               CORBA::tk_enum, // typecode kind
               116, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
+        TAO_ENCAP_BYTE_ORDER, // byte order
                 36,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5061), 
-                ACE_NTOHL (0x72616d65), 
-                ACE_NTOHL (0x7465724d), 
-                ACE_NTOHL (0x6f64653a), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5061),
+                ACE_NTOHL (0x72616d65),
+                ACE_NTOHL (0x7465724d),
+                ACE_NTOHL (0x6f64653a),
                 ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
                 14,
-                ACE_NTOHL (0x50617261), 
-                ACE_NTOHL (0x6d657465), 
-                ACE_NTOHL (0x724d6f64), 
+                ACE_NTOHL (0x50617261),
+                ACE_NTOHL (0x6d657465),
+                ACE_NTOHL (0x724d6f64),
                 ACE_NTOHL (0x65000000),  // name = ParameterMode
                 3, // member count
                 9,
-                ACE_NTOHL (0x50415241), 
-                ACE_NTOHL (0x4d5f494e), 
+                ACE_NTOHL (0x50415241),
+                ACE_NTOHL (0x4d5f494e),
                 ACE_NTOHL (0x0),  // name = PARAM_IN
-                10,
-                ACE_NTOHL (0x50415241), 
-                ACE_NTOHL (0x4d5f4f55), 
+        10,
+                ACE_NTOHL (0x50415241),
+                ACE_NTOHL (0x4d5f4f55),
                 ACE_NTOHL (0x54000000),  // name = PARAM_OUT
                 12,
-                ACE_NTOHL (0x50415241), 
-                ACE_NTOHL (0x4d5f494e), 
+                ACE_NTOHL (0x50415241),
+                ACE_NTOHL (0x4d5f494e),
                 ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
-
-
-            0U,
-
-
-        11,
-        ACE_NTOHL (0x65786365), 
-        ACE_NTOHL (0x7074696f), 
-        ACE_NTOHL (0x6e730000),  // name = exceptions
-        CORBA::tk_alias, // typecode kind for typedefs
-        556, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
-          40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
-          ACE_NTOHL (0x63446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
-          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
-          18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
-          ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
-          CORBA::tk_sequence, // typecode kind
-          476, // encapsulation length
-            TAO_ENCAP_BYTE_ORDER, // byte order
-            CORBA::tk_struct, // typecode kind
-            460, // encapsulation length
-              TAO_ENCAP_BYTE_ORDER, // byte order
-              43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
-              ACE_NTOHL (0x63657074), 
-              ACE_NTOHL (0x696f6e44), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
-              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
-              21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
-              ACE_NTOHL (0x0),  // name = ExceptionDescription
-              5, // member count
-              5,
-              ACE_NTOHL (0x6e616d65), 
-              ACE_NTOHL (0x0),  // name = name
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
-                ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-                11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
-                ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
-
-              3,
-              ACE_NTOHL (0x69640000),  // name = id
-              CORBA::tk_alias, // typecode kind for typedefs
-              72, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
-                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-                13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
-                ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
-
-              11,
-              ACE_NTOHL (0x64656669), 
-              ACE_NTOHL (0x6e65645f), 
-              ACE_NTOHL (0x696e0000),  // name = defined_in
-              CORBA::tk_alias, // typecode kind for typedefs
-              72, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
-                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-                13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
-                ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
-
-              8,
-              ACE_NTOHL (0x76657273), 
-              ACE_NTOHL (0x696f6e00),  // name = version
-              CORBA::tk_alias, // typecode kind for typedefs
-              68, // encapsulation length
-                TAO_ENCAP_BYTE_ORDER, // byte order
-                34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
-                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-                12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
-                ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
-                0U, // string length
-
-              5,
-              ACE_NTOHL (0x74797065), 
-              ACE_NTOHL (0x0),  // name = type
-              CORBA::tk_TypeCode,
-
-
-            0U,
-
 
 
       0U,
 
 
   11,
-  ACE_NTOHL (0x61747472), 
-  ACE_NTOHL (0x69627574), 
-  ACE_NTOHL (0x65730000),  // name = attributes
+        ACE_NTOHL (0x65786365),
+        ACE_NTOHL (0x7074696f),
+        ACE_NTOHL (0x6e730000),  // name = exceptions
   CORBA::tk_alias, // typecode kind for typedefs
-  1852, // encapsulation length
+        556, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    41,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f4174), 
-    ACE_NTOHL (0x74724465), 
-    ACE_NTOHL (0x73637269), 
-    ACE_NTOHL (0x7074696f), 
-    ACE_NTOHL (0x6e536571), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/AttrDescriptionSeq:1.0
-    19,
-    ACE_NTOHL (0x41747472), 
-    ACE_NTOHL (0x44657363), 
-    ACE_NTOHL (0x72697074), 
-    ACE_NTOHL (0x696f6e53), 
-    ACE_NTOHL (0x65710000),  // name = AttrDescriptionSeq
+          40,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4578),
+          ACE_NTOHL (0x63446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
+          ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
+          18,
+          ACE_NTOHL (0x45786344),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
+          ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
     CORBA::tk_sequence, // typecode kind
-    1768, // encapsulation length
+          476, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       CORBA::tk_struct, // typecode kind
-      1752, // encapsulation length
+            460, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         43,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x434f5242), 
-        ACE_NTOHL (0x412f4174), 
-        ACE_NTOHL (0x74726962), 
-        ACE_NTOHL (0x75746544), 
-        ACE_NTOHL (0x65736372), 
-        ACE_NTOHL (0x69707469), 
-        ACE_NTOHL (0x6f6e3a31), 
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f4578),
+              ACE_NTOHL (0x63657074),
+        ACE_NTOHL (0x696f6e44),
+        ACE_NTOHL (0x65736372),
+        ACE_NTOHL (0x69707469),
+        ACE_NTOHL (0x6f6e3a31),
+              ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
+              21,
+              ACE_NTOHL (0x45786365),
+              ACE_NTOHL (0x7074696f),
+              ACE_NTOHL (0x6e446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
+              ACE_NTOHL (0x0),  // name = ExceptionDescription
+              5, // member count
+        5,
+        ACE_NTOHL (0x6e616d65),
+        ACE_NTOHL (0x0),  // name = name
+              CORBA::tk_alias, // typecode kind for typedefs
+              68, // encapsulation length
+                TAO_ENCAP_BYTE_ORDER, // byte order
+                33,
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
+                ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
+                11,
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
+                ACE_NTOHL (0x65720000),  // name = Identifier
+        CORBA::tk_string,
+        0U, // string length
+
+        3,
+        ACE_NTOHL (0x69640000),  // name = id
+              CORBA::tk_alias, // typecode kind for typedefs
+              72, // encapsulation length
+                TAO_ENCAP_BYTE_ORDER, // byte order
+                35,
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
+                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
+                13,
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
+                ACE_NTOHL (0x0),  // name = RepositoryId
+        CORBA::tk_string,
+        0U, // string length
+
+        11,
+        ACE_NTOHL (0x64656669),
+        ACE_NTOHL (0x6e65645f),
+        ACE_NTOHL (0x696e0000),  // name = defined_in
+              CORBA::tk_alias, // typecode kind for typedefs
+              72, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+                35,
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
+                ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
+                13,
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
+                ACE_NTOHL (0x0),  // name = RepositoryId
+                CORBA::tk_string,
+                0U, // string length
+
+              8,
+              ACE_NTOHL (0x76657273),
+              ACE_NTOHL (0x696f6e00),  // name = version
+        CORBA::tk_alias, // typecode kind for typedefs
+              68, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+                34,
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5665),
+                ACE_NTOHL (0x7273696f),
+                ACE_NTOHL (0x6e537065),
+                ACE_NTOHL (0x633a312e),
+                ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
+                12,
+                ACE_NTOHL (0x56657273),
+                ACE_NTOHL (0x696f6e53),
+                ACE_NTOHL (0x70656300),  // name = VersionSpec
+            CORBA::tk_string,
+            0U, // string length
+
+              5,
+              ACE_NTOHL (0x74797065),
+              ACE_NTOHL (0x0),  // name = type
+              CORBA::tk_TypeCode,
+
+
+            0U,
+
+
+
+            0U,
+
+
+        11,
+  ACE_NTOHL (0x61747472),
+  ACE_NTOHL (0x69627574),
+  ACE_NTOHL (0x65730000),  // name = attributes
+        CORBA::tk_alias, // typecode kind for typedefs
+  1852, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+    41,
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f4174),
+    ACE_NTOHL (0x74724465),
+    ACE_NTOHL (0x73637269),
+    ACE_NTOHL (0x7074696f),
+    ACE_NTOHL (0x6e536571),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/AttrDescriptionSeq:1.0
+    19,
+    ACE_NTOHL (0x41747472),
+    ACE_NTOHL (0x44657363),
+    ACE_NTOHL (0x72697074),
+    ACE_NTOHL (0x696f6e53),
+    ACE_NTOHL (0x65710000),  // name = AttrDescriptionSeq
+          CORBA::tk_sequence, // typecode kind
+    1768, // encapsulation length
+            TAO_ENCAP_BYTE_ORDER, // byte order
+            CORBA::tk_struct, // typecode kind
+      1752, // encapsulation length
+              TAO_ENCAP_BYTE_ORDER, // byte order
+              43,
+              ACE_NTOHL (0x49444c3a),
+              ACE_NTOHL (0x6f6d672e),
+              ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+        ACE_NTOHL (0x412f4174),
+        ACE_NTOHL (0x74726962),
+        ACE_NTOHL (0x75746544),
+              ACE_NTOHL (0x65736372),
+              ACE_NTOHL (0x69707469),
+              ACE_NTOHL (0x6f6e3a31),
         ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/AttributeDescription:1.0
         21,
-        ACE_NTOHL (0x41747472), 
-        ACE_NTOHL (0x69627574), 
-        ACE_NTOHL (0x65446573), 
-        ACE_NTOHL (0x63726970), 
-        ACE_NTOHL (0x74696f6e), 
+        ACE_NTOHL (0x41747472),
+        ACE_NTOHL (0x69627574),
+        ACE_NTOHL (0x65446573),
+        ACE_NTOHL (0x63726970),
+        ACE_NTOHL (0x74696f6e),
         ACE_NTOHL (0x0),  // name = AttributeDescription
         8, // member count
-        5,
-        ACE_NTOHL (0x6e616d65), 
-        ACE_NTOHL (0x0),  // name = name
+              5,
+              ACE_NTOHL (0x6e616d65),
+              ACE_NTOHL (0x0),  // name = name
         CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           33,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4964), 
-          ACE_NTOHL (0x656e7469), 
-          ACE_NTOHL (0x66696572), 
-          ACE_NTOHL (0x3a312e30), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4964),
+          ACE_NTOHL (0x656e7469),
+          ACE_NTOHL (0x66696572),
+          ACE_NTOHL (0x3a312e30),
           ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
           11,
-          ACE_NTOHL (0x4964656e), 
-          ACE_NTOHL (0x74696669), 
+          ACE_NTOHL (0x4964656e),
+          ACE_NTOHL (0x74696669),
           ACE_NTOHL (0x65720000),  // name = Identifier
-          CORBA::tk_string, 
-          0U, // string length
+              CORBA::tk_string,
+              0U, // string length
 
         3,
         ACE_NTOHL (0x69640000),  // name = id
         CORBA::tk_alias, // typecode kind for typedefs
         72, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+                TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
           13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
+          ACE_NTOHL (0x5265706f),
+          ACE_NTOHL (0x7369746f),
+          ACE_NTOHL (0x72794964),
           ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
         11,
-        ACE_NTOHL (0x64656669), 
-        ACE_NTOHL (0x6e65645f), 
+        ACE_NTOHL (0x64656669),
+        ACE_NTOHL (0x6e65645f),
         ACE_NTOHL (0x696e0000),  // name = defined_in
         CORBA::tk_alias, // typecode kind for typedefs
         72, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           35,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5265), 
-          ACE_NTOHL (0x706f7369), 
-          ACE_NTOHL (0x746f7279), 
-          ACE_NTOHL (0x49643a31), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5265),
+          ACE_NTOHL (0x706f7369),
+          ACE_NTOHL (0x746f7279),
+          ACE_NTOHL (0x49643a31),
           ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
           13,
-          ACE_NTOHL (0x5265706f), 
-          ACE_NTOHL (0x7369746f), 
-          ACE_NTOHL (0x72794964), 
+          ACE_NTOHL (0x5265706f),
+          ACE_NTOHL (0x7369746f),
+          ACE_NTOHL (0x72794964),
           ACE_NTOHL (0x0),  // name = RepositoryId
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
         8,
-        ACE_NTOHL (0x76657273), 
+        ACE_NTOHL (0x76657273),
         ACE_NTOHL (0x696f6e00),  // name = version
         CORBA::tk_alias, // typecode kind for typedefs
         68, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+                TAO_ENCAP_BYTE_ORDER, // byte order
           34,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f5665), 
-          ACE_NTOHL (0x7273696f), 
-          ACE_NTOHL (0x6e537065), 
-          ACE_NTOHL (0x633a312e), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f5665),
+          ACE_NTOHL (0x7273696f),
+          ACE_NTOHL (0x6e537065),
+          ACE_NTOHL (0x633a312e),
           ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
-          12,
-          ACE_NTOHL (0x56657273), 
-          ACE_NTOHL (0x696f6e53), 
+                12,
+          ACE_NTOHL (0x56657273),
+          ACE_NTOHL (0x696f6e53),
           ACE_NTOHL (0x70656300),  // name = VersionSpec
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
         5,
-        ACE_NTOHL (0x74797065), 
+        ACE_NTOHL (0x74797065),
         ACE_NTOHL (0x0),  // name = type
         CORBA::tk_TypeCode,
 
         5,
-        ACE_NTOHL (0x6d6f6465), 
+        ACE_NTOHL (0x6d6f6465),
         ACE_NTOHL (0x0),  // name = mode
         CORBA::tk_enum, // typecode kind
         104, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           36,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4174), 
-          ACE_NTOHL (0x74726962), 
-          ACE_NTOHL (0x7574654d), 
-          ACE_NTOHL (0x6f64653a), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4174),
+          ACE_NTOHL (0x74726962),
+          ACE_NTOHL (0x7574654d),
+          ACE_NTOHL (0x6f64653a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/AttributeMode:1.0
           14,
-          ACE_NTOHL (0x41747472), 
-          ACE_NTOHL (0x69627574), 
-          ACE_NTOHL (0x654d6f64), 
+          ACE_NTOHL (0x41747472),
+          ACE_NTOHL (0x69627574),
+          ACE_NTOHL (0x654d6f64),
           ACE_NTOHL (0x65000000),  // name = AttributeMode
           2, // member count
           12,
-          ACE_NTOHL (0x41545452), 
-          ACE_NTOHL (0x5f4e4f52), 
+          ACE_NTOHL (0x41545452),
+          ACE_NTOHL (0x5f4e4f52),
           ACE_NTOHL (0x4d414c00),  // name = ATTR_NORMAL
           14,
-          ACE_NTOHL (0x41545452), 
-          ACE_NTOHL (0x5f524541), 
-          ACE_NTOHL (0x444f4e4c), 
+          ACE_NTOHL (0x41545452),
+          ACE_NTOHL (0x5f524541),
+          ACE_NTOHL (0x444f4e4c),
           ACE_NTOHL (0x59000000),  // name = ATTR_READONLY
 
         15,
-        ACE_NTOHL (0x6765745f), 
-        ACE_NTOHL (0x65786365), 
-        ACE_NTOHL (0x7074696f), 
+        ACE_NTOHL (0x6765745f),
+        ACE_NTOHL (0x65786365),
+        ACE_NTOHL (0x7074696f),
         ACE_NTOHL (0x6e730000),  // name = get_exceptions
         CORBA::tk_alias, // typecode kind for typedefs
         556, // encapsulation length
           TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
-          ACE_NTOHL (0x63446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
+          ACE_NTOHL (0x49444c3a),
+          ACE_NTOHL (0x6f6d672e),
+          ACE_NTOHL (0x6f72672f),
+          ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4578),
+          ACE_NTOHL (0x63446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
           18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
+          ACE_NTOHL (0x45786344),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
           ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
           CORBA::tk_sequence, // typecode kind
           476, // encapsulation length
@@ -20582,47 +20769,47 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
             460, // encapsulation length
               TAO_ENCAP_BYTE_ORDER, // byte order
               43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
-              ACE_NTOHL (0x63657074), 
-              ACE_NTOHL (0x696f6e44), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
+              ACE_NTOHL (0x49444c3a),
+              ACE_NTOHL (0x6f6d672e),
+              ACE_NTOHL (0x6f72672f),
+              ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f4578),
+              ACE_NTOHL (0x63657074),
+              ACE_NTOHL (0x696f6e44),
+              ACE_NTOHL (0x65736372),
+              ACE_NTOHL (0x69707469),
+              ACE_NTOHL (0x6f6e3a31),
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
               21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
+              ACE_NTOHL (0x45786365),
+              ACE_NTOHL (0x7074696f),
+              ACE_NTOHL (0x6e446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
               ACE_NTOHL (0x0),  // name = ExceptionDescription
               5, // member count
               5,
-              ACE_NTOHL (0x6e616d65), 
+              ACE_NTOHL (0x6e616d65),
               ACE_NTOHL (0x0),  // name = name
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
                 11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
+              CORBA::tk_string,
+              0U, // string length
 
               3,
               ACE_NTOHL (0x69640000),  // name = id
@@ -20630,73 +20817,73 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
+              CORBA::tk_string,
+              0U, // string length
 
               11,
-              ACE_NTOHL (0x64656669), 
-              ACE_NTOHL (0x6e65645f), 
+              ACE_NTOHL (0x64656669),
+              ACE_NTOHL (0x6e65645f),
               ACE_NTOHL (0x696e0000),  // name = defined_in
               CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
+              CORBA::tk_string,
+              0U, // string length
 
               8,
-              ACE_NTOHL (0x76657273), 
+              ACE_NTOHL (0x76657273),
               ACE_NTOHL (0x696f6e00),  // name = version
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5665),
+                ACE_NTOHL (0x7273696f),
+                ACE_NTOHL (0x6e537065),
+                ACE_NTOHL (0x633a312e),
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
                 12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
+                ACE_NTOHL (0x56657273),
+                ACE_NTOHL (0x696f6e53),
                 ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
-                0U, // string length
+              CORBA::tk_string,
+              0U, // string length
 
               5,
-              ACE_NTOHL (0x74797065), 
+              ACE_NTOHL (0x74797065),
               ACE_NTOHL (0x0),  // name = type
               CORBA::tk_TypeCode,
 
@@ -20705,154 +20892,154 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
 
 
         15,
-        ACE_NTOHL (0x7075745f), 
-        ACE_NTOHL (0x65786365), 
-        ACE_NTOHL (0x7074696f), 
+        ACE_NTOHL (0x7075745f),
+        ACE_NTOHL (0x65786365),
+        ACE_NTOHL (0x7074696f),
         ACE_NTOHL (0x6e730000),  // name = put_exceptions
-        CORBA::tk_alias, // typecode kind for typedefs
+  CORBA::tk_alias, // typecode kind for typedefs
         556, // encapsulation length
-          TAO_ENCAP_BYTE_ORDER, // byte order
+    TAO_ENCAP_BYTE_ORDER, // byte order
           40,
-          ACE_NTOHL (0x49444c3a), 
-          ACE_NTOHL (0x6f6d672e), 
-          ACE_NTOHL (0x6f72672f), 
-          ACE_NTOHL (0x434f5242), 
-          ACE_NTOHL (0x412f4578), 
-          ACE_NTOHL (0x63446573), 
-          ACE_NTOHL (0x63726970), 
-          ACE_NTOHL (0x74696f6e), 
-          ACE_NTOHL (0x5365713a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+          ACE_NTOHL (0x412f4578),
+          ACE_NTOHL (0x63446573),
+          ACE_NTOHL (0x63726970),
+          ACE_NTOHL (0x74696f6e),
+          ACE_NTOHL (0x5365713a),
           ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ExcDescriptionSeq:1.0
           18,
-          ACE_NTOHL (0x45786344), 
-          ACE_NTOHL (0x65736372), 
-          ACE_NTOHL (0x69707469), 
-          ACE_NTOHL (0x6f6e5365), 
+          ACE_NTOHL (0x45786344),
+          ACE_NTOHL (0x65736372),
+          ACE_NTOHL (0x69707469),
+          ACE_NTOHL (0x6f6e5365),
           ACE_NTOHL (0x71000000),  // name = ExcDescriptionSeq
-          CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
           476, // encapsulation length
-            TAO_ENCAP_BYTE_ORDER, // byte order
-            CORBA::tk_struct, // typecode kind
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      CORBA::tk_struct, // typecode kind
             460, // encapsulation length
-              TAO_ENCAP_BYTE_ORDER, // byte order
-              43,
-              ACE_NTOHL (0x49444c3a), 
-              ACE_NTOHL (0x6f6d672e), 
-              ACE_NTOHL (0x6f72672f), 
-              ACE_NTOHL (0x434f5242), 
-              ACE_NTOHL (0x412f4578), 
-              ACE_NTOHL (0x63657074), 
-              ACE_NTOHL (0x696f6e44), 
-              ACE_NTOHL (0x65736372), 
-              ACE_NTOHL (0x69707469), 
-              ACE_NTOHL (0x6f6e3a31), 
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        43,
+        ACE_NTOHL (0x49444c3a),
+        ACE_NTOHL (0x6f6d672e),
+        ACE_NTOHL (0x6f72672f),
+        ACE_NTOHL (0x434f5242),
+              ACE_NTOHL (0x412f4578),
+              ACE_NTOHL (0x63657074),
+              ACE_NTOHL (0x696f6e44),
+        ACE_NTOHL (0x65736372),
+        ACE_NTOHL (0x69707469),
+        ACE_NTOHL (0x6f6e3a31),
               ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ExceptionDescription:1.0
               21,
-              ACE_NTOHL (0x45786365), 
-              ACE_NTOHL (0x7074696f), 
-              ACE_NTOHL (0x6e446573), 
-              ACE_NTOHL (0x63726970), 
-              ACE_NTOHL (0x74696f6e), 
+              ACE_NTOHL (0x45786365),
+              ACE_NTOHL (0x7074696f),
+              ACE_NTOHL (0x6e446573),
+              ACE_NTOHL (0x63726970),
+              ACE_NTOHL (0x74696f6e),
               ACE_NTOHL (0x0),  // name = ExceptionDescription
               5, // member count
-              5,
-              ACE_NTOHL (0x6e616d65), 
-              ACE_NTOHL (0x0),  // name = name
+        5,
+        ACE_NTOHL (0x6e616d65),
+        ACE_NTOHL (0x0),  // name = name
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 33,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f4964), 
-                ACE_NTOHL (0x656e7469), 
-                ACE_NTOHL (0x66696572), 
-                ACE_NTOHL (0x3a312e30), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f4964),
+                ACE_NTOHL (0x656e7469),
+                ACE_NTOHL (0x66696572),
+                ACE_NTOHL (0x3a312e30),
                 ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
                 11,
-                ACE_NTOHL (0x4964656e), 
-                ACE_NTOHL (0x74696669), 
+                ACE_NTOHL (0x4964656e),
+                ACE_NTOHL (0x74696669),
                 ACE_NTOHL (0x65720000),  // name = Identifier
-                CORBA::tk_string, 
-                0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
-              3,
-              ACE_NTOHL (0x69640000),  // name = id
+        3,
+        ACE_NTOHL (0x69640000),  // name = id
               CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
-              11,
-              ACE_NTOHL (0x64656669), 
-              ACE_NTOHL (0x6e65645f), 
-              ACE_NTOHL (0x696e0000),  // name = defined_in
+        11,
+        ACE_NTOHL (0x64656669),
+        ACE_NTOHL (0x6e65645f),
+        ACE_NTOHL (0x696e0000),  // name = defined_in
               CORBA::tk_alias, // typecode kind for typedefs
               72, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 35,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5265), 
-                ACE_NTOHL (0x706f7369), 
-                ACE_NTOHL (0x746f7279), 
-                ACE_NTOHL (0x49643a31), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5265),
+                ACE_NTOHL (0x706f7369),
+                ACE_NTOHL (0x746f7279),
+                ACE_NTOHL (0x49643a31),
                 ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
                 13,
-                ACE_NTOHL (0x5265706f), 
-                ACE_NTOHL (0x7369746f), 
-                ACE_NTOHL (0x72794964), 
+                ACE_NTOHL (0x5265706f),
+                ACE_NTOHL (0x7369746f),
+                ACE_NTOHL (0x72794964),
                 ACE_NTOHL (0x0),  // name = RepositoryId
-                CORBA::tk_string, 
-                0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
-              8,
-              ACE_NTOHL (0x76657273), 
-              ACE_NTOHL (0x696f6e00),  // name = version
+        8,
+        ACE_NTOHL (0x76657273),
+        ACE_NTOHL (0x696f6e00),  // name = version
               CORBA::tk_alias, // typecode kind for typedefs
               68, // encapsulation length
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34,
-                ACE_NTOHL (0x49444c3a), 
-                ACE_NTOHL (0x6f6d672e), 
-                ACE_NTOHL (0x6f72672f), 
-                ACE_NTOHL (0x434f5242), 
-                ACE_NTOHL (0x412f5665), 
-                ACE_NTOHL (0x7273696f), 
-                ACE_NTOHL (0x6e537065), 
-                ACE_NTOHL (0x633a312e), 
+                ACE_NTOHL (0x49444c3a),
+                ACE_NTOHL (0x6f6d672e),
+                ACE_NTOHL (0x6f72672f),
+                ACE_NTOHL (0x434f5242),
+                ACE_NTOHL (0x412f5665),
+                ACE_NTOHL (0x7273696f),
+                ACE_NTOHL (0x6e537065),
+                ACE_NTOHL (0x633a312e),
                 ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/VersionSpec:1.0
                 12,
-                ACE_NTOHL (0x56657273), 
-                ACE_NTOHL (0x696f6e53), 
+                ACE_NTOHL (0x56657273),
+                ACE_NTOHL (0x696f6e53),
                 ACE_NTOHL (0x70656300),  // name = VersionSpec
-                CORBA::tk_string, 
-                0U, // string length
+        CORBA::tk_string,
+        0U, // string length
 
-              5,
-              ACE_NTOHL (0x74797065), 
-              ACE_NTOHL (0x0),  // name = type
-              CORBA::tk_TypeCode,
+        5,
+        ACE_NTOHL (0x74797065),
+        ACE_NTOHL (0x0),  // name = type
+        CORBA::tk_TypeCode,
 
 
             0U,
@@ -20863,8 +21050,8 @@ static const CORBA::Long _oc_IR_HomeDescription[] =
 
 
   9,
-  ACE_NTOHL (0x69735f62), 
-  ACE_NTOHL (0x61736963), 
+  ACE_NTOHL (0x69735f62),
+  ACE_NTOHL (0x61736963),
   ACE_NTOHL (0x0),  // name = is_basic
   CORBA::tk_boolean,
 
@@ -20883,9 +21070,9 @@ TAO_NAMESPACE_BEGIN (IR)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_HomeDescription, &_tc_TAO_tc_IR_HomeDescription)
 TAO_NAMESPACE_END
 
-void IR::HomeDescription::_tao_any_destructor (void *x)
+void IR::HomeDescription::_tao_any_destructor (void *_tao_void_pointer)
 {
-  HomeDescription *tmp = ACE_static_cast (HomeDescription*,x);
+  HomeDescription *tmp = ACE_static_cast (HomeDescription*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -20933,13 +21120,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::RepositoryIdSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_RepositoryIdSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21024,13 +21211,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ComponentDefSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ComponentDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21115,13 +21302,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ProvidesDefSeq
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ProvidesDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21206,13 +21393,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::UsesDefSeq *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_UsesDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21297,13 +21484,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::HomeDefSeq *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_HomeDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21388,13 +21575,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::EmitsDefSeq *&
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_EmitsDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21479,13 +21666,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::PublishesDefSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_PublishesDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21570,13 +21757,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ConsumesDefSeq
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ConsumesDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21661,13 +21848,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::FactoryDefSeq 
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_FactoryDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21752,13 +21939,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::FinderDefSeq *
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_FinderDefSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -21805,7 +21992,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::ComponentRepository_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_ComponentRepository, 
+        IR::_tc_ComponentRepository,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -21821,13 +22008,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::ComponentRepository_
   {
     _tao_elem = IR::ComponentRepository::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ComponentRepository, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -21866,7 +22053,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::ProvidesDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_ProvidesDef, 
+        IR::_tc_ProvidesDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -21882,13 +22069,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::ProvidesDef_ptr &_ta
   {
     _tao_elem = IR::ProvidesDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ProvidesDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -21957,13 +22144,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ProvidesDescri
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ProvidesDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22010,7 +22197,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::UsesDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_UsesDef, 
+        IR::_tc_UsesDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22026,13 +22213,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::UsesDef_ptr &_tao_el
   {
     _tao_elem = IR::UsesDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_UsesDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22101,13 +22288,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::UsesDescriptio
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_UsesDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22192,13 +22379,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ProvidesDescSe
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ProvidesDescSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22283,13 +22470,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::UsesDescSeq *&
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_UsesDescSeq, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22336,7 +22523,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::EventDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_EventDef, 
+        IR::_tc_EventDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22352,13 +22539,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::EventDef_ptr &_tao_e
   {
     _tao_elem = IR::EventDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_EventDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22427,13 +22614,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::EventDescripti
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_EventDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22480,7 +22667,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::EmitsDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_EmitsDef, 
+        IR::_tc_EmitsDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22496,13 +22683,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::EmitsDef_ptr &_tao_e
   {
     _tao_elem = IR::EmitsDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_EmitsDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22541,7 +22728,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::PublishesDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_PublishesDef, 
+        IR::_tc_PublishesDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22557,13 +22744,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::PublishesDef_ptr &_t
   {
     _tao_elem = IR::PublishesDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_PublishesDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22602,7 +22789,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::ConsumesDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_ConsumesDef, 
+        IR::_tc_ConsumesDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22618,13 +22805,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::ConsumesDef_ptr &_ta
   {
     _tao_elem = IR::ConsumesDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ConsumesDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22663,7 +22850,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::ComponentDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_ComponentDef, 
+        IR::_tc_ComponentDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22679,13 +22866,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::ComponentDef_ptr &_t
   {
     _tao_elem = IR::ComponentDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ComponentDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22754,13 +22941,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::ComponentDescr
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_ComponentDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22807,7 +22994,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::PrimaryKeyDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_PrimaryKeyDef, 
+        IR::_tc_PrimaryKeyDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22823,13 +23010,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::PrimaryKeyDef_ptr &_
   {
     _tao_elem = IR::PrimaryKeyDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_PrimaryKeyDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -22898,13 +23085,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::PrimaryKeyDesc
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_PrimaryKeyDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -22951,7 +23138,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::FactoryDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_FactoryDef, 
+        IR::_tc_FactoryDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -22967,13 +23154,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::FactoryDef_ptr &_tao
   {
     _tao_elem = IR::FactoryDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_FactoryDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -23012,7 +23199,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::FinderDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_FinderDef, 
+        IR::_tc_FinderDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -23028,13 +23215,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::FinderDef_ptr &_tao_
   {
     _tao_elem = IR::FinderDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_FinderDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -23073,7 +23260,7 @@ void operator<<= (CORBA::Any &_tao_any, IR::HomeDef_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        IR::_tc_HomeDef, 
+        IR::_tc_HomeDef,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -23089,13 +23276,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR::HomeDef_ptr &_tao_el
   {
     _tao_elem = IR::HomeDef::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_HomeDef, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     TAO_InputCDR stream (
         _tao_any._tao_get_cdr (),
         _tao_any._tao_byte_order ()
@@ -23164,13 +23351,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IR::HomeDescriptio
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    
+
     CORBA::Boolean result = type->equivalent (IR::_tc_HomeDescription, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-    
+
     if (!result)
       return 0; // not equivalent
-    
+
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -23240,7 +23427,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23282,7 +23469,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23324,7 +23511,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23366,7 +23553,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23408,7 +23595,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23450,7 +23637,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23492,7 +23679,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23534,7 +23721,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23576,7 +23763,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23618,7 +23805,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23768,7 +23955,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -23810,7 +23997,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -24146,4 +24333,3 @@ CORBA::Boolean operator>> (
   ACE_ENDTRY;
   return 0;
 }
-

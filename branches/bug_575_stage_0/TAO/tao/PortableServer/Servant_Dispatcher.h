@@ -36,7 +36,6 @@ public:
   /// Dispatch the request to the servant.
   virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
                          TAO_ServerRequest &req,
-                         void *context,
                          CORBA::Environment &ACE_TRY_ENV) = 0;
 };
 

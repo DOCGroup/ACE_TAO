@@ -267,10 +267,6 @@ protected:
   /// use for invocation.
   TAO_Invocation_Endpoint_Selector *endpoint_selector_;
 
-  /// Flag indicating whether <endpoint_selector_> has been
-  /// initialized.
-  int is_selector_initialized_;
-
   /// Store information used by endpoint_selector_ for making endpoint
   /// selection decisions. This is a hack. The state should be kept in
   /// the selector, but to do this, we'd need to dynamically allocate

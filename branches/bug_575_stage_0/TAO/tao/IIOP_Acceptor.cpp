@@ -505,6 +505,11 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 
+  (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
+  // This avoids having child processes acquire the listen socket thereby
+  // denying the server the opportunity to restart on a well-known endpoint.
+  // This does not affect the aberrent behavior on Win32 platforms. 
+
   if (TAO_debug_level > 5)
     {
       for (size_t i = 0; i < this->endpoint_count_; ++i)

@@ -1,3 +1,7 @@
+Sat Jun  2 12:02:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/* : Merged with the main trunk.
+
 Fri Jun  1 17:22:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_State.cpp (parse_message_header_i): 

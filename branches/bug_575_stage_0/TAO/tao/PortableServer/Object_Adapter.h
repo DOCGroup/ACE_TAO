@@ -233,7 +233,6 @@ public:
 
   int dispatch_servant (const TAO_ObjectKey &key,
                         TAO_ServerRequest &req,
-                        void *context,
                         CORBA::Object_out forward_to,
                         CORBA_Environment &ACE_TRY_ENV);
 
@@ -294,7 +293,6 @@ public:
   virtual int priority (void) const;
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        void *context, /* unused? */
                         CORBA::Object_out foward_to,
                         CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -629,7 +627,12 @@ public:
     // Object Adapter accessor.
 
     const PortableServer::ObjectId &id (void) const;
-    // ID accessor.
+    // System ID accessor.
+
+    void user_id (const PortableServer::ObjectId *);
+    const PortableServer::ObjectId &user_id (void) const;
+    // User ID accessors.  This is the same value returned by
+    // PortableServer::Current::get_object_id().
 
     PortableServer::Servant servant (void) const;
     // Servant accessor.
@@ -684,7 +687,9 @@ public:
 
     State state_;
 
-    PortableServer::ObjectId id_;
+    PortableServer::ObjectId system_id_;
+
+    const PortableServer::ObjectId *user_id_;
 
     TAO_POA_Current_Impl current_context_;
 

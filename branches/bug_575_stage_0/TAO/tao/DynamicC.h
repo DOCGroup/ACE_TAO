@@ -52,17 +52,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
+
 TAO_NAMESPACE  Dynamic
 {
-  enum ParameterMode
-  {
-        PARAM_IN,
-        PARAM_OUT,
-        PARAM_INOUT
-  };
-  typedef ParameterMode &ParameterMode_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;
-
   struct Parameter;
   class Parameter_var;
 
@@ -76,7 +71,7 @@ TAO_NAMESPACE  Dynamic
     static void _tao_any_destructor (void*);
 
     CORBA::Any argument;
-    ACE_NESTED_CLASS (Dynamic, ParameterMode) mode;
+    CORBA::ParameterMode mode;
   };
 
   class TAO_Export Parameter_var
@@ -445,8 +440,6 @@ TAO_NAMESPACE  Dynamic
 }
 TAO_NAMESPACE_CLOSE // module Dynamic
 
-TAO_Export void operator<<= (CORBA::Any &, Dynamic::ParameterMode);
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::ParameterMode &);
 TAO_Export void operator<<= (CORBA::Any &, const Dynamic::Parameter &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, Dynamic::Parameter*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::Parameter *&); // deprecated
@@ -462,8 +455,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::Except
 
 #ifndef __ACE_INLINE__
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::ParameterMode &); //
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::ParameterMode &);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
 
@@ -507,6 +498,10 @@ TAO_Export CORBA::Boolean operator>> (
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ifndef */

@@ -112,7 +112,7 @@ ACE_TRY_ENV
 }
 
 template <class T> ACE_INLINE
-CORBA_Policy_ptr POA_CORBA_Policy_tie<T>::copy  (
+CORBA::Policy_ptr POA_CORBA_Policy_tie<T>::copy  (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((

@@ -2,20 +2,20 @@
 
 //=============================================================================
 /**
- *  @file    corba.h
+ *  @file corba.h
  *
  *  $Id$
  *
  *   Master Header file for the TAO CORBA ORB.  Include only this
  *   file, to see all public ORB interfaces declared by TAO.
- *
+ *   @par
  *   This follows the OMG C++ mapping for compilers that don't
  *   support C++ exceptions or namespaces.
  *
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
- *  @author Chris Cleeland
- *  @author  and Douglas C. Schmidt.
+ *  @author  Chris Cleeland
+ *  @author  Douglas C. Schmidt
  */
 //=============================================================================
 
@@ -68,9 +68,12 @@
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 
-#include "tao/PortableInterceptor.h" /* This needs to remain visible. */
 #include "tao/StringSeqC.h"
 #include "tao/OctetSeqC.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/PortableInterceptorC.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

@@ -248,6 +248,10 @@ SOURCE=.\Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerInterceptorAdapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServerRequestInfo.cpp
 # End Source File
 # Begin Source File
@@ -372,6 +376,10 @@ SOURCE=.\Servant_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServerInterceptorAdapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServerRequestInfo.h
 # End Source File
 # Begin Source File
@@ -445,6 +453,10 @@ SOURCE=.\RTPortableServerC.i
 # Begin Source File
 
 SOURCE=.\Servant_Base.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerInterceptorAdapter.inl
 # End Source File
 # Begin Source File
 
