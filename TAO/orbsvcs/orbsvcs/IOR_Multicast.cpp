@@ -104,10 +104,20 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       remote_addr.set_port_number (mcast_info[0], 0);
 
       // Send the object reference for the naming service
-      result = response_.send (this->ior_,
-                               ACE_OS::strlen (this->ior_),
-                               remote_addr,
-                               0);
+
+      // Wait to give client a chance to start receiving,
+      // Send two times to provide better protection against packet
+      // loss.
+      // @@Vishal, a better (not hardcoded) 'policy' solution for this should be provided.
+      for (int i = 0; i < 5; ++i)
+        {
+          ACE_OS::sleep (ACE_Time_Value (0, 10000));
+          result = response_.send (this->ior_,
+                                   ACE_OS::strlen (this->ior_),
+                                   remote_addr,
+                                   0);
+        }
+
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
 		    "(%P|%t) ior_: <%s>\n"
