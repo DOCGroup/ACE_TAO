@@ -73,7 +73,6 @@ Fri Sep 29 10:14:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile: Added the new file.
 
-
 Fri Sep 29 09:17:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
