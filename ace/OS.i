@@ -11802,8 +11802,9 @@ ACE_OS::readdir_r (DIR *dirp,
   *result = ACE_OS::readdir (dirp);
   return 0;
 # elif defined (ACE_HAS_DIRENT)  &&  !defined (ACE_LACKS_READDIR_R)
-# if (defined (sun) && defined (_POSIX_PTHREAD_SEMANTICS))  || \
-     (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
+# if (defined (sun) && (defined (_POSIX_PTHREAD_SEMANTICS) || \
+                        (_FILE_OFFSET_BITS == 64))) || \
+      (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (__USE_POSIX)))
     return ::readdir_r (dirp, entry, result);
