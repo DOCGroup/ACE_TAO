@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class Cond_Signal_Test : public Benchmark
+class ACE_Svc_Export Cond_Signal_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -63,12 +64,8 @@ Cond_Signal_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *cond_signal_test (void);
-
-ACE_Service_Object *cond_signal_test (void)
-{
-  return new Cond_Signal_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Cond_Signal_Test)
+ACE_SVC_FACTORY_DEFINE  (Cond_Signal_Test)
 
 // ACE_Service_Object_Type cst (&cond_signal_test, "Condition_Signal_Test");
 #endif /* ACE_HAS_THREADS */

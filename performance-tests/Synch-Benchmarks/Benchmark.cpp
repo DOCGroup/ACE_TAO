@@ -1,11 +1,12 @@
-#include "Benchmark.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
 // Global variables (used by the dynamically linked services).
-int synch_count;
+ACE_Svc_Export int synch_count;
 int buffer;
 
 // Initialize the static variables. 

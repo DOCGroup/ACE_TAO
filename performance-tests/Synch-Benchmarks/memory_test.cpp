@@ -1,12 +1,13 @@
-#include "ace/Synch.h"
 // $Id$
 
+#define  ACE_BUILD_SVC_DLL
+#include "ace/Synch.h"
 #include "Options.h"
 #include "Benchmark.h"
 
 #if defined (ACE_HAS_THREADS)
 
-class Memory_Test : public Benchmark
+class ACE_Svc_Export Memory_Test : public Benchmark
 {
 public:
   virtual int svc (void);
@@ -31,12 +32,8 @@ Memory_Test::svc (void)
   return 0;
 }
 
-extern "C" ACE_Service_Object *memory_test (void);
-
-ACE_Service_Object *memory_test (void)
-{
-  return new Memory_Test;
-}
+ACE_SVC_FACTORY_DECLARE (Memory_Test)
+ACE_SVC_FACTORY_DEFINE  (Memory_Test)
 
 // ACE_Service_Object_Type mt (&memory_test, "Memory_Test");
 #endif /* ACE_HAS_THREADS */
