@@ -1,3 +1,13 @@
+Mon Nov 10 17:02:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Stream.i:
+
+          Added cast to ACE_CDR::Boolean of return values where necessary in
+          extraction methods, similarly to what is already in insertion
+          methods. Thanks to Ted Mules <ned@technisyst.com.au> for the 
+          resulting warnings on MSVC at warning level 4. This closes
+          [BUGID:1632].
+
 Mon Nov 10 16:43:19 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Acceptor.cpp: Add #include "ace/OS_NS_stdio.h" to get sprintf()
