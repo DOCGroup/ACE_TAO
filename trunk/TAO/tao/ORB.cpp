@@ -1172,6 +1172,16 @@ CORBA::ORB_init (int &argc,
   // Initialize the ORB Core instance.
   int result = oc->init (argc, (char **) argv);
 
+  env.clear ();
+
+  // This (init_orb_globals) must come *after* ORB Core initialization.
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (env);
+
+  if (env.exception () != 0)
+    return 0;
+
+  // This must come *after* (init_orb_globals).
   if (sizeof (CORBA::Short) != 2
       || sizeof (CORBA::Long) != 4
       || sizeof (CORBA::LongLong) != 8
@@ -1198,14 +1208,6 @@ CORBA::ORB_init (int &argc,
       env.exception (new CORBA::INITIALIZE (CORBA::COMPLETED_NO));
       return 0;
     }
-
-  env.clear ();
-
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (env);
-
-  if (env.exception () != 0)
-    return 0;
 
   // Check for errors and return 0 if error.
   if (result == -1)
