@@ -9,15 +9,6 @@
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
 		  TimeBase::InaccuracyT inaccuracy,
 		  TimeBase::TdfT tdf)
-  // @@ Vishal, please consider putting these assignments into the
-  // constructor of attr_utc_time_.  BTW, I think some of your other
-  // implementation classes could benefit from this same technique.
-
-  // ?? Tried to initialise the structure here. Failed.
-
-  // @@ Vishal, you'll need to add a CONSTRUCTOR for the structure and
-  // then initialize this.  Please let me know if you have any
-  // questions about how to do that.
 {
   this->attr_utc_time_.time = time;
   this->attr_utc_time_.inacchi = inaccuracy / 2;
@@ -109,13 +100,14 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 	    return CosTime::TCLessThan;
 	}
 
-      return CosTime::TCIndeterminate;
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
     }
   TAO_ENDTRY;
+
+  return CosTime::TCIndeterminate;
 }
 
 // Returns a TIO representing the time interval between the time in
@@ -145,13 +137,16 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 			      CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			      CosTime::TIO::_nil ());
       TAO_CHECK_ENV;
-      return tio->_this ();
+
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
+      return CosTime::TIO::_nil ();
     }
   TAO_ENDTRY;
+
+  return tio->_this ();
 }
 
   // Returns a TIO object representing the error interval around the
@@ -178,11 +173,13 @@ TAO_UTO::interval (CORBA::Environment &_env)
 			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
 			    CosTime::TIO::_nil ());
       TAO_CHECK_ENV;
-      return tio->_this ();
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Exception:");
+      return CosTime::TIO::_nil ();
     }
   TAO_ENDTRY;
+
+  return tio->_this ();
 };

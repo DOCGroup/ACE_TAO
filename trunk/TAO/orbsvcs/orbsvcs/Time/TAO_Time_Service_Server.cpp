@@ -23,24 +23,15 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &_env)
 {
   TAO_UTO *uto = 0;
 
-  TAO_TRY
-    {
-      // Return the local time of the system as a UTO.
-      ACE_NEW_THROW_RETURN (uto,
-			    TAO_UTO (CORBA::ULongLong (ACE_OS::gettimeofday ().sec ()),
-				     0,
-				     0),
-			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			    CosTime::UTO::_nil ());
+  // Return the local time of the system as a UTO.
+  ACE_NEW_THROW_RETURN (uto,
+			TAO_UTO (CORBA::ULongLong (ACE_OS::gettimeofday ().sec ()),
+				 0,
+				 0),
+			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+			CosTime::UTO::_nil ());
 
-      return uto->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception:");
-    }
-  TAO_ENDTRY;
+  return uto->_this ();
 }
 
 // This method returns the current time in a UTO only if the time can
@@ -72,22 +63,15 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
 					     CORBA::Environment &_env)
 {
   TAO_UTO *uto = 0;
-  TAO_TRY
-    {
-      ACE_NEW_THROW_RETURN (uto,
-			    TAO_UTO (time,
-				     inaccuracy,
-				     tdf),
-			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
-			    CosTime::UTO::_nil ());
 
-      return uto->_this (TAO_TRY_ENV);
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception:");
-    }
- TAO_ENDTRY;
+  ACE_NEW_THROW_RETURN (uto,
+			TAO_UTO (time,
+				 inaccuracy,
+				 tdf),
+			CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+			CosTime::UTO::_nil ());
+
+  return uto->_this ();
 
 }
 
