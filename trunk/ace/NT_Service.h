@@ -359,7 +359,7 @@ protected:
     }                                                                       \
     _ace_nt_svc_obj_##SVCNAME->init(dwArgc, lpszArgv);                      \
     _ace_nt_svc_obj_##SVCNAME->svc_handle(                                  \
-                  RegisterServiceCtrlHandler(SVCDESC,                       \
+                  ACE_TEXT_RegisterServiceCtrlHandler(SVCDESC,              \
                                           &ace_nt_svc_handler_##SVCNAME));  \
     _ace_nt_svc_obj_##SVCNAME->open();                                      \
     _ace_nt_svc_obj_##SVCNAME->wait();                                      \
@@ -380,14 +380,14 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
                       { SVCDESC, &ace_nt_svc_main_##SVCNAME }
 
 #define ACE_NT_SERVICE_RUN(SVCNAME, SVCINSTANCE, RET)                      \
-  SERVICE_TABLE_ENTRY _ace_nt_svc_table[2] =                               \
+  ACE_TEXT_SERVICE_TABLE_ENTRY _ace_nt_svc_table[2] =                      \
   {                                                                        \
-    ACE_NT_SERVICE_ENTRY(#SVCNAME, SVCNAME),                               \
+    ACE_NT_SERVICE_ENTRY(ACE_TEXT (#SVCNAME), SVCNAME),                    \
     { 0, 0 }                                                               \
   };                                                                       \
   _ace_nt_svc_obj_##SVCNAME = SVCINSTANCE;                                 \
   ACE_OS::last_error (0);                                                  \
-  int RET = StartServiceCtrlDispatcher(_ace_nt_svc_table);
+  int RET = ACE_TEXT_StartServiceCtrlDispatcher(_ace_nt_svc_table);
 
 #if defined (__ACE_INLINE__)
 #include "ace/NT_Service.i"

@@ -1,3 +1,23 @@
+Wed Mar 28 21:39:26 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/NT_Service.h:
+
+          Changed the ACE_NT_SERVICE macros to use ACE_TEXT_* API
+          calls for those that can take in unicode strings.
+
+        * examples/NT_Service/main.cpp:
+
+          Fixed use of ACE_NT_SERVICE to work with ACE_USES_WCHAR.
+
+        * examples/OS/Process/process.cpp:
+        * examples/Reactor/WFMO_Reactor/test_directory_changes.cpp:
+
+          Changed some Win32 API calls to use ACE_TEXT_* equivalents.
+
+        * ace/ace_wchar.h:
+
+          Added all the ACE_TEXT_* API macros needed above.
+
 Wed Mar 28 22:07:03 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw: Fixed project dependencies between DLL_Test and
