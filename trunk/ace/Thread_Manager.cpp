@@ -108,6 +108,12 @@ int
 ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle, 
                                         ACE_Thread_Descriptor &descriptor)
 {
+  // @@ This will probably not work right on Win32 for app. programmers since
+  // the Thread_Manager now returns a "duplicated handle" and it's not
+  // the one stored in the thread descriptor table.  Therefore, be sure to
+  // use the thread handle inside thread manager, not the one returned by
+  // thread manager.
+
   ACE_TRACE ("ACE_Thread_Manager::hthread_descriptor");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
@@ -121,6 +127,8 @@ ACE_Thread_Manager::hthread_descriptor (ACE_hthread_t thr_handle,
 int 
 ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 {
+  // @@ We can get this information from TSS directly after my change.
+  
   ACE_TRACE ("ACE_Thread_Manager::thr_self");  
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
@@ -145,6 +153,8 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 int
 ACE_Thread_Manager::resize (size_t size)
 {
+  // @@ We probably won't need this anymore after changing to use TSS.
+  
   ACE_TRACE ("ACE_Thread_Manager::resize");
   ACE_Thread_Descriptor *temp;
   
@@ -501,6 +511,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
     {
 #if defined (ACE_HAS_WTHREADS)
       // Have to duplicate handle if client asks for it.
+      // @@ How are thread handles implemented on AIX?  Do they
+      // also need to be duplicated?
       if (t_handle != 0)
         (void) ::DuplicateHandle (::GetCurrentProcess (), 
                                   thr_handle,
