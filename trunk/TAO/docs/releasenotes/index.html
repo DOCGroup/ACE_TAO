@@ -153,9 +153,9 @@ IDL compiler is now able to generate code that support native C++
 exceptions on the stubs and skeletons. With this strict mapping, the
 CORBA::Environment parameter is no longer generated.
 The default behavior is to generate code without the extra parameter
-	on plaforms with native exceptions and with the extra
-	parameter in platforms without native exceptions.
-	Use the -Ge flag to override the defaults.
+        on plaforms with native exceptions and with the extra
+        parameter in platforms without native exceptions.
+        Use the -Ge flag to override the defaults.
 </li>
 
 <li>
@@ -529,7 +529,7 @@ can be used to verify performance using the new framework.</li>
             If the user does not specify a list of endpoints then the
             ORB creates a default endpoint for each protocol
             configured, unless the pluggable protocol explicitly
-	    prevents that in an effort to prevent resource leaks.
+            prevents that in an effort to prevent resource leaks.
 </li>
 
 <P><li>
@@ -539,7 +539,7 @@ can be used to verify performance using the new framework.</li>
 </li>
 
 <P><li>
-	    Added support for multiple profiles in the IORs, when the
+            Added support for multiple profiles in the IORs, when the
             ORB demarshals an IOR it queries the Connector Registry to
             create the right kind of profile for the known protocols.
             If one of the protocols is unknown we create a special
@@ -548,29 +548,29 @@ can be used to verify performance using the new framework.</li>
 </li>
 
 <P><li>
-	    Enabled the UIOP protocol.  This protocol uses local IPC
+            Enabled the UIOP protocol.  This protocol uses local IPC
             (aka UNIX domain sockets) as the transport mechanism.  The
             protocol is loaded by default.
 
 </li>
 
 <P><li>
-	    Enabled the SHMIOP protocol.  This protocol uses shared
-	    memory as the transport mechanism.  The protocol is loaded
-	    by default.
+            Enabled the SHMIOP protocol.  This protocol uses shared
+            memory as the transport mechanism.  The protocol is loaded
+            by default.
 </li>
 
 <P><li>
-	    An IIOP over SSL pluggable protocol called "SSLIOP" has
-	    been implemented.  It provides secure communication
-	    between hosts that support IIOP over SSL, and is meant to
-	    be a drop-in replacement for the IIOP pluggable protocol.
-	    TAO's SSLIOP pluggable protocol implementation supports
-	    both the standard IIOP transport protocol and the secure
-	    IIOP over SSL transport protocol.
+            An IIOP over SSL pluggable protocol called "SSLIOP" has
+            been implemented.  It provides secure communication
+            between hosts that support IIOP over SSL, and is meant to
+            be a drop-in replacement for the IIOP pluggable protocol.
+            TAO's SSLIOP pluggable protocol implementation supports
+            both the standard IIOP transport protocol and the secure
+            IIOP over SSL transport protocol.
 
-	    <P>
-	      No changes were made to the core TAO sources to provide
+            <P>
+              No changes were made to the core TAO sources to provide
               to this SSL support, nor does TAO contain any security
               related hooks.  TAO's SSLIOP implementation is
               completely self-contained.  This ensures that the core
@@ -578,7 +578,7 @@ can be used to verify performance using the new framework.</li>
 </li>
 
 <P><li>
-	    Protocols can be dynamically loaded into the ORB: The
+            Protocols can be dynamically loaded into the ORB: The
             default resource factory reads the protocol "names" from
             its list of arguments.  These protocol names are used to
             load an abstract factory via the service configurator.
@@ -593,12 +593,12 @@ The service configurator is now used to load protocol factories.
 </li>
 
 <P><li>
-	    Support for the <code>-ORBHost</code> and
+            Support for the <code>-ORBHost</code> and
             <code>-ORBPort</code> has been removed. The new
             <a href="../ORBEndpoint.html"><code>-ORBEndpoint</code></a>
             option supersedes them, and provides the same
             functionality in a protocol-neutral way.  If the
-            deprecated options are used, the ORB exits with a 
+            deprecated options are used, the ORB exits with a
             <code>CORBA::BAD_PARAM</code> exception, indicating an
             unknown <code>-ORB</code> option.
 </li>
@@ -635,7 +635,7 @@ The service configurator is now used to load protocol factories.
 &lt;future_prot_addr&gt;    = &lt;future_prot_id>&lt;future_prot_addr&gt;
 &lt;future_prot_id&gt;    = &lt;future_prot_token&gt;":"
 &lt;future_prot_token&gt; = possible examples: "atm" | "dce"
-&lt;future_prot_addr&gt;    = protocol specific address 
+&lt;future_prot_addr&gt;    = protocol specific address
 &lt;key_string&gt; = &lt;string&gt; | empty_string<br>
 </code></blockquote>
 
@@ -663,7 +663,7 @@ The service configurator is now used to load protocol factories.
             string begins since both may contain forward
             slashes in them.  The new <code>corbaloc:uiop</code> URL
             format may also be used.
-	    <p>
+            <p>
             It should be noted that these formats have been superseded
             by the new <code>corbaloc</code>
             <a href="../INS.html">Interoperable Naming Service</a>
@@ -734,27 +734,27 @@ The service configurator is now used to load protocol factories.
             option uses a syntax similar to that of the URL style
             object reference shown above.  The only difference is that
             the object key delimiter and the object key string are not
-            specified. 
+            specified.
 </li>
 
 <P><li>
-	    Added documentation that describes how to implement
-	    pluggable transport protocols for TAO.  The document is
-	    available
-	    <A HREF="../pluggable_protocols/index.html">here</A>.
+            Added documentation that describes how to implement
+            pluggable transport protocols for TAO.  The document is
+            available
+            <A HREF="../pluggable_protocols/index.html">here</A>.
 </li>
 
 <P><li>
-	    TAO's IIOP pluggable protocol now supports automatic
-	    creation of profiles for endpoints created on a host with
-	    multiple network interfaces.  It should no longer be
-	    necessary to manually specify an endpoint for each network
-	    interface.
-	    <P>
-	      This means that server IORs will contain profiles for
-	      all of the default endpoints created on each network
-	      interface the server is listening on, if no explicit
-	      endpoints were specified.
+            TAO's IIOP pluggable protocol now supports automatic
+            creation of profiles for endpoints created on a host with
+            multiple network interfaces.  It should no longer be
+            necessary to manually specify an endpoint for each network
+            interface.
+            <P>
+              This means that server IORs will contain profiles for
+              all of the default endpoints created on each network
+              interface the server is listening on, if no explicit
+              endpoints were specified.
 </li>
 
 </ul>
@@ -1347,28 +1347,28 @@ Features in this release:</h3>
 
 <ul>
       <li><P>There is a new implementation of the COS Event Service
-	  available.
-	  This new implementation supports both the Push and Pull
-	  styles for event communication, and it does not require the
-	  Real-time Event Service to work.
-	</P>
+          available.
+          This new implementation supports both the Push and Pull
+          styles for event communication, and it does not require the
+          Real-time Event Service to work.
+        </P>
       </LI>
 
       <LI><P>A new testsuite for the COS Event Service has been
-	  started, they are available at:
-	  <CODE>$TAO_ROOT/orbsvcs/tests/CosEvent/</CODE>
-	</P>
+          started, they are available at:
+          <CODE>$TAO_ROOT/orbsvcs/tests/CosEvent/</CODE>
+        </P>
       </LI>
 
       <LI><P>A new example for the COS Event Service is provided in
-	  <CODE>$TAO_ROOT/orbsvcs/examples/CosEC/Simple/</CODE>
-	</P>
+          <CODE>$TAO_ROOT/orbsvcs/examples/CosEC/Simple/</CODE>
+        </P>
       </LI>
 
       <LI><P>A new binary to run the native COS Event Service was
-	  added, it is compiled in:
-	  <CODE>$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service_Native</CODE>
-	</P>
+          added, it is compiled in:
+          <CODE>$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service_Native</CODE>
+        </P>
       </LI>
 
 <li>
@@ -1429,9 +1429,9 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
   </li>
   <li>
       The Query Language supported at present is "TCL".
-	  The Log record id and Log record time are treated as properties
-	  of the log and can be referenced in a query as "id" and "time"
-	  respectively.
+          The Log record id and Log record time are treated as properties
+          of the log and can be referenced in a query as "id" and "time"
+          respectively.
       <br>
   </li>
 </ul>
@@ -1466,32 +1466,33 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
   <li>
       Support "Extended TCL" as the Query Language.
       <br>
-	  Support the record attributes as name-value pair properties.
-	  <br>
+          Support the record attributes as name-value pair properties.
+          <br>
   </li>
   <li>
-	Use Red-Black trees to optimize lookup on frequently used query keys -
-	namely record id's and time.
-	<br>
+        Use Red-Black trees to optimize lookup on frequently used query keys -
+        namely record id's and time.
+        <br>
   </li>
 </ul>
+
 
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated: Wed Jul 19 16:49:50 CDT 2000 </h4>
+<h4> Last updated:Wed Feb 14 15:14:15 CST 2001 </h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>
 Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
-The implementation released in TAO 1.1 consists of the following
+The implementation released in TAO 1.1.12 consists of the following
 (see the associated README's for more information):
 <ul>
-	<li>
+        <li>
             The implementation of the interfaces in the Notification Service
             spec is in <tt>$TAO_ROOT/orbsvcs/orbsvcs/Notify</tt>.
-	</li>
+        </li>
 
-	<li>
+        <li>
             The service executable is implemented in
             <tt>$TAO_ROOT/orbsvcs/Notify_Service</tt>.
         </li>
@@ -1499,7 +1500,7 @@ The implementation released in TAO 1.1 consists of the following
         <li>
             The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Filter</tt>
             shows a basic example of using filters.
-	</li>
+        </li>
 
         <li>
             The example in <tt>$TAO_ROOT/orbsvcs/examples/Notify/Subscribe
@@ -1514,14 +1515,16 @@ The implementation released in TAO 1.1 consists of the following
 </ul>
 
 <h3> Features supported thus far:</h3>
-The Notification Service supports all the interfaces defined in the spec
-*except* Qos Properties, Pull interfaces and Typed Event style communication.
-<br>
-Please note the following:
+
 <ul>
   <li>
-      All features implemented so far are *code* complete and we are
-      currently testing them.
+      The following QoS properties are supported - per-message event
+      priority,order policy and discard policy.
+  </li>
+
+  <li>
+      The following Admin. properties are supported - max. queue
+      length, max_consumers, max_suppliers and reject_new_events.
   </li>
 
   <li>
@@ -1532,7 +1535,6 @@ Please note the following:
 
   <li>
       Assignment of ID's: All object factories assign ID's to objects created.
-      The ID's are recycled when the objects are destroyed.
   </li>
 
   <li>
@@ -1540,13 +1542,6 @@ Please note the following:
       consumers.
       This will be done once we support the <tt>Maximum Batch Size</tt> QoS
       property.
-  </li>
-
-  <li>
-      There are helper classes TAO_Notify_StructuredPushConsumer,
-      TAO_Notify_StructuredPushSupplier and TAO_Notify_PushConsumer,
-      TAO_Notify_PushSupplier to write client consumers and suppliers
-      in <tt> $TAO_ROOT/orbsvcs/tests/Notify/lib</tt>.
   </li>
 
   <li>
@@ -1579,7 +1574,7 @@ Please note the following:
             that evaluated (checking subscriptions and filters) it.
         </li>
 
-        <li> MT evaluation of events - Events delivered to the
+        <li> MT Filter evaluation of events - Events delivered to the
             ProxySuppliers will be evaluated in another thread, different
             from the delivering thread.
         </li>
@@ -1610,14 +1605,17 @@ Please note the following:
 
 </ul>
 
+Note that this implementation does not support Pull interfaces and
+Typed Event style communication.
+
 <h3> Project Schedule </h3>
 The TODO list runs like this:
 <ul>
 
   <li>
-      Implement the QoS properties - Priority, Expiry times, Earliest
-      delivery times, maximun events per consumer, order policy,
-      discard policy, maximum batch size, pacing interval.
+      Implement the QoS properties - Expiry times, Earliest
+      delivery times, maximun events per consumer, deadline based ordering,
+      maximum batch size, pacing interval.
   </li>
 
   <li>
@@ -1634,8 +1632,8 @@ The TODO list runs like this:
         </li>
 
         <li>
-            (Wish list) Add a "filter cache" to cache the expression tree for frequently
-            used constraint expressions.
+            (Wish list) Add a "filter cache" to cache the expression
+            tree for frequently used constraint expressions.
         </li>
 
       </ul>
@@ -1711,15 +1709,15 @@ Schedule:
     the remaining, more "interesting," CORBA Security Service features
     will be built on.  Once they are in place, it will also be
     possible to perform some real research on fault injection, and
-    real-time security. 
+    real-time security.
     <UL>
       <LI>
         Complete full <CODE>SecurityLevel1</CODE> interface
-        implementation. 
+        implementation.
       </LI>
       <LI>
         Partial implementation of <CODE>SecurityManager</CODE>
-        interface. 
+        interface.
       </LI>
       <LI>
         Full implementation of the <CODE>SecureInvocation</CODE>
@@ -1745,7 +1743,7 @@ Schedule:
       <LI>
         Partial implementation of the <CODE>SecurityLevel2</CODE>
         interfaces.  This includes the <CODE>Credential</CODE> and
-        <CODE>Current</CODE> objects. 
+        <CODE>Current</CODE> objects.
       </LI>
       <LI>
         Partial implementation of the <CODE>SecurityAdmin</CODE>
