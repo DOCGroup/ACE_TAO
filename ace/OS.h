@@ -5413,7 +5413,6 @@ public:
 
   static void perror (const ACE_TCHAR *s);
 
-
   // The old gets () which directly maps to the evil, unprotected
   // gets () has been deprecated.  If you really need gets (),
   // consider the following one.
