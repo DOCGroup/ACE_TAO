@@ -6,6 +6,9 @@ Tue Nov 11 10:07:04 1997  David L. Levine  <levine@cs.wustl.edu>
         * tao/orbconf.h: added __i386 to TAO_WORDS_BIGENDIAN check,
           because that's what g++/VxWorks uses.
 
+        * tao/orb_core.i: fixed preprocessor test for using the
+          ACE_Hash_Addr<ACE_INET_Addr>::hash_i specialization.
+
 Tue Nov 11 04:22:44 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.28, released Tue Nov 11 04:22:44 1997.
