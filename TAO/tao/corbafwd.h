@@ -606,6 +606,9 @@ class CORBA_EnumMemberSeq_var;
 typedef CORBA_EnumMemberSeq *CORBA_EnumMemberSeq_ptr;
 #endif /* TAO_HAS_INTERFACE_REPOSITORY*/
 
+class CORBA_Bounds;
+typedef CORBA_Bounds *CORBA_Bounds_ptr;
+
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -1066,6 +1069,8 @@ TAO_NAMESPACE CORBA
   typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
 #endif /* TAO_HAS_INTERFACE_REPOSITORY */
 
+  typedef CORBA_Bounds Bounds;
+  typedef CORBA_Bounds *Bounds_ptr;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
@@ -1227,6 +1232,7 @@ TAO_NAMESPACE CORBA
 
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_UnknownUserException;
 
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Bounds;
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
