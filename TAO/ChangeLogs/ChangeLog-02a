@@ -1,3 +1,35 @@
+Wed Jan 16 21:26:14 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Disabled compiling PortableGroup when Minimum CORBA is
+	  enabled.
+
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	  Regenerated dependencies.
+
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	  Fixed a misuses of TAO_ENV_ARG_*.
+
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	  Fixed subtle typo on MIOP packet segmentation.
+
+	* orbsvcs/tests/Makefile:
+	  Added MIOP.
+
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/PortableGroup_Hooks.h:
+	* tao/PortableServer/PortableServerC.cpp:
+	* tao/PortableServer/PortableServerC.h:
+	* tao/PortableServer/PortableServerC.i:
+	* tao/diffs/PortableServerC.cpp.diff:
+	* tao/diffs/PortableServerC.h.diff:
+	* tao/diffs/PortableServerC.i.diff:
+	  #ifdef'd out PortableGroup additions to the POA when
+	  minimum CORBA is enabled.
+
 Wed Jan 16 20:28:56 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:

@@ -627,6 +627,8 @@ PortableServer::ObjectId_out::operator[] (CORBA::ULong index)
 // Inline operations for exception PortableServer::ForwardRequest
 // *************************************************************
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 // *************************************************************
 // Inline operations for exception PortableServer::NotAGroupObject
 // *************************************************************
@@ -1024,6 +1026,8 @@ PortableServer::IDs_out::operator[] (CORBA::ULong index)
 
 
 #endif /* end #if !defined */
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -1816,6 +1820,10 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,PortableServer::Forward
     return 0;
 }
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const PortableServer::NotAGroupObject &_tao_aggregate)
 {
   // first marshal the repository ID
@@ -1845,7 +1853,7 @@ CORBA::Boolean TAO_PortableServer_Export operator>> (
 
 #endif /* _TAO_CDR_OP_PortableServer_IDs_I_ */
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
