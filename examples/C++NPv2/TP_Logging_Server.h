@@ -124,6 +124,6 @@ public:
   }
 };
 
-ACE_FACTORY_DECLARE (TPLS, TP_Logging_Handler);
+ACE_FACTORY_DECLARE (TPLS, TP_Logging_Handler)
 
 #endif /* _TP_LOGGING_SERVER_H */
