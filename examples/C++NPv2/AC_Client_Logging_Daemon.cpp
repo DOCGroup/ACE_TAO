@@ -5,6 +5,8 @@
 */
 
 #include "ace/OS.h"
+#include "ace/Acceptor.h"
+#include "ace/Connector.h"
 #include "ace/Get_Opt.h"
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
@@ -19,11 +21,86 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Thread_Manager.h"
+#include "Logging_Handler.h"
 #include "AC_CLD_export.h"
 #include <openssl/ssl.h>
 
 
-/********************************************************/
+class AC_CLD_Connector;
+
+class AC_Output_Handler
+  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_MT_SYNCH> {
+public:
+  enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
+
+  virtual int open (void *); // Initialization hook method.
+
+  // Entry point into the <AC_Output_Handler>.
+  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+
+protected:
+  AC_CLD_Connector *connector_;
+
+  // Handle disconnects from the logging server.
+  virtual int handle_input (ACE_HANDLE handle);
+
+  // Hook method forwards log records to server logging daemon.
+  virtual int svc ();
+
+  // Send the buffered log records using a gather-write operation.
+  virtual int AC_Output_Handler::send
+    (ACE_Message_Block *blocks[], size_t &count);
+};
+
+
+class AC_Input_Handler 
+  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
+public:
+  AC_Input_Handler () : output_handler_ (0) { ACE_ASSERT (0); }  // Never used
+  AC_Input_Handler (AC_Output_Handler &handler)
+    : output_handler_ (handler) {}
+  virtual int open (void *); // Initialization hook method.
+  virtual int close (u_int = 0); // Shutdown hook method.
+
+protected:
+  // Reactor hook methods.
+  virtual int handle_input (ACE_HANDLE handle);
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = 0);
+
+  // Reference to the output handler.
+  AC_Output_Handler &output_handler_;
+
+  // Keep track of connected client handles.
+  ACE_Handle_Set connected_clients_;
+};
+
+
+class AC_CLD_Acceptor 
+  : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> {
+public:
+  // Constructor.
+  AC_CLD_Acceptor (AC_Output_Handler &handler)
+    : output_handler_ (handler), input_handler_ (handler) {}
+
+protected:
+  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> 
+          PARENT;
+
+  // <ACE_Acceptor> factory method.
+  virtual int make_svc_handler (AC_Input_Handler *&sh);
+
+  // <ACE_Reactor> close hook method.
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = 0);
+
+  // Reference to the output handler.
+  AC_Output_Handler &output_handler_;
+
+  // Single input handler.
+  AC_Input_Handler input_handler_;
+};
+
 
 class AC_CLD_Connector 
   : public ACE_Connector<AC_Output_Handler, ACE_SOCK_Connector> {
@@ -44,9 +121,6 @@ public:
   // Initialize the Connector.
   virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
                     int flags = 0);
-
-  // Connect to the logging server at the <remote_addr>.
-  int connect (const ACE_INET_Addr &remote_addr);
 
   // Re-establish a connection to the logging server.
   int reconnect ();
@@ -75,118 +149,50 @@ protected:
 };
 
 
-#if !defined (CLD_CERTIFICATE_FILENAME)
-#  define CLD_CERTIFICATE_FILENAME "cld-cert.pem"
-#endif /* !CLD_CERTIFICATE_FILENAME */
-#if !defined (CLD_KEY_FILENAME)
-#  define CLD_KEY_FILENAME "cld-key.pem"
-#endif /* !CLD_KEY_FILENAME */
+class AC_Client_Logging_Daemon : public ACE_Service_Object {
+protected:
+  // Factory that passively connects the <AC_Input_Handler>.
+  AC_CLD_Acceptor acceptor_;
 
+  // Factory that actively connects the <AC_Output_Handler>.
+  AC_CLD_Connector connector_;
 
-int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
-  if (PARENT::open (r, flags) != 0) return -1;
-  OpenSSL_add_ssl_algorithms ();
-  ssl_ctx_ = SSL_CTX_new (SSLv3_client_method ());
-  if (ssl_ctx_ == 0) return -1;
+  // The <AC_Output_Handler> connected by <AC_CLD_Connector>.
+  AC_Output_Handler output_handler_;
 
-  if (SSL_CTX_use_certificate_file (ssl_ctx_,
-                                    CLD_CERTIFICATE_FILENAME,
-                                    SSL_FILETYPE_PEM) <= 0
-     || SSL_CTX_use_PrivateKey_file (ssl_ctx_,
-                                     CLD_KEY_FILENAME,
-                                     SSL_FILETYPE_PEM) <= 0
-     || !SSL_CTX_check_private_key (ssl_ctx_))
-    return -1;
+public:
+  // Constructor.
+  AC_Client_Logging_Daemon ()
+    : acceptor_ (output_handler_), connector_ (output_handler_) {}
 
-  ssl_ = SSL_new (ssl_ctx_);
-  if (ssl_ == 0) return -1;
-  return 0;
-}
-
-
-int AC_CLD_Connector::connect (const ACE_INET_Addr &remote_addr) {
-  remote_addr_ = remote_addr;
-  return PARENT::connect (&handler_, remote_addr);
-}
-
-
-int AC_CLD_Connector::connect_svc_handler
-    (AC_Output_Handler *svc_handler,
-     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
-     ACE_Time_Value *timeout,
-     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
-     int reuse_addr, int flags, int perms) {
-  if (PARENT::connect_svc_handler 
-      (svc_handler, remote_addr, timeout,
-       local_addr, reuse_addr, flags, perms) == -1) return -1;
-  SSL_clear (ssl_);  
-  SSL_set_fd (ssl_, svc_handler->get_handle ());
-
-  SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
-
-  if (SSL_connect (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
-  return 0;
-}
-
-
-int AC_CLD_Connector::reconnect () {
-  // Maximum number of times to retry connect.
-  static const size_t MAX_RETRIES = 5;
-  ACE_Time_Value timeout (1);
-  size_t i;
-  for (i = 0; i < MAX_RETRIES; ++i) {
-    ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT,
-                               timeout);
-    if (i > 0) ACE_OS::sleep (timeout);
-    if (connect (&handler_, remote_addr_, options) == 0)
-      break;
-    timeout *= 2; // Exponential backoff.
-  }
-  return i == MAX_RETRIES ? -1 : 0;
-}
+  // Service Configurator hook methods.
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int fini ();
+  virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
+  virtual int suspend ();
+  virtual int resume ();
+};
 
 /******************************************************/
-
-class AC_Output_Handler
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_MT_SYNCH> {
-public:
-  enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
-
-  virtual int open (AC_CLD_Connector *); // Initialization hook method.
-
-  // Entry point into the <AC_Output_Handler>.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
-
-protected:
-  AC_CLD_Connector *connector_;
-
-  // Handle disconnects from the logging server.
-  virtual int handle_input (ACE_HANDLE handle);
-
-  // Hook method forwards log records to server logging daemon.
-  virtual int svc ();
-
-  // Send the buffered log records using a gather-write operation.
-  virtual int AC_Output_Handler::send
-    (ACE_Message_Block *blocks[], size_t &count);
-};
 
 #if !defined (FLUSH_TIMEOUT)
 #define FLUSH_TIMEOUT 120 /* 120 seconds == 2 minutes. */
 #endif /* FLUSH_TIMEOUT */
 
-
-int AC_Output_Handler::open (AC_CLD_Connector *connector) {
-  connector_ = connector;
+int AC_Output_Handler::open (void *connector) {
+  connector_ =
+    ACE_reinterpret_cast (AC_CLD_Connector *, connector);
   int bufsiz = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   peer ().set_option (SOL_SOCKET, SO_SNDBUF,
                       &bufsiz, sizeof bufsiz);
   if (reactor ()->register_handler 
        (this, ACE_Event_Handler::READ_MASK) == -1)
     return -1;
-  msg_queue ()->high_water_mark (AC_Output_Handler::QUEUE_MAX);
-  return activate (THR_SCOPE_SYSTEM);
+  if (msg_queue ()->activate () 
+      == ACE_Message_Queue_Base::WAS_ACTIVE) {
+    msg_queue ()->high_water_mark (AC_Output_Handler::QUEUE_MAX);
+    return activate (THR_SCOPE_SYSTEM);
+  } else return 0;
 }
 
 
@@ -219,7 +225,7 @@ int AC_Output_Handler::svc () {
     if (getq (mblk, &timeout) == -1) {
       if (errno == ESHUTDOWN) {
         if (connector_->reconnect () == -1) break;
-        else { msg_queue ()->activate (); continue; }
+        continue;
       } else if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
@@ -267,28 +273,6 @@ int AC_Output_Handler::send (ACE_Message_Block *blocks[], size_t &count) {
 
 /******************************************************/
 
-class AC_Input_Handler 
-  : public ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH> {
-public:
-  AC_Input_Handler (AC_Output_Handler &handler)
-    : output_handler_ (handler) {}
-  virtual int open (void *); // Initialization hook method.
-  virtual int close (u_int = 0); // Shutdown hook method.
-
-protected:
-  // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
-
-  // Reference to the output handler.
-  AC_Output_Handler &output_handler_;
-
-  // Keep track of connected client handles.
-  ACE_Handle_Set connected_clients_;
-};
-
-
 int AC_Input_Handler::open (void *) {
   ACE_HANDLE handle = peer ().get_handle ();
   if (reactor ()->register_handler
@@ -304,13 +288,10 @@ int AC_Input_Handler::close (u_int) {
   ACE_NEW_RETURN 
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-  output_handler_.put (shutdown_message);
 
-  ACE_Handle_Set_Iterator iterator (connected_clients_);  
-  for (ACE_HANDLE handle;
-       (handle = iterator ()) != ACE_INVALID_HANDLE;
-       )
-    reactor ()->remove_handler (handle);
+  output_handler_.put (shutdown_message);
+  reactor ()->remove_handler
+    (connected_clients_, ACE_Event_Handler::READ_MASK);
   return output_handler_.wait ();
 }
 
@@ -336,32 +317,6 @@ int AC_Input_Handler::handle_close (ACE_HANDLE handle,
 
 /********************************************************/
 
-class AC_CLD_Acceptor 
-  : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> {
-public:
-  // Constructor.
-  AC_CLD_Acceptor (AC_Output_Handler &handler):
-    : output_handler_ (handler), input_handler_ (handler) {}
-
-protected:
-  typedef ACE_Acceptor<AC_Input_Handler, ACE_SOCK_Acceptor> 
-          PARENT;
-
-  // <ACE_Acceptor> factory method.
-  virtual int make_svc_handler (AC_Input_Handler *&sh);
-
-  // <ACE_Reactor> close hook method.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
-
-  // Reference to the output handler.
-  AC_Output_Handler &output_handler_;
-
-  // Single input handler.
-  AC_Input_Handler input_handler_;
-};
-
-
 int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh) 
 { sh = &input_handler_; return 0; }
 
@@ -375,30 +330,73 @@ int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
 
 /*******************************************************/
 
-class AC_Client_Logging_Daemon : public ACE_Service_Object {
-protected:
-  // Factory that passively connects the <AC_Input_Handler>.
-  AC_CLD_Acceptor acceptor_;
+#if !defined (CLD_CERTIFICATE_FILENAME)
+#  define CLD_CERTIFICATE_FILENAME "cld-cert.pem"
+#endif /* !CLD_CERTIFICATE_FILENAME */
+#if !defined (CLD_KEY_FILENAME)
+#  define CLD_KEY_FILENAME "cld-key.pem"
+#endif /* !CLD_KEY_FILENAME */
 
-  // Factory that actively connects the <AC_Output_Handler>.
-  AC_CLD_Connector connector_;
 
-  // The <AC_Output_Handler> connected by <AC_CLD_Connector>.
-  AC_Output_Handler output_handler_;
+int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
+  if (PARENT::open (r, flags) != 0) return -1;
+  OpenSSL_add_ssl_algorithms ();
+  ssl_ctx_ = SSL_CTX_new (SSLv3_client_method ());
+  if (ssl_ctx_ == 0) return -1;
 
-public:
-  // Constructor.
-  AC_Client_Logging_Daemon ()
-    : acceptor_ (output_handler_), connector_ (output_handler_) {}
+  if (SSL_CTX_use_certificate_file (ssl_ctx_,
+                                    CLD_CERTIFICATE_FILENAME,
+                                    SSL_FILETYPE_PEM) <= 0
+     || SSL_CTX_use_PrivateKey_file (ssl_ctx_,
+                                     CLD_KEY_FILENAME,
+                                     SSL_FILETYPE_PEM) <= 0
+     || !SSL_CTX_check_private_key (ssl_ctx_))
+    return -1;
 
-  // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
-  virtual int suspend ();
-  virtual int resume ();
-};
+  ssl_ = SSL_new (ssl_ctx_);
+  if (ssl_ == 0) return -1;
+  return 0;
+}
 
+
+int AC_CLD_Connector::connect_svc_handler
+    (AC_Output_Handler *svc_handler,
+     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_Time_Value *timeout,
+     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     int reuse_addr, int flags, int perms) {
+  if (PARENT::connect_svc_handler 
+      (svc_handler, remote_addr, timeout,
+       local_addr, reuse_addr, flags, perms) == -1) return -1;
+  SSL_clear (ssl_);  
+  SSL_set_fd (ssl_, svc_handler->get_handle ());
+
+  SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
+
+  if (SSL_connect (ssl_) == -1
+      || SSL_shutdown (ssl_) == -1) return -1;
+  remote_addr_ = remote_addr;
+  return 0;
+}
+
+
+int AC_CLD_Connector::reconnect () {
+  // Maximum number of times to retry connect.
+  static const size_t MAX_RETRIES = 5;
+  ACE_Time_Value timeout (1);
+  size_t i;
+  for (i = 0; i < MAX_RETRIES; ++i) {
+    ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT,
+                               timeout);
+    if (i > 0) ACE_OS::sleep (timeout);
+    if (connect (&handler_, remote_addr_, options) == 0)
+      break;
+    timeout *= 2; // Exponential backoff.
+  }
+  return i == MAX_RETRIES ? -1 : 0;
+}
+
+/******************************************************/
 
 int AC_Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
@@ -434,7 +432,7 @@ int AC_Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   ACE_INET_Addr sld_addr (sld_port, sld_host);
 
   if (acceptor_.open (cld_addr) == -1) return -1;
-  else if (connector_.connect (sld_addr) == -1)
+  else if (connector_.connect (&output_handler_, sld_addr) == -1)
   { acceptor_.close (); return -1; }
   return 0;
 }
