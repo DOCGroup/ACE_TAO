@@ -48,7 +48,8 @@ namespace CIAO
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 				                           PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
-                                   Deployment::DeploymentPlan & plan);
+                                   Deployment::DeploymentPlan & plan,
+                                   ACE_CString & deployment_file);
 
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -78,7 +79,8 @@ namespace CIAO
 
     /**
      * Split the global (domain-level) deployment plan to a set of 
-     * local (node-level) deployment plans. 
+     * local (node-level) deployment plans. The set of local plans
+     * are cached in the ACE hash map member variable.
      */
     int split_plan ();
 
