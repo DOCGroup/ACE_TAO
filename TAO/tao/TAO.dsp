@@ -18,16 +18,20 @@ CFG=TAO DLL - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "TAO DLL - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "TAO DLL - Win32 Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO DLL - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO DLL - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO DLL - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO DLL - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO DLL - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "TAO DLL - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO DLL - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO DLL - Win32 MFC Debug" (based on\
+ "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "TAO DLL - Win32 MFC Release" (based on\
+ "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -106,12 +110,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD nologo MT Gt0 W3 GX O2 I "../../" /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "../../" /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD nologo MT Gt0 W3 GX O2 I "../../" /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "../../" /I "../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -136,12 +140,12 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "../../" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../../" /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
+CPP=cl.exe
+# ADD BASE CPP /Gt0 /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd nologo Gt0 W3 GX Zi Od Gy I "../../" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "../../" /I "../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -1886,6 +1890,25 @@ SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Release"
@@ -2918,6 +2941,10 @@ SOURCE=.\Priority_Mapping.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Protocol_Factory.h
 # End Source File
 # Begin Source File
@@ -3251,6 +3278,10 @@ SOURCE=.\Pool_Per_Endpoint.i
 # Begin Source File
 
 SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
