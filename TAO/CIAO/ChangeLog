@@ -1,3 +1,23 @@
+Wed Feb  2 09:39:25 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * CCF/CCF/CIDL/CIDL.mpc:
+        * CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+        * CCF/CCF/CompilerElements/CompilerElements.mpc:
+        * CCF/CCF/IDL2/IDL2.mpc:
+        * CCF/CCF/IDL3/IDL3.mpc:
+        * CIDLC/CIDLC.mpc:
+
+          Converted includes to incorporate $(CIAO_ROOT).  This allows the
+          GNUACEProjectCreator to recognize these projects as CIAO projects.
+
+        * DAnCE/ciao/CCM_Core.mpc:
+        * ciao/CCM_Core.mpc:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/Segment_Timer/Segment_Timer.mpc:
+
+          Added a bogus include of $(CIAO_ROOT).  This allows the
+          GNUACEProjectCreator to recognize these projects as CIAO projects.
+
 Wed Feb  2 14:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.ciao.GNU:
@@ -26,53 +46,53 @@ Tue Feb  1 13:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan 31 21:00:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (pre):
+        * CIDLC/ServantSourceGenerator.cpp (pre):
 
-	  Generate '#include "ace/OS_NS_string.h"' directive.  CIAO CIDL
-	  servant sources call ACE_OS::strcmp(), the prototype of which is
-	  found in that header.  Necessitated by inter-header dependency
-	  reductions in ACE.
+          Generate '#include "ace/OS_NS_string.h"' directive.  CIAO CIDL
+          servant sources call ACE_OS::strcmp(), the prototype of which is
+          found in that header.  Necessitated by inter-header dependency
+          reductions in ACE.
 
 Mon Jan 31 11:59:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Any_Handler.cpp:
-	* DAnCE/Config_Handlers/CPK_Handler.cpp:
-	* DAnCE/Config_Handlers/DT_Handler.cpp:
-	* DAnCE/Config_Handlers/Property_Handler.cpp:
-	* DAnCE/Config_Handlers/RS_Handler.cpp:
-	* DAnCE/Config_Handlers/Requirement_Handler.cpp:
-	* DAnCE/Config_Handlers/SP_Handler.cpp:
-	* DAnCE/ciao/Port_Activator_T.cpp:
-	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* ciao/Container_Impl.cpp:
-	* performance-tests/Protocols/Controller/Controller.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.cpp:
-	* tools/RTComponentServer/RTConfig_Manager.h:
-	* tools/RTComponentServer/RTServer_Impl.cpp:
+        * DAnCE/Config_Handlers/Any_Handler.cpp:
+        * DAnCE/Config_Handlers/CPK_Handler.cpp:
+        * DAnCE/Config_Handlers/DT_Handler.cpp:
+        * DAnCE/Config_Handlers/Property_Handler.cpp:
+        * DAnCE/Config_Handlers/RS_Handler.cpp:
+        * DAnCE/Config_Handlers/Requirement_Handler.cpp:
+        * DAnCE/Config_Handlers/SP_Handler.cpp:
+        * DAnCE/ciao/Port_Activator_T.cpp:
+        * DAnCE/examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * ciao/Container_Impl.cpp:
+        * performance-tests/Protocols/Controller/Controller.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.cpp:
+        * tools/RTComponentServer/RTConfig_Manager.h:
+        * tools/RTComponentServer/RTServer_Impl.cpp:
 
-	  Added missing header include directives that are necessary due
-	  to inter-header dependency reductions in ACE.
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
 
 Sun Jan 30 20:30:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
-	* DAnCE/ExecutionManager/ExecutionManager_Impl.h:
-	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
-	* DAnCE/ciao/Container_Base.cpp:
-	* DAnCE/ciao/NodeApplication_Impl.cpp:
-	* ciao/Container_Base.cpp:
-	* ciao/ServerActivator_Impl.h:
-	* docs/tutorial/Hello/hello_exec.cpp:
-	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
-	* tests/RTCCM/Priority_Test/Controllers/client.cpp:
-	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
-	* tools/Assembly_Deployer/Deployment_Configuration.h:
-	* tools/RTComponentServer/RTServer_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.h:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        * DAnCE/ciao/Container_Base.cpp:
+        * DAnCE/ciao/NodeApplication_Impl.cpp:
+        * ciao/Container_Base.cpp:
+        * ciao/ServerActivator_Impl.h:
+        * docs/tutorial/Hello/hello_exec.cpp:
+        * examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * tests/RTCCM/Priority_Test/Controllers/client.cpp:
+        * tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+        * tools/Assembly_Deployer/Deployment_Configuration.h:
+        * tools/RTComponentServer/RTServer_Impl.cpp:
 
-	  Added missing header include directives that are necessary due
-	  to inter-header dependency reductions in ACE.
+          Added missing header include directives that are necessary due
+          to inter-header dependency reductions in ACE.
 
 Sun Jan 23 01:49:51 2005  Marek Brudka  <mbrudka@aster.pl>
 

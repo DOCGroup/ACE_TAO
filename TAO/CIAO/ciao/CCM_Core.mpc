@@ -6,6 +6,9 @@ project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
   idlflags  += -Sc -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
   dynamicflags    = CIAO_CLIENT_BUILD_DLL
 
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
+
   IDL_Files {
     CCM_Base.idl
     CCM_Event.idl
@@ -37,6 +40,9 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
   idlflags   += -Sc -Wb,export_include=CIAO_Container_Export.h
   idlflags   += -Wb,export_macro=CIAO_CONTAINER_Export
   dynamicflags = CIAO_CONTAINER_BUILD_DLL
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes += $(CIAO_ROOT)
 
   IDL_Files {
     CCM_Transaction.idl
