@@ -777,7 +777,6 @@ protected:
   ACE_Reactor_Token token_;
   // Synchronization token for the MT_SAFE ACE_Reactor.
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Reactor_Notify notify_handler_;
   // Callback object that unblocks the ACE_Reactor if it's sleeping.
 
@@ -786,8 +785,6 @@ protected:
   // appropriate point specified by <requeue_position_>.  
 
   friend class ACE_Reactor_Notify;
-#endif /* ACE_MT_SAFE */
-
   friend class ACE_Reactor_Handler_Repository;
 
 private:
