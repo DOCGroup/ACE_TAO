@@ -65,7 +65,7 @@ if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
 if ($status == 0) {
   $STC->Arguments($client_args);
   print $STC->CommandLine ()."\n";
-  $client = $STC->SpawnWaitKill (300);
+  $client = $STC->SpawnWaitKill (60);
   print "\n";
 
   $STS->Kill ();
