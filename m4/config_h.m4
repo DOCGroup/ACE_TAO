@@ -782,6 +782,8 @@ AH_TEMPLATE([ACE_HAS_STREAMS],[Platform supports STREAMS])
 
 AH_TEMPLATE([ACE_HAS_STREAM_PIPES],[Platform supports STREAM pipes])
 
+AH_TEMPLATE([ACE_LACKS_STROPTS_H],[Platform lacks stropts.h])
+
 AH_TEMPLATE([ACE_HAS_STRERROR],[Compiler/platform supports strerror()])
 
 AH_TEMPLATE([ACE_HAS_STRING_CLASS],
@@ -988,6 +990,9 @@ AH_TEMPLATE([ACE_LACKS_FLOATING_POINT],
 
 AH_TEMPLATE([ACE_LACKS_FORK],
 [Platform lacks the fork() system call (e.g., Win32, VxWorks, Chorus)])
+
+AH_TEMPLATE([ACE_LACKS_GETHOSTENT],
+[Platform lacks gethostent()])
 
 AH_TEMPLATE([ACE_LACKS_GETOPT_PROTO],
 [Platform lacks the getopt() prototype (e.g., LynxOS)])
