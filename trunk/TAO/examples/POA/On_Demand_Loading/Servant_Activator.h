@@ -39,8 +39,15 @@ public:
                                              CORBA::Environment &env);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
   // RETAIN policies, whenever it receives a request for a
-  // MyFooServant object that is not currently active.
-  // @@ Kirthika, please explain briefly what THIS method does
+  // MyFooServant object that is not currently active. When an servant
+  // pointer corresponding to objectId is not found in the Active
+  // Object Map, the POA hands over the job of obtaining the servant
+  // to the Servant Manager. Depending upon whether the POA is created 
+  // with RETAIN or NON_RETAIN as the servant_retention policy, the
+  // Servant Activator or the Servant Locator interface is invoked
+  // respectively.
+
+  // @@ *done*Kirthika, please explain briefly what THIS method does
   // whenever it is invoked, i.e., explain the use of the
   // ServantManager stuff...
 
@@ -51,8 +58,13 @@ public:
                             CORBA::Boolean remaining_activations,
                             CORBA::Environment &env);
   // This method is invoked whenever a MyFooServant for a MyFoo object
-  // is deactivated.
-  // @@ Kirthika, please explain briefly what THIS method does
+  // is deactivated. This occurs when the POA is destroyed or the
+  // Object is deactivated. When the POA is getting destroyed, it
+  // needs to deactivate every  object in the Active Object Map and on
+  // that call the  ServantActivator invokes this method which will
+  // destroy the servant associated with the object.
+
+  // @@ *done*Kirthika, please explain briefly what THIS method does
   // whenever it is invoked, i.e., explain the use of the
   // ServantManager stuff...
 
@@ -64,7 +76,11 @@ public:
 private:
   ServantManager_i servant_manager_;
   // An ServantManager object that provides utility methods.
-  // @@ Kirthika, briefly summarize what these methods accomplish (in
+  // The methods include obtaining the servant using an ACE_DLL
+  // object, destroying the servant and extracting the dllname and
+  // factory function from the ObjectId.
+  
+  // @@*done* Kirthika, briefly summarize what these methods accomplish (in
   // general).
 };
 

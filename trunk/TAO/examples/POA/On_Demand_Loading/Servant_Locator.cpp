@@ -25,8 +25,7 @@ ACE_RCSID(On_Demand_Activation, Servant_Locator, "$Id$")
 // Initialization.
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)
-  : servant_manager_ (orb), 
-    counter_ (0)
+  : servant_manager_ (orb) 
 {
 }
 

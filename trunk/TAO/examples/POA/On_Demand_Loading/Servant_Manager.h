@@ -33,15 +33,13 @@ class ServantManager_i
 {
   // = TITLE
   //   This class is the helper class for the ServantActivator_i and
-  // @@ Kirthika, I don't think the following comment is correct since
-  // the Activator_i and Locator_i classes don't inherit from this
-  // class.  Can you please update this?
-  //   ServantLocator_i classes, both of which inherit from this class
-  //   and share its functions.
+  //   ServantLocator_i classes.
   //
   // = DESCRIPTION
-  //   @@ Kirthika, please add a detailed explanation of precise what
-  //   it is that this class DOES!
+  //   The methods provided by this class are used by the ServantActivator_i
+  //   and ServantLocator_i classes. This class contains the common methods
+  //   needed by them.
+  //  
 public:
    typedef PortableServer::Servant 
            (*SERVANT_FACTORY) (CORBA::ORB_ptr orb,
@@ -59,8 +57,10 @@ public:
   PortableServer::ObjectId_var create_dll_object_id (const char *libname, 
                                                      const char *factory_function);
   // Returns an ObjectId when given an DLL name and the factory method
-  // to be invoked in the DLL.
-  // @@ Kirthika, please explain what this function is USED for, i.e.,
+  // to be invoked in the DLL. The application developer can initialise the 
+  // ServantActivator object by providing the dllname and the factory function.
+
+  // @@ *done*Kirthika, please explain what this function is USED for, i.e.,
   // who calls it and why?
   
   PortableServer::Servant obtain_servant (const char *str,
@@ -87,13 +87,12 @@ public:
   CORBA::ORB_var orb_;
   // A reference to the ORB.
   
-  CORBA::String_var dllname_;
-  // The name of the DLL containing the factory function that creates
-  // servants.
+  ACE_CString dllname_;
+  // The name of the dll containing the servant.
   
-  CORBA::String_var create_symbol_;
-  // The symbol name of the factory function that will create a new
-  // servant pointer when invoked.
+  ACE_CString create_symbol_;
+  // The symbol which on getting invoked will give us the servant
+  // pointer.
   
   typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                                   ACE_DLL *,
@@ -103,10 +102,14 @@ public:
           SERVANT_MAP;
   
   SERVANT_MAP servant_map_;
-  // @@ Kirthika, please add some more comments explaining exactly
+  // This is the hash map object. The hash map is used to provide
+  // an quick access to the dll object associated with every servant
+  // using the unique ObjectId as key.
+
+  // *done*@@ Kirthika, please add some more comments explaining exactly
   // what this hash map is used for in this application.
 
-  // This is the hash map object.
+  
 };
 #endif /* SERVANT_MANAGER_H */
 
