@@ -105,6 +105,7 @@ main (int, char *[])
   char *shm = (char *) allocator.malloc (27);
 
   switch (ACE_OS::fork ("SV_Shared_Memory_Test.cpp"))
+  //  switch (1)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "(%P) fork failed\n"), -1);
