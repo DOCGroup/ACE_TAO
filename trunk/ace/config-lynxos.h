@@ -199,10 +199,6 @@ extern "C"
 // Aio works on lynx
 #define ACE_HAS_AIO_CALLS
 
-// To match the Solaris 2.6's definition of the aiocb structure.
-#define AIO_SYSRETURN aio_sysreturn
-#define AIO_SYSERRNO aio_syserrno
-
 // AIOCB Proactor doesnt work on lynx yet.
 #define ACE_POSIX_SIG_PROACTOR
 #endif /* ACE_CONFIG_H */

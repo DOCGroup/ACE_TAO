@@ -24,7 +24,4 @@
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
 
-// To match the LynxOS's definition of the aiocb structure.
-#define AIO_SYSRETURN aio_resultp.aio_return
-#define AIO_SYSERRNO aio_resultp.aio_errno
 #endif /* ACE_CONFIG_H */
