@@ -1,3 +1,16 @@
+Fri Sep  3 08:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.h:
+          Mark TAO_DONT_CATCH with @internal
+
+        * tao/Sequence.cpp:
+          Include SystemException.h instead of Exception.h
+
+        * tao/SystemException.cpp:
+          Include OS_NS_stdio.h to get printf
+        * tao/UserException.cpp:
+          Include UserException.inl when not defined ACE_INLINE
+
 Thu Sep  2 22:21:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Exception.h:
