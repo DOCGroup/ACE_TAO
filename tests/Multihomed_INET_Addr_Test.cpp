@@ -272,7 +272,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Check that the primary address in the in_out_sockaddr array
       // matches the primary address reported by the superclass
-      if (memcmp(in_out_sockaddr, addr.get_addr(), sizeof(sockaddr))) {
+      if (ACE_OS::memcmp(in_out_sockaddr, addr.get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
@@ -288,7 +288,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < i + 1;
            ++j, ++pointer) {
 
-        if (memcmp(pointer, stay_out[j-1].get_addr(), sizeof(sockaddr))) {
+        if (ACE_OS::memcmp(pointer, stay_out[j-1].get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
