@@ -31,6 +31,7 @@ class ACE_Service_Type;
 class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
+class ACE_Svc_Conf_Param;
 
 extern "C"
 {
@@ -376,7 +377,7 @@ public:
   static int remove (const ACE_TCHAR svc_name[]);
 
 #if defined (ACE_HAS_WINCE)
-  // We must provide these function to bridge the <Svc_Conf> parser
+  // We must provide these function to bridge the Svc_Conf parser
   // with ACE.
   static int initialize (const ACE_Service_Type *, char parameters[]);
   static int initialize (const char svc_name[], char parameters[]);
@@ -446,12 +447,10 @@ protected:
   /// command-line.  Returns the number of errors that occurred.
   static int process_commandline_directives (void);
 
-  /**
-   * This is the implementation function that <process_directives> and
-   * <process_directive> both call.  Returns the number of errors that
-   * occurred.
-   */
-  static int process_directives_i (void);
+  /// This is the implementation function that process_directives()
+  /// and process_directive() both call.  Returns the number of errors
+  /// that occurred.
+  static int process_directives_i (ACE_Svc_Conf_Param *param);
 
   /// Become a daemon.
   static int start_daemon (void);

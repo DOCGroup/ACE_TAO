@@ -21,21 +21,26 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Forward declarations
+class ACE_Svc_Conf_Param;
+
+struct ace_yy_buffer_state;
+
 /**
  * @class ACE_Svc_Conf_Lexer_Guard
  *
- * @brief "Guard" that ensures lexer buffer stack manipulation is
+ * @brief "Guard" that ensures lexer buffer switching is
  *        exception-safe.
  *
- * Buffers are allocated and deallocated when scanning a file or a
- * string.  This class utilizes the "guard" idiom to perform stack
- * pushing and popping before and after parsing/scanning.
- * @par
- * The underlying stack allows nested scans to occur.  For example,
- * while scanning a `svc.conf' file, a Service Object's init() method
- * could invoke a Service Configurator directive, which would require
- * "moving" the current lexer state out of the way (pushing it onto
- * the stack implementation).
+ * Buffers are switched, if necessary, each time a token is
+ * parsed/scanned.  The buffer switching must be synchronized
+ * externally.  This class performs no synchronization.
+ *
+ * @note Note that allocation/deallocation is done once during the
+ *       processing of a service configurator directive.  Memory
+ *       managements is done at a higher level, not in this class.
+ *       This is necessary to prevent an allocation/deallocation from
+ *       occurring when parsing/scanning each token.
  */
 class ACE_Svc_Conf_Lexer_Guard
 {
@@ -43,27 +48,28 @@ public:
 
   /// Constructor
   /**
-   * Create a new buffer to be used when scanning a new Service
-   * Configurator file, push it onto the underlying buffer stack,
-   * and make it the current buffer.
+   * Switches buffers, if necessary, when token scanning first
+   * begins.  Allocation of the buffer will also occur if one has not
+   * already been allocated.  This operation effectively pushes a
+   * buffer on to a stack.
    */
-  ACE_Svc_Conf_Lexer_Guard (FILE *file);
-
-  /// Constructor
-  /**
-   * Create a new buffer to be used when scanning a new Service
-   * Configurator directive, push it onto the underlying buffer stack,
-   * and make it the current buffer.
-   */
-  ACE_Svc_Conf_Lexer_Guard (const ACE_TCHAR *directive);
+  ACE_Svc_Conf_Lexer_Guard (ACE_Svc_Conf_Param *param);
 
   /// Destructor
   /**
-   * Pop the current buffer off of the underlying buffer stack,
-   * and make the previous buffer (i.e. the one on the top of the
-   * stack), the current buffer.
+   * Switches buffers, if necessary when token scanning completes.  No
+   * buffer deallocation occurs here.  Buffers are deallocated when
+   * parsing of the entire directive is done, not when scanning of a
+   * single token is done.  This operation effective pops a buffer off
+   * of a stack.
    */
   ~ACE_Svc_Conf_Lexer_Guard (void);
+
+private:
+
+  /// Lexer buffer that corresponds to the current Service
+  /// Configurator file/direct scan.
+  ace_yy_buffer_state *buffer_;
 
 };
 

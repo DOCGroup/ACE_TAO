@@ -32,7 +32,6 @@ int yyerrno = 0;
 %token ACE_DYNAMIC ACE_STATIC ACE_SUSPEND ACE_RESUME ACE_REMOVE ACE_USTREAM
 %token ACE_MODULE_T ACE_STREAM_T ACE_SVC_OBJ_T ACE_ACTIVE ACE_INACTIVE
 %token ACE_PATHNAME ACE_IDENT ACE_STRING
-%token ACE_LPAREN ACE_RPAREN ACE_LBRACE ACE_RBRACE ACE_STAR ACE_COLON
 
 %start svc_config_entries
 
@@ -133,12 +132,12 @@ stream_ops
   ;
 
 stream_modules
-  : ACE_LBRACE
+  : '{'
     {
       // Initialize left context...
       $<static_node_>$ = $<static_node_>0;
     }
-   module_list ACE_RBRACE
+   module_list '}'
     {
       $$ = $3;
     }
@@ -180,7 +179,7 @@ module
               ACE_ERROR ((LM_ERROR,
                           ACE_LIB_TEXT ("dynamic initialization failed for Module %s\n"),
                           svc_type->name ()));
-              yyerrno++;
+              ACE_SVC_CONF_PARAM->yyerrno++;
             }
         }
     }
@@ -192,7 +191,7 @@ module
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Problem with static\n")));
-          yyerrno++;
+          ACE_SVC_CONF_PARAM->yyerrno++;
         }
     }
   | suspend
@@ -226,7 +225,7 @@ module
                       ACE_LIB_TEXT ("cannot remove Module_Type %s from STREAM_Type %s\n"),
                       module->name (),
                       stream->name ()));
-          yyerrno++;
+          ACE_SVC_CONF_PARAM->yyerrno++;
         }
     }
   ;
@@ -258,7 +257,7 @@ svc_location
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("Unable to find service: %s\n"),
                       $1));
-          ++yyerrno;
+          ++ACE_SVC_CONF_PARAM->yyerrno;
           $$ = 0;
         }
       delete $3;
@@ -281,30 +280,30 @@ status
   ;
 
 svc_initializer
-  : pathname ACE_COLON ACE_IDENT
+  : pathname ':' ACE_IDENT
     {
       $$ = new ACE_Object_Node ($1, $3);
     }
-  | pathname ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN
+  | pathname ':' ACE_IDENT '(' ')'
     {
       $$ = new ACE_Function_Node ($1, $3);
     }
-  | ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN
+  | ':' ACE_IDENT '(' ')'
     {
       $$ = new ACE_Static_Function_Node ($2);
     }
   ;
 
 type
-  : ACE_MODULE_T ACE_STAR
+  : ACE_MODULE_T '*'
     {
       $$ = ACE_MODULE_T;
     }
-  | ACE_SVC_OBJ_T ACE_STAR
+  | ACE_SVC_OBJ_T '*'
     {
       $$ = ACE_SVC_OBJ_T;
     }
-  | ACE_STREAM_T ACE_STAR
+  | ACE_STREAM_T '*'
     {
       $$ = ACE_STREAM_T;
     }
@@ -334,7 +333,7 @@ yyerror (const ACE_TCHAR *s)
 
   ACE_ERROR ((LM_ERROR,
               ACE_LIB_TEXT ("[error %d] on line %d: %s\n"),
-              ++yyerrno,
+              yyerrno,
               yylineno,
               s));
 }
