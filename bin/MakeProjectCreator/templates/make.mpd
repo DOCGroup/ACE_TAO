@@ -160,7 +160,11 @@ GENERATED_DIRTY    =<%foreach(custom_types)%><%foreach(custom_type->input_files)
 <%endfor%>
 <%endfor%>
 .PRECIOUS: $(GENERATED_DIRTY)
+<%if(source_files)%>
 $(OBJS): $(GENERATED_DIRTY)
+<%else%>
+all: $(GENERATED_DIRTY)
+<%endif%>
 
 <%endif%>
 generated: $(GENERATED_DIRTY)

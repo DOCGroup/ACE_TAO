@@ -137,7 +137,11 @@ PATH := $(PATH);<%custom_type->libpath%>
 <%endif%>
 <%endfor%>
 <%endfor%>
+<%if(source_files)%>
 $(OBJFILES): $(GENERATED_DIRTY)
+<%else%>
+all: $(GENERATED_DIRTY)
+<%endif%>
 
 <%endif%>
 <%if(exename)%>
