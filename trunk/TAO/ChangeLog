@@ -1,3 +1,12 @@
+Mon Dec  1 10:26:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Modified the logic of pragma prefix updates to eliminate the
+          removal of the global scope prefix (if any), which should never
+          happen. Thanks to Simon McQueen <sm@prismtechnologies.com>
+          for reporting the bug.
+
 Mon Dec 01 03:05:44 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp:
