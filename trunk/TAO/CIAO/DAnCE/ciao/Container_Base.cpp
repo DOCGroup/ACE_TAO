@@ -4,6 +4,7 @@
 #include "ace/DLL.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
+#include "Servant_Activator.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -41,12 +42,12 @@ namespace CIAO
 
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         bool static_config_flag,
-                                        const Static_Config_EntryPoints_Maps* maps
-                                            )
+                                        const Static_Config_EntryPoints_Maps* maps)
   : Container (o),
     number_ (0),
     static_config_flag_ (static_config_flag),
-    static_entrypts_maps_ (maps)
+    static_entrypts_maps_ (maps),
+    sa_ (0)
   {
   }
 
@@ -142,8 +143,8 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO::Utils::PolicyList_Destroyer policies (4);
-    policies.length (4);
+    TAO::Utils::PolicyList_Destroyer policies (3);
+    policies.length (3);
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID
@@ -151,18 +152,13 @@ namespace CIAO
     ACE_CHECK;
 
     policies[1] =
-      root->create_lifespan_policy (PortableServer::PERSISTENT
-                                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    policies[2] =
       root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // Servant Retention Policy
-    policies[3] =
-      root->create_servant_retention_policy (PortableServer::NON_RETAIN
+    policies[2] =
+      root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
@@ -171,6 +167,15 @@ namespace CIAO
                         poa_manager.in (),
                         policies
                         ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    ACE_NEW_THROW_EX (this->sa_,
+                      Servant_Activator (this->orb_.in ()),
+                      CORBA::NO_MEMORY ());
+
+    this->facet_cons_poa_->set_servant_manager (
+        this->sa_
+        ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -211,9 +216,9 @@ namespace CIAO
                                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
-    CORBA::Object_var objref =
-      this->component_poa_->id_to_reference (id.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var objref
+      = this->component_poa_->id_to_reference (id.in ()
+                                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
     oid = id._retn ();
@@ -399,19 +404,27 @@ namespace CIAO
 
   CORBA::Object_ptr
   Session_Container::generate_reference (const char *obj_id,
-                                         const char *repo_id
+                                         const char *repo_id,
+                                         Container::OA_Type t
                                          ACE_ENV_ARG_DECL)
   {
+    PortableServer::POA_ptr tmp = 0;
+
+    if (t == Container::Component)
+      tmp = this->component_poa_.in ();
+    else
+      tmp = this->facet_cons_poa_.in ();
+
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (obj_id);
 
     CORBA::Object_var objref =
-      this->component_poa_->create_reference_with_id (
-          oid.in (),
-          repo_id
-          ACE_ENV_ARG_PARAMETER);
+      tmp->create_reference_with_id (oid.in (),
+                                     repo_id
+                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
     return objref._retn ();
   }
+
 }
