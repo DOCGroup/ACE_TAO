@@ -97,11 +97,11 @@ Event_Handler::handle_timeout (const ACE_Time_Value &tv,
   return 0;
 }
 
-Event_Handler event_handler;
-
 int
 main (int argc, char *argv[])
 {
+  Event_Handler event_handler;
+
   event_handler.iterations_ = 5;
   int result = ACE_Reactor::instance ()->register_handler
     (&event_handler,

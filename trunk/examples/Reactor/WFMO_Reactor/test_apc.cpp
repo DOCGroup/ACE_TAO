@@ -37,7 +37,7 @@ public:
   int iterations_;
 };
 
-static Event_Handler event_handler;
+static Event_Handler *global_event_handler;
 
 static void WINAPI
 apc_callback (DWORD)
@@ -45,7 +45,7 @@ apc_callback (DWORD)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) apc occured @ %T\n"));
 
-  event_handler.handle_.signal ();
+  global_event_handler->handle_.signal ();
 }
 
 void
@@ -84,7 +84,10 @@ Event_Handler::handle_timeout (const ACE_Time_Value &tv,
 int
 main (int argc, char *argv[])
 {
+  Event_Handler event_handler;
   event_handler.iterations_ = 5;
+  global_event_handler = &event_handler;
+
   int result = ACE_Reactor::instance ()->register_handler (&event_handler,
                                                            event_handler.handle_.handle ());
   ACE_ASSERT (result == 0);

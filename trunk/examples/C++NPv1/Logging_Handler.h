@@ -28,6 +28,8 @@ public:
   Logging_Handler (ACE_FILE_IO &log_file,
                    const ACE_SOCK_Stream &logging_peer)
     : log_file_ (log_file), logging_peer_ (logging_peer) {}
+  Logging_Handler (const ACE_SOCK_Stream &logging_peer)
+    : logging_peer_ (logging_peer) {}
   int close () { return logging_peer_.close (); }
 
   // Receive one log record from a connected client.   Returns
