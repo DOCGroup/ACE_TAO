@@ -1,16 +1,13 @@
-// $Id$
-
 #include "Repository_Configuration.h"
 #include "NT_Service.h"
 
 #include "ace/Configuration.h"
 
-#if defined (ACE_WIN32)
-const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
-const char *SERVICE_REG_PATH =
-  ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImplRepo\\Parameters");
-const char *SERVICE_REG_VALUE_NAME = ACE_TEXT ("ORBOptions");
-#endif /* ACE_WIN32 */
+
+ACE_RCSID (ImplRepo_Service,
+           Repository_Configuration,
+           "$Id$")
+
 
 Repository_Configuration::Repository_Configuration (const char *repository_mode)
   : config_ (0)

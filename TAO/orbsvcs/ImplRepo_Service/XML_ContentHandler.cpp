@@ -1,7 +1,10 @@
-// $Id$
-
 #include "XML_ContentHandler.h"
-#include "tao/ORB_Core.h"
+
+
+ACE_RCSID (ImplRepo_Service,
+           XML_ContentHandler,
+           "$Id$")
+
 
 XML_ContentHandler::XML_ContentHandler (const char *server_name)
   : server_name_ (server_name),
@@ -24,15 +27,11 @@ XML_ContentHandler::~XML_ContentHandler (void)
 
 void
 XML_ContentHandler::characters (const ACEXML_Char *cdata,
-                                int start,
-                                int end,
-                                ACEXML_Env &xmlenv)
+                                int /* start */,
+                                int /* end */,
+                                ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-  ACE_UNUSED_ARG (start);
-  ACE_UNUSED_ARG (end);
-
   if (ACE_OS::strcmp (cdata, this->server_name_.c_str ()) == 0)
     {
       this->found_server_entry_ = 1;
@@ -71,84 +70,70 @@ XML_ContentHandler::characters (const ACEXML_Char *cdata,
 }
 
 void
-XML_ContentHandler::endDocument (ACEXML_Env &xmlenv)
+XML_ContentHandler::endDocument (ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
 }
 
 void
 XML_ContentHandler::endElement (const ACEXML_Char *,
                                 const ACEXML_Char *,
-                                const ACEXML_Char *qName,
-                                ACEXML_Env &xmlenv)
+                                const ACEXML_Char * /* qName */,
+                                ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-  ACE_UNUSED_ARG (qName);
 }
 
 void
 XML_ContentHandler::endPrefixMapping (const ACEXML_Char *prefix,
-                                      ACEXML_Env &xmlenv)
+                                      ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
+  //  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
 }
 
 void
 XML_ContentHandler::ignorableWhitespace (const ACEXML_Char *,
-                                              int,
-                                              int,
-                                              ACEXML_Env &xmlenv)
+                                         int,
+                                         int,
+                                         ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-
-  cout << "* Event ignorableWhitespace () ***************" << endl;
+  //  cout << "* Event ignorableWhitespace () ***************" << endl;
 }
 
 void
-XML_ContentHandler::processingInstruction (const ACEXML_Char *target,
-                                           const ACEXML_Char *data,
-                                           ACEXML_Env &xmlenv)
+XML_ContentHandler::processingInstruction (const ACEXML_Char * /* target */,
+                                           const ACEXML_Char * /* data */,
+                                           ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-
   //  this->print_indent ();
-  cout << "<?" << target << " "
-       << data << "?>" << endl;
+//   cout << "<?" << target << " "
+//        << data << "?>" << endl;
 }
 
 void
 XML_ContentHandler::setDocumentLocator (ACEXML_Locator *,
-                                             ACEXML_Env &xmlenv)
+                                        ACEXML_Env & /* xmlenv */)
 {
-  ACE_UNUSED_ARG (xmlenv);
-
-  cout << "* Event setDocumentLocator () ***************" << endl;
+  //  cout << "* Event setDocumentLocator () ***************" << endl;
 }
 
 void
-XML_ContentHandler::skippedEntity (const ACEXML_Char *name,
-                                        ACEXML_Env &xmlenv)
+XML_ContentHandler::skippedEntity (const ACEXML_Char * /* name */,
+                                   ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-
-  cout << "* Event skippedEntity (" << name << ") ***************" << endl;
+  //  cout << "* Event skippedEntity (" << name << ") ***************" << endl;
 }
 
 void
-XML_ContentHandler::startDocument (ACEXML_Env &xmlenv)
+XML_ContentHandler::startDocument (ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-
-  cout << "* Event startDocument () ***************" << endl;
+  //  cout << "* Event startDocument () ***************" << endl;
 }
 
 void
@@ -156,11 +141,9 @@ XML_ContentHandler::startElement (const ACEXML_Char *,
                                   const ACEXML_Char *,
                                   const ACEXML_Char *qName,
                                   ACEXML_Attributes *,
-                                  ACEXML_Env &xmlenv)
+                                  ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  ACE_UNUSED_ARG (xmlenv);
-
   if (this->found_server_entry_ == 1)
     {
       if (ACE_OS::strcmp (qName, "Command_Line") == 0)
@@ -305,19 +288,17 @@ XML_ContentHandler::set_startup_value (ACE_CString POA_name,
 }
 
 void
-XML_ContentHandler::get_startup_value (ACE_CString POA_name,
+XML_ContentHandler::get_startup_value (ACE_CString /* POA_name */,
                                        int &new_value)
 {
-  ACE_UNUSED_ARG (POA_name);
   new_value = this->startup_value_;
 }
 
 void
-XML_ContentHandler::update_running_information (ACE_CString POA_name,
+XML_ContentHandler::update_running_information (ACE_CString /* POA_name */,
                                                 ACE_CString location,
                                                 ACE_CString server_object_ior)
 {
-  ACE_UNUSED_ARG (POA_name);
   this->location_ = location;
   this->server_object_ior_ = server_object_ior;
 }

@@ -1,3 +1,65 @@
+Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO/orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+
+	  Added missing ACEXML libraries to link command.  Fixes
+	  unresolved symbol errors.
+
+	  Removed unnecessary references to the DynamicInterface library.
+
+	  Corrected ImR_Activator binary name from `ImR_Activator .exe' to
+	  `ImR_Activator.exe'.  Notice the space between "ImR_Activator"
+	  and ".exe".
+
+	* TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (ready_check):
+
+	  Added missing ACE_CHECK_RETURN.
+
+	* TAO/orbsvcs/ImplRepo_Service/Options.h:
+
+	  No need to include "ace/FILE_Addr.h".
+
+	* TAO/orbsvcs/ImplRepo_Service/Options.cpp (SERVICE_REG_ROOT):
+	  (SERVICE_REG_PATH, SERVICE_REG_VALUE_NAME):
+
+	  Made these global variables static.  They are only used in this
+	  file.
+
+	* TAO/orbsvcs/ImplRepo_Service/Repository_Configuration.cpp:
+
+	  Removed global variables that were duplicates of those in
+	  Options.cpp.  Fixes a link-time error.
+
+	* TAO/orbsvcs/ImplRepo_Service/Server_Info.h:
+	* TAO/orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+	  ACE coding style updates.
+
+	* TAO/orbsvcs/ImplRepo_Service/Server_Repository.h:
+
+	  No need to include "XML_ContentHandler.h" to pull in the
+	  corresponding class declaration.  A forward reference will do.
+
+	* TAO/orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+
+	  Pass in "sizeof (buffer)" to fgets() instead of a constant like
+	  "4096".  The former works since the buffer is stack allocated.
+	  Compile time computation of the size leaves less room for
+	  error.
+
+	  Include "XML_ContentHandler.h" to pull in the appropriate class
+	  declaration.
+
+	  ACE coding style updates.
+
+	* TAO/orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp:
+
+	  Commented out debugging code that was always executed.
+
+	  Removed all ACE_UNUSED_ARG macros in favor of the standard C++
+	  way of marching an argument unused, i.e. only list the type of
+	  the argument without the argument name.
+
 Tue Sep 24 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ImR_Activator_i.h"
 
 #include "Locator.h"
@@ -17,6 +15,12 @@
 #include "tao/default_ports.h"
 
 #include "ace/Auto_Ptr.h"
+
+
+ACE_RCSID (ImplRepo_Service,
+           ImR_Activator_i,
+           "$Id$")
+
 
 // Constructor
 ImR_Activator_i::ImR_Activator_i (void)
@@ -473,13 +477,14 @@ ImR_Activator_i::ready_check (const char *server)
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR,
-                 "Error: Cannot activate server <%s>, "
-                 "terminating it (Server Ping Object failed).\n",
+                  "Error: Cannot activate server <%s>, "
+                  "terminating it (Server Ping Object failed).\n",
                   server));
 
       return -2;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-2);
 
   // Now ping it until we get a response.
   while (ACE_OS::gettimeofday () < end)
@@ -507,6 +512,7 @@ ImR_Activator_i::ready_check (const char *server)
              ACE_DEBUG ((LM_DEBUG, "Server not ready (Exception)\n"));
         }
       ACE_ENDTRY;
+      ACE_CHECK_RETURN (-2);
 
       // Sleep between sending pings.
       ACE_OS::sleep (OPTIONS::instance ()->ping_interval ());
@@ -521,11 +527,12 @@ ImR_Activator_i::ready_check (const char *server)
 // Adds an entry to the Repository about this <server>
 
 void
-ImR_Activator_i::register_server (const char *server,
-                                  const ImplementationRepository::StartupOptions &options
-                                  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     ImplementationRepository::AlreadyRegistered))
+ImR_Activator_i::register_server (
+    const char *server,
+    const ImplementationRepository::StartupOptions &options
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   ImplementationRepository::AlreadyRegistered))
 {
   if (OPTIONS::instance ()->readonly ())
     {
