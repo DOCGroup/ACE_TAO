@@ -24,6 +24,7 @@
 #define ACE_HAS_SIG_MACROS
 #define ACE_HAS_CHARPTR_DL
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM	  
+#define ACE_LACKS_SIGSET  
 
 // sched.h still not fully support on FreeBSD ?
 // this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
