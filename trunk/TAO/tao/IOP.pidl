@@ -70,8 +70,6 @@ module IOP
 
   // The following are defined in the ptc/99-05-03:
   // Real-Time CORBA Joint Revised Submission May 28, 1999
-  // Numbers are still to be assigned by OMG.  Values 100 and 101 are
-  // used until then.
   const ServiceId RTCorbaPriority = 10;
   const ServiceId RTCorbaPriorityRange = 11;
 };

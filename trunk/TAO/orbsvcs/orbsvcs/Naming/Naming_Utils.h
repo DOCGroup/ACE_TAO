@@ -67,7 +67,8 @@ public:
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
                      int resolve_for_existing_naming_service = 1,
-                     const ACE_TCHAR *persistence_location = 0);
+                     const ACE_TCHAR *persistence_location = 0,
+                     void *base_addr = TAO_NAMING_BASE_ADDR);
   // Constructor.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -76,14 +77,16 @@ public:
   // <context_size>, register it under the <poa>, and make the Naming
   // Service persistent if <persistence_location> is not 0.
   // (<persistence_location> specifies name of the file to use for
-  // persistent storage).
+  // persistent storage, <base_addr> specifies the address used for
+  // memory mapping <persistent_location> file).
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
             int resolve_for_existing_naming_service = 1,
-            const ACE_TCHAR *persistence_location = 0);
+            const ACE_TCHAR *persistence_location = 0,
+            void *base_addr = TAO_NAMING_BASE_ADDR);
   // Initializer.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -92,7 +95,8 @@ public:
   // <context_size>, register it under the <poa>, and make the Naming
   // Service persistent if <persistence_location> is not 0.
   // (<persistence_location> specifies name of the file to use for
-  // persistent storage).
+  // persistent storage, <base_addr> specifies the address used for
+  // memory mapping <persistent_location> file).
 
   ~TAO_Naming_Server (void);
   // Destructor.
@@ -107,6 +111,7 @@ protected:
   int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
                        const ACE_TCHAR *persistence_location,
+                       void *base_addr,
                        size_t context_size);
   // Helper method: create Naming Service locally.
   // Make the root context of size

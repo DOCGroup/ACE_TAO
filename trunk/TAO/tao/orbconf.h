@@ -353,6 +353,12 @@ enum MCAST_SERVICEID
 
 // TAO Naming Service.
 
+// Memory mapping address used by TAO's Naming Service when run in
+// persistent mode.
+#if !defined (TAO_NAMING_BASE_ADDR)
+#  define TAO_NAMING_BASE_ADDR ACE_DEFAULT_BASE_ADDR
+#endif /* ! TAO_NAMING_BASE_ADDR */
+
 // Poa id of the root Naming Context in a Naming server.
 #if !defined (TAO_ROOT_NAMING_CONTEXT)
 #  define TAO_ROOT_NAMING_CONTEXT "NameService"

@@ -14,7 +14,7 @@
 //
 // = AUTHORS
 //    Nagarajan Surendran (naga@cs.wustl.edu)
-//
+//    Marina Spivak <marina@cs.wustl.edu>
 // ============================================================================
 
 #ifndef TAO_NAMING_SERVICE_H
@@ -60,7 +60,7 @@ protected:
 
   PortableServer::POA_var ns_poa_;
   // The Naming Service POA.
-  
+
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
 
@@ -79,6 +79,10 @@ protected:
   const ACE_TCHAR *persistence_file_name_;
   // Path to the file to be used to store/read in Naming Service
   // persistent state.
+
+  void *base_address_;
+  // Address to be used for memory mapping Naming Service state file,
+  // identified by the <persistence_file_name_>.
 
   size_t time_;
   // After how long the server should stop listening to requests (in

@@ -62,7 +62,7 @@ public:
   // Constructor.
 
   int open (const ACE_TCHAR *file_name,
-            void * base_address = ACE_DEFAULT_BASE_ADDR);
+            void * base_address = TAO_NAMING_BASE_ADDR);
   // Create ACE_Allocator, open/create memory-mapped file with the
   // specified file name/base address.  Find or allocate <index_>.
   // Return 0 on success or -1 on failure.
