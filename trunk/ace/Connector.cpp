@@ -7,11 +7,11 @@
 #define ACE_BUILD_DLL
 #include "ace/Connector.h"
 
-/* Shorthand names */
+// Shorthand names.
 #define SH SVC_HANDLER 
 #define PR_CO_1 ACE_PEER_CONNECTOR_1
 #define PR_CO_2 ACE_PEER_CONNECTOR_2
-#define PEER_ADDR ACE_PEER_CONNECTOR_ADDR
+#define PR_AD ACE_PEER_CONNECTOR_ADDR
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Connector)
 
@@ -58,9 +58,9 @@ ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *svc_handler,
-						 const PEER_ADDR &remote_addr,
+						 const PR_AD &remote_addr,
 						 const ACE_Synch_Options &synch_options,
-						 const PEER_ADDR &local_addr,
+						 const PR_AD &local_addr,
 						 int reuse_addr,
 						 int flags,
 						 int perms)
@@ -111,11 +111,11 @@ ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *svc_handler,
     return this->activate_svc_handler (svc_handler);
 }
 
-template <class SH, PR_CO_1> PEER_CONNECTOR &
+template <class SH, PR_CO_1> ACE_PEER_CONNECTOR &
 ACE_Connector<SH, PR_CO_2>::connector (void) const
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::connector");
-  return (PEER_CONNECTOR &) this->connector_;
+  return (ACE_PEER_CONNECTOR &) this->connector_;
 }
 
 template <class SH, PR_CO_1> int
@@ -313,7 +313,7 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
   // Transfer ownership of the ACE_HANDLE to the SVC_HANDLER.
   ast->svc_handler ()->set_handle (handle);
 
-  PEER_ADDR raddr;
+  PR_AD raddr;
 
   // Check to see if we're connected.
   if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
@@ -329,9 +329,9 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::connect (SH *sh, 
-				     const PEER_ADDR &remote_addr,
+				     const PR_AD &remote_addr,
 				     const ACE_Synch_Options &synch_options,
-				     const PEER_ADDR &local_addr,
+				     const PR_AD &local_addr,
 				     int reuse_addr,
 				     int flags,
 				     int perms)
@@ -504,7 +504,7 @@ ACE_Connector<SH, PR_CO_2>::info (char **strp, size_t length) const
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::info");
   char buf[BUFSIZ];
   char addr_str[BUFSIZ];
-  PEER_ADDR addr;
+  PR_AD addr;
 
   if (this->connector ().get_local_addr (addr) == -1)
     return -1;

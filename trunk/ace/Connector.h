@@ -24,18 +24,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies.h"
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#define ACE_PEER_CONNECTOR_1 class PEER_CONNECTOR
-#define ACE_PEER_CONNECTOR_2 PEER_CONNECTOR
-#define ACE_PEER_CONNECTOR PEER_CONNECTOR
-#define ACE_PEER_CONNECTOR_ADDR ACE_TYPENAME PEER_CONNECTOR::PEER_ADDR
-#else
-#define ACE_PEER_CONNECTOR_1 class PEER_CONNECTOR, class PEER_ADDR
-#define ACE_PEER_CONNECTOR_2 PEER_CONNECTOR, PEER_ADDR
-#define ACE_PEER_CONNECTOR PEER_CONNECTOR
-#define ACE_PEER_CONNECTOR_ADDR PEER_ADDR
-#endif /* ACE_TEMPLATE_TYPEDEFS */
-
 template <class SVC_HANDLER>
 class ACE_Svc_Tuple
   // = TITLE
@@ -131,10 +119,10 @@ public:
   // = Connection establishment method
 
   virtual int connect (SVC_HANDLER *svc_handler,
-		       const PEER_ADDR &remote_addr,
+		       const ACE_PEER_CONNECTOR_ADDR &remote_addr,
 		       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-		       const PEER_ADDR &local_addr 
-		         = (PEER_ADDR &) PEER_ADDR::sap_any,
+		       const ACE_PEER_CONNECTOR_ADDR &local_addr 
+		         = (ACE_PEER_CONNECTOR_ADDR &) ACE_PEER_CONNECTOR_ADDR::sap_any,
 		       int reuse_addr = 0,
 		       int flags = O_RDWR,
 		       int perms = 0);
@@ -184,9 +172,9 @@ protected:
   // connecting and activating SVC_HANDLER's, respectively.
 
   virtual int connect_svc_handler (SVC_HANDLER *svc_handler,
-				   const PEER_ADDR &remote_addr,
+				   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
 				   const ACE_Synch_Options &synch_options,
-				   const PEER_ADDR &local_addr,
+				   const ACE_PEER_CONNECTOR_ADDR &local_addr,
 				   int reuse_addr,
 				   int flags,
 				   int perms);
