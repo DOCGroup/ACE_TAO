@@ -10,7 +10,7 @@
 //    corbacom.h
 //
 // = DESCRIPTION
-//    CORBA C/C++/COM mapping for Win32
+//    Externally visible CORBA classes.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc. and Andy Gokhale
@@ -167,10 +167,20 @@ public:
   CORBA_Boolean release; 
   // Only here to make it compliant with IDL-generated layout.
 
-  CORBA_SEQUENCE (void);
+  CORBA_SEQUENCE (void)
+    : maximum (0),
+      length (0),
+      buffer (0),
+      release (0) 
+  {
+  }
+  // Constructor.
 
-  ~CORBA_SEQUENCE (void);
-  // XXX destructor should free buffer, elements!!
+  ~CORBA_SEQUENCE (void)
+  {
+    // @@ destructor should free buffer, elements!!
+  }
+  // Destructor.
 };
 
 class TAO_Export CORBA
