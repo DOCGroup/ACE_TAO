@@ -42,6 +42,9 @@ Mon May 5 17:16:41 1997  Carlos O'Ryan  <coryan@mat.puc.cl>
  
 Mon May 05 08:39:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Strategies_T.cpp (Hash_Addr<ADDR_T,SVC_HANDLER>::operator==):
+	  added return type.
+
 	* netsvcs/lib/Server_Logging_Handler.cpp: fixed template
 	  specializations for platforms that have neither THREADS nor
 	  TLI.  Thanks to Nanbor Wang <nw1@cs.wustl.edu> for reporting this.
