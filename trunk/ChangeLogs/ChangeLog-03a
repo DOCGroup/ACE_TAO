@@ -1,3 +1,10 @@
+Thu Jun  2 12:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Caching_Utility.cpp: Changed the cache entries limit to 0 so
+	  that when the Purge_Percent is 100, all the entries are purged
+	  from the cache. Thanks to Edan Ayal <edana@bandwiz.com> for
+	  reporting this bug and sending in the fix too! 
+	
 Thu Jun  1 15:16:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux-common.h:
