@@ -540,9 +540,9 @@ typedef unsigned long long ACE_UINT64;
 # define ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION EXCEPTION_CONTINUE_SEARCH
 #endif /* ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION */
 
-// Try to make a good guess whether we are compiling with the newer version
-// of WinSock 2 that has GQOS support.
-#if !defined (ACE_HAS_WINSOCK2_GQOS)
+// ACE_HAS_QOS is defined in the qos.mpb base project.
+// If qos=1 in default.features, then this macro will be defined.
+#if defined (ACE_HAS_QOS) && !defined (ACE_HAS_WINSOCK2_GQOS)
 # if defined (WINSOCK_VERSION)
 #  define ACE_HAS_WINSOCK2_GQOS 1
 # endif /* WINSOCK_VERSION */
