@@ -267,14 +267,15 @@ Peer_Handler::handle_input (ACE_HANDLE h)
               "(%t) input arrived on handle %d\n",
               h));
 
-  ACE_Message_Block *db = new ACE_Message_Block (BUFSIZ);
+  ACE_Message_Block *db;
+
+  ACE_NEW_RETURN (db, ACE_Message_Block (BUFSIZ), -1);
+
   ACE_Message_Block *hb = new ACE_Message_Block (sizeof (ROUTING_KEY),
 						 ACE_Message_Block::MB_PROTO, db);
-
   // Check for memory failures.
-  if (db == 0 || hb == 0)
+  if (hb == 0)
     {
-      hb->release ();
       db->release ();
       errno = ENOMEM;
       return -1;
