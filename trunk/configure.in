@@ -3485,7 +3485,7 @@ dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
   AC_CHECK_FUNC(pthread_sigmask, dnl
-    AC_DEFINE(ACE_HAS_PTHREAD_SIGMASK),
+    ,
     AC_DEFINE(ACE_LACKS_PTHREAD_SIGMASK))
 
   AC_CHECK_FUNC(pthread_key_create, dnl

@@ -1118,12 +1118,9 @@ extern "C" pthread_t pthread_self (void);
 // overlap or are otherwise confused.  This is an attempt to start
 // straightening them out.
 # if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
-  // POSIX.1c threads implies pthread_sigmask()
-#   if !defined (ACE_HAS_PTHREAD_SIGMASK)
-#     define ACE_HAS_PTHREAD_SIGMASK
-#   endif /* ! ACE_HAS_PTHREAD_SIGMASK */
   // ... and 2-parameter asctime_r and ctime_r
-#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && !defined (ACE_HAS_STHREADS)
+#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && \
+       !defined (ACE_HAS_STHREADS)
 #     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #   endif
 # endif /* ACE_HAS_PTHREADS_STD */
