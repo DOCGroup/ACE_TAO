@@ -28,6 +28,7 @@
 #include "be_visitor_argument/pre_docall_cs.h"
 #include "be_visitor_argument/docall_cs.h"
 #include "be_visitor_argument/post_docall_cs.h"
+#include "be_visitor_argument/post_docall_compiled_cs.h"
 #include "be_visitor_argument/vardecl_ss.h"
 #include "be_visitor_argument/pre_upcall_ss.h"
 #include "be_visitor_argument/upcall_ss.h"

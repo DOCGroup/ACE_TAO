@@ -1,3 +1,18 @@
+Mon Feb 15 09:11:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_argument.cpp
+	  TAO_IDL/be_include/be_visitor_argument.h:
+
+	  Jeff had forgotten to #include the newly added files that he
+	  mentioned in his ChangeLog below. Due to this, we wre getting
+	  compile errors.
+	 
+	* TAO_IDL/be_include/be_visitor_argument/post_docall_cs.h:
+
+	  Once again, Jeff had forgotten to add the visit_string method to
+	  the class declaration, although he had provided the
+	  implementation. 
+
 Sun Feb 14 18:29:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.h:
