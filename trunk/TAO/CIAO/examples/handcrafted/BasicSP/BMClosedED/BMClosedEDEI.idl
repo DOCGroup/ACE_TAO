@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file GPSEI.idl
+ * @file BMClosedEDEI.idl
  *
  * Definition of the GPS component implementation.
  *
