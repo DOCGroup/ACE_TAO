@@ -1,3 +1,13 @@
+Thu May 18 10:29:49 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Makefile:
+          Disable the CDR_Array_Test with older versions of g++ because
+          the test breaks the templates there.
+
+        * tests/CDR_File_Test.cpp:
+          Use ULongLong instead of LongLong because the former is better
+          supported.
+
 Thu May 18 10:11:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/streams.h:
