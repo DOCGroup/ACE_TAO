@@ -1,3 +1,12 @@
+Thu Dec 13 11:41:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynCommon.cpp:
+
+          Changed a '*any' to 'any.in ()' to correspond to a change from
+          'Any_ptr any' to 'Any_var any' made 2 days ago. Thanks to
+          Johnny Willemsen <johnny.willemsen@meco.nl> for pointing this
+          out.
+
 Tue Dec 12 17:05:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/ReactorTask.h (ReactorEx.): Added a
