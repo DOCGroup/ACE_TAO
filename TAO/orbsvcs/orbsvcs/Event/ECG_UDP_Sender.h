@@ -44,7 +44,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include "EC_Lifetime_Utils.h"

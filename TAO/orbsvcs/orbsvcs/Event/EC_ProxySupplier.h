@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

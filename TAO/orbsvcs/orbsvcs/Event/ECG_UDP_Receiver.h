@@ -44,7 +44,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 
 #include "ECG_Adapters.h"
 #include "EC_Lifetime_Utils.h"

@@ -1,3 +1,10 @@
+Fri Jul 25 14:08:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC*.h:
+          Added /**/ before the include of event_export.h so that this file
+          isn't added to the doxygen include hierarchy pictures. This will
+          make the pictures simpler.
+
 Fri Jul 25 08:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Exception.h: Fix for the undefined symbol error that showed
