@@ -174,3 +174,11 @@ TAO_CosEC_ProxyPushSupplier_i::connected (void)
 {
   return this->wrapper_ == 0 ? 0 : 1;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class ACE_Auto_Basic_Ptr<TAO_CosEC_PushConsumerWrapper>;
+  template class auto_ptr<TAO_CosEC_PushConsumerWrapper>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_PushConsumerWrapper>
+# pragma instantiate auto_ptr<TAO_CosEC_PushConsumerWrapper>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
