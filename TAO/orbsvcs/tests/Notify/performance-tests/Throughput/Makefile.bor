@@ -20,7 +20,8 @@ CFLAGS = \
         $(TAO_NOTIFY_CFLAGS) \
         $(TAO_STRATEGIES_CFLAGS) \
         $(TAO_NOTIFYTESTS_CFLAGS) \
-        $(TAO_MESSAGING_CFLAGS)
+        $(TAO_MESSAGING_CFLAGS) \
+        $(TAO_DYNAMICANY_CFLAGS)
 
 CPPDIR = .
 
@@ -36,6 +37,7 @@ LIBFILES = \
         $(TAO_NOTIFY_LIB) \
         $(TAO_STRATEGIES_LIB) \
         $(TAO_NOTIFYTESTS_LIB) \
-        $(TAO_MESSAGING_LIB)
+        $(TAO_MESSAGING_LIB) \
+        $(TAO_DYNAMICANY_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
