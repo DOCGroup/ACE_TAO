@@ -1,7 +1,7 @@
 Mon Mar  2 13:13:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll: 
-	* TAO_IDL/fe/lex.yy.cpp: 
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
 	  Fixed pathname canonization for NT, we convert a double
 	  backslash into a single slash.
 
@@ -25,7 +25,8 @@ Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile,tmplinst-orbsvcs.cpp:
           renamed tmplinst.cpp to tmplinst-orbsvcs.cpp to avoid mangled name
-          collisions with GreenHills/Chorus.
+          collisions with tmplinst.cpp in test directories, when using
+          GreenHills/Chorus.
 
 Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
