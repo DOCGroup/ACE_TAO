@@ -10,8 +10,6 @@
 
 INFO  = README
 
-DIRS  =	src
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -19,7 +17,9 @@ DIRS  =	src
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifeq ($(CROSS-COMPILE),)
-  DIRS += tests
+  DIRS = src tests
+else
+  DIRS=
 endif # ! CROSS-COMPILE
 
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
