@@ -1,0 +1,286 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 013</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 013</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Multiple thread pools</FONT></B></CENTER>
+
+
+<P>
+<HR WIDTH="100%">
+<P>
+Let's take a look now at the new Task object.  This will obviously be
+different from the Tasks we've created before but I think you'll be
+surprised at how relatively simple it actually is.
+<P>
+Remember that the goal of this tutorial was to use the reference
+counting abilities of the ACE_Data_Block.  The only way to show that
+effectively is to have a data block passed between different threads.
+A thread pool isn't really going to do that so, instead, our new Task
+can be part of a chain of tasks.  In that way, each Task can pass the
+data on to another and satisfy our need for moving the ACE_Data_Block
+around.
+If we've done the reference counting correctly then none of our tasks
+will be trying to work with deleted data and we won't have any memory
+leaks at the end.
+<P>
+There's not much to the header, so I've included it and the cpp file
+on this one page.
+<P>
+<HR WIDTH="100%">
+<PRE>
+
+#include "ace/Task.h"
+#include "mld.h"
+
+/*
+  This is much like the Task we've used in the past for implementing a 
+  thread pool.  This time, however, I've made the Task an element in a 
+  singly-linked list.  As the svc() method finishes the process() on a 
+  unit of work, it will enqueue that unit of work to the next_ Task if 
+  there is one.  If the Task does not have a next_ Task, it will
+  invoke the unit of work object's fini() method after invoking process().
+ */
+class Task : public ACE_Task < ACE_MT_SYNCH >
+{
+public:
+
+    typedef ACE_Task < ACE_MT_SYNCH > inherited;
+
+        // Construct ourselves and an optional number of subtasks
+        // chained beyond us.
+    Task ( int sub_tasks = 0 );
+    ~Task (void);
+
+        // Open the Task with the proper thread-pool size
+    int open (int threads = 1 );
+
+        // Take Unit_Of_Work objects from the thread pool and invoke
+        // their process() and/or fini() as appropriate.
+    int svc (void);
+
+        // Shut down the thread pool and it's associated subtasks
+    int close (u_long flags = 0);
+
+        // Wait for the pool and subtasks to close
+    int wait(void);
+    
+protected:
+    ACE_Barrier * barrier_;
+    Task * next_;
+    MLD;
+};
+
+<HR WIDTH="50%">
+
+#include "task.h"
+#include "block.h"
+#include "work.h"
+
+/*
+   Construct the Task with zero or more subtasks.  If subtasks are requested,
+   we assign our next_ pointer to the first of those and let  it worry about
+   any remaining subtasks. 
+ */
+Task::Task (int sub_tasks)
+: barrier_ (0)
+ ,next_ (0)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Task ctor 0x%x\n", (void *) this));
+  if (sub_tasks)
+  {
+    next_ = new Task (--sub_tasks);
+  }
+}
+
+/*
+   Delete our barrier object and any subtasks we may have. 
+ */
+Task::~Task (void)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Task dtor 0x%x\n", (void *) this));
+
+  delete barrier_;
+  delete next_;
+}
+
+/*
+   Open our thread pool with the requested number of threads.  If subtasks are
+   enabled, they inherit the thread-pool size.  Make sure that the subtasks can 
+   be opened before we open our own threadpool. 
+ */
+int Task::open (int threads)
+{
+  if (next_)
+  {
+    if (next_->open (threads) == -1)
+    {
+      return -1;
+    }
+  }
+
+  barrier_ = new ACE_Barrier (threads);
+  return this->activate (THR_NEW_LWP, threads);
+}
+
+/*
+   Close ourselves and any subtasks.  This just prints a message so that we can 
+   assure ourselves things are cleaned up correctly. 
+ */
+int Task::close (u_long flags)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Task close 0x%x\n", (void *) this));
+  if (next_)
+  {
+    next_->close (flags);
+  }
+
+  return (0);
+}
+
+/*
+   Wait for all of the threads in our pool to exit and then wait for any
+   subtasks.  When called from the front of the task chain, this won't return
+   until all thread pools in the chain have exited. 
+ */
+int Task::wait (void)
+{
+  inherited::wait ();
+  if (next_)
+  {
+    next_->wait ();
+  }
+  return (0);
+}
+
+/*
+   Like the thread-pools before, this is where all of the work is done. 
+ */
+int Task::svc (void)
+{
+        // Wait for all threads to get this far before continuing.
+  this->barrier_->wait ();
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Task 0x%x starts in thread %u\n", (void *) this, ACE_Thread::self ()));
+
+      // getq() wants an ACE_Message_Block so we'll start out with one
+      // of those.  We could do some casting (or even auto-casting) to
+      // avoid the extra variable but I prefer to be clear about our actions.
+  ACE_Message_Block *message;
+  
+      // What we really put into the queue was our Message_Block.
+      // After we get the message from the queue, we'll cast it to this 
+      // so that we know how to work on it.
+  Message_Block *message_block;
+  
+      // And, of course, our Message_Block contains our Data_Block
+      // instead of the typical ACE_Data_Block
+  Data_Block *data_block;
+  
+      // Even though we put Work objects into the queue, we take them
+      // out using the baseclass pointer.  This allows us to create new 
+      // derivatives without having to change this svc() method.
+  Unit_Of_Work *work;
+
+  while (1)
+  {
+          // Get the ACE_Message_Block
+    if (this->getq (message) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getq"), -1);
+    }
+
+        // "Convert" it to our Message_Block
+    message_block = (Message_Block *) message;
+
+        // Get the ACE_Data_Block and "convert" to Data_Block in one step.
+    data_block = (Data_Block *) (message_block->data_block ());
+
+        // Get the unit of work from the data block
+    work = data_block->data ();
+
+        // Show the object's instance value and "type name"
+    work->who_am_i ();
+    work->what_am_i ();
+
+        // If there is a hangup we need to tell our pool-peers as
+        // well as any subtasks.
+    if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
+    {
+            // duplicate()ing the message block will increment the
+            // reference counts on the data blocks.  This allows us
+            // to safely release() the message block.  The rule of
+            // thumb is that if you pass a message block to a new
+            // owner, duplicate() it.  Then you can release() when
+            // you're done and not worry about memory leaks.
+      if (this->putq (message_block->duplicate ()) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putq"), -1);
+      }
+
+          // If we have a subtask, duplicate() the message block
+          // again and pass it to that task's queue
+      if (next_ && next_->putq (message_block->duplicate ()) == -1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putq"), -1);
+      }
+
+          // We're now done with our copy of the block, so we can
+          // release it.  Our peers/subtasks have their own message 
+          // block to access the shared data blocks.
+      message_block->release ();
+
+      break;
+    }
+
+      // If this isn't a hangup/shutdown message then we tell the
+      // unit of work to process() for a while.
+    work->process ();
+
+    if (next_)
+    {
+            // If we have subtasks, we pass the block on to them.  Notice
+            // that I don't bother to duplicate() the block since I won't 
+            // release it in this case.  I could have invoked
+            // duplicate() in the puq() and then release()
+            // afterwards.  Either is acceptable.
+      if (next_->putq (message_block) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putq"), -1);
+    }
+    else
+    {
+            // If we don't have subtasks then invoke fini() to tell
+            // the unit of work that we won't be invoking process()
+            // any more.  Then release() the block.  This release()
+            // would not change if we duplicate()ed in the above conditional
+      work->fini ();
+      message_block->release ();
+    }
+
+        // Pretend that the work takes some time...
+    ACE_OS::sleep (ACE_Time_Value (0, 250));
+  }
+
+  return (0);
+}
+</PRE>
+<HR WIDTH="100%">
+<P>
+So you see... it wasn't really that much more complicated.  We really
+just have to remember to pass to <i>next_</i> when we finish working
+on the data.  If your Unit_Of_Work derivative is going to implement a
+state machine be sure that you also implement a fini() method
+<em>or</em> ensure that your chain of subtasks is large enough for all 
+possible states.
+<P>
+<HR WIDTH="100%">
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page07.html">Continue
+This Tutorial</A>]</CENTER>
+
+</BODY>
+</HTML>
