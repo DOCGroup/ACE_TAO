@@ -225,13 +225,18 @@ test_4()
       mutex_.release ();
     }
 
-  if (mutex_.get_nesting_level() != 0)
+  // The waiter thread will acquire the mutex as a result of the releases
+  // above... don't check the nesting level until waiter() has had a chance
+  // to wake up, acquire, and release the mutex.
+  ACE_Thread_Manager::instance ()->wait ();
+
+  int nesting = mutex_.get_nesting_level ();
+  if (nesting != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%t) nesting level %d; should be 0\n"),
-                       mutex_.get_nesting_level ()),
+                       nesting),
                       1);
 
-  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
