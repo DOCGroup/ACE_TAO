@@ -1,3 +1,14 @@
+Thu Jul 15 21:01:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_helper.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	  Made some print format symbols agree with their
+	  arguments, warnings from the new egcs.
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Changed added 'u' and 'f' suffixes to integer and
+	  float literals to upper case for readability.
+
 Thu Jul 15 20:50:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Makefile:
