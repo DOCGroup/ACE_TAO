@@ -1,3 +1,32 @@
+Sun May 19 09:20:15 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Makefile:
+	* tests/RMCast/Makefile:
+
+	  Updated dependancies.
+
+	* tests/Framework_Component_DLL.{h,cpp}:
+
+	  Converted most debug and trace statements to use the new 
+	  macros:  ACE_FRAMEWORK_COMPONENT_DLL_TRACE.
+	
+	* tests/Framework_Component_DLL_Export.h:
+
+	  Regenerated with the new generate_export_file.pl script.
+	
+	* bin/generate_export_file.pl:
+
+	  Added code to generate library specifig XXX_TRACE macros
+	  that use the new ACE_TRACE_IMPL macor below based on 
+	  XXX_NTRACE.  This mimics the normal ACE_TRACE usage, but
+	  makes it possible to easily control tracing on a per
+	  library basis.
+	
+	* ace/DLL.cpp:
+
+	  Removed additional ACE_DEBUG statements, or converted them 
+	  to ACE_TRACE.
+
 Sat May 18 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	
 	* ace/Global_Macros.h:
@@ -6,7 +35,9 @@ Sat May 18 20:33:02 UTC 2002  Don Hinton  <dhinton@ieee.org>
 	  in terms of it if tracing is turned on.  This allows you to 
 	  easily and selectively turn tracing back on in an individual 
 	  file if you want without recompiling everything by just undefining
-	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.
+	  ACE_TRACE and redefining it as ACE_TRACE_IMPL.  This also makes it
+	  easy for applications to define their own *TRACE macro in terms of
+	  ACE_TRACE_IMPL.
 
 	* ace/Framework_Component.cpp:
 

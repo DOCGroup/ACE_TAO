@@ -17,7 +17,7 @@ class Server_T : public ACE_Service_Object
 public:
   int init (int, ACE_TCHAR *[]) 
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server_T::init()\n")));
+    FRAMEWORK_COMPONENT_DLL_TRACE ("Server_T::init");
 
     // Initialize the singleton
     FWCT_DLL_Singleton_Adapter_T <Simple_Service> *ss = SS_SINGLETON::instance ();
@@ -30,7 +30,7 @@ public:
   
   int fini (void) 
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server_T::fini()\n")));
+    FRAMEWORK_COMPONENT_DLL_TRACE ("Server_T::fini");
     return 0;
   }
 };

@@ -33,6 +33,8 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
     close_on_destruction_ (close_on_destruction),
     last_error_ (0)
 {
+  ACE_TRACE ("ACE_DLL::ACE_DLL");
+
   if (this->open (dll_name, open_mode, close_on_destruction) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%s\n"),
@@ -45,7 +47,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 
 ACE_DLL::~ACE_DLL (void)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::~ACE_DLL ()\n")));
+  ACE_TRACE ("ACE_DLL::~ACE_DLL");
   // CLose the library only if it hasn't been already.
   this->close ();
 
@@ -69,8 +71,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
                int close_on_destruction)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::open(%s, %d, %d)\n"),
-              dll_filename, open_mode, close_on_destruction));
+  ACE_TRACE ("ACE_DLL::open");
 
   // Recored that open has been called, use by error().
   this->open_called_ = 1;
@@ -132,6 +133,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 void *
 ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 {
+  ACE_TRACE ("ACE_DLL::symbol");
   void *sym =  ACE_OS::dlsym (this->handle_, sym_name);
 
   // Always set last error.
@@ -146,9 +148,9 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 int
 ACE_DLL::close (void)
 {
+  ACE_TRACE ("ACE_DLL::close");
   int retval = 0;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::close()\n")));
 
   // The handle is checked to see whether the library is closed
   // already and the <close_on_destruction_> flag is specified.  If
@@ -157,7 +159,7 @@ ACE_DLL::close (void)
   if (this->close_on_destruction_ != 0 &&
       this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
-     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::close(): close_on_destruction\n")));
+     ACE_TRACE ("ACE_DLL::close(): close_on_destruction");
      // First remove any associated Framework Components.
      ACE_Framework_Repository::instance () ->remove_dll_components (this->dll_name_);
 
@@ -176,6 +178,7 @@ ACE_DLL::close (void)
 void
 ACE_DLL::save_last_error (void)
 {
+  ACE_TRACE ("ACE_DLL::save_last_error");
   if (this->open_called_)
     {
       ACE::strdelete (this->last_error_);
@@ -188,6 +191,7 @@ ACE_DLL::save_last_error (void)
 ACE_TCHAR *
 ACE_DLL::error (void) const
 {
+  ACE_TRACE ("ACE_DLL::error");
   return this->last_error_;
 }
 
@@ -198,8 +202,7 @@ ACE_DLL::error (void) const
 ACE_SHLIB_HANDLE
 ACE_DLL::get_handle (int become_owner)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::get_handle(%d)\n"),
-              become_owner));
+  ACE_TRACE ("ACE_DLL::get_handle");
 
   // Since the caller is becoming the owner of the handle we lose
   // rights to close it on destruction.  The new controller has to do
@@ -218,8 +221,7 @@ int
 ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
                      int close_on_destruction)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("ACE_DLL::set_handle(%d, %d)\n"),
-              handle, close_on_destruction));
+  ACE_TRACE ("ACE_DLL::set_handle");
   // Close the handle in use before accepting the next one.
   if (this->close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
