@@ -58,26 +58,28 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
   ACE_TRY
     {
-      TAO::PICurrent_Guard pi_guard (server_request,
-                                     true  /* Copy TSC to RSC */);
+      {
+        TAO::PICurrent_Guard pi_guard (server_request,
+                                       true  /* Copy TSC to RSC */);
 
-      // Invoke intermediate server side interception points.
-      interceptor_adapter.receive_request (&request_info
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        // Invoke intermediate server side interception points.
+        interceptor_adapter.receive_request (&request_info
+                                             ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-      // Don't bother performing the upcall if an interceptor caused a
-      // location forward.
-      if (!interceptor_adapter.location_forwarded ())
-        {
+        // Don't bother performing the upcall if an interceptor caused a
+        // location forward.
+        if (!interceptor_adapter.location_forwarded ())
+          {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-          // The actual upcall.
-          command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-          TAO_INTERCEPTOR_CHECK;
+            // The actual upcall.
+            command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+            TAO_INTERCEPTOR_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
-        }
+          }
+      }
 
       // Do not execute the send_reply() interception point if an
       // interceptor caused a location forward.  The send_other()
