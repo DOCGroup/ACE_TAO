@@ -1,18 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//
-// = FILENAME
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//
-// ============================================================================
-
 #include "tao/Pluggable.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
@@ -73,7 +61,8 @@ TAO_Connector_Registry::close_all()
   //    since there is only one!
   if (iiop_connector_)
     return this->iiop_connector_->close ();
-  return 0;
+  else
+    return 0;
 }
 
 int

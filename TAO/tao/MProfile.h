@@ -98,11 +98,8 @@ public:
   // this object assumes ownership of this profile!!
 
   void forward_from (TAO_MProfile *mprofiles);
-  // @@ Fred, can you please change the name of this method to
-  // "forwarded_mprofile()"?  In general, it's better to use complete
-  // names.
-  // Set a pointer to the MProfile whose 'current' TAO_Profile was forwarded
-  // This object is the set of forwarding profiles.
+  // Set a pointer to the MProfile whose 'current' TAO_Profile was
+  // forwarded This object is the set of forwarding profiles.
 
   TAO_MProfile *forward_from (void);
   // Returns a pointer to the profile which was forwarded.  
@@ -130,25 +127,24 @@ protected:
 private:
 
   TAO_MProfile  *forward_from_;
-  // Used for chaning references when the current profile is forwarded.
-  // Note, this will only be valid for an MProfile which contains a list of
-  // forward_profiles for some initial or base profile.
-  // This is a backward reference to the profile list which received the 
-  // relocate message.  The actual profile what was forwarded will be
-  // forward_from_->get_current_profile ()
+  // Used for chaning references when the current profile is
+  // forwarded.  Note, this will only be valid for an MProfile which
+  // contains a list of forward_profiles for some initial or base
+  // profile.  This is a backward reference to the profile list which
+  // received the relocate message.  The actual profile what was
+  // forwarded will be forward_from_->get_current_profile ()
 
   TAO_Profile_ptr *pfiles_;
   // Actual list of profiles.
 
   TAO_PHandle current_;
-  // Points to the next prfoile to be used.
-  // 0 ... size_
+  // Points to the next profile to be used.  0 ... size_
 
   TAO_PHandle size_;
   // Max size of array
 
   TAO_PHandle last_;
-  // Index plus 1 of last valid entry!  May be < size_
+  // Index plus 1 of last valid entry!  May be < size_.
 };
 
 #if defined (__ACE_INLINE__)

@@ -31,14 +31,14 @@ class TAO_Client_Connection_Handler;
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
   // = TITLE
-  //   TAO_IIOP_Profile
+  //   This class defines the protocol specific attributes required
+  //   for locating ORBs over a TCP/IP network.  
   //
   // = DESCRIPTION
-  //   This class defines the protocol specific attributes required
-  //   for locating ORs over a TCP/IP network.  In other words,
-  //   defines the IIOP profile as specified in the CORBA spec.
-
+  //   This class defines the IIOP profile as specified in the CORBA
+  //   specification.  
 public:
+  // = Currently, TAO supports IIOP 1.0.
   enum
     {
       DEF_IIOP_MAJOR = 1,
@@ -50,9 +50,9 @@ public:
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const char *object_key);
-  // Profile constructor, the port and host fileds are derived
-  // from addr.  This is not an efficient creator since a call
-  // to get_host_XX is required.
+  // Profile constructor, the port and host fileds are derived from
+  // addr.  This is not an efficient creator since a call to
+  // get_host_XX is required.
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                     const TAO_ObjectKey &object_key);
@@ -106,27 +106,27 @@ public:
   // Profile constructor, default.
 
   ~TAO_IIOP_Profile (void);
-  // Destructor is to be called only through _decr_refcnt()
+  // Destructor is to be called only through <_decr_refcnt>.
 
   CORBA::ULong tag (void);
-  // The tag, each concrete class will have a specific tag value.
-  // for example we are TAO_IOP_TAG_INTERNET_IOP
+  // The tag, each concrete class will have a specific tag value.  for
+  // example we are TAO_IOP_TAG_INTERNET_IOP.
 
   TAO_Transport* transport (void);
-  // return a pointer to the underlying transport object.
-  // this will provide access to lower layer protocols
-  // and processing.
+  // Return a pointer to the underlying transport object.  this will
+  // provide access to lower layer protocols and processing.
 
   int parse (TAO_InputCDR& cdr,
              CORBA::Boolean& continue_decoding,
              CORBA::Environment &env);
-  // initialize this object using the given CDR octet string
+  // Initialize this object using the given CDR octet string.
 
-  int parse_string (const char *string, CORBA::Environment &env);
-  // initialize this object using the given input string
+  int parse_string (const char *string,
+                    CORBA::Environment &env);
+  // Initialize this object using the given input string.
 
   CORBA::String to_string (CORBA::Environment &env);
-  // return a string representation for this profile.
+  // Return a string representation for this profile.
   // client must deallocate memory.
 
   const TAO_opaque& body (void) const;
@@ -134,7 +134,7 @@ public:
 
   CORBA::TypeCode::traverse_status encode (TAO_OutputCDR *&stream,
                                            CORBA::Environment &env);
-  // encode this profile in a stream, i.e. marshal it.
+  // Encode this profile in a stream, i.e. marshal it.
 
   const TAO_ObjectKey &object_key (void) const;
   // @@ deprecated, return a reference to the Object Key.
@@ -143,23 +143,23 @@ public:
   // @@ deprecated. set the Object Key.
 
   TAO_ObjectKey *_key (CORBA::Environment &env);
-  //  return a pointer to the Object Key.
+  //  Return a pointer to the Object Key.
 
   virtual void forward_to (TAO_MProfile *mprofiles);
-  // client object will assume ownership for this object!!
+  // Client object will assume ownership for this object!!
 
   virtual TAO_MProfile *forward_to (void);
   // copy of MProfile, user must delete.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
                                 CORBA::Environment &env);
-  // return true if this profile is equivalent to other_profile.
-  // Two profiles are equivalent iff their key, port, host, object_key
-  // and version are the same.
+  // Return true if this profile is equivalent to other_profile.  Two
+  // profiles are equivalent iff their key, port, host, object_key and
+  // version are the same.
 
   CORBA::ULong hash (CORBA::ULong max,
                      CORBA::Environment &env);
-  // return a has value for this object.
+  // Return a hash value for this object.
 
   char *addr_to_string (void);
   // Return a string representation for the address.
@@ -171,21 +171,21 @@ public:
   //  return a reference to the object_addr.
 
   const char *host (void);
-  // return a pointer to the host string.
-  // This object maintains ownership of this string.
+  // Return a pointer to the host string.  This object maintains
+  // ownership of this string.
 
   const char *host (const char *h);
-  //  Copy the string h into host and return the resulting pointer.
+  // Copy the string h into host and return the resulting pointer.
   // This object maintains ownership of this string.
 
   CORBA::UShort port (void);
-  // return the port number.
+  // Return the port number.
 
   CORBA::UShort port (CORBA::UShort p);
-  // set the port number
+  // Set the port number.
 
   const TAO_IOP_Version *version (void);
-  // return a pointer to this profile's version.  This object
+  // Return a pointer to this profile's version.  This object
   // maintains ownership.
 
   const TAO_IOP_Version *version (TAO_IOP_Version *v);
@@ -208,8 +208,8 @@ public:
   // Increase the reference count by one on this object.
 
   virtual CORBA::ULong _decr_refcnt (void);
-  // Decrement the object's reference count.  When this count
-  // goes to 0 this object will be deleted.
+  // Decrement the object's reference count.  When this count goes to
+  // 0 this object will be deleted.
 
 #if defined (TAO_USES_FLICK)
   char *&_host_ (void);
@@ -220,10 +220,10 @@ public:
   // Return a reference to the underlying <port_> to allow Flick to
   // manipulate it directly.
 
-  TAO_ObjectKey& _object_key_ (void);
+  TAO_ObjectKey &_object_key_ (void);
   // Return a non-const reference of object key.
 
-  int reset_object_addr ();
+  int reset_object_addr (void);
   // Reset <object_addr_> after setting <host_> and <port_>.
 #endif /* TAO_USES_FLICK */
 
@@ -233,8 +233,8 @@ private:
 
   virtual TAO_MProfile *forward_to_i (void);
   // reference to the TAO_MProfile which the current profile was
-  // forwarded to.  This object keeps ownership
-  // NOT THREAD SAFE
+  // forwarded to.  This object keeps ownership.  Note that this
+  // method is NOT thread-safe, so it must be called with locks held.
 
   void create_body (void);
   // Does the work for <add_profile>.
@@ -264,7 +264,8 @@ private:
   // invocations, etc.
 
   TAO_Client_Connection_Handler *hint_;
-  // pointer to a connection handler which we successfully used already.
+  // Pointer to a connection handler which we successfully used
+  // already.
 
   ACE_SYNCH_MUTEX refcount_lock_;
   // Mutex to protect reference count.

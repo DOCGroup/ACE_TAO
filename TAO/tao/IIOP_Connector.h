@@ -31,10 +31,10 @@ typedef ACE_Strategy_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
   // = TITLE
-  //   TAO_IIOP_Connector
+  //   IIOP-specific Connector bridge for pluggable protocols.
   //
   // = DESCRIPTION
-  //   IIOP Specific Connector bridge for pluggable protocols.
+  //   @@ Fred, please fill in here.
 public:
   // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
