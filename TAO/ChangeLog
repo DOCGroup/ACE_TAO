@@ -1,3 +1,21 @@
+Sun Jun 29 00:26:56 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/corbafwd.h: 
+	* tao/Exeception.h: 	
+	* tao/Exeception.cpp: 		
+
+	  Added THREAD_CANCELLED to CORBA system exception. The exception
+	  is thrown when a Distributable Thread is cancelled. This should
+	  fix compile problems.
+
+	* TAOACE.dsw:
+	* tao/TAO.dsw:
+	* tao/RTScheduling/TAO_RTScheduler.dsp:	
+	* tao/RTScheduling/TAO_RTScheduler.rc:		
+
+	  Added project and workspace files to build RTScheduler library on
+	  windows.
+
 Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
@@ -96,6 +114,7 @@ Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Corresponding Makefiles to compile RTScheduler library.
 
 	
+>>>>>>> 1.2027
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * TAOACE.mwc:
