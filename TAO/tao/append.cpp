@@ -264,7 +264,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
 
-  CORBA::ULong profiles;
+  CORBA::ULong profiles = 0;
 
   // get the count of profiles that follow. This will tell us the length of the
   // sequence
@@ -274,27 +274,28 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // No profiles means a NIL objref.
   while (profiles-- != 0 && continue_append)
     {
-      CORBA::ULong tag;
+      CORBA::ULong tag = 0;
 
       // get the profile ID tag
       if ((continue_append = (src->read_ulong (tag) ?
                               dest->write_ulong (tag) : 0))  == 0)
         continue;
 
-      CORBA::ULong length;
+      CORBA::ULong length = 0;
       if ((continue_append = (src->read_ulong (length)
                               ? dest->write_ulong (length) : 0)) == 0)
         continue;
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
-      CORBA::Octet* body;
-      ACE_NEW_RETURN (body, CORBA::Octet[length],
+      CORBA::Octet* body = 0;
+      ACE_NEW_RETURN (body, 
+                      CORBA::Octet[length],
                       CORBA::TypeCode::TRAVERSE_STOP);
       continue_append = (src->read_octet_array (body, length)
                          ? dest->write_octet_array (body, length)
                          : 0);
-      delete[] body;
+      delete [] body;
     }
 
   if (continue_append == 1)
