@@ -36,6 +36,7 @@ UTILS_FILES = \
   Configuration \
   Dirent \
   Dynamic \
+  Dynamic_Service_Base \
   Functor \
   Get_Opt \
   Hash_Map_Manager \

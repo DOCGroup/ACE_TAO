@@ -12,41 +12,11 @@
 
 #include "ace/Service_Repository.h"
 #include "ace/Dynamic_Service.h"
-#include "ace/Log_Msg.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Dynamic_Service.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Dynamic_Service, "$Id$")
-
-template <class SERVICE> void
-ACE_Dynamic_Service<SERVICE>::dump (void) const
-{
-  ACE_TRACE ("ACE_Dynamic_Service<SERVICE>::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-// Get the instance using <name>.
-
-template <class SERVICE> SERVICE *
-ACE_Dynamic_Service<SERVICE>::instance (const ACE_TCHAR *name)
-{
-  ACE_TRACE ("ACE_Dynamic_Service::instance");
-  const ACE_Service_Type *svc_rec;
-
-  if (ACE_Service_Repository::instance ()->find (name,
-                                                 &svc_rec) == -1)
-    return 0;
-
-  const ACE_Service_Type_Impl *type = svc_rec->type ();
-
-  if (type == 0)
-    return 0;
-  else
-    {
-      void *obj = type->object ();
-      return ACE_reinterpret_cast (SERVICE *, obj);
-    }
-}
 
 #endif /* ACE_DYNAMIC_SERVICE_C */
