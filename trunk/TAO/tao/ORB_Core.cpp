@@ -36,10 +36,12 @@
 # include "ClientRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
+#include "ace/Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
+
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
