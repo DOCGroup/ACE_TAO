@@ -1454,8 +1454,8 @@ TAO_ORB_Core::reactor (void)
           // @@ Double checked locking!
           this->reactor_ =
             this->resource_factory ()->get_reactor ();
+          tss->reactor_ = this->reactor_;
         }
-      tss->reactor_ = this->reactor_;
     }
 
   return tss->reactor_;
