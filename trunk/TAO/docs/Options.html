@@ -9,25 +9,67 @@ link="#000fff"
 vlink="#ff0f0f"
 bgcolor="#ffffff">
 
-<H1 ALIGN=CENTER>Options for TAO Components</H1>
+<HR><P>
+<H3 ALIGN=CENTER>Options for TAO Components</H3>
 
-<H2>Overview</H2>
+<H3>Overview</H3>
 <blockquote>
-<P>Certain components in TAO such as the ORB Core or object adapter
-can be tuned by users by providing value for options to them.  These
-options are commonly specified as strings (<EM>e.g.</EM>, passed on
-the command-line) and are passed to component initialization methods
-for consumption.</P>
 
-<P><EM>Programmer's Note:</EM> the internal structure for these
-options is the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector
-of strings style popularized by C and Unix.  By convention, an
-initialization method will consume, <EM>i.e.</EM>, remove from the
-vector, any options that it recognizes.</P> </blockquote>
+<P>Certain components in TAO such as the ORB Core or Object Adapter
+can be tuned by users by providing value for options or environment
+variables to them.  These options are commonly specified as (1)
+environment variables or (2) strings passed on the command-line.  They
+are generally passed to component initialization methods for
+consumption.</P>
 
-<H2>Types of Options</H2>
+<P><EM>Programmer's Note:</EM> the internal structure for options is
+the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector of strings
+style popularized by C and Unix.  By convention, an initialization
+method will consume, <EM>i.e.</EM>, remove from the vector, any
+options that it recognizes.</P> </blockquote>
 
-<H2>Roadmap</H2>
+<HR><P>
+<H3>Environment Variables</H3>
+
+The following environment variables are supported by TAO:
+
+<BLOCKQUOTE>
+<P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" >
+<TR>
+<TH>Environment Variable</TH>
+<TH>Description</TH></TR>
+<TR>
+<TD><CODE>NameServiceIOR</CODE> <EM>which</EM></TD>
+<TD>
+Specifies which IOR the Naming Service is listening on.
+</TD></TR>
+<TR>
+<TD><CODE>NameServicePort</CODE> <EM>which</EM></TD>
+<TD>
+Specifies which port the Naming Service is listening on.
+</TD></TR>
+<TR>
+<TD><CODE>TradingServiceIOR</CODE> <EM>which</EM></TD>
+<TD>
+Specifies which IOR the Trading Service is listening on.
+</TD></TR>
+<TR>
+<TD><CODE>TradingServicePort</CODE> <EM>which</EM></TD>
+<TD>
+Specifies which port the Trading Service is listening on.
+</TD></TR>
+<TR>
+<TD><CODE>TAO_ORB_DEBUG</CODE> <EM>which</EM></TD>
+<TD>
+Enables TAO debugging mode.
+</TD></TR>
+</TABLE>
+</P>
+</BLOCKQUOTE>
+
+<HR><P>
+
+<H3>Types of Options</H3>
 
 <blockquote>
 <P>The following components can be tuned via options:</P>
@@ -40,8 +82,6 @@ vector, any options that it recognizes.</P> </blockquote>
   <LI><A HREF="#DefaultClient" TARGET="_top"><CODE>TAO_Default_Client_Strategy_Factory</CODE></A>
 </UL>
 </blockquote>
-
-<H2>Options</H2>
 
 <blockquote>
 <H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
@@ -235,8 +275,6 @@ no forwarding is used or only a single threaded client.
 </TD></TR>
 </TABLE>
 </P>
-
-
 </BLOCKQUOTE>
 </blockquote>
 

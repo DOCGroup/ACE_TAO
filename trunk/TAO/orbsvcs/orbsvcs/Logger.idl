@@ -85,8 +85,8 @@ interface Logger
   oneway void log (in Logger::Log_Record log_rec);
   // Transmit a Log_Record to the logging server.
 
-  void verbosity (Log_Verbosity verbosity_level);
-  // Change the state of the <verbosity_level>.  This controls how
+  void verbosity (Verbosity_Level level);
+  // Change the state of the <level> of verbosity.  This controls how
   // much logging information is displayed by the server.
 };
 

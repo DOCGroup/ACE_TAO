@@ -1,3 +1,23 @@
+Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * docs/Options.html: Added documentation for the TAO environment
+	  variables.
+
+	* tao/ORB.cpp (resolve_trading_service): Changed the environment
+ 	  variable for NameService and TradingService to NameServiceIOR
+ 	  and TradingServiceIOR to be more consistent.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
+ 	  TAO_Naming_Client class, which will simplify the initialization
+ 	  and access to a NamingContext.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
+ 	  capitalization of GetNamingContext() to get_naming_context(),
+ 	  which is consistent w/TAO programming style.
+
+	* tao/skip.cpp: Replaced uses of old-style C casts with a
+ 	  static_cast.
+
 Fri Jul 17 19:34:11 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/ORB.cpp: The return value for acceptor ().enable () is no
@@ -16,19 +36,6 @@ Fri Jul 17 18:46:17 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 	* orbsvcs/tests/server.cpp: Partialy incomplete incorporation of 
 	  name service
 	
-Fri Jul 17 17:42:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h: Started adding the new
- 	  TAO_Naming_Client class, which will simplify the initialization
- 	  and access to a NamingContext.
-
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Changed the
- 	  capitalization of GetNamingContext() to get_naming_context(),
- 	  which is consistent w/TAO programming style.
-
-	* tao/skip.cpp: Replaced uses of old-style C casts with a
- 	  static_cast.
-
 Fri Jul 17 17:58:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/implrepo.html: Addressed some more comments.
