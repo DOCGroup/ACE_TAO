@@ -43,7 +43,7 @@
 
 // Compiler's template mechanism requires the use of explicit C++
 // specializations for all used templates.
-#  define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#  define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // The HP/UX compiler doesn't support volatile!!!!
 #  define volatile
