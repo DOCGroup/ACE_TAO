@@ -5,9 +5,11 @@
 #include "tao/ORB_Core.h"
 #include "tao/Service_Callbacks.h"
 #include "ace/Dynamic_Service.h"
-
+#include <iostream>
 
 ACE_RCSID(FaultTolerance, FT_Service_Activate, "$Id$")
+
+static bool initialized = false;
 
 TAO_FT_Service_Activate::TAO_FT_Service_Activate (void)
 {
@@ -15,32 +17,6 @@ TAO_FT_Service_Activate::TAO_FT_Service_Activate (void)
 
 TAO_FT_Service_Activate::~TAO_FT_Service_Activate (void)
 {
-}
-
-int
-TAO_FT_Service_Activate::init (int /*argc*/,
-                               ACE_TCHAR *argv[])
-{
-  ACE_UNUSED_ARG (argv);
-
-  PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
-    PortableInterceptor::ORBInitializer::_nil ();
-  PortableInterceptor::ORBInitializer_var orb_initializer;
-
-  // Register the RTCORBA ORBInitializer.
-  ACE_NEW_RETURN (temp_orb_initializer,
-                  TAO_FT_ORBInitializer,
-                  -1);
-
-  orb_initializer = temp_orb_initializer;
-
-  PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-
-  // Set the name of the endpoint selector factory
-  TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
-  ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
-
-  return 0;
 }
 
 
@@ -63,8 +39,30 @@ TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
 int
 TAO_FT_Service_Activate::Initializer (void)
 {
-  ACE_Service_Config::static_svcs ()->
-    insert (&ace_svc_desc_TAO_FT_Service_Activate);
+  if (initialized == false)
+    {
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_FT_Service_Activate);
+
+      PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_var orb_initializer;
+
+      // Register the RTCORBA ORBInitializer.
+      ACE_NEW_RETURN (temp_orb_initializer,
+                      TAO_FT_ORBInitializer,
+                      -1);
+
+      orb_initializer = temp_orb_initializer;
+
+      PortableInterceptor::register_orb_initializer (orb_initializer.in ());
+
+      // Set the name of the endpoint selector factory
+      TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
+
+      initialized = true;
+    }
 
   return 0;
 }

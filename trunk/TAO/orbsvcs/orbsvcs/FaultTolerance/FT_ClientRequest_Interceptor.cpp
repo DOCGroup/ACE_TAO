@@ -180,14 +180,14 @@ TAO_FT_ClientRequest_Interceptor::group_version_context (
     }
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
-      // Grab the object group version
-      // @@ NOTE: This involves an allocation and a dellocation. This is
-      // really bad.
       IOP::TaggedComponent_var tp =
         ri->get_effective_component (IOP::TAG_FT_GROUP
                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
+      // Grab the object group version
+      // @@ NOTE: This involves an allocation and a dellocation. This is
+      // really bad.
       TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                               tp->component_data.get_buffer ()
                                               ),
