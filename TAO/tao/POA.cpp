@@ -31,7 +31,7 @@
 #endif /* _MSC_VER */
 
 class ServerObject_i
-: public POA_ImplementationRepository::ServerObject, 
+: public POA_ImplementationRepository::ServerObject,
   public PortableServer::RefCountServantBase
 {
   // = TITLE
@@ -41,7 +41,7 @@ class ServerObject_i
   //    Implementation Repository uses this to communicate with the IMR
   //    registered server.
 public:
-  ServerObject_i (CORBA::ORB_ptr orb) 
+  ServerObject_i (CORBA::ORB_ptr orb)
     : orb_ (orb) {}
 
   virtual void ping (CORBA::Environment &)
@@ -178,7 +178,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
       this->use_imr_ = 0;
       this->imr_notify_startup (ACE_TRY_ENV);
       ACE_CHECK;
-      this->use_imr_ = temp;  
+      this->use_imr_ = temp;
     }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -487,7 +487,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       ACE_CHECK;
     }
 
-  
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
   if (this->policies_.lifespan () == PortableServer::PERSISTENT)
   {
@@ -505,7 +505,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           }
         else
           {
-            PortableServer::ObjectId_var id = 
+            PortableServer::ObjectId_var id =
               root_poa->servant_to_id (this->server_object_, ACE_TRY_ENV);
             ACE_CHECK;
 
@@ -2681,19 +2681,16 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Thread_Policy> new_thread_policy (thread_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var thread_policy_var (thread_policy);
 
-  PortableServer::ThreadPolicy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+  PortableServer::ThreadPolicy_var result = thread_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_thread_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_thread_policy.release ();
   return result._retn ();
 }
 
@@ -2713,19 +2710,16 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Lifespan_Policy> new_lifespan_policy (lifespan_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var lifespan_policy_var (lifespan_policy);
 
-  PortableServer::LifespanPolicy_var result = new_lifespan_policy->_this (ACE_TRY_ENV);
+  PortableServer::LifespanPolicy_var result = lifespan_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_lifespan_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::LifespanPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_lifespan_policy.release ();
   return result._retn ();
 }
 
@@ -2743,19 +2737,16 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Id_Uniqueness_Policy> new_id_uniqueness_policy (id_uniqueness_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var id_uniqueness_policy_var (id_uniqueness_policy);
 
-  PortableServer::IdUniquenessPolicy_var result = new_id_uniqueness_policy->_this (ACE_TRY_ENV);
+  PortableServer::IdUniquenessPolicy_var result = id_uniqueness_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_id_uniqueness_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_id_uniqueness_policy.release ();
   return result._retn ();
 }
 
@@ -2773,19 +2764,16 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Id_Assignment_Policy> new_id_assignment_policy (id_assignment_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var id_assignment_policy_var (id_assignment_policy);
 
-  PortableServer::IdAssignmentPolicy_var result = new_id_assignment_policy->_this (ACE_TRY_ENV);
+  PortableServer::IdAssignmentPolicy_var result = id_assignment_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_id_assignment_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_id_assignment_policy.release ();
   return result._retn ();
 }
 
@@ -2805,19 +2793,16 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Implicit_Activation_Policy> new_implicit_activation_policy (implicit_activation_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var implicit_activation_policy_var (implicit_activation_policy);
 
-  PortableServer::ImplicitActivationPolicy_var result = new_implicit_activation_policy->_this (ACE_TRY_ENV);
+  PortableServer::ImplicitActivationPolicy_var result = implicit_activation_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_implicit_activation_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_implicit_activation_policy.release ();
   return result._retn ();
 }
 
@@ -2835,19 +2820,16 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Servant_Retention_Policy> new_servant_retention_policy (servant_retention_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var servant_retention_policy_var (servant_retention_policy);
 
-  PortableServer::ServantRetentionPolicy_var result = new_servant_retention_policy->_this (ACE_TRY_ENV);
+  PortableServer::ServantRetentionPolicy_var result = servant_retention_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_servant_retention_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_servant_retention_policy.release ();
   return result._retn ();
 }
 
@@ -2865,19 +2847,16 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Request_Processing_Policy> new_request_processing_policy (request_processing_policy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var request_processing_policy_var (request_processing_policy);
 
-  PortableServer::RequestProcessingPolicy_var result = new_request_processing_policy->_this (ACE_TRY_ENV);
+  PortableServer::RequestProcessingPolicy_var result = request_processing_policy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_request_processing_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_request_processing_policy.release ();
   return result._retn ();
 }
 
@@ -2908,19 +2887,16 @@ TAO_Thread_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Thread_Policy> new_thread_policy (thread_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var thread_policy_var (thread_policy_copy);
 
-  CORBA::Policy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = thread_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_thread_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_thread_policy.release ();
   return result._retn ();
 }
 
@@ -2983,19 +2959,16 @@ TAO_Lifespan_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Lifespan_Policy> new_lifespan_policy (lifespan_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var lifespan_policy_var (lifespan_policy_copy);
 
-  CORBA::Policy_var result = new_lifespan_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = lifespan_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_lifespan_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_lifespan_policy.release ();
   return result._retn ();
 }
 
@@ -3056,19 +3029,16 @@ TAO_Id_Uniqueness_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Id_Uniqueness_Policy> new_id_uniqueness_policy (id_uniqueness_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var id_uniqueness_policy_var (id_uniqueness_policy_copy);
 
-  CORBA::Policy_var result = new_id_uniqueness_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = id_uniqueness_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_id_uniqueness_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_id_uniqueness_policy.release ();
   return result._retn ();
 }
 
@@ -3129,19 +3099,16 @@ TAO_Id_Assignment_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Id_Assignment_Policy> new_id_assignment_policy (id_assignment_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var id_assignment_policy_var (id_assignment_policy_copy);
 
-  CORBA::Policy_var result = new_id_assignment_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = id_assignment_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_id_assignment_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_id_assignment_policy.release ();
   return result._retn ();
 }
 
@@ -3204,19 +3171,16 @@ TAO_Implicit_Activation_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Implicit_Activation_Policy> new_implicit_activation_policy (implicit_activation_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var implicit_activation_policy_var (implicit_activation_policy_copy);
 
-  CORBA::Policy_var result = new_implicit_activation_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = implicit_activation_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_implicit_activation_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_implicit_activation_policy.release ();
   return result._retn ();
 }
 
@@ -3277,19 +3241,16 @@ TAO_Servant_Retention_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Servant_Retention_Policy> new_servant_retention_policy (servant_retention_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var servant_retention_policy_var (servant_retention_policy_copy);
 
-  CORBA::Policy_var result = new_servant_retention_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = servant_retention_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_servant_retention_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_servant_retention_policy.release ();
   return result._retn ();
 }
 
@@ -3350,19 +3311,16 @@ TAO_Request_Processing_Policy::copy (CORBA::Environment &ACE_TRY_ENV)
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of the copy to the auto pointer.
-  auto_ptr<TAO_Request_Processing_Policy> new_request_processing_policy (request_processing_policy_copy);
+  // Give ownership of the copy to the servant var.  In the case when
+  // _this() succeeds, the servant var will reduce the servant ref
+  // count to 1, hence giving the ownership to the POA.  In the case
+  // where _this() fails, the servant var will reduce the servant ref
+  // count to 0, hence deleting the servant and avoiding memory leaks.
+  PortableServer::ServantBase_var request_processing_policy_var (request_processing_policy_copy);
 
-  CORBA::Policy_var result = new_request_processing_policy->_this (ACE_TRY_ENV);
+  CORBA::Policy_var result = request_processing_policy_copy->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  // Give ownership of this servant to the POA.
-  new_request_processing_policy->_remove_ref (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  // Make sure that the auto_ptr does not delete the implementation
-  // object.
-  new_request_processing_policy.release ();
   return result._retn ();
 }
 
@@ -3615,7 +3573,7 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
                         TAO_ServantBase *servant,
@@ -3626,14 +3584,14 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  if (this->use_imr_ 
+  if (this->use_imr_
       && this->policies_.lifespan () == PortableServer::PERSISTENT)
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr = this->orb_core ().implrepo_service ();
 
-      if (CORBA::is_nil (imr.in ()) 
-          || !imr->_stubobj () 
+      if (CORBA::is_nil (imr.in ())
+          || !imr->_stubobj ()
           || !imr->_stubobj ()->profile_in_use ())
         {
           if (TAO_debug_level > 0)
@@ -3665,12 +3623,12 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       ACE_CString ior (imr_str.in ());
 
       // Add the key
-      
+
       CORBA::String_var key_str;
       TAO_POA::encode_sequence_to_string (key_str.inout (), key);
 
       ior += key_str.in ();
-      
+
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "IMR-ified IOR = \n%s\n", ior.c_str ()));
 
@@ -3684,10 +3642,10 @@ orbkey:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  obj = this->orb_core_.orb()->key_to_object (key, 
-                                              type_id, 
-                                              servant, 
-                                              collocated, 
+  obj = this->orb_core_.orb()->key_to_object (key,
+                                              type_id,
+                                              servant,
+                                              collocated,
                                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (obj);
 
@@ -3696,7 +3654,7 @@ orbkey:
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-void 
+void
 TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level > 0)
@@ -3711,25 +3669,25 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
                     ServerObject_i (this->orb_core_.orb ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
- 
+
   // @@ (brunsch) The server should really be in the root poa, but
   // there are locking issues...
 
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId ("_tao_imr_server_object");
-      
+
   this->activate_object_with_id_i (id.in (),
-				   this->server_object_,
-				   ACE_TRY_ENV);
+                                   this->server_object_,
+                                   ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::Object_var obj = this->id_to_reference_i (id.in (),
-						   ACE_TRY_ENV);
+                                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  ImplementationRepository::ServerObject_ptr svr 
-    = ImplementationRepository::ServerObject::_narrow (obj.in (), 
-						       ACE_TRY_ENV);
+  ImplementationRepository::ServerObject_ptr svr
+    = ImplementationRepository::ServerObject::_narrow (obj.in (),
+                                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
@@ -3738,20 +3696,20 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
       return;
     }
 
-  CORBA::String_var svr_str = 
+  CORBA::String_var svr_str =
     svr->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
   ACE_CHECK;
 
   char *pos = ACE_OS::strstr (svr_str.inout (), "://");
 
-  pos = ACE_OS::strchr (pos + 3, 
+  pos = ACE_OS::strchr (pos + 3,
                         svr->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
   if (pos)
     *(pos + 1) = 0;  // Crop the string
   else
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                  "Could not parse ServerObject IOR, bailing out.\n"));
       return;
     }
@@ -3778,7 +3736,7 @@ TAO_POA::imr_notify_startup (CORBA_Environment &ACE_TRY_ENV)
 
 }
 
-void 
+void
 TAO_POA::imr_notify_shutdown (void)
 {
   if (TAO_debug_level > 0)
@@ -3789,7 +3747,7 @@ TAO_POA::imr_notify_shutdown (void)
 
   // Check to see if there was an imr returned.  If none, return ourselves.
   if (CORBA::is_nil (imr.in ()))
-    return; 
+    return;
 
   ACE_TRY_NEW_ENV
     {
@@ -3816,16 +3774,7 @@ TAO_POA::imr_notify_shutdown (void)
 template class ACE_Array<PortableServer::ObjectId>;
 template class ACE_Array_Base<PortableServer::ObjectId>;
 
-template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
-
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-template class ACE_Auto_Basic_Ptr<TAO_Thread_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
 
 template class ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>;
 
@@ -3851,16 +3800,8 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_POA *, ACE_Hash
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
-template class auto_ptr<TAO_Id_Assignment_Policy>;
-template class auto_ptr<TAO_Id_Uniqueness_Policy>;
-template class auto_ptr<TAO_Lifespan_Policy>;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-template class auto_ptr<TAO_Thread_Policy>;
-template class auto_ptr<TAO_Implicit_Activation_Policy>;
-template class auto_ptr<TAO_Servant_Retention_Policy>;
-template class auto_ptr<TAO_Request_Processing_Policy>;
 
 template class auto_ptr<TAO_Forwarding_Servant>;
 
@@ -3877,16 +3818,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Array<PortableServer::ObjectId>
 #pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
 
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>
-
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Thread_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
 
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Forwarding_Servant>
 
@@ -3912,16 +3844,8 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-#pragma instantiate auto_ptr<TAO_Id_Assignment_Policy>
-#pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
-#pragma instantiate auto_ptr<TAO_Lifespan_Policy>
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-
-#pragma instantiate auto_ptr<TAO_Thread_Policy>
-#pragma instantiate auto_ptr<TAO_Implicit_Activation_Policy>
-#pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>
-#pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
 
 #pragma instantiate auto_ptr<TAO_Forwarding_Servant>
 
