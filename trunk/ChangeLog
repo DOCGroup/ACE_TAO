@@ -1,3 +1,18 @@
+Fri Apr 23 11:23:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Local_Tokens.cpp:
+	* ace/Local_Tokens.h:
+	* ace/Timeprobe.h:
+
+	  Do not include "ace/Synch{_T}.h".  Include less expensive ones
+	  instead.  Fixes a "fuzz" error.
+
+	* ace/Token_Manager.h:
+
+	  Moved "ace/Map_Manager.h" inclusion within the
+	  ACE_HAS_TOKENS_LIBRARY block.  There is no need to include it if
+	  that macro isn't defined.
+
 Fri Apr 23 11:14:51 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Smart_Pointers/Widget_Impl.h:
