@@ -7489,7 +7489,7 @@ ACE_OS::thr_yield (void)
   ::pthread_yield (NULL);
 #   else    /* Draft 4 and 7 */
   ::pthread_yield ();
-#   endif  /*  ACE_HAS_IRIX62_THREADS */
+#   endif  /* ACE_HAS_PTHREADS_STD */
 # elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 # elif defined (VXWORKS)

@@ -42,16 +42,16 @@ case "$target" in
     dnl Use BSD 4.4 socket definitions for pre-AIX 4.2.  The _BSD
     dnl setting also controls the data type used for waitpid(),
     dnl wait(), and wait3().
-    AC_DEFINE(_BSD, 44)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD=44"
     dnl pre-AIX 4.3 requires _BSD_INCLUDES
-    AC_DEFINE(_BSD_INCLUDES)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_INCLUDES"
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     AC_DEFINE(ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
     ;;
   *aix4.2*)
     AC_DEFINE(AIX)
     dnl pre-AIX 4.3 requires _BSD_INCLUDES
-    AC_DEFINE(_BSD_INCLUDES)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_INCLUDES"
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
 dnl    AC_DEFINE(ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
     AC_DEFINE(ACE_TLI_TCP_DEVICE, "/dev/xti/tcp")
@@ -60,30 +60,25 @@ dnl    AC_DEFINE(ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
     AC_DEFINE(AIX)
     ;;
   t3e-cray-unicosmk*)
-    AC_DEFINE(_CRAYMPP)
-    AC_DEFINE(_CRAYT3E)
-    AC_DEFINE(_UNICOS,)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_CRAYMPP -D_CRAYT3E -D_UNICOS"
     ;;
   t3e-cray*)
-    AC_DEFINE(_CRAYT3E)
-    AC_DEFINE(_UNICOS,)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_CRAYT3E -D_UNICOS"
     ;;
   *cray-unicos*)
-    AC_DEFINE(_UNICOS,)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_UNICOS"
     ;;
   *dgux4.11*)
     AC_DEFINE(ACE_DGUX)
     AC_DEFINE(IP_ADD_MEMBERSHIP, 0x13)
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
-    AC_DEFINE(_POSIX_SOURCE)
-    AC_DEFINE(_DGUX_SOURCE)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_SOURCE -D_DGUX_SOURCE"
     ;;
   *dgux4*)
     AC_DEFINE(ACE_DGUX)
     AC_DEFINE(IP_ADD_MEMBERSHIP, 0x13)
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
-    AC_DEFINE(_POSIX4A_DRAFT10_SOURCE)
-    AC_DEFINE(_POSIX4_DRAFT_SOURCE)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX4A_DRAFT10_SOURCE -D_POSIX4_DRAFT_SOURCE"
     ;;
   *freebsd*)
     ;;
@@ -97,7 +92,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
   *hpux10*)
     AC_DEFINE(HPUX)
     AC_DEFINE(HPUX_10)
-    AC_DEFINE(_HPUX_SOURCE)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_HPUX_SOURCE"
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) 0x80000000))
     AC_DEFINE(ACE_TLI_TCP_DEVICE, "/dev/inet_cots")
     ;;
@@ -125,19 +120,23 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
   *irix5.3*)
     AC_DEFINE(IRIX5)
     if test -z "$GXX"; then
-      AC_DEFINE(_BSD_TYPES)
+      ACE_CPPFLAGS="$ACE_CPPFLAGS -D_BSD_TYPES"
     fi
     ;;
   *irix6*)
     AC_DEFINE(IRIX6)
-    AC_DEFINE(ACE_HAS_IRIX62_THREADS)
     AC_DEFINE(ACE_DEFAULT_BASE_ADDR, ((char *) (1024U * 1024 * 1024)))
-    if test "$ace_user_enable_threads" = yes; then
-      AC_DEFINE(ACE_HAS_IRIX62_THREADS)
-    fi
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
-    AC_DEFINE(_SGI_MP_SOURCE)
-    AC_DEFINE(_MODERN_C_)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SGI_MP_SOURCE -D_MODERN_C_"
+
+    case "$target" in
+      *irix6.2*)
+        dnl Recent versions of IRIX do not appear to require this macro.
+        if test "$ace_user_enable_threads" = yes; then
+          AC_DEFINE(ACE_HAS_IRIX62_THREADS)
+        fi
+        ;;
+    esac
     ;;
   *linux*)
     AC_DEFINE(ACE_DEFAULT_MAX_SOCKET_BUFSIZ, 65535)
@@ -145,28 +144,6 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(ACE_HAS_BIG_FD_SET) dnl FIXME: We need a test for this!
     AC_DEFINE(ACE_UINT64_FORMAT_SPECIFIER, "%Lu")
     AC_DEFINE(ACE_TIMER_SKEW, (1000 * 10))
-
-    AC_EGREP_CPP([PRE_2_2_0_LINUX_KERNEL],
-      [
-#if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#  include <linux/version.h>
-
-/* Macro used to compute LINUX_VERSION_CODE in <linux/version.h>
-   header.  Older kernels didn't define this macro. */
-#  ifndef KERNEL_VERSION
-#    define KERNEL_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
-#  endif
-
-/* Pre-2.2.x kernels limited the maximum number of file descriptors
-   for non-root processes to 256. */
-#  if LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0)
-     PRE_2_2_0_LINUX_KERNEL
-#  endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,2,0) */
-#endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
-      ],
-      [
-       AC_DEFINE(ACE_DEFAULT_SELECT_REACTOR_SIZE, 256)
-      ],)
     ;;
   *lynxos*)
     AC_DEFINE(_POSIX_THREADS_CALLS)
@@ -184,7 +161,7 @@ dnl FIXME: "FSU" isn't a platform!  We need to move this somewhere.
     AC_DEFINE(IP_DROP_MEMBERSHIP, 0x14)
     ;;
   *mvs*)
-    AC_DEFINE(_ALL_SOURCE)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_ALL_SOURCE"
     ;;
   *netbsd*)
     AC_DEFINE(ACE_NETBSD)
@@ -250,7 +227,7 @@ dnl Check for _POSIX_C_SOURCE macro
     AC_DEFINE(ACE_DEFAULT_CLOSE_ALL_HANDLES, 0)
     ;;
   *sco5*)
-    AC_DEFINE(_SVID3)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_SVID3"
     AC_DEFINE(SCO)
     AC_DEFINE(ACE_DEFAULT_CLOSE_ALL_HANDLES, 0)
     AC_DEFINE(ACE_HAS_BIG_FD_SET) dnl FIXME: We need a test for this!
@@ -320,10 +297,11 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     ;;
   *qnx* | *nto* | *neutrino*)
     dnl These should be defined on the command line, not in config.h.
-    CPPFLAGS="$CPPFLAGS -D_QNX_SOURCE -D_POSIX_C_SOURCE=199506"
-    CPPFLAGS="$CPPFLAGS -D_POSIX_NAME_MAX=14"  # Max bytes in a filename
-    CPPFLAGS="$CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
-                                               # pathname (excl. NULL)
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_QNX_SOURCE -D_POSIX_C_SOURCE=199506"
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_NAME_MAX=14"  # Max bytes in a
+                                                       # filename
+    ACE_CPPFLAGS="$ACE_CPPFLAGS -D_POSIX_PATH_MAX=256" # Num. bytes in
+                                                       # pathname (excl. NULL)
     case "$target" in
 changequote(, )dnl
       i[3456]86*)
@@ -332,7 +310,7 @@ changequote([, ])dnl
           # Neutrino defines memcpy as a macro on x86, which then
           # hoses the ACE_OS::memcpy() method.  Undefining
           # __OPTIMIZE__ prevents this from happening.
-          CPPFLAGS="$CPPFLAGS -U__OPTIMIZE__"
+          ACE_CPPFLAGS="$ACE_CPPFLAGS -U__OPTIMIZE__"
         fi
         ;;
     esac
