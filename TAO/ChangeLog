@@ -1,3 +1,30 @@
+Tue Dec  9 16:26:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/tests/Redundant_Naming/client.dsp:
+	* orbsvcs/tests/Miop/McastHello/client.dsp:
+	* orbsvcs/tests/Miop/McastHello/server.dsp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+	* orbsvcs/tests/Interoperable_Naming/client.dsp:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_client.dsp:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
+	* orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/IFR_Test.dsp:
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.dsp:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Persistence_Test.dsp:
+	* orbsvcs/tests/ImplRepo/airplane_client.dsp:
+	* orbsvcs/tests/ImplRepo/airplane_server.dsp:
+	* orbsvcs/tests/ImplRepo/nestea_client.dsp:
+	* orbsvcs/tests/ImplRepo/nestea_server.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.dsp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.dsp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+	* orbsvcs/tests/Event/*.dsp:
+	* orbsvcs/tests/EC_MT_Mcast/MCast.dsp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+	  Fixed release configurations, more follow later.
+
 Tue Dec  9 09:41:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
@@ -6,7 +33,7 @@ Tue Dec  9 09:41:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Dec  9 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp (TAO): 
+	* tao/Synch_Invocation.cpp (TAO):
 
 	  Cosmetic changes.
 
