@@ -86,7 +86,7 @@ namespace PortableInterceptor
 {
   
   // TAO_IDL - Generated from
-  // be\be_valuetype.cpp:527
+  // be\be_valuetype.cpp:525
   
   
 
@@ -165,7 +165,7 @@ namespace PortableInterceptor
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceFactory;
   
   // TAO_IDL - Generated from
-  // be\be_valuetype.cpp:527
+  // be\be_valuetype.cpp:525
   
   
 
@@ -388,7 +388,7 @@ TAO_ORT_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableIntercept
 TAO_ORT_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::ObjectReferenceTemplateSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:434
+// be\be_valuetype.cpp:432
 
 namespace CORBA
 {
@@ -403,7 +403,7 @@ TAO_ORT_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterce
 TAO_ORT_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 
 // TAO_IDL - Generated from
-// be\be_valuetype.cpp:434
+// be\be_valuetype.cpp:432
 
 namespace CORBA
 {
@@ -435,7 +435,7 @@ TAO_ORT_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "ObjectReferenceTemplateC.inl"
