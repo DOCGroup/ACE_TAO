@@ -248,7 +248,8 @@ Logger_Client::init (int argc, char **argv)
       return 1;
     }
 
-  this->naming_service_->unbind (nc1, env);
+  // destroy the naming context created above.
+  nc1->destroy (this->env_);
 
   if (this->env_.exception () != 0)
     {
