@@ -1,6 +1,8 @@
 // -*- C++ -*-
 // $Id$
 
+#if !defined (EVENT_TYPES_IMPL_H)
+#define EVENT_TYPES_IMPL_H
 #include "Event_TypesC.h"
 
 // Event hierarchy implementation classes ======================
@@ -33,6 +35,10 @@
 // previous and generate _var classes which access inline functions.
 // ... And I wonder how the OMG want to manage cyclic graphs with
 // reference counting.
+
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 class Event_impl : public virtual OBV_Event,
                    public virtual CORBA::DefaultValueRefCountBase
@@ -413,3 +419,8 @@ class Criterion_List_Iterator
 #define KITCHEN 1001
 #define BATHROOM 1002
 #define JONAS 1
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
+#endif /* EVENT_TYPES_IMPL_H */
