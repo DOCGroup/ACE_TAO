@@ -1,0 +1,4 @@
+project : aceexe, mfc {
+  pch_header = StdAfx.h
+  pch_source = StdAfx.cpp
+}

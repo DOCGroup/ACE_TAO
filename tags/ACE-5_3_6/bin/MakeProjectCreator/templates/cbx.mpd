@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--C++Builder MP Project-->
+<project>
+  <property category="build.config" name="active" value="0"/>
+  <property category="build.config" name="count" value="1"/>
+  <property category="build.config" name="excludedefaultforzero" value="0"/>
+  <property category="build.config.0" name="builddir" value="Debug"/>
+  <property category="build.config.0" name="key" value="Debug_Build"/>
+  <property category="build.config.0" name="linux.builddir" value="linux/Debug_Build"/>
+  <property category="build.config.0" name="name" value="Debug Build"/>
+  <property category="build.config.0" name="settings.MinGW" value="default;debug"/>
+  <property category="build.config.0" name="settings.gnuc++" value="default;debug"/>
+  <property category="build.config.0" name="settings.mswin32" value="default;debug"/>
+  <property category="build.config.0" name="solaris.builddir" value="solaris/Debug_Build"/>
+  <property category="build.config.0" name="type" value="Toolset"/>
+  <property category="build.config.0" name="win32.builddir" value="windows/Debug_Build"/>
+  <property category="build.config.1" name="key" value="Release_Build"/>
+  <property category="build.config.1" name="name" value="Release Build"/>
+  <property category="build.config.1" name="settings.MinGW" value="default;release"/>
+  <property category="build.config.1" name="settings.gnuc++" value="default;release"/>
+  <property category="build.config.1" name="settings.mswin32" value="default;release"/>
+  <property category="build.config.1" name="type" value="Toolset"/>
+  <property category="build.node" name="name" value="ACEtest"/>
+  <property category="build.node" name="type" value="libraryproject"/>
+  <property category="build.platform" name="active" value="win32"/>
+  <property category="build.platform" name="linux.Debug_Build.toolset" value="gnuc++"/>
+  <property category="build.platform" name="linux.Release_Build.toolset" value="gnuc++"/>
+  <property category="build.platform" name="linux.default" value="gnuc++"/>
+  <property category="build.platform" name="linux.gnuc++.enabled" value="1"/>
+  <property category="build.platform" name="solaris.Debug_Build.toolset" value="sunforte"/>
+  <property category="build.platform" name="solaris.Release_Build.toolset" value="sunforte"/>
+  <property category="build.platform" name="solaris.default" value="gnuc++"/>
+  <property category="build.platform" name="solaris.gnuc++.enabled" value="1"/>
+  <property category="build.platform" name="solaris.sunforte.enabled" value="1"/>
+  <property category="build.platform" name="win32.Debug_Build.toolset" value="win32b"/>
+  <property category="build.platform" name="win32.MinGW.enabled" value="1"/>
+  <property category="build.platform" name="win32.Release_Build.toolset" value="win32b"/>
+  <property category="build.platform" name="win32.default" value="win32b"/>
+  <property category="build.platform" name="win32.gnuc++.enabled" value="0"/>
+  <property category="build.platform" name="win32.mswin32.enabled" value="1"/>
+  <property category="build.platform" name="win32.win32b.enabled" value="1"/>
+  <property category="cbproject" name="lastnodeid" value="317"/>
+  <property category="cbproject" name="version" value="1.6"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.I.arg.1" value="\usr\include"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.I.arg.2" value="\usr\include\g++-3"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.I.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.MD.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.O0.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.c.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.g.arg" value="2"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.g.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++compile" name="option.o.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++link" name="option.g.arg" value="2"/>
+  <property category="linux.Debug_Build.gnuc++.g++link" name="option.g.enabled" value="1"/>
+  <property category="linux.Debug_Build.gnuc++.g++link" name="option.o.enabled" value="1"/>
+  <property category="linux.gnuc++.Debug_Build" name="saved" value="1"/>
+  <property category="runtime" name="ExcludeDefaultForZero" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_c_compile" name="option.o.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_c_link" name="option.o.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_Bdynamic.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_c.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_compat=5.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_dy.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_fns=no.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_fround=nearest.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_ftrap.arg.1" value="%none"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_ftrap.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_g.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_instances=global.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_o.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_staticlib.arg.1" value="%none"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_staticlib.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_template.arg.1" value="no%wholeclass,extdef"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_template.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_verbose.arg.1" value="%none"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_verbose.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xalias_level=any.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xarch=generic.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xbuiltin=%none.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xcheck=%none.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xcrossfile=0.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xinline.arg.1" value="%auto"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xinline.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xopenmp=none.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xprefetch.arg.1" value="no%auto,explicit"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xprefetch.enabled" value="1"/>
+  <property category="solaris.Debug_Build.sunforte.forte_cpp_link" name="option.minus_o.enabled" value="1"/>
+  <property category="solaris.sunforte.Debug_Build" name="saved" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.2" value="_RTLDLL"/>
+<%if(type_is_dynamic)%>
+ <%foreach(dynamicflags)%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%dynamicflag%>"/>
+ <%endfor%>
+<%endif%>
+<%if(need_staticflags)%>
+ <%foreach(staticflags)%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%libflag%>"/>
+ <%endfor%>
+<%endif%>
+<%foreach(defines common_defines macros)%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.3" value="<%define%>"/>
+<%endfor%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.D.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.Hc.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.I.arg.1" value="$(BCB)\include"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.I.arg.2" value="$(ACE_ROOT)"/>
+<%foreach(includes)%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.I.arg.2" value="<%include%>"/>
+<%endfor%>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.I.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.Od.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.V.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.VA.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.Ve.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.Vx.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.a8.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.b.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.batchfilecompile.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.c.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.g.arg" value="100"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.g.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.i.arg" value="250"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.i.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.j.arg" value="25"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.j.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.k.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.o.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.r.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.responsefile.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.tWM.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.v.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.vi.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.w.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.bcc32" name="option.y.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.brcc32" name="option.F.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.D.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Enn.arg" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Enn.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Gn.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.H:xxxx.arg" value="0x00100000"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.H:xxxx.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Hc:xxxx.arg" value="0x00001000"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Hc:xxxx.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.L.arg.1" value="$(BCB)\lib"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.L.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.S:xxxx.arg" value="0x00100000"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.S:xxxx.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Sc:xxxx.arg" value="0x00002000"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Sc:xxxx.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Tpe.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Ud.d.arg" value="1.0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Ud.d.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Vd.d.arg" value="0.0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Vd.d.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.b:xxxx.arg" value="0x00400000"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.b:xxxx.enabled" value="0"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.v.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.x.enabled" value="1"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="param.libfiles.1" value="cw32mti.lib"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="param.libfiles.2" value="import32.lib"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Tpd.enabled" value="<%if(type_is_dynamic)%>1<%w%>0<%endif%>"/>
+  <property category="win32.Debug_Build.win32b.ilink32" name="option.Tpe.enabled" value="<%if(type_is_dynamic)%>0<%else%>1<%endif%>"/>
+  <property category="win32.win32b.Debug_Build" name="saved" value="1"/>
+  <property category="win32b.ilink32" name="enabled" value="0"/>
+<%if(source_files)%>
+  <node name="Source Files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(source_files)%>
+      <file path=".\<%source_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(header_files)%>
+  <node name="Header files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(header_files)%>
+      <file path=".\<%header_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(inline_files)%>
+  <node name="Inline files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(inline_files)%>
+      <file path=".\<%inline_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(idl_files)%>
+  <node name="IDL files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(idl_files)%>
+      <file path=".\<%idl_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(template_files)%>
+  <node name="Template files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(template_files)%>
+      <file path=".\<%template_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(documentation_files)%>
+  <node name="Documentation files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(documentation_files)%>
+      <file path=".\<%documentation_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+<%if(resource_files)%>
+  <node name="Resource files" type="Folder">
+    <property category="unique" name="id"/>
+<%foreach(resource_files)%>
+      <file path=".\<%resource_file%>">
+        <property category="unique" name="id"/>
+      </file>
+<%endfor%>
+  </node>
+<%endif%>
+</project>

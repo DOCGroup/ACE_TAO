@@ -1,0 +1,9 @@
+project(Netsvcs_server) : aceexe {
+  exename = main
+  libs    += netsvcs
+  after   += netsvcs
+  includes += $(ACE_ROOT)/netsvcs/lib
+  Source_Files {
+    main.cpp
+  }
+}

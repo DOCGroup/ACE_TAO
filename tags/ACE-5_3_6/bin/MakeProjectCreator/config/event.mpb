@@ -1,0 +1,6 @@
+project : naming, messaging {
+  after     += CosEvent
+  libs      += TAO_CosEvent
+  comps     += CosEvent
+  tagchecks += CosEvent
+}

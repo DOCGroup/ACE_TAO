@@ -1,0 +1,4 @@
+project : portableserver, rtcorba {
+  after   += RTPortableServer 
+  libs    += TAO_RTPortableServer
+}

@@ -1,0 +1,6 @@
+project(http_client) : aceexe {
+  Source_Files {
+    http_handler.cpp
+    http_client.cpp
+  }
+}

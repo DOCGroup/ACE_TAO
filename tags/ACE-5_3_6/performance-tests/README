@@ -1,0 +1,16 @@
+The subdirectories in this directory provide a number of benchmarks
+that use ACE features to determine performance of various concurrency
+and communication mechanisms.
+
+        . Synch-Benchmarks -- Implements a number of benchmarks
+          that test the performance of various synchronization
+          mechanisms.
+
+        . TTCP -- Implements several variants of the TTCP benchmarking
+          test for TCP and UCP using C sockets and ACE C++ wrappers.
+
+        . UDP -- Contains UDP test, which measures UDP round-trip
+          performance.
+
+        . Misc -- Miscellaneous tests, e.g., Double-Checked Locking,
+          context switching, mutexes, naming, etc.

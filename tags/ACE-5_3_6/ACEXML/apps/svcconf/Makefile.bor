@@ -1,0 +1,20 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor all
+
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor clean
+
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor realclean
+
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor install
+
+regenerate:
+	/usr/bin/perl /build/kitty/ACE_wrappers/bin/mwc.pl -type borland ACEXML.mwc

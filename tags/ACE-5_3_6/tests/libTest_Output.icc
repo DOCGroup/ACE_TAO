@@ -1,0 +1,25 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(exportAll),
+    link(linkwithsharedlib),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+        target type ( shr ) "shr.o"
+        {
+            run after sources("shr.o") targets ("libTest_Output.a") "ar -r -u libTest_Output.a shr.o", "rm -rf shr.o"
+            run cleanup "rm -rf libTest_Output.a shr.o"
+
+	   source type (cpp) "Test_Output.cpp"
+	   if ($__IBMCPP__ >= 500) {
+	     option macros(global) {
+	       source type (hpp) "test_config.h"
+	     }
+	   }
+	   source type (lib) platformLinkLibs
+	}
+    }
