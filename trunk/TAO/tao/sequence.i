@@ -80,9 +80,9 @@ TAO_Unbounded_Base_Sequence::TAO_Unbounded_Base_Sequence (void)
 ACE_INLINE
 TAO_Unbounded_Base_Sequence::
 TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
-			     CORBA::ULong length,
-			     void* buffer,
-			     CORBA::Boolean release)
+                             CORBA::ULong length,
+                             void* buffer,
+                             CORBA::Boolean release)
   :  TAO_Base_Sequence (maximum, length, buffer, release)
 {
 }
@@ -90,7 +90,7 @@ TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
 ACE_INLINE
 TAO_Unbounded_Base_Sequence::
 TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
-			     void* buffer)
+                             void* buffer)
   :  TAO_Base_Sequence (maximum, buffer)
 {
 }
@@ -127,9 +127,9 @@ TAO_Bounded_Base_Sequence::TAO_Bounded_Base_Sequence (void)
 ACE_INLINE
 TAO_Bounded_Base_Sequence::
 TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-			   CORBA::ULong length,
-			   void* buffer,
-			   CORBA::Boolean release)
+                           CORBA::ULong length,
+                           void* buffer,
+                           CORBA::Boolean release)
   :  TAO_Base_Sequence (maximum, length, buffer, release)
 {
 }
@@ -137,7 +137,7 @@ TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
 ACE_INLINE
 TAO_Bounded_Base_Sequence::
 TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
-			   void* buffer)
+                           void* buffer)
   :  TAO_Base_Sequence (maximum, buffer)
 {
 }
@@ -166,7 +166,7 @@ TAO_Bounded_Base_Sequence::length (CORBA::ULong length)
 
 ACE_INLINE
 TAO_String_Manager::TAO_String_Manager (char **buffer,
-				        CORBA::Boolean release)
+                                        CORBA::Boolean release)
   :  ptr_ (buffer),
      release_ (release)
 {
@@ -201,9 +201,9 @@ TAO_Unbounded_String_Sequence::TAO_Unbounded_String_Sequence (void)
 ACE_INLINE
 TAO_Unbounded_String_Sequence::
 TAO_Unbounded_String_Sequence (CORBA::ULong maximum,
-			       CORBA::ULong length,
-			       char* *value,
-			       CORBA::Boolean release)
+                               CORBA::ULong length,
+                               char* *value,
+                               CORBA::Boolean release)
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
@@ -212,7 +212,6 @@ ACE_INLINE TAO_Unbounded_String_Sequence::Manager
 TAO_Unbounded_String_Sequence::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  char **tmp = ACE_reinterpret_cast (char **const, this->buffer_);
+  char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
   return Manager (tmp + index, this->release_);
 }
-
