@@ -64,15 +64,21 @@ sub process {
 
   ## Go through each file
   foreach my $finc (@files) {
-    ## Remove the current working directory from the front of the
-    ## file.  This will help reduce the size of the dependency file.
-    $finc =~ s/^$cwd//;
-
-    ## Modify those that have elements for replacement
-    foreach my $rep (@repkeys) {
-      if ($finc =~ /^$rep/) {
-        $finc =~ s/^$rep/$$replace{$rep}/;
-        last;
+    ## If we can remove the current working directory fromm the file
+    ## then we do not need to check the repkeys array and that cuts
+    ## the processing time for the ace directory almost in half.
+    if ($finc =~ /^$cwd/) {
+      ## Remove the current working directory from the front of the
+      ## file.  This will help reduce the size of the dependency file.
+      $finc =~ s/^$cwd//;
+    }
+    else {
+      ## Modify those that have elements for replacement
+      foreach my $rep (@repkeys) {
+        if ($finc =~ /^$rep/) {
+          $finc =~ s/^$rep/$$replace{$rep}/;
+          last;
+        }
       }
     }
 

@@ -47,12 +47,13 @@ sub locateFile {
 
 
 sub getFiles {
-  my($self) = shift;
-  my($file) = shift;
+  my($self)   = shift;
+  my($file)   = shift;
+  my($ifiles) = $self->{'ifiles'};
 
   foreach my $inc (@{$self->{'files'}->{$file}}) {
-    if (!defined $self->{'ifiles'}->{$inc}) {
-      $self->{'ifiles'}->{$inc} = 1;
+    if (!defined $$ifiles{$inc}) {
+      $$ifiles{$inc} = 1;
       $self->getFiles($inc);
     }
   }
@@ -65,22 +66,26 @@ sub process {
   my($noinline) = shift;
   my($noincs)   = shift;
   my($fh)       = new FileHandle();
-  my(@incs)     = ();
 
   if (open($fh, $file)) {
     my($ifcount) = 0;
     my(@zero)    = ();
+    my($files)   = $self->{'files'};
+    my($recurse) = ++$self->{'recurse'};
 
-    ++$self->{'recurse'};
-    $self->{'files'}->{$file} = [];
+    $$files{$file} = [];
     while(<$fh>) {
-      $_ =~ s/\/\/.*//;
-
-      ## As an optimization, use a very simple regular expression no the
+      ## As an optimization, use a very simple regular expression on the
       ## outside that all of the inner regular expressions have in
       ## common.  That way we go down the path of if elsif only if it is
       ## even possible due to the outside regular expression.
       if (/#/) {
+        ## Remove c++ comments inside this if statement.
+        ## This saves about 5% off of processing the ace directory
+        ## and we only need to strip comments if we are actually
+        ## going to look at the string.
+        $_ =~ s/\/\/.*//;
+
         if (/#\s*if\s+0/) {
           push(@zero, $ifcount);
           ++$ifcount;
@@ -100,9 +105,9 @@ sub process {
           if (defined $inc) {
             $inc =~ s/\\/\//g;
             if (!$noinline ||
-                ($inc !~ /\.i(nl)?$/ || $self->{'recurse'} == 1)) {
-              push(@{$self->{'files'}->{$file}}, $inc);
-              if (!defined $self->{'files'}->{$inc}) {
+                ($recurse == 1 || $inc !~ /\.i(nl)?$/)) {
+              push(@{$$files{$file}}, $inc);
+              if (!defined $$files{$inc}) {
                 ## Process this file, but do not return the include files
                 $self->process($inc, $noinline, 1);
               }
@@ -113,14 +118,15 @@ sub process {
     }
     close($fh);
 
+    --$self->{'recurse'};
+
     if (!$noincs) {
       $self->{'ifiles'} = {};
       $self->getFiles($file);
-      @incs = keys %{$self->{'ifiles'}};
+      my(@incs) = keys %{$self->{'ifiles'}};
+      return \@incs;
     }
-    --$self->{'recurse'};
   }
-  return \@incs;
 }
 
 
