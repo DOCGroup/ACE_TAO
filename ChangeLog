@@ -1,3 +1,11 @@
+Mon Aug 30 23:39:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Changed check for libc.h and osfcn.h to not export a feature
+	  test macro definition, as the results are only needed within
+	  the configure script itself.
+
 Mon Aug 30 23:28:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-macos.h:
