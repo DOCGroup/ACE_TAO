@@ -20,7 +20,7 @@
 #ifndef CONSUMER_SIGNAL_HANDLER_H
 #define CONSUMER_SIGNAL_HANDLER_H
 
-#include <signal.h>
+#include "ace/ACE.h"
 #include <ace/Reactor.h>
 #include <ace/Event_Handler.h>
 #include "Consumer_Handler.h"
@@ -32,9 +32,9 @@ class Consumer_Signal_Handler : public ACE_Event_Handler
   // = TITLE
   //   Creating a class to handle signal events.
   //
-  // = DESCRIPTION    
-  //   Since only signals need to be handled, only the <handle_signal> method 
-  //   is overlaoded. 
+  // = DESCRIPTION
+  //   Since only signals need to be handled, only the <handle_signal> method
+  //   is overlaoded.
 public:
 
   Consumer_Signal_Handler (Consumer_Handler *consumer_handler);
