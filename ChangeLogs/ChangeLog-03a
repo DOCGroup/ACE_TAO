@@ -1,3 +1,7 @@
+Mon Apr  3 08:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* bin/auto_compile: Added <smart_proxies> flag.
+	
 Mon Apr  3 04:07:47 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: Added a #define for
