@@ -25,7 +25,7 @@
 #include "Constraint_Interpreter.h"
 #include "Preference_Interpreter.h"
 
-#include "stl.h"
+#include "ace/Containers.h"
 
 template<class TRADER>
 class TAO_Lookup :
@@ -149,10 +149,16 @@ public:
   
 private:
 
-  typedef TRADER::LOCAL_OFFER_ITER LOCAL_OFFER_ITER;
+  typedef TRADER::LOCAL_OFFER_ITER Local_Offer_Iter;
   typedef TRADER::SERVICE_TYPE_MAP SERVICE_TYPE_MAP;
-  typedef pair<CosTrading::OfferId, CosTrading::Offer*> OFFER;
-  typedef deque<OFFER> LOOKUP_OFFER_LIST;
+ 
+  struct Offer_Info
+  {
+    CosTrading::OfferId offer_id_;
+    CosTrading::Offer* offer_ptr_;
+  };
+  
+  typedef ACE_Unbounded_Queue<Offer_Info> Offer_Queue;
   
   TAO_Offer_Iterator*
     create_offer_iterator (const char *type,
@@ -166,7 +172,7 @@ private:
 		       SERVICE_TYPE_MAP& service_type_map,
 		       CosTradingRepos::ServiceTypeRepository_ptr rep,
 		       TAO_Policies& policies,
-		       LOOKUP_OFFER_LIST& ordered_offers,
+		       Offer_Queue& ordered_offers,
            CosTrading::PolicyNameSeq_out returned_limits_applied,
 		       CORBA::Environment& env)
     TAO_THROW_SPEC ((CosTrading::IllegalConstraint,
@@ -203,7 +209,7 @@ private:
   // according to the preferences submitted.
     
   int fill_receptacles (const char* type,
-			 LOOKUP_OFFER_LIST& ordered_offers,
+			 Offer_Queue& ordered_offers,
 			 CORBA::ULong how_many,
 			 const CosTrading::Lookup::SpecifiedProps& desired_props,			 
 			 CosTrading::OfferSeq*& offers,
@@ -287,19 +293,18 @@ private:
   TRADER &trader_;
   // A reference to the trader for obtaining offer maps.
 
-  typedef set
+  typedef ACE_Unbounded_Set    
     <
-    CosTrading::Admin::OctetSeq_var,
-    less <CosTrading::Admin::OctetSeq_var>
+    CosTrading::Admin::OctetSeq_var
     >
-    REQUEST_IDS;
+    Request_Ids;
   
-  REQUEST_IDS request_ids_;
+  Request_Ids request_ids_;
   // A list of recent request_id_stems 
 };
 
-int operator< (const CosTrading::Admin::OctetSeq_var& left,
-	       const CosTrading::Admin::OctetSeq_var& right);
+int operator== (const CosTrading::Admin::OctetSeq_var& left,
+		const CosTrading::Admin::OctetSeq_var& right);
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Lookup.cpp"
