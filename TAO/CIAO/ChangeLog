@@ -1,3 +1,9 @@
+Mon Oct 13 16:49:00 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tools/RTComponentServer/RTConfig_Manager.h: 
+	* tools/RTComponentServer/ComponentServer_Task.h: 
+	  Added /**/ to fix Fuzz errors.  
+
 Sun Oct 12 20:44:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Collectors.hpp:
