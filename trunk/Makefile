@@ -80,7 +80,10 @@ RELEASE_LIB_FILES = \
 		ACE_wrappers/ace \
 		ACE_wrappers/include \
 
-#### If creating the "official" ACE release, update the timestamp in VERSION.
+#### If creating the "official" ACE release:
+#### 1) Check that the workspace is up-to-date, and bail out if not.
+#### 2) Update the timestamp in the VERSION file.
+#### 3) Add a ChangeLog entry to the newest ChangeLog plain file.
 #### Detect if we are creating the "official" release by looking at the PWD.
 #### To disable this feature, add "TIMESTAMP=" to the make command line.
 #### NOTE: if the version number in the VERSION file contains three components,
@@ -90,12 +93,30 @@ RELEASE_LIB_FILES = \
 ####       4.2, it will not be modified because it is assumed to be for a
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
-  TIMESTAMP = perl -pi -e \
-                'BEGIN {chop ($$date=`/usr/bin/date`);} \
+  TIMESTAMP = CHANGELOG=`/pkg/gnu/bin/find -name 'ChangeLog*' -maxdepth 1 \
+                -type f | xargs ls -1t | head -1`; export CHANGELOG; \
+              if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit; fi; \
+              DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
+              UPTODATE=`cvs -nq update | egrep -v '^\? ((build$)|(man$)|(tests/log/)|(ACE.*\.tar\.gz$))'`; \
+              if [ "$$UPTODATE" ]; then echo ERROR: workspace must first be updated, or non-controlled files must be removed: $$UPTODATE; exit; fi; \
+              ACE_VERSION=`perl -pi -e \
+                'BEGIN { $$date=$$ENV{"DATE"} } \
                  s/(ACE version \d+\.\d+\.)(\d+)/sprintf("$$1%d",$$2+1)/e; \
-                 s/(, released ).*/$$1$$date./;' VERSION; \
-              cvs commit -m'make release: updated timestamp' VERSION; \
-	      chmod 644 VERSION;
+                 if (s/(, released ).*/$$1$$date./) { \
+                   ($$version = $$_) =~ s/^This is //; } \
+                 END { print $$version  } ' VERSION;` export ACE_VERSION; \
+              perl -i -e \
+                'BEGIN {($$message = \
+                           $$ENV{"DATE"} . "  " . \
+                           $$ENV{"SIGNATURE"} . "  <" . \
+                           $$ENV{"LOGNAME"} . "\@cs.wustl.edu>\n\n\t* " . \
+                           $$ENV{"ACE_VERSION"} . "\n"); \
+                        $$message_printed = 0;} \
+                 while (<>) { \
+                   if ( ! $$message_printed++ ) { print "$$message\n"; } \
+                   print; } ' $$CHANGELOG; \
+              cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG; \
+              chmod 644 VERSION;
 else
   TIMESTAMP =
 endif
@@ -105,14 +126,14 @@ endif
 #### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
 
 cleanrelease:
-	($(TIMESTAMP)make realclean; cd ..; 
+	@($(TIMESTAMP)make realclean; cd ..; \
 	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
-	($(TIMESTAMP)cd ..; \
+	@($(TIMESTAMP)cd ..; \
 	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
-	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
+	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/); \
 	(cd ..; \
 	 find $(RELEASE_LIB_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE-lib.tar.gz; mv ACE-lib.tar.gz ./ACE_wrappers/)
