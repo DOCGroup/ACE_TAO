@@ -119,14 +119,14 @@ public:
   const ACE_UNIX_Addr &object_addr (void) const;
   // return a reference to the object_addr.
 
-  const char *rendezvous_point (void);
-  // Return a pointer to the rendezvous point string.  This object maintains
-  // ownership of this string.
+  const char *rendezvous_point (void) const;
+  // Return a pointer to the rendezvous point string.
+  // This object maintains ownership of the returned string.
 
-  const char *rendezvous_point (const char *r);
-  // Copy the string r into rendezvous_point_ and return the
-  // resulting pointer.
-  // This object maintains ownership of this string.
+  const char *rendezvous_point (const char *rendezvous);
+  // Set the rendezvous point and verify that it is 
+  // valid (e.g. wasn't truncated because it was too long).
+  // This object maintains ownership of the returned string.
 
   const TAO_GIOP_Version &version (void) const;
   // Return a pointer to this profile's version.  This object
@@ -141,16 +141,9 @@ public:
   const TAO_Tagged_Components& tagged_components (void) const;
   TAO_Tagged_Components& tagged_components (void);
   // Access the tagged components, notice that they are empty and
-  // ignored for GIOP 1.0
+  // ignored for GIOP 1.0.
 
 private:
-  int set (const ACE_UNIX_Addr &addr);
-  // helper method to set the UNIX_Addr.
-
-private:
-
-  char *rendezvous_point_;
-  // String representing the rendezvous point.
 
   TAO_GIOP_Version version_;
   // UIOP version number.
