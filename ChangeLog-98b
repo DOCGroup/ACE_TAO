@@ -1,3 +1,9 @@
+Fri Aug  7 23:18:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: 
+	  Updated the new ACE_CC_NAME macros (and friends) so they work
+	  with egcs (and hopefully g++).
+
 Fri Aug  7 21:39:26 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/INET_Addr.cpp: 
