@@ -1,3 +1,9 @@
+Mon Dec 22 21:40:02 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Still trying to sweet talk make into building PortableGroup
+          before it tries to build Fault Tolerant libraries.
+
 Mon Dec 22 14:55:59 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
