@@ -72,7 +72,7 @@ CORBA_ORB::~CORBA_ORB (void)
   if (CORBA_ORB::orb_init_count_ == 0)
     {
       // Other <fini> stuff should go here...
-      TAO_Exceptions::fini (env);
+      TAO_Exceptions::fini ();
     }
 }
 

@@ -921,7 +921,7 @@ private:
   // If this is non-_nil(), then this is the object reference to our
   // configured Trading.
 
-  static void init_orb_globals (void);
+  static void init_orb_globals (CORBA::Environment &env);
   // Initialize the ORB globals correctly, i.e., only when they
   // haven't been initialized yet.
 
