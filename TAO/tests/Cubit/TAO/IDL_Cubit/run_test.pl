@@ -12,7 +12,7 @@ require ACEutils;
 $nsport = 20000 + ACE::uniqueid ();
 $server_port = 0;
 $iorfile = "cubit.ior";
-$exepref = "";
+$exepref = '.' . $DIR_SEPARATOR;
 $svnsflags = " -s -o $iorfile";
 $clnsflags = " -s -f $iorfile";
 $clflags = " -ORBobjrefstyle url";
@@ -91,12 +91,12 @@ if ($mcast == 1)
 {
   sleep $ACE::sleeptime;
 }
-else 
+else
 {
   ACE::waitforfile ($iorfile);
 }
 
-unlink 
+unlink
 
 $status = system ($exepref."client".$Process::EXE_EXT.
                   $clflags.
