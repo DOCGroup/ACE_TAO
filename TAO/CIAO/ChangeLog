@@ -1,3 +1,11 @@
+Wed May 12 20:05:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC/EC/client.cpp:
+
+	  Corrected case of header file in #include directive.
+	  "ace/Streams.h" -> "ace/streams.h".  Blame it on MS Windows case
+	  insenstivity.  :-)
+
 Wed May 12 15:52:29 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Utils.h:
