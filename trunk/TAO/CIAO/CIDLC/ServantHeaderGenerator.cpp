@@ -250,7 +250,7 @@ namespace
       os << endl
          << a.name () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
+         << STRS[EXCP_SNGL] << ";" << endl;
 
       os << "virtual void" << endl
          << a.name () << " (" << endl;
@@ -1192,8 +1192,8 @@ namespace
     pre (Type& t)
     {
       os << STRS[GLUE_NS]
-         << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         << "{";
+          << regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
+          << "{";
 
       ScopedName scoped (t.scoped_name ());
       Name stripped (scoped.begin () + 1, scoped.end ());
@@ -1204,6 +1204,8 @@ namespace
          << "      POA_" << stripped << "," << endl
          << "      " << t.scoped_name ().scope_name () << "::CCM_" 
          << t.name () << "," << endl
+         << "      " << t.scoped_name ().scope_name () << "::CCM_"
+         << t.name () << "_var," << endl
          << "      " << t.name () << "_Context" << endl
          << "    >," << endl
          << "    " << STRS[INH_RCSB] << endl
