@@ -1,3 +1,8 @@
+Mon Oct 20 15:39:23 UTC 2003 Kevin Bryan <bryank@cs.uri.edu>
+
+	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+	  Another cast of ACE_Thread::self() returns to int to satisfy FreeBSD.
+
 Sun Oct 19 21:48:09 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
