@@ -1192,12 +1192,15 @@ main (int argc, char *argv [])
   ACE_Stats yield_test_stats;
   ACE_Stats synchronized_suspend_resume_test_stats;
 
-  while (forever  ||  count-- > 0)
+  int suspend_resume_supported = 0;
+  // Check to see if thr_continue (), and therefore thr_suspend (),
+  // probably, are supported.
+  if (ACE_OS::thr_continue (self) == 0  ||  errno != ENOTSUP)
+    suspend_resume_supported = 1;
+
+ while (forever  ||  count-- > 0)
     {
-      // Check to see if thr_continue (), and therefore thr_suspend (),
-      // probably, are supported.
-      if (ACE_OS::thr_continue (self) == 0  ||
-          errno != ENOTSUP)
+      if (suspend_resume_supported)
         {
           // Run suspend/resume test first . . .
           Suspend_Resume_Test suspend_resume_test (num_iterations);
@@ -1277,8 +1280,11 @@ main (int argc, char *argv [])
       ACE_OS::sleep (half_sec);
     }
 
-  ACE_OS::printf ("context_switch_test: ");
-  context_switch_test_stats.print_summary (3, num_iterations * 2u);
+  if (suspend_resume_supported)
+    {
+      ACE_OS::printf ("suspend-resume test: ");
+      context_switch_test_stats.print_summary (3, num_iterations * 2u);
+    }
 
   ACE_OS::printf ("\nyield_test: ");
   yield_test_stats.print_summary (3, num_iterations * 2u);
