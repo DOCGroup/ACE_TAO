@@ -29,7 +29,7 @@
 class Quoter_Client
 {
   // = TITLE
-  //    @@@ Write this
+  //    @@ Write this
   //
   // = DESCRIPTION
   //    @@@ Write this
