@@ -374,7 +374,6 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
              si.next ())
           {
             elements[position++] = si.item ();
-            si.next ();
           }
       }
 

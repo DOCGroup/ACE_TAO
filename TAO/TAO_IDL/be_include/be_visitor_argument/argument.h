@@ -54,6 +54,11 @@ public:
 
   virtual int visit_argument (be_argument *node);
   // must be overridden by derived classes
+
+  void set_fixed_direction (AST_Argument::Direction direction);
+
+private:
+  int fixed_direction_;
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_ARGUMENT_H_ */
