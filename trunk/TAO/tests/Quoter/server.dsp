@@ -154,7 +154,7 @@ InputPath=.\Quoter.idl
 InputName=Quoter
 
 BuildCmds= \
-	..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\tao_idl\tao_idl $(InputName).idl -I../../orbsvcs/orbsvcs
 
 "$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

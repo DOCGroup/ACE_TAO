@@ -1,25 +1,26 @@
-# Microsoft Developer Studio Project File - Name="Quoter Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Quoter_LifeCycle_Service" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Quoter Client - Win32 Debug
+CFG=Quoter_LifeCycle_Service - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak".
+!MESSAGE NMAKE /f "Quoter_LifeCycle_Service.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "client.mak" CFG="Quoter Client - Win32 Debug"
+!MESSAGE NMAKE /f "Quoter_LifeCycle_Service.mak"\
+ CFG="Quoter_LifeCycle_Service - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Quoter Client - Win32 Release" (based on\
+!MESSAGE "Quoter_LifeCycle_Service - Win32 Release" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Quoter Client - Win32 Debug" (based on\
+!MESSAGE "Quoter_LifeCycle_Service - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE 
 
@@ -29,7 +30,7 @@ CFG=Quoter Client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Quoter Client - Win32 Release"
+!IF  "$(CFG)" == "Quoter_LifeCycle_Service - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -42,7 +43,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -52,21 +53,21 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
-!ELSEIF  "$(CFG)" == "Quoter Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Quoter_LifeCycle_Service - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
+# PROP BASE Output_Dir "Quoter_L"
+# PROP BASE Intermediate_Dir "Quoter_L"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
+# PROP Output_Dir "Quoter_L"
+# PROP Intermediate_Dir "Quoter_L"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\\" /I "..\..\orbsvcs" /I "..\..\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\\" /I "..\..\orbsvcs" /I "..\..\orbsvcs\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -74,20 +75,32 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 tao.lib aced.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib tao.lib orbsvcs.lib /nologo /subsystem:console /debug /machine:I386 /out:"Quoter_LifeCycle_Service.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Quoter Client - Win32 Release"
-# Name "Quoter Client - Win32 Debug"
+# Name "Quoter_LifeCycle_Service - Win32 Release"
+# Name "Quoter_LifeCycle_Service - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp"
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\client.cpp
+SOURCE=.\Criteria_Evaluator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Factory_Trader.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Life_Cycle_Service.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Life_Cycle_Service_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -100,10 +113,26 @@ SOURCE=.\QuoterS.cpp
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h"
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\client.h
+SOURCE=.\Criteria_Evaluator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Factory_Trader.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Life_Cycle_Service.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Life_Cycle_Service_Impl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Quoter_Impl.h
 # End Source File
 # Begin Source File
 
@@ -113,10 +142,14 @@ SOURCE=.\QuoterC.h
 
 SOURCE=.\QuoterS.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\server.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter "i"
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\QuoterC.i
@@ -133,9 +166,9 @@ SOURCE=.\QuoterS.i
 
 SOURCE=.\Quoter.idl
 
-!IF  "$(CFG)" == "Quoter Client - Win32 Release"
+!IF  "$(CFG)" == "Quoter_LifeCycle_Service - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Quoter Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Quoter_LifeCycle_Service - Win32 Debug"
 
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Quoter.idl
