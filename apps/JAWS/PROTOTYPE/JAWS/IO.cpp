@@ -151,7 +151,9 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
       stream.set_handle (ioh->handle ());
 
       if ((unsigned long) stream.send_n (header, header_size) < header_size)
-        result = -1;
+        {
+          result = -1;
+        }
       else
         {
           int count;
@@ -164,13 +166,17 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                 break;
 
               if (stream.send_n (buf, count) < count)
+                {
                 result = -1;
+                }
             }
           while (result == 0);
 
           if ((unsigned long) stream.send_n (trailer, trailer_size)
               < trailer_size)
+            {
             result = -1;
+            }
         }
     }
 
@@ -198,7 +204,8 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   JAWS_Cached_FILE cf (filename);
 
-  if (cf.file ()->get_handle () != ACE_INVALID_HANDLE)
+  if (cf.file ()->get_handle () != ACE_INVALID_HANDLE
+      && cf.mmap () != 0)
     {
 #if defined (ACE_JAWS_BASELINE) || defined (ACE_WIN32)
       ACE_FILE_Info info;
@@ -213,12 +220,19 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                   == info.size_)
               && ((u_long) stream.send_n (trailer, trailer_size)
                   == trailer_size))
-            this->handler_->transmit_file_complete ();
+            {
+              this->handler_->transmit_file_complete ();
+              return;
+            }
           else
-            result = -1;
+            {
+              result = -1;
+            }
         }
       else
-        result = -1;
+        {
+          result = -1;
+        }
 #else
       // Attempting to use writev
       // Is this faster?
@@ -246,14 +260,34 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
           iovcnt++;
         }
       if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
-        result = -1;
+        {
+          result = -1;
+        }
       else
-        ioh->transmit_file_complete ();
+        {
+          ioh->transmit_file_complete ();
+          return;
+        }
 #endif /* ACE_JAWS_BASELINE */
+    }
+  else if (cf.file ()->get_handle () != ACE_INVALID_HANDLE
+           && cf.mmap () == 0)
+    {
+      this->transmit_file (ioh,
+                           cf.file ()->get_handle (),
+                           header, header_size,
+                           trailer, trailer_size);
+      return;
+    }
+  else
+    {
+      result = -1;
     }
 
   if (result != 0)
-    ioh->transmit_file_error (result);
+    {
+      ioh->transmit_file_error (result);
+    }
 }
 
 void

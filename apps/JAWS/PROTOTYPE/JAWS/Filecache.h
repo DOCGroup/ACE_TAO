@@ -41,7 +41,7 @@ typedef JAWS_Cache_Manager<JAWS_Strdup_String,
                            JAWS_String_Equal_Functor>
         JAWS_Counted_Filecache_Manager;
 
-typedef JAWS_Referenced_Filecache_Manager JAWS_Filecache_Manager;
+typedef JAWS_Counted_Filecache_Manager JAWS_Filecache_Manager;
 
 typedef JAWS_Cache_Proxy<const char *,
                          JAWS_FILE, JAWS_Filecache_Manager>
