@@ -26,11 +26,11 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
-    $val = "";
+    $val = '';
     foreach my $entry (@$arr) {
-      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+      $val .= '"' . $self->project_file_name($entry) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -59,20 +59,20 @@ sub project_file_name {
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "ghsexe";
+  #my($self) = shift;
+  return 'ghsexe';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "ghsdll";
+  #my($self) = shift;
+  return 'ghsdll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "ghs";
+  #my($self) = shift;
+  return 'ghs';
 }
 
 

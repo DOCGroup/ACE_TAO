@@ -22,7 +22,7 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub sort_files {
-  my($self) = shift;
+  #my($self) = shift;
   return 0;
 }
 
@@ -32,11 +32,11 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne "") {
+  if ($key eq 'depends' && $val ne '') {
     my($arr) = $self->create_array($val);
-    $val = "";
+    $val = '';
     foreach my $entry (@$arr) {
-      $val .= "\"" . $self->project_file_name($entry) . "\" ";
+      $val .= '"' . $self->project_file_name($entry) . '" ';
     }
     $val =~ s/\s+$//;
   }
@@ -63,20 +63,20 @@ sub project_file_name {
 
 
 sub get_dll_exe_template_input_file {
-  my($self) = shift;
-  return "nmakeexe";
+  #my($self) = shift;
+  return 'nmakeexe';
 }
 
 
 sub get_dll_template_input_file {
-  my($self) = shift;
-  return "nmakedll";
+  #my($self) = shift;
+  return 'nmakedll';
 }
 
 
 sub get_template {
-  my($self) = shift;
-  return "nmake";
+  #my($self) = shift;
+  return 'nmake';
 }
 
 

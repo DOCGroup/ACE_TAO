@@ -24,8 +24,8 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  my($self) = shift;
-  return "ghs/default.bld";
+  #my($self) = shift;
+  return 'ghs/default.bld';
 }
 
 

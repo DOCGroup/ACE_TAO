@@ -24,13 +24,13 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub workspace_file_name {
-  my($self) = shift;
-  return "Makefile";
+  #my($self) = shift;
+  return 'Makefile';
 }
 
 
 sub workspace_per_project {
-  my($self) = shift;
+  #my($self) = shift;
   return 1;
 }
 
@@ -43,7 +43,7 @@ sub pre_workspace {
   print $fh "#----------------------------------------------------------------------------$crlf" .
             "#       GNU Workspace$crlf" .
             "#----------------------------------------------------------------------------$crlf" .
-            "$crlf";
+            $crlf;
 }
 
 
@@ -71,7 +71,7 @@ sub write_comps {
     }
   }
 
-  print $fh "$crlf" .
+  print $fh $crlf .
             "\$(TARGETS_NESTED):$crlf" .
             "ifneq (Windows,\$(findstring Windows,\$(OS)))$crlf";
 
@@ -83,12 +83,12 @@ sub write_comps {
   }
   else {
     ## Otherwise, just list the call to make without a for loop
-    print $fh "\t\@\$(MAKE) -f " . basename($list[0]) . " -C " . dirname($list[0]) . " \$(\@);$crlf";
+    print $fh "\t\@\$(MAKE) -f " . basename($list[0]) . ' -C ' . dirname($list[0]) . " \$(\@);$crlf";
   }
 
   print $fh "else$crlf";
   foreach my $project (@list) {
-    print $fh "\t-\@cmd /c \"\$(MAKE) -f " . basename($project) . " -C " . dirname($project) . " \$(\@)\"$crlf";
+    print $fh "\t-\@cmd /c \"\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(\@)\"$crlf";
   }
   print $fh "endif$crlf";
 }

@@ -1,3 +1,34 @@
+Fri Nov  8 13:00:56 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/EM3ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/EM3WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GUID.pm:
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateInputReader.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VA4WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Performed various optimization which dramatically decreased the
+          amount of time to generate projects for the entire ACE tree.  In
+          tests, the time went from 2 minutes to 1 minute.
+
 Fri Nov  8 12:57:57 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:

@@ -11,7 +11,6 @@ package GUID;
 # ************************************************************
 
 use strict;
-use Cwd;
 
 # ************************************************************
 # Subroutine Section
@@ -29,7 +28,8 @@ sub generate {
   my($self)  = shift;
   my($out)   = shift;
   my($in)    = shift;
-  my($chash) = $self->hash(getcwd());
+  my($cwd)   = shift;
+  my($chash) = $self->hash($cwd);
   my($nhash) = $self->hash($out);
   my($ihash) = $self->hash($in);
   my($val)   = 0xfeca1bad;
