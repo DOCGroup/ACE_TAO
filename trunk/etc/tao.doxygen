@@ -130,7 +130,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../ace
+TAGFILES              = html/ace/ACE.tag=../../ace
 GENERATE_TAGFILE      = html/tao/TAO.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl

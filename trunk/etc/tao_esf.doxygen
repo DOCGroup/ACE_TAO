@@ -131,7 +131,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../ace \
+TAGFILES              = html/ace/ACE.tag=../../ace \
 			html/tao/TAO.tag=.. \
 			html/tao/portableserver/TAO_PortableServer.tag=../portableserver
 GENERATE_TAGFILE      = html/tao/esf/TAO_ESF.tag
