@@ -95,7 +95,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 // Return the local endpoint address.
 
 int 
-ACE_FILE_IO::get_local_addr (ACE_FILE_Addr &addr) const
+ACE_FILE_IO::get_local_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE_IO::get_local_addr");
 
@@ -107,7 +107,7 @@ ACE_FILE_IO::get_local_addr (ACE_FILE_Addr &addr) const
 // one).
 
 int 
-ACE_FILE_IO::get_remote_addr (ACE_FILE_Addr &addr) const
+ACE_FILE_IO::get_remote_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_FILE_IO::get_remote_addr");
   addr = this->addr_;
