@@ -44,6 +44,13 @@ IDL_FILES += \
 	sfpC
 endif
 
+# Lifecycle Service stuff
+ifdef lifecycle
+IDL_FILES += \
+	CosLifeCycleS \
+	CosLifeCycleC 
+endif # lifecycle
+
 ifdef trader
 
 IDL_FILES += \
