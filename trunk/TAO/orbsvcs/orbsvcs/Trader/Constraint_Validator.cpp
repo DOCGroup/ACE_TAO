@@ -27,7 +27,7 @@ TAO_Constraint_Validator(TypeStruct* type_struct)
     {
       string prop_name_str((const char*)prop_seq[i].name);
       CORBA::TypeCode_var corba_type = prop_seq[i].value_type;
-      this->type_map_[prop_name_str] = (const TypeCode_ptr)corba_type;
+      this->type_map_[prop_name_str] = (const CORBA::TypeCode_ptr)corba_type;
     }
 }
 
