@@ -265,7 +265,8 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
 int
 TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
                                  TAO_Transport *&transport,
-                                 ACE_Time_Value *max_wait_time)
+                                 ACE_Time_Value *max_wait_time,
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Find the appropriate connector object
   TAO_Connector *connector =
@@ -274,7 +275,10 @@ TAO_Connector_Registry::connect (TAO_Endpoint *endpoint,
   if (connector == 0)
     return -1;
 
-  return connector->connect (endpoint, transport, max_wait_time);
+  return connector->connect (endpoint,
+                             transport,
+                             max_wait_time,
+                             ACE_TRY_ENV); 
 }
 
 int

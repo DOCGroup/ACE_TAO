@@ -77,7 +77,8 @@ public:
 
   int connect (TAO_Endpoint *endpoint,
                TAO_Transport *&transport,
-               ACE_Time_Value *max_wait_time = 0);
+               ACE_Time_Value *max_wait_time,
+               CORBA::Environment &ACE_TRY_ENV);
   // This is where the transport protocol is selected based on some
   // policy.  This member will call the connect member of the
   // TAO_Connector class which in turn will call the concrete

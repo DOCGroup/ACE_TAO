@@ -461,7 +461,8 @@ TAO_IIOP_Connector::close (void)
 int
 TAO_IIOP_Connector::connect (TAO_Endpoint *endpoint,
                              TAO_Transport *&transport,
-                             ACE_Time_Value *max_wait_time)
+                             ACE_Time_Value *max_wait_time,
+                             CORBA::Environment &)
 {
   if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
     return -1;

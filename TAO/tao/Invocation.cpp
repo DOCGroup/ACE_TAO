@@ -136,7 +136,11 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // assert (this->stub_ != 0);
 
   if (this->stub_ == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INTERNAL (
+                 CORBA_SystemException::_tao_minor_code (
+                   TAO_DEFAULT_MINOR_CODE,
+                   EINVAL),
+              CORBA::COMPLETED_NO));
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
@@ -144,7 +148,11 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     this->orb_core_->connector_registry ();
 
   if (conn_reg == 0)
-    ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INTERNAL (
+                 CORBA_SystemException::_tao_minor_code (
+                   TAO_DEFAULT_MINOR_CODE,
+                   EINVAL),
+                 CORBA::COMPLETED_NO));
 
   // Initialize endpoint selection strategy.
   if (!this->is_selector_initialized_)
@@ -201,7 +209,10 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
       int result = conn_reg->connect (this->endpoint_,
                                       this->transport_,
-                                      this->max_wait_time_);
+                                      this->max_wait_time_,
+                                      ACE_TRY_ENV);
+      ACE_CHECK;
+
       if (result == 0)
         {
           // Now that we have the client connection handler object we need to
@@ -214,7 +225,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+                              ACE_TEXT ("(%N|%l|%p|%t) ")
+                              ACE_TEXT ("messaging_init() failed\n")));
                 }
             }
           else

@@ -497,36 +497,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-
-                ("-ORBNameServiceIOR")))
-        {
-          // Specify the IOR of the NameService.
-          // Issue a warning since this backward compatibilty support
-          // may be dropped in future releases.
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("(%P|%t) \nWARNING: The `-ORBNameServiceIOR' option ")
-                      ACE_TEXT ("is obsolete.\n")
-                      ACE_TEXT ("Please use the `-ORBInitRef ' option instead.\n")));
-
-          ACE_CString object_id (TAO_OBJID_NAMESERVICE);
-          ACE_CString IOR (current_arg);
-          if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Cannot store NameServiceIOR ")
-                          ACE_TEXT ("argument '%s'\n"),
-                          current_arg));
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBNameServicePort")))
         {
           // Specify the port number for the NameService.
@@ -556,82 +526,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBTradingServiceIOR")))
-        {
-          // Specify the IOR of the Trading Service.
-
-          // Issue a warning since this backward compatibilty support
-          // may be dropped in future releases.
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("(%P|%t) \nWARNING: The `-ORBTradingServiceIOR' ")
-                      ACE_TEXT ("option is obsolete.\n")
-                      ACE_TEXT ("Please use the `-ORBInitRef' option instead.\n")));
-
-          // Construct an argument that would be equivalent to
-          // "-ORBInitRef TradingService=....."
-
-          ACE_CString init_ref =
-            ACE_CString (TAO_OBJID_TRADINGSERVICE) +
-            ACE_CString ('=') +
-            ACE_CString (current_arg);
-
-          ACE_CString object_id (TAO_OBJID_TRADINGSERVICE);
-          ACE_CString IOR (current_arg);
-          if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Cannot store TradingServiceIOR ")
-                          ACE_TEXT ("argument '%s'\n"),
-                          current_arg));
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBTradingServicePort")))
         {
           // Specify the port number for the NameService.
 
           ts_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBImplRepoServiceIOR")))
-        {
-          // Specify the IOR of the Implementation Repository
-
-          // Issue a warning since this backward compatibilty support
-          // may be dropped in future releases.
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("(%P|%t) \nWARNING: The `-ORBImplRepoServiceIOR' ")
-                      ACE_TEXT ("option is obsolete.\n")
-                      ACE_TEXT ("Please use the `-ORBInitRef' option instead.\n")));
-
-          // Construct an argument that would be equivalent to
-          // "-ORBInitRef ImplRepoService=....."
-
-          ACE_CString object_id (TAO_OBJID_IMPLREPOSERVICE);
-          ACE_CString IOR (current_arg);
-          if (this->init_ref_map_.bind (object_id, IOR) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Cannot store ImplRepoServiceIOR ")
-                          ACE_TEXT ("argument '%s'\n"),
-                          current_arg));
-              ACE_THROW_RETURN (CORBA::INTERNAL (
-                                  CORBA::SystemException::_tao_minor_code (
-                                    TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    0),
-                                  CORBA::COMPLETED_NO),
-                                -1);
-            }
 
           arg_shifter.consume_arg ();
         }
@@ -804,6 +703,16 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                                   CORBA::COMPLETED_NO),
                                 -1);
             }
+
+          // validate_connection() supports the same functionality as
+          // the -ORBPreconnect option, and more.  Multiple
+          // preconnections are also provided by validate_connection()
+          // via "banded connections."
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("(%P|%t) -ORBPreconnect is ")
+                      ACE_TEXT ("deprecated.\n")
+                      ACE_TEXT ("(%P|%t) Use validate_connection()")
+                      ACE_TEXT ("at run-time, instead.\n")));
 
           arg_shifter.consume_arg ();
         }

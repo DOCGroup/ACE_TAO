@@ -9,7 +9,7 @@
 #include "SSLIOP_Connector.h"
 #include "ace/SSL/SSL_Context.h"
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Factory, "$Id$")
+ACE_RCSID (TAO_SSLIOP, SSLIOP_Factory, "$Id$")
 
 static const char prefix_[] = "iiop";
 
@@ -17,7 +17,7 @@ TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_IIOP_PROFILE),
      major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
-     use_ssl_ (1)
+     no_protection_ (0)
 {
 }
 
@@ -50,7 +50,7 @@ TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_SSLIOP_Acceptor (),
+                  TAO_SSLIOP_Acceptor (this->no_protection_),
                   0);
 
   return acceptor;
@@ -65,7 +65,18 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
       if (ACE_OS::strcasecmp (argv[curarg],
                               "-SSLDisable") == 0)
         {
-          this->use_ssl_ = 0;
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("(%P|%t) \"-SSLDisable\" has been ")
+                      ACE_TEXT ("superceded by the ")
+                      ACE_TEXT ("\"-SSLNoProtection\" option.\n")));
+
+          this->no_protection_ = 1;
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLNoProtection") == 0)
+        {
+          this->no_protection_ = 1;
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -151,7 +162,7 @@ TAO_SSLIOP_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO_SSLIOP_Connector (this->use_ssl_),
+                  TAO_SSLIOP_Connector (this->no_protection_),
                   0);
   return connector;
 }

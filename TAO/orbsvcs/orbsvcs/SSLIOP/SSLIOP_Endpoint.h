@@ -55,7 +55,7 @@ public:
 
   // = Initialization and termination methods.
 
-  TAO_SSLIOP_Endpoint (u_short ssl_port,
+  TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
                        TAO_IIOP_Endpoint *iiop_endp);
   // Constructor.
 
@@ -71,8 +71,8 @@ public:
 
   // = SSLIOP_Endpoint-specific methods.
 
-  CORBA::UShort ssl_port (void) const;
-  // Return port used for SSL communication.
+  const SSLIOP::SSL &ssl_component (void) const;
+  // Return SSL component corresponding to this endpoint.
 
   TAO_SSLIOP_Client_Connection_Handler *&ssl_hint (void);
   // Access to our <hint_>.

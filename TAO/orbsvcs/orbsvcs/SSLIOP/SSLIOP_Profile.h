@@ -53,7 +53,7 @@ public:
                       const TAO_ObjectKey &object_key,
                       const TAO_GIOP_Version &version,
                       TAO_ORB_Core *orb_core,
-                      u_short ssl_port = 0);
+                      const SSLIOP::SSL *ssl_component);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.
 
@@ -63,15 +63,14 @@ public:
                       const ACE_INET_Addr &addr,
                       const TAO_GIOP_Version &version,
                       TAO_ORB_Core *orb_core,
-                      u_short ssl_port = 0);
+                      const SSLIOP::SSL *ssl_component);
   //  Profile constructor, this is the most efficient since it
   // doesn't require any address resolution processing.
 
   TAO_SSLIOP_Profile (const char *string,
                       TAO_ORB_Core *orb_core,
-                      u_short ssl_port,
-                      CORBA::Environment &ACE_TRY_ENV =
-                          TAO_default_environment ());
+                      const SSLIOP::SSL *ssl_component,
+                      CORBA::Environment &ACE_TRY_ENV);
   // Create object using a string ior.
 
   TAO_SSLIOP_Profile (TAO_ORB_Core *orb_core);
