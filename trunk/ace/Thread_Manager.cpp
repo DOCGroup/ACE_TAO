@@ -1061,9 +1061,18 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
 
   int result = ACE_Thread::join (td->thr_handle_);
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
+#   if defined (HPUX_10)
+  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
+  // as an argument.  Since the id is still needed, give pthread_detach
+  // a junker to scribble on.
+  ACE_thread_t  junker;
+  cma_handle_assign(&td->thr_handle_, &junker);
+  ::pthread_detach (&junker);
+#   else
   ::pthread_detach (&td->thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+#   endif  /* HPUX_10 */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
 
   if (result != 0)
     {
@@ -1435,11 +1444,11 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
           if (ACE_Thread::join (tdb->thr_handle_) == -1)
             return -1;
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
           // Must explicitly detach threads.  Threads without THR_DETACHED
           // were detached in ACE_OS::thr_create ().
-          ::pthread_detach (tdb->thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+          ::pthread_detach (&tdb->thr_handle_);
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
 
           delete tdb;
           return 0;
@@ -1467,14 +1476,32 @@ ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
     // Didn't find the thread we want or the thread is not joinable.
   }
 
+# if defined (__xlC__)
+  // The AIX xlC compiler does not match the proper function here - it
+  // confuses ACE_Thread::join(ACE_thread_t, ACE_thread_t *, void **=0) and
+  // ACE_Thread::join(ACE_hthread_t, void **=0).  At least at 3.1.4.7 and .8.
+  // The 2nd arg is ignored for pthreads anyway.
+  if (ACE_Thread::join (tdb.thr_handle_, &tdb.thr_handle_, status) == -1)
+# else
   if (ACE_Thread::join (tdb.thr_handle_, status) == -1)
+# endif /* __xlC__ */
     return -1;
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
   // Must explicitly detach threads.  Threads without THR_DETACHED
   // were detached in ACE_OS::thr_create ().
-  ::pthread_detach (tdb.thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+
+#   if defined (HPUX_10)
+  // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
+  // as an argument.  Since the thread handle is still needed, give
+  // pthread_detach a junker to scribble on.
+  ACE_thread_t  junker;
+  cma_handle_assign(&tdb.thr_handle_, &junker);
+  ::pthread_detach (&junker);
+#   else
+  ::pthread_detach (&tdb.thr_handle_);
+    #endif /* HPUX_10 */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
   return 0;
 }
 
@@ -1543,11 +1570,11 @@ ACE_Thread_Manager::wait_grp (int grp_id)
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
       // Must explicitly detach threads.  Threads without THR_DETACHED
       // were detached in ACE_OS::thr_create ().
       ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;
@@ -1753,11 +1780,11 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
             // Detached handles shouldn't reached here.
               ACE_Thread::join (item->thr_handle_);
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
           // Must explicitly detach threads.  Threads without
           // THR_DETACHED were detached in ACE_OS::thr_create ().
           ::pthread_detach (&item->thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
           delete item;
         }
 #if defined (CHORUS)
@@ -1867,11 +1894,11 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
 
-# if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
+# if defined (ACE_HAS_PTHREADS_DRAFT4)  &&  defined (ACE_LACKS_SETDETACH)
       // Must explicitly detach threads.  Threads without THR_DETACHED
       // were detached in ACE_OS::thr_create ().
       ::pthread_detach (&copy_table[i].thr_handle_);
-# endif /* ACE_HAS_DCE_DRAFT4_THREADS && ACE_LACKS_SETDETACH */
+# endif /* ACE_HAS_PTHREADS_DRAFT4 && ACE_LACKS_SETDETACH */
     }
 
   delete [] copy_table;
