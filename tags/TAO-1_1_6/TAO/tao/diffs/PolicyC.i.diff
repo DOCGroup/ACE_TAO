@@ -1,0 +1,8 @@
+@@ -418,7 +418,2 @@
+-ACE_INLINE
+-CORBA::Policy_var::Policy_var (Policy_ptr p)
+-  : ptr_ (p)
+-{}
+-
+ACE_INLINE ::CORBA::Policy_ptr
+CORBA::Policy_var::ptr (void) const
