@@ -47,20 +47,19 @@ namespace TAO
         this->poa_->is_servant_active (servant,
                                        wait_occurred_restart_call);
 
-      if (result || wait_occurred_restart_call)
-        {
-          return false;
-        }
-      else
-        {
-          return true;
-        }
+      return (!(result || wait_occurred_restart_call));
     }
 
     bool
     IdUniquenessStrategyUnique::allow_multiple_activations (void) const
     {
       return false;
+    }
+
+    ::PortableServer::IdUniquenessPolicyValue
+    IdUniquenessStrategyUnique::type() const
+    {
+      ::PortableServer::UNIQUE_ID;
     }
 
     ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyUnique)

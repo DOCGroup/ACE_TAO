@@ -2,8 +2,6 @@
 
 #include "IdUniquenessStrategyFactoryImpl.h"
 #include "IdUniquenessStrategy.h"
-#include "IdUniquenessStrategyUnique.h"
-#include "IdUniquenessStrategyMultiple.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -40,22 +38,17 @@ namespace TAO
         }
         case ::PortableServer::UNIQUE_ID :
         {
-          // @@Johnny, why is there a difference between these
-          // multiple and unique.
+          IdUniquenessStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyUniqueFactory");
 
-/*          strategy =
-            ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyUnique");
+          if (strategy_factory != 0)
+            strategy = strategy_factory->create (value);
+          else
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("Unable to get ")
+                        ACE_TEXT ("IdUniquenessStrategyUniqueFactory")));
 
-          if (strategy == 0)
-            {
-              ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic IdUniquenessStrategyUnique Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_IdUniquenessStrategyUnique()"));
-
-              strategy =
-                ACE_Dynamic_Service<IdUniquenessStrategy>::instance ("IdUniquenessStrategyUnique");
-            }*/
-          ACE_NEW_RETURN (strategy, IdUniquenessStrategyUnique, 0);
           break;
         }
       }
@@ -68,7 +61,26 @@ namespace TAO
       IdUniquenessStrategy *strategy
       ACE_ENV_ARG_DECL)
     {
-      // todo
+      switch (strategy->type ())
+      {
+        case ::PortableServer::MULTIPLE_ID :
+        {
+          // Noop
+          break;
+        }
+        case ::PortableServer::UNIQUE_ID :
+        {
+          IdUniquenessStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<IdUniquenessStrategyFactory>::instance ("IdUniquenessStrategyUniqueFactory");
+
+          if (strategy_factory != 0)
+            {
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
+            }
+          break;
+        }
+      }
     }
 
     ACE_STATIC_SVC_DEFINE (

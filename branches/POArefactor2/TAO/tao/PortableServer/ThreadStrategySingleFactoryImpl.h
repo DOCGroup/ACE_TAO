@@ -35,7 +35,7 @@ namespace TAO
     public:
       virtual ~ThreadStrategySingleFactoryImpl (void);
 
-      /// Create a new servant retention strategy
+      /// Create a new thread strategy
       virtual ThreadStrategy* create (
         ::PortableServer::ThreadPolicyValue value);
 

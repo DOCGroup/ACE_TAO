@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Policy_Strategy.h"
+#include "IdUniquenessPolicyC.h"
 #include "PS_ForwardC.h"
 
 namespace TAO
@@ -45,6 +46,8 @@ namespace TAO
         int &w) = 0;
 
       virtual bool allow_multiple_activations (void) const = 0;
+
+      virtual ::PortableServer::IdUniquenessPolicyValue type() const = 0;
     };
   }
 }

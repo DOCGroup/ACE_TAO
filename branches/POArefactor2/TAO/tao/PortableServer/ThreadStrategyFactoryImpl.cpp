@@ -66,12 +66,12 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-          ThreadStrategyFactory *thread_strategy_factory =
+          ThreadStrategyFactory *strategy_factory =
             ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
-          if (thread_strategy_factory != 0)
+          if (strategy_factory != 0)
             {
-              thread_strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
+              strategy_factory->destroy (strategy ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
           break;

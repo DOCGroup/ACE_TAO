@@ -22,8 +22,6 @@
 
 #include "Policy_Strategy.h"
 #include "PortableServer.h"
-#include "ace/Service_Config.h"
-
 #include "Servant_Location.h"
 
 namespace PortableServer

@@ -42,6 +42,8 @@ namespace TAO
         int &w);
 
       virtual bool allow_multiple_activations (void) const;
+
+      virtual ::PortableServer::IdUniquenessPolicyValue type() const;
     };
 
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyMultiple)

@@ -43,6 +43,12 @@ namespace TAO
       return true;
     }
 
+    ::PortableServer::IdUniquenessPolicyValue
+    IdUniquenessStrategyMultiple::type() const
+    {
+      ::PortableServer::MULTIPLE_ID;
+    }
+
     ACE_FACTORY_DEFINE (TAO_PortableServer, IdUniquenessStrategyMultiple)
 
     ACE_STATIC_SVC_DEFINE (

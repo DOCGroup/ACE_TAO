@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Policy_Strategy.h"
-#include "ace/Service_Config.h"
 #include "Servant_Location.h"
 #include "Servant_Upcall.h"
 #include "ServantRetentionPolicyC.h"

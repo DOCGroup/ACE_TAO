@@ -46,6 +46,8 @@ namespace TAO
 
       virtual bool allow_multiple_activations (void) const;
 
+      virtual ::PortableServer::IdUniquenessPolicyValue type() const;
+
     private:
       TAO_Root_POA* poa_;
     };

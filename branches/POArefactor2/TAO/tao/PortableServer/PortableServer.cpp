@@ -43,6 +43,8 @@
 #include "RequestProcessingStrategyServantActivatorFactoryImpl.h"
 #include "RequestProcessingStrategyServantLocatorFactoryImpl.h"
 
+#include "IdUniquenessStrategyUniqueFactoryImpl.h"
+
 ACE_RCSID (PortableServer,
            PortableServer,
            "$Id$")
@@ -114,6 +116,10 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUnique
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
