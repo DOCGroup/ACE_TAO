@@ -24,7 +24,7 @@ SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
-TAO_IDLFLAGS += -Ge
+TAO_IDLFLAGS += -Ge 0
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
