@@ -41,6 +41,17 @@ ACE_ConsumerQOS_Factory::start_disjunction_group (void)
 }
 
 int
+ACE_ConsumerQOS_Factory::start_negation (void)
+{
+  int l = qos_.dependencies.length ();
+  qos_.dependencies.length (l + 1);
+  qos_.dependencies[l].event.header.type = ACE_ES_NEGATION_DESIGNATOR;
+  qos_.dependencies[l].rt_info = 0;
+  this->designator_set_ = 1;
+  return 0;
+}
+
+int
 ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscribe)
 {
   RtecScheduler::RT_Info dummy;
@@ -62,14 +73,14 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
 }
 
 void event_debug (const char* p,
-		  const RtecEventComm::Event& event)
+                  const RtecEventComm::Event& event)
 {
   int l = ACE_OS::strlen (p);
   ACE_DEBUG ((LM_DEBUG,
-	      "%*.*s - event.source: %d\n"
-	      "%*.*s   event.type: %d\n",
-	      l, l, p, event.header.source,
-	      l, l, p, event.header.type));
+              "%*.*s - event.source: %d\n"
+              "%*.*s   event.type: %d\n",
+              l, l, p, event.header.source,
+              l, l, p, event.header.type));
 }
 
 void
@@ -84,7 +95,7 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
       ACE_OS::sprintf (buf, " dep[%d]", i);
       event_debug (buf, qos.dependencies[i].event);
       ACE_DEBUG ((LM_DEBUG, "%s  rt_info: %d\n",
-		  buf, qos.dependencies[i].rt_info));
+                  buf, qos.dependencies[i].rt_info));
     }
   ACE_DEBUG ((LM_DEBUG, "}\n"));
 }
@@ -98,9 +109,9 @@ ACE_SupplierQOS_Factory::ACE_SupplierQOS_Factory (void)
 
 int
 ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
-				 RtecEventComm::EventType type,
-				 RtecScheduler::handle_t rt_info,
-				 u_int ncalls)
+                                 RtecEventComm::EventType type,
+                                 RtecScheduler::handle_t rt_info,
+                                 u_int ncalls)
 {
   int l = qos_.publications.length ();
   qos_.publications.length (l + 1);
@@ -123,11 +134,11 @@ void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& q
       ACE_OS::sprintf (buf, " publications[%d]", i);
       event_debug (buf, qos.publications[i].event);
       ACE_DEBUG ((LM_DEBUG,
-		  "%s   dependency_info.rt_info: %d\n"
-		  "%s   dependency_info.number_of_calls: %d\n",
-		  buf, qos.publications[i].dependency_info.rt_info,
-		  buf, qos.publications[i].dependency_info.number_of_calls));
-	}
+                  "%s   dependency_info.rt_info: %d\n"
+                  "%s   dependency_info.number_of_calls: %d\n",
+                  buf, qos.publications[i].dependency_info.rt_info,
+                  buf, qos.publications[i].dependency_info.number_of_calls));
+        }
   ACE_DEBUG ((LM_DEBUG, "}\n"));
 
 }

@@ -129,6 +129,10 @@ public:
   // insert calls (up until the next start_XX_group call).  Returns 0
   // on success, -1 on failure.
 
+  int start_negation (void);
+  // The consumer wants all the events *except* the group that
+  // follows.
+
   // = Insert operations add to the current conjunction or disjunction
   // group.  These return 0 on success, -1 on failure.  Before insert
   // is called, a start_XX_group method should be called.  If a

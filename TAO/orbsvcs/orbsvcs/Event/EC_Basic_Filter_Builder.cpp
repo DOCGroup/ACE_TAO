@@ -5,6 +5,7 @@
 #include "EC_Type_Filter.h"
 #include "EC_Conjunction_Filter.h"
 #include "EC_Disjunction_Filter.h"
+#include "EC_Negation_Filter.h"
 #include "EC_Timeout_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -60,6 +61,14 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
         }
       return new TAO_EC_Disjunction_Filter (children, n);
     }
+  else if (e.header.type == ACE_ES_NEGATION_DESIGNATOR)
+    {
+      pos++; // Consume the designator
+
+      TAO_EC_Filter *child =
+        this->recursive_build (supplier, qos, pos);
+      return new TAO_EC_Negation_Filter (child);
+    }
   else if (e.header.type == ACE_ES_EVENT_TIMEOUT
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
@@ -90,5 +99,5 @@ TAO_EC_Basic_Filter_Builder::
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;
     }
-  return i - 1;
+  return i - pos;
 }
