@@ -1,3 +1,11 @@
+Tue Nov 18 22:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Log_Msg.cpp:
+	* ace/Log_Msg.h:
+
+	  Fixed warnings in the daily builds. Further, made some cosmetic
+	  changes. 
+
 Tue Nov 18 21:25:23 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * html/index.html:

@@ -28,7 +28,7 @@
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
 #if defined (ACE_NDEBUG)
-#define ACE_ASSERT(x) 
+#define ACE_ASSERT(x)
 #elif !defined (ACE_ASSERT)
 #define ACE_ASSERT(X) \
   do { if(!(X)) { \
@@ -605,9 +605,6 @@ private:
 
   /// Are we deleting this ostream?
   int delete_ostream_;
-  
-  /// Always timestamp?
-  int timestamp_;
 
   /**
    * If we're running in the context of an ACE_Thread_Manager this
@@ -623,6 +620,9 @@ private:
    * be disabled.
    */
   u_long priority_mask_;
+
+  /// Always timestamp?
+  int timestamp_;
 
   // = The following fields are *not* kept in thread-specific storage.
 
