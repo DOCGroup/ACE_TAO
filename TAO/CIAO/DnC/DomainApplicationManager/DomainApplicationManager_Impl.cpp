@@ -358,6 +358,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ::Deployment::NodeApplicationManager_var my_nam =
             (entry->int_id_).node_application_manager_.in ();
 
+          if (CORBA::is_nil (my_nam.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG, "While starting launch, the DomainApplicationManager\
+                                     has a nil reference for NodeApplicationManager\n"));
+              ACE_THROW (Deployment::StartError ());
+            }
+          ACE_TRY_CHECK;
+
           ::Deployment::Connections_var retn_connections;
 
           // Obtained the returned NodeApplication object reference
@@ -372,6 +380,18 @@ startLaunch (const ::Deployment::Properties & configProperty,
             ::Deployment::NodeApplication::_narrow (temp_application.in ()
                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (my_na.in ()))
+            {
+              ACE_DEBUG ((LM_DEBUG, "The DomainApplicationManager receives a nil\
+                                     reference of NodeApplication after calling\
+                                     startLaunch on NodeApplicationManager.\n"));
+              ACE_THROW (Deployment::StartError ());
+            }
+          ACE_TRY_CHECK;
+
+          // Dump the connections for debug purpose.
+          dump_connections (retn_connections);
 
           // Cache the returned set of connections into the list.
           this->add_connections (retn_connections);
@@ -422,7 +442,10 @@ finishLaunch (::CORBA::Boolean start
           Deployment::Connections_var my_connections;
           if (!this->get_outgoing_connections (my_connections.out (),
 					      (entry->int_id_).child_plan_))
-	    ACE_THROW (Deployment::StartError ());
+	        ACE_THROW (Deployment::StartError ());
+
+          // Dump the connections for debug purpose.
+          dump_connections (retn_connections);
 
           // Invoke finishLaunch() operation on NodeApplication.
           my_na->finishLaunch (my_connections,
