@@ -3,6 +3,7 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_sys_utsname.h"
 
 ACE_RCSID(bin, envinfo, "$Id$")
 

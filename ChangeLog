@@ -1,3 +1,9 @@
+Thu Nov 18 06:48:28 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/envinfo.cpp:
+
+          Added #include "ace/OS_NS_sys_utsname.h" to get ACE_utsname.
+
 Thu Nov 18 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Threads/task_three.cpp:
@@ -5,24 +11,24 @@ Thu Nov 18 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 17 18:37:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/test_config.h:
-	  Added include of OS_NS_fcntl.h needed for VxWorks build.
+        * tests/test_config.h:
+          Added include of OS_NS_fcntl.h needed for VxWorks build.
 
 Wed Nov 17 08:53:11 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Updated.
+          Updated.
 
-	* ace/ace.mpc:
+        * ace/ace.mpc:
 
-	  Added Memory_Pool.h to Header_Files.
+          Added Memory_Pool.h to Header_Files.
 
-	* Makefile.am:
-	* configure.ac:
+        * Makefile.am:
+        * configure.ac:
 
-	  Changed to configure/build ACEXML only if --with-acexml (the
-	  default) was specified.
+          Changed to configure/build ACEXML only if --with-acexml (the
+          default) was specified.
 
 Tue Nov 16 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -34,67 +40,67 @@ Tue Nov 16 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Nov 14 10:12:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* Kokyu/Makefile.am:
-	* ace/Makefile.am:
-	* ace/QoS/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
-	* protocols/ace/HTBP/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * Kokyu/Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
+        * protocols/ace/HTBP/Makefile.am:
 
-	  Restored LDFLAGS definition.
+          Restored LDFLAGS definition.
 
 Sun Nov 14 05:03:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/tao_orb_tests.lst:
+        * bin/tao_orb_tests.lst:
 
-	  Added a new test for the daily regression.
+          Added a new test for the daily regression.
 
 Sat Nov 13 14:34:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Split Kokyu directories out of monolithic AC_CONFIG_FILES list,
-	  into a separate, smaller, AC_CONFIG_FILES that is used only if
-	  the Kokyu subdirectory exists.  This pattern can be used for
-	  other subdirectories (ACEXML, ASNMP, etc.) to provide flexibilty
-	  for packaging and compile-time configuration.
+          Split Kokyu directories out of monolithic AC_CONFIG_FILES list,
+          into a separate, smaller, AC_CONFIG_FILES that is used only if
+          the Kokyu subdirectory exists.  This pattern can be used for
+          other subdirectories (ACEXML, ASNMP, etc.) to provide flexibilty
+          for packaging and compile-time configuration.
 
 Sat Nov 13 10:40:13 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Removed line with m4_include([configure.ac.Makefiles]),
-	  autoreconf barfs with it present, even though it was
-	  "commented out" with dnl...
+          Removed line with m4_include([configure.ac.Makefiles]),
+          autoreconf barfs with it present, even though it was
+          "commented out" with dnl...
 
-	* apps/gperf/tests/Makefile.am:
+        * apps/gperf/tests/Makefile.am:
 
-	  Tweak to work around MPC brokenness.
+          Tweak to work around MPC brokenness.
 
 Fri Nov 12 20:54:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
-	  Restore conditionalized SUBDIR definition for Kokyu and TAO.
-	  Restore bin_SCRIPT and man_MANS definitions so the ace-config
-	  script and manpage is installed.
+          Restore conditionalized SUBDIR definition for Kokyu and TAO.
+          Restore bin_SCRIPT and man_MANS definitions so the ace-config
+          script and manpage is installed.
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* ace/Makefile.am:
-	* ace/QoS/Makefile.am:
-	* ace/RMCast/Makefile.am:
-	* ace/SSL/Makefile.am:
-	* ace/TMCast/Makefile.am:
-	* protocols/ace/HTBP/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * ace/Makefile.am:
+        * ace/QoS/Makefile.am:
+        * ace/RMCast/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * ace/TMCast/Makefile.am:
+        * protocols/ace/HTBP/Makefile.am:
 
-	  Restore includedir definitions so headers are installed in the
-	  correct place.
+          Restore includedir definitions so headers are installed in the
+          correct place.
 
 Fri Nov 12 16:35:00 2004  Gary Maxey    <gary.maxey@hp.com>
 
@@ -108,21 +114,21 @@ Fri Nov 12 16:35:00 2004  Gary Maxey    <gary.maxey@hp.com>
 
 Fri Nov 12 18:30:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Makefile.am: Moved HTBP down under '.' to make sure
-	  libTest_Output is built first.
+        * tests/Makefile.am: Moved HTBP down under '.' to make sure
+          libTest_Output is built first.
 
 Fri Nov 12 17:23:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* bin/bin.mpc:
-	* bin/PerlACE/perlace.mpc: These are meant to propagate the
-	  testing scripts over to the build area for automake builds.
+        * bin/bin.mpc:
+        * bin/PerlACE/perlace.mpc: These are meant to propagate the
+          testing scripts over to the build area for automake builds.
 
-	* bin/auto_run_tests.pl: When no test-set options are supplied, add
-	  in the TAO test lists only if there is an $ACE_ROOT/TAO directory.
-	  Facilitates being able to use this script without options from
-	  the automake-generated "make check" command.
+        * bin/auto_run_tests.pl: When no test-set options are supplied, add
+          in the TAO test lists only if there is an $ACE_ROOT/TAO directory.
+          Facilitates being able to use this script without options from
+          the automake-generated "make check" command.
 
-	* configure.ac: Updated with the list of Makefiles below.
+        * configure.ac: Updated with the list of Makefiles below.
 
         * ACEXML/apps/svcconf/Makefile.am:
         * ACEXML/apps/Makefile.am:
@@ -296,18 +302,18 @@ Fri Nov 12 17:23:41 2004  Steve Huston  <shuston@riverace.com>
         * protocols/ace/HTBP/Makefile.am:
         * protocols/ace/Makefile.am:
         * protocols/Makefile.am:
-	  Either updated or new automake files. These were all generated with
-	  MPC and checked in. A number will require further tweaks to be
-	  useable for installing an autoconfigure'd ACE. At some point, we
-	  may work on the MPC extensions needed to completely automate the
-	  Makefile.am file generation, but at this point, those changes are
-	  only useful for automake build targets.
+          Either updated or new automake files. These were all generated with
+          MPC and checked in. A number will require further tweaks to be
+          useable for installing an autoconfigure'd ACE. At some point, we
+          may work on the MPC extensions needed to completely automate the
+          Makefile.am file generation, but at this point, those changes are
+          only useful for automake build targets.
 
 Sat Nov 13 23:49:57 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 
-	* tests/Test_Output.cpp (ACE_Test_Output::close):
-	  Added delete of the stream and setting msg_ostream to 0. That way
-	  when re-initing the stream, it will be recreated.
+        * tests/Test_Output.cpp (ACE_Test_Output::close):
+          Added delete of the stream and setting msg_ostream to 0. That way
+          when re-initing the stream, it will be recreated.
 
 Fri Nov 12 09:10:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
