@@ -1,0 +1,47 @@
+<html>
+
+<head>
+<title>ACE Frequently Made Mistakes</title>
+</head>
+
+<body bgcolor=#ffffff>
+
+<center>
+
+<table border=0 width=450>
+<tr>
+<td>
+
+<h1>ACE_Task</h1>
+
+<ul>
+	<li><b>symptom:</b> ACE_Task::getq() returns the error 'resource temporarily unavailable'
+
+	<li><b>probable cause:</b> Your Task is a subclass of ACE_Task&lt;ACE_NULL_SYNCH&gt; and
+	you are using it in a multithreaded program.  Try using ACE_Task&lt;ACE_MT_SYNCH&gt;
+	instead.
+
+<hr noshade>
+
+	<li><b>symptom:</b> ACE_Task::wait() throws an assert violation.
+	<li><b>probable cause:</b> When you activate()d your Task, you specified
+	THR_DETACHED, which causes wait() to be unable to perform what you 
+	want it to.
+
+</ul>
+
+
+
+
+</td>
+</tr>
+
+</table>
+
+</center>
+
+
+</body>
+
+</html>
+
