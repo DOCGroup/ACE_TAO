@@ -1,3 +1,8 @@
+Wed Apr 30 10:40:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+	  Fixed compile errors for no exception builds on MSVC++.
+
 Wed Apr 30 16:21:21 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/orbsvcs/CosNotification_Static.dsp:
