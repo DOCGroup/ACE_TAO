@@ -1,3 +1,10 @@
+Fri Apr 25 17:04:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_type.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h: Added code
+	  to generate explicit template instantiations.
+
 Fri Apr 25 15:21:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\RTCORBA\Thread_Pool.cpp: 

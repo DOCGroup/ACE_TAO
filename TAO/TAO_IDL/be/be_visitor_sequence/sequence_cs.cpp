@@ -209,6 +209,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     {
       this->gen_varout_tmplinst (node,
                                  bt);
+
+      if (this->gen_base_class_tmplinst (node,
+                                         bt) == -1)
+        return -1;
     }
 
   os->gen_endif ();
@@ -333,12 +337,27 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
   os->gen_ifdef_AHETI ();
 
+  /// @@NOTE: This method contains too much of duplicated code. Needs
+  /// to be refactored. -- Bala
   switch (node->managed_type ())
     {
       case be_sequence::MNG_OBJREF:
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
             << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        // @@NOTE: Too much of code repetition. Aint there a way to
+        // refactor these things?
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             << "TAO_Object_Manager<" << be_idt << be_idt_nl
             << bt->name () << "," << be_nl
@@ -364,6 +383,18 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
             << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        // @@Please see note above
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
             << bt->name () << "," << be_nl
@@ -398,6 +429,16 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
             << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             << node->name () << "_var," << be_nl
@@ -412,6 +453,18 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
             << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
+            << bt->name () << "," << be_nl
+            << bt->name () << "_var," << be_nl
+            << bt->fwd_helper_name () << "_life" << be_uidt_nl
+            << ">" << be_uidt << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        //@@Please see note above..
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
             << bt->name () << "," << be_nl
@@ -443,6 +496,13 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            <<"TAO_SeqElem_String_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
             << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             << node->name () << "_var," << be_nl
@@ -454,6 +514,13 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "template class" << be_idt_nl
             << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
+            << node->name () << "," << be_nl
+            <<"TAO_SeqElem_WString_Manager" << be_uidt_nl
+            << ">;" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "template class" << be_idt_nl
+            << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
             << node->name () << "," << be_nl
             <<"TAO_SeqElem_WString_Manager" << be_uidt_nl
             << ">;" << be_uidt << be_uidt;
@@ -480,6 +547,14 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
               << bt->name () << be_uidt_nl
               << ">;" << be_uidt << be_uidt;
 
+          // @@ Please see not above..
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Seq_Var_Base_T<" << be_idt << be_idt_nl
+              << node->name () << "," << be_nl
+              << bt->name () << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
           *os << be_nl << be_nl
               << "template class" << be_idt_nl
               << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
@@ -500,6 +575,17 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt << be_idt_nl
             << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             << "TAO_Object_Manager< \\" << be_idt << be_idt_nl
             << bt->name () << ", \\" << be_nl
@@ -535,6 +621,17 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Abstract_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
             << "TAO_MngSeq_Out_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             << node->name () << "_var, \\" << be_nl
@@ -550,6 +647,16 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
             << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             << "TAO_Pseudo_Object_Manager< \\" << be_idt << be_idt_nl
             << bt->name () << ", \\" << be_nl
@@ -583,6 +690,17 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            << "TAO_Valuetype_Manager< \\" << be_idt << be_idt_nl
+            << bt->name () << ", \\" << be_nl
+            << bt->name () << "_var, \\" << be_nl
+            << bt->fwd_helper_name () << "_life \\" << be_uidt_nl
+            << "> \\" << be_uidt << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
             << "TAO_MngSeq_Out_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             << node->name () << "_var, \\" << be_nl
@@ -604,6 +722,13 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            <<"TAO_SeqElem_String_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
             << "TAO_MngSeq_Out_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             << node->name () << "_var, \\" << be_nl
@@ -615,6 +740,13 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
         *os << be_nl << be_nl
             << "# pragma instantiate \\" << be_idt_nl
             << "TAO_MngSeq_Var_T< \\" << be_idt << be_idt_nl
+            << node->name () << ", \\" << be_nl
+            <<"TAO_SeqElem_WString_Manager \\" << be_uidt_nl
+            << ">" << be_uidt << be_uidt;
+
+        *os << be_nl << be_nl
+            << "# pragma instantiate \\" << be_idt_nl
+            << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
             << node->name () << ", \\" << be_nl
             <<"TAO_SeqElem_WString_Manager \\" << be_uidt_nl
             << ">" << be_uidt << be_uidt;
@@ -643,6 +775,13 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
 
           *os << be_nl << be_nl
               << "# pragma instantiate \\" << be_idt_nl
+              << "TAO_Seq_Var_Base_T< \\" << be_idt << be_idt_nl
+              << node->local_name () << ", \\" << be_nl
+              << bt->name () << " \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt_nl
               << "TAO_Seq_Out_T< \\" << be_idt << be_idt_nl
               << node->local_name () << ", \\" << be_nl
               << node->local_name () << "_var, \\" << be_nl
@@ -656,4 +795,48 @@ be_visitor_sequence_cs::gen_varout_tmplinst (be_sequence *node,
   os->gen_endif_AHETI ();
 
   return 0;
+}
+
+int
+be_visitor_sequence_cs::gen_base_class_tmplinst (be_sequence *node,
+                                                 be_type * /*elem*/)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  os->gen_ifdef_AHETI ();
+
+  *os << be_nl
+      <<"template class ";
+
+  // Pass it to the base constructor.
+  if (node->gen_base_class_name (os, idl_global->root ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_cs::"
+                         "visit_sequence - "
+                         "codegen for base sequence class failed\n"),
+                        -1);
+    }
+
+  *os << ";"
+      << be_uidt_nl;
+
+  os->gen_elif_AHETI ();
+
+  *os << be_nl << be_nl
+      << "#pragma instantiate ";
+
+  // Pass it to the base constructor.
+  if (node->gen_base_class_name (os, idl_global->root ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_sequence_cs::"
+                         "visit_sequence - "
+                         "codegen for base sequence class failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt_nl;
+
+  os->gen_endif_AHETI ();
 }
