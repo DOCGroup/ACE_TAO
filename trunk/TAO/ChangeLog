@@ -1,3 +1,10 @@
+Sun Nov 14 14:26:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Changed to use ACE_WITH_ACEXML macro instead of setting
+	  BUILD_ACEXML automake conditional to true.
+
 Sun Nov 14 21:57:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
