@@ -118,7 +118,8 @@ TAO_UIOP_Connector::make_caching_strategy (void)
 #define TAO_COMPARE_KEYS ACE_Equal_To<TAO_ADDR>
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_GNU_REPO)
 
 template class ACE_Auto_Basic_Array_Ptr<ACE_UNIX_Addr>;
 template class ACE_Auto_Basic_Array_Ptr<TAO_UIOP_Client_Connection_Handler*>;
@@ -317,12 +318,12 @@ TAO_UIOP_Connect_Creation_Strategy::
 }
 
 int
-TAO_UIOP_Connect_Creation_Strategy::make_svc_handler 
+TAO_UIOP_Connect_Creation_Strategy::make_svc_handler
   (TAO_UIOP_Client_Connection_Handler *&sh)
 {
   if (sh == 0)
     ACE_NEW_RETURN (sh,
-                    TAO_UIOP_Client_Connection_Handler 
+                    TAO_UIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
                      this->orb_core_),
                     -1);
@@ -360,7 +361,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   TAO_UIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
   ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_UIOP_Connect_Creation_Strategy 
+                  TAO_UIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
                    this->orb_core_),
                   -1);
@@ -387,7 +388,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 #else /* TAO_USES_ROBUST_CONNECTION_MGMT */
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy = 0;
   ACE_NEW_RETURN (cached_connect_strategy,
-                  TAO_CACHED_CONNECT_STRATEGY 
+                  TAO_CACHED_CONNECT_STRATEGY
                   (new_connect_creation_strategy.get (),
                    0,
                    0,
@@ -430,7 +431,7 @@ TAO_UIOP_Connector::close (void)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
     ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
                       this->base_connector_.connect_strategy ());
-  
+
   delete cached_connect_strategy->creation_strategy ();
   delete cached_connect_strategy;
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
