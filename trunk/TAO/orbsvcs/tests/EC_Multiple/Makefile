@@ -60,6 +60,8 @@ endif # probe
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Sched_Params.h \
+ $(ACE_ROOT)/ace/Sched_Params.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -248,6 +250,8 @@ endif # probe
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Config_Scheduler.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
@@ -275,8 +279,11 @@ endif # probe
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
  EC_Multiple.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Gateway.h \
+ Scheduler_Runtime1.h Scheduler_Runtime2.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

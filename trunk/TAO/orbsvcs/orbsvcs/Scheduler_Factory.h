@@ -35,13 +35,15 @@ public:
     RtecScheduler::Time typical_execution_time;
     RtecScheduler::Time cached_execution_time;
     RtecScheduler::Period period;
-    RtecScheduler::Importance importance;
+    CORBA::Long criticality;
+    CORBA::Long importance;
     RtecScheduler::Quantum quantum;
     CORBA::Long threads;
     RtecScheduler::OS_Priority priority;
     RtecScheduler::Sub_Priority static_subpriority;
     RtecScheduler::Sub_Priority dynamic_subpriority;
     RtecScheduler::Preemption_Priority preemption_priority;
+    RtecScheduler::Info_Type info_type;
   };
 
   static int use_config (CosNaming::NamingContext_ptr naming);

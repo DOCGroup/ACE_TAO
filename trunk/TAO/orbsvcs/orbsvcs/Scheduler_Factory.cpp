@@ -34,37 +34,8 @@ RtecScheduler::Scheduler_ptr static_server ()
 {
   RtecScheduler::Scheduler_ptr server_ = 0;
 
-  typedef RtecScheduler::RT_Info* RT_Info_ptr;
-  RtecScheduler::RT_Info** info;
-  ACE_NEW_RETURN (info, RT_Info_ptr[entry_count], 0);
-  for (int i = 0; i < entry_count; ++i)
-    {
-      info[i] = new RtecScheduler::RT_Info;
-      if (info[i] == 0)
-        {
-          for (int j = 0; j < i; ++j)
-            {
-              delete info[i];
-            }
-          delete[] info;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE_Scheduler_Factory::config_runtime - "
-                             "cannot allocate RT_Info\n"), 0);
-        }
-      info[i]->entry_point = rt_info[i].entry_point;
-      info[i]->handle = rt_info[i].handle;
-      info[i]->worst_case_execution_time = rt_info[i].worst_case_execution_time;
-      info[i]->typical_execution_time = rt_info[i].typical_execution_time;
-      info[i]->cached_execution_time = rt_info[i].cached_execution_time;
-      info[i]->period = rt_info[i].period;
-      info[i]->importance = rt_info[i].importance;
-      info[i]->quantum = rt_info[i].quantum;
-      info[i]->threads = rt_info[i].threads;
-      info[i]->priority = rt_info[i].priority;
-      info[i]->static_subpriority = rt_info[i].static_subpriority;
-      info[i]->preemption_priority = rt_info[i].preemption_priority;
-    }
-  static ACE_Runtime_Scheduler scheduler(entry_count, info);
+  static ACE_Runtime_Scheduler scheduler(entry_count, rt_info);
+
   TAO_TRY
     {
       server_ = scheduler._this (TAO_TRY_ENV);
@@ -75,11 +46,6 @@ RtecScheduler::Scheduler_ptr static_server ()
     }
   TAO_CATCHANY
     {
-      for (int i = 0; i < entry_count; ++i)
-        {
-          delete info[i];
-        }
-      delete[] info;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ACE_Scheduler_Factory::config_runtime - "
                          "cannot allocate server\n"), 0);
@@ -123,7 +89,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     {
       server_ = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "ACE_Scheduler_Factory::use_context - "
+                         "ACE_Scheduler_Factory::use_config - "
                          " exception while resolving server\n"), -1);
     }
   TAO_ENDTRY;
@@ -167,7 +133,8 @@ static char start_infos[] =
 "static ACE_Scheduler_Factory::POD_RT_Info infos[] = {\n";
 
 static char end_infos[] =
-"};\n";
+"};\n"
+"static int infos_size = sizeof(infos)/sizeof(infos[0])\n";
 
 int ACE_Scheduler_Factory::dump_schedule
     (const RtecScheduler::RT_Info_Set& infos,
@@ -196,7 +163,8 @@ int ACE_Scheduler_Factory::dump_schedule
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
       ACE_OS::fprintf (file,
-"{ \"%s\", %d, {%d, %d}, {%d, %d}, {%d, %d}, %d, %d, {%d, %d}, %d, %d, %d, %d }",
+		       "{ \"%s\", %d, {%d, %d}, {%d, %d}, {%d, %d}, %d,\n"
+		       "   %d, %d, {%d, %d}, %d, %d, %d, %d, %d }",
                        (const char*)info.entry_point,
                        info.handle,
                        info.worst_case_execution_time.low,
@@ -206,13 +174,15 @@ int ACE_Scheduler_Factory::dump_schedule
                        info.cached_execution_time.low,
                        info.cached_execution_time.high,
                        info.period,
+                       info.criticality,
                        info.importance,
                        info.quantum.low,
                        info.quantum.high,
                        info.threads,
                        info.priority,
                        info.static_subpriority,
-                       info.preemption_priority);
+                       info.preemption_priority,
+		       info.info_type);
     }
   // finish last line.
   ACE_OS::fprintf(file, "\n");

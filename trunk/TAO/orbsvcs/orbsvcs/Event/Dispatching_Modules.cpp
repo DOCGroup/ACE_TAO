@@ -494,7 +494,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
       TAO_CATCHANY
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "ACE_ES_Display_Queue::exception"), -1);
+                             "ACE_ES_Dispatch_Queue::exception"), -1);
         }
       TAO_ENDTRY;
     case 1:
