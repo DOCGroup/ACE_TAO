@@ -429,15 +429,19 @@ ImplRepo_i::ready_check (const char *server)
 
   // Get the ior for the "ping" object for the server
 
-  if (this->repository_.get_running_info (server, location, ping_object_ior) != 0)
+  if (this->repository_.get_running_info (server, location, ping_object_ior)
+       != 0)
     {
-      // If get_running_info fails, something weird must have happened 
-      // (maybe it was removed after we started it up, but before we got here....)
+      // If get_running_info fails, something weird must have happened.
+      // Maybe it was removed after we started it up, but before we got here.
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find ServerObject IOR for server <%s>\n",
                   server));
 
-      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_THROW_RETURN (
+          ImplementationRepository::Administration::NotFound (),
+          -2
+        );
     }
 
   // Narrow the ping object
@@ -459,7 +463,10 @@ ImplRepo_i::ready_check (const char *server)
                       "Error: Invalid ServerObject IOR: <%s>\n",
                       ping_object_ior.c_str ()));
 
-          ACE_THROW (ImplementationRepository::Administration::NotFound ());
+          ACE_THROW_RETURN (
+              ImplementationRepository::Administration::NotFound (),
+              -2
+            );
         }
 
   }
