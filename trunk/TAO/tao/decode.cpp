@@ -403,8 +403,31 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                     // must always be negative. See the CORBA spec for details.
                     continue_decoding = (offset < 0);
                   }
+                
+                // Slava Galperin <galperin@teknowledge.com> clarifies
+                // this:
+		// CORBA Spec says:
+		// 
+		// The encoding of such an indirection is as a
+                // TypeCode with a TCKind value that has the special
+                // value 2^32 -1 (0xffffffff, all ones). Such
+                // typecodes have a single (simple) parameter, which
+                // is the long offset (in units of octets) from the
+                // simple parameter. (This means that an offset of
+                // negative four (-4) is illegal because it will be
+                // self-indirecting.)
+		// (CORBA V2.2 CDR Transfer Syntax February 1998 page 13-17)
+		// 
+		// This apparently assumes offset from the <em>
+                // beginning </em> of the simple parameter.
+                // [Right, because otherwise the value -8 would be
+                // illegal]
+                // Because at this point stream is positioned after
+                // the parameter, we need to account for that when
+                // constructing indir_stream by subtracting 4 (length
+                // of the offset parameter itself).
 
-                TAO_InputCDR indir_stream (*stream, 8, offset);
+                TAO_InputCDR indir_stream (*stream, 8, offset - 4);
 
                 continue_decoding = indir_stream.good_bit ();
 

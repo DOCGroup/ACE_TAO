@@ -1,5 +1,10 @@
 Mon Jan 18 11:20:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/decode.cpp: 
+	  Fixed a problem with indirected type codes, thanks to Slava
+	  Galperin <galperin@teknowledge.com> for detecting the problem
+	  and providing us with a patch for it.
+
 	* examples/Simple/time/server.cpp: 
 	* examples/Simple/time/Time_Client_i.cpp: 
 	  Added missing template instantiations.
