@@ -14,7 +14,7 @@
 //     <ACE_Log_Msg>.  The test works as follows:
 //     -Load the inserted arguments;
 //     -Remove existent log_files with the file_name specified by the
-//      user; 
+//      user;
 //     -Generate 1000 messages to create the DEBUG statements to be
 //      stored in the files;
 //     -Counts the created log_files and if it was specified a maximum
@@ -95,7 +95,7 @@ static int wipeout_logfile = 0;
 static void *
 run_reactor (void *)
 {
-  ACE_Reactor::instance ()->owner 
+  ACE_Reactor::instance ()->owner
     (ACE_Thread_Manager::instance ()->thr_self ());
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;
@@ -383,7 +383,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           wipeout_logfile = 1;
           break;
         default:
-          ACE_ERROR_RETURN 
+          ACE_ERROR_RETURN
             ((LM_ERROR,
               ACE_TEXT ("usage: [-s]<file_name>")
               ACE_TEXT ("[-i]<sample_interval> ")
@@ -396,7 +396,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("\t-N: Define the maximum number of log_files.\n")
               ACE_TEXT ("\t-o: If activated puts the log_files ordered.\n"),
               ACE_TEXT ("\t-w: If activated cause the logfile to be wiped out,")
-              ACE_TEXT (" both on startup and on reconfigure.\n")), 
+              ACE_TEXT (" both on startup and on reconfigure.\n")),
              -1);
           /* NOTREACHED */
           break;
@@ -407,7 +407,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+int run_main (int argc, ACE_TCHAR *argv [])
 {
   ACE_START_TEST (ACE_TEXT ("Logging_Strategy_Test"));
 
@@ -458,7 +458,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_OS::sprintf (arg_str,
                    ACE_TEXT ("dynamic Logger Service_Object ")
                    ACE_TEXT ("*ACE:_make_ACE_Logging_Strategy()")
-                   ACE_TEXT ("\"")); 
+                   ACE_TEXT ("\""));
 
   for (int i = 1; i < argc; i++)
     {
@@ -473,7 +473,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
                        "Error opening _make_ACE_Log_Strategy.\n"),
                       1);
 #else // Platform doesn't support DLLs, or configured to link
-      // statically 
+      // statically
   ACE_Logging_Strategy logging_strategy;
   char ls_argc = argc - 1;
   ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
@@ -482,15 +482,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)
-     ACE_ERROR_RETURN 
+     ACE_ERROR_RETURN
        ((LM_ERROR,
-         "Error initializing the ACE_Logging_Strategy.\n"), 
+         "Error initializing the ACE_Logging_Strategy.\n"),
                        1);
-#endif /* !ACE_HAS_STATIC_LIBS && (ACE_WIN32 || 
+#endif /* !ACE_HAS_STATIC_LIBS && (ACE_WIN32 ||
           ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux) */
 
   // launch a new Thread
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (run_reactor)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Spawning Reactor.\n"),

@@ -35,11 +35,11 @@ class ACE_RB_Tree_Test
 public:
   // = Traits
 
-  typedef ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
           TREE;
-  typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
           ITERATOR;
-  typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> 
+  typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
           REVERSE_ITERATOR;
 
   // = Initialization and termination methods.
@@ -80,9 +80,9 @@ private:
 
   ITERATOR stable_fwd_iter_;
   // Forward iterator for tree for testing stable interface.
- 
+
   ITERATOR part_fwd_iter_;
- 
+
   REVERSE_ITERATOR part_rev_iter_;
 
   REVERSE_ITERATOR stable_rev_iter_;

@@ -72,7 +72,7 @@ dirent_selector_test (void)
   ACE_ASSERT (sds.length () == 1);
 
   for (n = 0; n < sds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "Sorted: %d: %s\n",
                 n,
                 sds[n]->d_name));
@@ -89,7 +89,7 @@ dirent_selector_test (void)
   ACE_ASSERT (entrycount == ds.length ());
 
   for (n = 0; n < ds.length (); ++n)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "Entry %d: %s\n",
                 n,
                 ds[n]->d_name));
@@ -113,9 +113,9 @@ dirent_test (void)
                 entrycount,
                 directory->d_name));
 
-  switch (entrycount) 
+  switch (entrycount)
     {
-    case 0: 
+    case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "readdir failed to read anything\n"),
                         -1);
@@ -134,7 +134,7 @@ dirent_test (void)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dirent_Test"));
 

@@ -19,6 +19,7 @@
 #include "test_config.h"
 #include "ace/Codecs.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Codecs_Test, "$Id$")
 
@@ -81,7 +82,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

@@ -1,0 +1,17 @@
+#
+# $Id$
+#
+
+NAME = Test_Output
+
+TARGET = $(BINDIR)\$(NAME).dll
+
+OBJFILES = $(OBJDIR)\Test_Output.obj
+
+CFLAGS = $(ACE_CFLAGS) -DTEST_OUTPUT_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>

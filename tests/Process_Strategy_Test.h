@@ -11,7 +11,7 @@
 //    instantiation (such as AIX C Set ++).
 //
 // = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu> and 
+//    Doug Schmidt <schmidt@cs.wustl.edu> and
 //    Kevin Boyle <kboyle@sanwafp.com>
 //
 // ============================================================================
