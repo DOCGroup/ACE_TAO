@@ -27,8 +27,8 @@ Database_i::set (Test::Index i,
 
   returned_token = verification_token;
 
-  CORBA::ULong len = seq.length ();
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+  CORBA::ULong len = seq.length ();
   // CORBA::ULong max = seq.maximum ();
   ACE_Message_Block *mb = seq.mb ();
   if (mb == 0)

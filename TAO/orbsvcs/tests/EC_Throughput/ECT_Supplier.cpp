@@ -161,8 +161,21 @@ Test_Supplier::svc ()
 
       // We use replace to minimize the copies, this should result
       // in just one memory allocation;
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       event[0].data.payload.replace (this->event_size_,
                                      &mb);
+#else
+      // If the replace method is not available, we will need
+      // to do the copy manually.  First, set the octet sequence length.
+      event[0].data.payload.length (this->event_size_);
+
+      // Now copy over each byte.
+      char* base = mb.data_block ()->base ();
+      for(CORBA::ULong i = 0; i < (CORBA::ULong)this->event_size_; i++)
+        {
+          event[0].data.payload[i] = base[i];
+        }
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
