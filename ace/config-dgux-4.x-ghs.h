@@ -153,7 +153,7 @@
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
 
 // Need to #include <sched.h>
-#define ACE_LACKS_SCHED_H
+#define ACE_NEEDS_SCHED_H
 
 // Compiler/platform has thread-specific storage
 //

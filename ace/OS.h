@@ -2571,7 +2571,7 @@ typedef unsigned int size_t;
 
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
-# if !defined (ACE_LACKS_SCHED_H)
+# if defined (ACE_NEEDS_SCHED_H)
 #   include /**/ <sched.h>
 # endif /* ACE_LACKS_SCHED_H */
 
