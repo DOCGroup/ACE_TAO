@@ -12,13 +12,6 @@ MFILES = \
          Makefile.ContentHandler_Test
 
 $(TARGETS_NESTED):
-ifneq (Windows,$(findstring Windows,$(OS)))
 	@for file in $(MFILES); do \
 	$(MAKE) -f `basename $$file` -C `dirname $$file` $(@); \
 	done
-else
-	-@cmd /c "$(MAKE) -f Makefile.Transcoder_Test -C . $(@)"
-	-@cmd /c "$(MAKE) -f Makefile.NamespaceSupport_Test -C . $(@)"
-	-@cmd /c "$(MAKE) -f Makefile.HttpCharStream_Test -C . $(@)"
-	-@cmd /c "$(MAKE) -f Makefile.ContentHandler_Test -C . $(@)"
-endif
