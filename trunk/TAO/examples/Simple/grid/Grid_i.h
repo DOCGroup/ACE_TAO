@@ -42,32 +42,39 @@ public:
   ~Grid_i (void);
   // Destructor
 
-  virtual CORBA::Short width (CORBA_Environment &);
+  virtual CORBA::Short width (CORBA_Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Returns the width of the grid
 
-  virtual CORBA::Short height (CORBA_Environment &);
+  virtual CORBA::Short height (CORBA_Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Returns the height of the grid
 
   virtual void width (CORBA::Short,
-                      CORBA_Environment &);
+                      CORBA_Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Sets the width of the grid.
 
   virtual void height (CORBA::Short,
-                       CORBA_Environment &);
+                       CORBA_Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Sets the height of the grid.
 
   virtual void set (CORBA::Short,
                     CORBA::Short,
                     CORBA::Long,
-                    CORBA::Environment &);
+                    CORBA::Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Sets the grid value.
 
   virtual CORBA::Long get (CORBA::Short,
                            CORBA::Short,
-                           CORBA::Environment &);
+                           CORBA::Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Gets the grid value.
 
-  virtual void destroy (CORBA::Environment &);
+  virtual void destroy (CORBA::Environment &)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Destroy the grid.
 
 private:
@@ -98,10 +105,12 @@ public:
 
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short,
-                              CORBA::Environment &_env);
+                              CORBA::Environment &_env)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // This function creates and returns a <Grid>.
 
-  virtual void shutdown (CORBA::Environment &env);
+  virtual void shutdown (CORBA::Environment &env)
+    ACE_THROW_SPEC (CORBA::SystemException);
   // Shutdown the server.
 
   void orb (CORBA::ORB_ptr o);
