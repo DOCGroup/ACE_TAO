@@ -1,3 +1,49 @@
+Mon Dec 04 16:32:11 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv):
+
+	  Shutdown the SSL connection if SSL_read() returns with an
+	  SSL_ERROR_ZERO_RETURN OpenSSL error condition.
+	  SSL_ERROR_ZERO_RETURN indicates that the peer is shutting down,
+	  and that a "close_notify" message SSL message has been issued by
+	  the peer.  A "close_notify" message indicates that no further
+	  data will be sent through the given connection, so there is no
+	  need to keep the connection open.
+	
+	  Removed SSL_ERROR_WANT_{WRITE,X509_LOOKUP} switch statement
+	  cases.  They are apparently not necessary when performing a SSL
+	  read.
+
+	  (send):
+
+	  Removed SSL_ERROR_WANT_{READ,X509_LOOKUP} switch statement
+	  cases.  They are apparently not necessary when performing a SSL
+	  write.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp:
+
+	  Check that the X.509 verification didn't fail.  If the
+	  verification failed then do not continue.
+
+	* ace/SSL/SSL_Context.cpp:
+	* ace/SSL/SSL_SOCK_Connector.cpp:
+	* ace/SSL/SSL_SOCK_Stream.cpp:
+
+	  Added missing ACE_RCSID macros.
+
+	* ace/SSL/SSL_Context.h:
+	* ace/SSL/SSL_SOCK.h
+	* ace/SSL/SSL_SOCK_Acceptor.h:
+	* ace/SSL/SSL_SOCK_Connector.h:
+	* ace/SSL/SSL_SOCK_Stream.h:
+
+	  Doxygenated these headers.
+
+	* ace/SSL/SSL_Context.i:
+	* ace/SSL/SSL_SOCK.cpp:
+
+	  Cosmetic updates.
+
 Mon Dec 04 12:45:46 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.cpp: Corrected some problems with Linux on
@@ -97,6 +143,7 @@ Thu Nov 30 22:49:10 2000  pradeep@cs.wustl.edu  <pradeep@cs.wustl.edu>
 
         * ACE version 5.1.11 released.
 
+>>>>>>> 4.1299
 Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * apps/drwho/server.cpp:

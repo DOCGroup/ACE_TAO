@@ -1,16 +1,19 @@
 // -*- C++ -*-
-// $Id$
 //
+// $Id$
 
-#include "ace/SSL/SSL_SOCK_Acceptor.h"
+
+#include "SSL_SOCK_Acceptor.h"
 
 #include <openssl/err.h>
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL/SSL_SOCK_Acceptor.i"
+#include "SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
+ACE_RCSID (ACE_SSL, SSL_SOCK_Acceptor, "$Id$")
 
 int
 ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
@@ -89,34 +92,47 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
   if (SSL_is_init_finished (new_stream.ssl ()))
     return 0;
 
-  ::SSL_set_accept_state (new_stream.ssl ());
-
+  if (!SSL_in_accept_init (new_stream.ssl ()))
+    ::SSL_set_accept_state (new_stream.ssl ());
+	
   int status = ::SSL_accept (new_stream.ssl ());
+
   if (status <= 0)
     {
-      if (::BIO_sock_should_retry (status))
+//       if (::BIO_sock_should_retry (status))
+//         {
+      switch (::SSL_get_error (new_stream.ssl (), status))
         {
-	  switch (::SSL_get_error (new_stream.ssl (), status))
-	    {
-	    case SSL_ERROR_WANT_WRITE:
-            case SSL_ERROR_WANT_READ:
-            case SSL_ERROR_WANT_X509_LOOKUP:
-	      // If blocked, try again.
-              errno = EWOULDBLOCK;
-              break;
-            default:
-#ifndef ACE_NDEBUG
-              ERR_print_errors_fp (stderr);
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_X509_LOOKUP:
+          // If blocked, try again.
+          errno = EWOULDBLOCK;
+          break;
+        default:
+#ifndef ACE_NDEBUG 
+          ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-              break;
-            }
+          break;
         }
+//        }
 #ifndef ACE_NDEBUG
-      else
-        ERR_print_errors_fp (stderr);
+//      else
+//        ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+     // return -1;
+    }
+
+  long verify_error = ::SSL_get_verify_result (new_stream.ssl ());
+  if (verify_error != X509_V_OK)
+    {
+#ifndef ACE_NDEBUG
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) X.509 certificate verify error:%s\n",
+                  ::X509_verify_cert_error_string (verify_error)));
 #endif  /* ACE_NDEBUG */
 
-      return -1;
+      return new_stream.close ();
     }
 
   return 0;
@@ -152,20 +168,23 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
           addr = (sockaddr *) remote_addr->get_addr ();
         }
 
+      ACE_HANDLE handle;
       do
-        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-                                               addr,
-                                               len_ptr));
-      while (new_stream.get_handle () == ACE_INVALID_HANDLE
+        handle = ACE_OS::accept (this->get_handle (),
+                                 addr,
+                                 len_ptr);
+      while (handle == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
              && timeout == 0);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
-      if (new_stream.get_handle () != ACE_INVALID_HANDLE
+      if (handle != ACE_INVALID_HANDLE
           && remote_addr != 0)
         remote_addr->set_size (len);
+
+      new_stream.set_handle (handle);
     }
 
   return this->shared_accept_finish (new_stream,
@@ -203,25 +222,27 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
           addr = (sockaddr *) remote_addr->get_addr ();
         }
 
+      ACE_HANDLE handle;
       do
-        new_stream.set_handle (ACE_OS::accept (this->get_handle (),
-                                               addr,
-                                               len_ptr,
-                                               qos_params));
-      while (new_stream.get_handle () == ACE_INVALID_HANDLE
+        handle = ACE_OS::accept (this->get_handle (),
+                                 addr,
+                                 len_ptr,
+                                 qos_params);
+      while (handle == ACE_INVALID_HANDLE
              && restart != 0
              && errno == EINTR
              && timeout == 0);
 
       // Reset the size of the addr, which is only necessary for UNIX
       // domain sockets.
-      if (new_stream.get_handle () != ACE_INVALID_HANDLE
+      if (handle != ACE_INVALID_HANDLE
           && remote_addr != 0)
         remote_addr->set_size (len);
+
+      new_stream.set_handle (handle);
     }
 
   return this->shared_accept_finish (new_stream,
 				     in_blocking_mode,
 				     reset_new_handle);
 }
-

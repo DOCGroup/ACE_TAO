@@ -1,8 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
 
 
-#include "ace/SSL/SSL_SOCK_Connector.h"
+#include "SSL_SOCK_Connector.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/Synch_T.h"
@@ -10,9 +11,10 @@
 #include <openssl/err.h>
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL/SSL_SOCK_Connector.i"
+#include "SSL_SOCK_Connector.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+ACE_RCSID (ACE_SSL, SSL_SOCK_Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
@@ -89,9 +91,12 @@ ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
 int
 ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
 {
+  if (SSL_is_init_finished (new_stream.ssl ()))
+    return 0;
+
   // Check if a connection is already pending for the given SSL
   // structure.
-  if (!SSL_in_init (new_stream.ssl ()))
+  if (!SSL_in_connect_init (new_stream.ssl ()))
     ::SSL_set_connect_state (new_stream.ssl ());
 
   int status = ::SSL_connect (new_stream.ssl ());

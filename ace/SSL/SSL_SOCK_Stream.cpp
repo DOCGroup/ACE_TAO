@@ -1,15 +1,18 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Handle_Set.h"
 
 #include <openssl/err.h>
 
-#include "ace/SSL/SSL_SOCK_Stream.h"
+#include "SSL_SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SSL/SSL_SOCK_Stream.i"
+#include "SSL_SOCK_Stream.i"
 #endif
+
+ACE_RCSID (ACE_SSL, SSL_SOCK_Stream, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
@@ -475,5 +478,3 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
 #   endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }
-
-
