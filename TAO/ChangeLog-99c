@@ -1,3 +1,17 @@
+Sun Jun 20 14:39:23 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h: Reformatted the documentation
+	  so it'll conform to the "ACE+TAO style."
+  
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h: Added a definition for
+	  TAO_Dynamic_Property::operator=(TAO_Dynamic_Property const &) so
+ 	  that the code will compile with G++.  Thanks to Jean-Marc
+ 	  Strauss <jms97@club-internet.fr> for reporting this.
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp (startup): Make sure to 
+	  use .in() to work around broken G++ compilers...  Thanks to
+ 	  Jean-Marc Strauss <jms97@club-internet.fr> for reporting this.	
+
 Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
