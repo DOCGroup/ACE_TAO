@@ -31,7 +31,13 @@ ACE_ReactorEx::handle_events (ACE_Time_Value &how_long,
 ACE_INLINE ACE_HANDLE *
 ACE_ReactorEx_Handler_Repository::handles (void) const
 {
-  return this->handles_;
+  return this->current_handles_;
+}
+
+ACE_INLINE ACE_Event_Handler **
+ACE_ReactorEx_Handler_Repository::event_handlers (void) const
+{
+  return this->current_event_handlers_;
 }
 
 ACE_INLINE size_t
@@ -40,16 +46,31 @@ ACE_ReactorEx_Handler_Repository::max_handlep1 (void) const
   return this->max_handlep1_;
 }
 
-ACE_INLINE ACE_Event_Handler *
-ACE_ReactorEx_Handler_Repository::find (size_t index) const
+ACE_INLINE int
+ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 {
-  if (this->handle_in_range (index))
-    return this->event_handlers_[index];
-  else
+  ACE_TRACE ("ACE_ReactorEx_Handler_Repository::invalid_handle");
+  // It's too expensive to perform more exhaustive validity checks on
+  // Win32 due to the way that they implement SOCKET HANDLEs.
+  if (handle == ACE_INVALID_HANDLE)
     {
-      errno = ENOENT;
-      return 0;
+      errno = EINVAL;
+      return 1;
     }
+  else
+    return 0;
+}
+
+ACE_INLINE ACE_thread_t 
+ACE_ReactorEx::owner (void)
+{
+  return this->owner_;
+}
+
+ACE_INLINE void
+ACE_ReactorEx::owner (ACE_thread_t new_owner)
+{
+  this->owner_ = new_owner;
 }
 
 #endif /* ACE_WIN32 */
