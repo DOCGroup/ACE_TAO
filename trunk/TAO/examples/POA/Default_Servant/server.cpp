@@ -37,14 +37,14 @@ parse_args (int argc, char **argv)
         ior_output_file = get_opts.optarg;
         break;
       case 'd':
-	TAO_debug_level++;
-	break;
+        TAO_debug_level++;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "[-oior_output_file]"
-			   "[-d]"
+                           "[-d]"
                            "\n",
                            argv [0]),
                           -1);
@@ -144,10 +144,8 @@ main (int argc, char **argv)
         orb->object_to_string (file_system.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,"%s\n",
-                    file_system_ior.in ()));
+      ACE_DEBUG ((LM_DEBUG,"%s\n",
+                  file_system_ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)

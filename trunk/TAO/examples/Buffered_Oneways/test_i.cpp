@@ -14,10 +14,9 @@ test_i::method (CORBA::ULong request_number,
                 CORBA::Environment &)
   ACE_THROW_SPEC (())
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "server: Iteration %d @ %T\n",
-                request_number));
+  ACE_DEBUG ((LM_DEBUG,
+              "server: Iteration %d @ %T\n",
+              request_number));
 }
 
 void
