@@ -1,6 +1,6 @@
 Mon Jan 26 14:31:46 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* FindPOA.cpp: Added CVS ID
+	* tests/POA/FindPOA.cpp: Added CVS ID
 
 Mon Jan 26 00:57:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -18,11 +18,12 @@ Sun Jan 25 14:30:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Jan 24 21:55:55 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* AVStreams_i.h, AVStreams_i.cpp: Made changes for new POA
+	* orbsvcs/orbsvc/{AVStreams_i.h, AVStreams_i.cpp}: 
+	  Made changes for new POA
 
 Sat Jan 24 21:46:23 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* AVStreams.idl:
+	* orbsvcs/orbsvcs/AVStreams.idl:
 	Changed type key to be a string, rather than a sequence<octet>, which
 	breaks tao_idl!
 
@@ -1341,10 +1342,10 @@ Thu Jan 22 16:32:56 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Thu Jan 22 16:16:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* CosPropertyService_i.cpp, CosPropertyService_i.h, AVStreams_i.cpp, AVStreams_i.h:
+	* orbsvcs/orbsvcs/CosPropertyService_i.cpp, CosPropertyService_i.h, AVStreams_i.cpp, AVStreams_i.h:
 	Added empty implementation files for AVStreams and propertyservice implementations
 
-	* Makefile:
+	* orbsvcs/orbsvcs/Makefile:
 	Fixed the Makefile so that it will compile the AV related stuff
 	only when run as `make av=1`.
 
@@ -1831,7 +1832,7 @@ Tue Jan 13 15:55:32 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 Mon Jan 12 20:04:32 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* server.cpp: Added comments
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: Added comments
 
 Mon Jan 12 17:29:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
@@ -2320,7 +2321,8 @@ Sun Jan  4 13:49:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 Sun Jan  4 13:41:41 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* svr.cpp: Fixed prev_priority to previous_priority
+	* tests/Cubit/TAO/IDL_Cubit/svr.cpp: Fixed prev_priority to
+	previous_priority
 
 Sun Jan 04 07:47:52 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
