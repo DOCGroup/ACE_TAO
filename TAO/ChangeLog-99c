@@ -1,3 +1,10 @@
+Fri Dec 10 14:09:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable/client.dsp:
+	* performance-tests/RTCorba/Oneways/Reliable/server.dsp:
+	  Compile settings for .idl file had been set but not
+	  checked in.
+
 Fri Dec 10 12:04:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html:
