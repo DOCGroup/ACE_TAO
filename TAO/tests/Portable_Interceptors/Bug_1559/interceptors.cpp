@@ -148,7 +148,7 @@ Echo_Client_Request_Interceptor::send_request (
   else if (send_request_count == 2)
     {
       ACE_DEBUG ((LM_DEBUG, "Exception count: %i\n", exception_count));
-      if (exception_count != 1)
+      if (exception_count != 2)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Expected exception_count is <2>\n"));
