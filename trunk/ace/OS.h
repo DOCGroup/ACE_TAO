@@ -4762,7 +4762,7 @@ private:
   int error_;
 };
 
-#if defined (ACE_HAS_WINNT5)
+#if defined (ACE_HAS_WINSOCK2)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
 typedef GROUP ACE_SOCK_GROUP;
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
