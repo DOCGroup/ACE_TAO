@@ -1,3 +1,8 @@
+Thu Apr 29 16:23:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO_IDL/COPYING.sun: Split out the copyright information
+	  from the INSTALL.sun file.
+
 Thu Apr 29 15:58:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/performance-tests/Pluggable/PP_Test_Server.{h,cpp}:
