@@ -1,3 +1,19 @@
+Tue Jul 11 19:39:55 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode.h:
+	* tao/Typecode.cpp:
+
+	  The Typecode functions member_type, member_name, and
+	  member_label, when called on a union typecode, would
+	  try to acquire the private state's lock twice (the 
+	  second time when calling discriminator_type from within 
+	  a critical section), causing these functions to hang
+	  on all Unix platforms. The locking code was actually
+	  in the wrapped function private_discriminator_type, so
+	  a doubly wrapped function private_discriminator_type_i
+	  was added that can also be called internally. Also
+	  made many cosmetic changes.
+
 Tue Jul 11 14:51:13 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
 	* orbsvcs/orbsvcs/*.bor:
