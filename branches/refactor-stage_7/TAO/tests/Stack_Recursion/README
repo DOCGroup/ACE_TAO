@@ -1,0 +1,23 @@
+/**
+
+@page Stack_Recursion Test README File
+
+      A stress test for the stack recursion outlined in the bugzilla
+under id 1125. Here is the link for the bug 
+
+http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1125
+
+This test is designed to show the bug. The test has a server running 4
+threads and clients running 16 threads requesting around 30 MB of
+data. 
+
+@@NOTE: Once the bug is fixed we may have to change the timings in the
+test so that the test can run to completion.
+     
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/

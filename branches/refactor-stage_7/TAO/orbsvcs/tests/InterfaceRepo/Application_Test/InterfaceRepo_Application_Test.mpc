@@ -1,0 +1,16 @@
+project(*server): taoserver, ifr_client {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoserver, ifr_client, dynamicinterface {
+  IDL_Files {
+  }
+
+  Source_Files {
+    ifr_dii_client.cpp
+    client.cpp
+  }
+}

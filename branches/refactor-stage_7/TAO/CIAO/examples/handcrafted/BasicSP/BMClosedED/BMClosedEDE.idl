@@ -1,0 +1,76 @@
+// $Id$
+
+// ===========================================================
+//
+// @file BMClosedEDE.idl
+//
+// Generated based on $(CIAO_ROOT)/docs/templates/Executor.idl
+//
+// @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
+//
+// ===========================================================
+
+#ifndef CIAO_BMCLOSED_IDL
+#define CIAO_BMCLOSED_IDL
+
+#include "CCM_Container.idl"    // Found in $(CIAO_ROOT)/ciao
+                                // For various definitions of container
+                                // internal/callback interfaces
+#include "BMClosedED.idl"  // Original component IDL definition
+#include "../BasicSPE.idl"
+
+module BasicSP {
+
+  // Component Main Executor Interface.  We currently do not
+  // support Executor-based implementation.
+
+  local interface CCM_BMClosed_Executor
+  : ::Components::EnterpriseComponent
+  {
+  };
+
+  // Monolithic component executor.
+  // For implementing monolithic component call back interface.
+
+  local interface CCM_BMClosedED
+  : ::Components::EnterpriseComponent
+  {
+    CCM_ReadData get_dataout ();
+
+    void push_in_avail (in DataAvailable a);
+  };
+
+  /**
+   * Component Context Interface
+   *
+   * Notice that we are taking a shortcut here to inherit the
+   * component-specific context from SessionContext directly instead
+   * of CCMContext.
+   */
+  local interface CCM_BMClosedED_Context
+  : Components::SessionContext
+  {
+    void push_out_avail (in DataAvailable a);
+    ReadData get_connection_datain ();
+  };
+
+  local interface CCM_BMClosedEDHomeExplicit
+  : ::Components::HomeExecutorBase
+  {
+  };
+
+  local interface CCM_BMClosedEDHomeImplicit
+  {
+    ::Components::EnterpriseComponent create ()
+      raises (::Components::CCMException);
+  };
+
+  local interface CCM_BMClosedEDHome
+    : CCM_BMClosedEDHomeExplicit,
+      CCM_BMClosedEDHomeImplicit
+  {
+  };
+
+};
+
+#endif /* CIAO_BMCLOSED_IDL */

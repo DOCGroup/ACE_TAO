@@ -1,0 +1,22 @@
+project(*Server): taoserver, minimum_corba {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, minimum_corba {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
+project(*Manager): taoserver, minimum_corba, iormanip {
+  exename  = Manager
+  Source_Files {
+    testC.cpp
+    Servant_Locator.cpp
+    Manager.cpp
+  }
+}

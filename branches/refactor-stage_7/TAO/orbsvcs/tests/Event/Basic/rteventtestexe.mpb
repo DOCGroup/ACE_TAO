@@ -1,0 +1,5 @@
+project : messaging, rteventexe, naming, iortable {
+  after    += Event_Test_Lib
+  libs     += ECTests
+  includes += ../lib
+}

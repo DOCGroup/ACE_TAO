@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!-- Converted from ./examples/AMI/FL_Callback/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <static id="Advanced_Resource_Factory" params="-ORBReactorType fl"/>
+</ACE_Svc_Conf>

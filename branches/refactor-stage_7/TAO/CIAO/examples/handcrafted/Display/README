@@ -1,0 +1,30 @@
+ $Id$
+
+This directory contains a multi-component examples.  We will likely
+evolve this example in the future to show case how easy it is to
+configure and assemble a new application using component.
+
+The starting example is an imaginary car (software) instrument
+assembly which updates the display of current coordination of the car
+periodically.  It consists of 3 components as shown in
+<Configuration-0.png>.
+
+These components are all placed under their own subdirectories:
+
+* RateGen - A component that allows it's client to start/stop the rate
+            generating event.
+
+* GPS - A component that interact with GPS hardware.  When this
+        component receives an event from the Refresh port, it will
+        query the GPS hardware and updates the internal cached
+        coordinations (so that the current location can be read by
+        accessing the MyLocation interface,) and generates an event on
+        its Ready port to inform the event consumers that a new GPS
+        reading is available.
+
+* NavDisplay - A navigation display component that projects the
+               current location of the vehicle on the windshield.
+               When a navDisplay receives an event notifying the
+               availability of new data on its Refresh port, it will
+               acquire the current location of the vehicle by querying
+               the interface connected to the GetLocation receptacle.

@@ -1,0 +1,14 @@
+project(*Server): taoserver {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

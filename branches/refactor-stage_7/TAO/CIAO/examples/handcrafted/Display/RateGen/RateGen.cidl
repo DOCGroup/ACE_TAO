@@ -1,0 +1,12 @@
+// $Id$  -*- IDL -*-
+
+#include "RateGen.idl"
+
+composition session RateGen_example
+{
+  home executor RateGenHome_exec
+    {
+      implement RateGenHome;
+      manages RateGen_exec;
+    };
+};

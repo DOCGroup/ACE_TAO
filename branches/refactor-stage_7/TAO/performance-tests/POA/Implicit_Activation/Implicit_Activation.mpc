@@ -1,0 +1,24 @@
+project(*server): taoserver {
+  Source_Files {
+    Factory.cpp
+    Simple.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoclient {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
+project(*collocated): taoserver {
+  exename = collocated
+
+  Source_Files {
+    Simple.cpp
+    collocated.cpp
+  }
+}
+

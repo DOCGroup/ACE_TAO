@@ -1,0 +1,63 @@
+// $Id$
+
+project(BMDevice_stub): ciao_client {
+  after += BasicSP_stub
+  sharedname = BMDevice_stub
+
+  idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
+  libpaths += ..
+  libs += BasicSP_stub
+  dynamicflags   = BMDEVICE_STUB_BUILD_DLL
+
+  IDL_Files {
+    BMDevice.idl
+  }
+
+  Source_Files {
+    BMDeviceC.cpp
+  }
+}
+
+project(BMDevice_svnt) : ciao_servant {
+  after += BMDevice_stub BasicSP_stub
+  sharedname  = BMDevice_svnt
+  libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDEVICE_SVNT_Export -Wb,export_include=BMDevice_svnt_export.h
+  dynamicflags = BMDEVICE_SVNT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
+
+  IDL_Files {
+    BMDeviceE.idl
+  }
+
+  Source_Files {
+    BMDeviceEC.cpp
+    BMDeviceS.cpp
+    BMDevice_svnt.cpp
+  }
+}
+
+
+project(BMDevice_exec) : ciao_component {
+  after   += BMDevice_svnt
+  sharedname = BMDevice_exec
+  libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export -Wb,export_include=BMDevice_exec_export.h
+  dynamicflags   = BMDEVICE_EXEC_BUILD_DLL
+
+  IDL_Files {
+    BMDeviceEI.idl
+  }
+
+  Source_Files {
+    BMDeviceES.cpp
+    BMDeviceEIC.cpp
+    BMDeviceEIS.cpp
+    BMDevice_exec.cpp
+  }
+}

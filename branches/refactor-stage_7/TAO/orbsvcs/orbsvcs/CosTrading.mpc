@@ -1,0 +1,24 @@
+project(CosTrading) : orbsvcslib, core, dynamicany, svc_utils {
+  sharedname   = TAO_CosTrading
+  idlflags    += -Wb,export_macro=TAO_Trading_Export -Wb,export_include=Trader/trading_export.h
+  dynamicflags = TAO_TRADING_BUILD_DLL
+  tagchecks    = Trader
+
+  IDL_Files {
+    CosTrading.idl
+    CosTradingRepos.idl
+    CosTradingDynamic.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    Trader {
+      CosTradingC.cpp
+      CosTradingS.cpp
+      CosTradingReposC.cpp
+      CosTradingReposS.cpp
+      CosTradingDynamicC.cpp
+      CosTradingDynamicS.cpp
+      Trader
+    }
+  }
+}
