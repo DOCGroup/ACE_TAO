@@ -38,7 +38,7 @@ TAO_String_Manager::~TAO_String_Manager (void)
 }
 
 // assignment
-TAO_String_Manager&
+ACE_INLINE TAO_String_Manager&
 TAO_String_Manager::operator= (const TAO_String_Manager &rhs)
 {
   if (this == &rhs)
@@ -50,7 +50,7 @@ TAO_String_Manager::operator= (const TAO_String_Manager &rhs)
 }
 
 // assignment from CORBA::String_var makes a copy
-TAO_String_Manager&
+ACE_INLINE TAO_String_Manager&
 TAO_String_Manager::operator= (const CORBA::String_var &var)
 {
   CORBA::string_free (this->ptr_);
@@ -236,7 +236,7 @@ TAO_WString_Manager::~TAO_WString_Manager (void)
 }
 
 // assignment
-TAO_WString_Manager&
+ACE_INLINE TAO_WString_Manager&
 TAO_WString_Manager::operator= (const TAO_WString_Manager &rhs)
 {
   if (this == &rhs)
@@ -248,7 +248,7 @@ TAO_WString_Manager::operator= (const TAO_WString_Manager &rhs)
 }
 
 // assignment from CORBA::String_var makes a copy
-TAO_WString_Manager&
+ACE_INLINE TAO_WString_Manager&
 TAO_WString_Manager::operator= (const CORBA::String_var &var)
 {
   CORBA::string_free (this->ptr_);
