@@ -1,3 +1,9 @@
+Thu Jun 05 20:32:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp (randomize_array): removed static
+	  qualifier now that it's a template function.  It caused a warning
+	  with Sun C++.
+
 Thu Jun 05 18:28:36 1997    <irfan@TWOSTEP>
 
 	* ace/Asynch_Acceptor.cpp (open): The Proactor was beening passed
