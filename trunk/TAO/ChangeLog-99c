@@ -1,3 +1,10 @@
+Tue Jun  1 21:54:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connector_Registry.cpp:
+	* tao/Acceptor_Registry.cpp:
+	  Remove all the elements from the acceptor and connector
+	  registries when their close_all() method is invoked.
+
 Tue Jun  1 21:50:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.cpp:

@@ -130,7 +130,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
 
       if (indx == ACE_static_cast (int, iop.length () - 3))
         {
-          // Protocol was specified without an endpoint.  According to 
+          // Protocol was specified without an endpoint.  According to
           // the "iioploc" spec, this is valid.  As such, we extend
           // this feature to all pluggable protocols.  All TAO
           // pluggable protocols are expected to have the ability to
@@ -282,17 +282,14 @@ TAO_Acceptor_Registry::close_all (void)
 {
   TAO_AcceptorSetItor end =
                 this->acceptors_.end ();
-  TAO_AcceptorSetItor acceptor =
-                this->acceptors_.begin ();
 
-  for (;
-       acceptor != end ;
-       ++acceptor)
+  for (TAO_AcceptorSetItor i = this->acceptors_.begin (); i != end; ++i)
     {
-      if (*acceptor)
-        (*acceptor)->close ();
+      if (*i == 0)
+        continue;
+      (*i)->close ();
     }
-
+  this->acceptors_.reset ();
   return 0;
 }
 
