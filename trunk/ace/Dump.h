@@ -144,8 +144,8 @@ private:
   // Current size of <object_table_>.
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static ACE_Thread_Mutex ace_dump_lock_;
-  // Double-Check lock.
+  static u_int ace_dump_lock_;
+  // Double-Check lock identifier.
 #endif /* ACE_MT_SAFE */
 };
 

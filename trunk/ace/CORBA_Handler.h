@@ -229,8 +229,8 @@ protected:
   // Used to send CORBA::Requests through the server
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  static ACE_Thread_Mutex ace_mt_corba_handler_lock_;
-  // Double-Check lock.
+  static u_int ace_mt_corba_handler_lock_;
+  // Double-Check lock identifier.
 #endif /* ACE_MT_SAFE */
 };
 #endif /* ACE_HAS_MT_ORBIX */
