@@ -10125,6 +10125,24 @@ ACE_OS::getppid (void)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE int
+ACE_OS::setpgid (pid_t pid, pid_t pgid)
+{
+  ACE_TRACE ("ACE_OS::setpgid");
+#if defined (ACE_LACKS_SETPGID)
+  ACE_UNUSED_ARG (pid);
+  ACE_UNUSED_ARG (pgid);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (VXWORKS) || defined (ACE_PSOS)
+  // setpgid() is not supported, only one process anyway.
+  ACE_UNUSED_ARG (pid);
+  ACE_UNUSED_ARG (pgid);
+  return 0;
+#else
+  ACE_OSCALL_RETURN (::setpgid (pid, pgid), pid_t, -1);
+#endif /* ACE_WIN32 */
+}
+
 ACE_INLINE off_t
 ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
 {

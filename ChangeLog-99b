@@ -1,3 +1,12 @@
+Mon Aug 30 16:12:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process.i: Oops, the implementation of gethandle() was
+	  in a Win32-specific part of the code...
+
+	* ace/Msg_WFMO_Reactor.h: Fixed a problem that was causing
+ 	  ACE_Msg_WFMO_Reactor from being included in the documentation
+ 	  windex files.  Thanks to Jody Hagins for reporting this.
+
 Mon Aug 30 16:16:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* PROBLEM-REPORT-FORM:
@@ -11,11 +20,59 @@ Mon Aug 30 14:27:26 1999  David L. Levine  <levine@cs.wustl.edu>
           use the explicit template instantiations even with
           ACE_HAS_GNU_REPO.  g++ 2.91.66 misses some of them with -frepo.
 
-Mon Aug 30 12:53:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Mon Aug 30 15:23:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * ace/Local_Tokens.h: Added a comment explaining that these locking
-          classes aren't intended as general-purpose synchronization
-          mechanisms.  Thanks to Brian Wright <bwright@paladyne.com>
+	* ace/Process_Manager: Integrated the new features that make it
+	  possible to notify a Reactor when a process exits.  Thanks to
+ 	  Dave Madden <dhm@mersenne.com> for contributing this.
+
+	* ace/Process: Added a more portable timed wait() operation for
+	  UNIX platforms.  However, this method has the following two
+ 	  limitations: (1) on UNIX platforms this function uses <ualarm>,
+ 	  i.e., it overwrites any existing alarm and (2) it steals all
+ 	  SIGCHLDs during the timeout period, which will break another
+ 	  ACE_Process_Manager in the same process that's expecting SIGCHLD
+ 	  to kick off process reaping.  If you know a good solution to
+ 	  this please let us know.  Thanks to Dave Madden
+ 	  <dhm@mersenne.com> for contributing this.
+
+	* ace/Process: Added setgroup() and getgroup() methods to
+ 	  ACE_Process_Options so that we can manage groups of processes.
+  	  Thanks to Dave Madden <dhm@mersenne.com> for contributing this.
+
+	* examples/OS/Process/process.cpp: Added a new version that
+	  tests the various wait() methods on ACE_Process.  Thanks to Dave
+ 	  Madden <dhm@mersenne.com> for contributing this.
+
+	* config-chorus.h,
+	  config-cray.h,
+	  config-cygwin32-common.h,
+	  config-freebsd-pthread.h,
+	  config-freebsd.h,
+	  config-hpux-9.x.h,
+	  config-hpux-9.x.h,
+	  config-lynxos.h,
+	  config-netbsd.h,
+	  config-sunos4-g++.h,
+	  config-sunos4-lucid3.2.h,
+	  config-sunos4-sun3.x.h,
+	  config-sunos4-sun4.1.4.h,
+	  config-sunos4-sun4.x-orbix.h,
+	  config-sunos4-sun4.x.h,
+	  config-win32-common.h:
+	  Added ACE_LACKS_SETPGID on the assumption that platforms lacking
+	  getpgid() won't have setpgid() either.  If this turns out to be
+	  incorrect, please let me know.
+
+	* ace/OS: Added a new wrapper facade method for setpgid().  Thanks to
+	  Dave Madden <dhm@mersenne.com> for contributing this.
+
+	* ace/OS.h: Added a new macro called ACE_INVALID_PID.  Thanks to
+	  Dave Madden <dhm@mersenne.com> for contributing this.
+
+	* ace/Local_Tokens.h: Added a comment explaining that these locking
+	  classes aren't intended as general-purpose synchronization
+ 	  mechanisms.  Thanks to Brian Wright <bwright@paladyne.com>
 
         * examples/Misc/test_trace.cpp (main): Added a call to
           ACE_OS::atexit() to make sure we test this someplace.
