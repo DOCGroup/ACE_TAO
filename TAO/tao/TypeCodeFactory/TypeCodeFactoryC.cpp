@@ -43,7 +43,7 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "TypeCodeFactoryC.i"
+#include "TypeCodeFactoryC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
