@@ -12,9 +12,9 @@
 # DEBUG	- if defined means building with debug information
 #
 
-!ifdef INSTALL_THIS_TARGET
+# All DLLs are copied into the common bin directory so that they always
+# available on the path for the tests.
 BINDIR = $(CORE_BINDIR)
-!endif
 
 !include <$(ACE_ROOT)\include\makeinclude\decorator.bor>
 !include <$(ACE_ROOT)\include\makeinclude\outputdir.bor>
