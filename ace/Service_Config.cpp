@@ -874,6 +874,7 @@ ACE_Service_Config::start_daemon (void)
   return ACE::daemonize ();
 }
 
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
@@ -883,9 +884,6 @@ template class ACE_Unbounded_Queue<ACE_CString>;
 template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
 template class ACE_Unbounded_Set<ACE_CString>;
 template class ACE_Unbounded_Set_Iterator<ACE_CString>;
-template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
 template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -897,9 +895,6 @@ template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set<ACE_CString>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_CString>
-#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_T<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex, ACE_Control_Block>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #pragma instantiate auto_ptr<ACE_Obstack>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
