@@ -1,3 +1,8 @@
+Thu Mar  4 12:26:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Message_Queue_Notifications_Test.cpp (svc): Made increment
+	  of <role_> thread-safe.
+
 Thu Mar 04 07:00:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-aix-4.2.x.h: added ACE_LACKS_PRAGMA_ONCE
