@@ -40,6 +40,9 @@ public:
   ACE_Pipe (ACE_HANDLE read, ACE_HANDLE write);
   // Initialize the <ACE_Pipe> from the <read> and <write> handles.
 
+  ~ACE_Pipe (void);
+  // Default dtor.  It doesn't close the handles for you.
+
   int open (ACE_HANDLE handles[2]);
   // Open the pipe and initialize the handles.
 

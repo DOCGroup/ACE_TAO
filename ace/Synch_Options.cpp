@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/Synch_Options.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Synch_Options.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Synch_Options)
 
 void

@@ -5,6 +5,10 @@
 
 #include "ace/Activation_Queue.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Activation_Queue.i"
+#endif /* __ACE_INLINE__ */
+
 // Dump the state of an object.
 
 void 

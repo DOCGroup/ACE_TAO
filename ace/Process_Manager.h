@@ -28,6 +28,8 @@ private:
   friend class ACE_Process_Manager;
 
   ACE_Process_Descriptor (void);
+  ~ACE_Process_Descriptor (void);
+  // Default ctor/dtor.
 
   pid_t proc_id_;
   // Unique process ID.

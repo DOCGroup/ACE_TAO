@@ -172,6 +172,9 @@ public:
   // Initialize the iterator, the arguments define the scheduling
   // policy and scope for the priorities (see ACE_Sched_Param).
 
+  ~ACE_Sched_Priority_Iterator (void);
+  // Default dtor.
+
   int more (void) const;
   // Check if there are more priorities.
 

@@ -34,6 +34,9 @@ public:
   // not listen) to the multicast group, use ACE_SOCK_Dgram or
   // ACE_SOCK_CODgram.
 
+  ~ACE_SOCK_Dgram_Mcast (void);
+  // Default dtor.
+
   // = Multicast group management routines.
 
   int subscribe (const ACE_INET_Addr &mcast_addr,

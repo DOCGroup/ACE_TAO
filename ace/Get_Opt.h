@@ -52,6 +52,9 @@ public:
   // or the text of the following <argv>-element, is returned in
   // <optarg>.
 
+  ~ACE_Get_Opt (void);
+  // Default dtor.
+
   int operator () (void);
   // Scan elements of <argv> (whose length is <argc>) for option
   // characters given in <optstring>.

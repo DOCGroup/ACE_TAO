@@ -5,6 +5,14 @@
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 
+#if defined (ACE_HAS_WINCE)
+ACE_INLINE
+ACE_Handle_Set::~ACE_Handle_Set (void)
+{
+  ACE_TRACE ("ACE_Handle_Set::~ACE_Handle_Set");
+}
+#endif /* ACE_HAS_WINCE */
+
 ACE_INLINE void 
 ACE_Handle_Set::reset (void)
 {
@@ -133,3 +141,7 @@ ACE_Handle_Set::operator fd_set *()
     return (fd_set*) NULL;
 }
 
+ACE_INLINE
+ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator (void)
+{
+}

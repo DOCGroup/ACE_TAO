@@ -5633,9 +5633,14 @@ private:
 # if defined (ASYS_INLINE)
 #   undef ASYS_INLINE
 # endif /* ASYS_INLINE */
-# define ASYS_INLINE
+# define ASYS_INLINE 
+# if defined (ACE_HAS_INLINED_OSCALLS)
+#   undef ACE_HAS_INLINED_OSCALLS
+# endif /* ACE_HAS_INLINED_OSCALLS */
 #else
 # define ASYS_INLINE inline
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
+
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -5643,7 +5648,6 @@ private:
 #   define ACE_INLINE inline
 #   include "ace/OS.i"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #if defined (ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)
 # define ACE_INLINE_FOR_GNUC ACE_INLINE

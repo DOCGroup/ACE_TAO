@@ -208,6 +208,9 @@ public:
   ACE_SString (char c, ACE_Allocator *alloc = 0);
   // Constructor that copies <c> into dynamically allocated memory. 
 
+  ~ACE_SString (void);
+  // Default dtor.
+
   char operator[] (size_t index) const;
   // Return the <index'th> character in the string (doesn't perform
   // bounds checking).

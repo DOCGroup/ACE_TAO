@@ -3,6 +3,11 @@
 
 // SOCK_Dgram_Mcast.i
 
+ASYS_INLINE
+ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast (void)
+{
+}
+
 ASYS_INLINE int
 ACE_SOCK_Dgram_Mcast::set_option (int option, 
 				  char optval) 

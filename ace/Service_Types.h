@@ -90,6 +90,8 @@ public:
 			   u_int flags = 0,
                            ACE_Service_Object_Exterminator gobbler = 0);
 
+  ~ACE_Service_Object_Type (void);
+
   // = Implement the hooks for <ACE_Service_Objects>.
   virtual int suspend (void) const;
   virtual int resume (void) const;
@@ -108,6 +110,8 @@ public:
   ACE_Module_Type (void *m, // Really an <ACE_Module> *.
 		   const ASYS_TCHAR *identifier, 
 		   u_int flags = 0);
+
+  ~ACE_Module_Type (void);
 
   // = Implement the hooks for <ACE_Modules>.
   virtual int suspend (void) const;
@@ -141,6 +145,8 @@ public:
   ACE_Stream_Type (void *s, // Really an <ACE_Stream> *.
 		   const ASYS_TCHAR *identifier, 
 		   u_int flags = 0);
+
+  ~ACE_Stream_Type (void);
 
   // = Implement the hooks for <ACE_Streams>.
   virtual int suspend (void) const;

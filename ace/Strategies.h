@@ -66,6 +66,9 @@ public:
 				     ACE_Event_Handler *eh,
 				     ACE_Reactor_Mask mask);
 
+  ~ACE_Reactor_Notification_Strategy (void);
+  // Default dtor.
+
   virtual int notify (void);
 
   virtual int notify (ACE_Event_Handler *,
@@ -92,9 +95,17 @@ public:
 
   virtual int cache (const void *recycling_act) = 0;
   // Add to cache.
+
+protected:
+  ACE_Connection_Recycling_Strategy (void);
+  // Default ctor.
 };
 
 // This needs to come here to avoid circular dependencies.
 #include "ace/Strategies_T.h"
+
+#if defined (__ACE_INLINE__)
+#include "ace/Strategies.i"
+#endif /* __ACE_INLINE __ */
 
 #endif /* ACE_STRATEGIES_H */

@@ -106,6 +106,12 @@ ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params
   this->done_ = 0;
 }
 
+ACE_INLINE
+ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator (void)
+{
+  ACE_TRACE ("ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator");
+}
+
 ACE_INLINE int 
 ACE_Sched_Priority_Iterator::more (void) const
 {
