@@ -1,3 +1,8 @@
+Sun Nov 23 10:06:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added a new section how to build ACE with Cygwin
+
 Sat Nov 22 15:39:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Service_Object.h:
@@ -14,28 +19,28 @@ Sat Nov 22 22:10:14 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 Sat Nov 22 22:03:34 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/ace.mpc: 
+	* ace/ace.mpc:
 
 	  Added Task_Ex_T file
 
 Sat Nov 22 22:00:15 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/Task_Ex_T.h:
-	* ace/Task_Ex_T.i: 	
-	* ace/Task_Ex_T.cpp: 
+	* ace/Task_Ex_T.i:
+	* ace/Task_Ex_T.cpp:
 
 	  Added support for ACE_Task with Use define Message template
 	  parameter.
 
 Sat Nov 22 21:07:09 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* ace/OS_NS_Thread.h : 
+	* ace/OS_NS_Thread.h :
 
 	  Added "&& !defined (ACE_DEFAULT_THREAD_KEYS)". Problems occurs
 	  on win2k/XP when OS support up to 1024 slots,  but MS-sdk
 	  defines TLS_MINIMUM_AVAILABLE as 64. Now, Win2k/XP Users can
 	  raise that number, define-ing ACE_DEFAULT_THREAD_KEYS as 1024
-	  e.g.. 
+	  e.g..
 
 Sat Nov 22 11:18:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -49,7 +54,7 @@ Fri Nov 21 12:13:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Service_Object.{h,cpp}:
 
-	  Reverted this change since it broke the builds. 
+	  Reverted this change since it broke the builds.
  	  "Thu Nov 20 18:11:32 2003  Douglas C. Schmidt
 	  <schmidt@ace.cs.wustl.edu>".  We will get a better patch soon
 	  from the user.
@@ -91,9 +96,9 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         motivated by intermittent build errors in the autobuilds as well
         as the pending move to MPC.  Sorry if it's a little long, it's in
         a quasi Irfan-Bala style...
-        
+
         Specific changes are noted below, but here's a basic overview:
-        
+
         clean: Cleans up only the objects actually created by the
           current project.  If multiple makefiles exist in the same
           directory, they no longer need to be completely rebuilt because
@@ -169,8 +174,8 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           i.e., not specified in either platform_macros.GNU, the
           commandline, or contained in any of the ace_components files.
           For example, if you want to test for ssl and Other, you'd do
-          something like this: 
-        
+          something like this:
+
             REQUIRED_COMPONENTS = ssl Other
             include $(ACE_ROOT)/include/makeinclude/component_check.GNU
             ifneq ($(MISSING_COMPONENTS),)
@@ -180,7 +185,7 @@ Fri Nov 21 02:57:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
           This should greatly simplify Makefiles in general and MPC
           templates in particular.
-        
+
         * include/makeinclude/all_in_one.GNU:
         * include/makeinclude/component_check.GNU:
           Moved the code that set the BIN, LIB, and SHLIB variable from
