@@ -137,11 +137,69 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Makefile">Makefile</a>
 	  <CODE>TEMPLATE_FILES=</CODE> in the Makefile. Now update the Makefile so that
 	  <CODE>FILES=ACE_All_Src</CODE> and <CODE>TEMPLATE_FILES=ACE_All_Tmp</CODE>. <P>
 
-<DT> <B> Linux </B> <BR><BR>
+<DT><B>Linux</B><BR><BR>
 
-<DD> ACE has been ported to <A
+<DD>ACE has been ported to <A
 HREF="http://www.cs.wustl.edu/~cleeland/ace/">Linux</A> using the GNU
-g++ 2.7.2 compiler. <P>
+g++ 2.7.2 compiler.<P>
+
+With RedHat 5.0 distributions of Linux, it's best to use the
+Cyngus egcs compiler, at least version 1.0.1.<p>
+
+With RedHat 5.0 on Alpha CPUs, two system patches are necessary.
+Even with them, threads are not stable.  It's best to use ACE
+without threads (<code>include/makeinclude/platform_linux.GNU</code>
+and <code>ace/config-linux.h</code>) until thread support in
+glibc 2.0 for Alpha stabilizes.<p>
+
+The first patch is for the GNU assembler, gas.  It is only
+necessary on Alphas, and only when <code>-g</code> is used.
+If you don't want to patch the assembler, you can enable the
+SUPPRESS_DASH_G option in the <code>platform_linux.GNu</code>.
+Otherwise, this patch can be applied to the binutils gas
+source.  Then, rebuild and install as.<p>
+
+<pre>
+//--- ecoff.c.ORIGINAL	Mon May 26 12:32:47 1997
+//+++ ecoff.c	Thu Jan 15 09:21:08 1998
+//@@ -769,7 +769,11 @@
+//    can't be represented (assuming there are strings &gt; 4096 bytes).  */
+// 
+// #ifndef PAGE_SIZE
+//-#define PAGE_SIZE 4096		/* size of varray pages */
+//+// Thu Jan 15 09:21:03 CST 1998  David L. Levine  &lt;levine@cs.wustl.edu&gt;
+//+// Raised PAGE_SIZE to 8192 from 4096 to avoid "String too big"
+//+// errors on Linux/Alpha, with -g.  The OS page size is 8192, so this
+//+// should be OK.
+//+#define PAGE_SIZE 8192		/* size of varray pages */
+// #endif
+// 
+// #define PAGE_USIZE ((unsigned long) PAGE_SIZE)
+</pre><p>
+
+In addition, you'll need to patch
+<code>/usr/src/linux/include/linux/posix_types.h</code> as follows
+to avoid compilation errors:<p>
+
+<pre>
+//--- posix_types.h.ORIGINAL	Wed Nov 12 12:01:56 1997
+//+++ posix_types.h	Wed Jan 14 13:07:47 1998
+//@@ -41,9 +41,13 @@
+// #undef __FDMASK
+// #define	__FDMASK(d)	(1UL &lt;&lt; ((d) % __NFDBITS))
+// 
+//-typedef struct fd_set {
+//+#include &lt;gnu/types.h&gt;
+//+typedef __fd_set __kernel_fd_set;
+//+#if 0
+//+typedef struct kernel_fd_set {
+// 	unsigned long fds_bits [__FDSET_LONGS];
+// } __kernel_fd_set;
+//+#endif
+// 
+// /* Type of a signal handler.  */
+// typedef void (*__kernel_sighandler_t)(int);
+</pre><p>
 
 <DT> <B> SCO UNIX </B> <BR><BR>
 
