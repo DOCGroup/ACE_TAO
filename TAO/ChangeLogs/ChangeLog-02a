@@ -1,3 +1,10 @@
+Mon Jul 31 12:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+
+	  Added some ACE_UNUSED_ARGs to get rid of some g++ warnings.
+
 Sun Jul 30 16:13:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Collection.h:
