@@ -1,3 +1,13 @@
+Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ace_ld,include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added ace_ld, a drop-in replacement for ld that supports munching.
+          We need to munch for VxWorks/g++.
+
+        * ACE-INSTALL.html: updated VxWorks info to mention requirement
+          for perl with VxWorks/g++.  And, LD_LIBRARY_PATH must be set
+          to find the ACE libraries on the host if using TAO.
+
 Mon Nov 10 00:11:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Repository.cpp: The close() method needed a '\n' in
