@@ -1,3 +1,14 @@
+Sun Jan 18 01:04:22 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_attribute.cpp: 
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be_include/be_interface.h: 
+	* tao/servant_base.h: 
+	  Added support for collocation in the _narrow method, this
+	  required a complete implementation of _downcast() for each
+	  skeleton.
+
 Sat Jan 17 20:54:26 1998    <coryan@MILONGA>
 
 	* TAO_IDL/be/be_attribute.cpp: 

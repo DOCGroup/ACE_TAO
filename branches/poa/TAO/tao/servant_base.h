@@ -55,6 +55,9 @@ public:
   virtual void *_downcast (const char *repository_id);
   // Get the correct vtable
 
+  virtual STUB_Object *_create_stub (CORBA_Environment &_env);
+  // This is an auxiliar method for _this() and _narrow().
+
 protected:
   TAO_ServantBase (void);
   // Default constructor, only derived classes can be created.
@@ -66,10 +69,6 @@ protected:
   // Set the "parent" in the QueryInterface hierarchy.
   // @@ TODO use a conformant name; since it is an
   // internal (implementation) method its name should start with '_'
-
-protected:
-  STUB_Object *_create_stub (CORBA_Environment &_env);
-  // This is an auxiliar method for _this().
 
 protected:
   TAO_Operation_Table *optable_;

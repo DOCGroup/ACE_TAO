@@ -270,6 +270,9 @@ TAO_CodeGen::client_stubs (const char *fname)
   *this->client_stubs_ << "#include \"" <<
     idl_global->be_get_client_hdr_fname () << "\"\n\n";
 
+  *this->client_stubs_ << "#include \"" <<
+    idl_global->be_get_server_hdr_fname () << "\"\n\n";
+
   // generate the code that includes the inline file if not included in the
   // header file
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
