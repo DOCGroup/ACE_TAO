@@ -1,3 +1,12 @@
+Fri May 10 10:52:50 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tao/Environment.h:
+	* tao/Queued_Message.h:
+
+	  Modified includes to match new system header wrappers (see
+	  ACE_wrappers ChangeLogTag: Fri May 10 10:52:50 UTC 2002  
+	  Don Hinton  <dhinton@ieee.org> for more details.
+
 Mon May  6 15:53:39 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tao/RTCORBA/Private_Transport_Descriptor.h:

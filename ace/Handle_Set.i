@@ -4,8 +4,8 @@
 // Handle_Set.i
 
 #include "ace/Trace.h"
-#include /**/ <stddef.h>
-#include "ace/ace_string.h" // FD_ZERO seems to use memset on sun
+#include "ace/os_include/stddef.h"
+#include "ace/os_include/string.h" // FD_ZERO seems to use memset on sun
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 

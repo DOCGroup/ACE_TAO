@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/ace_ctype.h"
+#include "ace/os_include/ctype.h"
 #include "ace/OS.h"
 
 // Wrappers for methods that have been moved to ACE_OS.

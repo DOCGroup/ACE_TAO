@@ -29,7 +29,7 @@ ACE_RCSID(src, List_Node, "$Id$")
 
 #include "Vectors.h"
 #include "ace/Log_Msg.h"
-#include "ace/ace_ctype.h"
+#include "ace/os_include/ctype.h"
 
 // Sorts the key set alphabetically to speed up subsequent operation
 // Uses insertion sort since the set is probably quite small.

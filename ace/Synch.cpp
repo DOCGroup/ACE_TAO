@@ -18,7 +18,7 @@ ACE_RCSID(ace, Synch, "$Id$")
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/ace_sys_mman.h"
+#include "ace/os_include/sys/mman.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
 

@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Time_Value.h"
-#include "ace/ace_stdio.h" // for LPSECURITY_ATTRIBUTES
+#include "ace/os_include/stdio.h" // for LPSECURITY_ATTRIBUTES
 
 class ACE_Export ACE_Handle_Ops
 {

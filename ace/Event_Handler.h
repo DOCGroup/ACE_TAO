@@ -21,9 +21,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
-#include "ace/ace_signal.h"
-#include "ace/ace_threads.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/signal.h"
+#include "ace/os_include/threads.h"
 //#include "ace/OS.h" // for siginfo_t, etc...
 
 // Forward declaration.

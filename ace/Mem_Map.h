@@ -22,10 +22,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_param.h"
-#include "ace/ace_sys_mman.h"
-#include "ace/ace_stdio.h"
-#include "ace/ace_fcntl.h"
+#include "ace/os_include/sys/param.h"
+#include "ace/os_include/sys/mman.h"
+#include "ace/os_include/stdio.h"
+#include "ace/os_include/fcntl.h"
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
 

@@ -16,7 +16,7 @@
 
 #include "corbafwd.h"
 #include "LF_Event.h"
-#include "ace/ace_sys_uio.h"
+#include "ace/os_include/sys/uio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

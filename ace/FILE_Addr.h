@@ -22,8 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Flag_Manip.h"
-#include "ace/ace_dirent.h"
-#include "ace/ace_sys_socket.h"
+#include "ace/os_include/dirent.h"
+#include "ace/os_include/sys/socket.h"
 #include "ace/Global_Macros.h"
 
 /**

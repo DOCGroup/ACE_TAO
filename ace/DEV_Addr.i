@@ -3,7 +3,7 @@
 
 #include "ace/Trace.h"
 #include "ace/OS_String.h"
-#include "ace/ace_sys_socket.h" // to get AF_DEF
+#include "ace/os_include/sys/socket.h" // to get AF_DEF
 
 ACE_INLINE void
 ACE_DEV_Addr::set (const ACE_TCHAR *devname)

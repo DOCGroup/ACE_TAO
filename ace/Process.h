@@ -22,9 +22,9 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_param.h"
-#include "ace/ace_signal.h"
-#include "ace/ace_stdio.h"
+#include "ace/os_include/sys/param.h"
+#include "ace/os_include/signal.h"
+#include "ace/os_include/stdio.h"
 
 class ACE_Time_Value;
 

@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
+#include "ace/os_include/sys/types.h"
 
 /**
  * @class ACE_Shared_Object

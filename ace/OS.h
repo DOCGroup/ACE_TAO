@@ -23,23 +23,23 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/ace_dlfcn.h" // needed for ACE_SHLIB_HANDLE, etc...
-# include "ace/ace_fcntl.h" // needed for flock, etc...
-# include "ace/ace_poll.h" // needed for poll
-# include "ace/ace_pwd.h"  // needed for password stuff
-# include "ace/ace_signal.h" 
-# include "ace/ace_stdio.h"
-# include "ace/ace_stdlib.h" // needed for ACE_RANDR_TYPE
-# include "ace/ace_stropts.h" // needed for strbuf, etc...
-# include "ace/ace_threads.h" // ace specific that includes pthreads, etc...
-# include "ace/ace_time.h"  // needed for clock_t on windows
-# include "ace/ace_sys_resource.h"
-# include "ace/ace_sys_sem.h"
-# include "ace/ace_sys_socket.h"
-# include "ace/ace_sys_stat.h"
-# include "ace/ace_sys_uio.h"
-# include "ace/ace_sys_utsname.h"
-# include "ace/ace_sys_wait.h" // process control
+# include "ace/os_include/dlfcn.h" // needed for ACE_SHLIB_HANDLE, etc...
+# include "ace/os_include/fcntl.h" // needed for flock, etc...
+# include "ace/os_include/poll.h" // needed for poll
+# include "ace/os_include/pwd.h"  // needed for password stuff
+# include "ace/os_include/signal.h" 
+# include "ace/os_include/stdio.h"
+# include "ace/os_include/stdlib.h" // needed for ACE_RANDR_TYPE
+# include "ace/os_include/stropts.h" // needed for strbuf, etc...
+# include "ace/os_include/threads.h" // ace specific that includes pthreads, etc...
+# include "ace/os_include/time.h"  // needed for clock_t on windows
+# include "ace/os_include/sys/resource.h"
+# include "ace/os_include/sys/sem.h"
+# include "ace/os_include/sys/socket.h"
+# include "ace/os_include/sys/stat.h"
+# include "ace/os_include/sys/uio.h"
+# include "ace/os_include/sys/utsname.h"
+# include "ace/os_include/sys/wait.h" // process control
 
 // Include the split up ACE_OS classes
 # include "ace/OS_Dirent.h"
@@ -67,7 +67,7 @@ class ACE_Timeout_Manager;
 // Once the PSOS stuff has been incorporated into the various ace_*.h
 // headers, this can be removed.
 # if defined (ACE_PSOS)
-#   include "ace_psos.h"
+#   include "ace/os_include/psos.h"
 # endif /* ACE_PSOS */
 
 // The following are includes that have not been moved/examined yet.

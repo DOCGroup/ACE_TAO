@@ -17,7 +17,7 @@
 
 #include "ace/config-all.h"
 #include "ace/streams.h"
-#include "ace/ace_stdio.h"
+#include "ace/os_include/stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

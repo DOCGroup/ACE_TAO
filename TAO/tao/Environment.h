@@ -28,7 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_stdio.h"
+#include "ace/os_include/stdio.h"
 
 class TAO_ORB_Core;
 

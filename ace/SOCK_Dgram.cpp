@@ -12,8 +12,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 
-#include "ace/ace_netinet_in.h"
-#include "ace/ace_sys_ioctl.h"
+#include "ace/os_include/netinet/in.h"
+#include "ace/os_include/sys/ioctl.h"
 
 ACE_RCSID(ace, SOCK_Dgram, "$Id$")
 

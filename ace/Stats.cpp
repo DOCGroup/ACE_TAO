@@ -7,7 +7,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/High_Res_Timer.h"
-#include "ace/ace_string.h"
+#include "ace/os_include/string.h"
 
 ACE_RCSID(ace, Stats, "$Id$")
 

@@ -36,7 +36,7 @@
 # if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #   include "ace/ACE_export.h"
-#   include "ace/ace_sys_types.h"
+#   include "ace/os_include/sys/types.h"
 #   include "ace/Time_Value.h"
 #   include "ace/streams.h"
 

@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_sys_types.h"
-#include "ace/ace_signal.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/signal.h"
 #include "ace/OS_Export.h"
 #include "ace/Global_Macros.h"
 

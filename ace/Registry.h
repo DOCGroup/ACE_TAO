@@ -26,7 +26,7 @@
 
 #include "ace/Containers.h"
 #include "ace/SString.h"
-#include "ace/ace_stdio.h"
+#include "ace/os_include/stdio.h"
 
 /**
  * @class ACE_Registry

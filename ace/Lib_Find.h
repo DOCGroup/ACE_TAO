@@ -22,8 +22,8 @@
 
 
 #include "ace/ACE_export.h"
-#include "ace/ace_sys_types.h"
-#include "ace/ace_stdio.h"
+#include "ace/os_include/sys/types.h"
+#include "ace/os_include/stdio.h"
 
 /**
  * @class ACE_Lib_Find

@@ -32,7 +32,7 @@
 
 #if defined (ACE_HAS_GPERF)
 
-#include "ace/ace_sys_types.h"
+#include "ace/os_include/sys/types.h"
 
 // Enumerate the potential debugging Options.
 

@@ -9,7 +9,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_String.h"
-#include "ace/ace_stdio.h" // for MAXNAMELEN
+#include "ace/os_include/stdio.h" // for MAXNAMELEN
 #include "ace/Global_Macros.h"
 
 ACE_RCSID(ace, DEV_Addr, "$Id$")

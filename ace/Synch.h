@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_threads.h"
+#include "ace/os_include/threads.h"
 #include "ace/ACE_export.h"
 #include "ace/Global_Macros.h"
 

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ace_sys_param.h"
+#include "ace/os_include/sys/param.h"
 
 /**
  * @class ACE_FIFO

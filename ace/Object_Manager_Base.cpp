@@ -3,7 +3,7 @@
 #include "ace/Object_Manager_Base.h"
 
 #include "ace/OS_Errno.h"
-#include "ace/ace_threads.h"
+#include "ace/os_include/threads.h"
 #include "ace/OS.h"
 
 

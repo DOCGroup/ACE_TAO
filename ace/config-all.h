@@ -526,7 +526,7 @@ typedef ACE_EXITCODE_TYPE ACE_exitcode;
 // being used).
 // ============================================================================
 
-#include "ace/ace_new.h"
+#include "ace/os_include/new.h"
 #if defined (ACE_NEW_THROWS_EXCEPTIONS)
 
 // Since new() throws exceptions, we need a way to avoid passing
@@ -541,7 +541,7 @@ typedef ACE_EXITCODE_TYPE ACE_exitcode;
       // I know this works for HP aC++... if <stdexcept> is used, it
       // introduces other stuff that breaks things, like <memory>, which
       // screws up auto_ptr.
-#    include /**/ <new>
+//#    include /**/ <new>
     // _HP_aCC was first defined at aC++ 03.13 on HP-UX 11. Prior to that
     // (03.10 and before) a failed new threw bad_alloc. After that (03.13
     // and above) the exception thrown is dependent on the below settings.
