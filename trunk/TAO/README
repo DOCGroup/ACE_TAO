@@ -1,62 +1,10 @@
 Welcome to the latest release of The ACE ORB (TAO).  TAO is a freely
 available, open-source implementation of a CORBA 2.x-compliant ORB
 that supports real-time extensions.  Please see
-www.cs.wustl.edu/~schmidt/TAO.html for more information on TAO.
-
-Detailed information on this version of TAO is available in the
-$TAO_ROOT/docs subdirectory in HTML format.
-
-The current release of TAO contains the following components:
-
-     * An ORB Core based on ACE C++ components. This ORB Core provides
-       3 concurrency models: (1) Reactive, (2) Thread-per-Connection,
-       and (3) Thread-per-Rate (which is optimized for certain types
-       of deterministic real-time systems).
-
-     * A highly optimized version of the SunSoft IIOP protocol engine.
-
-     * An implementation of the Portable Object Adapter (POA)
-       specification.
-
-     * An IDL compiler, based on the SunSoft IDL compiler.  This IDL
-       compiler can generate compiled or interpreted stubs/skeletons
-       that use TAO's optimized IIOP protocol engine.  In addition,
-       TAO's IDL compiler generates stubs/skeletons that support both
-       native C++ exceptions and the original CORBA::Environment
-       approach.
-
-     * A Real-time Scheduling Service that determines the priority at
-       which Client requests are dispatched by the ORB.
-
-     * A Real-time Event Service that dispatches CORBA events in
-       real-time.
-
-     * Implementations of the CORBA Naming Service, Trading
-       Service, Concurrency Service, Audio/Video Streaming Service,
-       Property Service, and a Logging Service.
-
-     * Many tests illustrating how to use TAO and measuring
-       TAO's performance.
-
-We've gotten TAO to interoperate with other ORBs (e.g., Orbix,
-VisiBroker, miniCOOL, and CORBAplus), so we're confident that its
-implementation of IIOP is robust.  We're currently working on the
-following features for TAO:
-
-     * A highly extensible, highly optimized set of request
-       demultiplexing strategies that provide constant time lookup of
-       servants based on object keys and operation names contained in
-       CORBA requests.
-
-We plan to release these features throughout the fall of 1998.  You
-can keep track of our progress online at URL
-
-www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/
-
-A quick build note for users who have used ACE with other ORBs:
-linking TAO with a version of ACE that must also be linked against
-another ORB vendor's library, e.g., liborbix.so, will produce
-undefined and most likely unpredictable and erroneous results.
+www.cs.wustl.edu/~schmidt/TAO.html for more information on TAO
+features, services, and the status of current work.  In addition,
+document for TAO is available in the $TAO_ROOT/docs/ subdirectory in
+HTML format.
 
 We welcome suggestions for improvement, bug fixes, portability
 enhancements, etc. and will strive to integrate correct bug fixes
