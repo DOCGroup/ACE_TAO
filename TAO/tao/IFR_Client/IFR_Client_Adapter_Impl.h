@@ -65,13 +65,15 @@ public:
       CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     );
-    
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   virtual void create_operation_list (
       CORBA::ORB_ptr orb,
       CORBA::OperationDef_ptr,
       CORBA::NVList_ptr&
       ACE_ENV_ARG_DECL
     );
+#endif /*TAO_HAS_MINIMUM_CORBA*/
 
   // Used to force the initialization of the ORB code.
   static int Initializer (void);

@@ -27,7 +27,7 @@
 
 #include "tao/orbconf.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+#if TAO_HAS_CORBA_MESSAGING == 1
 
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
@@ -42,7 +42,7 @@ static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 #include "RTCORBAC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
+#endif /* TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
 
