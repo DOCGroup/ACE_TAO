@@ -5,7 +5,7 @@
   <params>-p 4911</params>
 </static>
 
-<dynamic id="Test_Task" type="service_object"> &#65; &amp;
+<dynamic id="Test_Task" type="service_object"> &#65; &amp;lt;
   <initializer path="CCM_App" init="_make_Test_Task">
     <params>-p 3000</params>
   </initializer>

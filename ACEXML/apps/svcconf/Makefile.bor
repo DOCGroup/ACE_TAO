@@ -1,20 +1,20 @@
-# Makefile for building the parser
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
 
-NAME = ACEXML_XML_Svc_Conf_Parser
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-OBJFILES = \
-        $(OBJDIR)\Svcconf.obj \
-        $(OBJDIR)\Svcconf_Handler.obj
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor all
 
-CFLAGS = \
-        $(ACE_CFLAGS) \
-        $(ACE_XML_CFLAGS)
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor clean
 
-CPPDIR = .;..
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor realclean
 
-LIBFILES = \
-        $(ACE_LIB) \
-        $(ACE_XML_LIB)
-# WE need both -lACEXML and -lACEXML_Parser here
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor install
 
-!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+regenerate:
+	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse

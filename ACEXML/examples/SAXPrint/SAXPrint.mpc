@@ -1,2 +1,3 @@
 project(SAXPrint): aceexe, acexml {
+    exename = SAXPrint
 }

@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -28,9 +29,12 @@
 #include "ace/Functor.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Unbounded_Set.h"
 #include "ace/Containers_T.h"
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/parser/parser/Entity_Manager.h"
+#include "ACEXML/parser/parser/ParserInternals.h"
+#include "ACEXML/parser/parser/ParserContext.h"
 
 /**
  * @class ACEXML_Parser Parser.h "ACEXML/parser/parser/Parser.h"
@@ -47,7 +51,14 @@ public:
   /// Destructor.
   virtual ~ACEXML_Parser (void);
 
-  /*
+  /**
+   *  Initialize the parser state.
+   *
+   *  @retval 0 if parser was initialized correctly else -1.
+   */
+  int initialize (ACEXML_InputSource* input);
+
+   /**
    * Return the current content handler.
    */
   virtual ACEXML_ContentHandler *getContentHandler (void) const;
@@ -132,80 +143,41 @@ public:
    */
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
-  // *** Helper functions for parsing XML
+
+
+protected:
+  /**
+   * Parse XML Prolog.
+   */
+  void parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
-   * Skip any whitespaces encountered until the first non-whitespace
-   * character is encountered and consumed from the current input
-   * CharStream.
+   * Parse VersionInfo declaration.
    *
-   * @param whitespace Return a pointer to the string of skipped
-   * whitespace after proper conversion.  Null if there's no
-   * whitespace found.
-   *
-   * @return The first none-white space characters (which will be
-   * consumed from the CharStream.)  If no whitespace is found, it
-   * returns 0.
-   *
-   * @sa skip_whitespace_count
    */
-  ACEXML_Char skip_whitespace (ACEXML_Char **whitespace);
+  void parse_version_info (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
-   * Skip any whitespaces encountered until the first non-whitespace
-   * character.  The first non-whitespace character is not consumed.
-   * This method does peek into the input CharStream and therefore
-   * is more expensive than @ref skip_whitespace.
+   *  Parse a EncodingDecl declaration.
    *
-   * @param peek If non-null, @a peek points to a ACEXML_Char where
-   *        skip_whitespace_count stores the first non-whitespace
-   *        character it sees (character is not removed from the stream.)
-   *
-   * @return The number of whitespace characters consumed.
-   *
-   * @sa skip_whitespace
    */
-  int skip_whitespace_count (ACEXML_Char *peek = 0);
+  void parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
-   * Check if a character @a c is a whitespace.
+   *  Parse a XMLDecl declaration.
    *
-   * @retval 1 if @a c is a valid white space character. 0 otherwise.
    */
-  int is_whitespace (ACEXML_Char c);
+  void parse_xml_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
-   * Check if a character @a c is a whitespace or '='.
-   *
-   * @retval 1 if true, 0 otherwise.
+   *  Parse a TextDecl declaration.
    */
-  int is_whitespace_or_equal (ACEXML_Char c);
-
-  /**
-   * Check if a character @a c is a valid character for nonterminal NAME.
-   *
-   * @retval 1 if true, 0 otherwise.
-   */
-  int is_nonname (ACEXML_Char c);
-
-  /**
-   * Skip an equal sign.
-   *
-   * @retval 0 when succeeds, -1 if no equal sign is found.
-   */
-  int skip_equal (void);
-
-  /**
-   * Get a quoted string.  Quoted strings are used to specify
-   * attribute values and this routine will replace character and
-   * entity references on-the-fly.  Parameter entities are not allowed
-   * (or replaced) in this function.  (But regular entities are.)
-   *
-   * @param str returns the un-quoted string.
-   *
-   * @retval 0 on success, -1 otherwise.
-   */
-  int get_quoted_string (ACEXML_Char *&str);
+  int parse_text_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse a PI statement.  The first character encountered
@@ -213,33 +185,15 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL);
-
-  /**
-   * Skip over a comment. The first character encountered
-   * should always be the first '-' in the comment prefix
-   * "@<@!--".
-   */
-  int grok_comment ();
-
-  /**
-   * Read a name from the input CharStream (until white space).
-   * If @a ch @!= 0, then we have already consumed the first name
-   * character from the input CharStream, otherwise, read_name
-   * will use this->get() to acquire the initial character.
-   *
-   * @return A pointer to the string in the obstack, 0 if it's not
-   * a valid name.
-   */
-  ACEXML_Char *read_name (ACEXML_Char ch = 0);
+  int parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse the DOCTYPE declaration.  The first character encountered
    * should always be  'D' in doctype prefix: "@<@!DOCTYPE".
    */
   int parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+        ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse an XML element.  The first character encountered should
@@ -255,35 +209,39 @@ public:
    * can be used in a validator.
    */
   void parse_element (int is_root ACEXML_ENV_ARG_DECL)
-        ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
-
-  /**
-   * Parse XML Prolog.
-   */
-  void parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((ACEXML_SAXException));
 
+  /**
+   *  Parse a content declaration.
+   *
+   */
+  int parse_content (const ACEXML_Char* startname, const ACEXML_Char* ns_uri,
+                     const ACEXML_Char* ns_lname
+                     ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
    * character encountered should be the '#' char.
    *
    * @param buf points to a character buffer for the result.
-   * @param len specifies the capacities of the buffer.
+   *
+   * @param len In/out argument which initially specifies the size of the
+   * buffer and is later set to the no. of characters in the reference.
    *
    * @retval 0 on success and -1 otherwise.
    */
-  int parse_char_reference (ACEXML_Char *buf, size_t len);
+  int parse_char_reference (ACEXML_Char *buf, size_t& len);
 
   /**
-   * Parse an entity reference, i.e., "&amp;".  The first character
-   * encountered should be the character following '&'.
+   * Parse a reference name, i.e., foo in "&foo;" or "%foo;". The first
+   * character encountered should be the character following '&' or '%'.
+   * Effectively the same as @sa parse_name but we don't use the parser's
+   * obstack. Caller is responsible for deleting the memory.
    *
-   * @return A pointer to the resolved const ACEXML_String if success
-   * (previously defined), 0 otherwise.
+   * @retval  A pointer to name of reference, 0 otherwise.
    */
-  const ACEXML_String *parse_reference (void);
+  ACEXML_Char* parse_reference_name (void);
 
   /**
    * Parse a CDATA section.  The first character should always be the first
@@ -292,13 +250,21 @@ public:
    * @retval 0 on success.
    * @retval -1 if fail.
    */
-  int parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse a "markupdecl" section, this includes both "markupdecl" and
    * "DeclSep" sections in XML specification
    */
-  int parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Skip over a comment. The first character encountered should always be
+   *  the first '-' in the comment prefix "@<@!--".
+   */
+  int parse_comment (void);
 
   /**
    * Parse an "ELEMENT" decl.  The first character this method
@@ -307,7 +273,8 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse an "ENTITY" decl.  The first character this method expects
@@ -315,7 +282,8 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse an "ATTLIST" decl.  Thse first character this method
@@ -324,7 +292,15 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   * Parse a AttType declaration.
+   *
+   */
+  int parse_atttype (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    *Parse a "NOTATION" decl.  The first character this method
@@ -333,7 +309,8 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse an ExternalID or a reference to PUBLIC ExternalID.
@@ -355,8 +332,81 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_external_id_and_ref (ACEXML_Char *&publicId,
-                                 ACEXML_Char *&systemId ACEXML_ENV_ARG_DECL);
+  int parse_external_id (ACEXML_Char *&publicId, ACEXML_Char *&systemId
+                         ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse an external DTD.
+   *
+   */
+  int parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse an external subset. This does the actual parsing of an external
+   *  subset and is called by @sa parse_external_dtd.
+   *
+   */
+  int parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a markupDecl section.
+   *
+   */
+  int parse_markup_decl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a conditionalSect declaration.
+   *
+   */
+  int parse_conditional_section (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a includeSect declaration.
+   *
+   */
+  int parse_includesect (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *
+   *  Parse a ignoreSect declaration.
+   */
+  int parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   * Parse a PEReference.
+   *
+   */
+  int parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a Reference.
+   *
+   */
+  int parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse an entityValue.
+   *
+   */
+  int parse_entity_value (ACEXML_Char *&str ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a DefaultDecl specification.
+   *
+   */
+  int parse_defaultdecl (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
 
   /**
    * Parse the "children" and "Mixed" non-terminals in contentspec.
@@ -366,7 +416,8 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL);
+  int parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
    * Parse a @c cp non-terminal.  @c cp can either be a @c seq or a @c choice.
@@ -378,23 +429,325 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL);
-
-protected:
-  /// Get a character.
-  ACEXML_Char get (void);
-
-  /// Peek a character.
-  ACEXML_Char peek (void);
+  int parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /**
-   * Check if more data can be added to a character buffer in obstack.
-   * If not, the existing data in the buffer will be cleared out by
-   * freezing the segment and pass it out thru a content_handler_->characters ()
-   * call.  @a counter records the length of the existing data in
-   * obstack.
+   *  Parse a name from the input CharStream. If @a ch @!= 0, then we have
+   *  already consumed the first name character from the input CharStream,
+   *  otherwise, parse_name will use this->get() to acquire the initial
+   *  character.
+   *
+   *  @return A pointer to the string in the obstack, 0 if it's not a
+   *  valid name.
    */
-  int try_grow_cdata (size_t size, size_t &len ACEXML_ENV_ARG_DECL);
+  ACEXML_Char *parse_name (ACEXML_Char ch = 0);
+
+  /**
+   *  Parse a NMTOKEN from the input stream.
+   *
+   * @return A pointer to the string in the obstack, 0 if it's not a valid
+   * NMTOKEN.
+   */
+  ACEXML_Char* parse_nmtoken (ACEXML_Char ch = 0);
+
+  /**
+   *  Parse the version string in an XML Prolog section.
+   *
+   *  @param str String containing the version number if successful.
+   *  @return 0 if the string was read successfully, 0 otherwise.
+   */
+  int parse_version (ACEXML_Char*& str);
+
+  /**
+   *  Parse the version number in a VersionInfo declaration.
+   */
+  int parse_version_num (ACEXML_Char*& str);
+
+  /**
+   *  Parse the encoding name in an XML Prolog section.
+   *
+   *  @param str String containing the encoding name if successful.
+   *  @return 0 if the string was read successfully, 0 otherwise.
+   */
+  int parse_encname (ACEXML_Char*& str);
+
+  /**
+   *  Parse a SDDecl string.
+   *
+   *  @param str String containing the encoding name if successful.
+   *  @return 0 if the string was read successfully, -1 otherwise.
+   */
+  int parse_sddecl (ACEXML_Char*& str);
+
+  /**
+   *  Parse an attribute name.
+   *
+   *  @retval str String containing the value of the attribute name
+   *             if successful.
+   *  @retval 0 otherwise.
+   */
+  ACEXML_Char* parse_attname (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse an attribute value.
+   *
+   *  @param str String containing the value of the attribute if successful.
+   *  @return 0 if attribute value was read successfully, -1 otherwise.
+   */
+  int parse_attvalue (ACEXML_Char*& str ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a tokenized type attribute.
+   *
+   *  @return 0 if attribute type was read successfully, -1 otherwise.
+   */
+  int parse_tokenized_type (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   *  Parse a SystemLiteral.
+   *
+   *  @param str String containing the SystemLiteral if successful.
+   *  @return 0 if the string was read successfully, 0 otherwise.
+   */
+  int parse_system_literal (ACEXML_Char*& str);
+
+   /**
+   *  Parse a PubidLiteral.
+   *
+   *  @param str String containing the PubidLiteral if successful.
+   *  @return 0 if the string was read successfully, 0 otherwise.
+   */
+  int parse_pubid_literal (ACEXML_Char*& str);
+
+  /**
+   * Check if a character @a c is a whitespace.
+   *
+   * @retval 1 if @a c is a valid white space character. 0 otherwise.
+   */
+  int is_whitespace (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a valid Char.
+   *
+   * @retval 1 if @a c is a valid character. 0 otherwise.
+   */
+  int isChar (ACEXML_UCS4 c) const;
+
+  /**
+   * Check if a character @a c is a valid CharRef character.
+   *
+   * @retval 1 if @a c is a valid character reference character, 0 otherwise.
+   */
+  int isCharRef (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a BaseChar.
+   *
+   * @retval 1 if @a c is a valid BaseChar character, 0 otherwise.
+   */
+  int isBasechar (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a Ideographic.
+   *
+   * @retval 1 if @a c is a valid Ideographic character, 0 otherwise.
+   */
+  int isIdeographic (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a CombiningChar.
+   *
+   * @retval 1 if @a c is a valid CombiningChar character, 0 otherwise.
+   */
+  int isCombiningchar (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a Digit.
+   *
+   * @retval 1 if @a c is a valid Digit character, 0 otherwise.
+   */
+  int isDigit (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is an Extender.
+   *
+   * @retval 1 if @a c is a valid Extender character, 0 otherwise.
+   */
+  int isExtender (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character @a c is a Letter.
+   *
+   * @retval 1 if @a c is a valid Letter character, 0 otherwise.
+   */
+  int isLetter (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character is an acceptable NameChar.
+   *
+   * @retval 1 if @a c is a valid NameChar character, 0 otherwise.
+   */
+  int isNameChar (const ACEXML_Char c) const;
+
+  /**
+   * Check if a character is a PubidChar.
+   *
+   * @retval 1 if @a c is a valid PubidChar character, 0 otherwise.
+   */
+  int isPubidChar (const ACEXML_Char c) const;
+
+  /// Get a character.
+  virtual ACEXML_Char get (void);
+
+  /// Peek a character.
+  virtual ACEXML_Char peek (void);
+
+private:
+
+  // *** Helper functions for parsing XML
+
+  /**
+   * Skip any whitespaces encountered until the first non-whitespace
+   * character is encountered.
+   *
+   * @return The next non-whitespace character from the CharStream.
+   *
+   * @sa skip_whitespace_count
+   */
+  ACEXML_Char skip_whitespace (void);
+
+  /**
+   * Skip any whitespaces encountered until the first non-whitespace
+   * character.  The first non-whitespace character is not consumed.
+   * This method does peek into the input CharStream and therefore
+   * is more expensive than @ref skip_whitespace.
+   *
+   * @param peek If non-null, @a peek points to a ACEXML_Char where
+   *        skip_whitespace_count stores the first non-whitespace
+   *        character it sees (character is not removed from the stream.)
+   *
+   * @return The number of whitespace characters consumed.
+   *
+   * @sa skip_whitespace
+   */
+  int skip_whitespace_count (ACEXML_Char *peek = 0);
+
+  /**
+   * Skip an equal sign.
+   *
+   * @retval 0 when succeeds, -1 if no equal sign is found.
+   */
+  int skip_equal (void);
+
+  /**
+   * Get a quoted string.  Quoted strings are used to specify
+   * attribute values and this routine will replace character and
+   * entity references on-the-fly.  Parameter entities are not allowed
+   * (or replaced) in this function.  (But regular entities are.)
+   *
+   * @param str returns the un-quoted string.
+   *
+   * @retval 0 on success, -1 otherwise.
+   */
+  int get_quoted_string (ACEXML_Char *&str);
+
+  /**
+   * Check if a character @a c is a Digit.
+   *
+   * @retval 1 if @a c is a valid Digit character, 0 otherwise.
+   */
+  int isNormalDigit (const ACEXML_Char c) const;
+
+  /**
+   * Dispatch errors to ErrorHandler.
+   *
+   */
+  void error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   * Dispatch warnings to ErrorHandler.
+   *
+   */
+  void warning (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   * Dispatch fatal errors to ErrorHandler.
+   *
+   */
+  void fatal_error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  /**
+   * Dispatch prefix mapping calls to the ContentHandler.
+   *
+   * @param prefix Namespace prefix
+   * @param uri Namespace URI
+   * @param name Local name
+   * @param start 1 => startPrefixMapping 0 => endPrefixMapping
+   */
+  void prefix_mapping (const ACEXML_Char* prefix,
+                              const ACEXML_Char* uri,
+                              const ACEXML_Char* name,
+                              int start ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+  /**
+   *  Parse a keyword.
+   */
+  int parse_token (const ACEXML_Char* keyword);
+
+  /**
+   *  Push the current context on to the stack.
+   *
+   */
+  int push_context (ACEXML_Parser_Context* context);
+
+  /**
+   *  Pop the top element in the stack and replace current context with that.
+   */
+  int pop_context (int GE_ref ACEXML_ENV_ARG_DECL);
+
+  /**
+   *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
+   *  replace the current input stream with the newly created stream.
+   */
+  virtual int switch_input (ACEXML_CharStream* cstream,
+                            const ACEXML_Char* systemId,
+                            const ACEXML_Char* publicId = 0);
+  /**
+   *  Create a new ACEXML_InputSource from @a systemId and @a publicId and
+   *  replace the current input source with the newly created InputSource.
+   */
+  virtual int switch_input (ACEXML_InputSource* input,
+                            const ACEXML_Char* systemId,
+                            const ACEXML_Char* publicId = 0);
+
+  /**
+   * Check for a parameter entity reference. This is used to check for the
+   * occurence of a PE Reference withing markupDecl. Additionally this
+   * function consumes any leading or trailing whitespace around the PE
+   * Reference.
+   *
+   * @retval Number of whitespace characters skipped.
+   */
+  int check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL);
+
+  /**
+   *  Reset the parser state.
+   *
+   */
+  void reset (void);
+
+  /**
+   * Very trivial, non-conformant normalization of a systemid.
+   *
+   */
+  ACEXML_Char* normalize_systemid (const ACEXML_Char* systemId);
 
   // Feature names:
 
@@ -433,43 +786,16 @@ protected:
    */
   static const ACEXML_Char namespace_prefixes_feature_[];
 
+  /**
+   *  @var validation_feature_
+   *
+   *  This constant string defines the SAX XML Validation feature. When
+   *  this feature is enabled, the parser validates the document in
+   *  addition to checking for well-formedness.
+   */
+  static const ACEXML_Char validation_feature_[];
+
   /* @} */
-
-private:
-  /**
-   * Dispatch errors to ErrorHandler.
-   *
-   */
-  void report_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
-
-  /**
-   * Dispatch warnings to ErrorHandler.
-   *
-   */
-  void report_warning (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
-
-  /**
-   * Dispatch fatal errors to ErrorHandler.
-   *
-   */
-  void report_fatal_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
-
-  /**
-   * Dispatch prefix mapping calls to the ContentHandler.
-   *
-   * @param prefix Namespace prefix
-   * @param uri Namespace URI
-   * @param name Local name
-   * @param start 1 => startPrefixMapping 0 => endPrefixMapping
-   */
-  void report_prefix_mapping (const ACEXML_Char* prefix,
-                              const ACEXML_Char* uri,
-                              const ACEXML_Char* name,
-                              int start ACEXML_ENV_ARG_DECL);
-  /**
-   *  Parse a keyword.
-   */
-  int parse_token (const ACEXML_Char* keyword);
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.
@@ -478,31 +804,94 @@ private:
   ACEXML_ContentHandler *content_handler_;
   ACEXML_ErrorHandler *error_handler_;
 
-  /// @@ Feature and properties management structure here.
-  /// Current input char stream.
-  ACEXML_CharStream *instream_;
-
-  /// My doctype, if any.
+  /// Document Type
   ACEXML_Char *doctype_;
 
-  /// External DTD System Literal, if any.
-  ACEXML_Char *dtd_system_;
+  /// Current parser context
+  ACEXML_Parser_Context* current_;
 
-  /// External DTD Public Literal, if any.
-  ACEXML_Char *dtd_public_;
+  /// Stack used to hold the Parser_Context
+  ACE_Unbounded_Stack<ACEXML_Parser_Context*> ctx_stack_;
 
+  /*
+   * The following two are essentially chains of references and is used by
+   * the parser to determine if there is any recursion. We keep two of
+   * these one for general entities and one for parameter entities, as they
+   * both fall under different namespaces.
+   *
+   */
+  /// Set used to hold the general entity references that are active.
+  ACE_Unbounded_Stack<ACEXML_Char*> GE_reference_;
+
+  /// Set used to hold the parameter entity references that are active.
+  ACE_Unbounded_Stack<ACEXML_Char*> PE_reference_;
+
+  /// Obstack used by the parser to hold all the strings parsed
   ACE_Obstack_T<ACEXML_Char> obstack_;
 
+  /// Alternative obstack used to hold any strings when the original is in use
+  ACE_Obstack_T<ACEXML_Char> alt_stack_;
+
+  /// Namespace stack used by the parser to implement support for Namespaces
   ACEXML_NamespaceSupport xml_namespace_;
 
-  ACEXML_Entity_Manager entities_;
+  /// T => We are processing a nested namespace
+  int nested_namespace_;
 
-  // Locator
-  ACEXML_LocatorImpl locator_;
+  /// Set of internal parsed general entities in the document
+  ACEXML_Entity_Manager internal_GE_;
 
-  // Feature flags &
+  /// Set of external parsed general entities in the document
+  ACEXML_Entity_Manager external_GE_;
+
+  /// Set of unparsed entities in the document
+  ACEXML_Entity_Manager unparsed_entities_;
+
+  /// Set of predefined entities used by the parser
+  ACEXML_Entity_Manager predef_entities_;
+
+  /// Set of internal parsed parameter entities in the document
+  ACEXML_Entity_Manager internal_PE_;
+
+  /// Set of external parsed parameter entities in the document
+  ACEXML_Entity_Manager external_PE_;
+
+  /// Set of notations declared in the document
+  ACEXML_Entity_Manager notations_;
+
+  /// State of the parser when it encounters a reference.
+  ACEXML_ParserInt::ReferenceState ref_state_;
+
+  /// T => We are parsing an external subset
+  int external_subset_;
+
+  /// T => We are parsing an external entity value
+  int external_entity_;
+
+  /// T => Internal DTD has parameter entity references
+  int has_pe_refs_;
+
+  /// If set, the document is a standalone XML document
+  int standalone_;
+
+  /// If set, the document has an external DTD subset
+  int external_dtd_;
+
+  /// If set, the document has an internal DTD
+  int internal_dtd_;
+
+  /// Feature flags
+  /// If set, the parser should parse a document without a prolog
   int simple_parsing_;
+
+  /// If set, the parser should also validate
+  int validate_;
+
+  /// If set, the parser should allow access by namespace qualified names.
   int namespaces_;
+
+  /// If set, the parser should include namespace declarations in the list
+  /// of attributes of an element.
   int namespace_prefixes_;
 
 };

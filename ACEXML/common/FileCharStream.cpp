@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
-  : filename_ (0), encoding_ (0), size_ (0), infile_ (NULL), peek_ (0)
+  : filename_ (0), encoding_ (0), size_ (0), infile_ (0), peek_ (0)
 {
 }
 
@@ -24,7 +24,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   this->encoding_ = 0;
 
   this->infile_ = ACE_OS::fopen (name, ACE_TEXT ("r"));
-  if (this->infile_ == NULL)
+  if (this->infile_ == 0)
     return -1;
 
   ACE_stat statbuf;
@@ -33,13 +33,15 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
 
   this->size_ = statbuf.st_size;
   this->filename_ = ACE::strnew (name);
-  this->determine_encoding();
-  return 0;
+  return this->determine_encoding();
 }
 
 int
 ACEXML_FileCharStream::determine_encoding (void)
 {
+  if (this->infile_ == 0)
+    return -1;
+
   char input[4];
   int retval = 0;
   int i = 0;
@@ -54,20 +56,20 @@ ACEXML_FileCharStream::determine_encoding (void)
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
   if (!temp)
     return -1;
-  if (ACE_OS::strcmp (temp,
-                      ACEXML_Encoding::encoding_names_[ACEXML_Encoding::OTHER]) == 0)
-    return -1;
   else
     {
       this->encoding_ = ACE::strnew (temp);
-//       ACE_DEBUG ((LM_DEBUG, "File's encoding is %s\n", this->encoding_));
+//       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
+//                   this->encoding_));
     }
   // Move over the byte-order-mark if present.
   char ch;
-  for (int j = 0; j < 2; ++j)
+  for (int j = 0; j < 3; ++j)
     {
-      this->getchar_i (ch);
-      if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF')
+      if (this->getchar_i (ch) < 0)
+        return -1;
+      if (ch == '\xFF' || ch == '\xFE' || ch == '\xEF' || ch == '\xBB' ||
+          ch == '\xBF')
         continue;
       else
         {
@@ -81,12 +83,17 @@ ACEXML_FileCharStream::determine_encoding (void)
 void
 ACEXML_FileCharStream::rewind()
 {
+  if (this->infile_ == 0)
+    return;
   ACE_OS::rewind (this->infile_);
 }
 
 int
 ACEXML_FileCharStream::available (void)
 {
+  if (this->infile_ == 0)
+    return -1;
+
   long curr;
   if ((curr = ACE_OS::ftell (this->infile_)) < 0)
     return -1;
@@ -96,10 +103,10 @@ ACEXML_FileCharStream::available (void)
 int
 ACEXML_FileCharStream::close (void)
 {
-  if (this->infile_ != NULL)
+  if (this->infile_ != 0)
     {
       ACE_OS::fclose (this->infile_);
-      this->infile_ = NULL;
+      this->infile_ = 0;
     }
   delete[] this->filename_;
   this->filename_ = 0;
@@ -122,17 +129,38 @@ int
 ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  return ACE_static_cast (int, ACE_OS::fread (str, len, 1, this->infile_));
+  if (this->infile_ == 0)
+    return -1;
+
+  return ACE_static_cast (int,
+          ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_));
 }
 
 int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
+  if (this->infile_ == 0)
+    return -1;
 #if defined (ACE_USES_WCHAR)
   return this->get_i (ch);
 #else
   ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
   return (feof(this->infile_) ? -1 : 0);
+#endif /* ACE_USES_WCHAR */
+}
+
+int
+ACEXML_FileCharStream::peek (void)
+{
+  if (this->infile_ == 0)
+    return -1;
+#if defined (ACE_USES_WCHAR)
+  return this->peek_i();
+#else
+
+  ACEXML_Char ch = ACE_OS::fgetc (this->infile_);
+  ::ungetc (ch, this->infile_);
+  return ch;
 #endif /* ACE_USES_WCHAR */
 }
 
@@ -166,24 +194,10 @@ ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
       ch = 0;
       return -1;
     }
-  ch = (BE) ? (input[0] << 8) | input[1] : (input[1] << 8) | input[0];
+  ch = BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0];
   return 0;
 }
-#endif /* ACE_USES_WCHAR */
 
-int
-ACEXML_FileCharStream::peek (void)
-{
-#if defined (ACE_USES_WCHAR)
-  return this->peek_i();
-#else
-  ACEXML_Char ch = ACE_OS::fgetc (this->infile_);
-  ::ungetc (ch, this->infile_);
-  return ch;
-#endif /* ACE_USES_WCHAR */
-}
-
-#if defined (ACE_USES_WCHAR)
 int
 ACEXML_FileCharStream::peek_i (void)
 {
@@ -215,7 +229,7 @@ ACEXML_FileCharStream::peek_i (void)
       this->peek_ = 0;
       return -1;
     }
-  this->peek_ = (BE) ? (input[0] << 8) | input[1] : (input[1] << 8) | input[0];
+  this->peek_ = BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0];
   return this->peek_;
 }
 #endif /* ACE_USES_WCHAR */
@@ -224,4 +238,10 @@ const ACEXML_Char*
 ACEXML_FileCharStream::getEncoding (void)
 {
   return this->encoding_;
+}
+
+const ACEXML_Char*
+ACEXML_FileCharStream::getSystemId (void)
+{
+  return this->filename_;
 }

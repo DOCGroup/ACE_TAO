@@ -35,7 +35,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "No filename specified\n"), -1);
 
   ACEXML_DefaultHandler *handler = 0;
-  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
     ACEXML_CharStream *stm = 0;
     ACEXML_FileCharStream *fstm = 0;
     ACE_NEW_RETURN (fstm,
@@ -52,6 +51,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (handler,
                     ACEXML_Svcconf_Handler (),
                     -1);
+
+    auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
 
     ACEXML_Parser parser;
     ACEXML_InputSource input(stm);

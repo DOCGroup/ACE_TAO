@@ -4,6 +4,7 @@
 #include "ace/ace_wchar.h"
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/common/HttpCharStream.h"
+#include "ACEXML/common/Encoding.h"
 
 ACE_RCSID (common, HttpCharStream, "$Id$")
 
@@ -72,7 +73,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
     this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s\n",
                        result,
-                       "Refer HTTP/1.1 for details"), -1);
+                       "Refer HTTP/1.0 error code for details"), -1);
   }
 
   this->size_ = ACE_static_cast (off_t, len);
@@ -109,6 +110,9 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
 int
 ACEXML_HttpCharStream::get_url (size_t& len)
 {
+  if (this->stream_ == 0)
+    return -1;
+
   int header_state = HDST_LINE1_PROTOCOL;
   int status = 0;
   size_t b = 0;
@@ -213,6 +217,8 @@ ACEXML_HttpCharStream::get_url (size_t& len)
         }
     }
  end_of_headers:
+  if (b == 0)
+    return -1;
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
@@ -236,6 +242,9 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   if (this->stream_->seek (data_offset, SEEK_SET) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%s: %m",
                        "Error in seeking to beginning of data"), -1);
+
+  if (this->determine_encoding() == -1)
+    return -1;
   return status;
 }
 
@@ -257,7 +266,7 @@ ACEXML_HttpCharStream::send_request (void)
   // Ensure that the <command> memory is deallocated.
   ACE_Auto_Basic_Array_Ptr<char> cmd_ptr (command);
 
-  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.1\r\n", path);
+  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.0\r\n", path);
   bytes += ACE_OS::sprintf (&command[bytes], "Host: %s\r\n",
                             this->url_addr_->get_host_name ());
   bytes += ACE_OS::sprintf (&command[bytes], "\r\n");
@@ -275,6 +284,8 @@ ACEXML_HttpCharStream::send_request (void)
 int
 ACEXML_HttpCharStream::available (void)
 {
+  if (this->stream_ == 0)
+    return -1;
   return ACE_static_cast (int, this->stream_->available());
 }
 
@@ -302,32 +313,44 @@ ACEXML_HttpCharStream::close (void)
 }
 
 int
-ACEXML_HttpCharStream::get (ACEXML_Char& ch)
+ACEXML_HttpCharStream::determine_encoding (void)
 {
-  ch = (ACEXML_Char) this->stream_->get_char();
-  return (ch == (ACEXML_Char)EOF ? -1 :0);
-}
-
-int
-ACEXML_HttpCharStream::read (ACEXML_Char *str,
-                             size_t len)
-{
-  char* temp = ACE_const_cast (char*, this->stream_->recv (len));
-  str = ACE_TEXT_CHAR_TO_TCHAR (temp);
-  if (str == 0)
+  if (this->stream_ == 0)
     return -1;
-  return ACE_static_cast (int, len);
-}
 
-int
-ACEXML_HttpCharStream::peek (void)
-{
-  return this->stream_->peek_char (0);
+  char input[4] = {0, 0, 0, 0};
+  int i = 0;
+  for (; i < 4 && input[i] != -1; ++i)
+    input[i] = this->stream_->peek_char(i);
+  if (i < 4)
+    return -1;
+  const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
+  if (!temp)
+    return -1;
+  else
+    {
+      this->encoding_ = ACE::strnew (temp);
+      //   ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
+    }
+  // Move over the byte-order-mark if present.
+  for (int j = 0; j < 3; ++j)
+    {
+      if (input[i] == '\xFF' || input[i] == '\xFE' || input[i] == '\xEF' ||
+          input[i] == '\xBB' || input[i] == '\xBF')
+        {
+          this->stream_->get_char();
+          continue;
+        }
+      break;
+    }
+  return 0;
 }
 
 void
 ACEXML_HttpCharStream::rewind (void)
 {
+  if (this->stream_ == 0)
+    return;
   this->stream_->rewind();
 }
 
@@ -336,3 +359,101 @@ ACEXML_HttpCharStream::getEncoding (void)
 {
   return this->encoding_;
 }
+
+const ACEXML_Char*
+ACEXML_HttpCharStream::getSystemId (void)
+{
+  return this->url_;
+}
+
+
+int
+ACEXML_HttpCharStream::read (ACEXML_Char *str,
+                             size_t len)
+{
+  if (this->stream_ == 0)
+    return -1;
+  len = len * sizeof (ACEXML_Char);
+  char* temp = ACE_const_cast (char*, this->stream_->recv (len));
+  str = ACE_TEXT_CHAR_TO_TCHAR (temp);
+  if (str == 0)
+    return -1;
+  return ACE_static_cast (int, len);
+}
+
+
+int
+ACEXML_HttpCharStream::get (ACEXML_Char& ch)
+{
+  if (this->stream_ == 0)
+    return -1;
+#if defined (ACE_USES_WCHAR)
+  return this->get_i (ch);
+#else
+  ch = (ACEXML_Char) this->stream_->get_char();
+  return (ch == (ACEXML_Char)EOF ? -1 :0);
+#endif /* ACE_USES_WCHAR */
+}
+
+int
+ACEXML_HttpCharStream::peek (void)
+{
+  if (this->stream_ == 0)
+    return -1;
+
+#if defined (ACE_USES_WCHAR)
+  return this->peek_i();
+#else
+  return this->stream_->peek_char (0);
+#endif /* ACE_USES_WCHAR */
+}
+
+
+#if defined (ACE_USES_WCHAR)
+int
+ACEXML_HttpCharStream::get_i (ACEXML_Char& ch)
+{
+  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+    {
+      ch = (ACEXML_Char) this->stream_->get_char();
+      return (ch == (ACEXML_Char)EOF ? -1 : 0);
+    }
+  int BE = (ACE_OS::strcmp (this->encoding_,
+                            ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
+  ACEXML_Char input[2] = {0};
+  int i = 0;
+  for (; i < 2 && input[i] != EOF; ++i)
+    {
+      input[i] = this->stream_->get_char();
+    }
+  if (i < 2)
+    {
+      ch = 0;
+      return input[i];
+    }
+  ch = BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0];
+  return 0;
+}
+
+int
+ACEXML_HttpCharStream::peek_i (void)
+{
+  // If we are reading a UTF-8 encoded file, just use the plain unget.
+  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+    {
+      ACEXML_Char ch = (ACEXML_Char) this->stream_->peek_char (0);
+      return ch;
+    }
+
+  int BE = (ACE_OS::strcmp (this->encoding_,
+                            ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
+  // Peek into the stream.
+  ACEXML_Char input[2];
+  int i = 0;
+  for (; i < 2 && (input[i] = this->stream_->peek_char (i)) != EOF; ++i)
+    ;
+  if (i < 2)
+    return -1;
+  return (BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0]);
+}
+#endif /* ACE_USES_WCHAR */

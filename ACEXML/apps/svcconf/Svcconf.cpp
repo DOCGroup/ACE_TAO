@@ -86,9 +86,10 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
     ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Can't parse a null string\n"), -1);
 
   ACEXML_StrCharStream *stm = 0;
-  ACE_NEW_RETURN (stm,
-                  ACEXML_StrCharStream (str),
-                  -1);
+  ACE_NEW_RETURN (stm, ACEXML_StrCharStream, -1);
+  if (stm->open (str, ACE_TEXT ("Svcconf")) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "ACEXML_Svcconf_Parser: Unable to create "
+                       "input stream.\n"), -1);
 
   this->input_stream_.setCharStream (stm);
   ACEXML_TRY_NEW_ENV
