@@ -128,6 +128,9 @@
 //**************************************************************
 
 #define ACE_HAS_DIRENT
+// Unless the thread enabled version is used the readdir_r interface
+// does not get defined in IRIX 6.2
+#define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RWLOCK_T
 
 #define ACE_HAS_GPERF
