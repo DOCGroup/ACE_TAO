@@ -1,9 +1,10 @@
-echo on
-#mkdir ..\proto\lib
-#copy .\Build\TAO.lib ..\proto\lib
+rem mkdir ..\proto\lib
+rem copy .\Build\TAO.lib ..\proto\lib
+
 rem copy %ACE_WRAPPERS%\ace.lib %TAO_ROOT%\proto\lib
 rem copy \OFP\Workspace\libfiles\ace.lib ..\proto\lib
-#copy \bmendel\ACE_wrappers\ace\ace.lib ..\proto\lib
+
+rem copy \bmendel\ACE_wrappers\ace\ace.lib ..\proto\lib
 
 mkdir ..\proto\include
 copy align.h     ..\proto\include
