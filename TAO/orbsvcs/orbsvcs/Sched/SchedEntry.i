@@ -247,6 +247,14 @@ Dispatch_Entry::task_entry () const
 }
 
 
+// accessor for pointer to original dispatch
+Dispatch_Entry *
+Dispatch_Entry::original_dispatch ()
+{
+  return original_dispatch_;
+}
+
+
 ///////////////////////////////
 // Class Dispatch_Entry_Link //
 ///////////////////////////////
@@ -309,6 +317,21 @@ TimeLine_Entry::stop () const
 {
   return stop_;
 }
+
+// accessor for time slice stop time (100 nanoseconds)
+ACE_INLINE u_long 
+TimeLine_Entry::arrival () const
+{
+  return arrival_;
+}
+
+// accessor for time slice stop time (100 nanoseconds)
+ACE_INLINE u_long 
+TimeLine_Entry::deadline () const
+{
+  return deadline_;
+}
+
 
 // accessor for next slice for this dispatch
 ACE_INLINE TimeLine_Entry *

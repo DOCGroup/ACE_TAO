@@ -178,6 +178,7 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 }
 
 
+
 // prohibit calls of the given type: currently used to enforce
 // the notion that two-way calls to disjunctive or conjunctive
 // RT_Infos do not have any defined meaning, and thus should be
@@ -432,36 +433,35 @@ Task_Entry::reframe (
     return -1;
   }
 
-  // use an empty ordered multiset for subsequent sub-frame dispatches
-  // (the set already holds all dispatches the 0th sub-frame)
+  // make a shallow copy of the set in a new ordered 
+  // multiset using the Dispatch_Entry_Link smart pointers
   ACE_Ordered_MultiSet <Dispatch_Entry_Link> new_set;
+  ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> new_iter (new_set);
+  ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> set_iter (set);
 
-  // merge the old set with its old period into the new (empty)
-  // set with the new period, starting after the 0th sub-frame:
-  // this puts all dispatches after the 0th sub-frame of the new period
-  // in the new set, and leaves all dispatches in the 0th sub-frame of
-  // the new period in the old set.
-  u_long temp_period = new_period;
-  int result = merge_frames (dispatch_entries, owner, new_set, set,
-                             temp_period, set_period, 1, 1);
-
-  // if the period changed during the merge, or an error was returned, bail out
-  if ((temp_period != new_period) || result == -1)
+  for (set_iter.first (); set_iter.done () == 0; set_iter.advance ())
   {
-    return -1;
+    Dispatch_Entry_Link *link;
+    if (set_iter.next (link) == 0)
+    {
+      return -1;
+    }
+
+    if (new_set.insert (*link, new_iter) < 0)
+    {
+      return -1;
+    }    
   }
 
-  // now, update the period for the set, and merge the 
-  // new set into the old set, over the same period
+  // do a deep copy merge back into the set using the new period and starting
+  // after the 0th sub-frame: this puts all dispatches after the 0th 
+  // sub-frame of the new period into the set, and leaves existing dispatches
+  // in the 0th sub-frame of the new period in the set as well.
+  int result = merge_frames (dispatch_entries, owner, set, 
+                         new_set, new_period, set_period, 1, 1);
+
+  // update the set's period to be the new frame
   set_period = new_period;
-  result = merge_frames (dispatch_entries, owner, set, 
-                         new_set, set_period, set_period);
-
-  // if the period changed during the merge, return an error
-  if (set_period != new_period)
-  {
-    result = -1;
-  }
 
   return result;
 }
@@ -497,11 +497,11 @@ Task_Entry::merge_frames (
 
   // do virutal iteration over the source set in the new frame,
   // adding adjusted dispatch entries to the destination
+  Dispatch_Proxy_Iterator src_iter (src, src_period, dest_period, 
+                                    number_of_calls, 
+                                    starting_dest_sub_frame);
 
-  for (Dispatch_Proxy_Iterator src_iter (src, src_period, dest_period, 
-                                         number_of_calls, 
-                                         starting_dest_sub_frame); 
-       src_iter.done () == 0; src_iter.advance ())
+  for (src_iter.first (starting_dest_sub_frame); src_iter.done () == 0; src_iter.advance ())
   {
 
     // Policy: disjunctively dispatched operations get their deadline and 
@@ -568,8 +568,9 @@ Dispatch_Entry::Dispatch_Id Dispatch_Entry::next_id_ = 0;
 Dispatch_Entry::Dispatch_Entry (
       Time arrival,
       Time deadline,
-	  Preemption_Priority priority,
-      Task_Entry &task_entry)
+	   Preemption_Priority priority,
+      Task_Entry &task_entry,
+      Dispatch_Entry *original_dispatch)
 
   : priority_ (priority)
   , OS_priority_ (0)
@@ -578,6 +579,7 @@ Dispatch_Entry::Dispatch_Entry (
   , arrival_ (arrival)
   , deadline_ (deadline)
   , task_entry_ (task_entry)
+  , original_dispatch_ (original_dispatch)
 {
   // obtain, increment the next id
   dispatch_id_ = next_id_++;
@@ -591,6 +593,7 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
   , arrival_ (d.arrival_)
   , deadline_ (d.deadline_)
   , task_entry_ (d.task_entry_)
+  , original_dispatch_ (d.original_dispatch_)
 {
   // obtain, increment the next id
   dispatch_id_ = next_id_++;
@@ -653,8 +656,8 @@ Dispatch_Entry_Link::Dispatch_Entry_Link (
 // Class Dispatch_Proxy_Iterator //
 ///////////////////////////////////
 
-Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator 
-  (ACE_Ordered_MultiSet <Dispatch_Entry_Link> set,
+Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
+  (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
    u_long actual_frame_size,
    u_long virtual_frame_size,
    u_long number_of_calls,
@@ -666,14 +669,14 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   , current_frame_offset_ (actual_frame_size * starting_sub_frame)
   , iter_ (set)
 {
-  first ();
+  first (starting_sub_frame);
 }
       // ctor
 
 int 
 Dispatch_Proxy_Iterator::first (u_int sub_frame)
 {
-  if (actual_frame_size_ * (sub_frame + 1) >= virtual_frame_size_)
+  if (actual_frame_size_ * (sub_frame) >= virtual_frame_size_)
   {
     // can not position the virtual iterator
     // in the given range: do nothing
@@ -846,11 +849,14 @@ Dispatch_Proxy_Iterator::priority () const
     // time slice constructor 
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 u_long start, u_long stop,
+                                u_long arrival, u_long deadline,
                                 TimeLine_Entry *next,
                                 TimeLine_Entry *prev)
   : dispatch_entry_ (dispatch_entry)
   , start_ (start)
   , stop_ (stop)
+  , arrival_ (arrival)
+  , deadline_ (deadline)
   , next_ (next)
   , prev_ (prev)
 {
