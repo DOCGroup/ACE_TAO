@@ -1,33 +1,33 @@
 Fri Oct 22 16:58:44 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/Dynamic_Service.h: Added an include for OS.h so the 
-          Dynamic_Service.cpp will always get included on platforms 
-          that need it (ie. win32).  
+        * ace/Dynamic_Service.h: Added an include for OS.h so the
+          Dynamic_Service.cpp will always get included on platforms
+          that need it (ie. win32).
 
           Thanks to Paulo Breda Vieira <breda@inesca.pt> for spotting
           this problem in the AV Streaming code on NT.
 
 Thu Oct 21 20:21:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp (map_file): Make sure to update the 
-	  base_addr_ with the new mem_map_.addr() before the call to
- 	  update the ACE based pointer.  Thanks to Damien Dufour
- 	  <damien.dufour@horoquartz.fr> for reporting this.
-	
+        * ace/Memory_Pool.cpp (map_file): Make sure to update the
+          base_addr_ with the new mem_map_.addr() before the call to
+          update the ACE based pointer.  Thanks to Damien Dufour
+          <damien.dufour@horoquartz.fr> for reporting this.
+        
 Thu Oct 21 17:10:17 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/OS.i (ioctl): Corrected the implementation of 
-	  ACE_OS::ioctl () call with ACE_SIO_GET_QOS io control
-	  code. Thanks to Vidya Narayanan <CVN065@lmpsil02.comm.mot.com>
-	  for reporting this.
+        * ace/OS.i (ioctl): Corrected the implementation of
+          ACE_OS::ioctl () call with ACE_SIO_GET_QOS io control
+          code. Thanks to Vidya Narayanan <CVN065@lmpsil02.comm.mot.com>
+          for reporting this.
 
-	* ACE_wrappers/examples/QOS/server.cpp:
-	* ACE_wrappers/examples/QOS/client.cpp:
-	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp:
-	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp:
-	  Changed the QOS example to GET-QOS only on receipt of a QoS
-	  event. Also tested the changes made to the ioctl (GET_QOS) in
-	  OS.i. 
+        * ACE_wrappers/examples/QOS/server.cpp:
+        * ACE_wrappers/examples/QOS/client.cpp:
+        * ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp:
+        * ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp:
+          Changed the QOS example to GET-QOS only on receipt of a QoS
+          event. Also tested the changes made to the ioctl (GET_QOS) in
+          OS.i.
 
 Thu Oct 21 15:46:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
