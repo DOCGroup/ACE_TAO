@@ -41,10 +41,10 @@ NS_NamingContext::~NS_NamingContext (void)
 }
 
 CosNaming::NamingContext_ptr
-NS_NamingContext::get_context (const CosNaming::Name &name)
+NS_NamingContext::get_context (const CosNaming::Name &name,
+			       CORBA::Environment &_env)
 {
   // Create compound name to be resolved (<name> - last component).
-  CORBA::Environment _env;
   CORBA::ULong len = name.length ();
   CosNaming::Name comp_name (name);
   comp_name.length (len - 1);
@@ -57,7 +57,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
   if (_env.exception () != 0)
     {
       _env.print_exception ("NS_NamingContext::get_context");
-      return 0;
+      return CosNaming::NamingContext::_nil ();
     }
 
   // Reference to a context from <resolve> cannot be nil because
@@ -69,7 +69,7 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
   if (_env.exception () != 0)
     {
       _env.print_exception ("NS_NamingContext::get_context - _narrow");
-      return 0;
+      return CosNaming::NamingContext::_nil ();
     }
 
   CosNaming::Name rest;
@@ -83,6 +83,9 @@ NS_NamingContext::get_context (const CosNaming::Name &name)
       rest.length (2);
       rest[0] = name[len - 2];
       rest[1] = name[len - 1];
+      _env.clear ();
+      _env.exception (new CosNaming::NamingContext::NotFound (CosNaming::NamingContext::not_context, rest));
+      return CosNaming::NamingContext::_nil ();      
     }
   return c;
 }
@@ -116,7 +119,10 @@ NS_NamingContext::bind (const CosNaming::Name& n,
   // target context.
   if (len > 1)
     {
-      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::NamingContext_var cont = get_context (n, _env);
+      if (_env.exception () != 0)
+	return;
+
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
@@ -181,7 +187,10 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
   // on target context.
   if (len > 1)
     {
-      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::NamingContext_var cont = get_context (n, _env);
+      if (_env.exception () != 0)
+	return;
+
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
@@ -240,7 +249,10 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
   // target context.
   if (len > 1)
     {
-      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::NamingContext_var cont = get_context (n, _env);
+      if (_env.exception () != 0)
+	return;
+
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
@@ -300,7 +312,10 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
   // on target context.
   if (len > 1)
     {
-      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::NamingContext_var cont = get_context (n, _env);
+      if (_env.exception () != 0)
+	return;
+
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
@@ -429,7 +444,10 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
   // on target context.
   if (len > 1)
     {
-      CosNaming::NamingContext_var cont = get_context (n);
+      CosNaming::NamingContext_var cont = get_context (n, _env);
+      if (_env.exception () != 0)
+	return;
+
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[len - 1];
