@@ -16,7 +16,7 @@ Sun Mar 26 14:57:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  reporting that the IDL compiler would not accept
 	  CosLifeCycle.idl with valuetype support enabled
 	  (CosLifeCycle.idl contains an identifier "suppports",
-	  a valuetype keyword).
+	  a valuetype keyword). This closes out Bugzilla #488.
 
 	* orbsvcs/orbsvcs/CosLifeCycle.idl:
 	  Changed "supports" identifier to "_supports". Generated
