@@ -1,3 +1,10 @@
+Tue Oct 14 17:51:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	* tao/corbafwd.h: Applied patches to fix compilation errors with
+	  LynxOS. Thanks to Olli Savia for the patches.
+
 Tue Oct 14 09:32:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/Makefile.parser: Removed lingTAO_Svc_Utils from the
