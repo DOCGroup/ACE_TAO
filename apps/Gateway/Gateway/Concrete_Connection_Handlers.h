@@ -7,10 +7,10 @@
 //    gateway
 // 
 // = FILENAME
-//    Concrete_Proxy_Handlers.h
+//    Concrete_Connection_Handlers.h
 //
 // = DESCRIPTION
-//    These are all the subclasses of Proxy_Handler that define the
+//    These are all the subclasses of Connection_Handler that define the
 //    appropriate threaded/reactive Consumer/Supplier behavior.
 //
 // = AUTHOR
@@ -18,21 +18,23 @@
 // 
 // ============================================================================
 
-#if !defined (_CONCRETE_PROXY_HANDLER)
-#define _CONCRETE_PROXY_HANDLER
+#if !defined (CONCRETE_CONNECTION_HANDLER)
+#define CONCRETE_CONNECTION_HANDLER
 
-#include "Proxy_Handler.h"
+#include "Connection_Handler.h"
 
-class Supplier_Proxy : public Proxy_Handler
+class Supplier_Handler : public Connection_Handler
+{
   // = TITLE
-  //     Handles reception of Events from Suppliers
+  //     Handles reception of Events from Suppliers.
   //
   // = DESCRIPTION
-  //     Performs framing and error checking.
-{
+  //     Performs framing and error checking on Events.  Intended to
+  //     run reactively, i.e., in one thread of control using a
+  //     Reactor for demuxing and dispatching.
 public:
   // = Initialization method.
-  Supplier_Proxy (const Proxy_Config_Info &);
+  Supplier_Handler (const Connection_Config_Info &);
 
 protected:
   // = All the following methods are upcalls, so they can be protected.
@@ -45,33 +47,32 @@ protected:
 
   int forward (ACE_Message_Block *event);
   // Forward the <event> to its appropriate Consumer.  This delegates
-  // to the <ACE_Event_Channel> to do the actual forwarding.
+  // to the <Event_Channel> to do the actual forwarding.
 
   ACE_Message_Block *msg_frag_;
   // Keep track of event fragment to handle non-blocking recv's from
   // Suppliers.
 };
 
-class Consumer_Proxy : public Proxy_Handler
+class Consumer_Handler : public Connection_Handler
+{
   // = TITLE
   //     Handles transmission of events to Consumers.
   //
   // = DESCRIPTION
-  //     Performs queueing and error checking.  Uses a single-threaded
-  //     Reactive approach to handle flow control.
-{
+  //     Performs queueing and error checking.  Intended to run
+  //     reactively, i.e., in one thread of control using a Reactor
+  //     for demuxing and dispatching.  Also uses a Reactor to handle
+  //     flow controlled output connections.
 public:
   // = Initialization method.
-  Consumer_Proxy (const Proxy_Config_Info &);
+  Consumer_Handler (const Connection_Config_Info &);
 
   virtual int put (ACE_Message_Block *event, 
 		   ACE_Time_Value * = 0);
   // Send an event to a Consumer (may be queued if necessary).
 
 protected:
-  // = We'll allow up to 16 megabytes to be queued per-output proxy.
-  enum {MAX_QUEUE_SIZE = 1024 * 1024 * 16};
-
   virtual int handle_output (ACE_HANDLE);
   // Finish sending event when flow control conditions abate.
 
@@ -85,15 +86,15 @@ protected:
   // Receive and process shutdowns from a Consumer.
 };
 
-class Thr_Consumer_Proxy : public Consumer_Proxy
-  // = TITLE
-  //    Runs each Output Proxy_Handler in a separate thread.
+class Thr_Consumer_Handler : public Consumer_Handler
 {
+  // = TITLE
+  //    Runs each <Consumer_Handler> in a separate thread.
 public:
-  Thr_Consumer_Proxy (const Proxy_Config_Info &);
+  Thr_Consumer_Handler (const Connection_Config_Info &);
 
   virtual int open (void *);
-  // Initialize the threaded Consumer_Proxy object and spawn a new
+  // Initialize the threaded Consumer_Handler object and spawn a new
   // thread.
 
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
@@ -107,12 +108,12 @@ protected:
   // Transmit peer messages.
 };
 
-class Thr_Supplier_Proxy : public Supplier_Proxy
-  // = TITLE
-  //    Runs each Input Proxy_Handler in a separate thread.
+class Thr_Supplier_Handler : public Supplier_Handler
 {
+  // = TITLE
+  //    Runs each <Supplier_Handler> in a separate thread.
 public:
-  Thr_Supplier_Proxy (const Proxy_Config_Info &pci);
+  Thr_Supplier_Handler (const Connection_Config_Info &pci);
 
   virtual int open (void *);
   // Initialize the object and spawn a new thread.
@@ -122,4 +123,4 @@ protected:
   // Transmit peer messages.
 };
 
-#endif /* _CONCRETE_PROXY_HANDLER */
+#endif /* CONCRETE_CONNECTION_HANDLER */
