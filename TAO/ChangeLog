@@ -1,3 +1,7 @@
+Sat Apr 26 10:52:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/ImR_LocatorC.i: Fixed a warning in VC++ builds.
+
 Sat Apr 26 08:42:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Environment.cpp: Removed operator= for
