@@ -173,7 +173,8 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
 	return -1;
 
       struct sockaddr_in *socket_address;
-      socket_address = (sockaddr_in *) &if_address.ifr_addr;
+      socket_address = ACE_reinterpret_cast(sockaddr_in *,
+					    &if_address.ifr_addr);
       multicast_address_.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #else
       // This port number is not necessary, just convenient
