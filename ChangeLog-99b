@@ -1,52 +1,57 @@
+Fri Apr 02 23:25:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: added TAO/tao/Version.h.  Thanks to
+          Nanbor for suggesting this.
+
 Fri Apr  2 19:19:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* bin/autogen: Update NEWS file by copying VERSION.  Temporary
-	  hack to make Automake happy when doing a `make dist'.
+        * bin/autogen: Update NEWS file by copying VERSION.  Temporary
+          hack to make Automake happy when doing a `make dist'.
 
 Fri Apr  2 18:37:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in: Placed the asynchronous IO checks right after
-	  the thread library checks.  This was done to make sure the
-	  library with AIO support gets added to the link list before
-	  the rest of the tests start, and to make sure that it doesn't
-	  get added if AIO isn't supported or isn't working.
+        * configure.in: Placed the asynchronous IO checks right after
+          the thread library checks.  This was done to make sure the
+          library with AIO support gets added to the link list before
+          the rest of the tests start, and to make sure that it doesn't
+          get added if AIO isn't supported or isn't working.
 
-	* Makefile.am (ACE_EXTRA_DIST): Changed directory names to use
-	  `$(top_srcdir)' instead of the current directory `.'.  This
-	  allows a distribution to be made from a directory other than
-	  ACE's top level source directory.
+        * Makefile.am (ACE_EXTRA_DIST): Changed directory names to use
+          `$(top_srcdir)' instead of the current directory `.'.  This
+          allows a distribution to be made from a directory other than
+          ACE's top level source directory.
 
-	* m4/compiler.m4: Explicitly add the `-xildoff' flag to Sun CC's
-	  LDFLAGS.  This is just a precautionary measure.  It shouldn't
-	  be needed.
+        * m4/compiler.m4: Explicitly add the `-xildoff' flag to Sun CC's
+          LDFLAGS.  This is just a precautionary measure.  It shouldn't
+          be needed.
 
 Fri Apr  2 12:41:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Containers_T.h (all of the classes listed below):
-	* ace/Containers_T.i (ACE_Array): 
-	* ace/Containers_T.i (ACE_DLList): 
-	* ace/Containers_T.cpp (ACE_Bounded_Stack):
-	* ace/Containers_T.cpp (ACE_Fixed_Stack):
-	* ace/Containers_T.cpp (ACE_Unbounded_Stack):
-	* ace/Containers_T.cpp (ACE_Unbounded_Queue):
-	* ace/Containers_T.cpp (ACE_Double_Linked_List):
-	* ace/Containers_T.cpp (ACE_Fixed_Set):
-	* ace/Containers_T.cpp (ACE_Bounded_Set):
-	* ace/Containers_T.cpp (ACE_Unbounded_Set):
-	* ace/Containers_T.cpp (ACE_Ordered_MultiSet):
-	* ace/Handle_Set.h (ACE_Handle_Set): 
-	* ace/Handle_Set.i (ACE_Handle_Set): 
-	
-	  Changed assignment operators (operator=) to return a reference
-	  to `*this' so that assignments may be chained.
+        * ace/Containers_T.h (all of the classes listed below):
+        * ace/Containers_T.i (ACE_Array):
+        * ace/Containers_T.i (ACE_DLList):
+        * ace/Containers_T.cpp (ACE_Bounded_Stack):
+        * ace/Containers_T.cpp (ACE_Fixed_Stack):
+        * ace/Containers_T.cpp (ACE_Unbounded_Stack):
+        * ace/Containers_T.cpp (ACE_Unbounded_Queue):
+        * ace/Containers_T.cpp (ACE_Double_Linked_List):
+        * ace/Containers_T.cpp (ACE_Fixed_Set):
+        * ace/Containers_T.cpp (ACE_Bounded_Set):
+        * ace/Containers_T.cpp (ACE_Unbounded_Set):
+        * ace/Containers_T.cpp (ACE_Ordered_MultiSet):
+        * ace/Handle_Set.h (ACE_Handle_Set):
+        * ace/Handle_Set.i (ACE_Handle_Set):
+
+          Changed assignment operators (operator=) to return a reference
+          to `*this' so that assignments may be chained.
 
 Thu Apr  1 23:41:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp:
-	  Fixed write_array() to memcpy if doing a byte-swap
-	  and size = 1. Previously, it was falling through
-	  without writing anything. Thanks to Jerry De Master 
-	  <jdemaste@ipdinc.com> for pointing this out.
+        * ace/CDR_Stream.cpp:
+          Fixed write_array() to memcpy if doing a byte-swap
+          and size = 1. Previously, it was falling through
+          without writing anything. Thanks to Jerry De Master
+          <jdemaste@ipdinc.com> for pointing this out.
 
 Thu Apr 01 22:38:25 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -54,130 +59,130 @@ Thu Apr 01 22:38:25 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Apr 01 21:09:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* Sequence.h (TAO_Base_Sequence): Made the copy constructor and
-	  the assignment operator public since making them protected was
-	  breaking some compilers.
+        * Sequence.h (TAO_Base_Sequence): Made the copy constructor and
+          the assignment operator public since making them protected was
+          breaking some compilers.
 
-	* ace/Filecache.cpp (ACE_Filecache_Object): Fixed typo: <lock_>
-	  should be <lock>.
+        * ace/Filecache.cpp (ACE_Filecache_Object): Fixed typo: <lock_>
+          should be <lock>.
 
 Thu Apr  1 19:41:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/IPC_SAP.h (ACE_IPC_SAP):
-	* ace/SOCK.h (ACE_SOCK):
-	* ace/SOCK_IO.h (ACE_SOCK_IO):
-	* ace/SV_Semaphore_Simple.h (ACE_SV_Semaphore_Simple):
-	* ace/Synch.h (ACE_Barrier):
-	* ace/Synch.h (ACE_Event):
-	* ace/Synch.h (ACE_Guard):
-	* ace/Synch.h (ACE_Null_Mutex):
-	* ace/Synch.h (ACE_RW_Mutex):
-	* ace/Synch.h (ACE_Semaphore):
-	  Reverted the changes that made these base class destructors
-	  virtual.  They don't need to be virtual for the way they are
-	  being used.
+        * ace/IPC_SAP.h (ACE_IPC_SAP):
+        * ace/SOCK.h (ACE_SOCK):
+        * ace/SOCK_IO.h (ACE_SOCK_IO):
+        * ace/SV_Semaphore_Simple.h (ACE_SV_Semaphore_Simple):
+        * ace/Synch.h (ACE_Barrier):
+        * ace/Synch.h (ACE_Event):
+        * ace/Synch.h (ACE_Guard):
+        * ace/Synch.h (ACE_Null_Mutex):
+        * ace/Synch.h (ACE_RW_Mutex):
+        * ace/Synch.h (ACE_Semaphore):
+          Reverted the changes that made these base class destructors
+          virtual.  They don't need to be virtual for the way they are
+          being used.
 
 Thu Apr 01 19:01:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Containers.h (ACE_DLList_Node):
-	* ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
-	* ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
-	* ace/Event_Handler.h (ACE_Event_Handler):
-	* ace/Event_Handler.h (ACE_Notification_Buffer):
-	* ace/Filecache.h (ACE_Filecache_Handle):
-	* ace/Filecache.h (ACE_Filecache_Object):
-	* ace/Local_Tokens.h (ACE_TPQ_Iterator):
-	* ace/Local_Tokens.h (ACE_Token_Proxy):
-	* ace/Local_Tokens.h (ACE_Token_Proxy_Queue):
-	* ace/Malloc.h (ACE_Name_Node):
-	* ace/Malloc.h (ACE_Static_Allocator_Base):
-	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool):
-	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool_Options):
-	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool):
-	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool_Options):
-	* ace/OS.h (ACE_Countdown_Time):
-	* ace/OS.h (ACE_Thread_Adapter):
-	* ace/OS.h (ACE_Thread_Control):
-	* ace/OS.h (ACE_Thread_Exit):
-	* ace/Service_Object.h (ACE_Service_Type):
-	* ace/Signal.h (ACE_Sig_Adapter):
-	* ace/Synch.h (ACE_Adaptive_Lock):
-	* ace/Synch.h (ACE_TSS_Adapter):
+        * ace/Containers.h (ACE_DLList_Node):
+        * ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
+        * ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
+        * ace/Event_Handler.h (ACE_Event_Handler):
+        * ace/Event_Handler.h (ACE_Notification_Buffer):
+        * ace/Filecache.h (ACE_Filecache_Handle):
+        * ace/Filecache.h (ACE_Filecache_Object):
+        * ace/Local_Tokens.h (ACE_TPQ_Iterator):
+        * ace/Local_Tokens.h (ACE_Token_Proxy):
+        * ace/Local_Tokens.h (ACE_Token_Proxy_Queue):
+        * ace/Malloc.h (ACE_Name_Node):
+        * ace/Malloc.h (ACE_Static_Allocator_Base):
+        * ace/Memory_Pool.h (ACE_MMAP_Memory_Pool):
+        * ace/Memory_Pool.h (ACE_MMAP_Memory_Pool_Options):
+        * ace/Memory_Pool.h (ACE_Shared_Memory_Pool):
+        * ace/Memory_Pool.h (ACE_Shared_Memory_Pool_Options):
+        * ace/OS.h (ACE_Countdown_Time):
+        * ace/OS.h (ACE_Thread_Adapter):
+        * ace/OS.h (ACE_Thread_Control):
+        * ace/OS.h (ACE_Thread_Exit):
+        * ace/Service_Object.h (ACE_Service_Type):
+        * ace/Signal.h (ACE_Sig_Adapter):
+        * ace/Synch.h (ACE_Adaptive_Lock):
+        * ace/Synch.h (ACE_TSS_Adapter):
 
-	  In some cases, classes with pointers *can* use the default copy
-	  constructor and the assignment operator.  A more careful
-	  screening of the egcs -Weffc++ flag need to be done before a
-	  copy constructor and assignment operator can be considered
-	  harmful/dangerous.  For now, the changes Ossama made have been
-	  reverted.
+          In some cases, classes with pointers *can* use the default copy
+          constructor and the assignment operator.  A more careful
+          screening of the egcs -Weffc++ flag need to be done before a
+          copy constructor and assignment operator can be considered
+          harmful/dangerous.  For now, the changes Ossama made have been
+          reverted.
 
-	* ace/Filecache.cpp (ACE_Filecache_Object):
-	* ace/Signal.i (ACE_Sig_Action):
-	* ace/OS.i (ACE_Time_Value):
+        * ace/Filecache.cpp (ACE_Filecache_Object):
+        * ace/Signal.i (ACE_Sig_Action):
+        * ace/OS.i (ACE_Time_Value):
 
-	  Removed default contruction of structs. Old g++ is broken.
+          Removed default contruction of structs. Old g++ is broken.
 
-	* ace/Filecache.cpp (ACE_Filecache_Object): Fixed incorrect
-	  initialization of <mmap_>.
+        * ace/Filecache.cpp (ACE_Filecache_Object): Fixed incorrect
+          initialization of <mmap_>.
 
 Thu Apr  1 16:22:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
-	* ace/Containers_T.cpp (ACE_Unbounded_Set_Iterator):
-	  The signatures for the prefix and postfix operators were
-	  switched.  Prefix operators take a void and return a
-	  a reference and postfix operators take an int and returns a
-	  copy.
+        * ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
+        * ace/Containers_T.cpp (ACE_Unbounded_Set_Iterator):
+          The signatures for the prefix and postfix operators were
+          switched.  Prefix operators take a void and return a
+          a reference and postfix operators take an int and returns a
+          copy.
 
-	* ace/Containers.h (ACE_DLList_Node):
-	* ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
-	* ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
-	* ace/Event_Handler.h (ACE_Event_Handler):
-	* ace/Event_Handler.h (ACE_Notification_Buffer):
-	* ace/Filecache.h (ACE_Filecache_Handle):
-	* ace/Filecache.h (ACE_Filecache_Object):
-	* ace/Local_Tokens.h (ACE_TPQ_Iterator):
-	* ace/Local_Tokens.h (ACE_Token_Proxy):
-	* ace/Local_Tokens.h (ACE_Token_Proxy_Queue):
-	* ace/Malloc.h (ACE_Name_Node):
-	* ace/Malloc.h (ACE_Static_Allocator_Base):
-	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool):
-	* ace/Memory_Pool.h (ACE_MMAP_Memory_Pool_Options):
-	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool):
-	* ace/Memory_Pool.h (ACE_Shared_Memory_Pool_Options):
-	* ace/OS.h (ACE_Countdown_Time):
-	* ace/OS.h (ACE_Thread_Adapter):
-	* ace/OS.h (ACE_Thread_Control):
-	* ace/OS.h (ACE_Thread_Exit):
-	* ace/Service_Object.h (ACE_Service_Type):
-	* ace/Signal.h (ACE_Sig_Adapter):
-	* ace/Synch.h (ACE_Adaptive_Lock):
-	* ace/Synch.h (ACE_TSS_Adapter):
-	  Explicitly disallow use of implicitly generated copy
-	  constructor and assignment operator to prevent inadvertent
-	  memory leaks.
+        * ace/Containers.h (ACE_DLList_Node):
+        * ace/Containers_T.h (ACE_Double_Linked_List_Iterator):
+        * ace/Containers_T.h (ACE_Unbounded_Set_Iterator):
+        * ace/Event_Handler.h (ACE_Event_Handler):
+        * ace/Event_Handler.h (ACE_Notification_Buffer):
+        * ace/Filecache.h (ACE_Filecache_Handle):
+        * ace/Filecache.h (ACE_Filecache_Object):
+        * ace/Local_Tokens.h (ACE_TPQ_Iterator):
+        * ace/Local_Tokens.h (ACE_Token_Proxy):
+        * ace/Local_Tokens.h (ACE_Token_Proxy_Queue):
+        * ace/Malloc.h (ACE_Name_Node):
+        * ace/Malloc.h (ACE_Static_Allocator_Base):
+        * ace/Memory_Pool.h (ACE_MMAP_Memory_Pool):
+        * ace/Memory_Pool.h (ACE_MMAP_Memory_Pool_Options):
+        * ace/Memory_Pool.h (ACE_Shared_Memory_Pool):
+        * ace/Memory_Pool.h (ACE_Shared_Memory_Pool_Options):
+        * ace/OS.h (ACE_Countdown_Time):
+        * ace/OS.h (ACE_Thread_Adapter):
+        * ace/OS.h (ACE_Thread_Control):
+        * ace/OS.h (ACE_Thread_Exit):
+        * ace/Service_Object.h (ACE_Service_Type):
+        * ace/Signal.h (ACE_Sig_Adapter):
+        * ace/Synch.h (ACE_Adaptive_Lock):
+        * ace/Synch.h (ACE_TSS_Adapter):
+          Explicitly disallow use of implicitly generated copy
+          constructor and assignment operator to prevent inadvertent
+          memory leaks.
 
-	* ace/Filecache.cpp (ACE_Filecache_Object):
-	* ace/OS.i (ACE_Time_Value):
-	* ace/Signal.i (ACE_Sig_Action):
-	* ace/Signal.i (ACE_Sig_Guard):
-	* ace/Signal.i (ACE_Sig_Set):
-	* ace/Synch_T.i (ACE_Guard):
-	  Added base member initializers for class members that weren't
-	  initialized.  Better style and helps avoid some warnings.
+        * ace/Filecache.cpp (ACE_Filecache_Object):
+        * ace/OS.i (ACE_Time_Value):
+        * ace/Signal.i (ACE_Sig_Action):
+        * ace/Signal.i (ACE_Sig_Guard):
+        * ace/Signal.i (ACE_Sig_Set):
+        * ace/Synch_T.i (ACE_Guard):
+          Added base member initializers for class members that weren't
+          initialized.  Better style and helps avoid some warnings.
 
-	* ace/IPC_SAP.h (ACE_IPC_SAP):
-	* ace/SOCK.h (ACE_SOCK):
-	* ace/SOCK_IO.h (ACE_SOCK_IO):
-	* ace/SV_Semaphore_Simple.h (ACE_SV_Semaphore_Simple):
-	* ace/Synch.h (ACE_Barrier):
-	* ace/Synch.h (ACE_Event):
-	* ace/Synch.h (ACE_Guard):
-	* ace/Synch.h (ACE_Null_Mutex):
-	* ace/Synch.h (ACE_RW_Mutex):
-	* ace/Synch.h (ACE_Semaphore):
-	  Made base class destructor virtual to ensure that it gets
-	  called by derived class destructor.
+        * ace/IPC_SAP.h (ACE_IPC_SAP):
+        * ace/SOCK.h (ACE_SOCK):
+        * ace/SOCK_IO.h (ACE_SOCK_IO):
+        * ace/SV_Semaphore_Simple.h (ACE_SV_Semaphore_Simple):
+        * ace/Synch.h (ACE_Barrier):
+        * ace/Synch.h (ACE_Event):
+        * ace/Synch.h (ACE_Guard):
+        * ace/Synch.h (ACE_Null_Mutex):
+        * ace/Synch.h (ACE_RW_Mutex):
+        * ace/Synch.h (ACE_Semaphore):
+          Made base class destructor virtual to ensure that it gets
+          called by derived class destructor.
 
 Thu Apr  1 13:31:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
