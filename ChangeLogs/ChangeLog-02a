@@ -1,3 +1,14 @@
+Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MEM_Stream_Test.cpp: Temporarily changed the informational
+	  message about the use SYSV semaphores to LM_ERROR so we can find
+	  those platforms out quicker.  Many of them may actually support
+	  POSIX semaphores.  We need to enable them in that case.
+
+	* ace/config-linux-common.h: Added ACE_HAS_POSIX_SEM and
+	  ACE_LACKS_NAMED_POSIX_SEM.  Linux actually support them.  I'm
+	  not sure if there are any version of linux that don't.
+
 Wed Apr 25 03:15:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Malloc.h:

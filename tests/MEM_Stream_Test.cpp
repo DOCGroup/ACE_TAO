@@ -350,7 +350,7 @@ main (int, ACE_TCHAR *[])
   test_multithreaded (server_addr);
 
 #if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
-  ACE_ERROR ((LM_INFO,
+  ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("\n *** Platform only support non-scalable SysV semaphores ***\n\n")));
 #endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 
