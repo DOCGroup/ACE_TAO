@@ -198,7 +198,7 @@ public:
   int trybind (const EXT_ID &ext_id,
                INT_ID &int_id);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.  
+  /// Locate <ext_id> and pass out parameter via <int_id>.
   /// Returns 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
@@ -221,6 +221,11 @@ public:
    */
   int unbind (const EXT_ID &ext_id,
               INT_ID &int_id);
+
+  /**
+   * Unbind all entires.
+   */
+  void unbind_all (void);
 
   /// Return the current size of the map.
   size_t current_size (void) const;
@@ -317,6 +322,9 @@ protected:
   /// with locks held.
   int unbind_and_return_index (const EXT_ID &ext_id,
                                size_t &slot);
+
+  /// Unbind <slot>.
+  void unbind_slot (size_t slot);
 
   /// Resize the map.  Must be called with locks held.
   int resize_i (size_t size);
