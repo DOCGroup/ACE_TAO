@@ -1,3 +1,29 @@
+Fri Mar 18 22:40:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+
+	  Remove unused ACE_LACKS_SYSTIMES_H autoheader template.
+
+	  Remove ACE_HAS_SIG_ATOMIC_T autoheader template.  The
+	  description is provided by the AC_DEFINE in the check.
+
+	* m4/platform.m4:
+
+	  Add ACE_SIZE_T_FORMAT_SPECIFIER and ACE_SSIZE_T_FORMAT_SPECIFIER
+	  definitions for Linux in ACE_CHECK_FORMAT_SPECIFIERS.  Processor
+	  specific values taken from config-linux-common.h.
+
+	  Remove ACE_UINT64_FORMAT_SPECIFIER definition for Linux from
+	  ACE_SET_PLATFORM_MACROS.
+
+Fri Mar 18 22:36:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* m4/config_h.m4:
+
+	  Use ACE_CHECK_LACKS_FUNCS instead of AC_CHECK_FUNC/AC_DEFINE for
+	  inet_aton().
+
 Fri Mar 18 14:13:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Kokyu/Makefile.am:
