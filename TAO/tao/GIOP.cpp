@@ -262,6 +262,20 @@ TAO_GIOP::write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
                                                msg);
 }
 
+// Write the GIOP locate request header.
+
+CORBA::Boolean
+TAO_GIOP::write_locate_request_header (CORBA::ULong request_id,
+                                       const TAO_opaque &key,
+                                       TAO_OutputCDR &msg)
+{
+  msg << request_id;
+  msg << key;
+
+  return 1;
+}
+
+
 CORBA::Boolean
 TAO_GIOP::send_message (TAO_Transport *transport,
                         TAO_OutputCDR &stream,
