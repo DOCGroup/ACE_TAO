@@ -22,7 +22,8 @@
 int
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
-// arguments.  And with it, we can't use spawn.
+// arguments.  And on VxWorks, which uses ACE_HAS_NONSTATIC_OBJECT_MANAGER,
+// we can't use spawn because it doesn't have fork ().
 main (int argc, char *[])
 {
       ACE_UNUSED_ARG (argc);
