@@ -1,3 +1,20 @@
+Wed Nov  3 10:02:25 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+
+          TAO/tests/IDL_Test/run_test.pl also can not be run with CORBA
+          Messaging disabled.
+
+        * bin/tao_other_tests.lst:
+
+          TAO/performance-tests/Protocols/run_test.pl can not be run in a
+          minimum corba build.
+
+          Both TAO/examples/ior_corbaloc/run_test.pl and
+          TAO/utils/nslist/run_test.pl now require CORBA Messaging
+          because the Naming_Service requires it due to the addition of the
+          relative roundtrip timeout ability in the TAO_Naming_Server class.
+
 Wed Nov  3 09:40:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_orb_tests.lst:

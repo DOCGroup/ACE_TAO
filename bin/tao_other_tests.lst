@@ -30,7 +30,7 @@ TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM
 TAO/performance-tests/Throughput/run_test.pl
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
-TAO/performance-tests/Protocols/run_test.pl
+TAO/performance-tests/Protocols/run_test.pl: !MINIMUM
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM !DISABLE_BIDIR
 TAO/examples/POA/DSI/run_test.pl: !MINIMUM
@@ -114,5 +114,5 @@ TAO/tests/Two_Objects/run_test.pl: !ST
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM !ST
 TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS  !STATIC !ST
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC !ST
-TAO/examples/ior_corbaloc/run_test.pl
-TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1
+TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING
+TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING
