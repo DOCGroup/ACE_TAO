@@ -4,7 +4,6 @@
 #include "UDP.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/MCast.h"
-//#include "orbsvcs/AV/QoS_MCast.h"
 #include "orbsvcs/AV/Fill_ACE_QoS.h"
 
 #if !defined (__ACE_INLINE__)
@@ -112,11 +111,8 @@ TAO_AV_UDP_QoS_Session_Helper::open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *ha
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
 
-  // Ask the factory to create a QoS session. This could be RAPI or
-  // GQoS based on the parameter passed.
-
-  //@@YAmuna : Later make this generic for GQoS
-  ACE_QoS_Session *qos_session = session_factory.create_session (ACE_QoS_Session_Factory::ACE_RAPI_SESSION);
+  // Ask the factory to create a QoS session.
+  ACE_QoS_Session *qos_session = session_factory.create_session ();
 
   // Create a destination address for the QoS session. The same
   // address should be used for the subscribe call later. A copy
@@ -848,20 +844,19 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   char buf [BUFSIZ];
   ACE_OS::hostname (buf,
                     BUFSIZ);
-  ACE_CString addr (buf);
-  addr += ":8000";
-  ACE_INET_Addr *address;
+  qos_acceptor_addr_.set((u_short)0, buf);
+/*  ACE_INET_Addr *address;
   ACE_NEW_RETURN (address,
                   ACE_INET_Addr ("0"),
                   -1);
 
   address->addr_to_string (buf,
-                           BUFSIZ);
+                           BUFSIZ);*/
   ACE_DEBUG ((LM_DEBUG,
-              "(%N,%l) ADDRESS IS %s\n",
-              buf));
+              "(%N,%l) ADDRESS IS %s:%d\n",
+              buf, qos_acceptor_addr_.get_port_number() ));
 
-  int result = this->open_i (address);
+  int result = this->open_i (&qos_acceptor_addr_);
   if (result < 0)
     return result;
   return 0;

@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_CosNamingd.lib TAO_CosTradingd.lib TAO_CosPropertyd.lib TAOd.lib aced.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_CosNamingd.lib TAO_CosTradingd.lib TAO_CosPropertyd.lib TAOd.lib aced.lib TAO_PortableServerd.lib ACE_QoSd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_AVd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\QoS"
 
 !ELSEIF  "$(CFG)" == "AV - Win32 MFC Debug"
 
@@ -180,6 +180,10 @@ SOURCE=.\AV\Endpoint_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Fill_ACE_QoS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\FlowSpec_Entry.cpp
 # End Source File
 # Begin Source File
@@ -213,6 +217,10 @@ SOURCE=.\AV\Policy.cpp
 # Begin Source File
 
 SOURCE=.\AV\Protocol_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\QoS_UDP.cpp
 # End Source File
 # Begin Source File
 
@@ -296,6 +304,10 @@ SOURCE=.\AV\Endpoint_Strategy_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\Fill_ACE_QoS.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\Flows_T.h
 # End Source File
 # Begin Source File
@@ -337,6 +349,10 @@ SOURCE=.\AV\Policy.h
 # Begin Source File
 
 SOURCE=.\AV\Protocol_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\QoS_UDP.h
 # End Source File
 # Begin Source File
 
@@ -710,6 +726,10 @@ SOURCE=.\Null_MediaCtrlS_T.i
 # Begin Source File
 
 SOURCE=.\AV\Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\QoS_UDP.i
 # End Source File
 # Begin Source File
 
