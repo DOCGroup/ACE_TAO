@@ -80,14 +80,15 @@ client (void *)
                    PIPE_READMODE_BYTE) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
 
+
   // Write out the alphabet all at once.
   if (cli_stream.send_n (ACE_ALPHABET,
-                         ACE_OS::strlen (ACE_ALPHABET)) != ACE_OS::strlen (ACE_ALPHABET))
+                         ACE_OS::strlen (ACE_ALPHABET)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
 
   // Write out the alphabet one byte at a time
-  for (c = ACE_ALPHABET; *c != '\0'; c++)
-    if (cli_stream.send (c, 1) == -1)
+  for (const char *d = ACE_ALPHABET; *d != '\0'; d++)
+    if (cli_stream.send (d, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
 
   if (cli_stream.close () == -1)
@@ -153,7 +154,7 @@ server (void *)
   // can stream it in one byte at a time.
   for (t = ACE_ALPHABET; *t; t++)
     {
-      if (new_stream.recv (buf, 1) <= 0) 
+      if (new_stream.recv (buf, 1) <= 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
           break;
@@ -167,9 +168,9 @@ server (void *)
 
   // Verify that we can read the stream of individual bytes all at
   // once.
-  if (new_stream.recv (buf, sizeof(buf)) != ACE_OS::strlen (ACE_ALPHABET)) 
+  if (new_stream.recv (buf, sizeof(buf)) != ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
-  else 
+  else
     ACE_ASSERT(memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
