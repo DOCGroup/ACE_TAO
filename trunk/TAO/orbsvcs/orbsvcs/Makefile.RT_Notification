@@ -88,9 +88,6 @@ ACE_SHLIBS = -lTAO_CosNotification -lTAO_Svc_Utils -lTAO_ETCL -lTAO_DynamicAny -
 ORBSVCS_COMPONENTS:
 	@sh ../../../bin/ace_components --orbsvcs --append '$(ORBSVCS_COMPONENTS)'
 
-compclean:
-	@sh $(ACE_ROOT)/bin/ace_components --orbsvcs --remove
-
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
