@@ -1,3 +1,12 @@
+Sun Jun 30 17:15:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/arglist.h:
+
+          Integrated Mayur's changes of 6/18 into my branch to
+          minimize conflicts when I merge, since we have both
+          modified the source file extensively.
+
 Sun Jun 30 16:42:25 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
