@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Dgram.h"
+#include "ace/Handle_Set.h"
 #include "ace/Synch.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram)
