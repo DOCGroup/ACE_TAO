@@ -1,4 +1,9 @@
-Tue Nov 12 14:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Nov 12 14:11:33 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.h:
+          Doxygen documentation improvements.
+
+Tue Nov 12 13:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Message_Queue_T.h:
           Doxygen documentation improvements.
