@@ -59,6 +59,7 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError))
 {
+  FTRTEC_TRACE("TAO_FTEC_ProxyPushSupplier::connect_push_consumer");
   if (Request_Context_Repository().is_executed_request())
     return;
 
@@ -69,8 +70,10 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
   param.qos = qos;
   update.param.connect_consumer_param(param);
 
+  FTRTEC::Log(3, "Before Inherited::connect_push_consumer\n");
   Inherited::connect_push_consumer(push_consumer, qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  FTRTEC::Log(3, "After Inherited::connect_push_consumer\n");
 
   ACE_TRY {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
