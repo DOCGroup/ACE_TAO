@@ -1,3 +1,9 @@
+Sun Sep  5 13:40:18 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* ace/ACE.cpp: Made the status code to be of type 
+	  ACE_exitcode instead of int. This is necessary
+	  because of the change on waitpid ().
+
 Sun Sep  5 10:59:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process.i (wait): Removed the ACE_static_cast() Michael
