@@ -17,7 +17,7 @@ Time_Client_i::~Time_Client_i (void)
 }
 
 int
-Time_Client_i::run (char *name,
+Time_Client_i::run (const char *name,
                     int argc,
                     char *argv[])
 {
