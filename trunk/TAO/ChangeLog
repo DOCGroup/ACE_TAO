@@ -1,3 +1,10 @@
+Mon Dec  6 09:41:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CharSeqC.{h,cpp,inl}:
+        * tao/CharSeqS.h:
+          Regenerated these files with the latest version of the TAO_IDL
+          compiler.
+
 Mon Dec  6 10:23:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
