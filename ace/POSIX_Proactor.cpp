@@ -1795,7 +1795,6 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int ) const
                        "Error:%p\n",
                        "Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
-#else
   ACE_UNUSED_ARG(signal_number);
 #endif
   return 0;
