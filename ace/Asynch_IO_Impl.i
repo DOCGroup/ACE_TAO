@@ -75,6 +75,19 @@ ACE_Asynch_Accept_Result_Impl::ACE_Asynch_Accept_Result_Impl (void)
 }
 
 ACE_INLINE
+ACE_Asynch_Connect_Impl::ACE_Asynch_Connect_Impl (void)
+  : ACE_Asynch_Operation_Impl ()
+{
+}
+
+ACE_INLINE
+ACE_Asynch_Connect_Result_Impl::ACE_Asynch_Connect_Result_Impl (void)
+  : ACE_Asynch_Result_Impl ()
+{
+}
+
+
+ACE_INLINE
 ACE_Asynch_Transmit_File_Impl::ACE_Asynch_Transmit_File_Impl (void)
   : ACE_Asynch_Operation_Impl ()
 {

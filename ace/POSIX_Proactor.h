@@ -31,6 +31,7 @@
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
 #include "ace/POSIX_Asynch_IO.h"
+#include "ace/Asynch_Pseudo_Task.h"
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
@@ -51,13 +52,6 @@
  */
 class ACE_Export ACE_POSIX_Proactor : public ACE_Proactor_Impl
 {
-  /**
-   * For <POSIX_SIG_Asynch_Accept> operation, this handler class does
-   * the actual work, has to register the real-time signal with the
-   * Proactor.
-   */
-  friend class ACE_POSIX_SIG_Asynch_Accept_Handler;
-
 public:
   enum Proactor_Type
   {
@@ -194,6 +188,13 @@ public:
                                                                       int priority = 0,
                                                                       int signal_number = ACE_SIGRTMIN);
   
+  virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (ACE_Handler & handler,
+                                                                        ACE_HANDLE connect_handle,
+                                                                        const void *act,
+                                                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                        int priority = 0,
+                                                                        int signal_number = ACE_SIGRTMIN);
+
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
@@ -249,7 +250,6 @@ protected:
 
 // Forward declarations.
 class ACE_AIOCB_Notify_Pipe_Manager;
-class ACE_POSIX_Accept_Task;
 
 /**
  * @class ACE_POSIX_AIOCB_Proactor
@@ -268,6 +268,7 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
   /// Proactor which is necessary in the AIOCB strategy.
   friend class ACE_POSIX_Asynch_Operation;
   friend class ACE_POSIX_Asynch_Accept;
+  friend class ACE_POSIX_Asynch_Connect;
 
   
 public:
@@ -317,6 +318,8 @@ public:
 
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
 
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
+
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
 
   /**
@@ -339,8 +342,9 @@ protected:
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop, 
                             ACE_POSIX_Proactor::Proactor_Type ptype);
 
-  /// Task to process pseudo-asynchronous accept
-  ACE_POSIX_Asynch_Accept_Task &get_asynch_accept_task (void);
+
+  /// Task to process pseudo-asynchronous operations
+  ACE_Asynch_Pseudo_Task & get_asynch_pseudo_task();
 
   /// Call these methods from derived class when virtual table is
   /// built.
@@ -442,7 +446,7 @@ protected:
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_;
 
   /// Task to process pseudo-asynchronous accept
-  ACE_POSIX_Asynch_Accept_Task  accept_task_;
+  ACE_Asynch_Pseudo_Task  pseudo_task_;
 };
 
 /**
@@ -563,6 +567,7 @@ protected:
  */
 class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 {
+
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;

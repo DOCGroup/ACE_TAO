@@ -16,6 +16,7 @@
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Roger Tragin <r.tragin@computer.org>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -438,6 +439,58 @@ protected:
   /// Do-nothing constructor.
   ACE_Asynch_Accept_Result_Impl (void);
 };
+
+
+/**
+ * @class ACE_Asynch_Connect_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Connect.
+ *
+ */
+class ACE_Export ACE_Asynch_Connect_Impl : public virtual ACE_Asynch_Operation_Impl
+{
+public:
+  virtual ~ACE_Asynch_Connect_Impl (void);
+
+  /**
+   * This starts off an asynchronous connect
+   */
+  virtual int connect (ACE_HANDLE connect_handle,
+                       const ACE_Addr & remote_sap,
+                       const ACE_Addr & local_sap,
+                       int   reuse_addr,
+                       const void *act,
+                       int   priority,
+                       int   signal_number) = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Connect_Impl (void);
+};
+
+/**
+ * @class ACE_Asynch_Connect_Result_Impl
+ *
+ * @brief Abstract base class for all the concrete implementation
+ * classes that provide different implementations for the
+ * ACE_Asynch_Connect.
+ *
+ */
+class ACE_Export ACE_Asynch_Connect_Result_Impl : public virtual ACE_Asynch_Result_Impl
+{
+public:
+  virtual ~ACE_Asynch_Connect_Result_Impl (void);
+
+  /// I/O handle for the connection.
+  virtual ACE_HANDLE connect_handle (void) const = 0;
+
+protected:
+  /// Do-nothing constructor.
+  ACE_Asynch_Connect_Result_Impl (void);
+};
+
 
 /**
  * @class ACE_Asynch_Transmit_File_Impl

@@ -109,6 +109,7 @@ DEMUX_FILES = \
 CONNECTION_FILES = \
   Asynch_IO \
   Asynch_IO_Impl \
+  Asynch_Pseudo_Task \
   POSIX_Asynch_IO \
   WIN32_Asynch_IO
 SOCKETS_FILES = \
@@ -252,6 +253,7 @@ TEMPLATE_FILES = \
 	   Unbounded_Set \
 	   Unbounded_Queue \
            Asynch_Acceptor \
+           Asynch_Connector \
            Auto_IncDec_T \
            Auto_Ptr \
            Based_Pointer_T \

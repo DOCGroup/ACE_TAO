@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -102,6 +103,9 @@ public:
   /// Create the correct implementation class for doing Asynch_Accept.
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void) = 0;
 
+  /// Create the correct implementation class for doing Asynch_Connect.
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void) = 0;
+
   /// Create the correct implementation class for doing Asynch_Transmit_File.
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void) = 0;
 
@@ -196,6 +200,14 @@ public:
                                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                       int priority = 0,
                                                                       int signal_number = ACE_SIGRTMIN) = 0;
+
+  /// Create the correct implementation class for ACE_Asynch_Connect::Result.
+  virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (ACE_Handler &handler,
+                                                                        ACE_HANDLE connect_handle,
+                                                                        const void* act,
+                                                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                                                        int priority = 0,
+                                                                        int signal_number = ACE_SIGRTMIN) = 0;
 
   /// Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
   virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler &handler,
