@@ -1,3 +1,12 @@
+Fri Aug 15 10:07:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/RtEC/IIOPGateway/*:
+          Added a new example which shows how the IIOP Gateway can be used.
+          There is seperate executable for the consumer, supplier, ec, and
+          gateway. This makes it easy to test all the options. The
+          consumerec_crash perl scripts shows how the new reconnect policy
+          in the gateway works when the consumerec is killed and restarted.
+
 Fri Aug 15 09:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/Simple/README:
