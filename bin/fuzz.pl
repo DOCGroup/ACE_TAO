@@ -111,7 +111,7 @@ sub store_file ($)
     elsif ($name =~ /Makefile/i) {
         push @files_makefile, ($name);
     }
-    elsif ($name =~ /\.(mpc|mpw)/i) {
+    elsif ($name =~ /\.(mpc|mwc)/i) {
         push @files_mpc, ($name);
     }
 }
@@ -284,6 +284,7 @@ sub check_for_math_include ()
 }
 
 # This test checks for the inclusion of streams.h.
+# // FUZZ: disable check_for_streams_include
 sub check_for_streams_include ()
 {
     print "Running ace/streams.h test\n";

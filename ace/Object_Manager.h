@@ -35,17 +35,8 @@ class ACE_Sig_Set;
   class ACE_Recursive_Thread_Mutex;
   class ACE_RW_Thread_Mutex;
 
-  // This is included because Svc_conf_l.cpp needs it and I don't want to 
-  // have to change it right now.  :-(
-  // dhinton.
-  #include "ace/Recursive_Thread_Mutex.h"
+#  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
-
-// temporary fix dhinton
-#if defined (DO_NOT_INCLUDE_OS_H)
-#  include "ace/OS_NS_stdio.h"
-#  include "ace/OS_NS_ctype.h"
-#endif /* DO_NOT_INCLUDE_OS_H */
 
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)

@@ -10,7 +10,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
-#include "ace/streams.h"
 
 ACE_RCSID(Ntalker, ntalker, "$Id$")
 

@@ -5,6 +5,7 @@
 #include "ace/Log_Msg.h"
 
 #if defined (DEBUGGING)
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #endif /* DEBUGGING */
 

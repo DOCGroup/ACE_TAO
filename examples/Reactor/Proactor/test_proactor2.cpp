@@ -33,6 +33,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #include "ace/Task.h"

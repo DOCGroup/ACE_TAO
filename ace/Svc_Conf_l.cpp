@@ -20,9 +20,11 @@
 
 #ifdef __cplusplus
 
-#include "ace/OS.h"
 #include "ace/Object_Manager.h"
 #include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
 
 /* Use prototypes in function declarations. */
 #define ACE_YY_USE_PROTOS

@@ -13,6 +13,7 @@ ACE_RCSID (ace,
 #if defined (ACE_LACKS_LONGLONG_T)
 # include "ace/Log_Msg.h"
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// FUZZ: disable check_for_streams_include
 #  include "ace/streams.h"
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 

@@ -12,6 +12,7 @@
 #include "ace/OS_NS_time.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// FUZZ: disable check_for_streams_include
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
