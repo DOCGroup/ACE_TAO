@@ -1922,6 +1922,8 @@ static int PLAYvideo()
       }
       if (!sendStatus)
       {
+        // Send the current video frame, calls send_to_network which
+        // fragments and sends via blocking write .
 	sendStatus = SendPacket(preHeader != curHeader,
 				curGroup, curFrame,
 				(VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF) * frameStep);
@@ -1941,6 +1943,7 @@ static int PLAYvideo()
       }
     }
 
+    // Wait for a command on serviceSocket or Feedback on videoSocket (UDP)
     FD_ZERO(&read_mask);
     FD_SET(VIDEO_SINGLETON::instance ()->serviceSocket, &read_mask);
     FD_SET(VIDEO_SINGLETON::instance ()->videoSocket, &read_mask);
