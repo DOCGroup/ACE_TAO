@@ -70,6 +70,14 @@ class ACE_Export ACE_Service_Config
   // = TITLE
   //     Supplies common server operations for dynamic and static
   //     configuration of services.
+
+  // = DESCRIPTION
+  //     NOTE: the signal_handler_ static member is allocated by the
+  //     ACE_Object_Manager.  The ACE_Service_Config constructor uses
+  //     signal_handler_.  Therefore, if the program has any static
+  //     ACE_Service_Config objects, there might be initialization
+  //     order problems.  They can be minimized, but not eliminated,
+  //     by _not_ #defining ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 {
 public:
   enum {MAX_SERVICES = ACE_DEFAULT_SELECT_REACTOR_SIZE};
