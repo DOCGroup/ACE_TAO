@@ -25,9 +25,14 @@ int main (int argc, char *argv[])
 #if defined (VXWORKS)
   ACE_DEBUG ((LM_DEBUG, "starting connect\n"));
 
+#if 1 // change this to 0 after hard-coding the hostname:port below
+  // The hostname is hardcoded because its inconvenient to pass
+  // command line arguments with VxWorks.
   fprintf (stderr,
           "CPP-inclient.cpp:  you'll need to hard code the hostname:port on VxWorks!!!!\n");
+#endif /* 1 */
   ACE_INET_Addr remote_addr ("<hard-coded hostname:10002");
+
   if (con.connect (cli_stream, remote_addr) == -1)
 #else
   ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
