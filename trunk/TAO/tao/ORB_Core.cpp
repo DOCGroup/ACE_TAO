@@ -1022,16 +1022,15 @@ int
 TAO_ORB_Core::unset_leader_wake_up_follower (void)
   // sets the leader_available flag to false and tries to wake up a follower
 {
-  ACE_Guard <ACE_SYNCH_MUTEX> g (TAO_ORB_Core_instance ()->leader_follower_lock ());
+  ACE_Guard <ACE_SYNCH_MUTEX> g (this->leader_follower_lock ());
 
   this->unset_leader_thread ();
 
-  if (TAO_ORB_Core_instance ()->follower_available ()
-      && !TAO_ORB_Core_instance ()->leader_available ())
+  if (this->follower_available () && !this->leader_available ())
     // do it only if a follower is available and no leader is available
     {
-      ACE_SYNCH_CONDITION* condition_ptr = TAO_ORB_Core_instance ()->get_next_follower ();
-      if (TAO_ORB_Core_instance ()->remove_follower (condition_ptr) == -1)
+      ACE_SYNCH_CONDITION* condition_ptr = this->get_next_follower ();
+      if (this->remove_follower (condition_ptr) == -1)
         return -1;
       condition_ptr->signal ();
     }

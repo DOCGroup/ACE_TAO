@@ -1,3 +1,39 @@
+Tue Apr 13 12:35:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.h:
+	* tao/Connect.cpp:
+	  The MT_Client_Connection handler was using ORB_Core_instance()
+	  all over the place. Now it uses the ORB_Core provided in the
+	  send_request call.
+	  We will need to revisit this class, right now it allocates one
+	  condition variable per-connection, but allocating one on a
+	  per-thread (many per-thread-per-ORB) basis should be enough.
+	  We are also careful to use the ORB_Core's reactor to send the
+	  request and to implement the leader-follower model.
+
+	* tao/ORB_Core.cpp:
+	  Changed bunch of calls to TAO_ORB_Core_instance() in an ORB_Core 
+	  method, using <this> is enough in that case.
+
+	* tests/MT_Client/client.cpp:
+	* tests/MT_Client/server.cpp:
+	* tests/MT_Client/test_i.cpp:
+	* tests/MT_Client/server.conf:
+	* tests/MT_Client/client.tss.conf:
+	* tests/MT_Client/client.global.conf:
+	* tests/MT_Client/run_test.pl:
+	  Added configuration files for the client, it can use TSS storage 
+	  now. Also added some (optional) debugging information to monitor 
+	  the client progress.
+	  The script supports this new features too.
+	  Simplified the server configuration file.
+
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf: 
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+	  We can use TSS allocators in this examples.
+
 Tue Apr 13 09:52:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Concurrency_Service/Makefile,
