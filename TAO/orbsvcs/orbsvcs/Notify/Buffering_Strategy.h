@@ -20,6 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Condition.h"
 #include "ace/Message_Queue.h"
 
 #include "orbsvcs/orbsvcs/TimeBaseC.h"
@@ -44,8 +45,8 @@ class TAO_Notify_Export TAO_Notify_Buffering_Strategy
 public:
   /// Constuctor
   TAO_Notify_Buffering_Strategy (
-      TAO_Notify_Message_Queue& msg_queue, 
-       TAO_Notify_AdminProperties_var& admin_properties, 
+      TAO_Notify_Message_Queue& msg_queue,
+       TAO_Notify_AdminProperties_var& admin_properties,
        CORBA::Long batch_size
      );
 
@@ -63,9 +64,9 @@ public:
   /// Return -1 on error else the number of items in the queue.
   int enqueue (TAO_Notify_Method_Request& method_request);
 
-  /// Dequeue batch. This method will block for <abstime> if non-zero or else blocks till an item is available.
+  /// Dequeue batch. This method will block for @a abstime if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
-  int dequeue (TAO_Notify_Method_Request* &method_request, 
+  int dequeue (TAO_Notify_Method_Request* &method_request,
                const ACE_Time_Value *abstime);
 
   /// Shutdown
