@@ -158,6 +158,8 @@
 // And they're even POSIX pthreads (LinuxThreads implementation)
 #  define ACE_HAS_PTHREADS
 
+#  define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 // Compiler/platform has thread-specific storage
 #   define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
