@@ -1,5 +1,9 @@
 Tue Oct 12 07:07:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* TAO_IDL/fe: Regenerated the y.tab.cpp file from the
+	  idl.yy file so that it'll have the new change described 
+	  below.
+
 	* TAO_IDL/fe/idl.yy: Changed the "definition" of definitions:
 	  to be left recursive (i.e., "definitions definition") rather
  	  than right recursive (i.e., "definition definitions") to prevent
