@@ -140,7 +140,7 @@ public:
 
 //   int gen_typecode (be_typedef *node);
 
-  int gen_typecode (be_union *node);
+//   int gen_typecode (be_union *node);
 
 //   int gen_typecode (be_valuetype *node);
 
@@ -170,9 +170,9 @@ public:
 
 //   int gen_encapsulation (be_typedef *node);
 
-  int gen_encapsulation (be_union *node);
+//   int gen_encapsulation (be_union *node);
 
-  int gen_encapsulation (be_union_branch *node);
+//   int gen_encapsulation (be_union_branch *node);
 
 //   int gen_encapsulation (be_valuetype *node);
 
@@ -198,7 +198,7 @@ public:
 
 //   ACE_CDR::Long compute_tc_size (be_typedef *node);
 
-  ACE_CDR::Long compute_tc_size (be_union *node);
+//   ACE_CDR::Long compute_tc_size (be_union *node);
 
 //   ACE_CDR::Long compute_tc_size (be_valuetype *node);
 
@@ -228,9 +228,9 @@ public:
 
 //   ACE_CDR::Long compute_encap_length (be_typedef *node);
 
-  ACE_CDR::Long compute_encap_length (be_union *node);
+//   ACE_CDR::Long compute_encap_length (be_union *node);
 
-  ACE_CDR::Long compute_encap_length (be_union_branch *node);
+//   ACE_CDR::Long compute_encap_length (be_union_branch *node);
 
 //   ACE_CDR::Long compute_encap_length (be_valuetype *node);
 

@@ -54,7 +54,8 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
-  if (this->visit_cases (node) != 0)
+  be_union_branch * default_case = 0;
+  if (this->visit_cases (node, default_case) != 0)
     return -1;
 
   os << be_uidt_nl
@@ -63,7 +64,8 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   // Generate the TypeCode instantiation.
   os
     << "static TAO::TypeCode::Union<char const *," << be_nl
-    << "                            " << case_array_type.c_str () << " const *," << be_nl
+    << "                            " << case_array_type.c_str ()
+    << " const *," << be_nl
     << "                            TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
@@ -72,24 +74,39 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     << discriminant_type->tc_name () << "," << be_nl
     << "_tao_cases_" << node->flat_name () << "," << be_nl
     << node->nfields () << ","
-    << node->default_index () << "," << be_nl
-//     << default_member_name,
-//     << default_member_type
-    << ");" << be_uidt_nl
-    << be_uidt_nl;
+    << node->default_index () << "," << be_nl;
+
+  if (default_case)
+    {
+      be_type * const type =
+        be_type::narrow_from_decl (default_case->field_type ());
+
+      os << "\"" << default_case->original_local_name () << "\", "
+         << "&"  << type->tc_name ();
+    }
+  else
+    {
+      os << "0, 0"; // No default_case.
+    }
+
+  os << ");" << be_uidt_nl
+     << be_uidt_nl;
 
   return
     this->gen_typecode_ptr (be_type::narrow_from_decl (node));
 }
 
 int
-TAO::be_visitor_union_typecode::visit_cases (be_union * node)
+TAO::be_visitor_union_typecode::visit_cases (be_union * node,
+                                             be_union_branch *& default_case)
 {
   AST_Field ** member_ptr = 0;
 
   size_t const count = node->nfields ();
 
   TAO_OutStream & os = *this->ctx_->stream ();
+
+  default_case = 0;
 
   for (size_t i = 0; i < count; ++i)
     {
@@ -125,6 +142,10 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
             os << ",";
 
           os << be_nl;
+        }
+      else
+        {
+          default_case = branch;
         }
     }
 
