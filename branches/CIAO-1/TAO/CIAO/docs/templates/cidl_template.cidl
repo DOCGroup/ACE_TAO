@@ -14,8 +14,9 @@
 
 #include "[idl-basename].idl"
 
-// We only support a simple session implementation definition.
-
+// We only support a simple session implementation definition, for
+// now.  @@ What is the relation of various names here and the
+// generated names we used in the glue code?
 composition session [composition name]
 {
   home executor [home executor name]
