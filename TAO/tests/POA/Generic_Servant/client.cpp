@@ -1,6 +1,6 @@
 // $Id$
 
-//===============================================================================
+// ================================================================
 //
 //
 // = FILENAME
@@ -12,21 +12,23 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-//==================================================================================
+// ================================================================
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
+#include "tao/Timeprobe.h"
 #include "FooC.h"
 
 static char *IOR = 0;
 static int iterations = 1;
 static int oneway = 0;
+static int shutdown_server = 0;
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:o");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:ox");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -35,12 +37,19 @@ parse_args (int argc, char **argv)
       case 'k':
         IOR = get_opts.optarg;
         break;
+
       case 'o':
         oneway = 1;
         break;
+
       case 'i':
         iterations = ::atoi (get_opts.optarg);
         break;
+
+      case 'x':
+	shutdown_server = 1;
+	break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,7 +170,6 @@ main (int argc, char **argv)
         // Invoke the doit() method of the foo reference.
         result = foo->doit (env);
       }
-
   // stop the timer.
   timer.stop ();
   timer.elapsed_time (elapsed_time);
@@ -169,16 +177,19 @@ main (int argc, char **argv)
   // compute average time.
   print_stats (elapsed_time, i);
 
+  if (shutdown_server && env.exception () == 0)
+    foo->shutdown (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("Foo::doit");
-      return -1;
+      return 1;
     }
   
   // Print the result of doit () method of the foo reference.
-  ACE_DEBUG ((LM_DEBUG,
-              "%d\n",
-              result));
-  
+  ACE_DEBUG ((LM_DEBUG, "The result of doit is %d\n", result));
+
+  ACE_TIMEPROBE_PRINT;
+
   return 0;
 }

@@ -25,12 +25,18 @@ static const char *TAO_IIOP_Object_Timeprobe_Description[] =
 { 
   "IIOP_Object::do_static_call - start",
   "IIOP_Object::do_static_call - end",
+  "IIOP_Object::do_static_call - invocation_ctor",
+  "IIOP_Object::do_static_call - invocation_start",
+  "IIOP_Object::do_static_call - put_params"
 };
 
 enum 
 {
   TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
-  TAO_IIOP_OBJECT_DO_STATIC_CALL_END
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_END,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS
 };
 
 #endif /* ACE_ENABLE_TIMEPROBES */
@@ -458,6 +464,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
                             info->opname,
                             info->is_roundtrip);
 
+  ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
+
   // We may need to loop through here more than once if we're
   // forwarded to some other object reference.
   //
@@ -476,6 +484,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 
       env.clear ();
       call.start (env);
+
+      ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START);
 
       if (env.exception ())
         {
@@ -532,6 +542,8 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 				       info->excepts);
       status = call.invoke (exceptions, env);
 #endif
+
+      ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
 
       status = call.invoke (info->excepts, info->except_count, env);
 
