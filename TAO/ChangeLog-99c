@@ -1,3 +1,20 @@
+Wed Nov 10 14:46:51 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* TAO_IDL/driver/Makefile.am (AM_CPPFLAGS):
+
+	  Defined TAO_IDL_INCLUDE_DIR macro to be equal to the
+	  pkgincludedir Makefile variable in automatically generated
+	  Makefiles.
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
+
+	  If the TAO_IDL_INCLUDE_DIR macro is defined, then add it to the
+	  include file search path.  This allows an "installed" tao_idl to
+	  find IDL files such as `orb.idl' without the need for setting an
+	  ACE_ROOT or a TAO_ROOT environment variable.
+	  TAO_IDL_INCLUDE_DIR must be the exact directory that contains
+	  IDL files destined for inclusion.
+
 Wed Nov 10 14:40:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.1:
