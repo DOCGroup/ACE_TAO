@@ -105,7 +105,6 @@ module Deployment {
     boolean exclusiveProvider;
     boolean exclusiveUser;
     boolean optional;
-    CCMComponentPortKind kind;
   };
 
   typedef sequence < ComponentPortDescription > ComponentPortDescriptions;
