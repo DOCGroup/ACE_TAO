@@ -32,6 +32,7 @@
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 
 #include "Deployment_Configuration.h"
+#include "DomainApplicationManager_Export.h"
 
 namespace CIAO
 {
@@ -43,8 +44,7 @@ namespace CIAO
    * deploying an application on the domain level, i.e. across
    * nodes. It specializes the ApplicationManager abstract interface.
    */
-  //class CIAO_DOMAINAPPLICATIONMANAGER_Export DomainApplicationManager_Impl
-  class DomainApplicationManager_Impl
+  class DomainApplicationManager_Export DomainApplicationManager_Impl
     : public virtual POA_Deployment::DomainApplicationManager,
       public virtual PortableServer::RefCountServantBase
   {
