@@ -3826,14 +3826,14 @@ typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
 typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
 # endif /* ACE_HAS_STRUCT_NETDB_DATA */
 
-# if !defined (ACE_HAS_SEMUN)
+# if !defined (ACE_HAS_SEMUN) || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED))
 union semun
 {
   int val; // value for SETVAL
   struct semid_ds *buf; // buffer for IPC_STAT & IPC_SET
   u_short *array; // array for GETALL & SETALL
 };
-# endif /* !ACE_HAS_SEMUN */
+# endif /* !ACE_HAS_SEMUN || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)) */
 
 // Max size of an ACE Log Record data buffer.  This can be reset in
 // the config.h file if you'd like to increase or decrease the size.
