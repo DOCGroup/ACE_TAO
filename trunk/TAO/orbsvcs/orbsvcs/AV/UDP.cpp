@@ -382,7 +382,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   //  callback->protocol_object (object);
 //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                         object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),flow_handler);
+  this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
   this->entry_->protocol_object (object);
 
   char buf[BUFSIZ];
@@ -432,6 +432,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   this->entry_ = entry;
   this->flowname_ = entry->flowname ();
   ACE_Addr *remote_addr = entry->address ();
+  ACE_UNUSED_ARG (remote_addr);
   ACE_INET_Addr *local_addr;
   ACE_NEW_RETURN (local_addr,
                   ACE_INET_Addr ("0"),
@@ -524,7 +525,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   //  callback->protocol_object (object);
 //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
 //                                         object);
-  this->endpoint_->set_handler (this->flowname_.c_str (),flow_handler);
+  this->endpoint_->set_flow_handler (this->flowname_.c_str (),flow_handler);
   this->entry_->protocol_object (object);
 
   char buf[BUFSIZ];
@@ -621,7 +622,7 @@ TAO_AV_UDP_Object::handle_input (void)
 
 int
 TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
-                               TAO_AV_frame_info *frame_info)
+                               TAO_AV_frame_info */*frame_info*/)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Object::send_frame\n"));
   int result = this->transport_->send (frame);
@@ -633,7 +634,7 @@ TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
 int 
 TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                int iovcnt,
-                               TAO_AV_frame_info *frame_info)
+                               TAO_AV_frame_info */*frame_info*/)
 {
   return this->transport_->send (iov,iovcnt);
 }

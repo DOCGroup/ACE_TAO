@@ -34,8 +34,9 @@
 static const char rcsid[] =
     "@(#) $Header$";
 
-#include <math.h>
 #include "media-timer.h"
+#include <math.h>
+
 
 MediaTimer* MediaTimer::instance_;
 

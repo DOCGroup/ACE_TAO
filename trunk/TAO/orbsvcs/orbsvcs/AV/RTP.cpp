@@ -168,7 +168,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
                                TAO_AV_frame_info *frame_info)
 {
   TAO_AV_RTP::rtphdr header;
-  int format = 0;
+  //  int format = 0;
   int result = -1;
   if (frame_info != 0)
     {
@@ -260,6 +260,8 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
           break;
         }
     }
+
+  return 0;
 }
 
 void
