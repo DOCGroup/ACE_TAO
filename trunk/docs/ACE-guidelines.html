@@ -340,8 +340,7 @@ The correct way to write that guard is:
       #include "Foo_T.h"
 
       #endif /* FOO_H */
-</pre></p>
-    </li>
+</pre></p></li>
 
     <li>Avoid <code>#include &lt;math.h&gt;</code> if at all possible.
       The <code>/usr/include/math.h</code> on SunOS 5.5.1 through 5.7
@@ -378,17 +377,17 @@ The correct way to write that guard is:
   <ul>
     <li><strong><code>for</code></strong> loops should look like:
         <pre>
-        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
-          spawn ();
+        for (u_int i = 0; i &lt; count; ++i)
+          ++total;
         </pre>
         Though, I prefer to always wrap the body of the loop in braces,
         to avoid surprises when other code or debugging statements are
         added, and to maintain sanity when the body consists of a macro,
         such as an ACE_ASSERT without a trailing semicolon:
         <pre>
-        for (size_t i = 0; i &lt; Options::instance ()-&gt;spawn_count (); ++i)
+        for (u_int i = 0; i &lt; count; ++i)
           {
-            ACE_ASSERT (spawn_result == 0;)
+            ACE_ASSERT (++total &lt; UINT_MAX;)
           }
         </pre><p>
 
@@ -698,17 +697,15 @@ Foo::bar ()
         template and non-template code is mixed in the same file.<p>
 
     <li>It's a good idea to specify the include path (with <code>-I</code>)
-      to include any directory which contains files with template
-      definitions.  The <code>-ptv</code> Digital Unix cxx compiler option
-      may help diagnose missing template instantiation problems.<p>
-    </li>
+        to include any directory which contains files with template
+        definitions.  The Compaq Tru64 cxx <code>-ptv</code> compiler option
+        may help diagnose missing template instantiation problems.<p>
 
     <li>When referring to member variables and functions, use
-      <code>this-&gt;</code><em>member</em>. This makes it clear to the
-      reader that a class member is being used. It also makes it crystal
-      clear to the compiler which variable/function you mean in cases
-      where it might make a difference.
-    </li>
+        <code>this-&gt;</code><em>member</em>. This makes it clear to the
+        reader that a class member is being used. It also makes it crystal
+        clear to the compiler which variable/function you mean in cases
+        where it might make a difference.
   </ul>
 
   <li><strong>I/O</strong><p>
