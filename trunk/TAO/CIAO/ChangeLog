@@ -1,3 +1,11 @@
+Wed Jul  7 21:52:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/releasenotes/index.html:
+
+	  Revamped to provide a new look. Has updated information. The
+	  notes are missing a link to dance.html which should have
+	  information about DAnCE. Tao will take care of that.
+
 Wed Jul  7 15:04:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/OEP/BasicSP/descriptors/test.rtd: 
