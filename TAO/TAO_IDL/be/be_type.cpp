@@ -174,8 +174,61 @@ be_type::tc_name (const char *prefix, const char *suffix)
 // in the next call.  (return std::string anyone?)
 //
 // return the type name using the ACE_NESTED_CLASS macro
+
 const char *
-be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *prefix)
+be_type::nested_type_name (be_decl *use_scope, 
+                           const char *suffix,
+                           const char *prefix)
+{
+  return nested_name (this->local_name()->get_string(),
+                     this->full_name(),
+                     use_scope,
+                     suffix,
+                     prefix);
+}
+
+// This works for the "special" names generated for smart proxy
+// classes. The form of these names is
+// scope'TAO_'+flat_name+'_Smart_Proxy_Base'.
+//
+// We can use the flat_name() method for the local_name parm but have
+// to construct the full name ourselves.
+const char *
+be_type::nested_sp_type_name (be_decl *use_scope, 
+                              const char *suffix, 
+                              const char *prefix)
+{
+  be_decl *fu_scope;  // our defining scope
+  char fu_name [NAMEBUFSIZE],fl_name[NAMEBUFSIZE];
+  
+  ACE_OS::memset (fu_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (fl_name, '\0', NAMEBUFSIZE);
+  
+  fu_scope = ((this->defined_in ())?
+              (be_scope::narrow_from_scope (this->defined_in ())->decl ()):
+              0);
+  
+  ACE_OS::strcat (fu_name, fu_scope->full_name ());
+  ACE_OS::strcat (fu_name, "::TAO_");
+  ACE_OS::strcat (fu_name, this->flat_name());
+  
+  ACE_OS::strcat (fl_name, "TAO_");
+  ACE_OS::strcat (fl_name, this->flat_name());
+  
+  return nested_name(fl_name, 
+                     fu_name,
+                     use_scope, 
+                     suffix, 
+                     prefix);
+}
+
+// This is the real thing used by the two other methods above
+const char *
+be_type::nested_name (const char* local_name,
+                      const char* full_name,
+                      be_decl *use_scope, 
+                      const char *suffix, 
+                      const char *prefix)
 {
   // some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
@@ -238,7 +291,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
             ACE_OS::strcat (this->nested_type_name_, prefix);
 
           ACE_OS::strcat (this->nested_type_name_, 
-                          this->local_name ()->get_string ());
+                          local_name);
           if (suffix)
             ACE_OS::strcat (this->nested_type_name_, suffix);
  
@@ -336,7 +389,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
           // append our local name
           if (prefix)
             ACE_OS::strcat (this->nested_type_name_, prefix);
-          ACE_OS::strcat (this->nested_type_name_, this->local_name ()->get_string ());
+          ACE_OS::strcat (this->nested_type_name_, local_name);
           if (suffix)
             ACE_OS::strcat (this->nested_type_name_, suffix);
           ACE_OS::strcat (this->nested_type_name_, ")");
@@ -347,7 +400,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
   // otherwise just emit our full_name
   if (prefix)
     ACE_OS::strcat (this->nested_type_name_, prefix);
-  ACE_OS::strcat (this->nested_type_name_, this->full_name ());
+  ACE_OS::strcat (this->nested_type_name_, full_name);
   if (suffix)
     ACE_OS::strcat (this->nested_type_name_, suffix);
 
