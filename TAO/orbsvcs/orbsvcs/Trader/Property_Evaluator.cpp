@@ -35,9 +35,9 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
     {
       // Obtain the value of the property at index <index>.
       const CORBA::Any& value = this->props_[index].value;
-      CORBA::TypeCode* type = value.type();
+      CORBA::TypeCode* type = value.type ();
       
-      if (type->equal(CosTradingDynamic::_tc_DynamicProp, env))
+      if (type->equal (CosTradingDynamic::_tc_DynamicProp, env))
 	return_value = 1;
     }
   
