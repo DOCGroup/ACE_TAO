@@ -1,3 +1,8 @@
+Fri Jan 12 07:49:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * docs/compiler.html:
+          Updated link to OMG's 2.3.1 specification download site.
+
 Thu Jan 11 20:50:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp: 
