@@ -171,7 +171,7 @@ ange */
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_NONCONST_MSGSND
 
-// #define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGWAIT
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT

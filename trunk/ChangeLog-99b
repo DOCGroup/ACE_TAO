@@ -1,4 +1,7 @@
-Tue Jan 12 21:25:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jan 12 22:41:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd.h: Uncommented ACE_HAS_SIGWAIT.  This is
+	  required for FreeBSD 2.2.8.
 
 	* ace/SOCK_IO.{h,i}:
 	* ace/SOCK_Stream.{h,i} (sendv_n/recvv_n): Moved these functions
