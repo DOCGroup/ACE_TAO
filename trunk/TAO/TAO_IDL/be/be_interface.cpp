@@ -1055,7 +1055,7 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface * /* derived_interface */,
   // Generate entries for the derived class using the properties of its
   // ancestors.
   return base_interface->gen_optable_entries (this->skeleton_name_, os);
-};
+}
 
 int
 be_interface::gen_operation_table (const char *flat_name,
