@@ -1,3 +1,8 @@
+Tue Dec 25 08:50:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp: Removed template
+	  instantiation of ACE_Equal_To <>. This should fix g++ builds. 
+
 Tue Dec 25 00:48:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h: Added a
