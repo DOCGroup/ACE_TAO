@@ -12,6 +12,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace,
            Local_Name_Space_T,
