@@ -103,6 +103,9 @@ public:
   // Obtain the object key delimiter used by the protocol specified in
   // the provided URL style IOR.
 
+  int purge_connections (void);
+  // Purge "old" connections.
+
 private:
   int preprocess_preconnects (TAO_ORB_Core *orb_core,
                               TAO_PreconnectSet &preconnects);

@@ -111,7 +111,7 @@ int
 TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
                                     TAO_PreconnectSet &preconnections)
 {
-  // Put the preconnects in a form that makes it simple for protocol 
+  // Put the preconnects in a form that makes it simple for protocol
   // implementers to parse.
   if (this->preprocess_preconnects (orb_core, preconnections) != 0)
     {
@@ -162,9 +162,9 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
   //   uiop://1.1@/tmp/foobar,/tmp/chicken,/tmp/soup
   //   iiop://1.0@localhost,1.1@mopbucket
   //
-  // The four elements in the preconnect set will be squeezed into two 
+  // The four elements in the preconnect set will be squeezed into two
   // elements, in this case. This is done to simplify the preconnect
-  // parsing code in each protocol specific connector and to make sure 
+  // parsing code in each protocol specific connector and to make sure
   // that all preconnections are established during the first
   // attempt.  Otherwise, secondary attempts to establish
   // preconnections will not be successful since all preconnections
@@ -398,6 +398,26 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
 
   // Failure: None of the connectors were able to match their protocol
   // against the provided string.
+  return 0;
+}
+
+int
+TAO_Connector_Registry::purge_connections (void)
+{
+  TAO_ConnectorSetItor end =
+    this->connectors_.end ();
+
+  TAO_ConnectorSetItor iterator =
+    this->connectors_.begin ();
+
+  for (;
+       iterator != end ;
+       iterator++)
+    {
+      if ((*iterator)->purge_connections () == -1)
+        return -1;
+    }
+
   return 0;
 }
 

@@ -1,3 +1,85 @@
+Wed Jul 21 03:20:16 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* Connection Caching Feature
+	  --------------------------
+
+	  Motivation:
+
+  	  In TAO, open connections are stored in a connection cache and
+	  reused for the subsequent requests between the same client and
+	  server.  This is done to avoid the cost of establishing new
+	  connections. Every connection needs a OS handle which has to
+	  obtained from the OS. The OS can allot only a fixed number of
+	  handles to a process.  This can become a issue in case of
+	  clients and servers with multiple handles open who may not be
+	  allowed to establish a new connection as the process has run out
+	  of handles.
+
+	  Aim:
+
+  	  Clients and servers should be able to to continue making new
+	  connections by tearing down "old" connections.
+
+	  Solution: Auto-purging
+
+	  The connections are stored in a cache. When ever the connect
+	  call fails due to the process running out of handles,
+	  auto-purging will kick in and some "old" connections will be
+	  removed from the connection cache.  The decision about which
+	  connections are "old" is made by the caching strategies. The
+	  percentage of existing connections to be purged is controlled by
+	  a purge percent.
+
+	  ACE classes: Caching_Utility, Cleanup_Stratgies, and
+	  Caching_Strategies have been used.  Simple examples are
+	  available in $ACE_ROOT/tests/Cached_Accept_Conn_Test.cpp and
+	  $ACE_ROOT/tests/Cached_Conn_Test.cpp.
+
+	  Note that the users can also purge handles used by the ORB
+	  explicitly through TAO_Connector_Registry::purge_connections().
+	  This can enable them to open new handles for their application.
+
+	  Todo: Implement purging for new handles created by the Acceptor.
+	  This will increase the scalability.
+
+	  Usage: Through options to the Resource_Factory :-
+
+	  -ORBConnectionCachingStrategy <lru/lfu/fifo/null>
+	  -ORBPurgePercent <percentage>
+
+	  Now for the changes made:
+
+	* tao/Connector_Registry.{h,cpp}:
+	  Added a purge_connections () method which purges entries from
+	  the connection cache of the different connectors registered with
+	  the registry.
+
+	* tao/IIOP_Connector.{h,cpp}:
+	* tao/UIOP_Connector.{h,cpp}:
+	  Changed Cached_Connect_Strategy to Cached_Connect_Strategy_Ex as
+	  the connection strategy.  It contains the caching strategy which
+	  decides the entries to remove on demand. A
+	  Hash_Cache_Map_Manager is used to store connections and appends
+	  each entry with special attributes used for purging
+	  purposes.
+
+	* tao/orbconf.h:
+	  Added:
+	  TAO_CONNECTION_CACHING_STRATEGY (default) is LRU
+	  TAO_PURGE_PERCENT (default) is 20%
+
+	* tao/Resource_Factory.{h,cpp}:
+	  Added hooks for connection_caching_strategy_type and
+	  purge_percent. Also an enum is added which is used for deciding
+	  the different caching strategies.
+
+	* tao/default_resource.{h,cpp}:
+	  Input from the user is parsed and the caching_stratgey_type and
+	  purge_percent is decided.
+
+	  Thanks to Irfan from the DOC group for being a great help and
+	  guiding me on this project.
+
 Wed Jul 21 16:59:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_decl.cpp:
