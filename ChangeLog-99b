@@ -1,3 +1,7 @@
+Wed May 19 21:56:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Message_Queue.h: fixed typo in comment: interrupt.
+
 Wed May 19 21:34:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU:  removed these
