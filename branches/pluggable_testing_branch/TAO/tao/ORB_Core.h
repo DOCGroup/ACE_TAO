@@ -8,7 +8,7 @@
 //
 // = FILENAME
 //     orb_core.h
-//
+//a
 // = AUTHOR
 //     Chris Cleeland
 //
@@ -25,12 +25,7 @@
 #include "tao/params.h"
 #include "tao/POAC.h"
 
-// @@ Fred&Ossama: In this file you only use pointers
-//    TAO_Connector_Registry and Acceptor_Registry, you should forward
-//    declare the classes, and not include the complete header file.
-#include "tao/Connector_Registry.h"
-#include "tao/Acceptor_Registry.h"
-
+// Forward declarations
 class TAO_Client_Connection_Handler;
 class TAO_POA;
 class TAO_POA_Current;
@@ -38,6 +33,7 @@ class TAO_POA_Manager;
 class TAO_POA_Policies;
 class TAO_Acceptor;
 class TAO_Connector;
+class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 
 class TAO_Resource_Factory;
@@ -156,7 +152,7 @@ public:
   // associated with the address.
 
   int add_to_ior_table (ACE_CString init_ref, TAO_IOR_LookupTable &table);
-  // Add the init_ref (objectID->IOR) to the Lookup Table.
+  // Add the init_ref (objectID->IOR) to the Lookup Table
 
   int leader_available (void);
   // returns the refcount on the leader
@@ -317,11 +313,6 @@ protected:
   TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
 
-  // @@ Depricated!
-  ACE_INET_Addr *addr_;
-  // The address of the endpoint on which we're listening for
-  // connections and requests.
-
   char* orbid_;
   // The ORBid for this ORB.
 
@@ -359,10 +350,6 @@ protected:
   CORBA::Boolean use_global_collocation_;
   // TRUE if we want to consider all ORBs in this address space
   // collocated.
-
-  char *preconnections_;
-  // A string of comma-separated <{host}>:<{port}> pairs used to
-  // pre-establish connections using <preconnect>.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
   TAO_Policy_Manager policy_manager_;

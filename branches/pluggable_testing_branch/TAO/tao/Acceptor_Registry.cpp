@@ -8,6 +8,8 @@
 #include "tao/GIOP.h"
 #include "tao/Protocol_Factory.h"
 #include "tao/ORB_Core.h"
+#include "tao/params.h"
+
 #include "ace/Auto_Ptr.h"
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
@@ -80,24 +82,24 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
 
-  ACE_Auto_Basic_Array_Ptr <char>
-                        str (orb_core->orb_params ()->endpoints ().rep ());
+  TAO_EndpointSetIterator first_endpoint =
+    orb_core->orb_params ()->endpoints ().begin ();
 
-  ACE_Auto_Basic_Array_Ptr <char> addr_str;
-  char *last_iop=0;
+  TAO_EndpointSetIterator last_endpoint =
+    orb_core->orb_params ()->endpoints ().end ();
 
-  for (char *iop_str = ACE_OS::strtok_r (str.get (), ";", &last_iop);
-     iop_str != 0;
-     iop_str = ACE_OS::strtok_r (0, ";",  &last_iop))
+  for (TAO_EndpointSetIterator endpoint = first_endpoint;
+       endpoint != last_endpoint;
+       ++endpoint)
     {
+      ACE_CString iop = (*endpoint);
 
-      ACE_CString iop (iop_str);
       int indx = iop.find ("://", 0);
       if ( indx == iop.npos)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) Invalid endpoint epecification.\n"),
-                       -1);
+                             "(%P|%t) Invalid endpoint epecification.\n"),
+                            -1);
         }
 
       ACE_CString prefix = iop.substring (0, indx);
@@ -108,10 +110,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
       char *last_addr=0;
       addr_str.reset (addrs.rep ());
       for (char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
-                astr != 0 ;
-                astr = ACE_OS::strtok_r (0,
-                                         ",",
-                                         &last_addr))
+           astr != 0 ;
+           astr = ACE_OS::strtok_r (0,
+                                    ",",
+                                    &last_addr))
         {
           ACE_CString address (astr);
 

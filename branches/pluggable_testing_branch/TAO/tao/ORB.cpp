@@ -955,8 +955,20 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
   //
   // size_t pfile_count =
   //     this->orb_core_->acceptor_registry ()->count_profiles ();
+  // {
+  //   int s = 0;
+  //   foreach a in Acceptors s+= a->count_endpoints ();
+  //   return s;
+  // }
   // TAO_MProfile mp (pfile_count);
-  // this->orb_core_->acceptor_registry ()->fill_mprofile (key);
+  // this->orb_core_->acceptor_registry ()->fill_mprofile (mp, key);
+  // {
+  //   foreach a in Acceptors a->add_profiles (mp, key);
+  //   {
+  //     foreach e in Endpoints
+  //       mp.give_profile (new Right_Endpoint (e, key));
+  //   }
+  // }
   //
   //    What do you think?
 
@@ -975,7 +987,8 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id, mp, this->orb_core_),
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
 
   return stub;
