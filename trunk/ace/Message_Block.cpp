@@ -222,14 +222,32 @@ ACE_Message_Block::total_size (void) const
 {
   ACE_TRACE ("ACE_Message_Block::total_size");
 
-  size_t s = 0;
+  size_t size = 0;
 
-  for (ACE_Message_Block *temp = ACE_const_cast (ACE_Message_Block *, this);
-       temp != 0;
-       temp = temp->cont ())
-    s += temp->size ();
+  for (const ACE_Message_Block *i = this;
+       i != 0;
+       i = i->cont ())
+    {
+      size += i->size ();
+    }
 
-  return s;
+  return size;
+}
+
+size_t
+ACE_Message_Block::total_length (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::total_length");
+
+  size_t length = 0;
+  for (const ACE_Message_Block *i = this;
+       i != 0;
+       i = i->cont ())
+    {
+      length += i->length ();
+    }
+
+  return length;
 }
 
 ACE_Data_Block::ACE_Data_Block (void)
