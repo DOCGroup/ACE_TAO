@@ -15,18 +15,38 @@ my $STILL_ACTIVE = 259;
 
 ### Constructor and Destructor
 
-sub new  
+#
+# Hack in purify support thru 2 environment variables:
+#   ACE_RUN_PURIFY_CMD: complete path to purify executable
+#   ACE_RUNTEST_DELAY: wait delay factor, default to 10 if
+#                      ACE_RUN_PURIFY_CMD is defined, or 1 if
+#                      ACE_RUN_PURIFY_CMD is not defined.
+# ** Notice that when ACE_RUN_PURIFY_CMD is define, PerlACE::Process
+#    reports the return status of *purify*, not the process being purified.
+#
+sub new
 {
     my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $self = {};
-    
+
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    
+    $self->{PURIFY_CMD} = $ENV{"ACE_RUN_PURIFY_CMD"};
+    $self->{WAIT_DELAY_FACTOR} = $ENV{"ACE_RUNTEST_DELAY"};
+
+    if (!defined $self->{WAIT_DELAY_FACTOR}) {
+        if (defined $self->{PURIFY_CMD}) {
+            $self->{WAIT_DELAY_FACTOR} = 10;
+        }
+        else {
+            $self->{WAIT_DELAY_FACTOR} = 1;
+        }
+    }
+
     bless ($self, $class);
     return $self;
 }
@@ -34,11 +54,11 @@ sub new
 sub DESTROY
 {
     my $self = shift;
-    
+
     if ($self->{RUNNING} == 1) {
-        print STDERR "ERROR: <", $self->{EXECUTABLE}, 
+        print STDERR "ERROR: <", $self->{EXECUTABLE},
                      "> still running upon object destruction\n";
-        $self->Kill ();             
+        $self->Kill ();
     }
 }
 
@@ -55,7 +75,7 @@ sub Executable
     }
 
     my $executable = $self->{EXECUTABLE};
-    
+
     if ($self->{IGNOREEXESUBDIR}) {
         return $executable;
     }
@@ -77,7 +97,7 @@ sub Arguments
     if (@_ != 0) {
         $self->{ARGUMENTS} = shift;
     }
-	
+
     return $self->{ARGUMENTS};
 }
 
@@ -90,7 +110,7 @@ sub CommandLine ()
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
     }
-	
+
     return $commandline;
 }
 
@@ -126,26 +146,51 @@ sub Spawn ()
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
 	    return -1;
     }
-    
+
     if ($self->{IGNOREEXESUBDIR} == 0) {
         if (!-f $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not found\n";
             return -1;
         }
 
         if (!-x $self->Executable ()) {
-            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (), 
+            print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not executable\n";
             return -1;
         }
     }
 
-    Win32::Process::Create ($self->{PROCESS}, 
-                            $self->Executable (),
-                            $self->CommandLine (), 
-                            0, 
-                            0, 
+    my $cmdline = "";
+    my $executable = "";
+
+    if (defined $self->{PURIFY_CMD}) {
+        my $orig_cmdline = $self->CommandLine ();
+        $executable = $self->{PURIFY_CMD};
+        my $basename = basename ($self->{EXECUTABLE});
+        $cmdline =
+            "purify " .
+            "/run ".
+            "/save-data=$basename.pfy ".
+            "/save-text-data=$basename.txt ".
+            "/AllocCallStackLength=20 ".
+            "/ErrorCallStackLength=20 ".
+            "/HandlesInUseAtExit ".
+            "/InUseAtExit ".
+            "/LeaksAtExit ".
+            "$orig_cmdline"
+
+            ;
+    }
+    else {
+        $executable = $self->Executable ();
+        $cmdline = $self->CommandLine ();
+    }
+    Win32::Process::Create ($self->{PROCESS},
+                            $executable,
+                            $cmdline,
+                            0,
+                            0,
                             '.');
 
     my $status = 0;
@@ -173,10 +218,10 @@ sub WaitKill ($)
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
-        $self->Kill (); 
+        $self->Kill ();
         # Don't need to Wait since we are on Win32
     }
-	
+
     $self->{RUNNING} = 0;
 
     return $status;
@@ -203,11 +248,11 @@ sub SpawnWaitKill ($)
 sub Kill ()
 {
     my $self = shift;
- 
+
     if ($self->{RUNNING}) {
         Win32::Process::Kill ($self->{PROCESS}, -1);
     }
-    
+
 	$self->{RUNNING} = 0;
 }
 
@@ -218,11 +263,11 @@ sub TerminateWaitKill ($)
 {
     my $self = shift;
     my $timeout = shift;
-    
+
     if ($self->{RUNNING}) {
         Win32::Process::Kill ($self->{PROCESS}, 0);
     }
-    
+
     return $self->WaitKill ($timeout);
 }
 
@@ -250,7 +295,8 @@ sub TimedWait ($)
         return 0;
     }
 
-    if (Win32::Process::Wait ($self->{PROCESS}, $timeout * 1000) == 0) {
+    if (Win32::Process::Wait ($self->{PROCESS},
+                              $timeout * 1000 * $self->{WAIT_DELAY_FACTOR}) == 0) {
         return -1;
     }
 
