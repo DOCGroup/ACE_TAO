@@ -23,7 +23,7 @@ main( int argc, char *argv[] )
       PortableServer::POAManager_var man = poa->the_POAManager(TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      man->activate(ACE_TRY_ENV);
+      man->activate(TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       simple_i simp;
