@@ -3176,7 +3176,7 @@ template class ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>;
-template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
+//template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_POA>;
 template class ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>;
 template class ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>;
@@ -3207,19 +3207,18 @@ template class auto_ptr<TAO_Id_Assignment_Policy>;
 template class auto_ptr<TAO_Id_Uniqueness_Policy>;
 template class auto_ptr<TAO_Implicit_Activation_Policy>;
 template class auto_ptr<TAO_Lifespan_Policy>;
-template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
+//template class auto_ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class auto_ptr<TAO_POA>;
 template class auto_ptr<TAO_Request_Processing_Policy>;
 template class auto_ptr<TAO_Servant_Retention_Policy>;
 template class auto_ptr<TAO_Thread_Policy>;
 template class ACE_Node<TAO_POA *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Assignment_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Implicit_Activation_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Lifespan_Policy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
+//#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_POA>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Request_Processing_Policy>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Servant_Retention_Policy>
@@ -3229,6 +3228,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
 #pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
 #endif /* ACE_HAS_THREADS */
+#pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_POA *>
 #pragma instantiate ACE_Hash<ACE_CString>
 #pragma instantiate ACE_Equal_To<ACE_CString>
@@ -3249,7 +3249,7 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate auto_ptr<TAO_Id_Uniqueness_Policy>
 #pragma instantiate auto_ptr<TAO_Implicit_Activation_Policy>
 #pragma instantiate auto_ptr<TAO_Lifespan_Policy>
-#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
+//#pragma instantiate auto_ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate auto_ptr<TAO_POA>
 #pragma instantiate auto_ptr<TAO_Request_Processing_Policy>
 #pragma instantiate auto_ptr<TAO_Servant_Retention_Policy>

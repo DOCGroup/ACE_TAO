@@ -103,10 +103,6 @@ SOURCE=.\EchoS.cpp
 
 SOURCE=.\server.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\Server_i.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -126,10 +122,6 @@ SOURCE=.\EchoS.h
 # Begin Source File
 
 SOURCE=.\EchoS_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Server_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

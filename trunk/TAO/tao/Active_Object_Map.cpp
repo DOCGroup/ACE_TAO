@@ -1075,6 +1075,9 @@ typedef ACE_Reference_Pair<const id, value> id_value_type;
 typedef ACE_Reference_Pair<const servant, value> servant_value_type;
 typedef ACE_Equal_To<id> id_compare_keys;
 typedef ACE_Equal_To<servant> servant_compare_keys;
+typedef TAO_ObjectId_Hash id_hash;
+typedef TAO_Servant_Hash servant_hash;
+typedef ACE_Noop_Key_Generator<PortableServer::Servant> noop_servant_key_generator;
 
 // Common
 template class ACE_Reference_Pair<const id, value>;
@@ -1108,20 +1111,20 @@ template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, id_expanded_
 template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, id_expanded_value>;
 
 // Hash Map Manager related.
-template class ACE_Hash_Map_Manager_Ex_Adapter<id, value, Hash_Key, id_compare_keys, TAO_Incremental_Key_Generator>;
-template class ACE_Hash_Map_Manager_Ex_Adapter<servant, value, Hash_Key, servant_compare_keys, TAO_Noop_Key_Generator>;
-template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, Hash_Key, id_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, Hash_Key, servant_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, Hash_Key, id_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, Hash_Key, servant_compare_keys>;
-template class ACE_Hash_Map_Manager_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex_Adapter<id, value, id_hash, id_compare_keys, TAO_Incremental_Key_Generator>;
+template class ACE_Hash_Map_Manager_Ex_Adapter<servant, value, servant_hash, servant_compare_keys, noop_servant_key_generator>;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>;
+template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>;
+template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>;
+template class ACE_Hash_Map_Manager_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<id, value>;
 template class ACE_Hash_Map_Entry<servant, value>;
 template class ACE_Equal_To<id>;
@@ -1133,7 +1136,7 @@ template class ACE_Map_Manager_Iterator_Adapter<servant_value_type, servant, val
 template class ACE_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id, value>;
 template class ACE_Map_Manager_Reverse_Iterator_Adapter<servant_value_type, servant, value>;
 template class ACE_Map_Manager_Adapter<id, value, TAO_Incremental_Key_Generator>;
-template class ACE_Map_Manager_Adapter<servant, value, TAO_Noop_Key_Generator>;
+template class ACE_Map_Manager_Adapter<servant, value, noop_servant_key_generator>;
 template class ACE_Map_Manager<id, value, ACE_Null_Mutex>;
 template class ACE_Map_Manager<servant, value, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<id, value, ACE_Null_Mutex>;
@@ -1157,6 +1160,9 @@ typedef ACE_Reference_Pair<const id, value> id_value_type;
 typedef ACE_Reference_Pair<const servant, value> servant_value_type;
 typedef ACE_Equal_To<id> id_compare_keys;
 typedef ACE_Equal_To<servant> servant_compare_keys;
+typedef TAO_ObjectId_Hash id_hash;
+typedef TAO_Servant_Hash servant_hash;
+typedef ACE_Noop_Key_Generator<PortableServer::Servant> noop_servant_key_generator;
 
 // Common
 #pragma instantiate ACE_Reference_Pair<const id, value>
@@ -1190,20 +1196,20 @@ typedef ACE_Equal_To<servant> servant_compare_keys;
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, id_expanded_value>
 
 // Hash Map Manager related.
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<id, value, Hash_Key, id_compare_keys, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<servant, value, Hash_Key, servant_compare_keys, TAO_Noop_Key_Generator>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, Hash_Key, id_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, Hash_Key, servant_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, Hash_Key, id_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, Hash_Key, servant_compare_keys>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<id, value, Hash_Key, id_compare_keys, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, Hash_Key, servant_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<id, value, id_hash, id_compare_keys, TAO_Incremental_Key_Generator>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<servant, value, servant_hash, servant_compare_keys, noop_servant_key_generator>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<id_value_type, id, value, id_hash, id_compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<servant_value_type, servant, value, servant_hash, servant_compare_keys>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<id, value, id_hash, id_compare_keys, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<servant, value, servant_hash, servant_compare_keys, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<id, value>
 #pragma instantiate ACE_Hash_Map_Entry<servant, value>
 #pragma instantiate ACE_Equal_To<id>
@@ -1215,7 +1221,7 @@ typedef ACE_Equal_To<servant> servant_compare_keys;
 #pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<id_value_type, id, value>
 #pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<servant_value_type, servant, value>
 #pragma instantiate ACE_Map_Manager_Adapter<id, value, TAO_Incremental_Key_Generator>
-#pragma instantiate ACE_Map_Manager_Adapter<servant, value, TAO_Noop_Key_Generator>
+#pragma instantiate ACE_Map_Manager_Adapter<servant, value, noop_servant_key_generator>
 #pragma instantiate ACE_Map_Manager<id, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Manager<servant, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator_Base<id, value, ACE_Null_Mutex>
