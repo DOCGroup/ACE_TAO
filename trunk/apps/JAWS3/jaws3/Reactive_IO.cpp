@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/ACE.h"
 #include "ace/OS.h"
 #include "ace/Reactor.h"
 
