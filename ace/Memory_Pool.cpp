@@ -33,16 +33,17 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
 
-  ACE_Auto_Basic_Array_Ptr<char> cp (new char[rounded_bytes]);
+  char *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  char[rounded_bytes],
+                  -1);
 
-  if (cp.get () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) new failed \n")), 0);
-  else
-    {
-      int result = this->allocated_chunks_.insert (cp.get ());
-      if (result != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) insertion into set failed\n")), 0);
-    }
+  ACE_Auto_Basic_Array_Ptr<char> cp (temp);
+
+  if (this->allocated_chunks_.insert (cp.get ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("(%P|%t) insertion into set failed\n")),
+                      0);
 
   return cp.release ();
 }
@@ -56,9 +57,7 @@ ACE_Local_Memory_Pool::release (void)
   for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
        i != this->allocated_chunks_.end ();
        ++i)
-    {
-      delete[] *i;
-    }
+    delete [] *i;
 
   return 0;
 }
@@ -357,9 +356,9 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
 // HP-UX 11, 64-bit bug workaround.
 #if defined (__hpux) && defined (__LP64__)
-long temp = ACE_DEFAULT_BASE_ADDRL;
-base_addr_ = (void *)temp;
-#endif
+  long temp = ACE_DEFAULT_BASE_ADDRL;
+  base_addr_ = (void *) temp;
+#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 // Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
@@ -485,18 +484,20 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
                                                                 size_t max_segments,
                                                                 size_t file_perms,
-                                                                off_t minimum_bytes)
+                                                                off_t minimum_bytes,
+                                                                size_t segment_size)
   : base_addr_ (base_addr),
     max_segments_ (max_segments),
     minimum_bytes_ (minimum_bytes),
-    file_perms_ (file_perms)
+    file_perms_ (file_perms),
+    segment_size_ (segment_size)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
-// HP-UX 11, 64-bit bug workaround
-#if defined (__hpux) && defined(__LP64__)
-long temp = ACE_DEFAULT_BASE_ADDRL;
-base_addr_ = (char *)temp;
-#endif
+  // HP-UX 11, 64-bit bug workaround
+#if defined (__hpux) && defined (__LP64__)
+  long temp = ACE_DEFAULT_BASE_ADDRL;
+  base_addr_ = (char *) temp;
+#endif /* defined (__hpux) && defined (__LP64__) */
 }
 
 void
@@ -666,7 +667,8 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
   : base_addr_ (0),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
     max_segments_ (ACE_DEFAULT_MAX_SEGMENTS),
-    minimum_bytes_ (0)
+    minimum_bytes_ (0),
+    segment_size_ (ACE_DEFAULT_SEGMENT_SIZE)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
 
@@ -677,6 +679,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
       this->max_segments_ = options->max_segments_;
       this->file_perms_ = options->file_perms_;
       this->minimum_bytes_ = options->minimum_bytes_;
+      this->segment_size_ = options->segment_size_;
     }
 
   if (backing_store_name)
