@@ -1,3 +1,12 @@
+Fri Jul  9 20:21:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/Protocols/Receiver/Receiver_svnt.h:
+	* performance-tests/Protocols/Receiver/Receiver_svnt.cpp:
+	* performance-tests/Protocols/Sender/Sender_svnt.h:
+	* performance-tests/Protocols/Sender/Sender_svnt.cpp:
+
+	  Removed them from the repo. 
+
 Thu Jul  8 17:16:34 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/Config_Handlers/Config_Handlers.mpc:
