@@ -886,10 +886,12 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  cond_.dump ();
-  mutex_.dump ();
+  // cond_.dump ();
+  // mutex_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+
+  return 0;
 }
 
 //ACE_TEMPLATE_METHOD_SPECIALIZATION
