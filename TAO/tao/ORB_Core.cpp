@@ -381,10 +381,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           dotted_decimal_addresses =
             ACE_OS::atoi (current_arg);
 
-          ACE_DEBUG ((LM_DEBUG,
-                      "OSSAMA: -ORBDottedDecimalAddresses = %d\n",
-                      dotted_decimal_addresses));
-
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
