@@ -4,9 +4,9 @@ Mon Mar 19 11:28:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/ORB_Core.i: Moved the method service_context_list () from
 	  the .i file to .cpp file. This was causing SunCC 4.2 to choke
 	  when the debugging symbols were off and caused the clients
-	  linked with TAO to dump a core. Thanks to Carlos for pointing me
-	  for suggesting that some methods in .i file could be the source
-	  of the problem.
+	  linked with TAO to dump a core. Thanks to Carlos for suggesting
+	  that some methods in .i file could be the source of the
+	  problem. 
 	
 Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
