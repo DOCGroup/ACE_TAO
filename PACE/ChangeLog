@@ -1,3 +1,27 @@
+Mon Aug 14 21:41:24 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthreadtypes.h:
+	* pace/win32/schedtypes.h:
+
+	  Added to repository to break up the complexity
+	  of the code and avoid circular dependencies.
+
+	* pace/win32/types.h:
+
+	  Updated declarations to remove circular dependencies.
+
+	* pace/win32/sched.h:
+
+	  Updated to use schedtypes.h.
+
+	* pace/win32/pthread.h:
+
+	  Updated to use pthreadtypes.h.
+
+	* pace/pthread.h:
+
+	  Updated signatures to use pace prefixed types.
+
 Thu Aug 10 04:18:14 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* tests/Stdio_Test.c:
@@ -7,7 +31,7 @@ Thu Aug 10 04:18:14 2000  John Heitmann  <jwh1@cs.wustl.edu>
 	* pace/mqueue.h
 	* pace/semaphore.h
 	* pace/stdio.h
-	  Removed glodal scope modifier, since it should be
+	  Removed global scope modifier, since it should be
 	  supplied by the client.
 
 Wed Aug 09 19:30:39 2000  Luther J Baker  <luther@cs.wustl.edu>
