@@ -6,6 +6,16 @@ project(*CIDLC) {
   includes += .. ../CCF
   after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
   install = ../bin
-  libpaths += ../CCF/CCF/CIDL ../CCF/CCF/IDL3 ../CCF/CCF/IDL2 ../CCF/CCF/CodeGenerationKit ../CCF/CCF/CompilerElements
+  libpaths += ../CCF/CCF
   libs += CIDL IDL3 IDL2 CodeGenerationKit CompilerElements boost_regex boost_filesystem
+  Source_Files {
+    ExecutorMappingGenerator.cpp
+    DescriptorGenerator.cpp
+    SizeTypeCalculator.cpp       
+    ServantGenerator.cpp         
+    ServantHeaderGenerator.cpp   
+    ServantSourceGenerator.cpp   
+    TypeNameEmitter.cpp          
+    cidlc.cpp
+  }
 }
