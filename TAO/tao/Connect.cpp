@@ -420,7 +420,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                          &resp_ctx,
                          0,
                          ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
 
           // Write the request ID
           output.write_ulong (request_id);
@@ -451,7 +451,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                              &object_ptr,
                              0,
                              ACE_TRY_ENV);
-              ACE_CHECK;
+              ACE_TRY_CHECK;
             }
           // end of the forwarding code ****************************
           else
@@ -468,7 +468,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 
               // write the actual exception
               output.encode (except_tc, x, 0, ACE_TRY_ENV);
-              ACE_CHECK;
+              ACE_TRY_CHECK;
             }
         }
       ACE_CATCH (CORBA_Exception, ex)
@@ -550,7 +550,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                         request_id,
                                         ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              ACE_CHECK_RETURN (-1);
+              ACE_TRY_CHECK;
               break;
 
             case TAO_GIOP::LocateRequest:
@@ -560,7 +560,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                        request_id,
                                        ACE_TRY_ENV) == -1)
                 error_encountered = 1;
-              ACE_CHECK_RETURN (-1);
+              ACE_TRY_CHECK;
               break;
 
             case TAO_GIOP::EndOfFile:
