@@ -1,3 +1,14 @@
+Fri Dec 28 15:41:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp (visit_array):
+
+          Where there are multiple levels of typedefs for an array,
+          some code generation was missing from the first level of
+          typedef. An extra condition in an IF statement in visit_array()
+          causes the ELSE branch to be taken in such a case, where before
+          the statment blocks were skipped altogether. This fixes a 
+          compile error in files generated from typedef.idl in IDL_Test.
+
 Fri Dec 28 13:50:48 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/README: Updated this document to explain
