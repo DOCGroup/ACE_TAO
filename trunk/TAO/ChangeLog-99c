@@ -1,3 +1,11 @@
+Mon Feb 15 10:45:10 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_argument/post_docall_compiled_cs.cpp:
+
+	  Jeff's changes are now valid only for the "inout" paramater and
+	  not to the "out" parameter.
+
 Mon Feb 15 09:11:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_argument.cpp
