@@ -1,3 +1,8 @@
+Sun Dec 29 18:27:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Prevented BiDirGIOP tests from running
+	  in GIOP 10 builds.
+
 Sun Dec 29 16:43:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/FileCharStream.cpp (close): Changed to reset the

@@ -36,8 +36,8 @@ TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
-TAO/tests/BiDirectional/run_test.pl: !MINIMUM
-TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC
+TAO/tests/BiDirectional/run_test.pl: !MINIMUM !GIOP10
+TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC !GIOP10
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
@@ -69,7 +69,7 @@ TAO/tests/Cache_Growth_Test/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/Muxed_GIOP_Versions/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
-TAO/tests/MT_BiDir/run_test.pl: !ST !MINIMUM
+TAO/tests/MT_BiDir/run_test.pl: !ST !MINIMUM !GIOP10
 TAO/tests/File_IO/run_test.pl: !ST !MINIMUM
 TAO/tests/MT_Server/run_test.pl: !ST
 TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM
