@@ -159,7 +159,6 @@ TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/orbsvcs/tests/Event/Basic/run_test.pl: !ST
 TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST
-TAO/orbsvcs/tests/EC_Basic/run_test.pl: !SUNCC5_1
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST
 TAO/orbsvcs/tests/ImplRepo/run_test.pl: SANDBOX
@@ -169,7 +168,6 @@ TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 
 # BREAKS !linux 'TAO/orbsvcs/tests/EC_Mcast/run_test.pl
 # FAILS 'TAO/orbsvcs/tests/EC_Multiple/run_test.pl
-TAO/orbsvcs/tests/Event_Latency/run_test.pl
 # NO REDIRECTION TAO/examples/Simple/echo/run_test.pl < Echo.idl
 # INTERACTIVE 'TAO/examples/Simple/chat/run_test.pl
 TAO/orbsvcs/tests/Property/run_test.pl
