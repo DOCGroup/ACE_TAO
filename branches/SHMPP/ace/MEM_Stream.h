@@ -110,7 +110,7 @@ public:
   // the close to avoid losing data).
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_Addr PEER_ADDR;
 
   void dump (void) const;
   // Dump the state of an object.

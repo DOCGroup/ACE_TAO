@@ -16,10 +16,6 @@ void
 ACE_MEM_Acceptor::dump (void) const
 {
   ACE_TRACE ("ACE_MEM_Acceptor::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  this->local_addr_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 // Do nothing routine for constructor.
@@ -106,7 +102,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   // should have something like ACE_MEM_Addr?
   ACE_OS::sprintf (buf, "MEM_Acceptor_%d_", local_addr.get_port_number ());
   char unique [MAXPATHLEN];
-  ACE_OS::unique_name (this, unique, MAXPATHLEN);
+  ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
   ACE_OS::strcat (buf, unique);
 
   // Make sure we have a fresh start.
