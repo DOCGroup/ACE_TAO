@@ -8,7 +8,6 @@
 ACE_RCSID(Log, Logger_i, "$Id$")
 
 
-  
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #define TAO_Logger_Hash \
   ACE_Hash_Map_Manager<const char *, Logger_i *, ACE_Null_Mutex>
@@ -206,3 +205,15 @@ Logger_i::verbosity (Logger::Verbosity_Level level, CORBA::Environment &env)
   ACE_UNUSED_ARG (env);
   verbosity_level_ = level;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Hash_Map_Manager<const char*, Logger_i*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<const char*, Logger_i*>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Manager<const char*, Logger_i*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<const char*, Logger_i*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
