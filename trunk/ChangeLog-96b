@@ -1,3 +1,11 @@
+Wed Dec  4 00:27:07 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Registry: Removed NOMINMAX and
+ 	  VC_PLUS_PLUS_NESTED_CLASS_PROBLEM flags from the header file.
+  	  The VC_PLUS_PLUS_NESTED_CLASS_PROBLEM flag is no longer needed
+ 	  and NOMINMAX is defined at the project level.  Thanks to
+	  Matthias Kerkhoff <make@cs.tu-berlin.de> for suggesting this. 
+
 Mon Dec  2 14:13:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace: Changed all occurrences of ACE_Event_Handler
@@ -68,11 +76,6 @@ Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 	* ace/Service_Config: Moved the #inclusion of ace/Proactor.h and
  	  ace/ReactorEx.h from the *.h file to the *.cpp file to avoid
  	  problems with circular dependencies.
-
-	* ace/ReactorEx: Added a new parameter to the Reactor's
- 	  initialization methods so that we can install a subclass of
- 	  ACE_Timer_Queue.  This is in anticipation of Tim's new
- 	  "real-time" implementation of a timer queue.
 
 	* ace/Reactor: Added a new parameter to the Reactor's
  	  initialization methods so that we can install a subclass of
