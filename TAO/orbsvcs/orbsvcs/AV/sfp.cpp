@@ -442,7 +442,7 @@ TAO_SFP::send_frame (ACE_Message_Block *frame)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_SFP::send_frame");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP::send_frame");
       return -1;
     }
   ACE_ENDTRY;
@@ -786,7 +786,7 @@ TAO_SFP::end_stream (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_SFP::end_stream ()\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP::end_stream ()\n");
       return result;
     }
   ACE_ENDTRY;
@@ -909,7 +909,7 @@ TAO_SFP::read_simple_frame (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("read_simple_frame");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"read_simple_frame");
       return 0;
     }
   ACE_ENDTRY;
@@ -1071,7 +1071,7 @@ TAO_SFP::read_fragment (void)
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_SFP::read_fragment");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_SFP::read_fragment");
       return 0;
     }
   ACE_ENDTRY;
