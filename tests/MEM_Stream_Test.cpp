@@ -49,12 +49,16 @@ public:
                             ACE_Reactor_Mask close_mask);
   // The Svc_Handler callbacks.
 
+public:
+  static u_short waiting_;
+  // How many connections are we waiting for.
+
+  static u_short connection_count_;
+  // How many connections are currently open
+
 private:
   ACE_TCHAR name_[MAXPATHLEN];
   u_short connection_;
-  static u_short connection_count_;
-  static u_short waiting_;
-  // How many connections are we waiting for.
 };
 
 u_short Echo_Handler::waiting_ = NO_OF_CONNECTION;
@@ -191,22 +195,48 @@ main (int, ACE_TCHAR *[])
 
   create_reactor ();
 
-  ACE_MEM_Addr server_addr (10000);
+  unsigned short port = 0;
+  ACE_MEM_Addr server_addr (port);
 
   ACCEPTOR acceptor;
   acceptor.acceptor ().mmap_prefix (ACE_TEXT ("MEM_Acceptor_"));
   if (acceptor.open (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("MEM_Accept::accept\n")), 1);
+                       ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
 
-  u_short sport = server_addr.get_port_number ();
+  ACE_MEM_Addr local_addr;
+  if (acceptor.acceptor ().get_local_addr (local_addr) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::get_local_addr\n")),
+                        1);
+    }
+
+  u_short sport = local_addr.get_port_number ();
 
   ACE_Thread_Manager::instance ()->spawn_n (NO_OF_CONNECTION,
                                             connect_client,
                                             &sport);
-  ACE_Reactor::instance ()->run_event_loop ();
+  ACE_Time_Value tv(60, 0);
+  ACE_Reactor::instance ()->run_event_loop (tv);
+
+  if (tv == ACE_Time_Value::zero)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("Reactor::run_event_loop timeout\n")),
+                        1);
+    }
+
+  ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
   ACE_Thread_Manager::instance ()->wait ();
+
+  if (acceptor.close () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("MEM_Acceptor::close\n")),
+                        1);
+    }
 
   ACE_END_TEST;
   return 0;
