@@ -91,6 +91,7 @@ static char	*__yytext = (char *) yytext;
 
 %%
 
+any             return ANY;
 module		return MODULE;
 raises		return RAISES;
 readonly	return READONLY;
