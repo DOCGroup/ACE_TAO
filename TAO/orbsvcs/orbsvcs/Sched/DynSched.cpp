@@ -16,10 +16,9 @@
 //
 // ============================================================================
 
-#include "math.h"
-
-#include "ace/Sched_Params.h"
 #include "DynSched.h"
+#include "ace/Sched_Params.h"
+#include "math.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "DynSched.i"
