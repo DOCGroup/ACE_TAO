@@ -1,7 +1,7 @@
 // $Id$
 
 // ============================================================================
-// 
+//
 // = FILENAME
 //    Event_Sup.h
 //
@@ -32,14 +32,14 @@ struct Schedule_Viewer_Data
   u_long computation_time;
 };
 
-class Event_Supplier 
+class Event_Supplier
 {
   // = TITLE
   //    Event Supplier.
   //
   // = DESCRIPTION
   //    Reads Scheduler information out of a file and
-  //    feeds it with additional navigation and 
+  //    feeds it with additional navigation and
   //    weapon data into the dove_supplier, which
   //    is connected to the event channel
 public:
@@ -60,11 +60,11 @@ public:
 
 
 private:
-  void insert_event_data (CORBA::Any &data, 
+  void insert_event_data (CORBA::Any &data,
                           ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
   // just a helper to put all the information into the CORBA::Any
 
-  unsigned int Event_Supplier::get_options (int argc, char *argv []);
+  unsigned int get_options (int argc, char *argv []);
 
   DOVE_Supplier dOVE_Supplier_;
   Navigation navigation_;
