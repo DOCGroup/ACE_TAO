@@ -111,7 +111,15 @@ server (void *arg)
   handle_set.reset ();
   handle_set.set_bit (peer_acceptor->get_handle ());
 
-  int result = ACE_OS::select (int (peer_acceptor->get_handle ()) + 1,
+  int select_width;
+#  if defined (ACE_WIN64)
+  // This arg is ignored on Windows and causes pointer truncation
+  // warnings on 64-bit compiles.
+  select_width = 0;
+#  else
+  select_width = int (peer_acceptor->get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+  int result = ACE_OS::select (select_width,
                                handle_set,
                                0, 0, &tv);
   ACE_ASSERT (tv == def_timeout);
@@ -140,10 +148,17 @@ server (void *arg)
       handle_set.set_bit (new_stream.get_handle ());
 
       // Read data from client (terminate on error).
-
+      int select_width;
       for (ssize_t r_bytes; ;)
         {
-          if (ACE_OS::select (int (new_stream.get_handle ()) + 1,
+#  if defined (ACE_WIN64)
+          // This arg is ignored on Windows and causes pointer truncation
+          // warnings on 64-bit compiles.
+          select_width = 0;
+#  else
+          select_width = int (new_stream.get_handle ()) + 1;
+#  endif /* ACE_WIN64 */
+          if (ACE_OS::select (select_width,
                               handle_set,
                               0, 0, 0) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("select")), 0);

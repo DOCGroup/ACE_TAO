@@ -164,7 +164,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy (void)
 template <class SVC_HANDLER> ASYS_INLINE
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_mgr,
                                                        long thr_flags,
-                                                       size_t n_threads,
+                                                       int n_threads,
                                                        int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy");

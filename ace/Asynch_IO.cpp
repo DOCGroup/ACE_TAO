@@ -12,7 +12,7 @@ ACE_RCSID(ace, Asynch_IO, "$Id$")
 #include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
 
-u_long
+size_t
 ACE_Asynch_Result::bytes_transferred (void) const
 {
   return this->implementation ()->bytes_transferred ();
@@ -193,7 +193,7 @@ ACE_Asynch_Read_Stream::open (ACE_Handler &handler,
   
 int
 ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
-                              u_long bytes_to_read,
+                              size_t bytes_to_read,
                               const void *act,
                               int priority,
                               int signal_number)
@@ -208,7 +208,7 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 int
 ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
-                               u_long bytes_to_read,
+                               size_t bytes_to_read,
                                const void *act,
                                int priority,
                                int signal_number)
@@ -238,7 +238,7 @@ ACE_Asynch_Read_Stream::implementation (ACE_Asynch_Read_Stream_Impl *implementat
 
 // ************************************************************
 
-u_long
+size_t
 ACE_Asynch_Read_Stream::Result::bytes_to_read (void) const
 {
   return this->implementation ()->bytes_to_read ();
@@ -315,7 +315,7 @@ ACE_Asynch_Write_Stream::open (ACE_Handler &handler,
 
 int
 ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
-                                u_long bytes_to_write,
+                                size_t bytes_to_write,
                                 const void *act,
                                 int priority,
                                 int signal_number)
@@ -330,7 +330,7 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 int
 ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
-                                 u_long bytes_to_write,
+                                 size_t bytes_to_write,
                                  const void *act,
                                  int priority,
                                  int signal_number)
@@ -360,7 +360,7 @@ ACE_Asynch_Write_Stream::implementation (ACE_Asynch_Write_Stream_Impl *implement
 
 // ************************************************************
 
-u_long
+size_t
 ACE_Asynch_Write_Stream::Result::bytes_to_write (void) const
 {
   return this->implementation ()->bytes_to_write ();
@@ -437,7 +437,7 @@ ACE_Asynch_Read_File::open (ACE_Handler &handler,
 
 int
 ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
-                            u_long bytes_to_read,
+                            size_t bytes_to_read,
                             u_long offset,
                             u_long offset_high,
                             const void *act,
@@ -456,7 +456,7 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 int
 ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
-                             u_long bytes_to_read,
+                             size_t bytes_to_read,
                              u_long offset,
                              u_long offset_high,
                              const void *act,
@@ -549,7 +549,7 @@ ACE_Asynch_Write_File::open (ACE_Handler &handler,
 
 int
 ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
-                              u_long bytes_to_write,
+                              size_t bytes_to_write,
                               u_long offset,
                               u_long offset_high,
                               const void *act,
@@ -568,7 +568,7 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 int
 ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
-                               u_long bytes_to_write,
+                               size_t bytes_to_write,
                                u_long offset,
                                u_long offset_high,
                                const void *act,
@@ -661,7 +661,7 @@ ACE_Asynch_Accept::open (ACE_Handler &handler,
 
 int
 ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
-                           u_long bytes_to_read,
+                           size_t bytes_to_read,
                            ACE_HANDLE accept_handle,
                            const void *act,
                            int priority,
@@ -691,7 +691,7 @@ ACE_Asynch_Accept::implementation (ACE_Asynch_Accept_Impl *implementation)
 
 // ************************************************************
 
-u_long
+size_t
 ACE_Asynch_Accept::Result::bytes_to_read (void) const
 {
   return this->implementation ()->bytes_to_read ();
@@ -875,10 +875,10 @@ ACE_Asynch_Transmit_File::open (ACE_Handler &handler,
 int
 ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                          Header_And_Trailer *header_and_trailer,
-                                         u_long bytes_to_write,
+                                         size_t bytes_to_write,
                                          u_long offset,
                                          u_long offset_high,
-                                         u_long bytes_per_send,
+                                         size_t bytes_per_send,
                                          u_long flags,
                                          const void *act,
                                          int priority,
@@ -930,13 +930,13 @@ ACE_Asynch_Transmit_File::Result::header_and_trailer (void) const
   return this->implementation ()->header_and_trailer ();
 }
 
-u_long
+size_t
 ACE_Asynch_Transmit_File::Result::bytes_to_write (void) const
 {
   return this->implementation ()->bytes_to_write ();
 }
 
-u_long
+size_t
 ACE_Asynch_Transmit_File::Result::bytes_per_send (void) const
 {
   return this->implementation ()->bytes_per_send ();
@@ -967,9 +967,9 @@ ACE_Asynch_Transmit_File::Result::implementation (void) const
 // ************************************************************
 
 ACE_Asynch_Transmit_File::Header_And_Trailer::Header_And_Trailer (ACE_Message_Block *header,
-                                                                  u_long header_bytes,
+                                                                  size_t header_bytes,
                                                                   ACE_Message_Block *trailer,
-                                                                  u_long trailer_bytes)
+                                                                  size_t trailer_bytes)
   : header_ (header),
     header_bytes_ (header_bytes),
     trailer_ (trailer),
@@ -983,9 +983,9 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::~Header_And_Trailer (void)
 
 void
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_and_trailer (ACE_Message_Block *header,
-                                                                  u_long header_bytes,
+                                                                  size_t header_bytes,
                                                                   ACE_Message_Block *trailer,
-                                                                  u_long trailer_bytes)
+                                                                  size_t trailer_bytes)
 {
   this->header (header);
   this->header_bytes (header_bytes);
@@ -1005,14 +1005,14 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::header (ACE_Message_Block *message
   this->header_ = message_block;
 }
 
-u_long
+size_t
 ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (void) const
 {
   return this->header_bytes_;
 }
 
 void
-ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (u_long bytes)
+ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (size_t bytes)
 {
   this->header_bytes_ = bytes;
 }
@@ -1029,14 +1029,14 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::trailer (ACE_Message_Block *messag
   this->trailer_ = message_block;
 }
 
-u_long
+size_t
 ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (void) const
 {
   return this->trailer_bytes_;
 }
 
 void
-ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (u_long bytes)
+ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (size_t bytes)
 {
   this->trailer_bytes_ = bytes;
 }
@@ -1307,7 +1307,7 @@ ACE_Asynch_Read_Dgram::Result::flags (void) const
   return this->implementation ()->flags ();
 }
 
-u_long
+size_t
 ACE_Asynch_Read_Dgram::Result::bytes_to_read (void) const
 {
   return this->implementation ()->bytes_to_read ();
@@ -1410,7 +1410,7 @@ ACE_Asynch_Write_Dgram::implementation (ACE_Asynch_Write_Dgram_Impl *implementat
 
 // ************************************************************
 
-u_long
+size_t
 ACE_Asynch_Write_Dgram::Result::bytes_to_write (void) const
 {
   return this->implementation ()->bytes_to_write ();

@@ -24,7 +24,7 @@ ACE_ARGV::dump (void) const
 
   ACE_ARGV *this_obj = ACE_const_cast (ACE_ARGV *, this);
 
-  for (size_t i = 0; i < this->argc_; i++)
+  for (int i = 0; i < this->argc_; i++)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("\nargv_[%i] = %s"),
                 i,

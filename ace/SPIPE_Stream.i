@@ -76,14 +76,14 @@ ACE_SPIPE_Stream::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *band, int *fl
 }
 
 ASYS_INLINE ssize_t
-ACE_SPIPE_Stream::send (const iovec iov[], size_t n) const
+ACE_SPIPE_Stream::send (const iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::writev (this->get_handle (), iov, n);
 }
 
 ASYS_INLINE ssize_t
-ACE_SPIPE_Stream::recv (iovec iov[], size_t n) const
+ACE_SPIPE_Stream::recv (iovec iov[], int n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv");
   return ACE_OS::readv (this->get_handle (), iov, n);
@@ -162,7 +162,7 @@ ACE_SPIPE_Stream::recv (void *buf, size_t n,
 
 ASYS_INLINE ssize_t
 ACE_SPIPE_Stream::sendv_n (const iovec iov[],
-                           size_t n) const
+                           int n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::sendv_n");
   return ACE::writev_n (this->get_handle (),
@@ -174,7 +174,7 @@ ACE_SPIPE_Stream::sendv_n (const iovec iov[],
 
 ASYS_INLINE ssize_t
 ACE_SPIPE_Stream::recvv_n (iovec iov[],
-                           size_t n) const
+                           int n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recvv_n");
   // @@ Carlos, can you please update this to call the
@@ -188,7 +188,7 @@ ACE_SPIPE_Stream::recvv_n (iovec iov[],
 
 ASYS_INLINE ssize_t
 ACE_SPIPE_Stream::sendv (const iovec iov[],
-                         size_t n) const
+                         int n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::sendv");
   return ACE_OS::writev (this->get_handle (),

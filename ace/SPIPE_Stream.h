@@ -86,10 +86,10 @@ public:
                 int *flags) const;
 
   /// Send iovecs via <::writev>.
-  ssize_t send (const iovec iov[], size_t n) const;
+  ssize_t send (const iovec iov[], int n) const;
 
   /// Recv iovecs via <::readv>.
-  ssize_t recv (iovec iov[], size_t n) const;
+  ssize_t recv (iovec iov[], int n) const;
 
   /**
    * Send N char *ptrs and int lengths.  Note that the char *'s
@@ -116,16 +116,16 @@ public:
 
   /// Send an <iovec> of size <n> to the stream.
   ssize_t sendv (const iovec iov[],
-                 size_t n) const;
+                 int n) const;
 
   /// Send an <iovec> of size <n> to the stream.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
-                   size_t n) const;
+                   int n) const;
 
   /// Receive an <iovec> of size <n> to the stream.
   ssize_t recvv_n (iovec iov[],
-                   size_t n) const;
+                   int n) const;
 
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;

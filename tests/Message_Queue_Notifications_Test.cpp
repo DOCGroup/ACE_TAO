@@ -205,7 +205,7 @@ Watermark_Test::producer (void)
 {
   int i = watermark_iterations;
 
-  for (int hwm = this->hwm_;
+  for (ssize_t hwm = this->hwm_;
        hwm >= 0 ;
        hwm -= this->len_)
     {

@@ -144,7 +144,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void *
 worker (void *)
 {
-  for (size_t iterations = 1;
+  for (long iterations = 1;
        iterations <= n_iterations;
        iterations++)
     {

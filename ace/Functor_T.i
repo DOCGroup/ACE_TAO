@@ -10,7 +10,7 @@ ACE_Hash<TYPE>::operator () (const TYPE &t) const
 template <class TYPE> ACE_INLINE u_long
 ACE_Pointer_Hash<TYPE>::operator () (TYPE t) const
 {
-  return u_long (t);
+  return ACE_reinterpret_cast (u_long, t);
 }
 
 template <class TYPE> ACE_INLINE int

@@ -149,7 +149,8 @@ Dispatch_Count_Handler::Dispatch_Count_Handler (void)
 
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  this->input_seen_ = this->notify_seen_ = this->timers_fired_ = 0;
+  this->input_seen_ = this->notify_seen_ = 0;
+  this->timers_fired_ = 0;
 
   // Initialize the pipe.
   if (this->pipe_.open () == -1)
