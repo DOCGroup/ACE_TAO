@@ -1,8 +1,24 @@
+Thu Dec 13 22:16:02 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/svc_export.h:
+	  Support ACE_Svc_BUILD_DLL also, to be consistent with all the
+	  other export macros.
+
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.h:
+	  Add missing ACE_Svc_Export to the class.
+
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsw:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.dsp:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+	* netsvcs/clients/Naming/Dump_Restore/main.dsp:
+	  Add missing project files and a workspace.
+
 Fri Dec 14 00:08:57 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/OS.h: Move around definitions of ACE_SOCK_GROUP
 	and ACE_OVERLAPPED_COMPLETION_FUNCTION_FUNC to fix
 	Win32 builds.
+
 	* ace/OS.cpp: Add #include "ace/OS_QoS.h" to fix Win32
 	builds.
 
