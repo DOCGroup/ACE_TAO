@@ -1,3 +1,12 @@
+Mon May  5 14:13:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/Makefile.PortableGroup:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+
+          Added links and dependencies to TAO_Valuetype library.
+
 Mon May  5 18:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMH_Oneway/client.bor:
