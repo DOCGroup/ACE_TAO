@@ -336,7 +336,7 @@ TAO/orbsvcs/tests/ImplRepo/ImplRepo.dsw, Airplane Server:
 TAO/orbsvcs/tests/ImplRepo/ImplRepo.dsw, Airplane Client:
 TAO/orbsvcs/tests/ImplRepo/ImplRepo.dsw, Nestea Server:
 TAO/orbsvcs/tests/ImplRepo/ImplRepo.dsw, Nestea Client:
-TAO/orbsvcs/tests/Trading/Trading.dsw, TradingLig:
+TAO/orbsvcs/tests/Trading/Trading.dsw, TradingLib:
 TAO/orbsvcs/tests/Trading/Trading.dsw, Import_Test:
 TAO/orbsvcs/tests/Trading/Trading.dsw, Export_Test:
 TAO/orbsvcs/tests/Trading/Trading.dsw, Colocated_Test:
@@ -352,7 +352,7 @@ TAO/examples/Callback_Quoter/Callback_Quoter.dsw, Callback Quoter Notifier:
 TAO/examples/Callback_Quoter/Callback_Quoter.dsw, Callback Quoter Supplier:
 TAO/examples/Callback_Quoter/Callback_Quoter.dsw, Callback Quoter Consumer:
 TAO/examples/POA/Generic_Servant/Generic_Servant.dsw, POA Generic Servant DLL:
-TAO/examples/POA/Generic_Servant/Generic_Servant.dsw, POA Generic Servant:
+TAO/examples/POA/Generic_Servant/Generic_Servant.dsw, POA Generic Servant Client:
 TAO/examples/POA/RootPOA/RootPOA.dsw, POA RootPOA:
 TAO/examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.dsw, POA Reference Counted Servant Server:
 TAO/examples/POA/Adapter_Activator/Adaptor_Activator.dsw, POA Adapter Activator Server:
@@ -401,7 +401,7 @@ TAO/examples/Buffered_AMI/Buffered_AMI.dsw, Buffered_AMI Server:
 TAO/examples/Buffered_AMI/Buffered_AMI.dsw, Buffered_AMI Client:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Server:
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Client:
-TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Collocations Test:
+TAO/performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.dsw, IDL_Cubit Collocation Test:
 TAO/performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw, MT_Cubit Server:
 TAO/performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw, MT_Cubit Client:
 TAO/performance-tests/POA/Object_Creation_And_Registration/registration.dsw, POA Registration:
@@ -427,8 +427,8 @@ TAO/tests/InterOp-Naming/InterOp-Naming.dsw, InterOp Naming Server:
 TAO/tests/InterOp-Naming/InterOp-Naming.dsw, InterOp Naming Client:
 TAO/tests/NestedUpcall/Simple/Simple.dsw, Nested Upcall Simple Server:
 TAO/tests/NestedUpcall/Simple/Simple.dsw, Nested Upcall Simple Client:
-TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Server_A:
-TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Server_B:
+TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Triangle Server_A:
+TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Triangle Server_B:
 TAO/tests/NestedUpcall/Triangle_Test/Triangle_Test.dsw, Nested Upcall Triangle Initiator:
 TAO/tests/NestedUpcall/MT_Client_Test/MT_Client_Test.dsw, Nested Upcall MT_Client Server:
 TAO/tests/NestedUpcall/MT_Client_Test/MT_Client_Test.dsw, Nested Upcall MT_Client Client:

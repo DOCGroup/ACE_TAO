@@ -1,3 +1,23 @@
+Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/Persistent_Grid/Persistent_Grid_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Second_Client_Files.dsp:
+        * examples/Persistent_Grid/Persistent_Grid_Server_Files.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp:
+        * tests/MT_Client/client.dsp:
+        * tests/MT_Client/orb_creation.dsp:
+        * tests/MT_Client/server.dsp:
+        * tests/MT_Client/simple_client.dsp:
+        * tests/NestedUpcall/Simple/client.dsp:
+        * tests/NestedUpcall/Simple/server.dsp:
+
+          Win32 Release configuration problems.
+
 Mon May  1 21:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * MessagingC.i:

@@ -129,26 +129,80 @@ SOURCE=..\test.idl
 
 !IF  "$(CFG)" == "Server - Win32 Release"
 
-USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compilre on $(InputName)
+# PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\..\..\bin\Release\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=..\test.idl
 InputName=test
 
-"..\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl -o .. -Ge 1 ..\$(InputName).idl
+BuildCmds= \
+	..\..\..\..\..\bin\Release\tao_idl -o .. -Ge 1 ..\$(InputName).idl
 
+"..\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
 !ELSEIF  "$(CFG)" == "Server - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compilre on $(InputName)
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=..\test.idl
 InputName=test
 
-"..\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	tao_idl -o .. -Ge 1 ..\$(InputName).idl
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -o .. -Ge 1 ..\$(InputName).idl
 
+"..\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"..\$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
 # End Custom Build
 
 !ENDIF 
@@ -177,15 +231,7 @@ SOURCE=..\testS_T.i
 # Begin Source File
 
 SOURCE=..\testS_T.cpp
-
-!IF  "$(CFG)" == "Server - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Server - Win32 Debug"
-
 # PROP Exclude_From_Build 1
-
-!ENDIF 
-
 # End Source File
 # End Group
 # End Target
