@@ -2,6 +2,7 @@ Fri Nov 10 13:06:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/NT_Service.cpp:
         * orbsvcs/ImplRepo_Service/NT_Service.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo.cpp:
 
           Forgot to #ifdef out on non-win32 platforms.
 
