@@ -187,7 +187,7 @@ ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
 ACE_INLINE
 ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar *ws,
                                            ACE_CDR::ULong b,
-					   ACE_CDR::Boolean nocopy)
+                                           ACE_CDR::Boolean nocopy)
   : val_ (ws),
     bound_ (b),
     nocopy_ (nocopy)
@@ -483,6 +483,9 @@ ACE_OutputCDR::adjust (size_t size,
                        size_t align,
                        char*& buf)
 {
+  if (!this->current_is_writable_)
+    return this->grow_and_adjust (size, align, buf);
+
   size_t offset =
     ACE_align_binary (this->current_alignment_, align)
     - this->current_alignment_;
@@ -490,8 +493,7 @@ ACE_OutputCDR::adjust (size_t size,
   buf = this->current_->wr_ptr () + offset;
   char *end = buf + size;
 
-  if (this->current_is_writable_ 
-      && end <= this->current_->end ())
+  if (end <= this->current_->end ())
     {
       this->current_alignment_ += offset + size;
       this->current_->wr_ptr (end);
