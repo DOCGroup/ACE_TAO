@@ -62,22 +62,22 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     {
       AST_Module *module =
         AST_Module::narrow_from_scope (node->defined_in ());
-      
+
       if (!module)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_amh_pre_proc::"
                            "visit_interface - module is null\n"),
                           -1);
-      
+
       // Create the ResponseHandler class
-      be_interface *response_handler = this->create_response_handler (node); 
+      be_interface *response_handler = this->create_response_handler (node);
       if (response_handler != 0)
         {
           response_handler->set_defined_in (node->defined_in ());
-          
+
           // Insert the response handler after the node.
           module->be_add_interface (response_handler, node);
-          
+
           // Remember from whom we were cloned
           response_handler->original_interface (node);
         }
@@ -103,11 +103,13 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
   class_name += node->local_name ();
   class_name += "ResponseHandler";
   
-  UTL_ScopedName *utl_class_name =
-    new UTL_ScopedName (new Identifier (class_name.c_str ()), 0);
+  UTL_ScopedName *amh_name = 
+    ACE_dynamic_cast(UTL_ScopedName*,node->name ()->copy ());
+  Identifier *local_name = amh_name->last_component ();
+  local_name->replace_string (class_name.c_str ());
 
   be_interface *response_handler =
-    new be_interface (utl_class_name, // name
+    new be_interface (amh_name,   // name
                       0,          // list of inherited
                       0,          // number of inherited
                       0,          // list of ancestors
@@ -115,9 +117,13 @@ be_visitor_amh_pre_proc::create_response_handler (be_interface *node)
                       1,          // local
                       0);         // non-abstract
 
-  response_handler->set_name (utl_class_name);
+  response_handler->set_name (amh_name);
+  response_handler->set_defined_in (node->defined_in ());
+  response_handler->set_imported (node->imported ());
+  response_handler->set_line (node->line ());
+  response_handler->set_file_name (node->file_name ());
 
-  add_rh_node_members (node, response_handler);
+  this->add_rh_node_members (node, response_handler);
 
   return response_handler;
 }
@@ -303,14 +309,14 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
   // We do nothing for oneways!
   if (node->flags () == AST_Operation::OP_oneway)
     return 0;
-  
+
   // Set the proper strategy
   be_operation_strategy *old_strategy =
     node->set_strategy (new be_operation_amh_strategy (node));
-  
+
   if (old_strategy)
     delete old_strategy;
-  
+
   return 0;
 }
 
