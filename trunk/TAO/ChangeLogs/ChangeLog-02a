@@ -1,3 +1,15 @@
+Tue Apr 25 15:10:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Exception.h:
+        * tao/Exception.cpp:
+          The _raise() method for CORBA::SystemException should be pure
+          virtual, thanks to Jonathan Biggar <jon@biggar.org>, Charles
+          Frasch <cfrasch@spawar.navy.mil> for suggesting the right fixes
+          and Benoit Viaud <benoit.viaud@artal.fr> for pointing this out.
+
+        * tao/Makefile:
+          Updated dependencies
+
 Tue Apr 25 12:39:41 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
