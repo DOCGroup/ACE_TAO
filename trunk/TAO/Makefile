@@ -96,9 +96,6 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
 INSTALL: TAO-INSTALL.html
 	@lynx -dump $^ > $@; chmod a+r $@
 
-orbsvcs/README: docs/orbsvcs.html
-	@lynx -dump $^ > $@; chmod a+r $@
-
 .PHONY: release tag
 
 REL = beta
