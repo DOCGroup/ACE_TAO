@@ -16,7 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
 #include "ub_any_seq.h"
 
 const CORBA::ULong TEST_SEQ_LENGTH = 1;
@@ -31,8 +30,8 @@ Test_AnySeq::Test_AnySeq (void)
   : opname_ (CORBA::string_dup ("test_anyseq")),
     in_ (new Param_Test::AnySeq (TEST_SEQ_LENGTH)),
     inout_ (new Param_Test::AnySeq (TEST_SEQ_LENGTH)),
-    out_ (0),
-    ret_ (0)
+    out_ (new Param_Test::AnySeq),
+    ret_ (new Param_Test::AnySeq)
 {
 }
 
@@ -69,7 +68,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
               s = gen->gen_short ();
               ACE_DEBUG ((LM_DEBUG, "setting short = %d\n", s));
               this->in_[i] <<= s;
-              this->inout_[i] <<= 0;
+              this->inout_[i] <<= 0; // different from in_
             }
             break;
           case 1:
@@ -77,7 +76,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
               char *str = gen->gen_string ();
               ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
               this->in_[i] <<= str;
-              this->inout_[i] <<= 0;
+              this->inout_[i] <<= 0; // different from in_
             }
             break;
           case 2:
@@ -90,7 +89,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
 
                   // insert the coffee object into the Any
                   this->in_[i] <<= cobj.in ();
-                  this->inout_[i] <<= 0;
+                  this->inout_[i] <<= 0; // different from in_
                 }
               TAO_CATCH (CORBA::SystemException, sysex)
                 {
@@ -178,21 +177,32 @@ Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
                      CORBA::B_FALSE);
 
   CORBA::Any inout_arg (Param_Test::_tc_AnySeq, 
-                        (void *) &this->inout_.in (), 
+                        &this->inout_.inout (), 
                         CORBA::B_FALSE);
   
   CORBA::Any out_arg (Param_Test::_tc_AnySeq, 
-                      &this->dii_out_,
+                      &this->out_.inout (), // .out () causes crash
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_AnySeq,
-                                            &this->dii_ret_,
+                                            &this->ret_.inout (), // see above
                                             CORBA::B_FALSE, // does not own
                                             env);
 
@@ -202,38 +212,16 @@ Test_AnySeq::add_args (CORBA::NVList_ptr param_list,
 CORBA::Boolean
 Test_AnySeq::check_validity (void)
 {
-  return this->check_validity_engine (this->in_,
-                                      this->inout_,
-                                      this->out_,
-                                      this->ret_);
-}
-
-CORBA::Boolean
-Test_AnySeq::check_validity (CORBA::Request_ptr req)
-{
-  return this->check_validity_engine (this->in_,
-                                      this->inout_,
-                                      this->dii_out_,
-                                      this->dii_ret_);
-}
-
-CORBA::Boolean
-Test_AnySeq::check_validity_engine (const Param_Test::AnySeq &the_in,
-                                    const Param_Test::AnySeq &the_inout,
-                                    const Param_Test::AnySeq &the_out,
-                                    const Param_Test::AnySeq &the_ret)
-{
-  CORBA::Environment env;
   CORBA::Short short_in, short_inout, short_out, short_ret;
   char *str_in, *str_inout, *str_out, *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
-  for (CORBA::ULong i=0; i < the_in.length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); i++)
   {
-    if ((the_in[i] >>= short_in) &&
-        (the_inout[i] >>= short_inout) &&
-        (the_out[i] >>= short_out) &&
-        (the_ret[i] >>= short_ret))
+    if ((this->in_[i] >>= short_in) &&
+        (this->inout_[i] >>= short_inout) &&
+        (this->out_[i] >>= short_out) &&
+        (this->ret_[i] >>= short_ret))
     {
       ACE_DEBUG ((LM_DEBUG, "Received shorts: in = %d, "
                   "inout = %d, out = %d, ret = %d\n",
@@ -249,10 +237,10 @@ Test_AnySeq::check_validity_engine (const Param_Test::AnySeq &the_in,
           return 0;
         }
     }
-    else if ((the_in[i] >>= str_in) &&
-             (the_inout[i] >>= str_inout) &&
-             (the_out[i] >>= str_out) &&
-             (the_ret[i] >>= str_ret))
+    else if ((this->in_[i] >>= str_in) &&
+             (this->inout_[i] >>= str_inout) &&
+             (this->out_[i] >>= str_out) &&
+             (this->ret_[i] >>= str_ret))
     {
       if (!ACE_OS::strcmp (str_in, str_inout) &&
           !ACE_OS::strcmp (str_in, str_out) &&
@@ -264,10 +252,10 @@ Test_AnySeq::check_validity_engine (const Param_Test::AnySeq &the_in,
           return 0;
         }
     }
-    else if ((the_in[i] >>= obj_in) &&
-             (the_inout[i] >>= obj_inout) &&
-             (the_out[i] >>= obj_out) &&
-             (the_ret[i] >>= obj_ret))
+    else if ((this->in_[i] >>= obj_in) &&
+             (this->inout_[i] >>= obj_inout) &&
+             (this->out_[i] >>= obj_out) &&
+             (this->ret_[i] >>= obj_ret))
     {
       // all the >>= operators returned true so we are OK.
       return 1;
@@ -278,6 +266,12 @@ Test_AnySeq::check_validity_engine (const Param_Test::AnySeq &the_in,
 
   // Should never reach this.
   return 0;
+}
+
+CORBA::Boolean
+Test_AnySeq::check_validity (CORBA::Request_ptr req)
+{
+  return this->check_validity ();
 }
 
 void

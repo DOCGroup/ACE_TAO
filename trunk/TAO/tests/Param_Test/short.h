@@ -19,6 +19,7 @@
 #if !defined (PARAM_TEST_SHORT_H)
 #define PARAM_TEST_SHORT_H
 
+#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -41,12 +42,16 @@ public:
                 CORBA::NVList_ptr retval,
                 CORBA::Environment &env);
   // add args to NVList for DII
-
+/*
+  int add_args (CORBA::Request_ptr &req,
+                CORBA::Environment &env);
+  // add args to DII request using << operator
+*/
   const char *opname (void) const;
   // return operation name
 
   int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+                       CORBA::Environment &env);
   // set values for parameters
 
   int reset_parameters (void);

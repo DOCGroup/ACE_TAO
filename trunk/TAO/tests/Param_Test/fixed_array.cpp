@@ -106,9 +106,20 @@ Test_Fixed_Array::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("l1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("l2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("l3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("l1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("l2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("l3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Array,

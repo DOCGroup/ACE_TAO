@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "fixed_struct.h"
 
 ACE_RCSID(Param_Test, fixed_struct, "$Id$")
@@ -53,16 +51,27 @@ Test_Fixed_Struct::init_parameters (Param_Test_ptr objref,
   ACE_UNUSED_ARG (env);
 
   this->in_ = gen->gen_fixed_struct ();
-  ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
+  ACE_OS::memset (&this->inout_,
+                  0,
+                  sizeof (Param_Test::Fixed_Struct));
   return 0;
 }
 
 int
 Test_Fixed_Struct::reset_parameters (void)
 {
-  ACE_OS::memset (&this->inout_, 0, sizeof (Param_Test::Fixed_Struct));
-  ACE_OS::memset (&this->out_, 0, sizeof (Param_Test::Fixed_Struct));
-  ACE_OS::memset (&this->ret_, 0, sizeof (Param_Test::Fixed_Struct));
+  ACE_OS::memset (&this->inout_,
+                  0,
+                  sizeof (Param_Test::Fixed_Struct));
+
+  ACE_OS::memset (&this->out_,
+                  0,
+                  sizeof (Param_Test::Fixed_Struct));
+
+  ACE_OS::memset (&this->ret_,
+                  0,
+                  sizeof (Param_Test::Fixed_Struct));
+  
   return 0;
 }
 
@@ -70,7 +79,9 @@ int
 Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref,
                                  CORBA::Environment &env)
 {
-  this->ret_ = objref->test_fixed_struct (this->in_, this->inout_, this->out_,
+  this->ret_ = objref->test_fixed_struct (this->in_,
+                                          this->inout_,
+                                          this->out_,
                                           env);
   return (env.exception () ? -1:0);
 }
@@ -82,20 +93,39 @@ Test_Fixed_Struct::add_args (CORBA::NVList_ptr param_list,
 {
   // We provide the top level memory
   // the Any does not own any of these
-  CORBA::Any in_arg (Param_Test::_tc_Fixed_Struct, &this->in_, 0);
-  CORBA::Any inout_arg (Param_Test::_tc_Fixed_Struct, &this->inout_, 0);
-  CORBA::Any out_arg (Param_Test::_tc_Fixed_Struct, &this->out_, 0);
+  CORBA::Any in_arg (Param_Test::_tc_Fixed_Struct,
+                     &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (Param_Test::_tc_Fixed_Struct,
+                        &this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (Param_Test::_tc_Fixed_Struct,
+                      &this->out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
-  (void)retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Struct,
-                                                  0, // let the ORB allocate
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_Fixed_Struct,
+                                            &this->ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 
@@ -131,13 +161,7 @@ Test_Fixed_Struct::check_validity (void)
 CORBA::Boolean
 Test_Fixed_Struct::check_validity (CORBA::Request_ptr req)
 {
-  CORBA::Environment env;
-
-  // we have forced the ORB to allocate memory for the return value so that we
-  // can test the >>= operator
-  Param_Test::Fixed_Struct *ret;
-  *req->result ()->value () >>= ret;
-  this->ret_ = *ret;
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

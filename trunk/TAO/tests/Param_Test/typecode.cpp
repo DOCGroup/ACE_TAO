@@ -60,7 +60,7 @@ Test_TypeCode::init_parameters (Param_Test_ptr objref,
 
   Generator *gen = GENERATOR::instance (); // value generator
   CORBA::ULong index = 
-    (CORBA::ULong) (gen->gen_long () % sizeof (tc_table) / sizeof (CORBA::TypeCode_ptr));
+    (CORBA::ULong) (gen->gen_long () % sizeof(tc_table)/sizeof(CORBA::TypeCode_ptr));
 
   this->tc_holder_ = CORBA::TypeCode::_duplicate (tc_table [index]);
   this->in_ = this->tc_holder_;
@@ -111,9 +111,20 @@ Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
   retval->item (0, env)->value ()->replace (CORBA::_tc_TypeCode,

@@ -61,7 +61,7 @@ Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr objref,
   for (CORBA::ULong i=0; i < this->in_->maximum (); i++)
     {
       this->in_[i] = i;
-      this->inout_[i] = i+1;
+      this->inout_[i] = i+1; // different from in_
     }
   return 0;
 }
@@ -105,9 +105,20 @@ Test_Bounded_Long_Sequence::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Bounded_Long_Seq,

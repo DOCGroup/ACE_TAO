@@ -16,8 +16,6 @@
 //
 // ============================================================================
 
-#include "helper.h"
-
 #include "objref.h"
 
 ACE_RCSID(Param_Test, objref, "$Id$")
@@ -121,20 +119,39 @@ Test_ObjRef::add_args (CORBA::NVList_ptr param_list,
 		       CORBA::NVList_ptr retval,
 		       CORBA::Environment &env)
 {
-  CORBA::Any in_arg (_tc_Coffee, &this->in_, 0);
-  CORBA::Any inout_arg (_tc_Coffee, &this->inout_, 0);
-  CORBA::Any out_arg (_tc_Coffee, &this->out_, 0);
+  CORBA::Any in_arg (_tc_Coffee,
+                     &this->in_,
+                     CORBA::B_FALSE);
+
+  CORBA::Any inout_arg (_tc_Coffee,
+                        &this->inout_,
+                        CORBA::B_FALSE);
+
+  CORBA::Any out_arg (_tc_Coffee,
+                      &this->out_,
+                      CORBA::B_FALSE);
 
   // add parameters
-  (void)param_list->add_value ("o1", in_arg, CORBA::ARG_IN, env);
-  (void)param_list->add_value ("o2", inout_arg, CORBA::ARG_INOUT, env);
-  (void)param_list->add_value ("o3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("o1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("o2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("o3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
-  (void)retval->item (0, env)->value ()->replace (_tc_Coffee,
-                                                  &this->ret_,
-                                                  0, // does not own
-                                                  env);
+  retval->item (0, env)->value ()->replace (_tc_Coffee,
+                                            &this->ret_,
+                                            CORBA::B_FALSE, // does not own
+                                            env);
   return 0;
 }
 

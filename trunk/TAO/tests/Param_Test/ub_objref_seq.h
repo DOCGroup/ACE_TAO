@@ -19,6 +19,7 @@
 #if !defined (PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H)
 #define PARAM_TEST_UNBOUNDED_OBJREF_SEQUENCE_H
 
+#include "helper.h"
 #include "param_testC.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

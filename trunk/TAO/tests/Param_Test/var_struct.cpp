@@ -84,7 +84,7 @@ Test_Var_Struct::reset_parameters (void)
 
 int
 Test_Var_Struct::run_sii_test (Param_Test_ptr objref,
-                                    CORBA::Environment &env)
+                               CORBA::Environment &env)
 {
   Param_Test::Var_Struct_out out (this->out_.out ());
   this->ret_ = objref->test_var_struct (this->in_,
@@ -112,9 +112,20 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("s1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("s2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("s3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Struct,

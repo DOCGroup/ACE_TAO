@@ -55,7 +55,7 @@ Test_Var_Array::init_parameters (Param_Test_ptr objref,
   // fill the in_ array
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
-      this->in_ [i] = gen->gen_string ();
+      this->in_[i] = gen->gen_string ();
     }
 
   return 0;
@@ -74,7 +74,7 @@ Test_Var_Array::reset_parameters (void)
 
 int
 Test_Var_Array::run_sii_test (Param_Test_ptr objref,
-                                CORBA::Environment &env)
+                              CORBA::Environment &env)
 {
   Param_Test::Var_Array_out out_arr (this->out_.out ());
   this->ret_ = objref->test_var_array (this->in_,
@@ -104,9 +104,20 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
                       CORBA::B_FALSE);
 
   // add parameters
-  param_list->add_value ("v1", in_arg, CORBA::ARG_IN, env);
-  param_list->add_value ("v2", inout_arg, CORBA::ARG_INOUT, env);
-  param_list->add_value ("v3", out_arg, CORBA::ARG_OUT, env);
+  param_list->add_value ("v1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("v2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("v3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Array,
