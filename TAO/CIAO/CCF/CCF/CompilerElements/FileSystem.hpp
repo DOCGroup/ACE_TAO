@@ -23,7 +23,7 @@ namespace fs
 
     for (path::iterator i (p.begin ()), e (p.end ()); i != e; ++i)
     {
-      if (*i != ".") result /= *i;
+      if (*i != ".") result /= path (*i, native);
     }
 
     return result;
