@@ -312,4 +312,3 @@ private:
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_CONNECTOR_H */
-
