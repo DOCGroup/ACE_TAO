@@ -15,15 +15,7 @@ endif # ! TAO_ROOT
 IDL_FILES = corbaname
 IDL_SRC = corbanameC corbanameS
 
-LDLIBS = -lTAO_PortableServer -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client

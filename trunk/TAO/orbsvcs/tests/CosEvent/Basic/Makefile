@@ -21,15 +21,7 @@ BIN2 =  \
 	Random
 
 PSRC=$(addsuffix .cpp,$(BIN2))
-LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
-#
-# NOTE
-#
-# The following macro expands to a series of libraries
-# on QNX RTP. It has been introduced to solve a problem
-# with the current QNX RTP linker.
-#
-LDLIBS+=$(TAO_COS_NAMING_LIBS)
+LDLIBS = -lCECTests -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 CPPFLAGS += -I../lib -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
