@@ -87,7 +87,7 @@ class TAO_ORBSVCS_Export TAO_SFP_Frame_State
 {
 public:
   TAO_SFP_Frame_State (void);
-  int is_complete (void);
+  CORBA::Boolean is_complete (void);
 
   int reset (void);
 

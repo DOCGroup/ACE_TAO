@@ -127,15 +127,20 @@ protected:
 
 class TAO_AV_UDP_MCast_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
-   public virtual ACE_Event_Handler,
-   public virtual ACE_SOCK_Dgram_Mcast
+   public virtual ACE_Event_Handler
 {
 public:
   TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *callback);
+  // Ctor
+  ~TAO_AV_UDP_MCast_Flow_Handler (void);
+  // Dtor
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
+  virtual ACE_SOCK_Dgram_Mcast *get_mcast_socket (void) const;
 protected:
   ACE_INET_Addr peer_addr_;
+  ACE_SOCK_Dgram_Mcast *dgram_mcast_;
+  
 };
 
 class TAO_AV_UDP_MCast_Protocol_Factory

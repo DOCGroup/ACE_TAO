@@ -470,10 +470,22 @@ TAO_StreamCtrl::TAO_StreamCtrl (void)
   ACE_CHECK;
 }
 
+TAO_StreamCtrl::TAO_StreamCtrl (TAO_StreamCtrl const &)
+{
+  //no-op
+}
+
+void
+TAO_StreamCtrl::operator= (TAO_StreamCtrl const &)
+{
+  //no-op
+}
+
 TAO_StreamCtrl::~TAO_StreamCtrl (void)
 {
   delete this->mcastconfigif_;
 }
+
 
 // Stop the transfer of data of the stream
 // Empty the_spec means apply operation to all flows
@@ -949,7 +961,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           ACE_NEW_RETURN (spec_fep_map_b,
                           FlowEndPoint_Map,
                           0);
-          for (u_int i=0; i< flow_spec.length ();i++)
+          for (i=0; i< flow_spec.length ();i++)
             {
               TAO_Forward_FlowSpec_Entry *entry;
               ACE_NEW_RETURN (entry,
@@ -1026,7 +1038,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                               flow_connection = flowConnection->_this (ACE_TRY_ENV);
                               ACE_TRY_CHECK_EX (flow_connect);
                               this->set_flow_connection (flowname,
-                                                         flow_connection,
+                                                         flow_connection.in (),
                                                          ACE_TRY_ENV);
                               ACE_TRY_CHECK_EX (flow_connect);
                             }
@@ -1074,7 +1086,10 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                               if (result == -1)
                                 ACE_DEBUG ((LM_DEBUG,"No QoS Specified for this flow"));
                             }
-                          flow_connection->connect (producer,consumer,flow_qos,ACE_TRY_ENV);
+                          flow_connection->connect (producer.in (),
+                                                    consumer.in (),
+                                                    flow_qos,
+                                                    ACE_TRY_ENV);
                           ACE_TRY_CHECK_EX (flow_connect);
                         }
                     }
@@ -1179,6 +1194,11 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &the_qos,
 TAO_MCastConfigIf::TAO_MCastConfigIf (void)
   :peer_list_iterator_ (peer_list_)
 {
+}
+
+TAO_MCastConfigIf::~TAO_MCastConfigIf (void)
+{
+  //no-op
 }
 
 // In future this should be a multicast message instead of point-to-point unicasts.
@@ -1436,20 +1456,18 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       if (!CORBA::is_nil (this->negotiator_.in ()))
         {
           CORBA::Any_var negotiator_any = responder->get_property_value ("Negotiator");
-          if (negotiator_any != 0)
+
+          AVStreams::Negotiator_ptr peer_negotiator;
+          negotiator_any.in () >>= peer_negotiator;
+          if (!CORBA::is_nil (peer_negotiator))
             {
-              AVStreams::Negotiator_ptr peer_negotiator;
-              negotiator_any.in () >>= peer_negotiator;
-              if (!CORBA::is_nil (peer_negotiator))
-                {
-                  CORBA::Boolean result =
-                    this->negotiator_->negotiate (peer_negotiator,
-                                                  qos,
-                                                  ACE_TRY_ENV);
-                  ACE_TRY_CHECK_EX (negotiate);
-                  if (!result)
-                    ACE_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::Connect (): negotiate failed\n"));
-                }
+              CORBA::Boolean result =
+                this->negotiator_->negotiate (peer_negotiator,
+                                              qos,
+                                              ACE_TRY_ENV);
+              ACE_TRY_CHECK_EX (negotiate);
+              if (!result)
+                ACE_DEBUG ((LM_DEBUG,"TAO_StreamEndPoint::Connect (): negotiate failed\n"));
             }
         }
     }
@@ -1472,8 +1490,6 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       peer_protocols = *temp_protocols;
       for (u_int i=0;i<peer_protocols.length ();i++)
         {
-          if (this->protocol_ != 0)
-            break;
           for (u_int j=0;j<this->protocols_.length ();j++)
             if (ACE_OS::strcmp (peer_protocols [i],
                                 this->protocols_[j]) == 0)
@@ -1526,7 +1542,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
       AVStreams::StreamEndPoint_var streamendpoint = this->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      retv = responder->request_connection (streamendpoint,
+      retv = responder->request_connection (streamendpoint.in (),
                                             0,
                                             network_qos,
                                             flow_spec,
@@ -1872,7 +1888,7 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name,
       AVStreams::FlowEndPoint_ptr fep_entry = 0;
       // Remove the fep from the hash table.
       if (this->fep_map_.unbind (fep_name_key,fep_entry)!= 0)
-        TAO_THROW_ENV (AVStreams::streamOpFailed (),ACE_TRY_ENV);
+        ACE_THROW (AVStreams::streamOpFailed ());
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0,j=0 ; i <this->flows_.length (); i++)
@@ -2058,7 +2074,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                           flow_connection = flowConnection->_this (ACE_TRY_ENV);
                           ACE_TRY_CHECK;
                           this->streamctrl_->set_flow_connection (forward_entry->flowname (),
-                                                                  flow_connection,
+                                                                  flow_connection.in (),
                                                                   ACE_TRY_ENV);
                           ACE_TRY_CHECK;
                         }
@@ -2102,6 +2118,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
             }
           else
             {
+
               switch (forward_entry->direction ())
                 {
                 case TAO_FlowSpec_Entry::TAO_AV_DIR_IN:
@@ -2213,7 +2230,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
               AVStreams::FlowConsumer_var consumer;
               ACE_TRY_EX (narrow)
                 {
-                  consumer = AVStreams::FlowConsumer::_narrow (flow_endpoint,ACE_TRY_ENV);
+                  consumer = AVStreams::FlowConsumer::_narrow (flow_endpoint.in (),ACE_TRY_ENV);
                   ACE_TRY_CHECK_EX (narrow);
                 }
               ACE_CATCHANY
@@ -2533,6 +2550,11 @@ TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
 {
 }
 
+TAO_MMDevice::TAO_MMDevice (TAO_MMDevice const &)
+{
+  //no-op
+}
+
 // create a streamctrl which is colocated with me, use that streamctrl
 // to bind the peer_device with me.
 AVStreams::StreamCtrl_ptr
@@ -2664,7 +2686,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                   ACE_TRY_CHECK_EX (flowconnection);
                   if (!CORBA::is_nil (flowconnection_obj.in ()))
                     {
-                      flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj,ACE_TRY_ENV);
+                      flowconnection = AVStreams::FlowConnection::_narrow (flowconnection_obj.in (),
+                                                                           ACE_TRY_ENV);
                       ACE_TRY_CHECK_EX (flowconnection);
                     }
                 }
@@ -2727,7 +2750,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                           // hence B is the producer for this flow and A is the consumer for this flow.
                           // We have to create a consumer from the FDev for this flow.
                           flow_endpoint =
-                            flow_dev->create_consumer (flowconnection,
+                            flow_dev->create_consumer (flowconnection.in (),
                                                        flow_qos,
                                                        met_qos,
                                                        named_fdev.inout (),
@@ -2740,7 +2763,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                           // hence A is the producer for this flow and B is the consumer for this flow.
                           // We have to create a producer from the FDev for this flow.
                           flow_endpoint =
-                            flow_dev->create_producer (flowconnection,
+                            flow_dev->create_producer (flowconnection.in (),
                                                        flow_qos,
                                                        met_qos,
                                                        named_fdev.inout (),
@@ -2758,7 +2781,8 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
               flowname_any <<= forward_entry.flowname ();
               flow_endpoint->define_property ("FlowName",flowname_any,ACE_TRY_ENV);
               ACE_TRY_CHECK;
-              sep->add_fep (flow_endpoint,ACE_TRY_ENV);
+              sep->add_fep (flow_endpoint.in (),
+                            ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
         }
@@ -2782,8 +2806,8 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
                         const AVStreams::flowSpec &flow_spec,
                         CORBA::Environment &ACE_TRY_ENV)
 {
-  AVStreams::StreamEndPoint_A_ptr sep_a;
-  AVStreams::StreamEndPoint_ptr sep;
+  AVStreams::StreamEndPoint_A_ptr sep_a = 0;
+  AVStreams::StreamEndPoint_ptr sep = 0;
   ACE_TRY
     {
       sep = this->create_A_B (MMDEVICE_A,streamctrl,the_vdev,stream_qos,met_qos,named_vdev,flow_spec,ACE_TRY_ENV);
@@ -3194,14 +3218,14 @@ TAO_FlowConnection::connect_devs (AVStreams::FDev_ptr a_party,
       CORBA::Boolean met_qos;
       CORBA::String_var named_fdev ((const char *)"");
       AVStreams::FlowProducer_var producer =
-        a_party->create_producer (flowconnection,
+        a_party->create_producer (flowconnection.in (),
                                   flow_qos,
                                   met_qos,
                                   named_fdev.inout (),
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
       AVStreams::FlowConsumer_var consumer =
-        b_party->create_consumer (flowconnection,
+        b_party->create_consumer (flowconnection.in (),
                                   flow_qos,
                                   met_qos,
                                   named_fdev.inout (),
@@ -3338,7 +3362,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
           AVStreams::FlowConnection_var flowconnection = this->_this (ACE_TRY_ENV);
           ACE_TRY_CHECK;
           flow_producer->set_Mcast_peer (flowconnection.in (),
-                                         this->mcastconfigif_,
+                                         this->mcastconfigif_.in (),
                                          the_qos,
                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -3561,28 +3585,26 @@ TAO_FlowEndPoint::destroy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 AVStreams::StreamEndPoint_ptr
-TAO_FlowEndPoint::related_sep (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::related_sep (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  return AVStreams::StreamEndPoint::_duplicate (this->related_sep_);
+
+  return AVStreams::StreamEndPoint::_duplicate (this->related_sep_.in ());
 }
 
 void
 TAO_FlowEndPoint::related_sep (AVStreams::StreamEndPoint_ptr related_sep,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->related_sep_ = AVStreams::StreamEndPoint::_duplicate (related_sep);
 }
 
 AVStreams::FlowConnection_ptr
-TAO_FlowEndPoint::related_flow_connection (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::related_flow_connection (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  return AVStreams::FlowConnection::_duplicate (this->related_flow_connection_);
+  return AVStreams::FlowConnection::_duplicate (this->related_flow_connection_.in ());
 }
 
 void
@@ -3596,24 +3618,22 @@ TAO_FlowEndPoint::related_flow_connection (AVStreams::FlowConnection_ptr related
 
 // returns the connected peer for this flow
 AVStreams::FlowEndPoint_ptr
-TAO_FlowEndPoint::get_connected_fep (CORBA::Environment &ACE_TRY_ENV)
+TAO_FlowEndPoint::get_connected_fep (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::notConnected,
                    AVStreams::notSupported))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  return this->peer_fep_;
+  return this->peer_fep_.in ();
 }
 
 CORBA::Boolean
 TAO_FlowEndPoint::use_flow_protocol (const char * fp_name,
-                                     const CORBA::Any & fp_settings,
+                                     const CORBA::Any & ,
                                      CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::FPError,
                    AVStreams::notSupported))
 {
-  ACE_UNUSED_ARG (fp_settings);
   ACE_TRY
     {
       // Define the property called FlowProtocol
@@ -3693,8 +3713,9 @@ TAO_FlowEndPoint::set_protocol_restriction (const AVStreams::protocolSpec & prot
 {
   ACE_TRY
     {
+      u_int i = 0;
       ACE_DEBUG ((LM_DEBUG,"%N:%l\n"));
-      for (u_int i=0;i<protocols.length ();i++)
+      for (i=0;i<protocols.length ();i++)
         {
           const char *protocol = (protocols)[i].in ();
           ACE_DEBUG ((LM_DEBUG,"%s\n",protocol));
@@ -3854,7 +3875,8 @@ TAO_FlowEndPoint::go_to_listen (AVStreams::QoS & the_qos,
   my_protocol_spec = *temp_protocols;
   int protocol_match = 0;
   CORBA::String_var listen_protocol;
-  for (u_int i=0;i<my_protocol_spec.length ();i++)
+  u_int i =0;
+  for (i=0;i<my_protocol_spec.length ();i++)
     {
       CORBA::String_var my_protocol_string;
       for (u_int j=0;j<peer_protocol_spec.length ();j++)
@@ -4090,6 +4112,10 @@ TAO_FDev::TAO_FDev (const char *flowname)
   ACE_CHECK;
 }
 
+TAO_FDev::~TAO_FDev (void)
+{
+  //no-op
+}
 AVStreams::FlowProducer_ptr
 TAO_FDev::create_producer (AVStreams::FlowConnection_ptr the_requester,
                            AVStreams::QoS & the_qos,
@@ -4280,8 +4306,10 @@ int
 TAO_Tokenizer::parse (const char *string,char delimiter)
 {
   ACE_CString new_string (string);
-  int pos =0, slash_pos = 0;
-  int count=0,result;
+  u_int pos =0;
+  int slash_pos = 0;
+  u_int count = 0;
+  int result;
   while (pos < new_string.length ())
     {
       slash_pos = new_string.find (delimiter,pos);
@@ -4994,24 +5022,30 @@ TAO_AV_QoS::convert (AVStreams::streamQoS &network_qos)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FDev_ptr>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>;
+
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>;
+
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr>;
+
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>;
@@ -5101,6 +5135,14 @@ template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::QoS
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+
 // template class ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>;
 // template class ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler <ACE_SOCK_STREAM,ACE_NULL_SYNCH>;
@@ -5118,21 +5160,32 @@ template class ACE_Node <TAO_FlowSpec_Entry*>;
 template class ACE_Unbounded_Set <TAO_FlowSpec_Entry*>;
 template class ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*>;
 template class ACE_Node <TAO_AV_Protocol_Item*>;
+template class ACE_Node<AVStreams::FlowProducer *>;
+template class ACE_Node<AVStreams::FlowConsumer *>;
 template class ACE_Unbounded_Set<TAO_AV_Protocol_Item*>;
+template class ACE_Unbounded_Set<AVStreams::FlowConsumer *>;
+template class ACE_Unbounded_Set<AVStreams::FlowProducer *>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>;
-//template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_AV_TCP_Flow_Handler> *, ACE_RW_Thread_Mutex>;
-//template class ACE_Svc_Tuple<TAO_AV_TCP_Flow_Handler>;
+template class ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer *>;
+template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_AV_TCP_Flow_Handler> *, ACE_RW_Thread_Mutex>;
+template class ACE_Svc_Tuple<TAO_AV_TCP_Flow_Handler>;
+
+
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FDev_ptr>
+#pragma instantaite ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FDev_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
@@ -5233,6 +5286,16 @@ template class ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::QoS,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::QoS, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_FlowSpec_Entry *>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_FlowSpec_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+
+
 #pragma instantiate ACE_Acceptor <TAO_AV_TCP_Flow_Handler,ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler <ACE_SOCK_STREAM,ACE_NULL_SYNCH>
@@ -5252,7 +5315,12 @@ template class ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>;
 #pragma instantiate ACE_Unbounded_Set <TAO_FlowSpec_Entry*>
 #pragma instantiate ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*>
 #pragma instantiate ACE_Node <TAO_AV_Protocol_Item*>
+#pragma instantiate ACE_Node<AVStreams::FlowProducer *>
+#pragma instantiate ACE_Node<AVStreams::FlowConsumer *>
 #pragma instantiate ACE_Unbounded_Set<TAO_AV_Protocol_Item*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Item*>
-
+#pragma instantiate ACE_Unbounded_Set<AVStreams::FlowConsumer *>
+#pragma instantiate ACE_Unbounded_Set<AVStreams::FlowProducer *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
