@@ -5196,81 +5196,81 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 
 ACE_INLINE int
 ACE_OS::ioctl (ACE_HANDLE socket,
-		 	   u_long io_control_code,	
+               u_long io_control_code,	
                ACE_QoS &ace_qos,
-			   u_long *bytes_returned,
+               u_long *bytes_returned,
                void *buffer_p,
                u_long buffer,
                ACE_OVERLAPPED *overlapped,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-
+  
   QOS qos;
   DWORD qos_len = 0;
-
+  
   if (io_control_code == SIO_SET_QOS)
-	{
-		qos.SendingFlowspec = ace_qos.sending_flowspec ();
-		qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
-		qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
-
-		qos_len = sizeof (QOS) + ace_qos.provider_specific ().iov_len;
-
-		ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
-                                   io_control_code,
-                                   &qos,
-                                   qos_len,
-                                   buffer_p,
-                                   buffer,
-                                   bytes_returned,
-                                   (WSAOVERLAPPED *) overlapped,
-                                   func),
-                       int,
-                       SOCKET_ERROR);
-	}
-   else
-	{
-		
-		ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
-											io_control_code,
-											buffer_p,
-											buffer,
-											&qos,
-											qos_len,
-											bytes_returned,
-											(WSAOVERLAPPED *) overlapped,
-											func),
-								int,
-								SOCKET_ERROR);
-
-		ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
-										qos.SendingFlowspec.TokenBucketSize,
-										qos.SendingFlowspec.PeakBandwidth,
-										qos.SendingFlowspec.Latency,
-										qos.SendingFlowspec.DelayVariation,
-										qos.SendingFlowspec.ServiceType,
-										qos.SendingFlowspec.MaxSduSize,
-										qos.SendingFlowspec.MinimumPolicedSize,
-										0,
-										0);
-
-		ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
-										  qos.ReceivingFlowspec.TokenBucketSize,
-										  qos.ReceivingFlowspec.PeakBandwidth,
-										  qos.ReceivingFlowspec.Latency,
-										  qos.ReceivingFlowspec.DelayVariation,
-										  qos.ReceivingFlowspec.ServiceType,
-										  qos.ReceivingFlowspec.MaxSduSize,
-										  qos.ReceivingFlowspec.MinimumPolicedSize,
-										  0,
-										  0);
-
-		ace_qos.sending_flowspec (sending_flowspec);
-		ace_qos.receiving_flowspec (receiving_flowspec);
-		ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
-	}
-												
+    {
+      qos.SendingFlowspec = ace_qos.sending_flowspec ();
+      qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
+      qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
+      
+      qos_len = sizeof (QOS) + ace_qos.provider_specific ().iov_len;
+      
+      ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
+                                       io_control_code,
+                                       &qos,
+                                       qos_len,
+                                       buffer_p,
+                                       buffer,
+                                       bytes_returned,
+                                       (WSAOVERLAPPED *) overlapped,
+                                       func),
+                           int,
+                           SOCKET_ERROR);
+    }
+  else
+    {
+      
+      ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
+                                       io_control_code,
+                                       buffer_p,
+                                       buffer,
+                                       &qos,
+                                       qos_len,
+                                       bytes_returned,
+                                       (WSAOVERLAPPED *) overlapped,
+                                       func),
+                           int,
+                           SOCKET_ERROR);
+      
+      ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
+                                      qos.SendingFlowspec.TokenBucketSize,
+                                      qos.SendingFlowspec.PeakBandwidth,
+                                      qos.SendingFlowspec.Latency,
+                                      qos.SendingFlowspec.DelayVariation,
+                                      qos.SendingFlowspec.ServiceType,
+                                      qos.SendingFlowspec.MaxSduSize,
+                                      qos.SendingFlowspec.MinimumPolicedSize,
+                                      0,
+                                      0);
+      
+      ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
+                                        qos.ReceivingFlowspec.TokenBucketSize,
+                                        qos.ReceivingFlowspec.PeakBandwidth,
+                                        qos.ReceivingFlowspec.Latency,
+                                        qos.ReceivingFlowspec.DelayVariation,
+                                        qos.ReceivingFlowspec.ServiceType,
+                                        qos.ReceivingFlowspec.MaxSduSize,
+                                        qos.ReceivingFlowspec.MinimumPolicedSize,
+                                        0,
+                                        0);
+      
+      ace_qos.sending_flowspec (sending_flowspec);
+      ace_qos.receiving_flowspec (receiving_flowspec);
+      ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
+    }
+  
 #else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
