@@ -114,6 +114,13 @@ ifeq ($(stdcpplib), 1)
   CPPFLAGS += -D__USE_STD_IOSTREAM
 endif
 
+# The correct flags to pass to the linker for ELF dynamic shared library
+# versioning
+#
+ifneq ($(SONAME),)
+  SOFLAGS += -soname $(SONAME)
+endif
+
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g -O0
 DLD             = $(CXX)

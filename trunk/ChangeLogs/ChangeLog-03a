@@ -1,3 +1,17 @@
+Tue Jul  9 23:24:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Print out more explanative messages.
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+
+          Turn on symbol versioning for these platforms with the
+          proprietary compilers that ships with these systems viz, Sun CC
+          and cxx.
+
+
 Tue Jul  9 16:24:46 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Containers_T.cpp: Fixed inconsistent initializer order for
@@ -175,14 +189,14 @@ Fri Jul  5 10:30:44 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 Thu Jul  4 11:27:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* Happy 226th Birthday USA!
-	
+
 Sat Jul 06 19:32:40 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Time_Value.h (ACE_Time_Value): Fix for [BUGID 1240]. Some of
 	  the operators were missing explicit declarations in the header
 	  file (they were anyway defined in the inlined files) which
 	  created problems in builds where inlining was diabled. Please
-	  see 
+	  see
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1240 for
 	  more details. Thanks to Marina Spivak <marina@atdesk.com> for
@@ -348,5 +362,3 @@ Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
 	  value for OSIOCGIFCONF.  Thanks to John Zorko <j.zorko@att.net>
  	  for this fix.
-
-
