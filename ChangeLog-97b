@@ -1,3 +1,11 @@
+Tue Oct 14 20:13:12 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Priority_Reactor_Test.cpp: 
+	  The children could not connect sometimes, this will cause the
+	  test to hang, waiting for those failed connections.
+	  I added a simple exponential backoff strategy to retry
+	  connections until they succeed.
+
 Tue Oct 14 17:48:28 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-10.x-hpc++.h: Set ACE_LACKS_SIGNED_CHAR for
