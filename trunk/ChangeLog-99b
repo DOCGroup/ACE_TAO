@@ -1,5 +1,6 @@
-Tue Aug 17 15:45:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Aug 17 15:55:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance-tests/TCP/TCP.{dsw,dsp}:
 	* performance-tests/TCP/Makefile:
 	* performance-tests/TCP/tcp_test.cpp: Added the new test modified
 	  by Carlos and a bit further by me.  The test measures TCP
