@@ -51,7 +51,7 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   //      Queue to call <handle_timeout> on ACE_Handlers.
 public:
   friend class ACE_Proactor;
-  // Proactor has special privileges, access needed to: proactor ()
+  // Proactor has special privileges, access needed to: proactor ().
 
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
@@ -82,7 +82,7 @@ protected:
   // Set the proactor. This will fail, if one is already set!
 
   ACE_Proactor *proactor_;
-  // Handle to the proactor. This is needed for the completion port.
+  // Handle to the proactor. This is needed for the completion port. 
 };
 
 class ACE_Export ACE_Proactor : public ACE_Event_Handler
@@ -102,12 +102,16 @@ public:
   friend class ACE_Proactor_Handle_Timeout_Upcall;
   // Access needed to: Asynch_Timer, and completion_port_.
 
+  friend class ACE_Asynch_Operation;
+  // For POSIX4-compliant-Unix systems, the
+  // <register_aio_with_proactor> call is used by
+  // <ACE_Asynch_Operation> to store some information with the
+  // Proactor after an <aio_> call is issued, so that the Proactor can
+  // retrive this information to do <aio_return> and <aio_error>. 
+  
   // = Here are the typedefs that the <ACE_Proactor> uses.
-
-  // @@ Alex, are there any reasons why these typedefs aren't
-  // "capitalized?  In general, that's the programming style we
-  // typically use.  Can you please take a look and see what depends
-  // on these typedefs to see if we can capitalize them?
+  
+  // @@ Can these typedefs be capitalized?
   typedef ACE_Timer_Queue_T<ACE_Handler *,
                             ACE_Proactor_Handle_Timeout_Upcall,
                             ACE_SYNCH_RECURSIVE_MUTEX>
@@ -141,11 +145,26 @@ public:
                                      ACE_SYNCH_RECURSIVE_MUTEX>
           Timer_Wheel_Iterator;
 
+#if defined (ACE_HAS_AIO_CALLS)
+  enum POSIX_COMPLETION_STRATEGY
+  {
+    // Use the real time signals and do <sigtimedwait> on the
+    // signals. 
+    RT_SIGNALS,
+    // Store the <aio> control blocks with the <Proactor> and do
+    // <aio_suspend> on them, 
+    AIO_CONTROL_BLOCKS
+  };
+  // For Posix4-Compliat-Unix systems how the completion of the
+  // asynchronous calls should be got from the OS.
+#endif /* ACE_HAS_AIO_CALLS */
+
   ACE_Proactor (size_t number_of_threads = 0,
 		Timer_Queue *tq = 0,
-		int used_with_reactor_event_loop = 0);
+		int used_with_reactor_event_loop = 0,
+                POSIX_COMPLETION_STRATEGY completion_strategy = RT_SIGNALS);
   // A do nothing constructor.
-
+  
   virtual ~ACE_Proactor (void);
   // Virtual destruction.
 
@@ -256,26 +275,21 @@ public:
 
   size_t number_of_threads (void) const;
   void number_of_threads (size_t threads);
-  // Number of thread used as a parameter to CreatIoCompletionPort
+  // Number of thread used as a parameter to CreatIoCompletionPort. 
 
   Timer_Queue *timer_queue (void) const;
   void timer_queue (Timer_Queue *);
-  // Get/Set timer queue
+  // Get/Set timer queue.
 
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle.
 
-protected:
 #if defined (ACE_HAS_AIO_CALLS)
-  // @@ Alex, you can probably just give "friendship" for the whole
-  // class, not just the one method.
-  friend int ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr);
-  // This call is for POSIX <aio_> calls.  This method is used by
-  // <ACE_Asynch_Operation> to store some information with the
-  // Proactor after an <aio_> call is issued, so that the Proactor can
-  // retrive this information to do <aio_return> and <aio_error>.
-#endif /* ACE_HAS_AIO_CALLS */
+  POSIX_COMPLETION_STRATEGY posix_completion_strategy (void);
+  // Return the completion strategy used.
+#endif /* ACE_HAS_AIO_CALLS */  
 
+protected:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when object is signaled by OS (either via UNIX signals or
   // when a Win32 object becomes signaled).
@@ -328,37 +342,26 @@ protected:
   };
 
 #if defined (ACE_HAS_AIO_CALLS)
-  // Use an array to keep track of the all the aio's issued
-  // currently. We'll limit the array size to Maximum RT signals that
+  aiocb *aiocb_list_ [ACE_RTSIG_MAX];
+  // Use an array to keep track of all the aio's issued
+  // currently. We'll limit the array size to Maximum RT signals that 
   // can be queued in a process.  This is the upper limit how many aio
   // operations can be pending at a time.
-#if defined (_POSIX_RTSIG_MAX)
-  aiocb *aiocb_list_ [_POSIX_RTSIG_MAX];
-#else /* _POSIX_RTSIG_MAX */
-  // @@ Alex, please don't use "magic numbers" like 8.  Make sure to
-  // put this kind of value in the OS.h file somewhere and make it a
-  // symbolic constant.
-  // Minimum is 8.
-  struct aiocb *aiocb_list_ [8];
-#endif /* AIO_LIST_AIO_MAX */
 
   size_t aiocb_list_max_size_;
   // To maintain the maximum size of the array (list).
-
+  
   size_t aiocb_list_cur_size_;
   // To maintain the current size of the array (list).
-
 #elif defined (ACE_WIN32)
   ACE_HANDLE completion_port_;
-  // Handle for the completion port.
-#endif /* ACE_HAS_AIO_CALLS */
-
+  // Handle for the completion port. Unix doesnt have completion
+  // ports.
+ 
   size_t number_of_threads_;
-  // This number is passed to the <CreatIOCompletionPort> system call.
-  // @@ Alex, is this WinNT specific?  If so, can you please move it
-  // into the ACE_WIN32 section?  Better yet is to use the Bridge
-  // pattern and make separate subclasses for the implementation to
-  // remove the need for #ifdefs.
+  // This number is passed to the <CreatIOCompletionPort> system
+  // call. 
+#endif /* ACE_HAS_AIO_CALLS */
 
   Timer_Queue *timer_queue_;
   // Timer Queue.
@@ -379,6 +382,22 @@ protected:
   int used_with_reactor_event_loop_;
   // Flag that indicates whether we are used in conjunction with
   // Reactor.
+
+#if defined (ACE_HAS_AIO_CALLS)
+  POSIX_COMPLETION_STRATEGY posix_completion_strategy_;
+  // Flag that indicates how the completion status is got from the OS
+  // on the POSIX4-Compliant-Unix systems.
+  
+  sigset_t RT_completion_signals_;
+  // These signals are used for completion notification by the
+  // Proactor.
+  // These signals are masked in the current process.
+  // By default, ACE_SIG_AIO_READ and ACE_SIG_AIO_WRITE are
+  // the  two signals used for completion notification. But if the
+  // user has specified someother signals in any of the
+  // read/write/transmit operations, some other signals might also
+  // have got masked.
+#endif /* ACE_HAS_AIO_CALLS */
 
 private:
   static ACE_Proactor *proactor_;
