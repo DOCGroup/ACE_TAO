@@ -172,6 +172,7 @@ union X switch (XType)
       } a;
 };
 
+// Example involving union members with multiple case labels.
 enum FieldType
 {
     FTYPE_CHAR,
@@ -193,3 +194,19 @@ struct Field
 {
     FieldValue value;
 };
+
+// Tricky case of lookup for a recursive union. When defined
+// inside another datatype like this, the union is referenced
+// inside itself before the closing brace is seen, but not
+// declared yet.
+struct Element
+{
+  union ValueUnion switch (short)
+  {
+    case 0:
+      long lvalue;
+    case 1:
+      sequence<ValueUnion> VUValue;
+  } Value;
+};
+
