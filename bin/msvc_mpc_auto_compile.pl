@@ -47,13 +47,13 @@ $vc7 = 0;
 
 # Build_Config takes in a string of the type "project--configuration" and
 # runs msdev to build it.
-sub Build_Config ($)
-{
-    my ($arg) = @_;
-    my ($project, $config) = split /--/, $arg;
-
-    return Build ($project, $config);
-}
+# sub Build_Config ($)
+#{
+#    my ($arg) = @_;
+#    my ($project, $config) = split /--/, $arg;
+#
+#    return Build ($project, $config);
+#}
 
 # Build
 sub Build ($$)
@@ -73,20 +73,53 @@ sub Build ($$)
   }
 }
 
+# Build
+sub Build_VC7 ($$)
+{
+  my ($project, $config) = @_;
+
+  if ($debug == 1) {
+    print "$project\n";
+    return 0;
+  }
+  else {
+    print "Auto_compiling $project : $config\n";
+
+    print "Building $project $config\n" if $verbose;
+
+    return system ("devenv.com $project $Build_Cmd $config $useenv");
+  }
+}
+
 sub Find_Dsw (@)
 {
     my (@dir) = @_;
     @array = ();
-    my @config_array = ();
 
-    sub wanted {
+    sub wanted_dsw {
         $array[++$#array] = 
             $File::Find::name if ($File::Find::name =~ /\.dsw$/i);
     }
     
-    find (\&wanted, @dir);
+    find (\&wanted_dsw, @dir);
     
     print "List of dsw's \n" if ($verbose == 1);
+    return @array;
+}
+
+sub Find_Sln (@)
+{
+    my (@dir) = @_;
+    @array = ();
+
+    sub wanted_sln {
+        $array[++$#array] = 
+            $File::Find::name if ($File::Find::name =~ /\.sln$/i);
+    }
+    
+    find (\&wanted_sln, @dir);
+    
+    print "List of sln's \n" if ($verbose == 1);
     return @array;
 }
 
@@ -150,6 +183,65 @@ sub Build_All ()
 }
 
 
+# Only builds the core libraries.
+sub Build_Custom_VC7 ()
+{
+    print STDERR "Building Custom\n";
+    print "Building Custom directories specified\n";# if ($verbose == 1);
+
+    print "Build " if ($verbose);
+    print "Debug " if ($verbose) && ($Build_Debug);
+    print "Release " if ($verbose) && ($Build_Release);
+    print "\n" if ($verbose);
+
+    my @custom_list = Find_Sln (@directories);
+    
+    print "List now is @custom_list \n";
+    foreach $c (@custom_list) {
+        print "List now is $c \n";
+        if ($Build_Debug) {
+            $Status = Build_VC7 ($c, "debug");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+        if ($Build_Release) {
+            $Status = Build_VC7 ($c, "release");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+    }
+}
+
+# Build all examples and directories
+sub Build_All_VC7 ()
+{
+    push @directories, @ace_core_dirs;
+    push @directories, @tao_core_dirs;
+    push @directories, @ciao_core_dirs;
+    
+    print STDERR "First pass (libraries)\n" if ($print_status == 1);
+    print "\nmsvc_auto_compile: First Pass CORE (libraries)\n";
+    
+    Build_Custom_VC7 ();
+
+    my @new_directory_search = "$ACE_ROOT";
+
+    my @configurations = Find_Sln (@new_directory_search);
+
+    print STDERR "Second pass (for other things)\n" if ($print_status == 1);
+    print "\nmsvc_mpc_auto_compile: Second  Pass (rest of the stuff)\n";
+
+    foreach $c (@configurations) {
+        print "\nUsing $c for compilation\n";
+        if ($Build_Debug) {
+            $Status = Build_VC7 ($c, "debug");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+        if ($Build_Release) {
+            $Status = Build_VC7 ($c, "release");
+            return if $Status != 0 && !$Ignore_errors;
+        }
+    }
+}
+
 ## Parse command line argument
 while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
 {
@@ -159,6 +251,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     }
     elsif ($ARGV[0] =~ /^-d$/i) {       # debug
         $debug = 1;
+    }
+    elsif ($ARGV[0] =~ '-vc7') {    # Use VC7 project and solution files.
+        print "Using VC7 files\n" if ( $verbose );
+        $vc7 = 1;
     }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
@@ -216,10 +312,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Building Release Version\n" if ( $verbose );
         $Build_Release = 1;
     }
-    elsif ($ARGV[0] =~ '-vc7') {    # Use VC7 project and solution files.
-        print "Using VC7 files\n" if ( $verbose );
-        $vc7 = 1;
-    }
     elsif ($ARGV[0] =~ '-(\?|h)') {     # Help information
         print "Options\n";
         print "-d         = Debug (only print out projects)\n";
@@ -227,6 +319,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-v         = Script verbose Mode\n";
         print "-s         = Print status messages to STDERR\n";
         print "-u         = Tell MSVC to use the environment\n";
+        print "-vc7       = Use MSVC 7 toolset\n";
         print "\n";
         print "-CORE      = Build ACE+TAO+CIAO core \n";
         print "-ACE       = Build ACE and its tests\n";
@@ -252,7 +345,13 @@ if (!$Build_Debug && !$Build_Release) {
 }
 
 print "MPC version of msvc_mpc_auto_compile: Begin\n";
-Build_All if ($build_all && !$use_custom_dir);
-Build_Custom if $use_custom_dir;
+if ($vc7) {
+    Build_All_VC7 if ($build_all && !$use_custom_dir);
+    Build_Custom_VC7 if $use_custom_dir;
+}
+else {
+    Build_All if ($build_all && !$use_custom_dir);
+    Build_Custom if $use_custom_dir;
+}
 print "msvc_mpc_auto_compile: End\n";
 print STDERR "End\n" if ($print_status == 1);
