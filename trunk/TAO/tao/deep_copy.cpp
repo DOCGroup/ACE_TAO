@@ -768,7 +768,6 @@ TAO_Marshal_Sequence::deep_copy (CORBA_TypeCode_ptr  tc,
       dmsg ("TAO_Marshal_Struct::deep_copy detected error");
       return CORBA_TypeCode::TRAVERSE_STOP;
     }
-  return retval;
 }
 
 // deep_copy for Array
