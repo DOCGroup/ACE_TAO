@@ -107,13 +107,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::shared_bind (const ACE_WString &name
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->shared_bind_i (name, value, type, rebind);
+      result = this->shared_bind_i (name, value, type, rebind);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ()))
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -196,13 +198,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::unbind (const ACE_WString &name)
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->unbind_i (name);
+      result = this->unbind_i (name);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 
 }
 
@@ -257,13 +261,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::resolve (const ACE_WString &name,
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->resolve_i (name, value, type);
+      result = this->resolve_i (name, value, type);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 
@@ -348,13 +354,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager (void)
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->create_manager_i ();
+      result = this->create_manager_i ();
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 
@@ -739,13 +747,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_names_i (set, pattern);
+      result = this->list_names_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -755,13 +765,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_values_i (set, pattern);
+      result = this->list_values_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -771,13 +783,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_types_i (set, pattern);
+      result = this->list_types_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -787,13 +801,15 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET 
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_name_entries_i (set, pattern);
+      result = this->list_name_entries_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -803,13 +819,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET 
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_value_entries_i (set, pattern);
+      result = this->list_value_entries_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
@@ -819,13 +837,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
+  int result = 0;
   ACE_SEH_TRY 
     {
-      return this->list_type_entries_i (set, pattern);
+      result = this->list_type_entries_i (set, pattern);
     }
   ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class LOCK> void
@@ -840,13 +860,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
     (ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *) this;
   ACE_UNUSED_ARG (fake_this);
 
+  int result = 0;
   ACE_SEH_TRY 
     {
-      this->dump_i ();
+      result = ->dump_i ();
     }
   ACE_SEH_EXCEPT (fake_this->remap (GetExceptionInformation ())) 
     {
     }
+  return result;
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
