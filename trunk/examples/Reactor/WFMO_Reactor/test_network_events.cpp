@@ -59,7 +59,8 @@ Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
 {
   this->reactor (ACE_Reactor::instance ());
 
-  ACE_ASSERT (this->reactor ()->register_handler (this, READ_MASK) == 0);
+  int result = this->reactor ()->register_handler (this, READ_MASK);
+  ACE_ASSERT (result == 0);
 }
 
 ACE_HANDLE  
@@ -132,8 +133,9 @@ Network_Listener::Network_Listener (void)
     acceptor_ (local_address_, 1)
 {
   this->reactor (ACE_Reactor::instance ());
-  ACE_ASSERT (this->reactor ()->register_handler (this, 
-						  ACE_Event_Handler::ACCEPT_MASK) == 0);
+  int result = this->reactor ()->register_handler (this, 
+                                                   ACE_Event_Handler::ACCEPT_MASK)
+  ACE_ASSERT (result == 0);
 }
 
 Network_Listener::~Network_Listener (void)
@@ -164,17 +166,18 @@ Network_Listener::handle_input (ACE_HANDLE handle)
   // associations.
   int reset_new_handle = this->reactor ()->uses_event_associations ();
 
-  ACE_ASSERT (this->acceptor_.accept (stream, // stream
-                                      &remote_address, // remote address
-                                      0, // timeout
-                                      1, // restart
-                                      reset_new_handle  // reset new handler
-                                      ) == 0);
-  
+  int result = this->acceptor_.accept (stream, // stream
+                                       &remote_address, // remote address
+                                       0, // timeout
+                                       1, // restart
+                                       reset_new_handle);  // reset new handler
+  ACE_ASSERT (result == 0);
+
   ACE_DEBUG ((LM_DEBUG, "Remote connection from: "));
   remote_address.dump ();
 
-  Network_Handler *handler = new Network_Handler (stream);
+  Network_Handler *handler;
+  ACE_NEW_RETURN (handler, Network_Handler (stream), -1);
   
   return 0;
 }

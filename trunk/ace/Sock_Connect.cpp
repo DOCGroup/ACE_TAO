@@ -521,12 +521,12 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
           // b. extract value
           // Gets overwritten on each call
-          buf_len = sizeof(buffer);
+          buf_len = sizeof (buffer);
           if (get_reg_value (ifdevkey.fast_rep (),
                              IPADDR_NAME_ID,
                              buffer,
                              buf_len))
-            return -4;
+            continue; // Skip unknown devices.
 
           if (ACE_OS::strcmp (buffer,
                               INVALID_TCPIP_DEVICE_ADDR) == 0)
