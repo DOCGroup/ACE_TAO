@@ -1,3 +1,20 @@
+Wed Mar  1 17:30:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	  Removed all calls to decode(), and replaced calls
+	  to Any::replace() (which calls encode()) with calls
+	  to Any::_tao_replace() (which does not). This is
+	  the first step in ridding TAO of interpreted
+	  (de)marshaling. Also added some memory cleanup if a
+	  CDR stream operation is not successful for some
+	  reason.
+
 Wed Mar  1 16:38:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
