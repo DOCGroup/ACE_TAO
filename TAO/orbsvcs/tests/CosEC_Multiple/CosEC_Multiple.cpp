@@ -129,5 +129,8 @@ CosEC_Multiple::runORB (void)
 void
 CosEC_Multiple::shutdown (void)
 {
-  this->orb_->shutdown ();
+  if (this->orb_ != CORBA::ORB::_nil ())
+    this->orb_->shutdown ();
+
+  this->orb_ == CORBA::ORB::_nil ();
 }
