@@ -1,3 +1,12 @@
+Wed Dec 17 12:13:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+
+	  More fixes for the generated code.
+
 Wed Dec 17 11:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Domain/DomainS.cpp:
