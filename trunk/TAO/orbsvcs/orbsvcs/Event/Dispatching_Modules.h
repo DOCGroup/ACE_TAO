@@ -38,7 +38,7 @@ class ACE_ES_Dispatch_Request;
 // Forward declarations.
 class ACE_ES_Consumer_Module;
 
-class ACE_ES_Dispatching_Base : public ACE_Event_Handler
+class TAO_ORBSVCS_Export ACE_ES_Dispatching_Base : public ACE_Event_Handler
 // = TITLE
 //    Event Service Dispatch Module base class
 //
@@ -110,7 +110,7 @@ protected:
 
 // ************************************************************
 
-class ACE_ES_Dispatch_Request : public ACE_RT_Task_Command
+class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request : public ACE_RT_Task_Command
 // = TITLE
 //    ACE Event Service Dispatch Request
 //
@@ -230,7 +230,7 @@ protected:
 // ************************************************************
 
 #if defined (ACE_WIN32)
-class ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
+class TAO_ORBSVCS_Export ACE_ES_ReactorEx_NS : public ACE_Notification_Strategy
 // = TITLE 
 //     Event Service ReactorEx Notification Strategy
 //
@@ -306,7 +306,7 @@ class ACE_ES_MQ : public ACE_ES_QUEUE
 
 // ************************************************************
 
-class ACE_ES_Dispatch_Queue : public ACE_RT_Task
+class TAO_ORBSVCS_Export ACE_ES_Dispatch_Queue : public ACE_RT_Task
 // = TITLE
 //    Event Service Dispatch Queue
 //
@@ -352,7 +352,7 @@ private:
 
 // ************************************************************
 
-class ACE_ES_Priority_Dispatching : public ACE_ES_Dispatching_Base
+class TAO_ORBSVCS_Export ACE_ES_Priority_Dispatching : public ACE_ES_Dispatching_Base
 // = TITLE
 //    Event Service Priority Dispatching Module
 //
@@ -435,7 +435,7 @@ protected:
 
 // ************************************************************
 
-class ACE_ES_EFD_Dispatching : public ACE_ES_Dispatching_Base
+class TAO_ORBSVCS_Export ACE_ES_EFD_Dispatching : public ACE_ES_Dispatching_Base
 // = TITLE
 //    Event Service EFD Dispatching Module
 //
@@ -454,7 +454,7 @@ public:
 
 // ************************************************************
 
-class ACE_ES_RTU_Dispatching : public ACE_ES_Priority_Dispatching
+class TAO_ORBSVCS_Export ACE_ES_RTU_Dispatching : public ACE_ES_Priority_Dispatching
 // = TITLE
 //    Event Service RTU Dispatching Module
 //

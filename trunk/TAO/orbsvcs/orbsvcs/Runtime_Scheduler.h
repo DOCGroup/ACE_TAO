@@ -11,7 +11,7 @@
 
 #include "orbsvcs/RtecSchedulerS.h"
 
-class ACE_Runtime_Scheduler
+class TAO_ORBSVCS_Export ACE_Runtime_Scheduler
   : public POA_RtecScheduler::Scheduler
   // = TITLE
   //   A proxy server for RtecScheduler::Scheduler.
