@@ -192,10 +192,7 @@ public:
   // be read and stored in the <message_block>.
 
 protected:
-  int shared_read (Result *result,
-		   ACE_Message_Block &message_block,
-		   u_long bytes_to_read,
-		   const void *act = 0);
+  int shared_read (Result *result);
   // This is the method which does the real work and is there so that
   // the ACE_Asynch_Read_File class can use it too.
 
@@ -285,10 +282,7 @@ public:
   // will be written from the <message_block>.
 
 protected:
-  int shared_write (Result *result,
-		    ACE_Message_Block &message_block,
-		    u_long bytes_to_write,
-		    const void *act = 0);
+  int shared_write (Result *result);
   // This is the method which does the real work and is there so that
   // the ACE_Asynch_Write_File class can use it too.
 

@@ -157,17 +157,11 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 			  this->proactor_->get_handle ()), 
 		  -1);
 
-  return this->shared_read (result,
-			    message_block,
-			    bytes_to_read,
-			    act);
+  return this->shared_read (result);
 }
 
 int 
-ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result,
-				     ACE_Message_Block &message_block,
-				     u_long bytes_to_read,
-				     const void *act)
+ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
 {
   u_long bytes_read;
 
@@ -274,17 +268,11 @@ ACE_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 			  this->proactor_->get_handle ()), 
 		  -1);
   
-  return this->shared_write (result,
-			     message_block,
-			     bytes_to_write,
-			     act);
+  return this->shared_write (result);
 }
   
 int 
-ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result,
-				       ACE_Message_Block &message_block,
-				       u_long bytes_to_write,
-				       const void *act)
+ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
 {
   u_long bytes_written;
 
@@ -391,10 +379,7 @@ ACE_Asynch_Read_File::read (ACE_Message_Block &message_block,
 			  this->proactor_->get_handle ()), 
 		  -1);
   
-  return this->shared_read (result,
-			    message_block,
-			    bytes_to_read,
-			    act);
+  return this->shared_read (result);
 }
 
 // ************************************************************
@@ -453,10 +438,7 @@ ACE_Asynch_Write_File::write (ACE_Message_Block &message_block,
 			  this->proactor_->get_handle ()), 
 		  -1);
   
-  return this->shared_write (result,
-			     message_block,
-			     bytes_to_write,
-			     act);
+  return this->shared_write (result);
 }
 
 // ************************************************************
@@ -936,37 +918,44 @@ ACE_Handler::ACE_Handler (ACE_Proactor *d)
 void
 ACE_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 void 
 ACE_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 void 
 ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 void 
 ACE_Handler::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 void
 ACE_Handler::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 void 
 ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 
 /*
 void 
 ACE_Handler::handle_notify (const ACE_Asynch_Notify::Result &result)
 {
+  ACE_UNUSED_ARG (result);
 }
 */
 
@@ -974,6 +963,8 @@ void
 ACE_Handler::handle_time_out (const ACE_Time_Value &tv,
 			      const void *act)
 {
+  ACE_UNUSED_ARG (tv);
+  ACE_UNUSED_ARG (act);
 }
 
 ACE_Proactor *

@@ -95,13 +95,13 @@ ACE_INET_Addr::string_to_addr (const char s[])
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      u_short port = ACE_OS::atoi (t);
+      u_short port = (u_short) ACE_OS::atoi (t);
       result = this->set (port, ACE_UINT32 (INADDR_ANY));
     }
   else
     {
       *ip_addr = '\0';
-      u_short port = ACE_OS::atoi (ip_addr + 1); // Skip over ':'
+      u_short port = (u_short) ACE_OS::atoi (ip_addr + 1); // Skip over ':'
       result = this->set (port, t); 
     }
   ACE_OS::free (ACE_MALLOC_T (t));

@@ -10,6 +10,9 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
 					       siginfo_t *siginfo, 
 					       ucontext_t *)
 {
+  ACE_UNUSED_ARG (signum); 
+  ACE_UNUSED_ARG (siginfo);
+
   // This will get called when <ReactorEx->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
   //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
@@ -665,7 +668,7 @@ ACE_ReactorEx::change_owner (void)
 ACE_INLINE int
 ACE_ReactorEx::safe_dispatch (int wait_status)
 {
-  int result;
+  int result = -1;
   ACE_SEH_TRY
     {
       result = this->dispatch (wait_status);  
