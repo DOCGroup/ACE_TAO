@@ -181,7 +181,9 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
           << node->name () << ">" << be_nl
           << "{" << be_idt_nl
           << "static void tao_add_ref (" << node->name () << " *);" << be_nl
-          << "static void tao_remove_ref (" << node->name () << " *);"
+          << "static void tao_remove_ref (" << node->name () << " *);" 
+          << be_nl
+          << "static void tao_release (" << node->name () << " *);"
           << be_uidt_nl
           << "};";
 
