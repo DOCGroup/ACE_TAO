@@ -1,0 +1,62 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "TAO_IDL_EXE"=TAO_IDL_EXE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE"=TAO_IDL_BE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE"=TAO_IDL_FE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

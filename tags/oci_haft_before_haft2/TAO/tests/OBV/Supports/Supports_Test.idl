@@ -1,0 +1,58 @@
+// $Id$
+
+module Supports_Test
+{
+
+	valuetype Node;
+
+	typedef sequence<Node> Node_List;
+
+	valuetype Node
+	{
+
+    void print ();
+
+		public string name_;
+		private long weight_;
+		private short degree_;
+		private Node_List neighbors_;
+
+		void change_weight (in long new_weight);
+		void add_edge (in Node neighbor);
+		void remove_edge (in Node neighbor);
+
+		factory create ();
+
+	};
+
+	interface graph
+	{
+
+		long size ();
+		void add_node (in string name);
+    void print ();
+		
+	};
+
+	valuetype vt_graph supports graph
+	{
+
+		public Node_List nodes_;
+		factory create ();
+
+	};
+
+	interface test
+	{
+
+		void pass_vt_graph_in (in vt_graph vt_graph_param);
+		void pass_obj_graph_in (in graph graph_param);
+    void pass_vt_graph_out (out vt_graph vt_graph_param);
+		void pass_obj_graph_out (out graph graph_param);
+		void pass_vt_graph_inout (inout vt_graph vt_graph_param);
+		void pass_obj_graph_inout (inout graph graph_param);
+		oneway void shutdown ();
+
+	};
+
+};

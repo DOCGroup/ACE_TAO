@@ -1,0 +1,46 @@
+// $Id$
+//
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   ssl_endpoints.pidl
+//
+// = DESCRIPTION
+//   This file contains idl definition for data structures used to
+//   encapsulate data in TAO_TAG_SSL_ENDPOINTS tagged component.  This
+//   TAO-specific component is used for transmission of multiple
+//   endpoints per single SSLIOP profile.  See SSLIOP_Profile.*
+//   for more details.
+//   
+//   This file was used to generate the code in
+//   iiop_endpoints.* The command used to generate code
+//   is:
+//
+//     tao_idl 
+//          -Wb,export_macro=TAO_Export \
+//          -Wb,export_include="tao/corbafwd.h" \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          ssl_endpoints.pidl
+//
+//   After the idl is compiled, the generated files are trimmed to
+//   remove classes/functions that are not used: Any operators, *_out
+//   and classes.
+//
+// ================================================================
+
+#ifndef _SSL_ENDPOINTS_IDL_
+#define _SSL_ENDPOINTS_IDL_
+
+#include "SSLIOP.idl"
+
+// Stores information for a collection of SSLIOP endpoints.
+typedef sequence <SSLIOP::SSL> TAO_SSLEndpointSequence;
+
+#pragma prefix ""
+
+#endif /* _SSL_ENDPOINTS_IDL_ */

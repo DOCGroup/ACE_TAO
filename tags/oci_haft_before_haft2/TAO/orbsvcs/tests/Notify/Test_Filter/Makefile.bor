@@ -1,0 +1,69 @@
+# $Id$
+# Makefile for building the TAO_RT_NotifyTests_Filter library with Borland C++ Builder
+
+NAME = TAO_RT_NotifyTests_Filter
+
+OBJFILES = \
+	$(OBJDIR)\RT_Test_Filter.obj \
+	$(OBJDIR)\RT_Test_FilterFactory.obj
+
+EXTERNAL_LIBS =
+
+LFLAGS = \
+	-j..\..\..\..\tao\RTCORBA\$(CONFIG_SUBDIR) -j..\..\..\..\tao\RTCORBA \
+	-L..\..\..\..\tao\RTCORBA\$(CONFIG_SUBDIR) -L..\..\..\..\tao\RTCORBA \
+	-j..\..\..\..\tao\IORTable\$(CONFIG_SUBDIR) -j..\..\..\..\tao\IORTable \
+	-L..\..\..\..\tao\IORTable\$(CONFIG_SUBDIR) -L..\..\..\..\tao\IORTable \
+	-j..\..\..\..\tao\PortableServer\$(CONFIG_SUBDIR) -j..\..\..\..\tao\PortableServer \
+	-L..\..\..\..\tao\PortableServer\$(CONFIG_SUBDIR) -L..\..\..\..\tao\PortableServer \
+	-j..\..\..\..\tao\DynamicAny\$(CONFIG_SUBDIR) -j..\..\..\..\tao\DynamicAny \
+	-L..\..\..\..\tao\DynamicAny\$(CONFIG_SUBDIR) -L..\..\..\..\tao\DynamicAny \
+	-j..\..\..\..\orbsvcs\orbsvcs\ETCL\$(CONFIG_SUBDIR) -j..\..\..\..\orbsvcs\orbsvcs\ETCL \
+	-L..\..\..\..\orbsvcs\orbsvcs\ETCL\$(CONFIG_SUBDIR) -L..\..\..\..\orbsvcs\orbsvcs\ETCL \
+	-j..\..\..\..\orbsvcs\orbsvcs\$(CONFIG_SUBDIR) -j..\..\..\..\orbsvcs\orbsvcs \
+	-L..\..\..\..\orbsvcs\orbsvcs\$(CONFIG_SUBDIR) -L..\..\..\..\orbsvcs\orbsvcs \
+	-j..\..\..\..\tao\$(CONFIG_SUBDIR) -j..\..\..\..\tao \
+	-L..\..\..\..\tao\$(CONFIG_SUBDIR) -L..\..\..\..\tao \
+	-j..\..\..\..\..\ace\$(CONFIG_SUBDIR) -j..\..\..\..\..\ace \
+	-L..\..\..\..\..\ace\$(CONFIG_SUBDIR) -L..\..\..\..\..\ace \
+  -j$(CORE_BINDIR) \
+  -L$(CORE_BINDIR)
+
+LIBFILES = \
+	TAO_RTCORBA$(LIB_DECORATOR).lib \
+	TAO_CosNotification$(LIB_DECORATOR).lib \
+	TAO_ETCL$(LIB_DECORATOR).lib \
+	TAO_CosNaming$(LIB_DECORATOR).lib \
+	TAO_Svc_Utils$(LIB_DECORATOR).lib \
+	TAO_IORTable$(LIB_DECORATOR).lib \
+	TAO_DynamicAny$(LIB_DECORATOR).lib \
+	TAO_PortableServer$(LIB_DECORATOR).lib \
+	TAO$(LIB_DECORATOR).lib \
+	ACE$(LIB_DECORATOR).lib \
+	$(EXTERNAL_LIBS)
+
+!ifdef STATIC
+LIB_FLAGS = -DTAO_AS_STATIC_LIBS=1 -DACE_AS_STATIC_LIBS=1
+DLL_FLAGS =
+!else
+LIB_FLAGS =
+DLL_FLAGS = -DTAO_RT_Test_Filter_BUILD_DLL=1
+!endif
+
+CFLAGS = \
+	-I..\..\..\..\orbsvcs \
+	-I..\..\..\.. \
+	-I..\..\..\..\tao \
+	-I..\..\..\..\.. \
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+
+CPPDIR = .
+
+INCLUDES = \
+	RT_Test_Filter.h \
+	RT_Test_FilterFactory.h
+
+BASE_BINDIR = ..\..\..\..\..\bin
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>

@@ -1,0 +1,108 @@
+<!--
+// $Id$
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+file      : Documentation/ReferenceCounting/News.html
+author    : Boris Kolpackov <boris@kolpackov.net>
+copyright : Copyright (c) 2003 Boris Kolpackov
+license   : http://kolpackov.net/license.html
+
+-->
+
+<html>
+
+<head>
+
+  <title>ReferenceCounting library news</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="copyright" content="&copy; 2001-2003 Boris Kolpackov"/>
+  <meta name="keywords" content="news,C++,reference,counting,smart,pointer"/>
+  <meta name="description" content="ReferenceCounting library news"/>
+  <meta http-equiv="Content-Language" content="en"/>
+
+  <style type="text/css">
+    body {
+      font-family  : arial,sans-serif;
+      font-size    : 10pt;
+    }
+
+    h1 {
+      font-size    : 12pt;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div align="center">
+<table width="700" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+
+<h1>1.1.0</h1>
+<ul>
+  <li><p>New and complete test coverage</p></li>
+
+  <li><p>
+    <code><a href="SmartPtr.hpp.html">Utility::ReferenceCounting::SmartPtr</a></code>: 
+    added
+    <p><code>
+      template&lt;typename Other&gt; SmartPtr (SmartPtr&lt;Other&gt; const&amp;)
+    </code></p>
+    and
+    <p><code>
+      template&lt;typename Other&gt; operator= (SmartPtr&lt;Other&gt; const&amp;)
+    </code></p>
+  </p></li>
+
+  <li><p>
+    <code><a href="SmartPtr.hpp.html">Utility::ReferenceCounting::SmartPtr</a></code>:
+    added
+    <p><code>
+      typedef T Type;
+    </code></p>
+    to provide access to underlying type.
+  </p></li>
+
+  <li><p>
+    <code><a href="index.html">Utility::ReferenceCounting</a></code>:
+    added
+    <p><code>
+      template &lt;typename D, typename S&gt;
+      D* smart_cast (SmartPtr&lt;S&gt; const&amp;)
+    </code></p>
+    to provide more convenient <code>dynamic_cast</code> functionality.
+  </p></li>
+
+  <li><p>
+    <code><a href="index.html">Utility::ReferenceCounting</a></code>:
+    added
+    <p><code>
+    template &lt;typename T&gt;
+    SmartPtr&lt;T&gt; acquire (T*)
+    </code></p>
+  </p></li>
+
+  <li><p>
+    New
+    <code><a href="StrictPtr.hpp.html">
+      Utility::ReferenceCounting::StrictPtr
+    </a></code> automatic pointer.
+  </p></li>
+
+</ul>
+
+
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

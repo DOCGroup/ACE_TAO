@@ -1,0 +1,12 @@
+/**
+
+@page Replay_Reply Test README File
+
+	The simplest possible test for TAO's replaying reply
+mechanism. Do not change or modify this.
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+*/
