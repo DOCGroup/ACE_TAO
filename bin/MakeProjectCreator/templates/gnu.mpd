@@ -10,16 +10,19 @@
 #
 #----------------------------------------------------------------------------
 <%marker(top)%>
-MAKEFILE        = <%project_file%>
-DEPENDENCY_FILE = .depend.<%project_file%>
+MAKEFILE         = <%project_file%>
+DEPENDENCY_FILE  = .depend.<%project_file%>
 <%if(exename)%>
-BIN_UNCHECKED   = <%exename%>
+BIN_UNCHECKED    = <%exename%>
 <%endif%>
 <%if(staticname)%>
-LIB             = lib<%staticname%>.a
+LIB              = lib<%staticname%>.a
+<%if(!sharedname)%>
+static_libs_only = 1
+<%endif%>
 <%endif%>
 <%if(sharedname)%>
-SHLIB           = lib<%sharedname%>.$(SOEXT)
+SHLIB            = lib<%sharedname%>.$(SOEXT)
 <%endif%>
 <%if(tao)%>
 
@@ -103,8 +106,17 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
-<%if(!exename)%>
+<%if(exename)%>
+OUTPUT_DIRECTORY = <%if(install)%><%install%><%else%>.<%endif%>
+<%else%>
+OUTPUT_DIRECTORY = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+<%endif%>
+all: $(OUTPUT_DIRECTORY)
 
+$(OUTPUT_DIRECTORY):
+	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+
+<%if(!exename)%>
 <%if(compname)%>
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
 <%endif%>
@@ -254,7 +266,7 @@ ifneq (,$(RC))
   FILES += $(RESOURCES)
 endif
 
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
 <%endif%>
 <%if(!comps)%>
@@ -356,7 +368,7 @@ endif
 <%endif%>
 
 <%endif%>
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
@@ -451,9 +463,6 @@ all: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
-<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>:
-	-@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
-
 <%comptarget%>
 <%if(idl_files)%>
 

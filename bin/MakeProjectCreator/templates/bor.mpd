@@ -1,10 +1,10 @@
-# Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%endif%> with Borland C++ Builder
+# Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%else%><%if(staticname)%><%staticname%> library<%endif%><%endif%> with Borland C++ Builder
 
 <%if(exename)%>
 NAME = <%exename%>
 <%else%>
-<%if(sharedname)%>
-NAME = <%sharedname%>
+<%if(sharedname || staticname)%>
+NAME = <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
 <%endif%>
 <%endif%>
 
