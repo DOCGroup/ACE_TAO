@@ -1,3 +1,10 @@
+Thu May 02 16:33:05 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (mmap): On Win32, check for both ERROR_INVALID_NAME and
+	  ERROR_FILE_NOT_FOUND to account for difference when running it
+	  on WINNT but with ACE_HAS_WINNT4 = 0.  Thanks to Ram Ben-Yakir
+	  <ram@BANDWIZ.COM> for figuring this out.
+
 Fri May  3 07:21:20 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Dev_Poll_Reactor_Test.cpp:
@@ -198,14 +205,14 @@ Thu May  2 00:29:34 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  ACE class.
 
 	* ace/Service_Object: Uninlined ACE_Service_Type::name().
-	
-	* ace/Malloc_T.cpp: 
+
+	* ace/Malloc_T.cpp:
 	* ace/Process_Mutex.cpp:
 	* ace/SOCK_Dgram_Bcast.cpp:
 	* ace/TLI_Acceptor.cpp:
 	* ace/TLI_Connector.cpp:
 	* ace/TLI_Stream.cpp:
-	
+
 	  Added #include "ace/ACE.h".
 
 Wed May  1 21:07:23 2002  Ossama Othman  <ossama@uci.edu>
@@ -381,7 +388,7 @@ Mon Apr 29 20:28:49 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Sun Apr 28 18:03:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst: Added the new tests to our daily list of 
+	* bin/auto_run_tests.lst: Added the new tests to our daily list of
 	  tests that needs to be run.
 
 Sun Apr 28 11:50:17 2002  Edan Ayal <edanayal@yahoo.com>
@@ -390,13 +397,13 @@ Sun Apr 28 11:50:17 2002  Edan Ayal <edanayal@yahoo.com>
 	  ACE_WIN32_Asynch_Read/Write_Stream/File_Result::complete -
 	  corrected the updates to the chained message blocks (rd_ptr and
 	  wr_ptr) in case of scatter-gather IO. This was apparently a
-	  cut-n-paste bug. 
+	  cut-n-paste bug.
 
 Sun Apr 28 08:19:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Proactor_Test.cpp: Added code to test async scatter-gather
 	  IO on Win32. Thanks Edan Ayal <edanayal@yahoo.com> for donating
-	  this. 
+	  this.
 
 Sun Apr 28 12:27:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -436,8 +443,8 @@ Sat Apr 27 11:16:03 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  without deactivating the queue.  Also refactored the close()
  	  method to use flush_i().
 
-Sat Apr 27 09:26:43 2002  Edan Ayal <edanayal@yahoo.com> 
-  
+Sat Apr 27 09:26:43 2002  Edan Ayal <edanayal@yahoo.com>
+
         Added support (currently under win32 only) for asynchronous
 	scattered read and asynchronous gathered write with socket streams
 	and with files.

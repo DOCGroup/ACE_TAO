@@ -2987,7 +2987,9 @@ ACE_OS::mmap (void *addr,
           *file_mapping = ACE_TEXT_OpenFileMapping (nt_flags,
                                                     0,
                                                     file_mapping_name);
-          if (*file_mapping != 0 || ::GetLastError () == ERROR_INVALID_NAME)
+          if (*file_mapping != 0
+              || (::GetLastError () == ERROR_INVALID_NAME
+                  && ::GetLastError () == ERROR_FILE_NOT_FOUND))
             try_create = 0;
         }
 
