@@ -25,6 +25,14 @@
     </P>
 
     <ol>
+      <li><p>ACE try macros are modeled and used like native c++
+          exceptions with some extra rules to ensure it works even on
+          platforms without native exception support.  See some <a
+          href="#example">quick examples</a> about how to use ACE try
+          macros.
+          </p>
+      </li>
+
       <li><P><em>Name of CORBA::Environment variable</em><br>
           A function that may throw a CORBA::Exception needs a
           CORBA::Environment variable to pass up exceptions and to gather
@@ -141,7 +149,7 @@
     </ul>
     </ol>
 
-<h3>Examples</h3>
+<h3>Examples</h3><a name="examples">
 
 Refer to <a href="../ace/CORBA_macros.h"><code>
 $ACE_ROOT/ace/CORBA_macros.h</code></a> for complete definitions of
@@ -149,7 +157,7 @@ macros discussed here.
 
 <ul>Sample exception catching:
 <pre>
-      ACE_TRY
+      ACE_TRY  // use ACE_TRY_NEW_ENV if there isn't an ACE_TRY_ENV already defined
         {
           some_operation (arg1, arg2, ACE_TRY_ENV);
           ACE_TRY_CHECK;
