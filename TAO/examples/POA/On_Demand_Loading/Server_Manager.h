@@ -1,3 +1,4 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 //=================================================================================
@@ -30,14 +31,11 @@ class Server_i
   //
   // = DESCRIPTION
   //   The various methods required by the server application for
-  //   utilizing the ServantActivator and ServantLocator interfaces
-  //   of the Servant Manager are implemented by this class.
-  //   These include initialisation procedures of the ServantActivator
-  //   and ServantLocator, and creation of POAs with emphasis on the
+  //   utilizing the ServantActivator and ServantLocator interfaces of
+  //   the Servant Manager are implemented by this class.  These
+  //   include initialisation procedures of the ServantActivator and
+  //   ServantLocator, and creation of POAs with emphasis on the
   //   servant retention policy.
-  
-  //   @@ *done*Kirthika, can you please give a very concise synopsis
-  //   of what this class does?
 public:
   // = Initialization and termination methods.
   Server_i (void);
@@ -84,7 +82,7 @@ private:
   // The poa policicies.
 
   PortableServer::POA_var root_poa_;
-  // The root_poa which is used for cretaing differnt child poas.
+  // The root_poa which is used for cretaing different child poas.
 
   PortableServer::POAManager_var poa_manager_;
   // The poa_manager object.

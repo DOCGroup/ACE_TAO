@@ -1,3 +1,4 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 //================================================================================
@@ -34,8 +35,6 @@ class ServantLocator_i : public POA_PortableServer::ServantLocator
   //   This class defines the Servant Locator interface of the Servant
   //   Manager. It is invoked when the POA has an USE_SERVANT_MANAGER
   //   policy and a servant_retention policy of NON_RETAIN type.
-
-  //   @@ *done*Kirthika, please explain what this class DOES.
 public:
   ServantLocator_i (CORBA::ORB_ptr orb);
   // Constructor.
@@ -46,18 +45,14 @@ public:
                                              PortableServer::ServantLocator::Cookie &the_cookie,
                                              CORBA::Environment &env);
   // This method is invoked by a POA whenever it receives a request
-  // for MyFoo object that is not currently active.
-  // When the POA is created using the NON_RETAIN policy the Active
-  // Object Map is not maintained, in other words, an association
-  // between the ObjectId and the servant is not maintained. Hence every
-  // client request the servant has to be loaded. Note the operation
-  // argument. This argument specifies the operation to be invoked on
-  // the servant. The cookie helps in  marking the servant. This marking
-  // is useful while destroying the servant.
-
-  // @@ *done*Kirthika, please explain briefly what THIS method does
-  // whenever it is invoked, i.e., explain the use of the
-  // ServantManager stuff...
+  // for MyFoo object that is not currently active.  When the POA is
+  // created using the NON_RETAIN policy the Active Object Map is not
+  // maintained, in other words, an association between the ObjectId
+  // and the servant is not maintained. Hence every client request the
+  // servant has to be loaded. Note the operation argument. This
+  // argument specifies the operation to be invoked on the
+  // servant. The cookie helps in marking the servant. This marking is
+  // useful while destroying the servant.
 
   virtual void postinvoke (const PortableServer::ObjectId &oid,
                            PortableServer::POA_ptr adapter,
@@ -72,24 +67,16 @@ public:
   // appropriate servant is destroyed by verifying the cookie.Again
   // this method is invoked per client request.
 
-  // @@ *done*Kirthika, please explain briefly what THIS method does
-  // whenever it is invoked, i.e., explain the use of the
-  // ServantManager stuff...
-
   PortableServer::ObjectId_var create_dll_object_id (const char *dllname, 
                                                      const char *factory_function);
   // Returns an ObjectId when given an dll name and the factory method
   // to be invoked in the dll.
 private:
   ServantManager_i servant_manager_;
-  // The <ServantManager_i> object that provides utility methods.
-  // The methods include obtaining the servant using an ACE_DLL
-  // object, destroying the servant and extracting the dllname and
-  // factory function from the ObjectId.
-
-  // @@ *done*Kirthika, briefly summarize what these methods accomplish (in
-  // general).
-  
+  // The <ServantManager_i> object that provides utility methods.  The
+  // methods include obtaining the servant using an ACE_DLL object,
+  // destroying the servant and extracting the dllname and factory
+  // function from the ObjectId.
 };
 
 #endif /* SERVANT_LOCATOR_H */
