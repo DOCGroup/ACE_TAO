@@ -1,3 +1,9 @@
+Tue Aug 12 13:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Fixed typos in code generation for dynamic hash operation tables.
+
 Tue Aug 12 12:47:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp: Fixed
