@@ -37,24 +37,24 @@ all:
 	@echo "performing some tests of the perfect hash generator"   
 	$(COMPILE.cc) $(srcdir)/test.cpp
 	$(GPERF) -a -p -c -l -S1 -o $(srcdir)/c.gperf > cinset.cpp
-	$(CXX) $(CFLAGS) -o cout cinset.cpp test.o
+	$(CXX) $(CFLAGS) -o cout cinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./cout -v < $(srcdir)/c.gperf > c.out
 	-diff -b $(srcdir)/c.exp c.out
 	$(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.cpp
 # double '$$' is only there since make gets confused; programn wants only 1 '$'
-	$(CXX) $(CFLAGS) -o aout adainset.cpp test.o
+	$(CXX) $(CFLAGS) -o aout adainset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	-diff -b $(srcdir)/ada-res.exp ada-res.out
 	$(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
-	$(CXX) $(CFLAGS) -o preout preinset.cpp test.o
+	$(CXX) $(CFLAGS) -o preout preinset.cpp test.o  $(LDFLAGS) $(VLDLIBS)
 	./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	-diff -b $(srcdir)/ada-pred.exp ada-pred.out
 	$(GPERF) -a -k1,2,'$$' -o $(srcdir)/modula3.gperf > m3inset.cpp
-	$(CXX) $(CFLAGS) -o m3out m3inset.cpp test.o
+	$(CXX) $(CFLAGS) -o m3out m3inset.cpp test.o  $(LDFLAGS) $(VLDLIBS)
 	./m3out -v < $(srcdir)/modula3.gperf > modula.out
 	-diff -b $(srcdir)/modula.exp modula.out
 	$(GPERF) -a -o -S2 -p < $(srcdir)/pascal.gperf > pinset.cpp
-	$(CXX) $(CFLAGS) -o pout pinset.cpp test.o
+	$(CXX) $(CFLAGS) -o pout pinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
 # these next 5 are demos that show off the generated code
