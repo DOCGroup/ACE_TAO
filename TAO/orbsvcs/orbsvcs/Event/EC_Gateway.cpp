@@ -346,9 +346,24 @@ TAO_EC_Gateway_IIOP::shutdown (CORBA::Environment& _env)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP>;
 template class ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP>;
+template class ACE_Map_Entry<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr>;
+template class ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>;
+template class ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Reverse<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_PushConsumer_Adapter<TAO_EC_Gateway_IIOP>
 #pragma instantiate ACE_PushSupplier_Adapter<TAO_EC_Gateway_IIOP>
+
+#pragma instantiate ACE_Map_Entry<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr>
+#pragma instantiate ACE_Map_Manager<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Reverse<RtecEventComm::EventSourceID,RtecEventChannelAdmin::ProxyPushConsumer_ptr,ACE_Null_Mutex>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
