@@ -1,3 +1,9 @@
+Mon Dec 23 15:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
+	* orbsvcs/tests/Notify/Basic/AdminProperties.h: Fixed a warning
+	  with SunCC builds.
+
 Mon Dec 23 15:16:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp: Moved the
