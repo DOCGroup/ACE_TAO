@@ -115,8 +115,16 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       throw_spec_close = "))";
     }
 
-  *os << be_idt_nl << throw_spec_open
-      << be_idt_nl << "CORBA::SystemException";
+  *os << be_idt_nl << throw_spec_open;
+
+  be_decl *scope = this->ctx_->scope ();
+  be_interface *iface = be_interface::narrow_from_decl (scope);
+
+  // Check if this is IF and it's not VT.
+  if (!(iface != 0 && iface->is_valuetype ()))
+  {
+    *os << be_idt_nl << "CORBA::SystemException";
+  }
 
   if (node->exceptions ())
     {
@@ -134,7 +142,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation"
                                  "gen_throw_spec - "
-                                 "bad exception node\n"), 
+                                 "bad exception node\n"),
                                 -1);
 
             }
@@ -209,7 +217,7 @@ be_visitor_operation::gen_environment_var ()
   static const char *ace_try_env_decl = "ACE_DECLARE_NEW_CORBA_ENV;";
   static const char *null_env_decl = "";
 
-  // Check if we are generating stubs/skeletons for 
+  // Check if we are generating stubs/skeletons for
   // true C++ exception support.
   if (be_global->exception_support ())
     {
