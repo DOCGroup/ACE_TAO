@@ -1,10 +1,19 @@
+Sun Apr 21 20:59:26 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU (OCFLAGS):
+        * include/makeinclude/platform_osf1_4.x_g++.GNU (OCFLAGS):
+
+          Set the optimization to level -O3. That way we will might just
+          get two builds in a day. This is also the recommended level in
+          the manual.
+
 Sun Apr 21 15:02:52 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/TP_Reactor_Test.cpp: Add checks for ACE_AS_THREADS.
 
 Sun Apr 21 09:42:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/config-win32-common.h: Changed the value of ACE_IOV_MAX to 
+	* ace/config-win32-common.h: Changed the value of ACE_IOV_MAX to
 	  be 64 rather than 1024.  Thanks to Alain Decamps for motivating
  	  this.
 
