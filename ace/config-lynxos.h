@@ -33,10 +33,14 @@
 #elif defined (__powerpc__)
   // fork ()/exec () don't seem to work well on PPC.
 # define ACE_LACKS_FORK
+  // It looks like the default stack size is 15000.
+  // ACE's Recursive_Mutex_Test needs more.
+# define ACE_NEEDS_HUGE_THREAD_STACKSIZE 32000
   // This doesn't work on LynxOS 3.0.0, because it resets the TimeBaseRegister.
   // # define ACE_HAS_POWERPC_TIMER
 #endif /* __x86__ || __powerpc__ */
 
+#define ACE_DEFAULT_BASE_ADDR ((char *) 0)
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_BROKEN_READV
@@ -84,6 +88,9 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_MALLOC_ALIGN 8
+// Don't use MAP_FIXED, at least for now.
+#define ACE_MAP_FIXED 0
 // LynxOS, through 3.0.0, does not support MAP_PRIVATE, so map it to
 // MAP_SHARED.
 #define ACE_MAP_PRIVATE ACE_MAP_SHARED
@@ -146,7 +153,5 @@ extern "C"
   int getopt (int, char *const *, const char *);
   int putenv (const char *);
 }
-
-#define ACE_MALLOC_ALIGN 8
 
 #endif /* ACE_CONFIG_H */
