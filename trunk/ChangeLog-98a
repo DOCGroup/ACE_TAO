@@ -1,3 +1,9 @@
+Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: protect #define of AF_FILE, because Linux/RedHat 5.0
+          #defines it in /usr/include/socketbits.h.  Thanks to James CE
+          Johnson <jcej@lads.com> for reporting this.
+
 Wed Jan 07 17:59:57 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Free_List.i (add): Only delete freeed item when we hit the
