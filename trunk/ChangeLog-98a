@@ -1,100 +1,105 @@
+Sat Apr 18 13:59:55 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Naming_Context.h: removed trailing ';' at end of
+          ACE_FACTORY_DECLARE.
+
 Sat Apr 18 01:14:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.cpp (start and stop): start and stop should only be done
- 	  when ACE_Countdown_Time::max_wait_time_ is non-zero.
+        * ace/OS.cpp (start and stop): start and stop should only be done
+          when ACE_Countdown_Time::max_wait_time_ is non-zero.
 
-	* ace/Acceptor.cpp (open): Only set the reactor if calls to open()
- 	  and register_handler() succeeds.
+        * ace/Acceptor.cpp (open): Only set the reactor if calls to open()
+          and register_handler() succeeds.
 
 Fri Apr 17 21:00:21 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux11.h: Changes and comments around the
-	  ACE_DEFAULT_BASE_ADDR definition for 64-bit HP-UX 11.
+        * ace/config-hpux11.h: Changes and comments around the
+          ACE_DEFAULT_BASE_ADDR definition for 64-bit HP-UX 11.
 
-	* ace/Naming_Context.cpp
-	* ace/Malloc_T.cpp
-	* ace/Memory_Pool.cpp: Hacks to work around bugs in HP-UX aC++ in
-	  64-bit mode on HP-UX 11.
+        * ace/Naming_Context.cpp
+        * ace/Malloc_T.cpp
+        * ace/Memory_Pool.cpp: Hacks to work around bugs in HP-UX aC++ in
+          64-bit mode on HP-UX 11.
 
-	* ace/OS.i: Addition of a facility that allows config.h to specify
-	  additional flags for ACE_OS::mmap, above what's set by the caller.
-	  It's done using a new definition, ACE_OS_EXTRA_MMAP_FLAGS.
-	  This was added primarily to allow setting of the MAP_ADDR32 flag
-	  on HP-UX 11 if the ACE_DEFAULT_BASE_ADDR is set in the 32-bit range
-	  to allow 32-bit and 64-bit programs to map the same region.
+        * ace/OS.i: Addition of a facility that allows config.h to specify
+          additional flags for ACE_OS::mmap, above what's set by the caller.
+          It's done using a new definition, ACE_OS_EXTRA_MMAP_FLAGS.
+          This was added primarily to allow setting of the MAP_ADDR32 flag
+          on HP-UX 11 if the ACE_DEFAULT_BASE_ADDR is set in the 32-bit range
+          to allow 32-bit and 64-bit programs to map the same region.
 
 Fri Apr 17 11:40:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (invoke): Should check against null thr_desc, not
- 	  thr_desc->flag ().  Thanks to "Erickson, Jack (CICG - NY GFX)"
- 	  <JErickson@exchange.ml.com> for reporting this.
+        * ace/OS.cpp (invoke): Should check against null thr_desc, not
+          thr_desc->flag ().  Thanks to "Erickson, Jack (CICG - NY GFX)"
+          <JErickson@exchange.ml.com> for reporting this.
 
-	* ace/OS.h (ACE_Service_Object_Exterminator): Typedef of ACE
-	  factory cleanup funciton. 
-	  (ACE_FACTORY_{DECLARE,DEFINE}): Added an extra argument to pass
-	  back destructor for the object created by the factory.  Changed
-	  the ACE_FACTORY_DEFINE to generate this destructor function to
-	  pair with factory function so that we can deallocate the object
-	  in the same heap it was created.
-	  (ACE_SVC_INVOKE): This will now pass in 0, which means we don't
-	  want to use the destructor function.
+        * ace/OS.h (ACE_Service_Object_Exterminator): Typedef of ACE
+          factory cleanup funciton.
+          (ACE_FACTORY_{DECLARE,DEFINE}): Added an extra argument to pass
+          back destructor for the object created by the factory.  Changed
+          the ACE_FACTORY_DEFINE to generate this destructor function to
+          pair with factory function so that we can deallocate the object
+          in the same heap it was created.
+          (ACE_SVC_INVOKE): This will now pass in 0, which means we don't
+          want to use the destructor function.
 
-	* ace/Parse_Node.{h,cpp} (symbol): Added an extra argument to get
-	  back the destructor function from ACE_FACTORY.  Only
-	  Function_Node actually uses it.
-	  (ACE_Function_Node::symbol): Initialize the Service_Object with
-	  added destructor function ptr so it will get destructed in the
-	  "right place".
+        * ace/Parse_Node.{h,cpp} (symbol): Added an extra argument to get
+          back the destructor function from ACE_FACTORY.  Only
+          Function_Node actually uses it.
+          (ACE_Function_Node::symbol): Initialize the Service_Object with
+          added destructor function ptr so it will get destructed in the
+          "right place".
 
-	* ace/Service_Config.{h,cpp} (load_static_svcs): Invoke the
-	  factory method with added argument to get back the destructor
-	  function and then, pass it in to ace_create_service_type
-	  function. 
-	  (ACE_Service_Manager): Changed to use the more generic
-	  ACE_FACTORY_DEFINE than using ACE_SVC_FACTORY_DEFINE.
-	  (ACE_SERVICE_ALLOCATOR): Must match with signature of the
-	  new factory method.
+        * ace/Service_Config.{h,cpp} (load_static_svcs): Invoke the
+          factory method with added argument to get back the destructor
+          function and then, pass it in to ace_create_service_type
+          function.
+          (ACE_Service_Manager): Changed to use the more generic
+          ACE_FACTORY_DEFINE than using ACE_SVC_FACTORY_DEFINE.
+          (ACE_SERVICE_ALLOCATOR): Must match with signature of the
+          new factory method.
 
-	* ace/Service_Type.{h,cpp}
-	  (ACE_Service_Object_Type,ACE_Service_Type_Impl): Keep the
-	  destruction function in these object, if use provides one, then
-	  use it to destruct the object, otherwise, just use delete.
+        * ace/Service_Type.{h,cpp}
+          (ACE_Service_Object_Type,ACE_Service_Type_Impl): Keep the
+          destruction function in these object, if use provides one, then
+          use it to destruct the object, otherwise, just use delete.
 
-	* ace/Naming_Context.{h,cpp}: Changed to use
-	  ACE_FACTORY_{DEFINE,DECLARE}.
+        * ace/Naming_Context.{h,cpp}: Changed to use
+          ACE_FACTORY_{DEFINE,DECLARE}.
 
-	* ace/Object_Manager.cpp: Changed the signature of
-	  Service_Manager.
+        * ace/Object_Manager.cpp: Changed the signature of
+          Service_Manager.
 
-	* ace/Svc_Conf.h: Changed the signature of
-	  ace_create_service_type.
+        * ace/Svc_Conf.h: Changed the signature of
+          ace_create_service_type.
 
-	* ace/Svc_Conf_y.cpp:
-	* ace/Svc_Conf.y: Try to get the destruction function from
-	  factories in svc_location.  
-	  (ace_create_service_type): Pass in the destruction function if
-	  provided one.
-	
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf.y: Try to get the destruction function from
+          factories in svc_location.
+          (ace_create_service_type): Pass in the destruction function if
+          provided one.
+
 Fri Apr 17 08:31:38 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Signal.cpp (dispatch): Fixed a typo.  Thanks for David
- 	  Levine's help pointing this out.
+        * ace/Signal.cpp (dispatch): Fixed a typo.  Thanks for David
+          Levine's help pointing this out.
 
 Thu Apr 16 21:12:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Signal.cpp: There was a major portability violation in the
- 	  ACE_Sig_Handler::dispatch() method, which was previously
- 	  acquiring a mutex lock.  This is NOT permitted in the POSIX
- 	  signal handler spec.  In addition, the implementation had other
- 	  nasty consequences related to dynamic allocation of memory in
- 	  the signal handler, which has a bad habit of breaking
- 	  non-reentrant uses of "new".  The consequence of all this is
- 	  that you really shouldn't be modifying signal handlers via the
- 	  Reactor in multiple threads of control.  In general, threads and
- 	  signals are just plain evil, so they are best addressed via
- 	  sigwait() anyhow...
+        * ace/Signal.cpp: There was a major portability violation in the
+          ACE_Sig_Handler::dispatch() method, which was previously
+          acquiring a mutex lock.  This is NOT permitted in the POSIX
+          signal handler spec.  In addition, the implementation had other
+          nasty consequences related to dynamic allocation of memory in
+          the signal handler, which has a bad habit of breaking
+          non-reentrant uses of "new".  The consequence of all this is
+          that you really shouldn't be modifying signal handlers via the
+          Reactor in multiple threads of control.  In general, threads and
+          signals are just plain evil, so they are best addressed via
+          sigwait() anyhow...
 
-	  Thanks to Sumedh and Naga for first tracking this down.
+          Thanks to Sumedh and Naga for first tracking this down.
 
 Thu Apr 16 20:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
 
