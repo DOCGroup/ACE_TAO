@@ -1,3 +1,12 @@
+Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Latency/control.cpp: 	
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/run_test.pl: 
+
+	  Added script to run test. 	  	  
+
 Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * orbsvcs/IFR_Service/tao_ifr.bor: 
