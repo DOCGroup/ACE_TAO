@@ -43,7 +43,7 @@ class IFR_Servant_Factory;
 class TAO_IDLType_i;
 class TAO_Container_i;
 class TAO_Contained_i;
-class TAO_AbstractInterfaceDef_i;
+class TAO_ExtAbstractInterfaceDef_i;
 class TAO_AliasDef_i;
 class TAO_ArrayDef_i;
 class TAO_AttributeDef_i;
@@ -51,8 +51,8 @@ class TAO_ConstantDef_i;
 class TAO_EnumDef_i;
 class TAO_ExceptionDef_i;
 class TAO_FixedDef_i;
-class TAO_InterfaceDef_i;
-class TAO_LocalInterfaceDef_i;
+class TAO_ExtInterfaceDef_i;
+class TAO_ExtLocalInterfaceDef_i;
 class TAO_NativeDef_i;
 class TAO_OperationDef_i;
 class TAO_PrimitiveDef_i;
@@ -333,7 +333,7 @@ protected:
 #endif
 
 #define CONCRETE_IR_OBJECT_TYPES \
-  GEN_IR_OBJECT (AbstractInterfaceDef) \
+  GEN_IR_OBJECT (ExtAbstractInterfaceDef) \
   GEN_IR_OBJECT (AliasDef) \
   GEN_IR_OBJECT (ArrayDef) \
   GEN_IR_OBJECT (AttributeDef) \
@@ -341,8 +341,8 @@ protected:
   GEN_IR_OBJECT (EnumDef) \
   GEN_IR_OBJECT (ExceptionDef) \
   GEN_IR_OBJECT (FixedDef) \
-  GEN_IR_OBJECT (InterfaceDef) \
-  GEN_IR_OBJECT (LocalInterfaceDef) \
+  GEN_IR_OBJECT (ExtInterfaceDef) \
+  GEN_IR_OBJECT (ExtLocalInterfaceDef) \
   GEN_IR_OBJECT (NativeDef) \
   GEN_IR_OBJECT (OperationDef) \
   GEN_IR_OBJECT (PrimitiveDef) \

@@ -1,3 +1,31 @@
+Thu Jan 22 19:37:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Changed the output directory of the build for tao_ifr.exe
+          to ACE_wrappers/bin.
+          
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/concrete_classes.h:
+        
+          - Changed the servant creation code to create the most 
+            derived servant classes for abstract, local, and 
+            unconstrained interfaces. These more derived classes
+            inherit from the mixin class TAO_InterfaceAttrExtension_i,
+            making the method create_ext_attribute() (which creates
+            IFR entries for the CORBA 3 attribute that can have
+            exceptions) visible. This change eliminates a BAD_OPERATION
+            exception that was thrown when trying to create an
+            attribute entry in the IFR. Thanks to Cristian Ferretti 
+            <cristian_ferretti@yahoo.com> for reporting the bug and
+            supplying an example IDL file.
+            
+          - Changed the POA and servant selector functions to return
+            the more derived servants (or associated POAs) described above.
+            
+          - Changed the includes file concrete_classes.h accordingly.
+
 Thu Jan 22 17:14:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:

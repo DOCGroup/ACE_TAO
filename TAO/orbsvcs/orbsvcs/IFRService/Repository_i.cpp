@@ -858,7 +858,7 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
   switch (def_kind)
   {
     case CORBA::dk_AbstractInterface:
-      return this->AbstractInterfaceDef_servant_->_tied_object ();
+      return this->ExtAbstractInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Alias:
       return this->AliasDef_servant_->_tied_object ();
     case CORBA::dk_Array:
@@ -868,9 +868,9 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Fixed:
       return this->FixedDef_servant_->_tied_object ();
     case CORBA::dk_Interface:
-      return this->InterfaceDef_servant_->_tied_object ();
+      return this->ExtInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
-      return this->LocalInterfaceDef_servant_->_tied_object ();
+      return this->ExtLocalInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Native:
       return this->NativeDef_servant_->_tied_object ();
     case CORBA::dk_Primitive:
@@ -900,13 +900,13 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
   switch (def_kind)
   {
     case CORBA::dk_AbstractInterface:
-      return this->AbstractInterfaceDef_servant_->_tied_object ();
+      return this->ExtAbstractInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Exception:
       return this->ExceptionDef_servant_->_tied_object ();
     case CORBA::dk_Interface:
-      return this->InterfaceDef_servant_->_tied_object ();
+      return this->ExtInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
-      return this->LocalInterfaceDef_servant_->_tied_object ();
+      return this->ExtLocalInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Repository:
       return ACE_const_cast (TAO_Repository_i *, this);
     case CORBA::dk_Struct:
@@ -926,7 +926,7 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
   switch (def_kind)
   {
     case CORBA::dk_AbstractInterface:
-      return this->AbstractInterfaceDef_servant_->_tied_object ();
+      return this->ExtAbstractInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Alias:
       return this->AliasDef_servant_->_tied_object ();
     case CORBA::dk_Attribute:
@@ -938,9 +938,9 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Exception:
       return this->ExceptionDef_servant_->_tied_object ();
     case CORBA::dk_Interface:
-      return this->InterfaceDef_servant_->_tied_object ();
+      return this->ExtInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
-      return this->LocalInterfaceDef_servant_->_tied_object ();
+      return this->ExtLocalInterfaceDef_servant_->_tied_object ();
     case CORBA::dk_Native:
       return this->NativeDef_servant_->_tied_object ();
     case CORBA::dk_Operation:
@@ -966,7 +966,7 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
   switch (def_kind)
   {
     case CORBA::dk_AbstractInterface:
-      return this->AbstractInterfaceDef_poa_.in ();
+      return this->ExtAbstractInterfaceDef_poa_.in ();
     case CORBA::dk_Alias:
       return this->AliasDef_poa_.in ();
     case CORBA::dk_Array:
@@ -982,9 +982,9 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Fixed:
       return this->FixedDef_poa_.in ();
     case CORBA::dk_Interface:
-      return this->InterfaceDef_poa_.in ();
+      return this->ExtInterfaceDef_poa_.in ();
     case CORBA::dk_LocalInterface:
-      return this->LocalInterfaceDef_poa_.in ();
+      return this->ExtLocalInterfaceDef_poa_.in ();
     case CORBA::dk_Native:
       return this->NativeDef_poa_.in ();
     case CORBA::dk_Operation:
