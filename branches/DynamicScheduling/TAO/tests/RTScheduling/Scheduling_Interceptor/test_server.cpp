@@ -38,6 +38,7 @@ private:
 	RTScheduling::Current_var current_;
 };
 
+int
 main (int argc, char* argv[])
 {
   ACE_TRY
