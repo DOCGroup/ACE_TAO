@@ -11,7 +11,7 @@ require Uniqueid;
 $nsport = 20000 + uniqueid ();
 $server_port = 0;
 $iorfile = "theior";
-$sleeptime = 3;
+$sleeptime = 5;
 $exepref = "";
 $svnsflags = " -s -o $iorfile";
 $clnsflags = " -s -f $iorfile";
@@ -31,11 +31,11 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-h                  -- prints this information\n";
       print "-n num              -- client uses <num> iterations\n";
       print "-mcast              -- uses the multicast version of the nameservice\n";
+      print "                       (default is 5 seconds)\n";
       print "-sleeptime t        -- run_test should sleep for <t> seconds between running\n";
       print "                       the server and client\n";
       print "-debug              -- sets the debug flag for both client and server\n";
       print "-release            -- runs the Release version of the test (for NT use)\n";
-      print "                       (default is 3 seconds)\n";
       exit;
     }
     if ($ARGV[$i] eq "-mcast")
@@ -74,14 +74,25 @@ $SV = Process::Create ($exepref."server".$Process::EXE_EXT,
                        $debug.
                        " -ORBport ".$server_port.
                        " -ORBobjrefstyle url".
-                       $nsflags);
+                       $svnsflags);
 
-sleep $sleeptime;
+# Put in a wait between the server and client
+if ($svnsflags eq "")
+{
+  sleep $sleeptime;
+}
+else 
+{
+  while (!(-e $iorfile))
+  { 
+    sleep 1;
+  }
+}
 
 $status = system ($exepref."client".$Process::EXE_EXT.
                   $debug.
                   $numflag.
-                  $nsflags.
+                  $clnsflags.
                   " -x");
 
 # @@ TODO change to Wait() once the -x option works.
