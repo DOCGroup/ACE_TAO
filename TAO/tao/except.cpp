@@ -426,7 +426,7 @@ CORBA::Environment::exception_type (void) const
 //
 void
 CORBA::Environment::print_exception (const char *info,
-                                     FILE *)
+                                     FILE *) const
 {
   CORBA::String id = this->_exception->id ();
 

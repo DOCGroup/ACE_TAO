@@ -1,3 +1,30 @@
+Tue Nov  4 16:58:12 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* {tests/Cubit/TAO/DII_Cubit,tests/Cubit/TAO/IDL_Cubit,
+ 	tests/Cubit/TAO/MT_Cubit,tests/Demux_Test,
+ 	tests/Thruput_test}/Makefile: Added an explicit definition for
+ 	VBIN so that VxWorks can build properly.
+
+	* tao/orb_core.*: Modified TAO_Resource_Factory so that it divides
+ 	the information that it tracks between pre-allocated resources and
+ 	resources which are allocated by the application.  Specifically,
+ 	the orb and root poa pointers are in here (though it's possible
+ 	that when we move to a full POA implementation that the root poa
+ 	can be pre-allocated as well).  These pointers are initialized to
+ 	zero and are given values by the TAO_ORB_Core instance writing
+ 	through back to the TAO_Resource_Factory instance.
+
+	Also, this implementation reduced the number of singletons/TSS
+ 	singletons utilized by the resource factory.  The initial
+ 	"get-it-working" cut used a singleton/tss singleton pair for every
+ 	resource, which was quite wasteful in environments such as NT that
+ 	don't have many TSS slots available.  Perhaps if we get even more
+ 	clever this can be reduced even further.
+
+	* tao/except.*: Added print_exception() function for backwards
+ 	compatibility.  It simply calls
+ 	CORBA::Environment::print_exception().
+
 Tue Nov  4 14:13:52 1997 Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* TAO/tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp: Changed the
