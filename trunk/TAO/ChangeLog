@@ -1,3 +1,13 @@
+Mon Dec 29 13:21:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+
+	  #included a files that is needed for one of our builds.  
+
+	* orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+
+	  Cosmetic fixes.
+
 Mon Dec 29 13:12:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
