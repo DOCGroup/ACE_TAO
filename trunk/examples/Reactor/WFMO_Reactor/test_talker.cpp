@@ -133,6 +133,7 @@
 // ============================================================================
 
 #include "ace/Reactor.h"
+#include "ace/WIN32_Proactor.h"
 #include "ace/Proactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
@@ -540,7 +541,7 @@ main (int argc, char *argv[])
   // Register proactor with Reactor so that we can demultiplex
   // "waitable" events and I/O operations from a single thread.
   if (ACE_Reactor::instance ()->register_handler 
-      (ACE_Proactor::instance ()) != 0)
+      (ACE_Proactor::instance ()->implementation ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
 		       argv[0]), -1);
 
