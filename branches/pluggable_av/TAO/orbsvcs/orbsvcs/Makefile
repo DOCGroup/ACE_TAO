@@ -77,7 +77,10 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
 	AV/MCast\
 	AV/RTP\
 	AV/Policy\
-	AV/Nil
+	AV/Nil\
+	AV/RTCP\
+	AV/source\
+	AV/media-timer
 endif # AV
 
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
@@ -320,9 +323,7 @@ ORBSVCS_COMPONENTS:
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/AVStreamsS.o .obj/AVStreamsS.so .shobj/AVStreamsS.o .shobj/AVStreamsS.so: AVStreamsS.cpp AVStreamsS.h CosPropertyServiceS.h \
- CosPropertyServiceC.h \
- $(TAO_ROOT)/tao/corba.h \
+.obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -332,7 +333,6 @@ ORBSVCS_COMPONENTS:
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
