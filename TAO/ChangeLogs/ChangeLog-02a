@@ -1,3 +1,11 @@
+Sat Oct 21 18:38:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
+
+	  Changed a use of auto_ptr<> to use of
+	  ACE_Auto_Basic_Ptr<>, to get rid of a Win32 build
+	  warning.
+
 Sat Oct 21 12:50:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile*:
