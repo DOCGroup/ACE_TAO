@@ -452,7 +452,7 @@ public:
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by
-  // <ACE_OS::free>
+  // <ACE_OS::free>.
 #endif /* ACE_HAS_WINCE */
 
   static char *strecpy (char *des, const char *src);

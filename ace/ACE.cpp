@@ -563,21 +563,13 @@ ACE::strrepl (char *s, char search, char replace)
   return replaced;
 }
 
-#if !defined (ACE_HAS_WINCE)
 char *
 ACE::strenvdup (const char *str)
 {
   ACE_TRACE ("ACE::strenvdup");
 
-  char *temp;
-
-  if (str[0] == '$'
-      && (temp = ACE_OS::getenv (&str[1])) != 0)
-    return ACE_OS::strdup (temp);
-  else
-    return ACE_OS::strdup (str);
+  return ACE_OS::strenvdup (str);
 }
-#endif /* ACE_HAS_WINCE */
 
 /*
 
