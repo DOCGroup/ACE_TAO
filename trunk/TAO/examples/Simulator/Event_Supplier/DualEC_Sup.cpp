@@ -101,7 +101,7 @@ DualEC_Supplier::DualEC_Supplier (int argc, char** argv)
     }
   ACE_CATCHANY
   {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DualEC_Supplier::DualEC_Supplier : could "
                            "not resolve reference to terminator");
   }
@@ -161,7 +161,7 @@ DualEC_Supplier::~DualEC_Supplier ()
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DualEC_Supplier::~DualEC_Supplier");
     }
   ACE_ENDTRY;
@@ -211,7 +211,7 @@ DualEC_Supplier::init ()
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          "DualEC_Supplier::init");
     return -1;
   }
@@ -234,16 +234,16 @@ DualEC_Supplier::init ()
     }
 
   // Connect suppliers to the respective event channels.
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_hi = 
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_hi =
     (suppress_priority_) ? 0 : &rt_info_nav_hi_;
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_hi = 
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_hi =
     (suppress_priority_) ? 0 : &rt_info_weap_hi_;
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_lo = 
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_nav_lo =
     (suppress_priority_) ? 0 : &rt_info_nav_lo_;
-  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_lo = 
+  ACE_Scheduler_Factory::POD_RT_Info * rt_info_weap_lo =
     (suppress_priority_) ? 0 : &rt_info_weap_lo_;
 
-  if (this->navigation_Supplier_.connect ("MIB_unknown", 
+  if (this->navigation_Supplier_.connect ("MIB_unknown",
                                           "DUAL_EC_HI",
                                           "DUAL_SCHED_HI",
                                            rt_info_nav_hi) == -1)
@@ -252,8 +252,8 @@ DualEC_Supplier::init ()
                          "Could not connect navigation supplier to DUAL_EC_HI"),
                         -1);
     }
- 
- if (this->navigation_Supplier_.connect ("MIB_unknown", 
+
+ if (this->navigation_Supplier_.connect ("MIB_unknown",
                                           "DUAL_EC_LO",
                                           "DUAL_SCHED_LO",
                                            rt_info_nav_lo) == -1)
@@ -263,7 +263,7 @@ DualEC_Supplier::init ()
                         -1);
     }
 
-  if (this->weapons_Supplier_.connect ("MIB_unknown", 
+  if (this->weapons_Supplier_.connect ("MIB_unknown",
                                        "DUAL_EC_HI",
                                        "DUAL_SCHED_HI",
                                        rt_info_weap_hi) == -1)
@@ -272,8 +272,8 @@ DualEC_Supplier::init ()
                          "Could not connect weapons supplier to DUAL_EC_HI"),
                         -1);
     }
- 
- if (this->weapons_Supplier_.connect ("MIB_unknown", 
+
+ if (this->weapons_Supplier_.connect ("MIB_unknown",
                                       "DUAL_EC_LO",
                                       "DUAL_SCHED_LO",
                                       rt_info_weap_lo) == -1)
@@ -288,12 +288,13 @@ DualEC_Supplier::init ()
 
 // Private class that implements a termination servant.
 
-void 
+void
 DualEC_Supplier::Terminator::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -305,11 +306,12 @@ DualEC_Supplier::Terminator::shutdown (CORBA::Environment &ACE_TRY_ENV)
 // Run the ORB event loop.
 
 void *
-DualEC_Supplier::run_orb (void *) 
+DualEC_Supplier::run_orb (void *)
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
-      TAO_ORB_Core_instance ()->orb ()->run (); 
+      TAO_ORB_Core_instance ()->orb ()->run ();
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -325,7 +327,7 @@ DualEC_Supplier::run_orb (void *)
 void *
 DualEC_Supplier::run_nav_thread (void *arg)
 {
-  DualEC_Supplier * sup = 
+  DualEC_Supplier * sup =
     ACE_static_cast (DualEC_Supplier *, arg);
 
   ACE_TRY_NEW_ENV
@@ -353,7 +355,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
           {
             any.replace (_tc_Navigation, *nav, 0, ACE_TRY_ENV);
 
-            // Sleep briefly to avoid too much livelock (a little is good). 
+            // Sleep briefly to avoid too much livelock (a little is good).
             ACE_OS::sleep (sup->nav_pause_);
 
             // If the break count has been reached, change the
@@ -406,7 +408,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 void *
 DualEC_Supplier::run_weap_thread (void *arg)
 {
-  DualEC_Supplier * sup = 
+  DualEC_Supplier * sup =
     ACE_static_cast (DualEC_Supplier *, arg);
 
   ACE_TRY_NEW_ENV
@@ -434,7 +436,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
           {
             any.replace (_tc_Weapons, *weap, 0, ACE_TRY_ENV);
 
-            // Sleep briefly to avoid too much livelock (a little is good). 
+            // Sleep briefly to avoid too much livelock (a little is good).
             ACE_OS::sleep (sup->weap_pause_);
 
             sup->weapons_Supplier_.notify (any);
@@ -479,7 +481,7 @@ int
 DualEC_Supplier::create_schedulers (void)
 {
   // @@TBD - look at a command line modified setting,
-  // create either a runtime or a config scheduler for 
+  // create either a runtime or a config scheduler for
   // each instance
 
   ACE_TRY_NEW_ENV
@@ -487,7 +489,7 @@ DualEC_Supplier::create_schedulers (void)
       if (use_runtime_schedulers_)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             " (%P|%t) Runtime Schedulers not implemented\n"), 
+                             " (%P|%t) Runtime Schedulers not implemented\n"),
                             -1);
         }
       else
@@ -511,20 +513,20 @@ DualEC_Supplier::create_schedulers (void)
 
           // Register Scheduling Service Implementations with Naming Service
 
-          this->naming_context_->bind (this ->sched_hi_name_, 
+          this->naming_context_->bind (this ->sched_hi_name_,
                                        this->sched_hi_.in (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          naming_context_->bind (this->sched_lo_name_, 
+          naming_context_->bind (this->sched_lo_name_,
                                  this->sched_lo_.in (), ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // Register high and low priority rt_infos with the 
+          // Register high and low priority rt_infos with the
           // schedulers to force priority differentiation.
 
-          this->sched_hi_rt_info_hi_ = 
+          this->sched_hi_rt_info_hi_ =
             this->sched_hi_->
-              create (this->rt_info_dummy_hi_.entry_point, 
+              create (this->rt_info_dummy_hi_.entry_point,
                       ACE_TRY_ENV);
 
           ACE_TRY_CHECK;
@@ -547,9 +549,9 @@ DualEC_Supplier::create_schedulers (void)
 
           ACE_TRY_CHECK;
 
-          this->sched_hi_rt_info_lo_ = 
+          this->sched_hi_rt_info_lo_ =
             this->sched_hi_->
-              create (this->rt_info_dummy_lo_.entry_point, 
+              create (this->rt_info_dummy_lo_.entry_point,
                       ACE_TRY_ENV);
 
           ACE_TRY_CHECK;
@@ -572,9 +574,9 @@ DualEC_Supplier::create_schedulers (void)
 
           ACE_TRY_CHECK;
 
-          this->sched_hi_rt_info_hi_ = 
+          this->sched_hi_rt_info_hi_ =
             this->sched_lo_->
-              create (this->rt_info_dummy_hi_.entry_point, 
+              create (this->rt_info_dummy_hi_.entry_point,
                       ACE_TRY_ENV);
 
           ACE_TRY_CHECK;
@@ -597,9 +599,9 @@ DualEC_Supplier::create_schedulers (void)
 
           ACE_TRY_CHECK;
 
-          this->sched_hi_rt_info_lo_ = 
+          this->sched_hi_rt_info_lo_ =
             this->sched_lo_->
-              create (this->rt_info_dummy_lo_.entry_point, 
+              create (this->rt_info_dummy_lo_.entry_point,
                       ACE_TRY_ENV);
 
           ACE_TRY_CHECK;
@@ -626,7 +628,7 @@ DualEC_Supplier::create_schedulers (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DualEC_Supplier::create_schedulers");
       return -1;
     }
@@ -639,7 +641,7 @@ DualEC_Supplier::create_schedulers (void)
 // Create two event service instances, registers
 // them with the Naming Service.
 
-int 
+int
 DualEC_Supplier::create_event_channels (void)
 {
   ACE_TRY_NEW_ENV
@@ -647,7 +649,7 @@ DualEC_Supplier::create_event_channels (void)
       // Create Event Service Implementations, passing in the respective
       // Scheduling Service Implementations (which must already be created).
       ACE_NEW_RETURN (this->ec_hi_impl_,
-                      ACE_EventChannel (sched_hi_.in (), 
+                      ACE_EventChannel (sched_hi_.in (),
                                         1,
                                         ACE_DEFAULT_EVENT_CHANNEL_TYPE,
                                         &default_module_factory_),
@@ -657,7 +659,7 @@ DualEC_Supplier::create_event_channels (void)
       ACE_TRY_CHECK;
 
       ACE_NEW_RETURN (this->ec_lo_impl_,
-                      ACE_EventChannel (sched_lo_.in (), 
+                      ACE_EventChannel (sched_lo_.in (),
                                         1,
                                         ACE_DEFAULT_EVENT_CHANNEL_TYPE,
                                         &default_module_factory_),
@@ -668,18 +670,18 @@ DualEC_Supplier::create_event_channels (void)
 
       // Register Event Service Implementations with Naming Service
 
-      naming_context_->bind (this->channel_hi_name_, 
+      naming_context_->bind (this->channel_hi_name_,
                              this->ec_hi_.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      naming_context_->bind (this->channel_lo_name_, 
+      naming_context_->bind (this->channel_lo_name_,
 		                     this->ec_lo_.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
   }
   ACE_CATCHANY
   {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                          "DualEC_Supplier::create_event_channels");
     return -1;
   }
@@ -734,7 +736,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             this->infos_hi_.out (), this->configs_hi_.out (), 
+             this->infos_hi_.out (), this->configs_hi_.out (),
              this->anomalies_hi_.out (), ACE_TRY_ENV);
            ACE_TRY_CHECK;
 
@@ -743,7 +745,7 @@ DualEC_Supplier::compute_schedules (void)
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             this->infos_lo_.out (), this->configs_lo_.out (), 
+             this->infos_lo_.out (), this->configs_lo_.out (),
              this->anomalies_lo_.out (), ACE_TRY_ENV);
            ACE_TRY_CHECK;
 
@@ -804,11 +806,11 @@ DualEC_Supplier::start_generating_events (void)
 
       // Spawn thread to run over the navigation data and generate events.
       ACE_Thread_Manager event_thread_manager;
-      event_thread_manager.spawn (DualEC_Supplier::run_nav_thread, 
+      event_thread_manager.spawn (DualEC_Supplier::run_nav_thread,
                                   this);
 
       // Spawn thread to run over the weapons data and generate events.
-      event_thread_manager.spawn (DualEC_Supplier::run_weap_thread, 
+      event_thread_manager.spawn (DualEC_Supplier::run_weap_thread,
                                   this);
 
       // Wait for the threads that are generating events.
@@ -904,13 +906,13 @@ DualEC_Supplier::load_schedule_data ()
                       return;
                     }
 
- 
+
                   if ((strcmp(data.operation_name, "high_20") == 0) ||
                       (strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
                       if (weap == 0)
-                        {                       
+                        {
                           ACE_ERROR ((LM_ERROR,
                                       "DOVE_Supplier::load_schedule_data: "
                                       "failed to allocate Weapons\n"));
@@ -949,7 +951,7 @@ DualEC_Supplier::load_schedule_data ()
                     {
                       ACE_NEW (nav, Navigation);
                       if (nav == 0)
-                        {                       
+                        {
                           ACE_ERROR ((LM_ERROR,
                                       "DOVE_Supplier::load_schedule_data: "
                                   "failed to allocate Navigation\n"));
@@ -1057,7 +1059,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           temp = ACE_OS::atoi (get_opt.optarg);
           if (temp >= 0)
             {
-              this->nav_pause_ = 
+              this->nav_pause_ =
                 ACE_Time_Value(0, ACE_static_cast (long, temp));
               ACE_DEBUG ((LM_DEBUG,
                           "Navigation pause: %d usec\n",
@@ -1075,7 +1077,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
           temp = ACE_OS::atoi (get_opt.optarg);
           if (temp >= 0)
             {
-              this->weap_pause_ = 
+              this->weap_pause_ =
                 ACE_Time_Value(0, ACE_static_cast (long, temp));
               ACE_DEBUG ((LM_DEBUG,
                           "Weapons pause: %d usec\n",
