@@ -36,20 +36,22 @@
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 
-static int opt_nchildren = 20;
 // The number of children to run, it can be changed using the -c
 // option.
+static int opt_nchildren = 20;
 
-static int opt_nloops = 200;
 // The number of loops per children, it can be changed using the -l
 // option.
+static int opt_nloops = 200;
 
-static int opt_priority_reactor = 1;
 // If not set use the normal reactor, it can be changed using the -d
 // option.
+static int opt_priority_reactor = 1;
 
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> 
+	CONNECTOR;
+typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> 
+	ACCEPTOR;
 
 int Read_Handler::waiting_ = 0;
 int Read_Handler::started_ = 0;
@@ -231,7 +233,8 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting server at port %d\n",
 	      server_addr.get_port_number ()));
 
-  ACE_INET_Addr connection_addr (server_addr.get_port_number (), "localhost");
+  ACE_INET_Addr connection_addr (server_addr.get_port_number (),
+				 "localhost");
       
   int i;
 
