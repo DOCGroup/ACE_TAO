@@ -1,6 +1,7 @@
 Sun Apr 14 11:59:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SPIPE_Addr.h:
+        * ace/Filecache.h:
           Doxygen-ized some of the comments
 
 Sat Apr 13 19:28:40 UTC 2002  Don Hinton  <dhinton@ieee.org>
