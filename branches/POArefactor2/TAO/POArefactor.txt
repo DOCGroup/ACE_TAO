@@ -1,3 +1,9 @@
+Tue Oct 12 14:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Test_Filter/RT_Test_Filter.cpp:
+          Use a dynamic_cast to get the TAO_POA, the _tao_downcast has been
+          zapped with this rework
+
 Tue Oct 12 14:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Miop/McastHello/server.cpp:
