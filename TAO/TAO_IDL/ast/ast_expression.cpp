@@ -1325,15 +1325,36 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
  * - EK_positive_int:	The expression must further evaluate to a
  *			positive integer
  */
+// @@(JP) This just maps one enum to another. It's a temporary fix,
+// but AST_Expression::EvalKind should go eventually.
 static AST_Expression::AST_ExprValue *
 eval_kind(AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 {
-  if (ek == AST_Expression::EK_const)
-    return ev;
-  if (ek == AST_Expression::EK_positive_int)
-    return coerce_value(ev, AST_Expression::EV_ulong);
-
-  return NULL;
+  switch (ek)
+  {
+    case AST_Expression::EK_const:
+      return ev;
+    case AST_Expression::EK_positive_int:
+      return coerce_value (ev, AST_Expression::EV_ulong);
+    case AST_Expression::EK_short:
+      return coerce_value (ev, AST_Expression::EV_short);
+    case AST_Expression::EK_ushort:
+      return coerce_value (ev, AST_Expression::EV_ushort);
+    case AST_Expression::EK_long:
+      return coerce_value (ev, AST_Expression::EV_long);
+    case AST_Expression::EK_ulong:
+      return coerce_value (ev, AST_Expression::EV_ulong);
+#if ! defined (ACE_LACKS_LONGLONG_T)
+    case AST_Expression::EK_longlong:
+      return coerce_value (ev, AST_Expression::EV_longlong);
+    case AST_Expression::EK_ulonglong:
+      return coerce_value (ev, AST_Expression::EV_ulonglong);
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
+    case AST_Expression::EK_octet:
+      return coerce_value (ev, AST_Expression::EV_octet);
+    default:
+      return NULL;
+  }
 }
 
 /*
@@ -1467,8 +1488,8 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
   if (pd_ev != NULL)
     return pd_ev;
 
-  if (ek != EK_const && ek != EK_positive_int)
-    return NULL;
+//  if (ek != EK_const && ek != EK_positive_int)
+//    return NULL;
   if (pd_v1 == NULL)
     return NULL;
   pd_v1->set_ev(pd_v1->eval_internal(ek));
@@ -1478,28 +1499,62 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
   retval = new AST_ExprValue;
   retval->et = EV_double;
 
-  switch (pd_ec) {
-  case EC_u_plus:
-    pd_v1->set_ev(pd_v1->coerce(EV_double));
-    if (pd_v1->ev() == NULL)
+  switch (pd_ec) 
+  {
+    case EC_u_plus:
+      pd_v1->set_ev(pd_v1->coerce(EV_double));
+      if (pd_v1->ev() == NULL)
+        return NULL;
+      retval->u.dval = pd_v1->ev()->u.dval;
+      break;
+    case EC_u_minus:
+      pd_v1->set_ev(pd_v1->coerce(EV_double));
+      if (pd_v1->ev() == NULL)
+        return NULL;
+      retval->u.dval = -(pd_v1->ev()->u.dval);
+      break;
+    case EC_bit_neg:
+  //    pd_v1->set_ev(pd_v1->coerce(EV_long));
+  //    if (pd_v1->ev() == NULL)
+  //      return NULL;
+      switch (pd_v1->ev ()->et)
+      {
+        case EV_short:
+          retval->et = EV_short;
+          retval->u.sval = ~pd_v1->ev ()->u.sval;
+          break;
+        case EV_ushort:          
+          retval->et = EV_ushort;
+          retval->u.usval = ~pd_v1->ev ()->u.usval;
+          break;
+        case EV_long:
+          retval->et = EV_long;
+          retval->u.lval = ~pd_v1->ev ()->u.lval;
+          break;
+        case EV_ulong:
+          retval->et = EV_ulong;
+          retval->u.ulval = ~pd_v1->ev ()->u.ulval;
+          break;
+#if ! defined (ACE_LACKS_LONGLONG_T)
+        case EV_longlong:
+          retval->et = EV_longlong;
+          retval->u.llval = ~pd_v1->ev ()->u.llval;
+          break;
+        case EV_ulonglong:
+          retval->et = EV_ulonglong;
+          retval->u.ullval = ~pd_v1->ev ()->u.ullval;
+          break;
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
+        case EV_octet:
+          retval->et = EV_octet;
+          retval->u.oval = ~pd_v1->ev ()->u.oval;
+          break;
+      }
+      break;
+    default:
       return NULL;
-    retval->u.dval = pd_v1->ev()->u.dval;
-    break;
-  case EC_u_minus:
-    pd_v1->set_ev(pd_v1->coerce(EV_double));
-    if (pd_v1->ev() == NULL)
-      return NULL;
-    retval->u.dval = -(pd_v1->ev()->u.dval);
-    break;
-  case EC_bit_neg:
-    pd_v1->set_ev(pd_v1->coerce(EV_long));
-    if (pd_v1->ev() == NULL)
-      return NULL;
-    retval->u.dval = ~pd_v1->ev()->u.lval;
-    break;
-  default:
-    return NULL;
   }
+
   return retval;
 }
 
@@ -1575,7 +1630,36 @@ AST_Expression::coerce(AST_Expression::ExprType t)
    * First, evaluate it, then try to coerce result type
    * If already evaluated, return the result
    */
-  pd_ev = eval_internal(EK_const);
+  switch (t)
+  {
+    case EV_short:
+      pd_ev = eval_internal (EK_short);
+      break;
+    case EV_ushort:
+      pd_ev = eval_internal (EK_ushort);
+      break;
+    case EV_long:
+      pd_ev = eval_internal (EK_long);
+      break;
+    case EV_ulong:
+      pd_ev = eval_internal (EK_ulong);
+      break;
+#if ! defined (ACE_LACKS_LONGLONG_T)
+    case EV_longlong:
+      pd_ev = eval_internal (EK_longlong);
+      break;
+    case EV_ulonglong:
+      pd_ev = eval_internal (EK_ulonglong);
+      break;
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
+    case EV_octet:
+      pd_ev = eval_internal (EK_octet);
+      break;
+    default:
+      pd_ev = eval_internal (EK_const);
+      break;
+  }
+
   if (pd_ev == NULL)
     return NULL;
 
@@ -1585,60 +1669,61 @@ AST_Expression::coerce(AST_Expression::ExprType t)
   copy = new AST_ExprValue;
 
   copy->et = pd_ev->et;
-  switch (pd_ev->et) {
-  case EV_longdouble:
-  case EV_wstring:
-  case EV_void:
-  case EV_none:
-  case EV_any:
-    return NULL;
-  case EV_short:
-    copy->u.sval = pd_ev->u.sval;
-    break;
-  case EV_ushort:
-    copy->u.usval = pd_ev->u.usval;
-    break;
-  case EV_long:
-    copy->u.lval = pd_ev->u.lval;
-    break;
-  case EV_ulong:
-    copy->u.ulval = pd_ev->u.ulval;
-    break;
-  case EV_longlong:
+  switch (pd_ev->et)
+  {
+    case EV_longdouble:
+    case EV_wstring:
+    case EV_void:
+    case EV_none:
+    case EV_any:
+      return NULL;
+    case EV_short:
+      copy->u.sval = pd_ev->u.sval;
+      break;
+    case EV_ushort:
+      copy->u.usval = pd_ev->u.usval;
+      break;
+    case EV_long:
+      copy->u.lval = pd_ev->u.lval;
+      break;
+    case EV_ulong:
+      copy->u.ulval = pd_ev->u.ulval;
+      break;
+    case EV_longlong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-    copy->u.llval = pd_ev->u.llval;
-    break;
+      copy->u.llval = pd_ev->u.llval;
+      break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
+      return NULL;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-  case EV_ulonglong:
+    case EV_ulonglong:
 #if ! defined (ACE_LACKS_LONGLONG_T)
-    copy->u.ullval = pd_ev->u.ullval;
-    break;
+      copy->u.ullval = pd_ev->u.ullval;
+      break;
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
+      return NULL;
 #endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-  case EV_bool:
-    copy->u.bval = pd_ev->u.bval;
-    break;
-  case EV_float:
-    copy->u.fval = pd_ev->u.fval;
-    break;
-  case EV_double:
-    copy->u.dval = pd_ev->u.dval;
-    break;
-  case EV_char:
-    copy->u.cval = pd_ev->u.cval;
-    break;
-  case EV_wchar:
-    copy->u.wcval = pd_ev->u.wcval;
-    break;
-  case EV_octet:
-    copy->u.oval = pd_ev->u.oval;
-    break;
-  case EV_string:
-    copy->u.strval = pd_ev->u.strval;
-    break;
+    case EV_bool:
+      copy->u.bval = pd_ev->u.bval;
+      break;
+    case EV_float:
+      copy->u.fval = pd_ev->u.fval;
+      break;
+    case EV_double:
+      copy->u.dval = pd_ev->u.dval;
+      break;
+    case EV_char:
+      copy->u.cval = pd_ev->u.cval;
+      break;
+    case EV_wchar:
+      copy->u.wcval = pd_ev->u.wcval;
+      break;
+    case EV_octet:
+      copy->u.oval = pd_ev->u.oval;
+      break;
+    case EV_string:
+      copy->u.strval = pd_ev->u.strval;
+      break;
   }
 
   return coerce_value(copy, t);

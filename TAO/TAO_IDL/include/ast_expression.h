@@ -104,6 +104,16 @@ public:
   enum EvalKind {
       EK_const                  // Must evaluate to constant
     , EK_positive_int           // Must evaluate to positive integer
+  // @@ (JP) I added these to get the ~ operator to work with all the
+  // relevant aritmetic types, but eventually, we should get rid of
+  // this whole enum.
+    , EK_short
+    , EK_ushort
+    , EK_long
+    , EK_ulong
+    , EK_longlong
+    , EK_ulonglong
+    , EK_octet
   };
 
   // Enum to define expression type
