@@ -662,15 +662,24 @@ extern TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 // Declare that the following method should be specialized.
 
-#if defined (ACE_WIN32)
-#pragma warning(disable:4231)
+#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  (!defined (__GNUG__) || (__GNUC__ > 2 || __GNUC_MINOR__ >= 90))
 
-extern template u_long
-ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const;
+// Template specializations that allow the cached connection manager
+// to work better.  Older versions of g++, such as 2.7.2.3, can't
+// deal with them, though.
 
-extern template u_long
-ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const;
+inline u_long
+ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const
+{
+  return this->t_.get_ip_address () + this->t_.get_port_number ();
+}
 
-#endif /* ACE_WIN32 */
+inline u_long
+ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
+{
+  return addr.get_ip_address () + addr.get_port_number ();
+}
+
+#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && egcs, if __GNUG__ */
 
 #endif /* TAO_ORB_CORE_H */
