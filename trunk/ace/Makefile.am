@@ -455,6 +455,7 @@ TEMPLATE_FILES = \
   Array_Base.cpp \
   Node.cpp \
   Unbounded_Set.cpp \
+  Unbounded_Set_Ex.cpp \
   Unbounded_Queue.cpp \
   Asynch_Acceptor.cpp \
   Auto_IncDec_T.cpp \
@@ -807,6 +808,7 @@ HEADER_FILES = \
   UPIPE_Stream.h \
   Unbounded_Queue.h \
   Unbounded_Set.h \
+  Unbounded_Set_Ex.h \
   Version.h \
   WFMO_Reactor.h \
   WIN32_Asynch_IO.h \
@@ -1029,6 +1031,7 @@ INLINE_FILES = \
   Thread_Control.inl \
   Unbounded_Queue.inl \
   Unbounded_Set.inl \
+  Unbounded_Set_Ex.inl \
   ace_wchar.inl
 
 ## It would be good to remove pkgincludedir.  However, we want to install

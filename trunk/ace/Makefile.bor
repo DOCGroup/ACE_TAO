@@ -259,6 +259,7 @@ INCLUDES = \
 	Array_Base.cpp \
 	Node.cpp \
 	Unbounded_Set.cpp \
+	Unbounded_Set_Ex.cpp \
 	Unbounded_Queue.cpp \
 	Auto_Ptr.cpp \
 	Connector.cpp \

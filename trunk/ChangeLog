@@ -1,3 +1,7 @@
+Tue Apr  1 16:02:30 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
+
+	* ace/Makefile.{am,bor}: Added Unbounded_Set_Ex.
+
 Tue Apr  1 13:42:37 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/Unbounded_Set_Test_Ex.cpp: New.
