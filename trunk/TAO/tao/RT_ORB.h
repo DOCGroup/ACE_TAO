@@ -23,6 +23,7 @@
 
 #include "tao/RTCORBAC.h"
 #include "tao/LocalObject.h"
+#include "tao/Thread_Pool.h"
 #include "ace/Hash_Map_Manager_T.h"
 
 #if defined(_MSC_VER)
@@ -106,7 +107,7 @@ class TAO_Export TAO_RT_ORB
 {
 public:
   /// Constructor.
-  TAO_RT_ORB (void);
+  TAO_RT_ORB (CORBA::ORB_ptr orb);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -261,9 +262,14 @@ protected:
   /// reference counted object.
   virtual ~TAO_RT_ORB (void);
 
+  /// Reference to our creating ORB.
+  CORBA::ORB_var orb_;
+
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;
 
+  /// Thread Pool Manager.
+  TAO_Thread_Pool_Manager tp_manager_;
 };
 
 #if defined (__ACE_INLINE__)

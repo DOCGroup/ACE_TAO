@@ -159,6 +159,7 @@ OBJFILES = \
 	$(OBJDIR)\RT_Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\RT_Mutex.obj \
 	$(OBJDIR)\RT_ORB.obj \
+	$(OBJDIR)\Thread_Pool.obj \
 	$(OBJDIR)\RT_ORBInitializer.obj \
 	$(OBJDIR)\RT_ORB_Loader.obj \
 	$(OBJDIR)\RT_Policy_i.obj \

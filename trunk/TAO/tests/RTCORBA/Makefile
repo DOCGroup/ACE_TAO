@@ -17,6 +17,7 @@ DIRS  = Banded_Connections \
 	Server_Declared \
         Server_Protocol \
 	Private_Connection \
+	Thread_Pool \
 	MT_Client_Protocol_Priority \
         RTMutex
 
