@@ -1416,7 +1416,7 @@ ACE_Thread_Manager::cancel_all (int async_cancel)
 }
 
 int
-ACE_Thread_Manager::join (ACE_thread_t tid)
+ACE_Thread_Manager::join (ACE_thread_t tid, void **status)
 {
   ACE_TRACE ("ACE_Thread_Manager::join");
 
@@ -1467,7 +1467,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid)
     // Didn't find the thread we want or the thread is not joinable.
   }
 
-  if (ACE_Thread::join (tdb.thr_handle_) == -1)
+  if (ACE_Thread::join (tdb.thr_handle_, status) == -1)
     return -1;
 
 # if defined (ACE_HAS_DCE_DRAFT4_THREADS)  &&  defined (ACE_LACKS_SETDETACH)
