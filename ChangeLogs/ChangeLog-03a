@@ -1,51 +1,57 @@
+Sat Feb 17 15:52:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/run_all_list.pm:
+        * tests/run_tests.pl:
+          Remove obsolete scripts.
+
 Sat Feb 17 13:26:17 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/POSIX_Asynch_IO.cpp (thread_function): Make sure to cast
-	  -1 to void * since that's the signature of the method.  Thanks
- 	  to Bala for reporting this.
-	
-	* ace/POSIX_Asynch_IO.cpp (thread_function): Zapped the unused
-	  result local variable and also changed the logic to bailout if
- 	  handle_events() returns -1.  This fixes a warning reported by
- 	  KCC.
+        * ace/POSIX_Asynch_IO.cpp (thread_function): Make sure to cast
+          -1 to void * since that's the signature of the method.  Thanks
+          to Bala for reporting this.
+
+        * ace/POSIX_Asynch_IO.cpp (thread_function): Zapped the unused
+          result local variable and also changed the logic to bailout if
+          handle_events() returns -1.  This fixes a warning reported by
+          KCC.
 
 Fri Feb 16 17:39:16 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-        * ace/config-qnx-rtp.h: Commented out ACE_HAS_NONSTATIC_OBJECT_MANAGER. 
+        * ace/config-qnx-rtp.h: Commented out ACE_HAS_NONSTATIC_OBJECT_MANAGER.
           Thanks to Andrew Olson <andrew.olson@lmco.com> for the suggestion.
 
-        * include/makeinclude/platform_qnx_rtp_gcc.GNU: Added -fexceptions to 
-          CCFLAGS and 'exceptions=1' at end of file. 
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU: Added -fexceptions to
+          CCFLAGS and 'exceptions=1' at end of file.
           Thanks to Andrew Olson <andrew.olson@lmco.com> for the suggestion.
 
 Fri Feb 16 05:37:47 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Logging_Strategy.h: Updated the documentation to explain what
-	  the various options mean.
+        * ace/Logging_Strategy.h: Updated the documentation to explain what
+          the various options mean.
 
-	* tests/Log_Msg_Test.cpp (test_log_msg_features): Added
-	  ACE_Log_Msg::PROCESS to a coupld or priority_mask() calls to
- 	  make the test work correctly.  Thanks to Kitty for reporting
- 	  this.
+        * tests/Log_Msg_Test.cpp (test_log_msg_features): Added
+          ACE_Log_Msg::PROCESS to a coupld or priority_mask() calls to
+          make the test work correctly.  Thanks to Kitty for reporting
+          this.
 
 Thu Feb 15 17:53:31 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* ace/Thread_Manager.i: Simplified casting in
-	  ACE_Thread_Descriptor::get_next per suggestion from Carlos.
+        * ace/Thread_Manager.i: Simplified casting in
+          ACE_Thread_Descriptor::get_next per suggestion from Carlos.
 
 Thu Feb 15 14:57:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* ace/Thread_Manager.i: Fixed typo in ACE_Thread_Descriptor::get_next.
+        * ace/Thread_Manager.i: Fixed typo in ACE_Thread_Descriptor::get_next.
 
 Thu Feb 15 11:33:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Refcounted_Auto_Ptr_Test.cpp (main): Always call ACE_OS::exit(0)
-	  to make sure that this test terminates...
+        * tests/Refcounted_Auto_Ptr_Test.cpp (main): Always call ACE_OS::exit(0)
+          to make sure that this test terminates...
 
-	* ace/Thread_Manager.i (get_next): Added an ACE_const_cast() to
-	  make certain compilers happy.
+        * ace/Thread_Manager.i (get_next): Added an ACE_const_cast() to
+          make certain compilers happy.
 
-	* ace/Logging_Strategy.cpp: Fixed some Unicode problems on Win32.
+        * ace/Logging_Strategy.cpp: Fixed some Unicode problems on Win32.
 
 Thu Feb 15 08:49:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 
