@@ -1,12 +1,12 @@
 #
 # Makefile for building the Event Service executable
-# 
+#
 
 NAME = Event_Service
 
 OBJFILES = \
 	$(OBJDIR)\Event_Service.obj
-        
+
 CFLAGS = \
 	$(ACE_CFLAGS) \
 	$(TAO_CFLAGS) \
@@ -15,8 +15,9 @@ CFLAGS = \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_RTSCHED_CFLAGS) \
 	$(TAO_RTEVENT_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS) \
 	$(TAO_RTOLDEVENT_CFLAGS)
-        
+
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
@@ -25,6 +26,7 @@ LIBFILES = \
 	$(TAO_NAMING_LIB) \
 	$(TAO_RTSCHED_LIB) \
 	$(TAO_RTEVENT_LIB) \
+        $(TAO_MESSAGING_LIB) \
 	$(TAO_RTOLDEVENT_LIB)
 
 CPPDIR = .

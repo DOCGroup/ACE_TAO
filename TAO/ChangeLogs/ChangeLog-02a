@@ -1,3 +1,11 @@
+Tue Mar 12 13:45:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/CosEvent_Service/Makefile.bor:
+        * orbsvcs/Event_Service/Makefile.bor:
+          Added TAO_Messaging library, this solves the link errors in the
+          static BCB build. Thanks to Oleg Kraynov <olegvkr@yahoo.com>
+          for reporting this.
+
 Tue Mar 12 10:41:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Load_Balancing/README:
