@@ -12,7 +12,7 @@ Wed Feb  5 10:59:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_enum/enum_cs.cpp:
 
 	  Added a missing check for typecode support before generating
-	  the typecode for an enum. Thanks to Mario Hofmann 
+	  the typecode for an enum. Thanks to Mario Hofmann
 	  <Mario.Hofmann@SystemaGmbH.de> for reporting the bug.
 
 Wed Feb  5 09:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
