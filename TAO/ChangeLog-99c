@@ -1,4 +1,6 @@
-Wed Jun 30 02:33:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Jun 30 04:04:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAOACE_Static.dsw: Fixed project dependencies.
 
 	* TAO/tao/try_macros.h: The TAO try macros are now deprecated.
 
@@ -23,7 +25,7 @@ Wed Jun 30 02:33:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO/orbsvcs/tests/Trading/export_test.cpp:
 	* TAO/orbsvcs/tests/Trading/import_test.cpp:
 	  Fixed exception handling.
-	
+
 	* TAO/tao/CurrentS.cpp:
 	* TAO/tao/PolicyS.cpp: Replaced TAO try macros with ACE try
 	  macros.
