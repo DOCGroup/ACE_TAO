@@ -24499,9 +24499,9 @@ realclean:
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  FILE_Parser.i \
- ior_dll/Object_Loader.h \
- ior_dll/ior_dll_export.h \
- ior_dll/Object_Loader.i \
+ Object_Loader.h \
+ ior_dll_export.h \
+ Object_Loader.i \
  Object.h \
  Object.i \
  ORB.h \

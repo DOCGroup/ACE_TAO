@@ -4,7 +4,7 @@
 
 #include "ace/Profile_Timer.h"
 
-#include "tao/ior_dll/Object_Loader.h"
+#include "tao/Object_Loader.h"
 #include "tao/Object.h"
 #include "tao/corba.h"
 #include "tao/ORB.h"
