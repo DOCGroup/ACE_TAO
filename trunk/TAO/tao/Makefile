@@ -20,9 +20,19 @@ ORBCORE_SRCS = \
 	Any \
 	CurrentC \
 	CurrentS \
+	DynAnyC \
+	DynAnyS \
+	DynAny_i \
+	DynArray_i \
+	DynEnum_i \
+	DynSequence_i \
+	DynStruct_i \
+	DynUnion_i \
+	DynUnion_i_T \
 	Exception \
 	Environment \
         Forwarding_Servant \
+	InconsistentTypeCodeC \
 	NVList \
 	Object \
 	ORB \

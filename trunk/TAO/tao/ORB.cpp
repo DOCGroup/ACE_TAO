@@ -41,16 +41,47 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+// Typecode stuff for the InconsistentTypeCode exception
+static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
+{
+  TAO_ENCAP_BYTE_ORDER,   // byte order
+  47, 
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f4f52), 
+  ACE_NTOHL (0x422f496e), 
+  ACE_NTOHL (0x636f6e73), 
+  ACE_NTOHL (0x69737465), 
+  ACE_NTOHL (0x6e745479), 
+  ACE_NTOHL (0x7065436f), 
+  ACE_NTOHL (0x64653a31), 
+  ACE_NTOHL (0x2e3000fd), // repository ID = 
+                          // IDL:omg.org/CORBA/ORB/InconsistentTypeCode:1.0
+  21, 
+  ACE_NTOHL (0x496e636f), 
+  ACE_NTOHL (0x6e736973), 
+  ACE_NTOHL (0x74656e74), 
+  ACE_NTOHL (0x54797065),
+  ACE_NTOHL (0x436f6465), 
+  ACE_NTOHL (0xfdfdfd),   // name = InconsistentTypeCode
+  0,                      // member count
+};
+
+static CORBA::TypeCode _tc__tc_CORBA_ORB_InconsistentTypeCode (
+    CORBA::tk_except, 
+    sizeof (_oc_CORBA_ORB_InconsistentTypeCode), 
+    (char *) &_oc_CORBA_ORB_InconsistentTypeCode, 
+    0
+  );
+
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
 
-TAO_Leader_Follower_Info::TAO_Leader_Follower_Info (void)
-  : leader_follower_lock_ (),
-    follower_set_ (),
-    leaders_ (0),
-    leader_thread_ID_ (ACE_OS::NULL_thread)
-{
-}
+// ORB exception typecode initialization.
+CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 
+  &_tc__tc_CORBA_ORB_InconsistentTypeCode;
 
 CORBA::String_var::String_var (char *p)
   : ptr_ (p)
@@ -90,8 +121,10 @@ CORBA_ORB::CORBA_ORB (void)
     event_service_ (CORBA_Object::_nil ()),
     trading_service_ (CORBA_Object::_nil ())
 {
-  ACE_NEW (this->cond_become_leader_,
-           ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
+  leader_follower_info_.leaders_ = 0;
+  leader_follower_info_.leader_thread_ID_ = 0;
+  this->cond_become_leader_ = 
+      new ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_);
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -234,10 +267,10 @@ CORBA_ORB::run (ACE_Time_Value *tv)
     
     while (TAO_ORB_Core_instance ()->leader_available ())
       {
-        if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ORB::run: Failed to add a follower thread\n"));
-        this->cond_become_leader_->wait ();     
+	      if (TAO_ORB_Core_instance ()->add_follower (this->cond_become_leader_) == -1)
+	        ACE_ERROR ((LM_ERROR,
+		                  "(%P|%t) ORB::run: Failed to add a follower thread\n"));
+	      this->cond_become_leader_->wait ();     
       }
     TAO_ORB_Core_instance ()->set_leader_thread ();
   }
@@ -300,9 +333,9 @@ CORBA_ORB::run (ACE_Time_Value *tv)
   if (result != -1)
     {
       if (TAO_ORB_Core_instance ()->unset_leader_wake_up_follower () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) ORB::run: Failed to add a follower thread\n"),
-                          -1);
+	      ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%P|%t) ORB::run: Failed to add a follower thread\n"),
+                                -1);
       return 0;
       // nothing went wrong
     }
@@ -655,11 +688,68 @@ CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
 
 TAO_Leader_Follower_Info &
 CORBA_ORB::leader_follower_info (void)
-  // get access to the leader_follower_info
+// get access to the leader_follower_info
 {
   return leader_follower_info_;
 }
 
+// Dynamic Any factory functions.
+
+ACE_INLINE 
+CORBA_DynAny_ptr       
+CORBA_ORB::create_dyn_any       (const CORBA_Any& any,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_any (any, env);
+}
+
+ACE_INLINE 
+CORBA_DynAny_ptr       
+CORBA_ORB::create_basic_dyn_any (CORBA_TypeCode_ptr tc,
+		                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_any (tc, env);
+}
+
+ACE_INLINE 
+CORBA_DynStruct_ptr    
+CORBA_ORB::create_dyn_struct    (CORBA_TypeCode_ptr tc,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_struct (tc, env);
+}
+
+ACE_INLINE 
+CORBA_DynSequence_ptr  
+CORBA_ORB::create_dyn_sequence  (CORBA_TypeCode_ptr tc,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_sequence (tc, env);
+}
+
+ACE_INLINE 
+CORBA_DynArray_ptr     
+CORBA_ORB::create_dyn_array     (CORBA_TypeCode_ptr tc,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_array (tc, env);
+}
+
+ACE_INLINE 
+CORBA_DynUnion_ptr     
+CORBA_ORB::create_dyn_union     (CORBA_TypeCode_ptr tc,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_union (tc, env);
+}
+
+ACE_INLINE 
+CORBA_DynEnum_ptr      
+CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
+                                 CORBA::Environment& env)
+{
+  return TAO_DynAny_i::create_dyn_enum (tc, env);
+}
 
 // String utility support; this can need to be integrated with the
 // ORB's own memory allocation subsystem.
@@ -802,7 +892,7 @@ CORBA::ORB_init (int &argc,
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
       ACE_DEBUG ((LM_DEBUG, "%s; ERROR: unexpected basic type size; "
-                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
+                            "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n",
                   __FILE__,
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),

@@ -193,23 +193,21 @@ typedef u_int CORBA_Flags;
   typedef u_char CORBA_Boolean;
 #endif /* ! (ghs && CHORUS) */
 
-struct TAO_Leader_Follower_Info
-{
-  TAO_Leader_Follower_Info (void);
+  typedef struct TAO_Leader_Follower_Info_Struct
+    {
+      ACE_SYNCH_MUTEX leader_follower_lock_; 
+      // do protect the access to the following three members
+  
+      ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
+      // keep a set of followers around (protected)
 
-  ACE_SYNCH_MUTEX leader_follower_lock_; 
-  // do protect the access to the following three members
-  
-  ACE_Unbounded_Set<ACE_SYNCH_CONDITION *> follower_set_;
-  // keep a set of followers around (protected)
-  
-  int leaders_; 
-  // 0 if no leader is around, 1 if there is a leader
-  // > 1 if we do nested upcalls (protected)
-  
-  ACE_thread_t leader_thread_ID_;
-  // thread ID of the leader thread (protected)
-};
+      int leaders_; 
+      // 0 if no leader is around, 1 if there is a leader
+      // > 1 if we do nested upcalls (protected)
+
+      ACE_thread_t leader_thread_ID_;
+      // thread ID of the leader thread (protected)
+    } TAO_Leader_Follower_Info;
 
 
 // forward declare sequences.
@@ -782,7 +780,7 @@ public:
 #include "tao/Union.h"
 
 class STUB_Object;
-// Forward declaration.
+// Forward declarations.
 
 class TAO_Export CORBA_ORB
 {
@@ -965,6 +963,38 @@ public:
 
   int should_shutdown (void);
   // Get the shutdown flag value
+
+  // Forward declaration and typedefs for the exception thrown by 
+  // the ORB Dynamic Any factory functions.
+  class CORBA_ORB_InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+
+  // Typecode for the above exception.
+  static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
+
+  // Dynamic Any factory functions.
+
+  CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
+                                               CORBA::Environment& env);
+
+  CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
+
+  CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
+
+  CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
+
+  CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
+
+  CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
+
+  CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment& env);
 
 protected:
   // We must be created via the <ORB_init> call.
