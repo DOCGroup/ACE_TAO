@@ -1,3 +1,11 @@
+Thu Oct 26 14:04:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.h:
+
+          Reverted Doug's change which defined ACE_MAX_USERID to
+          L_cuserid on all platforms.  It ended up that this
+          is only valid on Windows when _POSIX_ is defined.
+
 Thu Oct 26 11:20:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/RMCast/RMCast_IO_UDP.cpp:
