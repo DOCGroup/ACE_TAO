@@ -79,5 +79,6 @@ int Demux_Test_CodeGenerator::gen_client_incl_code (void)
 
   ACE_OS::fprintf (fp, "   return 0;\n");
   ACE_OS::fprintf (fp, "}\n\n");
+  return 0;
 }
 
