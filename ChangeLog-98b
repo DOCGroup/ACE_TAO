@@ -1,100 +1,110 @@
+Sun Nov 29 22:14:32 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (exit): with ACE_HAS_NON_STATIC_OBJECT_MANAGER,
+          call ACE_Object_Manager::fini ().  The ACE_Object_Manager
+          instantiation on main's stack is not destroyed by ::exit (),
+          so this addition causes the ACE_Object_Manager to be
+          properly shutdown.  Thanks to Jeff Greif <jmg@trivida.com>
+          for pointing out that automatic objects are not destroyed
+          by ::exit ().
+
 Sun Nov 29 20:13:15 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Today.cpp:
-	* examples/DLL/Newsweek.cpp:
-	  
-	  Added ACE_BUILD_SVC_DLL and ACE_Svc_Export directives needed for the
-	  extern "C" create_magazine function.
+        * examples/DLL/Today.cpp:
+        * examples/DLL/Newsweek.cpp:
+
+          Added ACE_BUILD_SVC_DLL and ACE_Svc_Export directives needed for the
+          extern "C" create_magazine function.
 
 Sun Nov 29 18:22:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Thread_Pool_Reactor_Test.cpp: Removed the use of
-	  "main_reactor".  The "main_reactor" was added to handle incoming
-	  connections because this test was not working correctly without
-	  moving out the acceptor to another reactor.  However, I recently
-	  found that the problem was actually due to the deadlocked
-	  notify_handler which I fixed a while back.
+        * tests/Thread_Pool_Reactor_Test.cpp: Removed the use of
+          "main_reactor".  The "main_reactor" was added to handle incoming
+          connections because this test was not working correctly without
+          moving out the acceptor to another reactor.  However, I recently
+          found that the problem was actually due to the deadlocked
+          notify_handler which I fixed a while back.
 
-	* ace/OS.h: Added forward declarations of ACE_Time_Value's
-	  operator{+,-} so VC 6.0 won't get confused with the
-	  operator{+,-} in namespace std.  Thanks to Victor Yu
-	  <victor.yu@computechnics.com.au> for reporting this.
+        * ace/OS.h: Added forward declarations of ACE_Time_Value's
+          operator{+,-} so VC 6.0 won't get confused with the
+          operator{+,-} in namespace std.  Thanks to Victor Yu
+          <victor.yu@computechnics.com.au> for reporting this.
 
 1998-11-29  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/007/page09.html: 
-	Added warnings about a possible core dump when an event handler
-	exists in the thread pool's message queue after the handler has
-	been destroyed.  Jeff Donner's <JDonner@schedsys.com> work with
-	Tutorial 007 on Win32 lead to this discovery.
+        * docs/tutorials/007/page09.html:
+        Added warnings about a possible core dump when an event handler
+        exists in the thread pool's message queue after the handler has
+        been destroyed.  Jeff Donner's <JDonner@schedsys.com> work with
+        Tutorial 007 on Win32 lead to this discovery.
 
 Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Today.cpp:
-	* examples/DLL/Newsweek.cpp:
+        * examples/DLL/Today.cpp:
+        * examples/DLL/Newsweek.cpp:
 
-	  Added the #ifdef directive needed to seperate out the
-	  functionality on NT and UNIX platforms.
+          Added the #ifdef directive needed to seperate out the
+          functionality on NT and UNIX platforms.
 
 Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Dll.dsw:
-	* examples/DLL/Test_dll.dsp:
-	* examples/DLL/Today.dsp:
-	* examples/DLL/Newsweek.dsp:
+        * examples/DLL/Dll.dsw:
+        * examples/DLL/Test_dll.dsp:
+        * examples/DLL/Today.dsp:
+        * examples/DLL/Newsweek.dsp:
 
           Added to the repository. The test successfully executes on NT.
-	
-	* examples/DLL/README: Modified to add information on how to
-	  execute this test example on NT.
-	
+
+        * examples/DLL/README: Modified to add information on how to
+          execute this test example on NT.
+
 Fri Nov 27 13:32:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/test_dll.cpp (main): Added right arguments to the
-	  ACE_ERROR_RETURN macro. 
-	
+        * examples/DLL/test_dll.cpp (main): Added right arguments to the
+          ACE_ERROR_RETURN macro.
+
 Thu Nov 26 21:04:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Makefile:
-	* examples/DLL/Today.{h,cpp}:
-	* examples/DLL/Newsweek.{h,cpp}:
-	* examples/DLL/Magazine.h:
+        * examples/DLL/Makefile:
+        * examples/DLL/Today.{h,cpp}:
+        * examples/DLL/Newsweek.{h,cpp}:
+        * examples/DLL/Magazine.h:
 
-	  Placed the comments at the right place and added an descriptive
-	  header wherever missing in the .h files.
-	
-	* examples/DLL/test_dll.cpp (main): Added auto_ptr for the
-	  Magazine class object pointer. 
+          Placed the comments at the right place and added an descriptive
+          header wherever missing in the .h files.
 
-	* examples/DLL/README: Added to the repository.
-	
+        * examples/DLL/test_dll.cpp (main): Added auto_ptr for the
+          Magazine class object pointer.
+
+        * examples/DLL/README: Added to the repository.
+
 Wed Nov 25 02:02:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Makefile:
-	* examples/DLL/Today.{h,cpp}:
-	* examples/DLL/Newsweek.{h,cpp}:
-	* examples/DLL/Magazine.h:
-	* examples/DLL/test_dll.cpp:
+        * examples/DLL/Makefile:
+        * examples/DLL/Today.{h,cpp}:
+        * examples/DLL/Newsweek.{h,cpp}:
+        * examples/DLL/Magazine.h:
+        * examples/DLL/test_dll.cpp:
 
-	Added these files. This test example shows how dynamically linked 
-	library objects can be loaded on demand and their methods accessed 
-	on getting an pointer to these objects.
-	
+        Added these files. This test example shows how dynamically linked
+        library objects can be loaded on demand and their methods accessed
+        on getting an pointer to these objects.
+
 Wed Nov 25 22:28:44 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/INET_Addr.cpp: 
-	  Reverted the behavior to version 4.35, we don't use the first
-	  alias as the hostname, but the value returned in the h_name
-	  field.
-	  This change was to support TAO in our local site, but it caused
-	  many problems for other configurations of /etc/hosts and DNS. We
-	  found another workaround for our local site which makes more
-	  sense to the rest of the world.
+        * ace/INET_Addr.cpp:
+          Reverted the behavior to version 4.35, we don't use the first
+          alias as the hostname, but the value returned in the h_name
+          field.
+          This change was to support TAO in our local site, but it caused
+          many problems for other configurations of /etc/hosts and DNS. We
+          found another workaround for our local site which makes more
+          sense to the rest of the world.
 
 Wed Nov 25 20:34:12 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (main): Removed ACE_OS::strcat which was
-	  concatenating a string literal with a defined string.
+        * tests/DLL_Test.cpp (main): Removed ACE_OS::strcat which was
+          concatenating a string literal with a defined string.
 
 Wed Nov 25 12:01:20 1998  Ossama Othman  <othman@astrosun.tn.cornell.edu>
 
