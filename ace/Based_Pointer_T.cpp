@@ -100,7 +100,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const ACE_Based_Poin
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
-  ACE_ASSERT (!"not implemented");
+  ACE_ASSERT (0); // not implemented.
 }
 
 template <class CONCRETE>
@@ -108,7 +108,7 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE
   : ACE_Based_Pointer_Basic<CONCRETE> (rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
-  ACE_ASSERT (!"not implemented");
+  ACE_ASSERT (0); // not implemented.
 }
 
 #endif /* ACE_BASED_POINTER_T_CPP */
