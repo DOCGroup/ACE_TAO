@@ -227,8 +227,6 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
                 {
                   this->move_queue_.dequeue_head (traveller);
                   
-                  char *repo_id = traveller->id ();
-                  
                   CORBA::String_var name =
                     traveller->name (ACE_ENV_SINGLE_ARG_PARAMETER);
                   ACE_TRY_CHECK;

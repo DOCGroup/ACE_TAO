@@ -86,7 +86,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-check_server_protocol_at_root_poa (CORBA::ORB_ptr orb,
+check_server_protocol_at_root_poa (CORBA::ORB_ptr /*orb*/,
                                    PortableServer::POA_ptr poa
                                    ACE_ENV_ARG_DECL)
 {

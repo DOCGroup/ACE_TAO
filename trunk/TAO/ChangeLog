@@ -1,3 +1,11 @@
+Fri Oct 29 09:23:50 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+
+          Removed build warnings from g++.
+
 Thu Oct 28 14:46:55 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.cpp:
