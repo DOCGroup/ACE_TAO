@@ -27,7 +27,7 @@ ACE_Synch_Options::ACE_Synch_Options (u_long options,
 				      const ACE_Time_Value &timeout,
 				      const void *arg)
 {
-  ACE_TRACE ("ACE_Synch_Options::ACE_Synch_Options");
+  // ACE_TRACE ("ACE_Synch_Options::ACE_Synch_Options");
   this->set (options, timeout, arg);
 }
 
@@ -36,7 +36,7 @@ ACE_Synch_Options::set (u_long options,
 			const ACE_Time_Value &timeout,
 			const void *arg)
 {
-  ACE_TRACE ("ACE_Synch_Options::set");
+  // ACE_TRACE ("ACE_Synch_Options::set");
   this->options_ = options;
   this->timeout_ = (ACE_Time_Value &) timeout;
 

@@ -75,7 +75,7 @@ ACE_Sig_Guard::dump (void) const
 
 ACE_Sig_Action::ACE_Sig_Action (void)
 {
-  ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = 0;
 
   // Since Service_Config::signal_handler_ is static and has an
@@ -91,7 +91,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 				sigset_t *sig_mask,
 				int sig_flags)
 {
-  ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = sig_flags;
 
   if (sig_mask == 0)
@@ -107,7 +107,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 				sigset_t *sig_mask,
 				int sig_flags)
 {
-  ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = sig_flags;
 
   if (sig_mask == 0)
@@ -276,7 +276,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
     type_ (SIG_ACTION),
     sa_ (sa)
 {
-  ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
+  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
@@ -285,7 +285,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
     type_ (ACE_HANDLER),
     eh_ (eh)
 {
-  ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
+  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
@@ -294,7 +294,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
     type_ (C_FUNCTION),
     sig_func_ (sig_func)
 {
-  ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
+  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 int

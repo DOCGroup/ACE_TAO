@@ -18,7 +18,7 @@ ACE_Event_Handler::ACE_Event_Handler (void)
     reactorex_ (0),
     proactor_ (0)
 {
-  ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
+  // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
 
 ACE_Event_Handler::~ACE_Event_Handler (void) 

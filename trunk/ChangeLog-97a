@@ -1,17 +1,11 @@
-Tue Apr 29 07:25:25 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* apps/JAWS/server/HTTP_Request.h (HTTP_Request): added destructor
-	  declaration.
-
-	* apps/JAWS/server/Parse_Headers.cpp (parse_header_line): assign local
-	  "value" to value_ field of map_[header].
-
-	* apps/JAWS/server/HTTP_Request.cpp (HTTP_fix_path): commented this
-	  static function out because it's not used, and g++ warns about that.
-
-	* apps/JAWS: added CVS header to all .h, .i, and .cpp files.
-
 Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace: Commented out ACE_TRACE calls in constructors in
+	  several ACE classes in order to avoid problems with circular
+	  initialization dependencies related to mutexes that are
+	  breaking code on WinNT when ACE_NTRACE is set to 0.  Thanks
+	  to Lothar Hermann <hermann@csaserv.med.siemens.de> for
+	  reporting these. 
 
 	* ace/Reactor.cpp: It looks as if Windows NT isn't returning
  	  the number of bytes requested by a WinSock recv() used in
@@ -40,6 +34,19 @@ Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/OS: Added patches for Digital UNIX to handle the
  	  getpwnam_r() name.  Thanks to Thilo Kielmann
  	  <kielmann@informatik.uni-siegen.de> for these patches.
+
+Tue Apr 29 07:25:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* apps/JAWS/server/HTTP_Request.h (HTTP_Request): added destructor
+	  declaration.
+
+	* apps/JAWS/server/Parse_Headers.cpp (parse_header_line): assign local
+	  "value" to value_ field of map_[header].
+
+	* apps/JAWS/server/HTTP_Request.cpp (HTTP_fix_path): commented this
+	  static function out because it's not used, and g++ warns about that.
+
+	* apps/JAWS: added CVS header to all .h, .i, and .cpp files.
 
 Tue Apr 29 00:33:46 1997    <irfan@TWOSTEP>
 
