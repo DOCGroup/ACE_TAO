@@ -317,6 +317,7 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer (void)
     this->offer_iter_->advance ();
 }
 
+/*
 ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer>::
 ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer> *next,
 		    ACE_Hash_Map_Entry<CORBA::ULong, CosTrading::Offer> *prev)
@@ -333,6 +334,7 @@ hash (const CORBA::ULong &ext_id)
   return ext_id;
   //return 0;
 }
+*/
 
 #endif /* TAO_SERVICE_TYPE_MAP_C */
 
