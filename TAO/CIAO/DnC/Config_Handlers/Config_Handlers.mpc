@@ -2,6 +2,7 @@
 
 project (Config_Handlers) : taolib {
 
+  requires += dnc
   sharedname = Config_Handers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
