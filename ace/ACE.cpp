@@ -1003,7 +1003,7 @@ ACE::get_temp_dir (char *buffer, size_t buffer_len)
 {
   int result;
 #if defined (ACE_WIN32)
-
+#if defined (ACE_HAS_WINCE)
   // Use the wchar version and convert it to char when
   // it returns.
 
@@ -1023,6 +1023,14 @@ ACE::get_temp_dir (char *buffer, size_t buffer_len)
                            buffer_len,
                            NULL,
                            NULL);
+#else /* ACE_HAS_WINCE */
+  result = ::GetTempPathA (buffer_len, buffer);
+
+  // Make sure to return -1 if there is an error
+  if (result == 0 && ::GetLastError () != ERROR_SUCCESS
+      || result > ACE_static_cast (int, buffer_len))
+    result = -1;
+#endif /* ACE_HAS_WINCE */
 
 #else /* ACE_WIN32 */
 

@@ -1,3 +1,16 @@
+Mon Mar 20 17:54:15 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:  
+
+          The ascii version of get_temp_dir () was calling the wchar_t
+          version, which doesn't work on Win95/98 since the GetTempPathW
+          isn't supported.  So I just called GetTempPathA directly.
+
+          Thanks to David Hauck <davidh@realtimeint.com> for first pointing
+          this out, Shalabh Bhatnagar <shalabh_b@hotmail.com> for informing
+          me that it doesn't work on Win95, and <torsten_pf@geocities.com> 
+          for pointing out this doesn't work on Win98 either.
+
 Mon Mar 20 12:45:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_linux_lxpthread.GNU:
