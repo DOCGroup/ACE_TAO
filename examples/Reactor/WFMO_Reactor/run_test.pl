@@ -22,7 +22,7 @@ $test_timeout = 60;
 @tests = 
     (
      "Abandoned",
-     "Apc",
+     "APC",
 #    "Console_Input",            # This test is interactive
      "Directory_Changes",
      "Exceptions",

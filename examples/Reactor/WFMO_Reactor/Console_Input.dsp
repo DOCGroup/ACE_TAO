@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Console_Input - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_console_input.cpp
+SOURCE=.\Console_Input.cpp
 # End Source File
 # End Target
 # End Project

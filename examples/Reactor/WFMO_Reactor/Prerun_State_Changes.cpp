@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_prerun_state_changes.cpp
+//    Prerun_State_Changes.cpp
 //
 // = DESCRIPTION
 //
@@ -21,7 +21,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_prerun_state_changes, "$Id$")
+ACE_RCSID(WFMO_Reactor, Prerun_State_Changes, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 // = TITLE

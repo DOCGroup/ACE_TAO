@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_suspended_removals.cpp
+//    Suspended_Removals.cpp
 //
 // = DESCRIPTION
 //
@@ -22,7 +22,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Synch.h"
 
-ACE_RCSID(WFMO_Reactor, test_suspended_removals, "$Id$")
+ACE_RCSID(WFMO_Reactor, Suspended_Removals, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

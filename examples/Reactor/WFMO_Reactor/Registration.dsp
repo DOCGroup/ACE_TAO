@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Registration - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_registration.cpp
+SOURCE=.\Registration.cpp
 # End Source File
 # End Target
 # End Project

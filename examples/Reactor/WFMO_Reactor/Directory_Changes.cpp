@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_directory_changes.cpp
+//    Directory_Changes.cpp
 //
 // = DESCRIPTION
 //
@@ -20,7 +20,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_directory_changes, "$Id$")
+ACE_RCSID(WFMO_Reactor, Directory_Changes, "$Id$")
 
 static int stop_test = 0;
 static const ACE_TCHAR *directory = ACE_TEXT (".");

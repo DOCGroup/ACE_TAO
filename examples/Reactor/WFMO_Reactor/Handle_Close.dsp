@@ -53,7 +53,7 @@ LINK32=link.exe
 # Name "Handle_Close - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_handle_close.cpp
+SOURCE=.\Handle_Close.cpp
 # End Source File
 # End Target
 # End Project

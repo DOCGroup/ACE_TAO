@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_registration.cpp
+//    Registration.cpp
 //
 // = DESCRIPTION
 //
@@ -35,7 +35,7 @@
 
 #include "ace/Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, test_registration, "$Id$")
+ACE_RCSID(WFMO_Reactor, Registration, "$Id$")
 
 // Globals for this test
 int stop_test = 0;

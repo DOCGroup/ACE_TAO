@@ -6,7 +6,7 @@
 //    examples
 //
 // = FILENAME
-//    test_multithreading.cpp
+//    Multithreading.cpp
 //
 // = DESCRIPTION
 //
@@ -27,7 +27,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(WFMO_Reactor, test_multithreading, "$Id$")
+ACE_RCSID(WFMO_Reactor, Multithreading, "$Id$")
 
 static int concurrent_threads = 1;
 static int number_of_handles = ACE_Reactor::instance ()->size ();

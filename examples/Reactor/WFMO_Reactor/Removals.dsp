@@ -52,7 +52,7 @@ LINK32=link.exe
 # Name "Removals - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\test_removals.cpp
+SOURCE=.\Removals.cpp
 # End Source File
 # End Target
 # End Project
