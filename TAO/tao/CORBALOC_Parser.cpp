@@ -8,6 +8,7 @@
 #include "tao/debug.h"
 #include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
+#include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"

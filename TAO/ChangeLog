@@ -1,3 +1,10 @@
+Fri Sep 24 09:38:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/CORBALOC_Parser.cpp:
+        
+          Added #include of ace/os_include/os_netdb.h to pull in define of
+          MAXHOSTNAMELEN for Windows platforms.
+
 Fri Sep 24 08:58:40 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
           Added capability to use INS-style corbaloc references to specify SSLIOP
