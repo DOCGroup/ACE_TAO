@@ -23,7 +23,11 @@ Legend:
 
 [111x1 ]   libTAO and TAO_IDL compile.
 [110x0 ]   IDL_Cubit compiles
-        [1xxxxx] Runs
+        [1x1x0x] svr runs
+        [1x1x1x] clnt runs
+[  x x ] POA/FindPOA compiles
+[  x x ] POA/NewPOA compiles
+[  x x ] POA/RootPOA compiles
 [1x1x1x]   Param_Test compiles
         [xxxxxx] DII short
         [xxxxxx] DII ubstring
@@ -60,9 +64,6 @@ Legend:
         [xxxxxx] Logger runs
         [xx1x1x] Event_Latency compiles
         [xxxxxx] Event_Latency runs
-[  x x ] POA/FindPOA compiles
-[  x x ] POA/NewPOA compiles
-[  x x ] POA/RootPOA compiles
 
 NOTES
 * Solaris/CC
@@ -84,13 +85,16 @@ NOTES
    unsigned int *): referenced in ./svr
 
 * IRIX
-** Event Latency won't work because unproper detection of failures for
-   priority change.
-   MT_Cubit does not compile due to extra library (-lposix4) only
-   present in Solaris; IMHO that should go into the platform file for
-   Solaris/CC
+** Event Latency won't work because unproper detection of failures for priority change.
+** MT_Cubit does not compile
+An extra library (-lposix4) is only present in Solaris; IMHO that
+should go into the platform file for Solaris/CC
 
 * Linux/g++
+** IDL Cubit clnt works, but generates a SEGV on shutdown
+** IDL Cubit svr executes, but returns object references across the wire with host of 127.0.0.1
+The remote client gets a MARSHAL exception.
+
 * Other (Linux/egcs, Solaris/egcs, etc.)
 
 
