@@ -7,15 +7,15 @@
 
 #include "CCF/IDL3/SemanticAction/Factory.hpp"
 
-#include "CCF/CIDL/SemanticAction/Composition.hpp"
-#include "CCF/CIDL/SemanticAction/HomeExecutor.hpp"
-
 namespace CCF
 {
   namespace CIDL
   {
     namespace SemanticAction
     {
+      struct Composition;
+      struct HomeExecutor;
+      
       struct Factory : virtual IDL3::SemanticAction::Factory
       {
         virtual Composition&

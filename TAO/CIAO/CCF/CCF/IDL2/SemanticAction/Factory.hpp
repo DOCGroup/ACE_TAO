@@ -11,20 +11,20 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Attribute;
-      class Enum;
-      class Exception;
-      class Include;
-      class Interface;
-      class Member;
-      class Module;
-      class Native;
-      class Operation;
-      class Struct;
-      class Typedef;
-      class TypeId;
-      class TypePrefix;
-      class ValueType;
+      struct Attribute;
+      struct Enum;
+      struct Exception;
+      struct Include;
+      struct Interface;
+      struct Member;
+      struct Module;
+      struct Native;
+      struct Operation;
+      struct Struct;
+      struct Typedef;
+      struct TypeId;
+      struct TypePrefix;
+      struct ValueType;
 
       //
       //
