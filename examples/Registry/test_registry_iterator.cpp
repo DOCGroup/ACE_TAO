@@ -66,7 +66,7 @@ print_naming_context (ACE_Registry::Naming_Context &naming_context,
   // Iterator through all entries
   for (ACE_Registry::Binding_List::iterator i = list.begin ();
        i != list.end ();
-       i++)
+       ++i)
     {
       // Yeeesss! STL rules!
       ACE_Registry::Binding &binding = *i;
