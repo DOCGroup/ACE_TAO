@@ -40,6 +40,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, MT_Reference_Counted_Event_Handler_Test, "$Id$")
 
