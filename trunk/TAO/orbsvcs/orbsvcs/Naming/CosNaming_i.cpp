@@ -550,44 +550,48 @@ TAO_NamingContext::bind_new_context_helper (const CosNaming::Name &n,
 void
 TAO_NamingContext::destroy (CORBA::Environment &_env)
 {
-  ACE_GUARD_THROW (ACE_Lock,
-                   ace_mon,
-                   *this->lock_,
-                   CORBA::INTERNAL (CORBA::COMPLETED_NO));
+  {
+    ACE_GUARD_THROW (ACE_Lock,
+                     ace_mon,
+                     *this->lock_,
+                     CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
-  if (context_.current_size () != 0)
-    TAO_THROW (CosNaming::NamingContext::NotEmpty);
+    if (context_.current_size () != 0)
+      TAO_THROW (CosNaming::NamingContext::NotEmpty);
 
-  if (this->root_ != 0)
-    return; // Destroy is a no-op on a root context.
-  else
-    {
-      TAO_TRY
-        {
-          // @@ This looks like a prime candidate for factoring into a
-          // helper method or class....!
-          PortableServer::POA_var poa =
-            this->_default_POA (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+    if (this->root_ != 0)
+      return; // Destroy is a no-op on a root context.
+    else
+      {
+        TAO_TRY
+          {
+            // @@ This looks like a prime candidate for factoring into a
+            // helper method or class....!
+            PortableServer::POA_var poa =
+              this->_default_POA (TAO_TRY_ENV);
+            TAO_CHECK_ENV;
 
-          PortableServer::ObjectId_var id =
-            poa->servant_to_id (this,
-                                TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          poa->deactivate_object (id.in (),
+            PortableServer::ObjectId_var id =
+              poa->servant_to_id (this,
                                   TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            TAO_CHECK_ENV;
 
-          // Commit suicide: must have been dynamically allocated
-          delete this;
-        }
-      TAO_CATCHANY
-        {
-          TAO_RETHROW;
-        }
-      TAO_ENDTRY;
-    }
+            poa->deactivate_object (id.in (),
+                                    TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+          }
+        TAO_CATCHANY
+          {
+            TAO_RETHROW;
+          }
+        TAO_ENDTRY;
+      }
+  }
+
+  // Let go of the lock.
+  //
+  // Commit suicide: must have been dynamically allocated
+  delete this;
 }
 
 void
