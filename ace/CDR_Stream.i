@@ -141,6 +141,10 @@ ACE_OutputCDR::~ACE_OutputCDR (void)
       this->start_.cont (0);
     }
   this->current_ = 0;
+  if (this->char_translator_)
+    this->char_translator_->remove_ref();
+  if (this->wchar_translator_)
+    this->wchar_translator_->remove_ref();
 }
 
 ACE_INLINE void
@@ -518,11 +522,38 @@ ACE_OutputCDR::wchar_translator (void) const
   return this->wchar_translator_;
 }
 
+ACE_INLINE void
+ACE_OutputCDR::char_translator (ACE_Char_Codeset_Translator * ctran)
+{
+  if (this->char_translator_)
+    this->char_translator_->remove_ref();
+  this->char_translator_ = ctran;
+}
+
+ACE_INLINE void
+ACE_OutputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
+{
+  if (this->wchar_translator_)
+    this->wchar_translator_->remove_ref();
+  this->wchar_translator_ = wctran;
+  this->wchar_allowed_ = 1;
+}
+
+ACE_INLINE void
+ACE_OutputCDR::wchar_allowed (int allowed)
+{
+  this->wchar_allowed_ = allowed;
+}
+
 // ****************************************************************
 
 ACE_INLINE
 ACE_InputCDR::~ACE_InputCDR (void)
 {
+  if (this->char_translator_)
+    this->char_translator_->remove_ref();
+  if (this->wchar_translator_)
+    this->wchar_translator_->remove_ref();
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1434,7 +1465,43 @@ ACE_InputCDR::wchar_translator (void) const
   return this->wchar_translator_;
 }
 
+
+ACE_INLINE void
+ACE_InputCDR::char_translator (ACE_Char_Codeset_Translator * ctran)
+{
+  if (this->char_translator_)
+    this->char_translator_->remove_ref();
+  this->char_translator_ = ctran;
+}
+
+ACE_INLINE void
+ACE_InputCDR::wchar_translator (ACE_WChar_Codeset_Translator * wctran)
+{
+  if (this->wchar_translator_)
+    this->wchar_translator_->remove_ref();
+  this->wchar_translator_ = wctran;
+  this->wchar_allowed_ = 1;
+}
+
+ACE_INLINE void
+ACE_InputCDR::wchar_allowed (int allowed)
+{
+  this->wchar_allowed_ = allowed;
+}
 // ****************************************************************
+
+ACE_INLINE void
+ACE_Char_Codeset_Translator::add_ref()
+{
+  this->refcount_++;
+}
+
+ACE_INLINE void
+ACE_Char_Codeset_Translator::remove_ref()
+{
+  if (this->refcount_-- <= 0)
+    delete this;
+}
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_Char_Codeset_Translator::read_1 (ACE_InputCDR& input,
@@ -1485,7 +1552,44 @@ ACE_Char_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
   out.good_bit_ = bit;
 }
 
+ACE_INLINE ACE_CDR::Octet
+ACE_Char_Codeset_Translator::major_version (ACE_InputCDR& input)
+{
+  return input.major_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_Char_Codeset_Translator::minor_version (ACE_InputCDR& input)
+{
+  return input.minor_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_Char_Codeset_Translator::major_version (ACE_OutputCDR& output)
+{
+  return output.major_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_Char_Codeset_Translator::minor_version (ACE_OutputCDR& output)
+{
+  return output.minor_version_;
+}
+
 // ****************************************************************
+
+ACE_INLINE void
+ACE_WChar_Codeset_Translator::add_ref()
+{
+  this->refcount_++;
+}
+
+ACE_INLINE void
+ACE_WChar_Codeset_Translator::remove_ref()
+{
+  if (this->refcount_-- <= 0)
+    delete this;
+}
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_WChar_Codeset_Translator::read_1 (ACE_InputCDR& input,
@@ -1562,4 +1666,28 @@ ACE_INLINE void
 ACE_WChar_Codeset_Translator::good_bit (ACE_OutputCDR& out, int bit)
 {
   out.good_bit_ = bit;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_WChar_Codeset_Translator::major_version (ACE_InputCDR& input)
+{
+  return input.major_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_WChar_Codeset_Translator::minor_version (ACE_InputCDR& input)
+{
+  return input.minor_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_WChar_Codeset_Translator::major_version (ACE_OutputCDR& output)
+{
+  return output.major_version_;
+}
+
+ACE_INLINE ACE_CDR::Octet
+ACE_WChar_Codeset_Translator::minor_version (ACE_OutputCDR& output)
+{
+  return output.minor_version_;
 }
