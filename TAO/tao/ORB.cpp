@@ -680,6 +680,30 @@ CORBA_ORB::resolve_implrepo_service (ACE_Time_Value *timeout,
           ACE_ENDTRY;
           ACE_CHECK_RETURN (CORBA_Object::_duplicate (this->implrepo_service_));
         }
+      else
+        {
+          // First, determine if the port was supplied on the command line
+          // @@ FRED: need a generic rep for this!
+          u_short port =
+            this->orb_core_->orb_params ()->implrepo_service_port ();
+
+          if (port == 0)
+            {
+              // Look for the port among our environment variables.
+              const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
+
+              if (port_number != 0)
+                port = ACE_OS::atoi (port_number);
+              else
+                port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+            }
+
+          this->implrepo_service_ =
+            this->multicast_to_service ("ImplRepoService",
+                                        port,
+                                        timeout,
+                                        ACE_TRY_ENV);
+        }
     }
 
   return CORBA_Object::_duplicate (this->implrepo_service_);

@@ -118,13 +118,26 @@
 // Service.
 #if !defined (TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT)
 #define TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT 10016
-#endif /* TAO_DEFAULT_NAME_SERVER_REQUEST_PORT */
+#endif /* TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT */
 
 // The default UDP port number for replying to a location request to
 // the TAO Trading Service.
 #if !defined (TAO_DEFAULT_TRADING_SERVER_REPLY_PORT)
 #define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
-#endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
+#endif /* TAO_DEFAULT_TRADING_SERVER_REPLY_PORT */
+
+// The default UDP multicast port number for locating the TAO 
+// Implementation Repository Service.
+#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT)
+#define TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT 10018
+#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT */
+
+// The default UDP port number for replying to a location request to
+// the TAO Implementation Repository Service.
+#if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT)
+#define TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT 10019
+#endif /* TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT */
+
 
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.

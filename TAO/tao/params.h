@@ -86,6 +86,10 @@ public:
   void implrepo_service_ior (const ACE_CString &ir);
   // Set/Get the IOR of the Implementation Repository service.
 
+  CORBA::UShort implrepo_service_port (void) const;
+  void implrepo_service_port (CORBA::UShort port);
+  // Set/Get the port of the Implementation Repository service.
+
   int sock_rcvbuf_size (void) const;
   void sock_rcvbuf_size (int);
   // Set/Get the size to be used for a socket's receive buffer.
@@ -157,6 +161,9 @@ private:
 
   ACE_CString implrepo_service_ior_;
   // The IOR of our configured Implementation Repository.
+
+  CORBA::UShort implrepo_service_port_;
+  // The port number of our configured Implementation Repository.
 
   ACE_CString init_ref_;
   // Initial Reference supplied as <ObjectID>:<IOR>
