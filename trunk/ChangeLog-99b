@@ -2,9 +2,8 @@ Sat Dec 11 14:27:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Makefile.am (pkginclude_HEADERS):
 
-	  Split header file list into `.h' files (HEADER_FILES) and
-	  `.i' (INLINE_FILES).  This fixes gets around a limitation on
-	  Solaris.
+	  Split header file list into `.h' files (HEADER_FILES) and `.i'
+	  (INLINE_FILES).  This gets around a limitation on Solaris.
 
 Sat Dec 11 10:40:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
