@@ -7926,7 +7926,9 @@ ACE_OS::thr_yield (void)
 # elif defined (VXWORKS)
   // An argument of 0 to ::taskDelay doesn't appear to yield the
   // current thread.
-  ::taskDelay (1);
+  // Now, it does seem to work.  The context_switch_time test 
+  // works fine with task_delay set to 0.
+  ::taskDelay (0);
 # endif /* ACE_HAS_STHREADS */
 #else
   ;
