@@ -87,7 +87,7 @@ public:
   // - there is no space separating the value from the flag "-FooBarVALUE"
   //
   // This method is safe to call without checking for a valid
-  // current argument
+  // current argument.
 
   int consume_arg (int number = 1);
   // Consume <number> argument(s) by sticking them/it on the end of
