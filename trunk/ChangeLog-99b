@@ -1,3 +1,17 @@
+Tue Dec 07 13:25:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Based_Pointer_T.{h,cpp}: Added two constructors that take a
+	  base pointer for base_offset_ calculation.  They can be used
+	  when we already know the base address of the pointer to avoid an
+	  extra lookup from the Based_Pointer_Repository.
+
+	* ace/Malloc_T.i (init_malloc_header_ptr): Changed to initialize
+	  the pointer using the address of control block.  Notice that
+	  the address of the control block should never change during the
+	  lifetime of ACE_Malloc.
+
+	  Thanks to Irfan for noticing the performance issue.
+
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SOCK_Dgram.cpp (send): Added missing timed send.
