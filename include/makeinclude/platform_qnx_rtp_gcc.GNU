@@ -2,7 +2,6 @@
 
 # QNX/RTP hosted, using gcc-2.95.2
 
-ACE_HAS_GNUG_PRE_2_8 := 0
 
 inline = 1
 debug = 1
@@ -16,7 +15,7 @@ else
   CCLAGS += -fno-exceptions
   LDLAGS += -fno-exceptions
 endif # ! exceptions
- 
+
 CC      = gcc
 CXX     = g++
 DCFLAGS += -gstabs
@@ -35,5 +34,3 @@ ARFLAGS = ruv
 SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
-
-
