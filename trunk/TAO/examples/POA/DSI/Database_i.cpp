@@ -170,7 +170,7 @@ DatabaseImpl::Agent::create_entry (const char *key,
   CORBA::Object_var obj = this->poa_->create_reference_with_id (obj_id.in (),
                                                                 repository_id.in (),
                                                                 env);
-  Database::Entry_var entry = Database::Entry::_narrow (obj, env);
+  Database::Entry_var entry = Database::Entry::_narrow (obj.in (), env);
   if (env.exception () != 0)
     return Database::Entry::_nil ();
 
@@ -202,7 +202,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
       CORBA::Object_var obj = this->poa_->create_reference_with_id (obj_id.in (),
                                                                     repository_id.in (),
                                                                     env);
-      Database::Entry_var entry = Database::Entry::_narrow (obj, env);
+      Database::Entry_var entry = Database::Entry::_narrow (obj.in (), env);
       if (env.exception () != 0)
         return Database::Entry::_nil ();
 
@@ -323,3 +323,14 @@ DatabaseImpl::Employee::operator delete (void *pointer)
 { 
   DATABASE::instance ()->free (pointer); 
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Malloc_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Singleton<DatabaseImpl::Simpler_Malloc, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
