@@ -1,3 +1,12 @@
+Wed Mar  3 03:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/client.dsp:
+	* TAO/performance-tests/Cubit/TAO/DII_Cubit/README:
+	  Removed all the naming service stuff from DII_Cubit_Test.
+	  Made a note in the README file that the IDL server no
+	  longer uses it either.
+
 Tue Mar  2 17:36:29 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEventComm.idl:

@@ -1,10 +1,15 @@
 // $Id$
 
 This is the cubit example that does everything using DII requests. 
-It uses the server in IDL_Cubit. The initial call to resolve the 
-nameservice is made on the orb. After that, getting a reference
+It uses the server in IDL_Cubit. Getting a reference
 to the Cubit object, making the Cubit operation calls, 
 and shutting down the server are all done with DII requests.
+
+NOTES: The IDL_Cubit server used to run a Naming Service so the client
+        could easily locate it.  This proved too problematic, the test
+        required a complete compilation of the orbsvcs library and was
+        not reliable. The preferred method is to use a file to pass
+        the factory IOR between the server and the client.
 
 To run the tests with one "button-push", execute the perl script run_test.pl
 in this directory. It will start up the server and client. The client will
@@ -29,8 +34,7 @@ the following args:
 
 If using the -i option, you might want to run the server with the option 
 [-ORBobjrefstyle url]. This will cause the server to display its IOR in a 
-more human-readable form. Make sure you use the factory IOR, NOT the nameservice 
-IOR. The server displays both. The server can be run in the same window in the 
+more human-readable form. The server can be run in the same window in the 
 background, or in a different window.
 
 The command line options, default calls per loop, order and display format of the 
