@@ -50,6 +50,14 @@ namespace CIAO
            node = this->iter_->nextNode())
         {
           XStr node_name (node->getNodeName());
+
+          /*
+          if
+            (process_string(this->iter_->nextNode(), pc.label));
+          else if
+            (process_string(this->iter_->nextNode(), pc.uuid));
+          */
+
           if (node_name == XStr (ACE_TEXT ("label")))
             {
               // Fetch the text node which contains the "label"

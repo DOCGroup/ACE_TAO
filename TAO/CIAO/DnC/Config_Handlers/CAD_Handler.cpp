@@ -93,12 +93,12 @@ namespace CIAO
         {
           for (y = 0; y < cad.connection[x].internalEndpoint.length (); ++y)
             {
-              ref_value = cad.connection[x].internalEndpoint[y].instance;
+              ref_value = cad.connection[x].internalEndpoint[y].instanceRef;
               if (idref_map_.find (ref_value, ref_name) == 0)
                 {
                   if (id_map_.find (ref_name, value) == 0)
                     {
-                      cad.connection[x].internalEndpoint[y].instance= value;
+                      cad.connection[x].internalEndpoint[y].instanceRef= value;
                     }
                 }
             }
