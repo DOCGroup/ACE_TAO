@@ -2,6 +2,11 @@ Thu Dec 17 16:56:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/create_ace_build: try /bin/find if /usr/bin/find doesn't exist.
 
+        * ace/High_Res_Timer.cpp (elapsed_time): rearranged terms in
+          nanoseconds calculation to avoid overflow on machines that don't
+          have native 64-bit ints.  Thanks to Greg Holtmeyer
+          <gholtmeyer@mdc.com> for helping to track this problem down.
+
 Thu Dec 17 12:43:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace: Removed the use of ACE_DEBUG within handle_signal() methods
