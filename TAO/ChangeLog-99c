@@ -1,44 +1,50 @@
+Tue Feb 23 16:53:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run):
+          removed old comment that server shutdown would cause a
+          memPartFree on VxWorks.  It no longer does.
+
 Tue Feb 23 15:24:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	  Fixed some more g++ warnings in generated code. It was
-	  unused arg in the case of the union and an
-	  unnecessary ACE_NOTREACHED in the case of the objref. If
-	  g++ is going to complain now about this, we might need
-	  to add it to the list in the #define of ACE_NOTREACHED.
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+          Fixed some more g++ warnings in generated code. It was
+          unused arg in the case of the union and an
+          unnecessary ACE_NOTREACHED in the case of the objref. If
+          g++ is going to complain now about this, we might need
+          to add it to the list in the #define of ACE_NOTREACHED.
 
 Tue Feb 23 11:48:15 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp (start_client_stubs,
-          start_server_skeletons): removed #pragma once directives 
+          start_server_skeletons): removed #pragma once directives
           because they do not make sense in .cpp files, plus they
-          don't work with MSVC 5.  
+          don't work with MSVC 5.
 
 Mon Feb 22 20:34:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Totally broken.
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp: Totally broken.
 
-	* orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp: Fixed
-	  configurations.
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp: Fixed
+          configurations.
 
-	* orbsvcs/Concurrency_Service/Concurrency_Service.dsp: Fixed
-	  Release build settings.
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp: Fixed
+          Release build settings.
 
 Mon Feb 22 19:18:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* $TAO/examples/POA/RootPoa/RootPoa.cpp:
-	Fixed a anoying warning due to an unchecked exception
+        * $TAO/examples/POA/RootPoa/RootPoa.cpp:
+        Fixed a anoying warning due to an unchecked exception
 
-	* examples/Simple/Simple_util.cpp :
+        * examples/Simple/Simple_util.cpp :
 
-	* examples/Simple/bank/Makefile :
-	Updated dependencies
+        * examples/Simple/bank/Makefile :
+        Updated dependencies
 
 Mon Feb 22 19:13:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* examples/Simple/bank/Bank_Client_i.cpp:
-	  Removed an annoying warning due to an unchecked exception.
+        * examples/Simple/bank/Bank_Client_i.cpp:
+          Removed an annoying warning due to an unchecked exception.
 
 Mon Feb 22 19:15:09 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -52,10 +58,10 @@ Mon Feb 22 19:15:09 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Feb 22 14:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* rules.tao.GNU: Added rules to compile IDL files using Flick.
-	  You need to invoke a Makefile with "use_flick=1" command line
-	  flag.  Thanks to Tim Stack <stack@aros.net> for sending the
-	  detailed instruction.
+        * rules.tao.GNU: Added rules to compile IDL files using Flick.
+          You need to invoke a Makefile with "use_flick=1" command line
+          flag.  Thanks to Tim Stack <stack@aros.net> for sending the
+          detailed instruction.
 
 Mon Feb 22 12:34:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
