@@ -13,7 +13,7 @@ $file = PerlACE::LocalFile ("test.ior");
 
 unlink $file;
 
-$SV = new PerlACE::Process ("collocated", "-ORBobjrefstyle url");
+$SV = new PerlACE::Process ("Collocated_Test", "-ORBobjrefstyle url");
 
 print STDERR "\n\n==== Running interceptor Dynamic test\n";
 
