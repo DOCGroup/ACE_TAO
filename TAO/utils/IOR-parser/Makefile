@@ -12,15 +12,10 @@ BIN   	= ior-parser
 
 FILES  	= ior-handler
 
-LIBNAME  = libIOR
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
-
 SRC   	= $(addsuffix .cpp,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
 OBJ	= $(addsuffix .o,$(FILES))
 
-#BUILD	= $(VBIN)
+BUILD	= $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -30,7 +25,6 @@ include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
