@@ -474,7 +474,7 @@ TAO_GIOP_Message_Lite::
   const CORBA::Octet response_flags = opdetails.response_flags ();
 
   // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
-  if (response_flags == 131)
+  if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     out_stream << CORBA::Any::from_octet (1);
 
   // Sync scope - ignored by server if request is not oneway.

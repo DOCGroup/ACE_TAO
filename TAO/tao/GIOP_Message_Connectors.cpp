@@ -223,7 +223,7 @@ TAO_GIOP_Message_Connector_10::
   const CORBA::Octet response_flags = opdetails.response_flags ();
 
    // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
-  if (response_flags == 131)
+  if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     msg << CORBA::Any::from_octet (1);
   else 
     msg << CORBA::Any::from_octet (0);
@@ -398,7 +398,7 @@ TAO_GIOP_Message_Connector_12::
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'
   //
   // We have not implemented the policy INV_NO_RESPONSE for DII.
-  if (response_flags == 131)
+  if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     msg << CORBA::Any::from_octet (3);
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
