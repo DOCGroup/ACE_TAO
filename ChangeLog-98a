@@ -1,3 +1,13 @@
+Sun Feb 01 15:12:49 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * tests/OrdMultiSet_Test.cpp: added an ACE test for the 
+          ACE_Ordered_MultiSet and ACE_Ordered_MultiSet_Iterator
+          class templates.
+
+        * ace/Containers.i (ACE_Ordered_MultiSet<T>::is_empty ()):
+          changed to return 1 rather than cause a SEGV when the
+          container is in fact empty (the above test discovered the bug).
+
 1998-02-01  Nanbor Wang  <nanbor@fennec.wolfpack.cs.wustl.edu>
 
 	* ace/OS.h (struct utsname): Separated WCE's definition from
