@@ -1255,8 +1255,7 @@ ECM_Local_Federation::dump_results (void) const
 }
 
 void
-ECM_Local_Federation::subscribed_bit (CORBA::ULong i,
-				      CORBA::Boolean x)
+ECM_Local_Federation::subscribed_bit (int i, CORBA::Boolean x)
 {
   if (i > this->consumer_types ())
     return;
@@ -1264,7 +1263,7 @@ ECM_Local_Federation::subscribed_bit (CORBA::ULong i,
 }
 
 CORBA::Boolean
-ECM_Local_Federation::subscribed_bit (CORBA::ULong i) const
+ECM_Local_Federation::subscribed_bit (int i) const
 {
   if (i > this->consumer_types ())
     return 0;
