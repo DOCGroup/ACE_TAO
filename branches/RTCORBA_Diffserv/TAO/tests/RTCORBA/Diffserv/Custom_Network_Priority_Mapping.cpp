@@ -37,7 +37,7 @@ ACE_RCSID(Strategies, Custom_Network_Priority_Mapping, "$Id$")
 #define IPDSFIELD_DSCP_EF       0x2E
 
 
-int dscp [] =
+static int dscp [] =
   {
     // IPDSFIELD_DSCP_DEFAULT ,
     IPDSFIELD_DSCP_CS1     ,
@@ -62,7 +62,7 @@ int dscp [] =
     IPDSFIELD_DSCP_EF      
   };
 
-const char *dscp_char[]=
+static const char *dscp_char[]=
   {
     //"Normal",
     "CS1",
