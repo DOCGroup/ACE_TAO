@@ -414,6 +414,7 @@ public:
   // Return the <current_> message block in chain.
 
   const char *buffer (void) const;
+  // Access the underlying buffer (read only).
 
   size_t length (void) const;
   // Return the start and size of the internal buffer.  NOTE: This
@@ -544,9 +545,9 @@ public:
 
   ACE_InputCDR (const ACE_InputCDR& rhs);
   ACE_InputCDR& operator= (const ACE_InputCDR& rhs);
-  // Make a copy of the current stream state, but does not copy the
-  // internal buffer; so the same stream can be read multiple times
-  // efficiently.
+  // These make a copy of the current stream state, but do not copy
+  // the internal buffer, so the same stream can be read multiple
+  // times efficiently.
 
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
@@ -744,8 +745,10 @@ private:
   // for that case, but that would be too platform dependent.
 
   void rd_ptr (size_t offset);
+  // Move the rd_ptr ahead by <offset> bytes.
+
   char* end (void);
-  // Short cuts for the underlying message block.
+  // Points to the continuation field of the current message block.
 
   int adjust (size_t size,
               char *&buf);
