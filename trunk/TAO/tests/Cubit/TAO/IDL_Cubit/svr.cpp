@@ -107,20 +107,17 @@ main (int argc, char *argv[])
 					 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (TAO_debug_level > 0)
-	{
-	  CORBA::Object_var obj = 
-	    good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+      CORBA::Object_var obj = 
+	good_poa->id_to_reference (id.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-	  CORBA::String_var str =
-	    orb->object_to_string (obj.in (),
-				   TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+      CORBA::String_var str =
+	orb->object_to_string (obj.in (),
+			       TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-	  ACE_DEBUG ((LM_DEBUG,
-		      "The IOR is: <%s>\n", str.in ()));
-	}
+      ACE_DEBUG ((LM_DEBUG,
+		  "The IOR is: <%s>\n", str.in ()));
 
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
