@@ -1,3 +1,9 @@
+Mon Feb  3 11:30:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_recursive_tc):
+
+          Changed ACE_ENV_ARG_DECL_NOT_USED to ACE_ENV_ARG_DECL.        
+
 Wed Jan 29 20:47:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_context.cpp:
