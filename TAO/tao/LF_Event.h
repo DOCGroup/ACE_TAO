@@ -31,7 +31,7 @@ class TAO_LF_Follower;
  * responses, as well as to wait for all the data to be flushed.
  * This class encapsulates this event loop. It uses Template Method to
  * parametrize the 'waited for' predicate (i.e. reply received or
- * message sent.)
+ * message sent or connection establishment etc.)
  *
  * @todo Implementing the Leader/Followers loop in this class, as
  * well as the callbacks to communicate that an event has completed
@@ -71,19 +71,17 @@ public:
    *
    * A Leader/Followers event goes through several states during its
    * lifetime. We use an enum to represent those states and state
-   * changes are validated according to the rules below.
-   *
+   * changes are validated according to the rules defined in the
+   * concrete classes. We treat the states as finite states in a
+   * FSM. The possible sequence of states through which the FSM
+   * migrates is defined in the concrete classes.
    */
   enum {
-    /// The event is created, initial state can only move to
-    /// LFS_ACTIVE or LFS_CONNECTION_WAIT
-    LFS_IDLE,
-    /// The event is active, can change to any of the following
-    /// states, each of them is a final state
+    /// The event is created, and is in initial state
+    LFS_IDLE = 0,
+    /// The event is active
     LFS_ACTIVE,
-    /// The event is waiting for connection completion. It can change
-    /// to the any of the following states, each of them being a final
-    /// state.
+    /// The event is waiting for connection completion.
     LFS_CONNECTION_WAIT,
     /// The event has completed successfully
     LFS_SUCCESS,
@@ -91,45 +89,50 @@ public:
     LFS_FAILURE,
     /// The event has timed out
     LFS_TIMEOUT,
-    /// The connection was closed while the state was active
+    /// The connection was closed.
     LFS_CONNECTION_CLOSED
   };
 
-  /// Change the state
+  /**
+   * Virtual methods for this class hierarchy..
+   */
+  /// Accessor to change the state. The state isnt changed unless
+  /// certain conditions are satisfied.
   void state_changed (int new_state);
 
   /// Return 1 if the condition was satisfied successfully, 0 if it
   /// has not
-  int successful (void) const;
+  virtual int successful (void) const = 0 ;
 
   /// Return 1 if an error was detected while waiting for the
   /// event
-  int error_detected (void) const;
-  //@}
+  virtual int error_detected (void) const = 0;
 
   /// Check if we should keep waiting.
   int keep_waiting (void);
+  //@}
 
   /// Reset the state, irrespective of the previous states
   void reset_state (int new_state);
 
 protected:
-  /// Validate the state change
-  void state_changed_i (int new_state);
 
-private:
+  /// Validate the state change
+  virtual void state_changed_i (int new_state) = 0;
 
   /// Check whether we have reached the final state..
-  int is_state_final (void);
-
-  /// Set the state.
-  void set_state (int new_state);
+  virtual int is_state_final (void) = 0;
 
 private:
+
+  /// Set the state irrespective of anything.
+  virtual void set_state (int new_state);
+
+protected:
   /// The current state
   int state_;
 
-  /// The bound follower thread
+  /// The bounded follower
   TAO_LF_Follower *follower_;
 };
 
