@@ -41,8 +41,6 @@
 #include "tao/PortableServer/Collocated_Object.h"
 #include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
 #include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
-#include "tao/PortableServer/ServerRequestInfo.h"
-
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -106,31 +104,24 @@ TAO_NAMESPACE  POA_Messaging
         TAO_ServerRequest &req,
         void *obj,
         void *context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &_tao_req,
         void *_tao_context,
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     ::Messaging::ReplyHandler *_this (
-        CORBA::Environment &ACE_TRY_ENV =
+        CORBA::Environment &ACE_TRY_ENV = 
           TAO_default_environment ()
       );
 
     virtual const char* _interface_repository_id (void) const;
 
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-    // Generation of interceptors related RequestInfo classes per operation.
-    // This needed to be able to store the arguments, exceptions, contexts
-    // and build the lists dynamically on demand so that unnecessary time overhead
-    // of building these lists when they arent used is avoided.
-    #endif /* TAO_HAS_INTERCEPTORS */
 
   };
 

@@ -1,5 +1,5 @@
---- orig/MessagingS_T.i	Sat Mar 31 14:51:18 2001
-+++ PortableServer/MessagingS_T.i	Sat Mar 31 15:31:16 2001
+--- orig/MessagingS_T.i	Tue Apr  3 22:01:25 2001
++++ patched/MessagingS_T.i	Tue Apr  3 22:15:20 2001
 @@ -20,6 +20,7 @@
  //     http://www.cs.wustl.edu/~schmidt/TAO.html
  
