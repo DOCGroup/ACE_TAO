@@ -1,3 +1,10 @@
+Sat Jan 10 17:25:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.mpc:
+
+	  Added a missing file to the project. This was creating link
+	  error in VC71 builds.
+
 Sat Jan 10 12:27:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/FT_App/FT_App.mpc:

@@ -5,6 +5,11 @@
   exename   = ftrtec_gateway_service
   includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils
 
+  Source_Files {
+    FTRTEC_Gateway_Service.cpp
+    $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup_DSC.cpp
+  }
+
   specific(gnuace) {
    lit_libs += TAO_Strategies
   }
