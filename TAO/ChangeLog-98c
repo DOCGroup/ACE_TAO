@@ -1,3 +1,13 @@
+Sat Jan  3 14:58:21 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
+
+	* Task_Client.h, Util_Thread.cpp, Util_Thread.h, client.cpp, Task_Client.cpp, Makefile:
+	The Util_Thread class basically computes CPU usage. Integrated
+	this class with the MT_Cubit test, so that the Util_Thread
+	performs computation in the background while the test is
+	running. Also extended the test to use `n' clients talking to `n'
+	servants.
+
+
 Sat Jan 03 09:04:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/invoke.cpp (ACE_Synchronous_Cancellation_Required):
