@@ -45,38 +45,38 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   CORBA::ULong length;
   CORBA::Octet *buf = 0;
 
-  policy_value_seq.length(policy_list_->length());
+  policy_value_seq.length (policy_list_->length ());
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  for (size_t i = 0; i < policy_list_->length(); i++)
+  for (size_t i = 0; i < policy_list_->length (); i++)
     {
-      ACE_NEW(pv_ptr, Messaging::PolicyValue);
-    pv_ptr->ptype = (policy_list_)[i]->policy_type();
+      ACE_NEW (pv_ptr, Messaging::PolicyValue);
+    pv_ptr->ptype = policy_list_[i]->policy_type ();
 
-    policy_list_[i]->_tao_encode(outCDR);
+    policy_list_[i]->_tao_encode (outCDR);
 
-    length = outCDR.total_length();
-    pv_ptr->pvalue.length(length);
+    length = outCDR.total_length ();
+    pv_ptr->pvalue.length (length);
 
-    buf = pv_ptr->pvalue.get_buffer();
+    buf = pv_ptr->pvalue.get_buffer ();
 
     // Now I copy the CDR buffer data into the sequence<octect> buffer.
 
-    for (const ACE_Message_Block *iterator = outCDR.begin();
+    for (const ACE_Message_Block *iterator = outCDR.begin ();
          iterator != 0;
-         iterator = iterator->cont())
+         iterator = iterator->cont ())
     {
-      ACE_OS::memcpy(buf, iterator->rd_ptr(), iterator->length());
-      buf += iterator->length();
+      ACE_OS::memcpy(buf, iterator->rd_ptr (), iterator->length ());
+      buf += iterator->length ();
     }
 
-    policy_value_seq[i] = (*pv_ptr);
+    policy_value_seq[i] = *pv_ptr;
 
     // Reset the CDR buffer index so that the buffer can
     // be reused for the next conversion.
 
-    outCDR.reset();
+    outCDR.reset ();
   }
 
   // Now we have to embedd the Messaging::PolicyValueSeq into
@@ -87,19 +87,19 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   tagged_component.tag = Messaging::TAG_POLICIES;
   outCDR << policy_value_seq;
 
-  buf = tagged_component.component_data.get_buffer();
+  buf = tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = outCDR.begin();
+  for (const ACE_Message_Block *iterator = outCDR.begin ();
        iterator != 0;
-       iterator = iterator->cont())
+       iterator = iterator->cont ())
   {
-    ACE_OS::memcpy(buf, iterator->rd_ptr(), iterator->length());
-    buf += iterator->length();
+    ACE_OS::memcpy(buf, iterator->rd_ptr (), iterator->length ());
+    buf += iterator->length ();
   }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
-  tagged_components_.set_component(tagged_component);
+  tagged_components_.set_component (tagged_component);
   are_policies_parsed_ = 1;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -107,89 +107,90 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
 
 CORBA::PolicyList&
-TAO_Profile::policies ()
+TAO_Profile::policies (void)
 {
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  if(!are_policies_parsed_)
-  {
-    IOP::TaggedComponent tagged_component;
-    tagged_component.tag = Messaging::TAG_POLICIES;
-
-
-    // This gets a component with the proper "tag" field
-    // if it exists.
-    if (tagged_components_.get_component(tagged_component))
+  if (!are_policies_parsed_)
     {
-      const CORBA::Octet *buf = tagged_component.component_data.get_buffer();
-
-      TAO_InputCDR inCDR(ACE_reinterpret_cast(const char*, buf),
-                         tagged_component.component_data.length());
-
-      // Now we take out the Messaging::PolicyValueSeq out from the
-      // CDR.
-      Messaging::PolicyValueSeq policy_value_seq;
-      inCDR >> policy_value_seq;
-
-
-      // Here we extract the Messaging::PolicyValue out of the sequence
-      // and we convert those into the proper CORBA::Policy
-
-      CORBA::Policy *policy = 0;
-      CORBA::ULong length = policy_value_seq.length ();
-      CORBA::PolicyList *plp = 0;
-
-      _create_policy_list (length);
-
-      this->policy_list_ = plp;
-
-      policy_list_->length (length);
-
-      for (CORBA::ULong i = 0; i < length; i++)
-      {
-        policy = Policy_Factory::create_policy(policy_value_seq[i].ptype);
-        if (policy != 0)
+      IOP::TaggedComponent tagged_component;
+      tagged_component.tag = Messaging::TAG_POLICIES;
+      
+      
+      // This gets a component with the proper "tag" field
+      // if it exists.
+      if (tagged_components_.get_component (tagged_component))
         {
-          buf = policy_value_seq[i].pvalue.get_buffer();
-
-          TAO_InputCDR inCDR(ACE_reinterpret_cast(const char*, buf),
-                             policy_value_seq[i].pvalue.length());
-
-          policy->_tao_decode(inCDR);
-
-          policy_list_[i] = policy;
+          const CORBA::Octet *buf = tagged_component.component_data.get_buffer ();
+          
+          TAO_InputCDR inCDR( ACE_reinterpret_cast (const char*, buf),
+                              tagged_component.component_data.length () );
+          
+          // Now we take out the Messaging::PolicyValueSeq out from the
+          // CDR.
+          Messaging::PolicyValueSeq policy_value_seq;
+          inCDR >> policy_value_seq;
+          
+          
+          // Here we extract the Messaging::PolicyValue out of the sequence
+          // and we convert those into the proper CORBA::Policy
+          
+          CORBA::Policy *policy = 0;
+          CORBA::ULong length = policy_value_seq.length ();
+          CORBA::PolicyList *plp = 0;
+          
+          create_policy_list (length);
+          
+          this->policy_list_ = plp;
+          
+          policy_list_->length (length);
+          
+          for (CORBA::ULong i = 0; i < length; i++)
+            {
+              policy = Policy_Factory::create_policy (policy_value_seq[i].ptype);
+              if (policy != 0)
+                {
+                  buf = policy_value_seq[i].pvalue.get_buffer ();
+                  
+                  TAO_InputCDR inCDR (ACE_reinterpret_cast (const char*, buf),
+                                      policy_value_seq[i].pvalue.length ());
+                  
+                  policy->_tao_decode (inCDR);
+                  
+                  policy_list_[i] = policy;
+                }
+              else
+                {
+                  // @@ Irfan and Marina, Should I through an exception???
+                }
+            }
         }
-        else
+      else // Create an empty list if no policies were exposed.
         {
-        // @@ Irfan and Marina, Should I through an exception???
+          create_policy_list (1);
+          policy_list_->length (0);
         }
-      }
+      
     }
-    else // Create an empty list
-      {
-        _create_policy_list (1);
-        policy_list_->length(0);
-      }
-
-  }
-
+  
   return policy_list_;
+  
+#else /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
-#else
-  _create_policy_list (1);
-  policy_list_->length(0);
-
-#endif
+  create_policy_list (1);
+  policy_list_->length (0);
+  
+#endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 }
 
 void
-TAO_Profile::_create_policy_list (int length)
+TAO_Profile::create_policy_list (int length)
 {
   CORBA::PolicyList *plist = 0;
   ACE_NEW (plist, CORBA::PolicyList (length));
   policy_list_ = plist;
-  policy_list_->length(length);
+  policy_list_->length (length);
 }
 
 // ****************************************************************

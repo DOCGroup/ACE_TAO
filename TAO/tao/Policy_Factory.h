@@ -1,4 +1,5 @@
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -22,7 +23,7 @@
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
-#endif // ACE_LACKS_PRAGMA_ONCE 
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
 class TAO_Export Policy_Factory {
@@ -38,18 +39,18 @@ class TAO_Export Policy_Factory {
 public:
   
   static CORBA::Policy * create_policy (CORBA::PolicyType ptype);
-  // Creates a RTPolicy of the type specified by the parameter CORBA::PolicyType ptype
+  // Creates a Policy of the type specified by the parameter CORBA::PolicyType ptype
   // NULL is returned if the policy type is unknown.
 
 protected:
-  Policy_Factory(void);
+  Policy_Factory (void);
   
 };
 
 
 #if defined (__ACE_INLINE__)
 # include "tao/Policy_Factory.i"
-#endif // __ACE_INLINE__ 
+#endif /* __ACE_INLINE__ */
 
 
 #endif // defined (RTPOLICY_FACTORY_H_)
