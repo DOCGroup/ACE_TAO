@@ -1,3 +1,6 @@
+Mon Mar 19 08:32:34 2002  Boris Kolpackov  <bosk@ipmce.ru>
+	* THANKS: Added Chen Jian <jchen@huawei.com> to the Hall of fame.
+	
 Sun Mar 17 18:22:12 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_freebsd.GNU: Copy lines from
