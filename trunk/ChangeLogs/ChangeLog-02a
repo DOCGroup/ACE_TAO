@@ -1,3 +1,10 @@
+Sat Aug 25 08:42:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp: Fixed warnings with g++. I
+	  am not sure how this fix will be accepted on different
+	  compilers.  Things are always dicy when you want to delete a
+	  void *. 
+
 Fri Aug 24 23:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added File_IO test to our daily builds. 
