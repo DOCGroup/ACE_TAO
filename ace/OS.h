@@ -2249,7 +2249,7 @@ typedef CRITICAL_SECTION ACE_thread_mutex_t;
 
 #     if defined (ACE_HAS_PACE)
 typedef pace_pthread_mutex_t ACE_mutex_t;
-#     else 
+#     else
 typedef struct
 {
   int type_; // Either USYNC_THREAD or USYNC_PROCESS
