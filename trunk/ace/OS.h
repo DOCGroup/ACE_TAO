@@ -584,6 +584,25 @@ typedef int clockid_t;
 #endif /* CLOCK_REALTIME */
 #endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
+// IRIX5 defines bzero() in this odd file...
+#if defined (ACE_HAS_BSTRING)
+#include /**/ <bstring.h>
+#endif /* ACE_HAS_BSTRING */
+
+// IRIX5.3 defines timeval in this odd file...
+#if defined (IRIX5)
+#include /**/ <unistd.h>
+#endif /* IRIX5 */
+
+// AIX defines bzero() in this odd file...
+#if defined (ACE_HAS_STRINGS)
+#include /**/ <strings.h>
+#endif /* ACE_HAS_STRINGS */
+
+#if defined (ACE_HAS_TERM_IOCTLS)
+#include /**/ <sys/termios.h>
+#endif /* ACE_HAS_TERM_IOCTLS */
+
 class ACE_Export ACE_Time_Value
   // = TITLE
   //     Operations on "timeval" structures.
@@ -2458,20 +2477,6 @@ extern "C"
   int t_unbind(int fildes);
 }
 #endif /* !ACE_HAS_TLI_PROTOTYPES */
-
-// IRIX5 defines bzero() in this odd file...
-#if defined (ACE_HAS_BSTRING)
-#include /**/ <bstring.h>
-#endif /* ACE_HAS_BSTRING */
-
-// AIX defines bzero() in this odd file...
-#if defined (ACE_HAS_STRINGS)
-#include /**/ <strings.h>
-#endif /* ACE_HAS_STRINGS */
-
-#if defined (ACE_HAS_TERM_IOCTLS)
-#include /**/ <sys/termios.h>
-#endif /* ACE_HAS_TERM_IOCTLS */
 
 #if defined (ACE_LACKS_MMAP)
 #define PROT_READ 0
