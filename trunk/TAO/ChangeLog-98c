@@ -4,6 +4,11 @@ Mon Sep 28 14:41:48 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Brian Mendel <brian.r.mendel@boeing.com> for
           reporting link failure without it on NT.
 
+        * tao/Object_Table.i (TAO_Object_Table_Impl::create_object_id): added
+          comment noting that the function is supposed to always fail.
+          Only TAO_Active_Demux_ObjTable::create_object_id is supposed to
+          succeed.
+
 Mon Sep 28 02:26:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/POA: Added ability to support perl scripts for running
