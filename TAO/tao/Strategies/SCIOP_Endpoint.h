@@ -107,6 +107,12 @@ public:
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
+  /// Do we have a preferred local network for the target?
+  bool is_preferred_network (void) const;
+
+  /// Return the preferred network if any.
+  const char *preferred_network (void) const;
+
 private:
 
   /// Helper method for setting INET_Addr.
@@ -115,6 +121,19 @@ private:
 
   /// Helper method for object_addr ().
   void object_addr_i (void) const;
+
+  /// Generate preferred interfaces from the options passed in by the
+  /// user.
+  CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
+
+  /// Canonical copy constructor
+  /**
+   * In private section to prevent clients from invoking this
+   * accidentally. Clients should only use duplicate () to make a depp
+   * copy
+   */
+  TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &);
+
 
   /// String representing the host name.
   CORBA::String_var host_;
@@ -129,10 +148,12 @@ private:
   /// Flag to indicate if the address has been resolved and set.
   mutable int object_addr_set_;
 
+  /// Preferred path for this endpoint.
+  TAO::IIOP_Endpoint_Info preferred_path_;
+
   /// SCIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_SCIOP_Endpoint *next_;
-
 };
 
 

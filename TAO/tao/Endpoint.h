@@ -109,14 +109,6 @@ protected:
   /// Cache the hash value
   CORBA::ULong hash_val_;
 
-private:
-
-  /// Endpoints should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Endpoint (const TAO_Endpoint&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
-
-private:
-
   /// IOP tag, identifying the protocol for which this endpoint
   /// contains addressing info.
   CORBA::ULong tag_;
@@ -128,6 +120,11 @@ private:
    */
   CORBA::Short priority_;
 
+private:
+
+  /// Endpoints should not be copied.
+  ACE_UNIMPLEMENTED_FUNC (TAO_Endpoint (const TAO_Endpoint&))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
 };
 
 

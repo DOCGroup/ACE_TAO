@@ -157,16 +157,25 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   TAO_Transport *transport = 0;
 
-  while (tao_endpoint != 0) {
-    TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
-    if (sciop_endpoint != 0) {
-      transport = make_connection_i (r, desc, timeout, sciop_endpoint);
-      if (transport) {
-        break;
-      }
+  // @@ ATL folks, is this while loop needed?
+  // TAO_Default_Endpoint_Selector has this code already, i.e., the
+  // loop.
+  while (tao_endpoint != 0)
+    {
+      TAO_SCIOP_Endpoint *sciop_endpoint =
+        this->remote_endpoint (tao_endpoint);
+
+      if (sciop_endpoint != 0)
+        {
+          transport =
+            this->make_connection_i (r, desc, timeout, sciop_endpoint);
+          if (transport)
+            {
+              break;
+            }
+        }
+      tao_endpoint = tao_endpoint->next();
     }
-    tao_endpoint = tao_endpoint->next();
-  }
 
   return transport;
 }
@@ -214,10 +223,18 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 
   ACE_Multihomed_INET_Addr local_address;
 
-  int result = this->base_connector_.connect (svc_handler,
-                                              multihomed,
-                                              synch_options,
-                                              local_address);
+  bool pn =
+    sciop_endpoint->is_preferred_network ();
+
+  if (pn)
+    local_addr.set ((u_short) 0,
+                    sciop_endpoint->preferred_network ());
+
+  int result =
+    this->base_connector_.connect (svc_handler,
+                                   multihomed,
+                                   synch_options,
+                                   local_address);
 
   // This call creates the service handler and bumps the #REFCOUNT# up
   // one extra.  There are three possibilities: (a) connection
