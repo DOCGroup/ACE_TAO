@@ -142,6 +142,7 @@ OBJFILES = \
 	$(OBJDIR)\Reactor.obj \
         $(OBJDIR)\Reactor_Notification_Strategy.obj \
 	$(OBJDIR)\Read_Buffer.obj \
+        $(OBJDIR)\Recyclable.obj \
         $(OBJDIR)\Refcountable.obj \
 	$(OBJDIR)\Registry.obj \
 	$(OBJDIR)\Registry_Name_Space.obj \

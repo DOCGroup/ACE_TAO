@@ -1,3 +1,8 @@
+Wed Dec 12 07:29:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Makefile.bor:
+          Added Recycable
+
 Tue Dec 11 12:17:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.h (ACE_SSL_Accept_Handler):
@@ -6,7 +11,7 @@ Tue Dec 11 12:17:45 2001  Ossama Othman  <ossama@uci.edu>
 	  Accept a reference to the flag that causes the calling thread's
 	  event loop to stop on error.  See below for details.
 
-	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept): 
+	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
 	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 
 	  Return 1 if errno == EWOULDBLOCK and SSL_pending() return a
