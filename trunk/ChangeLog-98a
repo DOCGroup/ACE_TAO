@@ -10,6 +10,13 @@ Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.vxworks: updated VxWorks test status.
 
+        * ace/Basic_Types.h: look for ULONGLONG_MAX, which Irix 6.x uses.
+          Thanks to Carlos for reporting this.
+
+        * tests/Time_Value_Test.cpp: fixed #ifdefs so that ACE_ULongLong
+          isn't tested on Irix 6.x, etc.  Thanks to Carlos for tripping
+          over this.
+
 Thu Dec 18 00:15:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.6, released Thu Dec 18 00:15:02 1997.
