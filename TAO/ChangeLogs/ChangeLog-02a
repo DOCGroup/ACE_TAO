@@ -1,3 +1,16 @@
+Fri Apr 19 12:13:17 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.cpp:
+
+	  Include "ace/OS.h" to pull in "ACE_OS" methods.  Necessitated by
+	  recent inter-header dependency reductions.
+
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
+	  (TAO_Diamond_Top_Default_Proxy_Factory):
+
+	  Include "ace/svc_export.h" to pull definition of ACE_Svc_Export
+	  macro.
+
 Thu Apr 18 15:03:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Table.h:
