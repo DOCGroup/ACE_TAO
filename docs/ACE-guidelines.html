@@ -193,7 +193,7 @@ The correct way to write that guard is:
           typedef long ACE_NETIF_TYPE;
         # define ACE_DEFAULT_NETIF 0
         #else  /* ! ACE_PSOS */
-          typedef const ASYS_TCHAR* ACE_NETIF_TYPE;
+          typedef const TCHAR* ACE_NETIF_TYPE;
         # define ACE_DEFAULT_NETIF ASYS_TEXT("le0")
         #endif /* ! ACE_PSOS */
         </pre><p>
@@ -205,7 +205,7 @@ The correct way to write that guard is:
           // pSOS supports numbers, not names for network interfaces
           long net_if,
         #else  /* ! ACE_PSOS */
-          const ASYS_TCHAR *net_if,
+          const TCHAR *net_if,
         #endif /* ! ACE_PSOS */
         </pre><p>
 
@@ -713,7 +713,7 @@ Foo::bar ()
 
   <!-- @@ UNICODE: update -->
   For now, don't worry about it.
-    
+
   <li><strong>Exceptions</strong><p>
 
   <ul>
