@@ -260,10 +260,13 @@ public:
   // Insert I/O <Event_Handler> entry into the system. This method
   // assumes that the lock are head *before* this method is invoked.
 
-  int unbind (ACE_HANDLE, ACE_Reactor_Mask mask);
+  int unbind (ACE_HANDLE,
+              ACE_Reactor_Mask mask);
   // Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
 
-  int unbind_i (ACE_HANDLE, ACE_Reactor_Mask mask, int &changes_required);
+  int unbind_i (ACE_HANDLE,
+                ACE_Reactor_Mask mask,
+                int &changes_required);
   // Non-lock-grabbing version of <unbind>
 
   void unbind_all (void);
@@ -295,18 +298,21 @@ public:
   int scheduled_for_deletion (size_t index) const;
   // Check to see if <index> has been scheduled for deletion
 
-  int add_network_events_i (ACE_Reactor_Mask mask,
-                            ACE_HANDLE io_handle,
-                            long &new_mask,
-                            ACE_HANDLE &event_handle,
-                            int &delete_event);
-  // This method is used to calculate the network mask after a
-  // register request to <WFMO_Reactor>. Note that because the
-  // <Event_Handler> may already be in the handler repository, we may
-  // have to find the old event and the old network events
+  int modify_network_events_i (ACE_HANDLE io_handle,
+                               ACE_Reactor_Mask new_masks,
+                               ACE_Reactor_Mask &old_masks,
+                               long &new_network_events,
+                               ACE_HANDLE &event_handle,
+                               int &delete_event,
+                               int operation);
+  // This method is used to calculate the network mask after a mask_op
+  // request to <WFMO_Reactor>. Note that because the <Event_Handler>
+  // may already be in the handler repository, we may have to find the
+  // old event and the old network events
 
-  void remove_network_events_i (long &existing_masks,
-                                ACE_Reactor_Mask to_be_removed_masks);
+  ACE_Reactor_Mask bit_ops (long &existing_masks,
+                            ACE_Reactor_Mask to_be_removed_masks,
+                            int operation);
   // This method is used to change the network mask left (if any)
   // after a remove request to <WFMO_Reactor>
 
@@ -786,13 +792,16 @@ public:
   // registered with WFMO_Reactor.
 
   virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
-                             ACE_Reactor_Mask mask);
-  // This method is identical to the <remove_handler> method.
+                             ACE_Reactor_Mask masks_to_be_deleted);
+  // Remove <masks_to_be_deleted> to the <handle>'s entry in
+  // WFMO_Reactor.  The Event_Handler associated with <handle> must
+  // already have been registered with WFMO_Reactor.
 
   virtual int cancel_wakeup (ACE_HANDLE handle,
-                             ACE_Reactor_Mask mask);
-  // This method is identical to the <remove_handler> method.
-
+                             ACE_Reactor_Mask masks_to_be_deleted);
+  // Remove <masks_to_be_deleted> to the <handle>'s entry in
+  // WFMO_Reactor.  The Event_Handler associated with <handle> must
+  // already have been registered with WFMO_Reactor.
 
   // = Notification methods.
 
@@ -867,14 +876,18 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   virtual int mask_ops (ACE_Event_Handler *event_handler,
-                        ACE_Reactor_Mask mask,
-                        int ops);
-  // Not implemented
+                        ACE_Reactor_Mask masks,
+                        int operation);
+  // Modify <masks> of the <event_handler>'s entry in WFMO_Reactor
+  // depending upon <operation>.  <event_handler> must already have
+  // been registered with WFMO_Reactor.
 
   virtual int mask_ops (ACE_HANDLE handle,
-                        ACE_Reactor_Mask mask,
+                        ACE_Reactor_Mask masks,
                         int ops);
-  // Not implemented
+  // Modify <masks> of the <handle>'s entry in WFMO_Reactor depending
+  // upon <operation>.  <handle> must already have been registered
+  // with WFMO_Reactor.
 
   // = Low-level ready_set mask manipulation methods.
 
@@ -895,10 +908,6 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual int schedule_wakeup_i (ACE_HANDLE handle,
-                                 ACE_Reactor_Mask masks_to_be_added);
-  // Scheduling workhorse
-
   virtual int register_handler_i (ACE_HANDLE event_handle,
                                   ACE_HANDLE io_handle,
                                   ACE_Event_Handler *event_handler,
@@ -908,6 +917,11 @@ protected:
   virtual int event_handling (ACE_Time_Value *max_wait_time = 0,
                               int alertable = 0);
   // Event handling workhorse
+
+  virtual int mask_ops_i (ACE_HANDLE io_handle,
+                          ACE_Reactor_Mask masks,
+                          int operation);
+  // Bit masking workhorse
 
   virtual ACE_thread_t owner_i (void);
   // Return the ID of the "owner" thread. Does not do any locking.

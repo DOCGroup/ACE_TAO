@@ -693,17 +693,21 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
   ACE_FDS_PTMF ptmf  = &ACE_Handle_Set::set_bit;
   u_long omask = ACE_Event_Handler::NULL_MASK;
 
+  // Find the old reactor masks.  This automatically does the work of
+  // the GET_MASK operation.
+  if (handle_set.rd_mask_.is_set (handle))
+    ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
+  if (handle_set.wr_mask_.is_set (handle))
+    ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
+  if (handle_set.ex_mask_.is_set (handle))
+    ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
+
   switch (ops)
     {
     case ACE_Reactor::GET_MASK:
-      if (handle_set.rd_mask_.is_set (handle))
-        ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
-      if (handle_set.wr_mask_.is_set (handle))
-        ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
-      if (handle_set.ex_mask_.is_set (handle))
-        ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
+      // The work for this operation is done in all cases at the
+      // begining of the function.
       break;
-
     case ACE_Reactor::CLR_MASK:
       ptmf = &ACE_Handle_Set::clr_bit;
       /* FALLTHRU */
@@ -725,7 +729,6 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.rd_mask_.*ptmf) (handle);
-          ACE_SET_BITS (omask, ACE_Event_Handler::READ_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.rd_mask_.clr_bit (handle);
@@ -737,7 +740,6 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
                               ACE_Event_Handler::CONNECT_MASK))
         {
           (handle_set.wr_mask_.*ptmf) (handle);
-          ACE_SET_BITS (omask, ACE_Event_Handler::WRITE_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.wr_mask_.clr_bit (handle);
@@ -751,7 +753,6 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
           )
         {
           (handle_set.ex_mask_.*ptmf) (handle);
-          ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
         }
       else if (ops == ACE_Reactor::SET_MASK)
         handle_set.ex_mask_.clr_bit (handle);

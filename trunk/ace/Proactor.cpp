@@ -3,6 +3,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Proactor.h"
 #include "ace/Proactor_Impl.h"
+#include "ace/Object_Manager.h"
 
 ACE_RCSID(ace, Proactor, "$Id$")
 
