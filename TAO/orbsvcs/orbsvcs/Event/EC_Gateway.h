@@ -36,6 +36,7 @@
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
+#include "orbsvcs/orbsvcs_export.h"
 
 class TAO_ORBSVCS_Export TAO_EC_Gateway
 {
@@ -53,14 +54,14 @@ class TAO_ORBSVCS_Export TAO_EC_Gateway
   //
   //   This is an abstract class to represent all the different
   //   strategies for EC distribution.
-  // 
+  //
 public:
   virtual ~TAO_EC_Gateway (void);
   // Destructor
 
   virtual void open (const RtecEventChannelAdmin::ConsumerQOS& subscriptions,
-		     const RtecEventChannelAdmin::SupplierQOS& publications,
-		     CORBA::Environment& env) = 0;
+                     const RtecEventChannelAdmin::SupplierQOS& publications,
+                     CORBA::Environment& env) = 0;
   // This method is invoked to create the first connection to the ECs
 
   virtual void close (CORBA::Environment& env) = 0;
@@ -68,16 +69,16 @@ public:
   // or any other communication media (such as multicast groups).
 
   virtual void update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
-				RtecEventChannelAdmin::SupplierQOS& pub,
-				CORBA::Environment& env) = 0;
+                                RtecEventChannelAdmin::SupplierQOS& pub,
+                                CORBA::Environment& env) = 0;
   // The subscription list in the managing EC has changed, thus the
   // gateway must reconnect (or update its connection) to the remote
   // EC.  The SupplierQOS can be used if the gateway also connect as a
   // consumer.
 
   virtual void update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
-				RtecEventChannelAdmin::SupplierQOS& pub,
-				CORBA::Environment& env) = 0;
+                                RtecEventChannelAdmin::SupplierQOS& pub,
+                                CORBA::Environment& env) = 0;
   // The publication list in the managing EC has changed, thus the
   // gateway must reconnect (or update its connection) to the remote
   // EC.  The ConsumerQOS can be used if the gateway also connect as a
@@ -119,12 +120,12 @@ public:
   ~TAO_EC_Gateway_IIOP (void);
 
   void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-	     RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
-	     RtecScheduler::Scheduler_ptr rmt_sched,
-	     RtecScheduler::Scheduler_ptr lcl_sched,
-	     const char* lcl_name,
-	     const char* rmt_name,
-	     CORBA::Environment &_env);
+             RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+             RtecScheduler::Scheduler_ptr rmt_sched,
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
+             const char* rmt_name,
+             CORBA::Environment &_env);
   // To do its job this class requires to know the local and remote
   // ECs it will connect to; furthermore it also requires to build
   // RT_Infos for the local and remote schedulers.
@@ -138,7 +139,7 @@ public:
   // The channel is disconnecting.
 
   void push (const RtecEventComm::EventSet &events,
-	     CORBA::Environment &);
+             CORBA::Environment &);
   // This is the Consumer side behavior, it pushes the events to the
   // local event channel.
 
@@ -147,15 +148,15 @@ public:
 
   // The following methods are documented in the base class.
   virtual void open (const RtecEventChannelAdmin::ConsumerQOS& subscriptions,
-		     const RtecEventChannelAdmin::SupplierQOS& publications,
-		     CORBA::Environment &_env);
+                     const RtecEventChannelAdmin::SupplierQOS& publications,
+                     CORBA::Environment &_env);
   virtual void close (CORBA::Environment& _env);
   virtual void update_consumer (RtecEventChannelAdmin::ConsumerQOS& sub,
-				RtecEventChannelAdmin::SupplierQOS& pub,
-				CORBA::Environment& env);
+                                RtecEventChannelAdmin::SupplierQOS& pub,
+                                CORBA::Environment& env);
   virtual void update_supplier (RtecEventChannelAdmin::ConsumerQOS& sub,
-				RtecEventChannelAdmin::SupplierQOS& pub,
-				CORBA::Environment& env);
+                                RtecEventChannelAdmin::SupplierQOS& pub,
+                                CORBA::Environment& env);
 
 private:
   RtecEventChannelAdmin::EventChannel_var rmt_ec_;
