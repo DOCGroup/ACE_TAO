@@ -71,7 +71,7 @@ main (int argc, char **argv)
       ACE_OS::memset (buf, 1, max_message_size);
 
       while (iterations--)
-        if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+        if (log.log_message (Log_Wrapper::LOG_DEBUG, buf) == -1)
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log"), -1);
     }
 
@@ -107,7 +107,7 @@ main (int argc, char **argv)
 	    ACE_OS::sleep (1);
 
           // Send the message to the logger.
-          if (log.log_message (Log_Wrapper::LM_DEBUG, buf) == -1)
+          if (log.log_message (Log_Wrapper::LOG_DEBUG, buf) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n" "log_message"), -1);
 	  ACE_DEBUG ((LM_DEBUG, "finished sending message %d\n", count++));
         } 
