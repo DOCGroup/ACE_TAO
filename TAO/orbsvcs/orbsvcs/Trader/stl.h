@@ -36,6 +36,7 @@ using std::stack;
 using std::less;
 using std::pair;
 using std::multimap;
+using std::make_pair;
 
 //#endif // ACE_USES
 

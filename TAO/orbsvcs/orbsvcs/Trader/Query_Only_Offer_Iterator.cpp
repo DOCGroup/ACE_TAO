@@ -48,8 +48,8 @@ TAO_Query_Only_Offer_Iterator::max_left (CORBA::Environment& _env)
 
 CORBA::Boolean 
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n, 
-				       OfferSeq_out offers,
-				       CORBA::Environment& _env) 
+                                       CosTrading::OfferSeq_out offers,
+				                                CORBA::Environment& _env) 
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   offers = new CosTrading::OfferSeq;
