@@ -22,7 +22,7 @@
 #include "ace/Name_Space.h"
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
-#include "Local_Name_Space.h"
+#include "ace/Local_Name_Space.h"
 
 // A short-hand name for our set of name/value/type tuples passed back
 // to callers.

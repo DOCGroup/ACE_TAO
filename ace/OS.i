@@ -4993,6 +4993,7 @@ ACE_OS::dlclose (void *handle)
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary ((HMODULE) handle), ace_result_), int, -1);
 #else
+  ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
@@ -5032,6 +5033,8 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 	
   ACE_OSCALL_RETURN (::LoadLibraryA (filename), void *, 0);
 #else
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
@@ -5049,6 +5052,8 @@ ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::GetProcAddress ((HMODULE) handle, symbolname), void *, 0);
 #else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (symbolname);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
