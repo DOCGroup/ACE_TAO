@@ -1,3 +1,15 @@
+Fri Jan 23 07:38:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/README:
+        * ace/OS_NS_time.h:
+          Added ace_timezone implementation for use with Dinkum STL, which
+          lacks _timezone. For this added ACE_HAS_DINKUM_STL which can be
+          set when using the Dinkum STL version.
+
+        * ace/config-win32-borland.h:
+          The new CBuilderX preview compiler uses Dinkum STL, so se then
+          ACE_HAS_DINKUM_STL
+
 Thu Jan 22 19:57:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Makefile.am (install-data-local):
