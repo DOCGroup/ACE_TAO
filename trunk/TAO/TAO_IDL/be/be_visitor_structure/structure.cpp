@@ -77,12 +77,6 @@ be_visitor_structure::visit_field (be_field *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_field_cdr_op_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_field_cdr_op_cs visitor (&ctx);

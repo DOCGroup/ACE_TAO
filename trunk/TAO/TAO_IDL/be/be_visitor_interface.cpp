@@ -64,7 +64,6 @@
 #include "be_visitor_interface/any_op_ch.cpp"
 #include "be_visitor_interface/any_op_cs.cpp"
 #include "be_visitor_interface/cdr_op_ch.cpp"
-#include "be_visitor_interface/cdr_op_ci.cpp"
 #include "be_visitor_interface/cdr_op_cs.cpp"
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"

@@ -8,7 +8,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_ci.cpp
+//    cdr_op_cs.cpp
 //
 // = DESCRIPTION
 //    Visitors for generation of code for Enum for the CDR operators
@@ -19,7 +19,7 @@
 // ============================================================================
 
 ACE_RCSID (be_visitor_enum, 
-           cdr_op_ci, 
+           cdr_op_cs, 
            "$Id$")
 
 
@@ -28,19 +28,19 @@ ACE_RCSID (be_visitor_enum,
 // stubs file.
 // ***************************************************************************
 
-be_visitor_enum_cdr_op_ci::be_visitor_enum_cdr_op_ci (be_visitor_context *ctx)
+be_visitor_enum_cdr_op_cs::be_visitor_enum_cdr_op_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_enum_cdr_op_ci::~be_visitor_enum_cdr_op_ci (void)
+be_visitor_enum_cdr_op_cs::~be_visitor_enum_cdr_op_cs (void)
 {
 }
 
 int
-be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
+be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
 {
-  if (node->cli_inline_cdr_op_gen () || node->imported ())
+  if (node->cli_stub_cdr_op_gen () || node->imported ())
     {
       return 0;
     }
@@ -50,16 +50,14 @@ be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "ACE_INLINE" << be_nl
-      << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
+  *os << "CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ULong _tao_temp = _tao_enumval;" << be_nl
       << "return strm << _tao_temp;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "ACE_INLINE" << be_nl
-      << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
+  *os << "CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_enumval)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::ULong _tao_temp = 0;" << be_nl
@@ -72,6 +70,6 @@ be_visitor_enum_cdr_op_ci::visit_enum (be_enum *node)
       << "return _tao_result;" << be_uidt_nl
       << "}";
 
-  node->cli_inline_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (I_TRUE);
   return 0;
 }

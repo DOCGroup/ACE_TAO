@@ -2864,8 +2864,15 @@ idl_store_pragma (char *buf)
 
       if (new_id != 0)
         {
+          if (d->typeid_set ())
+            {
+              idl_global->err ()->id_reset_error (d->repoID (),
+                                                  new_id);
+              return;
+            }
+            
           d->repoID (new_id);
-          d->typeid_set (1);
+          d->typeid_set (I_TRUE);
         }
     }
 }

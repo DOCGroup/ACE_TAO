@@ -26,6 +26,5 @@
 #include "be_visitor_eventtype_fwd/eventtype_fwd_ch.h"
 #include "be_visitor_eventtype_fwd/any_op_ch.h"
 #include "be_visitor_eventtype_fwd/cdr_op_ch.h"
-#include "be_visitor_eventtype_fwd/cdr_op_ci.h"
 
 #endif /* TAO_BE_VISITOR_EVENTTYPE_FWD_H */

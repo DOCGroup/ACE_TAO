@@ -1,3 +1,153 @@
+Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll (idl_store_pragma):
+        * TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
+
+          Moved the check for the repo id having been
+          already set with 'typeid' earlier, before the
+          call to replace the repo id itself.
+
+        * TAO_IDL/include/utl_err.h (id_reset_error):
+        * TAO_IDL/util/utl_err.cpp (id_reset_error):
+
+          Change the two char* parameters of this method
+          to have the 'const' qualifier.
+
+        * TAO_IDL/ast/ast_decl.cpp:
+
+          Changed the logic of the repo id set method to
+          reflect the changes above in lex.yy.cpp.
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Commented out occurrences of 
+
+             optimize = <nothing>
+
+          There are comments that this doesn't work on Windows,
+          but the line itself was left uncommented. The comment
+          is correct, the line does indeed break project generation
+          on Windows.
+
+        * TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_enum/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_cs.h:
+
+          New files, renamed from the corresponding *_ci.* versions,
+          which were removed from the repository.
+
+        * TAO_IDL/be/be_visitor_component_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_typedef/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_component/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_component_fwd/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_enum/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_exception/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_interface/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_sequence/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_structure/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_typedef/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_union/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/field_cdr_ci.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd/cdr_op_ci.h:
+
+          Visitor files removed from the repository. Code from some
+          of these files has been moved to the corresponding *_cs.*
+          files, see below.
+
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_component.cpp:
+        * TAO_IDL/be/be_visitor_component_fwd.cpp:
+        * TAO_IDL/be/be_visitor_enum.cpp:
+        * TAO_IDL/be/be_visitor_eventtype.cpp:
+        * TAO_IDL/be/be_visitor_eventtype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_exception.cpp:
+        * TAO_IDL/be/be_visitor_field.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/cdr_op.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be_include/be_visitor_array.h:
+        * TAO_IDL/be_include/be_visitor_component.h:
+        * TAO_IDL/be_include/be_visitor_component_fwd.h:
+        * TAO_IDL/be_include/be_visitor_enum.h:
+        * TAO_IDL/be_include/be_visitor_eventtype.h:
+        * TAO_IDL/be_include/be_visitor_eventtype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_exception.h:
+        * TAO_IDL/be_include/be_visitor_field.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+        * TAO_IDL/be_include/be_visitor_sequence.h:
+        * TAO_IDL/be_include/be_visitor_structure.h:
+        * TAO_IDL/be_include/be_visitor_typedef.h:
+        * TAO_IDL/be_include/be_visitor_union.h:
+        * TAO_IDL/be_include/be_visitor_union_branch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_array/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_exception/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_structure/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union/cdr_op_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/cdr_op_cs.h:
+
+          Generation of all implementations of CDR stream operators
+          has been uninlined. CDR stream operators for about half the
+          IDL types were already uninlined, due to various forces such
+          as the handling of undefined forward declared interfaces and
+          increased templatizing of generated code to reduce footprint.
+          However, bugs continued to be discovered relating to the
+          CDR stream operators that remained inlined, so this change
+          was made to deal with present and future cases. The bug that
+          precipitated this entry was reported by John Fletcher
+          <john.fletcher@rd.bbc.co.uk>. In many cases, where the operand
+          type is fully known, modern C++ compilers will still implicitly
+          inline the operator bodies.
+
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed the context state TAO_ROOT_CDR_OP_CI, since it is
+          no longer needed.
+
 Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* */*.bor:
