@@ -35,18 +35,10 @@ if (ACE::waitforfile_timed ($iorfile_1, 5) == -1) {
 }
 
 ACE::waitforfile ($iorfile_1);
-$status  = system ("client$Process::EXE_EXT  -a file://$iorfile_1");
-ACE::waitforfile ($iorfile_2);
-$status  = system ("client$Process::EXE_EXT  -b file://$iorfile_2 ");
-ACE::waitforfile ($iorfile_3);
-$status  = system ("client$Process::EXE_EXT  -c file://$iorfile_3 ");
-ACE::waitforfile ($iorfile_4);
-$status  = system ("client$Process::EXE_EXT  -d file://$iorfile_4 ");
+$status  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT  -a file://$iorfile_1 -b file://$iorfile_2 -c file://$iorfile_3 -d file://$iorfile_4");
+
 if (ACE::waitforfile_timed ($iorfile_5,1) == 0) {
-$status  = system ("client$Process::EXE_EXT  -e file://$iorfile_5 ");
-}
-if (ACE::waitforfile_timed ($iorfile_6,1) == 0) {
-$status  = system ("client$Process::EXE_EXT  -f file://$iorfile_6 ");
+$status  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT  -e file://$iorfile_5 -f file://$iorfile_6");
 }
 
 unlink $iorfile_1;
@@ -58,4 +50,4 @@ unlink $iorfile_6;
 
 $SV->Kill ();$SV->Wait ();
 
-exit $status;
+exit $client;
