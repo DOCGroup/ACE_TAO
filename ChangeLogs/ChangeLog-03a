@@ -1,3 +1,7 @@
+Thu Feb 24 15:44:42 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Added Capabilities.h and Capabilities.cpp.
+
 Thu Feb 24 12:35:31 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/ARGV_Test.icc:
