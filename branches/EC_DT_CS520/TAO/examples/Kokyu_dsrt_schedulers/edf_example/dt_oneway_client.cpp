@@ -19,6 +19,7 @@ const char *ior = "file://test1.ior";
 int do_shutdown = 1;
 int enable_dynamic_scheduling = 1;
 int enable_yield = 1;
+int enable_rand = 0;
 int niteration = 1000;
 int workload = 1;
 int period = 2;
@@ -62,7 +63,7 @@ private:
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:sn:w:p:");
+  ACE_Get_Opt get_opts (argc, argv, "k:sn:w:p:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -86,6 +87,10 @@ parse_args (int argc, char *argv[])
   
       case 'p':
         period = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+  
+      case 'r':
+        enable_rand = 1;
         break;
 
       case '?':
@@ -277,6 +282,8 @@ main (int argc, char *argv[])
               EDF_Scheduling::SchedulingParameter sched_param;
               sched_param.importance = 0;
               sched_param.deadline = 0;
+              sched_param.task_id = ID_BEGIN++;
+              sched_param.period = 0;
               CORBA::Policy_var sched_param_policy =
                 scheduler->create_scheduling_parameter (sched_param);
               CORBA::Policy_ptr implicit_sched_param = 0;
@@ -397,6 +404,8 @@ Worker::svc (void)
       CORBA::Policy_var sched_param_policy;
       sched_param.importance = importance_;
       sched_param.deadline = deadline_;
+      sched_param.period = period*10000000;
+      sched_param.task_id = ID_BEGIN++;
       sched_param_policy = scheduler_->create_scheduling_parameter (sched_param);
 
       //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
@@ -417,6 +426,7 @@ Worker::svc (void)
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):after begin_sched_segment\n"));
     }
 
+  int rand;
   for(int i=0; i<niteration; i++) 
   {
   /* MEASURE: One way call start */
@@ -430,8 +440,13 @@ Worker::svc (void)
   /* MEASURE: One way call done */
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):one way call done\n"));
-  
-  ACE_OS::sleep(period);
+ 
+  rand = mrand48()/10000;
+  if(enable_rand) 
+    usleep(period*1000000+rand);
+  else
+    sleep(period);
+  ACE_DEBUG((LM_DEBUG,"NOW I AM GOING TO SLEEP FOR %d\n", period*1000000+rand));
   }
   if (enable_dynamic_scheduling)
     {

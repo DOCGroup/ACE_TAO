@@ -247,7 +247,7 @@ int
 Worker::svc (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_Time_Value tv(120);
+  ACE_Time_Value tv(5000);
 
   ACE_TRY
     {
