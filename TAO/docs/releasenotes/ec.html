@@ -16,25 +16,11 @@ Last Updated: $Date$</H4>
 <H3>
 New on this release</H3>
 
-<UL>Continued work on the multicast support for the EC, we added a new
-server that maps the event types (and supplier ids) into the right mcast
-group. Usually this server is collocated with the helper classes that send
-the events through multicast, so using a CORBA interface for this mapping
-is not expensive, further it adds the flexibility of using a global service
-with complete knowledge of the traffic in the system, that could try to
-optimize multicast group usage.
-<P>The subscriptions and publications on a particular EC can be remotely
-observed by instances of the <TT>RtecChannelAdmin::Observer</TT> class.
-Once more using CORBA for this interface cost us little or nothing because
-it is usually used by objects collocated with the EC.
-<P><TT>TAO_EC_UDP_Receiver</TT> is a helper class that receives events
-from multicast groups and dispatches them as a supplier to some event channel.
-This class has to <B>join</B> the right multicast groups, using the <TT>Observer</TT>
-described above and the <TT>RtecUDPAdmin</TT> to map the subscriptions
-into multicast groups it can do this dynamically, as consumers join or
-leave its Event Channel.
-<P>When sending Events through multicast all the <TT>TAO_EC_UDP_Sender</TT>
-objects can shared the same socket.</UL>
+<UL>
+  <LI><P>Added fragmentation and reassembly support for the multicast
+    gateways</P>
+  </LI>
+</UL>
 
 <H3>
 Known issues:</H3>
@@ -85,40 +71,18 @@ ACE Service Configurator; currently the services must be explicitly instantiated
 by the user.
 <DT>
 
-<P><I>The <TT>TAO_EC_Gateway_IIOP</TT> objects publish events coming from
-multiple suppliers</I></DT>
-
-<P>This objects receive the events from a "remote" EC and pushes them into
-a "local" EC, it subscribes to the disjunction of the events in the local
-consumers and it uses the same event types/<TT>supplier_ids</TT> to connect
-as a local supplier. This list may potentially include several different
-subscriptions based on different supplier ids, so the <TT>Gateway</TT>
-may end up with an invalid publication. We need to have different local
-suppliers for each remote <TT>supplier_id</TT> potentially shared between
-all the local <TT>Gateways</TT>.
-<DT>
-
-<P><I>There is no <TT>CosEventChannel</TT> interface</I></DT>
-
-<P>This is more of a warning than an issue. TAO's Real-time Event Channel
-is <B>not</B> an implementation of the CORBAservices Event Channel; it
-provides a similar set of features, and the interfaces are also similar,
-but real-time applications require more control over their middleware than
-what the CORBA Event Channel provides.
-<P>It should also be noted that the Event Channel only provides the <B>Push</B>
-model, since it is more predictable and it can be reuse the scheduling
-algorithms uses for normal function calls.
-<P>It would be fairly simple to implement a standard CORBA Event Service
-on top of TAO's Real-time Event Channel, but this is a low priority task,
-since our sponsors have no need for such a beast.
 <DT>
 <P><I>Further details:</I></DT>
 
 <P>Many lower level issues and tasks can be found in the <A HREF="TODO.html">TODO
-list</A>.</DL>
+list</A>.
+
+</DL>
 
 <H3>
 Examples</H3>
+
+
 For general documentation on the Event Service please read <A HREF="http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz">The
 Design and Performance of a Real-time CORBA Event Service</A>.
 <P>The simplest test for the Event Channel is <TT>Event_Latency</TT>, below
@@ -149,10 +113,35 @@ inversion, since only one thread runs at a time.</LI>
 </OL>
 Another example is <TT>EC_Multiple</TT>, numerous examples on how to run
 this test can be found in the scripts located in <TT>$TAO_ROOT/orbsvcs/tests/EC_Multiple</TT>.
+
 <H3>
 Features in previous releases</H3>
 
-<UL>Added a prototype Consumer and Supplier that can send events though
+<UL>
+
+<LI><P>Continued work on the multicast support for the EC, we added a new
+server that maps the event types (and supplier ids) into the right mcast
+group. Usually this server is collocated with the helper classes that send
+the events through multicast, so using a CORBA interface for this mapping
+is not expensive, further it adds the flexibility of using a global service
+with complete knowledge of the traffic in the system, that could try to
+optimize multicast group usage.
+<P>The subscriptions and publications on a particular EC can be remotely
+observed by instances of the <TT>RtecChannelAdmin::Observer</TT> class.
+Once more using CORBA for this interface cost us little or nothing because
+it is usually used by objects collocated with the EC.
+<P><TT>TAO_EC_UDP_Receiver</TT> is a helper class that receives events
+from multicast groups and dispatches them as a supplier to some event channel.
+This class has to <B>join</B> the right multicast groups, using the <TT>Observer</TT>
+described above and the <TT>RtecUDPAdmin</TT> to map the subscriptions
+into multicast groups it can do this dynamically, as consumers join or
+leave its Event Channel.
+<P>When sending Events through multicast all the <TT>TAO_EC_UDP_Sender</TT>
+objects can shared the same socket.
+</P>
+</LI>
+
+<LI><P>Added a prototype Consumer and Supplier that can send events though
 multicast groups (or regular UDP sockets).
 <P>The Event Channel can be configured using a Factory that constructs
 the right modules (like changing the dispatching module), in the current
@@ -174,34 +163,51 @@ basically hardcodes all the subscriptions and publications, we are researching
 on how to automatically build the publication list.
 <P>We use the COS Time Service types (not the services) to specify time
 for the Event Service and Scheduling Service.
+</P>
+</LI>
+
 <LI>
-The <TT>Gateway</TT> to connect two event channels was moved from a test
+<P>The <TT>Gateway</TT> to connect two event channels was moved from a test
 to the library. The corresponding test (<TT>EC_Multiple</TT>) has been
-expanded and improved.</LI>
+expanded and improved.
+</P>
+</LI>
 
 <LI>
-The user can register a set of <TT>EC_Gateways</TT> with the <TT>EventChannel</TT>
+<P>The user can register a set of <TT>EC_Gateways</TT> with the <TT>EventChannel</TT>
 implementation, the event channel will automatically update the subscription
-list as consumers subscribe to the EC.</LI>
+list as consumers subscribe to the EC.
+</P>
+</LI>
 
 <LI>
-The code for consumer and supplier disconnection was improved and seems
-to work without problems now</LI>
+<P>The code for consumer and supplier disconnection was improved and seems
+to work without problems now
+</P>
+</LI>
 
 <LI>
-The <TT>Event_Service</TT> program creates a collocated <TT>Scheduling
-Service</TT> this works around a problem in the ORB when running on multiprocessor.</LI>
+<P>The <TT>Event_Service</TT> program creates a collocated <TT>Scheduling
+Service</TT> this works around a problem in the ORB when running on
+multiprocessor.
+</P>
+</LI> 
 
 <LI>
-Startup and shutdown were revised, the event channel shutdown cleanly now.</LI>
+<P>Startup and shutdown were revised, the event channel shutdown
+cleanly now.
+</P>
+</LI> 
 
 <LI>
-Added yet another example (<TT>$TAO_ROOT/orbsvcs/tests/EC_Throughput</TT>),
+<P>Added yet another example
+(<TT>$TAO_ROOT/orbsvcs/tests/EC_Throughput</TT>),
 this one ilustrate how to use the TAO extensions to create octet sequences
 based on CDR streams, without incurring in extra copies. This is useful
 to implement custom marshalling or late dermashalling of the event payload.
 Future versions of the test will help measuring the EC throughput, hence
-the name.</LI>
+the name.</P>
+</LI>
 </UL>
 
 </BODY>
