@@ -1,4 +1,7 @@
-Sat May 08 03:10:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat May 08 03:41:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_{dll,lib}.dsp: Moved RB_Tree.cpp to template folder and
+	  excluded it from being built.
 
 	* ace/ace_lib.dsp:
 	* performance-tests/Misc/basic_perf.dsp:
