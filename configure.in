@@ -1,5 +1,5 @@
 dnl
-AC_REVISION($Id$)dnl
+AC_REVISION([$Id$])dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
