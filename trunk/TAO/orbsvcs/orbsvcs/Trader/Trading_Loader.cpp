@@ -243,7 +243,10 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
       // @@ Could do other things. For example, every timeout
       // period try to federate again, but let's not hardcode that
       // policy.
-      if (this->bootstrap_to_federation (ACE_TRY_ENV) == -1)
+      int rc = this->bootstrap_to_federation (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      if (rc == -1)
         this->init_multicast_server ();
     }
   else

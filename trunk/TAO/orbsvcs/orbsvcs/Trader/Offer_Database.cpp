@@ -279,7 +279,6 @@ parse_offer_id (const CosTrading::OfferId offer_id,
                 CORBA::Environment& ACE_TRY_ENV)
   ACE_THROW_SPEC ((CosTrading::IllegalOfferId))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   // Get service type: it is everything from 17th character to the end.
   service_type = (char *) offer_id + 16;
 
