@@ -27,7 +27,7 @@ $DM2 = new PerlACE::Process ("${CIAO_ROOT}/tools/Daemon/CIAO_Daemon", "$DM2_args
 $AM_args = "-o ior -c test.dat";
 $AM = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Manager", "$AM_args");
 
-$AD_args = "-k file://ior -a remote.cad";
+$AD_args = "-k file://ior -a remote.cad -o cookie -d cookie";
 $AD = new PerlACE::Process ("${CIAO_ROOT}/tools/Assembly_Deployer/Assembly_Deployer", "$AD_args");
 
 $ST = new PerlACE::Process ("${CIAO_ROOT}/examples/Hello/Sender/starter");
