@@ -9,9 +9,9 @@ Tue Sep 21 12:10:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Sep 21 12:08:46 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	Added a missing template instantiation for ACE_Equal_To<MMDevice_Map_Hash_Key>
-
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	  Added a missing template instantiation for
+	  ACE_Equal_To<MMDevice_Map_Hash_Key>.
 
 Mon Sep 21 12:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
