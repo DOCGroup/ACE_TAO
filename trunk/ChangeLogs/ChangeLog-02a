@@ -1,3 +1,12 @@
+Wed May 23 17:33:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/make_pretty.pl:
+
+	Seems to have missed my previous update. Add the code to remove
+	the bogus warning associated with SunCC5. Check the ChangeLog tag
+	Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu> for
+	more.
+
 Wed May 23 18:22:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.cpp (run_reactor_event_loop (ACE_Time_Value&, eh)):
@@ -32,7 +41,7 @@ Wed May 23 14:41:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* netsvcs/Makefile.am:
 	* netsvcs/Makefile.bor:
 	* netsvcs/README:
-	* netsvcs/build.bor: Resurrected the files from the repo. 
+	* netsvcs/build.bor: Resurrected the files from the repo.
 
 Wed May 23 11:13:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
