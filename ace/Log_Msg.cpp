@@ -44,7 +44,7 @@ static ACE_FIFO_Send_Msg message_queue_;
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include "ace/stdcpp.h"
+# include /**/ <iostream.h>
 #endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
