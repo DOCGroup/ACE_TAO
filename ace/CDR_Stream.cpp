@@ -1018,7 +1018,7 @@ ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
 ACE_CDR::Boolean
 ACE_InputCDR::read_1 (ACE_CDR::Octet *x)
 {
-  if (this->rd_ptr () < this->end ())
+  if (this->rd_ptr () < this->wr_ptr ())
     {
       *x = *ACE_reinterpret_cast (ACE_CDR::Octet*,this->rd_ptr ());
       this->start_.rd_ptr (1);
