@@ -196,7 +196,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
   aiocb_ptr->aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
   aiocb_ptr->aio_sigevent.sigev_value.sival_ptr =
-    (void *) aiocb_ptr;
+    (void *) result;
 
   // Fire off the aio write.  @@ Alex, should this be < 0 or -1?  In
   // general, please try to use -1 for checking all return values if
@@ -208,7 +208,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
                       -1);
 
   // Success. Store the aiocb_ptr with Proactor.
-  if (this->proactor_->insert_to_aiocb_list (aiocb_ptr, result) < 0)
+  if (this->proactor_->insert_to_aiocb_list (aiocb_ptr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Fatal error : aio_read queuing suceeded, no place at aiocb_list"),
                       -1);
