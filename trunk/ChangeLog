@@ -1,3 +1,11 @@
+Tue Jul 10 11:12:00 2001  Chris Gill <cdgill@cs.wustl.edu>
+
+        * ace/OS_Dirent.{h, inl}: refactored XDIR, dirent usage for pSOS - 
+          user is no longer responsible for buffer deallocation after each
+          readdir call, only for passing the pointer returned from opendir
+          into closedir when all done.  ACE_DIR structure is now used
+          consistently for all pSOS dirent calls.
+
 Tue Jul 10 06:06:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Repository.h: Updated the insert() comment to

@@ -1,4 +1,4 @@
-// -*- C++ -*- 
+// -*- C++ -*-
 // $Id$
 
 #if defined (ACE_HAS_PACE)
@@ -11,17 +11,12 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
   return pace_opendir (filename);
 #elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
-
-  // The pointer to the <ACE_DIR> buffer must be passed to ACE_OS_Dirent::closedir
-  // in order to free it and avoid a memory leak.
+  // The pointer to the <ACE_DIR> buffer *must* be passed to
+  // ACE_OS_Dirent::closedir to free it and avoid a memory leak.
   ACE_DIR *dir;
   u_long result;
   ACE_NEW_RETURN (dir, ACE_DIR, 0);
-#    if defined (ACE_PSOS_DIAB_PPC)
   result = ::open_dir (ACE_const_cast (char *, filename), &(dir->xdir));
-#    else
-  result = ::open_dir (ACE_const_cast (char *, filename), dir);
-#    endif /* defined ACE_PSOS_DIAB_PPC */
   if (result == 0)
     return dir;
   else
@@ -29,14 +24,14 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
       errno = result;
       return 0;
     }
-#  else /* ! defined (ACE_PSOS) */
+#  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32)
   return ::ACE_OS_Dirent::opendir_emulation (filename);
-#    else /* ACE_WIN32 */
+#    else /* ! ACE_WIN32 */
   // VxWorks' ::opendir () is declared with a non-const argument.
   return ::opendir (ACE_const_cast (char *, filename));
 #    endif /* ACE_WIN32 */
-#  endif /* ! defined (ACE_PSOS) */
+#  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (0);
@@ -51,19 +46,12 @@ ACE_OS_Dirent::closedir (ACE_DIR *d)
 #elif defined (ACE_HAS_DIRENT)
 # if defined (ACE_PSOS)
 
-  u_long result;
-
-#   if defined (ACE_PSOS_DIAB_PPC)
-  result = ::close_dir (&(d->xdir));
-#   else
-  result = ::close_dir (d);
-#   endif /* defined ACE_PSOS_DIAB_PPC */
-
+  u_long result = ::close_dir (&(d->xdir));
   delete d;
   if (result != 0)
     errno = result;
 
-# else /* ! defined (ACE_PSOS) */
+# else /* ! ACE_PSOS */
 
 #   if defined (ACE_WIN32)
   ACE_OS_Dirent::closedir_emulation (d);
@@ -73,7 +61,7 @@ ACE_OS_Dirent::closedir (ACE_DIR *d)
   ::closedir (d);
 #   endif /* ACE_WIN32 */
 
-# endif /* !ACE_PSOS */
+# endif /* ACE_PSOS */
 #else /* ACE_HAS_DIRENT */
   ACE_UNUSED_ARG (d);
 #endif /* ACE_HAS_PACE */
@@ -86,35 +74,23 @@ ACE_OS_Dirent::readdir (ACE_DIR *d)
   return pace_readdir (d);
 #elif defined (ACE_HAS_DIRENT)
 #  if defined (ACE_PSOS)
-  // The returned pointer to the dirent struct must be deleted by the
-  // caller to avoid a memory leak.
-  struct dirent *dir_ent;
-  u_long result;
 
-  ACE_NEW_RETURN (dir_ent,
-                  dirent,
-                  0);
-#if defined (ACE_PSOS_DIAB_PPC)
-  result = ::read_dir (&(d->xdir), dir_ent);
-#else
-  result = ::read_dir (d, dir_ent);
-#endif /* defined ACE_PSOS_DIAB_PPC) */
-
+  u_long result = ::read_dir (&(d->xdir), &(d->dirent));
   if (0 == result)
-    return dir_ent;
+    return &(d->dirent);
   else
     {
       errno = result;
       return 0;
     }
 
-#  else /* ! defined (ACE_PSOS) */
+#  else /* ! ACE_PSOS */
 #    if defined (ACE_WIN32)
   return ACE_OS_Dirent::readdir_emulation (d);
 #    else /* defined (ACE_WIN32) */
   return ::readdir (d);
 #    endif /* defined (ACE_WIN32) */
-#  endif /* ! defined (ACE_PSOS) */
+#  endif /* ACE_PSOS */
 #else
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
@@ -125,7 +101,7 @@ ACE_INLINE int
 ACE_OS_Dirent::readdir_r (ACE_DIR *dirp,
                           struct dirent *entry,
                           struct dirent **result)
-{                                 
+{
 #if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   return pace_readdir_r (dirp, entry, result);
 # elif !defined (ACE_HAS_REENTRANT_FUNCTIONS)
@@ -208,16 +184,16 @@ ACE_OS_Dirent::rewinddir (ACE_DIR *d)
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE int 
-ACE_OS_Dirent::scandir (const ACE_TCHAR *dirname, 
-                        struct dirent **namelist[], 
-                        int (*selector)(const struct dirent *), 
-                        int (*comparator) (const struct dirent **f1, 
+ACE_INLINE int
+ACE_OS_Dirent::scandir (const ACE_TCHAR *dirname,
+                        struct dirent **namelist[],
+                        int (*selector)(const struct dirent *),
+                        int (*comparator) (const struct dirent **f1,
                                            const struct dirent **f2))
-{ 
-#if defined (ACE_HAS_SCANDIR) 
-  return ::scandir (dirname, namelist, selector, comparator); 
-#else /* ! defined ( ACE_HAS_SCANDIR) */ 
-  return ACE_OS_Dirent::scandir_emulation (dirname, namelist, selector, comparator); 
-#endif /* ACE_HAS_SCANDIR */ 
-} 
+{
+#if defined (ACE_HAS_SCANDIR)
+  return ::scandir (dirname, namelist, selector, comparator);
+#else /* ! defined ( ACE_HAS_SCANDIR) */
+  return ACE_OS_Dirent::scandir_emulation (dirname, namelist, selector, comparator);
+#endif /* ACE_HAS_SCANDIR */
+}
