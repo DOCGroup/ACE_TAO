@@ -5,6 +5,8 @@ Wed Oct  4 15:05:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/IORManipulation/Makefile:
 	* tao/IORTable/Makefile:
 	* tao/PortableServer/Makefile:
+	* tao/examples/POA/DSI/Makefile:
+	* tao/tests/DSI_Gateway/Makefile:
 
 	  Updated dependencies.
 
