@@ -95,25 +95,25 @@ writev_n (ACE_HANDLE h, iovec* iov, int iovcnt)
       ssize_t n = ACE_OS::writev (h, iov + s, iovcnt - s);
 
       if (n == -1)
-	{
-	  return n;
-	}
+        {
+          return n;
+        }
       else
-	{
-	  writelen += n;
-	  while (n >= iov[s].iov_len && s < iovcnt)
-	    {
-	      n -= iov[s].iov_len;
-	      s++;
-	    }
-	  if (n != 0)
-	    {
-	      char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
-	      
-	      iov[s].iov_base = base + n;
-	      iov[s].iov_len -= n;
-	    }
-	}
+        {
+          writelen += n;
+          while (n >= ACE_static_cast (ssize_t, iov[s].iov_len) && s < iovcnt)
+            {
+              n -= iov[s].iov_len;
+              s++;
+            }
+          if (n != 0)
+            {
+              char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
+
+              iov[s].iov_base = base + n;
+              iov[s].iov_len -= n;
+            }
+        }
     }
   return writelen;
 }
@@ -183,53 +183,53 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
       // other cases there may be some limits on the size of the
       // iovec, there we should set TAO_WRITEV_MAX to that limit.
       if (iovcnt == TAO_WRITEV_MAX)
-	{
-	  ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
-	  if (n == -1)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%P|%t) closing conn %d after fault %p\n",
-			  peer.get_handle (), "GIOP::send_request"));
-	      handler->close ();
-	      ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	      return CORBA::B_FALSE;
-	    }
-	  else if (n == 0)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  "(%P|%t) GIOP::send_request (): "
-			  "EOF, closing conn %d\n",
-			  peer.get_handle ()));
-	      handler->close ();
-	      ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	      return CORBA::B_FALSE;
-	    }
-	  iovcnt = 0;
-	}
+        {
+          ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
+          if (n == -1)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) closing conn %d after fault %p\n",
+                          peer.get_handle (), "GIOP::send_request"));
+              handler->close ();
+              ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+              return CORBA::B_FALSE;
+            }
+          else if (n == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) GIOP::send_request (): "
+                          "EOF, closing conn %d\n",
+                          peer.get_handle ()));
+              handler->close ();
+              ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+              return CORBA::B_FALSE;
+            }
+          iovcnt = 0;
+        }
     }
 
   if (iovcnt != 0)
     {
       ssize_t n = writev_n (peer.get_handle (), iov, iovcnt);
       if (n == -1)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) closing conn %d after fault %p\n",
-		      peer.get_handle (), "GIOP::send_request"));
-	  handler->close ();
-	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	  return CORBA::B_FALSE;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) closing conn %d after fault %p\n",
+                      peer.get_handle (), "GIOP::send_request"));
+          handler->close ();
+          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+          return CORBA::B_FALSE;
+        }
       else if (n == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "(%P|%t) GIOP::send_request (): "
-		      "EOF, closing conn %d\n",
-		      peer.get_handle ()));
-	  handler->close ();
-	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
-	  return CORBA::B_FALSE;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) GIOP::send_request (): "
+                      "EOF, closing conn %d\n",
+                      peer.get_handle ()));
+          handler->close ();
+          ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
+          return CORBA::B_FALSE;
+        }
       iovcnt = 0;
     }
 
@@ -687,7 +687,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // Build the outgoing message, starting with generic GIOP header.
 
   CORBA::Boolean bt = TAO_GIOP::start_message (TAO_GIOP::Request,
-					       this->out_stream_);
+                                               this->out_stream_);
 
   if (bt != CORBA::B_TRUE)
     {
@@ -724,17 +724,17 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     }
 
   if (this->out_stream_.encode (TC_opaque,
-				key,
-				0,
-				env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                                key,
+                                0,
+                                env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || this->out_stream_.encode (CORBA::_tc_string,
-				   &opname_,
-				   0,
-				   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                                   &opname_,
+                                   0,
+                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || this->out_stream_.encode (CORBA::_tc_Principal,
-				   &anybody,
-				   0,
-				   env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                   &anybody,
+                                   0,
+                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
     return; // right after fault
   else
     return; // no fault reported
@@ -837,8 +837,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-						     this->inp_stream_,
-						     env);
+                                                     this->inp_stream_,
+                                                     env);
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -965,7 +965,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
         // Pull the exception ID out of the marshaling buffer.
         {
-	  if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
+          if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
             {
               TAO_GIOP::send_error (this->handler_);
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -990,7 +990,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
              i < xlist->count ();
              i++)
           {
-	    CORBA::TypeCode_ptr tcp = xlist->item (i, env);
+            CORBA::TypeCode_ptr tcp = xlist->item (i, env);
 
             const char *xid = tcp->id (env);
 
@@ -1064,8 +1064,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         // profile.
 
         if (this->inp_stream_.decode (CORBA::_tc_Object,
-				      &obj, 0,
-				      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                                      &obj, 0,
+                                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
             || obj->QueryInterface (IID_IIOP_Object,
                                     (void **) &obj2) != TAO_NOERROR)
           {
@@ -1189,8 +1189,8 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
 
   TAO_SVC_HANDLER *handler = this->handler_;
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (handler,
-						     this->inp_stream_,
-						     env);
+                                                     this->inp_stream_,
+                                                     env);
   switch (m)
     {
     case TAO_GIOP::Reply:
@@ -1317,7 +1317,7 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
 
         // Pull the exception ID out of the marshaling buffer.
         {
-	  if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
+          if (this->inp_stream_.read_string (buf) == CORBA::B_FALSE)
             {
               TAO_GIOP::send_error (this->handler_);
               env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_YES));
@@ -1448,8 +1448,8 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
         // profile.
 
         if (this->inp_stream_.decode (CORBA::_tc_Object,
-				      &obj, 0,
-				      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
+                                      &obj, 0,
+                                      env) != CORBA::TypeCode::TRAVERSE_CONTINUE
             || obj->QueryInterface (IID_IIOP_Object,
                                     (void **) &obj2) != TAO_NOERROR)
           {
@@ -1561,7 +1561,7 @@ TAO_GIOP_RequestHeader::init (TAO_InputCDR &msg,
 
 CORBA::Boolean
 TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
-			 TAO_OutputCDR &msg)
+                         TAO_OutputCDR &msg)
 {
   msg.reset ();
 
