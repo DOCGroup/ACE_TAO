@@ -1,3 +1,10 @@
+Fri Jun 25 21:53:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/performance-tests/Pluggable/server.cpp:
+	* TAO/performance-tests/Pluggable/PP_Test_Client.cpp:
+	  Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
+	  it comes after ACE_ENDTRY in a non-void function.
+
 Fri Jun 25 21:27:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynAny_i.cpp:
