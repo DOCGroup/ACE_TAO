@@ -1,3 +1,8 @@
+Tue Jan 22 11:25:13 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+          Fixed MSVC warning.
+
 Tue Jan 22 11:22:33 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/McastHello/Makefile:
