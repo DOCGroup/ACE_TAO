@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be\be_codegen.cpp:171
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
@@ -38,6 +38,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/TAO_Export.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -63,44 +65,44 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace Messaging
 {
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
+  // be\be_visitor_typedef/typedef_ch.cpp:342
 
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be\be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::SyncScope SYNC_NONE = 0;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be\be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::SyncScope SYNC_WITH_TRANSPORT = 1;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be\be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::SyncScope SYNC_WITH_SERVER = 2;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  // be\be_visitor_constant/constant_ch.cpp:52
 
   const Messaging::SyncScope SYNC_WITH_TARGET = 3;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module Messaging
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -108,17 +110,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
-
-#ifndef __ACE_INLINE__
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_SyncScopeC.i"
@@ -133,4 +125,6 @@ namespace TAO
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
+

@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "Messaging_PolicyValueC.h"
@@ -41,7 +41,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +50,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_PolicyValue[] =
 {
@@ -138,7 +138,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:66
 
 void 
 Messaging::PolicyValue::_tao_any_destructor (
@@ -151,7 +151,7 @@ Messaging::PolicyValue::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CS_)
 #define _MESSAGING_POLICYVALUESEQ_CS_
@@ -204,7 +204,7 @@ void Messaging::PolicyValueSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_Messaging_PolicyValueSeq[] =
 {
@@ -318,7 +318,30 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:95
+// be\be_visitor_structure/cdr_op_cs.cpp:61
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Messaging::PolicyValue &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.ptype) &&
+    (strm << _tao_aggregate.pvalue);
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Messaging::PolicyValue &_tao_aggregate
+  )
+{
+  return
+    (strm >> _tao_aggregate.ptype) &&
+    (strm >> _tao_aggregate.pvalue);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_
 #define _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_
@@ -390,7 +413,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
