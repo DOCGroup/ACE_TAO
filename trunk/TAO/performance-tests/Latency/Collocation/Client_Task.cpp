@@ -35,17 +35,16 @@ Client_Task::svc (void)
 				       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
       Test::Roundtrip_var rt =
 	Test::Roundtrip::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (rt.in ()))
-	{
-	  ACE_ERROR_RETURN ((LM_DEBUG,
-			     "Nil Test::Roundtrip reference <%s>\n",
-			     ior.c_str()) ,1);
-	}
+      {
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Nil Test::Roundtrip reference <%s>\n",
+                           ior.c_str()) ,1);
+      }
 
       //// Start Test ///////////////////////////////
       CORBA::Long test_time = 1234L;
@@ -92,7 +91,7 @@ Client_Task::svc (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception caught:");
+                           "Exception caught:");
       return 1;
     }
   ACE_ENDTRY;
