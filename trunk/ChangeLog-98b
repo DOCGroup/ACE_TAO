@@ -1,4 +1,8 @@
-Sun Aug 30 21:27:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Aug 30 23:05:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp: Should include ace/Thread.h also.
+	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+	  for reporting this.
 
 	* ace/Select_Reactor.cpp: Added explicit template instantiation
 	  for ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token>>.
