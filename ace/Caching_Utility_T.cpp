@@ -128,7 +128,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
               min = (*iter).int_id_.second ();
               found = 1;
             }          
-          else if (found == 1)
+          else 
             {
               // Ah! an entry with lower ATTTRIBUTES...
               if (min > (*iter).int_id_.second ())
