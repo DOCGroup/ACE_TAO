@@ -44,8 +44,7 @@ extern "C" {
 
 #ifndef PACE_GID_T
 #define PACE_GID_T 1
-  typedef int gid_t;
-  typedef gid_t pace_gid_t;
+  typedef int pace_gid_t;
 #endif /* PACE_GID_T */
 
 #ifndef PACE_INO_T
@@ -55,14 +54,12 @@ extern "C" {
 
 #ifndef PACE_MODE_T
 #define PACE_MODE_T 1
-  typedef int mode_t;
-  typedef mode_t pace_mode_t;
+  typedef int pace_mode_t;
 #endif /* PACE_MODE_T */
 
 #ifndef PACE_NLINK_T
 #define PACE_NLINK_T 1
-  typedef DWORD nlink_t;
-  typedef nlink_t pace_nlink_t;
+  typedef DWORD pace_nlink_t;
 #endif /* PACE_NLINK_T */
 
 #ifndef PACE_OFF_T
@@ -72,26 +69,22 @@ extern "C" {
 
 #ifndef PACE_PID_T
 #define PACE_PID_T 1
-  typedef long pid_t;
-  typedef pid_t pace_pid_t;
+  typedef long pace_pid_t;
 #endif /* PACE_PID_T */
 
 #ifndef PACE_SIZE_T
-#define PACE_SIZE_T
+#define PACE_SIZE_T 1
   typedef size_t pace_size_t;
 #endif /* PACE_SIZE_T */
 
 #ifndef PACE_SSIZE_T
-#define PACE_SSIZE_T
-  /* typedef long ssize_t;
-   * typedef ssize_t pace_ssize_t; */
+#define PACE_SSIZE_T 1
   typedef long pace_ssize_t;
 #endif /* PACE_SSIZE_T */
 
 #ifndef PACE_UID_T
-#define PACE_UID_T
-  typedef int uid_t;
-  typedef uid_t pace_uid_t;
+#define PACE_UID_T 1
+  typedef int pace_uid_t;
 #endif /* PACE_UID_T */
 
 #include "pace/win32/pthreadtypes.h"
