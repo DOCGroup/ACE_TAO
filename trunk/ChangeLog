@@ -1,3 +1,10 @@
+Wed Mar 31 23:20:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* apps/JAWS3/bench/mkfiles.cpp:
+	* apps/JAWS3/bench/rqfiles.cpp:
+	* examples/APG/Naming/Makefile.nodelocal:
+
+
 Wed Mar 31 18:08:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/MakeProjectCreator/config/bison.mpb:

@@ -8,6 +8,7 @@
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 
+//FUZZ: disable check_for_math_include/
 #include <math.h>
 
 static char **requests;
