@@ -17,8 +17,6 @@
 #ifndef TAO_POLICIES_H
 #define TAO_POLICIES_H
 
-// STL fun stuff.
-#include "stl.h"
 #include "Trader.h"
 
 class TAO_Policies
@@ -38,6 +36,8 @@ class TAO_Policies
 {
 public:
 
+#define TAO_NUM_POLICIES  11
+  
   enum POLICY_TYPE
   {
     EXACT_TYPE_MATCH,
@@ -249,8 +249,6 @@ public:
   
 private:
 
-  typedef vector <CosTrading::Policy*> POL_VECTOR;
-    
   CORBA::ULong ulong_prop (POLICY_TYPE pol,
 			   CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
@@ -260,8 +258,8 @@ private:
 			       CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch));
   // Reconcile a Boolean property with its debault.
-   
-  POL_VECTOR policies_;
+  
+  CosTrading::Policy* policies_[TAO_NUM_POLICIES];
   // The policies indexable from the enumerated type.
   
   TAO_Trader_Base& trader_;

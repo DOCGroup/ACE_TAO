@@ -131,7 +131,6 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
 		   CosTrading::IllegalPropertyName))
     : TAO_Property_Evaluator (properties, supports_dp)
 {
-  string prop_name;
   int length = this->props_.length();
 
   for (int i = 0; i < length; i++)
@@ -141,8 +140,8 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
       if (! TAO_Trader_Base::is_valid_identifier_name (prop.name))
 	TAO_THROW (CosTrading::IllegalPropertyName (prop.name));
       
-      prop_name = prop.name;
-      if (! (this->table_.insert (make_pair (prop_name, i))).second)
+      TAO_String_Hash_Key prop_name = prop.name;
+      if (this->table_.bind (prop_name, i))
 	TAO_THROW (CosTrading::DuplicatePropertyName (prop.name));
     }
 }
@@ -156,8 +155,8 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 
   for (int i = 0; i < length; i++)
     {
-      string prop_name = (const char*) this->props_[i].name;
-      this->table_[prop_name] = i;
+      TAO_String_Hash_Key prop_name = (const char*) this->props_[i].name;
+      this->table_.bind (prop_name, i);
     }
 }
 
@@ -165,17 +164,13 @@ int
 TAO_Property_Evaluator_By_Name::
 is_dynamic_property(const char* property_name)
 {
-  int predicate = 0;
-  string prop_name (property_name);
-  Lookup_Table_Iter lookup_iter = this->table_.find (prop_name);
+  int predicate = 0, index = 0;
+  TAO_String_Hash_Key prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
-  if (lookup_iter != this->table_.end())
-    {
-      int index = (*lookup_iter).second;
-      predicate = this->TAO_Property_Evaluator::is_dynamic_property(index);
-    }
+  if (this->table_.find (prop_name, index) == 0)
+    predicate = this->TAO_Property_Evaluator::is_dynamic_property(index);
 
   return predicate;
 }
@@ -185,17 +180,14 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
 						CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
+  int index = 0;
   CORBA::Any* prop_value = 0;
-  string prop_name(property_name);
-  Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
+  TAO_String_Hash_Key prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
-  if (lookup_iter != this->table_.end())
-    {
-      int index = (*lookup_iter).second;
-      prop_value = this->TAO_Property_Evaluator::property_value (index, _env);
-    }
+  if (this->table_.find (prop_name, index) == 0)
+    prop_value = this->TAO_Property_Evaluator::property_value (index, _env);
 
   return prop_value;
 }
@@ -203,17 +195,14 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name,
 CORBA::TypeCode*
 TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
 {
-  string prop_name(property_name);
+  int index = 0;
+  TAO_String_Hash_Key prop_name (property_name);
   CORBA::TypeCode* prop_type = CORBA::TypeCode::_nil();
-  Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
   
   // If the property name is in the map, delegate evaluation to our
   // superclass. Otherwise, throw an exception.
-  if (lookup_iter != this->table_.end())
-    {
-      int index = (*lookup_iter).second;
-      prop_type = this->TAO_Property_Evaluator::property_type (index);
-    }
+  if (this->table_.find (prop_name, index) == 0)
+    prop_type = this->TAO_Property_Evaluator::property_type (index);
 
   return prop_type;
 }
@@ -221,12 +210,12 @@ TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
 const CosTrading::Property*
 TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
 {
+  int index = 0;
   CosTrading::Property* property = 0;
-  string prop_name (property_name);
-  Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
+  TAO_String_Hash_Key prop_name (property_name);
 
-  if (lookup_iter != this->table_.end())
-    property = (CosTrading::Property *) &this->props_[(*lookup_iter).second];
+  if (this->table_.find (prop_name, index) == 0)
+    property = (CosTrading::Property *) &this->props_[index];
 
   return property;
 }

@@ -123,14 +123,33 @@ public:
   // Copy the value of the property into the result container.
   
 private:
-  
-  typedef map<string, int, less<string> > Property_Map;
-  typedef Property_Map::iterator Property_Map_Iter;   
-  typedef deque<TAO_Literal_Constraint> Operand_Queue;
 
+  class Operand_Queue :
+  public ACE_Unbounded_Queue <TAO_Literal_Constraint>
+  {
+  public:
+
+    Operand_Queue (void);
+
+    TAO_Literal_Constraint& get_left_operand (void);
+
+    TAO_Literal_Constraint& get_right_operand (void);
+
+    TAO_Literal_Constraint& get_operand (void);
+
+    void dequeue_operand (void);
+  };
+  
+  typedef ACE_Hash_Map_Manager
+    <
+    TAO_String_Hash_Key,
+    int,
+    ACE_Null_Mutex
+    >
+    Property_Map;
+  
   void do_the_op (int operation);
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
-
   
   CORBA::Boolean sequence_does_contain(CORBA::Any* sequence,
 				       TAO_Literal_Constraint& element);
