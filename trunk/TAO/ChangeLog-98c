@@ -1,3 +1,12 @@
+Sat Jan 10 14:08:09 1998    <coryan@MILONGA>
+
+	* TAO_IDL/be/be_array.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	  We no longer generate names with CORBA_1 or CORBA_3 macros, but
+	  sometimes we cannot use the typedefs in CORBA:: because some
+	  weird MSVC++ features (bugs?).
+
 Fri Jan 09 21:37:39 1998    <coryan@MILONGA>
 
 	* TAO_IDL/be/be_typedef.cpp: 
