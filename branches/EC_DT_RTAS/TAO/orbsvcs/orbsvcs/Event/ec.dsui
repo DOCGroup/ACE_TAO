@@ -1,24 +1,18 @@
 #################################################
 #       EC Namespace Specification File        #
 #################################################
-DSTRM_FAMILY    EC2_GROUP       1       "EC DSUI group"
-DSTRM_FAMILY    TIMEOUT         2       "Timeout handler group"
+DSTRM_FAMILY    EC2_GROUP       11       "EC DSUI group"
+DSTRM_FAMILY    TIMEOUT         12       "Timeout handler group"
 
 # Entity type   Family Name     Fam ID  Entity Name     				Ety ID Description  			function 1      function2
-DSTRM_EVENT     EC2_GROUP    	1      ENTER_PROXY_PUSH_CONSUMER  		0      	"ENTER_PROXY_PUSH_CONSUMER" 	print_string
-DSTRM_EVENT     EC2_GROUP     	1      ENTER_PROXY_PUSH_SUPPLIER		1	"ENTER_PROXY_PUSH_SUPPLIER" 	print_string
-DSTRM_EVENT     EC2_GROUP     	1      DISPATCH_THE_EVENT			2	"DISPATCH_THE_EVENT" 			print_string
-DSTRM_EVENT     EC2_GROUP     	1      DISPATCH_COMMAND_ENQUEUE_BEGIN		3	"DISPATCH_COMMAND_ENQUEUE_BEGIN" 	print_string
-DSTRM_EVENT     EC2_GROUP     	1      DISPATCH_COMMAND_ENQUEUE_END		4	"DISPATCH_COMMAND_ENQUEUE_END" 		print_string
-DSTRM_EVENT     EC2_GROUP     	1      ENTER_TIMEOUT_GENERATOR			5	"ENTER_TIMEOUT_GENERATOR" 		print_string
-
-
-###################
-#HISTS  #
-###################
-DSTRM_HISTOGRAM EC2_GROUP        1       HISTOGRAM_TIME_SPENT_IN_EC  	               	0       "this is the first/only histogram"
+DSTRM_EVENT     EC2_GROUP    	11      ENTER_PROXY_PUSH_CONSUMER  		0      	"ENTER_PROXY_PUSH_CONSUMER" 	print_string
+DSTRM_EVENT     EC2_GROUP     	11      ENTER_PROXY_PUSH_SUPPLIER		1	"ENTER_PROXY_PUSH_SUPPLIER" 	print_string
+DSTRM_EVENT     EC2_GROUP     	11      DISPATCH_THE_EVENT			2	"DISPATCH_THE_EVENT" 			print_string
+DSTRM_EVENT     EC2_GROUP     	11      DISPATCH_COMMAND_ENQUEUE_BEGIN		3	"DISPATCH_COMMAND_ENQUEUE_BEGIN" 	print_string
+DSTRM_EVENT     EC2_GROUP     	11      DISPATCH_COMMAND_ENQUEUE_END		4	"DISPATCH_COMMAND_ENQUEUE_END" 		print_string
+DSTRM_EVENT     EC2_GROUP     	11      ENTER_TIMEOUT_GENERATOR			5	"ENTER_TIMEOUT_GENERATOR" 		print_string
 
 ###################
 # DATA Collection
 ###################
-DSTRM_EVENT     TIMEOUT         2       TIMEOUT_EVENT   1       "Last meaningful event"     print_string
+DSTRM_EVENT     TIMEOUT         12       TIMEOUT_EVENT   0       "Last meaningful event"     print_string

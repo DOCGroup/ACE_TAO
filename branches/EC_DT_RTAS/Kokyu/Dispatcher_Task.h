@@ -76,7 +76,8 @@ class Dispatcher_Task : public ACE_Task<ACE_SYNCH>
 public:
   /// Constructor
   Dispatcher_Task (const ConfigInfo& config_info,
-                   ACE_Thread_Manager* thr_manager = 0);
+                   ACE_Thread_Manager* thr_manager = 0,
+                   uint32_t queue_id = 0);
 
 
   ~Dispatcher_Task ();
@@ -101,6 +102,9 @@ private:
   static int get_native_prio();
 
 private:
+  // Unique ID for queue
+  uint32_t queue_id_;
+
   ConfigInfo curr_config_info_;
 
   ACE_Allocator *allocator_;

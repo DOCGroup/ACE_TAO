@@ -156,13 +156,13 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEQUEUED Measure time
       //between event released (enqueued) and dispatched
-      Kokyu::Object_Counter::object_id oid = command->getID();
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+      ACE_Object_Counter::object_id oid = command->getID();
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEQUEUED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
       ACE_ASSERT(command != 0);
 
       //@BT INSTRUMENT with event ID: EVENT_START_DISPATCHING Measure
       //time to actually dispatch event
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_START_DISPATCHING, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : beginning event dispatch at %u\n",tv.msec()));
@@ -173,7 +173,7 @@ Dispatcher_Task::svc (void)
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_FINISHED_DISPATCHING
       //Measure time to actually dispatch event
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_FINISHED_DISPATCHING, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
 
       tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::svc() (%t) : end event dispatch at %u\n",tv.msec()));
@@ -234,8 +234,8 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
       //between original dispatch and dispatch because of RG
-      Kokyu::Object_Counter::object_id oid = cmd->getID();
-      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
+      ACE_Object_Counter::object_id oid = cmd->getID();
+      DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
       ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));

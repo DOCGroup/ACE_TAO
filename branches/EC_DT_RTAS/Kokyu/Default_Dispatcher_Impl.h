@@ -26,6 +26,7 @@
 #include "Kokyu_defs.h"
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
+#include <ace/Counter.h>
 
 namespace Kokyu
 {
@@ -48,6 +49,8 @@ namespace Kokyu
                   const QoSDescriptor&);
     int shutdown_i ();
     Dispatcher_Task* find_task_with_preemption_prio (Priority_t);
+
+    ACE_Queue_Counter queue_ctr;
 
   private:
     typedef auto_ptr<Dispatcher_Task> Dispatcher_Task_Auto_Ptr;

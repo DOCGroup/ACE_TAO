@@ -5,4 +5,11 @@ project: qt, zzip {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
+
+  specific(gnuace) {
+    libs += dsui
+    libpaths += $(DATASTREAM_ROOT)/lib
+    includes += $(DATASTREAM_ROOT)/include
+  }
+
 }

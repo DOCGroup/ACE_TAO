@@ -31,7 +31,7 @@ TAO_EC_Kokyu_Push_Command::TAO_EC_Kokyu_Push_Command (
   CORBA::ULong length = event.length ();
   RtecEventComm::Event* buffer = event.get_buffer (1);
 
-  Kokyu::Object_Counter::object_id event_id;
+  ACE_Object_Counter::object_id event_id;
   event_id.id = buffer->header.eid.id;
   event_id.tid = buffer->header.eid.tid;
   Kokyu::Dispatch_Command::setID (event_id);

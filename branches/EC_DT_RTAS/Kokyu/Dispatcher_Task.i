@@ -4,8 +4,10 @@ namespace Kokyu
 {
 ACE_INLINE
 Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
-                                  ACE_Thread_Manager* thr_manager)
+                                  ACE_Thread_Manager* thr_manager,
+                                  uint32_t queue_id)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
+     queue_id_ (queue_id),
      curr_config_info_ (config_info),
      allocator_ (config_info.allocator_),
      own_allocator_ (0),
@@ -98,9 +100,9 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         ACE_Allocator* mb_allocator)
  : ACE_Message_Block (data_block,
                       flags,
-                      mb_allocator),
+                      mb_allocator,
+                      cmd->getID_ptr()),
    command_ (cmd), qos_info_ (qos_info)
-
 {
    this->init_i (qos_info);
 }
@@ -110,7 +112,7 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Allocator* mb_allocator)
- : ACE_Message_Block (mb_allocator),
+ : ACE_Message_Block (mb_allocator, cmd->getID_ptr()),
    command_ (cmd), qos_info_ (qos_info)
 {
    this->init_i (qos_info);
