@@ -118,6 +118,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                    print; } ' $$CHANGELOG; \
               cvs commit -m"$$ACE_VERSION" VERSION $$CHANGELOG; \
               chmod 644 VERSION) &&
+  FILTER = -name CVS -prune -o ! -name '.#*' ! -name '#*' ! -name '*~' -print
 else
   TIMESTAMP =
 endif
@@ -128,13 +129,13 @@ endif
 
 cleanrelease:
 	@$(TIMESTAMP) (make realclean; cd ..; \
-	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
 	 chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
 	@$(TIMESTAMP) (cd ..; \
-	 find $(RELEASE_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
-	 find $(RELEASE_LIB_FILES) -name CVS -prune -o -print | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
+	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE.tar.gz; \
+	 find $(RELEASE_LIB_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
 	 chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
 	 mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
