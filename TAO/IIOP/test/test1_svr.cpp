@@ -383,7 +383,7 @@ level1_skeleton (
     {
     env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
 #ifdef	DEBUG
-    if (debug_level)
+    if (TAO_debug_level)
       dmsg_opaque ("request to nonexistent object, key = ",
 		   key.buffer, key.length);
 #endif
