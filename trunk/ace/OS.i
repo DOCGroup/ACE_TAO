@@ -4837,8 +4837,10 @@ ACE_OS::truncate (const char *filename,
         ACE_FAIL_RETURN (-1);
     }
   /* NOTREACHED */
-#else
+#elif !defined (ACE_LACKS_TRUNCATE)
   ACE_OSCALL_RETURN (::truncate (filename, offset), int, -1);
+#else
+  ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
 
