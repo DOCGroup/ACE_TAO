@@ -51,7 +51,7 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
 // Returns true the <position_> is at the end of the heap array
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void)
+ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->position_ == this->timer_heap_.cur_size_;
 }

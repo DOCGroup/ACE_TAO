@@ -350,4 +350,80 @@ ACE_Unbounded_Set_Iterator<T>::operator!= (const ACE_Unbounded_Set_Iterator<T> &
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Const_Iterator)
+
+template <class T> void
+ACE_Unbounded_Set_Const_Iterator<T>::dump (void) const
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::dump");
+}
+
+template <class T>
+ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s, int end)
+  : current_ (end == 0 ? s.head_->next_ : s.head_ ),
+    set_ (&s)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator");
+}
+
+template <class T> int
+ACE_Unbounded_Set_Const_Iterator<T>::advance (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::advance");
+  this->current_ = this->current_->next_;
+  return this->current_ != this->set_->head_;
+}
+
+template <class T> int
+ACE_Unbounded_Set_Const_Iterator<T>::first (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::first");
+  this->current_ = this->set_->head_->next_;
+  return this->current_ != this->set_->head_;
+}
+
+template <class T> int
+ACE_Unbounded_Set_Const_Iterator<T>::done (void) const
+{
+  ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::done");
+
+  return this->current_ == this->set_->head_;
+}
+
+template <class T> int
+ACE_Unbounded_Set_Const_Iterator<T>::next (T *&item)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::next");
+  if (this->current_ == this->set_->head_)
+    return 0;
+  else
+    {
+      item = &this->current_->item_;
+      return 1;
+    }
+}
+
+template <class T> ACE_Unbounded_Set_Const_Iterator<T>
+ACE_Unbounded_Set_Const_Iterator<T>::operator++ (int)
+{
+  //ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::operator++ (int)");
+  ACE_Unbounded_Set_Const_Iterator<T> retv (*this);
+
+  // postfix operator
+
+  this->advance ();
+  return retv;
+}
+
+template <class T> ACE_Unbounded_Set_Const_Iterator<T>&
+ACE_Unbounded_Set_Const_Iterator<T>::operator++ (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Set_Const_Iterator<T>::operator++ (void)");
+
+  // prefix operator
+
+  this->advance ();
+  return *this;
+}
+
 #endif /* ACE_UNBOUNDED_SET_C */

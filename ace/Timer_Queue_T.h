@@ -73,13 +73,13 @@ public:
   void set_act (void *act);
 
   /// get the timer value.
-  ACE_Time_Value &get_timer_value (void);
+  const ACE_Time_Value &get_timer_value (void) const;
 
   /// set the timer value.
   void set_timer_value (ACE_Time_Value timer_value);
 
   /// get the timer interval.
-  ACE_Time_Value &get_interval (void);
+  const ACE_Time_Value &get_interval (void) const;
 
   /// Set the timer interval.
   void set_interval (ACE_Time_Value interval);
@@ -97,7 +97,7 @@ public:
   void set_next (ACE_Timer_Node_T<TYPE> *next);
 
   /// get the timer_id.
-  long get_timer_id (void);
+  long get_timer_id (void) const;
 
   /// set the timer_id.
   void set_timer_id (long timer_id);
@@ -157,7 +157,7 @@ public:
   virtual void next (void) = 0;
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void) = 0;
+  virtual int isdone (void) const = 0;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void) = 0;

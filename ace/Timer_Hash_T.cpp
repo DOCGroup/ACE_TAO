@@ -97,7 +97,7 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_
 {
   ACE_UNUSED_ARG (timer_queue);
 
-  Hash_Token *h = ACE_reinterpret_cast (Hash_Token *, 
+  Hash_Token *h = ACE_reinterpret_cast (Hash_Token *,
                                         ACE_const_cast (void *,
                                                         arg));
   int result =
@@ -175,7 +175,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::next (void)
 // Returns true when we are at the end (when bucket_item_ == 0)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
-ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::isdone (void)
+ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::isdone (void) const
 {
   return this->iter_ == 0;
 }
