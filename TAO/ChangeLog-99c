@@ -1,3 +1,61 @@
+Wed Aug 11 09:18:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  The following changes are used to surface the ServiceContextList
+	  so interceptors can access them at inteception points.
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i: The ORB_Core no longer owns the
+	  ServiceContextList object.  ServiceContextList objects are now
+	  associated with Invocation or ServerRequest objects.
+
+	* tao/GIOP.cpp:
+	* tao/GIOP.h: Disabled the definition/implementation of
+	  TAO_GIOP_ServiceContextList and changed to use
+	  IOP::ServiceContextList.  The TAO_GIOP_ServiceContextList was
+	  apparently redundant.
+	  (write_request_header): The request ServiceContextList is now
+	  passed down thru this method and its friends instead of getting
+	  the default one from the ORB_Core.
+
+	* tao/Server_Request.h:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i: ServerRequest and friends now owns
+	  the request ServiceContextList object passed from the client.
+	  It also maintains a separate ServiceContextList object for two
+	  way calls.
+
+	* tao/Pluggable.cpp:
+	* tao/Pluggable.h:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/UIOP_Transport.cpp:
+	* tao/UIOP_Transport.h: The <start_request> method now takes an
+	  extra ServiceContextList argument to build a request headers.
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Invocation.cpp:
+	* tao/Invocation.h:
+	* tao/Invocation.i: The invocation class now owns the request
+	  ServiceContextList.  Accessors for both request and reply
+	  ServiceContextList are added.
+
+	* tao/Transport_Mux_Strategy.cpp:
+	* tao/Transport_Mux_Strategy.h: Changed the use of
+	  TAO_GIOP_ServiceContextList to IOP::ServiceContextList.
+
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i: Added accesor to the reply
+	  ServiceContextList object so we can get a hold on the object
+	  from the invocation object.
+
+	* tao/Typecode_Constants.cpp: Removed the typecode constant for
+	  TAO_GIOP_ServiceContext and TAO_GIOP_ServiceContextList.  We now
+	  use the ones defined in IOPC.cpp.
+
 Wed Aug 11 09:45:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/IDL_Test/main.cpp:
@@ -34,7 +92,7 @@ Tue Aug 10 19:59:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/CDR.i:
 	  Added the wstring versions of the <<=, >>=, << and >>
 	  operators. Also moved the <<= operators in Any.i to
-	  Any.cpp (they are much too long to inline), and 
+	  Any.cpp (they are much too long to inline), and
 	  added an ACE_DEBUG message to the previously empty
 	  ACE_CATCHANY block in the Any operators.
 
