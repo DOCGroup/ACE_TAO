@@ -39,8 +39,8 @@ Timeout_i::sendTimeToWait (CORBA::Long msec,
 
   if (msec != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Timeout_i::sendTimeToWait: sleeping\n\n"));
+      // ACE_DEBUG ((LM_DEBUG,
+      //            "Timeout_i::sendTimeToWait: sleeping\n\n"));
 
       ACE_Time_Value tv (0, msec * 1000);
 	    ACE_OS::sleep (tv);
@@ -52,8 +52,8 @@ Timeout_i::shutdown (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   orb_->shutdown (false);
-  ACE_DEBUG ((LM_DEBUG,
-              "Timeout_i::shutdown: shut down ORB\n\n"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "Timeout_i::shutdown: shut down ORB\n\n"));
 }
 
 // Reply Handler implementation
@@ -86,8 +86,8 @@ TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutExceptionHolder *,
                                         CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "excep"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "excep"));
   reply_excep_counter_++;
   timer_.stop ();
 }

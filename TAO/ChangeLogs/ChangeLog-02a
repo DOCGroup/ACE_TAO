@@ -1,3 +1,13 @@
+Tue Mar  6 13:06:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * tests/AMI_Timeouts/client.cpp:
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/AMI_Timeouts/timeout_i.cpp:
+
+          Cleaned up the code and pretty-printed the output of the 
+          debug messages.
+
 Tue Mar  6 11:51:18 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Wait_On_Leader_Follower.cpp:
