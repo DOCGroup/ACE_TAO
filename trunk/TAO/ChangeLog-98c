@@ -1,3 +1,15 @@
+Sat Nov 14 18:31:57 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/new_run_test: new perl version of
+	the previous shell script (run_test)
+
+	* performance-tests/Thruput/TAO/new_server_test: new perl version
+	of the previous shell script (run_server)
+
+	* performance-tests/Thruput/TAO/new_client_test: new perl version
+	of the previous shell script (run_client)
+	
+
 Sat Nov 14 14:29:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.41 released.
