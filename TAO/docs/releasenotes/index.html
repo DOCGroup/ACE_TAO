@@ -1012,6 +1012,19 @@ is necessary for namespace recognition by the preprocessor, is not defined.</li>
 
 <p>Known Issues:
 <ul>
+<li> Right now included IDL files are processed by tao_ifr - their contents are
+added to the Interface Repository. This could create a problem if the included
+IDL file is processed again, whether as an included file or not. Now that forward
+declared interfaces need not be defined in the same file, it is impossible for the
+Interface Repository to tell, if it finds an existing entry with the same id when
+attempting to create a new entry, if it is a case of a name clash (perhaps a previously defined empty interface is being redefined - an error) or if an undefined
+forward declared interface from another file is now being fully defined. On the
+other hand, if included IDL files are not processed, the user must make sure that
+an included file has been processed as a main IDL file previously, so the
+Interface Repository will have its contents available for lookup. A command line
+option will be added at some point to enable or disable the processing of included
+IDL files. It remains to be decided what the default behavior should be. </li><p>
+
 <li> With the chosen design, calling move() on a Contained IR object will
 invalidate the object reference, since the object ID is based on the path
 to the object in the database. This is not expected to be a serious problem
@@ -1086,10 +1099,21 @@ resolve the IFR of the target object (whether local or remote), and return the
 InterfaceDef associated with that object, if it is found in the repository. The test
 in orbsvcs/tests/InterfaceRepo/Application_Test has been modified to use _get_interface().</li><p>
 
+<li> The executable tao_ifr now handles -ORB options and multiple IDL files in
+the command line. The option<br><br>
+
+-ORBInitRef InterfaceRepository=file://[filename]<br><br>
+
+can now be used instead of relying on IP multicast to resolve the IFR service.</li><p>
+
+
 </ul>
 
 <p>Future Work:
 <ul>
+<li> Add a command line option to tao_ifr to turn on (or off) the processing of
+included IDL files. See Known Issues above. </li><p>
+
 <li> Add support for recursive structs and unions to the IFR, and for
 their typecodes to the TypeCodeFactory.</li><p>
 
