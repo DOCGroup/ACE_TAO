@@ -1,3 +1,18 @@
+Tue Jan 28 16:07:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+
+          Delayed the check for abstract interfaces in the 
+          ancestry of a non-abstract interface until just before
+          the knowledge is needed for the first time in code
+          generation. This corrects a problem with forward
+          declared interfaces whose full definition member has
+          not yet been replaced by its final value. Thanks to
+          Michael Soden <soden@ikv.de> for reporting the
+          problem.
+
 Tue Jan 28 14:27:01 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/Properties.cpp:

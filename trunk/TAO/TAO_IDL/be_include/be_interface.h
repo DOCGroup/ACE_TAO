@@ -321,8 +321,7 @@ public:
                            TAO_OutStream *os);
   // generate the operation table entries.
 
-  void analyze_parentage (AST_Interface **parents,
-                          long n_parents);
+  void analyze_parentage (void);
   // Compute whether or not we have both abstract and concrete parents,
   // and make a list of the abstract parents, if any.
 
@@ -347,7 +346,7 @@ public:
   // Returns an interface, which can be used instead.
   // Needs to get set by the strategy.
 
-  idl_bool has_mixed_parentage (void) const;
+  int has_mixed_parentage (void);
   // Do we have both abstract and concrete parents?
 
 private:
@@ -400,7 +399,7 @@ private:
   // The original interface from which this one was created,
   // applies only to implied IDL
 
-  idl_bool has_mixed_parentage_;
+  int has_mixed_parentage_;
   // Do we have both abstract and concrete parents?
 };
 
