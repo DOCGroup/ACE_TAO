@@ -52,7 +52,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
       TAO_ProtocolFactorySetItor end =
         orb_core.protocol_factories ()->end ();
 
-      int found = 0;
+      // int found = 0;
       // If usable protocol (factory) is found then this will be
       // set equal to 1.
 
@@ -69,7 +69,7 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                             TAO_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
-              found = 1;  // A usable protocol was found.
+              // found = 1;  // A usable protocol was found.
             }
           else
             continue;
