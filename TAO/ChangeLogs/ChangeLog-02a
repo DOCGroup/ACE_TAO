@@ -5,7 +5,8 @@ Sun Dec 30 10:31:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	* tests/BiDirectional/README:
 	* tests/BiDirectional_NestedUpcall/README: Updated the above
-	  files. 
+	  files.  Thanks to Scott Harris <harris_s@ociweb.com>  pointing
+	  out.  
 
 Sun Dec 30 09:14:04 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
