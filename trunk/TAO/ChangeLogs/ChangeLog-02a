@@ -1,3 +1,7 @@
+Sat Dec 15 12:53:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Objref_Sequence_Test/client.cpp: Fixed a Win2000 warning. 
+
 Sat Dec 15 09:53:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/Transport.cpp:

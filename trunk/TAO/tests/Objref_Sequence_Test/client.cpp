@@ -128,4 +128,6 @@ main (int argc, char *argv [])
       ACE_CHECK_RETURN (-1);
     }
   ACE_ENDTRY;
+
+  return 0;
 }
