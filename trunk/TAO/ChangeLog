@@ -1,3 +1,8 @@
+Tue Feb 22 15:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current_Impl.{h,cpp,inl}:
+          Added :: before TAO_Root_POA to fix compile errors with Sun Forte
+
 Tue Feb 22 14:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_cs.cpp:
