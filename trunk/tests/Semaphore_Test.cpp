@@ -116,12 +116,7 @@ test_timeout (void)
   wait.sec (wait.sec () + wait_secs);
 
   if (s.acquire (wait) == -1)
-#if defined (ACE_HAS_PTHREADS_DRAFT4)
-    // LynxOS, at least.
-    ACE_ASSERT (errno == EINTR);
-#else
     ACE_ASSERT (errno == ETIME);
-#endif
 
   ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
 
