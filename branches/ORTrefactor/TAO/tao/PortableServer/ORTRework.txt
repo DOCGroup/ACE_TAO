@@ -1,3 +1,40 @@
+Fri Aug 20 11:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor.mpc:
+          IORInterceptor is now dependent on PortableServer
+
+        * tao/IORInterceptor_Adapter.h:
+          Added several new pure virtual methods that must be implemented by
+          the real adapter implementations
+
+        * tao/ORB_Core.{h,cpp}:
+          Removed ior_interceptor_list(), make ior_interceptor_adapter()
+          public, the POA will just retrieve the ior_interceptor_adapter from
+          the ORB core and will use it then from then.
+
+        * tao/PortableServer.mpc:
+          PortableServer is not dependent on IORInterceptor anymore.
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+          Initialise pointer with 0.
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.{h,cpp}:
+          Implemented new pure virtual methods from the base, this code was
+          previously in the POA, but couples the POA to the IORInterceptor, by
+          moving it here we can decouple it
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POAManager.cpp:
+          Instead of handling IORInterceptors here, just try to retrieve the
+          IORInterceptor adapter from the ORB Core and pass the call to the
+          adapter, this removes the dependency of the POA on IORInterceptor
+
+        * tao/PortableServer/IORInfo.{h,cpp,inl}:
+        * tao/IORInterceptor/IORInfo.{h,cpp,inl}:
+          Moved this class from PortableServer to IORInterceptor, because of
+          the changes above the usage of IORInfo is restricted to the
+          IORInterceptor library
+
 Fri Aug 20 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor.pidl:

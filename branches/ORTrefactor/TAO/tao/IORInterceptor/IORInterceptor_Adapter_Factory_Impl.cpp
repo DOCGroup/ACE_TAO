@@ -16,7 +16,7 @@ TAO_IORInterceptor_Adapter * TAO_IORInterceptor_Adapter_Factory_Impl::create (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IORInterceptor_Adapter_Impl * new_iorinterceptor_adapter;
+  TAO_IORInterceptor_Adapter_Impl * new_iorinterceptor_adapter = 0;
   ACE_NEW_RETURN (new_iorinterceptor_adapter,
                   TAO_IORInterceptor_Adapter_Impl,
                   0);

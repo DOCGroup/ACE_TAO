@@ -1,4 +1,4 @@
-#include "tao/PortableServer/IORInfo.h"
+#include "IORInfo.h"
 #include "tao/PortableServer/POA.h"
 
 #include "tao/PolicyC.h"
@@ -6,10 +6,9 @@
 #include "tao/ORB_Constants.h"
 
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (IORInterceptor,
            IORInfo,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "IORInfo.inl"
