@@ -2,6 +2,9 @@ Mon May  5 08:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbvcs/orbsvcs/*Makefile.*: Updated dependencies.
 
+	* orbsvcs/orbsvcs/LB_ORT.idl: Fixed the path to the included pidl
+	  file. 
+
 Mon May  5 08:32:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAOACE.dsw:
