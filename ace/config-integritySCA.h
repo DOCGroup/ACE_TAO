@@ -23,7 +23,7 @@
 #endif
 #define ACE_NEW_THROWS_EXCEPTIONS
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define	ACE_HAS_TEMPLATE_SPECIALIZATION
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 #define TAO_USE_SEQUENCE_TEMPLATES
@@ -185,7 +185,7 @@ typedef union sigval sigval_t;
 #define ACE_USE_RCSID 0
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
-#define fileno(file)	((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
+#define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled
 #define ACE_DEFAULT_THREAD_PRIORITY 127
 #define ACE_HAS_ATTR_SETSCHED
 #define PRI_FIFO_MIN 1
