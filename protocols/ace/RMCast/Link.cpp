@@ -195,9 +195,8 @@ namespace ACE_RMCast
       if (capacity < msg_size)
       {
         capacity = msg_size;
-        holder = auto_ptr<char> (0);
         data = reinterpret_cast<char*> (operator new (capacity));
-        holder = auto_ptr<char> (data);
+        holder.reset (data);
       }
 
       size = rsock_.recv (data, capacity, addr);

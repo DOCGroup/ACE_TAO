@@ -1,3 +1,9 @@
+Tue Feb 22 21:30:04 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Link.cpp: Replaced assignment of auto_ptr's
+	with a call to reset() in search for a way around VxWorks' broken
+	implementation.
+
 Tue Feb 22 21:20:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Stack.cpp:
