@@ -4,6 +4,7 @@
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
 #include "../Utils/Safe_InputCDR.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
@@ -219,8 +220,10 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 {
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  if (ACE_OS::strcmp(operation.in(), "push") == 0)
+  if (ACE_OS::strcmp(operation.in(), "push") == 0) {
+    TAO_FTRTEC::Log(3, "Received push command\n");
     return;
+  }
 
   ACE_TRY_EX(block1) {
     FT::FTRequestServiceContext ft_request_service_context;
