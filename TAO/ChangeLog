@@ -1,3 +1,17 @@
+Thu Jun 12 10:46:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Removed a method from a template utility class that was more
+          trouble than it was worth to support on platforms requiring
+          explicit template instantiation. Also removed all uses of this
+          method, removed a specialization of it, and moved the explicit
+          template instantiation back to the tmplinst.cpp file.
+
 Wed Jun 11 16:14:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/Makefile: Fixed a minor problem which should

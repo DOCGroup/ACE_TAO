@@ -47,12 +47,15 @@ TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::ValueMember vm;
   TAO_IFR_Desc_Utils<CORBA::ValueMember,
-                     TAO_ValueMemberDef_i>::fill_desc_begin_ex (
+                     TAO_ValueMemberDef_i>::fill_desc_begin (
                                                 vm,
                                                 this->repo_,
                                                 this->section_key_
                                                 ACE_ENV_ARG_PARAMETER
                                               );
+  ACE_CHECK_RETURN (0);
+
+  vm.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
