@@ -1,3 +1,10 @@
+Fri Jan 23 19:09:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/OS_NS_string.cpp:
+	  With CBuilderX Preview strdup is in the std namespace, so
+	  added ACE_STD_NAMESPACE which expands to std with Borland,
+	  to nothing with other compilers.
+
 Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * ace/OS_NS_stdlib.inl
@@ -13,7 +20,7 @@ Fri Jan 23 10:04:00 2004  Gary Maxey <gary.maxey@hp.com>
 Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * ace/OS_NS_Thread.inl:
-	 
+
           Fix for BUGID 1708
 
           Added #elif in ACE_OS::sigwait to use alternate sigwait() when
@@ -22,7 +29,7 @@ Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
 Fri Jan 23 09:34:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * ace/OS_NS_unistd.inl:
-	 
+
           Fix for BUGID 1709
 
           Added #ifdef to use alternate select() when compiling for Tandem
