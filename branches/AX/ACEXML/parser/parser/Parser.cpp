@@ -26,6 +26,9 @@ Make sure we are freezing the obstack in all cases.
 static const ACEXML_Char default_attribute_type[] = {'C', 'D', 'A', 'T', 'A', 0};
 static const ACEXML_Char empty_string[] = { 0 };
 
+const ACEXML_Char
+ACEXML_Parser::simple_parsing_name_[] = { 'S', 'i', 'm', 'p', 'l', 'e', 0 };
+
 ACEXML_Parser::ACEXML_Parser (void)
   :   dtd_handler_ (0),
       entity_resolver_ (0),
@@ -34,7 +37,8 @@ ACEXML_Parser::ACEXML_Parser (void)
       instream_ (0),
       doctype_ (0),
       dtd_system_ (0),
-      dtd_public_ (0)
+      dtd_public_ (0),
+      simple_parsing_ (0)
 {
 }
 
@@ -48,11 +52,10 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name,
   // ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
   //                       ACEXML_SAXNotSupportedException))
 {
-  // Not implemented.
+  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0)
+    return this->simple_parsing_;
 
-  ACE_UNUSED_ARG (name);
-
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
+  xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
   return -1;
 }
 
@@ -76,11 +79,10 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name,
   //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
   //                       ACEXML_SAXNotSupportedException))
 {
-  // @@ Not implemented.
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (boolean_value);
+  if (ACE_OS_String::strcmp (name, ACEXML_Parser::simple_parsing_name_) == 0)
+    this->simple_parsing_ = (boolean_value == 0 ? 0 : 1);
 
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
+  xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
 }
 
 void
@@ -116,9 +118,12 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
       xmlenv.exception (new ACEXML_SAXException ("No valid input source available"));
       return;
     }
-  this->parse_xml_prolog (xmlenv);
-  ACEXML_CHECK;
 
+  if (this->simple_parsing_ == 0)
+    {
+      this->parse_xml_prolog (xmlenv);
+      ACEXML_CHECK;
+    }
   // @@ Should startDocument come before or after parsing the DTD definition?
   this->content_handler_->startDocument (xmlenv);
   ACEXML_CHECK;

@@ -47,9 +47,9 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = ace/XML
-FILE_PATTERNS         = *.cpp *.h *.i *.inl
-RECURSIVE             = NO
+INPUT                 = XML
+FILE_PATTERNS         = *.cpp *.h *.i *.inl *.txt
+RECURSIVE             = YES
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
 EXAMPLE_PATH          =
@@ -70,7 +70,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace/xml
+HTML_OUTPUT           = html/xml
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -127,7 +127,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 #---------------------------------------------------------------------------
 
 TAGFILES              = html/ace/ACE.tag=..
-GENERATE_TAGFILE      = html/ace/xml/ACEXML.tag
+GENERATE_TAGFILE      = html/xml/ACEXML.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
