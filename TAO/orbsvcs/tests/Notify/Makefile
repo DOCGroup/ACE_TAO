@@ -19,8 +19,9 @@ DIRS  =	lib \
         Structured_Filter \
         Structured_Multi_Filter \
         Sequence_Multi_Filter \
-        Sequence_Multi_ETCL_Filter
-
+        Sequence_Multi_ETCL_Filter \
+	RT_lib \
+	Test_Filter
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

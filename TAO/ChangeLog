@@ -1,10 +1,17 @@
+Tue Apr 2 11:06:06 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/tests/Notify/RT_lib:
+	* orbsvcs/tests/Notify/Test_Filter:
+	  Moved the test library for RT Noification features and the test
+	  filter into seperate directories from orbsvcs/tests/Notify/lib
+
 Thu Mar 27 01:04:43 2003  Pradeep Gore  <pradeep@.oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_NotifyTests
 	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_RT_NotifyTests
 	* orbsvcs/tests/Notify/lib/.depend.Makefile.TAO_RT_NotifyTests_Filter
 	Added .depend files.
-	
+
 Thu Mar 27 07:29:06 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.RT_Notification:

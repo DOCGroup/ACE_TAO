@@ -1,0 +1,66 @@
+#$Id$
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile
+DEPENDENCY_FILE = .depend.Makefile
+LIB_UNCHECKED   = libTAO_RT_NotifyTests.a
+SHLIB_UNCHECKED = libTAO_RT_NotifyTests.$(SOEXT)
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+
+
+FILES = \
+  RT_Application_Command \
+  RT_POA_Command \
+  RT_Priority_Mapping \
+  RT_Factories_Define
+
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq ($(rt_corba),1)
+ifeq (Notify, $(findstring Notify, $(CURRENT_COMPONENTS)))
+ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+endif
+endif
+endif
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+LSRC   = $(addsuffix .cpp, $(FILES))
+ACELIB = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
+
+CPPFLAGS     += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DTAO_RT_NOTIFY_TEST_BUILD_DLL
+endif
+endif
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
+
+
+LDFLAGS      += -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao/DynamicAny -L$(TAO_ROOT)/tao/IORTable -L$(TAO_ROOT)/orbsvcs/orbsvcs/ETCL -L$(TAO_ROOT)/tao/RTPortableServer -L$(TAO_ROOT)/tao/RTCORBA -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+
+ACE_SHLIBS = -lTAO_NotifyTests -lTAO_RTCORBA -lTAO_RTPortableServer -lTAO_CosNotification -lTAO_ETCL -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_DynamicAny -lTAO_PortableServer -lTAO $(ACELIB)
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
