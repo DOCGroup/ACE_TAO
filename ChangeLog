@@ -1,3 +1,14 @@
+Thu Jun 17 22:10:18 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp:
+  
+          Fixed recalc_earliest() to remember the spoke with the earliest
+ 	  time not from the current wheel iteration.  If the entire wheel
+ 	  is searched and no earliest time from the current iteration is
+ 	  found, then the remembered spoke is the earliest_spoke_.  Thanks
+ 	  to Ken Descoteaux <ken@proquent.com> for this fix.  This fixes
+ 	  bugid 1853.
+
 Thu Jun 17 12:48:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/configure.ac:

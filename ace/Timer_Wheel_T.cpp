@@ -653,7 +653,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::recalc_earliest
     return;
 
   ACE_Time_Value et = ACE_Time_Value::zero;
-
+  u_int es = 0;
   u_int spoke = this->earliest_spoke_;
 
   // We will have to go around the wheel at most one time.
@@ -672,11 +672,14 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::recalc_earliest
           else if (et == ACE_Time_Value::zero || t < et)
             {
               et = t;
+              es = spoke;
             }
         }
       if (++spoke >= this->spoke_count_)
         spoke = 0;
     }
+
+  this->earliest_spoke_ = es;
   //ACE_ERROR((LM_ERROR, "We had to search the whole wheel.\n"));
 }
 
