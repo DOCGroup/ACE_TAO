@@ -1,3 +1,11 @@
+Thu Apr  4 08:32:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/CDRStream.cpp (ctor):
+	  Modified default ctor to always add ACE_CDR::MAX_ALIGNMENT to 
+	  the size parameter since it is always required since the 
+	  subsequent call to ACE_CDR::mb_align() might advance the
+	  (rd|wr)_ptr's up to ACE_CDR::MAX_ALIGNMENT-1 bytes. 
+
 Wed Apr  3 18:01:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SOCK_Dgram.cpp (shared_open): Add PF_INET6 to the test for
