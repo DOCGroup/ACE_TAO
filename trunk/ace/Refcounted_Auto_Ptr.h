@@ -127,7 +127,7 @@ private:
   void reset (X *p = 0);
 
   /// Get the pointer value.
-  X *get (void);
+  X *get (void) const;
 
   /// Get the reference count value.
   int count (void) const;

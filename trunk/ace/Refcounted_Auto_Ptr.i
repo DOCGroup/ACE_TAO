@@ -190,7 +190,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator *() const
 }
 
 template <class X, class ACE_LOCK> inline X*
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::get (void)
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::get (void) const
 {
   // We return the ACE_Future_rep.
   return this->rep_->get ();
