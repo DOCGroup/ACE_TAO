@@ -21,6 +21,7 @@ use Getopt::Std;
 # - files not ending with newline
 # - Guards in .h files
 # - no global functions
+# - other commit_check checks, missing LF at eof, tabs, trailing spaces.
 #
 # And others in ACE_Guidelines and Design Rules
 #
@@ -218,7 +219,7 @@ sub check_for_line_length ()
 # should be used, not the newer // style.  
 sub check_for_preprocessor_comments ()
 {
-    print "Running line length test\n";
+    print "Running preprocessor comment test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
         my $line = 0;
         if (open (FILE, $file)) {
