@@ -5,7 +5,7 @@ Thu Dec 10 21:48:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* examples/Callback_Quoter/Consumer_Handler.cpp:
 
 	  Replaced #include <signal.h> by #include "ace/OS.h" and also
-	  changed all #include <foo.h> to #include "foo.h" wherever
+	  changed all #include <ace/foo.h> to #include "ace/foo.h" wherever
 	  applicable. Thanks to David for pointing out these discrepancies.
 
 Thu Dec 10 09:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
