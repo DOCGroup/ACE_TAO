@@ -188,7 +188,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-	  ACE_OS::socket_init (ACE_ENV_ARG_PARAMETER);
+      ACE_OS::socket_init ();
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
