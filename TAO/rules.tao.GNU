@@ -17,6 +17,16 @@ ifndef TAO_IDL
   TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
 endif
 
+ifdef COMSPEC
+  #### Assume we're on a WIN32 host.
+  ifndef CPP_LOCATION
+    #### Assume we have Bourne shell and sed.  Otherwise, the user
+    #### should find out here that the CPP_LOCATION environment
+    #### variable must be set explicitly!
+    CPP_LOCATION := $(shell type $(CXX) | sed 's/.* is //')
+  endif # ! CPP_LOCATION
+endif # ! CPP_LOCATION
+
 
 ####
 #### Macro customization.
