@@ -1,3 +1,9 @@
+Thu Sep  3 14:51:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* docs: Moved ACE-{tutorials,guidelines,subsets,porting}.html
+	  into the docs directory from the etc directory.  This is
+	  a more "fitting" location...
+
 Thu Sep  3 13:23:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile (CONTROLLED_FILES): Added docs/ into CONTROLLED_FILES.
