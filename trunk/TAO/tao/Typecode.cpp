@@ -294,6 +294,19 @@ CORBA::TypeCode::~TypeCode (void)
   // Free up our private state.
   delete this->private_state_;
   this->private_state_ = 0;
+  
+  if (this->offset_map_ != 0)
+    {
+      OFFSET_MAP_ENTRY *entry = 0;
+      
+      for (CORBA::TypeCode::OFFSET_MAP_ITERATOR iter (*this->offset_map_);
+           iter.next (entry) != 0;
+           iter.advance ())
+        {
+          CORBA::string_free ((char*)entry->ext_id_);
+          delete entry->int_id_;
+        }
+    }
 
   delete this->offset_map_;
   this->offset_map_ = 0;
