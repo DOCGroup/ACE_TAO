@@ -19,11 +19,11 @@ static int shutdown_server = 0;
 static int do_dump_history = 0;
 static ACE_UINT32 gsf = 0;
 static const char *rates_file = "rates";
-static size_t continuous_workers = 0;
+static CORBA::ULong continuous_workers = 0;
 static int done = 0;
-static time_for_test = 10;
-static work = 10;
-static size_t max_throughput_timeout = 5;
+static CORBA::ULong time_for_test = 10;
+static CORBA::ULong work = 10;
+static CORBA::ULong max_throughput_timeout = 5;
 
 int
 parse_args (int argc, char *argv[])
@@ -82,12 +82,12 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-typedef ACE_Array_Base<size_t> Rates;
+typedef ACE_Array_Base<CORBA::ULong> Rates;
 
 int
 get_rates (const char *file_name,
            Rates &rates,
-           size_t &lowest_rate)
+           CORBA::ULong &lowest_rate)
 {
   //
   // Read rates from a file.
@@ -116,7 +116,7 @@ get_rates (const char *file_name,
       return 0;
     }
 
-  size_t length =
+  CORBA::ULong length =
     reader.replaced () + 1;
 
   rates.size (length);
@@ -128,7 +128,7 @@ get_rates (const char *file_name,
   int result = 1;
   char* working_string = string;
   lowest_rate = ACE_UINT32_MAX;
-  for (size_t i = 0; i < length; ++i)
+  for (CORBA::ULong i = 0; i < length; ++i)
     {
       result = ::sscanf (working_string,
                          "%d",
@@ -169,8 +169,8 @@ class Paced_Worker :
 public:
   Paced_Worker (ACE_Thread_Manager &thread_manager,
                 test_ptr test,
-                size_t rate,
-                size_t iterations,
+                CORBA::ULong rate,
+                CORBA::ULong iterations,
                 CORBA::Short priority,
                 RTCORBA::Current_ptr current,
                 RTCORBA::PriorityMapping &priority_mapping,
@@ -178,7 +178,7 @@ public:
 
   int svc (void);
 
-  ACE_Time_Value deadline_for_current_call (size_t i);
+  ACE_Time_Value deadline_for_current_call (CORBA::ULong i);
 
   test_var test_;
   int rate_;
@@ -193,8 +193,8 @@ public:
 
 Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
                             test_ptr test,
-                            size_t rate,
-                            size_t iterations,
+                            CORBA::ULong rate,
+                            CORBA::ULong iterations,
                             CORBA::Short priority,
                             RTCORBA::Current_ptr current,
                             RTCORBA::PriorityMapping &priority_mapping,
@@ -214,7 +214,7 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
 }
 
 ACE_Time_Value
-Paced_Worker::deadline_for_current_call (size_t i)
+Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 {
   ACE_Time_Value deadline_for_current_call =
     this->interval_between_calls_;
@@ -229,7 +229,7 @@ Paced_Worker::deadline_for_current_call (size_t i)
 int
 Paced_Worker::svc (void)
 {
-  size_t deadlines_missed = 0;
+  CORBA::ULong deadlines_missed = 0;
   CORBA::Short native_priority = 0;
 
   ACE_TRY_NEW_ENV
@@ -253,7 +253,7 @@ Paced_Worker::svc (void)
       ACE_hrtime_t test_start =
         ACE_OS::gethrtime ();
 
-      for (size_t i = 0;
+      for (CORBA::ULong i = 0;
            i != this->history_.max_samples ();
            ++i)
         {
@@ -341,20 +341,20 @@ class Continuous_Worker :
 {
 public:
   Continuous_Worker (test_ptr test,
-                     size_t iterations,
+                     CORBA::ULong iterations,
                      RTCORBA::Current_ptr current,
                      ACE_SYNCH_MUTEX &output_lock);
 
   int svc (void);
 
   test_var test_;
-  size_t iterations_;
+  CORBA::ULong iterations_;
   ACE_SYNCH_MUTEX &output_lock_;
   RTCORBA::Current_var current_;
 };
 
 Continuous_Worker::Continuous_Worker (test_ptr test,
-                                      size_t iterations,
+                                      CORBA::ULong iterations,
                                       RTCORBA::Current_ptr current,
                                       ACE_SYNCH_MUTEX &output_lock)
   : test_ (test::_duplicate (test)),
@@ -378,7 +378,7 @@ Continuous_Worker::svc (void)
       ACE_hrtime_t test_start =
         ACE_OS::gethrtime ();
 
-      for (size_t i = 0;
+      for (CORBA::ULong i = 0;
            i != history.max_samples () && !done;
            ++i)
         {
@@ -432,9 +432,9 @@ Continuous_Worker::svc (void)
 
 int
 max_throughput (test_ptr test,
-                size_t &max_rate)
+                CORBA::ULong &max_rate)
 {
-  size_t calls_made = 0;
+  CORBA::ULong calls_made = 0;
 
   ACE_TRY_NEW_ENV
     {
@@ -528,7 +528,7 @@ main (int argc, char *argv[])
         *mapping_manager->mapping ();
 
       Rates rates;
-      size_t lowest_rate = 0;
+      CORBA::ULong lowest_rate = 0;
 
       result =
         get_rates (rates_file,
@@ -537,7 +537,7 @@ main (int argc, char *argv[])
       if (result != 0)
         return result;
 
-      size_t max_rate = 0;
+      CORBA::ULong max_rate = 0;
       result =
         max_throughput (test.in (),
                         max_rate);
@@ -549,7 +549,7 @@ main (int argc, char *argv[])
 
       ACE_Thread_Manager paced_workers_manager;
 
-      size_t i = 0;
+      CORBA::ULong i = 0;
       Paced_Worker **paced_workers =
         new Paced_Worker *[rates.size ()];
 
@@ -635,3 +635,9 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<CORBA::ULong>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Array_Base<CORBA::ULong>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

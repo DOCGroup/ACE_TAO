@@ -16,7 +16,7 @@ unlink $iorfile;
 
 $SV = new PerlACE::Process ("server");
 
-$CL = new PerlACE::Process ("client", "-x -i $iterations");
+$CL = new PerlACE::Process ("client", "-x");
 
 $SV->Spawn ();
 
