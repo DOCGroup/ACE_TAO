@@ -1,3 +1,10 @@
+Thu Sep 14 19:36:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  Modified iter_lookup_by_name_local() to handle an
+	  example sent in by Russell Mora <rd.mora@router.econz.co.nz>.
+
 Thu Sep 14 16:39:12 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* Merged in the changes from the pluggable IOR parsing branch.
