@@ -59,14 +59,28 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
+      << "TAO_OutputCDR stream;" << be_nl
+      << "stream << _tao_elem;" << be_nl
       << "if (_tao_elem.nocopy ()) // no copy" << be_idt_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_elem.in (), 1, ACE_TRY_ENV); // consume it" << be_uidt_nl
-      << "else // copy" << be_idt_nl
-      << "_tao_any.replace (" << node->tc_name () << ", " << node->name ()
-      << "_dup (_tao_elem.in ()), 1, ACE_TRY_ENV);" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl 
+      << node->tc_name () << "," << be_nl
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl
+      << "stream.begin ()," << be_nl
+      << "1," << be_nl
+      << "(void *)_tao_elem.in ()," << be_nl
+      <<  "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "else                // copy" << be_idt_nl
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl 
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl 
+      << "stream.begin ()," << be_nl 
+      << "1," << be_nl 
+      << node->name () << "_dup (_tao_elem.in ())," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl
       << "ACE_CATCHANY {}" << be_nl
       << "ACE_ENDTRY;" << be_uidt_nl
       << "}\n\n";
@@ -91,21 +105,25 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "{" << be_idt_nl
       << "_tao_elem.out () = " << node->name () << "_alloc ();" << be_nl
       << "if (!_tao_elem.in ()) return 0;" << be_nl
-
       << "TAO_InputCDR stream (" << be_idt << be_idt_nl
       << "_tao_any._tao_get_cdr ()," << be_nl
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
       << ");" << be_uidt_nl
-
-      << "if (stream.decode (" << node->tc_name ()
-      << ", _tao_elem.inout (), 0, ACE_TRY_ENV)" << be_nl
-      << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "if (stream >> _tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", _tao_elem.inout (), 1, ACE_TRY_ENV);" << be_nl
+      << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl 
+      << "1," << be_nl 
+      << "_tao_elem.inout ()," << be_nl 
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << node->name () << "_free (_tao_elem._retn ());" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
