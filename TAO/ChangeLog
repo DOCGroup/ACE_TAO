@@ -1,3 +1,11 @@
+Wed Aug 21 17:11:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp (loads):
+
+	  Added support for load computation on Solaris 7 and HPUX.
+
+	  Fixed unused variable warning.
+
 Wed Aug 21 17:01:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.bor (RESOURCE):
