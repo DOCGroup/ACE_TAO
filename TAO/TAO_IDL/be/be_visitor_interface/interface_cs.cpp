@@ -396,7 +396,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl;
 
-  if (node->is_local ())
+  if (node->is_local () || node->is_abstract ())
     *os << "ACE_ENV_ARG_DECL_NOT_USED";
   else
     *os << "ACE_ENV_ARG_DECL";
