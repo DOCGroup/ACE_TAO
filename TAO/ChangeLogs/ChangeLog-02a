@@ -1,3 +1,36 @@
+Fri Jan 18 09:32:57 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be/be_interface.cpp:
+	  Improved comments in generated code.
+	  New gen_operation_table() helper method, it can generate an
+	  operation table with a different class name (and class flat
+	  name).  This is useful for the AMH code generation.
+	  Changed the related methods to take a flat_name argument.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	  Do not create a temporary "AMH_*" node, the visitors deal with
+	  the original interface node directly.
+	  Fixed generation of the _this() method to use the new
+	  TAO_ENV_ARG_* macros.
+
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Make the "flat_name" customizable in the be_visitor_interface_ss
+	  vistor.  This is used to generate an AMH-specific flat name and
+	  take advantage of the new gen_operation_table() helper method in
+	  be_interface.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	  Since there is no AMH_* node anymore then we need to add the
+	  AMH_ prefix explicitly.
+
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Removed traditional visitors, but I still need to add the new
+	  ones.
+
 Fri Jan 18 09:23:42 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup.dsp:

@@ -72,7 +72,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
       << "void *_tao_servant_upcall" << be_nl
       << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ");" << be_uidt << "\n\n";
-  
+
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -119,7 +119,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   char *buf;
   // @@ TODO this must be kept consistent with the code in
   //    be_visitor_interface/amh_sh.cpp
-  intf->compute_full_name ("", "ResponseHandler_ptr", buf);
+  intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
 
   *os << buf << " _tao_rh";
   delete[] buf;

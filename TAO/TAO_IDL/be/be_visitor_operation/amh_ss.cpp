@@ -58,9 +58,10 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
   char *buf;
   intf->compute_full_name ("AMH_", "", buf);
-  ACE_CString amh_skel_name (buf);
+  ACE_CString amh_skel_name ("POA_");
+  amh_skel_name += buf;
   delete[] buf;
-    
+
   os->indent ();
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::";
@@ -133,7 +134,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
   ACE_CString response_handler_implementation_name ("POA_");
   response_handler_implementation_name += buf;
   delete[] buf;
-  
+
   *os << be_nl << response_handler_name.c_str ()
       << "_var _tao_rh =" << be_idt_nl
       << "new " << response_handler_implementation_name.c_str ()
@@ -141,23 +142,12 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
   // Make the upcall.
   *os << be_nl << "_tao_impl->"
-      << node->local_name () << " (_tao_rh.in (),"
+      << node->local_name () << " (_tao_rh.in ()"
       << be_idt << be_idt_nl;
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
-  visitor = tao_cg->make_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "codegen for making upcall failed\n"),
-                        -1);
-    }
-  delete visitor;
-  *os << be_uidt_nl << ");\n" << be_uidt;
+  // @@ Insert the IN and INOUT arguments here..
+
+  *os << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl << ");\n" << be_uidt_nl;
 
   *os << be_uidt << "}\n\n";
 
