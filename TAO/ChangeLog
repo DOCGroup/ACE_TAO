@@ -1,3 +1,13 @@
+Tue Apr 13 12:22:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/GIOP.pidl:
+        
+          In the suggested IDL compiler command line options to
+          regenerate this file, removed -Gp (thru-POA collocation)
+          and -Gd (direct collocation) since the file contains
+          no interfaces, and added -GA, to generate Any operator
+          and type code bodies in a separate file called GIOPA.cpp.
+
 Tue Apr 13 12:00:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO/TAO_IDL/be/be_visitor_root/any_op.cpp:
