@@ -146,7 +146,6 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *db)
       //  handler maintains the state of the protocol
       task = handler->task ();
       ts_db = handler->message_block ();
-      handler->waiter_index (waiter_index);
 
       // Use a NULL task to make the thread recycle now
       if (task == 0)
