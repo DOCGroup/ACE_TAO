@@ -1,3 +1,11 @@
+Mon Oct  1 14:24:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/Options.html: Changed the default in the
+	  -ORBTransportMuxStrategy option.  We have been using Muxed for
+	  sometime now and it seems to be going fine. In all probability
+	  we would go for x.2 with this option. Thanks to Ossama for
+	  poiting this out.
+
 Mon Oct  1 07:49:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Endpoint.i:
