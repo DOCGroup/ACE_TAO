@@ -1,3 +1,9 @@
+Mon Dec 13 16:11:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Exclude ASNMP/asnmp.mwc during the release.
+
 Mon Dec 13 06:33:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:

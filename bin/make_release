@@ -785,7 +785,7 @@ sub generate_makefiles () {
     my $mpc_option = $tmp_mpc_option.$here.'/ACE_wrappers';
 
     my $tmp_static_option =
-        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAO/TAOACE.mwc ';
+        '-static -name_modifier *_Static -apply_project -exclude ASNMP/asnmp.mwc,TAO/CIAO,TAO/TAOACE.mwc ';
 
     my $static_option = $tmp_static_option.$mpc_option;
 
