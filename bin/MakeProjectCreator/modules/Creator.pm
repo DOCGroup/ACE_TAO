@@ -93,7 +93,7 @@ sub collect_line {
   }
   else {
     ($status, $errorString) = $self->parse_line($fh, $$lref);
-    $$lref = "";
+    $$lref = '';
   }
 
   return $status, $errorString;
@@ -263,6 +263,12 @@ sub parse_known {
       $status = 0;
     }
   }
+  elsif ($line =~ /^(feature)\s*\(([^\)]+)\)\s*{$/) {
+    my($type)  = $1;
+    my($name)  = $2;
+    my(@names) = split(/\s*,\s*/, $name);
+    push(@values, $type, \@names);
+  }
   elsif (!$self->{$typecheck}) {
     $errorString = "ERROR: No $type was defined";
     $status = 0;
@@ -279,7 +285,7 @@ sub parse_known {
       $name =~ s/\s*\)$//;
     }
     else {
-      $name = 'default';
+      $name = $self->get_default_component_name();
     }
     push(@values, 'component', $comp, $name);
   }
@@ -306,7 +312,7 @@ sub parse_scope {
     $flags = {};
   }
 
-  while(<$fh>) {
+  while($_ = $fh->getline()) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -708,6 +714,12 @@ sub get_dynamic {
 sub get_static {
   my($self) = shift;
   return $self->{'static'};
+}
+
+
+sub get_default_component_name {
+  #my($self) = shift;
+  return 'default';
 }
 
 # ************************************************************

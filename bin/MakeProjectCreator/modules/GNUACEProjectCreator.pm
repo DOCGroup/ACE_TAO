@@ -50,6 +50,7 @@ sub fill_value {
   my($crlf)  = $self->crlf();
   my($tag)   = 'source_files';
   my($names) = $self->{$tag};
+  my($dcomp) = $self->get_default_component_name();
 
   if ($name eq 'gnu_source_files') {
     my(%vpath) = ();
@@ -60,10 +61,8 @@ sub fill_value {
       foreach my $key (sort keys %$comps) {
         my($a)   = $$comps{$key};
         my(@arr) = @$a;
-        my($cpy) = $key;
 
-        $cpy =~ s/^\d+_//;
-        $value .= "$crlf$crlf$cpy = \\";
+        $value .= "$crlf$crlf$key = \\";
         for(my $i = 0; $i <= $#arr; $i++) {
           my($item) = $arr[$i];
           my($dname) = dirname($item);
@@ -81,17 +80,15 @@ sub fill_value {
       my($comps) = $$names{$name};
       foreach my $key (sort keys %$comps) {
         $fname = $key;
-        $fname =~ s/^\d+_//;
         last;
       }
 
-      if ($name ne 'default') {
-        $fname = 'FILES';
+      if ($name ne $dcomp) {
+        $fname = $self->get_default_element_name();
         $value .= "$crlf$crlf" . "ifndef $name$crlf" .
                   "  $name = \\$crlf";
         my(@keys) = sort keys %$comps;
         for(my $i = 0; $i <= $#keys; $i++) {
-          $keys[$i] =~ s/^\d+_//;
           my($key) = $keys[$i];
           $value .= "    $key" . ($i != $#keys ? " \\" : '') . $crlf;
         }
@@ -114,7 +111,7 @@ sub fill_value {
   }
   elsif ($name eq 'build') {
     foreach my $name (keys %$names) {
-      if ($name ne 'default') {
+      if ($name ne $dcomp) {
         if (!defined $value) {
           $value = 'BUILD +=';
         }

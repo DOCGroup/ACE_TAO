@@ -20,6 +20,7 @@ use Creator;
 use TemplateInputReader;
 use TemplateParser;
 use FeatureParser;
+use ArrayHandle;
 
 use vars qw(@ISA);
 @ISA = qw(Creator);
@@ -146,8 +147,10 @@ sub new {
                                 $feature, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
+  $self->{'feature_defined'}       = 0;
   $self->{'project_info'}          = [];
   $self->{'reading_parent'}        = [];
+  $self->{'feature_definitions'}   = [];
   $self->{'dexe_template_input'}   = undef;
   $self->{'lexe_template_input'}   = undef;
   $self->{'lib_template_input'}    = undef;
@@ -243,8 +246,14 @@ sub parse_line {
           }
 
           if ($status) {
-            ## End of project; Write out the file.
-            ($status, $errorString) = $self->write_project();
+            ## Now add in the features that have been defined
+            $self->{$typecheck} = 0;
+            ($status, $errorString) = $self->process_features();
+
+            if ($status) {
+              ## End of project; Write out the file.
+              ($status, $errorString) = $self->write_project();
+            }
 
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
@@ -256,6 +265,7 @@ sub parse_line {
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
             $self->{'parents_read'}         = {};
+            $self->{'feature_definitions'}  = [];
             $self->reset_generating_types();
           }
         }
@@ -402,7 +412,7 @@ sub parse_line {
         $name =~ s/\s*\)$//;
       }
       else {
-        $name = 'default';
+        $name = $self->get_default_component_name();
       }
 
       my($vc) = $self->{'valid_components'};
@@ -432,6 +442,14 @@ sub parse_line {
           $errorString = "ERROR: Invalid component name: $comp";
           $status = 0;
         }
+      }
+    }
+    elsif ($values[0] eq 'feature') {
+      $self->{'feature_defined'} = 1;
+      $self->save_feature($ih, $values[1]);
+      if ($self->{'feature_defined'}) {
+        $errorString = "ERROR: Did not find the end of the feature";
+        $status = 0;
       }
     }
     else {
@@ -506,11 +524,10 @@ sub parse_components {
   my($fh)      = shift;
   my($tag)     = shift;
   my($name)    = shift;
-  my($current) = '000_FILES';
+  my($current) = $self->get_default_element_name();
   my($status)  = 1;
   my($names)   = {};
   my($comps)   = {};
-  my($order)   = 0;
   my($set)     = 0;
   my(%flags)   = ();
   my($custom)  = defined $self->{'generated_exts'}->{$tag};
@@ -548,7 +565,7 @@ sub parse_components {
     }
   }
 
-  while(<$fh>) {
+  while($_ = $fh->getline()) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -560,9 +577,8 @@ sub parse_components {
           ## so we remove it from the components
           delete $$comps{$current};
         }
-        $current = sprintf("%03d_$1", $order);
+        $current = $1;
         $set = 1;
-        $order++;
         if (!defined $$comps{$current}) {
           $$comps{$current} = [];
         }
@@ -627,7 +643,7 @@ sub parse_verbatim {
   $self->{'verbatim'}->{$type}->{$loc} = [];
   my($array) = $self->{'verbatim'}->{$type}->{$loc};
 
-  while(<$fh>) {
+  while($_ = $fh->getline()) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -643,6 +659,81 @@ sub parse_verbatim {
   }
 
   return 1;
+}
+
+
+sub save_feature {
+  my($self)  = shift;
+  my($fh)    = shift;
+  my($names) = shift;
+  my(@lines) = ("project {\n");
+  my($curly) = 1;
+
+  while($_ = $fh->getline()) {
+    my($line) = $self->strip_line($_);
+    push(@lines, "$line\n");
+
+    ## This is a very simplistic way of finding the end of
+    ## the feature definition.  It will work as long as no spurious
+    ## open curly braces are counted.
+    if ($line =~ /{$/) {
+      ++$curly;
+    }
+    elsif ($line =~ /^}$/) {
+      --$curly;
+    }
+    if ($curly == 0) {
+      $self->{'feature_defined'} = 0;
+      last;
+    }
+  }
+  push(@{$self->{'feature_definitions'}}, [ $names, \@lines ]);
+}
+
+
+sub process_features {
+  my($self)   = shift;
+  my($status) = 1;
+  my($error)  = '';
+
+  foreach my $feature (@{$self->{'feature_definitions'}}) {
+    my($names, $lines) = @$feature;
+    my($requires) = '';
+    my($avoids)   = '';
+    foreach my $name (@$names) {
+      if ($name =~ /^!\s*(.*)$/) {
+        if ($avoids ne '') {
+          $avoids .= ' ';
+        }
+        $avoids .= $1;
+      }
+      else {
+        if ($requires ne '') {
+          $requires .= ' ';
+        }
+        $requires .= $name;
+      }
+    }
+
+    if ($self->check_features($requires, $avoids)) {
+      my($ah) = new ArrayHandle($lines);
+      push(@{$self->{'reading_parent'}}, "feature $requires $avoids");
+      my($line) = '';
+      while($_ = $ah->getline()) {
+        ($status, $error) = $self->collect_line($ah, \$line, $_);
+
+        if (!$status) {
+          last;
+        }
+      }
+      pop(@{$self->{'reading_parent'}});
+    }
+
+    if (!$status) {
+      last;
+    }
+  }
+  return $status, $error;
 }
 
 
@@ -701,7 +792,7 @@ sub parse_define_custom {
       $self->{'matching_assignments'}->{$tag} = \@keys;
     }
 
-    while(<$fh>) {
+    while($_ = $fh->getline()) {
       my($line) = $self->strip_line($_);
 
       if ($line eq '') {
@@ -986,7 +1077,7 @@ sub generate_default_target_names {
       my($exename) = undef;
       foreach my $file (@sources) {
         if (open($fh, $file)) {
-          while(<$fh>) {
+          while($_ = $fh->getline()) {
             ## Remove c++ comments (ignore c style comments for now)
             $_ =~ s/\/\/.*//;
 
@@ -1238,12 +1329,13 @@ sub generate_default_components {
       }
       else {
         ## Generate default values for undefined tags
+        my($defcomp) = $self->get_default_element_name();
         my($names) = {};
         $self->{$tag} = $names;
         my($comps) = {};
-        $$names{'default'} = $comps;
-        $$comps{'000_FILES'} = [];
-        my($array) = $$comps{'000_FILES'};
+        $$names{$self->get_default_component_name()} = $comps;
+        $$comps{$defcomp} = [];
+        my($array) = $$comps{$defcomp};
 
         if (!$self->is_special_tag($tag)) {
           $self->sift_files($files, $exts, $pchh, $pchc, $tag, $array);
@@ -1755,7 +1847,8 @@ sub get_custom_value {
 
 sub check_features {
   my($self)     = shift;
-  my($requires) = $self->get_assignment('requires');
+  my($requires) = shift;
+  my($avoids)   = shift;
   my($status)   = 1;
 
   if (defined $requires) {
@@ -1772,7 +1865,6 @@ sub check_features {
 
   ## If it passes the requires, then check the avoids
   if ($status) {
-    my($avoids) = $self->get_assignment('avoids');
     if (defined $avoids) {
       foreach my $avoid (split(/\s+/, $avoids)) {
         my($fval) = $self->{'feature_parser'}->get_value($avoid);
@@ -1793,7 +1885,8 @@ sub check_features {
 sub need_to_write_project {
   my($self) = shift;
 
-  if ($self->check_features()) {
+  if ($self->check_features($self->get_assignment('requires'),
+                            $self->get_assignment('avoids'))) {
     foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
       my($names) = $self->{$key};
       foreach my $name (keys %$names) {
@@ -1851,7 +1944,7 @@ sub write_output_file {
               print $fh $line;
             }
             close($fh);
-            
+
             if (-r $name &&
                 -s $tmp == -s $name && compare($tmp, $name) == 0) {
               $different = 0;
@@ -2075,6 +2168,12 @@ sub generate_recursive_input_list {
   my($dir)  = shift;
   return $self->extension_recursive_input_list($dir,
                                                $ProjectCreatorExtension);
+}
+
+
+sub get_default_element_name {
+  #my($self) = shift;
+  return 'FILES';
 }
 
 # ************************************************************
