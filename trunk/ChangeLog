@@ -1,3 +1,10 @@
+Tue Jul 11 11:06:45 2000  Craig Rodrigues <rodrigc@mediaone.net>
+
+        * ace/config-linux-common.h: in glibc 2.2, the function
+          prototypes for msgsnd() and msgrcv() were changed to be POSIX
+          compliant.  So, ACE_LACKS_SOME_POSIX_PROTOTYPES breaks
+          compilation.
+
 Tue Jul 11 11:03:50 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: chmod of kits to 664, and chgrp to doc,
