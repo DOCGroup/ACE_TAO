@@ -1,3 +1,10 @@
+Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.cpp
+	  (establish_components, components_established):
+
+	  Fixed unused argument warnings.
+
 Wed Jan 23 09:30:19 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Current.pidl:
