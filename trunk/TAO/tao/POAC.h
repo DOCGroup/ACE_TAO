@@ -39,6 +39,7 @@ class TAO_DynamicImplementation;
 TAO_NAMESPACE PortableServer{
 
   typedef TAO_ServantBase ServantBase;
+  typedef TAO_RefCountServantBase RefCountServantBase;
   typedef ServantBase *Servant;
 
   typedef TAO_Local_ServantBase LocalServantBase;

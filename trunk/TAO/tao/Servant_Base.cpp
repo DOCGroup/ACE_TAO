@@ -142,6 +142,42 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
   return stub;
 }
 
+TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
+{
+}
+
+void
+TAO_RefCountServantBase::_add_ref (void)
+{
+  ++this->ref_count_;
+}
+
+void
+TAO_RefCountServantBase::_remove_ref (void)
+{
+  CORBA::ULong new_count = --this->ref_count_;
+  if (new_count == 0)
+    {
+      delete this;
+    }
+}
+
+TAO_RefCountServantBase::TAO_RefCountServantBase (void)
+  : ref_count_ (1)
+{
+}
+
+TAO_RefCountServantBase::TAO_RefCountServantBase (const TAO_RefCountServantBase &)
+  : ref_count_ (1)
+{
+}
+
+TAO_RefCountServantBase &
+TAO_RefCountServantBase::operator= (const TAO_RefCountServantBase &)
+{
+  return *this;
+}
+
 TAO_Stub *
 TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
 {
@@ -243,3 +279,15 @@ TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+////////////////////////////////////////////////////////////////////////////////
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
