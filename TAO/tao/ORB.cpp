@@ -1061,12 +1061,12 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  ACE_CHECK;
   orb_initializer = temp_orb_initializer;
 
   PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                  ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  ACE_CHECK;
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
@@ -1078,12 +1078,12 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  ACE_CHECK;
   orb_initializer = temp_orb_initializer;
 
   PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                  ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
+  ACE_CHECK;
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
   // -------------------------------------------------------------
 }
