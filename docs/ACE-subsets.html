@@ -239,9 +239,6 @@ System_Time.cpp
 System_Time.h
 Time_Request_Reply.cpp
 Time_Request_Reply.h
-# Time_Value.cpp
-# Time_Value.h
-# Time_Value.i
 Timer_Hash.cpp
 Timer_Hash.h
 Timer_Hash_T.cpp
@@ -738,81 +735,242 @@ This component contains miscellaneous ACE C++ wrappers.
 <h3><a name="ACE Library Size Breakdown">ACE Library Size Breakdown</a></h3>
 
 Here is an example size breakdown, by ACE library component.  It
-is for ACE 4.6.25, statically built on Linux/Intel.  To build
-an ACE static library, if shared libraries are the default, use
+is for ACE 4.6.25, statically built with these
+<a href="../ACE-INSTALL.html#flags">make flags</a>:
+
+<pre><code>
+    debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0
+</code></pre><p>
+
+To build an ACE static library, if shared libraries are the default, use
 <code>make static_libs_only=1</code>.<p>
 
 <center><table cellpadding=4 border=4>
   <tr>
+    <th>Platform
     <th>Component
+    <th>Total
+    <th>OS
+    <th>Utils
+    <th>Logging
+    <th>Threads
+    <th>Demux
+    <th>Connection
+    <th>Sockets
+    <th>IPC
+    <th>Svcconf
+    <th>Streams
+    <th>Memory
+    <th>Token
+    <th>Other
+  <tr>
+    <th rowspan=2>Linux (RedHat 5.2)<br>egcs 1.0.3
     <th>Size, bytes
+    <td align=center>527445
+    <td align=center>10645
+    <td align=center>111542
+    <td align=center>13783
+    <td align=center>54239
+    <td align=center>33880
+    <td align=center>650
+    <td align=center>12565
+    <td align=center>32391
+    <td align=center>91919
+    <td align=center>16773
+    <td align=center>17154
+    <td align=center>69346
+    <td align=center>62558
+  <tr>
     <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>2
+    <td align=center>21
+    <td align=center>3
+    <td align=center>10
+    <td align=center>6
+    <td align=center>0
+    <td align=center>2
+    <td align=center>6
+    <td align=center>17
+    <td align=center>3
+    <td align=center>3
+    <td align=center>13
+    <td align=center>12
+
   <tr>
-    <td>OS
-    <td>11812
-    <td>2
+    <th rowspan=2>LynxOS 3.0.0<br>g++ 2.7-97r1
+    <th>Size, bytes
+    <td align=center>547004
+    <td align=center>17056
+    <td align=center>100712
+    <td align=center>11104
+    <td align=center>44548
+    <td align=center>45780
+    <td align=center>52888
+    <td align=center>11468
+    <td align=center>29184
+    <td align=center>84236
+    <td align=center>15664
+    <td align=center>17304
+    <td align=center>62312
+    <td align=center>54748
   <tr>
-    <td>Utils
-    <td>128252
-    <td>20
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>3
+    <td align=center>18
+    <td align=center>2
+    <td align=center>8
+    <td align=center>8
+    <td align=center>10
+    <td align=center>2
+    <td align=center>5
+    <td align=center>15
+    <td align=center>3
+    <td align=center>3
+    <td align=center>11
+    <td align=center>10
+
   <tr>
-    <td>Logging
-    <td>15425
-    <td>2
+    <th rowspan=2>SunOS5.7<br>egcs 1.1.1
+    <th>Size, bytes
+    <td align=center>587059
+    <td align=center>21651
+    <td align=center>116410
+    <td align=center>14005
+    <td align=center>58063
+    <td align=center>39620
+    <td align=center>770
+    <td align=center>13719
+    <td align=center>40362
+    <td align=center>101543
+    <td align=center>19611
+    <td align=center>20855
+    <td align=center>75806
+    <td align=center>64644
   <tr>
-    <td>Threads
-    <td>61223
-    <td>10
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>4
+    <td align=center>20
+    <td align=center>2
+    <td align=center>10
+    <td align=center>7
+    <td align=center>0
+    <td align=center>2
+    <td align=center>7
+    <td align=center>17
+    <td align=center>3
+    <td align=center>4
+    <td align=center>13
+    <td align=center>11
+
   <tr>
-    <td>Demux
-    <td>40984
-    <td>6
+    <th rowspan=2>SunOS 5.7<br>Sun C++ 4.2
+    <th>Size, bytes
+    <td align=center>512538
+    <td align=center>13433
+    <td align=center>63314
+    <td align=center>15570
+    <td align=center>61947
+    <td align=center>58158
+    <td align=center>864
+    <td align=center>16609
+    <td align=center>71484
+    <td align=center>50155
+    <td align=center>17747
+    <td align=center>22279
+    <td align=center>70771
+    <td align=center>96952
   <tr>
-    <td>Connection
-    <td>2134
-    <td>0
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>3
+    <td align=center>12
+    <td align=center>3
+    <td align=center>12
+    <td align=center>11
+    <td align=center>0
+    <td align=center>3
+    <td align=center>14
+    <td align=center>10
+    <td align=center>3
+    <td align=center>4
+    <td align=center>14
+    <td align=center>19
+
   <tr>
-    <td>Sockets
-    <td>15333
-    <td>2
+    <th rowspan=2>VxWorks 5.3.1<br>GreenHills 1.8.8
+    <th>Size, bytes
+    <td align=center>669176
+    <td align=center>26248
+    <td align=center>143632
+    <td align=center>16860
+    <td align=center>60468
+    <td align=center>49964
+    <td align=center>868
+    <td align=center>18660
+    <td align=center>42512
+    <td align=center>120384
+    <td align=center>21444
+    <td align=center>19252
+    <td align=center>79112
+    <td align=center>70780
   <tr>
-    <td>IPC
-    <td>43794
-    <td>7
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>4
+    <td align=center>21
+    <td align=center>3
+    <td align=center>9
+    <td align=center>7
+    <td align=center>0
+    <td align=center>3
+    <td align=center>6
+    <td align=center>18
+    <td align=center>3
+    <td align=center>3
+    <td align=center>12
+    <td align=center>11
+
   <tr>
-    <td>Svcconf
-    <td>99318
-    <td>16
+    <th rowspan=2>VxWorks 5.3.1<br>g++ cygnus-2.7.2-960126<br>
+      (with implicit templates)
+    <th>Size, bytes
+    <td align=center>999608
+    <td align=center>21232
+    <td align=center>164948
+    <td align=center>14752
+    <td align=center>66728
+    <td align=center>138008
+    <td align=center>9788
+    <td align=center>13116
+    <td align=center>108128
+    <td align=center>146528
+    <td align=center>39552
+    <td align=center>20052
+    <td align=center>108140
+    <td align=center>148636
   <tr>
-    <td>Streams
-    <td>21592
-    <td>3
-  <tr>
-    <td>Memory
-    <td>20679
-    <td>3
-  <tr>
-    <td>Token
-    <td>74804
-    <td>12
-  <tr>
-    <td>Other
-    <td>71928
-    <td>11
-  <tr>
-    <td>TEMPLATE_FILES
-    <td>28008
-    <td>4
-  <tr>
-    <td>Total
-    <td>635286
-    <td>100
+    <th>Percentage of<br>total size
+    <td align=center>100
+    <td align=center>2
+    <td align=center>17
+    <td align=center>1
+    <td align=center>7
+    <td align=center>14
+    <td align=center>1
+    <td align=center>1
+    <td align=center>11
+    <td align=center>15
+    <td align=center>4
+    <td align=center>2
+    <td align=center>11
+    <td align=center>15
 </table></center><p>
 
-NOTE: <code>TEMPLATE_FILES</code> is an artifact of the existing
-ACE library build process.  We don't see a need to compile files
-that only contain template class definitions, but no instantiations.
-We are considering removal of it from the ACE library.<p>
+</table></center><p>
+
 
 
 <hr><p>
@@ -836,7 +994,18 @@ exclude unused components.  To do that, define an
 </ol><p>
 
 Please see <code><a href="../ace/Makefile">../ace/Makefile</a></code>
-for the default setting of <code>ACE_COMPONENTS</code>.<p>
+for the default contents of <code>ACE_COMPONENTS</code>.<p>
+
+A special value of <code>ACE_COMPONENTS</code> can be used to
+build an ACE library that supports
+<a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>.  The
+special value is <code>FOR_TAO</code>.  So, for example, you can
+add this to your
+<code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
+to restrict ACE support to just that which is needed for TAO:
+<pre><code>
+ACE_COMPONENTS = FOR_TAO
+</code></pre><p>
 
 Please note the current limitations:<p>
 
