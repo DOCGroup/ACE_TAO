@@ -839,13 +839,9 @@ Tue Jun 06 17:26:41 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Jun 06 14:53:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/ORB_Core.cpp:
-          @@ Angelo, the change log entry below is unclear.  What did you
-          change in the ORB_Core, e.g., which method, and what change in
-          TAO_Profile you are referring to? (either state it explicitly or
-          reference a previous ChangeLog entry.
-
-          Updated method invocation on TAO_ORB_Core to
-          reflect the change done on the TAO_Profile class.
+          
+          Updated method <create_stub_object> to pass a PolicyList pointer
+	  instead of a reference to the TAO_Profile class.
 
 Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
