@@ -831,7 +831,7 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
@@ -845,7 +845,7 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
   ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
-#else /* VXWORKS */
+#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (::tempnam (dir, pfx), char *, 0);
 #endif /* VXWORKS */
 }
