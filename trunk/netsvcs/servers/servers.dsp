@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="NETSVCS Servers" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -18,14 +18,17 @@ CFG=NETSVCS Servers - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NETSVCS Servers - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "NETSVCS Servers - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "NETSVCS Servers - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
-!MESSAGE "NETSVCS Servers - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "NETSVCS Servers - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "NETSVCS Servers - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "NETSVCS Servers - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Console Application")
+!MESSAGE "NETSVCS Servers - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -55,7 +58,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib netsvcs.lib /nologo /subsystem:console /machine:I386 /out:"Release/main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
-# SUBTRACT LINK32 /incremental:yes
 
 !ELSEIF  "$(CFG)" == "NETSVCS Servers - Win32 Debug"
 
@@ -72,7 +74,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -99,8 +101,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\ /D " WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MDd /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\lib" /I "..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -126,8 +128,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\lib" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\ /I " ..\lib" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\lib" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\\" /I "..\lib" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -137,7 +139,6 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib netsvcs.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
 # ADD LINK32 ace.lib netsvcs.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /machine:ALPHA /out:"main.exe" /libpath:"..\..\ace" /libpath:"..\lib"
-# SUBTRACT LINK32 /incremental:yes
 
 !ENDIF 
 
