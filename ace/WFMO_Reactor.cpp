@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ace/WFMO_Reactor.h"
 
 #include "ace/Handle_Set.h"
@@ -1980,7 +1979,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
   long actual_events = events.lNetworkEvents;
   int action;
 
-  if (actual_events & FD_READ)
+  if (ACE_BIT_ENABLED (actual_events, FD_READ))
     {
       action = event_handler->handle_input (io_handle);
       if (action <= 0)
@@ -1991,8 +1990,8 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if ((actual_events & FD_CLOSE)
-      && !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK))
+  if (ACE_BIT_ENABLED (actual_events, FD_CLOSE))
+      && ACE_BIT_DISABLED (problems, ACE_Event_Handler::READ_MASK))
     {
       action = event_handler->handle_input (io_handle);
       if (action <= 0)
@@ -2003,7 +2002,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_ACCEPT)
+  if (ACE_BIT_ENABLED (actual_events, FD_ACCEPT))
     {
       action = event_handler->handle_input (io_handle);
       if (action <= 0)
@@ -2014,7 +2013,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_WRITE)
+  if (ACE_BIT_ENABLED (actual_events, FD_WRITE))
     {
       action = event_handler->handle_output (io_handle);
       if (action <= 0)
@@ -2025,7 +2024,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_CONNECT)
+  if (ACE_BIT_ENABLED (actual_events, FD_CONNECT))
     {
       if (events.iErrorCode[FD_CONNECT_BIT] == 0)
         {
@@ -2053,7 +2052,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_OOB)
+  if (ACE_BIT_ENABLED (actual_events, FD_OOB))
     {
       action = event_handler->handle_exception (io_handle);
       if (action <= 0)
@@ -2064,7 +2063,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_QOS)
+  if (ACE_BIT_ENABLED (actual_events, FD_QOS))
     {
       action = event_handler->handle_qos (io_handle);
       if (action <= 0)
@@ -2075,7 +2074,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         }
     }
 
-  if (actual_events & FD_GROUP_QOS)
+  if (ACE_BIT_ENABLED (actual_events, FD_GROUP_QOS))
     {
       action = event_handler->handle_group_qos (io_handle);
       if (action <= 0)
