@@ -18,10 +18,10 @@
 # RED    = Number of hours until timestamp turns red (default: 48)
 #
 
-#[Win2000_DLL_Core]
-#LIST   = http://tao.doc.wustl.edu/bugzilla/Core/
-#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
-#STATUS = http://tao.doc.wustl.edu/bugzilla/core/status.txt
+[Win2000_DLL_Core]
+LIST   = http://tao.doc.wustl.edu/bugzilla/Core/
+WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?core
+STATUS = http://tao.doc.wustl.edu/bugzilla/core/status.txt
 
 #[Win2000_DLL_Debug]
 #LIST   = http://tao.doc.wustl.edu/bugzilla/DLL_Debug/
