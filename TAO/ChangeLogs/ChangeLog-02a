@@ -2,12 +2,12 @@ Wed Nov 15 21:35:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  This set of changes have been motivated by the CORBA 2.4
 	  spec. The spec specifies that the GIOP request header should not
-	  be padded to a 8 byte boundary if there is no information or
+	  be padded to a 8 byte boundary, if there is no information or
 	  data that is sent along. In other words, Request headers for
 	  operations with no arguments should not be padded to a 8 byte
 	  boundary.  Actually, the CORBA 2.4 spec has specified this only
-	  for the request header. But, the same argument has been applied
-	  for the reply header too. ORBIX 2000 already does this. If the
+	  for the request header. But, the same argument has been extended
+	  to the reply header too. ORBIX 2000 already does this. If the
 	  operation returns a void and has no arguments, the reply header
 	  is not padded to an 8 byte boundary. So, the same has been done
 	  for TAO too.
