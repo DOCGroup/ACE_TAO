@@ -1637,6 +1637,11 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream
 
+// Handle ACE_MEM_*
+#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor
+#   define ACE_MEM_CONNECTOR ACE_MEM_Connector
+#   define ACE_MEM_STREAM ACE_MEM_Stream
+
 // Handle ACE_LSOCK_*
 #   define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor
 #   define ACE_LSOCK_CONNECTOR ACE_LSOCK_Connector
@@ -1712,6 +1717,11 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_SOCK_ACCEPTOR ACE_SOCK_Acceptor, ACE_INET_Addr
 #   define ACE_SOCK_CONNECTOR ACE_SOCK_Connector, ACE_INET_Addr
 #   define ACE_SOCK_STREAM ACE_SOCK_Stream, ACE_INET_Addr
+
+// Handle ACE_MEM_*
+#   define ACE_MEM_ACCEPTOR ACE_MEM_Acceptor, ACE_MEM_Addr
+#   define ACE_MEM_CONNECTOR ACE_MEM_Connector, ACE_INET_Addr
+#   define ACE_MEM_STREAM ACE_MEM_Stream, ACE_INET_Addr
 
 // Handle ACE_LSOCK_*
 #   define ACE_LSOCK_ACCEPTOR ACE_LSOCK_Acceptor, ACE_UNIX_Addr
