@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-TAO_LB_LIBS = -lTAO_PortableGroup -lTAO_CosLoadBalancing -lTAO_Messaging -lTAO_CosNaming
+TAO_LB_LIBS = -lTAO_CosLoadBalancing -lTAO_PortableGroup -lTAO_CosNaming -lTAO_Messaging 
 
 IDL_FILES = Test
 IDL_SRC = TestC.cpp TestS.cpp
@@ -61,7 +61,7 @@ LDFLAGS += -L$(TAO_ROOT)/tao
         TestS_T.h TestS_T.cpp TestS_T.i
 
 client: $(addprefix $(VDIR),$(CLNT_TEST_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_LB_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
 
 server: $(addprefix $(VDIR),$(SVR_TEST_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_LB_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
