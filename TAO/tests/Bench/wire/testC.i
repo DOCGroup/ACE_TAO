@@ -71,6 +71,64 @@ foo::foo (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const one_bad &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    one_bad&
+  )
+{
+  return 1;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const two_bad &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    two_bad&
+  )
+{
+  return 1;
+}
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (

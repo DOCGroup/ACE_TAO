@@ -422,23 +422,121 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  // Declare return type.
-  ctx = *this->ctx_;
-  be_visitor_operation_rettype_vardecl_cs rd_visitor (&ctx);
+  // Declare return type helper class.
 
-  if (return_type->accept (&rd_visitor) == -1)
+  *os << "TAO::Arg_Traits<";
+  
+  this->gen_arg_template_param_name (return_type, os);
+      
+  *os << ">::stub_ret_val _tao_retval;";
+
+  // Declare the argument helper classes.
+
+  AST_Argument *arg = 0;
+
+  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
+       ! arg_decl_iter.is_done ();
+       arg_decl_iter.next ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
-                         "visit_operation - "
-                         "codegen for return var decl failed\n"),
-                        -1);
+      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+
+      *os << be_nl
+          << "TAO::Arg_Traits<";
+          
+      this->gen_arg_template_param_name (arg->field_type (), os);
+       
+      *os << ">::";
+      
+      switch (arg->direction ())
+        {
+          case AST_Argument::dir_IN:
+            *os << "in";
+            break;
+          case AST_Argument::dir_INOUT:
+            *os << "inout";
+            break;
+          case AST_Argument::dir_OUT:
+            *os << "out";
+          default:
+            break;
+        }
+
+      *os << "_arg_val _tao_" << arg->local_name () << " (" 
+          << arg->local_name () << ");";
     }
 
-  if (node->void_return_type () == 0)
+  *os << be_nl << be_nl
+      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
+      << "{" << be_idt_nl
+      << "&_tao_retval";
+
+  for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
+       ! arg_list_iter.is_done ();
+       arg_list_iter.next ())
     {
-      *os << be_nl;
+      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+
+      *os << "," << be_nl
+          << "&_tao_" << arg->local_name ();
     }
+
+  *os << be_uidt_nl
+      << "};" << be_uidt;
+
+  *os << be_nl << be_nl
+      << "TAO::Invocation_Base _tao_call (" << be_idt << be_idt_nl
+      << "_collocated_tao_target_," << be_nl
+      << "_tao_signature," << be_nl
+      << node->argument_count () + 1 << "," << be_nl
+      << "\"" << node->local_name () << "\"," << be_nl
+      << ACE_OS::strlen (node->local_name ()->get_string ());
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      *os << "," << be_nl
+          << "TAO::TAO_ONEWAY_INVOCATION";
+    }
+
+  if (be_global->ami_call_back ())
+    {
+      *os << "," << be_nl
+          << "TAO::TAO_ASYNCHRONOUS_CALLBACK_INVOCATION";
+    }
+      
+  *os << be_uidt_nl
+      << ");" << be_uidt;
+
+  *os << be_nl << be_nl;
+
+  // Since oneways cannot raise user exceptions, we have that
+  // case covered as well.
+  if (node->exceptions ())
+    {
+      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
+          << "_tao_" << node->flat_name ()
+          << "_exceptiondata," << be_nl
+          << node->exceptions ()->length () << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt;
+    }
+  else
+    {
+      *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
+    }
+
+  *os << be_nl;
+
+  if (this->void_return_type (return_type))
+    {
+      *os << "ACE_CHECK;";
+    }
+  else
+    {
+      *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
+    }
+
+  // Temporary hack until we finish code generation refactoring.
+  *os << "\n\n#if 0" << be_nl << be_nl;
 
   if (node->has_native ()) // native exists => no stub
     {
@@ -526,32 +624,15 @@ be_visitor_operation::gen_stub_operation_body (
             ),
             -1
           );
-
         }
+
+      // Temporary hack until we finish refactoring the code generation.
+      *os << "\n\n#endif /* 0 */";
 
       if (!this->void_return_type (return_type))
         {
-          AST_Decl::NodeType nt = return_type->node_type ();
-
-          if (nt == AST_Decl::NT_typedef)
-            {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (return_type);
-              AST_Type *t = td->primitive_base_type ();
-              nt = t->node_type ();
-            }
-
-          *os << be_nl << be_nl;
-
-          // Now generate the normal successful return statement.
-          if (return_type->size_type () == AST_Type::VARIABLE
-              || nt == AST_Decl::NT_array)
-            {
-              *os << "return _tao_retval._retn ();";
-            }
-          else
-            {
-              *os << "return _tao_retval;";
-            }
+          *os << be_nl << be_nl
+              << "return _tao_retval.retn ();";
         }
     } // end of if (!native)
 
@@ -1278,7 +1359,7 @@ be_visitor_operation::gen_marshal_and_invoke (
   *os << be_nl
       << "if (_invoke_status != TAO_INVOKE_RESTART)" << be_idt_nl
       << "break;" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt;
+      << "}" << be_uidt;
 
   return 0;
 }
@@ -1376,4 +1457,32 @@ be_visitor_operation::compute_operation_name (
     }
 
   return this->operation_name_;
+}
+
+void
+be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
+                                                   TAO_OutStream *os)
+{
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
+      AST_Type *pbt = td->primitive_base_type ();
+      nt = pbt->node_type ();
+
+      if (nt == AST_Decl::NT_string)
+        {
+          AST_String *s = AST_String::narrow_from_decl (pbt);
+          unsigned long bound = s->max_size ()->ev ()->u.ulval;
+
+          if (bound > 0)
+            {
+              *os << "TAO::" << td->local_name () << "_" << bound;
+              return;
+            }
+        }
+    }
+
+  *os << bt->name ();
 }

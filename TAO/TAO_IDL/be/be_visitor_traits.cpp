@@ -374,10 +374,15 @@ be_visitor_traits::visit_string (be_string *node)
 
   os->gen_ifdef_macro (node->flat_name (), "arg_traits");
 
+  // A workaround since bounded (w)strings are all generated as typedefs
+  // of (w)char *.
+  *os << be_nl << be_nl
+      << "struct " << alias->local_name () << "_" << bound << " {};";
+
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " Arg_Traits<"
-      << alias->name () << ">" << be_idt_nl
+      << alias->local_name () << "_" << bound << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "BD_" << (wide ? "W" : "") 
       << "String_Arg_Traits<" << bound << ">" 

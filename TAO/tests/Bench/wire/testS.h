@@ -26,13 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:487
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:390
 
-#ifndef _TAO_IDL_ONEWAYS_H_
-#define _TAO_IDL_ONEWAYS_H_
+#ifndef _TAO_IDL_TESTS_H_
+#define _TAO_IDL_TESTS_H_
 
 
-#include "onewayC.h"
+#include "testC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,7 +54,7 @@
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:86
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
 
 class POA_foo;
 typedef POA_foo *POA_foo_ptr;
@@ -127,7 +127,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual char * all_str (
       const char * inarg,
@@ -137,6 +137,8 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
+      , one_bad
+      , two_bad
     )) = 0;
   
   static void all_str_skel (
@@ -147,7 +149,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void push (
       const char * inarg
@@ -170,7 +172,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
 
 class  _TAO_foo_Strategized_Proxy_Broker : public virtual ::_TAO_foo_Proxy_Broker
 {
@@ -217,7 +219,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class  _TAO_foo_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_foo_Proxy_Impl,
@@ -229,7 +231,7 @@ public:
   virtual ~_TAO_foo_ThruPOA_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * all_str (
       CORBA::Object *_collocated_tao_target_,
@@ -240,10 +242,12 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
+      , one_bad
+      , two_bad
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void push (
       CORBA::Object *_collocated_tao_target_,
@@ -260,7 +264,9 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1090
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:993
+
+#include "testS_T.h"
 
 #if defined (__ACE_INLINE__)
 #include "testS.i"

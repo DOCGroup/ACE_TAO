@@ -110,6 +110,10 @@ public:
   // _does_ include the double quote.
 
 private:
+  void gen_arg_template_param_name (AST_Type *bt,
+                                    TAO_OutStream *os);
+
+private:
   char *operation_name_;
 };
 
