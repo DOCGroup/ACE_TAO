@@ -1,3 +1,10 @@
+Thu Apr  5 13:09:33 2001  Mayur Deshpande <mayur@ics.uci.edu>
+        
+        * docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+          Added tao_imr path for windows platforms. Also added 
+          an extra ImplRepoService  to $TAO_ROOT/orbsvcs/ImplRepo_Service
+          path.
+
 Thu Apr  5 14:44:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/IFR_BaseC.cpp:
