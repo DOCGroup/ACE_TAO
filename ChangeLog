@@ -1,3 +1,10 @@
+Fri Sep  3 15:10:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-5.x.h: Add ACE_HAS_TIMEZONE.
+
+	* ace/OS_NS_time.h: Include "ace/OS_NS_errno.h" - ACE_NOTSUP_RETURN
+	  sets errno.
+
 Fri Sep  3 21:36:51 2004  Olli Savia  <ops@iki.fi>
 
         * apps/drwho/File_Manager.cpp:
