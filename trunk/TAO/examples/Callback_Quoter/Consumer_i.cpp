@@ -34,9 +34,6 @@ Consumer_i::push (const Callback_Quoter::Info &data,
   // On getting the needed information you now proceed to the next
   // step, which could be obtaining the shares.
 
-  // @@ Please see if you can remove this.
-  this->done_ = 1;
-
   ACE_DEBUG ((LM_DEBUG,
               "Selling 10,000 %s shares at %d!!\n",
 	      data.stock_name.in (),

@@ -316,7 +316,10 @@ Supplier::reactor_used (void) const
 int
 Supplier::read_file (char *filename)
 {
-  f_ptr_ = ACE_OS::fopen ("stocks.st", "rw");
+  f_ptr_ = ACE_OS::fopen (filename, "r");
+
+  ACE_DEBUG ((LM_DEBUG,
+              "filename = %s\n",filename));
 
   // the stock values are to be read from a file.
   if (f_ptr_ == 0)

@@ -97,7 +97,7 @@ Notifier_i::register_callback (const char *stock_name,
 		   "register_callback: Bind failed!/n"));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    "new map entry: stockname %s threshold %d",
+                    "new map entry: stockname %s threshold %d\n",
                     stock_name,
                     threshold_value));
       
@@ -202,11 +202,16 @@ Notifier_i::market_status (const char *stock_name,
         }
     }
   else
+    ACE_DEBUG ((LM_DEBUG,
+                " Stock Not Present!\n"));
+  // Raising an exception caused problems as they were caught by the Market daemon
+  // who exited prematurely.
+
     // /*done*/@@ Please add a user defined exception called something like
     // NOT_FOUND.
   
       // Exception is raised when the stock doesnt exist in the Hash_map.
-      env.exception (new Callback_Quoter::Invalid_Stock (" Nonexistent Stock"));
+    //  env.exception (new Callback_Quoter::Invalid_Stock (" Nonexistent Stock"));
   //  stock_name,
   //                                                     stock_value);
 }
@@ -223,7 +228,7 @@ Notifier_i::shutdown (CORBA::Environment &env)
   notifier_exited_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
-	      "The Callback Quoter server is shutting down..."));
+	      "The Callback Quoter server is shutting down...\n"));
 
 
   // Instruct the ORB to shutdown.

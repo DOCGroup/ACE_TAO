@@ -65,42 +65,38 @@ public:
   friend class ACE_Shutup_GPlusPlus;
   // Turn off g++ warning
 
+  enum 
+  {
+    // =  TITLE 
+    //   A set of values for the execution of the consumer.
+    //
+    // = DESCRIPTION
+    //   Used so that the process of registering, unregistering
+    //   and exitting neednt be dependent on 'r' 'u' and 'q'.
+    //   Also, #define clutters up the global namespace.
+
+    REGISTER = 'r',
+    // The character that the user must type to register the consumer with
+    // the Notifier_server.
+
+    UNREGISTER = 'u',
+    // The character that the user must type to unregister the consumer with
+    // the Notifier_server.
+
+    EXIT = 'q'
+    // The character the user must type to quit the consumer client
+    // application.
+  };
+
 private:
-
-  // @@ Please don't put implementations in the class headers...
-  ~Consumer_Input_Handler (void)
-   {
-     // No-op
-   }
-
+  ~Consumer_Input_Handler (void);
+  // the destructor.
+  
   Consumer_Handler *consumer_handler_;
   // The Consumer_Handler object.
+  
+  
 
 };
-
-// @@ Please don't use #defines because they clutter up the global
-// namespace.  Instead, use enums, e.g.,
-// enum 
-// {
-//    REGISTER = 'r',
-//    UNREGISTER = 'u',
-//    EXIT = 'q'
-// };
-//
-// Please put this enum inside of class Consumer_Input_Handler.  Note
-// that you'll need to refer to these enumerals as
-// Consumer_Input_Handler::REGISTER, etc. in order to be portable.
-
-#define REGISTER 'r'
-// The character that the user must type to register the consumer with
-// the Notifier_server.
-
-#define UNREGISTER 'u'
-// The character that the user must type to unregister the consumer with
-// the Notifier_server.
-
-#define EXIT 'q'
-// The character the user must type to quit the consumer client
-// application.
 
 #endif /* CONSUMER_INPUT_HANDLER_H */

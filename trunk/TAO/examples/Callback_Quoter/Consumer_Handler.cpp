@@ -200,9 +200,6 @@ Consumer_Handler::init (int argc, char **argv)
 		      -1);
 
   // Register the signal event handler for ^C
-  // and for the signal which occurs when a terminal window
-  // is changed.
-
    ACE_NEW_RETURN (consumer_signal_handler_,
                   Consumer_Signal_Handler (this),
                   -1);
@@ -307,8 +304,10 @@ Consumer_Handler::run (void)
 ACE_Reactor *
 Consumer_Handler::reactor_used (void) const
 {
-  // @@ Please check with Pradeep and see how to remove the reliance
+  //*done* @@ Please check with Pradeep and see how to remove the reliance
   // on <TAO_ORB_Core_instance()>.  This is non-portable and we want
   // to try to use only CORBA-compliant code in our examples.
+
+  // Cant do anything as the reactor is not accessible in any other way.
   return TAO_ORB_Core_instance ()->reactor ();
 }
