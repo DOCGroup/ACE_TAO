@@ -41,8 +41,6 @@
 #define ACE_HAS_BROKEN_MAP_FAILED
 
 #define ACE_LACKS_SEMBUF_T
-#define ACE_LACKS_SENDMSG
-#define ACE_LACKS_RECVMSG
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_FCNTL
@@ -176,7 +174,7 @@
 #endif  /* ACE_MT_SAFE */
 
 // Include math.h here so that it will be included before ACE.h.  math.h defines
-// a macro log2 that conflicts with ACE::log2() which seems to only cause a 
+// a macro log2 that conflicts with ACE::log2() which seems to only cause a
 // problem on cygwin.  Insuring that math.h is included first solves it since
 // ACE.h defines acelog2 as log2, then undefines log2.
 #include "ace/os_include/os_math.h"
