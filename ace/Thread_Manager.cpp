@@ -517,8 +517,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (t_id == 0)
     {
       char *thr_id;
-      ACE_NEW_RETURN (thr_id, char[32], -1);
-      ACE_OS::strcpy (thr_id, "==ace_t==");
+      ACE_NEW_RETURN (thr_id, char[16], -1);
+      // Mark the thread ID to show that the ACE_Thread_Manager
+      // allocated it.
+      thr_id[0] = ACE_THR_ID_ALLOCATED;
+      thr_id[1] = '\0';
       t_id = &thr_id;
     }
 #else  /* ! VXWORKS */
@@ -823,7 +826,8 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
   this->thr_list_.remove (td);
 
 #if defined (VXWORKS)
-  if (tid && ACE_OS::strncmp (tid, "==ace_t==", 9) == 0)
+  // Delete the thread ID, if the ACE_Thread_Manager allocated it.
+  if (tid  &&  tid[0] == ACE_THR_ID_ALLOCATED)
     {
       delete [] tid;
     }
@@ -935,7 +939,8 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
 
   ACE_thread_t tid = td->thr_id_;
 #if defined (VXWORKS)
-  tid += ACE_OS::strncmp (tid, "==ace_t==", 9) == 0  ?  9  :  0;
+  // Skip over the ID-allocated marker, if present.
+  tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* VXWORKS */
 
   int result = ACE_Thread::kill (tid, signum);
