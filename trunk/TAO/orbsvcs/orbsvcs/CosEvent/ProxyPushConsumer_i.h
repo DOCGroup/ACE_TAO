@@ -26,7 +26,7 @@
 
 class PushSupplierWrapper;
 
-class ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
+class TAO_ORBSVCS_Export ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
   //   class ProxyPushConsumer_i implements the ProxyPushConsumer

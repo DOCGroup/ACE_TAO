@@ -25,7 +25,7 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosEvent/ProxyPushSupplier_i.h"
 
-class ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
+class TAO_ORBSVCS_Export ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
   // = TITLE
   //   class ConsumerAdmin_i implements the ConsumerAdmin interface.
