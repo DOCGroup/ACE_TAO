@@ -1,3 +1,14 @@
+Fri Sep 10 16:39:13 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* examples/QOS/README: 
+	* examples/QOS/server.cpp:
+	* examples/QOS/client.cpp:
+	* examples/QOS/Sender_QOS_Event_Handler.h: 
+	* examples/QOS/Sender_QOS_Event_Handler.cpp: 
+
+	  Removed the Win32-isms from the above files and used cleaner ACE
+	  interfaces. Added a README file that describes the test.
+	
 Fri Sep 10 16:38:51 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/WinCE/*.dsp: VC 6 changed all the dsp files format.
