@@ -1,3 +1,16 @@
+Wed Sep  4 17:42:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+    * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+	* orbsvcs/ImplRepo_Service/implrepo.dsp:
+	* orbsvcs/ImplRepo_Service/ImplRepo.dsw:
+	   New dsp and modified existing to add new files and remove
+	   files. 
+	
+	* orbsvcs/ImplRepo_Service/Options.cpp:
+	* orbsvcs/ImplRepo_Service/NT_Service.cpp:
+	  Modified to get compiled on NT. Replaced ImplREpo_i 
+	  with ImR_Activator_i.
+
 Wed Sep  4 17:11:25 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
     * tao/PortableServer/TAO_PortableServer.dsp:

@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ImplRepo_Service"=.\implrepo.dsp - Package Owner=<4>
+Project: "ImR_Activator "=".\ImR_Activator.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "tao_imr"=.\tao_imr.dsp - Package Owner=<4>
+Project: "ImplRepo_Service"=".\implrepo.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "tao_imr"=".\tao_imr.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
