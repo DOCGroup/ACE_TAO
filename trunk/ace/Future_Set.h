@@ -9,7 +9,7 @@
 // = FILENAME
 //    Future_Set.h
 //
-// = AUTHOR
+// = AUTHOR (S)
 //    John Tucker <jtucker@infoglide.com>
 //
 // ============================================================================
@@ -17,10 +17,10 @@
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
 
-#include "ace/Thread.h"
-#include "ace/Message_Queue.h"
-#include "ace/Future.h"
-#include "ace/Hash_Map_Manager.h"
+#include /**/ "ace/Thread.h"
+#include /**/ "ace/Message_Queue.h"
+#include /**/ "ace/Future.h"
+#include /**/ "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,23 +33,23 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
 {
   // = TITLE
   //     This class implements a mechanism which allows the values of
-  //     a collections of ACE_Future<T> objects to be accessed by
+  //     a collections of <ACE_Future> objects to be accessed by
   //     reader threads as they become available.
 public:
   // = Initialization and termination methods.
 
-  ACE_Future_Set (ACE_DEFAULT_MESSAGE_QUEUE_TYPE *new_queue = 0);
+  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
   // Constructor.
 
   ~ACE_Future_Set (void);
   // Destructor.
 
   int is_empty (void) const;
-  // Return 1 if their are no ACE_Future objects left on its queue and
+  // Return 1 if their are no <ACE_Future> objects left on its queue and
   // 0 otherwise
 
   int insert (ACE_Future<T> &future);
-  // Enqueus the given ACE_Future into this objects queue when it is
+  // Enqueus the given <ACE_Future> into this objects queue when it is
   // readable.
   //
   // Returns 0 if the future is successfully inserted, 1 if the
@@ -59,7 +59,7 @@ public:
                      ACE_Time_Value *tv = 0);
   // Wait up to <tv> time to get the <value>.  Note that <tv> must be
   // specified in absolute time rather than relative time.); get the
-  // next ACE_Future<T> that is readable.  If <tv> = 0, the will block
+  // next <ACE_Future> that is readable.  If <tv> = 0, the will block
   // forever.
   //
   // If a readable future becomes available, then the input result
@@ -67,7 +67,7 @@ public:
   // is empty, then 0 is returned.
 
   virtual void update (const ACE_Future<T> &future);
-  // Called by the ACE_Future<T> subject in which we are subscribed to
+  // Called by the <ACE_Future> subject in which we are subscribed to
   // when its value is written to.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -92,14 +92,14 @@ private:
                                   FUTURE_HOLDER *,
                                   FUTURE_REP_HASH,
                                   FUTURE_REP_COMPARE,
-                                  ACE_Null_Mutex> FUTURE_HASH_MAP;
+			          ACE_Null_Mutex> FUTURE_HASH_MAP;
 
   FUTURE_HASH_MAP future_map_;
-  // Map of ACE_Futures, subjects, which have not been written to by
+  // Map of <ACE_Futures>, subjects, which have not been written to by
   // client's writer thread.
 
   ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
-  // Message queue for notifying the reader thread of ACE_Futures which
+  // Message queue for notifying the reader thread of <ACE_Futures> which
   // have been written to by client's writer thread.
 
   int delete_queue_;
