@@ -16,6 +16,9 @@ Thu Mar 26 08:31:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	Changed files also include y.tab.cpp and y.tab.h
 
+	* TAO_IDL/be/be_visitor_sequence.cpp: Minor correction to get the
+	formatting right.
+
 Thu Mar 26 06:29:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Marshal.{h,cpp},ORB.*,Object.{h,cpp},corba.h:
