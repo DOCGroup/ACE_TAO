@@ -317,6 +317,14 @@ main (int argc, char *argv[])
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Get the command line options.
+      if (parse_args (argc, argv) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "parse_args failed\n"),
+                            1);
+        }
+
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
@@ -334,14 +342,6 @@ main (int argc, char *argv[])
       Test_var server = Test::_narrow (obj.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      // Get the command line options.
-      if (parse_args (argc, argv) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "parse_args failed\n"),
-                            1);
-        }
 
       // Print testing parameters.
       print_params ();
