@@ -45,7 +45,7 @@ void
 ACEXML_Element_Tree_List_Node::dump (void)
 {
   ACEXML_Element_Tree_Node *ptr = this->head_;
-  const ACEXML_Char *separator = (this->type_ == SEQUENCE) ? " , " : " | ";
+  const ACEXML_Char *separator = (this->type_ == SEQUENCE) ? ACE_LIB_TEXT(" , ") : ACE_LIB_TEXT(" | ");
 
   cout << "(";
 

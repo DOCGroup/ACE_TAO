@@ -36,7 +36,7 @@ ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type,
       return 0;
     }
 
-  xmlenv.exception (new ACEXML_SAXParseException ("Element type redefinition in Debug_Validator."));
+  xmlenv.exception (new ACEXML_SAXParseException (ACE_LIB_TEXT("Element type redefinition in Debug_Validator.")));
   return -1;
 }
 

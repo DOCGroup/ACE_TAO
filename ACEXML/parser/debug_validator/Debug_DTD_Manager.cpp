@@ -33,7 +33,7 @@ ACEXML_Debug_DTD_Manager::insertElement_Definition (ACEXML_Element_Def_Builder *
       return 0;
     }
 
-  xmlenv.exception (new ACEXML_SAXParseException ("ACEXML_Debug_Attributes_Builder internal error"));
+  xmlenv.exception (new ACEXML_SAXParseException (ACE_LIB_TEXT("ACEXML_Debug_Attributes_Builder internal error")));
   return -1;
 }
 
@@ -58,7 +58,7 @@ ACEXML_Debug_DTD_Manager::insertAttributes_Definition (ACEXML_Attributes_Def_Bui
       return 0;
     }
 
-  xmlenv.exception (new ACEXML_SAXParseException ("ACEXML_Debug_Attributes_Builder internal error"));
+  xmlenv.exception (new ACEXML_SAXParseException (ACE_LIB_TEXT("ACEXML_Debug_Attributes_Builder internal error")));
   return -1;
 }
 
