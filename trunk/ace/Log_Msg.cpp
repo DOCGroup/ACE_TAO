@@ -463,7 +463,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // <program_name_> and <local_host_> strings weren't duplicated, in
   // order to avoid memory leaks, because this destructor can't tell
   // when the last thread in the program exits.
-#if ! defined (VXWORKS)
+#if !defined (VXWORKS) && defined (ACE_MT_SAFE)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
   
   // If this is the last instance then cleanup.
@@ -481,7 +481,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
 	  ACE_Log_Msg::local_host_ = 0;
 	}
     }
-#endif /* ! VXWORKS */
+#endif /* !VXWORKS && ACE_MT_SAFE */
 }
 
 // Open the sender-side of the Message ACE_Queue.
