@@ -1,14 +1,7 @@
 # $Id$
 
 Copyright (c) 2000  Center for Distributed Object Computing,
-Washington University, St. Louis, Missouri, USA.  All rights reserved.
-
-
-NOTE:  PACE has not been released yet.  It is currently a research
-prototype.  All information contained in the PACE distribution is
-subject to change without notice.  (That includes the copyright
-notice above :-)
-
+Washington University, St. Louis, Missouri, USA.
 
 This is POSIX ACE (PACE).  It is based on ACE, the Adaptive
 Communications Environment, developed by Doug Schmidt and the
@@ -23,21 +16,15 @@ these benefits:
 * A strict POSIX.1-like, low-level interface.  Its interface is "POSIX
   compatible"; by that we mean as close to POSIX.1 as it can be, given
   that PACE is not an operating system.  And, to avoid name conflicts
-  with OS APIs, all low-level PACE function names have the PACE_
+  with OS APIs, all low-level PACE function names have the pace_
   prefix.
-
-* The low-level interface is a C file, so that it can be used in both
-  C and C++ programs.
 
 * The low-level interface is partitioned into multiple files, one
   per POSIX.1 section.
 
-* PACE relies on the STL, instead of using proprietary container
-  classes.  STL is part of the language standard, so it is most
-  portable to rely on it.  (It is assumed that STL is provided
-  with the C++ compiler.  If not, we suggest trying the STL that
-  is distributed with the GNU g++ compiler.)
+* The low-level interface is written in C, so that it can be used in
+  both C and C++ programs.
 
-* PACE does not require the use of multiple inheritance, static
-  objects, exception handling, or other C++ language constructs that
-  impair code size and/or run-time performance.
+* PACE (on most platforms) does not require the use of multiple
+  inheritance, static objects, exception handling, or other C++
+  language constructs that impair code size and/or run-time performance.

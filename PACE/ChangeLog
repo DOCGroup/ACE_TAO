@@ -1,651 +1,655 @@
+Thu Jul 27 12:33:55 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * README, VERSION: updated in preparation for 1.0 release.
+
 Thu Jul 27 08:36:01 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/fcntl.h
-	* pace/mqueue.h
-	* pace/semaphore.h
-	* pace/stdio.h
-	  Added :: qualifier to macros, but of course these should
-	  be defined by the user, so these will go away once
-	  I update OS.*.
+        * pace/fcntl.h
+        * pace/mqueue.h
+        * pace/semaphore.h
+        * pace/stdio.h
+          Added :: qualifier to macros, but of course these should
+          be defined by the user, so these will go away once
+          I update OS.*.
 
-	* pace/config/config.h
-	  Added _REENTRANT for solaris.
+        * pace/config/config.h
+          Added _REENTRANT for solaris.
 
-	* pace/posix/time.inl
-	* pace/posix/unistd.inl
-	  Took away PACE_HAS_PTHREAD_SEMANTICS in favor of platform
-	  specific code. It appears PAC_HAS_PTHREAD_SEMANTICS is now
-	  superfluous.
+        * pace/posix/time.inl
+        * pace/posix/unistd.inl
+          Took away PACE_HAS_PTHREAD_SEMANTICS in favor of platform
+          specific code. It appears PAC_HAS_PTHREAD_SEMANTICS is now
+          superfluous.
 
-	* ../ace/OS.i
-	  Qualified two functions with pace_ as they should
-	  have been originally. Paceified ACE_OS::gettimeofday.
+        * ../ace/OS.i
+          Qualified two functions with pace_ as they should
+          have been originally. Paceified ACE_OS::gettimeofday.
 
 Wed Jul 26 17:13:51 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/emulation/mqueue.c:
-	  Removed print_queue(), qualified attrdefault
-	  with pace_, fixed memory leaks, and fixed
-	  the totally broken mq_unlink.
+        * pace/emulation/mqueue.c:
+          Removed print_queue(), qualified attrdefault
+          with pace_, fixed memory leaks, and fixed
+          the totally broken mq_unlink.
 
 Tue Jul 25 17:09:13 2000  Luther J Baker   <luther@cs.wustl.edu>
 
-	* pace/win32/mman.c:
+        * pace/win32/mman.c:
 
-	  Typo.
+          Typo.
 
 Tue Jul 25 17:00:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.h:
-	* pace/win32/dirent.inl:
-	* pace/win32/dirent.c:
-	* pace/win32/fcntl.h:
-	* pace/win32/fcntl.inl:
-	* pace/win32/fcntl.c:
-	* pace/win32/mman.h:
-	* pace/win32/mman.inl:
-	* pace/win32/mman.c:
-	* pace/win32/semaphore.h:
-	* pace/win32/semaphore.inl:
-	* pace/win32/semaphore.c:
-	* pace/win32/signal.h:
-	* pace/win32/signal.inl:
-	* pace/win32/signal.c:
-	* pace/win32/stat.h:
-	* pace/win32/stat.inl:
-	* pace/win32/stat.c:
-	* pace/win32/unistd.h:
-	* pace/win32/unistd.inl:
-	* pace/win32/unistd.c:
-	* pace/win32/utime.h:
-	* pace/win32/utime.inl:
-	* pace/win32/utime.c:
-	* pace/win32/utsname.h:
-	* pace/win32/utsname.inl:
-	* pace/win32/utsname.c:
+        * pace/win32/dirent.h:
+        * pace/win32/dirent.inl:
+        * pace/win32/dirent.c:
+        * pace/win32/fcntl.h:
+        * pace/win32/fcntl.inl:
+        * pace/win32/fcntl.c:
+        * pace/win32/mman.h:
+        * pace/win32/mman.inl:
+        * pace/win32/mman.c:
+        * pace/win32/semaphore.h:
+        * pace/win32/semaphore.inl:
+        * pace/win32/semaphore.c:
+        * pace/win32/signal.h:
+        * pace/win32/signal.inl:
+        * pace/win32/signal.c:
+        * pace/win32/stat.h:
+        * pace/win32/stat.inl:
+        * pace/win32/stat.c:
+        * pace/win32/unistd.h:
+        * pace/win32/unistd.inl:
+        * pace/win32/unistd.c:
+        * pace/win32/utime.h:
+        * pace/win32/utime.inl:
+        * pace/win32/utime.c:
+        * pace/win32/utsname.h:
+        * pace/win32/utsname.inl:
+        * pace/win32/utsname.c:
 
-	  Placed emulation prototype in the .h file.
-	  Removed emulation code from the .inl file.
-	  Moved emulation code to the .c file.
+          Placed emulation prototype in the .h file.
+          Removed emulation code from the .inl file.
+          Moved emulation code to the .c file.
 
 Mon Jul 24 15:57:24 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/string.inl
-	  Casted away const returns.
+        * pace/posix/string.inl
+          Casted away const returns.
 
-	* pace/posix/signal.h
-	  Moved pace_sig_pf back inside the extern "C" {}
+        * pace/posix/signal.h
+          Moved pace_sig_pf back inside the extern "C" {}
 
 Mon Jul 24 14:19:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/TODO:
+        * pace/win32/TODO:
 
-	  Updated.
+          Updated.
 
 Mon Jul 24 14:02:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32:
+        * pace/win32:
 
-	  Updated pace.dsw. Re-arranged files and folders.
+          Updated pace.dsw. Re-arranged files and folders.
 
-	* pace/win32/TODO:
+        * pace/win32/TODO:
 
-	  Updated.
+          Updated.
 
 Sun Jul 23 20:36:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/TODO:
+        * pace/win32/TODO:
 
-	  Updated.
+          Updated.
 
 Sun Jul 23 20:21:02 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/*:
+        * pace/win32/*:
 
-	  Cleaned up alot of implementation.
+          Cleaned up alot of implementation.
 
-	  Got rid of separate 'emulation' functions because only win32
-	  is in this directory (if we supported multiple platforms in
-	  this directory, then the code would get messy so we would do
-	  better to inline and call emulation funcs according to the
-	  platform at hand).
+          Got rid of separate 'emulation' functions because only win32
+          is in this directory (if we supported multiple platforms in
+          this directory, then the code would get messy so we would do
+          better to inline and call emulation funcs according to the
+          platform at hand).
 
-	  Inserted ACE style macros for WIN32 OS calls. Set errno
-	  properly and adapts return values to POSIX compliance.
+          Inserted ACE style macros for WIN32 OS calls. Set errno
+          properly and adapts return values to POSIX compliance.
 
 Sun Jul 23 19:17:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthread.h:
+        * pace/win32/pthread.h:
 
-	  Added typedefs from pace/posix/pthread.h.
+          Added typedefs from pace/posix/pthread.h.
 
 Sun Jul 23 18:34:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pthread.inl:
+        * pace/win32/pthread.inl:
 
-	  Win32 doesn't support pthreads. These all need to be emulated.
+          Win32 doesn't support pthreads. These all need to be emulated.
 
-	* pace/docs/PACE_POSIX_support.txt
+        * pace/docs/PACE_POSIX_support.txt
 
-	  Updated.
+          Updated.
 
 Sun Jul 23 17:32:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/pthread.h:
+        * pace/pthread.h:
 
-	  Missing pace_* prefix on two sigset_t args.
-	  Missing pace_* prefix on pthread_t arg.
+          Missing pace_* prefix on two sigset_t args.
+          Missing pace_* prefix on pthread_t arg.
 
-	  Became evident on NT because there are no definitions for
-	  the native types.
+          Became evident on NT because there are no definitions for
+          the native types.
 
 Sat Jul 22 09:24:34 2000  Ossama Othman  <ossama@uci.edu>
 
-	* pace/Makefile.am (DESTDIRS):
+        * pace/Makefile.am (DESTDIRS):
 
-	  Added missing line continuation backslash `\'.
+          Added missing line continuation backslash `\'.
 
-	* pace/posix/Makefile.am (noinst_LTLIBRARIES):
+        * pace/posix/Makefile.am (noinst_LTLIBRARIES):
 
-	  Rename libtool convenience library to `libPACE_POSIX.la' to
-	  avoid name clash with the actual `libPACE.la' library.
+          Rename libtool convenience library to `libPACE_POSIX.la' to
+          avoid name clash with the actual `libPACE.la' library.
 
 Fri Jul 21 20:41:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/unistd.inl:
-	* pace/posix/unistd.inl:
-	* pace/unistd.h:
+        * pace/win32/unistd.inl:
+        * pace/posix/unistd.inl:
+        * pace/unistd.h:
 
-	  Typos.
+          Typos.
 
 Fri Jul 21 20:35:38 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/wait.h:
-	* pace/win32/wait.inl:
+        * pace/win32/wait.h:
+        * pace/win32/wait.inl:
 
-	  ACE implements waitpid with an additional argument (HANDLE).
-	  Eliminated POSIX support here.
+          ACE implements waitpid with an additional argument (HANDLE).
+          Eliminated POSIX support here.
 
-	* pace/docs/PACE_POSIX_support.txt
+        * pace/docs/PACE_POSIX_support.txt
 
-	  Updated.
+          Updated.
 
 Fri Jul 21 20:23:55 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/utsname.inl (pace_uname):
+        * pace/win32/utsname.inl (pace_uname):
 
-	  Partial emulation made. But more work to be done!
+          Partial emulation made. But more work to be done!
 
-	* pace/docs/PACE_POSIX_support.txt
+        * pace/docs/PACE_POSIX_support.txt
 
-	  Updated.
+          Updated.
 
 Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/utime.h (pace_utime):
-	* pace/win32/utime.inl (pace_utime):
+        * pace/win32/utime.h (pace_utime):
+        * pace/win32/utime.inl (pace_utime):
 
-	  Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
-	  casted away and made the current func work. Left the
-	  correct implementation -- "unimplemented" :-/ in the file.
+          Implemented the "RIGHT ANSWER[TM]" but it doesn't work so
+          casted away and made the current func work. Left the
+          correct implementation -- "unimplemented" :-/ in the file.
 
-	* pace/docs/PACE_POSIX_support.txt
+        * pace/docs/PACE_POSIX_support.txt
 
-	  Updated.
+          Updated.
 
 Fri Jul 21 19:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/string.inl:
+        * pace/win32/string.inl:
 
-	  Fixed eror from adding new funcs (retval param was const).
+          Fixed eror from adding new funcs (retval param was const).
 
 Fri Jul 21 18:43:07 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/unistd.inl:
+        * pace/win32/unistd.inl:
 
-	  Emulated or removed implementation.
+          Emulated or removed implementation.
 
-	* pace/docs/PACE_POSIX_support.txt
+        * pace/docs/PACE_POSIX_support.txt
 
-	  Updated.
+          Updated.
 
 Fri Jul 21 18:33:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/constants.h (PACE_ONE_SECOND_IN_MSECS):
+        * pace/config/constants.h (PACE_ONE_SECOND_IN_MSECS):
 
-	  Added.
+          Added.
 
 Fri Jul 21 18:19:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Added PACE_SYSCALL_FAILED 0xFFFFFFFF
+          Added PACE_SYSCALL_FAILED 0xFFFFFFFF
 
 Fri Jul 21 12:19:06 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Typo. ACE_ADAPT_RETVAL ... PACE_ADAPT_RETVAL.
+          Typo. ACE_ADAPT_RETVAL ... PACE_ADAPT_RETVAL.
 
 Thu Jul 20 22:58:16 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/stdlib.h
-	* pace/posix/stdlib.inl
-	  Added atexit, div, labs, ldiv, mblen, mbstowcs, mbtowc
-	  strtod, strtol, strtoul, system, wcstombs, wctomb.
+        * pace/stdlib.h
+        * pace/posix/stdlib.inl
+          Added atexit, div, labs, ldiv, mblen, mbstowcs, mbtowc
+          strtod, strtol, strtoul, system, wcstombs, wctomb.
 
-	* pace/string.h
-	* pace/posix/string.inl
-	  Removed const return from strchr, strstr, strrchr, strpbrk.
+        * pace/string.h
+        * pace/posix/string.inl
+          Removed const return from strchr, strstr, strrchr, strpbrk.
 
-	*../ace/OS_String.*
-	  Paceified.
+        *../ace/OS_String.*
+          Paceified.
 
-	*../ace/ThreadManager.cpp
-	  Paceified.
+        *../ace/ThreadManager.cpp
+          Paceified.
 
-	* docs/ACE_Integration.txt
-	  Updated.
+        * docs/ACE_Integration.txt
+          Updated.
 
 Thu Jul 20 19:17:15 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/unistd.inl:
+        * pace/win32/unistd.inl:
 
-	  Part of file fixed. Wanted to commit before I lose something.
+          Part of file fixed. Wanted to commit before I lose something.
 
 Thu Jul 20 19:19:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/unistd.h:
-	* pace/posix/unistd.h:
+        * pace/unistd.h:
+        * pace/posix/unistd.h:
 
-	  _isatty, lseek are both implemented in win32 with
-	  int fildes. Removed PACE_HANDLE here.
+          _isatty, lseek are both implemented in win32 with
+          int fildes. Removed PACE_HANDLE here.
 
 Thu Jul 20 19:00:12 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/unistd.inl (pace_fsync):
+        * pace/posix/unistd.inl (pace_fsync):
 
-	  Missing the wrapper? pace_fsync --> return fildes.
-	  Changed to 'return fsync (fildes); :-)
+          Missing the wrapper? pace_fsync --> return fildes.
+          Changed to 'return fsync (fildes); :-)
 
 Thu Jul 20 18:55:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/unistd.h:
-	* pace/posix/unistd.inl:
+        * pace/unistd.h:
+        * pace/posix/unistd.inl:
 
-	  More PACE_HANDLE (dup, dup2)
+          More PACE_HANDLE (dup, dup2)
 
 Thu Jul 20 14:47:20 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Better comments and changed syntax of PACE_OSCALL_RETURN.
+          Better comments and changed syntax of PACE_OSCALL_RETURN.
 
 Thu Jul 20 14:42:26 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h (ACE_ADAPT_RETVAL):
+        * pace/config/utility.h (ACE_ADAPT_RETVAL):
 
-	  Typo.
+          Typo.
 
 Thu Jul 20 14:12:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/unistd.inl:
-	* pace/unistd.h:
+        * pace/posix/unistd.inl:
+        * pace/unistd.h:
 
-	  Lots of int file descriptors changed to PACE_HANDLE.
+          Lots of int file descriptors changed to PACE_HANDLE.
 
 Wed Jul 19 19:50:54 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Added some sorely needed macros for adapting return values.
-	  Used extensively by ACE to emulate funcs on win32.
+          Added some sorely needed macros for adapting return values.
+          Used extensively by ACE to emulate funcs on win32.
 
 Tue Jul 18 23:25:43 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/signal.h
-	* pace/posix/signal.inl
-	* pace/posix/stdio.h
-	* pace/posix/stdlib.h
-	* pace/posix/time.h
-	* pace/posix/unistd.h
+        * pace/posix/signal.h
+        * pace/posix/signal.inl
+        * pace/posix/stdio.h
+        * pace/posix/stdlib.h
+        * pace/posix/time.h
+        * pace/posix/unistd.h
 
-	Added double definition protections around types, PACE_NULL
-	in particular.
+        Added double definition protections around types, PACE_NULL
+        in particular.
 
-	* pace/posix/signal*
+        * pace/posix/signal*
 
-	Changed signal's pointer to a functions to almost support
-	Lynx, but it is not quite working yet.
+        Changed signal's pointer to a functions to almost support
+        Lynx, but it is not quite working yet.
 
-	* ../ace/ACE.cpp
-	* ../ace/OS_Memory.h
+        * ../ace/ACE.cpp
+        * ../ace/OS_Memory.h
 
-	Changed system calls to pace calls.
+        Changed system calls to pace calls.
 
-	* ../ace/OS.h
+        * ../ace/OS.h
 
-	Reverted part of my earlier changes to support Lynxos in
-	a cleaner way.
+        Reverted part of my earlier changes to support Lynxos in
+        a cleaner way.
 
-	* ../ace/OS.h
-	* ../ace/OS.i
+        * ../ace/OS.h
+        * ../ace/OS.i
 
-	Many small changes including wrapping most calls with ACE_OSCALL
-	to handle EINTR correctly.
+        Many small changes including wrapping most calls with ACE_OSCALL
+        to handle EINTR correctly.
 
 Tue Jul 18 15:13:40 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/times.h:
-	* pace/win32/times.inl:
+        * pace/win32/times.h:
+        * pace/win32/times.inl:
 
-	  Fixed type support.
-	  Eliminated unsupported funcs (return -1 and set ernno).
+          Fixed type support.
+          Eliminated unsupported funcs (return -1 and set ernno).
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 15:09:09 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/time.inl:
+        * pace/win32/time.inl:
 
-	  Eliminated and confirmed suport for funcs.
+          Eliminated and confirmed suport for funcs.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 14:43:08 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/termios.h:
-	* pace/posix/termios.inl:
+        * pace/termios.h:
+        * pace/posix/termios.inl:
 
-	  PACE_HANDLE substituted in for file descriptors.
+          PACE_HANDLE substituted in for file descriptors.
 
-	* pace/win32/termios.h:
-	* pace/win32/termios.inl:
+        * pace/win32/termios.h:
+        * pace/win32/termios.inl:
 
-	  Eliminated support for most funcs. Return -1 and set ernno
-	  to ENOTSUP.
+          Eliminated support for most funcs. Return -1 and set ernno
+          to ENOTSUP.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 14:15:11 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/stdio.inl:
+        * pace/win32/stdio.inl:
 
-	  Eliminated support for cterm.
-	  Created support for v...print.. family of funcs.
+          Eliminated support for cterm.
+          Created support for v...print.. family of funcs.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 13:52:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/stat.h:
-	* pace/win32/stat.inl:
+        * pace/win32/stat.h:
+        * pace/win32/stat.inl:
 
-	  Eliminated, emulated and confirmed suport for funcs.
+          Eliminated, emulated and confirmed suport for funcs.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 13:16:14 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/signal.h:
-	* pace/win32/signal.inl:
+        * pace/win32/signal.h:
+        * pace/win32/signal.inl:
 
-	  Eliminated, emulated and confirmed suport for funcs.
+          Eliminated, emulated and confirmed suport for funcs.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Tue Jul 18 11:33:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/setjmp.h:
-	* pace/win32/setjmp.inl:
+        * pace/win32/setjmp.h:
+        * pace/win32/setjmp.inl:
 
-	  Eliminated support sig(setjmp/longjmp).
+          Eliminated support sig(setjmp/longjmp).
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Mon Jul 17 18:29:27 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/semaphore.h:
-	* pace/win32/semaphore.inl:
+        * pace/win32/semaphore.h:
+        * pace/win32/semaphore.inl:
 
-	  Eliminated support for these functions. Started emulation.
+          Eliminated support for these functions. Started emulation.
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Changed PACE_HANDLE to represent HANDLE (not void *).
+          Changed PACE_HANDLE to represent HANDLE (not void *).
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Mon Jul 17 16:37:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/sched.h:
-	* pace/win32/sched.inl:
+        * pace/win32/sched.h:
+        * pace/win32/sched.inl:
 
-	  Eliminated support for these functions.
+          Eliminated support for these functions.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Mon Jul 17 16:27:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pwd.h:
-	* pace/win32/pwd.inl:
+        * pace/win32/pwd.h:
+        * pace/win32/pwd.inl:
 
-	  Emulate some... return no support for others.
+          Emulate some... return no support for others.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
-	* pace/win32/mqueue.h:
+        * pace/win32/mqueue.h:
 
-	  Typo.
+          Typo.
 
 Mon Jul 17 15:57:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/mqueue.h:
-	* pace/win32/mqueue.h:
+        * pace/win32/mqueue.h:
+        * pace/win32/mqueue.h:
 
-	  Fixed types to compile for win32.
-	  Code was NOT emulated so types are dummy types and
-	  PACE_ERRNO_NO_SUPPORT_RETURN (-1) was applied when applicable.
+          Fixed types to compile for win32.
+          Code was NOT emulated so types are dummy types and
+          PACE_ERRNO_NO_SUPPORT_RETURN (-1) was applied when applicable.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Mon Jul 17 14:56:31 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/mman.inl:
+        * pace/win32/mman.inl:
 
-	  Emulate some... return no support for others.
+          Emulate some... return no support for others.
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
 Mon Jul 17 14:00:35 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Changed #if (PACE_WIN32 != 0) to #if (PACE_WIN32) to be
-	  more consistent.
+          Changed #if (PACE_WIN32 != 0) to #if (PACE_WIN32) to be
+          more consistent.
 
 Mon Jul 17 13:57:05 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/posix/mman.inl (pace_shm_open):
-	* pace/win32/mman.inl (pace_shm_open):
-	* pace/sys/mman.h (pace_shm_open):
+        * pace/posix/mman.inl (pace_shm_open):
+        * pace/win32/mman.inl (pace_shm_open):
+        * pace/sys/mman.h (pace_shm_open):
 
-	  Return value changed to PACE_HANDLE.
+          Return value changed to PACE_HANDLE.
 
-	* pace/win32/mman.h:
+        * pace/win32/mman.h:
 
-	  Added some sorely needed constant macro definitions.
+          Added some sorely needed constant macro definitions.
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Removed #define PACE_POSIX_ERROR_INT_RETVAL -1
+          Removed #define PACE_POSIX_ERROR_INT_RETVAL -1
 
 Mon Jul 17 13:31:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Added #define PACE_POSIX_ERROR_INT_RETVAL -1
+          Added #define PACE_POSIX_ERROR_INT_RETVAL -1
 
 Mon Jul 17 13:07:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/aio.h (pace_aio_cancel):
-	* pace/posix/aio.inl (pace_aio_cancel):
-	* pace/win32/aio.inl (pace_aio_cancel):
-	* pace/mman.h:
-	* pace/posix/mman.inl:
-	* pace/win32/mman.inl:
+        * pace/aio.h (pace_aio_cancel):
+        * pace/posix/aio.inl (pace_aio_cancel):
+        * pace/win32/aio.inl (pace_aio_cancel):
+        * pace/mman.h:
+        * pace/posix/mman.inl:
+        * pace/win32/mman.inl:
 
-	  Substituted PACE_HANDLE for ints that were file descriptors.
+          Substituted PACE_HANDLE for ints that were file descriptors.
 
 Mon Jul 17 12:49:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  PACE_HANDLE and PACE_INVALID_HANDLE get changed in WIN32
-	  to a void *. (In POSIX dir, we use an int as a file desc.)
+          PACE_HANDLE and PACE_INVALID_HANDLE get changed in WIN32
+          to a void *. (In POSIX dir, we use an int as a file desc.)
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Updated.
+          Updated.
 
-	* pace/win32/dirent.inl
+        * pace/win32/dirent.inl
 
-	  Uses the new PACE_HANDLE.
+          Uses the new PACE_HANDLE.
 
 Mon Jul 17 12:27:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Prevented windows.h from getting included on non Win32 platforms. :)
+          Prevented windows.h from getting included on non Win32 platforms. :)
 
 Mon Jul 17 11:47:11 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* docs/PACE_POSIX_support.txt:
+        * docs/PACE_POSIX_support.txt:
 
-	  Added to specify native/emulation/not supported funcs.
+          Added to specify native/emulation/not supported funcs.
 
-	* pace/win32/fcntl.h:
+        * pace/win32/fcntl.h:
 
-	  creat isn't quite exactly as ACE does it. Leave this out
-	  until correctly finished!
+          creat isn't quite exactly as ACE does it. Leave this out
+          until correctly finished!
 
 Sun Jul 16 16:21:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/grp.inl:
-	* pace/win32/grp.h:
+        * pace/win32/grp.inl:
+        * pace/win32/grp.h:
 
-	  No WIN32 support. ACE does not emulate this family.
-	  Build a group struct & return -1 and set ernno to
-	  NO SUPPORT!
+          No WIN32 support. ACE does not emulate this family.
+          Build a group struct & return -1 and set ernno to
+          NO SUPPORT!
 
 Sun Jul 16 16:17:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h (PACE_FAIL_RETURN):
+        * pace/config/utility.h (PACE_FAIL_RETURN):
 
-	  Fixed to work with just PACE_WIN32 defined.
+          Fixed to work with just PACE_WIN32 defined.
 
 Fri Jul 14 22:56:29 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h (PACE_FAIL_RETURN):
+        * pace/config/utility.h (PACE_FAIL_RETURN):
 
-	  Defined.
+          Defined.
 
 Fri Jul 14 22:41:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/fcntl.h:
-	* pace/fcntl.inl:
+        * pace/fcntl.h:
+        * pace/fcntl.inl:
 
-	  Some old changes didn't seem to take?
+          Some old changes didn't seem to take?
 
 Fri Jul 14 22:25:31 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.inl:
+        * pace/win32/dirent.inl:
 
-	  Typo.
+          Typo.
 
 Fri Jul 14 22:06:14 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/fcntl.inl:
+        * pace/win32/fcntl.inl:
 
-	  Type in comments for pace_win32_emulate_creat.
+          Type in comments for pace_win32_emulate_creat.
 
 Fri Jul 14 22:00:34 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/fcntl.inl (creat):
+        * pace/win32/fcntl.inl (creat):
 
-	  WIN32 doesn't support integers as file handles. Note here,
-	  we return -1 for failure and we cast a HANDLE to an int
-	  for success.
+          WIN32 doesn't support integers as file handles. Note here,
+          we return -1 for failure and we cast a HANDLE to an int
+          for success.
 
-	  Also, emulated support for POSIX creat. The ACE_OS version
-	  extensively uses thread protection. This is commented out and
-	  may be added in later, when threads are implemented in PACE.
+          Also, emulated support for POSIX creat. The ACE_OS version
+          extensively uses thread protection. This is commented out and
+          may be added in later, when threads are implemented in PACE.
 
-	* pace/fcntl.h (creat):
+        * pace/fcntl.h (creat):
 
-	  Comments regarding return values == (int)*HANDLE for WIN32.
+          Comments regarding return values == (int)*HANDLE for WIN32.
 
 Fri Jul 14 21:20:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Added #include <windef.h> for common definitions and basic types.
+          Added #include <windef.h> for common definitions and basic types.
 
 Fri Jul 14 20:49:46 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Added some neat :-) ACE_* macro utilities.
+          Added some neat :-) ACE_* macro utilities.
 
 Fri Jul 14 20:38:44 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.inl:
+        * pace/win32/dirent.inl:
 
-	  Added (POSIX_HAS_POSIX_FS_UOF) protection to emulation funcs.
+          Added (POSIX_HAS_POSIX_FS_UOF) protection to emulation funcs.
 
 Fri Jul 14 20:18:46 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
-	* pace/win32/errno.h:
+        * pace/config/utility.h:
+        * pace/win32/errno.h:
 
-	  Moved win32 error definitions to pace/win32/errno.h.
+          Moved win32 error definitions to pace/win32/errno.h.
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Changed #include <errno.h> to #include "pace/errno.h".
+          Changed #include <errno.h> to #include "pace/errno.h".
 
 Fri Jul 14 20:05:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pace_dll.dsp:
-	* pace/win32/pace_lib.dsp:
+        * pace/win32/pace_dll.dsp:
+        * pace/win32/pace_lib.dsp:
 
-	  Default the build to all POSIX units of functionality.
-	  Defined PACE_HAS_ALL_POSIX_FUNCS in
-	  Settings >> C/C++ >> Preprocessor
+          Default the build to all POSIX units of functionality.
+          Defined PACE_HAS_ALL_POSIX_FUNCS in
+          Settings >> C/C++ >> Preprocessor
 
 Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
@@ -656,47 +660,47 @@ Fri Jul 14 19:06:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
         * pace/unistd.h:
           Removed a duplicate closing }.
 
-	* pace/pthread.h:
-	  Added (void) in arguments to pointers to functions
-	  which were otherwise interpreted as (...) args.
+        * pace/pthread.h:
+          Added (void) in arguments to pointers to functions
+          which were otherwise interpreted as (...) args.
 
 Fri Jul 14 18:50:07 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/unistd.h:
+        * pace/win32/unistd.h:
 
-	  Removed incompatible #include <unistd.h> for win32.
+          Removed incompatible #include <unistd.h> for win32.
 
 Fri Jul 14 18:19:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/signal.h:
+        * pace/win32/signal.h:
 
-	  Typo...(pace_s_sigaction becomes pace_sigaction_s).
+          Typo...(pace_s_sigaction becomes pace_sigaction_s).
 
 Fri Jul 14 18:05:09 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.h:
+        * pace/win32/dirent.h:
 
-	  Removed dir_init.
+          Removed dir_init.
 
-	* pace/win32/dirent.inl:
+        * pace/win32/dirent.inl:
 
-	  win32 emulation functions finished.
-	  closedir  ==  pace_win32_emulate_closedir
-	  opendir   ==  pace_win32_emulate_opendir
-	  readdir   ==  pace_win32_emulate_readdir
+          win32 emulation functions finished.
+          closedir  ==  pace_win32_emulate_closedir
+          opendir   ==  pace_win32_emulate_opendir
+          readdir   ==  pace_win32_emulate_readdir
 
 Fri Jul 14 17:46:56 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/dirent.h:
+        * pace/win32/dirent.h:
 
-	  Removed 'const' member of dirent struct.
-	  Added dir_init to guarantee that 'started_reading_' is
-	  initialized correctly!
+          Removed 'const' member of dirent struct.
+          Added dir_init to guarantee that 'started_reading_' is
+          initialized correctly!
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Added support for win32
-	  PACE_WIN32_INVALID_HANDLE = (void*)0
+          Added support for win32
+          PACE_WIN32_INVALID_HANDLE = (void*)0
 
 Fri Jul 14 15:55:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -804,10 +808,10 @@ Fri Jul 14 15:55:24 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Fri Jul 14 15:02:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* PACE/pace/win32/dirent.h:
+        * PACE/pace/win32/dirent.h:
 
-	  pace_dir changed to PACE_DIR.
-	  PACE_TCHAR changed to char.
+          pace_dir changed to PACE_DIR.
+          PACE_TCHAR changed to char.
 
 Fri Jul 14 14:34:43 2000  David L. Levine <levine@cs.wustl.edu>
 
