@@ -61,7 +61,9 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 void
-JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh)
+JAWS_Synch_IO::accept (JAWS_IO_Handler *ioh,
+                       ACE_Message_Block *,
+                       unsigned int size)
 {
   ACE_SOCK_Stream new_stream;
   new_stream.set_handle (ACE_INVALID_HANDLE);
@@ -228,10 +230,18 @@ JAWS_Asynch_IO::~JAWS_Asynch_IO (void)
 }
 
 void
-JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh)
+JAWS_Asynch_IO::accept (JAWS_IO_Handler *ioh,
+                        ACE_Message_Block* mb,
+                        unsigned int size)
 {
-  // Since each thread will call into this function, just do nothing.
-  // Assume that the framework has initialized the Asynch_Acceptor already.
+  JAWS_Asynch_IO_Handler *aioh =
+    ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
+
+  ACE_Asynch_Accept aa;
+
+  if (aa.open (*(aioh->handler ()), aioh->handle ()) == -1
+      || aa.accept (*mb, size) == -1)
+    aioh->accept_error ();
 }
 
 void
