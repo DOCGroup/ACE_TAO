@@ -125,6 +125,23 @@ Fri Mar  7 06:35:09 2003  Chad Elliott  <elliott_c@ociweb.com>
           now "uses" Parser.  Thanks to Steve Huston for bringing this to my
           attention.
 
+Thu Mar  6 18:14:21 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Rather than do the
+          template closure as part of the AR command, set up PRELIB to do
+          template closure; this allows static libs to build clean with the
+          xargs method introduced to rules.lib.GNU. A side-affect of this
+          is that the separate template closure step is also used for
+          shared libraries, and thus, +inst_none needed to be added to
+          SOFLAGS.
+	  Also set AR to /usr/ccs/bin/ar to be sure to pick up the native
+	  HP-supplied ar command.
+
+	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Don't
+	  reinterpret_cast on non-Windows. Not needed and aC++ complains.
+	  Also see:
+	  Wed Feb 19 10:41:20 2003  Steve Huston  <shuston@riverace.com>
+
 Thu Mar  6 14:49:37 2003  Steve Huston  <shuston@riverace.com>
 
         * apps/mkcsregdb/mkcsregdb.cpp: const_cast pointers that need to be
