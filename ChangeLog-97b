@@ -35,8 +35,9 @@ Tue Sep  2 09:51:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Mon Sep 01 21:31:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* Makefile: ChangeLog is no longer a symbolic link, but instead
-	  is the most recent ChangeLog file.
+	* ChangeLog-97b,Makefile,bin/create_ace_build: ChangeLog is no longer
+	  a symbolic link, but instead is the most recent ChangeLog file.
+	  ChangeLog-97b was moved to ChangeLog.
 
 	* ace/Timer_Queue_T.cpp (schedule): added ACE_UNUSED_ARGs for act
 	  and interval.
