@@ -31,7 +31,7 @@ namespace TAO
    *
    * Used for arrays
    */
-  template<typename T_slice, typename T_forany> 
+  template<typename T_slice, typename T_forany>
   class Any_Array_Impl_T : public Any_Impl
   {
   public:
@@ -40,7 +40,7 @@ namespace TAO
                       T_slice * const);
     virtual ~Any_Array_Impl_T (void);
 
-    static void insert (CORBA::Any &, 
+    static void insert (CORBA::Any &,
                         _tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T_slice * const);
@@ -60,7 +60,7 @@ namespace TAO
   private:
     T_slice * value_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Array_Impl_T.inl"
