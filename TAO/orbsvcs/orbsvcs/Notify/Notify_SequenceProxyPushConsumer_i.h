@@ -1,13 +1,12 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   TAO_Notify_SequenceProxyPushConsumer_i.h
+ * @file Notify_SequenceProxyPushConsumer_i.h
  *
- *  $Id$
+ * $Id$
  *
  * Implements the CosNotifyChannelAdmin::SequenceProxyPushConsumer
  * interface.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

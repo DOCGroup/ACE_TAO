@@ -1,13 +1,12 @@
 //=============================================================================
 /**
- *  @file    FT_Callbacks.h
+ * @file FT_Service_Callbacks.h
  *
- *  $Id$
+ * $Id$
  *
  * A concrete FT service callback implementation
  *
- *
- *  @author Bala Natarajan <bala@cs.wustl.edu>
+ * @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 

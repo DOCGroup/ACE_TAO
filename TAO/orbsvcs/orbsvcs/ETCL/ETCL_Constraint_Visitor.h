@@ -1,12 +1,12 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    ECTL_Constraint_Visitor
+ * @file ETCL_Constraint_Visitor.h
  *
- *  $Id$
+ * $Id$
  *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ * @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ * @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
 

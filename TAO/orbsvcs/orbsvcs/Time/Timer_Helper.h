@@ -2,18 +2,17 @@
 
 //=============================================================================
 /**
- *  @file    Timer_Helper.cpp
+ * @file Timer_Helper.h
  *
- *  $Id$
+ * $Id$
  *
- *  This class is registered with the Reactor and extends from the
- *  event handler.It is a friend of the TAO_Time_Service_Clerk and
- *  helps to update the clerk's notion of globally synchronized
- *  time. This class obviates the need for multiple inheritance in
- *  the clerk.
+ * This class is registered with the Reactor and extends from the
+ * event handler.It is a friend of the TAO_Time_Service_Clerk and
+ * helps to update the clerk's notion of globally synchronized
+ * time. This class obviates the need for multiple inheritance in
+ * the clerk.
  *
- *
- *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
+ * @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
 //=============================================================================
 

@@ -1,13 +1,12 @@
 //=============================================================================
 /**
- *  @file   Notify_Proxy.h
+ * @file Notify_Proxy_T.h
  *
- *  $Id$
+ * $Id$
  *
  * Template Base class for all Proxys.
  *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
 
