@@ -1,3 +1,8 @@
+Sat Dec 22 11:27:11 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/auto_compile:
+	  Add missing -i flags for make_pretty.pl.
+
 Sat Dec 22 11:24:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Service_Configurator/IPC-tests/client/client.dsw:
