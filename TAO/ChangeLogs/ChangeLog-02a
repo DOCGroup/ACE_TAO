@@ -1,3 +1,21 @@
+Fri Jan 19 17:41:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+
+          Reverted previous fix for the infinite recursion problem
+          on Win32 with the Notification Service - compile errors
+          were fixed, but not the infinite recursion at runtime.
+          Renamed all foo::bar::_tao_setup_collocation() functions
+          as foo::bar::foo_bar_setup_collocation(). This eliminates
+          the need for the ACE_NESTED_CLASS macro and for the the typedef
+          that were in the original fix. Thanks to Jonathan Stockdale 
+          <Jonathan.Stockdale@locusdialogue.com> for letting us know
+          that it still wasn't fixed, and for the example code that
+          clarified the problem.
+
 Fri Jan 19 15:42:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
