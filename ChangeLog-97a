@@ -4,6 +4,13 @@ Tue Mar 18 08:12:22 1997  David L. Levine  <levine@cs.wustl.edu>
 	  "Svc_Conf_y.cpp" to ease debugging.  Thanks to Luca Priorelli
 	  <lucapri@mbox.vol.it> for suggesting this.
 
+	* ace/IOStream.cpp (close): replaced call to
+	  ACE_SOCK_Stream::close () with one to generic STREAM::close ().
+	  Thanks to Kumar Neelakantan <kneelaka@painewebber.com> for
+	  reporting this problem.
+
+	* tests/IOStream_test.cpp: added checks for receipt of proper values.
+
 Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
         * ace/ace.mdp: Add DllMain as the entry point of ace.dll.  This
