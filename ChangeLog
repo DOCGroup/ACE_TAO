@@ -1,3 +1,7 @@
+Thu May  3 17:43:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Acceptor.cpp (ACE_Acceptor): Fixed a warning in g++ builds. 
+
 Thu May  3 16:00:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h:
