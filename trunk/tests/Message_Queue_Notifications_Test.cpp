@@ -304,10 +304,8 @@ Watermark_Test::print_producer_debug_message (void)
 int
 Watermark_Test::svc (void)
 {
-  int role = this->role_.value ();
-  // Be sure to use the prefix operator++!!!!  We've witnessed
-  // race conditions with the postfix operator++.
-  ++this->role_;
+  // this->role_ is an Atomic_Op object.
+  int role = this->role_++;
 
   switch (role)
     {
