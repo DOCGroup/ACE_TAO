@@ -145,7 +145,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -229,7 +229,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                                                this->env_);
           TAO_IFR_CHECK_RETURN (-1);
 
-          if (CORBA::is_nil (bases[i]))
+          if (CORBA::is_nil (bases[i].in ()))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
@@ -357,7 +357,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                   node->full_name (),
                   be_global->filename ()
                 ),
-                -1,
+                -1
               );
             }
           else if (node->ifr_fwd_added_ == 0)
@@ -406,7 +406,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                                                    this->env_);
               TAO_IFR_CHECK_RETURN (-1);
 
-              if (CORBA::is_nil (bases[i]))
+              if (CORBA::is_nil (bases[i].in ()))
                 {
                   ACE_ERROR_RETURN ((
                       LM_ERROR,
@@ -583,7 +583,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
       else if (node->ifr_fwd_added_ == 0)
@@ -658,7 +658,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -753,7 +753,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
@@ -911,7 +911,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
               node->full_name (),
               be_global->filename ()
             ),
-            -1,
+            -1
           );
         }
     }
