@@ -1,3 +1,10 @@
+Fri Jun  1 16:11:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Acceptor.cpp (open): Enabled the socket to be non-blocking
+	  mode in the ACE_Strategy_Acceptor::open () call. Thanks to Singh
+	  Kirat <kirat.singh@gs.com>, for reporting this through a problem
+	  in TAO. 
+
 Thu May 31 17:29:33 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Refcounted_Auto_Ptr_Test.cpp:
