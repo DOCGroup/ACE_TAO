@@ -15,7 +15,6 @@ BIN     = test_mutex \
 LSRC    = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-LIBS	+= -lm
 BUILD   = $(VBIN)
 
 #----------------------------------------------------------------------------

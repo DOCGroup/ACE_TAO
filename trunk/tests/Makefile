@@ -42,7 +42,6 @@ BIN = 	Barrier_Test \
 	UPIPE_SAP_Test 
 
 CFLAGS += -I.
-LIBS	+= -lm
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
