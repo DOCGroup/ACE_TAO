@@ -948,8 +948,6 @@ ACE_LACKS_SYSCALL                       Platform doesn't have
                                         syscall() prototype
 ACE_LACKS_T_ERRNO                       Header files lack t_errno for
                                         TLI
-ACE_LACKS_TCP_H                         Platform doesn't have
-                                        netinet/tcp.h
 ACE_LACKS_TCP_NODELAY                   OS does not support TCP_NODELAY.
 ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
                                         but does not have telldir ().
