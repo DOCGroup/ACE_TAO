@@ -61,7 +61,7 @@ sub client
              "* ORB Default Server Protocol Policy Test\n          "
              ."(All TAO protocols are loaded, but in reverse order): \n",
              "* ORB Default Server Protocol Policy Test\n          "
-             ."(Only SHMIOP loaded): \n",
+            ."(Only SHMIOP loaded): \n",
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
              ."          (POA Server Protocol set to UIOP only): \n",
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
@@ -71,7 +71,7 @@ sub client
 if ($^O eq "MSWin32")
 {
     @server_opts =
-        ("-ORBendpoint shmiop:// -ORBendpoint iiop://",
+        ("-ORBendpoint iiop://",
          "-ORBsvcconf server_reverse_nt.conf "
          ."-ORBEndpoint shmiop:// -ORBendpoint iiop://",
          "-ORBsvcconf server_shmiop.conf -ORBendpoint shmiop://");
