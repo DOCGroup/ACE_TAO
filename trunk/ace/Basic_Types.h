@@ -220,6 +220,9 @@ typedef ACE_UINT16 ACE_USHORT16;
 #endif /* ACE_SIZEOF_VOID_P */
 
 #if defined (ACE_LACKS_LONGLONG_T)
+  // This throws away the high 32 bits.  It's very unlikely that a
+  // pointer will be more than 32 bits wide if the platform does not
+  // support 64-bit integers.
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
   ACE_reinterpret_cast (PTR_TYPE, L.lo ())
 #else  /* ! ACE_LACKS_LONGLONG_T */
