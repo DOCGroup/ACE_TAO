@@ -1,3 +1,11 @@
+Mon Dec 22 16:55:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP_Static.dsp:
+	* tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+	* tao/IORTable/TAO_IORTable_Static.dsp:
+	* tao/DynamicAny/TAO_DynamicAny_Static.dsp:
+	  Enabled rtti in these projects.
+
 Mon Dec 22 10:38:55 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/vc7_orbsvcs.mwc:
