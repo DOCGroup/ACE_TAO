@@ -43,10 +43,13 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
 #endif
   else // We're connected!
     {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
+
       ACE_UPIPE_Stream *ustream = &new_stream;
 
       new_stream.set_handle (handle);
       new_stream.remote_addr_ = addr; // class copy.
+      new_stream.reference_count_++; 
 
       // Now send the address of our ACE_UPIPE_Stream over this pipe
       // to our corresponding ACE_UPIPE_Acceptor, so he may link the

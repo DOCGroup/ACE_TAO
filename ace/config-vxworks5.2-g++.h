@@ -44,7 +44,6 @@
 #define ACE_MT_SAFE
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
-#define SIGNAL_SAFE_OS_CALLS
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096

@@ -1,5 +1,6 @@
-// Test the event server.
 // $Id$
+
+// Test the event server.
 
 #include "ace/Log_Msg.h"
 #include "ace/Stream.h"

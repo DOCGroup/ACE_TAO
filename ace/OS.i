@@ -159,7 +159,7 @@ extern "C" char *mktemp (char *);
 #define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
 #endif /* VXWORKS */
 
-#if defined (SIGNAL_SAFE_OS_CALLS)
+#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 #include "ace/Log_Msg.h"
 // The following two macros ensure that system calls are properly
 // restarted (if necessary) when interrupts occur.
@@ -178,7 +178,7 @@ extern "C" char *mktemp (char *);
 #else
 #define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
 #define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
-#endif /* SIGNAL_SAFE_OS_CALLS */
+#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
 
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
@@ -3212,23 +3212,13 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm), 
 				       ace_result_),
 		     int, -1);
-#elif defined (ACE_HAS_SETKIND_NP)
-  // ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigaction (how, nsm, osm), 
-  //                                   ace_result_),
-  //                 int, -1);
-  //    commented this out since nothing appropriate 
-  //    found in the man pages...
-  ACE_NOTSUP_RETURN (-1);
-
-#elif defined (ACE_HAS_DCETHREADS)
-#if defined (ACE_HAS_PTHREADS_1003_DOT_1C)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigaction (how, nsm, osm),
-                                       ace_result_), int, -1);
-#else
+#elif defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_DCETHREADS)
+  // DCE threads have no such function.
+  ACE_NOTSUP_RETURN (-1);  
+#elif defined (ACE_HAS_PTHREADS_1003_DOT_1C)
+  // PTHREADS_1003_DOT_1C is NOT a subcase of DCETHREADS!
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigthreadmask (how, nsm, osm), 
 				       ace_result_), int, -1);
-#endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
-
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
 #if defined (ACE_HAS_IRIX62_THREADS) || defined (DIGITAL_UNIX)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),

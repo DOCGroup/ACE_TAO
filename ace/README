@@ -72,6 +72,7 @@ ACE_HAS_RTLD_LAZY_V			Explicit dynamic linking permits "lazy" symbol resolution
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SIGINFO_T			Platform supports SVR4 extended signals
+ACE_HAS_SIGNAL_SAFE_OS_CALLS		Automatically restart OS system calls when EINTR occurs
 ACE_HAS_SIGWAIT				Platform/compiler has the sigwait(2) prototype
 ACE_HAS_SIG_ATOMIC_T			Compiler/platform defines the sig_atomic_t typedef
 ACE_HAS_SIN_LEN				Platform supports new BSD inet_addr len field.
@@ -121,6 +122,7 @@ ACE_HAS_UNICODE				Platform/compiler supports UNICODE
 ACE_HAS_VOIDPTR_MMAP			Platform requires void * for mmap().
 ACE_HAS_VOIDPTR_SOCKOPT			OS/compiler uses void * arg 4 setsockopt() rather than const char *
 ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection()
+ACE_HAS_WINSOCK2			The Win32 platform supports WinSock 2.0
 ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.

@@ -1,6 +1,4 @@
 #ifndef lint
-// @(#)Svc_Conf_y.cpp	1.1	10/18/96
-
 char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
  Modified 5/2/90 by J. Roskind to support graphic debugging modes";
 #endif
@@ -44,56 +42,58 @@ ACE_Obstack *ace_obstack;
 #define ACE_COLON 276
 #define YYERRCODE 256
 short ace_yylhs[] = {                                        -1,
-    0,    0,    0,   13,   13,   13,   13,   13,   13,    4,
-    5,    6,    7,    8,   10,   17,   10,   14,   14,   18,
-   11,   11,    9,    9,   12,   12,   12,   12,   12,   15,
-    3,    3,    3,   16,   16,    2,    2,    2,    1,    1,
+    0,    0,    0,   14,   14,   14,   14,   14,   14,    5,
+    6,    7,    8,    9,   11,   18,   11,   15,   15,   19,
+   12,   12,   10,   10,   13,   13,   13,   13,   13,   16,
+    4,    4,    4,   17,   17,    3,    3,    3,    2,    2,
+    1,    1,
 };
 short ace_yylen[] = {                                         2,
     2,    2,    0,    1,    1,    1,    1,    1,    1,    3,
     3,    2,    2,    2,    3,    0,    4,    1,    1,    0,
     4,    0,    2,    0,    1,    1,    1,    1,    1,    4,
     1,    1,    0,    3,    5,    2,    2,    2,    1,    0,
+    1,    1,
 };
 short ace_yydefred[] = {                                      3,
     0,    2,    0,    0,    0,    0,    0,    0,    4,    5,
     6,    7,    8,    9,    1,    0,    0,    0,   12,   13,
    14,   16,   18,   19,    0,    0,    0,    0,    0,   39,
-   10,   11,    0,   20,   15,   36,   38,   37,    0,    0,
-   17,   24,    0,   31,   32,   30,    0,    0,   21,   25,
-   26,   27,   28,   29,   23,    0,   35,
+   10,   11,    0,   20,   15,   36,   38,   37,   41,   42,
+    0,    0,   17,   24,    0,   31,   32,   30,    0,    0,
+   21,   25,   26,   27,   28,   29,   23,    0,   35,
 };
 short ace_yydgoto[] = {                                       1,
-   31,   29,   46,    9,   10,   11,   12,   13,   47,   14,
-   35,   55,   15,   25,   17,   40,   33,   42,
+   41,   31,   29,   48,    9,   10,   11,   12,   13,   49,
+   14,   35,   57,   15,   25,   17,   42,   33,   44,
 };
 short ace_yysindex[] = {                                      0,
- -244,    0, -266, -260, -250, -243, -239, -247,    0,    0,
+ -244,    0, -266, -260, -250, -243, -241, -247,    0,    0,
     0,    0,    0,    0,    0, -240, -237, -237,    0,    0,
-    0,    0,    0,    0, -242, -241, -235, -233, -236,    0,
-    0,    0, -242,    0,    0,    0,    0,    0, -232, -238,
-    0,    0, -234,    0,    0,    0, -253, -228,    0,    0,
-    0,    0,    0,    0,    0, -227,    0,
+    0,    0,    0,    0, -238, -236, -233, -231, -239,    0,
+    0,    0, -238,    0,    0,    0,    0,    0,    0,    0,
+ -242, -235,    0,    0, -232,    0,    0,    0, -253, -226,
+    0,    0,    0,    0,    0,    0,    0, -234,    0,
 };
 short ace_yyrindex[] = {                                      0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,   27,   27,    0,    0,
     0,    0,    0,    0,   46,    0,    0,    0,    0,    0,
-    0,    0,   46,    0,    0,    0,    0,    0,    0,   20,
-    0,    0,    0,    0,    0,    0,    0,    1,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,
+    0,    0,   46,    0,    0,    0,    0,    0,    0,    0,
+    0,   20,    0,    0,    0,    0,    0,    0,    0,    1,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,
 };
 short ace_yygindex[] = {                                      0,
-   18,    0,    0,   -8,   -6,  -10,   -9,    2,    0,    0,
-   14,    0,    0,    0,    0,    0,    0,    0,
+    0,   18,    0,    0,   -8,   -6,   -9,   -2,   -1,    0,
+    0,   16,    0,    0,    0,    0,    0,    0,    0,
 };
 #define YYTABLESIZE 308
 short ace_yytable[] = {                                      23,
    34,   24,   16,    3,    4,    5,    6,    7,   18,    3,
     4,    2,    3,    4,    5,    6,    7,    8,   19,   33,
-   49,   22,   26,   27,   28,   20,   40,   44,   45,   21,
-   34,   39,   30,   36,   48,   32,   52,   53,   50,   37,
-   51,   38,   56,   43,   57,   22,   41,    0,   54,    0,
+   51,   22,   26,   27,   28,   20,   40,   21,   39,   40,
+   46,   47,   30,   45,   34,   32,   50,   59,   36,   54,
+   52,   37,   53,   38,   58,   22,   55,   56,   43,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -124,9 +124,9 @@ short ace_yytable[] = {                                      23,
 short ace_yycheck[] = {                                       8,
     0,    8,  269,  257,  258,  259,  260,  261,  269,  257,
   258,  256,  257,  258,  259,  260,  261,  262,  269,    0,
-  274,  269,  263,  264,  265,  269,    0,  266,  267,  269,
-  273,  268,  270,  275,  269,   18,   47,   47,   47,  275,
-   47,  275,  271,  276,  272,    0,   33,   -1,   47,   -1,
+  274,  269,  263,  264,  265,  269,    0,  269,  268,  269,
+  266,  267,  270,  276,  273,   18,  269,  272,  275,   49,
+   49,  275,   49,  275,  271,    0,   49,   49,   33,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -208,13 +208,15 @@ char *ace_yyrule[] = {
 "status : ACE_ACTIVE",
 "status : ACE_INACTIVE",
 "status :",
-"svc_initializer : ACE_PATHNAME ACE_COLON ACE_IDENT",
-"svc_initializer : ACE_PATHNAME ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN",
+"svc_initializer : pathname ACE_COLON ACE_IDENT",
+"svc_initializer : pathname ACE_COLON ACE_IDENT ACE_LPAREN ACE_RPAREN",
 "type : ACE_MODULE_T ACE_STAR",
 "type : ACE_SVC_OBJ_T ACE_STAR",
 "type : ACE_STREAM_T ACE_STAR",
 "parameters_opt : ACE_STRING",
 "parameters_opt :",
+"pathname : ACE_PATHNAME",
+"pathname : ACE_IDENT",
 };
 #endif
 #define ace_yyclearin (ace_yychar=(-1))
@@ -237,7 +239,7 @@ YYSTYPE ace_yylval;
 #define ace_yystacksize YYSTACKSIZE
 short ace_yyss[YYSTACKSIZE];
 YYSTYPE ace_yyvs[YYSTACKSIZE];
-#line 241 "Svc_Conf.y"
+#line 246 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -340,7 +342,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 342 "y.tab.c"
+#line 346 "y.tab.c"
 #define YYABORT goto ace_yyabort
 #define YYACCEPT goto ace_yyaccept
 #define YYERROR goto ace_yyerrlab
@@ -861,7 +863,7 @@ case 40:
 #line 237 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 862 "y.tab.c"
+#line 866 "y.tab.c"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;

@@ -1035,7 +1035,12 @@ PAGE_NOCACHE  */
 #include /**/ <windows.h>
 #endif /* __AFX_H__ */
 
+#if defined (ACE_HAS_WINSOCK2)
+#include /**/ <winsock2.h>
+#include "ace/ws2tcpip.h"
+#else
 #include /**/ <winsock.h>
+#endif /* ACE_HAS_WINSOCK2 */
 
 #define MAXHOSTNAMELEN  256
 

@@ -72,15 +72,19 @@ ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
   else
     {
       ACE_UPIPE_Stream *remote_stream = 0;
-      // Transfer address ownership.
-      new_stream.set_handle (new_io.get_handle ());      
 
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
+
+      new_stream.set_handle (new_io.get_handle ());      
+      new_stream.reference_count_++; 
+
+      // Transfer address ownership.
       new_io.get_local_addr (new_stream.local_addr_);
       new_io.get_remote_addr (new_stream.remote_addr_);
-
-      // Now that we got the fd, we'll read the address of the
+      
+      // Now that we got the handle, we'll read the address of the
       // connector-side ACE_UPIPE_Stream out of the pipe and link that
-      // ACE_UPIPE_Stream to our ACE_UPIPE_Stream
+      // ACE_UPIPE_Stream to our ACE_UPIPE_Stream.
 
       if (ACE_OS::read (new_stream.get_handle (), 
 			(char *) &remote_stream,

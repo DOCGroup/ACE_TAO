@@ -28,6 +28,24 @@ ACE_Message_Block::copy (const char *buf, size_t n)
     }
 }
 
+int
+ACE_Message_Block::copy (const char *buf)
+{
+  ACE_TRACE ("ACE_Message_Block::copy");
+  // Note that for this to work correct, end() *must* be >= wr_ptr().
+  size_t len = size_t (this->end () - this->wr_ptr ());
+  size_t buflen = ACE_OS::strlen (buf) + 1;
+
+  if (len < buflen)
+    return -1;
+  else
+    {
+      (void) ACE_OS::memcpy (this->wr_ptr (), buf, buflen);
+      this->wr_ptr (buflen);
+      return 0;
+    }
+}
+
 void
 ACE_Message_Block::dump (void) const
 {
