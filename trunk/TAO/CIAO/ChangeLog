@@ -1,6 +1,13 @@
+Mon May 10 18:21:34 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DT_Handler.h:
+        * DnC/Config_Handlers/DT_Handler.cpp:
+          Data_Type handler class that parses the <type> .. </type> tags
+          in the Deployment schema.
+
 Mon May 10 13:42:04 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
-        * DnC/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
           Removed the trailing #endif as the corresponding #ifndef was
           removed earlier.
 
