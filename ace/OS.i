@@ -5978,9 +5978,11 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
         return errno == 0  ?  *sig  :  -1;
 #     endif /* g++, for example, on DIGITAL_UNIX */
 #   else /* ! __Lynx __ && ! DIGITAL_UNIX */
-#     if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
+#     if (defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)
         *sig = ::sigwait (set);
         return *sig;
+#     elif defined(ACE_HAS_FSU_PTHREADS)
+        return ::sigwait (set, sig);
 #     else   /* this is draft 7 or std */
         errno = ::sigwait (set, sig);
         return errno == 0  ?  *sig  :  -1;
