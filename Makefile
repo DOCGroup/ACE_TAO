@@ -44,6 +44,7 @@ CLONE   = Makefile \
           include \
           netsvcs \
           performance-tests \
+	  TAO \
           tests
 
 #----------------------------------------------------------------------------
@@ -111,7 +112,6 @@ RELEASE_LIB_FILES = \
                 ACE_wrappers/include \
                 ACE_wrappers/netsvcs \
                 ACE_wrappers/tests
-
 
 .PHONY: release releasetao releaseall
 
