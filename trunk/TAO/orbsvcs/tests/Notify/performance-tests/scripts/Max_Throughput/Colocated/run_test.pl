@@ -33,7 +33,7 @@ if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
 $Collocated->Arguments ($Collocated_Args);
 $args = $Collocated->Arguments ();
 print STDERR "Running Collocated with arguments: $args\n";
-$status = $Colocated->SpawnWaitKill ($experiment_timeout);
+$status = $Collocated->SpawnWaitKill ($experiment_timeout);
 
 if ($status != 0)
   {
