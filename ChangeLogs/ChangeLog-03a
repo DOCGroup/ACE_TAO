@@ -1,3 +1,10 @@
+Wed Aug  8 16:07:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: The GIOP lite tests will not work in the
+	  static builds. It was  adding more complications to the test
+	  than what is already there to get it working for the static 
+          builds.
+
 Wed Aug  8 14:06:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-tru64.h:
