@@ -137,6 +137,10 @@ main (int argc, char *argv[])
       // We ought to have a result!
       ACE_DEBUG ((LM_DEBUG, "%s: received %d as return from register_handler()\n",
                   argv[0], r));
+
+      remote_reactor->set_value (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
     }
   TAO_CATCHANY
     {

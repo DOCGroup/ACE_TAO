@@ -34,3 +34,10 @@ Reactor_i::register_handler (EventHandler_ptr eh,
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) END Reactor_i::register_handler ()\n"));
   return 0;
 }
+
+void
+Reactor_i::set_value (CORBA::Environment &env)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) doing Reactor_i::set_value()\n"));
+}
+
