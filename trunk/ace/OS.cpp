@@ -1925,15 +1925,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                   ACE_THREAD_ARGUMENT),
                                 result),
               int, -1, result);
-#      else
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (thr_id, &attr,
-                                                  ACE_THREAD_FUNCTION,
-                                                  ACE_THREAD_ARGUMENT), 
-                                result),
-              int, -1, result);
-#      endif /* ACE_HAS_THR_C_FUNC */
   ::pthread_attr_destroy (&attr);
-#    endif /* ACE_HAS_DCETHREADS */
 
   // This is a Solaris, POSIX, or DCE implementation of pthreads,
   // where we assume that ACE_thread_t and ACE_hthread_t are the same.
