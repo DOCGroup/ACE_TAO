@@ -111,7 +111,7 @@ TAO_IIOP_Transport::recv_i (char *buf,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv_i, "),
-                  ACE_TEXT ("read failure - %p"),
+                  ACE_TEXT ("read failure - %m"),
                   this->id ()));
     }
 

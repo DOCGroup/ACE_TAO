@@ -1,3 +1,12 @@
+Mon Dec  9 10:26:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp (recv_i): Fixed a small error in the
+	  debug  statement. Thanks to Duane Binder for pointing this out. 
+
+	* tao/IIOP_Connection_Handler.cpp: Initialized dscp_codepoint_ in
+	  the second constructor. This was observed by Ossama, Duane
+	  Binder and me. I decided to check this in.
+
 Thu Dec  5 20:45:49 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event_Utilities.cpp (event_debug): Print out the 
