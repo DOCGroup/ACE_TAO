@@ -606,6 +606,27 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ImR_Activator "=.\orbsvcs\ImplRepo_Service\ImR_Activator.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "ImplRepo_Service"=.\orbsvcs\ImplRepo_Service\implrepo.dsp - Package Owner=<4>
 
 Package=<5>
