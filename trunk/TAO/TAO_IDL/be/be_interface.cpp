@@ -1635,7 +1635,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << ancestor->full_skel_name () << "_ptr impl = (" <<
                     derived->full_skel_name () << "_ptr) obj;" << nl;
                   *os << ancestor->full_skel_name () << "::" << d->local_name
-                    () << "_skel (req, impl, context, env);\n";
+                    () << "_skel (req, (" << ancestor->full_skel_name () <<
+                    "_ptr) impl, context, env);\n";
                   os->decr_indent ();
                   *os << "}\n";
                 }
@@ -1668,7 +1669,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << ancestor->full_skel_name () << "_ptr impl = (" <<
                     derived->full_skel_name () << "_ptr) obj;" << nl;
                   *os << ancestor->full_skel_name () << "::_get_" << d->local_name
-                    () << "_skel (req, impl, context, env);\n";
+                    () << "_skel (req, (" << ancestor->full_skel_name () <<
+                    "_ptr) impl, context, env);\n";
                   os->decr_indent ();
                   *os << "}\n";
                 }
@@ -1697,7 +1699,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       *os << ancestor->full_skel_name () << "_ptr impl = (" <<
                         derived->full_skel_name () << "_ptr) obj;" << nl;
                       *os << ancestor->full_skel_name () << "::_get_" <<
-                        d->local_name () << "_skel (req, impl, context, env);\n";
+                        d->local_name () << "_skel (req, (" <<
+                        ancestor->full_skel_name () <<
+                        "_ptr) impl, context, env);\n";
                       os->decr_indent ();
                       *os << "}\n";
                     }
