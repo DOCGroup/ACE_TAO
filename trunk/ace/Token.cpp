@@ -48,6 +48,10 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
     runable_ (0)
 {
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+  ACE_UNUSED_ARG (m);
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+
   ACE_TRACE ("ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry");
 }
 
@@ -179,7 +183,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
             }
 
           // Sleep until we've got the token (ignore signals).
-          
+
           while (my_entry.wait (timeout, this->lock_) == -1)
             {
               // Note, this should obey whatever thread-specific
