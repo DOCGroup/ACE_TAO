@@ -1,3 +1,11 @@
+Tue Apr 16 11:04:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+        * ace/Log_Msg.h:
+        * ace/Message_Block.h:
+        * ace/Timer_Hash_T.h:
+          Doxygen-ized some of the comments
+
 Mon Apr 15 22:25:28 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Andrew Guy to the hallf of fame.

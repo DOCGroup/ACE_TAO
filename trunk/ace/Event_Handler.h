@@ -80,8 +80,9 @@ public:
   virtual ~ACE_Event_Handler (void);
 
   /// Get the I/O handle.
-  /// Set the I/O handle.
   virtual ACE_HANDLE get_handle (void) const;
+
+  /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
 
   // = Get/set priority
@@ -89,8 +90,9 @@ public:
   // Priorities run from MIN_PRIORITY (which is the "lowest priority")
   // to MAX_PRIORITY (which is the "highest priority").
   /// Get the priority of the Event_Handler.
-  /// Set the priority of the Event_Handler.
   virtual int priority (void) const;
+
+  /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
 
   /// Called when input events occur (e.g., connection or data).
