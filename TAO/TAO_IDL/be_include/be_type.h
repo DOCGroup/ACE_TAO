@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_type.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_TYPE_H)
@@ -36,13 +36,13 @@ public:
   // constructor
 
   virtual int gen_client_header (void) = 0;
-  // Generates the client-side header information for the type 
+  // Generates the client-side header information for the type
 
   virtual int gen_client_stubs (void) = 0;
   // Generates the client-side stubs for the type
 
   virtual int gen_server_header (void) = 0;
-  // Generates the server-side header information for the type 
+  // Generates the server-side header information for the type
 
   virtual int gen_server_skeletons (void) = 0;
   // Generates the server-side skeletons for the type
@@ -62,6 +62,9 @@ public:
   UTL_ScopedName *tc_name (void);
   // return the typecode name
 
+  virtual char *nested_type_name (be_decl *d);
+  // type name of a node used when generating declarations
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_type, AST_Type, be_decl);
   DEF_NARROW_FROM_DECL (be_type);
@@ -73,6 +76,8 @@ protected:
   UTL_ScopedName *tc_name_;
   // typecode name
 
+  char *type_name_;
+  // type name (this uses the ACE NESTED macro)
 };
 
 #endif // end of if !defined

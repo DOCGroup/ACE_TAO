@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_string.h
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (BE_STRING_H)
@@ -71,6 +71,10 @@ public:
   // Narrowing
   DEF_NARROW_METHODS2 (be_string, AST_String, be_type);
   DEF_NARROW_FROM_DECL (be_string);
+
+protected:
+  virtual void compute_tc_name (void);
+  // overridden method
 };
 
 #endif

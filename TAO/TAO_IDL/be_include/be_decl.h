@@ -3,18 +3,18 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_decl.h
 //
 // = DESCRIPTION
-//    Extension of the AST_Decl class. 
+//    Extension of the AST_Decl class.
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_BE_DECL_H)
@@ -29,7 +29,7 @@ class be_decl : public virtual AST_Decl
   //   be_decl
   // = DESCRIPTION
   //   The back end extension of the AST_Decl class. Provides an abstract
-  //   interface 
+  //   interface
   //
 public:
   enum SIZE_TYPE
@@ -64,13 +64,13 @@ public:
   // generate the _out implementation
 
   virtual int gen_client_header (void) = 0;
-  // Generates the client-side header information for the decl 
+  // Generates the client-side header information for the decl
 
   virtual int gen_client_stubs (void) = 0;
   // Generates the client-side stubs for the decl
 
   virtual int gen_server_header (void) = 0;
-  // Generates the server-side header information for the decl 
+  // Generates the server-side header information for the decl
 
   virtual int gen_server_skeletons (void) = 0;
   // Generates the server-side skeletons for the decl
@@ -85,7 +85,7 @@ public:
   // lookup a name inside a list of generated seq names
 
   virtual idl_bool add_seq_name (Identifier *);
-  // add a generated seq name to a list. 
+  // add a generated seq name to a list.
 
   virtual void size_type (SIZE_TYPE);
   // set the size type
@@ -125,11 +125,11 @@ protected:
   // computes the fully scoped name
 
   virtual void compute_flatname (void);
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
 
   virtual int tc_name2long (const char *name, long *&, long &);
   // name represented as a padded array of longs
- 
+
   virtual long repoID_encap_len (void);
   // return encapsulation length required to hold repository ID
 

@@ -27,6 +27,10 @@ class TAO_CodeGen
   //   Holds global parameters for the Back End and generates the C++ mapping
   //
 public:
+
+  const long MAXNAMELEN;
+  // maximum length of static buffers used
+
   // define all the code generation states. The first letter C/S of the suffix stands
   // for client/server-side and the second letter H/I/S stands for
   // header/inline/impl file.
@@ -158,10 +162,12 @@ public:
     // emitting code for an operation.
     TAO_OPERATION_CH,
     TAO_OPERATION_CI,
-    TAO_OPERATION_CS,
+    TAO_OPERATION_RETURN_TYPE_CS,
+    TAO_OPERATION_RETVAL_DECL_CS,
+    TAO_OPERATION_RETVAL_EXCEPTION_CS,
+    TAO_OPERATION_RETVAL_RETURN_CS,
     TAO_OPERATION_SH,
     TAO_OPERATION_SI,
-    TAO_OPERATION_SS,
     TAO_OPERATION_RETVAL_DECL_SS,
     TAO_OPERATION_RETVAL_ASSIGN_SS,
     TAO_OPERATION_RESULT_SS,
