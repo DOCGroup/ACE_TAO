@@ -16,11 +16,11 @@ ACE_RCSID(tests, Queued_Message_Test, "$Id$")
 const size_t max_block_length = 256;
 
 static TAO_Queued_Message *
-create_new_message (ACE_RANDR_TYPE &seed)
+create_new_message (void)
 {
   // First create a message block
   size_t block_size =
-    64 + ACE_OS::rand_r(seed) % (max_block_length - 64);
+    64 + ACE_OS::rand () % (max_block_length - 64);
   ACE_Message_Block mb (block_size);
   mb.wr_ptr (block_size);
 
@@ -29,27 +29,24 @@ create_new_message (ACE_RANDR_TYPE &seed)
 
 /// Add a new message at the tail of the queue.
 static void push_back_message (TAO_Queued_Message *&head,
-                               TAO_Queued_Message *&tail,
-                               ACE_RANDR_TYPE &seed)
+                               TAO_Queued_Message *&tail)
 {
-  TAO_Queued_Message *msg = create_new_message (seed);
+  TAO_Queued_Message *msg = create_new_message ();
   msg->push_back (head, tail);
 }
 
 /// Add a new message at the head of the queue.
 static void push_front_message (TAO_Queued_Message *&head,
-                                TAO_Queued_Message *&tail,
-                                ACE_RANDR_TYPE &seed)
+                                TAO_Queued_Message *&tail)
 {
-  TAO_Queued_Message *msg = create_new_message (seed);
+  TAO_Queued_Message *msg = create_new_message ();
   msg->push_front (head, tail);
 }
 
 /// Remove the message at the head of the queue, and simulate the
 /// behavior of the I/O subsystem when processing such messages.
 static void del_message (TAO_Queued_Message *&head,
-                         TAO_Queued_Message *&tail,
-                         ACE_RANDR_TYPE &seed)
+                         TAO_Queued_Message *&tail)
 {
   // ACE_DEBUG ((LM_DEBUG, "Removing message\n"));
   TAO_Queued_Message *current = head;
@@ -63,7 +60,8 @@ static void del_message (TAO_Queued_Message *&head,
   while (total_length > 0)
     {
       // select how many bytes we want to 'send' in this iteration.
-      size_t t = ACE_OS::rand_r(seed) % 256 + 1;
+      size_t t = ACE_OS::rand () % 256 + 1;
+
       if (t > total_length)
         t = total_length;
 
@@ -88,10 +86,9 @@ main (int, ACE_TCHAR *[])
   // using command line options.
 
   ACE_hrtime_t current_hrtime = ACE_OS::gethrtime ();
-  ACE_UINT32 low_bits =
+  ACE_UINT32 seed =
     ACE_CU64_TO_CU32(current_hrtime);
-  ACE_RANDR_TYPE seed =
-    ACE_static_cast(ACE_RANDR_TYPE,low_bits);
+  ACE_OS::srand (seed);
 
   ACE_DEBUG ((LM_DEBUG, "Running test SEED = %d\n", seed));
 
@@ -103,16 +100,18 @@ main (int, ACE_TCHAR *[])
 
   const int iterations = 100;
   int i;
+
   for (i = 0; i != iterations; ++i)
     {
-      push_back_message (head, tail, seed);
+      push_back_message (head, tail);
       add_count++;
-      if (ACE_OS::rand_r(seed) % 100 > 90)
+
+      if (ACE_OS::rand () % 100 > 90)
         {
           // every so often remove a message also.
           if (head != 0)
             {
-              del_message (head, tail, seed);
+              del_message (head, tail);
               del_count++;
             }
         }
@@ -121,17 +120,17 @@ main (int, ACE_TCHAR *[])
   // second phase, change the probabilities of removing a message.
   for (i = 0; i != iterations; ++i)
     {
-      if (ACE_OS::rand_r(seed) % 100 > 90)
+      if (ACE_OS::rand () % 100 > 90)
         {
-          push_back_message (head, tail, seed); add_count++;
+          push_back_message (head, tail); add_count++;
         }
-      if (ACE_OS::rand_r(seed) % 100 > 90)
+      if (ACE_OS::rand () % 100 > 90)
         {
-          push_front_message (head, tail, seed); add_count++;
+          push_front_message (head, tail); add_count++;
         }
       if (head != 0)
         {
-          del_message (head, tail, seed);
+          del_message (head, tail);
           del_count++;
         }
     }
@@ -139,7 +138,7 @@ main (int, ACE_TCHAR *[])
   // Go through a phase where all messages are removed.
   while (head != 0)
     {
-      del_message (head, tail, seed);
+      del_message (head, tail);
       del_count++;
     }
 
