@@ -195,6 +195,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Thread_Pool Client"=.\Thread_Pool\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Thread_Pool Server"=.\Thread_Pool\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RTMutex Server"=.\RTMutex\server.dsp - Package Owner=<4>
 
 Package=<5>

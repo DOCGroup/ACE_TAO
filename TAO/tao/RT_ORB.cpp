@@ -12,7 +12,10 @@ ACE_RCSID(TAO, RT_ORB, "$Id$")
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-TAO_RT_ORB::TAO_RT_ORB (void)
+TAO_RT_ORB::TAO_RT_ORB (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    mutex_mgr_ (),
+    tp_manager_ (orb)
 {
 }
 
@@ -240,41 +243,53 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
 }
 
 RTCORBA::ThreadpoolId
-TAO_RT_ORB::create_threadpool (CORBA::ULong /*stacksize*/,
-                               CORBA::ULong /*static_threads*/,
-                               CORBA::ULong /*dynamic_threads*/,
-                               RTCORBA::Priority /*default_priority*/,
-                               CORBA::Boolean /*allow_request_buffering*/,
-                               CORBA::ULong /*max_buffered_requests*/,
-                               CORBA::ULong /*max_request_buffer_size*/,
-                               CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
+                               CORBA::ULong static_threads,
+                               CORBA::ULong dynamic_threads,
+                               RTCORBA::Priority default_priority,
+                               CORBA::Boolean allow_request_buffering,
+                               CORBA::ULong max_buffered_requests,
+                               CORBA::ULong max_request_buffer_size,
+                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //Add your implementation here
-  return 0;
+  return this->tp_manager_.create_threadpool (stacksize,
+                                              static_threads,
+                                              dynamic_threads,
+                                              default_priority,
+                                              allow_request_buffering,
+                                              max_buffered_requests,
+                                              max_request_buffer_size,
+                                              ACE_TRY_ENV);
 }
 
 RTCORBA::ThreadpoolId
-TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong /*stacksize*/,
-                                          const RTCORBA::ThreadpoolLanes & /*lanes*/,
-                                          CORBA::Boolean /*allow_borrowing*/,
-                                          CORBA::Boolean /*allow_request_buffering*/,
-                                          CORBA::ULong /*max_buffered_requests*/,
-                                          CORBA::ULong /*max_request_buffer_size*/,
-                                          CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
+                                          const RTCORBA::ThreadpoolLanes &lanes,
+                                          CORBA::Boolean allow_borrowing,
+                                          CORBA::Boolean allow_request_buffering,
+                                          CORBA::ULong max_buffered_requests,
+                                          CORBA::ULong max_request_buffer_size,
+                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //Add your implementation here
-  return 0;
+  return this->tp_manager_.create_threadpool_with_lanes (stacksize,
+                                                         lanes,
+                                                         allow_borrowing,
+                                                         allow_request_buffering,
+                                                         max_buffered_requests,
+                                                         max_request_buffer_size,
+                                                         ACE_TRY_ENV);
 }
 
 void
-TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId /*threadpool*/,
-                                CORBA::Environment &/*ACE_TRY_ENV*/)
+TAO_RT_ORB::destroy_threadpool (RTCORBA::ThreadpoolId threadpool,
+                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
-  //Add your implementation here
+  this->tp_manager_.destroy_threadpool (threadpool,
+                                        ACE_TRY_ENV);
 }
 
 RTCORBA::PriorityModelPolicy_ptr

@@ -57,3 +57,6 @@ includes the following:
 
           Tests RTCORBA::Mutex.
 
+        . Thread_Pool
+        
+          Tests the creation and use of thread pools.

@@ -22,7 +22,7 @@ TAO_RT_ORB_Loader::create_object (CORBA::ORB_ptr orb,
   /// Return RT_ORB
   CORBA::Object_ptr rt_orb;
   ACE_NEW_THROW_EX (rt_orb,
-                    TAO_RT_ORB,
+                    TAO_RT_ORB (orb),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,

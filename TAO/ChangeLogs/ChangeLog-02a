@@ -1,3 +1,45 @@
+Thu Apr 12 23:46:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Thread_Pool: Added classes to handle the creation of thread
+	  pools in TAO:
+	  
+	  - TAO_Thread_Pool_Threads: Class representing a thread running
+	    in a thread lane.
+
+	  - TAO_Thread_Lane: Class representing the thread lane inside a
+	    thread pool.
+
+	  - TAO_Thread_Pool: Class representing the thread pool inside a
+ 	    thread pool manager.
+
+	  - TAO_Thread_Pool_Manager: Class for managing thread pools.
+
+	* tests/RTCORBA/Thread_Pool: New test for creating and using
+	  thread-pools in a MT server.
+
+	* tao/RT_ORB.h: The RT_ORB now has a TAO_Thread_Pool_Manager class
+	  to create and manage thread pools.  All thread pool related
+	  methods are forwarded to TAO_Thread_Pool_Manager.
+
+	* tao/ORB_Core: Because the RT_ORB now holds a pointer to its
+	  creating ORB, the RT members of ORB_Core had to be rearranged such
+	  that <rt_orb_> is before <orb_>.
+
+	* tao/RT_ORB_Loader.cpp (create_object): RT_ORB constructor
+	  now requires that the orb reference be passed in.
+
+	* File updates for new thread pool code and test:
+
+	  - tao/Makefile
+	  - tao/Makefile.bor
+	  - tao/TAO.dsp
+	  - tao/TAO_Static.dsp
+	  - tests/RTCORBA/README
+	  - tests/RTCORBA/Makefile
+	  - tests/RTCORBA/Makefile.bor
+	  - tests/RTCORBA/RTCORBA_tests.dsw
+	  - $ACE_ROOT/bin/auto_run_tests.lst
+	
 Thu Apr 12 20:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Blocking_Sync_None/Blocking_Sync_None.dsw:

@@ -908,6 +908,21 @@ private:
 
 protected:
 
+#if (TAO_HAS_RT_CORBA == 1)
+  /// Implementation of RTCORBA::RTORB interface.
+  CORBA::Object_var rt_orb_;
+
+  /// Implementation of RTCORBA::RTCurrent interface.
+  CORBA::Object_var rt_current_;
+
+  /// Manager for setting priority mapping.
+  CORBA::Object_var priority_mapping_manager_;
+
+  // RT ORB specific command line argument parsing.
+  int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
 
@@ -1125,21 +1140,6 @@ protected:
   int open_called_;
 
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
-
-#if (TAO_HAS_RT_CORBA == 1)
-  /// Implementation of RTCORBA::RTORB interface.
-  CORBA::Object_var rt_orb_;
-
-  /// Implementation of RTCORBA::RTCurrent interface.
-  CORBA::Object_var rt_current_;
-
-  /// Manager for setting priority mapping.
-  CORBA::Object_var priority_mapping_manager_;
-
-  // RT ORB specific command line argument parsing.
-  int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

@@ -33,6 +33,7 @@ TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/Hello/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST

@@ -78,6 +78,11 @@ const char * TAO_ORB_Core::typecodefactory_adapter_name_ =
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
+#if (TAO_HAS_RT_CORBA == 1)
+    rt_orb_ (),
+    rt_current_ (),
+    priority_mapping_manager_ (),
+#endif /* TAO_HAS_RT_CORBA == 1 */
     lock_ (),
     connector_registry_ (0),
     acceptor_registry_ (0),
@@ -141,11 +146,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     endpoint_selector_factory_ (0),
-#if (TAO_HAS_RT_CORBA == 1)
-    rt_orb_ (),
-    rt_current_ (),
-    priority_mapping_manager_ (),
-#endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
     delayed_buffering_sync_strategy_ (0),
