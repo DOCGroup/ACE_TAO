@@ -19,6 +19,9 @@ const char *TAO_SFP_START_MAGIC_NUMBER = "=STA";
 const unsigned char TAO_SFP_MAJOR_VERSION = 1;
 const unsigned char TAO_SFP_MINOR_VERSION = 0;
 
+// lengths of various SFP headers
+const unsigned char TAO_SFP_FRAME_HEADER_LEN = 12;
+
 class SFP_Encoder
 // = DESCRIPTION
 //     Encodes frames for the SFP protocol
@@ -35,11 +38,11 @@ class SFP_Encoder
   ACE_Message_Block *encode_simple_frame (ACE_Message_Block *data);
   // Encodes the message_block in an SFP frame
 
-  //  ACE_Message_Block *encode_stop_message ();
-  // returns a SFP start message. it is the users responsibility to
+  ACE_Message_Block *encode_start_reply_message (void);
+  // returns a start-reply message. it is the users responsibility to
   // delete this message block after using it.
 
-  ~SFP_Encoder ();
+  ~SFP_Encoder (void);
   // Destructor
 
  protected:
@@ -60,22 +63,28 @@ class SFP_Encoder
 class SFP_Decoder
 {
 public:
-  SFP_Decoder ();
+  SFP_Decoder (void);
   // Default constructor
 
   int decode_start_message (ACE_Message_Block *message);
   // returns 0 if the message is a valid SFP start message
   // returns -1 otherwise.
 
-  SFP::message_type decode_frame (ACE_Message_Block *message);
+  int decode_simple_frame (ACE_Message_Block *message);
   // decodes the message and returns the data in the message.
   // Returns the message type.
                    
-  int decode_stop_message (ACE_Message_Block *message);
-  // returns 0 if the message is a valid SFP start message
+  int decode_start_reply_message (ACE_Message_Block *message);
+  // returns 0 if the message is a valid SFP stop message
   // returns -1 otherwise.
   
-  ~SFP_Decoder ();
+  ~SFP_Decoder (void);
+
+protected:
+  int create_cdr_buffer (char *message,
+                         size_t length);
+  // Helper - copies length bytes from the given message into the CDR
+  // buffer. Returns 0 on success, -1 on failure
 
 private:
   CDR *decoder_;
