@@ -1,22 +1,25 @@
-Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Tue Dec 24 15:38:43 1996  David L. Levine  <levine@cs.wustl.edu>
 
-	* examples/Threads/task_three.cpp (main): Changed the use of
- 	  new-style C++ casts for ACE_Sig_Action to old-style C casts so
- 	  that more picky compilers like GCC won't complain.  Thanks to
- 	  Sandro Doro <alex@aureus.sublink.org> for reporting this.
+	* ace/OS.i (cond_destroy): added call to event_destroy ()
+	  for waiters_done_ on WTHREADS platforms
 
-	* examples/Threads/task_two.cpp: Fixed a typo where int should be
- 	  used as the type for ACE_Atomic_Op rather than u_long.  Thanks
- 	  to David Levine for noticing this.
+	* ace/Future.cpp: added specialization of
+	  template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+	  so that libACE is self-contained with respect to template
+	  instantiations (with g++, for example)
 
-	* ace/OS.i: Generalized the implementation of ACE_OS::cond_wait()
- 	  so that it will work with Win32 and VxWorks.  Thanks to David
- 	  Levine for pointing this out.
+	* ace/Malloc.cpp: added specialization of
+	  template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
+	  so that libACE is self-contained with respect to template
+	  instantiations (with g++, for example)
 
-	* ace/Synch_T.cpp: Removed ACE_Process_Condition since it isn't
- 	  really feasible to implement this as a template.  At some point,
- 	  it should be reimplemnted as a non-template that is only
- 	  guaranteed to work on Solaris and some POSIX pthreads platforms.
+	* examples/Reactor/Misc/test_reactors.cpp,
+	  examples/Threads/future1.cpp, examples/Threads/future2.cpp,
+	  examples/Threads/manual_event.cpp, examples/Threads/task_two.cpp,
+	  performance-tests/Synch-Benchmarks/Benchmark.cpp,
+	  tests/Future_Test.cpp, tests/Reactors_Test.cpp: instantiate
+	  ACE_Atomic_Op with int instead of u_long so that it can use
+	  the specialization in libACE
 
 Tue Dec 24 12:49:21 1996  David L. Levine  <levine@cs.wustl.edu>
 
@@ -44,6 +47,26 @@ Tue Dec 24 12:49:21 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (ACE_OS::cond_*): on VxWorks only, use sema
 	  operations on ACE_cond_t::waiters_done_ instead of event ops
+
+Tue Dec 24 10:55:20 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Threads/task_three.cpp (main): Changed the use of
+ 	  new-style C++ casts for ACE_Sig_Action to old-style C casts so
+ 	  that more picky compilers like GCC won't complain.  Thanks to
+ 	  Sandro Doro <alex@aureus.sublink.org> for reporting this.
+
+	* examples/Threads/task_two.cpp: Fixed a typo where int should be
+ 	  used as the type for ACE_Atomic_Op rather than u_long.  Thanks
+ 	  to David Levine for noticing this.
+
+	* ace/OS.i: Generalized the implementation of ACE_OS::cond_wait()
+ 	  so that it will work with Win32 and VxWorks.  Thanks to David
+ 	  Levine for pointing this out.
+
+	* ace/Synch_T.cpp: Removed ACE_Process_Condition since it isn't
+ 	  really feasible to implement this as a template.  At some point,
+ 	  it should be reimplemnted as a non-template that is only
+ 	  guaranteed to work on Solaris and some POSIX pthreads platforms.
 
 Sun Dec 22 21:23:57 1996  David L. Levine  <levine@cs.wustl.edu>
 
