@@ -7,6 +7,10 @@ Wed Jun 17 07:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/UDP/udp_test.cpp: added a few
           ACE_U64_TO_U32 explicit conversions.
 
+        * tests/Priority_Buffer_Test.cpp (consumer): re-enabled the
+          statement to suppress the ghs warning about unused variable
+          cur_priority.
+
 Tue Jun 16 20:29:32 1998  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Added some comments concerning MSVC 5.0 and SP3.
