@@ -157,7 +157,7 @@ TAO_DynSequence_i::get_elements (CORBA::Environment& ACE_TRY_ENV)
       CORBA::Any_var temp =
         this->da_members_[i]->to_any (ACE_TRY_ENV);
 
-      ACE_CHECK_RETURN (CORBA_AnySeq::_nil ());
+      ACE_CHECK_RETURN (0);
 
       (*elements)[i] = temp.in ();
     }
@@ -1536,20 +1536,20 @@ TAO_DynSequence_i::get_element_type (CORBA::Environment& ACE_TRY_ENV)
 
   // Strip away aliases (if any) on top of the outer type
   CORBA::TCKind kind = element_type->kind (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Typecode::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   while (kind != CORBA::tk_sequence)
     {
       element_type = element_type->content_type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Typecode::_nil ());
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
       kind = element_type->kind (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA_Typecode::_nil ());    
+      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());    
     }
 
   // Return the content type.
   CORBA::TypeCode_ptr retval = element_type->content_type (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA_Typecode::_nil ());
+  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
 
   return retval;
 }
