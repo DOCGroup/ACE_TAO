@@ -137,7 +137,7 @@ Thread_Pool::svc (void)
           break;
         }
 
-      int length = mb->length ();
+      size_t length = mb->length ();
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
@@ -358,7 +358,7 @@ Thread_Pool::test_empty_message_shutdown (void)
                       this->thr_count ()));
           this->dump ();
 
-          int i = 0;
+          size_t i = 0;
 
           // Enqueue an empty message to flag each consumer thread to
           // inform it to shutdown.

@@ -1,3 +1,90 @@
+Tue Aug 27 13:28:17 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Added #define ACE_MALLOC_ALIGN 8 for
+          Win64.
+
+        * ace/Malloc_T.cpp (ACE_Cached_Allocator): When dividing up the
+          allocated space, maintain the platform's alignment requirements.
+
+        * ace/ace_dll64.mak: Removed references to Hash_Map_Manager_rt.*.
+
+        * ace/Stream_Modules.cpp (info): Cast string length back to int.
+
+        * ace/ARGV.{h i cpp}: Changed argc() value from size_t to int. It
+          needs to get passed to many places that expect int (argc, argv).
+
+        * ace/OS.{h cpp} (ACE_OS::string_to_argv): argc changed from size_t&
+          to int& to match the change above.
+
+        * ace/FILE_IO.{h i cpp}:
+        * ace/SPIPE_Stream.{h i}: Follow-up to ACE_SOCK_Stream change in:
+          Mon Jul 22 16:39:21 2002  Steve Huston  <shuston@riverace.com>
+          (sendv_n, recvv_n, sendv, send, recv) - change iov count from
+          size_t to int.
+
+        * ace/Functor_T.i (ACE_Pointer_Hash::operator()): Use reinterpret_cast
+          to go from pointer to u_long.
+
+        * ace/config-win32-msvc-7.h: Define ACE_AUTO_PTR_LACKS_RESET for
+          Win64 SDK compiler.
+
+        * ace/Strategies_T.{h i cpp} (ACE_Thread_Strategy): Changed n_threads
+          parameter (and n_threads_ member) from size_t to int - matches
+          what's expected by ACE_Task::activate(), which is where this
+          value is passed.
+
+        * ace/Asynch_Acceptor.{h cpp}:
+        * ace/Asynch_IO.{h cpp}:
+        * ace/Asynch_IO_Impl.h:
+        * ace/POSIX_Asynch_IO.{h cpp}:
+        * ace/POSIX_Proactor.{h cpp}:
+        * ace/WIN32_Asynch_IO.{h cpp}:
+        * ace/WIN32_Proactor.{h cpp}: All byte-count arguments and members
+          in all classes changed from u_long to size_t. Some already were...
+
+        * ace/SOCK_Dgram.i (send): address length is an int, not size_t.
+
+        * tests/Cache_Map_Manager_Test.h (Hash_Key::operator()): Cast the
+          size_t argument to u_long for return.
+
+        * tests/Cache_Map_Manager_Test.cpp: Cast arg for ACE_OS::srand to
+          u_int (matches ACE_OS signature), not size_t.
+
+        * tests/CDR_Array_Test.cpp (zero): Change len arg to size_t, and
+          also the values passed to it. Also, correct length args to
+          ACE_InputCDR and ACE_OutputCDR - they're size_t, not int.
+
+        * tests/Handle_Set_Test.cpp: Disable the conversion warnings
+          initializing the array of ACE_HANDLE values on Win64. They're fine.
+
+        * tests/Mem_Map_Test.cpp (reverse_file): Changed size arg from int
+          to size_t.
+
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+	* tests/Priority_Buffer_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/TP_Reactor_Test.{h cpp}:
+        * tests/Upgradable_RW_Test.cpp: Align size_t/int usage.
+
+        * tests/Message_Queue_Notifications_Test.cpp (Watermark_Test::producer)
+          Change hwm from size_t to ssize_t so it can go less than zero and
+          break the 'for' loop properly.
+
+        * tests/MT_SOCK_Test.cpp:
+        * tests/SOCK_Test.cpp: Use an int to pass to select(), always 0
+          for Win64.
+
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/TSS_TEst.cpp: Add missing type cast.
+
 Tue Aug 27 11:08:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Pair_T.{h,i}: Added support for operator== to the ACE_Pair

@@ -132,7 +132,7 @@ last_chunk (ACE_Message_Block *chain,
   if (!chain)
     return 0;
 
-  size_t index = 1;
+  int index = 1;
   last = chain;
   while (0 != last->cont ())
   {
@@ -335,8 +335,8 @@ private:
    // Output file
   ACE_Asynch_Write_File wf_;
   ACE_HANDLE output_file_handle_;
-  size_t      writing_file_offset_;
-  size_t      reported_file_offset_;
+  u_long      writing_file_offset_;
+  u_long      reported_file_offset_;
   ACE_Message_Block *odd_chain_;
   ACE_Message_Block *even_chain_;
   long io_count_;

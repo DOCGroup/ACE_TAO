@@ -12,7 +12,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Task_T.h"
 
-u_long
+size_t
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const
 {
   return this->bytes_transferred_;
@@ -89,7 +89,7 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
 }
 
 void
-ACE_WIN32_Asynch_Result::set_bytes_transferred (u_long nbytes)
+ACE_WIN32_Asynch_Result::set_bytes_transferred (size_t nbytes)
 {
   this->bytes_transferred_ = nbytes;
 }
@@ -200,7 +200,7 @@ ACE_WIN32_Asynch_Operation::~ACE_WIN32_Asynch_Operation (void)
 
 // ************************************************************
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_Stream_Result::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -221,7 +221,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::handle (void) const
 ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
                                                                           ACE_HANDLE handle,
                                                                           ACE_Message_Block &message_block,
-                                                                          u_long bytes_to_read,
+                                                                          size_t bytes_to_read,
                                                                           const void* act,
                                                                           ACE_HANDLE event,
                                                                           int priority,
@@ -238,7 +238,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (ACE_Ha
 }
 
 void
-ACE_WIN32_Asynch_Read_Stream_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
                                                int success,
                                                const void *completion_key,
                                                u_long error)
@@ -283,7 +283,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result (void)
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_Stream_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -364,16 +364,16 @@ ACE_WIN32_Asynch_Read_Stream::ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *
 
 int
 ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
-                                    u_long bytes_to_read,
+                                    size_t bytes_to_read,
                                     const void *act,
                                     int priority,
                                     int signal_number)
 {
-  u_long space = message_block.space ();
-  if ( bytes_to_read > space )
+  size_t space = message_block.space ();
+  if (bytes_to_read > space)
     bytes_to_read = space;
 
-  if ( bytes_to_read == 0 )
+  if (bytes_to_read == 0)
     ACE_ERROR_RETURN 
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::read:")
@@ -406,7 +406,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
-                                     u_long bytes_to_read,
+                                     size_t bytes_to_read,
                                      const void *act,
                                      int priority,
                                      int signal_number)
@@ -471,7 +471,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 
   result->set_error (0); // Clear error before starting IO.
 
-  u_long bytes_recvd = 0;
+  DWORD bytes_recvd = 0;
   u_long flags = 0;
 
   int initiate_result = ::WSARecv (ACE_reinterpret_cast (SOCKET, result->handle ()),
@@ -590,7 +590,7 @@ ACE_WIN32_Asynch_Read_Stream::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
@@ -611,7 +611,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
 ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
-                                                                            u_long bytes_to_write,
+                                                                            size_t bytes_to_write,
                                                                             const void* act,
                                                                             ACE_HANDLE event,
                                                                             int priority,
@@ -628,7 +628,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (ACE_
 }
 
 void
-ACE_WIN32_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
                                                 int success,
                                                 const void *completion_key,
                                                 u_long error)
@@ -673,7 +673,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result (voi
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_Stream_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -754,12 +754,12 @@ ACE_WIN32_Asynch_Write_Stream::ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor
 
 int
 ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
-                                      u_long bytes_to_write,
+                                      size_t bytes_to_write,
                                       const void *act,
                                       int priority,
                                       int signal_number)
 {
-  u_long len = message_block.length();
+  size_t len = message_block.length();
   
   if ( bytes_to_write > len )
      bytes_to_write = len ;
@@ -795,7 +795,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
-                                       u_long bytes_to_write,
+                                       size_t bytes_to_write,
                                        const void *act,
                                        int priority,
                                        int signal_number)
@@ -976,7 +976,7 @@ ACE_WIN32_Asynch_Write_Stream::proactor (void) const
 ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
                                                                       ACE_HANDLE handle,
                                                                       ACE_Message_Block &message_block,
-                                                                      u_long bytes_to_read,
+                                                                      size_t bytes_to_read,
                                                                       const void* act,
                                                                       u_long offset,
                                                                       u_long offset_high,
@@ -1002,7 +1002,7 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (ACE_Handle
 }
 
 void
-ACE_WIN32_Asynch_Read_File_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
                                              int success,
                                              const void *completion_key,
                                              u_long error)
@@ -1053,7 +1053,7 @@ ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result (void)
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_File_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -1118,7 +1118,7 @@ ACE_WIN32_Asynch_Read_File_Result::signal_number (void) const
 // warnings. These methods route their call to the
 // ACE_WIN32_Asynch_Read_Stream_Result base class.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_File_Result::bytes_to_read (void) const
 {
   return ACE_WIN32_Asynch_Read_Stream_Result::bytes_to_read ();
@@ -1154,14 +1154,14 @@ ACE_WIN32_Asynch_Read_File::ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win3
 
 int
 ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
-                                  u_long bytes_to_read,
+                                  size_t bytes_to_read,
                                   u_long offset,
                                   u_long offset_high,
                                   const void *act,
                                   int priority,
                                   int signal_number)
 {
-  u_long space = message_block.space ();
+  size_t space = message_block.space ();
   if ( bytes_to_read > space )
     bytes_to_read = space;
 
@@ -1199,7 +1199,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
-                                   u_long bytes_to_read,
+                                   size_t bytes_to_read,
                                    u_long offset,
                                    u_long offset_high,
                                    const void *act,
@@ -1217,7 +1217,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   // We should not read more than user requested,
   // but it is allowed to read less
 
-  u_long total_space = 0;
+  size_t total_space = 0;
 
   for (const ACE_Message_Block* msg = &message_block;
        msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_space < bytes_to_read;
@@ -1225,36 +1225,22 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   {
     size_t msg_space = msg->space ();
 
-    if ( msg_space < page_size )
+    if (msg_space < page_size)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_File::readv:")
                          ACE_LIB_TEXT ("Invalid message block size\n")),
                         -1);
 
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-      = ACE_reinterpret_cast (size_t, msg->wr_ptr ());
-
-    *ACE_reinterpret_cast (size_t *,
-                           ACE_reinterpret_cast (char *,
-                                                 &buffer_pointers[buffer_pointers_count]) + 4)
-      = 0;
-    
+    buffer_pointers[buffer_pointers_count].Buffer = msg->wr_ptr ();    
     total_space += page_size;
   }
 
   // not read more than buffers space
-  if ( bytes_to_read > total_space )
+  if (bytes_to_read > total_space)
     bytes_to_read = total_space;
 
   // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-    = 0;
-  *ACE_reinterpret_cast (size_t *,
-                         ACE_reinterpret_cast (char *,
-                                               &buffer_pointers[buffer_pointers_count]) + 4)
-    = 0;
-
-
+  buffer_pointers[buffer_pointers_count].Buffer = 0;
 
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1319,7 +1305,7 @@ ACE_WIN32_Asynch_Read_File::~ACE_WIN32_Asynch_Read_File (void)
 
 int
 ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
-                                  u_long bytes_to_read,
+                                  size_t bytes_to_read,
                                   const void *act,
                                   int priority,
                                   int signal_number)
@@ -1333,7 +1319,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
-                                   u_long bytes_to_read,
+                                   size_t bytes_to_read,
                                    const void *act,
                                    int priority,
                                    int signal_number)
@@ -1376,7 +1362,7 @@ ACE_WIN32_Asynch_Read_File::proactor (void) const
 ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
                                                                         ACE_HANDLE handle,
                                                                         ACE_Message_Block &message_block,
-                                                                        u_long bytes_to_write,
+                                                                        size_t bytes_to_write,
                                                                         const void* act,
                                                                         u_long offset,
                                                                         u_long offset_high,
@@ -1402,7 +1388,7 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (ACE_Hand
 }
 
 void
-ACE_WIN32_Asynch_Write_File_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
                                               int success,
                                               const void *completion_key,
                                               u_long error)
@@ -1454,7 +1440,7 @@ ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  (void)
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_File_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -1519,7 +1505,7 @@ ACE_WIN32_Asynch_Write_File_Result::signal_number (void) const
 // warnings. These methods route their call to the
 // ACE_WIN32_Asynch_Write_Stream_Result base class.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_File_Result::bytes_to_write (void) const
 {
   return ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write ();
@@ -1553,14 +1539,14 @@ ACE_WIN32_Asynch_Write_File::ACE_WIN32_Asynch_Write_File (ACE_WIN32_Proactor *wi
 
 int
 ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
-                                    u_long bytes_to_write,
+                                    size_t bytes_to_write,
                                     u_long offset,
                                     u_long offset_high,
                                     const void *act,
                                     int priority,
                                     int signal_number)
 {
-  u_long len = message_block.length ();
+  size_t len = message_block.length ();
   if ( bytes_to_write > len )
      bytes_to_write = len;
 
@@ -1597,7 +1583,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
-                                     u_long bytes_to_write,
+                                     size_t bytes_to_write,
                                      u_long offset,
                                      u_long offset_high,
                                      const void *act,
@@ -1615,7 +1601,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   // We should not read more than user requested,
   // but it is allowed to read less
 
-  u_long total_len = 0;
+  size_t total_len = 0;
 
   for (const ACE_Message_Block* msg = &message_block;
        msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_len < bytes_to_write;
@@ -1624,40 +1610,27 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
     size_t msg_len = msg->length ();
 
     // Don't allow writing less than page_size, unless 
-    // the size of the message block is big enough (so we don't write from memory which
-    // does not belong to the message block), and the message block is the last in the chain
-    if ( msg_len < page_size &&
-         (msg->size () - (msg->rd_ptr () - msg->base ()) < page_size || // message block too small
-          bytes_to_write - total_len > page_size ))// NOT last chunk
+    // the size of the message block is big enough (so we don't write from
+    // memory which does not belong to the message block), and the message
+    // block is the last in the chain.
+    if (msg_len < page_size &&
+        (msg->size () - (msg->rd_ptr () - msg->base ()) < page_size || // message block too small
+         bytes_to_write - total_len > page_size ))// NOT last chunk
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_File::writev:")
                          ACE_LIB_TEXT ("Invalid message block length\n")),
                         -1);
 
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-      = ACE_reinterpret_cast (size_t, msg->rd_ptr ());
-
-    *ACE_reinterpret_cast (size_t *,
-                           ACE_reinterpret_cast (char *,
-                                                 &buffer_pointers[buffer_pointers_count]) + 4)
-      = 0;
-    
+    buffer_pointers[buffer_pointers_count].Buffer = msg->rd_ptr ();
     total_len += page_size;
   }
 
   // not write more than we have in buffers
-  if ( bytes_to_write > total_len )
+  if (bytes_to_write > total_len)
     bytes_to_write = total_len;
 
   // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-    = 0;
-  *ACE_reinterpret_cast (size_t *,
-                         ACE_reinterpret_cast (char *,
-                                               &buffer_pointers[buffer_pointers_count]) + 4)
-    = 0;
-
-
+  buffer_pointers[buffer_pointers_count].Buffer = 0;
 
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -1722,7 +1695,7 @@ ACE_WIN32_Asynch_Write_File::~ACE_WIN32_Asynch_Write_File (void)
 
 int
 ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
-                                    u_long bytes_to_write,
+                                    size_t bytes_to_write,
                                     const void *act,
                                     int priority,
                                     int signal_number)
@@ -1736,7 +1709,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
 int
 ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
-                                     u_long bytes_to_write,
+                                     size_t bytes_to_write,
                                      const void *act,
                                      int priority,
                                      int signal_number)
@@ -1776,7 +1749,7 @@ ACE_WIN32_Asynch_Write_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Accept_Result::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -1804,7 +1777,7 @@ ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (ACE_Handler &han
                                                                 ACE_HANDLE listen_handle,
                                                                 ACE_HANDLE accept_handle,
                                                                 ACE_Message_Block &message_block,
-                                                                u_long bytes_to_read,
+                                                                size_t bytes_to_read,
                                                                 const void* act,
                                                                 ACE_HANDLE event,
                                                                 int priority,
@@ -1820,7 +1793,7 @@ ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (ACE_Handler &han
 }
 
 void
-ACE_WIN32_Asynch_Accept_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Accept_Result::complete (size_t bytes_transferred,
                                           int success,
                                           const void *completion_key,
                                           u_long error)
@@ -1848,7 +1821,7 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Accept_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -1923,7 +1896,7 @@ ACE_WIN32_Asynch_Accept::ACE_WIN32_Asynch_Accept (ACE_WIN32_Proactor *win32_proa
 
 int
 ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
-                                  u_long bytes_to_read,
+                                  size_t bytes_to_read,
                                   ACE_HANDLE accept_handle,
                                   const void *act,
                                   int priority,
@@ -2094,7 +2067,7 @@ ACE_WIN32_Asynch_Connect_Result::ACE_WIN32_Asynch_Connect_Result
 }
 
 void
-ACE_WIN32_Asynch_Connect_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Connect_Result::complete (size_t bytes_transferred,
                                            int success,
                                            const void *completion_key,
                                            u_long error)
@@ -2119,7 +2092,7 @@ ACE_WIN32_Asynch_Connect_Result::~ACE_WIN32_Asynch_Connect_Result (void)
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Connect_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -2727,13 +2700,13 @@ ACE_WIN32_Asynch_Transmit_File_Result::header_and_trailer (void) const
   return this->header_and_trailer_;
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Transmit_File_Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Transmit_File_Result::bytes_per_send (void) const
 {
   return this->bytes_per_send_;
@@ -2749,10 +2722,10 @@ ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (AC
                                                                               ACE_HANDLE socket,
                                                                               ACE_HANDLE file,
                                                                               ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                              u_long bytes_to_write,
+                                                                              size_t bytes_to_write,
                                                                               u_long offset,
                                                                               u_long offset_high,
-                                                                              u_long bytes_per_send,
+                                                                              size_t bytes_per_send,
                                                                               u_long flags,
                                                                               const void *act,
                                                                               ACE_HANDLE event,
@@ -2771,7 +2744,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (AC
 }
 
 void
-ACE_WIN32_Asynch_Transmit_File_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
                                                  int success,
                                                  const void *completion_key,
                                                  u_long error)
@@ -2812,7 +2785,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result (v
 // Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
-u_long
+size_t
 ACE_WIN32_Asynch_Transmit_File_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -2888,10 +2861,10 @@ ACE_WIN32_Asynch_Transmit_File::ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proact
 int
 ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                               u_long bytes_to_write,
+                                               size_t bytes_to_write,
                                                u_long offset,
                                                u_long offset_high,
-                                               u_long bytes_per_send,
+                                               size_t bytes_per_send,
                                                u_long flags,
                                                const void *act,
                                                int priority,
@@ -3002,7 +2975,7 @@ ACE_WIN32_Asynch_Transmit_File::proactor (void) const
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_Dgram_Result::bytes_to_read (void) const
 {
   return this->bytes_to_read_;
@@ -3050,7 +3023,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::handle (void) const
   return this->handle_;
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Read_Dgram_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -3119,7 +3092,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor
 ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
                                                                         ACE_HANDLE handle,
                                                                         ACE_Message_Block *message_block,
-                                                                        u_long bytes_to_read,
+                                                                        size_t bytes_to_read,
                                                                         int flags,
                                                                         int protocol_family,
                                                                         const void* act,
@@ -3143,7 +3116,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Hand
 }
 
 void
-ACE_WIN32_Asynch_Read_Dgram_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
                                               int success,
                                               const void *completion_key,
                                               u_long error)
@@ -3201,7 +3174,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 {
   number_of_bytes_recvd = 0;
 
-  u_long bytes_to_read = 0;
+  size_t bytes_to_read = 0;
 
   iovec  iov[ACE_IOV_MAX];
   int    iovcnt = 0;
@@ -3225,7 +3198,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
     bytes_to_read += msg_space;
   }
 
-  if ( bytes_to_read == 0 )
+  if (bytes_to_read == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Dgram::recv:")
                          ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
@@ -3332,7 +3305,7 @@ ACE_WIN32_Asynch_Read_Dgram::ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *wi
 
 //***********************************************
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_Dgram_Result::bytes_to_write (void) const
 {
   return this->bytes_to_write_;
@@ -3356,7 +3329,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::handle (void) const
   return this->handle_;
 }
 
-u_long
+size_t
 ACE_WIN32_Asynch_Write_Dgram_Result::bytes_transferred (void) const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
@@ -3442,7 +3415,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Ha
 }
 
 void
-ACE_WIN32_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
+ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
                                                int success,
                                                const void *completion_key,
                                                u_long error)
@@ -3497,7 +3470,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 {
   number_of_bytes_sent = 0;
 
-  u_long bytes_to_write = 0;
+  size_t bytes_to_write = 0;
 
   iovec  iov[ACE_IOV_MAX];
   int    iovcnt = 0;

@@ -210,7 +210,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 template <class SVC_HANDLER> int
 ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
                                         long thr_flags,
-                                        size_t n_threads,
+                                        int n_threads,
                                         int flags)
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::open");

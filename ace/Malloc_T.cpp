@@ -23,14 +23,28 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
     free_list_ (ACE_PURE_FREE_LIST)
 {
+  // To maintain alignment requirements, make sure that each element
+  // inserted into the free list is aligned properly for the platform.
+  // Since the memory is allocated as a char[], the compiler won't help.
+  // To make sure enough room is allocated, round up the size so that
+  // each element starts aligned.
+  //
+  // NOTE - this would probably be easier by defining pool_ as a pointer
+  // to T and allocating an array of them (the compiler would probably
+  // take care of the alignment for us), but then the ACE_NEW below would
+  // require a default constructor on T - a requirement that is not in
+  // previous versions of ACE
+  size_t chunk_size = sizeof (T);
+  if (chunk_size % ACE_MALLOC_ALIGN != 0)
+    chunk_size += (ACE_MALLOC_ALIGN - (chunk_size % ACE_MALLOC_ALIGN));
   ACE_NEW (this->pool_,
-           char[n_chunks * sizeof (T)]);
+           char[n_chunks * chunk_size]);
 
   for (size_t c = 0;
        c < n_chunks;
        c++)
     {
-      void* placement = this->pool_ + c * sizeof(T);
+      void* placement = this->pool_ + c * chunk_size;
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
     }
   // Put into free list using placement contructor, no real memory

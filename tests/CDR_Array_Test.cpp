@@ -155,7 +155,7 @@ private:
 static ACE_UINT32 seal = 0xdeadbeef;
 
 void
-zero (char* p, int k)
+zero (char* p, size_t k)
 {
   char* end = p + k;
   while (p < end)
@@ -189,7 +189,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
   char* srcbuf;
   char* dstbuf;
   {
-    const int stotal =
+    const size_t stotal =
       (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
 
     ACE_NEW(srcbuf, char[stotal]);
@@ -394,7 +394,8 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; n++)
       {
-        int size = H::size () * (dst_offset + total) + ACE_CDR::MAX_ALIGNMENT;
+        size_t size = H::size () * (dst_offset + total) +
+                      ACE_CDR::MAX_ALIGNMENT;
         ACE_OutputCDR os (dstbuf, size);
 
         // This is intrusive...
@@ -498,7 +499,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("====== Read iteration %d\n"), n));
 
-        int size = (total + dst_offset) * H::size ();
+        size_t size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
         // This is intrusive...

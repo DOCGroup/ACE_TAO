@@ -68,7 +68,7 @@ class ACE_Export ACE_WIN32_Asynch_Result : public virtual ACE_Asynch_Result_Impl
 
 public:
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -112,7 +112,7 @@ public:
   void set_error (u_long errcode);
 
   /// Simulate value to use in the post_completion ()
-  void set_bytes_transferred (u_long nbytes);
+  void set_bytes_transferred (size_t nbytes);
 
 protected:
   /// Constructor.
@@ -131,7 +131,7 @@ protected:
   const void *act_;
 
   /// Bytes transferred by this operation.
-  u_long bytes_transferred_;
+  size_t bytes_transferred_;
 
   /// Success indicator.
   int success_;
@@ -214,7 +214,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  u_long bytes_to_read (void) const;
+  size_t bytes_to_read (void) const;
 
   /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
@@ -226,7 +226,7 @@ public:
   // dominance warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -272,7 +272,7 @@ protected:
   ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler &handler,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
-                                       u_long bytes_to_read,
+                                       size_t bytes_to_read,
                                        const void* act,
                                        ACE_HANDLE event,
                                        int priority,
@@ -280,7 +280,7 @@ protected:
                                        int scatter_enabled = 0);
 
   /// Proactor will call this method when the read completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -289,7 +289,7 @@ protected:
   virtual ~ACE_WIN32_Asynch_Read_Stream_Result (void);
 
   /// Bytes requested when the asynchronous read was initiated.
-  u_long bytes_to_read_;
+  size_t bytes_to_read_;
 
   /// Message block for reading the data into.
   ACE_Message_Block &message_block_;
@@ -324,7 +324,7 @@ public:
   /// This starts off an asynchronous read.  Upto <bytes_to_read> will
   /// be read and stored in the <message_block>.
   int read (ACE_Message_Block &message_block,
-            u_long bytes_to_read,
+            size_t bytes_to_read,
             const void *act,
             int priority,
             int signal_number = 0);
@@ -334,7 +334,7 @@ public:
   * message blocks using the continuation field.
   */
   int readv (ACE_Message_Block &message_block,
-             u_long bytes_to_read,
+             size_t bytes_to_read,
              const void *act,
              int priority,
              int signal_number = 0);
@@ -391,7 +391,7 @@ class ACE_Export ACE_WIN32_Asynch_Write_Stream_Result : public virtual ACE_Async
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  u_long bytes_to_write (void) const;
+  size_t bytes_to_write (void) const;
 
   /// Message block that contains the data to be written.
   ACE_Message_Block &message_block (void) const;
@@ -403,7 +403,7 @@ public:
   //   warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -449,7 +449,7 @@ protected:
   ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler &handler,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
-                                        u_long bytes_to_write,
+                                        size_t bytes_to_write,
                                         const void* act,
                                         ACE_HANDLE event,
                                         int priority,
@@ -457,7 +457,7 @@ protected:
                                         int gather_enabled = 0);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -467,7 +467,7 @@ protected:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  u_long bytes_to_write_;
+  size_t bytes_to_write_;
 
   /// Message block that contains the data to be written.
   ACE_Message_Block &message_block_;
@@ -502,7 +502,7 @@ public:
   /// This starts off an asynchronous write.  Upto <bytes_to_write>
   /// will be written from the <message_block>.
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              const void *act,
              int priority,
              int signal_number = 0);
@@ -512,7 +512,7 @@ public:
   * message blocks using the continuation field.
   */
   int writev (ACE_Message_Block &message_block,
-              u_long bytes_to_write,
+              size_t bytes_to_write,
               const void *act,
               int priority,
               int signal_number = 0);
@@ -573,7 +573,7 @@ public:
   //   methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -614,7 +614,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  u_long bytes_to_read (void) const;
+  size_t bytes_to_read (void) const;
 
   /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
@@ -631,7 +631,7 @@ protected:
   ACE_WIN32_Asynch_Read_File_Result (ACE_Handler &handler,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
-                                     u_long bytes_to_read,
+                                     size_t bytes_to_read,
                                      const void* act,
                                      u_long offset,
                                      u_long offset_high,
@@ -641,7 +641,7 @@ protected:
                                      int scatter_enabled = 0);
 
   /// ACE_Proactor will call this method when the read completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -679,7 +679,7 @@ public:
    * at <offset> from the beginning of the file.
    */
   int read (ACE_Message_Block &message_block,
-            u_long bytes_to_read,
+            size_t bytes_to_read,
             u_long offset,
             u_long offset_high,
             const void *act,
@@ -693,7 +693,7 @@ public:
   * and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
-             u_long bytes_to_read,
+             size_t bytes_to_read,
              u_long offset,
              u_long offset_high,
              const void *act,
@@ -735,7 +735,7 @@ private:
    * ACE_WIN32_Asynch_Read_Stream class.
    */
   int read (ACE_Message_Block &message_block,
-            u_long bytes_to_read,
+            size_t bytes_to_read,
             const void *act,
             int priority,
             int signal_number = 0);
@@ -745,7 +745,7 @@ private:
   * message blocks using the continuation field.
   */
   int readv (ACE_Message_Block &message_block,
-             u_long bytes_to_read,
+             size_t bytes_to_read,
              const void *act,
              int priority,
              int signal_number = 0);
@@ -782,7 +782,7 @@ public:
   //   warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -823,7 +823,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  u_long bytes_to_write (void) const;
+  size_t bytes_to_write (void) const;
 
   /// Message block that contains the data to be written.
   ACE_Message_Block &message_block (void) const;
@@ -840,7 +840,7 @@ protected:
   ACE_WIN32_Asynch_Write_File_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
-                                      u_long bytes_to_write,
+                                      size_t bytes_to_write,
                                       const void* act,
                                       u_long offset,
                                       u_long offset_high,
@@ -850,7 +850,7 @@ protected:
                                       int gather_enabled = 0);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -884,7 +884,7 @@ public:
    * start at <offset> from the beginning of the file.
    */
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              u_long offset,
              u_long offset_high,
              const void *act,
@@ -898,7 +898,7 @@ public:
   * and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,
-              u_long bytes_to_write,
+              size_t bytes_to_write,
               u_long offset,
               u_long offset_high,
               const void *act,
@@ -940,7 +940,7 @@ private:
    * ACE_WIN32_Asynch_Write_Stream class.
    */
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              const void *act,
              int priority,
              int signal_number = 0);
@@ -950,7 +950,7 @@ private:
   * message blocks using the continuation field.
   */
   int writev (ACE_Message_Block &message_block,
-              u_long bytes_to_write,
+              size_t bytes_to_write,
               const void *act,
               int priority,
               int signal_number = 0);
@@ -978,7 +978,7 @@ class ACE_Export ACE_WIN32_Asynch_Accept_Result : public virtual ACE_Asynch_Acce
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
-  u_long bytes_to_read (void) const;
+  size_t bytes_to_read (void) const;
 
   /// Message block which contains the read data.
   ACE_Message_Block &message_block (void) const;
@@ -993,7 +993,7 @@ public:
   //   warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -1037,14 +1037,14 @@ protected:
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
-                                  u_long bytes_to_read,
+                                  size_t bytes_to_read,
                                   const void* act,
                                   ACE_HANDLE event,
                                   int priority,
                                   int signal_number = 0);
 
   /// ACE_Proactor will call this method when the accept completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -1053,7 +1053,7 @@ protected:
   virtual ~ACE_WIN32_Asynch_Accept_Result (void);
 
   /// Bytes requested when the asynchronous read was initiated.
-  u_long bytes_to_read_;
+  size_t bytes_to_read_;
 
   /// Message block for reading the data into.
   ACE_Message_Block &message_block_;
@@ -1096,7 +1096,7 @@ public:
    * the new connection is placed at the end of this buffer.
    */
   int accept (ACE_Message_Block &message_block,
-              u_long bytes_to_read,
+              size_t bytes_to_read,
               ACE_HANDLE accept_handle,
               const void *act,
               int priority,
@@ -1159,7 +1159,7 @@ public:
   //   warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -1207,7 +1207,7 @@ protected:
                                    int signal_number);
 
   /// ACE_Proactor will call this method when the accept completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -1378,11 +1378,11 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous transmit file.
-  u_long bytes_to_write (void) const;
+  size_t bytes_to_write (void) const;
 
   /// Number of bytes per send requested at the start of the transmit
   /// file.
-  u_long bytes_per_send (void) const;
+  size_t bytes_per_send (void) const;
 
   /// Flags which were passed into transmit file.
   u_long flags (void) const;
@@ -1391,7 +1391,7 @@ public:
   // warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -1435,10 +1435,10 @@ protected:
 					 ACE_HANDLE socket,
 					 ACE_HANDLE file,
 					 ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-					 u_long bytes_to_write,
+					 size_t bytes_to_write,
 					 u_long offset,
 					 u_long offset_high,
-					 u_long bytes_per_send,
+					 size_t bytes_per_send,
 					 u_long flags,
 					 const void *act,
 					 ACE_HANDLE event,
@@ -1446,7 +1446,7 @@ protected:
                 int signal_number = 0);
 
   /// Proactor will call this method when the write completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -1465,11 +1465,11 @@ protected:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous transmit file.
-  u_long bytes_to_write_;
+  size_t bytes_to_write_;
 
   /// Number of bytes per send requested at the start of the transmit
   /// file.
-  u_long bytes_per_send_;
+  size_t bytes_per_send_;
 
   /// Flags which were passed into transmit file.
   u_long flags_;
@@ -1514,10 +1514,10 @@ public:
    */
   int transmit_file (ACE_HANDLE file,
                      ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                     u_long bytes_to_write,
+                     size_t bytes_to_write,
                      u_long offset,
                      u_long offset_high,
-                     u_long bytes_per_send,
+                     size_t bytes_per_send,
                      u_long flags,
                      const void *act,
                      int priority,
@@ -1570,7 +1570,7 @@ class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  u_long bytes_to_read (void) const;
+  size_t bytes_to_read (void) const;
 
   /// Message block which contains the read data
   ACE_Message_Block *message_block (void) const;
@@ -1590,7 +1590,7 @@ public:
   // dominance warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -1633,7 +1633,7 @@ protected:
   ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
-                                      u_long bytes_to_read,
+                                      size_t bytes_to_read,
                                       int flags,
                                       int protocol_family,
                                       const void* act,
@@ -1642,7 +1642,7 @@ protected:
                                       int signal_number = 0);
 
   /// Proactor will call this method when the read completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -1651,7 +1651,7 @@ protected:
   virtual ~ACE_WIN32_Asynch_Read_Dgram_Result (void);
 
   /// Bytes requested when the asynchronous read was initiated.
-  u_long bytes_to_read_;
+  size_t bytes_to_read_;
 
   /// Message block for reading the data into.
   ACE_Message_Block *message_block_;
@@ -1764,7 +1764,7 @@ class ACE_Export ACE_WIN32_Asynch_Write_Dgram_Result : public virtual ACE_Asynch
 public:
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  u_long bytes_to_write (void) const;
+  size_t bytes_to_write (void) const;
 
   /// Message block which contains the sent data
   ACE_Message_Block *message_block (void) const;
@@ -1779,7 +1779,7 @@ public:
   //   warnings. These methods call the base class methods.
 
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -1830,7 +1830,7 @@ protected:
                                        int signal_number = 0);
 
   /// ACE_Proactor will call this method when the write completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error);
@@ -1840,7 +1840,7 @@ protected:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  u_long bytes_to_write_;
+  size_t bytes_to_write_;
 
   /// Message block used for the send.
   ACE_Message_Block *message_block_;

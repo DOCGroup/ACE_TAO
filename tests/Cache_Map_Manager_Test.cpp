@@ -542,7 +542,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   // Providing random a unique seed.
-  ACE_OS::srand (ACE_static_cast (size_t, ACE_OS::time (0)));
+  ACE_OS::srand (ACE_static_cast (u_int, ACE_OS::time (0)));
 
   // Create the lookup array.
   ACE_NEW_RETURN (lookup_array,

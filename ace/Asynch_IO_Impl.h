@@ -52,7 +52,7 @@ public:
   virtual ~ACE_Asynch_Result_Impl (void);
 
   /// Number of bytes transferred by the operation.
-  virtual u_long bytes_transferred (void) const = 0;
+  virtual size_t bytes_transferred (void) const = 0;
 
   /// ACT associated with the operation.
   virtual const void *act (void) const = 0;
@@ -90,7 +90,7 @@ public:
   // These two should really be protected.  But sometimes it
   // simplifies code to be able to "fake" a result.  Use carefully.
   /// This is called when the asynchronous operation completes.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0) = 0;
@@ -159,7 +159,7 @@ public:
   /// This starts off an asynchronous read. Upto <bytes_to_read> will
   /// be read and stored in the <message_block>.
   virtual int read (ACE_Message_Block &message_block,
-                    u_long bytes_to_read,
+                    size_t bytes_to_read,
                     const void *act,
                     int priority,
                     int signal_number) = 0;
@@ -170,7 +170,7 @@ public:
   * message blocks using the continuation field.
   */
   virtual int readv (ACE_Message_Block &message_block,
-                     u_long bytes_to_read,
+                     size_t bytes_to_read,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
@@ -196,7 +196,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  virtual u_long bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read (void) const = 0;
 
   /// Message block which contains the read data.
   virtual ACE_Message_Block &message_block (void) const = 0;
@@ -225,7 +225,7 @@ public:
   /// This starts off an asynchronous write.  Upto <bytes_to_write>
   /// will be written from the <message_block>.
   virtual int write (ACE_Message_Block &message_block,
-                     u_long bytes_to_write,
+                     size_t bytes_to_write,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
@@ -236,7 +236,7 @@ public:
   * message blocks using the continuation field.
   */
   virtual int writev (ACE_Message_Block &message_block,
-                      u_long bytes_to_write,
+                      size_t bytes_to_write,
                       const void *act,
                       int priority,
                       int signal_number) = 0;
@@ -262,7 +262,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  virtual u_long bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write (void) const = 0;
 
   /// Message block that contains the data to be written.
   virtual ACE_Message_Block &message_block (void) const = 0;
@@ -294,7 +294,7 @@ public:
    * at <offset> from the beginning of the file.
    */
   virtual int read (ACE_Message_Block &message_block,
-                    u_long bytes_to_read,
+                    size_t bytes_to_read,
                     u_long offset,
                     u_long offset_high,
                     const void *act,
@@ -309,7 +309,7 @@ public:
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int readv (ACE_Message_Block &message_block,
-                     u_long bytes_to_read,
+                     size_t bytes_to_read,
                      u_long offset,
                      u_long offset_high,
                      const void *act,
@@ -324,7 +324,7 @@ public:
   /// This starts off an asynchronous read. Upto <bytes_to_read> will
   /// be read and stored in the <message_block>.
   virtual int read (ACE_Message_Block &message_block,
-                    u_long bytes_to_read,
+                    size_t bytes_to_read,
                     const void *act,
                     int priority,
                     int signal_number) = 0;
@@ -335,7 +335,7 @@ public:
   * message blocks using the continuation field.
   */
   virtual int readv (ACE_Message_Block &message_block,
-                     u_long bytes_to_read,
+                     size_t bytes_to_read,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
@@ -383,7 +383,7 @@ public:
    * start at <offset> from the beginning of the file.
    */
   virtual int write (ACE_Message_Block &message_block,
-                     u_long bytes_to_write,
+                     size_t bytes_to_write,
                      u_long offset,
                      u_long offset_high,
                      const void *act,
@@ -398,7 +398,7 @@ public:
   * memory page and must be aligned on a system memory page size boundary
   */
   virtual int writev (ACE_Message_Block &message_block,
-                      u_long bytes_to_write,
+                      size_t bytes_to_write,
                       u_long offset,
                       u_long offset_high,
                       const void *act,
@@ -414,7 +414,7 @@ public:
   /// This starts off an asynchronous write.  Upto <bytes_to_write>
   /// will be written from the <message_block>.
   virtual int write (ACE_Message_Block &message_block,
-                     u_long bytes_to_write,
+                     size_t bytes_to_write,
                      const void *act,
                      int priority,
                      int signal_number) = 0;
@@ -425,7 +425,7 @@ public:
   * message blocks using the continuation field.
   */
   virtual int writev (ACE_Message_Block &message_block,
-                      u_long bytes_to_write,
+                      size_t bytes_to_write,
                       const void *act,
                       int priority,
                       int signal_number) = 0;
@@ -479,7 +479,7 @@ public:
    * the new connection is placed at the end of this buffer.
    */
   virtual int accept (ACE_Message_Block &message_block,
-                      u_long bytes_to_read,
+                      size_t bytes_to_read,
                       ACE_HANDLE accept_handle,
                       const void *act,
                       int priority,
@@ -505,7 +505,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
-  virtual u_long bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read (void) const = 0;
 
   /// Message block which contains the read data.
   virtual ACE_Message_Block &message_block (void) const = 0;
@@ -589,10 +589,10 @@ public:
   /// This starts off an asynchronous transmit file.
   virtual int transmit_file (ACE_HANDLE file,
                              ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                             u_long bytes_to_write,
+                             size_t bytes_to_write,
                              u_long offset,
                              u_long offset_high,
-                             u_long bytes_per_send,
+                             size_t bytes_per_send,
                              u_long flags,
                              const void *act,
                              int priority,
@@ -627,11 +627,11 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous transmit file.
-  virtual u_long bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write (void) const = 0;
 
   /// Number of bytes per send requested at the start of the transmit
   /// file.
-  virtual u_long bytes_per_send (void) const = 0;
+  virtual size_t bytes_per_send (void) const = 0;
 
   /// Flags which were passed into transmit file.
   virtual u_long flags (void) const = 0;
@@ -712,7 +712,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  virtual u_long bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read (void) const = 0;
 
   /// The address of where the packet came from
   virtual int remote_address (ACE_Addr& addr) const = 0;
@@ -795,7 +795,7 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  virtual u_long bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write (void) const = 0;
 
   /// Message block which contains the sent data
   virtual ACE_Message_Block *message_block (void) const = 0;

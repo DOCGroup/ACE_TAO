@@ -219,10 +219,10 @@ public:
   virtual void reissue_accept (int new_value);
 
   /// Get bytes to be read with the <accept> call.
-  virtual int bytes_to_read (void) const;
+  virtual size_t bytes_to_read (void) const;
 
   /// Set bytes to be read with the <accept> call.
-  virtual void bytes_to_read (int new_value);
+  virtual void bytes_to_read (size_t new_value);
 
   /// This is required by the AcceptEx call.
   static size_t address_size (void);
@@ -270,7 +270,7 @@ private:
   int reissue_accept_;
 
   /// Bytes to be read with the <accept> call.
-  int bytes_to_read_;
+  size_t bytes_to_read_;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

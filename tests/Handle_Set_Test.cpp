@@ -68,6 +68,11 @@ test_duplicates (size_t count)
 // <ACE_DEFAULT_SELECT_REACTOR_SIZE> is less than any of these
 // <HANDLE> values, the logic in <test_boundaries> will simply ignore
 // these values.
+#if defined (ACE_WIN64)
+  // The casts below are legit...
+#  pragma warning(push)
+#  pragma warning(disable : 4312)
+#endif /* ACE_WIN64 */
 static ACE_HANDLE handle_vector[] =
 {
   (ACE_HANDLE) 0,
@@ -86,6 +91,9 @@ static ACE_HANDLE handle_vector[] =
   (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE,
   ACE_INVALID_HANDLE
 };
+#if defined (ACE_WIN64)
+#  pragma warning(pop)
+#endif /* ACE_WIN64 */
 
 static void
 test_boundaries (void)
@@ -118,6 +126,11 @@ test_boundaries (void)
 
   // Insert the vector of <ACE_HANDLE>s into the set.
 
+#if defined (ACE_WIN64)
+  // The casts below are legit...
+#  pragma warning(push)
+#  pragma warning(disable : 4312)
+#endif /* ACE_WIN64 */
   for (int i = 0;
        handle_vector[i] != ACE_INVALID_HANDLE;
        i++)
@@ -128,6 +141,9 @@ test_boundaries (void)
           set.insert (handle_vector[i]);
         }
     }
+#if defined (ACE_WIN64)
+#  pragma warning(pop)
+#endif /* ACE_WIN64 */
 
   int count = 0;
 

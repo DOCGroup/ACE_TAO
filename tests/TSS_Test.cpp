@@ -93,7 +93,7 @@ worker (void *c)
 {
   // Cast the arg to a long, first, because a pointer is the same
   // size as a long on all current ACE platforms.
-  int count = (int) (long) c;
+  int count = ACE_reinterpret_cast (int, c);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 

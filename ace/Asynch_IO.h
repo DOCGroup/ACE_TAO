@@ -65,7 +65,7 @@ class ACE_Export ACE_Asynch_Result
 
 public:
   /// Number of bytes transferred by the operation.
-  u_long bytes_transferred (void) const;
+  size_t bytes_transferred (void) const;
 
   /// ACT associated with the operation.
   const void *act (void) const;
@@ -289,7 +289,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
-            u_long num_bytes_to_read,
+            size_t num_bytes_to_read,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
@@ -300,7 +300,7 @@ public:
   * message blocks using the continuation field.
   */
   int readv (ACE_Message_Block &message_block,
-             u_long num_bytes_to_read,
+             size_t num_bytes_to_read,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -339,7 +339,7 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    u_long bytes_to_read (void) const;
+    size_t bytes_to_read (void) const;
 
     /// Message block which contains the read data.
     ACE_Message_Block &message_block (void) const;
@@ -415,7 +415,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
@@ -426,7 +426,7 @@ public:
   * message blocks using the continuation field.
   */
   int writev (ACE_Message_Block &message_block,
-              u_long bytes_to_write,
+              size_t bytes_to_write,
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
@@ -465,7 +465,7 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    u_long bytes_to_write (void) const;
+    size_t bytes_to_write (void) const;
 
     /// Message block that contains the data to be written.
     ACE_Message_Block &message_block (void) const;
@@ -542,7 +542,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
-            u_long bytes_to_read,
+            size_t bytes_to_read,
             u_long offset = 0,
             u_long offset_high = 0,
             const void *act = 0,
@@ -557,7 +557,7 @@ public:
   * memory page and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
-             u_long bytes_to_read,
+             size_t bytes_to_read,
              u_long offset = 0,
              u_long offset_high = 0,
              const void *act = 0,
@@ -678,7 +678,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int write (ACE_Message_Block &message_block,
-             u_long bytes_to_write,
+             size_t bytes_to_write,
              u_long offset = 0,
              u_long offset_high = 0,
              const void *act = 0,
@@ -693,7 +693,7 @@ public:
   * memory page and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,
-              u_long bytes_to_write,
+              size_t bytes_to_write,
               u_long offset = 0,
               u_long offset_high = 0,
               const void *act = 0,
@@ -816,7 +816,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int accept (ACE_Message_Block &message_block,
-              u_long bytes_to_read,
+              size_t bytes_to_read,
               ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
               const void *act = 0,
               int priority = 0,
@@ -855,7 +855,7 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous accept.
-    u_long bytes_to_read (void) const;
+    size_t bytes_to_read (void) const;
 
     /// Message block which contains the read data.
     ACE_Message_Block &message_block (void) const;
@@ -1044,10 +1044,10 @@ public:
    */
   int transmit_file (ACE_HANDLE file,
                      Header_And_Trailer *header_and_trailer = 0,
-                     u_long bytes_to_write = 0,
+                     size_t bytes_to_write = 0,
                      u_long offset = 0,
                      u_long offset_high = 0,
-                     u_long bytes_per_send = 0,
+                     size_t bytes_per_send = 0,
                      u_long flags = 0,
                      const void *act = 0,
                      int priority = 0,
@@ -1094,11 +1094,11 @@ public:
 
     /// The number of bytes which were requested at the start of the
     /// asynchronous transmit file.
-    u_long bytes_to_write (void) const;
+    size_t bytes_to_write (void) const;
 
     /// Number of bytes per send requested at the start of the transmit
     /// file.
-    u_long bytes_per_send (void) const;
+    size_t bytes_per_send (void) const;
 
     /// Flags which were passed into transmit file.
     u_long flags (void) const;
@@ -1132,18 +1132,18 @@ public:
   public:
     /// Constructor.
     Header_And_Trailer (ACE_Message_Block *header = 0,
-                        u_long header_bytes = 0,
+                        size_t header_bytes = 0,
                         ACE_Message_Block *trailer = 0,
-                        u_long trailer_bytes = 0);
+                        size_t trailer_bytes = 0);
 
     /// Destructor
     virtual ~Header_And_Trailer (void);
 
     /// This method allows all the member to be set in one fell swoop.
     void header_and_trailer (ACE_Message_Block *header = 0,
-                             u_long header_bytes = 0,
+                             size_t header_bytes = 0,
                              ACE_Message_Block *trailer = 0,
-                             u_long trailer_bytes = 0);
+                             size_t trailer_bytes = 0);
 
     /// Get header which goes before the file data.
     ACE_Message_Block *header (void) const;
@@ -1152,10 +1152,10 @@ public:
     void header (ACE_Message_Block *message_block);
 
     /// Get size of the header data.
-    u_long header_bytes (void) const;
+    size_t header_bytes (void) const;
 
     /// Set size of the header data.
-    void header_bytes (u_long bytes);
+    void header_bytes (size_t bytes);
 
     /// Get trailer which goes after the file data.
     ACE_Message_Block *trailer (void) const;
@@ -1164,10 +1164,10 @@ public:
     void trailer (ACE_Message_Block *message_block);
 
     /// Get size of the trailer data.
-    u_long trailer_bytes (void) const;
+    size_t trailer_bytes (void) const;
 
     /// Set size of the trailer data.
-    void trailer_bytes (u_long bytes);
+    void trailer_bytes (size_t bytes);
 
     /// Conversion routine.
     ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
@@ -1177,13 +1177,13 @@ public:
     ACE_Message_Block *header_;
 
     /// Size of header data.
-    u_long header_bytes_;
+    size_t header_bytes_;
 
     /// Trailer data.
     ACE_Message_Block *trailer_;
 
     /// Size of trailer data.
-    u_long trailer_bytes_;
+    size_t trailer_bytes_;
 
     /// Target data structure.
     ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
@@ -1298,7 +1298,7 @@ public:
 
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    u_long bytes_to_read (void) const;
+    size_t bytes_to_read (void) const;
 
     /// Message block which contains the read data
     ACE_Message_Block *message_block (void) const;
@@ -1433,7 +1433,7 @@ public:
 
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    u_long bytes_to_write (void) const;
+    size_t bytes_to_write (void) const;
 
     /// Message block which contains the sent data
     ACE_Message_Block *message_block (void) const;

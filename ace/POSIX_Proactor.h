@@ -131,7 +131,7 @@ public:
   virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (ACE_Handler &handler,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block &message_block,
-                                                                                u_long bytes_to_read,
+                                                                                size_t bytes_to_read,
                                                                                 const void *act,
                                                                                 ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                 int priority = 0,
@@ -140,7 +140,7 @@ public:
   virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler &handler,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
-                                                                                  u_long bytes_to_write,
+                                                                                  size_t bytes_to_write,
                                                                                   const void *act,
                                                                                   ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                                   int priority = 0,
@@ -149,7 +149,7 @@ public:
   virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler &handler,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
-                                                                            u_long bytes_to_read,
+                                                                            size_t bytes_to_read,
                                                                             const void *act,
                                                                             u_long offset,
                                                                             u_long offset_high,
@@ -160,7 +160,7 @@ public:
   virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler &handler,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block &message_block,
-                                                                              u_long bytes_to_write,
+                                                                              size_t bytes_to_write,
                                                                               const void *act,
                                                                               u_long offset,
                                                                               u_long offset_high,
@@ -193,7 +193,7 @@ public:
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
                                                                       ACE_Message_Block &message_block,
-                                                                      u_long bytes_to_read,
+                                                                      size_t bytes_to_read,
                                                                       const void *act,
                                                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                                                       int priority = 0,
@@ -210,10 +210,10 @@ public:
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
                                                                                     ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
-                                                                                    u_long bytes_to_write,
+                                                                                    size_t bytes_to_write,
                                                                                     u_long offset,
                                                                                     u_long offset_high,
-                                                                                    u_long bytes_per_send,
+                                                                                    size_t bytes_per_send,
                                                                                     u_long flags,
                                                                                     const void *act,
                                                                                     ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -240,7 +240,7 @@ protected:
    * POSIX Proators.
    */
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  u_long bytes_transferred,
+				  size_t bytes_transferred,
 				  const void *completion_key,
 				  u_long error);
 
@@ -394,7 +394,7 @@ protected:
   /// We will call the base class's application_specific_code from
   /// here.
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-				  u_long bytes_transferred,
+				  size_t bytes_transferred,
 				  const void *completion_key,
 				  u_long error);
 
@@ -611,7 +611,7 @@ protected:
   virtual ~ACE_POSIX_Asynch_Timer (void) {}
 
   /// This method calls the <handler>'s handle_timeout method.
-  virtual void complete (u_long bytes_transferred,
+  virtual void complete (size_t bytes_transferred,
                          int success,
                          const void *completion_key,
                          u_long error = 0);
