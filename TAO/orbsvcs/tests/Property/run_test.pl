@@ -22,7 +22,7 @@ sub name_server
 {
     my $args = " -o $nsior";
     my $prog = 
-      print ("\nNaming_Service: $args\n");
+      print STDERR "\nNaming_Service: $args\n";
 
     unlink $nsior;
     $NS = Process::Create ("..".$DIR_SEPARATOR
@@ -40,7 +40,7 @@ sub name_server
 sub server
 {
     my $args = "-ORBNameServiceIOR file://$nsior";
-    print ("\nServer $args\n");
+    print STDERR "\nServer $args\n";
     $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", $args);
 }
 
@@ -48,7 +48,7 @@ sub server
 sub client
 {
     my $args = "-ORBNameServiceIOR file://$nsior";
-    print ("\nclient $args\n");
+    print STDERR "\nclient $args\n";
     $CL = Process::Create ($EXEPREFIX."client$EXE_EXT", $args);
 }
 
