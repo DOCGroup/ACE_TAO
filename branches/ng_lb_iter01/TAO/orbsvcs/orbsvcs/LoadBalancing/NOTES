@@ -21,7 +21,7 @@ ReplicaLocator::pre_invoke ()
 
 GenericFactory::create_object ()
 {
-  ObjectGroup_Map.bind (FactoryCreationId, ObjectGroup);
+  ObjectGroup_Map.bind (FactoryCreationId, ObjectGroup_Entry);
   ObjectId_Replica_Map.bind (ObjectId, ReplicaMap);
 
   if (infrastructure-controlled)

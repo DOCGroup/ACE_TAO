@@ -22,18 +22,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager.h"
-#include "LB_Replica_Map.h"
-#include "LB_ObjectGroup_Hash.h"
-#include "LB_ObjectGroup_Equal_To.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/LoadBalancingC.h"
+
+#include "LB_Replica_Set.h"
+
 
 /**
  * @class TAO_LB_ObjectGroup_Map
  *
- * @brief Map of RepositoryId to ObjectGroup reference,
- * FactoryCreationId, replicas belonging to the ObjectGroup and
- * corresponding replica-specific information.
+ * @brief Map of FactoryCreationId to ObjectGroup reference.
  *
  * Implementation to be used by the Load Balancer ReplicationManager.
  */
@@ -61,30 +59,10 @@ public:
     /// Reference to the ObjectGroup.
     TAO_LoadBalancing::ObjectGroup_var object_group;
 
-    /// The FactoryCreationId corresponding to the ObjectGroup created
-    /// by the Load Balancer GenericFactory.
-    CORBA::ULong factory_creation_id;
-
-    /// Hash map containing replica references and all related
+    /// Unbounded set containing replica references and all related
     /// information for each replica.
-    TAO_LB_Replica_Map replica_map;
+    TAO_LB_ReplicaInfo_Set replica_infos;
   };
-
-  /// type_id hash map.
-  typedef ACE_Hash_Map_Manager_Ex<
-    const char *,
-    Map_Entry *,
-    ACE_Hash<const char *>,
-    ACE_Equal_To<const char *>,
-    ACE_SYNCH_MUTEX> type_id_map;
-
-  /// ObjectGroup hash map.
-  typedef ACE_Hash_Map_Manager_Ex<
-    TAO_LoadBalancing::ObjectGroup_ptr,
-    Map_Entry *,
-    TAO_LB_ObjectGroup_Hash,
-    TAO_LB_ObjectGroup_Equal_To,
-    ACE_SYNCH_MUTEX> ObjectGroup_map;
 
   /// FactoryCreationId hash map.  A FactoryCreationId is represented
   /// internally as a CORBA::ULong.
@@ -93,11 +71,12 @@ public:
     Map_Entry *,
     ACE_Hash<ACE_UINT32>,
     ACE_Equal_To<ACE_UINT32>,
-    ACE_SYNCH_MUTEX> FactoryCreationId_map;
+    TAO_SYNCH_MUTEX> Table;
 
-  int bind (const char *type_id,
-            TAO_LoadBalancing::ObjectGroup_ptr object_group,
-            CORBA::ULong &factory_creation_id);
+  int bind (CORBA::ULong factory_creation_id,
+            TAO_LB_ObjectGroup_Map::Map_Entry *object_group_entry);
+
+
 };
 
 #include "ace/post.h"

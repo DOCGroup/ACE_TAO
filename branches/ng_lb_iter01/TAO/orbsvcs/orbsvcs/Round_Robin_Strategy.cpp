@@ -6,7 +6,9 @@
 #include "Round_Robin_Strategy.h"
 #include "ReplicaProxy.h"
 
-ACE_RCSID(orbsvcs, Round_Robin_Strategy, "$Id$")
+ACE_RCSID (LoadBalancing,
+           Round_Robin_Strategy,
+           "$Id$")
 
 
 TAO_LB_Round_Robin_Strategy::TAO_LB_Round_Robin_Strategy (void)

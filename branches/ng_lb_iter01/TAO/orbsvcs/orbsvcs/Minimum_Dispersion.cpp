@@ -2,11 +2,12 @@
 
 // $Id$
 
-
 #include "Minimum_Dispersion.h"
 #include "ReplicaProxy.h"
 
-ACE_RCSID(orbsvcs, Minimum_Dispersion, "$Id$")
+ACE_RCSID (LoadBalancing,
+           Minimum_Dispersion,
+           "$Id$")
 
 
 TAO_LB_Minimum_Dispersion_Strategy::TAO_LB_Minimum_Dispersion_Strategy (void)

@@ -25,7 +25,7 @@
 #include "orbsvcs/LoadBalancingS.h"
 #include "LB_ObjectGroup_Map.h"
 
-class TAO_LoadBalancing_ReplicationManager_i
+class TAO_LoadBalancing_Export TAO_LoadBalancing_ReplicationManager_i
   : public virtual POA_TAO_LoadBalancing::ReplicationManager
 {
 public:
@@ -255,19 +255,6 @@ public:
 
 private:
 
-  /// Helper method that creates replicas of the given type.
-  void create_object_i (
-    const char * type_id,
-    CORBA::UShort initial_number_replicas,
-    TAO_LoadBalancing::FactoryInfos &factory_infos,
-    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::CannotMeetCriteria));
-
   /// Extract the value of the InitialNumberReplicas property from
   /// the_criteria.
   int get_initial_number_replicas (
@@ -275,8 +262,8 @@ private:
     const TAO_LoadBalancing::Criteria &the_criteria,
     CORBA::UShort &initial_number_replicas) const;
 
+  /// Extract the value of the Factories property from the_criteria.
   /**
-   * Extract the value of the Factories property from the_criteria.
    * This method ensures that the locations in the returned
    * FactoryInfos are unique.  This is necessary to ensure that only
    * one replica of a given type is created by the load balancer at a
@@ -290,15 +277,6 @@ private:
   /// Create a POA with the appropriate policies to support
   /// ServantLocators (i.e. the ReplicaLocator).
   int init (PortableServer::POA_ptr root_poa);
-
-  /**
-   * Get a new ObjectId to be used when creating a new ObjectGroup.
-   * An ObjectId created by this method will never be reused within
-   * the scope of a given ReplicationManager.  A value suitable for
-   * use in a map association <ext_id> is also returned.
-   */
-  void get_ObjectId (PortableServer::ObjectId &oid,
-                     TAO_LB_ObjectGroup_EXT_ID &ext_id);
 
   /// Assignment operator for TAO_LoadBalancer::FactoryInfo instances.
   void operator= (TAO_LoadBalancer::FactoryInfo &lhs,
@@ -316,21 +294,20 @@ private:
   /// Mutex that provides synchronization.
   TAO_SYNCH_MUTEX lock_;
 
-  /// ObjectId to be used for the next ObjectGroup that is created.
-  CORBA::ULong next_oid_;
-
   /// Map between RepositoryId, ObjectGroup reference, replica list and
   /// factory creation ID.
   TAO_LB_ObjectGroup_Map object_group_map_;
 
-  /**
-   * Value that is used when assigning a FactoryCreationId to the
-   * factory that was used to create a given ObjectGroup.  The
-   * FactoryCreationId is typically comprised of this value in
-   * addition to another value that makes it unique to a given Load
-   * Balancer.
-   */
-  CORBA::ULong next_fcid_;
+  /// The PropertyManager that is reponsible for parsing all criteria,
+  /// and keeping track of property-type_id associations.
+  TAO_LB_PropertyManager property_manager_;
+
+  /// The GenericFactory responsible for creating all object groups.
+  TAO_LB_GenericFactory generic_factory_;
+
+  /// The ObjectGroupManager that implements the functionality
+  /// necessary for application-controlled object group membership.
+  TAO_LB_ObjectGroupManager object_group_manager_;
 
 };
 

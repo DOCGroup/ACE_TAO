@@ -1,50 +1,54 @@
 // -*- C++ -*-
 
-// $Id$
+//=============================================================================
+/**
+ *  @file    ReplicaLocator.h
+ *
+ *  $Id$
+ *
+ *  @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_LoadBalancing
-//
-// = FILENAME
-//    ReplicaLocator.h
-//
-// = AUTHOR
-//    Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
 
 #ifndef TAO_REPLICA_LOCATOR_H
 #define TAO_REPLICA_LOCATOR_H
 
 #include "ace/pre.h"
 
-#include "orbsvcs/LoadBalancingS.h"
-#include "LoadBalancing_export.h"
+#include "ace/config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableServer/PortableServerC.h"
+
 // Forward declaration.
 class TAO_LB_LoadBalancer;
 
-class TAO_LoadBalancing_Export TAO_LB_ReplicaLocator
+/**
+ * @class TAO_LB_ReplicaLocator
+ *
+ * @brief ServantLocator implementation for the Load Balancer.
+ *
+ * This is a Servant Locator implementation that forwards requests to
+ * a replica returned by the Load Balancer.
+ */
+class TAO_LB_ReplicaLocator
   : public virtual PortableServer::ServantLocator
 {
-  // = TITLE
-  //    Class that provides request forwarding.
-
-  // = DESCRIPTION
-  //    This is a Servant Locator implementation that forwards
-  //    requests to a replica returned by the Load Balancer.
-
 public:
-  TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *load_balancer);
-  // Constructor
 
-  // = The ServantLocator methods
+  /// Constructor
+  TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *load_balancer);
+
+  /**
+   * @name The ServantLocator methods
+   */
+  //@{
+  /// Clients requests are forwarded via the
+  /// PortableServer::ForwardRequest exception thrown in this method.
   virtual PortableServer::Servant preinvoke (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr adapter,
@@ -54,6 +58,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
+  /// This method is no-op in this ServantLocator implementation.
   virtual void postinvoke (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr adapter,
@@ -62,10 +67,13 @@ public:
       PortableServer::Servant the_servant
       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
 
 private:
+
+  /// The load balancer implementation.
   TAO_LB_LoadBalancer *load_balancer_;
-  // The load balancer implementation.
+
 };
 
 #include "ace/post.h"

@@ -56,10 +56,10 @@ public:
     CORBA::Object_var replica;
     // Reference to the replica.
 
-    TAO_LoadBalancer::FactoryInfo_var factory_info;
-    // Pointer to FactoryInfo structure associated with the replica.
+    TAO_LoadBalancer::FactoryInfo factory_info;
+    // FactoryInfo structure associated with the replica.
 
-    TAO_LoadBalancer::FactoryCreationId factory_creation_id;
+    TAO_LoadBalancer::FactoryCreationId_var factory_creation_id;
     // The FactoryCreationId corresponding to the replica created by
     // the above factory.  This factory creation ID is only valid if
     // the corresponding factory reference above is not nil.
