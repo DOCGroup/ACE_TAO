@@ -15,8 +15,59 @@ ACE_RCSID(Strategies, Linear_Priority_Mapping, "$Id$")
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (int policy)
   :  policy_ (policy)
 {
+  // We have special behavior for SUNs.  This is because the results
+  // from ACE_Sched_Params::priority_min() and
+  // ACE_Sched_Params::priority_max() are not correct.
+
+#if defined (sun)
+
+  ACE_utsname name;
+  ACE_OS::uname (&name);
+
+  // If we are on Solaris 5.7.
+  if (ACE_OS::strcmp (name.release, "5.7") == 0)
+    {
+      if (policy == ACE_SCHED_OTHER)
+        {
+          this->min_ = 0;
+          this->max_ = 127;
+        }
+      else
+        {
+          this->min_ = 0;
+          this->max_ = 59;
+        }
+    }
+  // If we are on Solaris 5.8.
+  else if (ACE_OS::strcmp (name.release, "5.8") == 0)
+    {
+      if (policy == ACE_SCHED_OTHER)
+        {
+          this->min_ = -20;
+          this->max_ = 127;
+        }
+      else
+        {
+          this->min_ = 0;
+          this->max_ = 59;
+        }
+    }
+  // Not sure about the other SUN releases.  Therefore, lets stick to
+  // the default behavior.
+  else
+    {
+      this->min_ = ACE_Sched_Params::priority_min (this->policy_);
+      this->max_ = ACE_Sched_Params::priority_max (this->policy_);
+    }
+
+#else /* sun */
+
+  // Other platforms should be ok.
   this->min_ = ACE_Sched_Params::priority_min (this->policy_);
   this->max_ = ACE_Sched_Params::priority_max (this->policy_);
+
+#endif /* sun */
+
 }
 
 TAO_Linear_Priority_Mapping::~TAO_Linear_Priority_Mapping (void)
@@ -152,4 +203,3 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
 #endif /* ACE_WIN32 */
 }
-
