@@ -1,10 +1,16 @@
+Thu Oct 12 15:41:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/rules.bin.GNU:
+          List the LDFLAGS before the name of the program, this seems to
+          work better for some of our sponsors.
+
 Thu Oct 12 15:40:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.cpp (ACE_OS_GUARD):
-	  Use explicit names for the OS guards, otherwise the SGI compiler
-	  (7.30 + several patches) crashes.  Thanks to Philip Miller
-	  <pwmiller@sarnoff.com> for reporting the problem and providing
-	  the patch.
+        * ace/OS.cpp (ACE_OS_GUARD):
+          Use explicit names for the OS guards, otherwise the SGI compiler
+          (7.30 + several patches) crashes.  Thanks to Philip Miller
+          <pwmiller@sarnoff.com> for reporting the problem and providing
+          the patch.
 
 Thu Oct 12 12:15:23 2000  Angelo  <corsaro@cs.wustl.edu>
 
@@ -12,8 +18,8 @@ Thu Oct 12 12:15:23 2000  Angelo  <corsaro@cs.wustl.edu>
 
 Tue Oct 10 21:54:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/msvc_auto_compile.pl (Build_Core): Updated LIB core build
-	  dsp list.
+        * bin/msvc_auto_compile.pl (Build_Core): Updated LIB core build
+          dsp list.
 
 Tue Oct 10 18:51:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
