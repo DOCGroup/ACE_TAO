@@ -1,3 +1,14 @@
+Mon Mar 15 17:21:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+          Fixed unused argument warning in MinGW builds. Thanks to
+          Martin Corino <mcorino@remedy.nl> for fixing this.
+
+        * examples/APG/Logging/Trace.h:
+          In case ACE_NTRACE is set to 1 then TRACE_RETURN should
+          return the given value instead of doing nothing. Thanks
+          to Martin Corino <mcorino@remedy.nl> for finding this.
+
 Mon Mar 15 10:01:43 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceCreator.pm:
