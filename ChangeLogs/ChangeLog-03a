@@ -34,9 +34,9 @@ Mon Feb 07 21:11:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    and <this->in_use_>.
 
 	  - The wait() loop was not correct. We now loop until the token
-	    is longer in use.  This way if the token ownership was taken by
-	    another (new) waiter thread by the time we wake up, we simply go
-	    back to sleep.
+	    is no longer in use.  This way if the token ownership was taken
+	    by another (new) waiter thread by the time we wake up, we simply
+	    go back to sleep.
 
 Mon Feb  7 17:54:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
