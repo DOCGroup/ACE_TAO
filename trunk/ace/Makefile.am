@@ -138,6 +138,10 @@ libACE_OS_la_SOURCES = \
   OS_Memory.cpp \
   OS_String.cpp \
   OS_TLI.cpp \
+  Thread_Hook \
+  Thread_Adapter \
+  Thread_Exit \
+  Thread_Control \
   Sched_Params.cpp
 
 libACE_Utils_la_SOURCES = \
