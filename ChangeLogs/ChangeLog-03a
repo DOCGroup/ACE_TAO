@@ -1,30 +1,35 @@
+Sun Jun 24 08:57:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * bin/auto_run_tests.lst: Added Oneways_Invoking_Twoways to the
+          daily builds.
+
 Sat Jun 23 08:34:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Max_Default_Port_Test.cpp: Fixed a unused warning in
-	  Single Threaded  builds.
-	
-	* tests/run_tests.lst: Prevented the above test from running in
-	  Single Threaded configurations.
+        * tests/Max_Default_Port_Test.cpp: Fixed a unused warning in
+          Single Threaded  builds.
+
+        * tests/run_tests.lst: Prevented the above test from running in
+          Single Threaded configurations.
 
 Sat Jun 23 06:19:39 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
         * ace/OS.i: For some god knows why reason, _POSIX_C_SOURCE doesn't
-	  get us the right behavior for getpwnam_r() on some platforms...
-  	  Therefore, we'll need to define an ACE_HAS_POSIX_GETPWNAM_R
- 	  macro instead -- grrr....  Thanks to Bala for pointing this out.
-	
-	* ace/OS.i: Fixed the getpwnam_r() wrapper so that it conforms to
-	  POSIX on platforms that support POSIX.  Thanks to
-	  Craig L. Ching <cching@mqsoftware.com> for reporting this.
+          get us the right behavior for getpwnam_r() on some platforms...
+          Therefore, we'll need to define an ACE_HAS_POSIX_GETPWNAM_R
+          macro instead -- grrr....  Thanks to Bala for pointing this out.
+
+        * ace/OS.i: Fixed the getpwnam_r() wrapper so that it conforms to
+          POSIX on platforms that support POSIX.  Thanks to
+          Craig L. Ching <cching@mqsoftware.com> for reporting this.
 
 Fri Jun 22 18:35:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS_TLI.inl: Fixed a compile error in win 32.
+        * ace/OS_TLI.inl: Fixed a compile error in win 32.
 
 Fri Jun 22 18:06:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst: Added a solaris 8 build to the
-	  scoreboard.  
+        * bin/nightlybuilds/builds.lst: Added a solaris 8 build to the
+          scoreboard.
 
 Fri Jun 22 18:00:51 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -7306,8 +7311,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
 
         * ace/Process_Manager.cpp(wait): The "result >= WAIT_OBJECT_0"
           test within the ACE_ASSERT statement causes the Native x86
-          compiler to produce a ôpointless comparison of unsigned
-          integer with zeroö warning because "result" is of type
+          compiler to produce a pointless comparison of unsigned
+          integer with zero warning because "result" is of type
           "DWORD," which is defined by the Native x86 compiler as type
           "unsigned int."  This test has been blocked out for ghs.
 
@@ -7324,8 +7329,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
           within the function get_ip_interfaces() function only when
           either ACE_HAS_WINSOCK2 is not defined or when ACE_HAS_WINSOCK2
           is defined as "0." Because ACE_HAS_WINSOCK2 is defined on the
-          Native x86 platform, the compiler was issuing a ôdefined, but
-          never usedö warning. This warning has been eliminated by
+          Native x86 platform, the compiler was issuing a defined, but
+          never used warning. This warning has been eliminated by
           blocking out the definition of get_reg_value() when
           ACE_HAS_WINSOCK2 is defined as a value other than "0."
 
@@ -7347,8 +7352,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
           has been cast to "DWORD."
 
         * ace/WFMO_Reactor.cpp(dispatch_handles): The "wait_status >=
-          WAIT_OBJECT_0" comparison was producing a ôpointless
-          comparison of unsigned integer with zeroö warning because
+          WAIT_OBJECT_0" comparison was producing a pointless
+          comparison of unsigned integer with zero warning because
           "wait_status" is an unsigned integer. This was a known problem
           with Borland, so the blocking out of this comparison has been
           extende to ghs.
