@@ -17,7 +17,6 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup, m
 
   Source_Files(ORBSVCS_COMPONENTS) {
     FaultTolerance {
-      FT_CORBAC.cpp
       FT_CORBAS.cpp
       FT_CORBAC.cpp
       FT_ReplicaS.cpp

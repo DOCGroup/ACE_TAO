@@ -48,7 +48,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
       Event/EC_Basic_Factory.cpp
       Event/EC_Basic_Filter_Builder.cpp
       Event/EC_Bitmask_Filter.cpp
-      Event/EC_Busy_Lock.cpp
       Event/EC_Channel_Destroyer.cpp
       Event/EC_Conjunction_Filter.cpp
       Event/EC_ConsumerAdmin.cpp
@@ -69,7 +68,6 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
       Event/EC_Gateway_IIOP_Factory.cpp
       Event/EC_Group_Scheduling.cpp
       Event/EC_Lifetime_Utils.cpp
-      Event/EC_Lifetime_Utils_T.cpp
       Event/EC_Masked_Type_Filter.cpp
       Event/EC_MT_Dispatching.cpp
       Event/EC_Negation_Filter.cpp
@@ -100,5 +98,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging {
   }
 
   Template_Files {
+    Event/EC_Busy_Lock.cpp
+    Event/EC_Lifetime_Utils_T.cpp
   }
 }

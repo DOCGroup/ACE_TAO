@@ -1,3 +1,25 @@
+Tue Jan 11 12:17:26 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+
+          List the naming_serv_export.h instead of Naming_Server.h. 
+          Naming_Server.h gets added automatically.
+
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+
+          Removed a redundant listing of FT_CORBAC.cpp.
+
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+
+          Moved two files listed in Source_Files into Template_Files as they
+          are template cpp files.
+
+        * orbsvcs/orbsvcs/RTOLDEvent.mpc:
+
+          Removed the listing of RTOldEvent.rc.  MPC will now detect that it
+          belongs to the RTOLDEvent project due to case insensitivity for
+          resource files.
+
 Mon Jan 10 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
@@ -13,24 +35,24 @@ Mon Jan 10 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan  9 19:52:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Naming/README:
+        * orbsvcs/orbsvcs/Naming/README:
 
-	  Updated to note that Naming_Utils.{cpp,h} was split into
-	  Naming_Client.{cpp,h} and Naming_Server.{cpp,h}.
+          Updated to note that Naming_Utils.{cpp,h} was split into
+          Naming_Client.{cpp,h} and Naming_Server.{cpp,h}.
 
 Sun Jan  9 19:36:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Generate pkg-config *.pc files from templates.
+          Generate pkg-config *.pc files from templates.
 
-	* orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosLifeCycle.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosLoadBalancing.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosTime.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosLifeCycle.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosLoadBalancing.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTime.pc.in:
 
-	  New files, pkg-config *.pc templates.
+          New files, pkg-config *.pc templates.
 
 Sun Jan  9 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -94,35 +116,35 @@ Sat Jan  8 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan  7 22:46:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Generate pkg-config *.pc files from templates.
+          Generate pkg-config *.pc files from templates.
 
-	* orbsvcs/orbsvcs/TAO_CosEvent.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosEvent_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosEvent_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNaming.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNaming_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNaming_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNotification.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNotification_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosNotification_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosTrading.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosTrading_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_CosTrading_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsLogAdmin.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsLogAdmin_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsLogAdmin_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Serv.pc.in:
-	* orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Skel.pc.in:
-	* orbsvcs/orbsvcs/TAO_ETCL.pc.in:
-	* orbsvcs/orbsvcs/TAO_Svc_Utils.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosEvent.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosEvent_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosEvent_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNaming.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNaming_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNaming_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNotification.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNotification_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosNotification_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTrading.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTrading_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_CosTrading_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsEventLogAdmin.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsEventLogAdmin_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsLogAdmin.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsLogAdmin_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsLogAdmin_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Serv.pc.in:
+        * orbsvcs/orbsvcs/TAO_DsNotifyLogAdmin_Skel.pc.in:
+        * orbsvcs/orbsvcs/TAO_ETCL.pc.in:
+        * orbsvcs/orbsvcs/TAO_Svc_Utils.pc.in:
 
-	  New files, pkg-config *.pc templates.
+          New files, pkg-config *.pc templates.
 
 Fri Jan  7 19:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -228,9 +250,9 @@ Fri Jan  7 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  6 12:39:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Add Adapter_{Factory,Registry}.cpp to ORB_Core defn.
+          Add Adapter_{Factory,Registry}.cpp to ORB_Core defn.
 
 Thu Jan  6 18:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -277,12 +299,12 @@ Thu Jan  6 15:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  6 08:24:39 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i:
-	  Use ACE_Unbounded_Set instead of ACE_Unbounded_Set_Ex.  The
-	  latter is not thread-safe, and the bugs attributed to the former
-	  (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1465)
-	  are actually a user-configuration mistake.
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i:
+          Use ACE_Unbounded_Set instead of ACE_Unbounded_Set_Ex.  The
+          latter is not thread-safe, and the bugs attributed to the former
+          (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1465)
+          are actually a user-configuration mistake.
 
 Thu Jan  6 12:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -653,16 +675,16 @@ Wed Jan  5 10:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan  4 17:55:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
-	* Release:
-	* configure.ac:
+        * Makefile.am:
+        * Release:
+        * configure.ac:
 
-	  Updated for removal of tao-config.in and tao-config.1.in.
+          Updated for removal of tao-config.in and tao-config.1.in.
 
-	* tao-config.in:
-	* tao-config.1.in:
+        * tao-config.in:
+        * tao-config.1.in:
 
-	  Removed.
+          Removed.
 
 Tue Jan  4 20:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -944,32 +966,32 @@ Tue Jan  4 09:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jan  3 17:04:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Generate pkg-config *.pc files from templates.
+          Generate pkg-config *.pc files from templates.
 
-	* tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
-	* tao/Domain/TAO_Domain.pc.in:
-	* tao/DynamicAny/TAO_DynamicAny.pc.in:
-	* tao/DynamicInterface/TAO_DynamicInterface.pc.in:
-	* tao/IFR_Client/TAO_IFR_Client.pc.in:
-	* tao/IORInterceptor/TAO_IORInterceptor.pc.in:
-	* tao/IORManipulation/TAO_IORManip.pc.in:
-	* tao/IORTable/TAO_IORTable.pc.in:
-	* tao/Messaging/TAO_Messaging.pc.in:
-	* tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
-	* tao/PortableServer/TAO_PortableServer.pc.in:
-	* tao/RTCORBA/TAO_RTCORBA.pc.in:
-	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
-	* tao/RTScheduling/TAO_RTScheduler.pc.in:
-	* tao/SmartProxies/TAO_SmartProxies.pc.in:
-	* tao/Strategies/TAO_Strategies.pc.in:
-	* tao/TAO.pc.in:
-	* tao/TAO_Utils.pc.in:
-	* tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
-	* tao/Valuetype/TAO_Valuetype.pc.in:
+        * tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
+        * tao/Domain/TAO_Domain.pc.in:
+        * tao/DynamicAny/TAO_DynamicAny.pc.in:
+        * tao/DynamicInterface/TAO_DynamicInterface.pc.in:
+        * tao/IFR_Client/TAO_IFR_Client.pc.in:
+        * tao/IORInterceptor/TAO_IORInterceptor.pc.in:
+        * tao/IORManipulation/TAO_IORManip.pc.in:
+        * tao/IORTable/TAO_IORTable.pc.in:
+        * tao/Messaging/TAO_Messaging.pc.in:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
+        * tao/PortableServer/TAO_PortableServer.pc.in:
+        * tao/RTCORBA/TAO_RTCORBA.pc.in:
+        * tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+        * tao/RTScheduling/TAO_RTScheduler.pc.in:
+        * tao/SmartProxies/TAO_SmartProxies.pc.in:
+        * tao/Strategies/TAO_Strategies.pc.in:
+        * tao/TAO.pc.in:
+        * tao/TAO_Utils.pc.in:
+        * tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
+        * tao/Valuetype/TAO_Valuetype.pc.in:
 
-	  New files, pkg-config *.pc templates.
+          New files, pkg-config *.pc templates.
 
 Mon Jan  3 11:31:35 2005  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -986,7 +1008,7 @@ Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * orbsvcs/examples/FaultTolerance/RolyPoly: Changed the use of
           TMCast to ACE_TMCast.  Thanks to J.T. Conklin for pointing out
- 	  the inconsistency.
+          the inconsistency.
 
 Sun Jan  2 21:26:58 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
