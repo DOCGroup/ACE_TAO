@@ -148,6 +148,8 @@ private:
 
 //----------------------------------------
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Fixed_Stack
  *
@@ -162,19 +164,32 @@ class ACE_Fixed_Stack
 public:
   // = Initialization, assignment, and termination methods.
   /// Initialize a new stack so that it is empty.
+  /**
+   * Initialize an empty stack. 
+   */
   ACE_Fixed_Stack (void);
 
   /// The copy constructor (performs initialization).
+  /**
+   * Initialize the stack and copy the provided stack into the current stack. 
+   */
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
 
   /// Assignment operator (performs assignment).
+  /**
+   * Perform a deep copy of the provided stack.
+   */
   void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
 
   /// Perform actions needed when stack goes out of scope.
+  /**
+   * Destroy the stack. 
+   */
   ~ACE_Fixed_Stack (void);
 
   // = Classic Stack operations.
-
+  
+  ///Constant time placement of element on top of stack. 
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
    * is already full, 0 if the stack is not already full, and -1 if
@@ -182,6 +197,7 @@ public:
    */
   int push (const T &new_item);
 
+  ///Constant time removal of top of stack. 
   /**
    * Remove and return the top stack item.  Returns -1 if the stack is
    * already empty, 0 if the stack is not already empty, and -1 if
@@ -189,6 +205,7 @@ public:
    */
   int pop (T &item);
 
+  ///Constant time examination of top of stack. 
   /**
    * Return top stack item without removing it.  Returns -1 if the
    * stack is already empty, 0 if the stack is not already empty, and
@@ -199,12 +216,21 @@ public:
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
+  /**
+   * Performs constant time check to see if stack is empty.
+   */
   int is_empty (void) const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
+  /** 
+   * Performs constant time check to see if stack is full. 
+   */
   int is_full (void) const;
 
   /// The number of items in the stack.
+  /**
+   * Constant time access to the current size of the stack. 
+   */
   size_t size (void) const;
 
   /// Dump the state of an object.
