@@ -1438,9 +1438,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	    spolicy = SCHED_OTHER;
 	  else if (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO))
 	    spolicy = SCHED_FIFO;
+#if defined (SCHED_IO)
+	  else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO))
+	    spolicy = SCHED_IO;
+#else
+	  else if (ACE_BIT_ENABLED (flags, THR_SCHED_IO)) 
+	    {
+	      errno = ENOSYS;
+	      return -1; 
+	    }
+#endif /* SCHED_IO */
 	  else
 	    spolicy = SCHED_RR;
-#      endif
+#      endif /* ACE_HAS_ONLY_SCHED_OTHER */
 
 #      if !defined (ACE_HAS_FSU_PTHREADS)
 #        if defined (ACE_HAS_SETKIND_NP)
