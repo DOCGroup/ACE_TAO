@@ -1285,6 +1285,7 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 
 #  include /**/ <hostLib.h>
 #  include /**/ <ioLib.h>
+#  include /**/ <remLib.h>
 #  include /**/ <selectLib.h>
 #  include /**/ <sigLib.h>
 #  include /**/ <sockLib.h>
@@ -2208,9 +2209,6 @@ extern "C" int sigwait (sigset_t *set);
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
-#if !defined(RTLD_LAZY) && !defined(AIX)
-# define RTLD_LAZY 1
-#endif /* !RTLD_LAZY && !AIX */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 # include /**/ <dlfcn.h>
   typedef void *ACE_SHLIB_HANDLE;
@@ -2224,6 +2222,9 @@ extern "C" int sigwait (sigset_t *set);
   typedef shl_t ACE_SHLIB_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
 #else
+  #if !defined(RTLD_LAZY)
+  # define RTLD_LAZY 1
+  #endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
   const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
