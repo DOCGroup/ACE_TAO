@@ -531,9 +531,18 @@ be_visitor_operation::gen_stub_operation_body (
 
       if (!this->void_return_type (return_type))
         {
+          AST_Decl::NodeType nt = return_type->node_type ();
+
+          if (nt == AST_Decl::NT_typedef)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (return_type);
+              AST_Type *t = td->primitive_base_type ();
+              nt = t->node_type ();
+            }
+
           // Now generate the normal successful return statement.
           if (return_type->size_type () == AST_Type::VARIABLE
-              || return_type->node_type () == AST_Decl::NT_array)
+              || nt == AST_Decl::NT_array)
             {
               *os << "return _tao_retval._retn ();";
             }
