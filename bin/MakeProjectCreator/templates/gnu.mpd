@@ -71,6 +71,9 @@ RESOURCES += \
 #       Include macros and targets
 #----------------------------------------------------------------------------
 <%marker(macros)%>
+<%if(xerceslib)%>
+XERCESLIB ?= <%xerceslib%>
+<%endif%>
 <%if(exename)%>
 LDLIBS =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%>
 <%else%>
