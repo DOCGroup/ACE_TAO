@@ -91,21 +91,12 @@ pace_sigismember (const pace_sigset_t * set, int signo)
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-# if defined (PACE_HAS_CPLUSPLUS)
 PACE_INLINE
 pace_sig_pf
 pace_signal (int sig, pace_sig_pf func)
 {
   return signal (sig, func);
 }
-# else /* ! PACE_HAS_CPLUSPLUS */
-PACE_INLINE
-void
-(*pace_signal(int sig, void (*func)(int)))(int)
-{
-  return signal (sig, func);
-}
-# endif /* PACE_HAS_CPLUSPLUS */
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_SIG_UOF)

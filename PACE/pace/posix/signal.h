@@ -20,16 +20,21 @@
 #include "pace/sys/types.h"
 #include "pace/time.h"
 
+#ifndef PACE_SIG_PF
+# define PACE_SIG_PF
+# if (PACE_LYNXOS)
+#  if defined (PACE_HAS_CPLUSPLUS)
+  typedef void (*pace_sig_pf)(...);
+#  else
+  typedef void (*pace_sig_pf)();
+#  endif /* PACE_HAS_CPLUSPLUS */
+# else
+  typedef void (*pace_sig_pf)(int);
+# endif /* PACE_LYNXOS */
+#endif /* PACE_SIG_PF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
-#endif /* PACE_HAS_CPLUSPLUS */
-
-/* Required to force correct linkage on signal() */
-#if defined (PACE_HAS_CPLUSPLUS)
-# ifndef PACE_SIG_PF
-# define PACE_SIG_PF
-  typedef void (*pace_sig_pf) (int);
-# endif /* PACE_SIG_PF */
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #ifndef PACE_SIG_ATOMIC_T

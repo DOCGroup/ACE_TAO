@@ -1,3 +1,30 @@
+Tue Jul 18 23:25:43 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/posix/signal.h
+	* pace/posix/signal.inl
+	* pace/posix/stdio.h
+	* pace/posix/stdlib.h
+	* pace/posix/time.h
+	* pace/posix/unistd.h
+
+	Added double definition protections around types, PACE_NULL
+	in particular.
+
+	* pace/posix/signal*
+
+	Changed signal's pointer to a functions to almost support
+	Lynx, but it is not quite working yet.
+
+	* ../ace/ACE.cpp
+	* ../ace/OS_Memory.h
+
+	Changed system calls to pace calls.
+
+	* ../ace/OS.h
+
+	Reverted part of my earlier changes to support Lynxos in
+	a cleaner way.
+
 Tue Jul 18 15:13:40 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/times.h:
@@ -102,7 +129,7 @@ Mon Jul 17 16:37:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/win32/sched.inl:
 
 	  Eliminated support for these functions.
-	
+
 	* docs/PACE_POSIX_support.txt:
 
 	  Updated.
@@ -113,20 +140,20 @@ Mon Jul 17 16:27:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/win32/pwd.inl:
 
 	  Emulate some... return no support for others.
-	
+
 	* docs/PACE_POSIX_support.txt:
 
 	  Updated.
-	
+
 	* pace/win32/mqueue.h:
 
 	  Typo.
-	
+
 Mon Jul 17 15:57:43 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/mqueue.h:
 	* pace/win32/mqueue.h:
-	
+
 	  Fixed types to compile for win32.
 	  Code was NOT emulated so types are dummy types and
 	  PACE_ERRNO_NO_SUPPORT_RETURN (-1) was applied when applicable.
@@ -184,7 +211,7 @@ Mon Jul 17 13:07:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 	* pace/win32/mman.inl:
 
 	  Substituted PACE_HANDLE for ints that were file descriptors.
-	
+
 Mon Jul 17 12:49:17 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:
@@ -209,7 +236,7 @@ Mon Jul 17 12:27:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 Mon Jul 17 11:47:11 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* docs/PACE_POSIX_support.txt:
-	 
+
 	  Added to specify native/emulation/not supported funcs.
 
 	* pace/win32/fcntl.h:
@@ -219,7 +246,7 @@ Mon Jul 17 11:47:11 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 Sun Jul 16 16:21:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/grp.inl: 
+	* pace/win32/grp.inl:
 	* pace/win32/grp.h:
 
 	  No WIN32 support. ACE does not emulate this family.
