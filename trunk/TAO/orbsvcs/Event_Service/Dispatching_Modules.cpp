@@ -599,8 +599,9 @@ ACE_ES_RTU_Dispatching::push (ACE_ES_Dispatch_Request *request,
 template class ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> >;
 template void operator+=(ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> > &, ACE_CORBA_var<ACE_ES_Event_Container> const &);
 
-#if defined(ACE_ES_LACKS_ORB)
-template class ACE_CORBA_Sequence<ACE_ES_Event>;
-#endif /* ACE_ES_LACKS_ORB */
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> >
+#pragma instantiate void operator+=(ACE_CORBA_Sequence<ACE_CORBA_var<ACE_ES_Event_Container> > &, ACE_CORBA_var<ACE_ES_Event_Container> const &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
