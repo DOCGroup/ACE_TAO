@@ -39,7 +39,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::first (void)
     }
 
   // The queue is empty if we are here
-  this->list_item_ = NULL;
+  this->list_item_ = 0;
 }
 
 
@@ -68,7 +68,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
             }
         }
   
-      this->list_item_ = NULL;
+      this->list_item_ = 0;
     }
 }
 
@@ -78,7 +78,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void)
 {
-  return this->list_item_ == NULL;
+  return this->list_item_ == 0;
 }
 
 
@@ -88,7 +88,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
 {
   if (this->isdone ())
-    return NULL;
+    return 0;
 
   return this->list_item_;
 }
@@ -99,9 +99,9 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_T (size_t wheelsize, 
-							   size_t resolution, 
-							   size_t prealloc,
-							   FUNCTOR *upcall_functor,
+                                                           size_t resolution, 
+                                                           size_t prealloc,
+                                                           FUNCTOR *upcall_functor,
                                                            ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : INHERITED (upcall_functor, freelist),
     wheel_size_ (wheelsize),
@@ -173,13 +173,13 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Wheel_T (void)
     {
       // delete nodes until only the dummy node is left
       while (this->wheel_[i]->get_next () != this->wheel_[i])
-	{
-	  ACE_Timer_Node_T<TYPE> *next = this->wheel_[i]->get_next ();
-	  this->wheel_[i]->set_next (next->get_next ());
-	  next->get_next ()->set_prev (this->wheel_[i]);
+        {
+          ACE_Timer_Node_T<TYPE> *next = this->wheel_[i]->get_next ();
+          this->wheel_[i]->set_next (next->get_next ());
+          next->get_next ()->set_prev (this->wheel_[i]);
           this->upcall_functor ().deletion (*this, next->get_type (), next->get_act ());
           this->free_node (next);
-	}
+        }
 
       // and now delete the dummy node
       delete this->wheel_[i];
@@ -219,9 +219,9 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> long
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type, 
-						  const void *act,
-						  const ACE_Time_Value &delay,
-						  const ACE_Time_Value &interval)
+                                                  const void *act,
+                                                  const ACE_Time_Value &delay,
+                                                  const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -237,8 +237,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
                      act,
                      delay,
                      interval,
-                     NULL,
-                     NULL,
+                     0,
+                     0,
                      (long) tempnode);
 
       // Reschedule will insert it into the correct position
@@ -258,7 +258,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
-						int dont_call_handle_close)
+                                                int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -273,26 +273,26 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
   
       // Walk through the list
       while (curr != this->wheel_[i])
-	{
-	  if (curr->get_type () == type)
-	    {
+        {
+          if (curr->get_type () == type)
+            {
               // Cancel it and remove it.  
-	      number_of_cancellations++;
+              number_of_cancellations++;
 
               // Detach it from the list
-	      ACE_Timer_Node_T<TYPE> *tempnode = curr;
-	      curr->get_prev ()->set_next (curr->get_next ());
-	      curr->get_next ()->set_prev (curr->get_prev ());
-	      
+              ACE_Timer_Node_T<TYPE> *tempnode = curr;
+              curr->get_prev ()->set_next (curr->get_next ());
+              curr->get_next ()->set_prev (curr->get_prev ());
+              
               // Go on to the next and delete the detached node
               curr = curr->get_next ();
               this->free_node (tempnode);
-	    }
-	  else
-	    {
-	      curr = curr->get_next ();
-	    }
-	}
+            }
+          else
+            {
+              curr = curr->get_next ();
+            }
+        }
     }
 
   //  Look for a new earliest time
@@ -304,15 +304,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
     {
       // Skip empty entries
       if (this->wheel_[i]->get_next () != this->wheel_[i])
-	{
-	  // if initialization or if the time is earlier
-	  if (earliest_time == ACE_Time_Value::zero
-	      || this->wheel_[i]->get_timer_value () < earliest_time)
-	    {
-	      earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
-	      this->earliest_pos_ = i;
-	    }
-	}
+        {
+          // if initialization or if the time is earlier
+          if (earliest_time == ACE_Time_Value::zero
+              || this->wheel_[i]->get_timer_value () < earliest_time)
+            {
+              earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
+              this->earliest_pos_ = i;
+            }
+        }
     }
 
   if (dont_call_handle_close == 0) 
@@ -327,8 +327,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
-						const void **act,
-						int dont_call_handle_close)
+                                                const void **act,
+                                                int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -347,10 +347,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
       node->get_prev ()->set_next (node->get_next ());
     
       if (act != 0)
-	*act = node->get_act ();
+        *act = node->get_act ();
 
       if (dont_call_handle_close == 0)
-	this->upcall_functor ().cancellation (*this, node->get_type ());
+        this->upcall_functor ().cancellation (*this, node->get_type ());
 
       // Find out what position it is in
       size_t pos = (node->get_timer_value ().usec () / this->resolution_) % this->wheel_size_;
@@ -368,15 +368,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
             {
               // Skip empty entries
               if (this->wheel_[i]->get_next () != this->wheel_[i])
-	        {
-	          // if initialization or if the time is earlier
-	          if (earliest_time == ACE_Time_Value::zero
-	              || this->wheel_[i]->get_timer_value () < earliest_time)
-	            {
-	              earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
-	              this->earliest_pos_ = i;
-	            }
-	        }
+                {
+                  // if initialization or if the time is earlier
+                  if (earliest_time == ACE_Time_Value::zero
+                      || this->wheel_[i]->get_timer_value () < earliest_time)
+                    {
+                      earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
+                      this->earliest_pos_ = i;
+                    }
+                }
             }
         }
 
@@ -405,10 +405,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
       ACE_DEBUG ((LM_DEBUG, "%d\n", i));
       ACE_Timer_Node_T<TYPE> *temp = this->wheel_[i]->get_next ();
       while (temp != this->wheel_[i])
-	{
-	  temp->dump ();
-	  temp = temp->get_next ();
-	}
+        {
+          temp->dump ();
+          temp = temp->get_next ();
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -434,15 +434,15 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::remove_first (void)
     {
       // Check for an empty entry
       if (this->wheel_[i]->get_next () != this->wheel_[i])
-	{
-	  // if initialization or if the time is earlier
-	  if (earliest_time == ACE_Time_Value::zero
-	      || this->wheel_[i]->get_timer_value () < earliest_time)
-	    {
-	      earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
-	      this->earliest_pos_ = i;
-	    }
-	}
+        {
+          // if initialization or if the time is earlier
+          if (earliest_time == ACE_Time_Value::zero
+              || this->wheel_[i]->get_timer_value () < earliest_time)
+            {
+              earliest_time = this->wheel_[i]->get_next ()->get_timer_value ();
+              this->earliest_pos_ = i;
+            }
+        }
     }
 
 
@@ -562,18 +562,18 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
     
           // Check if this is an interval timer.
           if (expired->get_interval () > ACE_Time_Value::zero)
-	    {
-	      // Make sure that we skip past values that have already
-	      // "expired".
-	      do
-	        expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
-	      while (expired->get_timer_value () <= cur_time);
+            {
+              // Make sure that we skip past values that have already
+              // "expired".
+              do
+                expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
+              while (expired->get_timer_value () <= cur_time);
 
-	      // Since this is an interval timer, we need to reschedule
-	      // it.
-	      this->reschedule (expired);
-	      reclaim = 0;
-	    }
+              // Since this is an interval timer, we need to reschedule
+              // it.
+              this->reschedule (expired);
+              reclaim = 0;
+            }
    
           // call the functor
           this->upcall (type, act, cur_time);

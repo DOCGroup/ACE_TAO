@@ -43,14 +43,14 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void)
   return this->position_ == this->timer_list_.head_;
 }
 
-// Returns the node at <position_> or NULL if we are at the end
+// Returns the node at <position_> or 0 if we are at the end
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
 {
   if (this->position_ != this->timer_list_.head_)
     return this->position_;
-  return NULL;
+  return 0;
 }
 
 // Return our instance of the iterator
@@ -155,7 +155,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *e
   // Locate the proper position in the queue. 
 
   while (after != this->head_ 
-	 && expired->get_timer_value () > after->get_timer_value ())
+         && expired->get_timer_value () > after->get_timer_value ())
       after = after->get_next ();
 
   expired->set_next (after);
@@ -170,9 +170,9 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *e
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> long
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
-						 const void *act,
-						 const ACE_Time_Value &future_time, 
-						 const ACE_Time_Value &interval)
+                                                 const void *act,
+                                                 const ACE_Time_Value &future_time, 
+                                                 const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_List_T::schedule");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -206,8 +206,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
-					       const void **act,
-					       int dont_call)
+                                               const void **act,
+                                               int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -226,10 +226,10 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
       node->get_prev ()->set_next (node->get_next ());
     
       if (act != 0)
-	*act = node->get_act ();
+        *act = node->get_act ();
 
       if (dont_call == 0)
-	this->upcall_functor ().cancellation (*this, node->get_type ());
+        this->upcall_functor ().cancellation (*this, node->get_type ());
     
       this->free_node (node);
       return 1;
@@ -244,7 +244,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
-					       int dont_call)
+                                               int dont_call)
 {
   ACE_TRACE ("ACE_Timer_List_T::cancel");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
@@ -256,15 +256,15 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
   while (curr != this->head_)
     {
       if (curr->get_type () == type)
-	{
-	  number_of_cancellations++;
+        {
+          number_of_cancellations++;
 
           curr->get_prev ()->set_next (curr->get_next ());
           curr->get_next ()->set_prev (curr->get_prev ());
           ACE_Timer_Node_T<TYPE> *temp = curr;
           curr = curr->get_next ();
           this->free_node (temp);
-	}
+        }
       else
         curr = curr->get_next ();
     }
