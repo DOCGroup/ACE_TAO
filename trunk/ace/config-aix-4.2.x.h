@@ -73,6 +73,9 @@
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
+// Compiler has readdir and friends.
+#define ACE_HAS_DIRENT
+
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
