@@ -1,3 +1,10 @@
+Mon Jan 04 00:15:13 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+          Updated to work with recent changes to the ORB (specifically the
+          IIOP_Object constructor and ORB_Core::addr()).
+
 Sun Jan 03 23:05:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp: 
