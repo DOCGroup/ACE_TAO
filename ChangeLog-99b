@@ -1,3 +1,8 @@
+Tue May 18 11:46:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/FILE_Connector.h: Changed the default perms from 0 to
+ 	  ACE_DEFAULT_FILE_PERMS.
+
 Tue May 18 11:28:32 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * examples/IPC_SAP/TLI_SAP/CPP-ATM-server.cpp: forced
