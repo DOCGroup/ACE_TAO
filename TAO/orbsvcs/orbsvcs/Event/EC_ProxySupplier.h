@@ -83,16 +83,16 @@ public:
   // The QoS (subscription) used to connect to the EC.
 
   virtual void connected (TAO_EC_ProxyPushConsumer* consumer,
-			  CORBA::Environment &env);
+                          CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer,
-			     CORBA::Environment &env);
+                             CORBA::Environment &env);
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier,
-			  CORBA::Environment &env);
+                          CORBA::Environment &env);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier,
-			     CORBA::Environment &env);
+                             CORBA::Environment &env);
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
@@ -114,7 +114,7 @@ public:
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
-		RtecEventComm::PushConsumer_ptr push_consumer,
+                RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS& qos,
                 CORBA::Environment &);
   virtual void disconnect_push_supplier (CORBA::Environment &);
@@ -167,9 +167,6 @@ private:
 
   CORBA::Boolean suspended_;
   // Is this consumer suspended?
-
-  int state_;
-  // The state, see the enum above for a description.
 
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The subscription and QoS information...
