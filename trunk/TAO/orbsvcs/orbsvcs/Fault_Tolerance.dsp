@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_BUILD_DLL" /D "TAO_ORBSVCS_HAS_FT" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_FT_BUILD_DLL" /D "TAO_ORBSVCS_HAS_FT" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_FT_ORB.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_Svc_Utils.lib TAO_FTORB_Utils.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_IORManip.lib TAO_PortableServer.lib TAO_CosNaming.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_Svc_Utils.lib TAO_FTORB_Utils.lib TAO_FT_ServerORB.lib TAO_FT_ClientORB.lib  TAO_CosEvent.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_Fault_Tolerance.dll" /libpath:"ETCL" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\tao\IORManipulation" /libpath:"..\..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Fault Tolerance - Win32 Debug"
 
