@@ -161,6 +161,8 @@ public:
 
 
 protected:
+  ACE_INET_Addr *address_;
+  ACE_INET_Addr *control_inet_address_;
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
@@ -190,6 +192,7 @@ public:
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
   virtual int close (void);
 protected:
+  ACE_INET_Addr *control_inet_address_;
   TAO_Base_StreamEndPoint *endpoint_;
   TAO_AV_Core *av_core_;
   TAO_FlowSpec_Entry *entry_;
