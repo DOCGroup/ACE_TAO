@@ -775,15 +775,25 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 #if defined (ACE_HAS_THREADS)
 
-// This global so that it doesn't have to be declared in the
-// header file.  That would cause nasty circular include problems.
-static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *
-ACE_Static_Object_Lock_lock = 0;
+// This is global so that it doesn't have to be declared in the header
+// file.  That would cause nasty circular include problems.
+// ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
+// But, applications may find it useful for avoiding recursive calls
+// if they have overridden operator new.  Thanks to Jody Hagins
+// <jody@atdesk.com> for contributing it.
+# if defined(ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
+    typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>
+      ACE_Static_Object_Lock_Type;
+    ACE_Static_Object_Lock_Type *
+# else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
+    static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *
+# endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
+      ACE_Static_Object_Lock_lock = 0;
 
 ACE_Recursive_Thread_Mutex *
 ACE_Static_Object_Lock::instance (void)
 {
-  if (ACE_Object_Manager::starting_up ()  || \
+  if (ACE_Object_Manager::starting_up ()  ||
       ACE_Object_Manager::shutting_down ())
     {
       // The preallocated ACE_STATIC_OBJECT_LOCK has not been
@@ -793,9 +803,24 @@ ACE_Static_Object_Lock::instance (void)
       // Allocate a lock to use, for interface compatibility, though
       // there should be no contention on it.
       if (ACE_Static_Object_Lock_lock == 0)
+        {
+#     if defined (ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
+        // Allocate a buffer with malloc, and then use placement
+        // new for the object, on the malloc'd buffer.
+        void *buffer =
+          ACE_OS::malloc (sizeof (*ACE_Static_Object_Lock_lock));
+        if (buffer == 0)
+          {
+            return 0;
+          }
+        ACE_NEW (ACE_Static_Object_Lock_lock,
+                 ACE_static_cast (buffer, ACE_Static_Object_Lock_Type ()));
+#       else   /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
         ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
                         ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
                         0);
+#       endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
+        }
 
       // Can't register with the ACE_Object_Manager here!  The lock's
       // declaration is visible to the ACE_Object_Manager destructor,
@@ -813,8 +838,16 @@ ACE_Static_Object_Lock::instance (void)
 void
 ACE_Static_Object_Lock::cleanup_lock (void)
 {
-  delete ACE_Static_Object_Lock_lock;
-  ACE_Static_Object_Lock_lock = 0;
+# if defined(ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
+    // It was malloc'd, so we need to explicitly call the dtor
+    // and then free the memory.
+    ACE_DES_FREE (ACE_Static_Object_Lock_lock,
+                  ACE_OS::free,
+                  ACE_Static_Object_Lock_Type);
+# else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
+    delete ACE_Static_Object_Lock_lock;
+# endif /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
+    ACE_Static_Object_Lock_lock = 0;
 }
 #endif /* ACE_HAS_THREADS */
 
