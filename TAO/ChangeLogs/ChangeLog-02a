@@ -1,4 +1,41 @@
-Tue Mar 06 23:34:55 2001  Ossama Othman  <ossama@uci.edu>
+Wed Mar 07 00:07:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableInterceptorS.h:
+
+	  Some IDL files may include the `tao/PortableInterceptor.pidl'
+	  file.  In those cases, the IDL compiler will generate an include
+	  for this header in the skeleton.  This dummy header satisfies
+	  that inclusion.
+
+	* tests/Portable_Interceptors/ForwardRequest/ServerRequestInterceptor.idl:
+
+	  Removed this IDL files.  Some old C++ compilers couldn't handle the
+	  reopened namespaces found in the stubs/skeletons associated with
+	  this IDL.
+
+	* tests/Portable_Interceptors/ForwardRequest/test.idl:
+
+	  Moved the "ServerRequestInterceptor" interface to this IDL file
+	  since some old C++ compilers couldn't handle the reopened
+	  namespaces found in the stubs/skeletons associated with this
+	  IDL.
+
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.h:
+
+	  Include `testC.h' instead of `ServerRequestInterceptorC.h' since
+	  the server request interceptor IDL was moved to the `test.idl'
+	  file.
+
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/client.bor:
+	* tests/Portable_Interceptors/ForwardRequest/server.bor:
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+
+	  Removed references to the removed `ServerRequestInterceptor.idl'
+	  file, and updated IDL compiler flags accordingly.
+
+Tue Mar 06 23:43:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/CONV_FRAMEC.cpp (operator>>=):
 	* tao/DomainC.cpp (operator>>=):

@@ -36,4 +36,4 @@ IDLDIR = .
 #
 
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
-	$(TAO_IDL) $**
+	$(TAO_IDL) -DCORBA3 -I..\..\.. $**

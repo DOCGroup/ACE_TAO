@@ -11,7 +11,6 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\ServerRequestInterceptorC.obj \
 	$(OBJDIR)\server.obj \
 	$(OBJDIR)\test_i.obj \
 	$(OBJDIR)\Server_Request_Interceptor.obj \
@@ -28,8 +27,7 @@ LIBFILES = \
 	$(TAO_PORTABLESERVER_LIB)
 
 IDLFILES = \
-	$(IDLDIR)\test.idl \
-	$(IDLDIR)\ServerRequestInterceptor.idl
+	$(IDLDIR)\test.idl
 
 CPPDIR = .
 
@@ -42,7 +40,5 @@ IDLDIR = .
 #
 
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
-	$(TAO_IDL) $**
-
-$(IDLDIR)\ServerRequestInterceptorC.cpp: $(IDLDIR)\ServerRequestInterceptor.idl
 	$(TAO_IDL) -DCORBA3 -I..\..\.. $**
+
