@@ -1,3 +1,25 @@
+Sat Jun 19 14:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynUnion_i_T.h:
+	* tao/DynUnion_i_T.cpp:
+	  Cosmetic changes.
+
+	* tao/DynUnion_i.h:
+	* tao/DynUnion_i.cpp:
+	  Class DynUnion_i contains a functor class DU_Extractor to
+	  check for a match in TypeCode::member-label when 
+	  constructing or assigning from an Any. DU_Extractor is a
+	  template class containing one function check_match(). The
+	  cases where the discriminator is a wchar or an enum caused
+	  resolution problems with 16 and 32 bit types respectively,
+	  so they had been specialized classes inheriting from a
+	  non-template base class. The cases for char and boolean,
+	  however, needed onlythe template function check_match()
+	  specialized, in order to use to_char and to_boolean. This
+	  kept all the compilers happy until recently, when AIX/egcs
+	  complained about char and boolean, so they have also been
+	  subclassed.
+
 Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* rules.tao.GNU : Added the default argument ie. -Ge 1 to be used
