@@ -71,8 +71,12 @@ TAO_Synch_Reply_Dispatcher::message_state (void) const
 // *********************************************************************
 
 // Constructor.
-TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state)
-  : message_state_ (message_state)
+TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State *message_state,
+                                                          const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+                                                          Messaging::ReplyHandler_ptr reply_handler_ptr)
+  : message_state_ (message_state),
+    reply_handler_skel_ (reply_handler_skel),
+    reply_handler_ (reply_handler_ptr)
 {
 }
 
@@ -111,7 +115,14 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
       ACE_DEBUG ((LM_DEBUG,
                   "%N:%l:TAO_Asynch_Reply_Dispatcher::dispatch_reply:\n"));
     }
-
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+  
+  // Call the Reply Handler's skeleton.
+  reply_handler_skel_ (message_state_->cdr,
+                       reply_handler_,
+                       ACE_TRY_ENV);
+                                  
   return 0;
 }
 

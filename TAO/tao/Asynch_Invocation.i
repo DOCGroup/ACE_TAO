@@ -4,9 +4,12 @@
 //
 
 ACE_INLINE
-TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
-                                                        const char *operation,
-                                                        TAO_ORB_Core *orb_core)
+TAO_GIOP_Twoway_Asynch_Invocation::
+TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
+                                   const char *operation,
+                                   TAO_ORB_Core *orb_core,
+                                   const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+                                   Messaging::ReplyHandler_ptr reply_handler_ptr)
   : TAO_GIOP_Asynch_Invocation (stub, operation, orb_core),
     message_state_ (0),
     rd_ (0)
@@ -17,7 +20,9 @@ TAO_GIOP_Twoway_Asynch_Invocation::TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *
   
   // New Reply Dispatcher.
   ACE_NEW (rd_,
-           TAO_Asynch_Reply_Dispatcher (message_state_));
+           TAO_Asynch_Reply_Dispatcher (message_state_,
+                                        reply_handler_skel,
+                                        reply_handler_ptr));
 }
 
 ACE_INLINE TAO_InputCDR &
