@@ -70,6 +70,7 @@ main (int argc, char *argv[])
 
       Test::Coordinator_var coordinator =
         coordinator_impl->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
 	orb->object_to_string (coordinator.in (), ACE_TRY_ENV);

@@ -115,6 +115,7 @@ main (int argc, char *argv [])
 
       CORBA::String_var str =
         orb->object_to_string (ec.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (ior_file_name != 0)
         {

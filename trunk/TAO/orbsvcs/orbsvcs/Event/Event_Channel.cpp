@@ -414,12 +414,14 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
 
       this->time_stamp (copy);
       this->supplier_module_->push (this, copy, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   else
     {
       RtecEventComm::EventSet copy = event;
       this->time_stamp (copy);
       this->supplier_module_->push (this, copy, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 }
 

@@ -607,6 +607,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                       // This constructor is fast.
                       const RtecEventComm::EventSet es (1, 1, &event);
                       consumer [cons]->push (es, ACE_TRY_ENV);
+                      ACE_TRY_CHECK;
                     }
                 }
               else
@@ -626,10 +627,10 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                   events.length (1);
                   events[0] = event;
                   consumers_->push (events, ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
 
                   ACE_TIMEPROBE (EVENT_LATENCY_SUPPLIER_ENDS_PUSHING_EVENT);
                 }
-              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {

@@ -364,10 +364,15 @@ main (int argc, char* argv[])
       for (int i = 0; i != 200; ++i)
         {
           if (i % 2 == 0)
-            consumer_proxy->push (event1, ACE_TRY_ENV);
+            {
+              consumer_proxy->push (event1, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
           else
-            consumer_proxy->push (event2, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+            {
+              consumer_proxy->push (event2, ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
 
           ACE_Time_Value rate (0, 10000);
           ACE_OS::sleep (rate);

@@ -601,16 +601,18 @@ Test_ECG::run (int argc, char* argv[])
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              infos_out, configs_out, anomalies_out, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 #else  /* ! __SUNPRO_CC */
           ACE_Scheduler_Factory::server ()->compute_scheduling
             (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
              ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                              ACE_SCOPE_THREAD),
-             infos.out (), configs.out (), anomalies.out (), ACE_TRY_ENV);
+             infos.out (), configs.out (), anomalies.out (),
+             ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 #endif /* ! __SUNPRO_CC */
 
-          ACE_TRY_CHECK;
           ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                                 configs.in (),
                                                 anomalies.in (),
@@ -1008,21 +1010,21 @@ Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
 {
 
   this->running_suppliers_--;
-  if (this->running_suppliers_ == 0)
-    {
-      // We propagate a shutdown event through the system...
-      RtecEventComm::EventSet shutdown (1);
-      shutdown.length (1);
-      RtecEventComm::Event& s = shutdown[0];
+  if (this->running_suppliers_ != 0)
+    return;
 
-      s.header.source = 0;
-      s.header.ttl = 1;
+  // We propagate a shutdown event through the system...
+  RtecEventComm::EventSet shutdown (1);
+  shutdown.length (1);
+  RtecEventComm::Event& s = shutdown[0];
 
-      ACE_hrtime_t t = ACE_OS::gethrtime ();
-      ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
-      s.header.type = ACE_ES_EVENT_SHUTDOWN;
-      consumer->push (shutdown, ACE_TRY_ENV);
-    }
+  s.header.source = 0;
+  s.header.ttl = 1;
+
+  ACE_hrtime_t t = ACE_OS::gethrtime ();
+  ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
+  s.header.type = ACE_ES_EVENT_SHUTDOWN;
+  consumer->push (shutdown, ACE_TRY_ENV);
 }
 
 void

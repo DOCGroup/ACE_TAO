@@ -278,6 +278,7 @@ EC_Driver::initialize_ec_impl (CORBA::Environment& ACE_TRY_ENV)
   if (this->use_remote_ec_ == 1)
     {
       this->obtain_remote_ec (ACE_TRY_ENV);
+      ACE_CHECK;
       return;
     }
 #endif
@@ -286,6 +287,7 @@ EC_Driver::initialize_ec_impl (CORBA::Environment& ACE_TRY_ENV)
   if (this->use_old_ec_ == 1)
     {
       this->initialize_old_ec (ACE_TRY_ENV);
+      ACE_CHECK;
       return;
     }
 #endif

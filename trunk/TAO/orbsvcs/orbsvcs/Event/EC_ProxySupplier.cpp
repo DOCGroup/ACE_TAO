@@ -587,6 +587,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
         this->event_channel_->consumer_control ();
 
       control->consumer_not_exist (this, ACE_TRY_ENV);
+      ACE_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
@@ -596,6 +597,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       control->system_exception (this,
                                  sysex,
                                  ACE_TRY_ENV);
+      ACE_CHECK;
     }
   ACE_CATCHANY
     {

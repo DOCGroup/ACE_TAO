@@ -114,9 +114,16 @@ TAO_EC_Gateway_IIOP::close_i (CORBA::Environment &ACE_TRY_ENV)
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
             continue;
-          consumer->disconnect_push_consumer (ACE_TRY_ENV);
+          ACE_TRY
+            {
+              consumer->disconnect_push_consumer (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+            }
+          ACE_ENDTRY;
           CORBA::release (consumer);
-          ACE_CHECK;
         }
       // Remove all the elements on the map.  Calling close() does not
       // work because the map is left in an inconsistent state.
@@ -441,6 +448,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events,
       {
         this->update_posted_ = 0;
         this->update_consumer_i (this->c_qos_, ACE_TRY_ENV);
+        ACE_CHECK;
       }
   }
 

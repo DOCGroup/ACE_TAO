@@ -132,6 +132,7 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier,
         {
           //          ACE_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
           this->collection_->connected (supplier, ACE_TRY_ENV);
+          ACE_CHECK;
           return;
         }
     }
