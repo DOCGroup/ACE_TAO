@@ -286,7 +286,7 @@ public:
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
-            u_long bytes_to_read,
+            u_long num_bytes_to_read,
             const void *act = 0,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
