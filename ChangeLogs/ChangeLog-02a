@@ -1,3 +1,8 @@
+Wed Nov 15 10:19:45 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Threads/thread_specific.cpp:
+          Fixed warning under linux
+
 Wed Nov 15 08:32:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * apps/JAWS/server/Makefile:
