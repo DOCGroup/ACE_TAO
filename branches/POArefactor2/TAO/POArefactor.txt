@@ -1,3 +1,8 @@
+Wed Oct 13 11:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (id):
+          Use ACE_NEW_THROW_EX instead of plain new
+
 Wed Oct 13 10:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Activation_Strategy.{h,cpp,inl}:
