@@ -7,10 +7,22 @@ Sat Aug 10 17:09:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  repo. They dont seem to work right in any configuration and this
 	  should be fixed after the beta. 
 
+Fri Aug 9 21:22:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	
+	* tao/RTCORBA/TAO_RTCORBA.dsp: 
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 	
+
+	  Reacreated the project files to add files
+	  Network_Priority_Mapping.{h,cpp,i},
+	  Linear_Network_Priority_Mapping.{h,cpp,i},
+	  Network_Priority_Mapping_Manager.{h,cpp,i} to fix the compile
+	  errors.
+
 Fri Aug  9 15:28:10 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
 	  Fixed the Debian NoInline builds.
+
 
 Fri Aug  9 15:26:30 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -34,6 +46,7 @@ Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  This should fix somerandom core dumps with MT_Timeout test which
 	  uses this feature heavily.
 
+>>>>>>> 1.243
 Thu Aug  8 23:12:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Reverted this change "Thu Aug  8
