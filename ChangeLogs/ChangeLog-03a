@@ -1,3 +1,43 @@
+Thu Mar  1 13:18:07 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Added two new tests:
+
+          - absolute ACE_wrappers test:
+
+            Check for ~schmidt/ACE_wrappers in html files.  These should
+            be relative links since these html files already exist in 
+            their own ACE_wrappers tree.
+
+          - TRACE test:
+
+            Does a check on whether the ACE_TRACE or ACE_OS_TRACE actually
+            refers to the function/method it is in.  
+
+          And expanded the checks in the bad run_test test (level 6)
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_Win32.pm:
+
+          - Added checks for file existence before running.
+          - Added IgnoreExeSubDir option.
+          - Added TerminateWaitKill method.
+
+        * bin/pippen.pl: (added)
+        * bin/PerlACE/MSProject.pm: (added)
+        * bin/PerlACE/MSProject/DSP.pm: (added)
+        * bin/PerlACE/MSProject/VCP.pm: (added)
+
+          There is nothing to see here...please be on your way.
+
+          It isn't like this is a super top secret project to
+          replace msvc_auto_compile.pl with something that works
+          better and also has a cool code-name that is shorter
+          than "msvc_auto_compile.pl".  
+
+          But remember, you didn't hear that from me.
+          
 Thu Mar  1 10:54:23 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
