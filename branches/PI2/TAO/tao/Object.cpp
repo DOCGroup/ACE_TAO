@@ -88,6 +88,9 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
   //
   // XXX if type_id is that of CORBA_Object, "yes, we comply" :-)
 
+  if (this->is_local_)
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
                          this->_stubobj ()->type_id.in ()) == 0)
@@ -389,7 +392,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   return _tao_retval;
@@ -418,6 +421,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                     arg_list,
                                     result,
                                     req_flags,
+                                    CORBA::ExceptionList::_nil (),
                                     ACE_TRY_ENV),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
@@ -431,7 +435,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                const CORBA::Char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
-                               CORBA::ExceptionList_ptr,
+                               CORBA::ExceptionList_ptr exceptions,
                                CORBA::ContextList_ptr,
                                CORBA::Request_ptr &request,
                                CORBA::Flags req_flags,
@@ -451,6 +455,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
                                     arg_list,
                                     result,
                                     req_flags,
+                                    exceptions,
                                     ACE_TRY_ENV),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
