@@ -83,6 +83,8 @@ Test_Task::synch (void)
 
 void work (ACE_Thread_Manager *thr_mgr, int n_tasks, size_t stack_size)
 {
+  ACE_UNUSED_ARG (stack_size);
+
   int i;
   Test_Task *task_array = new Test_Task[n_tasks];
 
