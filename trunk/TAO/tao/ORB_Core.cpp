@@ -841,11 +841,35 @@ int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 {
   // Inherit properties/objects used in ORB_Core from the
-  // parent thread.  
+  // parent thread.  Stuff inherited here must already exist
+  // in the "parent" orbcore.
 
   this->orb (p->orb ());
+  // We'll use the spawning thread's ORB.
+
   this->root_poa (p->root_poa ());
-  // At the moment, only root_poa needs to be inherited.
+  // And its root_poa.
+
+  this->orb_params_ = p->orb_params ();
+  // We also need its ORB_Params.
+
+  this->oa_params_ = p->oa_params ();
+  // And, of course, the POA params.
+
+  this->thr_mgr (p->thr_mgr ());
+  // We should use the same thread_manager.
+
+  this->resource_factory_ = p->resource_factory ();
+  this->client_factory_ = p->client_factory ();
+  this->server_factory_ = p->server_factory ();
+  // Inherit the factories.  Notice that they will not be destroyed by
+  // this orb_core because *_facotry_from_service_config_'s all default
+  // to FALSE.
+
+  this->using_collocation (p->using_collocation ());
+
+  // @@ We shouldn't share the same reactor with the spawning thread.
+  //    But what about connector and acceptor????
 
   return 0;
 }
@@ -883,7 +907,7 @@ TAO_ORB_Core::add_to_collocation_table (void)
     {
       TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
       if (coltbl != 0)
-        return coltbl->bind (this->addr (), this->root_poa ());
+        return coltbl->bind (this->orb_params ()->addr (), this->root_poa ());
     }
   return 0;
 }
@@ -902,7 +926,7 @@ TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
         }
       else
         {
-          if (addr == this->addr ())
+          if (addr == this->orb_params ()->addr ())
             return this->root_poa ();
         }
     }
