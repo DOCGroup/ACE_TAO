@@ -181,6 +181,10 @@ main (int argc, char *argv[])
           server->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {

@@ -3,14 +3,16 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 
-ACE_RCSID(Failure, server, "$Id$")
+ACE_RCSID(Failure, middle, "$Id$")
 
-const char *ior_output_file = 0;
+const char *ior_output_file = "middle.ior";
+const char *ior = "file://test.ior";
+int niterations = 10;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:k:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,11 +22,21 @@ parse_args (int argc, char *argv[])
 	ior_output_file = get_opts.optarg;
 	break;
 
+      case 'k':
+        ior = get_opts.optarg;
+        break;
+
+      case 'i':
+        niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
 			   "-o <iorfile>"
+                           "-k <ior> "
+                           "-i <niterations> "
                            "\n",
                            argv [0]),
                           -1);
@@ -63,14 +75,31 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i server_impl (orb.in ());
+      CORBA::Object_var object =
+        orb->string_to_object (ior, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       Simple_Server_var server =
-        server_impl._this (ACE_TRY_ENV);
+        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (server.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Object reference <%s> is nil\n",
+                             ior),
+                            1);
+        }
+
+      Middle_i middle_impl (orb.in (),
+                            server.in ());
+
+      Simple_Server_var middle =
+        middle_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-	orb->object_to_string (server.in (), ACE_TRY_ENV);
+	orb->object_to_string (middle.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -94,6 +123,7 @@ main (int argc, char *argv[])
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
     }
   ACE_CATCHANY
     {

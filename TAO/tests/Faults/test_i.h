@@ -72,6 +72,41 @@ private:
   // The ORB
 };
 
+class Middle_i : public POA_Simple_Server
+{
+  // = TITLE
+  //   Another implementation of the simple server...
+  //
+  // = DESCRIPTION
+  //   Implements the Simple_Server interface in test.idl
+  //
+public:
+  Middle_i (CORBA::ORB_ptr orb,
+            Simple_Server_ptr server);
+  // ctor
+
+  // = The Simple_Server methods.
+  CORBA::Long test_method (CORBA::Boolean do_callback,
+                           CORBA::Boolean is_clean,
+                           Callback_ptr callback,
+                           CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown_now (CORBA::Boolean is_clean,
+                     CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void shutdown (CORBA::Environment&)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+private:
+  CORBA::ORB_ptr orb_;
+  // The ORB
+
+  Simple_Server_var server_;
+  // The real server
+};
+
 #if defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */

@@ -149,6 +149,9 @@ protected:
 
   TAO_ORB_Core_TSS_Resources *tss_resources_;
   // Cached tss resources of the ORB that activated this object.
+
+  u_long refcount_;
+  // Reference count, to avoid early deletes...
 };
 
 #if defined (__ACE_INLINE__)
