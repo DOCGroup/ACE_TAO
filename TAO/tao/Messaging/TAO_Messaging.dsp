@@ -156,6 +156,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\AMI_ClientRequestInfo_i.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -214,6 +218,10 @@ SOURCE=.\Twoway_Asynch_Invocation.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\AMI_ClientRequestInfo_i.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\Asynch_Reply_Dispatcher.h
