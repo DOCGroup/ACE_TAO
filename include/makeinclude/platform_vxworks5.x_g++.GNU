@@ -34,7 +34,8 @@ endif # WIND_HOST_TYPE
 HOST_DIR        = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
 
 ifeq (,$(findstring $(HOST_DIR)/bin,$PATH))
-  PATH +=:$(HOST_DIR)/bin
+  #### Use := instead of += because += inserts a space.
+  PATH := $(PATH):$(HOST_DIR)/bin
 endif # PATH
 
 
