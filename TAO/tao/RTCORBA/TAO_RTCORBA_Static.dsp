@@ -1,4 +1,3 @@
-
 # Microsoft Developer Studio Project File - Name="RTCORBA_Static" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
@@ -41,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\RTCORBA"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -67,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\RTCORBA"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -104,19 +103,11 @@ SOURCE=.\Direct_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping_Manager.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Linear_Network_Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.i
 # End Source File
 # Begin Source File
 
@@ -125,6 +116,14 @@ SOURCE=.\Network_Priority_Mapping.i
 # Begin Source File
 
 SOURCE=.\Network_Priority_Mapping_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
@@ -180,19 +179,11 @@ SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping_Manager.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Linear_Network_Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.h
 # End Source File
 # Begin Source File
 
@@ -201,6 +192,14 @@ SOURCE=.\Network_Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Network_Priority_Mapping_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
@@ -292,15 +291,11 @@ SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Linear_Network_Priority_Mapping.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
@@ -309,6 +304,10 @@ SOURCE=.\Network_Priority_Mapping.cpp
 # Begin Source File
 
 SOURCE=.\Network_Priority_Mapping_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
