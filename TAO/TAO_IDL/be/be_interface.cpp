@@ -109,7 +109,7 @@ be_interface::be_interface (UTL_ScopedName *n,
       ACE_SET_BITS (idl_global->decls_seen_info_,
                     idl_global->decls_seen_masks.interface_seen_);
 
-      if (abstract)
+      if (abstract || this->has_mixed_parentage ())
         {
           // Set the flag for abstract interface seen in this IDL file.
           ACE_SET_BITS (idl_global->decls_seen_info_,
