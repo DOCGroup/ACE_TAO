@@ -273,7 +273,7 @@ iiop_string_to_object (CORBA::String string,
 
   // Set the ref_count on data to 1, which is correct, because only
   // obj has now a reference to it.
-  data->_decr_refcnt ();
+  // data->_decr_refcnt ();
 
   return obj;
 }

@@ -1,3 +1,9 @@
+Tue Jul 21 16:57:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_ORB.cpp (iiop_string_to_object): Don't decrement the
+ 	  ref count on the IIOP_Object since the policy has changed such
+ 	  that the CORBA_Object is taking ownership of the IIOP_Object.
+
 Tue Jul 21 15:49:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added a new Server
