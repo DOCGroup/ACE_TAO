@@ -1,3 +1,49 @@
+Sat Mar 13 21:53:57 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	Added the Inaccuracy measure to the time returned by a 
+ 	Universal Time Object (UTO). The inaccuracy is a 64 bit number
+	broken into inacchi and inacclo as :
+
+		Inaccuracy 64-bits
+	|------------------------------------|
+	|         | inacchi |   inacclo      |
+	|------------------------------------|
+	  16-bits   16-bits     32-bits
+
+	The current measure of inaccuracy is the skew in synchronization of
+	the clerk's time. It is the difference in the largest and smallest
+	times from servers that the clerk syncs its time with. The inaccuracy
+	is dynamically updated with every time synchronization cycle. 
+	
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Added the 
+	logic to calculate the inaccuracy from the times returned by servers.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp : 
+	Constructed the Inaccuracy within UTO from the hi,lo values in UTC
+	struct in uto_from_utc(). Filled the UTO with the current inaccuracy
+	estimate in universal_time (). Added the GET/SET methods for the 
+	inaccuracy.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h : 
+	Added a class variable for inaccuracy estimate and the declarations
+	for the GET/SET methods. These are used by the Timer_Helper class to 
+	set the inaccuracy.
+
+	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp :
+	Changed the constructor to initialise the UTO inacchi and inacclo 
+	with properly extracted bits from the given inaccuracy. Rewrote the
+	GET method for inaccuracy to construct the inaccuracy from the UTC
+	struct hi,lo values. This was previously being returned as just the 
+	addition of hi and lo values.
+
+	* orbsvcs/tests/Time/Client_i.cpp : Changed the test to test for the 
+	newly added inaccuracy and timezone information in the UTO time.
+
+	* orbsvcs/Time_Service/README : Updated to include this addition in 
+	the Time Service.
+
+	Thanks to Brian Dance <Brian_Dance@UECCS.co.uk> for reporting this.
+	
 Sat Mar 13 11:58:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
