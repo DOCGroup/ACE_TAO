@@ -74,8 +74,8 @@ Test_Short::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Short::add_args (CORBA::NVList_ptr &param_list,
-                      CORBA::NVList_ptr &retval,
+Test_Short::add_args (CORBA::NVList_ptr param_list,
+                      CORBA::NVList_ptr retval,
                       CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data

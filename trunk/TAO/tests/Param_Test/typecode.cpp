@@ -89,9 +89,9 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_TypeCode::add_args (CORBA::NVList_ptr &param_list,
-                      CORBA::NVList_ptr &retval,
-                      CORBA::Environment &env)
+Test_TypeCode::add_args (CORBA::NVList_ptr param_list,
+			 CORBA::NVList_ptr retval,
+			 CORBA::Environment &env)
 {
   return 0;
 }

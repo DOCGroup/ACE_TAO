@@ -91,9 +91,9 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr &param_list,
-                                                            CORBA::NVList_ptr &retval,
-                                                                    CORBA::Environment &env)
+Test_Bounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
+					CORBA::NVList_ptr retval,
+					CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Bounded_StructSeq, (void *) &this->in_, 0);
   CORBA::Any inout_arg (Param_Test::_tc_Bounded_StructSeq, &this->inout_.inout (), 0);

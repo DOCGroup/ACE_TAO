@@ -76,6 +76,76 @@ private:
   friend class CORBA_Request;
 };
 
+typedef CORBA_NamedValue* CORBA_NamedValue_ptr;
+
+class TAO_Export CORBA_NamedValue_var
+{
+  // = TITLE
+  //   The T_var class for NamedValue
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object NamedValue must have a T_var class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_NamedValue_ptr as the _ptr type instead of
+  //   CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_NamedValue_var (void); // default constructor
+  CORBA_NamedValue_var (CORBA_NamedValue_ptr);
+  CORBA_NamedValue_var (const CORBA_NamedValue_var &); // copy constructor
+  ~CORBA_NamedValue_var (void); // destructor
+
+  CORBA_NamedValue_var &operator= (CORBA_NamedValue_ptr);
+  CORBA_NamedValue_var &operator= (const CORBA_NamedValue_var &);
+  CORBA_NamedValue_ptr operator-> (void) const;
+
+  operator const CORBA_NamedValue_ptr &() const;
+  operator CORBA_NamedValue_ptr &();
+  // in, inout, out, _retn
+  CORBA_NamedValue_ptr in (void) const;
+  CORBA_NamedValue_ptr &inout (void);
+  CORBA_NamedValue_ptr &out (void);
+  CORBA_NamedValue_ptr _retn (void);
+  CORBA_NamedValue_ptr ptr (void) const;
+
+private:
+  CORBA_NamedValue_ptr ptr_;
+};
+
+class TAO_Export CORBA_NamedValue_out
+{
+  // = TITLE
+  //   The T_out class for NamedValue
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object NamedValue must have a T_out class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_NamedValue_ptr as the _ptr type instead of
+  //   CORBA::NamedValue_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_NamedValue_out (CORBA_NamedValue_ptr &);
+  CORBA_NamedValue_out (CORBA_NamedValue_var &);
+  CORBA_NamedValue_out (CORBA_NamedValue_out &);
+  CORBA_NamedValue_out &operator= (CORBA_NamedValue_out &);
+  CORBA_NamedValue_out &operator= (const CORBA_NamedValue_var &);
+  CORBA_NamedValue_out &operator= (CORBA_NamedValue_ptr);
+  operator CORBA_NamedValue_ptr &();
+  CORBA_NamedValue_ptr &ptr (void);
+  CORBA_NamedValue_ptr operator-> (void);
+
+private:
+  CORBA_NamedValue_ptr &ptr_;
+};
+
+// ****************************************************************
+
 class TAO_Export CORBA_NVList
 {
   // = TITLE
@@ -97,35 +167,35 @@ public:
   CORBA::ULong count (void) const;
   // return the current number of elements in the list
 
-  CORBA::NamedValue_ptr add (CORBA::Flags,
+  CORBA_NamedValue_ptr add (CORBA::Flags,
                              CORBA::Environment &);
   // add an element and just initialize the flags
 
-  CORBA::NamedValue_ptr add_item (const char *,
+  CORBA_NamedValue_ptr add_item (const char *,
                                   CORBA::Flags,
                                   CORBA::Environment &);
   // add an element and initialize its name and flags
 
-  CORBA::NamedValue_ptr add_value (const char *,
+  CORBA_NamedValue_ptr add_value (const char *,
                                    const CORBA::Any &,
                                    CORBA::Flags,
                                    CORBA::Environment &);
   // initializes a value, name, and flags
 
-  CORBA::NamedValue_ptr add_item_consume (char *,
+  CORBA_NamedValue_ptr add_item_consume (char *,
                                           CORBA::Flags,
                                           CORBA::Environment &);
   // just like add_item. In addition, memory management of char * name is taken
   // over by the NVList
 
-  CORBA::NamedValue_ptr add_value_consume (char *,
+  CORBA_NamedValue_ptr add_value_consume (char *,
                                            CORBA::Any_ptr,
                                            CORBA::Flags,
                                            CORBA::Environment &);
   // just like add_value. In addition, the NVList controls the memory
   // management of the char *name and Any *value parameter
 
-  CORBA::NamedValue_ptr item (CORBA::ULong n, CORBA::Environment &env);
+  CORBA_NamedValue_ptr item (CORBA::ULong n, CORBA::Environment &env);
   // retrieve the item at the nth location. Raises Bounds
 
   //  CORBA::Status
@@ -145,11 +215,11 @@ private:
   // constructor - cannot be instantiated directly other than through the
   // ORB::create_list method
 
-  CORBA::NamedValue_ptr add_element (CORBA::Flags, CORBA::Environment &);
+  CORBA_NamedValue_ptr add_element (CORBA::Flags, CORBA::Environment &);
   // helper to increase the list size. This is used by all the add_ methods of
   // the NVList class
 
-  ACE_Unbounded_Queue<CORBA::NamedValue_ptr> values_;
+  ACE_Unbounded_Queue<CORBA_NamedValue_ptr> values_;
   // internal list of parameters stored as NamedValues
 
   CORBA::ULong max_;
@@ -164,6 +234,76 @@ private:
   friend class CORBA_ORB;
   friend class CORBA_Request;
 };
+
+typedef CORBA_NVList* CORBA_NVList_ptr;
+
+class TAO_Export CORBA_NVList_var
+{
+  // = TITLE
+  //   The T_var class for NVList
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object NVList must have a T_var class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_NVList_ptr as the _ptr type instead of
+  //   CORBA::NVList_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_NVList_var (void);
+  CORBA_NVList_var (CORBA_NVList_ptr);
+  CORBA_NVList_var (const CORBA_NVList_var &);
+  ~CORBA_NVList_var (void);
+
+  CORBA_NVList_var &operator= (CORBA_NVList_ptr);
+  CORBA_NVList_var &operator= (const CORBA_NVList_var &);
+  CORBA_NVList_ptr operator-> (void) const;
+
+  operator const CORBA_NVList_ptr &() const;
+  operator CORBA_NVList_ptr &();
+  // in, inout, out, _retn
+  CORBA_NVList_ptr in (void) const;
+  CORBA_NVList_ptr &inout (void);
+  CORBA_NVList_ptr &out (void);
+  CORBA_NVList_ptr _retn (void);
+  CORBA_NVList_ptr ptr (void) const;
+
+private:
+  CORBA_NVList_ptr ptr_;
+};
+
+class TAO_Export CORBA_NVList_out
+{
+  // = TITLE
+  //   The T_out class for NVList
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object NVList must have a T_out class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_NVList_ptr as the _ptr type instead of
+  //   CORBA::NVList_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_NVList_out (CORBA_NVList_ptr &);
+  CORBA_NVList_out (CORBA_NVList_var &);
+  CORBA_NVList_out (CORBA_NVList_out &);
+  CORBA_NVList_out &operator= (CORBA_NVList_out &);
+  CORBA_NVList_out &operator= (const CORBA_NVList_var &);
+  CORBA_NVList_out &operator= (CORBA_NVList_ptr);
+  operator CORBA_NVList_ptr &();
+  CORBA_NVList_ptr &ptr (void);
+  CORBA_NVList_ptr operator-> (void);
+
+private:
+  CORBA_NVList_ptr &ptr_;
+};
+
+// ****************************************************************
 
 #if defined (__ACE_INLINE__)
 # include "tao/NVList.i"

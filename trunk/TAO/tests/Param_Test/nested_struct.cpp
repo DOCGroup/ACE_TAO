@@ -92,9 +92,9 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Nested_Struct::add_args (CORBA::NVList_ptr &param_list,
-                                CORBA::NVList_ptr &retval,
-                                CORBA::Environment &env)
+Test_Nested_Struct::add_args (CORBA::NVList_ptr param_list,
+			      CORBA::NVList_ptr retval,
+			      CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Nested_Struct, (void *) &this->in_, 0);
   CORBA::Any inout_arg (Param_Test::_tc_Nested_Struct, &this->inout_.inout (), 0);

@@ -109,6 +109,74 @@ private:
   // protect the reference count
 };
 
+typedef CORBA_Request* CORBA_Request_ptr;
+
+class TAO_Export CORBA_Request_var
+{
+  // = TITLE
+  //   The T_var class for Request
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object Request must have a T_var class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_Request_ptr as the _ptr type instead of
+  //   CORBA::Request_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_Request_var (void);
+  CORBA_Request_var (CORBA_Request_ptr);
+  CORBA_Request_var (const CORBA_Request_var &);
+  ~CORBA_Request_var (void);
+
+  CORBA_Request_var &operator= (CORBA_Request_ptr);
+  CORBA_Request_var &operator= (const CORBA_Request_var &);
+  CORBA_Request_ptr operator-> (void) const;
+
+  operator const CORBA_Request_ptr &() const;
+  operator CORBA_Request_ptr &();
+  // in, inout, out, _retn
+  CORBA_Request_ptr in (void) const;
+  CORBA_Request_ptr &inout (void);
+  CORBA_Request_ptr &out (void);
+  CORBA_Request_ptr _retn (void);
+  CORBA_Request_ptr ptr (void) const;
+
+private:
+  CORBA_Request_ptr ptr_;
+};
+
+class TAO_Export CORBA_Request_out
+{
+  // = TITLE
+  //   The T_out class for Request
+  //
+  // = DESCRIPTION
+  //   As any other pseudo object Request must have a T_out class,
+  //   the interface an semantics are specified in the CORBA spec.
+  //
+  // = NOTE
+  //   We use CORBA_Request_ptr as the _ptr type instead of
+  //   CORBA::Request_ptr, this is an attempt to reduced the cyclic
+  //   dependencies in TAO.
+  //
+public:
+  CORBA_Request_out (CORBA_Request_ptr &);
+  CORBA_Request_out (CORBA_Request_var &);
+  CORBA_Request_out (CORBA_Request_out &);
+  CORBA_Request_out &operator= (CORBA_Request_out &);
+  CORBA_Request_out &operator= (const CORBA_Request_var &);
+  CORBA_Request_out &operator= (CORBA_Request_ptr);
+  operator CORBA_Request_ptr &();
+  CORBA_Request_ptr &ptr (void);
+  CORBA_Request_ptr operator-> (void);
+
+private:
+  CORBA_Request_ptr &ptr_;
+};
+
 #if defined (__ACE_INLINE__)
 # include "tao/Request.i"
 #endif /* __ACE_INLINE__ */

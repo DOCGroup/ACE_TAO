@@ -83,9 +83,21 @@ CORBA_Object::_request (const CORBA::Char *operation,
 // *************************************************************
 
 ACE_INLINE
+CORBA_Object_var::CORBA_Object_var (void)
+  : ptr_ (CORBA_Object::_nil ())
+{
+}
+
+ACE_INLINE
 CORBA_Object_var::CORBA_Object_var (CORBA_Object_ptr p)
-        : ptr_ (p)
+  : ptr_ (p)
 {}
+
+ACE_INLINE
+CORBA_Object_var::~CORBA_Object_var (void)
+{
+  CORBA::release (this->ptr_);
+}
 
 ACE_INLINE CORBA_Object_ptr
 CORBA_Object_var::ptr (void) const

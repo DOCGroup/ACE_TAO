@@ -90,8 +90,8 @@ Test_Short_Sequence::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Short_Sequence::add_args (CORBA::NVList_ptr &param_list,
-                               CORBA::NVList_ptr &retval,
+Test_Short_Sequence::add_args (CORBA::NVList_ptr param_list,
+                               CORBA::NVList_ptr retval,
                                CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_Short_Seq, (void *) &this->in_.in (), 0);

@@ -99,9 +99,9 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Bounded_String::add_args (CORBA::NVList_ptr &param_list,
-                      CORBA::NVList_ptr &retval,
-                      CORBA::Environment &env)
+Test_Bounded_String::add_args (CORBA::NVList_ptr param_list,
+			       CORBA::NVList_ptr retval,
+			       CORBA::Environment &env)
 {
   CORBA::Any in_arg (CORBA::_tc_string, &this->in_, 0);
   CORBA::Any inout_arg (CORBA::_tc_string, &this->inout_, 0);
