@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_netdb.h"
 #include "ClientService.h"
 

@@ -10,7 +10,6 @@ MAKEFILE = Makefile.tests
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
-DIRS_PARALLEL = 1
 
 BIN =   \
         aix_hack_for_main \
@@ -207,6 +206,10 @@ else
   BIN2 += Service_Config_Test
   BIN2 += Framework_Component_Test
 endif  # shared_libs
+
+ifndef TEMPINCDIR
+DIRS_PARALLEL = 1
+endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU

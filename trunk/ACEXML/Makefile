@@ -17,5 +17,6 @@ MFILES = \
 
 $(TARGETS_NESTED):
 	@for file in $(MFILES); do \
+	$(RM) -rf `dirname $$file`/tempinc ;\
 	$(MAKE) -f `basename $$file` -C `dirname $$file` $(@); \
 	done
