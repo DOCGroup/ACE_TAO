@@ -47,24 +47,18 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "vs.h"
 
-#include "include/Property_Info.h"
 #include "Property_Exporter.h"
 #include "Machine_Properties.h"
-
-class AV_Exportable
-{
-public:
-
-  virtual void export_properties (TAO_Property_Exporter& prop_exporter) const = 0;
-  // Insert exportable properties into the proper_exporter.
-
-  virtual CORBA::Object_ptr get_object (CORBA::Environment& _env) = 0;
-};
+#include "Video_Repository.h"
 
 class AV_Audio_MMDevice
-  : public TAO_MMDevice, public AV_Exportable   
+  : public TAO_MMDevice,
+    public TAO_Exportable   
 {
 public:
+
+  static const char* NUMBER_OF_CONNECTIONS;
+  
   AV_Audio_MMDevice (TAO_AV_Endpoint_Process_Strategy *endpoint_strategy);
   // Default constructor
 
@@ -78,16 +72,19 @@ public:
 	    CORBA::Environment &env);
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
-  int connections (void) const;
+  CORBA::ULong connections (void) const;
   // Retrieve the number of connections.
 
-  virtual void export_properties (TAO_Property_Exporter& prop_exporter) const;
+  virtual void
+  export_static_properties (TAO_Property_Exporter& prop_exporter) const;
 
-  virtual CORBA::Object_ptr get_object (CORBA::Environment& _env); 
+  virtual int define_properties
+    (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq,
+     CORBA::ULong offset = 0) const;
 
 private:
   
-  int connections_;
+  CORBA::ULong connections_;
   // Number of active connections
 };
 
@@ -143,6 +140,9 @@ class AV_Server
   //   Using the class is as simple as calling init () first and then
   //   run. It uses an acceptor with the default ACE_Reactor::instance ().
 public:
+
+  static const char* SERVICE_TYPE;
+  
   AV_Server (void);
   // constructor
 
@@ -171,18 +171,23 @@ private:
                   char **argv);
   // Parse the arguments.
 
-  void export_properties (AV_Exportable* mmdevice,
-			  CORBA::Environment& _env);
+  void export_properties (CORBA::Environment& _env);
 
-  void resolve_trader (const AV_Audio_MMDevice* mmdevice,
-		       CORBA::Environment& _env);
+  void resolve_trader (CORBA::Environment& _env);
   
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
   TAO_Machine_Properties mach_props_;
+  // Dynamic properties concerning the server's performance.
 
+  TAO_Video_Repository video_rep_;
+  // Dynamic property that assesses the contents of the sever's video
+  // repository.
+  
   TAO_DP_Dispatcher dp_;
+  // Demultiplexes and dispatches incoming dynamic property callbacks
+  // to their respective handlers.
 
   CosTrading::Lookup_var trader_;
   

@@ -10,12 +10,16 @@ BIN =  augmented_server server vs as
 BUILD = $(BIN)
 
 AV_SERVER_OBJS = server.o 
-AV_AUGSERVER_OBJS = augmented_server.o Property_Exporter.o Machine_Properties.o
+AV_AUGSERVER_OBJS = Video_RepositoryC.o augmented_server.o \
+		    Property_Exporter.o Machine_Properties.o \
+		    Video_Repository.o
 AV_VS_OBJS = vs.o
 AV_AS_OBJS = as.o
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
+IDL_FILES = Video_RepositoryC
+
 FILES = augmented_server server vs as Property_Exporter Machine_Properties
 
 DEFS    = $(addsuffix .h,$(FILES))
@@ -46,6 +50,11 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 CPPFLAGS += -DSH_MEM -DNDEBUG 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
+
+.PRECIOUS: Video_RepositoryC.cpp
+
+idl_stubs: $(addsuffix .h, $(IDL_FILES))
+
 
 ifdef stat
 CPPFLAGS += -DSTAT
