@@ -1,5 +1,11 @@
 Wed Jun 16 16:51:52 2004  Steve Huston  <shuston@riverace.com>
 
+	* ace/SSL/SSL_Context.h: Changed include of os_include/os_pthread.h to
+	  OS_NS_Thread.h so ACE_mutex_t is picked up correctly on all
+	  platforms.
+
+	* ace/SSL/SSL_SOCK_Acceptor.cpp:
+	* ace/SSL/SSL_SOCK_Connector.cpp:
 	* tests/SOCK_Test_IPv6.cpp:
 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
 	* tests/Proactor_Test_IPV6.cpp: Added missing #include directives
