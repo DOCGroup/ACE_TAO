@@ -12,17 +12,21 @@ Mpeg_Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Mpeg_Svc_Handler::open called\n"));
   // Lets use threads at a later point. The current scheme works fine with fork..
+  // this will activate a thread
   //  this->activate (THR_BOUND);
   switch (ACE_OS:: fork ())
     {
     case -1:
+      // fork failed!!
       ACE_ERROR_RETURN ((LM_ERROR, 
                          "(%P|%t) %p: fork failed",
                          "server"),
                         -1);
     case 0:
+      // i am the parent. i should go back and listen for more connections
       return 0;
     default:
+      // i am the child. i should handle this connection
       this-> svc ();
     }
   
