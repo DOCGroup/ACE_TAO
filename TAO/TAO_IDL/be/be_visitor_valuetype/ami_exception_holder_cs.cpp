@@ -125,5 +125,5 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_operation (be_operation *nod
   delete visitor;
 
   return 0;
-};
+}
 
