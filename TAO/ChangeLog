@@ -2,7 +2,8 @@ Fri Feb 20 13:46:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/amh_ss.cpp (visit_attrbute):
         
-          Fixed incorrect code generation for AMH upcall. Thanks to
+          Fixed incorrect code generation in the AMH upcall for the
+          '_set_' version of the attribute. Thanks to
           Johnny Willemsen <jwillemsen@remedy.nl> for reporting the
           problem.
 
