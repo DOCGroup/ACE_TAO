@@ -639,7 +639,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #define HASH_RECYCLABLE_ADDR ACE_Hash_Recyclable<HASH_ADDR>
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>;
 template class HASH_ADDR;
 template class RECYCLABLE_ADDR;
 template class HASH_RECYCLABLE_ADDR;
@@ -677,7 +677,7 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor_Base>;
 template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #endif /* defined (__BORLANDC__) */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
 #pragma instantiate HASH_ADDR;
 #pragma instantiate RECYCLABLE_ADDR;
 #pragma instantiate HASH_RECYCLABLE_ADDR;
