@@ -2,7 +2,7 @@ Fri Nov 10 17:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connect.cpp:
 	* tao/Strategies/UIOP_Connect.cpp:
-	* tao/IIOP_Connect.cpp: Fixed a problem with thread-per-endpoint
+	* tao/IIOP_Connect.cpp: Fixed a problem with thread-per-connection
 	  case. The event handler was getting destroyed before the ORB
 	  shuts down the Cache. This lead to cache  shutdown problem. 
 
