@@ -1,3 +1,8 @@
+Tue Dec 23 21:18:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * *.bor:
+          Added $Id to fix fuzz errors.
+
 Tue Dec 23 21:01:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *.{mpc,mwc}:

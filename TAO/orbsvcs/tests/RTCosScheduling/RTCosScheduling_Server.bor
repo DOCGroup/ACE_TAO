@@ -1,3 +1,4 @@
+# $Id$
 # Makefile for building the server exe with Borland C++ Builder
 
 NAME = server
