@@ -1,3 +1,15 @@
+Fri Oct 22 17:00:27 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/os_include/sys/os_stat.h: Add more values for the 'mode' flags
+	  for WinCE and use the macros defined for them in the Windows API.
+
+	* ace/OS_NS_sys_stat.inl (stat): Set the st_mode value for WinCE.
+
+	* tests/Dirent_Test.cpp: Don't attempt ACE_OS::chdir() for
+	  ACE_LACKS_CHDIR; the method isn't declared on those platforms.
+
+	* tests/Time_Value_Test.cpp: Removed stray #include <iostream>.
+
 Fri Oct 22 11:10:55 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/GNUObjectGenerator.pm:
