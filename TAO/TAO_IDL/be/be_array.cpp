@@ -1433,6 +1433,13 @@ be_array::compute_size_type (void)
   return 0;
 }
 
+int be_array::write_as_return (TAO_OutStream *stream,
+			       be_type *type)
+{
+  *stream << type->name () << "_slice *";
+  return 0;
+}
+
 // Visiting methods
 int be_array::accept (be_visitor *visitor)
 {

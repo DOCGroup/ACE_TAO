@@ -324,6 +324,13 @@ AST_Decl::NodeType be_typedef::base_node_type (void) const
   return base->base_node_type ();
 }
 
+int be_typedef::write_as_return (TAO_OutStream *stream,
+				 be_type *type)
+{
+  be_type *base = be_type::narrow_from_decl (this->base_type ());
+  return base->write_as_return (stream, type);
+}
+
 // Visiting methods
 int be_typedef::accept (be_visitor *visitor)
 {

@@ -18,47 +18,11 @@
 // = NOTE
 //   Visitors were added recently into the compiler, so some
 //   code is still generated using the old "state oriented" approach;
-//   notably only the _collocated and the _stub classes are actually
-//   generated using the visitor, in the other cases (the interface
-//   class and the skeleton class) we still call back the old code
-//   generation methods.
+//   notably only the _collocated class is actually generated using
+//   the visitor, in the other cases (the interface class and the
+//   skeleton class) we still call back the old code generation
+//   methods.
 //
-
-class be_visitor_interface_ch : public be_visitor
-{
-  // = TITLE
-  //   Generate code for the client header.
-
-public:
-  be_visitor_interface_ch (void);
-  virtual ~be_visitor_interface_ch (void);
-
-  virtual int visit_interface (be_interface *node);
-};
-
-class be_visitor_interface_cs : public be_visitor
-{
-  // = TITLE
-  //   Generate code for the client stubs (.cpp).
-
-public:
-  be_visitor_interface_cs (void);
-  virtual ~be_visitor_interface_cs (void);
-
-  virtual int visit_interface (be_interface *node);
-};
-
-class be_visitor_interface_ci : public be_visitor
-{
-  // = TITLE
-  //   Generate code for the client inline (.cpp).
-
-public:
-  be_visitor_interface_ci (void);
-  virtual ~be_visitor_interface_ci (void);
-
-  virtual int visit_interface (be_interface *node);
-};
 
 class be_visitor_collocated_sh : public be_visitor
 {

@@ -115,6 +115,10 @@ public:
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
 
+  virtual int write_as_return (TAO_OutStream *stream,
+			       be_type *type);
+  // write the mapping as a return value on the stream.
+
   // Visiting
   virtual int accept (be_visitor* visitor);
 

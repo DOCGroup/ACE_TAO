@@ -222,7 +222,74 @@ struct TAO_Dispatch_Context
   // NOTE!!!  This type MUST match that used for POA_Handler!
 };
 
+class PortableServer
+{
+  // = TITLE
+  //   Portable Server (POA) name space.
+public:
+  
+  class ServantBase
+  {
+    // = TITLE
+    //   Base class for skeletons and servants.
+    //
+    // = DESCRIPTION
+    //   The POA spec requires that all servants inherit from this
+    //   class.
+    //
+  public:
+    virtual ~ServantBase (void);
+    // destructor
+
+    ServantBase& operator=(const ServantBase&);
+    // assignment operator.
+
+    virtual CORBA_POA *_default_POA (void);
+
+    virtual void dispatch (CORBA::ServerRequest &_tao_request,
+			   void *_tao_context,
+			   CORBA::Environment &_tao_environment);
+    // Dispatches a request to the object: find the operation, cast
+    // the type to the most derived type, demarshall all the
+    // parameters from the request and finally invokes the operation,
+    // storing the results and out parameters (if any) or the
+    // exceptions thrown into <_tao_request>.
+    // @@ TODO use a conformant name; since it is an
+    // internal (implementation) method its name should start with '_'
+
+    virtual int find (const CORBA::String &opname,
+		      TAO_Skeleton &skelfunc);
+    // Find an operation in the operation table.
+    // @@ TODO use a conformant name; since it is an
+    // internal (implementation) method its name should start with '_'
+
+    virtual int bind (const CORBA::String &opname,
+		      const TAO_Skeleton skel_ptr);
+    // Register a CORBA IDL operation name.
+    // @@ TODO use a conformant name; since it is an
+    // internal (implementation) method its name should start with '_'
+
+  protected:
+    ServantBase (void);
+    // Default constructor, only derived classes can be created.
+
+    ServantBase (const ServantBase&);
+    // Copy constructor, protected so no instances can be created.
+
+    void set_parent (TAO_IUnknown *p);
+    // Set the most derived class pointer.
+    // @@ TODO use a conformant name; since it is an
+    // internal (implementation) method its name should start with '_'
+
+  protected:
+    TAO_Operation_Table *optable_;
+    // The operation table for this servant, it is initialized by the
+    // most derived class.
+
+    TAO_IUnknown *parent_;
+    // @@ TODO find out why is this here....
+  };
+  typedef ServantBase *Servant;
+};
+
 #endif	/* TAO_POA_H */
-
-
-

@@ -37,7 +37,7 @@ int be_visitor_args_decl::visit_operation (be_operation *node)
   this->stream ().indent ();
   this->stream () << "CORBA::Environment &_tao_environment\n";
   this->stream ().decr_indent ();
-  this->stream () << ");\n";
+  this->stream () << ")";
   this->stream ().decr_indent (0);
   return 0;
 }
