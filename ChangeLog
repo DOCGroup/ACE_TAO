@@ -1,9 +1,18 @@
+Thu Feb 21 16:33:11 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/tutorials/007: Rename Thread_Pool::open() to Thread_Pool::start() and
+	  Thread_Pool::close() to Thread_Pool::stop() and fixed all the
+ 	  usages.  Also removed the unneeded parameter from stop() and
+ 	  removed the unneeded re-definition of close() (since we are not
+ 	  shadowing it any more).  Thanks to Peter Heitman
+ 	  <pheitman@cisco.com> for reporting this.
+	
 Thu Feb 21 13:12:44 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/SSL/SSL_Context.* (ACE_SSL_Context): Added new methods to
-	specify Diffie-Hellman parameters.  These parameters are required
-	when using DSA certificates/keys.  The new methods are dh_params,
-	dh_params_file_name, and dh_params_file_type.
+	  specify Diffie-Hellman parameters.  These parameters are
+ 	  required when using DSA certificates/keys.  The new methods are
+ 	  dh_params, dh_params_file_name, and dh_params_file_type.
 
 Thu Feb 21 09:32:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
