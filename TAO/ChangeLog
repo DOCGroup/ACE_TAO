@@ -1,6 +1,17 @@
+Sun Jul  7 18:53:54 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+
+          Added ACE_Unbounded_Queue<AST_Operation *> and related
+          entries. Thanks again to Marvin Wolfthal <maw@weichi.com>
+          for the bug report.
+
 Sun Jul  7 12:45:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.IFRService:
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.EXE:
+        * TAO_IDL/Makefile.FE:
 
           Updated dependencies.
 
