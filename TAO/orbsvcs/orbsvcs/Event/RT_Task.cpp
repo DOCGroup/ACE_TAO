@@ -111,7 +111,9 @@ ACE_RT_Task::svc (void)
       TAO_CHECK_ENV;
       if (ACE_OS::thr_setprio (thread_priority) == -1)
 	{
-	  ACE_ERROR ((LM_ERROR, "(%P|%t) RT_Task thr_setprio failed\n"));
+	  ACE_ERROR ((LM_ERROR,
+		      "(%P|%t) RT_Task thr_setprio failed, "
+		      "this is OK if you don't want RT threads\n"));
 	}
 
       int done = 0;

@@ -54,22 +54,23 @@ ACE_ES_Array_Iterator<ITEM>::ACE_ES_Array_Iterator (ITEM *data, size_t size) :
 {
 }
 
+template<class ITEM> ACE_INLINE int
+ACE_ES_Array_Iterator<ITEM>::done (void) const
+{
+  return index_ < size_;
+}
+
 template <class ITEM> ACE_INLINE int
 ACE_ES_Array_Iterator<ITEM>::next (ITEM *&next_item)
 {
   next_item = &data_[index_];
-  return index_ < (size_ - 1);
+  return this->done ();
 }
 
 template <class ITEM> ACE_INLINE int
 ACE_ES_Array_Iterator<ITEM>::advance (void)
 {
   index_++;
-  return index_ < size_;
+  return this->done ();
 }
 
-template<class ITEM> ACE_INLINE int
-ACE_ES_Array_Iterator<ITEM>::done (void) const
-{
-  return index_ < size_;
-}
