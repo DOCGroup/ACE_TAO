@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    performance_tests
-// 
+//
 // = FILENAME
 //    test_naming.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Prashant Jain
-// 
+//
 // ============================================================================
 
 #include "ace/SString.h"
@@ -33,16 +33,16 @@ void
 bind (ACE_Naming_Context *ns_context, int result)
 {
   // do the binds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       if (i % 50 == 0)
-	ACE_DEBUG ((LM_DEBUG, "."));
+        ACE_DEBUG ((LM_DEBUG, "."));
       ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
-      
+
       ACE_OS::sprintf (value, "%s%d", "value", i);
       ACE_WString w_value (value);
-      
+
       ACE_OS::sprintf (type, "%s%d", "type", i);
       ACE_ASSERT (ns_context->bind (w_name, w_value, type) == result);
     }
@@ -53,7 +53,7 @@ void
 rebind (ACE_Naming_Context *ns_context, int result)
 {
   // do the rebinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
@@ -68,7 +68,7 @@ void
 unbind (ACE_Naming_Context *ns_context, int result)
 {
   // do the unbinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
@@ -83,40 +83,44 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
   char temp_type[BUFSIZ];
 
   // do the finds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
-      
+
       ACE_WString w_value;
       char *type_out;
 
       if (sign == 1)
-	{
-	  ACE_OS::sprintf (temp_val, "%s%d", "value", i);
-	  ACE_OS::sprintf (temp_type, "%s%d", "type", i);
-	}	  
+        {
+          ACE_OS::sprintf (temp_val, "%s%d", "value", i);
+          ACE_OS::sprintf (temp_type, "%s%d", "type", i);
+        }
       else
-	{
-	  ACE_OS::sprintf (temp_val, "%s%d", "value", -i);
-	  ACE_OS::sprintf (temp_type, "%s%d", "type", -i);
-	}
+        {
+          ACE_OS::sprintf (temp_val, "%s%d", "value", -i);
+          ACE_OS::sprintf (temp_type, "%s%d", "type", -i);
+        }
 
       ACE_WString val (temp_val);
-      
-      ACE_ASSERT (ns_context->resolve (w_name, w_value, type_out) == result);
+
+      int resolve_result = ns_context->resolve (w_name, w_value, type_out);
+      ACE_ASSERT (resolve_result == result);
+      ACE_UNUSED_ARG (resolve_result); // To avoid compile warning
+                                       // with ACE_NDEBUG.
+
       if (w_value.char_rep ())
-	{
+        {
           ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
                       name, w_value.char_rep (), type_out));
-	  ACE_ASSERT (w_value == val);
-	  if (type_out)
-	    {
-	      ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
-	      delete[] type_out;
-	    }
-	}
-    }  
+          ACE_ASSERT (w_value == val);
+          if (type_out)
+            {
+              ACE_ASSERT (::strcmp (type_out, temp_type) == 0);
+              delete[] type_out;
+            }
+        }
+    }
 }
 
 void do_testing (int argc, char *argv[], int light)
@@ -130,7 +134,7 @@ void do_testing (int argc, char *argv[], int light)
   if (light == 0)  // Use SYNC
     {
       name_options->database (ACE::basename (name_options->process_name (),
-					     ACE_DIRECTORY_SEPARATOR_CHAR));
+                                             ACE_DIRECTORY_SEPARATOR_CHAR));
       ns_context.open (ACE_Naming_Context::PROC_LOCAL);
     }
   else  // Use NO-SYNC
@@ -150,14 +154,14 @@ void do_testing (int argc, char *argv[], int light)
   bind (&ns_context, 0);
 
   ACE_DEBUG ((LM_DEBUG, "Unbinding\n"));
-  unbind (&ns_context, 0); 
+  unbind (&ns_context, 0);
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
 
   timer.elapsed_time (et);
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
-	      et.real_time, et.user_time, et.system_time));
+              et.real_time, et.user_time, et.system_time));
 }
 
 int
@@ -173,4 +177,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
