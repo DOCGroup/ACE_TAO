@@ -217,7 +217,7 @@ Thu Apr 18 13:58:11 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Thu Apr 18 12:20:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Acceptor.cpp: Added a missing template instantiation to
-	  keep Sun CC compiulers happy.
+	  keep Sun CC compilers happy.
 
 Thu Apr 18 09:00:31 2002  Ossama Othman  <ossama@uci.edu>
 
