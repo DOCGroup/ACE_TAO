@@ -274,14 +274,15 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
 			const char dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::open");
-  int res     = 0;
-  int one     = 1;
+  int res = 0;
+  int one = 1;
 
   this->disp_ = 0;
 
-  if ((this->device_ = ACE_OS::strdup (dev)) == 0)
-    res = ACE_INVALID_HANDLE;
-  else if (this->ACE_TLI::open (dev, oflag, info) == ACE_INVALID_HANDLE)
+  ACE_ALLOCATOR_RETURN (this->device_,
+                        ACE_OS::strdup (dev),
+                        ACE_INVALID_HANDLE);
+  if (this->ACE_TLI::open (dev, oflag, info) == ACE_INVALID_HANDLE)
     res = ACE_INVALID_HANDLE;
   else if (reuse_addr 
 	   && this->set_option (SOL_SOCKET, SO_REUSEADDR, 

@@ -1,4 +1,42 @@
-Sun Nov 16 11:13:43 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added a few minor changes for Borland
+ 	  C++.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
+ 	  this.
+
+	* ace/Log_Record.cpp (print): Changed the formal parameter from
+ 	  "const char host_name[]" to "const char *hostname" so that we
+ 	  can assign this in the function if necessary.  Thanks to Valik
+ 	  Solrzano Barboza <valik@xs4all.nl> for this.
+
+	* ace/OS.cpp: Moved the constructor for ACE_Cleanup_Info into the
+ 	  OS.cpp since it doesn't really need to be inline.
+
+	* ace/WFMO_Reactor.cpp (notify): Replaced a "sizeof
+ 	  ACE_Notification_Buffer" with "sizeof
+	  (ACE_Notification_Buffer)".  It's odd that the first approach
+	  (which is incorrect) isn't flagged by MSVC++...  Thanks to Valik
+ 	  Solrzano Barboza <valik@xs4all.nl> for this.
+
+	* ace/OS.i (sema_init): Added an ACE_ALLOCATOR_RETURN in the
+ 	  appropriate spot.
+
+	* ace/ACE.cpp: Moved the implementation of strsplit_r() into the
+ 	  ACE.cpp file since it's rather long...
+
+	* ace/OS: To be more conformant to the standard C++ library,
+	  I've added a pair of methods for strstr(), strchr(), strrchr(),
+	  etc. e.g., the function signature strstr(const char*, const
+	  char*) is replaced by the two declarations:
+
+	  const char *strstr (const char* s1, const char* s2);
+	  char *strstr (char* s1, const char* s2);"
+
+	  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for this.
+
+	* ace: Added "ace.idl", which is a config file for Borland C++
+	  5.x.  Thanks to Valik Solrzano Barboza <valik@xs4all.nl> for
+	  this.
 
 	* include/makeinclude/platform_linux_kcc.GNU (SOFLAGS): Improved
  	  this file a bit to work better with NULL pointers.  Thanks to

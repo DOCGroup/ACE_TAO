@@ -142,6 +142,41 @@ ACE::read_adapter (void *args)
   return 0;
 }
 
+// Split a string up into 'token'-delimited pieces, ala Perl's "split".
+
+char *
+ACE::strsplit_r (char *str,
+                 const char *token,
+                 char *&next_start)
+{
+  char *ret = 0;
+
+  if (str != 0)
+    next_start = str;
+
+  if (next_start != 0)
+    {
+      char *tok_loc = ACE_OS::strstr (next_start, token);
+
+      if (tok_loc != 0)
+        {
+          // Return the beginning of the string.
+          ret = next_start;         
+
+          // Insure it's terminated.
+          *tok_loc = '\0';          
+          next_start = tok_loc + ACE_OS::strlen (token);
+        }
+      else
+        {
+          ret = next_start;
+          next_start = (char *) 0;
+        }
+    }
+
+  return ret;
+}
+
 const char *
 ACE::execname (const char *old_name)
 {
@@ -503,9 +538,9 @@ ACE::ldfind (const char filename[],
 
           // Look at each dynamic lib directory in the search path.
           char *nextholder = 0;
-          const char *path_entry = ACE::strsplit_r
-            (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
-
+          const char *path_entry = ACE::strsplit_r (ld_path,
+                                                    ACE_LD_SEARCH_PATH_SEPARATOR_STR,
+                                                    nextholder);
           int result = 0;
 
           while (path_entry != 0)
@@ -547,8 +582,9 @@ ACE::ldfind (const char filename[],
                 break;
 
               // Fetch the next item in the path
-              path_entry = ACE::strsplit_r
-                (0, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
+              path_entry = ACE::strsplit_r (0,
+                                            ACE_LD_SEARCH_PATH_SEPARATOR_STR,
+                                            nextholder);
             }
 
           ACE_OS::free ((void *) ld_path);

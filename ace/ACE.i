@@ -72,42 +72,6 @@ ACE::strecpy (char *s, const char *t)
   return dscan - 1;
 }
 
-// Split a string up into 'token'-delimited pieces, ala Perl's "split".
-
-inline char *
-ACE::strsplit_r (char *str,
-                 const char *token,
-                 char *&next_start)
-{
-  char *tok_loc;
-  char *ret = 0;
-
-  if (str != 0)
-    next_start = str;
-
-  if (next_start != 0)
-    {
-      tok_loc = strstr (next_start, token);
-
-      if (tok_loc != 0)
-        {
-          // Return the beginning of the string.
-          ret = next_start;         
-
-          // Insure its terminated.
-          *tok_loc = '\0';          
-          next_start = tok_loc + strlen (token);
-        }
-      else
-        {
-          ret = next_start;
-          next_start = (char *)0;
-        }
-    }
-
-  return ret;
-}
-
 // Return flags currently associated with handle.
 
 inline int
