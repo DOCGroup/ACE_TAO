@@ -98,10 +98,11 @@ ACE_INLINE
 ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
                                                           int scope)
  : policy_ (policy),
-   scope_ (scope)
+   scope_ (scope),
+   priority_ (0),
+   done_ (0)
 {
   priority_ = ACE_Sched_Params::priority_min (this->policy (), this->scope ());
-  this->done_ = 0;
 }
 
 ACE_INLINE

@@ -153,7 +153,8 @@ ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
 inline
 ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   ACE_recursive_thread_mutex_t &m)
-   : lock_ (m)
+   : lock_ (m),
+     owner_ (-1)
 {
   acquire ();
 }
