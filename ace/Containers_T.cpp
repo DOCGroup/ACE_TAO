@@ -2278,7 +2278,7 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
 
 // Assignment operator (performs assignment).
 
-template <class T> 
+template <class T> void
 ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
 {
   // Check for "self-assignment".
@@ -2288,8 +2288,8 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
       if (this->max_size_ < s.size ())
         {
           delete [] this->array_;
-          ACE_NEW_RETURN (this->array_,
-                          T[s.size ()]);
+          ACE_NEW (this->array_,
+                   T[s.size ()]);
           this->max_size_ = s.size ();
         }
 
