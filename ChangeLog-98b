@@ -1,3 +1,14 @@
+Sat Oct 10 16:44:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Repository.cpp: Improved the documentation and added
+ 	  some new ACE_const_casts.  Thanks to Eric Palantir
+ 	  <palantir@net56.net> for motivating this.
+
+	* ace/Service_Config.cpp (open): The logger key should be set to
+ 	  the static logger key only if the key supplied is EQUAL with the
+ 	  default logger key.  Thanks to Eric Palantir
+ 	  <palantir@net56.net> for reporting this.
+
 Sat Oct 10 16:28:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Synch.h: 
