@@ -1,3 +1,8 @@
+Fri Jan 23 10:29:17 1998  David L. Levine  <@cs.wustl.edu>
+
+        * tao/deep_free.cpp (TAO_Marshal_Sequence::deep_free): added
+          ACE_UNUSED_ARGs of dest and env.
+
 Thu Jan 22 18:18:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/GPlot_File.{h,cpp}: Shuffled template
