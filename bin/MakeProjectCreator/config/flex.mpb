@@ -1,0 +1,10 @@
+project {
+  Define_Custom(FLEX) {
+    automatic        = 1
+    command          = flex
+    commandflags     = -t
+    output_option    = >
+    inputext         = .l
+    source_outputext = .c
+  }
+}

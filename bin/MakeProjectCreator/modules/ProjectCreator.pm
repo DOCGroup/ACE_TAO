@@ -303,9 +303,10 @@ sub begin_project {
             ## project), then the current base project is redundant.
             if (!defined $self->{'reading_parent'}->[0]) {
               $file =~ s/\.[^\.]+$//;
-              $self->information("Inheriting from '" . basename($file) .
-                                 "' in " . $self->get_current_input() .
-                                 " is redundant.");
+              $self->information('Inheriting from \'' . basename($file) .
+                                 '\' in ' . $self->get_current_input() .
+                                 ' is redundant at line ' .
+                                 $self->get_line_number() . '.');
             }
           }
         }
