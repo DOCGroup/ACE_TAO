@@ -1,3 +1,17 @@
+Wed Jun 17 15:05:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Connect.cpp (activate): Set the thr_mgr of the service
+ 	  handler so the newly spawned thread is created under the ORB's
+ 	  Thread_Manager.
+
+	* tao/ORB_Core.cpp (inherit_from_parent_thread): Inherit more
+	  properties from the parent thread so the spawned thread has a
+	  complete environment to run on.
+	  
+	  (add_to_collocation_table):
+	  (get_collocated_poa): Changed to use the address in the
+	  orb_params. 
+
 1998-06-17  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/CC_client.{h,cpp}
