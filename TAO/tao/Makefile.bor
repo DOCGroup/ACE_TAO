@@ -97,7 +97,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\IOPC.obj \
-	$(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Incoming_Message_Queue.obj \
 	$(OBJDIR)\Interceptor_List.obj \

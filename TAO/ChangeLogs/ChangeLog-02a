@@ -1,3 +1,11 @@
+Tue Jan 15 07:35:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Makefile.bor:
+          Removed IORInfo
+
+        * tao/PortableServer/Makefile.bor:
+          Added IORInfo
+
 Mon Jan 14 22:08:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	From Bruce Trask <trask_b@ociweb.com>
@@ -29,25 +37,25 @@ Mon Jan 14 19:53:18 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/PortableServer/IORInfo.cpp (current_factory):
 	  Was a returning a void value. Fixed it.
-	
-	* tao/PortableServer/POA.cpp (establish_components): 
+
+	* tao/PortableServer/POA.cpp (establish_components):
 	  Modified variable i as variable j to satisfy win.
 	  Also modified a const variable as non-const.
 
 Mon Jan 14 19:37:03 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/PortableServer/TAO_PortableServer_Static.dsp (SOURCE): 
-	* tao/PortableServer/TAO_PortableServer.dsp: 
+	* tao/PortableServer/TAO_PortableServer_Static.dsp (SOURCE):
+	* tao/PortableServer/TAO_PortableServer.dsp:
 	  Updated to add IORInfor, ObjectReferenceTemplate and
 	  ObjectReferenceFactory.
 
-	* tao/TAO.dsp: 
-	* tao/TAO_Static.dsp: 
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
 	  Updated to remove IORInfo
-	
+
 Mon Jan 14 18:08:50 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.h (TAO_ORB_Core): 
+	* tao/ORB_Core.h (TAO_ORB_Core):
 	  Used the correct form of TAO_ENV_ARG_DECL
 
 Mon Jan 14 17:56:09 2002  Jeff Parsons <parsons@cs.wustl.edu>

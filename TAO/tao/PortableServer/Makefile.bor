@@ -13,6 +13,7 @@ OBJFILES = \
 	$(OBJDIR)\Direct_Object_Proxy_Impl.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
+        $(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\MessagingS.obj \
 	$(OBJDIR)\Object_Adapter.obj \
