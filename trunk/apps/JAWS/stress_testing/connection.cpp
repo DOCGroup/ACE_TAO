@@ -1,4 +1,5 @@
-// connection.cc Sumedh Mungee <sumedh@cs>
+// $Id$
+
 #include "connection.h"
 
 

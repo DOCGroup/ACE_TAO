@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (VFS_T_C)
 #define VFS_T_C
 

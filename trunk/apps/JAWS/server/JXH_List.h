@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// JXH_List.h
+// $Id$
 
 #ifndef JXH_LIST_H
 #define JXH_LIST_H

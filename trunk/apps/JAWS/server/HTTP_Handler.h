@@ -1,5 +1,6 @@
 /* -*- c++ -*- */
 // Hey, Emacs!  This is a C++ file!
+// $Id$
 
 #if !defined (HTTP_HANDLER_H)
 #define HTTP_HANDLER_H

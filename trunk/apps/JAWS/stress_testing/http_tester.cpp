@@ -1,4 +1,5 @@
-// http_tester.cc sumedh@cs.wustl.edu
+// $Id$
+
 #include "client.h"
 
 int Client_Parameters::tcp_nodelay;
