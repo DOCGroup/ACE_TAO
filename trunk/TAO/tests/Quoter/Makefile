@@ -1,4 +1,3 @@
-#
 # $Id$
 #
 # needed for the trading service stuff
