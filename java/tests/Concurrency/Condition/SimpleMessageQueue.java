@@ -1,7 +1,7 @@
 package tests.Concurrency.Condition;
 
 import ACE.ASX.TimeoutException;
-import ACE.Reactor.TimeValue;
+import ACE.ASX.TimeValue;
 import ACE.Concurrency.*;
 
 public class SimpleMessageQueue
