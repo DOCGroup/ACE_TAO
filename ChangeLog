@@ -1,25 +1,32 @@
+Wed Apr  2 08:49:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Allow libraries to be built only if "requires" and "avoids" are
+          met.
+
 Wed Apr  2 11:51:52 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
+        * tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
 
-	  Zap extraneous trailing semicolons on #pragma instantiates.
+          Zap extraneous trailing semicolons on #pragma instantiates.
 
 Wed Apr  2 11:44:41 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
+        * tests/Unbounded_Set_Test.cpp, tests/Unbounded_Set_Test_Ex.cpp:
 
-	  Add explicit template instantiations.
+          Add explicit template instantiations.
 
 Tue Apr  1 17:02:37 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Process_Strategy_Test.cpp: Nul-terminate received command
-	  string to ACE_TEXT_CHAR_TO_TCHAR can deal with it; this is needed
-	  to properly log the string in wide-char builds.
+        * tests/Process_Strategy_Test.cpp: Nul-terminate received command
+          string to ACE_TEXT_CHAR_TO_TCHAR can deal with it; this is needed
+          to properly log the string in wide-char builds.
 
 Tue Apr  1 15:52:41 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Multicast_Test.cpp: If the platform doesn't support IP
-	  multicast, log an info message, not an error.
+        * tests/Multicast_Test.cpp: If the platform doesn't support IP
+          multicast, log an info message, not an error.
 
 Tue Apr  1 10:06:57 2003  Chad Elliott  <elliott_c@ociweb.com>
 
