@@ -260,8 +260,6 @@
 #define ACE_HAS_SELECT_H
 // Platform/compiler supports Standard C++ Library
 #define ACE_HAS_STANDARD_CPP_LIBRARY
-//Platform/compiler support the System V sprintf().
-//?#define ACE_HAS_SYSV_SPRINTF
 //Platform/compiler supports _sys_errlist symbol
 //#define ACE_HAS_SYS_ERRLIST
 //Platform lacks madvise() (e.g., Linux)
