@@ -11,6 +11,8 @@ Fri Oct 17 15:36:26 1997    <nw1@CHA-CHA>
 
 Fri Oct 17 06:31:20 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Atomic_Op.i (operator=): rsh.value () instead of just rhs.
+
 	* Makefile (release): added ACE_VERSION string to ace/Version.h.
 	  The MS Resource-Compiler doesn't implement the preprocessor
 	  # operator, so ACE_VERSION supplies the concatenated version
