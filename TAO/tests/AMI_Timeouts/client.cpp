@@ -9,10 +9,9 @@
 //    server.cpp
 //
 // = DESCRIPTION
-//    A client, which uses the AMI callback model.
+//    A client, which uses the AMI callback model and timeouts.
 //
 // = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
 //    Michael Kircher <Michael.Kircher@mchp.siemens.de>
 //
 // ============================================================================
@@ -28,31 +27,25 @@
 ACE_RCSID(AMI, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int nthreads = 5;
-int niterations = 5;
-int debug = 0;
-int number_of_replies = 0;
+unsigned int msec = 50;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:n:i:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':
-        debug = 1;
+        TAO_debug_level++;
         break;
       case 'k':
         ior = get_opts.optarg;
         break;
-      case 'n':
-        nthreads = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'i':
-        niterations = ACE_OS::atoi (get_opts.optarg);
+      case 't':
+        msec = ACE_OS::atoi (get_opts.optarg);
         break;
       case '?':
       default:
@@ -60,8 +53,7 @@ parse_args (int argc, char *argv[])
                            "usage:  %s "
                            "-d "
                            "-k <ior> "
-                           "-n <nthreads> "
-                           "-i <niterations> "
+                           "-t <timeout in ms> "
                            "\n",
                            argv [0]),
                           -1);
@@ -128,24 +120,16 @@ main (int argc, char *argv[])
       // Instantiate client
       TimeoutClient* client = new TimeoutClient (orb,
                                                  timeout_var.in (),
-                                                 timeoutHandler_var.in ());
+                                                 timeoutHandler_var.in (),
+                                                 &timeoutHandler_i,
+                                                 msec);
 
       client->activate ();
 
       // ORB loop.
-      ACE_Time_Value time (1,0); // 1 s
-      orb->run (time);  // Fetch responses
+      orb->run ();  // Fetch responses
 
-      if (debug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
-        }
-
-
-
-      ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
     }
   ACE_CATCHANY

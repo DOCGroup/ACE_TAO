@@ -1,8 +1,8 @@
 #
-# Makefile for building the AMI timeout server
+# Makefile for building the AMI timeout client
 #
 
-NAME = server
+NAME = client
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC -Gv
 
@@ -10,7 +10,7 @@ OBJFILES = \
 	$(OBJDIR)\timeoutS.obj \
 	$(OBJDIR)\timeoutC.obj \
 	$(OBJDIR)\timeout_i.obj \
-	$(OBJDIR)\server.obj
+	$(OBJDIR)\client.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
