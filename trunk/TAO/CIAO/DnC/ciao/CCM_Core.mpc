@@ -99,9 +99,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
 
   Source_Files {
     DeploymentC.cpp
-    NodeApp_CB_Impl.cpp
     NodeApplication_CallBackC.cpp
-    NodeApplication_CallBackS.cpp
   }
 }
 
@@ -111,12 +109,14 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server_dnc {
   sharedname   =  Deployment_svnt
   dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
   libs         += Deployment_stub
-  idlflags     +=  -Wb,export_macro=Deployment_svnt_Export -Wb,export_include=Deployment_svnt_export.h
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=Deployment_svnt_Export -Wb,skel_export_include=Deployment_svnt_export.h
 
   IDL_Files {
   }
 
   Source_Files {
     DeploymentS.cpp
+    NodeApp_CB_Impl.cpp
+    NodeApplication_CallBackS.cpp
   }
 }

@@ -12,12 +12,3 @@ project(NodeApplication): ciao_server_dnc, ciao_deployment_stub {
     NodeApplication.cpp
   }
 }
-
-//project(NodeApplication_test_client) : ciao_server {
-//  requries +=dnc
-//  exename   =NodeApplication_client
-//  Source_Files {
-//    NodeApplication_test_client.cpp
-//  }
-
-//}
