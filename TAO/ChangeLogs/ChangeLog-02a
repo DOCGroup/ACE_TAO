@@ -1,3 +1,10 @@
+Tue Dec 26 15:09:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/client.bor:
+	* tests/Portable_Interceptors/IORInterceptor/server.bor:
+
+	  Added these missing Borland C++ Makefiles.
+
 Tue Dec 26 14:55:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.i (receive_request):
