@@ -1,3 +1,14 @@
+Thu Dec 28 16:10:59 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/UDP/udp_test.cpp:
+	* performance-tests/Server_Concurrency/Latency_Stats.h:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp
+	* performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp
+	  Fixed compile problems under VxWorks when handling 
+	  64 bit integers.  Basically, truncated the 64 bit integers
+	  to 32 bit integers for operations not supported by 
+	  ACE_U_LongLong.
+
 Wed Dec 27 15:32:43 2000  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
  	* examples/Reactor/WFMO_Reactor/test_network_events.cpp:
