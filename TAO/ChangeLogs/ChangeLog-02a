@@ -1,3 +1,10 @@
+Wed  Sep  5 7:20:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast/ftp.dsp:
+	* orbsvcs/tests/AVStreams/Multicast/server.dsp: Added the
+	  path to teh strategies library. I am not sure when I will get
+	  the  Win32 stuff right every time:(
+
 Tue Sep  4 20:11:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast/ftp.dsp:
