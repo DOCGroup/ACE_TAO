@@ -1,3 +1,7 @@
+Tue Aug 27 17:25:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Proactor.{h cpp}: More u_long->size_t corrections.
+
 Tue Aug 27 16:50:41 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Fixed mismatched printf formats for
