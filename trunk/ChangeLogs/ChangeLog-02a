@@ -1,3 +1,10 @@
+Wed Aug 15 09:08:40 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+
+          Added an implementation to ACE_Sock_Connect::get_ip_interfaces().
+          With this, the Enum_Interfaces_Test works correctly.
+
 Wed Aug 15 07:54:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU: Unravelled the mystery a
