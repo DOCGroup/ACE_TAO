@@ -584,15 +584,6 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_DEF_GIOP_MINOR 1
 #endif /* TAO_DEF_GIOP_MINOR */
 
-// This is just a #define for the GIOP Lite
-#if !defined (TAO_DEF_GIOP_LITE_MAJOR)
-#define TAO_DEF_GIOP_LITE_MAJOR 100
-#endif /* TAO_DEF_GIOP_LITE_MAJOR */
-#if !defined (TAO_DEF_GIOP_LITE_MINOR)
-#define TAO_DEF_GIOP_LITE_MINOR 100
-#endif /* TAO_DEF_GIOP_LITE_MINOR */
-
-
 // By default TAO generate the OMG standard profile components
 // (ORB_TYPE and CODE_SETS)
 #define TAO_STD_PROFILE_COMPONENTS

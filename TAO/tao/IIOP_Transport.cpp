@@ -14,10 +14,14 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-//#include "tao/target_identifier.h"
 
-#include "tao/Pluggable_Messaging.h"
 
+#include "tao/GIOP_Message_Connectors.h"
+#include "tao/GIOP_Message_Lite.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/IIOP_Transport.i"
+#endif /* ! __ACE_INLINE__ */
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_Transport_Timeprobe_Description[] =
@@ -120,13 +124,6 @@ TAO_IIOP_Server_Transport::~TAO_IIOP_Server_Transport (void)
 {
 }
 
-void
-TAO_IIOP_Server_Transport::messaging_init (TAO_Pluggable_Messaging_Interface *mesg)
-{
-  this->server_mesg_factory_ = mesg;
-}
-
-
 // ****************************************************************
 
 TAO_IIOP_Client_Transport::
@@ -134,7 +131,8 @@ TAO_IIOP_Client_Transport::
                                TAO_ORB_Core *orb_core)
   :  TAO_IIOP_Transport (handler,
                          orb_core),
-     client_handler_ (handler)
+     client_handler_ (handler),
+     client_mesg_factory_ (0)
 {
 }
 
@@ -320,10 +318,55 @@ TAO_IIOP_Client_Transport::register_handler (void)
                               ACE_Event_Handler::READ_MASK);
 }
 
-void
-TAO_IIOP_Client_Transport::messaging_init (TAO_Pluggable_Messaging_Interface *mesg)
+int
+TAO_IIOP_Client_Transport::messaging_init (CORBA::Octet major, 
+                                           CORBA::Octet minor)
 {
-  this->client_mesg_factory_ = mesg;
+  if (this->client_mesg_factory_ == 0)
+    {
+      if (this->lite_flag_)
+        {
+          ACE_NEW_RETURN  (this->client_mesg_factory_,
+                           TAO_GIOP_Message_Lite,
+                           -1);
+        }
+      else if (major == TAO_DEF_GIOP_MAJOR)
+        {
+          if (minor > TAO_DEF_GIOP_MINOR)
+            minor = TAO_DEF_GIOP_MINOR;
+          switch (minor)
+            {
+            case 0:
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_10,
+                               0);
+              break;
+            case 1:
+          ACE_NEW_RETURN  (this->client_mesg_factory_,
+                           TAO_GIOP_Message_Connector_11,
+                           0);
+          break;
+            default:
+              if (TAO_debug_level > 0)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ASYS_TEXT ("(%N|%l|%p|%t) No matching minor version number \n")),
+                                    0);
+                }
+            }
+        }
+      else
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")), 
+                                0);
+            }
+        }
+    }
+  
+  return 1;
 }
 
 CORBA::Boolean

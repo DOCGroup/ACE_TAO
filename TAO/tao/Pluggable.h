@@ -205,6 +205,13 @@ public:
   ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
   // Send any messages that have been buffered.
 
+  virtual int
+  messaging_init (CORBA::Octet major,
+                  CORBA::Octet minor);
+  // Initialising the messaging object. This would be used by the
+  // connector  side. On the acceptor side the connection handler
+  // would take care of the messaging objects.
+
 protected:
 
   void dequeue_head (void);
@@ -220,9 +227,6 @@ protected:
   void reset_message (ACE_Message_Block *message_block,
                       size_t bytes_delivered,
                       int queued_message);
-
-  virtual void messaging_init (TAO_Pluggable_Messaging_Interface *mesg) = 0;
-  // Initialising the messaging object
 
   CORBA::ULong tag_;
   // IOP protocol tag.

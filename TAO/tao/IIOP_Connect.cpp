@@ -11,7 +11,6 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/GIOP_Message_Acceptors.h"
-#include "tao/GIOP_Message_Connectors.h"
 
 
 #if !defined (__ACE_INLINE__)
@@ -107,12 +106,6 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
                TAO_GIOP_Message_Acceptors (orb_core));
     }
         
-  // OK, Here is a small twist. By now the all the objecs cached in
-  // this class would have been constructed. But we would like to make
-  // the one of the objects, precisely the transport object a pointer
-  // to the Messaging object. So, we set this up properly by calling
-  // the messaging_init method on the transport. 
-  this->transport_.messaging_init (this->acceptor_factory_);
 }
 
 TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
@@ -355,18 +348,20 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 //    transport obj.
 TAO_IIOP_Client_Connection_Handler::
 TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                    TAO_ORB_Core* orb_core)
+                                    TAO_ORB_Core* orb_core,
+                                    CORBA::Boolean flag)
   : TAO_IIOP_Handler_Base (t),
     transport_ (this, orb_core),
     orb_core_ (orb_core),
-    mesg_factory_ (0)
+    lite_flag_ (flag)
 {
-  //no-op 
+  // Set the lite flag in the client transport
+  this->transport_.use_lite (flag);
 }
 
 TAO_IIOP_Client_Connection_Handler::~TAO_IIOP_Client_Connection_Handler (void)
 {
-  delete this->mesg_factory_;
+  //no-op
 }
 
 
@@ -556,58 +551,7 @@ TAO_IIOP_Client_Connection_Handler::handle_cleanup (void)
   return 0;
 }
 
-int
-TAO_IIOP_Client_Connection_Handler::
-  init_mesg_protocol (CORBA::Octet major, 
-                      CORBA::Octet minor) 
-{
-  if (major == TAO_DEF_GIOP_LITE_MAJOR &&
-      minor == TAO_DEF_GIOP_LITE_MINOR)
-    {
-      ACE_NEW_RETURN  (this->mesg_factory_,
-                       TAO_GIOP_Message_Lite,
-                       -1);
-    }
-  else if (major == TAO_DEF_GIOP_MAJOR)
-    {
-      if (minor > TAO_DEF_GIOP_MINOR)
-        minor = TAO_DEF_GIOP_MINOR;
-      switch (minor)
-        {
-        case 0:
-          ACE_NEW_RETURN  (this->mesg_factory_,
-                           TAO_GIOP_Message_Connector_10,
-                           0);
-          break;
-        case 1:
-          ACE_NEW_RETURN  (this->mesg_factory_,
-                           TAO_GIOP_Message_Connector_11,
-                           0);
-          break;
-        default:
-          if (TAO_debug_level > 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%N|%l|%p|%t) No matching minor version number \n")),
-                                0);
-            }
-        }
-    }
-  else
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ASYS_TEXT ("(%N|%l|%p|%t) No matching major version number \n")), 
-                            0);
-        }
-    }
 
-  // Make the transport know 
-  this->transport_.messaging_init (this->mesg_factory_);
-
-  return 1;
-}
  
 // ****************************************************************
 

@@ -61,7 +61,8 @@ class TAO_Export TAO_UIOP_Connect_Creation_Strategy : public ACE_Creation_Strate
   //
 public:
   TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                      TAO_ORB_Core* orb_core = 0);
+                                      TAO_ORB_Core* orb_core = 0,
+                                      CORBA::Boolean flag = 0);
 
   virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
   // Makes TAO_UIOP_Client_Connection_Handlers
@@ -69,6 +70,9 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
+  
+  CORBA::Boolean lite_flag_;
+  // Are we using lite?
 };
 
 // ****************************************************************

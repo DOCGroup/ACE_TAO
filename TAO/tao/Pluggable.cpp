@@ -176,6 +176,13 @@ TAO_Transport::reset_message (ACE_Message_Block *message_block,
     }
 }
 
+int
+TAO_Transport::messaging_init (CORBA::Octet /*major*/,
+                               CORBA::Octet /*minor*/)
+{
+  ACE_NOTSUP_RETURN (-1);
+}
+
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.

@@ -63,7 +63,8 @@ class TAO_Export TAO_SHMIOP_Client_Connection_Handler : public TAO_SHMIOP_Handle
 public:
   // = Intialization method.
   TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                        TAO_ORB_Core* orb_core = 0);
+                                        TAO_ORB_Core* orb_core = 0,
+                                        CORBA::Boolean flag = 0);
 
   virtual ~TAO_SHMIOP_Client_Connection_Handler (void);
 
@@ -94,9 +95,6 @@ public:
   virtual TAO_Transport *transport (void);
   // Return the transport objects
 
-  virtual int init_mesg_protocol (CORBA::Octet major,
-                                  CORBA::Octet minor);
-  // Assigns the right messaging protocol object based on the version  
 protected:
   int handle_cleanup (void);
   // This method deregisters the handler from the reactor and closes it.
@@ -109,6 +107,9 @@ protected:
   
   TAO_Pluggable_Messaging_Interface *mesg_factory_;
   // The Connector messaging factory
+  
+  CORBA::Boolean lite_flag_;
+  // Are we using lite?
 };
 
 // ****************************************************************
