@@ -4672,6 +4672,7 @@ public:
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
+  static int atoi (const wchar_t *s);
   static wint_t to_lower (wint_t c);
   static wchar_t *strcat (wchar_t *s,
                           const wchar_t *t);
@@ -5411,10 +5412,23 @@ ACE_WString (ASCII_STRING).fast_rep ()
 #define ACE_MULTIBYTE_STRING(WIDE_STRING) \
 ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #define ACE_TEXT_STRING ACE_WString
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
+#else
+#define ASYS_MULTIBYTE_STRING(WIDE_STRING) \
+ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 #else
 #define ACE_WIDE_STRING(ASCII_STRING) ASCII_STRING
 #define ACE_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #define ACE_TEXT_STRING ACE_CString
+#define ASYS_MULTIBYTE_STRING(WIDE_STRING) WIDE_STRING
 #endif /* UNICODE */
+
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#define ASYS_WIDE_STRING(ASCII_STRING) ACE_WString (ASCII_STRING).fast_rep ()
+#else
+#define ASYS_WIDE_STRING(ASCII_STRING) ASCII_STRING
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
 #endif  /* ACE_OS_H */
