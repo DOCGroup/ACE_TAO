@@ -1015,7 +1015,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
         if (reply_status == TAO_GIOP_USER_EXCEPTION)
           xlist = &exceptions;
         else
-          xlist = &TAO_Exceptions::system_exceptions;
+          xlist = TAO_Exceptions::system_exceptions;
 
         // Find it in the operation description and then use that to
         // get the typecode.  Use it to unmarshal the exception's
