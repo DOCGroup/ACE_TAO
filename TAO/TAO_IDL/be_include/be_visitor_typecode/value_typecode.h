@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file  struct_typecode.h
+ *  @file  value_typecode.h
  *
  *  $Id$
  *
@@ -12,8 +12,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_BE_VISITOR_STRUCT_TYPECODE_H
-#define TAO_BE_VISITOR_STRUCT_TYPECODE_H
+#ifndef TAO_BE_VISITOR_VALUE_TYPECODE_H
+#define TAO_BE_VISITOR_VALUE_TYPECODE_H
 
 #include "ace/pre.h"
 
@@ -27,14 +27,14 @@ namespace TAO
    *
    * Structure TypeCode generation visitor.
    */
-  class be_visitor_struct_typecode
+  class be_visitor_value_typecode
     : public be_visitor_typecode_defn
   {
   public:
 
     /// Constructor.
-    be_visitor_struct_typecode (be_visitor_context * ctx,
-                                bool is_exception);
+    be_visitor_value_typecode (be_visitor_context * ctx,
+                               bool is_exception);
 
     /// Visit a structure.
     /**
@@ -44,7 +44,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_structure (AST_Structure * node);
+    virtual int visit_valuetype (AST_Structure * node);
 
   private:
 
@@ -62,4 +62,4 @@ namespace TAO
 
 #include "ace/post.h"
 
-#endif  /* TAO_BE_VISITOR_STRUCT_TYPECODE_H */
+#endif  /* TAO_BE_VISITOR_VALUE_TYPECODE_H */
