@@ -60,6 +60,7 @@ DIRS  = CDR \
 	Server_Leaks \
 	Muxing \
 	Hello \
+	Cache_Growth_Test \
 	MT_Timeout \
 	Crash_On_Write \
 	Reliable_Oneways \

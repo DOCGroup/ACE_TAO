@@ -1,3 +1,24 @@
+Thu Sep 13 13:18:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Cache_Growth_Test: A new test for testing whether the
+	  Cache size grows when old clients start disconnecting  and new
+	  clients start connecting.
+	
+	* tests/Cache_Growth_Test/run_test.pl: 
+	* tests/Cache_Growth_Test/Makefile:
+	* tests/Cache_Growth_Test/Makefile.bor:
+	* tests/Cache_Growth_Test/server.dsp:
+	* tests/Cache_Growth_Test/Cache_Grow.dsw:
+	* tests/Cache_Growth_Test/server.cpp:
+	* tests/Cache_Growth_Test/client.cpp:
+	* tests/Cache_Growth_Test/server.bor:
+	* tests/Cache_Growth_Test/client.bor:
+	* tests/Cache_Growth_Test/README:
+	* tests/Cache_Growth_Test/Hello.h:
+	* tests/Cache_Growth_Test/Hello.cpp: Files for the test.
+
+	* tests/Makefile: Added the new test.
+
 Thu Sep 13 12:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.h:
