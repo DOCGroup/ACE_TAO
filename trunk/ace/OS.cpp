@@ -1085,7 +1085,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
             && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
             && tss_info)
           {
-	    //            info_arr[info_ix].key_ = key_info->key_;
+            info_arr[info_ix].key_ = key_info->key_;
             info_arr[info_ix].destructor_ = key_info->destructor_;
             info_arr[info_ix++].tss_obj_ = key_info->tss_obj_;
           }
