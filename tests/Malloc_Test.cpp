@@ -345,17 +345,12 @@ main (int argc, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>;
 template class auto_ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >;
 template class ACE_Auto_Basic_Ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >;
 #else
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
 template class auto_ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
 template class ACE_Auto_Basic_Ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-template class ACE_Write_Guard<ACE_Process_Mutex>;
-template class ACE_Read_Guard<ACE_Process_Mutex>;
 template class ACE_Based_Pointer<Test_Data>;
 template class ACE_Based_Pointer_Basic<Test_Data>;
 template class ACE_Based_Pointer_Basic<long>;
@@ -363,17 +358,12 @@ template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block>
 #pragma instantiate auto_ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >
 #pragma instantiate ACE_Auto_Basic_Ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >;
 #else
-#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>
 #pragma instantiate auto_ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >
 #pragma instantiate ACE_Auto_Basic_Ptr< ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> >;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
-#pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
-#pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
 #pragma instantiate ACE_Based_Pointer<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<Test_Data>
 #pragma instantiate ACE_Based_Pointer_Basic<long>
