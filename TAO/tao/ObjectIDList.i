@@ -198,7 +198,8 @@ CORBA_ORB_ObjectIdList_out::operator[] (CORBA::ULong slot)
 
 #endif /* end #if !defined */
 
-ACE_INLINE CORBA::Boolean operator<< (
+CORBA::Boolean TAO_Export
+operator<< (
     TAO_OutputCDR &strm,
     const CORBA_ORB_ObjectIdList &_tao_sequence
   )
@@ -214,7 +215,8 @@ ACE_INLINE CORBA::Boolean operator<< (
   return 0; // error
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
+CORBA::Boolean TAO_Export
+operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
