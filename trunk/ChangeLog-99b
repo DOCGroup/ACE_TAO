@@ -1,4 +1,6 @@
-Thu Apr 22 16:35:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Thu Apr 22 17:05:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/auto_compile_win32.pl: Added version_tests.
 
 	* include/makeinclude/platform_sunos5_kcc.GNU: Makefile macros for
 	  KAI C++ compiler.

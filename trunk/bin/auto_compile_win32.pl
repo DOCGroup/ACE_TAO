@@ -259,7 +259,9 @@ sub Build_Version_Test
     chdir ("$ENV{ACE_ROOT}/tests/version_tests");
     for ($Cntr = 0; $Cntr < scalar (@Version_Tests_List); $Cntr++)
     {
-        $Command_Line =  "msdev.com $Project_File /MAKE \"$Version_Tests_List[$Cntr] - $Config\" /USEENV $Build_Cmd /Y3";
+        $Project_Name = $Version_Tests_List[$Cntr];
+        $Project_Name =~ s/(.*)\.dsp/$1/;
+        $Command_Line =  "msdev.com $Version_Tests_List[$Cntr] /MAKE \"$Project_Name - $Config\" /USEENV $Build_Cmd /Y3";
         if ( $Debug == 0 )
         {
             $Status =
