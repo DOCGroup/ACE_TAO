@@ -58,6 +58,10 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_lynxos.GNU: added -Winline and
           removed -fno-strict-prototypes.
 
+        * tests/Message_Queue_Test (main): increased queue size from
+          default of 16Kb to 32Kb, so that it runs on machines with 8Kb
+          pagesizes.
+
 Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
 
         * ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
