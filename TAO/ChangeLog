@@ -1,3 +1,10 @@
+Mon Aug  2 07:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Cache_Manager.cpp (is_entry_idle):
+          Corrected method name in debug statement and instead of retrieving
+          the recycle_state three times, get it into a local variable and use
+          that for checking.
+
 Mon Aug  2 06:46:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
