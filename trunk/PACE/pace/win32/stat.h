@@ -18,6 +18,7 @@
 
 #include "pace/sys/types.h"
 #include <sys/stat.h>
+#include <io.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
@@ -50,7 +51,7 @@ extern "C" {
 
 #ifndef PACE_STAT
 #define PACE_STAT
-  typedef struct stat pace_stat_s;
+  typedef struct _stat pace_stat_s;
 #endif /* PACE_STAT */
 
 #if defined (PACE_HAS_CPLUSPLUS)
