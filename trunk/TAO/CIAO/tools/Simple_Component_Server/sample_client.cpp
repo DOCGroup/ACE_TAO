@@ -60,7 +60,8 @@ main (int argc, char *argv[])
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      /// @@ Narrow the object and do your stuff here.
+      /// @@ Use cserve->get_home () or cserve->get_component ()
+      ///    and do your stuff to test the component here.
 
       if (shutdown_server != 0)
         cserve->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
