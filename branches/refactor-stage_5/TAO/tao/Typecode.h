@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,6 +31,7 @@
 #include "tao/Arg_Traits_T.h"
 #include "tao/OBV_Constants.h"
 #include "tao/corbafwd.h"
+#include "ace/Unbounded_Queue.h"
 
 // Forward declarations.
 class TAO_InputCDR;

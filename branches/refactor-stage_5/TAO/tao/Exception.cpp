@@ -13,7 +13,7 @@
 #include "Any_SystemException.h"
 
 #include "ace/streams.h"
-
+#include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Exception.i"

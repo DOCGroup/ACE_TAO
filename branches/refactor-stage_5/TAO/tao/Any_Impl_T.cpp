@@ -7,6 +7,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any_Impl_T.inl"
@@ -31,7 +32,7 @@ TAO::Any_Impl_T<T>::~Any_Impl_T (void)
 {
 }
 
-template<typename T> 
+template<typename T>
 void
 TAO::Any_Impl_T<T>::insert (CORBA::Any & any,
                             _tao_destructor destructor,
@@ -46,7 +47,7 @@ TAO::Any_Impl_T<T>::insert (CORBA::Any & any,
   any.replace (new_impl);
 }
 
-template<typename T> 
+template<typename T>
 CORBA::Boolean
 TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                              _tao_destructor destructor,
@@ -91,7 +92,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                                           any_tc,
                                           0),
                       0);
-                      
+
       auto_ptr<TAO::Any_Impl_T<T> > replacement_safety (replacement);
 
       TAO_InputCDR cdr (mb->data_block (),
@@ -99,8 +100,8 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-						            TAO_DEF_GIOP_MAJOR,
-						            TAO_DEF_GIOP_MINOR);
+                                                            TAO_DEF_GIOP_MAJOR,
+                                                            TAO_DEF_GIOP_MINOR);
 
       CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
@@ -121,11 +122,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
-template<typename T> 
+template<typename T>
 void
 TAO::Any_Impl_T<T>::free_value (void)
 {
@@ -138,8 +139,8 @@ TAO::Any_Impl_T<T>::free_value (void)
   this->value_ = 0;
 }
 
-template<typename T> 
-void 
+template<typename T>
+void
 TAO::Any_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
                                  ACE_ENV_ARG_DECL)
 {

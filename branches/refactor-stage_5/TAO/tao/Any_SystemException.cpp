@@ -10,7 +10,7 @@
 #include "CORBA_String.h"
 
 #include "ace/CORBA_macros.h"
-
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (tao,
            Any_SystemException,

@@ -4,6 +4,7 @@
 #include "tao/Services_Activate.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Fault_Tolerance_Service.i"
