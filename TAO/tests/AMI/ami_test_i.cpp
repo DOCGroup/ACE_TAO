@@ -34,7 +34,8 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
                  const char* in_str,
                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   A::DidTheRightThing))
 {
   out_l = 931233;
 
