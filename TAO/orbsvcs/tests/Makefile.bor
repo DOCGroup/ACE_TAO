@@ -1,0 +1,8 @@
+
+#
+# Makefile for building the TAO obsvcs examples
+#
+
+DIRS = Simple_Naming
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -13,11 +13,18 @@ OBJFILES = \
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -I$(TAO_ROOT)/orbsvcs
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_NAMING_LIB) $(TAO_SVC_UTILS_LIB)
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_SVC_UTILS_LIB)
 
 CPPDIR = .
 
 IDLDIR = .
+
+IDLFILES = test_object.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 
