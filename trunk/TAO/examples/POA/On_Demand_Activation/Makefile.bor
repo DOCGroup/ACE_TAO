@@ -20,7 +20,7 @@ LIBFILES = \
 	$(ACE_LIB) \
         $(TAO_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
-        ..\Generic_Servant\$(BINDIR)\Generic_Servant$(LIB_DECORATOR).lib
+        $(CORE_BINDIR)\Generic_Servant$(LIB_DECORATOR).lib
 
 CPPDIR = .
 
