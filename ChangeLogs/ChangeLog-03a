@@ -1,3 +1,14 @@
+Sat Jun  1 15:38:40 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Asynch_Acceptor.cpp (open): bind_port is in ACE_Sock_Connect,
+          not ACE.
+          Added #include "ace/SOCK_Stream.h" that class is also used, and
+          #include "ace/Log_Msg.h" to get the ACE_ERROR macros.
+
+        * ace/Asynch_Connector.cpp (handle_connect): clr_flags() is in
+          ACE_Flag_Manip, not ACE.
+          Added #include "ace/Log_Msg.h" to get ACE_ERROR macros.
+
 Fri May 31 13:35:41 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/TPC_Logging_Server.{h cpp}:
