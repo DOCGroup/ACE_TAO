@@ -657,7 +657,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
       CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  "TAO (%P|%t) - Synch_Invocation::invoke_i, "
+                  "timeout on recv is <%u>\n",
                   msecs));
     }
 
@@ -671,7 +672,8 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
       CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  "TAO (%P|%t) Synch_Invocation::invoke_i, "
+                  "timeout after recv is <%u> status <%d>\n",
                   msecs,
                   reply_error));
     }

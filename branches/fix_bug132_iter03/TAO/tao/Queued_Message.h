@@ -82,6 +82,9 @@ public:
   /// signal waiting threads.
   void connection_closed (void);
 
+  /// There was an error while sending the data.
+  void send_failure (void);
+
   /** @name Intrusive list manipulation
    *
    * The messages are put in a doubled linked list (for easy insertion
@@ -183,11 +186,14 @@ public:
   //@}
 
 protected:
-  /// Record if the send was completely successful
-  int data_sent_successfully_;
-
   /// Set to 1 if the connection was closed
   int connection_closed_;
+
+  /// Set to 1 if there was a failure while sending the data
+  int send_failure_;
+
+  /// Set to 1 if there was a timeout while sending the data
+  int timeout_;
 
 private:
   /// If not null, this is the object that we signal to indicate that

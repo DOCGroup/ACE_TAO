@@ -660,28 +660,7 @@ public:
   /// Cancel handle_output() callbacks
   int cancel_output (void);
 
-protected:
-  // @@ see if one of these calls send_message()
-  /// Remove the first message from the outgoing queue.
-  void dequeue_head (void);
-
-  /// Update the state of the outgoing queue, assuming that
-  /// bytes_delivered bytes have been sent already.
-  void reset_queued_message (ACE_Message_Block *message_block,
-                             size_t bytes_delivered);
-
-  /// Update the state of the outgoing queue, this time a complete
-  /// message was sent.
-  void reset_sent_message (ACE_Message_Block *message_block,
-                           size_t bytes_delivered);
-
-  /// Helper function used to implement the two methods above.
-  void reset_message (ACE_Message_Block *message_block,
-                      size_t bytes_delivered,
-                      int queued_message);
-
 private:
-
   /// Try to send the current message.
   /**
    * As the outgoing data is drained this method is invoked to send as
@@ -690,17 +669,22 @@ private:
    * Returns 0 if there is more data to send, -1 if there was an error
    * and 1 if the message was completely sent.
    */
-  int send_current_message (void);
+  int drain_queue (void);
+
+  /// Cleanup the queue.
+  /**
+   * Exactly <byte_count> bytes have been sent, the queue must be
+   * cleaned up as potentially several messages have been completely
+   * sent out.
+   * It leaves on head_ the next message to send out.
+   */
+  void cleanup_queue (size_t byte_count);
 
   /// Copy the contents of a message block into a Queued_Message
   /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
 
   /// Check if the buffering constraints have been reached
   int must_flush_queue_i (TAO_Stub *stub);
-
-  /// Update the queue, exactly <byte_count> bytes have been sent.
-  void bytes_transferred_i (size_t byte_count,
-                            TAO_Queued_Message *&iterator);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
