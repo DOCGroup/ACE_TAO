@@ -4,6 +4,9 @@
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
+  : port_number_ (0),
+    if_count_ (0),
+    ifs_ (0)
 {
 }
 

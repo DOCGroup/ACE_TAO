@@ -221,9 +221,6 @@ ECM_Driver::run (int argc, char* argv[])
       if (this->orb_->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
-      ec_impl.shutdown ();
-
       this->dump_results ();
 
       this->close_receivers (TAO_TRY_ENV);
@@ -234,11 +231,15 @@ ECM_Driver::run (int argc, char* argv[])
       this->close_federations (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
+      ec_impl.shutdown ();
+
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown grace period\n"));
 
       ACE_Time_Value tv (5, 0);
       if (this->orb_->run (&tv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
+
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -312,6 +313,12 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
       _env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
       return;
     }
+  ACE_INET_Addr ignore_from;
+  this->endpoint_.dgram ().get_local_addr (ignore_from);
+  ACE_DEBUG ((LM_DEBUG, "ECM_Driver::open_senders - "
+              "local endpoint = (%u:%d)\n",
+              ignore_from.get_ip_address (),
+              ignore_from.get_port_number ()));
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
       this->all_federations_[i]->open (&this->endpoint_,
@@ -342,6 +349,7 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
     {
       this->local_federations_[i]->open_receiver (ec,
                                                   scheduler,
+                                                  &this->endpoint_,
                                                   _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
@@ -1016,6 +1024,7 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      last_publication_change_ (0),
      last_subscription_change_ (0),
      mcast_eh_ (&receiver_),
+     seed_ (0),
      subscription_change_period_ (10000),
      publication_change_period_ (10000)
 {
@@ -1167,6 +1176,7 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 void
 ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                                      RtecScheduler::Scheduler_ptr scheduler,
+                                     TAO_ECG_UDP_Out_Endpoint* ignore_from,
                                      CORBA::Environment &_env)
 {
   const int bufsize = 512;
@@ -1180,14 +1190,12 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
 
   ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
 
-  ACE_INET_Addr local_addr;
-  this->federation_->sender_local_addr (local_addr);
   // @@ This should be parameters...
-  ACE_Time_Value expire_interval (0, 1000); // 1 milli second
-  const int max_timeouts = 3; // expire the message after 3 msecs
+  ACE_Time_Value expire_interval (1, 0);
+  const int max_timeouts = 5;
   this->receiver_.init (ec, scheduler,
                         buf,
-                        local_addr,
+                        ignore_from,
                         addr_server.in (),
                         reactor, expire_interval, max_timeouts,
                         _env);
