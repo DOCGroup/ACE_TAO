@@ -1,5 +1,3 @@
-project(IORManipulation IORTest) : taoexe {
-  depends += IORManipulation
-  libs    += TAO_IORManip
+project(*IORTest) : taoexe, iormanip {
   exename  = IORTest
 }

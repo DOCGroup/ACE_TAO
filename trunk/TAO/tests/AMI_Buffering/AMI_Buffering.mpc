@@ -1,4 +1,4 @@
-project(AMI Buffering Server): messaging {
+project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
 
@@ -8,7 +8,7 @@ project(AMI Buffering Server): messaging {
   }  
 }
  
-project(AMI Buffering Client): messaging {
+project(*Client): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = client
@@ -20,7 +20,7 @@ project(AMI Buffering Client): messaging {
   }  
 }
 
-project(AMI Buffering Admin): messaging {
+project(*Admin): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   exename   = admin

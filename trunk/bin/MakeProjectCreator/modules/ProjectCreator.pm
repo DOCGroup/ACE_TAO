@@ -43,7 +43,7 @@ my(%validNames) = ('exename'         => 1,
                    'idlflags'        => 1,
                    'idlpreprocessor' => 1,
                    'defaultlibs'     => 1,
-                   'depends'         => 1,
+                   'after'           => 1,
                    'libs'            => 1,
                    'lit_libs'        => 1,
                    'pch_header'      => 1,
@@ -51,8 +51,8 @@ my(%validNames) = ('exename'         => 1,
                    'ssl'             => 1,
                    'dllout'          => 1,
                    'libout'          => 1,
-                   'dllflags'        => 1,
-                   'libflags'        => 1,
+                   'dynamicflags'    => 1,
+                   'staticflags'     => 1,
                    'version'         => 1,
                    'requires'        => 1,
                    'avoids'          => 1,
@@ -2306,7 +2306,7 @@ sub translate_value {
   my($key)  = shift;
   my($val)  = shift;
 
-  if ($key eq 'depends' && $val ne '') {
+  if ($key eq 'after' && $val ne '') {
     my($arr) = $self->create_array($val);
     $val = '';
     foreach my $entry (@$arr) {

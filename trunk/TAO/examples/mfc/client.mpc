@@ -1,4 +1,4 @@
-project(client): namingexe {
+project(MFC client): namingexe {
   exename = client
 
   verbatim(gnuace, top) {

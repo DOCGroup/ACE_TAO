@@ -1,11 +1,11 @@
-project(Leader Followers Server): strategies, server {
+project(*Server): strategies, taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Leader Followers Client): strategies, client {
+project(*Client): strategies, taoclient {
   Source_Files {
     testC.cpp
     client.cpp

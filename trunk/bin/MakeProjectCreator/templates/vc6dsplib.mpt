@@ -1,29 +1,32 @@
+conditional_include "idl_compiler_win32"
+
 type_description      = "Static Library"
 type_code             = 0x0104
-configurations        = "Static Release" "Static Debug"
-default_configuration = "Static Debug"
+configurations        = Release Debug
+default_configuration = Debug
 common_defines        = WIN32 _WINDOWS
 type_is_static        = 1
-need_libflags         = 1
+need_staticflags         = 1
 
-Static Release {
+
+Release {
   use_debug_libraries   = 0
   compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
-  output_dir            = Static_Release
-  intermediate_dir      = Static_Release
+  output_dir            = Release
+  intermediate_dir      = Release
   lib_modifier          = s
   debug_switch          =
 }
 
-Static Debug {
+Debug {
   use_debug_libraries   = 1
   compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
-  output_dir            = Static_Debug
-  intermediate_dir      = Static_Debug
+  output_dir            = Debug
+  intermediate_dir      = Debug
   lib_modifier          = sd
   pdb                   = 1
 }

@@ -1,10 +1,11 @@
-project(TAO_IDL_EXE) : aceexe, taoversion, core {
+// This project must be named TAO_IDL_EXE instead of TAO_IDL
+// because otherwise mpc won't work correctly. 
+project(TAO_IDL_EXE) : aceexe, taoversion, core, tao_output {
   exename   = tao_idl
   libs     += TAO_IDL_BE TAO_IDL_FE
-  includes += include be_include fe
-  install   = ../../bin
-  libflags += TAO_AS_STATIC_LIBS
-  depends  += TAO_IDL_BE TAO_IDL_FE gperf_exe
+  includes += include be_include fe 
+  install   = $(ACE_ROOT)/bin
+  after    += TAO_IDL_BE TAO_IDL_FE gperf_exe
   idlpreprocessor = 1
 
   Source_Files {
@@ -20,13 +21,15 @@ project(TAO_IDL_EXE) : aceexe, taoversion, core {
 }
 
 
-project(TAO_IDL_BE) : acelib, taoversion, core {
-  sharedname = TAO_IDL_BE
-  libs      += TAO_IDL_FE
-  includes  += include be_include fe
-  dllflags   = TAO_IDL_BE_BUILD_DLL
-  libflags  += TAO_AS_STATIC_LIBS
-  depends   += TAO_IDL_FE
+project(TAO_IDL_BE) : acelib, taoversion, core, tao_output {
+  sharedname   = TAO_IDL_BE
+  libs        += TAO_IDL_FE
+  includes    += include be_include fe
+  dynamicflags = TAO_IDL_BE_BUILD_DLL
+  staticflags += TAO_AS_STATIC_LIBS
+  after       += TAO_IDL_FE
+  pch_header   = be_pch.h
+  pch_source   = be/be_pch.cpp
 
   Source_Files {
     be
@@ -38,11 +41,13 @@ project(TAO_IDL_BE) : acelib, taoversion, core {
 }
 
 
-project(TAO_IDL_FE) : acelib, taoversion, core {
-  sharedname = TAO_IDL_FE
-  includes  += include fe
-  dllflags   = TAO_IDL_FE_BUILD_DLL
-  libflags  += TAO_AS_STATIC_LIBS
+project(TAO_IDL_FE) : acelib, taoversion, core, tao_output {
+  sharedname   = TAO_IDL_FE
+  includes    += include fe
+  dynamicflags = TAO_IDL_FE_BUILD_DLL
+  staticflags += TAO_AS_STATIC_LIBS
+  pch_header   = fe_pch.h
+  pch_source   = fe/fe_pch.cpp
 
   Source_Files {
     fe

@@ -1,4 +1,4 @@
-project(AMI Server): messaging {
+project(*Server): messaging, taoserver {
   idlflags -= -Sc
   idlflags += -GC
   requires += ami
@@ -9,7 +9,7 @@ project(AMI Server): messaging {
   }  
 }
  
-project(AMI Client): messaging {
+project(*Client): messaging, taoserver {
   exename   = client
   idlflags -= -Sc
   idlflags += -GC
@@ -20,7 +20,7 @@ project(AMI Client): messaging {
   }  
 }
 
-project(AMI Simple Client): messaging {
+project(*Simple Client): messaging, taoserver {
   exename   = simple_client
   idlflags -= -Sc
   idlflags += -GC

@@ -1,4 +1,4 @@
-project(Reliable Oneways Server): messaging, corba_messaging {
+project(*Server): messaging, taoserver, corba_messaging {
   Source_Files {
     Oneway_Receiver.cpp
     Shutdown_Helper.cpp
@@ -6,7 +6,7 @@ project(Reliable Oneways Server): messaging, corba_messaging {
   }
 }
 
-project(Reliable Oneways Client): messaging, corba_messaging {
+project(*Client): messaging, taoserver, corba_messaging {
   exename = client
 
   Source_Files {

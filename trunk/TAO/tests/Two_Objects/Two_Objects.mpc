@@ -1,4 +1,4 @@
-project(Two Objects Server): server {
+project(*Server): taoserver {
   Source_Files {
     worker.cpp
     First_i.cpp
@@ -8,7 +8,7 @@ project(Two Objects Server): server {
   }
 }
 
-project(Two Objects Client): client {
+project(*Client): taoclient {
   Source_Files {
     Two_ObjectsC.cpp
     client.cpp

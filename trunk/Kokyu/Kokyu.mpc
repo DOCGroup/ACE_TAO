@@ -1,7 +1,6 @@
 project : Kokyulib, core {
-  depends     = ace
   sharedname  = Kokyu
-  dllflags    = KOKYU_BUILD_DLL
+  dynamicflags    = KOKYU_BUILD_DLL
   libout      = ..
-  include_dir = ace
+  // include_dir = $(ACE_ROOT)/ace
 }

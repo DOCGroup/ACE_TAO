@@ -1,4 +1,4 @@
-project(Crash On Write Server): server {
+project(*Server): taoserver {
   Source_Files {
     Oneway_Receiver.cpp
     Crash_Task.cpp
@@ -6,7 +6,7 @@ project(Crash On Write Server): server {
   }
 }
 
-project(Crash On Write Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

@@ -1,4 +1,6 @@
 workspace {
-  tests.mpc
-  RMCast/tests.mpc
+  exclude {
+    pharlap
+    log
+  }
 }

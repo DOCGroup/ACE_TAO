@@ -1,4 +1,4 @@
-project(server): avstreamsexe, strategies {
+project(*server): avstreamsexe, strategies {
   exename  = server
 
   Source_Files {
@@ -6,7 +6,7 @@ project(server): avstreamsexe, strategies {
   }
 }
 
-project(ftp): avstreamsexe, strategies {
+project(*ftp): avstreamsexe, strategies {
   exename  = ftp
 
   Source_Files {

@@ -1,10 +1,10 @@
-project(Objref Sequence Test Server): server {
+project(*Server): taoserver {
   Source_Files {
     server.cpp
   }
 }
 
-project(Objref Sequence Test Client): client {
+project(*Client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

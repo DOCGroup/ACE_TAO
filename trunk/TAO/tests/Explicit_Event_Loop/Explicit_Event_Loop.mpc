@@ -1,10 +1,10 @@
-project(Explicit Event Loop Server): server {
+project(*Server): taoserver {
   Source_Files {
     server.cpp
   }
 }
 
-project(Explicit Event Loop Client): client {
+project(*Client): taoclient {
   Source_Files {
     timeC.cpp
     client.cpp

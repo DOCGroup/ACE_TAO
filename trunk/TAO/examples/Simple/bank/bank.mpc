@@ -1,4 +1,4 @@
-project: namingexe {
+project(*server): namingexe {
   Source_Files {
     Account_i.cpp
     AccountManager_i.cpp
@@ -7,7 +7,7 @@ project: namingexe {
   }
 }
 
-project(client): namingexe {
+project(*client): namingexe {
   exename = client
 
   Source_Files {

@@ -1,36 +1,15 @@
-project: server {
-  depends += IORTable
-  libs    += TAO_IORTable
-
-  IDL_Files {
-    Receiver.idl
-    Broadcaster.idl
-  }
-
+project(*server) : taoserver, iortable {
   Source_Files {
-    ReceiverS.cpp
-    ReceiverC.cpp
-    BroadcasterC.cpp
-    BroadcasterS.cpp
     Broadcaster_i.cpp
     Server_i.cpp
     server.cpp
   }
 }
 
-project(client): server {
+project(*client): taoserver {
   exename = client
 
-  IDL_Files {
-    Receiver.idl
-    Broadcaster.idl
-  }
-
   Source_Files {
-    ReceiverS.cpp
-    ReceiverC.cpp
-    BroadcasterC.cpp
-    BroadcasterS.cpp
     Receiver_i.cpp
     Client_i.cpp
     client.cpp

@@ -1,0 +1,5 @@
+project : naming {
+  after   += CosTime
+  libs    += TAO_CosTime
+  comps   += Time
+}

@@ -1,4 +1,4 @@
-project(IDL Test Main): server {
+project(*Main): taoserver {
   exename = main
 
   IDL_Files {
@@ -23,6 +23,7 @@ project(IDL Test Main): server {
     sequence.idl
     typedef.idl
     union.idl
+    repo_id_mod.idl
   }
 
   Source_Files {
@@ -58,6 +59,8 @@ project(IDL Test Main): server {
     typedefS.cpp
     unionC.cpp
     unionS.cpp
+    repo_id_modC.cpp
+    repo_id_modS.cpp
     namespace_check.cpp
     main.cpp
   }

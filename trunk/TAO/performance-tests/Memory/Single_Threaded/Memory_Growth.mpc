@@ -1,11 +1,11 @@
-project: server {
+project(*server): taoserver {
   Source_Files {
-    Hello.cpp
+    Memory_Growth.cpp
     server.cpp
   }
 }
 
-project: client {
+project(*client): taoclient {
   Source_Files {
     TestC.cpp
     client.cpp

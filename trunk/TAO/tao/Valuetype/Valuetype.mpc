@@ -1,7 +1,7 @@
 project : taolib, core {
   sharedname  = TAO_Valuetype
   libs       += TAO
-  dllflags    = TAO_VALUETYPE_BUILD_DLL
+  dynamicflags    = TAO_VALUETYPE_BUILD_DLL
   libout      = ..
   include_dir = tao/Valuetype
 }

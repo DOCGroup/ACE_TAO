@@ -1,3 +1,5 @@
+conditional_include "idl_compiler_win32"
+
 type_description      = "Static Library"
 platform_longs        = "WCE ARM" "WCE x86" "WCE emulator"
 default_configuration = "Static Debug"
@@ -5,7 +7,7 @@ default_platform_long = "WCE ARM"
 configurations        = "Static Release" "Static Debug"
 common_defines        = UNICODE _UNICODE
 type_is_static        = 1
-need_libflags         = 1
+need_staticflags      = 1
 stack                 =
 
 WCE x86 {

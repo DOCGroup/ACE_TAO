@@ -1,6 +1,9 @@
+conditional_include "idl_compiler_win32"
+
 common_defines  = _WINDOWS _CONSOLE
 type_is_binary  = 1
 lib_modifier    = d
 defines         = _DEBUG
-need_libflags   = 1
+need_staticflags   = 1
 conditional_include "zziplib"
+

@@ -1,5 +1,5 @@
 project : taoexe {
   includes += $(TAO_ROOT)/orbsvcs
-  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs
+  libpaths += $(ACE_ROOT)/lib
   compname  = --orbsvcs
 }

@@ -1,11 +1,11 @@
-project(Timeout Server): server, corba_messaging {
+project(*Server): taoserver, corba_messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(Timeout Client): messaging, corba_messaging {
+project(*Client): messaging, taoserver, corba_messaging {
   exename = client
 
   Source_Files {

@@ -1,4 +1,4 @@
-project(ping): avstreamsexe, strategies {
+project(*ping): avstreamsexe, strategies {
   exename  = ping
 
   Source_Files {
@@ -6,7 +6,7 @@ project(ping): avstreamsexe, strategies {
   }
 }
 
-project(pong): avstreamsexe, strategies {
+project(*pong): avstreamsexe, strategies {
   exename  = pong
 
   Source_Files {
@@ -14,7 +14,7 @@ project(pong): avstreamsexe, strategies {
   }
 }
 
-project(control): avstreamsexe, strategies {
+project(*control): avstreamsexe, strategies {
   exename  = control
 
   Source_Files {

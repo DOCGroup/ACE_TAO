@@ -1,4 +1,4 @@
-project(MT Timeout Server): messaging, corba_messaging {
+project(*Server): messaging, taoserver, corba_messaging {
   Source_Files {
     Sleep_Service.cpp
     Server_Task.cpp
@@ -6,7 +6,7 @@ project(MT Timeout Server): messaging, corba_messaging {
   }
 }
 
-project(MT Timeout Client): messaging, corba_messaging {
+project(*Client): messaging, taoserver, corba_messaging {
   exename  = client
 
   Source_Files {

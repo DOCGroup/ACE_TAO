@@ -1,17 +1,11 @@
-project: server {
-  depends  += SSL
-  requires += ssl
-
+project(*security server): taoserver, ssl {
   Source_Files {
     TX_Object_i.cpp
     server.cpp
   }
 }
 
-project: client {
-  depends  += SSL
-  requires += ssl
-
+project(*security client): taoclient, ssl {
   Source_Files {
     TX_ObjectC.cpp
     client.cpp

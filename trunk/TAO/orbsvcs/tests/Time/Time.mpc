@@ -1,6 +1,3 @@
-project(client): server, namingexe {
-  depends += CosTime
-  libs    += TAO_CosTime
+project(*client): taoserver, namingexe, time {
   exename  = client
-  comps   += Time
 }

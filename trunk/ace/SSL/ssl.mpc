@@ -1,8 +1,7 @@
-project : acelib, core {
-  ssl         = 1
-  depends     = ace
-  sharedname  = ACE_SSL
-  dllflags    = ACE_SSL_BUILD_DLL
-  libout      = ..
-  include_dir = ace/SSL
+project(SSL) : acelib, core {
+  ssl          = 1
+  requires    += ssl
+  sharedname   = ACE_SSL
+  dynamicflags = ACE_SSL_BUILD_DLL
+  include_dir  = ace/SSL
 }

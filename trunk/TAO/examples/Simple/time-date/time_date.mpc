@@ -1,11 +1,11 @@
-project: namingexe {
+project(*server): namingexe {
   Source_Files {
     server.cpp
     ../Simple_util.cpp
   }
 }
 
-project(client): namingexe {
+project(*client): namingexe {
   exename = client
 
   Source_Files {

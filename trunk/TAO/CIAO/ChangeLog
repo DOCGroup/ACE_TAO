@@ -1,3 +1,38 @@
+Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+    * ciao/CCM_Core.mpc:
+    * examples/OEP/BasicSP/BasicSP.mpc:
+    * examples/OEP/BasicSP/BMClosedED/BMClosedED.mpc:
+    * examples/OEP/BasicSP/BMDevice/BMDevice.mpc:
+    * examples/OEP/BasicSP/BMDisplay/BMDisplay.mpc:
+    * examples/OEP/BasicSP/EC/EC.mpc:
+    * examples/OEP/Display/HUDisplay.mpc:
+    * examples/OEP/Display/GPS/GPS.mpc:
+    * examples/OEP/Display/NavDisplay/NavDisplay.mpc:
+    * examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+    * examples/OEP/Display/RateGen/RateGen.mpc:
+    * examples/handcrafted/BasicSP/BasicSP.mpc:
+    * examples/handcrafted/BasicSP/BMClosedED/BMClosedED.mpc:
+    * examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+    * examples/handcrafted/BasicSP/BMDisplay/BMDisplay.mpc:
+    * examples/handcrafted/BasicSP/EC/EC.mpc:
+    * examples/handcrafted/Display/HUDisplay.mpc:
+    * examples/handcrafted/Display/GPS/GPS.mpc:
+    * examples/handcrafted/Display/NavDisplay/NavDisplay.mpc:
+    * examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+    * examples/handcrafted/Display/RateGen/RateGen.mpc:
+    * examples/handcrafted/Hello/hello.mpc:
+    * tools/Assembly_Deployer/Assembly_Deployer.mpc:
+    * tools/ComponentServer/ComponentServer.mpc:
+    * tools/Daemon/Daemon.mpc:
+    * tools/ServerActivator/ServerActivator.mpc:
+    * tools/Simple_Component_Server/Simple_Component_Server.mpc:
+    * tools/XML_Helpers/XMLHelpers.mpc:
+
+      Added and updated mpc files to use the latest
+        features and make use of base projects. 
+
+
 Tue Jun 24 15:42:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl: Updated mpc file generator to

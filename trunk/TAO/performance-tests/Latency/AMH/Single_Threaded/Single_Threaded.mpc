@@ -1,4 +1,4 @@
-project: server, strategies {
+project(*AMH server): taoserver, strategies {
   idlflags += -GH
   requires += ami
 
@@ -8,7 +8,7 @@ project: server, strategies {
   }
 }
 
-project: client, strategies {
+project(*AMH client): taoclient, strategies {
   idlflags += -GH
   requires += ami
 

@@ -1,0 +1,5 @@
+project : acelib {
+  requires += qos
+  after    += QoS
+  libs     += ACE_QoS
+}

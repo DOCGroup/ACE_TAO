@@ -1,5 +1,5 @@
-project(application): messaging, rteventexe {
-  depends  += ECMcastTests_Lib CosNaming IORTable
+project(*application): messaging, rteventexe {
+  after  += ECMcastTests_Lib CosNaming IORTable
   libs     += ECMcastTests TAO_CosNaming TAO_IORTable
   includes += ../Common
   exename   = application
@@ -9,8 +9,8 @@ project(application): messaging, rteventexe {
   }
 }
 
-project(gateway-ec): messaging, rteventexe {
-  depends  += ECMcastTests_Lib CosNaming IORTable
+project(*gateway-ec): messaging, rteventexe {
+  after  += ECMcastTests_Lib CosNaming IORTable
   libs     += ECMcastTests TAO_CosNaming TAO_IORTable
   includes += ../Common
   exename   = gateway-ec

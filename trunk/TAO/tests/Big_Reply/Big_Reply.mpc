@@ -1,11 +1,11 @@
-project(Big Reply Server): server {
+project(*Server): taoserver {
   Source_Files {
     Big_Reply_i.cpp
     server.cpp
   }
 }
 
-project(Big Reply Client): server {
+project(*Client): taoserver {
   exename  = client
   Source_Files {
     Client_Task.cpp

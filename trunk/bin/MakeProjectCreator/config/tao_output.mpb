@@ -1,0 +1,6 @@
+project {
+  libout        = $(ACE_ROOT)/lib 
+  libpaths     += $(ACE_ROOT)/lib
+  staticflags  += TAO_AS_STATIC_LIBS
+}
+

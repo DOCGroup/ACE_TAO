@@ -64,11 +64,11 @@ RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.r
 <%endif%>
 
 !ifdef STATIC
-LIB_FLAGS =<%foreach(libflags)%> -D<%libflag%><%endfor%>
+LIB_FLAGS =<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
 DLL_FLAGS =
 !else
 LIB_FLAGS =
-DLL_FLAGS =<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
+DLL_FLAGS =<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
 !endif
 
 CFLAGS = \
@@ -121,11 +121,15 @@ BASE_BINDIR = <%install%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 <%endif%>
-<%endif%>
-<%if(sharedname)%>
+<%else%>
 <%if(dllout)%>
 
 BASE_BINDIR = <%dllout%>
+<%else%>
+<%if(libout)%>
+
+BASE_BINDIR = <%libout%>
+<%endif%>
 <%endif%>
 <%if(core)%>
 

@@ -1,6 +1,2 @@
-project : client {
-  depends  += RTCORBA
-  libs     += TAO_RTCORBA
-  requires += rt_corba
-  libpaths += $(TAO_ROOT)/tao/RTCORBA
+project : taoclient, rtcorba {
 }

@@ -1,3 +1,5 @@
+conditional_include "idl_compiler_win32"
+
 configurations        = Release Debug "Static Release" "Static Debug"
 platforms             = Win32
 default_configuration = Debug
@@ -59,7 +61,7 @@ Static Release {
   lib_modifier          = s
   debug_switch          =
   type_is_static        = 1
-  need_libflags         = 1
+  need_staticflags      = 1
 }
 
 Static Debug {
@@ -73,7 +75,7 @@ Static Debug {
   intermediate_dir      = Static_Debug
   lib_modifier          = sd
   type_is_static        = 1
-  need_libflags         = 1
+  need_staticflags      = 1
 }
 
 MFC Release {
@@ -121,7 +123,7 @@ Static MFC Release {
   lib_modifier          = mfcs
   debug_switch          =
   type_is_static        = 1
-  need_libflags         = 1
+  need_staticflags      = 1
 }
 
 Static MFC Debug {
@@ -135,7 +137,7 @@ Static MFC Debug {
   intermediate_dir      = Static_MFC_Debug
   lib_modifier          = mfcsd
   type_is_static        = 1
-  need_libflags         = 1
+  need_staticflags      = 1
 }
 
 conditional_include "vcfullmacros"

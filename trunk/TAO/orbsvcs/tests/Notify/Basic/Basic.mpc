@@ -1,4 +1,4 @@
-project(ConnectDisconnect): notifytest {
+project(*Notify ConnectDisconnect): notifytest {
   exename = ConnectDisconnect
 
   Source_Files {
@@ -7,7 +7,7 @@ project(ConnectDisconnect): notifytest {
 }
 
 
-project(LifeCycle): notifytest {
+project(*Notify LifeCycle): notifytest {
   exename  = LifeCycle
 
   Source_Files {
@@ -15,7 +15,7 @@ project(LifeCycle): notifytest {
   }
 }
 
-project(IdAssignment): notifytest {
+project(*Notify IdAssignment): notifytest {
   exename  = IdAssignment
 
   Source_Files {
@@ -23,7 +23,7 @@ project(IdAssignment): notifytest {
   }
 }
 
-project(Events): notifytest {
+project(*Notify Events): notifytest {
   exename  = Events
 
   Source_Files {
@@ -31,7 +31,7 @@ project(Events): notifytest {
   }
 }
 
-project(AdminProperties): notifytest {
+project(*Notify AdminProperties): notifytest {
   exename  = AdminProperties
 
   Source_Files {
@@ -39,11 +39,17 @@ project(AdminProperties): notifytest {
   }
 }
 
-project(Simple): notifytest {
+project(*Notify Simple): notifytest {
   exename  = Simple
 
   Source_Files {
     Simple.cpp
+  }
+}
+
+project(*Notify MultiTypes): notifytest {
+  Source_Files {
+    MultiTypes.cpp
   }
 }
 

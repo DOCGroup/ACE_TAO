@@ -1,4 +1,4 @@
-project(ORB Destroy): server {
+project: taoserver {
   exename = ORB_destroy
 }
 

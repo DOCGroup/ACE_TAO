@@ -1,6 +1,6 @@
 project(XML_Helpers): acelib, acexml {
   sharedname=CIAO_XML_Helpers
-  dllflags += CIAO_XML_HELPERS_BUILD_DLL
+  dynamicflags += CIAO_XML_HELPERS_BUILD_DLL
 
   Source_Files {
     XML_Utils.cpp
@@ -13,7 +13,7 @@ project(XML_Helpers): acelib, acexml {
 
 project(Helper_Test): aceexe, acexml {
   libs += CIAO_XML_Helpers
-  depends += XML_Helpers
+  after += XML_Helpers
 
   Source_Files {
     main.cpp

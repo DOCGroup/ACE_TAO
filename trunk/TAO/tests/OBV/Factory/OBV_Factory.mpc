@@ -1,4 +1,6 @@
-project(OBV Factory Server): server {
+project(*Server): taoserver {
+  idlflags += -Gv
+
   Source_Files {
     FactoryC_impl.cpp
     FactoryS_impl.cpp
@@ -6,7 +8,9 @@ project(OBV Factory Server): server {
   }
 }
 
-project(OBV Factory Client): client {
+project(*Client): taoclient {
+  idlflags += -Gv
+
   Source_Files {
     FactoryC.cpp
     FactoryC_impl.cpp

@@ -1,4 +1,4 @@
-project(client): messaging {
+project(*client): messaging, taoserver {
   exename  = client
 
   Source_Files {

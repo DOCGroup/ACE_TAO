@@ -1,4 +1,4 @@
-project: namingexe {
+project(*poa server): namingexe {
   Source_Files {
     demux_test_server.cpp
     demux_test_i.cpp
@@ -6,7 +6,7 @@ project: namingexe {
   }
 }
 
-project(client): namingexe {
+project(*poa client): namingexe {
   exename = client
 
   Source_Files {

@@ -1,4 +1,4 @@
-project(Exposed Policies Server): strategies, rt_server {
+project(*Server): strategies, rt_server {
   Source_Files {
     Policy_Tester.cpp
     Policy_Verifier.cpp
@@ -7,7 +7,7 @@ project(Exposed Policies Server): strategies, rt_server {
   }
 }
 
-project(Exposed Policies Client): strategies, rt_server {
+project(*Client): strategies, rt_server {
   exename = client
 
   Source_Files {

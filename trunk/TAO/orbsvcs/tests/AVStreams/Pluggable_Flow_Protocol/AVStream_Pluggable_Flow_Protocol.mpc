@@ -1,15 +1,14 @@
-project(avstreams ts) : orbsvcslib {
-  sharedname = TAO_TS
-  dllflags   = TAO_AV_BUILD_DLL
-  install    =
-  comps     += AV
+project(*ts) : orbsvcslib, portableserver, avstreams, naming {
+  sharedname   = TAO_TS
+  dynamicflags = TAO_AV_BUILD_DLL
+  comps       += AV
 
   Source_Files {
     TimeStamp.cpp
   }
 }
 
-project(sender): avstreamsexe {
+project(*sender): avstreamsexe {
   exename  = sender
 
   Source_Files {
@@ -17,7 +16,7 @@ project(sender): avstreamsexe {
   }
 }
 
-project(receiver): avstreamsexe {
+project(*receiver): avstreamsexe {
   exename  = receiver
 
   Source_Files {

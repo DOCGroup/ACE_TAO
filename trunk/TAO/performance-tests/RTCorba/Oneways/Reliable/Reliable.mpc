@@ -1,11 +1,11 @@
-project: rt_server, messaging_only {
+project(*oneways server): rt_server, messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project: rt_client, messaging_only {
+project(*oneways client): rt_client, messaging {
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,6 +1,3 @@
-project(CC client) : orbsvcsexe {
-  depends += CosConcurrency CosNaming Svc_Utils IORTable PortableServer
-  libs    += TAO_CosConcurrency TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+project(CC client) : orbsvcsexe, concurrency, naming, svc_utils, iortable, portableserver {
   exename  = CC_client
-  comps   += Concurrency
 }

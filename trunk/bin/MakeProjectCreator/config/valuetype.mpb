@@ -1,5 +1,5 @@
 project {
-  depends += Valuetype
+  after += Valuetype
   libs    += TAO_Valuetype
   libpaths += $(TAO_ROOT)/tao/Valuetype
 }

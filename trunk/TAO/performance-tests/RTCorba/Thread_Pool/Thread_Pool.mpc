@@ -1,10 +1,10 @@
-project: rt_server {
+project(*RTCorba server): rt_server {
   Source_Files {
     server.cpp
   }
 }
 
-project: rt_client {
+project(*RTCorba client): rt_client {
   Source_Files {
     testC.cpp
     client.cpp

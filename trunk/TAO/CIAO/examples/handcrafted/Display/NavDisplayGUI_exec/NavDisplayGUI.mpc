@@ -1,12 +1,11 @@
 // $Id$
 project(NavDisplayGUI_exec) : ciao_component, qt_moc {
-  depends   += NavDisplay_exec
+  after   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
-  libpaths  += .. ../NavDisplay $(QTDIR)/lib
-  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
-  macros    += QT_THREAD_SUPPORT
-  includes  += ../NavDisplay $(QTDIR)/include
+  libpaths  += .. ../NavDisplay
+  dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
+  includes  += ../NavDisplay
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   idlgendir = ./
 

@@ -1,6 +1,4 @@
-project(ECT Supplier): rteventexe {
-  depends += RTOLDEvent RTSched CosNaming IORTable Messaging
-  libs    += TAO_RTOLDEvent TAO_RTSched TAO_CosNaming TAO_IORTable TAO_Messaging
+project(ECT Supplier): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Supplier
   comps   += Naming RTOLDEvent
 
@@ -11,9 +9,7 @@ project(ECT Supplier): rteventexe {
   }
 }
 
-project(ECT Consumer): rteventexe {
-  depends += RTOLDEvent RTSched CosNaming IORTable Messaging
-  libs    += TAO_RTOLDEvent TAO_RTSched TAO_CosNaming TAO_IORTable TAO_Messaging
+project(ECT Consumer): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Consumer
   comps   += Naming RTOLDEvent
 
@@ -24,9 +20,7 @@ project(ECT Consumer): rteventexe {
   }
 }
 
-project(ECT Throughput): rteventexe {
-  depends += RTOLDEvent RTSched CosNaming IORTable Messaging
-  libs    += TAO_RTOLDEvent TAO_RTSched TAO_CosNaming TAO_IORTable TAO_Messaging
+project(ECT Throughput): rteventexe, rtoldevent, rtsched, naming, iortable, messaging {
   exename  = ECT_Throughput
   comps   += Naming RTOLDEvent
 

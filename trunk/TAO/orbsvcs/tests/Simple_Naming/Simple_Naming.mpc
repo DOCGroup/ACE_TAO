@@ -1,4 +1,4 @@
-project(Simple Naming Client) : namingexe {
+project(*Client) : namingexe {
   exename  = client
 
   Source_Files {

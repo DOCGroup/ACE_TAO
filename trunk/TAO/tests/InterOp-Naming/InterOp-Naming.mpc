@@ -1,8 +1,5 @@
-project(InterOp-Naming Server): server {
-  depends += IORTable
-  libs    += TAO_IORTable
+project(*Server): taoserver, iortable {
   exename  = INS_test_server
-
   Source_Files {
     INS_i.cpp
     Server_i.cpp
@@ -10,7 +7,7 @@ project(InterOp-Naming Server): server {
   }
 }
 
-project(InterOp-Naming Client): client {
+project(*Client): taoclient {
   exename  = INS_test_client
 
   Source_Files {

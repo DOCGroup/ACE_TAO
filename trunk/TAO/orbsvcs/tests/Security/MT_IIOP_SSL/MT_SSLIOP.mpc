@@ -1,4 +1,4 @@
-project: server {
+project(* security server): taoserver {
   Source_Files {
     Server_Worker.cpp
     test_i.cpp
@@ -6,7 +6,7 @@ project: server {
   }
 }
 
-project: client {
+project(* security client): taoclient {
   Source_Files {
     testC.cpp
     Client_Worker.cpp

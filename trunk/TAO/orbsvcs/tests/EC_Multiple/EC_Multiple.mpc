@@ -1,5 +1,3 @@
-project(EC_Multiple): rteventexe {
-  depends += RTOLDEvent RTSchedEvent RTSched CosNaming IORTable Messaging
-  libs    += TAO_RTOLDEvent TAO_RTSchedEvent TAO_RTSched TAO_CosNaming TAO_IORTable TAO_Messaging
+project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging {
   exename  = EC_Multiple
 }

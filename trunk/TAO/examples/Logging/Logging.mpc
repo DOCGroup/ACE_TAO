@@ -1,4 +1,4 @@
-project(Logging Service): namingexe {
+project(*Service): namingexe {
   exename = Logging_Service
   comps  += LifeCycle
 
@@ -9,7 +9,7 @@ project(Logging Service): namingexe {
   }
 }
 
-project(Logging Test): namingexe {
+project(*Test): namingexe {
   exename = Logging_Test
   comps  += LifeCycle
 

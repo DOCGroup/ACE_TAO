@@ -1,4 +1,4 @@
-project: server, strategies {
+project(*AMH sequence server): server, strategies {
   idlflags += -GH
   requires += ami
 
@@ -8,7 +8,7 @@ project: server, strategies {
   }
 }
 
-project: client, strategies {
+project(* AMH sequence client): client, strategies {
   idlflags += -GH
   requires += ami
 
