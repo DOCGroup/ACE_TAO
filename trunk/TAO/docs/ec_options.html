@@ -169,45 +169,6 @@ static EC_Factory "-ECFiltering basic ....."
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECPushSupplierSet"> -->
-        <TR>
-          <TD><CODE>-ECPushSupplierSet</CODE>
-            <EM>strategy</EM>
-          </TD>
-          <TD><P>Consumers can connect and disconnect from the event
-              channel as part of push to one consumer;
-              changing the set of consumers as a result of such an
-              operation would invalidate the iterators used by the event
-              channel to dispatch to the relevant consumers.
-              There are several ways to handle this problem, for example
-              a copy of the set could be made <I>before</I> initiating
-              the dispatch, or only if there is a change on the set
-              <I>during</I> the dispatch.
-              If the dispatching strategy is not reactive then it is
-              possible to lock the set of consumers during the duration
-              of the dispatch operation, the change in the subscriptions
-              will be held until the event is completely processed.
-              Finally the subscription change could be delayed until the
-              event is fully processed and there is no risk of
-              invalidating an iterator.
-            </P>
-            <P>All this strategies have merits under different
-              circumstances, the user can select the right one for his
-              application using this option.
-              The <EM>immediate</EM> strategy will perform any changes
-              on the consumer set immediately, simply using a lock to
-              synchronize access. The <EM>delayed</EM> operation will
-              wait until there are no threads iterating over the set
-              to perform any modifications on it.
-              The <EM>immediate_st</EM> simply performs the
-              modications without taking any locks, it is useful for
-              single threaded applications that do not receive changes
-              are part of an upcall (for example: if there are no
-              collocated consumers).
-            </P>
-          </TD>
-        </TR>
-
         <!-- <TR NAME="ECProxyConsumerLock"> -->
         <TR>
           <TD><CODE>-ECProxyConsumerLock</CODE>
@@ -227,28 +188,6 @@ static EC_Factory "-ECFiltering basic ....."
           <TD>Select the lock type (<EM>null</EM>, <EM>thread</EM> or
             <EM>recursive</EM>) to synchronize access to the
             ProxyPushSupplier state.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECConsumerAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECConsumerAdminLock</CODE>
-            <EM>lock_type</EM>
-          </TD>
-          <TD>Select the lock type (<EM>null</EM>, <EM>thread</EM> or
-            <EM>recursive</EM>) to synchronize access to the
-            ConsumerAdmin state.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECSupplierAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECSupplierAdminLock</CODE>
-            <EM>lock_type</EM>
-          </TD>
-          <TD>Select the lock type (<EM>null</EM>, <EM>thread</EM> or
-            <EM>recursive</EM>) to synchronize access to the
-            SupplierAdmin state.
           </TD>
         </TR>
 
@@ -304,6 +243,98 @@ static EC_Factory "-ECFiltering basic ....."
           <TD>Set the period (in microseconds) used by the reactive
 	    supplier control policy to poll the state of the
 	    supplier proxies.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECProxyPushConsumerCollection"> -->
+        <TR>
+          <TD><CODE>-ECProxyPushConsumerCollection</CODE>
+	    <EM>flag[:flags]</EM>
+          </TD>
+          <TD><P>Configure the data structure and strategies used to
+	      implement collections of
+	      <CODE>ProxyPushConsumers</CODE>.
+	      The argument is a colon separated list of flags, with
+	      the following semantics:
+	      <TABLE>
+	      <TR><TH>Flag</TH><TH>Description</TH><
+	      </TR>
+	      <TR>
+		<TD>MT</TD>
+		<TD>Use regular mutexes and/or condition
+		  variables for serialization.
+		</TD>
+		<TD>ST</TD>
+		<TD>Use null mutexes and/or condition
+		  variables for serialization.
+		</TD>
+		<TD>LIST</TD>
+		<TD>Implement the collection using an ordered list,
+		  fast for iteration (i.e. during event dispatching),
+		  but slow for insertion and removal (i.e. when
+		  clients connect and disconnect from the EC).
+		</TD>
+		<TD>RB_TREE</TD>
+		<TD>Implement the collection using a Red-Black tree,
+		  slow for iteration (i.e. during event dispatching),
+		  but fast for insertion and removal (i.e. when
+		  clients connect and disconnect from the EC).
+		</TD>
+		<TD>IMMEDIATE</TD>
+		<TD>Threads block until they can execute a change on
+		  the data structure, the system must use other
+		  approaches to guarantee that the iterators are not
+		  invalidated during event dispatching.  For example,
+		  use a separate dispatching thread.
+		</TD>
+		<TD>COPY_ON_READ</TD>
+		<TD>Before initiating an iteration to dispatch events
+		  (or similar tasks) a copy of the complete collection
+		  is performed.
+		  This solves most of the synchronization problems,
+		  but introduces a significant source of overhead and
+		  priority inversions on the critical path.
+		</TD>
+		<TD>COPY_ON_WRITE <STRONG>UNIMPLEMENTED</STRONG></TD>
+		<TD>Similar to the previous one, but the copy is only
+		  performed when needed.
+		</TD>
+		<TD>DELAYED</TD>
+		<TD>Threads that need to change the collection can
+		  detect if that change will invalidate iterators used
+		  by other threads.
+		  If so, the thread posts the change on a queue that
+		  is executed once the collection is no longer in
+		  use.
+		</TD>
+	      </TR>
+	      </TABLE>
+	    </P>
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECPushSupplierSet"> -->
+        <TR>
+          <TD><CODE>-ECPushSupplierSet</CODE>
+          </TD>
+          <TD><P>Obsolete option, ignored.
+	    </P>
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECConsumerAdminLock"> -->
+        <TR>
+          <TD><CODE>-ECConsumerAdminLock</CODE>
+          </TD>
+          <TD>Obsolete option, ignored in the current version.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECSupplierAdminLock"> -->
+        <TR>
+          <TD><CODE>-ECSupplierAdminLock</CODE>
+          </TD>
+          <TD>Obsolete option, ignored in the current version.
           </TD>
         </TR>
 
@@ -405,7 +436,7 @@ static EC_Factory "-ECFiltering basic ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Tue Jan 18 20:19:17 PST 2000
+Last modified: Fri Jan 28 15:59:23 PST 2000
 <!-- hhmts end -->
   </body>
 </html>
