@@ -671,6 +671,72 @@ class POA_Foo {
   <!-- Things below this point are "big" tasks" that -->
   <!-- could require major work -->
 
+      <LI><P>Provide mechanisms to marshal arguments into a CDR
+          stream, Jon Biggar contributed his proposal to the CORBA 2.3
+          RTF:
+<PRE>
+Issue 991: Operations to add to CORBA::ORB pseudo-object
+
+Proposal:
+
+[Note I have expanded the SerializedEncoding IDL type to include version
+information, since we now have 3 versions of CDR!]
+
+The following operations should be added to the CORBA::ORB
+pseudo-object:
+
+module CORBA {
+        interface ORB {
+                ...
+                typedef sequence<octet> SerializedData;
+                typedef unsigned long   SerializedFormat;
+
+                const SerializedFormat ENCODING_CDR = 0;
+
+                struct SerializedEncoding {
+                    SerializedFormat    format;
+                    octet               major_version;
+                    octet               minor_version;
+                };
+
+                SerializedData serialize(in Any data,
+                    in SerializedEncoding how);
+                Any unserialize(in SerializedData data,
+                    in SerializedEncoding how);
+                SerializedData serialize_value(in Any data,
+                    in SerializedEncoding how);
+                Any unserialize_value(in SerializedData data,
+                    in SerializedEncoding how,
+                    in TypeCode tc);
+                ...
+        };
+};
+
+These operations provide a standard mechanism for serializing and
+unserializing the data in an any, along with hooks to support new
+encoding formats as they are needed.  The type SerializedEncoding
+indicates the encoding mechanism to use to serialize and unserialize the
+data.  The format field specifies what encoding rules to use when
+serializing the data, and the major_version and minor_version indicate
+what version of the encoding rules to use.
+
+The serialize and unserialize encode the TypeCode along with the value
+so that the serialized data is self contained.  The serialize_value and
+unserialize_value version encodes the value without the TypeCode to save
+space, but a TypeCode must be supplied to unserialize the data.
+
+Since the serialized data may contain no indication of machine dependent
+issues such as byte order, the serialized data can only be guaranteed to
+correctly be unserialized on the same ORB.  The IDL any type should be
+used to exchange information between ORBs.
+
+Data encoded using the ENCODING_CDR format will be encoded using CDR
+encapsulation format.
+</PRE>
+
+        </P>
+      </LI>
+
       <LI><P>Add support for Smart Proxies to the ORB</P>
       </LI>
 
