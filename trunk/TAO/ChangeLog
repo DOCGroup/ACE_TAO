@@ -1,3 +1,10 @@
+Mon Aug 30 12:19:04 2004  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+
+	  Reordered base projects, putting amh last, to resolve generation
+	  problems on RH80_Static_Core.
+
 Mon Aug 30 15:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Makefile.am:
