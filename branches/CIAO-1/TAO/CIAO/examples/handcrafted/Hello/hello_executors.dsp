@@ -66,8 +66,8 @@ LINK32=link.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD   /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD   /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD  /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "HELLO_EXECUTORS_EXPORTS" /YX /FD  /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -96,6 +96,110 @@ LINK32=link.exe
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# End Group
+# Begin Group "IDL Files"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\hello.idl
+
+!IF  "$(CFG)" == "hello_executors - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\hello.idl
+InputName=hello
+
+BuildCmds= \
+	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_STUB_Export -Wb,export_include=hello_stub_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
+	del *S.* \
+	del *S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "hello_executors - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\hello.idl
+InputName=hello
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_STUB_Export -Wb,export_include=hello_stub_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\helloE.idl
+
+!IF  "$(CFG)" == "hello_executors - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\helloE.idl
+InputName=helloE
+
+BuildCmds= \
+	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_STUB_Export -Wb,export_include=hello_stub_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
+	del *S.* \
+	del *S_T.* \
+	
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "hello_executors - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\helloE.idl
+InputName=helloE
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_STUB_Export -Wb,export_include=hello_stub_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # End Group
 # End Target
 # End Project

@@ -78,7 +78,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib taod.lib CIAO_Clientd.lib /nologo /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\ciao"
+# ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib CIAO_Clientd.lib /nologo /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\ciao"
 
 !ENDIF 
 
@@ -102,6 +102,14 @@ SOURCE=.\helloC.cpp
 SOURCE=.\helloC.h
 # End Source File
 # End Group
+# Begin Group "Inline Files"
+
+# PROP Default_Filter "i,inl"
+# Begin Source File
+
+SOURCE=.\helloC.i
+# End Source File
+# End Group
 # Begin Group "IDL Files"
 
 # PROP Default_Filter "idl"
@@ -110,6 +118,33 @@ SOURCE=.\helloC.h
 SOURCE=.\hello.idl
 
 !IF  "$(CFG)" == "hello_stub - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
+InputPath=.\hello.idl
+InputName=hello
+
+BuildCmds= \
+	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_STUB_Export -Wb,export_include=hello_stub_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
 
 !ELSEIF  "$(CFG)" == "hello_stub - Win32 Debug"
 
@@ -142,14 +177,6 @@ BuildCmds= \
 
 !ENDIF 
 
-# End Source File
-# End Group
-# Begin Group "Inline Files"
-
-# PROP Default_Filter "i,inl"
-# Begin Source File
-
-SOURCE=.\helloC.i
 # End Source File
 # End Group
 # End Target
