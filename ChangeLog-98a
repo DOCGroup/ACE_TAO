@@ -1,3 +1,7 @@
+Sun May 03 01:58:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.1 released.
+
 Sat May  2 14:35:04 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Reactor_Notify_Test.cpp: Factored out some common code to
