@@ -27,10 +27,11 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_PROXYSUPPLIER_H
-#define TAO_EC_PROXYSUPPLIER_H
+#ifndef TAO_EC_CONSUMERADMIN_H
+#define TAO_EC_CONSUMERADMIN_H
 
 #include "ace/Containers.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -39,6 +40,7 @@
 
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
+class TAO_EC_ProxyPushConsumer;
 
 class TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin::ConsumerAdmin
 {
@@ -109,4 +111,4 @@ private:
 #include "EC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_EC_PROXYSUPPLIER_H */
+#endif /* TAO_EC_CONSUMERADMIN_H */

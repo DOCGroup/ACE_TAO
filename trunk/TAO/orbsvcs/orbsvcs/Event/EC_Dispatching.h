@@ -30,14 +30,16 @@
 //
 // ============================================================================
 
-#ifndef TAO_EC_FILTER_H
-#define TAO_EC_FILTER_H
+#ifndef TAO_EC_DISPATCHING_H
+#define TAO_EC_DISPATCHING_H
 
-#include "orbsvcs/RtecEventComm.h"
+#include "orbsvcs/RtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class TAO_EC_QOS_Info;
 
 class TAO_EC_Dispatching
 {

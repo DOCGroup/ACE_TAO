@@ -38,6 +38,7 @@
 #ifndef TAO_EC_FILTER_H
 #define TAO_EC_FILTER_H
 
+#include "ace/Containers.h"
 #include "orbsvcs/RtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -64,7 +65,7 @@ public:
   virtual ~TAO_EC_Filter (void);
   // destructor...
 
-  TAO_EC_Filter* parent (void) const;
+  const TAO_EC_Filter* parent (void) const;
   // Obtain the parent of this filter.
 
   void adopt_child (TAO_EC_Filter* child);
@@ -73,7 +74,7 @@ public:
   static int matches (const RtecEventComm::EventHeader& rhs,
                       const RtecEventComm::EventHeader& lhs);
   // matches two event headers.
-  // @@ TODO: stragize this...
+  // @@ TODO: strategize this...
 
   virtual int filter (const RtecEventComm::EventSet& event,
                       const TAO_EC_QOS_Info& qos_info,
@@ -94,7 +95,9 @@ public:
   virtual CORBA::ULong max_event_size (void) const = 0;
   // Returns the maximum size of the events pushed by this filter.
 
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset) = 0;
+  typedef ACE_Array<RtecEventComm::EventHeader> Headers;
+
+  virtual void event_ids (Headers& headerset) = 0;
   // Compute the disjunction of all the event types that could be of
   // interest for this filter (and its children).
 
@@ -105,7 +108,7 @@ private:
 
 // ****************************************************************
 
-class TAO_EC_Trivial_Filter : public TAO_EC_Filter
+class TAO_EC_Null_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //
@@ -114,7 +117,7 @@ class TAO_EC_Trivial_Filter : public TAO_EC_Filter
   // = MEMORY MANAGMENT
   //
 public:
-  TAO_EC_Trivial_Filter (void);
+  TAO_EC_Null_Filter (void);
   // constructor.
 
   // = The TAO_EC_Filter methods, please check the documentation in
@@ -127,7 +130,7 @@ public:
                      CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 };
 
 // ****************************************************************
@@ -152,7 +155,7 @@ public:
                      CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 };
 
 // ****************************************************************
@@ -177,7 +180,7 @@ public:
                      CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 };
 
 // ****************************************************************
@@ -202,7 +205,7 @@ public:
                      CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
+  virtual void event_ids (TAO_EC_Filter::Headers& headerset);
 };
 
 // ****************************************************************

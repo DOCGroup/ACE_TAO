@@ -33,14 +33,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-
-class TAO_EC_Dispatching;
-class TAO_EC_Filter_Builder;
-class TAO_EC_ConsumerAdmin;
-class TAO_EC_SupplierAdmin;
-class TAO_EC_Timer_Module;
-
-class TAO_EC_Factory;
+#include "EC_Factory.h"
 
 class TAO_EC_Event_Channel : public POA_RtecEventChannelAdmin::EventChannel
 {
@@ -84,6 +77,10 @@ public:
   TAO_EC_ProxyPushConsumer* create_proxy_push_consumer (void);
   void destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
   // Create and destroy a ProxyPushConsumer
+
+  PortableServer::POA_ptr supplier_poa (CORBA::Environment&);
+  PortableServer::POA_ptr consumer_poa (CORBA::Environment&);
+  // Access the supplier and consumer POAs from the factory.
 
   virtual void connected (TAO_EC_ProxyPushConsumer*,
                           CORBA::Environment&);
@@ -138,7 +135,7 @@ private:
   TAO_EC_SupplierAdmin *supplier_admin_;
   // The SupplierAdmin implementation
 
-  TAO_EC_TimerModule *timer_module_;
+  TAO_EC_Timer_Module *timer_module_;
   // The timer module
 };
 

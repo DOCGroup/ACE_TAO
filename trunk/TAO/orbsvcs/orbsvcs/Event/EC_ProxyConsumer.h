@@ -31,14 +31,15 @@
 #ifndef TAO_EC_PROXYCONSUMER_H
 #define TAO_EC_PROXYCONSUMER_H
 
+#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_EC_Dispatching;
-class TAO_EC_Filter_Builder;
+class TAO_EC_Event_Channel;
+class TAO_EC_ProxyPushSupplier;
 
 class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushConsumer
 {
@@ -60,7 +61,7 @@ class TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelAdmin::ProxyPushCons
   //   externally.
   //
 public:
-  TAO_EC_ProxyPushConsumer (TAO_EC_SupplierAdmin* supplier_admin);
+  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel);
   // constructor...
 
   virtual ~TAO_EC_ProxyPushConsumer (void);
@@ -90,23 +91,23 @@ public:
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  void set_default_poa (PortableServer::POA_ptr poa);
+  void set_default_POA (PortableServer::POA_ptr poa);
   // Set this servant's default POA
-
-  // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-		RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS& qos,
-                CORBA::Environment &);
-  virtual void push (const RtecEventComm::EventSet& event,
-                     CORBA::Environment &);
-  virtual void disconnect_push_consumer (CORBA::Environment &);
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
 
+  // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
+  virtual void connect_push_supplier (
+		RtecEventComm::PushSupplier_ptr push_supplier,
+                const RtecEventChannelAdmin::SupplierQOS& qos,
+                CORBA::Environment &);
+  virtual void push (const RtecEventComm::EventSet& event,
+                     CORBA::Environment &) = 0;
+  virtual void disconnect_push_consumer (CORBA::Environment &);
+
 private:
-  TAO_EC_SupplierAdmin* supplier_admin_;
+  TAO_EC_Event_Channel* event_channel_;
   // The supplier admin, used for activation and memory managment.
 
   RtecEventComm::PushSupplier_var supplier_;

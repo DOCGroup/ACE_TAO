@@ -1,6 +1,8 @@
 // $Id$
 
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "EC_ConsumerAdmin.h"
+#include "EC_ProxySupplier.h"
 #include "EC_Event_Channel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -64,17 +66,18 @@ TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
 				    CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->all_suppliers_.remove (supplier) != 0)
-    ACE_THROW (RtecEventChannelAdmin::SUBSCRIPTION_ERROR ());
+    ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_ProxyPushSupplier* supplier = 
-    this->event_channel_->create_proxy_push_supplier (void);
+    this->event_channel_->create_proxy_push_supplier ();
 
-  supplier->set_default_POA (
-        this->event_channel_->factory ()->supplier_POA ());
+  PortableServer::POA_var poa =
+    this->event_channel_->supplier_poa (ACE_TRY_ENV);
+  supplier->set_default_POA (poa.in ());
 
   return supplier->_this (ACE_TRY_ENV);
 }

@@ -31,7 +31,7 @@
 #ifndef TAO_EC_FILTER_BUILDER_H
 #define TAO_EC_FILTER_BUILDER_H
 
-#include "orbsvcs/RtecEventChannelAdmin.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,8 +49,8 @@ public:
   virtual ~TAO_EC_Filter_Builder (void);
   // destructor...
 
-  TAO_EC_Filter* build (RtecEventChannelAdmin::ConsumerQOS& qos) const
-    = 0;
+  virtual TAO_EC_Filter*
+      build (RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
   // Create the filter, the caller must assume ownership of the filter
   // returned.
 

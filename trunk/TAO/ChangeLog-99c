@@ -1,5 +1,31 @@
 Mon Jan 25 17:24:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.i: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h: 
+	  These files compile now, and are fairly complete, but I still
+	  have to implement the TAO_EC_Filter hierarchy, the dispatching
+	  strategies and a couple of example ProxySupplier/ProxyConsumer
+	  classes.
+	  We also need to implement the locking strategies.
+
 	* orbsvcs/orbsvcs/Makefile: 
 	  Updated dependencies.
 
