@@ -171,10 +171,11 @@ private:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    virtual Messaging::SyncScope synchronization (
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      ) = 0;
+    virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV) = 0;
+    // Hacky TAO extension to reduce call to
+    // CORBA::Environment::default_environment () since this method
+    // will never raise exceptions.
+    virtual Messaging::SyncScope synchronization (void) = 0;
 
     Messaging::SyncScopePolicy *_this (
         CORBA::Environment &ACE_TRY_ENV =
