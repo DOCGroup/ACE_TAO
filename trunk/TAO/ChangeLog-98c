@@ -1,4 +1,10 @@
-Tue Dec 22 01:01:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Dec 22 01:12:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h: Replaced TAO_CATCHANY with
+	  TAO_CATCH (CORBA_Exception, ex) when building DEBUG library
+	  (when ACE_NDEBUG is _not_ defined.)  This will make un-expected
+	  exception very out-standing and let debuggers have a chance to
+	  catch these exceptions for us.
 
 	* orbsvcs/orbsvcs/Trader/Trader_T.cpp (extract): Changed to use
 	  any's >>= operator to extract a sequence.  No need to decode it
