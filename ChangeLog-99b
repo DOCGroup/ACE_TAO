@@ -1,10 +1,10 @@
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a new sigpause() wrapper to class ACE_OS.
+	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.
 
 	* ace/config-sunos5.5.h,
 	* ace/config-linux-common.h: Added support for
-	  the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGPAUSE macros.
+	  the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
 
 	* ace/Signal: Make the use of ACE_Sig_Set & parameters
  	  const-correct.
