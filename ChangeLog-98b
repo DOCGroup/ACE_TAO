@@ -1,88 +1,93 @@
+Mon Sep 14 21:46:36 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers.h: added "class" to several ACE_DLList friend
+          declarations.
+
 Mon Sep 14 21:02:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Mem_Map.cpp (map_it): Removed the code for
- 	  !ACE_HAS_P_READ_WRITE since we cover it in ACE_OS::pwrite.
+        * ace/Mem_Map.cpp (map_it): Removed the code for
+          !ACE_HAS_P_READ_WRITE since we cover it in ACE_OS::pwrite.
 
-	* ace/Filecache.cpp (ACE_Filecache_Object): Changed the
- 	  lseek/write combo to pwrite.
+        * ace/Filecache.cpp (ACE_Filecache_Object): Changed the
+          lseek/write combo to pwrite.
 
 Mon Sep 14 17:09:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-common.h,OS.h,README: Removed all mention of
- 	  ACE_LACKS_FIFO, which was no longer necessary.  Thanks to Ossama
- 	  Othman <othman@astrosun.tn.cornell.edu> for suggesting this.
+        * ace/config-win32-common.h,OS.h,README: Removed all mention of
+          ACE_LACKS_FIFO, which was no longer necessary.  Thanks to Ossama
+          Othman <othman@astrosun.tn.cornell.edu> for suggesting this.
 
-	* ace/ACE.cpp (bind_port): Renamed sin to sock_addr to make the
- 	  autoconf script happier.  Thanks to Ossama Othman
- 	  <othman@astrosun.tn.cornell.edu> for suggesting this.
+        * ace/ACE.cpp (bind_port): Renamed sin to sock_addr to make the
+          autoconf script happier.  Thanks to Ossama Othman
+          <othman@astrosun.tn.cornell.edu> for suggesting this.
 
-	* include/makeinclude/platform_mvs.GNU: Updated the MVS platform
- 	  configuration as follows:
+        * include/makeinclude/platform_mvs.GNU: Updated the MVS platform
+          configuration as follows:
 
-	  changed:
-	    debug = 1
-	  to:
-	    debug = 0
+          changed:
+            debug = 1
+          to:
+            debug = 0
 
-	  added:
-	    static_libs = 1
+          added:
+            static_libs = 1
 
-	  and deleted the line:
-	    CCFLAGS       += $(CFLAGS)
+          and deleted the line:
+            CCFLAGS       += $(CFLAGS)
 
-	  Thanks to Chuck Gehr <GehrCR@LOUISVILLE.STORTEK.COM> for these
-	  changes.
+          Thanks to Chuck Gehr <GehrCR@LOUISVILLE.STORTEK.COM> for these
+          changes.
 
 Mon Sep 14 14:34:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* apps/gperf/src/gperf.dsp:
-	* apps/gperf/src/gperf_lib.dsp:
-	  Fixed the project by removing new.cpp (which disappeared a 
-	  while back) and changed the code generation to DLL.  Now
-	  seems to work on NT.
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+          Fixed the project by removing new.cpp (which disappeared a
+          while back) and changed the code generation to DLL.  Now
+          seems to work on NT.
 
-	* ace/config-win32.h: ACE_HAS_GPERF now on NT.
+        * ace/config-win32.h: ACE_HAS_GPERF now on NT.
 
 Mon Sep 14 13:41:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Fixed qsort() and bsearch() so they work correctly for
- 	  MVS.  Thanks to Chuck Gehr for reporting this.
+        * ace/OS: Fixed qsort() and bsearch() so they work correctly for
+          MVS.  Thanks to Chuck Gehr for reporting this.
 
-	* ace/config-mvs.h: Added 
-	
-	  #define ACE_HAS_DIRENT
-	  #define ACE_LACKS_READDIR_R
+        * ace/config-mvs.h: Added
 
-	  so that things will work correctly for MVS.  Thanks to Chuck
- 	  Gehr for reporting this.
+          #define ACE_HAS_DIRENT
+          #define ACE_LACKS_READDIR_R
+
+          so that things will work correctly for MVS.  Thanks to Chuck
+          Gehr for reporting this.
 
 Mon Sep 14 10:11:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_ce_dll.dsp: Added Select_Reactor_Base.cpp and removed
-	  Array.cpp from the project.  Thanks to Paul Sexton
-	  <pauls@ENTERPRISE.bt.co.uk> for noticing this.
- 	
-	* ace/config-WinCE.h: Added ACE_LACKS_BSEARCH.
-	
-	* ace/OS.h: Added /**/ between #include and <ace/sys_conf.h> in
-	  pSOS section to prevent a MSVC warning.
+        * ace/ace_ce_dll.dsp: Added Select_Reactor_Base.cpp and removed
+          Array.cpp from the project.  Thanks to Paul Sexton
+          <pauls@ENTERPRISE.bt.co.uk> for noticing this.
 
-	* ace/OS.i (bsearch): If the function is not supported by the
-	  platform, return NULL instead of -1 so it behaves compatibly
-	  with most common implementation.
+        * ace/config-WinCE.h: Added ACE_LACKS_BSEARCH.
+
+        * ace/OS.h: Added /**/ between #include and <ace/sys_conf.h> in
+          pSOS section to prevent a MSVC warning.
+
+        * ace/OS.i (bsearch): If the function is not supported by the
+          platform, return NULL instead of -1 so it behaves compatibly
+          with most common implementation.
 
 Mon Sep 14 09:37:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch_T.h: Fixed a deadlock condition caused by acquiring
- 	  the internal lock in multiple places during the same call.
-  	  Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
+        * ace/Synch_T.h: Fixed a deadlock condition caused by acquiring
+          the internal lock in multiple places during the same call.
+          Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
 
 Mon Sep 14 01:59:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Strategies_T.{h,i,cpp}: Added two new classes
- 	  ACE_Thread_Pool_Strategy and ACE_Svc_Handler_Pool_Strategy for
- 	  activating and creating Svc_Handler.  They should be used with
- 	  the new TP_Reactor.  More to come...
+        * ace/Strategies_T.{h,i,cpp}: Added two new classes
+          ACE_Thread_Pool_Strategy and ACE_Svc_Handler_Pool_Strategy for
+          activating and creating Svc_Handler.  They should be used with
+          the new TP_Reactor.  More to come...
 
 Sun Sep 13 22:31:23 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -93,17 +98,17 @@ Sun Sep 13 18:36:11 EDT 1998   James CE Johnson  <jcej@.lads.com>
         * docs/tutorials/006/notify.cpp
           No longer applicable.  This used spawn() to create the
           thread but the new version uses an ACE_Task<> derivative.
-        
+
         * docs/tutorials/006/Makefile
           Removed dependency info.
-        
+
         * docs/tutorials/007/thread_pool.cpp
           Removed THR_DETACHED from activate() call.  I need a
           better understanding of when to include this flag...
-        
+
         * docs/tutorials/index.html
           Setting up new Message_Queue entry points.
-        
+
         * docs/tutorials/010/Makefile
           docs/tutorials/010/block.h
           docs/tutorials/010/message_queue.cpp
@@ -116,9 +121,9 @@ Sun Sep 13 18:36:11 EDT 1998   James CE Johnson  <jcej@.lads.com>
           docs/tutorials/010/page07.html
           docs/tutorials/010/task.cpp
           docs/tutorials/010/task.h
-        
+
           A tutorial showing a simple use of the ACE_Message_Queue.
-        
+
         * docs/tutorials/011/Makefile
           docs/tutorials/011/block.h
           docs/tutorials/011/data.h
@@ -131,61 +136,61 @@ Sun Sep 13 18:36:11 EDT 1998   James CE Johnson  <jcej@.lads.com>
           docs/tutorials/011/page06.html
           docs/tutorials/011/task.cpp
           docs/tutorials/011/task.h
-        
+
           Extension of 010 adds queue-ing of non-trivial data.
-        
+
 
 Sun Sep 13 16:29:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Select_Reactor_T.h: 
-	  Use the ACE_UNIMPLETED_FUNC to make the code work on older
-	  versions of IRIX
+        * ace/Select_Reactor_T.h:
+          Use the ACE_UNIMPLETED_FUNC to make the code work on older
+          versions of IRIX
 
 Sat Sep 12 22:39:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.i: There was a bug with strecpy() -- it should return a
- 	  pointer to 1 byte PAST the '\0'...
+        * ace/ACE.i: There was a bug with strecpy() -- it should return a
+          pointer to 1 byte PAST the '\0'...
 
 Sat Sep 12 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Timer_Hash.cpp: Removed the #pragma template instantiation
-	  for ACE_Timer_Node_T<ACE_Event_Handler *> because it is already
-	  instantiated in Timer_Queue.cpp.  Thanks to Sergio for noticing
-	  this.
+        * ace/Timer_Hash.cpp: Removed the #pragma template instantiation
+          for ACE_Timer_Node_T<ACE_Event_Handler *> because it is already
+          instantiated in Timer_Queue.cpp.  Thanks to Sergio for noticing
+          this.
 
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Dirent.cpp: Renamed the methods to be more "abstract" by
- 	  removing the "dir" suffixes.
+        * ace/Dirent.cpp: Renamed the methods to be more "abstract" by
+          removing the "dir" suffixes.
 
-	* ACE-INSTALL.html: Fixed a broken link.  Thanks to Tom Shields
- 	  <Shields@MarsHotel.CMPU.NET> for reporting this.
+        * ACE-INSTALL.html: Fixed a broken link.  Thanks to Tom Shields
+          <Shields@MarsHotel.CMPU.NET> for reporting this.
 
-	* ace/OS.h (ACE_OS): Added wrappers for the passwd iterator.
+        * ace/OS.h (ACE_OS): Added wrappers for the passwd iterator.
 
-	* ace/OS.h (ACE_OS): Added wrappers for qsort() and bsearch().
+        * ace/OS.h (ACE_OS): Added wrappers for qsort() and bsearch().
 
-	* ace/README: Reformatted this file and also changed
-	  ACE_REQUIRES_FUNC_DEFINITIONS
-	  ACE_NEEDS_READV
-	  ACE_NEEDS_SCHED_H
-	  ACE_NEEDS_SYSTIME_H
-	  ACE_NEEDS_WRITEV
+        * ace/README: Reformatted this file and also changed
+          ACE_REQUIRES_FUNC_DEFINITIONS
+          ACE_NEEDS_READV
+          ACE_NEEDS_SCHED_H
+          ACE_NEEDS_SYSTIME_H
+          ACE_NEEDS_WRITEV
 
-	  to
+          to
 
-	  ACE_NEEDS_FUNC_DEFINITIONS
-	  ACE_LACKS_READV
-	  ACE_LACKS_SCHED_H
-	  ACE_LACKS_SYSTIME_H
-	  ACE_LACKS_WRITEV
+          ACE_NEEDS_FUNC_DEFINITIONS
+          ACE_LACKS_READV
+          ACE_LACKS_SCHED_H
+          ACE_LACKS_SYSTIME_H
+          ACE_LACKS_WRITEV
 
-	  respectively.
+          respectively.
 
 Sat Sep 12 19:18:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (qsort): Fixed a typo.  And removed "return" for this
-	  is a void function.
+        * ace/OS.i (qsort): Fixed a typo.  And removed "return" for this
+          is a void function.
 
 Sat Sep 12 13:13:39 EDT 1998  James CE Johnson <jcej@lads.com>
 
@@ -224,8 +229,8 @@ Fri Sep 11 22:46:54 EDT 1998  James CE Johnson <jcej@lads.com>
 
 Fri Sep 11 12:30:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* ace/config-chorus.h: Uncommented ACE_LACKS_SYSV_SHMEM as ace
-	  didn't compile on Chorus with that commented out.
+        * ace/config-chorus.h: Uncommented ACE_LACKS_SYSV_SHMEM as ace
+          didn't compile on Chorus with that commented out.
 
 Fri Sep 11 09:02:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
@@ -240,20 +245,20 @@ Fri Sep 11 09:02:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 Fri Sep 11 08:54:41 EDT 1998  James CE Johnson <jcej@lads.com>
 
         * docs/tutorials/001/logger.h
-	  Logging_Handler::open() should return 0 on success.
+          Logging_Handler::open() should return 0 on success.
 
         * docs/tutorials/002/server.cpp
           docs/tutorials/002/page02.html
-	  Provide 'g_reactor' to the acceptor's open().  If you
-	  don't do this, the app will core dump on ^C
+          Provide 'g_reactor' to the acceptor's open().  If you
+          don't do this, the app will core dump on ^C
 
-	  Thanks to Krishna Padmasola <pkrishna@cybercash.co.in> for
- 	  helping me see these.
+          Thanks to Krishna Padmasola <pkrishna@cybercash.co.in> for
+          helping me see these.
 
 Thu Sep 10 16:53:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Upgradable_RW_Test.cpp:
-	  Some templates were instantiated twice if threads were enabled.
+        * tests/Upgradable_RW_Test.cpp:
+          Some templates were instantiated twice if threads were enabled.
 
 Thu Sep 10 13:41:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
