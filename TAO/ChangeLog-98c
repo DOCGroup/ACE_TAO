@@ -1,3 +1,21 @@
+Fri Jan  1 12:29:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Makefile: 
+	  Added the Time_Service directory.
+
+	* orbsvcs/Time_Service/Clerk_i.h: 
+	* orbsvcs/Time_Service/Clerk_i.cpp: 
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h: 
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp: 
+	* orbsvcs/orbsvcs/Time/Timer_Helper.h: 
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp: 
+	  Use ACE_Array_Base instead of ACE_Unbounded_Set because it does
+	  not require an == or != operator defined.
+
+	* tao/DynArray_i.h: 
+	* tao/DynArray_i.cpp: 
+	  Use ACE_Array_Base instead of ACE_Array.
+
 Fri Jan  1 11:51:42 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Removed some VxWorks errors like 'TAO_TRY_LABEL unreferenced' in

@@ -65,8 +65,7 @@ protected:
   TAO_Time_Service_Clerk *clerk_;
   // Clerk's instance that this class helps to update time.
 
-  typedef ACE_Unbounded_Set<CosTime::TimeService_var>
-          IORS;
+  typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
   // The set of server IORs.
 };
 
