@@ -62,10 +62,13 @@ Test_DynAny::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
       CORBA::Any in1 (CORBA::_tc_double);
       DynamicAny::DynAny_var fa1 =
@@ -77,11 +80,16 @@ Test_DynAny::run_test (void)
       ACE_TRY_CHECK;
       CORBA::Double d_out = fa1->get_double (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (d_out == data.m_double1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -101,10 +109,14 @@ Test_DynAny::run_test (void)
       out_any1 >>= d_out;
 
       if (d_out == data.m_double1)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       fa1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -128,12 +140,17 @@ Test_DynAny::run_test (void)
       ACE_TRY_CHECK;
       CORBA::TypeCode_var tc_out = fa2->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
       if (tc_out->equal (data.m_typecode1,
                          ACE_TRY_ENV))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_TRY_CHECK;
 
@@ -154,12 +171,19 @@ Test_DynAny::run_test (void)
       CORBA::TypeCode_ptr out_tc;
       out_any2 >>= out_tc;
 
-      if (out_tc->equal(data.m_typecode1,
-                        ACE_TRY_ENV))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+      CORBA::Boolean equal = out_tc->equal (data.m_typecode1,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (equal)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_TRY_CHECK;
 

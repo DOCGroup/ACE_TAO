@@ -43,12 +43,10 @@ Test_DynEnum::test_name (void) const
 int
 Test_DynEnum::run_test (void)
 {
-  DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
-
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/value_as_ulong\n"));
+                 "testing: constructor(Any)/set_as_string/get_as_ulong\n"));
 
       CORBA::Object_var factory_obj =
         this->orb_->resolve_initial_references ("DynAnyFactory",
@@ -59,43 +57,59 @@ Test_DynEnum::run_test (void)
         DynamicAny::DynAnyFactory::_narrow (factory_obj.in (),
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (CORBA::is_nil (dynany_factory.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil dynamic any factory after narrow\n"),
-                          -1);
 
+      if (CORBA::is_nil (dynany_factory.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
+
+      DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
       CORBA_Any in_any1;
       in_any1 <<= te;
       DynamicAny::DynAny_var dp1 =
         dynany_factory->create_dyn_any (in_any1,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      DynamicAny::DynEnum_var de1 = DynamicAny::DynEnum::_narrow (dp1.in (),
-                                                      ACE_TRY_ENV);
+      DynamicAny::DynEnum_var de1 = 
+        DynamicAny::DynEnum::_narrow (dp1.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      de1->set_as_ulong (2, ACE_TRY_ENV);
+      de1->set_as_string ("TE_FIRST", 
+                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::ULong ul_out1 = de1->get_as_ulong (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (ul_out1 == 2)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+
+      if (ul_out1 == 1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: value_as_string\n"));
+                 "testing: set_as_ulong/get_as_string\n"));
 
-      de1->set_as_string ("TE_FIRST",
-                          ACE_TRY_ENV);
+      de1->set_as_ulong (3,
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::String_var s = de1->get_as_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!ACE_OS::strcmp (s.in (), "TE_FIRST"))
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+
+      if (ACE_OS::strcmp (s.in (), "TE_THIRD") == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
 
       ACE_DEBUG ((LM_DEBUG,
@@ -112,23 +126,30 @@ Test_DynEnum::run_test (void)
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (de2.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "DynEnum::_narrow() returned nil\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DynEnum::_narrow() returned nil\n"),
+                            -1);
+        }
 
       CORBA_Any in_any2;
       in_any2 <<= DynAnyTests::TE_THIRD;
       de2->from_any (in_any2,
-                    ACE_TRY_ENV);
+                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA_Any_var out_any1 = de2->to_any (ACE_TRY_ENV);
       ACE_TRY_CHECK;
       out_any1.in () >>= te;
+
       if (te == DynAnyTests::TE_THIRD)
-        ACE_DEBUG ((LM_DEBUG,
-                   "++ OK ++\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
       else
-        ++this->error_count_;
+        {
+          ++this->error_count_;
+        }
 
       de1->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
