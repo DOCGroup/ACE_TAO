@@ -91,7 +91,7 @@ ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
     ifeq ($(GNU_LD),1)
       # Make sure this version of ld supports the -E option.
-      LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "(option|flag)" /dev/null; echo $$?')
+      LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "option" -e "flag" /dev/null; echo $$?')
       ifeq ($(LD_EXPORT_DEFINED),1)
         LDFLAGS += -Wl,-E
       endif # LD_EXPORT_DEFINED = 1
