@@ -6,16 +6,19 @@
 #include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "ace/String_Base.h"
+#include "ace/Dynamic_Service.h"
+#include "orbsvcs/Event/EC_Kokyu_Factory.h"
+#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/DefaultHandler.h"
 
-#include "ECConfig.h"
 #include "Config_Factory.h"
 #include "Test_Handler.h"
 
 using namespace TestConfig;
+using namespace ConfigFactory;
 
 struct Arguments
 {
@@ -27,8 +30,11 @@ int parse_args (int argc, char *argv[],Arguments &args);
 int
 main (int argc, char *argv[])
 {
+  TAO_EC_Gateway_IIOP_Factory::init_svcs();
+  Default_Config_Factory::init_svcs();
+
   int retval = 0;
-  ds_control ctrl ("Test start","Test.dsui");
+  ds_control ctrl ("Test start","ec_test.dsui");
 
   ACEXML_TRY_NEW_ENV
     {
@@ -69,16 +75,23 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
 
       // configure according to parsed XML
-      ConfigFactory::Default_Config_Factory fact;
-      fact.init(argc,argv);
 
-      Test_Config *backend = fact.create_testconfig();
+      //get Config_Factory service
+      Config_Factory *fact(
+        ACE_Dynamic_Service<Config_Factory>::instance ("Config_Factory"));
+
+      if (fact == 0)
+        {
+          ACE_NEW_RETURN (fact,
+			  Default_Config_Factory,-1);
+        }
+
+      Test_Config *backend = fact->create_testconfig();
       if (0 == backend) {
         ACE_DEBUG((LM_DEBUG, "Error: could not create back end!\n"));
         return 1;
       }
 
-      // PROBLEM: occasional segfault on run and configure
       TCFG_SET_WPTR cfg_ptr(handler.get_configs());
 
       int retval = 0;
@@ -92,8 +105,8 @@ main (int argc, char *argv[])
         return retval;
       }
 
-      fact.destroy_testconfig(backend);
-      fact.fini();
+      fact->destroy_testconfig(backend);
+      fact->fini();
 
     }
   ACEXML_CATCH (ACEXML_SAXException, ex)
