@@ -60,6 +60,7 @@ BIN =   Aio_Platform_Test \
         Simple_Message_Block_Test \
         SOCK_Test \
         SOCK_Connector_Test \
+        SOCK_Send_Recv_Test \
         SPIPE_Test \
         SString_Test \
         SV_Shared_Memory_Test \
