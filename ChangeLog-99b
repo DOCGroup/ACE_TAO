@@ -1,3 +1,15 @@
+Fri Sep  3 14:58:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * config-aix-4.x.h:
+        * config-hpux-10.x-hpc++.h:
+        * config-hpux-11.x-hpc++.h:
+        * config-mvs.h:
+        * config-win32-borland.h:
+        * config-win32.h:
+          Moved many of the preprocessor information for various 
+          platforms from TAO_IDL to here (in ACE_CC_PREPROCESSOR and 
+          ACE_CC_PREPROCESSOR_ARGS).
+
 Fri Sep  3 13:52:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:
