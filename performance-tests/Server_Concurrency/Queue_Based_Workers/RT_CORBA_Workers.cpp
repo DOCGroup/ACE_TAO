@@ -264,7 +264,8 @@ Input_Task::svc (void)
   (void) this->synch_.start_synchronization ();
 
 
-  for (size_t i = 0;
+  size_t i = 0;
+  for (i = 0;
        i < (number_of_messages - number_of_workers);
        ++i)
     {
@@ -300,7 +301,7 @@ Input_Task::svc (void)
 
 
   // Stop messages
-  for (size_t i = 0;
+  for (i = 0;
        i < number_of_workers;
        ++i)
     {
@@ -546,17 +547,19 @@ main (int argc, ACE_TCHAR *argv[])
 
   test_timer.elapsed_time (elapsed_time);
 
+# if !defined (ACE_WIN32)
   double elapsed_time_per_invocation =
     (double) elapsed_time / number_of_messages;
 
-  /* ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_DEBUG,
      "(%P|%t) Throughput is [%f] \n",
-     elapsed_time_per_invocation)); */
+     elapsed_time_per_invocation)); 
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Throughput is [%f] \n",
               1000000000/ elapsed_time_per_invocation));
 
+#endif /*ACE_WIN32 */
   for (i = 0; i < number_of_workers; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
