@@ -750,6 +750,13 @@ operator<< (TAO_OutputCDR& cdr, CORBA::ULongLong x)
 }
 
 ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::LongDouble x)
+{
+  cdr.write_longdouble (x);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
 operator<< (TAO_OutputCDR& cdr, CORBA::Float x)
 {
   cdr.write_float (x);
@@ -910,6 +917,13 @@ ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::ULongLong &x)
 {
   cdr.read_ulonglong (x);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::LongDouble &x)
+{
+  cdr.read_longdouble (x);
   return cdr.good_bit ();
 }
 
