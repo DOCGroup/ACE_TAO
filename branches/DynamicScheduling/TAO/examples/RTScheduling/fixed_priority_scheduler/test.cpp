@@ -6,6 +6,8 @@
 #include "ace/Arg_Shifter.h"
 #include "FP_DT_Creator.h"
 #include "../Thread_Task.h"
+#include "../Task_Stats.h"
+
 
 DT_Test::DT_Test (void)
 {
@@ -120,15 +122,20 @@ DT_Test::run (int argc, char* argv []
   init (argc,argv
 	ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
   
   dt_creator_->create_distributable_threads (orb_,
-											 current_
-											ACE_ENV_ARG_PARAMETER);
+					     current_
+					     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
+
+
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
+
 
 void
 DT_Test::dt_creator (FP_DT_Creator* dt_creator)
