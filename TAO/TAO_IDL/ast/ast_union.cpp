@@ -218,13 +218,11 @@ AST_Union::in_recursion (AST_Type *node)
             AST_UnionBranch::narrow_from_decl (si->item ());
 
           if (field == 0)
+            // This will be an enum value or other legitimate non-field
+            // member - in any case, no recursion.
             {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("(%N:%l) AST_Union::")
-                                 ACE_TEXT ("in_recursion - ")
-                                 ACE_TEXT ("bad field node\n")),
-                                0);
+              si->next ();
+              continue;
             }
 
           AST_Type *type = 

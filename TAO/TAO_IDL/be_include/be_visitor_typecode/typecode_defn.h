@@ -44,6 +44,9 @@ public:
   ~be_visitor_typecode_defn (void);
   // destructor
 
+  virtual int visit_members (AST_Structure *node);
+  // for use with structs, exceptions, and unions.
+
   virtual int visit_type (be_type *node);
   // visit a generic be_type node
 
