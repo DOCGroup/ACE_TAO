@@ -64,7 +64,7 @@ namespace CIAO
   protected:
     CosNaming::NamingContext_var ns_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "HomeRegistrar_i.inl"
