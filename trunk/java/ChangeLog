@@ -1,3 +1,8 @@
+Fri Jul 09 13:58:42 1999  Everett Anderson  <eea1@cs.wustl.edu>
+
+	* src/Acceptor.java, EventHandler, TimeValue.java
+	  Solved a few javadoc warnings.
+
 Fri Jul 09 11:08:32 1999  Everett Anderson  <eea1@cs.wustl.edu>
 
 	* src/TimedWait.java, Stream*.java, Token.java
