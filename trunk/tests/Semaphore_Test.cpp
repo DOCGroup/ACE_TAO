@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Semaphore Test
 //
 // = DESCRIPTION
 //    This test verifies the functionality of the <ACE_Thread_Semaphore>
-//    implementation.  
+//    implementation.
 //
 // = AUTHOR
 //    Darrell Brunsch <brunsch@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -60,11 +60,11 @@ static size_t timeouts = 0;
 #endif /* ! ACE_HAS_STHREADS */
 
 // Explain usage and exit.
-static void 
+static void
 print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-	      ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("usage: %n [-s n_release_count] [-w n_workers] [-n iteration_count]\n")));
   ACE_OS::exit (1);
 }
 
@@ -73,7 +73,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("s:w:n:"));
 
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -96,7 +96,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 #if !defined (ACE_HAS_STHREADS) && !defined (ACE_HAS_POSIX_SEM)
 // Tests the amount of time spent in a timed wait.
 
-static int 
+static int
 test_timeout (void)
 {
   int status = 0;
@@ -116,7 +116,12 @@ test_timeout (void)
   wait.sec (wait.sec () + wait_secs);
 
   if (s.acquire (wait) == -1)
+#if defined (ACE_HAS_PTHREADS_DRAFT4)
+    // LynxOS, at least.
+    ACE_ASSERT (errno == EINTR);
+#else
     ACE_ASSERT (errno == ETIME);
+#endif
 
   ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
 
@@ -130,7 +135,7 @@ test_timeout (void)
                   ASYS_TEXT ("Timed wait fails length test\n")));
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("Value: %d ms, actual %d ms\n"),
-		  msecs_expected,
+                  msecs_expected,
                   msecs_waited));
       status = -1;
     }
@@ -157,17 +162,17 @@ worker (void *)
         ++timeouts;
       else
         {
-	  ACE_Time_Value diff = ACE_OS::gettimeofday ();
-	  diff = diff - tv;       // tv should have been reset to time acquired
-	  if (diff.msec () > ACE_ALLOWED_SLACK)
-	    {
-	      ACE_DEBUG ((LM_DEBUG,
-			  ASYS_TEXT ("Acquire fails time reset test\n")));
-	      ACE_DEBUG ((LM_DEBUG,
-			  ASYS_TEXT ("Diff btw now and returned time: %d ms\n"),
-			  diff.msec ()));
-	      test_result = 1;
-	    }
+          ACE_Time_Value diff = ACE_OS::gettimeofday ();
+          diff = diff - tv;       // tv should have been reset to time acquired
+          if (diff.msec () > ACE_ALLOWED_SLACK)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("Acquire fails time reset test\n")));
+              ACE_DEBUG ((LM_DEBUG,
+                          ASYS_TEXT ("Diff btw now and returned time: %d ms\n"),
+                          diff.msec ()));
+              test_result = 1;
+            }
 
           // Hold the lock for a while.
           ACE_OS::sleep (ACE_Time_Value (0,
@@ -203,7 +208,7 @@ int main (int argc, ASYS_TCHAR *argv[])
   // Release the semaphore a certain number of times.
   s.release (n_release_count);
 
-  if (ACE_Thread_Manager::instance ()->spawn_n 
+  if (ACE_Thread_Manager::instance ()->spawn_n
       (n_workers,
        ACE_THR_FUNC (worker),
        0,
@@ -218,11 +223,11 @@ int main (int argc, ASYS_TCHAR *argv[])
   size_t percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("Worker threads timed out %d percent of the time\n"),
+              ASYS_TEXT ("Worker threads timed out %d percent of the time\n"),
               percent));
 #else
   ACE_ERROR ((LM_ERROR,
-	      ASYS_TEXT ("Timed semaphores are not supported with native Solaris threads or on POSIX semaphores\n")));
+              ASYS_TEXT ("Timed semaphores are not supported with native Solaris threads or on POSIX semaphores\n")));
 #endif /* ACE_HAS_STHREADS && ACE_HAS_POSIX_SEM */
 #else
   ACE_UNUSED_ARG (argc);
