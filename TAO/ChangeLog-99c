@@ -1,3 +1,18 @@
+Fri May 28 18:39:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/Reactor/Makefile:
+	* tests/NestedUpcall/Reactor/svc.conf: 
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	* tests/NestedUpcall/Reactor/client.h:
+	* tests/NestedUpcall/Reactor/client.cpp:
+	* tests/NestedUpcall/Reactor/server.h:
+	* tests/NestedUpcall/Reactor/server.cpp:
+	  The test doesn't require the naming service anymore. I also
+	  added a svc.conf file because this is a good test for the ST
+	  clientconnectionstrategy (vs. the default value).
+	  Added options to control the number of iterations and made the
+	  option to shutdown the server functional.
+
 Fri May 28 16:50:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Invocation.h:

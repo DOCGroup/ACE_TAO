@@ -17,6 +17,9 @@
 //
 // ============================================================================
 
+#ifndef TAO_NUC_CLIENT_H
+#define TAO_NUC_CLIENT_H
+
 #include "ace/Get_Opt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -50,16 +53,6 @@ public:
   // Initialize the client communication endpoint with server.
 
 private:
-  int init_naming_service (void);
-  // Function to initialize the naming service.
-
-  int func (u_int i);
-  // Simple function that returns the substraction of 117 from the
-  // parameter.
-
-  int read_ior (char *filename);
-  // Function to read the NestedUpCalls reactor ior from a file.
-
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
@@ -97,3 +90,5 @@ private:
   // Flag to tell client not to use Namingservice to find the NestedUpCalls
   // reactor.
 };
+
+#endif /* TAO_NUC_CLIENT_H */
