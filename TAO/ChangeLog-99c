@@ -1,3 +1,9 @@
+Mon Feb 15 17:24:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	* tao/Invocation.i: 
+	  replaced all the TAO_TRY macros with their ACE_ equivalents.
+	
 Mon Feb 15 16:24:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/CDR/Makefile: 
