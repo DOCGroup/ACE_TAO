@@ -1,3 +1,36 @@
+Mon Jun 03 17:10:38 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.inl:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.inl:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Map.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Map.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Operators.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Operators.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
+
+	  Implementation of the pending standard PortableGroup
+	  specification.  It will be used by TAO's new load balancer (soon
+	  to follow), and potentially other services that require some
+	  form of group management.
+
 Mon Jun  3 11:10:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
