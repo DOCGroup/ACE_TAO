@@ -188,4 +188,10 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
+#  if defined (ACE_HAS_EXCEPTIONS)
+     // If exceptions are enabled and we are using Sun/CC then
+     // <operator new> throws an exception instead of returning 0.
+#    define ACE_NEW_THROWS_EXCEPTIONS
+#  endif /* ACE_HAS_EXCEPTIONS */
+
 #endif /* ACE_CONFIG_H */
