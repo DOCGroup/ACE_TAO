@@ -44,8 +44,7 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                         TAO_OutputCDR &output,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Environment &env)
-  : operation_ (0),
-    incoming_ (&input),
+  : incoming_ (&input),
     outgoing_ (&output),
     response_expected_ (0),
 
@@ -109,7 +108,10 @@ IIOP_ServerRequest::parse_header_std (CORBA::Environment &ACE_TRY_ENV)
   hdr_status = hdr_status && input.read_long (length);
   if (hdr_status)
     {
-      this->operation_ = input.rd_ptr ();
+      // Do not include NULL character at the end.
+      this->operation_.set (input.rd_ptr (),
+                            length - 1,
+                            0);
       hdr_status = input.skip_bytes (length);
     }
 
@@ -153,8 +155,11 @@ IIOP_ServerRequest::parse_header_lite (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Long length;
   hdr_status = hdr_status && input.read_long (length);
   if (hdr_status)
-    {
-      this->operation_ = input.rd_ptr ();
+    {     
+      // Do not include NULL character at the end.
+      this->operation_.set (input.rd_ptr (),
+                            length - 1,
+                            0);
       hdr_status = input.skip_bytes (length);
     }
 
@@ -178,7 +183,7 @@ IIOP_ServerRequest::parse_header (CORBA::Environment &env)
 IIOP_ServerRequest::IIOP_ServerRequest (CORBA::ULong &request_id,
                                         CORBA::Boolean &response_expected,
                                         TAO_ObjectKey &object_key,
-                                        char* operation,
+                                        const ACE_CString &operation,
                                         TAO_OutputCDR &output,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Environment &)

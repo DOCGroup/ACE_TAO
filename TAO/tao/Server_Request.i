@@ -45,10 +45,18 @@ IIOP_ServerRequest::outgoing (void)
 }
 
 // Invocation attributes.
+
 ACE_INLINE const char *
 IIOP_ServerRequest::operation (void) const
 {
-  return this->operation_;
+  return this->operation_.c_str ();
+}
+
+// get the length of the operation name.
+ACE_INLINE unsigned int
+IIOP_ServerRequest::operation_length (void) const
+{
+  return this->operation_.length ();
 }
 
 #if 0
@@ -66,7 +74,7 @@ IIOP_ServerRequest::response_expected (void) const
   return this->response_expected_;
 }
 
-ACE_INLINE CORBA::Principal_ptr 
+ACE_INLINE CORBA::Principal_ptr
 IIOP_ServerRequest::principal (void) const
 {
   return this->requesting_principal_;
@@ -84,7 +92,7 @@ IIOP_ServerRequest::service_info (void) const
   return this->service_info_;
 }
 
-ACE_INLINE CORBA::ULong 
+ACE_INLINE CORBA::ULong
 IIOP_ServerRequest::request_id (void)
 {
   return this->request_id_;
