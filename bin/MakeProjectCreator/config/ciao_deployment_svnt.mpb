@@ -4,6 +4,6 @@
 project : portableserver, taoidldefaults {
   after += Deployment_svnt
   libs  += Deployment_svnt
-  includes += $(CIAO_ROOT)/DnC/ciao $(CIAO_ROOT)/DnC
-  idlflags += -I$(CIAO_ROOT)/DnC -I$(CIAO_ROOT)/DnC/ciao -Sc
+  includes += $(CIAO_ROOT)/DAnCE/ciao $(CIAO_ROOT)/DAnCE
+  idlflags += -I$(CIAO_ROOT)/DAnCE -I$(CIAO_ROOT)/DAnCE/ciao -Sc
 }
