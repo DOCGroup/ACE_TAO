@@ -18,9 +18,8 @@ TAO_EC_Type_Filter::filter (const RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info
                             TAO_ENV_ARG_DECL)
 {
-  // @@ It this the right way to do this?
   if (event.length () != 1)
-    return 0;
+    return this->filter_set (event, qos_info TAO_ENV_ARG_PARAMETER);
 
   if (this->can_match (event[0].header))
     {
@@ -36,9 +35,8 @@ TAO_EC_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info
                                    TAO_ENV_ARG_DECL)
 {
-  // @@ It this the right way to do this?
   if (event.length () != 1)
-    return 0;
+    return this->filter_set (event, qos_info TAO_ENV_ARG_PARAMETER);
 
   if (this->can_match (event[0].header))
     {
@@ -122,3 +120,32 @@ TAO_EC_Type_Filter::add_dependencies (
 {
   return this->can_match (header);
 }
+
+int
+TAO_EC_Type_Filter::filter_set (const RtecEventComm::EventSet& event,
+                                TAO_EC_QOS_Info& qos_info
+                                TAO_ENV_ARG_DECL)
+{
+  CORBA::ULong maximum = event.length ();
+  if (event.maximum () == 0)
+    return 0;
+
+  RtecEventComm::EventSet matched (maximum);
+  CORBA::ULong next_slot = 0;
+  for (CORBA::ULong i = 0; i != maximum; ++i)
+    {
+      if (!this->can_match (event[i].header))
+        continue;
+      matched.length (next_slot + 1);
+      matched[next_slot] = event[i];
+      next_slot++;
+    }
+  if (matched.length () == 0)
+    return 0;
+
+  this->push (matched, qos_info TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return 1;
+}
+

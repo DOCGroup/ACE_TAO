@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
 

@@ -12,6 +12,7 @@
 #include "EC_Per_Supplier_Filter.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_Null_Scheduling.h"
+#include "EC_Group_Scheduling.h"
 #include "EC_Reactive_Timeout_Generator.h"
 #include "EC_Event_Channel.h"
 #include "EC_Reactive_ConsumerControl.h"
@@ -185,6 +186,8 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
               const char* opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, "null") == 0)
                 this->scheduling_ = 0;
+              else if (ACE_OS::strcasecmp (opt, "group") == 0)
+                this->scheduling_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
                             "EC_Default_Factory - "
@@ -612,6 +615,8 @@ TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel*)
 {
   if (this->scheduling_ == 0)
     return new TAO_EC_Null_Scheduling;
+  else if (this->scheduling_ == 1)
+    return new TAO_EC_Group_Scheduling;
   return 0;
 }
 

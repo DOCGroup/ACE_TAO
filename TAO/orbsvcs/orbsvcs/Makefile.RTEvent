@@ -71,6 +71,7 @@ CPP_SRCS += \
         Event/EC_Dispatching_Task \
         Event/EC_Scheduling_Strategy \
         Event/EC_Null_Scheduling \
+        Event/EC_Group_Scheduling \
         Event/EC_ConsumerControl \
         Event/EC_SupplierControl \
         Event/EC_Reactive_ConsumerControl \
@@ -86,7 +87,8 @@ CPP_SRCS += \
         Event/EC_Gateway \
         Event/EC_Gateway_UDP \
         Event/ECG_Mcast_EH \
-        Event/EC_UDP_Admin \
+        Event/ECG_UDP_Sender \
+        Event/EC_UDP_Admin
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \

@@ -132,9 +132,13 @@ TAO_EC_Sched_Factory::init (int argc, char* argv[])
                 {
                   this->scheduling_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, "group") == 0)
                 {
                   this->scheduling_ = 1;
+                }
+              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+                {
+                  this->scheduling_ = 2;
                 }
               else
                 {
@@ -195,7 +199,7 @@ TAO_EC_Sched_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 TAO_EC_Scheduling_Strategy*
 TAO_EC_Sched_Factory::create_scheduling_strategy (TAO_EC_Event_Channel* ec)
 {
-  if (this->scheduling_ == 1)
+  if (this->scheduling_ == 2)
     {
       CORBA::Object_var tmp = ec->scheduler ();
       RtecScheduler::Scheduler_var scheduler =

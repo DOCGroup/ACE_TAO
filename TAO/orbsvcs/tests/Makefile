@@ -10,12 +10,10 @@
 
 DIRS = \
   Simple_Naming \
-  Event_Latency \
   EC_Multiple \
   EC_Throughput \
   EC_Mcast \
   EC_Custom_Marshal \
-  EC_Basic \
   Property \
   Sched \
   Sched_Conf \
