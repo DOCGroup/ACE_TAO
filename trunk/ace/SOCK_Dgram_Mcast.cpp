@@ -172,7 +172,7 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
     return 0;
 }
 
-int
+ACE_HANDLE
 ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 				 const ACE_Connect_QoS_Params &qos_params,
                                  int reuse_addr,
@@ -190,18 +190,11 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
   else
-    {
-      ACE_HANDLE h = ACE_OS::join_leaf (this->get_handle (),
-					ACE_reinterpret_cast (const sockaddr *,
-							      &this->mcast_request_if_.imr_multiaddr.s_addr),
-					sizeof this->mcast_request_if_.imr_multiaddr.s_addr,
-					qos_params);
-
-      if (h == ACE_INVALID_HANDLE)
-	return -1;
-      else
-	return 0;
-    }
+    return ACE_OS::join_leaf (this->get_handle (),
+                              ACE_reinterpret_cast (const sockaddr *,
+                                                    &this->mcast_request_if_.imr_multiaddr.s_addr),
+                              sizeof this->mcast_request_if_.imr_multiaddr.s_addr,
+                              qos_params);
 }
 
 int
