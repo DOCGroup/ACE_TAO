@@ -1,5 +1,9 @@
 Sat Feb 17 13:26:17 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/POSIX_Asynch_IO.cpp (thread_function): Make sure to cast
+	  -1 to void * since that's the signature of the method.  Thanks
+ 	  to Bala for reporting this.
+	
 	* ace/POSIX_Asynch_IO.cpp (thread_function): Zapped the unused
 	  result local variable and also changed the logic to bailout if
  	  handle_events() returns -1.  This fixes a warning reported by
