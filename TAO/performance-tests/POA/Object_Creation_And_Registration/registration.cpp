@@ -24,11 +24,25 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
-//#define USING_PURIFY
-//#define USING_PURIFY_FOR_SERVANT_LOOKUP
-//#define USING_PURIFY_FOR_UNDERBAR_THIS
+//
+// The following macros help take a very precise look into the
+// different object creations and registration calls through
+// Quantify. You'll have to define USING_QUANTIFY and define any of
+// the other specific defines that you are interested in to be 1.
+//
+// Compilation: Add the directory where pure.h is (usually C:\Program
+// Files\Rational\Quantify) to the list of include directories.  In
+// addition, add pure_api.c to the source file compilation list.
+//
 
-#if defined (USING_PURIFY)
+//#define USING_QUANTIFY
+#define QUANTIFY_DEACTIVATE_OBJECT 0
+#define QUANTIFY_ACTIVATE_OBJECT_WITH_ID 0
+#define QUANTIFY_CREATE_REFERENCE_WITH_ID 0
+#define QUANTIFY_SERVANT_TO_ID 0
+#define QUANTIFY_UNDERBAR_THIS 0
+
+#if defined (USING_QUANTIFY)
 #if defined (ACE_WIN32)
 #include "pure.h"
 
@@ -51,7 +65,7 @@ inline int QuantifyStopRecordingData ()
 }
 
 #endif /* ACE_WIN32 */
-#endif /* USING_PURIFY */
+#endif /* USING_QUANTIFY */
 
 class test_i : public POA_test
   // = TITLE
@@ -59,16 +73,8 @@ class test_i : public POA_test
 {
 };
 
-// Prototype for stat printing function
-void
-print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-
-void
-reverse_map_effectiveness (test_i *servants);
-
+// Program statics
 static int measure_reverse_map_effectiveness = 0;
-
-// Default iterations
 static u_long iterations = 1000;
 
 static int
@@ -103,146 +109,6 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
-int
-main (int argc, char **argv)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            0,
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      int result = parse_args (argc, argv);
-      if (result != 0)
-        return result;
-
-      // Obtain the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA",
-                                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Get the POA_var object from Object_var.
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Create an array of servants
-      test_i *servants = new test_i[iterations];
-
-      // Create an array of objects
-      test_var *objects = new test_var[iterations];
-
-      // Create an array of objects
-      PortableServer::ObjectId_var *object_ids = new PortableServer::ObjectId_var[iterations];
-
-      if (measure_reverse_map_effectiveness)
-        {
-          reverse_map_effectiveness (servants);
-        }
-
-      // Index counter
-      u_long i = 0;
-
-      {
-        // Profile timer
-        ACE_Profile_Timer timer;
-        ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-
-        // We start the profile timer here...
-        timer.start ();
-
-#if defined (USING_PURIFY_FOR_UNDERBAR_THIS)
-        // Reset Quantify data recording; whatever happened in the
-        // past is not relevant to this test.
-        QuantifyClearData ();
-        QuantifyStartRecordingData ();
-#endif /* USING_PURIFY_FOR_UNDERBAR_THIS */
-
-        for (i = 0; i < iterations; i++)
-          {
-            objects[i] = servants[i]._this (ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-
-#if defined (USING_PURIFY_FOR_UNDERBAR_THIS)
-        // Stop recording data here; whatever happens after this in
-        // the test is not relevant to this test.
-        QuantifyStopRecordingData ();
-#endif /* USING_PURIFY_FOR_UNDERBAR_THIS */
-
-        // stop the timer.
-        timer.stop ();
-        timer.elapsed_time (elapsed_time);
-
-        // compute average time.
-        ACE_DEBUG ((LM_DEBUG, "\n_this stats...\n"));
-        print_stats (elapsed_time);
-      }
-
-      {
-        // Profile timer
-        ACE_Profile_Timer timer;
-        ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-
-        // We start the profile timer here...
-        timer.start ();
-
-#if defined (USING_PURIFY_FOR_SERVANT_LOOKUP)
-        // Reset Quantify data recording; whatever happened in the
-        // past is not relevant to this test.
-        QuantifyClearData ();
-        QuantifyStartRecordingData ();
-#endif /* USING_PURIFY_FOR_SERVANT_LOOKUP */
-
-        for (i = 0; i < iterations; i++)
-          {
-            object_ids[i] = root_poa->servant_to_id (&servants[i],
-                                                     ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-
-#if defined (USING_PURIFY_FOR_SERVANT_LOOKUP)
-        // Stop recording data here; whatever happens after this in
-        // the test is not relevant to this test.
-        QuantifyStopRecordingData ();
-#endif /* USING_PURIFY_FOR_SERVANT_LOOKUP */
-
-        // stop the timer.
-        timer.stop ();
-        timer.elapsed_time (elapsed_time);
-
-        // compute average time.
-        ACE_DEBUG ((LM_DEBUG, "\nservant_to_id stats...\n"));
-        print_stats (elapsed_time);
-      }
-
-      // Destroy RootPOA.
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Cleanup
-      delete[] objects;
-      delete[] servants;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
-      return -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
 //
 // Code for printing stats
 //
@@ -262,20 +128,20 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "\titerations\t = %d, \n"
-		  "\treal_time\t = %0.06f ms, \n"
-		  "\tuser_time\t = %0.06f ms, \n"
-		  "\tsystem_time\t = %0.06f ms, \n"
-		  "\t%0.00f calls/second\n",
+                  "\titerations\t = %d, \n"
+                  "\treal_time\t = %0.06f ms, \n"
+                  "\tuser_time\t = %0.06f ms, \n"
+                  "\tsystem_time\t = %0.06f ms, \n"
+                  "\t%0.00f calls/second\n",
                   iterations,
-		  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
-		  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
-		  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
-		  tmp < 0.0 ? 0.0 : tmp));
+                  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
+                  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
+                  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
+                  tmp < 0.0 ? 0.0 : tmp));
     }
   else
     ACE_ERROR ((LM_ERROR,
-		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
 
 
@@ -321,4 +187,255 @@ reverse_map_effectiveness (test_i *servants)
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 
   delete[] hash_counter;
+}
+
+class stats
+{
+public:
+  stats (int quantify,
+         const char *test_name)
+    : quantify_ (quantify),
+      test_name_ (test_name)
+  {
+    this->timer_.start ();
+
+    if (this->quantify_)
+      {
+#if defined (USING_QUANTIFY)
+        // Reset Quantify data recording; whatever happened before this
+        // point is not relevant anymore.
+        QuantifyClearData ();
+        QuantifyStartRecordingData ();
+#endif /* USING_QUANTIFY */
+      }
+  }
+
+  ~stats (void)
+  {
+    if (this->quantify_)
+      {
+#if defined (USING_QUANTIFY)
+        // Stop recording data here; whatever happens after this is
+        // not relevant.
+        QuantifyStopRecordingData ();
+#endif /* USING_QUANTIFY */
+      }
+
+    // stop the timer.
+    this->timer_.stop ();
+
+    ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
+    this->timer_.elapsed_time (elapsed_time);
+
+    // compute average time.
+    ACE_DEBUG ((LM_DEBUG,
+                "\n%s stats...\n",
+                this->test_name_));
+    print_stats (elapsed_time);
+  }
+
+private:
+  // Profile timer
+  ACE_Profile_Timer timer_;
+  int quantify_;
+  const char *test_name_;
+};
+
+void
+child_poa_testing (PortableServer::POA_ptr root_poa,
+                   CORBA::Environment &ACE_TRY_ENV)
+{
+  // Policies for the child POA.
+  CORBA::PolicyList policies (1);
+  policies.length (1);
+
+  // Id Assignment Policy
+  policies[0] =
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Create the child POA under the RootPOA.
+  PortableServer::POA_var child_poa =
+    root_poa->create_POA ("child POA",
+                          PortableServer::POAManager::_nil (),
+                          policies,
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Create an array of servants
+  test_i *servants =
+    new test_i[iterations];
+
+      // Create an array of objects
+  CORBA::Object_var *objects =
+    new CORBA::Object_var[iterations];
+
+      // Create an array of object ids
+  PortableServer::ObjectId_var *object_ids =
+    new PortableServer::ObjectId_var[iterations];
+
+  // Buffer for the id string.
+  char id_buffer[128];
+
+  // Index counter
+  u_long i = 0;
+
+  {
+    // Record and quantify stats.
+    stats s (QUANTIFY_CREATE_REFERENCE_WITH_ID,
+             "create_reference_with_id");
+    ACE_UNUSED_ARG (s);
+
+    for (i = 0; i < iterations; i++)
+      {
+        ACE_OS::sprintf (id_buffer,
+                         "%d",
+                         i);
+
+        object_ids[i] =
+          PortableServer::string_to_ObjectId (id_buffer);
+
+        objects[i] =
+          child_poa->create_reference_with_id (object_ids[i].in (),
+                                               "IDL:test:1.0",
+                                               ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+  }
+
+  {
+    // Record and quantify stats.
+    stats s (QUANTIFY_ACTIVATE_OBJECT_WITH_ID,
+             "activate_object_with_id");
+    ACE_UNUSED_ARG (s);
+
+    for (i = 0; i < iterations; i++)
+      {
+        child_poa->activate_object_with_id (object_ids[i].in (),
+                                            &servants[i],
+                                            ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+  }
+
+  {
+    // Record and quantify stats.
+    stats s (QUANTIFY_DEACTIVATE_OBJECT,
+             "deactivate_object");
+    ACE_UNUSED_ARG (s);
+
+    for (i = 0; i < iterations; i++)
+      {
+        child_poa->deactivate_object (object_ids[i].in (),
+                                      ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+  }
+
+  // Cleanup
+  delete[] object_ids;
+  delete[] objects;
+  delete[] servants;
+}
+
+int
+main (int argc, char **argv)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      // Initialize the ORB first.
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            0,
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      int result = parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // Obtain the RootPOA.
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA",
+                                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get the POA_var object from Object_var.
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Create an array of servants
+      test_i *servants =
+        new test_i[iterations];
+
+      // Create an array of objects
+      CORBA::Object_var *objects =
+        new CORBA::Object_var[iterations];
+
+      // Create an array of object ids
+      PortableServer::ObjectId_var *object_ids =
+        new PortableServer::ObjectId_var[iterations];
+
+      if (measure_reverse_map_effectiveness)
+        {
+          reverse_map_effectiveness (servants);
+        }
+
+      // Index counter
+      u_long i = 0;
+
+      {
+        stats s (QUANTIFY_UNDERBAR_THIS,
+                 "_this");
+        ACE_UNUSED_ARG (s);
+
+        for (i = 0; i < iterations; i++)
+          {
+            objects[i] = servants[i]._this (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
+      }
+
+      {
+        stats s (QUANTIFY_SERVANT_TO_ID,
+                 "servant_to_id");
+        ACE_UNUSED_ARG (s);
+
+        for (i = 0; i < iterations; i++)
+          {
+            object_ids[i] = root_poa->servant_to_id (&servants[i],
+                                                     ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
+      }
+
+      // Create the child POA.
+      child_poa_testing (root_poa.in (),
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Destroy RootPOA.
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Cleanup
+      delete[] object_ids;
+      delete[] objects;
+      delete[] servants;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }

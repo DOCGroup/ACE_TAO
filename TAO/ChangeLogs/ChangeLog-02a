@@ -1,3 +1,8 @@
+Wed May 09 19:37:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
+	  (child_poa_testing): Updated and extended this test.
+
 Wed May  9 15:36:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Makefile:
