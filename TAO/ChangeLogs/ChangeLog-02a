@@ -1,3 +1,11 @@
+Sat Sep 29 14:06:30 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.dsw:
+	* orbsvcs/tests/Security/MT_SSLIOP/client.dsp:
+	* orbsvcs/tests/Security/MT_SSLIOP/server.dsp:
+
+	  New MSVC++ workspace/project files for this test.
+
 Fri Sep 28 15:40:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
