@@ -147,13 +147,14 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &local_sap,
                              int reuse_addr,
                              int /* flags */,
-                             int /* perms */)
+                             int /* perms */, 
+                             int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
 
   if (this->shared_open (new_stream,
                          remote_sap.get_type (),
-                         0,
+                         protocol,
                          reuse_addr) == -1)
     return -1;
   else if (this->shared_connect_start (new_stream,
@@ -272,7 +273,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                                         const ACE_Addr &local_sap,
                                         int reuse_addr,
                                         int flags,
-                                        int perms)
+                                        int perms, 
+                                        int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
 
@@ -282,7 +284,8 @@ ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                      local_sap,
                      reuse_addr,
                      flags,
-                     perms) == -1
+                     perms,
+                     protocol) == -1
       && timeout != 0
       && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
     ACE_ERROR ((LM_ERROR,
