@@ -55,7 +55,8 @@ Priority_Task::open (void *arg)
 {
   this->priority_ = *(int *) arg;
   // Become an active object.
-  ACE_ASSERT (this->activate (THR_NEW_LWP, 1, 0, this->priority_) != -1);
+  ACE_ASSERT (this->activate (THR_NEW_LWP | THR_SCHED_FIFO,
+                              1, 0, this->priority_) != -1);
   return 0;
 }
 
