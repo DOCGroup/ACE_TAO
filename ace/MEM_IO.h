@@ -37,6 +37,9 @@ public:
 
   /**
    * Initialize the MEM_SAP object.
+   *
+   * @a options is used to pass in the Malloc_Options to initialize
+   * underlying ACE_MMAP.
    */
   virtual int init (ACE_HANDLE handle,
                     const ACE_TCHAR *name,
