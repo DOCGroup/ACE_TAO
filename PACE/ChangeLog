@@ -1,15 +1,21 @@
+Thu Jan 04 17:10:09 2001  Luther Baker  <luther@cs.wustl.edu>
+
+        * pace/win32/pace.dsw
+
+          Typographic changes.
+
 Thu Jan 04 13:59:00 2001  Luther Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/pace.dsw
+        * pace/win32/pace.dsw
 
-	  Changed MS libraries to link to. Now consistent with ACE.
-	  (ie, Always 'Multithreaded DLL' with Debug version using
-	  the DEBUG DLL and Release using the standard DLL).
+          Changed MS libraries to link to. Now consistent with ACE.
+          (ie, Always 'Multithreaded DLL' with Debug version using
+          the DEBUG DLL and Release using the standard DLL).
 
-	* pace/pace/win32/stdlib.h
+        * pace/pace/win32/stdlib.h
 
-	  Updated. Implements the posix C functions that were added
-	  to PACE last year.
+          Updated. Implements the posix C functions that were added
+          to PACE last year.
 
 Wed Jan  3 10:01:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -18,48 +24,48 @@ Wed Jan  3 10:01:02 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Fri Dec 22 12:09:59 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/Makefile:
-	* pace/config/config.h:
-	
-	* pace/sys/socket.h:
-	* pace/posix/socket.h:
-	* pace/posix/socket.inl:
-	* pace/posix/socket.c: 	
+        * pace/Makefile:
+        * pace/config/config.h:
 
-	  Updated. Linux is building sockets correctly now.
+        * pace/sys/socket.h:
+        * pace/posix/socket.h:
+        * pace/posix/socket.inl:
+        * pace/posix/socket.c:
+
+          Updated. Linux is building sockets correctly now.
 
 Fri Dec 22 10:54:13 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/socket.h
-	* pace/sys/socket.h
-	* pace/Makefile
+        * pace/socket.h
+        * pace/sys/socket.h
+        * pace/Makefile
 
-	  Moved socket.h to sys/socket.h.
+          Moved socket.h to sys/socket.h.
 
-	  Started looking at Makefile to add socket.h
+          Started looking at Makefile to add socket.h
 
 Thu Dec 21 18:22:28 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* docs/index.html: 	
-	* docs/legend.html: 	
-	* docs/overview.html:
-	* docs/todo.html: 	
+        * docs/index.html:
+        * docs/legend.html:
+        * docs/overview.html:
+        * docs/todo.html:
 
-	  Begin moving PACE documentation to main distribution.
-	  Also rewriting much of this.
+          Begin moving PACE documentation to main distribution.
+          Also rewriting much of this.
 
 Thu Dec 21 18:02:23 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/docs/todo.txt
+        * pace/docs/todo.txt
 
-	  Meaningless file removed.
+          Meaningless file removed.
 
 Wed Dec 20 16:49:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* tests/Stdio_Test.c:
+        * tests/Stdio_Test.c:
 
-	  An innocent change :-/. Used pace_strcmp (...) instead of
-	  strcmp. Had to include "pace/string.h".
+          An innocent change :-/. Used pace_strcmp (...) instead of
+          strcmp. Had to include "pace/string.h".
 
 Wed Dec 20 16:42:45 2000  Luther J Baker  <luther@cs.wustl.edu>
 
