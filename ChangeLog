@@ -1,3 +1,9 @@
+Thu Nov  5 07:53:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Name_Space.h:
+          Fixed fuzz errors
+
 Thu Nov  5 07:46:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ARGV.h:
