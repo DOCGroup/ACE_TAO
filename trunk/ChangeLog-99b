@@ -1,12 +1,20 @@
 Sun Aug 29 07:53:33 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
-	  implementation is "smarter" than the default behavior of
- 	  sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
+	* tests/Signal_Test.cpp: Linux threads are evil because getppid()
+	  isn't the process id of your parent PROCESS, it's the process id
+ 	  of your parent THREAD.  Yikes!  Therefore, I had to rearrange
+ 	  this test so that it'll work on Linux.
 
+	* ace/config-qnx-neutrino.h,
+	* ace/config-vxworks5.x.h,
+	* ace/config-osf1-4.0.h,
 	* ace/config-sunos5.5.h,
 	* ace/config-linux-common.h: Added support for
 	  the ACE_HAS_SIGTIMEDWAIT and ACE_HAS_SIGSUSPEND macros.
+
+	* ace/OS: Added a new sigsuspend() wrapper to class ACE_OS.  This
+	  implementation is "smarter" than the default behavior of
+ 	  sigsuspend(2) because it'll handle NULL sigset_t *'s gracefully.
 
 	* ace/Signal: Make the use of ACE_Sig_Set & parameters
  	  const-correct.
