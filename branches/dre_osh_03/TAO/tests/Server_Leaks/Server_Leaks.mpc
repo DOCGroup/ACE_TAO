@@ -1,0 +1,14 @@
+project(Server Leaks Server): server {
+  Source_Files {
+    Ping_Service.cpp
+    server.cpp
+  }
+}
+
+project(Server Leaks Client): client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

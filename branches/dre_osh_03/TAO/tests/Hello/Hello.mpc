@@ -1,0 +1,14 @@
+project(Hello Server): server {
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+project(Hello Client): client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

@@ -1,0 +1,14 @@
+project(Cache Growth Test Server): server {
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+}
+
+project(Cache Growth Test Client): client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

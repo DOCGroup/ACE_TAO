@@ -1,0 +1,24 @@
+project(RTEventLogAdmin) : orbsvcslib, core {
+  depends    += RTSched ETCL CosTrading IORTable CosNaming Svc_Utils DynamicAny DsLogAdmin RTEvent PortableServer
+  sharedname  = TAO_RTEventLogAdmin
+  libs       += TAO_ETCL TAO_CosTrading TAO_IORTable TAO_CosNaming TAO_Svc_Utils TAO_DynamicAny TAO_DsLogAdmin TAO_RTEvent TAO_PortableServer TAO
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=Log/rteventlog_export.h
+  dllflags    = TAO_RTEVENTLOG_BUILD_DLL
+  tagchecks   = RTEventLog
+  include_dir = orbsvcs
+
+  IDL_Files {
+    RTEventLogAdmin.idl
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    RTEventLog {
+      RTEventLogAdminC.cpp
+      RTEventLogAdminS.cpp
+      Log/RTEventLogFactory_i.cpp
+      Log/RTEventLog_i.cpp
+      Log/RTEventLogConsumer.cpp
+      Log/RTEventLogNotification.cpp
+    }
+  }
+}

@@ -1,0 +1,25 @@
+#
+# $Id$
+# Makefile for building the SAXPrint example
+#
+
+NAME = SAXPrint
+
+OBJFILES = \
+	$(OBJDIR)\Print_Handler.obj \
+	$(OBJDIR)\SAXPrint_Handler.obj \
+	$(OBJDIR)\main.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(ACE_XML_CFLAGS) \
+	$(ACE_XML_PARSER_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(ACE_XML_LIB) \
+	$(ACE_XML_PARSER_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
