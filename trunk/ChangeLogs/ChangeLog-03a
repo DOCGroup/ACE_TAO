@@ -1,3 +1,8 @@
+Wed Dec 26 06:19:32 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Reactor/Misc/test_reactors.cpp: Removed a duplicate
+	  ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int> instantiation.
+
 Tue Dec 25 19:43:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependencies that were left behind from the last one. 
