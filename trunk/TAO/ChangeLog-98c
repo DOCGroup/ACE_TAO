@@ -1,6 +1,6 @@
 Tue Dec 22 01:12:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Replaced TAO_CATCHANY with
+	* tao/try_macros.h: Defined TAO_CATCHANY as
 	  TAO_CATCH (CORBA_Exception, ex) when building DEBUG library
 	  (when ACE_NDEBUG is _not_ defined.)  This will make un-expected
 	  exception very out-standing and let debuggers have a chance to

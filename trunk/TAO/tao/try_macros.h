@@ -47,7 +47,13 @@
 
 #define TAO_CATCH(TYPE,VAR) } catch (TYPE & VAR) { ACE_UNUSED_ARG (VAR);
 
+// @@ @@ @@ This conditional compilation is meant to be catch abnormal
+//          exceptions so the debugger can catch the exception for us.
+#if !defined (ACE_NDEBUG)
+#define TAO_CATCHANY TAO_CATCH (CORBA_Exception, ex)
+#else
 #define TAO_CATCHANY } catch (...) {
+#endif /* ACE_NDEBUG */
 
 #define TAO_ENDTRY }} while (0)
 
