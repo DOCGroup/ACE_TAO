@@ -190,6 +190,25 @@ ACE_OS::thr_suspend (const ACE_Thread_ID &thr_id)
 
 #endif /* 0 */
 
+ACE_INLINE int
+ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
+{
+#if defined (ACE_HAS_PTHREADS)
+# if defined (pthread_equal)
+  // If it's a macro we can't say "::pthread_equal"...
+  return pthread_equal (t1, t2);
+# else
+  return ::pthread_equal (t1, t2);
+# endif /* pthread_equal */
+#elif defined (VXWORKS)
+  return ! ACE_OS::strcmp (t1, t2);
+#else /* For both STHREADS and WTHREADS... */
+  // Hum, Do we need to treat WTHREAD differently?
+  // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
+  return t1 == t2;
+#endif /* ACE_HAS_PTHREADS */
+}
+
 #if !defined (ACE_LACKS_COND_T)
 // NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
 // here because the ACE_OS::sema_* functions below need them.
@@ -3506,25 +3525,6 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
-ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
-{
-#if defined (ACE_HAS_PTHREADS)
-# if defined (pthread_equal)
-  // If it's a macro we can't say "::pthread_equal"...
-  return pthread_equal (t1, t2);
-# else
-  return ::pthread_equal (t1, t2);
-# endif /* pthread_equal */
-#elif defined (VXWORKS)
-  return ! ACE_OS::strcmp (t1, t2);
-#else /* For both STHREADS and WTHREADS... */
-  // Hum, Do we need to treat WTHREAD differently?
-  // levine 13 oct 98 % I don't think so, ACE_thread_t is a DWORD.
-  return t1 == t2;
-#endif /* ACE_HAS_PTHREADS */
 }
 
 ACE_INLINE int
