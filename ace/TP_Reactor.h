@@ -38,6 +38,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 /**
  * @class ACE_EH_Dispatch_Info
  *
@@ -88,7 +89,7 @@ class ACE_Export ACE_TP_Token_Guard
 public:
 
   /// Constructor that will grab the token for us
-  ACE_TP_Token_Guard (ACE_SELECT_REACTOR_TOKEN &token,
+  ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token,
                       ACE_Time_Value *max_wait_time,
                       int &result);
 
@@ -112,7 +113,7 @@ private:
 private:
 
   /// The Select Reactor token.
-  ACE_SELECT_REACTOR_TOKEN &token_;
+  ACE_Select_Reactor_Token &token_;
 
   /// Flag that indicate whether the thread that created this object
   /// owns the token or not. A value of 0 indicates that this class
@@ -183,6 +184,9 @@ public:
                   ACE_Timer_Queue * = 0,
                   int mask_signals = 1);
 
+  // = Reactor calls
+  virtual void max_notify_iterations (int iter);
+
   // = Event loop drivers.
 
   /**
@@ -242,21 +246,20 @@ public:
 protected:
   // = Internal methods that do the actual work.
 
-  /**
-   * Dispatch signal, timer, notification handlers and return possibly
-   * 1 I/O handler for dispatching. Ideally, it would dispatch nothing,
-   * and return dispatch information for only one of (signal, timer,
-   * notification, I/O); however, the reactor mechanism is too enmeshed
-   * in the timer queue expiry functions and the notification class to
-   * do this without some significant redesign.
-   */
-  int dispatch_i (ACE_Time_Value *max_wait_time,
-                  ACE_EH_Dispatch_Info &event);
+  /// Get the event that needs dispatching.It could be either a
+  /// signal, timer, notification handlers or return possibly 1 I/O
+  /// handler for dispatching. In the most common use case, this would
+  /// return 1 I/O handler for dispatching
+  int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
-  int dispatch_i_protected (ACE_Time_Value *max_wait_time,
-  /// Only really does anything for Win32. Wraps a call to dispatch_i in an
-  /// ACE_SEH_TRY block.
-                            ACE_EH_Dispatch_Info &event);
+  int handle_signals (int &event_count,
+                      ACE_TP_Token_Guard &g);
+
+  int handle_notify_events (int &event_count,
+                            ACE_TP_Token_Guard &g);
+
+  int handle_socket_events (int &event_count,
+                            ACE_TP_Token_Guard &g);
 
   /// This method shouldn't get called.
   virtual void notify_handle (ACE_HANDLE handle,
@@ -264,20 +267,13 @@ protected:
                               ACE_Handle_Set &,
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback);
+private:
 
-  /// Notify the appropriate <callback> in the context of the <eh>
-  /// associated with <handle> that a particular event has occurred.
-  virtual int notify_handle (ACE_EH_Dispatch_Info &dispatch_info);
+  ACE_HANDLE get_notify_handle (void);
 
-  /// Get the event that needs dispatching.It could be either a
-  /// signal, timer, notification handlers or return possibly 1 I/O
-  /// handler for dispatching. In the most common use case, this would
-  /// return 1 I/O handler for dispatching
-  int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
+  int get_socket_event_info (ACE_EH_Dispatch_Info &info);
 
-  int dispatch_signals (void);
-
-
+  int dispatch_socket_events (ACE_EH_Dispatch_Info &info);
 
 private:
   /// Deny access since member-wise won't work...
