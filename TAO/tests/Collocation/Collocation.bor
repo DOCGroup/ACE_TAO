@@ -21,8 +21,8 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_STRATEGIES_LIB) \
-	$(BINDIR)\Diamond$(LIB_DECORATOR).lib \
-	$(BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
+	$(CORE_BINDIR)\Diamond$(LIB_DECORATOR).lib \
+	$(CORE_BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
 
 CPPDIR = .
 

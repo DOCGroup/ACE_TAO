@@ -1,3 +1,10 @@
+Sun Sep 23 20:11:45 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * tests/Collocation/Collocation.bor:
+        * tests/Collocation/Diamond.bor:
+          Updated Borland makefiles to find the example's libraries in the
+          common bin directory, since all libraries are now built into there.
+
 Sun Sep 23 15:01:08 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation.cpp (location_forward):
