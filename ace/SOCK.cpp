@@ -19,7 +19,7 @@ ACE_SOCK::dump (void) const
 
 ACE_SOCK::ACE_SOCK (void)
 {
-  ACE_TRACE ("ACE_SOCK::ACE_SOCK");
+  // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
 
   // Make sure that we've initialized the WinSock library before using
   // sockets!

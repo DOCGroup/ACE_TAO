@@ -63,7 +63,7 @@ ACE_INET_Addr::operator == (const ACE_Addr &sap) const
 ACE_INET_Addr::ACE_INET_Addr (void)
   : ACE_Addr (AF_INET, sizeof this->inet_addr_)
 {
-  ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
+  // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   (void) ACE_OS::memset ((void *) &this->inet_addr_, 0, 
 			 sizeof this->inet_addr_);  
 }
