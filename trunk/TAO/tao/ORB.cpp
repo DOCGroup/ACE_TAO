@@ -1,5 +1,11 @@
 // "$Id$"
 
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Reactor.h"
+#include "ace/Argv_Type_Converter.h"
+#include "ace/OS_NS_strings.h"
+
 #include "ORB.h"
 
 ACE_RCSID (tao,
@@ -30,12 +36,6 @@ ACE_RCSID (tao,
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Reactor.h"
-#include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -340,9 +340,9 @@ CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
       ACE_THROW (CORBA::INTF_REPOS ());
     }
 
-  adapter->create_operation_list (this, 
-                                  opDef, 
-                                  result 
+  adapter->create_operation_list (this,
+                                  opDef,
+                                  result
                                   ACE_ENV_ARG_PARAMETER);
 }
 
