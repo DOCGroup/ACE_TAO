@@ -211,7 +211,9 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
-      *os << be_nl << "void result (";
+      // The double colon guards against a return type called 'result'.
+      *os << be_nl << "void result (::";
+
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       be_visitor_operation_interceptors_info_rettype oiir_visitor (&ctx);
@@ -363,6 +365,9 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   if (!this->void_return_type (bt))
     {
       *os << be_nl << be_nl;
+
+      // Guards against a return type called 'result'.
+      *os << "::";
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);

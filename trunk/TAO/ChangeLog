@@ -1,3 +1,69 @@
+Mon Oct 14 15:44:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+
+	  Fixed mistakes in code generation for sequences of valuetypes. 
+	  Thanks to Sean M. Paus <spaus@cdtd.saic.com> for pointing out
+	  the problem.
+
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+
+	  Fixed cut and paste error in visitor instantiation for generation
+	  of Any operators for forward declared interfaces. Thanks to
+	  Antonio Saraiva <Antonio_Saraiva@csgsystems.com> for reporting the
+	  bug.
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+
+	  Changed behavior of typeprefix so that an inner scope directive
+	  overrides an outer one. This behavior is not explicitly required
+	  by the CORBA specification, but it is assumed that this is the
+	  intention. This point will be submitted as an OMG issue shortly.
+	  Thanks to Jonathan Biggar <jon@floorboard.com> for his advice on
+	  this matter
+
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+
+	  Fixed a problem with interceptors where there is a name clash
+	  if an operation has a return type called 'result'. Thanks to
+	  Ossama <ossama@doc.ece.uci.edu> for suggesting the fix.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+	  Fixed another name clash with the 'result' identifier, this
+	  time in the body of the Any extraction operator.
+
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/ValueFactory.h:
+        * tao/ValueFactory.i:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+	  Removed both cast operators from class ValueFactoryBase_var,
+	  since they do not appear in the C++ mapping, and removed the
+	  const cast operator from ValueBase_var, since it was causing a
+	  problem with the HP-UX 11.11 compiler, and valuetypes do not
+	  support const operations anyway. Thanks to Torsten Kuepper
+	  <Torsten.Kuepper@nokia.com> for the bug report and the valuetype
+	  expertise.
+
+        * tao/corbafwd.h:
+
+	  Added dk_Event to enum DefinitionKind.
+
 Mon Oct 14 11:32:16 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* docs/releasenotes/index.html:

@@ -262,6 +262,18 @@ AST_Decl::set_prefix_with_typeprefix_r (char *value)
   delete [] this->repoID_;
   this->repoID_ = 0;
   this->prefix (value);
+
+  if (this->node_type () == AST_Decl::NT_module)
+    {
+      AST_Decl *d = DeclAsScope (this)->lookup_by_name (this->name (),
+                                                        I_TRUE);
+
+      if (d != this)
+        {
+          d->set_prefix_with_typeprefix_r (value);
+        }
+    }
+
   this->compute_repoID ();
   UTL_Scope *s = DeclAsScope (this);
 
@@ -991,7 +1003,7 @@ AST_Decl::defined_in (void)
 }
 
 void
-AST_Decl::set_defined_in(UTL_Scope *s)
+AST_Decl::set_defined_in (UTL_Scope *s)
 {
   this->pd_defined_in = s;
 }

@@ -330,7 +330,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "CORBA::Boolean retval =" << be_idt_nl
       << "CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
       << "strm," << be_nl
-      << "factory," << be_nl
+      << "factory.out ()," << be_nl
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl

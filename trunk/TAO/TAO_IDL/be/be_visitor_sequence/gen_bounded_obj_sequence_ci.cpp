@@ -183,9 +183,18 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "buffer[i]->_remove_ref ();" << be_nl
-          << "buffer[i] = 0;" << be_uidt_nl;
+          << "{" << be_idt_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "buffer[i]->_remove_ref ();" << be_nl;
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_remove_ref (buffer[i]);";
+        }
+
+      *os  << "buffer[i] = 0;" << be_uidt_nl;
     }
   else if (bt_is_defined)
     {
@@ -270,9 +279,18 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp2[i] != 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "tmp2[i]->_add_ref ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
+          << "{" << be_idt_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "tmp2[i]->_add_ref ();";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_add_ref ();";
+        }
+
+      *os << be_uidt_nl << "}" << be_uidt_nl << be_nl
           << "tmp1[i] = tmp2[i];";
     }
   else
@@ -329,9 +347,18 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp[i] != 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "tmp[i]->_remove_ref ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
+          << "{" << be_idt_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "tmp[i]->_remove_ref ();";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_remove_ref ();";
+        }
+
+      *os << be_uidt_nl << "}" << be_uidt_nl << be_nl
           << "tmp[i] = 0;";
     }
   else if (bt_is_defined)
@@ -384,9 +411,18 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   if (pt->node_type () == AST_Decl::NT_valuetype)
     {
       *os << "if (tmp2[i] != 0)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "tmp2[i]->_add_ref ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
+          << "{" << be_idt_nl;
+
+      if (bt_is_defined)
+        {
+          *os << "tmp2[i]->_add_ref ();";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_add_ref ();";
+        }
+
+      *os << be_uidt_nl << "}" << be_uidt_nl << be_nl
           << "tmp1[i] = tmp2[i];";
     }
   else
