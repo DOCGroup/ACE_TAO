@@ -103,15 +103,15 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::print_stats (void) const
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) contents of freelist:\n")));
 
-  for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_;
+  for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->next_block_;
        ;
-       currp = currp->s_.next_block_)
+       currp = currp->next_block_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) ptr = %u, ACE_Malloc_Header units = %d, byte units = %d\n"),
                   currp,
-                  currp->s_.size_,
-                  currp->s_.size_ * sizeof (ACE_Malloc_Header)));
+                  currp->size_,
+                  currp->size_ * sizeof (ACE_Malloc_Header)));
       if (currp == this->cb_ptr_->freep_)
         break;
     }
@@ -179,8 +179,8 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
       this->cb_ptr_->name_head_ = (ACE_Name_Node *) 0;
 
       // Initialize the dummy <ACE_Malloc_Header> to point to itself.
-      this->cb_ptr_->freep_->s_.size_ = 0;
-      this->cb_ptr_->freep_->s_.next_block_ = this->cb_ptr_->freep_;
+      this->cb_ptr_->freep_->size_ = 0;
+      this->cb_ptr_->freep_->next_block_ = this->cb_ptr_->freep_;
 
       if (rounded_bytes > (sizeof *this->cb_ptr_ + sizeof (ACE_Malloc_Header)))
         {
@@ -195,9 +195,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
 #if defined (__hpux) && defined (__LP64__)
           size_t hpux11_hack = (rounded_bytes - sizeof *this->cb_ptr_)
                                / sizeof (ACE_Malloc_Header);
-          p->s_.size_ = hpux11_hack;
+          p->size_ = hpux11_hack;
 #else
-          p->s_.size_ = (rounded_bytes - sizeof *this->cb_ptr_)
+          p->size_ = (rounded_bytes - sizeof *this->cb_ptr_)
             / sizeof (ACE_Malloc_Header);
 #endif /* (__hpux) && defined (__LP64__) */
 
@@ -306,27 +306,27 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
   // Begin the search starting at the place in the freelist where the
   // last block was found.
   ACE_Malloc_Header *prevp = this->cb_ptr_->freep_;
-  ACE_Malloc_Header *currp = prevp->s_.next_block_;
+  ACE_Malloc_Header *currp = prevp->next_block_;
 
   // Search the freelist to locate a block of the appropriate size.
 
   for (int i = 0;
-       ; i++, prevp = currp, currp = currp->s_.next_block_)
+       ; i++, prevp = currp, currp = currp->next_block_)
     {
-      if (currp->s_.size_ >= nunits) // Big enough
+      if (currp->size_ >= nunits) // Big enough
         {
           AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
-          if (currp->s_.size_ == nunits)
+          if (currp->size_ == nunits)
             // Exact size, just update the pointers.
-            prevp->s_.next_block_ = currp->s_.next_block_;
+            prevp->next_block_ = currp->next_block_;
           else
             {
               // Remaining chunk is larger than requested block, so
               // allocate at tail end.
               AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
-              currp->s_.size_ -= nunits;
-              currp += currp->s_.size_;
-              currp->s_.size_ = nunits;
+              currp->size_ -= nunits;
+              currp += currp->size_;
+              currp->size_ = nunits;
             }
           this->cb_ptr_->freep_ = prevp;
 
@@ -351,7 +351,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
               AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
               // Compute the chunk size in ACE_Malloc_Header units.
-              currp->s_.size_ = chunk_bytes / sizeof (ACE_Malloc_Header);
+              currp->size_ = chunk_bytes / sizeof (ACE_Malloc_Header);
 
               // Insert the newly allocated chunk of memory into the
               // free list.  Add "1" to skip over the
@@ -415,35 +415,35 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
 
   for (;
        blockp <= currp 
-         || blockp >= (ACE_Malloc_Header *) currp->s_.next_block_;
-       currp = currp->s_.next_block_)
+         || blockp >= (ACE_Malloc_Header *) currp->next_block_;
+       currp = currp->next_block_)
     {
-      if (currp >= (ACE_Malloc_Header *) currp->s_.next_block_
+      if (currp >= (ACE_Malloc_Header *) currp->next_block_
           && (blockp > currp 
-              || blockp < (ACE_Malloc_Header *) currp->s_.next_block_))
+              || blockp < (ACE_Malloc_Header *) currp->next_block_))
         // Freed block at the start or the end of the memory pool.
         break;
     }
 
   // Join to upper neighbor.
-  if ((blockp + blockp->s_.size_) == currp->s_.next_block_)
+  if ((blockp + blockp->size_) == currp->next_block_)
     {
       AMS (--this->cb_ptr_->malloc_stats_.nblocks_);
-      blockp->s_.size_ += currp->s_.next_block_->s_.size_;
-      blockp->s_.next_block_ = currp->s_.next_block_->s_.next_block_;
+      blockp->size_ += currp->next_block_->size_;
+      blockp->next_block_ = currp->next_block_->next_block_;
     }
   else
-    blockp->s_.next_block_ = currp->s_.next_block_;
+    blockp->next_block_ = currp->next_block_;
 
   // Join to lower neighbor.
-  if ((currp + currp->s_.size_) == blockp)
+  if ((currp + currp->size_) == blockp)
     {
       AMS (--this->cb_ptr_->malloc_stats_.nblocks_);
-      currp->s_.size_ += blockp->s_.size_;
-      currp->s_.next_block_ = blockp->s_.next_block_;
+      currp->size_ += blockp->size_;
+      currp->next_block_ = blockp->next_block_;
     }
   else
-    currp->s_.next_block_ = blockp;
+    currp->next_block_ = blockp;
 
   AMS (--this->cb_ptr_->malloc_stats_.ninuse_);
   this->cb_ptr_->freep_ = currp;
@@ -576,12 +576,12 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::avail_chunks (size_t size) const
   // Avoid dividing by 0...
   size = size == 0 ? 1 : size;
 
-  for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->s_.next_block_;
+  for (ACE_Malloc_Header *currp = this->cb_ptr_->freep_->next_block_;
        currp != this->cb_ptr_->freep_;
-       currp = currp->s_.next_block_)
+       currp = currp->next_block_)
     // Calculate how many will fit in this block.
-    if (currp->s_.size_ * sizeof (ACE_Malloc_Header) >= size)
-      count += currp->s_.size_ * sizeof (ACE_Malloc_Header) / size;
+    if (currp->size_ * sizeof (ACE_Malloc_Header) >= size)
+      count += currp->size_ * sizeof (ACE_Malloc_Header) / size;
 
   return count;
 }
