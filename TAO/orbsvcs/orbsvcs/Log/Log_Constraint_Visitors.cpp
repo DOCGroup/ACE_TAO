@@ -27,7 +27,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   ACE_NEW (value, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
-  *value <<= ACE_U64_TO_U32 (this->rec_.id)
+  *value <<= ACE_U64_TO_U32 (this->rec_.id);
 #else
   *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.id));
 #endif
