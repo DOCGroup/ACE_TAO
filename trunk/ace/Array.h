@@ -9,11 +9,9 @@
  *  NOTE: this file has been deprecated and will soon go away.  You
  *  should directly include "Containers_T.h" instead.
  *
- *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_ARRAY_H
 #define ACE_ARRAY_H

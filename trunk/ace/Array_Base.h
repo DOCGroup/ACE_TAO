@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+#include "ace/OS.h"
 
 class ACE_Allocator;
 
