@@ -23,7 +23,7 @@
 
 #include "tao/TAO.h"
 #include "nestea_i.h"
-#include "IR_Helper.h"
+#include "orbsvcs/IR_Helper.h"
 
 class Nestea_Server_i
 {

@@ -100,10 +100,6 @@ SOURCE=.\airplane_server.cpp
 
 SOURCE=.\airplane_server_i.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.cpp
-# End Source File
 # End Group
 # Begin Group "Generated Source Files"
 
@@ -127,10 +123,6 @@ SOURCE=.\airplane_i.h
 # Begin Source File
 
 SOURCE=.\airplane_server_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/tests/ImplRepo
+//    TAO/orbsvcs/orbsvcs
 //
 // = FILENAME
 //    IR_Helper.h
@@ -24,7 +24,7 @@
 #include "orbsvcs/ImplRepoC.h"
 #include "orbsvcs/ImplRepoS.h"
 
-class IR_Helper
+class TAO_ORBSVCS_Export IR_Helper
   // = TITLE
   //   Implementation Repository Helper Class
   //
