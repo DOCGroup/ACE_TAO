@@ -4,7 +4,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Synch.h"
 
-#include "Options.h"
+#include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 #include "Performance_Test.h"
 
