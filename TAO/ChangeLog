@@ -1,3 +1,20 @@
+Tue Nov 30 09:53:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+          Renamed the init method in Topology_Object to initialize to avoid
+          ambiguity with the TAO_NotifyProxyConsumer init method.
+
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+
+          Changed the fprintf format from %d to %ld for the long int
+          parameter.
+
 Tue Nov 30 08:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/tests/FT_App/FT_Client.cpp:
@@ -44,7 +61,7 @@ Mon Nov 29 13:23:14 2004  Dale Wilson  <wilson_d@ociweb.com>
 
 Mon Nov 29 17:45:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.cpp:
         * tao/IIOP_Endpoint.h:
 
           Added a bool which holds the  details of when the endpoint is
@@ -94,7 +111,7 @@ Mon Nov 29 13:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov 29 12:39:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.cpp:
         * tao/Strategies/SCIOP_Endpoint.cpp:
 
           Fixed a stupid typo which resulted in some tests failing in the
@@ -124,7 +141,7 @@ Sun Nov 28 18:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Nov 28 18:00:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/IORInterceptor/IORInterceptor.pidl:
+        * tao/IORInterceptor/IORInterceptor.pidl:
 
           Added some documentation for applying diffs.
 
@@ -156,7 +173,7 @@ Sun Nov 28 17:41:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Reduced inter-header dependancies.
 
- 	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
         * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
         * tests/ORT/ORT_test_IORInterceptor.h:
         * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
@@ -220,7 +237,7 @@ Sat Nov 27 23:44:56 2004  Ciju John  <john_c@ociweb.com>
 
 Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* tao/Connector_Registry.cpp:
+        * tao/Connector_Registry.cpp:
 
           Used an auto_ptr <> instead of using delete's in the error
           paths.
