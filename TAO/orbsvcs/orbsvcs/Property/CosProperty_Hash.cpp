@@ -60,13 +60,23 @@ CosProperty_Hash_Value::CosProperty_Hash_Value (void)
 {
 }
 
+#if 0
 CosProperty_Hash_Value::CosProperty_Hash_Value (const CORBA::Any &any)
   : pvalue_ (new CORBA::Any (any))
 {
 }
+#endif /* 0 */
+
+CosProperty_Hash_Value::CosProperty_Hash_Value (const CORBA::Any &any, 
+                                                const CosPropertyService::PropertyModeType &mode)
+  : pvalue_ (new CORBA::Any (any)),
+    pmode_ (mode)
+{
+}
 
 CosProperty_Hash_Value::CosProperty_Hash_Value (const CosProperty_Hash_Value &src)
-  : pvalue_ (src.pvalue_)
+  : pvalue_ (src.pvalue_),
+    pmode_ (src.pmode_)
 {
 }
 
