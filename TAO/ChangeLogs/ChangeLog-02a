@@ -5,6 +5,14 @@ Tue Sep  5 18:36:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Changed some minor project options for the release
 	  version - logo display, etc.
 
+	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
+	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
+
+	  Added generation of debugging symbols to the release
+	  version. With this we don't get the full display of
+	  source code (only disassembled code) but we do get
+	  a call stack, which can be useful.
+
 	* TAO_IDL/be/be_decl.cpp:
 
 	  Added a temporary variable in the compute_prefix()
