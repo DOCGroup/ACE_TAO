@@ -1227,7 +1227,7 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
   // GNU GLIBC correctly deprecates the cuserid() function.
 
   struct passwd *pw = 0;
-  
+
   // Make sure the file pointer is at the beginning of the password file
   ::setpwent ();
   // Should use ACE_OS::setpwent() but I didn't want to move this
@@ -5268,18 +5268,18 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  
+
   QOS qos;
   DWORD qos_len = sizeof (QOS);
-  
+
   if (io_control_code == SIO_SET_QOS)
     {
       qos.SendingFlowspec = ace_qos.sending_flowspec ();
       qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
       qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
-      
+
       qos_len += ace_qos.provider_specific ().iov_len;
-      
+
       ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                        io_control_code,
                                        &qos,
@@ -5296,8 +5296,8 @@ ACE_OS::ioctl (ACE_HANDLE socket,
     {
       qos.ProviderSpecific.len = 0xFFFFFFFF;
       qos.ProviderSpecific.buf = NULL;
-      
-      // Query for the buffer size. 
+
+      // Query for the buffer size.
       int result = ::WSAIoctl ((ACE_SOCKET) socket,
                                io_control_code,
                                buffer_p,
@@ -5307,7 +5307,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                bytes_returned,
                                (WSAOVERLAPPED *) overlapped,
                                func);
-      
+
       if (result == SOCKET_ERROR)
         errno = ::WSAGetLastError ();
       else
@@ -5317,7 +5317,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
             ACE_NEW_RETURN (qos.ProviderSpecific.buf,
                             char [qos.ProviderSpecific.len],
                             -1);
-          
+
           result = ::WSAIoctl ((ACE_SOCKET) socket,
                                io_control_code,
                                buffer_p,
@@ -5327,7 +5327,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                                bytes_returned,
                                (WSAOVERLAPPED *) overlapped,
                                func);
-          
+
           ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
                                           qos.SendingFlowspec.TokenBucketSize,
                                           qos.SendingFlowspec.PeakBandwidth,
@@ -5344,7 +5344,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                           0,
                                           0);
-          
+
           ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
                                             qos.ReceivingFlowspec.TokenBucketSize,
                                             qos.ReceivingFlowspec.PeakBandwidth,
@@ -5361,15 +5361,15 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                             0,
                                             0);
-          
+
           ace_qos.sending_flowspec (sending_flowspec);
           ace_qos.receiving_flowspec (receiving_flowspec);
           ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
-	}
-      
+        }
+
       return result;
     }
-  
+
 #else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
@@ -6940,7 +6940,16 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 # if defined (VXWORKS)
-  return (void **&) taskIdCurrent->spare4;
+  /* If someone wants tss_base make sure they get one.  This
+     gets used if someone spawns a VxWorks task directly, not
+     through ACE.  The allocated array will never be deleted! */
+  if (0 == taskIdCurrent->ACE_VXWORKS_SPARE)
+    {
+      taskIdCurrent->ACE_VXWORKS_SPARE =
+        ACE_reinterpret_cast (int, new void *[ACE_TSS_THREAD_KEYS_MAX]);
+    }
+
+  return (void **&) taskIdCurrent->ACE_VXWORKS_SPARE;
 # elif defined (ACE_PSOS)
   // not supported
   long x=0;   //JINLU

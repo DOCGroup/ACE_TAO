@@ -158,6 +158,9 @@
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
+#if !defined (ACE_VXWORKS_SPARE)
+# define ACE_VXWORKS_SPARE spare4
+#endif /* ! ACE_VXWORKS_SPARE */
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
