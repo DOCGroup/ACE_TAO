@@ -1,3 +1,8 @@
+Wed Jul 30 10:05:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/connect.cpp: Removed a number of explicit template
+ 	instantiations that are already included in ACE.
+
 Wed Jul 30 14:20:18 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/boa.{i,h,cpp}: Removed the #include of "tao/objtable.h" and
