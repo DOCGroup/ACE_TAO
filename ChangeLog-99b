@@ -1,3 +1,10 @@
+Thu Aug 05 08:43:27 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_diab.GNU: added.
+          Thanks to Erik Johannes <ejohannes@oresis.com> for
+          helping to figure out its contents.  Note that compiles
+          succeed with Diab 4.2a for VxWorks, but links do not, yet.
+
 Thu Aug 05 08:37:09 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added Kirk Davies' notes for running
