@@ -1,3 +1,16 @@
+Thu Apr  8 13:49:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Active_Object_Map.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp: 
+	  Added missing template instantiations. Thanks to Dave Meyer
+	  <dmeyer@saic.com> for this one.
+
+	* rules.tao.GNU:
+	* orbsvcs/orbsvcs/Makefile:
+	  Fixed some dependencies and rules problems with the IDL
+	  generated files, now we can do "make -j 4" in orbsvcs (and
+	  apparently all the TAO directories)
+
 Thu Apr 08 14:05:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * CosEvent_Service/Makefile,tests/CosEC_Basic/Makefile,

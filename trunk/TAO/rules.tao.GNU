@@ -39,10 +39,13 @@ endif # g++
 ####
 #### Build rules.
 ####
-.SUFFIXES:      S.h C.h S.i C.i S.cpp C.cpp
+IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
+IDL_EXT2=Cli.h Clie.i Clie.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+
+.SUFFIXES: $(IDL_EXT)
 
 ifneq ($(use_flick),1)
-%S.h %Ser.h %C.h %Cli.h %S.i %Ser.i  %C.i %Cli.i %S.cpp %Ser.cpp %C.cpp %Cli.cpp:       %.idl $(TAO_IDL)
+$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 else
 #### You can redefine the following in your platform_macros.GNU

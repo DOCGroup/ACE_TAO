@@ -1094,6 +1094,8 @@ typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
 typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 
+template class ACE_Noop_Key_Generator<servant>;
+
 // Common
 template class ACE_Reference_Pair<const id, value>;
 template class ACE_Reference_Pair<const servant, value>;
@@ -1192,6 +1194,8 @@ typedef ACE_Equal_To<servant> servant_compare_keys;
 typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
 typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
+
+#pragma instantiate ACE_Noop_Key_Generator<servant>
 
 // Common
 #pragma instantiate ACE_Reference_Pair<const id, value>
