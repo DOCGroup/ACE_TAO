@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project {
+project : portableserver {
+  avoids   += minimum_corba
   after    += RTCORBA_Common
   libs     += RTCORBA_Common
   includes += ../Common
