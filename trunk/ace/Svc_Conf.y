@@ -1,8 +1,11 @@
 %{
 // $Id$
 
-#include "ace/ARGV.h"
 #include "ace/Svc_Conf.h"
+
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
+
+#include "ace/ARGV.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 
@@ -12,17 +15,16 @@ ACE_RCSID (ace,
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
-                                        ACE_Static_Node *svc_type);
+                                        ACE_Static_Node *svc_type,
+                                        int & yyerrno);
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
-                                        const ACE_TCHAR *svc_name);
+                                        const ACE_TCHAR *svc_name,
+                                        int & yyerrno);
 
 #define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
 
 // Force the pretty debugging code to compile.
 // #define YYDEBUG 1
-
-// Keeps track of the number of errors encountered so far.
-int yyerrno = 0;
 
 %}
 
@@ -50,7 +52,7 @@ svc_config_entries
     {
       if ($2 != 0)
       {
-        $2->apply (); delete $2;
+        $2->apply (ACE_SVC_CONF_PARAM->yyerrno); delete $2;
       }
       ACE_SVC_CONF_PARAM->obstack.release ();
     }
@@ -164,7 +166,8 @@ module
 
           ACE_ARGV args (svc_type->parameters ());
           ACE_Module_Type *mt = ace_get_module (module,
-                                                svc_type);
+                                                svc_type,
+                                                ACE_SVC_CONF_PARAM->yyerrno);
           ACE_Stream_Type *st =
             ACE_dynamic_cast (ACE_Stream_Type *,
                               ACE_const_cast (ACE_Service_Type_Impl *,
@@ -182,7 +185,9 @@ module
     }
   | static
     {
-      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1, $<static_node_>1->name ());
+      ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
+                                            $<static_node_>1->name (),
+                                            ACE_SVC_CONF_PARAM->yyerrno);
 
       if (((ACE_Stream_Type *) ($<static_node_>-1)->record ()->type ())->push (mt) == -1)
         {
@@ -194,14 +199,16 @@ module
   | suspend
     {
       ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
-                                            $<static_node_>1->name ());
+                                            $<static_node_>1->name (),
+                                            ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != 0)
         mt->suspend ();
     }
   | resume
     {
       ACE_Module_Type *mt = ace_get_module ($<static_node_>-1,
-                                            $<static_node_>1->name ());
+                                            $<static_node_>1->name (),
+                                            ACE_SVC_CONF_PARAM->yyerrno);
       if (mt != 0)
         mt->resume ();
     }
@@ -210,7 +217,8 @@ module
       ACE_Static_Node *stream = $<static_node_>-1;
       ACE_Static_Node *module = $<static_node_>1;
       ACE_Module_Type *mt = ace_get_module (stream,
-                                            module->name ());
+                                            module->name (),
+                                            ACE_SVC_CONF_PARAM->yyerrno);
 
       ACE_Stream_Type *st =
         ACE_dynamic_cast (ACE_Stream_Type *,
@@ -234,7 +242,7 @@ svc_location
         = ACE_Service_Type::DELETE_THIS
         | ($3->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
       ACE_Service_Object_Exterminator gobbler = 0;
-      void *sym = $3->symbol (&gobbler);
+      void *sym = $3->symbol (ACE_SVC_CONF_PARAM->yyerrno, &gobbler);
 
       if (sym != 0)
         {
@@ -245,11 +253,11 @@ svc_location
                                                             flags,
                                                             gobbler);
           if (stp == 0)
-            ace_yyerrno++;
+            ++ACE_SVC_CONF_PARAM->yyerrno;
 
           $$ = new ACE_Service_Type ($1,
                                      stp,
-                                     $3->handle (),
+                                     $3->dll (),
                                      $4);
         }
       else
@@ -325,9 +333,11 @@ pathname
 // messages.
 
 void
-yyerror (const ACE_TCHAR *s)
+yyerror (int yyerrno, int yylineno, const ACE_TCHAR *s)
 {
 #if defined (ACE_NLOGGING)
+  ACE_UNUSED_ARG (yyerrno);
+  ACE_UNUSED_ARG (yylineno);
   ACE_UNUSED_ARG (s);
 #endif /* ACE_NLOGGING */
 
@@ -343,7 +353,8 @@ yyerror (const ACE_TCHAR *s)
 
 static ACE_Module_Type *
 ace_get_module (ACE_Static_Node *str_rec,
-                const ACE_TCHAR *svc_name)
+                const ACE_TCHAR *svc_name,
+                int & yyerrno)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -368,7 +379,8 @@ ace_get_module (ACE_Static_Node *str_rec,
 
 static ACE_Module_Type *
 ace_get_module (ACE_Static_Node *str_rec,
-                ACE_Static_Node *svc_type)
+                ACE_Static_Node *svc_type,
+                int & yyerrno)
 {
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
@@ -404,12 +416,6 @@ ace_get_module (ACE_Static_Node *str_rec,
 }
 
 #if defined (DEBUGGING)
-// Current line number.
-int yylineno = 1;
-
-// Name given on the command-line to envoke the program.
-ACE_TCHAR *program_name;
-
 // Main driver program.
 
 int
@@ -419,8 +425,9 @@ main (int argc, char *argv[])
 
   // Try to reopen any filename argument to use YYIN.
   if (argc > 1 && (yyin = freopen (argv[1], "r", stdin)) == 0)
-    (void) ::fprintf (stderr, "usage: %s [file]\n", argv[0]), ACE_OS::exit (1);
+    (void) ACE_OS::fprintf (stderr, ACE_LIB_TEXT ("usage: %s [file]\n"), argv[0]), ACE_OS::exit (1);
 
-  return yyparse (&param);
+  return ::yyparse (&param);
 }
 #endif /* DEBUGGING */
+#endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */
