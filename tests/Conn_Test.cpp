@@ -31,22 +31,6 @@
 #include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
-#if defined (ACE_LACKS_CONN_TEST)
-
-int
-main (int, char *[])
-{
-  ACE_START_TEST ("Conn_Test");
-
-  // Conn_Test doesn't build on DEC_CXX 5.5.
-  ACE_ERROR ((LM_ERROR, "Conn_Test not supported on this platform\n"));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#else
-
 // Default number of clients/servers.
 static int n_servers = 4;
 static int n_clients = 10;
@@ -604,5 +588,3 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_LACKS_CONN_TEST */
