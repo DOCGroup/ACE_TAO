@@ -12,6 +12,7 @@
 
 #include "Thread_Strategy.h"
 #include "Request_Processing_Strategy.h"
+#include "Id_Assignment_Strategy.h"
 
 ACE_RCSID(PortableServer,
           Active_Policy_Strategies,
@@ -23,7 +24,8 @@ namespace TAO
   {
     Active_Policy_Strategies::Active_Policy_Strategies() :
       thread_strategy_(0),
-      request_processing_strategy_(0)
+      request_processing_strategy_(0),
+      id_assignment_strategy_(0)
     {
     }
 
@@ -71,6 +73,20 @@ namespace TAO
           break;
         }
       }
+
+      switch (policies.id_assignment())
+      {
+        case ::PortableServer::USER_ID :
+        {
+          ACE_NEW (id_assignment_strategy_, User_Id_Assignment_Strategy);
+          break;
+        }
+        case ::PortableServer::SYSTEM_ID :
+        {
+          ACE_NEW (id_assignment_strategy_, System_Id_Assignment_Strategy);
+          break;
+        }
+      }
     }
 
     Thread_Strategy*
@@ -83,6 +99,12 @@ namespace TAO
     Active_Policy_Strategies::request_processing_strategy (void) const
     {
       return request_processing_strategy_;
+    }
+
+    Id_Assignment_Strategy *
+    Active_Policy_Strategies::id_assignment_strategy (void) const
+    {
+      return id_assignment_strategy_;
     }
 
   }

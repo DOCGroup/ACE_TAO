@@ -29,6 +29,7 @@ namespace TAO
     class Cached_Policies;
     class Thread_Strategy;
     class Request_Processing_Strategy;
+    class Id_Assignment_Strategy;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -45,9 +46,12 @@ namespace TAO
 
       Request_Processing_Strategy *request_processing_strategy (void) const;
 
+      Id_Assignment_Strategy *id_assignment_strategy (void) const;
+
     private:
-      Thread_Strategy* thread_strategy_;
-      Request_Processing_Strategy* request_processing_strategy_;
+      Thread_Strategy *thread_strategy_;
+      Request_Processing_Strategy *request_processing_strategy_;
+      Id_Assignment_Strategy *id_assignment_strategy_;
     };
   }
 }

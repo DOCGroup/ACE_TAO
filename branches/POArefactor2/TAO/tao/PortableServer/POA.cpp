@@ -1127,51 +1127,8 @@ TAO_POA::get_servant_i (ACE_ENV_SINGLE_ARG_DECL)
                    PortableServer::POA::NoServant,
                    PortableServer::POA::WrongPolicy))
 {
-  return this->active_policy_strategies_.request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-/*  // This operation requires the USE_DEFAULT_SERVANT policy; if not
-  // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
-    }
-
-  // This operation returns the default servant associated with the
-  // POA.
-  PortableServer::Servant result = this->default_servant_.in ();
-  if (result != 0)
-    {
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
-      // The POA invokes _add_ref once on the Servant before returning
-      // it. If the application uses reference counting, the caller of
-      // get_servant is responsible for invoking _remove_ref once on
-      // the returned Servant when it is finished with it. A
-      // conforming caller need not invoke _remove_ref on the returned
-      // Servant if the type of the Servant uses the default reference
-      // counting inherited from ServantBase.
-      result->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      return result;
-    }
-  else
-    // If no servant has been associated with the POA, the NoServant
-    // exception is raised.
-    {
-      ACE_THROW_RETURN (PortableServer::POA::NoServant (),
-                        0);
-    }*/
+  return this->active_policy_strategies_.request_processing_strategy()->
+          get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -1180,40 +1137,9 @@ TAO_POA::set_servant_i (PortableServer::Servant servant
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
-  this->active_policy_strategies_.request_processing_strategy()->set_servant (servant ACE_ENV_ARG_PARAMETER);
-/*
-  // This operation requires the USE_DEFAULT_SERVANT policy; if not
-  // present, the WrongPolicy exception is raised.
-  if (this->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
-    {
-      ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
-  // This operation registers the specified servant with the POA as
-  // the default servant. This servant will be used for all requests
-  // for which no servant is found in the Active Object Map.
-  this->default_servant_ = servant;
-
-  // The implementation of set_servant will invoke _add_ref at least
-  // once on the Servant argument before returning. When the POA no
-  // longer needs the Servant, it will invoke _remove_ref on it the
-  // same number of times.
-  if (servant != 0)
-    {
-      // A recursive thread lock without using a recursive thread
-      // lock.  Non_Servant_Upcall has a magic constructor and
-      // destructor.  We unlock the Object_Adapter lock for the
-      // duration of the servant activator upcalls; reacquiring once
-      // the upcalls complete.  Even though we are releasing the lock,
-      // other threads will not be able to make progress since
-      // <Object_Adapter::non_servant_upcall_in_progress_> has been
-      // set.
-      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
-      ACE_UNUSED_ARG (non_servant_upcall);
-
-      servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-    }*/
+  this->active_policy_strategies_.request_processing_strategy()->
+    set_servant (servant ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
