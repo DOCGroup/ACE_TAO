@@ -317,13 +317,20 @@ TAO_AV_RTP_Object::handle_input (void)
   // Handles the incoming RTP packet input.
   this->frame_.rd_ptr (this->frame_.base ());
 
-
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
   if (n == 0)
     ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
-    ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+    {
+      if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
+        {
+          this->connection_gone_ = 1;
+          return -1;
+        }
+      else
+        ACE_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
+    }
 
   this->frame_.wr_ptr (this->frame_.rd_ptr () + n);
   ACE_Addr *addr = this->transport_->get_peer_addr ();
@@ -353,6 +360,12 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                TAO_AV_frame_info *frame_info)
 {
 //  ACE_Addr *addr = this->transport_->get_peer_addr ();
+
+  if (this->connection_gone_)
+    {
+      errno = ECONNRESET;
+      return -1;
+    }
 
   int result = -1;
   RTP_Packet *rtp_packet;
@@ -457,8 +470,8 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
   TAO_AV_RTCP_Object *rtcp_prot_obj = ACE_dynamic_cast (TAO_AV_RTCP_Object*,
                                                         this->control_object_);
-  rtcp_prot_obj->handle_control_output (&mb);
-//  rtcp_prot_obj->handle_control_output (rtp_packet);
+  if (rtcp_prot_obj)
+    rtcp_prot_obj->handle_control_output (&mb);
 
   delete rtp_packet;
 
@@ -474,6 +487,12 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
   RTP_Packet *rtp_packet = 0;
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
   ACE_UINT32 *csrc_list = 0;
+
+  if (this->connection_gone_)
+    {
+      errno = ECONNRESET;
+      return -1;
+    }
 
   if (frame_info != 0)
     {
@@ -594,7 +613,8 @@ TAO_AV_RTP_Object::send_frame (const char*,
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
-   control_object_ (0)
+   control_object_ (0),
+   connection_gone_ (0)
 {
   this->sequence_num_ = ACE_OS::rand ();
   this->timestamp_offset_ = ACE_OS::rand ();
