@@ -905,7 +905,7 @@ protected:
 
   /// Search the Dynamic service list for BiDirectional options that
   /// can be dynamically loaded.
-  int bidirectional_giop_init (void);
+  int bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV);
 
   /// Search the Dynamic service list for well known services that has
   /// callbacks  which can be dynamically loaded.

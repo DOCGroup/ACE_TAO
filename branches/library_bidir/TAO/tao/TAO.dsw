@@ -81,6 +81,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "BiDir_GIOP"=.\BiDir_GIOP\TAO_BiDir_GIOP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "BiDir_GIOP_Static"=.\BiDir_GIOP\TAO_BiDir_GIOP_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "IFR_Client"=.\IFR_Client\TAO_IFR_Client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -263,4 +287,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
