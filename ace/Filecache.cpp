@@ -8,6 +8,7 @@ static const int R_MASK = S_IRUSR|S_IRGRP|S_IROTH;
 static const int W_MASK = S_IRUSR|S_IRGRP|S_IROTH|S_IWUSR|S_IWGRP|S_IWOTH;
 
 #if defined (ACE_WIN32)
+// See if you can get rid of some of these.
 static const int READ_FLAGS = (FILE_FLAG_SEQUENTIAL_SCAN |
                                FILE_FLAG_OVERLAPPED |
                                O_RDONLY);
