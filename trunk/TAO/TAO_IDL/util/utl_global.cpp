@@ -146,7 +146,8 @@ IDL_GlobalData::dsf::dsf (void)
     special_basic_arg_seen_ (0),
     ub_string_arg_seen_ (0),
     var_array_arg_seen_ (0),
-    var_size_arg_seen_ (0)
+    var_size_arg_seen_ (0),
+    any_arg_seen_ (0)
 {}
 
 IDL_GlobalData::IDL_GlobalData (void)
@@ -297,6 +298,7 @@ IDL_GlobalData::IDL_GlobalData (void)
   ACE_SET_BITS (this->decls_seen_masks.ub_string_arg_seen_,     cursor << 58);
   ACE_SET_BITS (this->decls_seen_masks.var_array_arg_seen_,     cursor << 59);
   ACE_SET_BITS (this->decls_seen_masks.var_size_arg_seen_,      cursor << 60);
+  ACE_SET_BITS (this->decls_seen_masks.any_arg_seen_,           cursor << 61);
 }
 
 IDL_GlobalData::~IDL_GlobalData (void)
