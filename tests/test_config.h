@@ -241,7 +241,7 @@ ACE_Test_Output::~ACE_Test_Output (void)
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
@@ -249,6 +249,13 @@ ACE_Test_Output::~ACE_Test_Output (void)
 int
 ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 {
+#if defined (ACE_HAS_PHARLAP)
+  // For PharLap, just send it all to the host console for now - redirect
+  // to a file there for saving/analysis.
+  EtsSelectConsole(ETS_CO_HOST);
+  ACE_LOG_MSG->msg_ostream (&cout);
+
+#else
   ASYS_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
   LPCTSTR test_dir;
@@ -277,16 +284,16 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
       ACE_OS::close (fd);
       ACE_OS::unlink (temp);
     }
-#else /* ! VXWORKS */
+# else /* ! VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist: it creates a plain file instead of a directory.  If the
   // directory does exist, it causes a wierd console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
-#endif /* ! VXWORKS */
+# endif /* ! VXWORKS */
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   int flags = ios::out;
   if (append)
     flags |= ios::app;
@@ -303,9 +310,11 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   else
     fmode = ASYS_TEXT ("w");
   this->output_file_ = ACE_OS::fopen (temp, fmode);
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+# endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
+#endif /* ACE_HAS_PHARLAP */
+
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
