@@ -31,7 +31,15 @@
 
 #include "RTCORBA.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/UB_String_Arguments.h"
@@ -71,7 +79,7 @@ RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 RTCORBA::ThreadpoolLane::_tao_any_destructor (
@@ -568,7 +576,7 @@ RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 RTCORBA::Protocol::_tao_any_destructor (
@@ -1939,7 +1947,7 @@ RTCORBA::StreamControlProtocolProperties::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from 
-// be\be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 RTCORBA::PriorityBand::_tao_any_destructor (
@@ -2561,47 +2569,10 @@ void RTCORBA::RTORB::MutexNotFound::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr RTCORBA::RTORB::MutexNotFound::_type (void) const
+CORBA::TypeCode_ptr RTCORBA::RTORB::MutexNotFound::_tao_type (void) const
 {
   return ::RTCORBA::RTORB::_tc_MutexNotFound;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_RTCORBA_RTORB_MutexNotFound[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  44,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x52544f52), 
-  ACE_NTOHL (0x422f4d75), 
-  ACE_NTOHL (0x7465784e), 
-  ACE_NTOHL (0x6f74466f), 
-  ACE_NTOHL (0x756e643a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/MutexNotFound:1.0
-    14,
-  ACE_NTOHL (0x4d757465), 
-  ACE_NTOHL (0x784e6f74), 
-  ACE_NTOHL (0x466f756e), 
-  ACE_NTOHL (0x64000000),  // name = MutexNotFound
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_RTORB_MutexNotFound (
-    CORBA::tk_except,
-    sizeof (_oc_RTCORBA_RTORB_MutexNotFound),
-    (char *) &_oc_RTCORBA_RTORB_MutexNotFound,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const RTCORBA::RTORB::_tc_MutexNotFound =
-  &_tc_TAO_tc_RTCORBA_RTORB_MutexNotFound;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -2693,49 +2664,10 @@ void RTCORBA::RTORB::InvalidThreadpool::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr RTCORBA::RTORB::InvalidThreadpool::_type (void) const
+CORBA::TypeCode_ptr RTCORBA::RTORB::InvalidThreadpool::_tao_type (void) const
 {
   return ::RTCORBA::RTORB::_tc_InvalidThreadpool;
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_RTCORBA_RTORB_InvalidThreadpool[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x5254434f), 
-  ACE_NTOHL (0x5242412f), 
-  ACE_NTOHL (0x52544f52), 
-  ACE_NTOHL (0x422f496e), 
-  ACE_NTOHL (0x76616c69), 
-  ACE_NTOHL (0x64546872), 
-  ACE_NTOHL (0x65616470), 
-  ACE_NTOHL (0x6f6f6c3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/RTCORBA/RTORB/InvalidThreadpool:1.0
-    18,
-  ACE_NTOHL (0x496e7661), 
-  ACE_NTOHL (0x6c696454), 
-  ACE_NTOHL (0x68726561), 
-  ACE_NTOHL (0x64706f6f), 
-  ACE_NTOHL (0x6c000000),  // name = InvalidThreadpool
-  0, // member count
-  };
-
-static CORBA::TypeCode _tc_TAO_tc_RTCORBA_RTORB_InvalidThreadpool (
-    CORBA::tk_except,
-    sizeof (_oc_RTCORBA_RTORB_InvalidThreadpool),
-    (char *) &_oc_RTCORBA_RTORB_InvalidThreadpool,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const RTCORBA::RTORB::_tc_InvalidThreadpool =
-  &_tc_TAO_tc_RTCORBA_RTORB_InvalidThreadpool;
 
 RTCORBA::RTORB::RTORB (void)
 {}
@@ -2942,23 +2874,22 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be\be_visitor_enum/cdr_op_cs.cpp:51
 
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const RTCORBA::PriorityModel &_tao_enumval)
+CORBA::Boolean operator<< (TAO_OutputCDR & strm, RTCORBA::PriorityModel _tao_enumerator)
 {
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
+  return strm << static_cast<CORBA::ULong> (_tao_enumerator);
 }
 
-CORBA::Boolean operator>> (TAO_InputCDR &strm, RTCORBA::PriorityModel &_tao_enumval)
+CORBA::Boolean operator>> (TAO_InputCDR & strm, RTCORBA::PriorityModel & _tao_enumerator)
 {
   CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
+  CORBA::Boolean const _tao_success = strm >> _tao_temp;
   
-  if (_tao_result == 1)
+  if (_tao_success)
     {
-      _tao_enumval = static_cast<RTCORBA::PriorityModel> (_tao_temp);
+      _tao_enumerator = static_cast<RTCORBA::PriorityModel> (_tao_temp);
     }
   
-  return _tao_result;
+  return _tao_success;
 }
 
 // TAO_IDL - Generated from
@@ -3057,7 +2988,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_RTCORBA_PriorityBands_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1619
+// be\be_visitor_root/root.cpp:1528
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

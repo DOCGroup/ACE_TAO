@@ -26,231 +26,98 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "IIOPC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_IIOP_ListenPoint[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x2f4c6973), 
-  ACE_NTOHL (0x74656e50), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-    12,
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x656e506f), 
-  ACE_NTOHL (0x696e7400),  // name = ListenPoint
-  2, // member count
-    5,
-  ACE_NTOHL (0x686f7374), 
-  ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string, 
-  0U, // string length
-  5,
-  ACE_NTOHL (0x706f7274), 
-  ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_ushort,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IIOP_ListenPoint[] =
+  {
+    { "host", &CORBA::_tc_string },
+    { "port", &CORBA::_tc_ushort }
+    
+  };
 
-};
-
-static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPoint (
-    CORBA::tk_struct,
-    sizeof (_oc_IIOP_ListenPoint),
-    (char *) &_oc_IIOP_ListenPoint,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_IIOP_ListenPoint (
+    "IDL:omg.org/IIOP/ListenPoint:1.0",
+    "ListenPoint",
+    _tao_fields_IIOP_ListenPoint,
+    2);
+  
 namespace IIOP
 {
   ::CORBA::TypeCode_ptr const _tc_ListenPoint =
-    &_tc_TAO_tc_IIOP_ListenPoint;
+    &_tao_tc_IIOP_ListenPoint;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
-
-static const CORBA::Long _oc_IIOP_ListenPointList[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  37,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x2f4c6973), 
-  ACE_NTOHL (0x74656e50), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
-    16,
-  ACE_NTOHL (0x4c697374), 
-  ACE_NTOHL (0x656e506f), 
-  ACE_NTOHL (0x696e744c), 
-  ACE_NTOHL (0x69737400),  // name = ListenPointList
-    CORBA::tk_sequence, // typecode kind
-  116, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    100, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      33,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x49494f50), 
-      ACE_NTOHL (0x2f4c6973), 
-      ACE_NTOHL (0x74656e50), 
-      ACE_NTOHL (0x6f696e74), 
-      ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-            12,
-      ACE_NTOHL (0x4c697374), 
-      ACE_NTOHL (0x656e506f), 
-      ACE_NTOHL (0x696e7400),  // name = ListenPoint
-      2, // member count
-            5,
-      ACE_NTOHL (0x686f7374), 
-      ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string, 
-      0U, // string length
-      5,
-      ACE_NTOHL (0x706f7274), 
-      ACE_NTOHL (0x0),  // name = port
-            CORBA::tk_ushort,
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
 
-    0U,
 
-};
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:744
 
-static CORBA::TypeCode _tc_TAO_tc_IIOP_ListenPointList (
-    CORBA::tk_alias,
-    sizeof (_oc_IIOP_ListenPointList),
-    (char *) &_oc_IIOP_ListenPointList,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+  _tao_tc_IIOP_ListenPointList_0 (
+    CORBA::tk_sequence,
+    &IIOP::_tc_ListenPoint,
+    0U);
+  
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_IIOP_ListenPointList (
+    "IDL:omg.org/IIOP/ListenPointList:1.0",
+    "ListenPointList",
+    &::_tao_tc_IIOP_ListenPointList_0);
+  
 namespace IIOP
 {
   ::CORBA::TypeCode_ptr const _tc_ListenPointList =
-    &_tc_TAO_tc_IIOP_ListenPointList;
+    &_tao_tc_IIOP_ListenPointList;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x49494f50), 
-  ACE_NTOHL (0x2f426944), 
-  ACE_NTOHL (0x69724949), 
-  ACE_NTOHL (0x4f505365), 
-  ACE_NTOHL (0x72766963), 
-  ACE_NTOHL (0x65436f6e), 
-  ACE_NTOHL (0x74657874), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/BiDirIIOPServiceContext:1.0
-    24,
-  ACE_NTOHL (0x42694469), 
-  ACE_NTOHL (0x7249494f), 
-  ACE_NTOHL (0x50536572), 
-  ACE_NTOHL (0x76696365), 
-  ACE_NTOHL (0x436f6e74), 
-  ACE_NTOHL (0x65787400),  // name = BiDirIIOPServiceContext
-  1, // member count
-    14,
-  ACE_NTOHL (0x6c697374), 
-  ACE_NTOHL (0x656e5f70), 
-  ACE_NTOHL (0x6f696e74), 
-  ACE_NTOHL (0x73000000),  // name = listen_points
-    CORBA::tk_alias, // typecode kind for typedefs
-  192, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    37,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x49494f50), 
-    ACE_NTOHL (0x2f4c6973), 
-    ACE_NTOHL (0x74656e50), 
-    ACE_NTOHL (0x6f696e74), 
-    ACE_NTOHL (0x4c697374), 
-    ACE_NTOHL (0x3a312e30), 
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
-        16,
-    ACE_NTOHL (0x4c697374), 
-    ACE_NTOHL (0x656e506f), 
-    ACE_NTOHL (0x696e744c), 
-    ACE_NTOHL (0x69737400),  // name = ListenPointList
-        CORBA::tk_sequence, // typecode kind
-    116, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_struct, // typecode kind
-      100, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        33,
-        ACE_NTOHL (0x49444c3a), 
-        ACE_NTOHL (0x6f6d672e), 
-        ACE_NTOHL (0x6f72672f), 
-        ACE_NTOHL (0x49494f50), 
-        ACE_NTOHL (0x2f4c6973), 
-        ACE_NTOHL (0x74656e50), 
-        ACE_NTOHL (0x6f696e74), 
-        ACE_NTOHL (0x3a312e30), 
-        ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
-                12,
-        ACE_NTOHL (0x4c697374), 
-        ACE_NTOHL (0x656e506f), 
-        ACE_NTOHL (0x696e7400),  // name = ListenPoint
-        2, // member count
-                5,
-        ACE_NTOHL (0x686f7374), 
-        ACE_NTOHL (0x0),  // name = host
-                CORBA::tk_string, 
-        0U, // string length
-        5,
-        ACE_NTOHL (0x706f7274), 
-        ACE_NTOHL (0x0),  // name = port
-                CORBA::tk_ushort,
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_IIOP_BiDirIIOPServiceContext[] =
+  {
+    { "listen_points", &IIOP::_tc_ListenPointList }
+    
+  };
 
-
-      0U,
-
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_IIOP_BiDirIIOPServiceContext (
-    CORBA::tk_struct,
-    sizeof (_oc_IIOP_BiDirIIOPServiceContext),
-    (char *) &_oc_IIOP_BiDirIIOPServiceContext,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_IIOP_BiDirIIOPServiceContext (
+    "IDL:omg.org/IIOP/BiDirIIOPServiceContext:1.0",
+    "BiDirIIOPServiceContext",
+    _tao_fields_IIOP_BiDirIIOPServiceContext,
+    1);
+  
 namespace IIOP
 {
   ::CORBA::TypeCode_ptr const _tc_BiDirIIOPServiceContext =
-    &_tc_TAO_tc_IIOP_BiDirIIOPServiceContext;
+    &_tao_tc_IIOP_BiDirIIOPServiceContext;
 }
+
+
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
@@ -322,7 +189,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert_copy (
       _tao_any,
       IIOP::ListenPointList::_tao_any_destructor,
-      IIOP::_tc_ListenPointList,
+      IIOP_ListenPointList_0,
       _tao_elem
     );
 }
@@ -336,7 +203,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::insert (
       _tao_any,
       IIOP::ListenPointList::_tao_any_destructor,
-      IIOP::_tc_ListenPointList,
+      IIOP_ListenPointList_0,
       _tao_elem
     );
 }
@@ -363,7 +230,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<IIOP::ListenPointList>::extract (
         _tao_any,
         IIOP::ListenPointList::_tao_any_destructor,
-        IIOP::_tc_ListenPointList,
+        IIOP_ListenPointList_0,
         _tao_elem
       );
 }

@@ -26,153 +26,81 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "orb_typesC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/String_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_ORBid[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4f52), 
-  ACE_NTOHL (0x4269643a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ORBid:1.0
-    6,
-  ACE_NTOHL (0x4f524269), 
-  ACE_NTOHL (0x64000000),  // name = ORBid
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ORBid (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ORBid),
-    (char *) &_oc_CORBA_ORBid,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ORBid (
+    "IDL:omg.org/CORBA/ORBid:1.0",
+    "ORBid",
+    &::_tao_tc_CORBA::_tc_string);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ORBid =
-    &_tc_TAO_tc_CORBA_ORBid;
+    &_tao_tc_CORBA_ORBid;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_Flags[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f466c), 
-  ACE_NTOHL (0x6167733a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/Flags:1.0
-    6,
-  ACE_NTOHL (0x466c6167), 
-  ACE_NTOHL (0x73000000),  // name = Flags
-    CORBA::tk_ulong,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Flags (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_Flags),
-    (char *) &_oc_CORBA_Flags,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_Flags (
+    "IDL:omg.org/CORBA/Flags:1.0",
+    "Flags",
+    &::_tao_tc_CORBA::_tc_ulong);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Flags =
-    &_tc_TAO_tc_CORBA_Flags;
+    &_tao_tc_CORBA_Flags;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_Identifier[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f4964), 
-  ACE_NTOHL (0x656e7469), 
-  ACE_NTOHL (0x66696572), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Identifier:1.0
-    11,
-  ACE_NTOHL (0x4964656e), 
-  ACE_NTOHL (0x74696669), 
-  ACE_NTOHL (0x65720000),  // name = Identifier
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_Identifier (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_Identifier),
-    (char *) &_oc_CORBA_Identifier,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_Identifier (
+    "IDL:omg.org/CORBA/Identifier:1.0",
+    "Identifier",
+    &::_tao_tc_CORBA::_tc_string);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Identifier =
-    &_tc_TAO_tc_CORBA_Identifier;
+    &_tao_tc_CORBA_Identifier;
 }
 
+
+
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_CORBA_RepositoryId[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  35,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f5265), 
-  ACE_NTOHL (0x706f7369), 
-  ACE_NTOHL (0x746f7279), 
-  ACE_NTOHL (0x49643a31), 
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
-    13,
-  ACE_NTOHL (0x5265706f), 
-  ACE_NTOHL (0x7369746f), 
-  ACE_NTOHL (0x72794964), 
-  ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_RepositoryId (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_RepositoryId),
-    (char *) &_oc_CORBA_RepositoryId,
-    0,
-    0
-  );
-
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_RepositoryId (
+    "IDL:omg.org/CORBA/RepositoryId:1.0",
+    "RepositoryId",
+    &::_tao_tc_CORBA::_tc_string);
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_RepositoryId =
-    &_tc_TAO_tc_CORBA_RepositoryId;
+    &_tao_tc_CORBA_RepositoryId;
 }
+
+

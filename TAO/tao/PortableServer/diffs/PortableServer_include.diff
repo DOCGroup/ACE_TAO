@@ -1,5 +1,5 @@
---- orig/PortableServer_includeC.h	2005-02-22 14:55:31.297721600 +0100
-+++ PortableServer_includeC.h	2005-02-22 14:56:24.994934400 +0100
+--- orig/PortableServer_includeC.h	2005-03-25 15:46:11.914934400 +0100
++++ PortableServer_includeC.h	2005-03-25 15:47:19.141601600 +0100
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -17,14 +17,16 @@
  
  #if defined (TAO_EXPORT_MACRO)
  #undef TAO_EXPORT_MACRO
-@@ -79,10 +79,6 @@
- // TAO_IDL - Generated from
- // be\be_codegen.cpp:961
+@@ -77,11 +77,7 @@
+ }
  
+ // TAO_IDL - Generated from
+-// be\be_codegen.cpp:969
+-
 -#if defined (__ACE_INLINE__)
 -#include "PortableServer_includeC.inl"
 -#endif /* defined INLINE */
--
++// be\be_codegen.cpp:961
+ 
  #if defined(_MSC_VER)
  #pragma warning(pop)
- #endif /* _MSC_VER */

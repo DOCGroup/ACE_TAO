@@ -366,7 +366,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -416,7 +416,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -474,7 +474,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -526,7 +526,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -578,7 +578,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -628,7 +628,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -678,7 +678,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -728,7 +728,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -778,7 +778,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -828,7 +828,7 @@ namespace PortableServer
       // TAO_IDL - Generated from
       // be\be_visitor_exception/exception_ch.cpp:127
       
-      virtual CORBA::TypeCode_ptr _type (void) const;
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
@@ -1399,7 +1399,7 @@ TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, Portab
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::POA::WrongPolicy *&);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:961
+// be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "PortableServerC.inl"

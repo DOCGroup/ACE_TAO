@@ -26,7 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "POAManagerC.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/TypeCode_Non_Default_Case.h"
+#include "tao/Enum_TypeCode.h"
+#include "tao/Objref_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/Any.h"
 #include "tao/Any_Impl_T.h"
@@ -34,97 +40,72 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_PortableServer_POAManager_State[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  48,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f414d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x722f5374), 
-  ACE_NTOHL (0x6174653a), 
-  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POAManager/State:2.3
-  6,
-  ACE_NTOHL (0x53746174), 
-  ACE_NTOHL (0x65000000),  // name = State
-  4, // member count
-  8,
-  ACE_NTOHL (0x484f4c44), 
-  ACE_NTOHL (0x494e4700),  // name = HOLDING
-  7,
-  ACE_NTOHL (0x41435449), 
-  ACE_NTOHL (0x56450000),  // name = ACTIVE
-  11,
-  ACE_NTOHL (0x44495343), 
-  ACE_NTOHL (0x41524449), 
-  ACE_NTOHL (0x4e470000),  // name = DISCARDING
-  9,
-  ACE_NTOHL (0x494e4143), 
-  ACE_NTOHL (0x54495645), 
-  ACE_NTOHL (0x0),  // name = INACTIVE
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_PortableServer_POAManager_AdapterInactive[] =
+  {
+    
   };
 
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_State (
-    CORBA::tk_enum,
-    sizeof (_oc_PortableServer_POAManager_State),
-    (char *) &_oc_PortableServer_POAManager_State,
-    0,
-    0
-  );
-
-::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
-  &_tc_TAO_tc_PortableServer_POAManager_State;
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_except,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_POAManager_AdapterInactive (
+    "IDL:omg.org/PortableServer/POAManager/AdapterInactive:2.3",
+    "AdapterInactive",
+    _tao_fields_PortableServer_POAManager_AdapterInactive,
+    0);
+  
+::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_AdapterInactive =
+  &_tao_tc_PortableServer_POAManager_AdapterInactive;
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/enum_typecode.cpp:34
 
-static const CORBA::Long _oc_PortableServer_POAManager[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x506f7274), 
-  ACE_NTOHL (0x61626c65), 
-  ACE_NTOHL (0x53657276), 
-  ACE_NTOHL (0x65722f50), 
-  ACE_NTOHL (0x4f414d61), 
-  ACE_NTOHL (0x6e616765), 
-  ACE_NTOHL (0x723a322e), 
-  ACE_NTOHL (0x33000000),  // repository ID = IDL:omg.org/PortableServer/POAManager:2.3
-    11,
-  ACE_NTOHL (0x504f414d), 
-  ACE_NTOHL (0x616e6167), 
-  ACE_NTOHL (0x65720000),  // name = POAManager
+static TAO::TypeCode::Enumerator<char const *> const _tao_enumerators_PortableServer_POAManager_State[] =
+  {
+    "HOLDING",
+    "ACTIVE",
+    "DISCARDING",
+    "INACTIVE"
+    
   };
 
-static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager (
-    CORBA::tk_objref,
-    sizeof (_oc_PortableServer_POAManager),
-    (char *) &_oc_PortableServer_POAManager,
-    0,
-    0
-  );
+static TAO::TypeCode::Enum<char const *,
+                           TAO::TypeCode::Enumerator<char const *> const *,
+                           TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_POAManager_State (
+    "IDL:omg.org/PortableServer/POAManager/State:2.3",
+    "State",
+    _tao_enumerators_PortableServer_POAManager_State,
+    4);
+  
+::CORBA::TypeCode_ptr const PortableServer::POAManager::_tc_State =
+  &_tao_tc_PortableServer_POAManager_State;
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:73
+
+static TAO::TypeCode::Objref<char const *,
+                             CORBA::tk_local_interface,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableServer_POAManager (
+    "IDL:omg.org/PortableServer/POAManager:2.3",
+    "POAManager");
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_POAManager =
-    &_tc_TAO_tc_PortableServer_POAManager;
+    &_tao_tc_PortableServer_POAManager;
 }
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -134,14 +115,14 @@ TAO::Any_Impl_T<PortableServer::POAManager>::to_object (
   return 1;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::POAManager>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableServer::POAManager>::demarshal_value (TAO_InputCDR &)
 {
@@ -193,14 +174,14 @@ operator>>= (
 // TAO_IDL - Generated from 
 // be\be_visitor_exception/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::marshal_value (TAO_OutputCDR &)
 {
   return false;
 }
 
-ACE_TEMPLATE_SPECIALIZATION
+template<>
 CORBA::Boolean
 TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
 {
