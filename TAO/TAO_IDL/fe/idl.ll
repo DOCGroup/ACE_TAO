@@ -267,7 +267,7 @@ oneway		return IDL_ONEWAY;
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
-^#line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		|
+^#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\"")?{NL}		|
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL}		{
 		  idl_parse_line_and_file(ace_yytext);
 		}
