@@ -98,11 +98,11 @@ namespace CCF
         }
 
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const& s, Parsing::Error e) const
         {
           Iterator i = e.where;
 
-          switch (e.descriptor.diagnostic_)
+          switch (e.descriptor->diagnostic_)
           {
           case Parsing::DiagnosticType::BEFORE:
             {
@@ -111,7 +111,7 @@ namespace CCF
                 (*i)->line ());
 
               rec << "before \'" << (*i)->lexeme () << "\': "
-                  << e.descriptor.description_;
+                  << e.descriptor->description_;
 
               dout_ << rec;
               break;
@@ -125,7 +125,7 @@ namespace CCF
                 (*i)->line ());
 
               rec << "after \'" << (*i)->lexeme () << "\': "
-                  << e.descriptor.description_;
+                  << e.descriptor->description_;
 
               dout_ << rec;
               break;
@@ -135,13 +135,13 @@ namespace CCF
             }
           }
 
-          if (e.descriptor.action_one_.get ())
-            e.descriptor.action_one_->execute ();
+          if (e.descriptor->action_one_.get ())
+            e.descriptor->action_one_->execute ();
 
-          if (e.descriptor.action_two_.get ())
-            e.descriptor.action_two_->execute ();
+          if (e.descriptor->action_two_.get ())
+            e.descriptor->action_two_->execute ();
 
-          switch (e.descriptor.recovery_)
+          switch (e.descriptor->recovery_)
           {
           case Parsing::RecoveryMethod::STANDARD:
             {
@@ -175,7 +175,7 @@ namespace CCF
                 }
               }
 
-              switch (e.descriptor.diagnostic_)
+              switch (e.descriptor->diagnostic_)
               {
               case Parsing::DiagnosticType::BEFORE:
                 {
@@ -205,13 +205,14 @@ namespace CCF
                 }
               }
 
-              e.descriptor.recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
-              e.descriptor.diagnostic_ = Parsing::DiagnosticType::NONE;
+              e.descriptor->recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
+              e.descriptor->diagnostic_ = Parsing::DiagnosticType::NONE;
 
-              e.descriptor.action_one_.reset ();
-              e.descriptor.action_two_.reset ();
+              e.descriptor->action_one_.reset ();
+              e.descriptor->action_two_.reset ();
 
-              return RecoveryStatus (RecoveryStatus::rethrow);
+              // return RecoveryStatus (RecoveryStatus::rethrow);
+              throw e;
             }
           case Parsing::RecoveryMethod::NONE:
           default:
@@ -222,13 +223,14 @@ namespace CCF
             }
           case Parsing::RecoveryMethod::BAIL_OUT:
             {
-              e.descriptor.recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
-              e.descriptor.diagnostic_ = Parsing::DiagnosticType::NONE;
+              e.descriptor->recovery_ = Parsing::RecoveryMethod::BAIL_OUT;
+              e.descriptor->diagnostic_ = Parsing::DiagnosticType::NONE;
 
-              e.descriptor.action_one_.reset ();
-              e.descriptor.action_two_.reset ();
+              e.descriptor->action_one_.reset ();
+              e.descriptor->action_two_.reset ();
 
-              return RecoveryStatus (RecoveryStatus::rethrow);
+              // return RecoveryStatus (RecoveryStatus::rethrow);
+              throw e;
             }
           }
         }
@@ -272,17 +274,18 @@ namespace CCF
         }
 
         RecoveryStatus
-        operator() (Parsing::Scanner const& s, Parsing::Error& e) const
+        operator() (Parsing::Scanner const& s, Parsing::Error e) const
         {
           assert (
-            e.descriptor.diagnostic_ == Parsing::DiagnosticType::NONE &&
-            e.descriptor.recovery_ == Parsing::RecoveryMethod::BAIL_OUT
+            e.descriptor->diagnostic_ == Parsing::DiagnosticType::NONE &&
+            e.descriptor->recovery_ == Parsing::RecoveryMethod::BAIL_OUT
           );
 
           if (action_one_.get ()) action_one_->execute ();
           if (action_two_.get ()) action_two_->execute ();
 
-          return RecoveryStatus (RecoveryStatus::rethrow);
+          // return RecoveryStatus (RecoveryStatus::rethrow);
+          throw e;
         }
 
         std::auto_ptr<Parsing::Thunk> action_one_;

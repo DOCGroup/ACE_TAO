@@ -1,11 +1,28 @@
+Wed Nov  5 14:07:06 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CodeGenerationKit/CommandLineGrammar.hpp:
+	* CCF/CCF/CodeGenerationKit/CommandLineParser.cpp:
+
+	  Got rid of some warnings.
+
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/Parsing/Recovery.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+
+	  Added a work-around to subvert constness of descriptor
+          member in spirit::parser_error. Joel de Guzman acknowledged
+	  that this is an architectural error but unfortunately it
+	  doesn't seem he is going to fix it any time soon (even though
+	  patch is available).
+
 Tue Nov  4 21:21:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentsC.h:
 	* ciao/ComponentsS.h;
 
 	  Regenerated these files. Not sure why this is maintained in the
-	  repo. 
-	
+	  repo.
+
 	* examples/handcrafted/Hello/hello_executors.h:
 
 	  #include "tao/LocalObject.h"
