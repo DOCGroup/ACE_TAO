@@ -1,3 +1,9 @@
+Wed Feb 12 08:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UPIPE_Addr.h:
+          Removed ACE_UPIPE_Addr class which isn't used, typedef ACE_UPIPE_Addr
+          still is there.
+
 Tue Feb 11 22:19:39 2003  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * examples/DLL/Makefile.Today (SHLIB):
