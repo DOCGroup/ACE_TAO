@@ -1,3 +1,25 @@
+Thu May 08 01:12:59 1997    <irfan@TWOSTEP>
+
+	* tests/Message_Block_Test.cpp: I was incorrect about each data
+	  block having its own lock. Since *many* data blocks can share
+	  the same lock, for the case of message block chains, we would
+	  like to optimize locking. 
+
+	  Therefore, the first guy in the chain grabs the lock and passes
+	  it to the continuation chain. When each guy in the chain gets
+	  it, it compares the passed lock to its own locking strategy. If
+	  it is the same lock, no need to acquire the lock again. If our
+	  lock is different, then we do our own locking.	  
+
+	* tests/Simple_Message_Block_Test.cpp: This test program is a
+ 	  torture test that illustrates how ACE_Message_Block reference
+ 	  counting works, how and when locks are used, how memory is
+ 	  managed, and how continuation chains of message blocks are
+	  made. Ideally used with purify :-)
+
+	* tests: Added new test. Following changed:
+	  Makefile run_tests.bat run_tests.sh tests.mak tests.mdp
+
 Thu May  8 00:40:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers.i (size): Changed <TYPE> to <T> so that this
