@@ -492,7 +492,7 @@ public:
   CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
                                                CORBA::Environment &ACE_TRY_ENV);
 
-#ifdef TAO_HAS_INTERFACE_REPOSITORY
+#ifdef (TAO_HAS_INTERFACE_REPOSITORY)
   //Methods added for Philipe Merle for CORBA Script..
   CORBA_TypeCode_ptr create_interface_tc (const char * id,
                                           const char * name,
