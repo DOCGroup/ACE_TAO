@@ -294,7 +294,8 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
   if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
-      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo)))
+      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
+       (!ACE_OS::strcmp (prim->local_name ()->get_string (), "Object"))))
     {
       // Pseudo objects do not require this methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl
