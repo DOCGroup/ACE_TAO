@@ -1,6 +1,6 @@
-#include "ace/Service_Config.h"
 // $Id$
 
+#include "ace/Service_Config.h"
 #include "Timer_Service.h"
 
 // Create an object that will insert the Timer_Service into the list

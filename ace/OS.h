@@ -1335,6 +1335,9 @@ typedef int ACE_thread_key_t;
 // This must come after signal.h is #included.
 #if defined (SCO)
 #define SIGIO SIGPOLL
+#endif 
+
+#if defined (SCO) || defined (FreeBSD)
 #undef sigemptyset
 #undef sigfillset
 #undef sigaddset

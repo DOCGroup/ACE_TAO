@@ -2,7 +2,7 @@ http_tester
 -----------
 
 This is the http_tester suite, an ACE based HTTP benchmarking tool,
-used to evaluate the performance of JAWS.
+used to evaluate the performance of JAWS and other HTTP servers.
 
 Usage
 -----

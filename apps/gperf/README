@@ -19,6 +19,10 @@ Output from the GPERF program is used to recognize reserved words in
 the GNU C, GNU C++, and GNU Pascal compilers, as well as with the GNU
 indent program.
 
+For more information on GPERF, please see
+
+http://www.cs.wustl.edu/~schmidt/C++-USENIX-90.ps.gz
+
 Happy hacking!
 
 Douglas C. Schmidt
