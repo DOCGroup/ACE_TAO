@@ -1,3 +1,13 @@
+Thu Jun 14 13:43:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+
+          Removed a '>' left over from the time before TAO_Object_Field<>
+          was eliminated. It was overlooked for so long because it 
+          turns up in generated code only when a valuetype has an
+          interface member. Thanks to Srikanth Vedire <srvedire@yahoo.com>
+          for reporting the problem.
+
 Thu Jun 14 13:36:43 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy_Set.i:
