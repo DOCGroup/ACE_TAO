@@ -37,7 +37,7 @@ import JACE.ASX.TimeValue;
  *</blockquote>
  *
  *@see TimerQueue
- *@see Reactor
+ *@see JACE.Reactor
  */
 public interface EventHandler
 {

@@ -69,7 +69,7 @@ public class Acceptor extends ServiceObject
    * an instance is created via this method, <tt>setHandlerFactory</tt>
    * must be called prior to using <tt>accept</tt>.
    *
-   * @see JACE.Connection.Acceptor.setHandlerFactory
+   * @see JACE.Connection.Acceptor#setHandlerFactory
    */
   public Acceptor ()
   {
@@ -81,7 +81,7 @@ public class Acceptor extends ServiceObject
    * an instance of a SvcHandler when a connection is accepted
    * (typically obtained by calling <tt>Class.classForName</tt>).
    *
-   *@see java.lang.Class.forName
+   *@see java.lang.Class#forName
    */
   public Acceptor (Class handlerFactory)
   {
@@ -95,7 +95,7 @@ public class Acceptor extends ServiceObject
    * an instance of a SvcHandler when a connection is accepted
    * (typically obtained by calling <tt>Class.forName</tt>).
    *
-   *@see java.lang.Class.forName
+   *@see java.lang.Class#forName
    */
   public void setHandlerFactory (Class handlerFactory)
   {
