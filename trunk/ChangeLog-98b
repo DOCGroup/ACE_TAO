@@ -1,3 +1,15 @@
+Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/DLL/Dll.dsw:
+	* examples/DLL/Test_dll.dsp:
+	* examples/DLL/Today.dsp:
+	* examples/DLL/Newsweek.dsp:
+
+          Added to the repository. The test successfully executes on NT.
+	
+	* examples/DLL/README: Modified to add information on how to
+	  execute this test example on NT.
+	
 Fri Nov 27 13:32:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/DLL/test_dll.cpp (main): Added right arguments to the

@@ -20,14 +20,28 @@ performing various operations on the library object.
 Execution:
 ---------
 
-First, build the test program, which you can do on UNIX as follows:
+*** On POSIX platforms,
+        First, build the test program, which you can do on UNIX as follows:
 
-% make
+        % make
 
-Then run the test program:
+        Then run the test program:
 
-% test_dll
+        % test_dll
 
-to exercise the test.
+        to exercise the test.
 
------------------------------------------------------------------
+
+***On NT or any Win32 platform:
+
+        Load Dll.dsw which contains Test_dll.dsp, Today.dsp and Newsweek.dsp.
+
+        Build each dsp such that you build Test_dll.dsp last.
+        This is because the test_dll.exe will be using Today.dll and Newsweek.dll. 
+
+        Execute test_dll
+
+        and watch it happen!
+
+
+------------------------------------------------------------------------------------
