@@ -1,3 +1,15 @@
+Wed Nov 22 17:37:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+	
+	* tests/Multiple/Collocation_Tester.cpp:
+	* tests/Multiple/Makefile:
+	* tests/Multiple/Multiple_Impl.cpp:
+	* tests/Multiple/client.cpp:
+	* tests/Multiple/server.cpp:
+	* tests/Multiple/run_test.pl:
+
+	  Cosmetic changes to some file, plus perl script for automatically
+	  running the test.
+	
 Wed Nov 22 14:30:12 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
