@@ -8,11 +8,12 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "orb.h"
-#include        <initguid.h>
+#include <objbase.h>
+#include <initguid.h>
 
-#include        "stub.h"
-#include        "iiopobj.h"
+#include "tao/orb.h"
+#include "tao/stub.h"
+#include "tao/iiopobj.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "iiopobj.i"
@@ -126,11 +127,12 @@ IIOP_Object::is_equivalent (CORBA_Object_ptr other_obj,
 DEFINE_GUID (IID_IIOP_Object,
 0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+#if 0
 // Added by BRM: 2/21/97
 // IID_STUB_Object and IID_CORBA_Object were not being defined.
 // Need a central place for all of these macros.
 
-#if defined(WIN32)
+#if 0 //defined(WIN32)
 EXTERN_C ACE_Svc_Export GUID IID_STUB_Object = 
 {0xa201e4c7, 0xf258, 0x11ce, {0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98} };
 #else
@@ -145,6 +147,7 @@ DEFINE_GUID (IID_CORBA_Object,
 // End - Added by BRM: 2/21/97 IID_STUB_Object and IID_CORBA_Object
 // were not being defined.  Need a central place for all of these
 // macros.
+#endif
 
 ULONG __stdcall
 IIOP_Object::AddRef (void)

@@ -21,7 +21,8 @@
 #  include "ace/Hash_Map_Manager.h"
 #  include "ace/SString.h"
 
-#  include "orb.h"
+#  include "tao/orb.h"
+#  include "tao/sequence.h"
 
 // Dynamic Hashing scheme.
 //typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;

@@ -40,13 +40,16 @@
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
 
-#include "orb.h"
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Stream.h"
-#include "orbobj.h"
-#include "factories.h"
-#include "cdr.h"
-#include "giop.h"
+
+#include "tao/giop.h"
+#include "tao/orb.h"
+#include "tao/orbobj.h"
+#include "tao/factories.h"
+#include "tao/cdr.h"
+#include "tao/debug.h"
+
 
 // defined by GIOP 1.0 protocol
 #define	TAO_GIOP_HEADER_LEN 12		
@@ -609,7 +612,6 @@ GIOP::Invocation::start (CORBA_Environment &env)
 
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, guard, lock_));
 
-#if !defined (USE_OLD_CODE)
   // Get a CORBA_Object_ptr from _data using QueryInterface ()
   CORBA_Object_ptr obj = 0;
 
@@ -644,25 +646,6 @@ GIOP::Invocation::start (CORBA_Environment &env)
 
   // Use the ACE_SOCK_Stream from the Client_Connection_Handler for
   // communication inplace of the endpoint used below.
-#else
-  if (_data->fwd_profile != 0) 
-    {
-      key = &_data->fwd_profile->object_key;
-      endpoint = client_endpoint::lookup ((char *)_data->fwd_profile->host,
-					  _data->fwd_profile->port, env);
-    } 
-  else 
-    {
-      key = &_data->profile.object_key;
-      endpoint = client_endpoint::lookup ((char *)_data->profile.host,
-					  _data->profile.port, env);
-    }
-  if (env.exception () != 0) 
-    {
-      dexc (env, "invoke, lookup client endpoint");
-      return;
-    }
-#endif /* USE_OLD_CODE */
 
   // POLICY DECISION: If the client expects most agents to forward,
   // then it could try to make sure that it's been forwarded at least
@@ -1042,7 +1025,7 @@ GIOP::Invocation::invoke (CORBA_ExceptionList &exceptions,
 			  &obj, 0, 
 			  env) != CORBA_TypeCode::TRAVERSE_CONTINUE
 	    || obj->QueryInterface (IID_IIOP_Object, 
- (void **)&obj2) != NOERROR)
+                                    (void **)&obj2) != NOERROR)
 	  {
 	    dexc (env, "invoke, location forward");
 	    send_error (handler_->peer ());

@@ -13,9 +13,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-#include "corba/orb.h"
-#include "corba/debug.h"
-#include "connect.h"
+#include "tao/orb.h"
+#include "tao/orbobj.h"
+#include "tao/boa.h"
+#include "tao/debug.h"
+#include "tao/connect.h"
 
 #include "cubit_i.h"
 

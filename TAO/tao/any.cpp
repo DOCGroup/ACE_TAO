@@ -32,10 +32,12 @@
 // COM NOTE: Yes, this is a utility data type whose implementation is
 // fully exposed.  Factories for these are not normally used in C++.
 
-#include "orb.h"
-#include "cdr.h"
-
+#include <objbase.h>
 #include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/cdr.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "any.i"

@@ -22,9 +22,11 @@
 
 #endif	// unix
 
-#include	"cubitC.h"
+#include "cubitC.h"
 
-#include	<corba/debug.h>
+#include "tao/debug.h"
+#include "tao/orbobj.h"
+#include "tao/nvlist.h"
 
 
 #if !defined (_WIN32)

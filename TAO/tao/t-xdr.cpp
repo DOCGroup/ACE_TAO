@@ -7,16 +7,16 @@
 //
 // It's suitable only for a simple performance test just now ...
 
-#include	"orb.h"
+#include "tao/orb.h"
 
 #if defined(HAVE_WIDEC_H)
 #  include	<widec.h>
 #endif
 
-#include	"cdr.h"
-#include	"debug.h"
+#include "tao/cdr.h"
+#include "tao/debug.h"
 
-#include	"xdr.h"
+#include "tao/xdr.h"
 
 // A structure that's somewhat representative of an IIOP message in
 // terms of overall complexity, so that its encoding cost is

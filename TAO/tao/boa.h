@@ -24,11 +24,14 @@
 #if !defined (TAO_BOA_H)
 #  define TAO_BOA_H
 
+#  include <objbase.h>
+
 #  include "ace/SOCK_Stream.h"
 
-#  include "orb.h"
-#  include "corbacom.h"
-#  include "objtable.h"
+#  include "tao/orb.h"
+#  include "tao/sequence.h"
+#  include "tao/svrrqst.h"
+#  include "tao/objtable.h"
 
 // @@ Shouldn't this go into the CORBA:: namespace?  It doesn't belong
 // at global scope!
@@ -39,7 +42,7 @@ CORBA_Boolean is_nil (CORBA_BOA_ptr obj);
 // Decrement reference count on <obj>.
 void release (CORBA_BOA_ptr obj);
 
-extern const IID IID_BOA;
+extern "C" const IID IID_BOA;
 
 struct TAO_Dispatch_Context;
 class TAO_Object_Table;

@@ -8,8 +8,8 @@
 // messages, responds to them.
 //
 
-#include	<stdio.h>
-#include	<string.h>
+#include <stdio.h>
+#include <string.h>
 #include <ace/Get_Opt.h>
 
 #if	unix
@@ -19,11 +19,12 @@
 
 #endif
 
-#include	"test1.h"
-#include	<corba/boa.h>
-#include <roa.h>
-
-#include	<corba/debug.h>
+#include "test1.h"
+#include "tao/boa.h"
+#include "tao/roa.h"
+#include "tao/orbobj.h"
+#include "tao/nvlist.h"
+#include "tao/debug.h"
 
 
 

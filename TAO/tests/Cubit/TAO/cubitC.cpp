@@ -17,18 +17,25 @@ Cubit_ptr Cubit::_duplicate(Cubit_ptr obj)
 
 Cubit_ptr Cubit::_narrow(CORBA_Object_ptr obj)
 {
-   CORBA_Environment env;
-   if (obj->_is_a("IDL:Cubit:1.0", env))
-   {
+  CORBA_Environment env;
+  if (obj->_is_a("IDL:Cubit:1.0", env))
+    {
+      obj->Release(); // Release the reference grabbed by _is_a()
+      
       STUB_Object *istub;
       if (obj->QueryInterface(IID_STUB_Object, (void **)&istub) != NOERROR)
-      {
-         return Cubit::_nil();
-      }
+        {
+          return Cubit::_nil();
+        }
+      obj->Release();
       Cubit_ptr new_obj = new Cubit(istub);
       return Cubit::_duplicate(new_obj);
-   }
-   return Cubit::_nil();
+    }
+  else
+    {
+      // Do we need to do an obj->Release() here if _is_a() failed?
+    }
+  return Cubit::_nil();
 }
 
 Cubit_ptr Cubit::_nil()
@@ -67,7 +74,8 @@ Cubit::Cubit_cube_octet (CORBA_Octet       o,
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return 0;
    }
-
+   this->Release();
+   
    istub->do_call (env, &Cubit_cube_octet_calldata,
                         &retval, &o);
    istub->Release ();
@@ -106,6 +114,7 @@ Cubit::Cubit_cube_short (CORBA_Short       s,
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return 0;
    }
+   this->Release();
 
    istub->do_call(env, &Cubit_cube_short_calldata,
                   &retval, &s);
@@ -145,6 +154,7 @@ Cubit::Cubit_cube_long (CORBA_Long        l,
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return 0;
    }
+   this->Release();
    
    istub->do_call (env, &Cubit_cube_long_calldata,
                   &retval, &l);
@@ -218,6 +228,7 @@ Cubit::Cubit_cube_struct (Cubit_Many &values,
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return 0;
    }
+   this->Release();
   
    istub->do_call (env, &Cubit_cube_struct_calldata,
                         &retval, &values);
@@ -345,6 +356,7 @@ Cubit::Cubit_cube_union (Cubit_oneof		&values,
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return 0;
    }
+   this->Release();
 
    istub->do_call (env, &Cubit_cube_union_calldata,
                   &retval, &values);
@@ -375,6 +387,7 @@ Cubit::Cubit_please_exit (CORBA_Environment	&env)
       env.exception(new CORBA_DATA_CONVERSION (COMPLETED_NO));
       return;
    }
+   this->Release();
 
    istub->do_call (env, &Cubit_please_exit_calldata);
    istub->Release ();

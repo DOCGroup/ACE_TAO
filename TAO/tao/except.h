@@ -22,9 +22,11 @@
 #  include "ace/OS.h"
 #  include "ace/Synch.h"
 
-extern const IID IID_CORBA_Exception;
-extern const IID IID_CORBA_UserException;
-extern const IID IID_CORBA_SystemException;
+#  include <objbase.h>
+
+extern "C" const IID IID_CORBA_Exception;
+extern "C" const IID IID_CORBA_UserException;
+extern "C" const IID IID_CORBA_SystemException;
 
 class ACE_Svc_Export CORBA_Exception : public IUnknown
   // = TITLE

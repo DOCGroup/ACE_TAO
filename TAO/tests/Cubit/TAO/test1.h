@@ -8,9 +8,9 @@
 #ifndef	_TEST1_HH
 #define	_TEST1_HH
 
-#include <corba/orb.h>
-#include <corba/stub.h>
-
+#include "tao/orb.h"
+#include "tao/stub.h"
+#include "tao/typecode.h"
 
 #ifdef	_MSC_VER
 #pragma	pack (push, 1)			// VC++, known padding rules

@@ -27,15 +27,15 @@
 // arrays of "short" data (e.g. unicode strings) pack tightly.
 //
 
-#include "orb.h"
+#include "tao/orb.h"
+#include "tao/debug.h"
+#include "tao/principa.h"
+#include "tao/xdr.h"
 
 #if defined(HAVE_WIDEC_H)
 #  include <widec.h>
 #endif
 
-#include "debug.h"
-
-#include "xdr.h"
 
 
 //

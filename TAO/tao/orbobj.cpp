@@ -9,14 +9,16 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
-#include	"orb.h"
-#include	"stub.h"
-#include	"iioporb.h"		// XXX
+#include <objbase.h>
+#include <initguid.h>
 
-#include        "params.h"
-#include        "boa.h"
-#include        "roa.h"
-#include	<initguid.h>
+#include "tao/orb.h"
+#include "tao/stub.h"
+#include "tao/iioporb.h"		// XXX
+#include "tao/params.h"
+#include "tao/boa.h"
+#include "tao/roa.h"
+#include "tao/nvlist.h"
 
 extern void __TC_init_table (void);
 extern void __TC_init_standard_exceptions (CORBA_Environment &env);
@@ -32,11 +34,10 @@ extern void __TC_init_standard_exceptions (CORBA_Environment &env);
 DEFINE_GUID (IID_CORBA_ORB,
 0xa201e4c6, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-#if 0
+// CJC Why was this commented out?
 // {A201E4C7-F258-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_STUB_Object,
 0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
-#endif
 
 ULONG __stdcall
 CORBA_ORB::Release (void)

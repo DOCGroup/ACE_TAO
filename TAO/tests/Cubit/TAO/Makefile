@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS     =  -lcorba
+LDLIBS     =  -lTAO
 
 PROG_SRCS =	svr.cpp clnt.cpp cubit.cpp \
 		test1.cpp test1_clnt.cpp test1_svr.cpp \
@@ -42,8 +42,13 @@ include $(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
 # Local modifications to variables imported by includes above.
-LDFLAGS    += -L../../../proto/lib
-CPPFLAGS   += -I../../../proto/include -DUSE_ACE_EVENT_HANDLING -DDEBUG
+#LDFLAGS    += -L../../../proto/lib
+#CPPFLAGS   += -I../../../proto/include -DUSE_ACE_EVENT_HANDLING -DDEBUG
+ifndef TAO_ROOT
+TAO_ROOT = $(WRAPPER_ROOT)/TAO
+endif
+LDFLAGS += -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)

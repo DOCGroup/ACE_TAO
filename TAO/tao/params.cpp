@@ -1,6 +1,6 @@
-#include "params.h"
-#include "connect.h"
-#include "objtable.h"
+#include "tao/params.h"
+#include "tao/connect.h"
+#include "tao/objtable.h"
 
 TAO_OA_Parameters *
 TAO_OA_Parameters::instance (void)
