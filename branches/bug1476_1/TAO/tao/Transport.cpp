@@ -205,6 +205,13 @@ TAO_Transport::register_handler (void)
 
   ACE_Reactor *r = this->orb_core_->reactor ();
 
+  // @@note: This should be okay since the register handler call will
+  // not make a nested call into the transport.
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->handler_lock_,
+                    false);
+
   if (r == this->event_handler_i ()->reactor ())
     {
       return 0;
@@ -353,8 +360,6 @@ TAO_Transport::handle_output (void)
 int
 TAO_Transport::format_queue_message (TAO_OutputCDR &stream)
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
   if (this->messaging_object ()->format_message (stream) != 0)
     return -1;
 
@@ -2124,29 +2129,31 @@ TAO_Transport::out_stream (void)
 bool
 TAO_Transport::post_open (size_t id)
 {
-  bool result = false;
-
   this->id_ = id;
-  this->is_connected_ = true;
+
+  {
+    ACE_GUARD_RETURN (ACE_Lock,
+                      ace_mon,
+                      *this->handler_lock_,
+                      false);
+
+    this->is_connected_ = true;
+  }
+
+  // When we have data in our outgoing queue schedule ourselves
+  // for output
+  if (this->queue_is_empty_i ())
+    return true;
 
   // If the wait strategy wants us to be registered with the reactor
   // then we do so. If registeration is required and it succeeds,
   // #REFCOUNT# becomes two.
-  int register_handler_result =
-    this->wait_strategy ()->register_handler ();
-
-  if (register_handler_result == 0)
+  if (this->wait_strategy ()->register_handler () == 0)
     {
-      result = true;
-
-      // When we have data in our outgoing queue schedule ourselves for output
-      if (!this->queue_is_empty_i ())
-        {
-          TAO_Flushing_Strategy *flushing_strategy =
-            this->orb_core ()->flushing_strategy ();
-          (void) flushing_strategy->schedule_output (this);
-        }
-     }
+      TAO_Flushing_Strategy *flushing_strategy =
+        this->orb_core ()->flushing_strategy ();
+      (void) flushing_strategy->schedule_output (this);
+    }
   else
     {
       // Registration failures.
@@ -2160,14 +2167,15 @@ TAO_Transport::post_open (size_t id)
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - Transport[%d]::set_connected, "
+                    "TAO (%P|%t) - Transport[%d]::post_connect , "
                     "could not register the transport "
                     "in the reactor.\n",
-                    this->id()));
+                    this->id ()));
 
+      return false;
     }
 
-  return result;
+  return true;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -274,6 +274,27 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
+  if (transport->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) transport->purge_entry ();
+
+      // Close the handler.
+      (void) transport->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - IIOP_Connector [%d]::make_connect , "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    transport->id ()));
+
+      return 0;
+    }
+
   return transport;
 }
 

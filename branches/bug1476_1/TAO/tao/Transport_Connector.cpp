@@ -10,6 +10,7 @@
 #include "Client_Strategy_Factory.h"
 #include "Connection_Handler.h"
 #include "Profile_Transport_Resolver.h"
+#include "Wait_Strategy.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -263,6 +264,27 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                     "connect, "
                     "wait for completion failed\n"));
 
+  if (base_transport->wait_strategy ()->register_handler () != 0)
+    {
+      // Registration failures.
+
+      // Purge from the connection cache, if we are not in the cache, this
+      // just does nothing.
+      (void) base_transport->purge_entry ();
+
+      // Close the handler.
+      (void) base_transport->close_connection ();
+
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO (%P|%t) - Transport_Connector [%d]::make_connect , "
+                    "could not register the transport "
+                    "in the reactor.\n",
+                    base_transport->id ()));
+
+      return 0;
+    }
+
   return base_transport;
 }
 
@@ -298,7 +320,7 @@ TAO_Connector::wait_for_connection_completion (
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - Transport_Connector::wait_for_connection_completion, "
                 "transport [%d], wait done result = %d\n",
-                transport->id(), result));
+                transport->id (), result));
 
   // There are three possibilities when wait() returns: (a)
   // connection succeeded; (b) connection failed; (c) wait()

@@ -896,7 +896,7 @@ protected:
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
    */
-  ACE_Lock *handler_lock_;
+  mutable ACE_Lock *handler_lock_;
 
   /// A unique identifier for the transport.
   /**
