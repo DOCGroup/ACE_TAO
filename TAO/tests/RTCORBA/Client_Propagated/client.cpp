@@ -94,8 +94,8 @@ main (int argc, char *argv[])
         RTCORBA::Current::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Short desired_priority =
-        current->the_priority (ACE_TRY_ENV);
+      CORBA::Short desired_priority = 0;
+      current->the_priority (desired_priority, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       for (int i = 0; i < 3; ++i)

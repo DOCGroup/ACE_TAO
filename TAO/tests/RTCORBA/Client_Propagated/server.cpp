@@ -60,9 +60,9 @@ Test_i::test_method (CORBA::Short priority,
                 "to method argument.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "CORBA Priority of servant thread: %d  "
-              "Method argument: %d\n",
-              servant_thread_priority, priority));
+              "Client priority: %d  "
+              "Servant thread priority: %d\n",
+              priority, servant_thread_priority));
 }
 
 void
@@ -175,7 +175,7 @@ main (int argc, char *argv[])
         orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
 
       if (ior_output_file != 0)
         {
@@ -214,6 +214,11 @@ main (int argc, char *argv[])
                     "has been permanently changed!\n"
                     "Initial priority: %d  Final priority: %d\n",
                     initial_thread_priority, final_thread_priority));
+      else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Final priority of the servant thread"
+                    " = its initial priority\n"));
+      
     }
   ACE_CATCHANY
     {

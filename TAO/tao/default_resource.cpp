@@ -42,7 +42,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     sched_policy_ (ACE_SCHED_OTHER),
-    priority_mapping_type_ (TAO_PRIORITY_MAPPING_LINEAR)
+    priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT)
 {
 }
 
