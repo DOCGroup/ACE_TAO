@@ -12,9 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Filter builder to the basic filters.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -35,6 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Filter;
+class TAO_EC_Event_Channel;
 
 class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
@@ -47,7 +45,7 @@ class TAO_ORBSVCS_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Buil
   //   are constructed using this class.
   //
 public:
-  TAO_EC_Basic_Filter_Builder (void);
+  TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel* ec);
   // constructor.
 
   virtual ~TAO_EC_Basic_Filter_Builder (void);
@@ -65,6 +63,10 @@ private:
                                CORBA::ULong pos) const;
   // Count the number of children of the current node, i.e. until a
   // conjunction or disjunction starts.
+
+private:
+  TAO_EC_Event_Channel* event_channel_;
+  // The event channel.
 };
 
 #if defined (__ACE_INLINE__)

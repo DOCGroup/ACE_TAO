@@ -321,7 +321,7 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
                       "-n <burst size> "
                       "-b <event payload size> "
                       "-T <burst pause (usecs)> "
-                      "-h <eventa,eventb> "
+                      "-h <type_start,type_count> "
                       "-p <pid file name> "
                       "\n",
                       argv[0]));

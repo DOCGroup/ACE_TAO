@@ -77,7 +77,7 @@ public:
   // Access the supplier admin implementation, useful for controlling
   // the activation...
 
-  TAO_EC_Timer_Module* timer_module (void) const;
+  TAO_EC_Timeout_Generator* timeout_generator (void) const;
   // Access the timer module...
 
   // = The factory methods, they delegate on the EC_Factory.
@@ -163,8 +163,8 @@ private:
   TAO_EC_SupplierAdmin *supplier_admin_;
   // The SupplierAdmin implementation
 
-  TAO_EC_Timer_Module *timer_module_;
-  // The timer module
+  TAO_EC_Timeout_Generator *timeout_generator_;
+  // The timeout generator
 
   TAO_EC_ObserverStrategy *observer_strategy_;
   // The observer strategy

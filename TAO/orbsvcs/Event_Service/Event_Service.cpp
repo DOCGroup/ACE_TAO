@@ -11,6 +11,10 @@
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/Event_Channel.h"
 
+#include "orbsvcs/Event/EC_Null_Factory.h"
+#include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
 int main (int argc, char *argv[])
@@ -23,6 +27,7 @@ int main (int argc, char *argv[])
 
 Event_Service::Event_Service (void)
   : module_factory_ (0),
+    factory_ (0),
     sched_impl_ (0),
     ec_impl_ (0),
     service_name_ (0),
@@ -39,6 +44,8 @@ Event_Service::~Event_Service (void)
   this->ec_impl_ = 0;
   delete this->sched_impl_;
   this->sched_impl_ = 0;
+  delete this->factory_;
+  this->factory_ = 0;
   delete this->module_factory_;
   this->module_factory_ = 0;
 }
@@ -90,8 +97,8 @@ Event_Service::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
 
-      if (this->event_service_type_ == ES_OLD_REACTIVE
-          || this->event_service_type_ == ES_OLD_MT)
+      if (1) // this->event_service_type_ == ES_OLD_REACTIVE
+             // || this->event_service_type_ == ES_OLD_MT)
         {
           // We must find the scheduler object reference...
 
@@ -111,10 +118,10 @@ Event_Service::run (int argc, char* argv[])
             }
           else
             {
-              CORBA::Object_var tmp = 
+              CORBA::Object_var tmp =
                 naming_context->resolve (schedule_name, ACE_TRY_ENV);
               ACE_TRY_CHECK;
-              
+
               scheduler = RtecScheduler::Scheduler::_narrow (tmp.in (),
                                                              ACE_TRY_ENV);
               ACE_TRY_CHECK;
@@ -124,11 +131,35 @@ Event_Service::run (int argc, char* argv[])
       switch (this->event_service_type_)
         {
         case ES_NULL_FILTERING:
-        case ES_REACTIVE:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "The new EC is still unsupported\n"),
+          {
+            ACE_NEW_RETURN (this->factory_,
+                            TAO_EC_Null_Factory (root_poa.in ()),
                             1);
+            TAO_EC_Event_Channel* ec;
+            ACE_NEW_RETURN (ec,
+                            TAO_EC_Event_Channel (this->factory_),
+                            1);
+            this->ec_impl_ = ec;
+            ec->activate (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
           break;
+
+        case ES_REACTIVE:
+          {
+            ACE_NEW_RETURN (this->factory_,
+                            TAO_EC_Basic_Factory (root_poa.in ()),
+                            1);
+            TAO_EC_Event_Channel* ec;
+            ACE_NEW_RETURN (ec,
+                            TAO_EC_Event_Channel (this->factory_),
+                            1);
+            this->ec_impl_ = ec;
+            ec->activate (ACE_TRY_ENV);
+            ACE_TRY_CHECK;
+          }
+          break;
+
         case ES_OLD_REACTIVE:
           {
             ACE_NEW_RETURN (this->module_factory_,
@@ -147,7 +178,7 @@ Event_Service::run (int argc, char* argv[])
             ACE_NEW_RETURN (this->module_factory_,
                             TAO_Default_Module_Factory,
                             1);
-            
+
             ACE_NEW_RETURN (this->ec_impl_,
                             ACE_EventChannel (scheduler.in (),
                                               1,
@@ -155,7 +186,7 @@ Event_Service::run (int argc, char* argv[])
                                               this->module_factory_),
                             1);
           }
-      
+
           break;
         }
 

@@ -12,10 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   A per-consumer filter that only accept events whose type/source
-//   match.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -43,8 +39,6 @@ class TAO_ORBSVCS_Export TAO_EC_Type_Filter : public TAO_EC_Filter
   // = DESCRIPTION
   //   This filter only accept events with a predefined type/source,
   //   both the source and the type can be wildcards.
-  //
-  // = MEMORY MANAGMENT
   //
 public:
   TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header);

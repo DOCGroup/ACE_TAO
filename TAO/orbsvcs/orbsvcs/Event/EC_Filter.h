@@ -12,19 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   The per-consumer filtering mechanisms.
-//   The EC needs to filter data passed to the consumers, so it can
-//   correctly satisfy its subscription requirements.
-//   This filtering can include correlations, sequences, timeouts,
-//   etc. each consumer can request different filtering criteria.
-//
-//   Different filtering objects are associated with each consumer,
-//   the filters are organized in a hierarchical structure,
-//   corresponding to the subscription "expression" that the events
-//   must satisfy.
-//   The hierarchy is constructed using the "Builder" pattern.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -52,7 +39,17 @@ class TAO_ORBSVCS_Export TAO_EC_Filter
   //   Abstract base class for the filter hierarchy.
   //
   // = DESCRIPTION
-  //   Defines the filter interface.
+  //   The per-consumer filtering mechanisms.
+  //   The EC needs to filter data passed to the consumers, so it can
+  //   correctly satisfy its subscription requirements.
+  //   This filtering can include correlations, sequences, timeouts,
+  //   etc. each consumer can request different filtering criteria.
+  //
+  //   Different filtering objects are associated with each consumer,
+  //   the filters are organized in a hierarchical structure,
+  //   corresponding to the subscription "expression" that the events
+  //   must satisfy.
+  //   The hierarchy is constructed using the "Builder" pattern.
   //
   // = MEMORY MANAGMENT
   //   It does *not* assume ownership of its parent.

@@ -88,12 +88,13 @@ Airplane_Client_i::get_planes (size_t count)
 {
   for (size_t i = 0; i < count; i++)
     {
-      TAO_TRY 
+      TAO_TRY
         {
-          char *response = this->server_->get_plane (TAO_TRY_ENV);
+          CORBA::String_var response =
+            this->server_->get_plane (TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response));
+          ACE_DEBUG ((LM_DEBUG, "Plane %d is %s\n", i, response.in ()));
         }
       TAO_CATCHANY
         {

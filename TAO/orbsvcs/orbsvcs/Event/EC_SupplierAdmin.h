@@ -12,11 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
-//   This class is an Abstract Factory for the
-//   TAO_EC_ProxyPushConsumer.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -47,13 +42,15 @@ class TAO_ORBSVCS_Export TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin
   //   ProxyPushSupplier
   //
   // = DESCRIPTION
-  //   Implements the SupplierAdmin interface, i.e. the factory for
-  //   ProxyPushConsumer objects.
+  //   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
+  //   This class is an Abstract Factory for the
+  //   TAO_EC_ProxyPushConsumer.
   //
   // = MEMORY MANAGMENT
   //   It does not assume ownership of the TAO_EC_Event_Channel object
   //
   // = LOCKING
+  //   @@ TODO
   //   No provisions for locking, access must be serialized
   //   externally.
   //
@@ -105,6 +102,7 @@ private:
   // Store the default POA.
 
   ConsumerSet all_consumers_;
+  // The set of consumers...
 };
 
 #if defined (__ACE_INLINE__)

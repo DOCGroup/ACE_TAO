@@ -1,3 +1,94 @@
+Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.i:
+	* orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.h:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.i:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.i:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.i:
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+	  Added support for timeout events, including a simple
+	  Timeout_Generator based on the ORB's reactor.
+
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	  Fixed several problems with g++ 2.7.2.X; thanks to David Levine
+	  for reporting them.
+
+	* orbsvcs/tests/Makefile: 
+	  Added a bunch of missing directories to the list.
+
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  The Event2 service is compiled by default, not need to check for 
+	  it.
+
+	* orbsvcs/Event_Service/Event_Service.h:
+	* orbsvcs/Event_Service/Event_Service.cpp:
+	  Added support for the new EC implementation.
+
+	* tao/append.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	* tao/skip.cpp:
+	  The debug messages are only be printed out if TAO_debug_level is 
+	  greater than 0.
+	  Also fixed many of them.
+
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/CosEC_Multiple/Makefile:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	  Updated dependencies.
+
+	* orbsvcs/tests/ImplRepo/Makefile:
+	  Fixed the Makefile so it would compile.
+
+	* orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+	  Fixed memory leak.
+
+	* orbsvcs/orbsvcs/Event/EC_Busy_Lock.h:
+	* orbsvcs/orbsvcs/Event/EC_Command.h:
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set_T.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp: 
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
+	  Minor cosmetic changes.
+
 Fri Mar 05 12:51:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: replaced -Wno-used for g++, but just for

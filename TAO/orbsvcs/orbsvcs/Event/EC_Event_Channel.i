@@ -24,10 +24,10 @@ TAO_EC_Event_Channel::supplier_admin (void) const
   return this->supplier_admin_;
 }
 
-ACE_INLINE TAO_EC_Timer_Module*
-TAO_EC_Event_Channel::timer_module (void) const
+ACE_INLINE TAO_EC_Timeout_Generator*
+TAO_EC_Event_Channel::timeout_generator (void) const
 {
-  return this->timer_module_;
+  return this->timeout_generator_;
 }
 
 ACE_INLINE TAO_EC_ProxyPushSupplier*

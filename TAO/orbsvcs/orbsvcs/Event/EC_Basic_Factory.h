@@ -12,10 +12,6 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
-// = DESCRIPTION
-//   A factory for a basic event channel: it provides filtering and
-//   correlation, but only at the consumer level.
-//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -86,10 +82,10 @@ public:
       create_proxy_push_consumer (TAO_EC_Event_Channel*);
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
-  virtual TAO_EC_Timer_Module*
-      create_timer_module (TAO_EC_Event_Channel*);
+  virtual TAO_EC_Timeout_Generator*
+      create_timeout_generator (TAO_EC_Event_Channel*);
   virtual void
-      destroy_timer_module (TAO_EC_Timer_Module*);
+      destroy_timeout_generator (TAO_EC_Timeout_Generator*);
   virtual TAO_EC_ObserverStrategy*
       create_observer_strategy (TAO_EC_Event_Channel*);
   virtual void
