@@ -138,6 +138,18 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
+  /**
+   * TAO-specific extension.
+   * Return the ObjectGroup reference for the given ObjectGroupId.
+   */
+   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+        PortableGroup::ObjectGroupId group_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+      ));
 
   //@}
 

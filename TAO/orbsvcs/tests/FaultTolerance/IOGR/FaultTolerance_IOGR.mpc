@@ -1,4 +1,4 @@
-project(*server): portableserver, orbsvcsexe, iormanip, ftorb {
+project(*server): portableserver, orbsvcsexe, iormanip, ftorb, messaging {
   Source_Files {
     test_i.cpp
     server.cpp
