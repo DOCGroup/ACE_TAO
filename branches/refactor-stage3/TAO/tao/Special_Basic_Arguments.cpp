@@ -8,11 +8,6 @@ ACE_RCSID (tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO::Arg_Traits<CORBA::Char>;
-template class TAO::Arg_Traits<CORBA::WChar>;
-template class TAO::Arg_Traits<CORBA::Octet>;
-template class TAO::Arg_Traits<ACE_InputCDR::to_boolean>;
-
 template class TAO::Special_Basic_Arg_Traits_T<CORBA::Char,
                                                ACE_InputCDR::to_char,
                                                ACE_OutputCDR::from_char>;
@@ -30,11 +25,6 @@ template class TAO::Special_Basic_Arg_Traits_T<CORBA::Boolean,
                                                ACE_OutputCDR::from_boolean>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO::Arg_Traits<CORBA::Char>
-# pragma instantiate TAO::Arg_Traits<CORBA::WChar>
-# pragma instantiate TAO::Arg_Traits<CORBA::Octet>
-# pragma instantiate TAO::Arg_Traits<ACE_InputCDR::to_boolean>
 
 # pragma instantiate TAO::Special_Basic_Arg_Traits_T< \
                               CORBA::Char, \

@@ -198,7 +198,9 @@ TAO::Inout_UB_String_SArgument_T<S,S_var>::interceptor_param (
 
 template<typename S, typename S_var>
 CORBA::Boolean
-TAO::Inout_UB_String_SArgument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
+TAO::Inout_UB_String_SArgument_T<S,S_var>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= this->x_.out ();
 }
@@ -255,7 +257,9 @@ TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_result (CORBA::Any * any)
 
 template<typename S, typename S_var>
 CORBA::Boolean
-TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_replace (CORBA::Any & any)
+TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_replace (
+    CORBA::Any & any
+  )
 {
   return any >>= this->x_.out ();
 }

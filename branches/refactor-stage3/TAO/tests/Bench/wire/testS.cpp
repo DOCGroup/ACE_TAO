@@ -539,10 +539,10 @@ void POA_foo::all_str_skel (
     ACE_ENV_ARG_DECL
   )
 {
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::skel_ret_val _tao_retval;
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::in_sarg_val _tao_inarg;
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::inout_sarg_val _tao_inoutarg;
-  TAO::Arg_Traits<ACE_InputCDR::to_string>::out_sarg_val _tao_outarg;
+  TAO::UB_String_Arg_Traits::skel_ret_val _tao_retval;
+  TAO::UB_String_Arg_Traits::in_sarg_val _tao_inarg;
+  TAO::UB_String_Arg_Traits::inout_sarg_val _tao_inoutarg;
+  TAO::UB_String_Arg_Traits::out_sarg_val _tao_outarg;
 
   TAO::Argument *_tao_signature [] = 
     { 
