@@ -2,8 +2,8 @@
 //$Id$
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
-					      CORBA::ULong len,
-					      CORBA::Boolean argument_flag)
+                                              CORBA::ULong len,
+                                              CORBA::Boolean argument_flag)
   :opname_ (name),
    opname_len_ (len),
    request_id_ (0),
@@ -60,9 +60,20 @@ TAO_Operation_Details::service_context (void) const
 
 
 ACE_INLINE void
-TAO_Operation_Details::request_id (CORBA::ULong	id)
+TAO_Operation_Details::request_id (CORBA::ULong id)
 {
   this->request_id_ = id;
+}
+
+ACE_INLINE void
+TAO_Operation_Details::modify_request_id (int flag)
+{
+  // If the flag value is -1 then BiDirectional connection has not
+  // been negotiated
+  if (flag >= 0)
+    {
+      this->request_id_ = (this->request_id_ * 2) + flag;
+    }
 }
 
 ACE_INLINE CORBA::ULong
@@ -80,7 +91,7 @@ TAO_Operation_Details::request_id (void) const
 ACE_INLINE void
 TAO_Operation_Details::response_flags (CORBA::Octet flags)
 {
-  this->response_flags_	= flags;
+  this->response_flags_ = flags;
 }
 
 ACE_INLINE CORBA::Octet
@@ -109,12 +120,12 @@ TAO_Operation_Details::addressing_mode (void) const
 
 ACE_INLINE void
 TAO_Operation_Details::
-  addressing_mode (CORBA::Short	mode)
+  addressing_mode (CORBA::Short mode)
 {
   if (mode == 0)
       this->addressing_mode_ = TAO_Target_Specification::Key_Addr;
-  else if (mode	== 1)
+  else if (mode == 1)
     this->addressing_mode_ = TAO_Target_Specification::Profile_Addr;
-  else if (mode	== 2)
+  else if (mode == 2)
       this->addressing_mode_ = TAO_Target_Specification::Reference_Addr;
 }
