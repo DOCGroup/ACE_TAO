@@ -1,7 +1,7 @@
 Wed Mar 27 20:00:31 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* include/makeinclude/platform_linux.GNU: Fixed a typo where
-	  PLATFORM_XT_LDFLAGS was spelled incorrectly.  Thanks to 
+	  PLATFORM_XT_LDFLAGS was spelled incorrectly.  Thanks to
 	  Eric Eide for reporting this.
 
 Wed Mar 27 18:36:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
@@ -15,7 +15,8 @@ Wed Mar 27 18:36:14 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
           If the compiler has g++ or any mutations of g++, test whether
           the version is less than 2.8. If so set ACE_HAS_GNUG_PRE_2_8
-          to 1 else set it to 0.
+          to 1 else set it to 0. Thanks to James Haiar <haiar@ll.mit.edu>
+          for reporting this.
 
 Wed Mar 27 16:32:55 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -60,7 +61,6 @@ Wed Mar 27 15:10:27 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/icc.bat: Removed duplicates.
 
->>>>>>> 4.3319
 Wed Mar 27 10:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.{h,cpp}:
