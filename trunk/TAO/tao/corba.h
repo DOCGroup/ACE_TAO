@@ -90,6 +90,10 @@
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
+
+typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
+extern CORBA::TypeCode TC_opaque;
+
 #include "tao/any.h"
 #include "tao/poa.h"
 
