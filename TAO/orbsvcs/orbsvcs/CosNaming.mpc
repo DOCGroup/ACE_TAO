@@ -6,8 +6,6 @@ project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=orbsvcs/Naming/naming_export.h
   dynamicflags = TAO_NAMING_BUILD_DLL
   tagchecks   += Naming
-  libs += TAO_Messaging
-  after += Messaging
 
   IDL_Files {
     CosNaming.idl
