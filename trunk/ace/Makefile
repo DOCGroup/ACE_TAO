@@ -178,6 +178,7 @@ TEMPLATE_FILES = \
            Message_Block_T \
            Message_Queue_T \
            Module \
+           Pair_T \
            RB_Tree \
 	   Select_Reactor_T \
            Singleton \
@@ -187,6 +188,7 @@ TEMPLATE_FILES = \
            Svc_Handler \
            Synch_T \
            Task_T \
+           Template_Instantiations \
            Timeprobe_T \
            Timer_Hash_T \
            Timer_Heap_T \
