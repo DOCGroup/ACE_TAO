@@ -1,5 +1,9 @@
 Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* src/Key_List.cpp (dump): Reverted back to using int for
+ 	  keyword_width to keep certain compilers happy.  Thanks to David
+ 	  Levine for reporting this.
+
 	* src/Key_List: MAke sure that we don't generate the lookup table
  	  twice if we're forced to change to the switch format.
 
