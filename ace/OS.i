@@ -873,7 +873,7 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #else
-#if defined (WIN32)
+#if defined (ACE_WIN32)
 #if defined (__BORLANDC__)
   ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
 #else
@@ -6701,7 +6701,11 @@ ACE_OS::execv (const char *path, char *const argv[])
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
+#if defined (__BORLANDC__) // VSB
+  return ::execv (path, argv);
+#else
   return ::_execv (path, (const char *const *) argv);
+#endif /* __BORLANDC__ */
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execv (path, (const char **) argv), int, -1);
 #else
@@ -6720,7 +6724,11 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
+#if defined (__BORLANDC__) // VSB
+  return ::execve (path, argv, envp);
+#else
   return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
+#endif /* __BORLANDC__ */
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execve (path, (const char **) argv, (char **) envp), int, -1);
 #else
@@ -6738,7 +6746,11 @@ ACE_OS::execvp (const char *file, char *const argv[])
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
+#if defined (__BORLANDC__) // VSB
+  return ::execvp (file, argv);
+#else
   return ::_execvp (file, (const char *const *) argv);
+#endif /* __BORLANDC__ */
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execvp (file, (const char **) argv), int, -1);
 #else
@@ -6760,7 +6772,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const char *mode)
 
   if (crt_handle != -1)
     {
+#if defined(__BORLANDC__) // VSB
+      file = ::_fdopen (crt_handle, (char *) mode);
+#else
       file = ::_fdopen (crt_handle, mode);
+#endif /* __BORLANDC__ */
 
       if (!file)
         ::_close (crt_handle);

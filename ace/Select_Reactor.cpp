@@ -320,7 +320,9 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
           // valid place in the array that we should consider in
           // subsequent searches.
 
-          for (int i = this->max_handlep1_ - 1;
+          int i;
+
+          for (i = this->max_handlep1_ - 1;
                i >= 0 && ACE_SELECT_REACTOR_HANDLE (i) == ACE_INVALID_HANDLE;
                i--)
             continue;

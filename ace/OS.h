@@ -1910,9 +1910,9 @@ struct utsname
 #define ACE_SEH_FINALLY catch(...)
 #else
 #define ACE_SEH_TRY __try
-#define ACE_SEH_EXCEPT(X) __except(X)
-#endif /* __BORLANDC__ */
 #define ACE_SEH_FINALLY __finally
+#endif /* __BORLANDC__ */
+#define ACE_SEH_EXCEPT(X) __except(X)
 
 // The "null" device on Win32.
 #define ACE_DEV_NULL "nul"
@@ -2016,16 +2016,23 @@ PAGE_NOCACHE  */
 #include /**/ <io.h>
 
 #if defined (__BORLANDC__)
+#include <fcntl.h>
 #define _chdir chdir
 #define _ftime ftime
 #define _access access
 #define _getcwd getcwd
+#define _isatty isatty
+#define _umask umask
+#define _fstat fstat
+#define _stat stat
+#define _stricmp stricmp
+#define _strnicmp strnicmp
 
 #define _timeb timeb
 
-#define _O_CREAT 			O_CREAT
-#define _O_EXCL 			O_EXCL
-#define _O_TRUNC 			O_TRUNC
+#define _O_CREAT O_CREAT
+#define _O_EXCL  O_EXCL
+#define _O_TRUNC O_TRUNC
 #define _O_TEMPORARY 	0x0800 // see fcntl.h
 #endif /* __BORLANDC__ */
 
@@ -3184,6 +3191,12 @@ struct ACE_Cleanup_Info
 {
   ACE_Cleanup_Info (void);
   // Default constructor.
+
+  int operator== (const struct ACE_Cleanup_Info &o) const;
+  // Equality operator.
+
+  int operator!= (const struct ACE_Cleanup_Info &o) const;
+  // Inequality operator.
 
   void *object_;
   // Point to object that gets passed into the <cleanup_hook_>.
