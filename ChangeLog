@@ -4,7 +4,7 @@ Tue Feb  3 14:35:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/config-win32-common.h:	
 
 	  Moved the definition of ACE_HAS_NONCONST_SWAB from VC6 to
-	  win32-common.h.  Thanks to Andrew G. Harvey" <agh@cisco.com> 
+	  win32-common.h.  Thanks to Andrew G. Harvey <agh@cisco.com> 
           for the suggestion.
 
 Tue Feb  3 11:36:41 2004  Steve Huston  <shuston@riverace.com>
