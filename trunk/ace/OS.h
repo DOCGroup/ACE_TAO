@@ -18,6 +18,7 @@
 #ifndef ACE_OS_H
 # define ACE_OS_H
 
+
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
@@ -668,6 +669,18 @@ typedef int key_t;
 #   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
 #   define ERRMAX       151      /* Last error number                     */
 
+#   if ! defined (NSIG)
+#     define NSIG 32
+#   endif /* NSIG */
+
+#   if ! defined (TCP_NODELAY)
+#     define TCP_NODELAY  1
+#   endif /* TCP_NODELAY */
+
+#if defined (ACE_LACKS_ASSERT_MACRO)
+ #define assert(expr)
+#endif
+
 #   if defined (ACE_PSOSIM)
 
 #     include /**/ <ace/sys_conf.h> /* system configuration file */
@@ -724,10 +737,14 @@ typedef int key_t;
 #     include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
 #     include /**/ <phile.h>     /* pHILE+ file system calls */
 //    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
-
-// These are colliding with the pSOS libraries
-// # include /**/ <unistd.h>    /* Diab Data supplied file system calls */
-// # include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+#     if defined (ACE_PSOS_DIAB_MIPS)
+#       if defined (ACE_PSOS_USES_DIAB_SYS_CALLS)
+#         include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+#       else
+#         include /**/ <prepc.h>
+#       endif /* ACE_PSOS_USES_DIAB_SYS_CALLS */
+#       include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+#     endif /* ACE_PSOS_DIAB_MIPS */
 
 // This collides with phile.h
 //    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
@@ -972,6 +989,8 @@ typedef struct timespec
 } timespec_t;
 #   endif
 
+#if defined (ACE_PSOS_HAS_TIME)
+
 // Use pSOS time, wrapped . . .
 class ACE_Export ACE_PSOS_Time_t
 {
@@ -1033,6 +1052,7 @@ private:
   u_long ticks_;
   // ticks: number of system clock ticks (KC_TICKS2SEC-1 max)
 } ;
+#endif /* ACE_PSOS_HAS_TIME */
 
 # endif /* defined (ACE_PSOS) */
 
@@ -1097,13 +1117,13 @@ extern "C" pthread_t pthread_self (void);
 #   define ACE_TRACE(X) ACE_Trace ____ (ASYS_TEXT (X), __LINE__, ASYS_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
-# if !defined (ACE_HAS_WINCE)
-#   include /**/ <time.h>
+# if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
+#     include /**/ <time.h>
 #   if defined (__Lynx__)
 #     include /**/ <st.h>
 #     include /**/ <sem.h>
 #   endif /* __Lynx__ */
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
 
 # if defined (ACE_LACKS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
@@ -2480,16 +2500,30 @@ protected:
 #     define BUFSIZ LC_BUFSIZ
 #   endif /* defined (ACE_PSOS) */
 
+#if defined (ACE_PSOS_DIAB_MIPS)
+#undef size_t
+typedef unsigned int size_t;
+#endif
+
 #   include /**/ <new.h>
+
+#   if !defined (ACE_PSOS_DIAB_MIPS)
 #   include /**/ <signal.h>
+#   endif /* ACE_PSOS_DIAB_MIPS */
+
 #   include /**/ <errno.h>
+
+#   if ! defined (ACE_PSOS_DIAB_MIPS)
 #   include /**/ <fcntl.h>
+#   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
 # include /**/ <limits.h>
 # include /**/ <ctype.h>
+# if ! defined (ACE_PSOS_DIAB_MIPS)
 # include /**/ <string.h>
 # include /**/ <stdlib.h>
+# endif /* ! ACE_PSOS_DIAB_MIPS */
 # include /**/ <float.h>
 
 // This is defined by XOPEN to be a minimum of 16.  POSIX.1g
@@ -2549,7 +2583,9 @@ protected:
 # endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 # if !defined (ACE_HAS_WINCE)
+#   if ! defined (ACE_PSOS_DIAB_MIPS)
 #   include /**/ <fcntl.h>
+#   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
 // This must come after signal.h is #included.
@@ -3755,15 +3791,27 @@ struct sigaction
 # endif /* SIGALRM */
 
 # if !defined (SIG_DFL)
-#   define SIG_DFL ((__sighandler_t) 0)
+#   if defined (ACE_PSOS_DIAB_MIPS)
+#     define SIG_DFL ((void *) 0)
+#   else
+#     define SIG_DFL ((__sighandler_t) 0)
+#   endif
 # endif /* SIG_DFL */
 
 # if !defined (SIG_IGN)
-#   define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
+#   if defined (ACE_PSOS_DIAB_MIPS)
+#     define SIG_IGN ((void *) 1)     /* ignore signal */
+#   else
+#     define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
+#   endif
 # endif /* SIG_IGN */
 
 # if !defined (SIG_ERR)
-#   define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
+#   if defined (ACE_PSOS_DIAB_MIPS)
+#     define SIG_ERR ((void *) -1)    /* error return from signal */
+#   else
+#     define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
+#   endif
 # endif /* SIG_ERR */
 
 # if !defined (O_NONBLOCK)

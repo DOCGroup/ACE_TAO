@@ -5015,12 +5015,17 @@ ACE_OS::ctime_r (const time_t *clock,
 time_t
 ACE_OS::mktime (struct tm *t)
 {
-  // ACE_TRACE ("ACE_OS::asctime");
-#   if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
+  // ACE_TRACE ("ACE_OS::mktime");
+#   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+  ACE_UNUSED_ARG (t);
+  ACE_NOTSUP_RETURN (-1);
+#   else
+#     if defined (ACE_HAS_THREADS)  &&  !defined (ACE_HAS_MT_SAFE_MKTIME)
   ACE_OS_GUARD
-#   endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
+#     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
   ACE_OSCALL_RETURN (::mktime (t), time_t, (time_t) -1);
+#   endif /* ACE_PSOS && ! ACE_PSOS_HAS_TIME */
 }
 # endif /* !ACE_HAS_WINCE */
 
@@ -5091,7 +5096,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 }
 # endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_LACKS_COND_T) && ! defined (ACE_PSOS_DIAB_MIPS)
 // NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
 // defined here either because they're too big to be inlined, or
 // to avoid use before definition if they were inline.
@@ -5847,7 +5852,7 @@ ACE_PSOS_Time_t::init_simulator_time (void)
 // Static member function to initialize system time, using UNIX calls.
 
 #   endif /* ACE_PSOSIM */
-# endif /* ACE_PSOS */
+# endif /* ACE_PSOS && ! ACE_PSOS_DIAB_MIPS */
 
 # if defined (__DGUX) && defined (ACE_HAS_THREADS) && defined (_POSIX4A_DRAFT10_SOURCE)
 extern "C" int __d6_sigwait (sigset_t *set);

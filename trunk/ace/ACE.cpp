@@ -568,6 +568,7 @@ netsvc.so            netsvc.so + warning   libnetsvc.so
 
 */
 
+#if ! defined (ACE_PSOS_DIAB_MIPS)
 int
 ACE::ldfind (const ASYS_TCHAR filename[],
              ASYS_TCHAR pathname[],
@@ -922,6 +923,7 @@ ACE::open_temp_file (const char *name, int mode, int perm)
     return handle;
 #endif /* ACE_WIN32 */
 }
+#endif /* ! ACE_PSOS_DIAB_MIPS */
 
 const char *
 ACE::basename (const char *pathname, char delim)

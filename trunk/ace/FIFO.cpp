@@ -31,22 +31,28 @@ ACE_FIFO::open (const char *r, int flags, int perms,
   ACE_TRACE ("ACE_FIFO::open");
   ACE_OS::strncpy (this->rendezvous_, r, MAXPATHLEN);
 
-  if ((flags & O_CREAT) != 0 
-      && ACE_OS::mkfifo (this->rendezvous_, perms) == -1 
+#if defined (ACE_PSOS_DIAB_MIPS)
+  if ( ACE_OS::mkfifo (this->rendezvous_, perms) == -1
       && !(errno == EEXIST))
     return -1;
+#else
+  if ((flags & O_CREAT) != 0
+      && ACE_OS::mkfifo (this->rendezvous_, perms) == -1
+      && !(errno == EEXIST))
+    return -1;
+#endif
 
   this->set_handle (ACE_OS::open (this->rendezvous_, flags, 0, sa));
   return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
 }
 
-ACE_FIFO::ACE_FIFO (const char *fifo_name, 
-		    int flags, 
+ACE_FIFO::ACE_FIFO (const char *fifo_name,
+		    int flags,
 		    int perms,
                     LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::ACE_FIFO");
-  if (this->open (fifo_name, flags, perms, sa) == -1) 
+  if (this->open (fifo_name, flags, perms, sa) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO")));
 }
 
@@ -68,4 +74,3 @@ ACE_FIFO::close (void)
     }
  return result;
 }
-

@@ -315,8 +315,8 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
   else
     multicast_address.imr_interface.s_addr = INADDR_ANY;
 
-#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM)
-  multicast_address.imr_mcastaddr.s_addr = htonl (mcast_addr.get_ip_address ());
+#if defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS)
+  multicast_address.imr_mcastaddr.s_addr = htonl(mcast_addr.get_ip_address());
 #else
   multicast_address.imr_multiaddr.s_addr = htonl (mcast_addr.get_ip_address ());
 #endif /* defined (ACE_PSOS) */

@@ -1,3 +1,19 @@
+Tue Mar 16 15:15:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/ACE.{cpp, i}
+          ace/OS.{cpp, h, i}
+          ace/FIFO.cpp
+          ace/Log_Record.cpp
+          ace/SOCK_Dgram_Mcast.cpp
+          ace/SPIPE_Connector.cpp
+          ace/TLI_Acceptor.cpp
+          ace/config-psos-diab-mips.h (new)
+          ace/config-psos-diab.h
+          ace/config-psos-tm.h
+          ace/streams.h: integrated pSOS/MIPS changes into ACE.  Thanks to
+          Jaepil Kim  (jpkim@lgsoft.com) for completing the ACE pSOS port
+          for the MIPS platform, and for sending these modifications.
+
 Tue Mar 16 14:25:03 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (get_ip_interfaces, count_interfaces, get_bcast_addr):
