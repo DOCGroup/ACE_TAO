@@ -1,3 +1,15 @@
+Mon Jul  1 11:02:13 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/AbstractBase.inl:
+        * tao/ABstractBase.cpp:
+
+          Moved constructors from inline to source file. More
+          includes are needed for inlining enabled, which
+          would increase the footprint, and the constructors
+          all contain an ACE_NEW, so we aren't gaining much
+          by inlining them anyway. Thanks to Bala for pointing
+          this out.
+
 Mon Jul  1 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* TAO_IDL/Makefile.BE:
