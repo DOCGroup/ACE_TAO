@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Composition::
-        ~Composition () throw ()
-        {
-        }
-
-        Composition::
         Composition (Context& c)
             : ScopeBase<SemanticGraph::Composition> (c)
         {

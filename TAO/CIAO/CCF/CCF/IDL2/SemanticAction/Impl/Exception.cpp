@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Exception::
-        ~Exception () throw ()
-        {
-        }
-
-        Exception::
         Exception (Context& c)
             : ScopeBase<SemanticGraph::Exception> (c)
         {

@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Typedef : public virtual SemanticAction::Typedef,
-                        public Base
+        struct Typedef : SemanticAction::Typedef, Base
         {
-        public:
-          virtual
-          ~Typedef () throw ();
-
           Typedef (Context& c);
 
           virtual void
@@ -39,6 +34,7 @@ namespace CCF
           end ();
 
         private:
+          bool define_;
           SemanticGraph::Type* type_;
         };
       }

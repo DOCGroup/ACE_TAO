@@ -22,18 +22,13 @@ namespace CCF
         //
         //
         //
-        class Factory : public virtual CIDL::SemanticAction::Factory,
-                        public virtual IDL3::SemanticAction::Impl::Factory
+        struct Factory : virtual CIDL::SemanticAction::Factory,
+                         virtual IDL3::SemanticAction::Impl::Factory
         {
-        public:
-          virtual
-          ~Factory () throw ();
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
                    SemanticGraph::TranslationUnit& tu);
 
-        public:
           virtual SemanticAction::Composition&
           composition ()
           {

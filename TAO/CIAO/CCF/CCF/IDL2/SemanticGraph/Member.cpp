@@ -4,18 +4,15 @@
 
 #include "CCF/IDL2/SemanticGraph/Member.hpp"
 
-using Introspection::TypeInfo;
-using Introspection::Access;
-
 namespace CCF
 {
   namespace IDL2
   {
     namespace SemanticGraph
     {
-      // Member
-      //
-      //
+      using Introspection::TypeInfo;
+      using Introspection::Access;
+      
       namespace
       {
         TypeInfo

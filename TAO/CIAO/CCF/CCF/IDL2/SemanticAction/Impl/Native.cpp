@@ -2,10 +2,6 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-//@@ Sometimes I include SemanticGraph headers in sematic action
-//   headers even though I need them only in .cpp (like here).
-//
-
 #include "CCF/IDL2/SemanticGraph/Native.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Native.hpp"
 
@@ -23,11 +19,6 @@ namespace CCF
       namespace Impl
       {
         using namespace SemanticGraph;
-
-        Native::
-        ~Native () throw ()
-        {
-        }
 
         Native::
         Native (Context& c)

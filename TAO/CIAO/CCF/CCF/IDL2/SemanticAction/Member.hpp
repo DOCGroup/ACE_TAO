@@ -13,12 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Member
+      struct Member
       {
-      public:
-        virtual
-        ~Member () throw () {}
-
         virtual void
         type (IdentifierPtr const& id) = 0;
 

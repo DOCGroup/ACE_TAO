@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Module::
-        ~Module () throw ()
-        {
-        }
-
-        Module::
         Module (Context& c)
             : ScopeBase<SemanticGraph::Module> (c)
         {

@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Provides
+      struct Provides
       {
-      public:
-        virtual
-        ~Provides () throw () {}
-
         virtual void
         type (IdentifierPtr const& id) = 0;
 

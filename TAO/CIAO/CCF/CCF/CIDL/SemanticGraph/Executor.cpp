@@ -32,7 +32,7 @@ namespace CCF
       TypeInfo const& Executor::
       static_type_info () { return executor_; }
 
-      
+
       // ComponentExecutor
       //
       //

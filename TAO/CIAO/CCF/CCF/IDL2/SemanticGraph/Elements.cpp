@@ -4,21 +4,15 @@
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 
-//@@ move this stuff into namespace
-using Introspection::TypeInfo;
-using Introspection::Access;
-
-//@@ tmp
-#include <iostream>
-using std::cerr;
-using std::endl;
-
 namespace CCF
 {
   namespace IDL2
   {
     namespace SemanticGraph
     {
+      using Introspection::TypeInfo;
+      using Introspection::Access;
+
       // Edge
       //
       //
@@ -209,7 +203,7 @@ namespace CCF
       //
 
       Nameables Scope::
-      lookup (Name const& name)
+      lookup (Name const& name) const
       {
         Nameables r;
         lookup (name, r);
@@ -217,7 +211,7 @@ namespace CCF
       }
 
       void Scope::
-      lookup (Name const& name, Nameables& result)
+      lookup (Name const& name, Nameables& result) const
       {
         SimpleName first (*name.begin ());
 

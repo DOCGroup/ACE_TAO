@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Attribute::
-        ~Attribute () throw ()
-        {
-        }
-
-        Attribute::
         Attribute (Context& c)
             : Base (c)
         {
@@ -58,7 +53,7 @@ namespace CCF
           {
             try
             {
-              Type& t (resolve<Type> (from, name, complete));
+              Type& t (resolve<Type> (from, name, Flags::complete));
 
               ctx.tu ().new_edge<Belongs> (*a_, t);
             }

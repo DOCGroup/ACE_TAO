@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         Struct::
-        ~Struct () throw ()
-        {
-        }
-
-        Struct::
         Struct (Context& c)
             : ScopeBase<SemanticGraph::Struct> (c)
         {

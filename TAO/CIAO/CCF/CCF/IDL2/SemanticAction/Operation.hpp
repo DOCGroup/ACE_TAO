@@ -15,12 +15,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Operation
+      struct Operation
       {
-      public:
         virtual void
         one_way () = 0;
 

@@ -4,6 +4,8 @@
 
 #include "CCF/IDL2/SemanticAction/Impl/TypeId.hpp"
 
+#include "CCF/IDL2/SemanticGraph/TypeId.hpp"
+
 // These inclusions are needed to ensure that typeprefix is applied to a
 // suitable declaration.
 
@@ -29,11 +31,6 @@ namespace CCF
         // TypeId
         //
         //
-        TypeId::
-        ~TypeId () throw ()
-        {
-        }
-
         TypeId::
         TypeId (Context& c)
             : ctx (c)
@@ -79,11 +76,6 @@ namespace CCF
         // TypePrefix
         //
         //
-        TypePrefix::
-        ~TypePrefix () throw ()
-        {
-        }
-
         TypePrefix::
         TypePrefix (Context& c)
             : ctx (c)

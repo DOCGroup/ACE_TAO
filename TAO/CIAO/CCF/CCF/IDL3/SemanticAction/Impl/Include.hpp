@@ -5,8 +5,8 @@
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_INCLUDE_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_INCLUDE_HPP
 
-#include <stack>
 #include <set>
+#include <stack>
 
 #include "CCF/CompilerElements/Context.hpp"
 #include "CCF/CompilerElements/Diagnostic.hpp"
@@ -15,10 +15,9 @@
 #include "CCF/IDL3/SemanticGraph/Elements.hpp"
 
 #include "CCF/IDL2/SemanticAction/Include.hpp"
-#include "CCF/IDL3/SemanticAction/Elements.hpp"
-#include "CCF/IDL3/SemanticAction/Impl/Elements.hpp"
-
 #include "CCF/IDL3/SemanticAction/Factory.hpp"
+
+#include "CCF/IDL3/SemanticAction/Impl/Elements.hpp"
 
 namespace CCF
 {
@@ -28,15 +27,12 @@ namespace CCF
     {
       namespace Impl
       {
-        // Note: overriding IDL2 include to allow inclusion of IDL3 files
+        // Note: overriding IDL2 include to allow inclusion of IDL3 files.
         //
         //
-        class Include : public virtual IDL2::SemanticAction::Include
+        struct Include : IDL2::SemanticAction::Include, Base
         {
         public:
-          virtual
-          ~Include () throw ();
-
           Include (Context& c,
                    CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
@@ -65,8 +61,6 @@ namespace CCF
           handle_already_included (fs::path const& path,
                                    StringLiteralPtr const& sl);
         private:
-          Context& ctx;
-
           CompilerElements::Context& context_;
           Diagnostic::Stream& dout_;
           SemanticAction::Factory& action_factory_;

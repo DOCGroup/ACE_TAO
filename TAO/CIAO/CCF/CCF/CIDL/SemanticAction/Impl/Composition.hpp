@@ -17,17 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class Composition :
-          public virtual SemanticAction::Composition,
-          public virtual ScopeBase<SemanticGraph::Composition>
+        struct Composition : SemanticAction::Composition,
+                             ScopeBase<SemanticGraph::Composition>
         {
-        public:
-          virtual
-          ~Composition () throw ();
-
           Composition (Context& c);
 
           virtual void

@@ -25,13 +25,13 @@ namespace CCF
       {
       public:
         Operation&
-        operation ()
+        operation () const
         {
           return *operation_;
         }
 
         Parameter&
-        parameter ()
+        parameter () const
         {
           return *parameter_;
         }
@@ -90,14 +90,14 @@ namespace CCF
       class Raises : public virtual Edge
       {
       public:
-        Operation&
-        operation ()
+        Operation& 
+        operation () const
         {
           return *operation_;
         }
 
         Exception&
-        exception ()
+        exception () const
         {
           return *exception_;
         }
@@ -214,7 +214,7 @@ namespace CCF
       };
 
 
-      // @@ How am I going to make Instance & Returns work together?
+      //
       //
       //
       class Operation : public virtual Nameable, public virtual Instance
@@ -261,7 +261,7 @@ namespace CCF
         }
 
         Returns&
-        returns ()
+        returns () const
         {
           return dynamic_cast<Returns&> (belongs ());
         }

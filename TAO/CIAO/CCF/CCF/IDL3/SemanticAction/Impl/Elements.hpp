@@ -5,6 +5,7 @@
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_ELEMENTS_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_ELEMENTS_HPP
 
+#include "CCF/IDL3/SemanticAction/Elements.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
 namespace CCF

@@ -19,8 +19,6 @@ namespace CCF
       //
       class Interface : public virtual Type, public virtual Scope
       {
-        //@@ Should I create Inheritable type?
-        //
         typedef
         std::vector <Inherits*>
         Inherits_;
@@ -85,13 +83,13 @@ namespace CCF
       {
       public:
         virtual Type&
-        supporter ()
+        supporter () const
         {
           return subject ();
         }
 
         virtual Type&
-        supportee ()
+        supportee () const
         {
           return object ();
         }

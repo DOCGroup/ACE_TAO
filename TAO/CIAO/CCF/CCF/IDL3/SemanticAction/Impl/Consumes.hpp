@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Consumes : public virtual SemanticAction::Consumes,
-                         public Base
+        struct Consumes : SemanticAction::Consumes, Base
         {
-        public:
-          virtual
-          ~Consumes () throw ();
-
           Consumes (Context& c);
 
           virtual void

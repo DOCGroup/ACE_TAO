@@ -176,9 +176,8 @@ namespace CCF
       };
 
 
-      //@@ Root somewhat breaks Nameable interface.
-      //   Maybe, for consistency, I should make TR to name
-      //   Root?
+      //
+      //
       //
       class Root : public virtual Scope
       {
@@ -221,10 +220,10 @@ namespace CCF
       {
       public:
         Nameables
-        lookup (ScopedName const& name);
+        lookup (ScopedName const& name) const;
 
         void
-        lookup (ScopedName const& name, Nameables& result);
+        lookup (ScopedName const& name, Nameables& result) const;
 
         static Introspection::TypeInfo const&
         static_type_info ();
@@ -254,7 +253,7 @@ namespace CCF
         }
 
         Nameables
-        lookup (ScopedName const& name);
+        lookup (ScopedName const& name) const;
 
         static Introspection::TypeInfo const&
         static_type_info ();

@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Include
+      struct Include
       {
-      public:
-        virtual
-        ~Include () throw () {}
-
         virtual void
         quote (StringLiteralPtr const& sl) = 0;
 

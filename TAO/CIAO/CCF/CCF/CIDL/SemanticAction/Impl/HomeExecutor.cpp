@@ -20,11 +20,6 @@ namespace CCF
         using namespace SemanticGraph;
 
         HomeExecutor::
-        ~HomeExecutor () throw ()
-        {
-        }
-
-        HomeExecutor::
         HomeExecutor (Context& c)
             : Base (c)
         {
@@ -54,7 +49,7 @@ namespace CCF
             try
             {
               SemanticGraph::Home& h (
-                resolve<SemanticGraph::Home> (from, name, defined));
+                resolve<SemanticGraph::Home> (from, name, Flags::defined));
 
               c_ = &dynamic_cast<SemanticGraph::Component&> (
                 h.manages ().managee ());
@@ -96,7 +91,7 @@ namespace CCF
               ctx.tu ().new_node<SemanticGraph::ComponentExecutor> ());
 
             ctx.tu ().new_edge<Implements> (ce, *c_);
-            
+
             ctx.tu ().new_edge<Defines> (ctx.scope (), ce, id->lexeme ());
             ctx.tu ().new_edge<Defines> (ctx.scope (), *he_, id_->lexeme ());
 

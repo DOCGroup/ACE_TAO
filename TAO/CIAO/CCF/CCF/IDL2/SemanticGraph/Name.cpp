@@ -4,10 +4,12 @@
 
 #include "CCF/IDL2/SemanticGraph/Name.hpp"
 
+/*
 #include <iostream>
 
 using std::cerr;
 using std::endl;
+*/
 
 namespace CCF
 {

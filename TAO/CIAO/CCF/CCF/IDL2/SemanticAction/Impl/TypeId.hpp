@@ -5,7 +5,6 @@
 #ifndef CCF_IDL2_SEMANTIC_ACTION_IMPL_TYPE_ID_HPP
 #define CCF_IDL2_SEMANTIC_ACTION_IMPL_TYPE_ID_HPP
 
-#include "CCF/IDL2/SemanticGraph/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/TypeId.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Elements.hpp"
 
@@ -20,12 +19,8 @@ namespace CCF
         //
         //
         //
-        class TypeId : public virtual SemanticAction::TypeId
+        struct TypeId : SemanticAction::TypeId
         {
-        public:
-          virtual
-          ~TypeId () throw ();
-
           TypeId (Context& c);
 
           virtual void
@@ -42,12 +37,8 @@ namespace CCF
         //
         //
         //
-        class TypePrefix : public virtual SemanticAction::TypePrefix
+        struct TypePrefix : SemanticAction::TypePrefix
         {
-        public:
-          virtual
-          ~TypePrefix () throw ();
-
           TypePrefix (Context& c);
 
           virtual void

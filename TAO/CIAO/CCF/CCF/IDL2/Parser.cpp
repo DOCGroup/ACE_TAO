@@ -150,23 +150,23 @@ namespace CCF
           // Interface
           //
           //
-          act_abstract_interface_begin_def (
+          act_interface_begin_abstract_def (
             f.interface (), &SemanticAction::Interface::begin_abstract_def),
 
-          act_abstract_interface_begin_fwd (
+          act_interface_begin_abstract_fwd (
             f.interface (), &SemanticAction::Interface::begin_abstract_fwd),
 
-          act_local_interface_begin_def (
+          act_interface_begin_local_def (
             f.interface (), &SemanticAction::Interface::begin_local_def),
 
-          act_local_interface_begin_fwd (
+          act_interface_begin_local_fwd (
             f.interface (), &SemanticAction::Interface::begin_local_fwd),
 
-          act_unconstrained_interface_begin_def (
+          act_interface_begin_unconstrained_def (
             f.interface (),
             &SemanticAction::Interface::begin_unconstrained_def),
 
-          act_unconstrained_interface_begin_fwd (
+          act_interface_begin_unconstrained_fwd (
             f.interface (),
             &SemanticAction::Interface::begin_unconstrained_fwd),
 
@@ -293,16 +293,16 @@ namespace CCF
           // ValueType
           //
           //
-          act_abstract_value_type_begin_def (
+          act_value_type_begin_abstract_def (
             f.value_type (), &SemanticAction::ValueType::begin_abstract_def),
 
-          act_abstract_value_type_begin_fwd (
+          act_value_type_begin_abstract_fwd (
             f.value_type (), &SemanticAction::ValueType::begin_abstract_fwd),
 
-          act_concrete_value_type_begin_def (
+          act_value_type_begin_concrete_def (
             f.value_type (), &SemanticAction::ValueType::begin_concrete_def),
 
-          act_concrete_value_type_begin_fwd (
+          act_value_type_begin_concrete_fwd (
             f.value_type (), &SemanticAction::ValueType::begin_concrete_fwd),
 
           act_value_type_inherits (
@@ -494,7 +494,7 @@ namespace CCF
       character_const_expr = character_literal;
 
       //@@ I may have recognision problem on unary operators or
-      //   even worse on LPAREN.
+      //   even worse on LPAREN. Seems not.
       //
 
       integer_const_expr = integer_or_expr;
@@ -580,13 +580,13 @@ namespace CCF
             (
                  simple_identifier
               >> SEMI
-            )[act_abstract_interface_begin_fwd][act_interface_end]
+            )[act_interface_begin_abstract_fwd][act_interface_end]
           |
             (
                  (
                    simple_identifier
                    >> COLON
-                 )[act_abstract_interface_begin_def]
+                 )[act_interface_begin_abstract_def]
 
               >> interface_inheritance_spec
               >> LBRACE[act_interface_open_scope]
@@ -597,7 +597,7 @@ namespace CCF
                  (
                       simple_identifier
                    >> LBRACE
-                 )[act_abstract_interface_begin_def][act_interface_open_scope]
+                 )[act_interface_begin_abstract_def][act_interface_open_scope]
 
               >> interface_def_trailer
             )
@@ -611,13 +611,13 @@ namespace CCF
             (
                  simple_identifier
               >> SEMI
-            )[act_local_interface_begin_fwd][act_interface_end]
+            )[act_interface_begin_local_fwd][act_interface_end]
           |
             (
                  (
                    simple_identifier
                    >> COLON
-                 )[act_local_interface_begin_def]
+                 )[act_interface_begin_local_def]
 
               >> interface_inheritance_spec
               >> LBRACE[act_interface_open_scope]
@@ -628,7 +628,7 @@ namespace CCF
                  (
                       simple_identifier
                    >> LBRACE
-                 )[act_local_interface_begin_def][act_interface_open_scope]
+                 )[act_interface_begin_local_def][act_interface_open_scope]
 
               >> interface_def_trailer
             )
@@ -644,13 +644,13 @@ namespace CCF
                  (
                       simple_identifier
                    >> SEMI
-                 )[act_unconstrained_interface_begin_fwd][act_interface_end]
+                 )[act_interface_begin_unconstrained_fwd][act_interface_end]
                |
                  (
                       (
                            simple_identifier
                         >> COLON
-                      )[act_unconstrained_interface_begin_def]
+                      )[act_interface_begin_unconstrained_def]
 
                    >> interface_inheritance_spec
                    >> LBRACE[act_interface_open_scope]
@@ -661,7 +661,7 @@ namespace CCF
                       (
                            simple_identifier
                         >> LBRACE
-                      )[act_unconstrained_interface_begin_def][act_interface_open_scope]
+                      )[act_interface_begin_unconstrained_def][act_interface_open_scope]
 
                    >> interface_def_trailer
                  )
@@ -953,13 +953,13 @@ namespace CCF
             (
                  simple_identifier
               >> SEMI
-            )[act_abstract_value_type_begin_fwd][act_value_type_end]
+            )[act_value_type_begin_abstract_fwd][act_value_type_end]
           |
             (
                  (
                    simple_identifier
                    >> COLON
-                 )[act_abstract_value_type_begin_def]
+                 )[act_value_type_begin_abstract_def]
 
               >> value_type_inheritance_spec
               >> !(SUPPORTS >> value_type_supports_spec)
@@ -971,7 +971,7 @@ namespace CCF
                  (
                            simple_identifier
                         >> SUPPORTS
-                 )[act_abstract_value_type_begin_def]
+                 )[act_value_type_begin_abstract_def]
 
               >> value_type_supports_spec
               >> LBRACE[act_value_type_open_scope]
@@ -982,7 +982,7 @@ namespace CCF
                  (
                       simple_identifier
                    >> LBRACE
-                 )[act_abstract_value_type_begin_def][act_value_type_open_scope]
+                 )[act_value_type_begin_abstract_def][act_value_type_open_scope]
 
               >> value_type_def_trailer
             )
@@ -997,13 +997,13 @@ namespace CCF
                  (
                       simple_identifier
                    >> SEMI
-                 )[act_concrete_value_type_begin_fwd][act_value_type_end]
+                 )[act_value_type_begin_concrete_fwd][act_value_type_end]
                |
                  (
                       (
                            simple_identifier
                         >> COLON
-                      )[act_concrete_value_type_begin_def]
+                      )[act_value_type_begin_concrete_def]
 
                    >> value_type_inheritance_spec
                    >> !(SUPPORTS >> value_type_supports_spec)
@@ -1015,7 +1015,7 @@ namespace CCF
                       (
                            simple_identifier
                         >> SUPPORTS
-                      )[act_concrete_value_type_begin_def]
+                      )[act_value_type_begin_concrete_def]
 
                    >> value_type_supports_spec
                    >> LBRACE[act_value_type_open_scope]
@@ -1026,7 +1026,7 @@ namespace CCF
                       (
                            simple_identifier
                         >> LBRACE
-                      )[act_concrete_value_type_begin_def][act_value_type_open_scope]
+                      )[act_value_type_begin_concrete_def][act_value_type_open_scope]
 
                    >> value_type_def_trailer
                  )

@@ -17,15 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Attribute : public virtual SemanticAction::Attribute,
-                          public Base
+        struct Attribute : SemanticAction::Attribute, Base
         {
-        public:
-          // @@ remove all these d-tors.
-          //
-          virtual
-          ~Attribute () throw ();
-
           Attribute (Context& c);
 
           virtual void

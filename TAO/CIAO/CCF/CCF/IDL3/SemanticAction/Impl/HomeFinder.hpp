@@ -5,7 +5,7 @@
 #ifndef CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FINDER_HPP
 #define CCF_IDL3_SEMANTIC_ACTION_IMPL_HOME_FINDER_HPP
 
-#include "CCF/IDL2/SemanticGraph/Operation.hpp"
+#include "CCF/IDL3/SemanticGraph/Home.hpp"
 #include "CCF/IDL3/SemanticAction/HomeFinder.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Elements.hpp"
 
@@ -17,16 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class HomeFinder : public virtual SemanticAction::HomeFinder,
-                            public Base
-        {
-        public:
-          virtual
-          ~HomeFinder () throw ();
 
+        struct HomeFinder : SemanticAction::HomeFinder, Base
+        {
           HomeFinder (Context& c);
 
           virtual void

@@ -17,13 +17,9 @@ namespace CCF
     {
       namespace Impl
       {
-        class Exception : public virtual SemanticAction::Exception,
-                          public virtual ScopeBase<SemanticGraph::Exception>
+        struct Exception : SemanticAction::Exception,
+                           ScopeBase<SemanticGraph::Exception>
         {
-        public:
-          virtual
-          ~Exception () throw ();
-
           Exception (Context& c);
 
           virtual void

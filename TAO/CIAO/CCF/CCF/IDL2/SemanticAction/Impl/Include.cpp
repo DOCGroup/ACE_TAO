@@ -4,8 +4,6 @@
 
 #include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
 
-// #include "CCF/IDL2/SemanticGraph/Translation.hpp"
-
 #include <iostream>
 
 using std::cerr;
@@ -20,15 +18,9 @@ namespace CCF
       namespace Impl
       {
         // @@ This is left unimplemented for now. Later code from
-        // IDL3 should be copied here.
+        // IDL3 should be copied here. Or better yet this implementation
+        // should allow customization via overriding.
         //
-        //
-
-        Include::
-        ~Include () throw ()
-        {
-        }
-
         Include::
         Include (Context& c)
             : ctx (c)

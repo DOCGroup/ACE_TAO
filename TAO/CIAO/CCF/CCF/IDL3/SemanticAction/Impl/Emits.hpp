@@ -17,13 +17,8 @@ namespace CCF
     {
       namespace Impl
       {
-        class Emits : public virtual SemanticAction::Emits,
-                         public Base
+        struct Emits : SemanticAction::Emits, Base
         {
-        public:
-          virtual
-          ~Emits () throw ();
-
           Emits (Context& c);
 
           virtual void

@@ -37,15 +37,8 @@ namespace CCF
     {
       namespace Impl
       {
-        //@@ rename sustem/user include to quote/bracket
-        //
-        //
-        class Factory : public virtual IDL2::SemanticAction::Factory
+        struct Factory : virtual IDL2::SemanticAction::Factory
         {
-        public:
-          virtual
-          ~Factory () throw ();
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
                    SemanticGraph::TranslationUnit& tu);
