@@ -64,70 +64,89 @@ Server_i::parse_args (void)
 int
 Server_i::init_naming_service (CORBA::Environment& env)
 {
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
-  this->orb_manager_.init_child_poa (this->argc_,
-				     this->argv_,
-				     "my_child_poa",
-				     env);
-  PortableServer::POA_ptr child_poa
-    = this->orb_manager_.child_poa ();
-
-  int result = this->my_name_server_.init (orb.in (),
-					   child_poa);
-  if (result == -1)
+  TAO_TRY
     {
-      return result;
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
+      this->orb_manager_.init_child_poa (this->argc_,
+					 this->argv_,
+					 "my_child_poa",
+					 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      PortableServer::POA_ptr child_poa
+	= this->orb_manager_.child_poa ();
+
+      int result = this->my_name_server_.init (orb.in (),
+					       child_poa);
+      if (result == -1)
+	{
+	  return result;
+	}
+
+      // Generate an IOR for the AccountManager Object and register it
+      // with POA.
+
+      CORBA::String_var str =
+	this->orb_manager_.activate_under_child_poa ("AccountManager",
+						     this->account_manager_impl_,
+						     TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // @@ Converting the stringified IOR to an IOR.
+
+      Bank::AccountManager_var account_manager =
+	Bank::AccountManager::_narrow (orb->string_to_object (str,TAO_TRY_ENV));
+
+      TAO_CHECK_ENV;
+
+      // Pass the Account Manager an ORB reference to use.
+      account_manager_impl_->orb (orb.in ());
+
+      // Pass the Account Manager a POA reference to use.
+      account_manager_impl_->poa (child_poa);
+
+      account_manager_impl_->set_orb_manager (&orb_manager_);
+
+      // Convert an Account Manager reference to a string.
+      CORBA::String_var objref =
+	orb->object_to_string (account_manager.in (),
+			       TAO_TRY_ENV);
+
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
+
+      // Print the Account Manager IOR on the console.
+      ACE_DEBUG ((LM_DEBUG,
+		  "[SERVER] Process/Thread Id : (%P/%t) The IOR is: <%s>\n",
+		  (const char *) objref));
+
+      // Print the Account Manager IOR to a file.
+      if (this->ior_output_file_)
+	{
+	  ACE_OS::fprintf (this->ior_output_file_,
+			   "%s",
+			   account_manager.in ());
+	  ACE_OS::fclose (this->ior_output_file_);
+	}
+
+      // Bind the Account Manager with the Naming Service.
+      CosNaming::Name account_manager_name (1);
+      account_manager_name.length (1);
+      account_manager_name[0].id = CORBA::string_dup ("AccountManager");
+
+      this->my_name_server_->rebind (account_manager_name,
+				     account_manager.in (),
+				     TAO_TRY_ENV);
+
+      TAO_CHECK_ENV;
+
     }
-
-  // Generate an IOR for the AccountManager Object and register it
-  // with POA.
-
-  CORBA::String_var str =
-    this->orb_manager_.activate_under_child_poa ("AccountManager",
-                                                 this->account_manager_impl_,
-                                                 env);
-
-  // @@ Converting the stringified IOR to an IOR.
-
-  Bank::AccountManager_var account_manager =
-    Bank::AccountManager::_narrow (orb->string_to_object (str,env));
-
-  // Pass the Account Manager an ORB reference to use.
-  account_manager_impl_->orb (orb.in ());
-
-  // Pass the Account Manager a POA reference to use.
-  account_manager_impl_->poa (child_poa);
-
-  account_manager_impl_->set_orb_manager (&orb_manager_);
-
-  // Convert an Account Manager reference to a string.
-  CORBA::String_var objref =
-    orb->object_to_string (account_manager.in (),
-			   env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  // Print the Account Manager IOR on the console.
-  ACE_DEBUG ((LM_DEBUG,
-	      "[SERVER] Process/Thread Id : (%P/%t) The IOR is: <%s>\n",
-	      (const char *) objref));
-
-  // Print the Account Manager IOR to a file.
-  if (this->ior_output_file_)
+  TAO_CATCHANY
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       account_manager.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      TAO_TRY_ENV.print_exception ("Exception:");
+      return -1;
     }
+  TAO_ENDTRY;
 
-  // Bind the Account Manager with the Naming Service.
-  CosNaming::Name account_manager_name (1);
-  account_manager_name.length (1);
-  account_manager_name[0].id = CORBA::string_dup ("AccountManager");
-  this->my_name_server_->bind (account_manager_name,
-			       account_manager.in (),
-			       env);
-  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 }
 
@@ -164,7 +183,9 @@ Server_i::init (int argc,
 		  -1);
 
   // Register the above implementation with the Naming Service.
-  this->init_naming_service (env);
+  if (this->init_naming_service (env) == -1)
+    return -1;
+
   return 0;
 }
 
