@@ -150,7 +150,7 @@ TAO_NS_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 int
-TAO_NS_Periodic_Supplier::activate (ACE_Barrier* barrier)
+TAO_NS_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
 {
   barrier_ = barrier;
 
