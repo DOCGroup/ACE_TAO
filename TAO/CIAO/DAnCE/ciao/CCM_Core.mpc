@@ -99,18 +99,16 @@ project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
   dynamicflags =  DEPLOYMENT_STUB_BUILD_DLL
 
   IDL_Files {
-     Deployment_Ex.idl
-     NodeApplication_CallBack.idl
-  }
-
- IDL_Files {
-     idlflags += -St
-     Deployment.idl
+    NodeApplication_CallBack.idl
+    Deployment_Base.idl
+    Deployment_Data.idl
+    Deployment.idl
   }
 
   Source_Files {
+    Deployment_BaseC.cpp
+    Deployment_DataC.cpp
     DeploymentC.cpp
-    Deployment_ExC.cpp
     NodeApplication_CallBackC.cpp
   }
 }
@@ -129,8 +127,9 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server_dnc {
   }
 
   Source_Files {
+    Deployment_BaseS.cpp
+    Deployment_DataS.cpp
     DeploymentS.cpp
-    Deployment_ExS.cpp
     NodeApp_CB_Impl.cpp
     NodeApplication_CallBackS.cpp
   }
