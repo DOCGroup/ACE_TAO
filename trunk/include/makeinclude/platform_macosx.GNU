@@ -23,7 +23,7 @@ CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
-LDFLAGS		+= -L/sw/lib
+LDFLAGS		+= -L/sw/lib -flat_namespace -undefined warning
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
 ## dlcompat package (not part of base Darwin) is needed for dlopen().
