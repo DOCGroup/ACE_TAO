@@ -1,3 +1,25 @@
+Fri Sep 24 10:40:11 2004  Steve Huston  <shuston@riverace.com>
+
+	* apps/JAWS/clients/Blobby/blobby.cpp:
+	* apps/JAWS/clients/Blobby/Blob.{h cpp}:
+	* apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+	* apps/JAWS/clients/Blobby/Options.{h cpp}:
+	* apps/JAWS/clients/Caching/http_client.cpp:
+	* apps/JAWS/clients/Caching/http_handler.cpp:
+	* apps/JAWS/server/HTTP_Server.{h cpp}:
+	* apps/JAWS/server/HTTP_Response.cpp:
+	  Wide-char fixes.
+
+Fri Sep 24 10:34:26 2004  Steve Huston  <shuston@riverace.com>
+
+	* bin/MakeProjectCreator/config/acedefaults.mpb:
+	* bin/MakeProjectCreator/config/acelib.mpb: For automake projects,
+	  change ACE_ROOT to either top_srcdir or top_builddir depending
+	  on whether it's looking for source (such as includes) or libraries.
+
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Benchmarks_Synch_Lib.mpc:
+	  Changed base project from aceexe to acelib. This builds a library.
+
 Fri Sep 24 07:04:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
