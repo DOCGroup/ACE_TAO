@@ -3,9 +3,6 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 
-#include "ace/Service_Config.h"
-#include "tao/Strategies/TAO_Strategies_Internal.h"
-
 #if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
