@@ -1,3 +1,7 @@
+Wed Jul 31 11:34:58 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/index.html: Added a link to ACEXML document.
+
 Wed Jul 31 10:47:54 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
