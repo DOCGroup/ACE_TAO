@@ -347,7 +347,8 @@ IIOP_Object::IIOP_Object (const char *host,
                           char *repository_id)
   : STUB_Object (repository_id),
     profile (host, port, objkey),
-    refcount_ (1)
+    refcount_ (1),
+    handler_ (0)
 {
 }
 
@@ -358,7 +359,8 @@ IIOP_Object::IIOP_Object (char *repository_id,
   : STUB_Object (repository_id),
     profile (addr, objkey),
     fwd_profile_ (0),
-    refcount_ (1)
+    refcount_ (1),
+    handler_ (0)
 {
   this->fwd_profile_lock_ptr_ =  TAO_ORB_Core_instance ()
                                 ->client_factory ()

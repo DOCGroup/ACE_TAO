@@ -229,7 +229,13 @@ public:
   void use_locate_requests (CORBA::Boolean use_it);
   // set the flags to use locate_requests.
 
-private:
+  TAO_Client_Connection_Handler *&handler (void);
+  // Return the <handler_> pointer by reference.
+
+  void reset_handler (void);
+  // Reset the <handler_>.  Usually used on errors.
+
+protected:
   void put_params (CORBA::Environment &env,
 		   const TAO_Call_Data *info,
 		   TAO_GIOP_Invocation &call,
@@ -243,7 +249,7 @@ private:
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.
 
-private:
+protected:
   IIOP::Profile *fwd_profile_;
   // Store the forwarding profile
 
@@ -261,6 +267,14 @@ private:
 
   CORBA::Boolean first_locate_request_;
   // distinguishes the first from following calls
+
+  TAO_Client_Connection_Handler *handler_;
+  // This handler is going to be used to keep track of the last client
+  // connection handler used by the stub.  It is also used as a "hint"
+  // to the cached connector.  Note that all changes to this pointer
+  // are made by the cached connector, i.e., under the lock of the
+  // cached connector. Don't modify this pointer at will except in the
+  // case of error, in which case should be set to zero.
 
   ~IIOP_Object (void);
   // Destructor is to be called only through _decr_refcnt()
