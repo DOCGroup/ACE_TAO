@@ -72,7 +72,8 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                       u_long bytes_to_read,
                                                       const void* act,
                                                       ACE_HANDLE event,
-                                                      int priority)
+                                                      int priority,
+                                                      int signal_number)
 {
   ACE_Asynch_Read_Stream_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -82,7 +83,8 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result (ACE_Handler &handler,
                                                        bytes_to_read,
                                                        act,
                                                        event,
-                                                       priority),
+                                                       priority,
+                                                       signal_number),
                   0);
   return implementation;
 }
@@ -94,7 +96,8 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                        u_long bytes_to_write,
                                                        const void* act,
                                                        ACE_HANDLE event,
-                                                       int priority)
+                                                       int priority,
+                                                       int signal_number)
 {
   ACE_Asynch_Write_Stream_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -104,7 +107,8 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result (ACE_Handler &handler,
                                                         bytes_to_write,
                                                         act,
                                                         event,
-                                                        priority),
+                                                        priority, 
+                                                        signal_number),
                   0);
   return implementation;
 }
@@ -118,7 +122,8 @@ ACE_POSIX_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                     u_long offset,
                                                     u_long offset_high,
                                                     ACE_HANDLE event,
-                                                    int priority)
+                                                    int priority,
+                                                    int signal_number)
 {
   ACE_Asynch_Read_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -130,7 +135,8 @@ ACE_POSIX_Proactor::create_asynch_read_file_result (ACE_Handler &handler,
                                                      offset,
                                                      offset_high,
                                                      event,
-                                                     priority),
+                                                     priority,
+                                                     signal_number),
                   0);
   return implementation;
 }
@@ -144,7 +150,8 @@ ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                      u_long offset,
                                                      u_long offset_high,
                                                      ACE_HANDLE event,
-                                                     int priority)
+                                                     int priority,
+                                                     int signal_number)
 {
   ACE_Asynch_Write_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -156,20 +163,22 @@ ACE_POSIX_Proactor::create_asynch_write_file_result (ACE_Handler &handler,
                                                       offset,
                                                       offset_high,
                                                       event,
-                                                      priority),
+                                                      priority,
+                                                      signal_number),
                   0);
   return implementation;
 }
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
-                                           ACE_HANDLE listen_handle,
-                                           ACE_HANDLE accept_handle,
-                                           ACE_Message_Block &message_block,
-                                           u_long bytes_to_read,
-                                           const void* act,
-                                           ACE_HANDLE event,
-                                           int priority)
+                                                 ACE_HANDLE listen_handle,
+                                                 ACE_HANDLE accept_handle,
+                                                 ACE_Message_Block &message_block,
+                                                 u_long bytes_to_read,
+                                                 const void* act,
+                                                 ACE_HANDLE event,
+                                                 int priority,
+                                                 int signal_number)
 {
   ACE_Asynch_Accept_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -180,7 +189,8 @@ ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                   bytes_to_read,
                                                   act,
                                                   event,
-                                                  priority),
+                                                  priority,
+                                                  signal_number),
                   0);
   return implementation;
 }
@@ -197,7 +207,8 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         u_long flags,
                                                         const void *act,
                                                         ACE_HANDLE event,
-                                                        int priority)
+                                                        int priority,
+                                                        int signal_number)
 {
   ACE_Asynch_Transmit_File_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -212,7 +223,8 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                          flags,
                                                          act,
                                                          event,
-                                                         priority),
+                                                         priority,
+                                                         signal_number),
                   0);
   return implementation;
 }
@@ -222,7 +234,8 @@ ACE_POSIX_Proactor::create_asynch_timer (ACE_Handler &handler,
                                          const void *act,
                                          const ACE_Time_Value &tv,
                                          ACE_HANDLE event,
-                                         int priority)
+                                         int priority,
+                                         int signal_number)
 {
   ACE_Asynch_Result_Impl *implementation;
   ACE_NEW_RETURN (implementation,
@@ -230,7 +243,8 @@ ACE_POSIX_Proactor::create_asynch_timer (ACE_Handler &handler,
                                           act,
                                           tv,
                                           event,
-                                          priority),
+                                          priority,
+                                          signal_number),
                   0);
   return implementation;
 }
@@ -712,7 +726,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
                 "Error:%p\n",
                 "Couldn't init the RT completion signal set"));
 
-  if (sigaddset (&this->RT_completion_signals_, ACE_SIG_AIO) < 0)
+  if (sigaddset (&this->RT_completion_signals_, ACE_SIGRTMIN) < 0)
     ACE_ERROR ((LM_ERROR,
                 "Error:%p\n",
                 "Couldnt init the RT completion signal set"));
@@ -732,7 +746,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (void)
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
   reaction.sa_sigaction = 0;         // No handler.
-  int sigaction_return = sigaction (ACE_SIG_AIO,
+  int sigaction_return = sigaction (ACE_SIGRTMIN,
                                     &reaction,
                                     0);
   if (sigaction_return == -1)
@@ -777,7 +791,7 @@ ACE_POSIX_SIG_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
   value.sival_ptr = (void *) result;
   
   // Queue the signal.
-  if (sigqueue (pid, ACE_SIG_AIO, value) == -1)
+  if (sigqueue (pid, ACE_SIGRTMIN, value) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:(%P | %t):%p",
                        "<sigqueue> failed\n"),
@@ -872,8 +886,8 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   
   // No errors, RT compleion signal is received.
   
-  // We deal only with the signal number ACE_SIG_AIO.
-  if (result_sigwait != ACE_SIG_AIO)
+  // We deal only with the signal number ACE_SIGRTMIN.
+  if (result_sigwait != ACE_SIGRTMIN)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t)::%p\n",
                        "ACE_POSIX_SIG_Proactor::handle_events:"
@@ -961,9 +975,10 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer (ACE_Handler &handler,
                                                 const void *act,
                                                 const ACE_Time_Value &tv,
                                                 ACE_HANDLE event,
-                                                int priority)
+                                                int priority,
+                                                int signal_number)
   : ACE_Asynch_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority),
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
     time_ (tv)
 {
 }
