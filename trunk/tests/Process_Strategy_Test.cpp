@@ -502,6 +502,7 @@ main (int argc, char *argv[])
 	  exit (-1);
 	  /* NOTREACHED */
 	case 0:
+	  signal (SIGCHLD, SIG_IGN);
 	  server (0);
 	  break;
 	  /* NOTREACHED */
