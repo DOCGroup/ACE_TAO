@@ -169,9 +169,11 @@ be_visitor_interface::visit_constant (be_constant *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_CONSTANT_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -243,9 +245,11 @@ be_visitor_interface::visit_enum (be_enum *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_ENUM_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_ENUM_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -327,12 +331,15 @@ be_visitor_interface::visit_exception (be_exception *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_I:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -557,12 +564,15 @@ be_visitor_interface::visit_structure (be_structure *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_I:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -643,12 +653,15 @@ be_visitor_interface::visit_union (be_union *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_UNION_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_I:
       ctx.state (TAO_CodeGen::TAO_UNION_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_UNION_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
@@ -729,12 +742,15 @@ be_visitor_interface::visit_typedef (be_typedef *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_H:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CI:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_I:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
+    case TAO_CodeGen::TAO_LOCAL_INTERFACE_S:
       ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
