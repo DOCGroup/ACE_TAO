@@ -249,7 +249,6 @@ protected:
   /// dispatching handles.
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
-				  int success,
 				  const void *completion_key,
 				  u_long error);
 
