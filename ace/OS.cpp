@@ -2339,7 +2339,6 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 }
 
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
-#define ACE_ENDTHREADEX(STATUS) ::_endthread ()
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
 #elif defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
@@ -2379,16 +2378,13 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
                        thr_id);
 }
 
-#define ACE_ENDTHREADEX(STATUS) ::_endthread ()
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
              __IBMCPP__beginthreadex(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID)
 
 #elif defined (ACE_HAS_WINCE) && defined (UNDER_CE) && (UNDER_CE >= 211)
-#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (NULL, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & CREATE_SUSPENDED, (unsigned long *) THR_ID)
 #else
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
