@@ -18,13 +18,13 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 bin_PROGRAMS = CosEvent_Service
 
 CosEvent_Service_LDADD = \
-	$(top_builddir)/ace/libACE.la \
-	$(top_builddir)/TAO/tao/libTAO.la \
-	$(top_builddir)/TAO/tao/libTAO_CosEvent.la \
-	$(top_builddir)/TAO/tao/libTAO_Svc_Utils.la
+	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
 
 CosEvent_Service_SOURCES = \
         CosEvent_Service.cpp
+
+noinst_HEADERS = \
+        CosEvent_Service.h
 
 EXTRA_DIST = README
 
