@@ -1,3 +1,23 @@
+Mon Jul  2 10:57:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/Smart_Proxies/Benchmark/Benchmark.dsw:
+        * tests/Smart_Proxies/Benchmark/client.dsp:
+        * tests/Smart_Proxies/Benchmark/server.dsp:
+
+          New files to build the smart proxies benchmark test on 
+          Win32 platforms.
+
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/Benchmark/Smart_Proxy_Impl.h:
+
+          Removed unnecessary TAO_HAS_SMART_PROXIES macro from
+          these files.
+
+        * docs/Smart_Proxies.html:
+
+          Updated documentation.
+
 Sun Jul 01 11:18:47 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.18 released.
