@@ -242,11 +242,11 @@ Client_i::output_latency (void)
            i++,iterator.advance ())
         {
           ACE_OS::sprintf (buffer + ACE_OS::strlen (buffer),
-#if defined (CHORUS)
+#if defined (CHORUS_MVME)
                           "\t%u\n",
 #else
                           "\t%f\n",
-#endif /* !CHORUS */
+#endif /* !CHORUS_MVME */
                            *latency);
           ACE_OS::fputs (buffer,
                          latency_file_handle);
@@ -289,7 +289,7 @@ Client_i::calc_util_time (void)
 
   // Execute one computation.
   timer.start ();
-#if defined (CHORUS)
+#if defined (CHORUS_MVME)
   this->util_thread_->computation ();
   timer.stop ();
   this->util_task_duration_ = timer.get_elapsed ();
@@ -301,7 +301,7 @@ Client_i::calc_util_time (void)
 
   timer.stop ();
   this->util_task_duration_ = timer.get_elapsed () / NUM_UTIL_COMPUTATIONS;
-#endif /* !CHORUS */
+#endif /* !CHORUS_MVME */
 }
 
 int
@@ -521,7 +521,7 @@ Client_i::print_latency_stats (void)
       // it to Excel to calculate jitter, in the mean time we come up
       // with the sqrt() function.
       output_latency ();
-#elif defined (CHORUS)
+#elif defined (CHORUS_MVME)
       ACE_DEBUG ((LM_DEBUG,
                   "Test done.\n"
                   "High priority client latency : %u usec\n"
@@ -532,7 +532,7 @@ Client_i::print_latency_stats (void)
       // it to Excel to calculate jitter, in the mean time we come up
       // with the sqrt() function.
       output_latency ();
-#else /* !CHORUS */
+#else /* !CHORUS_MVME */
       ACE_DEBUG ((LM_DEBUG, "Test done.\n"
                   "High priority client latency : %f usec, jitter: %f usec\n"
                   "Low priority client latency : %f usec, jitter: %f usec\n",
@@ -541,7 +541,7 @@ Client_i::print_latency_stats (void)
                   this->low_priority_client_[0]->get_low_priority_latency (),
                   this->low_priority_client_[0]->get_low_priority_jitter ()));
       // output_latency ();
-#endif /* !VXWORKS && !CHORUS */
+#endif /* !VXWORKS && !CHORUS_MVME */
     }
 }
 
@@ -844,13 +844,13 @@ main (int argc, char *argv[])
   // Run the tests.
   client.run ();
 
-#if defined (CHORUS)
+#if defined (CHORUS_MVME)
   int pTime;
   if (pccTimer (PCC2_TIMER1_STOP,
                 &pTime) != K_OK)
     ACE_DEBUG ((LM_DEBUG,
                 "pccTimer has a pending bench mark\n"));
-#endif /* CHORUS */
+#endif /* CHORUS_MVME */
   return 0;
 }
 

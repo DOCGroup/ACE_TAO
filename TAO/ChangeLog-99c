@@ -1,86 +1,94 @@
+Thu Sep 23 11:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/Globals.h,
+          Task_Client.h,Timer.{h,cpp},client.{h,cpp}:
+          replaced CHORUS with CHORUS_MVME.  I think that
+          pccTimer is specific to MVME.  Thanks to Wei Chiang
+          <wei.chiang@nokia.com> for reporting this.
+
 Thu Sep 23 11:18:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Fixed the custom build setting in
-	  release configuration for RtecEventChannelAdmin.idl.  Thanks to
-	  Alok Gupta <alokg@ssind.stpn.soft.net> and Chien Yueh
-	  <cyueh@viasoft.com> for reporting this.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Fixed the custom build setting in
+          release configuration for RtecEventChannelAdmin.idl.  Thanks to
+          Alok Gupta <alokg@ssind.stpn.soft.net> and Chien Yueh
+          <cyueh@viasoft.com> for reporting this.
 
 Thu Sep 23 08:55:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_interface_strategy.h,
-	  TAO_IDL/be/be_interface_strategy.cpp:
-	  Introduced these files, holding now the
-	  strategies, which were formerly in the be_interface.{h,cpp}
-	  files.
+        * TAO_IDL/be/be_interface_strategy.h,
+          TAO_IDL/be/be_interface_strategy.cpp:
+          Introduced these files, holding now the
+          strategies, which were formerly in the be_interface.{h,cpp}
+          files.
 
-	* TAO_IDL/Makefile
-	  TAO_IDL/tao_idl.dsp
-	  TAO_IDL/tao_idl_static.dsp:
-	  Added two files.
+        * TAO_IDL/Makefile
+          TAO_IDL/tao_idl.dsp
+          TAO_IDL/tao_idl_static.dsp:
+          Added two files.
 
-	* TAO_IDL/ast/ast_interface.cpp
-	  TAO_IDL/include/ast_interface.h
-	  TAO_IDL/ast/ast_operation.cpp
-	  TAO_IDL/include/ast_operation.h:
-	  Renamed operations add_operation_x to
-	  be_add_operation and add_exceptions_x to
-	  be_add_exceptions.
+        * TAO_IDL/ast/ast_interface.cpp
+          TAO_IDL/include/ast_interface.h
+          TAO_IDL/ast/ast_operation.cpp
+          TAO_IDL/include/ast_operation.h:
+          Renamed operations add_operation_x to
+          be_add_operation and add_exceptions_x to
+          be_add_exceptions.
 
-	* TAO_IDL/ast/ast_module.cpp
-	  TAO_IDL/include/ast_module.h:
-	  Added a method to add interfaces in the
-	  back-end.
+        * TAO_IDL/ast/ast_module.cpp
+          TAO_IDL/include/ast_module.h:
+          Added a method to add interfaces in the
+          back-end.
 
-	* TAO_IDL/be/be_interface.cpp,
-	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
-	  TAO_IDL/be/be_visitor_attribute/attribute.cpp,
-	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
-	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
-	  TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp,
-	  TAO_IDL/be/be_visitor_interface/any_op_ch.cpp,
-	  TAO_IDL/be/be_visitor_interface/any_op_cs.cpp,
-	  TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
-	  TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
-	  TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
-	  TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
-	  TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp,
-	  TAO_IDL/be_include/be.h,
-	  TAO_IDL/be_include/be_interface.h,
-	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
-	  Did a big refactoring by commenting out all origninal
-	  AMI code generation and activating the new AMI
-	  implied IDL preprocessor.
-	  Still, AMI code does not compile yet, we need to
-	  implement some of the visitors.
+        * TAO_IDL/be/be_interface.cpp,
+          TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+          TAO_IDL/be/be_visitor_attribute/attribute.cpp,
+          TAO_IDL/be/be_visitor_interface/ami_exception_holder_ch.cpp,
+          TAO_IDL/be/be_visitor_interface/ami_exception_holder_ci.cpp,
+          TAO_IDL/be/be_visitor_interface/ami_exception_holder_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/any_op_ch.cpp,
+          TAO_IDL/be/be_visitor_interface/any_op_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp,
+          TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp,
+          TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/interface.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_cs.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_sh.cpp,
+          TAO_IDL/be/be_visitor_interface/interface_ss.cpp,
+          TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp,
+          TAO_IDL/be_include/be.h,
+          TAO_IDL/be_include/be_interface.h,
+          TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+          Did a big refactoring by commenting out all origninal
+          AMI code generation and activating the new AMI
+          implied IDL preprocessor.
+          Still, AMI code does not compile yet, we need to
+          implement some of the visitors.
 
 Thu Sep 23 02:02:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Updated the idl files compilation guidelines.
-	  We can use a utility project to handle the IDL compilation part
-	  to avoid setting up the custom rules twice.  Thanks to Dmitri
-	  Katchalov <Dmitri.Katchalov@computershare.com.au> for suggesting
-	  the change.
+        * TAO-INSTALL.html: Updated the idl files compilation guidelines.
+          We can use a utility project to handle the IDL compilation part
+          to avoid setting up the custom rules twice.  Thanks to Dmitri
+          Katchalov <Dmitri.Katchalov@computershare.com.au> for suggesting
+          the change.
 
 Wed Sep 22 13:13:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/DynAnyC.h:
+        * tao/DynAnyC.h:
 
-	  Removed inclusion of ORB.h.  It wasn't needed.
+          Removed inclusion of ORB.h.  It wasn't needed.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
-	  Moved inclusion of ORB.h to ORB_Core.h to fix "incomplete type"
-	  errors when building with Minimum CORBA support.  Thanks to
-	  David for reporting this.
+          Moved inclusion of ORB.h to ORB_Core.h to fix "incomplete type"
+          errors when building with Minimum CORBA support.  Thanks to
+          David for reporting this.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Wed Sep 22 13:09:06 1999  Jim Rogers <jrogers@viasoft.com>
 
@@ -89,10 +97,10 @@ Wed Sep 22 13:09:06 1999  Jim Rogers <jrogers@viasoft.com>
 
 Wed Sep 22 10:30:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  Replaced CORBA::TypeCode_ptr::_nil() with CORBA::TypeCode::_nil()
-	  in several places. Amazingly, gcc 2.95 compiled this, but
-	  MSVC output an internal compiler error.
+        * tao/ORB.cpp:
+          Replaced CORBA::TypeCode_ptr::_nil() with CORBA::TypeCode::_nil()
+          in several places. Amazingly, gcc 2.95 compiled this, but
+          MSVC output an internal compiler error.
 
 Tue Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -109,10 +117,10 @@ Tue Sep 22 01:15:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Tue Sep 21 23:29:30 1999  Mike Moran  <mm4@cs.wustl.edu>
 
-	* tests/Explicit_Event_Loop:
+        * tests/Explicit_Event_Loop:
 
-	  Added ACE_TRY macros so the test will run without exceptions=1,
-	  and enhanced the documentation and ACE-style compliance.
+          Added ACE_TRY macros so the test will run without exceptions=1,
+          and enhanced the documentation and ACE-style compliance.
 
 Tue Sep 21 22:06:10 1999  Ossama Othman  <othman@cs.wustl.edu>
 
@@ -973,18 +981,18 @@ Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
 
-	  CORBA 2.3 Updates:
+          CORBA 2.3 Updates:
 
-	  No longer destroy the ORB_Core in the ORB's destructor.  Let the
-	  ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
-	  will also destroy the ORB's underlying ORB_Core.  It is the
-	  user's responsibility to release an ORB.
+          No longer destroy the ORB_Core in the ORB's destructor.  Let the
+          ORB_Table handle ORB_Core deallocation.  CORBA::ORB::destroy()
+          will also destroy the ORB's underlying ORB_Core.  It is the
+          user's responsibility to release an ORB.
 
           All ORB methods that access the ORB_Core in some way now check
           that the ORB_Core hasn't been shutdown or destroyed before
@@ -994,11 +1002,11 @@ Tue Sep 14 14:42:04 1999  Ossama Othman  <othman@cs.wustl.edu>
           exceptions must be kept around during the lifetime of the
           application.
 
-	  Summary of Changes:
+          Summary of Changes:
 
-	  These changes allow code such as the following:
+          These changes allow code such as the following:
 
-	    {
+            {
              ORB_var orb = CORBA::ORB_init (argc, argv, "my_orb");
             }
             {

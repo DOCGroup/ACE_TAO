@@ -38,9 +38,9 @@
 #include "Globals.h"
 #include "Timer.h"
 
-#if defined (CHORUS)
+#if defined (CHORUS_MVME)
 # include "pccTimer.h"
-#endif /* CHORUS */
+#endif /* CHORUS_MVME */
 
 #if defined(ACE_HAS_EXCEPTIONS) && !defined (__KCC)
   // Some plaforms define an exception structure in math.h...

@@ -30,9 +30,9 @@
 #include "Util_Thread.h"
 #include "Timer.h"
 
-#if defined (CHORUS)
+#if defined (CHORUS_MVME)
 #include "pccTimer.h"
-#endif /* CHORUS */
+#endif /* CHORUS_MVME */
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
