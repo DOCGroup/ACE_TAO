@@ -16,16 +16,21 @@
 #ifndef PACE_SYS_UTSNAME_H_WIN32
 #define PACE_SYS_UTSNAME_H_WIN32
 
-#include <sys/utsname.h>
-
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#ifndef PACE_UTSNAME
-#define PACE_UTSNAME
-typedef struct utsname pace_utsname;
-#endif /* PACE_UTSNAME */
+# ifndef PACE_UTSNAME
+# define PACE_UTSNAME
+# define PACE_SYS_NMLN 257
+  typedef struct utsname {
+    char sysname[PACE_SYS_NMLN];
+    char nodename[PACE_SYS_NMLN];
+    char release[PACE_SYS_NMLN];
+    char version[PACE_SYS_NMLN];
+    char machine[PACE_SYS_NMLN];
+} pace_utsname;
+# endif /* PACE_UTSNAME */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
