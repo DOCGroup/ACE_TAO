@@ -30,7 +30,7 @@ public:
 
   Trading_Shutdown (Trading_Service& trader);
 
-  virtual int handle_signal (int, siginfo*, ucontext*);
+  virtual int handle_signal (int, siginfo_t*, ucontext_t*);
 
 private:
 
