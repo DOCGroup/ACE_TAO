@@ -1,3 +1,10 @@
+Fri Jun 23 23:26:09 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (pre_invoke):
+
+	  Modified the method to check for TAO_INVALID_PRIORITY before
+	  proceeding with the processing.
+
 Fri Jun 23 22:21:31 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/GIOP_Message_Acceptors.h
