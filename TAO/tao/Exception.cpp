@@ -107,25 +107,6 @@ CORBA_Exception::_tao_print_exception (const char *user_provided_info,
               this->_info ().c_str ()));
 }
 
-ACE_CString
-CORBA_Exception::_info (void) const
-{
-  CORBA::SystemException *system_exception =
-    CORBA_SystemException::_downcast (ACE_const_cast (CORBA_Exception *,
-                                                      this));
-
-  if (system_exception != 0)
-    return system_exception->_info ();
-
-  // @@ we can use the exception's typecode to dump all the data held
-  // within it ...
-
-  ACE_CString user_exception_info = "user exception, ID '";
-  user_exception_info += this->_id ();
-  user_exception_info += "'";
-  return user_exception_info;
-}
-
 void
 CORBA_Exception::_tao_any_destructor (void *x)
 {
@@ -222,6 +203,18 @@ CORBA_UserException::_downcast (CORBA_Exception* exception)
     return ACE_dynamic_cast (CORBA_UserException *,
                              exception);
   return 0;
+}
+
+ACE_CString
+CORBA_UserException::_info (void) const
+{
+  // @@ we can use the exception's typecode to dump all the data held
+  // within it ...
+
+  ACE_CString user_exception_info = "user exception, ID '";
+  user_exception_info += this->_id ();
+  user_exception_info += "'";
+  return user_exception_info;
 }
 
 CORBA_SystemException::CORBA_SystemException (void)

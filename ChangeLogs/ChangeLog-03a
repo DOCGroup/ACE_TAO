@@ -1,3 +1,8 @@
+Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/SString_Test.cpp (main): Added tests for string
+	  assignments.
+
 Tue Oct 24 19:30:16 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_Base.cpp (purge_pending_notifications): Correct

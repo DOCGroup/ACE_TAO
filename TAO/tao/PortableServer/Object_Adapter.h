@@ -273,6 +273,10 @@ public:
   // Access to ORB Core.
 
   void wait_for_non_servant_upcalls_to_complete (CORBA::Environment &ACE_TRY_ENV);
+  // Wait for non-servant upcalls to complete.
+
+  void wait_for_non_servant_upcalls_to_complete (void);
+  // Non-exception throwing version.
 
   static CORBA::ULong transient_poa_name_size (void);
 
@@ -509,15 +513,6 @@ protected:
 
   ACE_Reverse_Lock<ACE_Lock> reverse_lock_;
 
-  ACE_SYNCH_CONDITION non_servant_upcall_condition_;
-  // Condition variable for waiting on non-servant upcalls to end.
-
-  CORBA::Boolean non_servant_upcall_in_progress_;
-  // Flag for knowing when an non-servant upcall is in progress.
-
-  ACE_thread_t non_servant_upcall_thread_;
-  // Id of thread making the non-servant upcall.
-
 public:
 
   class TAO_PortableServer_Export poa_name_iterator
@@ -582,15 +577,18 @@ public:
     //     set.
   public:
 
-    Non_Servant_Upcall (TAO_Object_Adapter &object_adapter);
+    Non_Servant_Upcall (TAO_POA &poa);
     // Constructor.
 
     ~Non_Servant_Upcall (void);
     // Destructor.
 
+    TAO_POA &poa (void) const;
+
   protected:
 
     TAO_Object_Adapter &object_adapter_;
+    TAO_POA &poa_;
   };
 
   friend class Non_Servant_Upcall;
@@ -768,7 +766,24 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+public:
+
+  Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+  // Pointer to the non-servant upcall in progress.  If no non-servant
+  // upcall is in progress, this pointer is zero.
+
 private:
+
+  ACE_SYNCH_CONDITION non_servant_upcall_condition_;
+  // Condition variable for waiting on non-servant upcalls to end.
+
+  Non_Servant_Upcall *non_servant_upcall_in_progress_;
+  // Pointer to the non-servant upcall in progress.  If no non-servant
+  // upcall is in progress, this pointer is zero.
+
+  ACE_thread_t non_servant_upcall_thread_;
+  // Id of thread making the non-servant upcall.
+
   TAO_POA *root_;
   // The Root POA
 };

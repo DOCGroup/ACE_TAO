@@ -73,6 +73,15 @@ main (int, ACE_TCHAR *[])
     // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
+
+    // Assignment.
+    ACE_CString s6;
+    s6 = s0;
+    ACE_ASSERT (s6 == s0);
+    s6 = s4;
+    ACE_ASSERT (s4 == s6);
+    s6 = s5;
+    ACE_ASSERT (s6 == s5);
   }
 
   {
@@ -120,6 +129,15 @@ main (int, ACE_TCHAR *[])
     // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
+
+    // Assignment.
+    ACE_CString s6;
+    s6 = s0;
+    ACE_ASSERT (s6 == s0);
+    s6 = s4;
+    ACE_ASSERT (s4 == s6);
+    s6 = s5;
+    ACE_ASSERT (s6 == s5);
   }
 
   {
@@ -132,7 +150,7 @@ main (int, ACE_TCHAR *[])
 
     ACE_WSTRING_TYPE single_character = 'z';
     ACE_WString single_character_string (single_character);
-    
+
     ACE_WString empty_string;
     ACE_WString zero_size_string (s1.c_str (), 0, 0);
 
@@ -167,6 +185,15 @@ main (int, ACE_TCHAR *[])
     // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
+
+    // Assignment.
+    ACE_WString s6;
+    s6 = s0;
+    ACE_ASSERT (s6 == s0);
+    s6 = s4;
+    ACE_ASSERT (s4 == s6);
+    s6 = s5;
+    ACE_ASSERT (s6 == s5);
   }
 
   ACE_END_TEST;

@@ -416,6 +416,7 @@ public:
 
   friend class TAO_Object_Adapter;
   friend class TAO_Object_Adapter::Servant_Upcall;
+  friend class TAO_Object_Adapter::Non_Servant_Upcall;
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
 
@@ -974,6 +975,8 @@ protected:
   void establish_servant_lock (PortableServer::Servant servant);
 
   void teardown_servant_lock (PortableServer::Servant servant);
+
+  CORBA::Boolean waiting_destruction (void) const;
 
   String name_;
 

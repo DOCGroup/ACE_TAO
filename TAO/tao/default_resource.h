@@ -56,7 +56,7 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
-  int get_parser_names (const char **&names,
+  int get_parser_names (char **&names,
                         int &number_of_names);
   // = Member Accessors
   enum
@@ -116,7 +116,7 @@ public:
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
-  
+
   int add_to_ior_parser_names (const char *);
   // Add a Parser name to the list of Parser names.
 
@@ -140,7 +140,7 @@ protected:
   int parser_names_count_;
   // The number of the different types of Parsers.
 
-  const char **parser_names_;
+  char **parser_names_;
   // Array consisting of the names of the parsers
 
   int index_;

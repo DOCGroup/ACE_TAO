@@ -224,6 +224,9 @@ TAO_POA::~TAO_POA (void)
 void
 TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
 {
+  // No longer awaiting destruction.
+  this->waiting_destruction_ = 0;
+
   // Delete the active object map.
   delete this->active_object_map_;
 
@@ -250,10 +253,18 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
     // though we are releasing the lock, other threads will not be
     // able to make progress since
     // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-    TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
-    ACE_UNUSED_ARG (non_servant_upcall);
+
+    //
+    // If new things are added to this cleanup code, make sure to move
+    // the minimum CORBA #define after the declaration of
+    // <non_servant_upcall>.
+    //
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+    TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
+    ACE_UNUSED_ARG (non_servant_upcall);
+
     this->adapter_activator_ = PortableServer::AdapterActivator::_nil ();
 
     this->servant_activator_ = PortableServer::ServantActivator::_nil ();
@@ -261,9 +272,11 @@ TAO_POA::complete_destruction_i (CORBA::Environment &ACE_TRY_ENV)
     this->servant_locator_ = PortableServer::ServantLocator::_nil ();
 
     this->default_servant_ = 0;
+
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   }
+
 
   CORBA::release (this);
 }
@@ -414,7 +427,7 @@ TAO_POA::find_POA (const char *adapter_name,
   // though we are releasing the lock, other threads will not be able
   // to make progress since
   // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
   ACE_UNUSED_ARG (non_servant_upcall);
 
   TAO_POA *poa = this->find_POA_i (adapter_name,
@@ -579,8 +592,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
-  // If there are no outstanding requests.
-  if (this->outstanding_requests_ == 0)
+  // If there are no outstanding requests and that we are not in a
+  // non-servant upcall or if we are in a non-servant upcall, make
+  // sure we are the POA related to the non-servant upcall.
+  TAO_Object_Adapter::Non_Servant_Upcall *non_servant_upcall_in_progress =
+    this->object_adapter ().non_servant_upcall_in_progress ();
+  if (this->outstanding_requests_ == 0 &&
+      (non_servant_upcall_in_progress == 0 ||
+       &non_servant_upcall_in_progress->poa () != this))
     {
       this->complete_destruction_i (ACE_TRY_ENV);
       ACE_CHECK;
@@ -724,7 +743,7 @@ TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
       // other threads will not be able to make progress since
       // <Object_Adapter::non_servant_upcall_in_progress_> has been
       // set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The POA invokes _add_ref once on the Servant before returning
@@ -780,7 +799,7 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
       // other threads will not be able to make progress since
       // <Object_Adapter::non_servant_upcall_in_progress_> has been
       // set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       servant->_add_ref (ACE_TRY_ENV);
@@ -922,7 +941,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // though we are releasing the lock, other threads will not be able
   // to make progress since
   // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
   ACE_UNUSED_ARG (non_servant_upcall);
 
   // The implementation of activate_object will invoke _add_ref at
@@ -1024,7 +1043,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // though we are releasing the lock, other threads will not be able
   // to make progress since
   // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
   ACE_UNUSED_ARG (non_servant_upcall);
 
   // The implementation of activate_object_with_id will invoke
@@ -1268,7 +1287,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // If the cleanup_in_progress parameter is TRUE, the reason
@@ -1298,7 +1317,7 @@ TAO_POA::cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_en
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           active_object_map_entry->servant_->_remove_ref (ACE_TRY_ENV);
@@ -1587,7 +1606,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // other threads will not be able to make progress since
       // <Object_Adapter::non_servant_upcall_in_progress_> has been
       // set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // If this operation causes the object to be activated, _add_ref
@@ -1704,7 +1723,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // other threads will not be able to make progress since
       // <Object_Adapter::non_servant_upcall_in_progress_> has been
       // set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // If this operation causes the object to be activated, _add_ref
@@ -1843,7 +1862,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // The POA invokes _add_ref once on the Servant before
@@ -1888,7 +1907,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // The POA invokes _add_ref once on the Servant before
@@ -2021,7 +2040,7 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
       // other threads will not be able to make progress since
       // <Object_Adapter::non_servant_upcall_in_progress_> has been
       // set.
-      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+      TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // The POA invokes _add_ref once on the Servant before returning
@@ -2393,7 +2412,7 @@ TAO_POA::locate_servant_i (const char *operation,
             // threads will not be able to make progress since
             // <Object_Adapter::non_servant_upcall_in_progress_> has
             // been set.
-            TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+            TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
             ACE_UNUSED_ARG (non_servant_upcall);
 
             // @@
@@ -2464,7 +2483,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // the lock, other threads will not be able to make progress
           // since <Object_Adapter::non_servant_upcall_in_progress_>
           // has been set.
-          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (this->object_adapter ());
+          TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           // No serialization of invocations of preinvoke or
@@ -3910,7 +3929,6 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-
 CORBA::Object_ptr
 TAO_POA::key_to_object (const TAO_ObjectKey &key,
                         const char *type_id,
@@ -4066,6 +4084,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
       == TAO_POA_Policies::SERVER_DECLARED
       && this->policies ().server_priority () != priority)
     {
+
 #if (TAO_HAS_RT_CORBA == 1)
 
       TAO_Priority_Acceptor_Filter
@@ -4077,6 +4096,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                                  client_exposed_policies._retn (),
                                                  &filter,
                                                  ACE_TRY_ENV);
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
       ACE_CHECK_RETURN (0);

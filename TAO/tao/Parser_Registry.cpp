@@ -28,10 +28,11 @@ TAO_Parser_Registry::~TAO_Parser_Registry (void)
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
 {
-  const char **names;
+  char **names;
   int number_of_names = 0;
 
-  orb_core->resource_factory ()->get_parser_names (names, number_of_names);
+  orb_core->resource_factory ()->get_parser_names (names,
+                                                   number_of_names);
 
   if (number_of_names == 0)
     return -1;

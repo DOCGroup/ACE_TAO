@@ -163,7 +163,7 @@ TAO_Resource_Factory::get_priority_mapping (void)
 }
 
 int
-TAO_Resource_Factory::get_parser_names (const char **&,
+TAO_Resource_Factory::get_parser_names (char **&,
                                         int &)
 {
   return 0;

@@ -338,16 +338,6 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  // A recursive thread lock without using a recursive thread lock.
-  // Non_Servant_Upcall has a magic constructor and destructor.  We
-  // unlock the Object_Adapter lock for the duration of the adapter
-  // activator(s) upcalls; reacquiring once the upcalls complete.
-  // Even though we are releasing the lock, other threads will not be
-  // able to make progress since
-  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
-  Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
-
   iteratable_poa_name ipn (folded_name);
   iteratable_poa_name::iterator iterator = ipn.begin ();
   iteratable_poa_name::iterator end = ipn.end ();
@@ -361,6 +351,16 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
                       -1);
   else
     ++iterator;
+
+  // A recursive thread lock without using a recursive thread lock.
+  // Non_Servant_Upcall has a magic constructor and destructor.  We
+  // unlock the Object_Adapter lock for the duration of the adapter
+  // activator(s) upcalls; reacquiring once the upcalls complete.
+  // Even though we are releasing the lock, other threads will not be
+  // able to make progress since
+  // <Object_Adapter::non_servant_upcall_in_progress_> has been set.
+  Non_Servant_Upcall non_servant_upcall (*parent);
+  ACE_UNUSED_ARG (non_servant_upcall);
 
   for (;
        iterator != end;
@@ -711,7 +711,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
                               CORBA::Object (stub, 1,
                                              servant),
                               0);
-              
+
               // Here we set the strategized Proxy Broker.
               x->_proxy_broker (the_tao_strategized_object_proxy_broker ());
               return x;
@@ -977,11 +977,12 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
                    this->folded_name_.get_buffer ());
 }
 
-TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_Object_Adapter &object_adapter)
-  : object_adapter_ (object_adapter)
+TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
+  : object_adapter_ (poa.object_adapter ()),
+    poa_ (poa)
 {
   // Mark the fact that a non-servant upcall is in progress.
-  this->object_adapter_.non_servant_upcall_in_progress_ = 1;
+  this->object_adapter_.non_servant_upcall_in_progress_ = this;
 
   // Remember which thread is calling the adapter activators.
   this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::thr_self ();
@@ -1001,6 +1002,23 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
   // Reset thread id.
   this->object_adapter_.non_servant_upcall_thread_ =
     ACE_OS::NULL_thread;
+
+  // Check if all pending requests are over.
+  if (this->poa_.waiting_destruction () &&
+      this->poa_.outstanding_requests () == 0)
+    {
+      ACE_TRY_NEW_ENV
+        {
+          this->poa_.complete_destruction_i (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
+        }
+      ACE_ENDTRY;
+    }
 
   // If locking is enabled.
   if (this->object_adapter_.enable_locking_)
@@ -1052,9 +1070,9 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
 
   // Locate the POA.
   this->object_adapter_->locate_poa (key,
-                                    this->id_,
-                                    this->poa_,
-                                    ACE_TRY_ENV);
+                                     this->id_,
+                                     this->poa_,
+                                     ACE_TRY_ENV);
   ACE_CHECK;
 
   // Check the state of the POA Manager.
@@ -1064,6 +1082,10 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Setup current for this request.
   this->current_context_.setup (this->poa_,
                                 key);
+
+  // Increase <poa->outstanding_requests_> for the duration of finding
+  // the POA, finding the servant, and making the upcall.
+  this->poa_->increment_outstanding_requests ();
 
   // We have setup the POA Current.  Record this for later use.
   this->state_ = POA_CURRENT_SETUP;
@@ -1083,15 +1105,10 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // Now that we know the servant.
   this->current_context_.servant (this->servant_);
 
+  // For servants from Servant Locators, there is no active object map
+  // entry.
   if (this->active_object_map_entry ())
     this->current_context_.priority (this->active_object_map_entry ()->priority_);
-
-  // Increase <poa->outstanding_requests_> for the duration of the
-  // upcall.
-  //
-  // Note that the object adapter lock is released after
-  // <POA::outstanding_requests_> is increased.
-  this->poa_->increment_outstanding_requests ();
 
   // Release the object adapter lock.
   this->object_adapter_->lock ().release ();
@@ -1117,6 +1134,7 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
     case SERVANT_LOCK_ACQUIRED:
       // Unlock servant (if appropriate).
       this->single_threaded_poa_cleanup ();
+
       /* FALLTHRU */
 
     case OBJECT_ADAPTER_LOCK_RELEASED:
@@ -1132,16 +1150,24 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
       // with it.
       this->object_adapter_->lock ().acquire ();
 
+      // Check if a non-servant upcall is in progress.  If a
+      // non-servant upcall is in progress, wait for it to complete.
+      // Unless of course, the thread making the non-servant upcall is
+      // this thread.
+      this->object_adapter_->wait_for_non_servant_upcalls_to_complete ();
+
       // Cleanup servant related state.
       this->servant_cleanup ();
 
-      // Cleanup POA related state.
-      this->poa_cleanup ();
       /* FALLTHRU */
 
     case POA_CURRENT_SETUP:
+      // Cleanup POA related state.
+      this->poa_cleanup ();
+
       // Teardown current for this request.
       this->current_context_.teardown ();
+
       /* FALLTHRU */
 
     case OBJECT_ADAPTER_LOCK_ACQUIRED:
@@ -1150,6 +1176,7 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
       this->object_adapter_->lock ().release ();
 
       /* FALLTHRU */
+
     case INITIAL_STAGE:
     default:
       // @@ Keep compiler happy, the states above are the only
@@ -1175,6 +1202,24 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (CORBA::Environment
       if (result == -1)
         ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
+}
+
+void
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
+{
+  // Non-exception throwing version.
+  ACE_TRY_NEW_ENV
+    {
+      this->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete "
+                  "threw exception it should not have!\n"));
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -1292,7 +1337,7 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
   // is complete.
   //
   // Note that the object adapter lock is acquired before
-  // <POA::outstanding_requests_> is increased.
+  // <POA::outstanding_requests_> is decreased.
   CORBA::ULong outstanding_requests =
     this->poa_->decrement_outstanding_requests ();
 
@@ -1306,6 +1351,10 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
           // Wakeup all waiting threads.
           this->poa_->outstanding_requests_condition_.broadcast ();
         }
+
+      // Note that there is no need to check for
+      // <non_servant_upcall_in_progress> since it is not possible for
+      // non-servant upcalls to be in progress at this point.
       if (this->poa_->waiting_destruction_)
         {
           ACE_TRY_NEW_ENV

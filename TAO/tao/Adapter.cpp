@@ -31,8 +31,11 @@ TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
 
 TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
 {
-  // Deallocate adapter array in case the registry was not closed
-  // properly.
+  for (size_t i = 0; i != this->adapters_count_; ++i)
+    {
+      delete this->adapters_[i];
+    }
+
   delete[] this->adapters_;
 }
 
@@ -45,10 +48,6 @@ TAO_Adapter_Registry::close (int wait_for_completion,
       this->adapters_[i]->close (wait_for_completion, ACE_TRY_ENV);
       ACE_CHECK;
     }
-  delete[] this->adapters_;
-  this->adapters_ = 0;
-  this->adapters_capacity_ = 0;
-  this->adapters_count_ = 0;
 }
 
 void
