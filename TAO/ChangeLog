@@ -1,3 +1,13 @@
+Tue Dec  9 15:17:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp (visit_union):
+
+          Fixed code generation for accessors/mutators to a union as a
+          member of a valuetype. The previous, incorrect code assumed that
+          the member is declared as a union_var, which is not the case.
+          Thanks to Andy Bellafaire <Andy_M_Bellafaire@raytheon.com> for
+          pointing out the problem.
+
 Tue Dec  9 14:07:28 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp (gen_stub_operation_body);
