@@ -18,7 +18,7 @@
 <p>
 
 In addition to our work on <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-subsets.html">ACE
+HREF="../../docs/ACE-subsets.html">ACE
 subsetting</A>, we have also been reducing the footprint of TAO.  We
 are pursuing two complementary strategies to reduce TAO's footprint:
 
@@ -49,12 +49,11 @@ specification. <P>
 
 The implicit subsetting of TAO requires no explicit application
 programmer intervention.  In contrast, to minimize the footprint of
-TAO explicitly, you must first <a href=
-"http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">configure</a>
+TAO explicitly, you must first <a href="../../ACE-INSTALL.html">configure</a>
 ACE to support only those <a href =
-"http://www.cs.wustl.edu/~schmidt/ACE_wrappers/docs/ACE-subsets.html">components</a>
+"../../docs/ACE-subsets.html">components</a>
 that are required by TAO. Second, you must <a href =
-"http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/TAO-INSTALL.html">configure</a>
+"../TAO-INSTALL.html">configure</a>
 TAO to only support the components specified by the
 <em>minimumCORBA</em> specification.  The following two tables show
 the footprint reduction achievable via explicit subsetting.  Note that
@@ -68,7 +67,7 @@ Note: All measurement are for ACE 5.0 and TAO 1.0 using egcs-2.91.60
 on SunOS5.7<P>
 
 The <a
-href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#flags">make
+href="../../ACE-INSTALL.html#flags">make
 flags</a> options used were: <P>
 
 <code> debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0 </code> <P>
