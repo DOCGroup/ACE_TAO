@@ -20,7 +20,7 @@
 #if defined (PACE_LINUX)
 # define PACE_HAS_POSIX PACE_LINUX
 #elif defined (PACE_LYNXOS)
-# define PACE_HAS_POSIX PACE_LYNX
+# define PACE_HAS_POSIX PACE_LYNXOS
 #elif defined (PACE_SUNOS)
 # define PACE_HAS_POSIX PACE_SUNOS
 

@@ -1,3 +1,27 @@
+Fri Jun 30 10:10:53 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Posix_SP_Test.c:
+          Fixed description. Fixed name value arg to sysconf to be
+          POSIX. Added more extensive checking and output of values
+          when a function succeeds.
+
+        * pace/Makefile:
+          Removed extraneous #INCLDIRS comment.
+
+        * pace/posix/pthread.inl:
+        * pace/posix/aio.inl:
+          Casted away const from certain functions for LynxOS when
+          their prototypes don't have const.
+
+        * tests/Makefile:
+          Moved PACE_SYSNAME definition below wrapper_macros.GNU so
+          that cross-compiled platforms (e.g., LynxOS) can define
+          PACE_SYSNAME.
+
+        * pace/config/platform.h:
+          Changed of PACE_HAS_POSIX for LynxOS from PACE_LYNX to
+          PACE_LYNXOS.
+
 Thu Jun 29 19:53:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
