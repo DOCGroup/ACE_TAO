@@ -92,6 +92,7 @@ protected:
 
 typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
 
+class ACE_Message_Block;
 class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
 class TAO_AV_Flow_Handler;
