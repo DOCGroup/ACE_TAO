@@ -856,6 +856,7 @@ Cubit_Client::~Cubit_Client (void)
   // Free resources and close the IOR files.
   if (this->cubit_factory_ior_file_)
     ACE_OS::fclose (this->cubit_factory_ior_file_);
+
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->f_handle_);
 
@@ -863,6 +864,7 @@ Cubit_Client::~Cubit_Client (void)
 
   if (this->cubit_factory_key_ != 0)
     delete[] (this->cubit_factory_key_);
+
   if (this->cubit_key_ != 0)
     ACE_OS::free (this->cubit_key_);
 }
@@ -872,12 +874,14 @@ Cubit_Client::init_naming_service (void)
 {
   TAO_TRY
     {
+      // @@ This code should use the new TAO_Naming_Client helper
+      // class.
       CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
 
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                           " (%P|%t) Unable to resolve the NameService.\n"),
                           -1);
 
       CosNaming::NamingContext_var naming_context =
@@ -887,14 +891,18 @@ Cubit_Client::init_naming_service (void)
 
       CosNaming::Name cubit_factory_name (2);
       cubit_factory_name.length (2);
-      cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
-      cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
+      cubit_factory_name[0].id =
+        CORBA::string_dup ("IDL_Cubit");
+      cubit_factory_name[1].id =
+        CORBA::string_dup ("cubit_factory");
       CORBA::Object_var factory_obj =
-        naming_context->resolve (cubit_factory_name,TAO_TRY_ENV);
+        naming_context->resolve (cubit_factory_name,
+                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->factory_ =
-        Cubit_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+        Cubit_Factory::_narrow (factory_obj.in (),
+                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->factory_.in ()))
@@ -915,7 +923,6 @@ Cubit_Client::init_naming_service (void)
 int
 Cubit_Client::init (int argc, char **argv)
 {
-  int naming_result;
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -932,12 +939,9 @@ Cubit_Client::init (int argc, char **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->use_naming_service_)
-        {
-          naming_result = this->init_naming_service ();
-          if (naming_result < 0)
-            return naming_result;
-        }
+      if (this->use_naming_service_
+          && this->init_naming_service () == -1)
+        return -1;
       else
         {
           if (this->cubit_factory_key_ == 0)
@@ -953,7 +957,8 @@ Cubit_Client::init (int argc, char **argv)
           TAO_CHECK_ENV;
 
           this->factory_ =
-            Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
+            Cubit_Factory::_narrow (factory_object.in(),
+                                    TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (CORBA::is_nil (this->factory_.in ()))
@@ -963,7 +968,8 @@ Cubit_Client::init (int argc, char **argv)
                               -1);
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Factory received OK\n"));
 
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
