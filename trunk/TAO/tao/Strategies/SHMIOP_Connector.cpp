@@ -118,8 +118,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == 0)
     return -1;
 
@@ -351,8 +350,7 @@ TAO_SHMIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_SHMIOP_Endpoint *shmiop_endpoint =
-    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast <TAO_SHMIOP_Endpoint *>(endpoint);
   if (shmiop_endpoint == 0)
     return 0;
 
