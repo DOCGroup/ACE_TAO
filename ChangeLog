@@ -1,3 +1,13 @@
+Mon Apr 28 11:00:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* configure.ac:
+
+	  Reverted change that placed configure script set optimization
+	  flags before $CXXFLAGS.  GNU Autoconf likes to add "-g -O2" to
+	  $CXXFLAGS by default for GNU C/C++ compilers.  That
+	  unfortunately overrides the configure script optimization flags,
+	  hence the need to revert the change.
+
 Mon Apr 28 10:54:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
