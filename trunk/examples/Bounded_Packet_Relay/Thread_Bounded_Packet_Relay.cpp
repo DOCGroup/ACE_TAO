@@ -190,7 +190,6 @@ User_Input_Task::set_packet_count (void *argument)
       packet_count_ = *ACE_static_cast (int *, argument);
       return 0;
     }
-
   ACE_ERROR_RETURN ((LM_ERROR, 
                      "User_Input_Task::set_packet_count: null argument"), 
                     -1);
@@ -289,7 +288,6 @@ User_Input_Task::run_transmission (void *)
                                             *relay_,
                                             *queue_), 
                               -1);
-
               if (queue_->schedule (send_handler, 0, send_at) < 0)
                 ACE_ERROR_RETURN ((LM_ERROR, 
                                    "User_Input_Task::run_transmission: "
@@ -306,7 +304,6 @@ User_Input_Task::run_transmission (void *)
                                   Termination_Handler (*relay_,
                                                        *queue_), 
                                   -1);
-
                   if (queue_->schedule (termination_handler, 
                                         0, terminate_at) < 0)
                     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -315,11 +312,9 @@ User_Input_Task::run_transmission (void *)
                                        "handler"), 
                                       -1);
                 }
-
               return 0;
             }
             /* NOTREACHED */
-
           default:
             return -1;
             /* NOTREACHED */
@@ -346,13 +341,11 @@ User_Input_Task::end_transmission (void *)
                         "no transmission in progress\n"));
             return 0;
             /* NOTREACHED */
-
           case 0: 
             // Cancel any remaining timers.
             this->clear_all_timers ();
             return 0;
             /* NOTREACHED */
-  
           default:
             return -1;
             /* NOTREACHED */
@@ -426,7 +419,6 @@ User_Input_Task::clear_all_timers (void)
   return 0;
 }
 
-
 // Constructor.
 
 BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay<ACE_MT_SYNCH> &relay,
@@ -456,7 +448,6 @@ BPR_Handler_Base::clear_all_timers (void)
 
   return 0;
 }
-
 
 // Constructor.
 
