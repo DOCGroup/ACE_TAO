@@ -1,3 +1,9 @@
+Mon Nov 17 17:09:37 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Mem_Map.i (map): Disable the use of MAP_FIXED on Linux
+	  since it seems to cause problems.  Thanks to Lothar Werzinger
+ 	  <lothar@xcerla.com> for this fix.
+
 Mon Nov 17 21:50:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/rules.local.GNU:
