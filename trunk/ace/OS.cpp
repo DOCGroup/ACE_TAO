@@ -215,6 +215,9 @@ ACE_OS::gethrtime (void)
   asm ("movl %eax, -4(%ebp)");  // least
   asm ("movl %edx, -8(%ebp)");  // most
 
+  // This code relies on the subtle semantics of operator precedence,
+  // but David Levine wants it this way to encourage C++ programmers
+  // to learn their precedence rules.
   return (ACE_hrtime_t) most << 32  |  least;
 }
 #endif /* ACE_HAS_PENTIUM && __GNUC__ */
