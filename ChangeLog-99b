@@ -1,3 +1,14 @@
+Sun Feb 21 00:17:58 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * websvcs/lib/URL_Addr.i: Can now copy null Addrs.  Also added
+          hash function implementation.
+        
+        * websvcs/lib URL_Addr.h: Added hash function.
+
+        * websvcs/lib/URL_Addr.cpp: Fixed a bug with 
+          ACE_HTTP_Addr::create_relative_address and urls beginning with
+          "/".  It used to copy the first '/', which wasn't needed.
+
 Sat Feb 20 15:39:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.{h,cpp},Object_Manager.{h,cpp}: changed ACE_OS::exit ()
