@@ -17,6 +17,11 @@ public:
   TAO_Debug_Msg_Emitter_Guard (unsigned int debug_level, const char* msg)
     : which_level_(debug_level)
     {
+      if (TAO_debug_level < this->which_level_)
+        {
+          msg_ = 0;
+          return;
+        }
       this->msg_ = new char[ACE_OS::strlen (msg) + MAGIC_LENGTH ];
       ACE_OS::strcpy (this->msg_, msg);
       ACE_OS::strcat (this->msg_, " begin\n");
@@ -26,14 +31,17 @@ public:
 
   ~TAO_Debug_Msg_Emitter_Guard ()
     {
-      if (TAO_debug_level >= this->which_level_)
+      if (this->msg_)
         {
-          char* begin_start =
-            this->msg_ + ACE_OS::strlen(this->msg_) - MAGIC_LENGTH + 1;
-          ACE_OS::strcpy (begin_start, " end\n");
-          ACE_DEBUG ((LM_DEBUG, this->msg_));
+          if (TAO_debug_level >= this->which_level_)
+            {
+              char* begin_start =
+                this->msg_ + ACE_OS::strlen(this->msg_) - MAGIC_LENGTH + 1;
+              ACE_OS::strcpy (begin_start, " end\n");
+              ACE_DEBUG ((LM_DEBUG, this->msg_));
+            }
+          delete[] this->msg_;
         }
-      delete[] this->msg_;
     }
 
 private:
@@ -68,8 +76,6 @@ TAO_GIOP_Message_State::take_values_from_message_block (
   const ACE_Message_Block& mb
   )
 {
-  TAO_Debug_Msg_Emitter_Guard (8, "(%P|%t) GIOP_Message_State::take_values_from_message_block");
-
   const char* buf = mb.rd_ptr ();
 
   // Get the version information
@@ -104,117 +110,9 @@ TAO_GIOP_Message_State::take_values_from_message_block (
   return 0;
 }
 
-#if 0
-int
-TAO_GIOP_Message_State::parse_message_header (ACE_Message_Block &incoming)
-{
-  if (incoming.length () >= TAO_GIOP_MESSAGE_HEADER_LEN)
-    {
-      // Parse the GIOP header
-      if (this->parse_message_header_i (incoming) == -1)
-        return -1;
-    }
-
-  return 0;
-}
-
-int
-TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
-{
-  if (TAO_debug_level > 8)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - GIOP_Message_State::parse_message_header_i\n"
-                  ));
-    }
-
-  // Grab the rd_ptr_ from the message block..
-  char *buf = incoming.rd_ptr ();
-
-  // Parse the magic bytes first
-  if (this->parse_magic_bytes (buf) == -1)
-    {
-      return -1;
-    }
-
-  // Get the version information
-  if (this->get_version_info (buf) == -1)
-    return -1;
-
-  // Get the byte order information...
-  if (this->get_byte_order_info (buf) == -1)
-    return -1;
-
-  // Get the message type
-  this->message_type_ = buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
-
-
-  // Get the size of the message..
-  this->get_payload_size (buf);
-
-  if (this->message_size_ == 0)
-    {
-      if (this->message_type_ == TAO_GIOP_MESSAGERROR)
-        {
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "TAO (%P|%t) -"
-                          "GIOP_MESSAGE_ERROR received \n"));
-            }
-          return 0;
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) - "
-                        "Message of  size zero recd. \n"));
-          return -1;
-        }
-    }
-
-  if (this->more_fragments_)
-    {
-      (void) this->parse_fragment_header (buf,
-                                          incoming.length ());
-    }
-
-  return 0;
-}
-
-
-
-
-int
-TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
-{
-  // The values are hard-coded to support non-ASCII platforms.
-  if (!(buf [0] == 0x47      // 'G'
-        && buf [1] == 0x49   // 'I'
-        && buf [2] == 0x4f   // 'O'
-        && buf [3] == 0x50)) // 'P'
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - bad header, ")
-                    ACE_LIB_TEXT ("magic word [%2.2x,%2.2x,%2.2x,%2.2x]\n"),
-                    buf[0],
-                    buf[1],
-                    buf[2],
-                    buf[3]));
-      return -1;
-    }
-
- return 0;
-}
-#endif
-
 int
 TAO_GIOP_Message_State::set_version_info_from_buffer (const char *buf)
 {
-  TAO_Debug_Msg_Emitter_Guard (8, ACE_TEXT("TAO (%P|%t) GIOP_Message_State::set_version_info"));
-
   // We have a GIOP message on hand. Get its revision numbers
   CORBA::Octet incoming_major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
   CORBA::Octet incoming_minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
@@ -246,8 +144,6 @@ TAO_GIOP_Message_State::set_version_info_from_buffer (const char *buf)
 int
 TAO_GIOP_Message_State::set_byte_order_info_from_buffer (const char *buf)
 {
-  TAO_Debug_Msg_Emitter_Guard (8, "TAO (%P|%t) GIOP_Message_State::set_byte_order_info_from_buffer");
-
   // Let us be specific that this is for 1.0
   if (this->giop_version_.minor == 0 &&
       this->giop_version_.major == 1)
@@ -290,16 +186,6 @@ TAO_GIOP_Message_State::set_byte_order_info_from_buffer (const char *buf)
     }
 
   return 0;
-}
-
-void
-TAO_GIOP_Message_State::set_payload_size_from_buffer (const char *rd_ptr)
-{
-  TAO_Debug_Msg_Emitter_Guard (8, "(%P|%t) GIOP_Message_State::set_payload_size_from_buffer");
-  // Move the read pointer
-  rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
-
-  this->message_size_ =  this->read_ulong (rd_ptr);
 }
 
 

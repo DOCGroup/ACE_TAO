@@ -1,266 +1,343 @@
+Mon Mar 17 11:09:00 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/GIOP_Message_Base.cpp (check_for_valid_header): Optimized
+	  implementation.
+
+	* tao/GIOP_Message_Base.* (header_length): Moved to inline for
+	  optimization.
+
+	* tao/GIOP_Message_State.cpp (TAO_Debug_Msg_Emitter_Guard):
+	  Improved implementation so it didn't make copies of the message
+	  even when it was never going to output anything due to debug
+	  level being lower than the value that would cause debug output.
+
+	* tao/GIOP_Message_State.cpp (take_values_from_message_block):
+	* tao/GIOP_Message_State.cpp (set_version_info_from_buffer):
+	* tao/GIOP_Message_State.cpp (set_byte_order_info_from_buffer):
+	* tao/GIOP_Message_State.cpp (set_payload_size_from_buffer):
+
+	  Removed use of TAO_Debug_Msg_Emitter_Guard.
+
+	* tao/GIOP_Message_State.inl (set_payload_size_from_buffer):
+
+	  Moved to inline file.
+
+	* tao/Incoming_Message_Queue.h (TAO_Incoming_Message_Queue):
+	  Changed name of member 'queued_data_' to 'last_added_' to be
+	  more clear about what the pointer actually points to.
+
+	  Added documentation that describes the structure of the linked
+	  list so that hopefully future maintainers don't have to go
+	  through the same learning curve I did.
+
+	* tao/Incoming_Message_Queue.*: Updates to reflect last_added_
+	  member name change.
+
+	* tao/Incoming_Message_Queue.cpp (dequeue_head): Add check to not
+	  allow dequeuing when size is zero, plus we now zero-out the
+	  last_added_ pointer after we've dequeued the last item in the
+	  list.
+
+	* tao/Incoming_Message_Queue.cpp (clone_mb_nocopy_size): Fix
+	  setting and copying of flags on the message and data blocks so
+	  that the DONT_DELETE flag specifically doesn't get copied.  This
+	  cured a HUGE memory leak that was causing substantial
+	  performance problems.
+
+	* tao/Incoming_Message_Queue.cpp (make_uncompleted_message):
+	* tao/Incoming_Message_Queue.cpp (make_completed_message):
+
+	  Cache values used over and over again within these methods such
+	  as header and message block lengths
+
+	* tao/Transport.cpp (handle_input_i):
+
+	  Added flag noting that we enqueued a message.
+
+	  Changed how re-reading is performed; see entry for
+	  try_to_complete for information.
+
+	  Used ACE_CDR::grow to grow the uncompleted_message message block
+	  once the payload size is known.  This insures that the growth
+	  happens with proper alignment constraints.
+
+	* tao/Transport.* (try_to_complete): Added this method which
+	  tries to complete whatever partial message is held in
+	  uncompleted_message_.  The difference between doing this and
+	  simply revisiting the top of handle_input_i is that this will
+	  only try to read enough to complete the message rather than also
+	  read another partial.
+
+	* tao/Transport.cpp (process_queue_head): Added check to insure
+	  that we don't try to do any processing when there's nothing in
+	  the queue.  Also, removed old code leftover from when the
+	  incoming queue could have partial GIOP messages in it.  Finally,
+	  insured that the return value matched previous requirements.
+	  
+
 Thu Mar  6 15:27:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/Incoming_Message_Queue.cpp: Removed Shattering Encapsulation
-	hack around ace/Message_Block.h inclusion to make this link
-	properly on VC6.
+	  hack around ace/Message_Block.h inclusion to make this link
+	  properly on VC6.
 
 	* tao/GIOP_Message_State.cpp: Moved initialization of
-	TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH outside the class
-	declaration.
+	  TAO_Debug_Msg_Emitter_Guard::MAGIC_LENGTH outside the class
+	  declaration.
 
 Wed Mar  5 13:08:37 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/GIOP_Message_Generator_Parser_Impl.inl (check_revision):
-	Modified to only explicitly allow versions of GIOP that TAO
-	supports, and no others.  Note that this change means that
-	whenever a new version of GIOP gets added to TAO, this function
-	must be updated, too.  Hopefully that won't happen so often that
-	this becomes horribly burdensome.  Thanks to Chad Elliott and Paul
-	Calabrese for ideas in getting this right.
+	  Modified to only explicitly allow versions of GIOP that TAO
+	  supports, and no others.  Note that this change means that
+	  whenever a new version of GIOP gets added to TAO, this function
+	  must be updated, too.  Hopefully that won't happen so often that
+	  this becomes horribly burdensome.  Thanks to Chad Elliott and
+	  Paul Calabrese for ideas in getting this right.
 
 	* tao/Incoming_Message_Queue.* (make_uncompleted_message):
 
-	This now behaves similar to make_completed_message, i.e., it
-	allocates the message block held in TAO_Queued_Data and advnaced
-	the rd_ptr past the bytes it consumes.
+	  This now behaves similar to make_completed_message, i.e., it
+	  allocates the message block held in TAO_Queued_Data and advnaced
+	  the rd_ptr past the bytes it consumes.
 
 	* tao/Incoming_Message_Queue.cpp: Eliminated hacks on
-	ACE_Message_Block and replaced with functions
-	clone_mb_nocopy_size() and copy_mb_span() that utilize ONLY the
-	public API.  make_completed_message() and
-	make_uncompleted_message() now use these.
+	  ACE_Message_Block and replaced with functions
+	  clone_mb_nocopy_size() and copy_mb_span() that utilize ONLY the
+	  public API.  make_completed_message() and
+	  make_uncompleted_message() now use these.
 
 	* tao/Transport.cpp (handle_input_i): Enlarged the buffer size and
-	replaced the magic number for the maximum number of re-read
-	attempts with the manifest constant
-	TAO_MAX_TRANSPORT_REREAD_ATTEMPTS, now defined in orbconf.h.
+	  replaced the magic number for the maximum number of re-read
+	  attempts with the manifest constant
+	  TAO_MAX_TRANSPORT_REREAD_ATTEMPTS, now defined in orbconf.h.
 
-	Changed uses of make_uncompleted_message() to be consistent with
-	changes outlined above.
+	  Changed uses of make_uncompleted_message() to be consistent with
+	  changes outlined above.
 
-	Corrected a bug where, upon re-reading after completely emptying
-	the stack-allocated message block, I forgot to reset the
-	rd_ptr/wr_ptr in the message block.
+	  Corrected a bug where, upon re-reading after completely emptying
+	  the stack-allocated message block, I forgot to reset the
+	  rd_ptr/wr_ptr in the message block.
 
 	* tao/orbconf.h: Added new manifest constant
-	TAO_MAX_TRANSPORT_REREAD_ATTEMPTS.  Documentation is in the file.
+	  TAO_MAX_TRANSPORT_REREAD_ATTEMPTS.  Documentation is in the file.
 
 Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* TAO/tao/GIOP_Message_Base.cpp:
 
-	Eliminate parse_incoming_messages(), missing_data(),
-	extract_next_message(), consolidate_node(),
-	consolidate_fragments(), get_message_data(), make_queued_data().
+	  Eliminate parse_incoming_messages(), missing_data(),
+	  extract_next_message(), consolidate_node(),
+	  consolidate_fragments(), get_message_data(), make_queued_data().
 
-	Add new methods set_queued_data_from_message_header() and
-	check_for_valid_header().
+	  Add new methods set_queued_data_from_message_header() and
+	  check_for_valid_header().
 
 	* TAO/tao/GIOP_Message_Base.h:
 
-	Eliminate #if0 parse_incoming_messages(), missing_data(),
-	extract_next_message(), consolidate_node(),
-	consolidate_fragments(), get_message_data(), and
-	make_queued_data() declarations.
+	  Eliminate #if0 parse_incoming_messages(), missing_data(),
+	  extract_next_message(), consolidate_node(),
+	  consolidate_fragments(), get_message_data(), and
+	  make_queued_data() declarations.
 
-	Add declarations for set_queued_data_from_message_header() and
-	check_for_valid_header().
+	  Add declarations for set_queued_data_from_message_header() and
+	  check_for_valid_header().
 
-	Make message_type() static.
+	  Make message_type() static.
 
 	* TAO/tao/GIOP_Message_Generator_Parser_Impl.inl:
 	
-	Reimplement check_revision() to be exact about which GIOP
-	revisions are okay.  This is different from before where it
-	loosely assumed that everything was valid unless it want higher
-	than a particular range.
+	  Reimplement check_revision() to be exact about which GIOP
+	  revisions are okay.  This is different from before where it
+	  loosely assumed that everything was valid unless it want higher
+	  than a particular range.
 
 	* TAO/tao/GIOP_Message_List.cpp:
 
-	Remove parse_incoming_messages() thru consolidate_fragments();
-	remove make_queued_data().
+          Remove parse_incoming_messages() thru consolidate_fragments();
+          remove make_queued_data().
 
-	Add set_queued_data_from_message_header() and
-	check_for_valid_header().
+          Add set_queued_data_from_message_header() and
+          check_for_valid_header().
 
 	* TAO/tao/GIOP_Message_Lite.h:
 
-	Remove declarations for parse_incoming_messages() thru
-	consolidate_fragments(); remove make_queued_data().
+          Remove declarations for parse_incoming_messages() thru
+          consolidate_fragments(); remove make_queued_data().
 
-	Add declarations for set_queued_data_from_message_header() and
-	check_for_valid_header().
+          Add declarations for set_queued_data_from_message_header() and
+          check_for_valid_header().
 
 	* TAO/tao/GIOP_Message_State.cpp:
 
-	Add TAO_Debug_Message_Emitter_Guard class within the compilation
-	unit.
+          Add TAO_Debug_Message_Emitter_Guard class within the compilation
+          unit.
 
-	Change CTOR not to use the 2nd argument.
+          Change CTOR not to use the 2nd argument.
 
-	Change CTOR not to initialize this->base_with the 2nd arg.
+          Change CTOR not to initialize this->base_with the 2nd arg.
 
-	Add take_values_from_message_block().
+          Add take_values_from_message_block().
 
-	Remove parse_magic_bytes(), parse_message_header_i(),
-	parse_message_header().
+          Remove parse_magic_bytes(), parse_message_header_i(),
+          parse_message_header().
 
-	Rename get_version_info() to set_version_info_from_buffer();
-	change argument type to 'const char*'.
+          Rename get_version_info() to set_version_info_from_buffer();
+          change argument type to 'const char*'.
 
-	Rename get_byte_order_info() to set_byte_order_info_from_buffer();
-	change argument type to 'const char*'.
+          Rename get_byte_order_info() to set_byte_order_info_from_buffer();
+          change argument type to 'const char*'.
 
-	Rename get_payload_size() to set_payload_size_from_buffer();
-	change argument type to 'const char*'.
+          Rename get_payload_size() to set_payload_size_from_buffer();
+          change argument type to 'const char*'.
 
-	Change argument type for read_ulong() to 'const char*'.
+          Change argument type for read_ulong() to 'const char*'.
 
 	* TAO/tao/GIOP_Message_State.h:
 
-	Add default value for CTOR arguments so we don't have to pass
-	them.
+          Add default value for CTOR arguments so we don't have to pass
+          them.
 
-	Add declaration for take_values_from_message_block().
+          Add declaration for take_values_from_message_block().
 
-	#if0 parse_message_header() declaration.
+          #if0 parse_message_header() declaration.
 
-	Add documentation for byte_order().
+          Add documentation for byte_order().
 
-	Add new GIOP information accessors: giop_version(),
-	more_fragments(), and message_type().
+          Add new GIOP information accessors: giop_version(),
+          more_fragments(), and message_type().
 
-	#if0 declaration for parse_message_header_i() and
-	parse_magic_bytes().
+          #if0 declaration for parse_message_header_i() and
+          parse_magic_bytes().
 
-	Rename delcarations for get_version_info(), get_byte_order_info(),
-	and get_payload_size().
+          Rename delcarations for get_version_info(), get_byte_order_info(),
+          and get_payload_size().
 
-	#if0 base_ member variable.
+          #if0 base_ member variable.
 
 	* TAO/tao/GIOP_Message_State.inl:
 
-	Add definitions for giop_version(), more_fragments(), and
-	message_type().
+          Add definitions for giop_version(), more_fragments(), and
+          message_type().
 
 	* TAO/tao/Incoming_Message_Queue.cpp:
 
-	Add #include for ace/Message_Block.h, but shatter encapsulation
-	and effectively extend its interface so that we can clone spans of
-	message blocks.
+          Add #include for ace/Message_Block.h, but shatter encapsulation
+          and effectively extend its interface so that we can clone spans of
+          message blocks.
 
-	Modify copy_tail() to use new TAO_Queued_Data member names.
+          Modify copy_tail() to use new TAO_Queued_Data member names.
 
 	* TAO/tao/Incoming_Message_Queue.cpp (class TAO_Queued_Data):
 
-	Update CTORs to initialize new this->current_state_ data member.
+          Update CTORs to initialize new this->current_state_ data member.
 
-	Add new make_uncompleted_message(), ACE_Message_Block hack
-	"extensions", make_completed_message().
+          Add new make_uncompleted_message(), ACE_Message_Block hack
+          "extensions", make_completed_message().
 
-	Rename get_queued_data() to make_queued_data().
+          Rename get_queued_data() to make_queued_data().
 
 	* TAO/tao/Incoming_Message_Queue.h:
 
-	Changed #include <Pluggable_Messaging_Utils.h> to #include
-	<Pluggable_Message.h>
+          Changed #include <Pluggable_Messaging_Utils.h> to #include
+          <Pluggable_Message.h>
 
-	Documentation for is_tail_complete() and is_head_complete() and
-	is_tail_fragmented().
+          Documentation for is_tail_complete() and is_head_complete() and
+          is_tail_fragmented().
 
-	#if0 get_node().
+          #if0 get_node().
 
 	* TAO/tao/Incoming_Message_Queue.h (class TAO_Queued_Data):
 
-	Make CTORs protected so creation can only go through new factory
-	methods, i.e., make_completed_message() and
-	make_uncompleted_message().
+          Make CTORs protected so creation can only go through new factory
+          methods, i.e., make_completed_message() and
+          make_uncompleted_message().
 
-	Add new factory methods make_completed_message() and
-	make_uncompleted_message().
+          Add new factory methods make_completed_message() and
+          make_uncompleted_message().
 
-	Add release() method [in addition to static of same name].
+          Add release() method [in addition to static of same name].
 
-	Add explicit definition of various states and a member to hold the
-	current state (this->current_state_).
+          Add explicit definition of various states and a member to hold the
+          current state (this->current_state_).
 
-	Rename this->missing_data_ flag/value with
-	this->missing_data_bytes_ count.
+          Rename this->missing_data_ flag/value with
+          this->missing_data_bytes_ count.
 
-	Documentation for this->byte_order_.
+          Documentation for this->byte_order_.
 
 	* TAO/tao/Incoming_Message_Queue.inl:
 
-	Replace uses of this->missing_data_ with
-	this->missing_data_bytes_.
+          Replace uses of this->missing_data_ with
+          this->missing_data_bytes_.
 
-	#if0 get_node().
+          #if0 get_node().
 
-	Add release() method.
+          Add release() method.
 
 	* TAO/tao/Pluggable_Message.h:
 
-	#if0 parse_incoming_messages() through consolidate_fragments().
+          #if0 parse_incoming_messages() through consolidate_fragments().
 
-	Add declarations for check_for_valid_header() and
-	set_queued_data_from_message_header().
+          Add declarations for check_for_valid_header() and
+          set_queued_data_from_message_header().
 
 	* TAO/tao/Transport.cpp:
 
-	Add #include <ace/Min_Max.h>
+          Add #include <ace/Min_Max.h>
 
-	Add uncompleted_message_ to initialization list.
+          Add uncompleted_message_ to initialization list.
 
-	Modify what happens when reading in handle_input_i():
+          Modify what happens when reading in handle_input_i():
 
-	- number_of_read_attempts is how many times we'll try to read
-	again to complete a message before we give up.
+          - number_of_read_attempts is how many times we'll try to read
+          again to complete a message before we give up.
 
-	- read_from_the_connection label added
+          - read_from_the_connection label added
 
-	- correct 1st argument to this->recv() to be wr_ptr() rather than
-	rd_ptr().
+          - correct 1st argument to this->recv() to be wr_ptr() rather than
+          rd_ptr().
 
-	- lots of changes that are substantially documented in the code.
+          - lots of changes that are substantially documented in the code.
 
-	#if0 parse_consolidate_messages(), parse_incoming_messages(),
-	missing_data(), consolidate_message(), consolidate_fragments(),
-	consolidate_message_queue(), consolidate_extra_messages(), and
-	make_queued_data().
+          #if0 parse_consolidate_messages(), parse_incoming_messages(),
+          missing_data(), consolidate_message(), consolidate_fragments(),
+          consolidate_message_queue(), consolidate_extra_messages(), and
+          make_queued_data().
 
 	* TAO/tao/Transport.h:
 
-	#if0 declarations for parse_consolidate_messages(), parse_incoming_messages(),
-	missing_data(), consolidate_message(), consolidate_fragments(),
-	consolidate_message_queue(), consolidate_extra_messages(), and
-	make_queued_data().
+          #if0 declarations for parse_consolidate_messages(), parse_incoming_messages(),
+          missing_data(), consolidate_message(), consolidate_fragments(),
+          consolidate_message_queue(), consolidate_extra_messages(), and
+          make_queued_data().
 
-	Add this->uncompleted_message_ data member.
+          Add this->uncompleted_message_ data member.
 
 	* TAO/tao/Strategies/DIOP_Transport.cpp:
 
-	Change 1st arg of this->recv() in handle_input_i() to wr_ptr()
-	from rd_ptr().
+          Change 1st arg of this->recv() in handle_input_i() to wr_ptr()
+          from rd_ptr().
 
 	* TAO/tao/Strategies/SHMIOP_Transport.cpp:
 
-	#if0 consolidate_message().
+          #if0 consolidate_message().
 
 	* TAO/tao/Strategies/SHMIOP_Transport.h:
 
-	#if0 declaration for consolidate_message().
+          #if0 declaration for consolidate_message().
 
 	* TAO/tests/AMI/run_test.pl:
 
-	Increase default number of iterations from 1 to 10000.  Earlier
-	versions of the PMB changes succeeded just fine with low numbers
-	of iterations, but began to fail miserably when the number of
-	iterations climbed.
+          Increase default number of iterations from 1 to 10000.  Earlier
+          versions of the PMB changes succeeded just fine with low numbers
+          of iterations, but began to fail miserably when the number of
+          iterations climbed.
 
 	* TAO/tests/BiDirectional/run_test.pl:
 
-	Added level 10 debug.
+          Added level 10 debug.
 
 	* TAO/tests/InterOp-Naming/INS_test_client.cpp:
 
-	Changes that don't appear to be related in any way to PMB...
+          Changes that don't appear to be related in any way to PMB...

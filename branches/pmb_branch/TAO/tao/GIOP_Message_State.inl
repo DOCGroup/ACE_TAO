@@ -51,22 +51,11 @@ TAO_GIOP_Message_State::message_type () const
   return this->message_type_;
 }
 
-#if 0
-ACE_INLINE int
-TAO_GIOP_Message_State::message_fragmented (void)
+ACE_INLINE void
+TAO_GIOP_Message_State::set_payload_size_from_buffer (const char *rd_ptr)
 {
-  if (this->more_fragments)
-    return 1;
+  // Move the read pointer
+  rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
 
-  return 0;
+  this->message_size_ =  this->read_ulong (rd_ptr);
 }
-
-
-
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_State::header_received (void) const
-{
-  return this->message_size != 0;
-}
-
-#endif
