@@ -127,7 +127,7 @@ protected:
 class ServerObject_i;
 
 class TAO_PortableServer_Export TAO_POA :
-  public PortableServer::POA ,
+  public virtual PortableServer::POA ,
   public TAO_Local_RefCounted_Object
 {
 public:
