@@ -177,7 +177,7 @@ process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
 
   if (result == true)
     {
-      OBJECT obj (iter, false);
+      OBJECT obj (doc, iter, false);
       
       Process_Member_Function_Remote<OBJECT, DATA>
         pf(obj, func);

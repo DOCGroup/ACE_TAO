@@ -116,6 +116,14 @@ void CAD_Handler::update_spr_refs
 void CAD_Handler::process_instance (DOMNodeIterator* iter,
                                     Deployment::SubcomponentInstantiationDescription& sid)
 {
+  ACE_DEBUG ((LM_DEBUG, "i am processing instance \n"));
+  ACE_TString root_node_name;
+
+  root_node_name = XMLString::transcode
+    (this->doc_->getDocumentElement ()->getNodeName ());
+
+  ACE_DEBUG ((LM_DEBUG, "root node name is %s \n", root_node_name.c_str ()));
+
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
