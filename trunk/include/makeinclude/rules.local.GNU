@@ -161,23 +161,23 @@ endif # SOLINK
 
 ifeq ($(vxworks_ntbuild),1)
 $(VDIR)%.creation_stamp:
-	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
+	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
 	@echo > $@
 else
 .PHONY: $(VDIR)%.creation_stamp
 $(VDIR)%.creation_stamp:
-	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
+	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
 endif
 
 ifneq ($(VDIR),$(VSHDIR))
   ifeq ($(vxworks_ntbuild),1)
 $(VSHDIR)%.creation_stamp:
-	@if not exist $(dir $@) mkdir $(subst /,,$(dir $@))
+	@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
 	@echo > $@
   else
 .PHONY: $(VSHDIR)%.creation_stamp
 $(VSHDIR)%.creation_stamp:
-	@-test -d $(dir $@) || mkdir -p $(dir $@) $(ACE_NUL_STDERR)
+	@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
   endif
 endif
 
@@ -449,10 +449,10 @@ build.objdirs: $(CLEANUP_DIRS)
 
 ifeq ($(MKDIR_NTSTYLE),1)
 $(CLEANUP_DIRS):
-	@if not exist $@ mkdir $@
+	@if not exist $@ $(MKDIR) $@ $(ACE_NUL_STDERR)
 else
 $(CLEANUP_DIRS):
-	@test -d $@ || mkdir -p $@ $(ACE_NUL_STDERR)
+	@test -d $@ || $(MKDIR) $@ $(ACE_NUL_STDERR)
 endif
 
 #---------------------------------------------------------------------------
