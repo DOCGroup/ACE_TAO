@@ -1,3 +1,18 @@
+Wed Nov 24 08:06:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+
+	  OpenSSL's DHparams_dup() and DSAparams_dup() macros contain
+	  casts that are invalid C++.  Added C wrapper functions that
+	  allow them to be called from C++.  Changed SSLIOP_EVP_PKEY.cpp
+	  to call the wrappers instead of the macros.
+
 Wed Nov 24 10:02:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -11,18 +26,18 @@ Wed Nov 24 10:02:12 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Wed Nov 24 08:07:21 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           Removed generation of ace/config-all.h include in the
           skeleton source file, since it is already pulled in by
           the stub header file.
-          
+
         * TAO_IDL/be/be_visitor_root/root_sth.cpp:
         * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
-        
+
           Removed generation of TAO_HAS_USING_KEYWORD guards - it is
           a legacy of the days when we supported platforms without
           namespaces.
-          
+
           Thanks to Johhny Willemsen <jwillemsen@remedy.nl> for
           pointing out the above redundant code generation.
 

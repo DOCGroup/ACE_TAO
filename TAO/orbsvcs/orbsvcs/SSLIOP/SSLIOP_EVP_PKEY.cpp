@@ -6,6 +6,7 @@
 #include <openssl/rsa.h>
 #include <openssl/dsa.h>
 #include <openssl/dh.h>
+#include "params_dup.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -44,7 +45,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dsa != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DSA (p.in (), DSAparams_dup (dsa));
+            ::EVP_PKEY_set1_DSA (p.in (), DSAparams_dup_wrapper (dsa));
             ::DSA_free (dsa);
           }
       }
@@ -56,7 +57,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dh != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DH (p.in (), DHparams_dup (dh));
+            ::EVP_PKEY_set1_DH (p.in (), DHparams_dup_wrapper (dh));
             ::DH_free (dh);
           }
       }
