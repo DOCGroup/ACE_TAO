@@ -1,5 +1,8 @@
 Tue May 25 08:23:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
+        * tao/try_macros.h (TAO_THROW_ENV,TAO_THROW_ENV_RETURN):
+          with native exceptions, added ACE_UNUSED_ARG (ENV).
+
         * examples/Quoter/Quoter_i.cpp (copy): wrapped final
           return statement with ACE_NOTREACHED, to please
           DU cxx 6.2-021.
