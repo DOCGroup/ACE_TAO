@@ -1,3 +1,12 @@
+Wed May 23 18:22:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor.cpp (run_reactor_event_loop (ACE_Time_Value&, eh)):
+          It is possible for rounding/conversion fudges in calculating
+          the WFMO/select wait time to cause the wait to time out, but the
+          timer queue be not quite ready to expire the next timer. In this
+          case, the ACE_Time_Value won't have been reduced to 0, so the
+          handle_events call is repeated. Fixes Bugzilla # 153.
+
 Wed May 23 15:55:21 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Containers_T.h: Fixed comment directing reader to include
