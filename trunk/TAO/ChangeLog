@@ -1,3 +1,23 @@
+Tue Oct 28 13:21:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB.cpp:
+
+          Replaced a TypeCode::_nil () return value with 0, similar to other
+          locations in this file, to avoid dependency on Typecode.h.
+
+        * tao/ORB.h:
+
+          Cosmetic changes.
+
+        * tao/ORB_Core.cpp:
+
+          Fixed misstypes of TAO::TAO_INVOKE_SYSTEM_EXCEPTION.
+
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate_Static.dsp:
+        * tao/Valuetype/TAO_Valuetype_Static.dsp:
+
+          Minor changes to project configurations.
+
 Tue Oct 28 13:11:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB.cpp:
