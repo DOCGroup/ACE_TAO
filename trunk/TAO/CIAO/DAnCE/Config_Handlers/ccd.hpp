@@ -14,8 +14,8 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include "XSCRT/XMLSchema.hpp"
+#include "XSCRT/Parser.hpp"
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -29,7 +29,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -40,7 +40,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -51,7 +51,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // specificType
-      // 
+      //
       public:
       bool specificType_p () const;
       ::XMLSchema::string< char > const& specificType () const;
@@ -62,7 +62,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > specificType_;
 
       // supportedType
-      // 
+      //
       public:
       bool supportedType_p () const;
       ::XMLSchema::string< char > const& supportedType () const;
@@ -73,7 +73,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > supportedType_;
 
       // idlFile
-      // 
+      //
       public:
       bool idlFile_p () const;
       ::XMLSchema::string< char > const& idlFile () const;
@@ -84,7 +84,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > idlFile_;
 
       // configProperty
-      // 
+      //
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
@@ -95,7 +95,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // port
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::iterator port_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::const_iterator port_const_iterator;
@@ -109,7 +109,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
 
       // property
-      // 
+      //
       public:
       bool property_p () const;
       ::CIAO::Config_Handlers::ComponentPropertyDescription const& property () const;
@@ -120,7 +120,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -131,7 +131,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;

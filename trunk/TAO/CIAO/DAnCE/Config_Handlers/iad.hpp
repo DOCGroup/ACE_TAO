@@ -15,8 +15,8 @@ namespace CIAO
 
 #include <memory>
 #include <vector>
-#include <XSCRT/XMLSchema.hpp>
-#include <XSCRT/Parser.hpp>
+#include "XSCRT/XMLSchema.hpp"
+#include "XSCRT/Parser.hpp"
 
 #include "Basic_Deployment_Data.hpp"
 
@@ -30,7 +30,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // name
-      // 
+      //
       public:
       ::XMLSchema::string< char > const& name () const;
       ::XMLSchema::string< char >& name ();
@@ -40,7 +40,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > name_;
 
       // referencedArtifact
-      // 
+      //
       public:
       ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
       ::CIAO::Config_Handlers::ImplementationArtifactDescription& referencedArtifact ();
@@ -67,7 +67,7 @@ namespace CIAO
       typedef ::XSCRT::Type Base__;
 
       // label
-      // 
+      //
       public:
       bool label_p () const;
       ::XMLSchema::string< char > const& label () const;
@@ -78,7 +78,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > label_;
 
       // UUID
-      // 
+      //
       public:
       bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
@@ -89,7 +89,7 @@ namespace CIAO
       ::std::auto_ptr< ::XMLSchema::string< char > > UUID_;
 
       // location
-      // 
+      //
       public:
       typedef ::std::vector< ::XMLSchema::string< char > >::iterator location_iterator;
       typedef ::std::vector< ::XMLSchema::string< char > >::const_iterator location_const_iterator;
@@ -103,7 +103,7 @@ namespace CIAO
       ::std::vector< ::XMLSchema::string< char > > location_;
 
       // execParameter
-      // 
+      //
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
@@ -114,7 +114,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
-      // 
+      //
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
@@ -125,7 +125,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // dependsOn
-      // 
+      //
       public:
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
       typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
@@ -139,7 +139,7 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
 
       // infoProperty
-      // 
+      //
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
@@ -150,7 +150,7 @@ namespace CIAO
       ::std::auto_ptr< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
-      // 
+      //
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< char > const& contentLocation () const;
