@@ -655,11 +655,12 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 //   'I', indent according to nesting depth
 //   'e', 'E', 'f', 'F', 'g', 'G': print a double
 //   'l', print line number where an error occurred.
+//   'm': Return the message corresponding to errno value, e.g., as done by <strerror>
 //   'N': print file name where the error occurred.
 //   'n': print the name of the program (or "<unknown>" if not set)
 //   'o': print as an octal number
 //   'P': format the current process id
-//   'p': format the appropriate errno value from sys_errlist
+//   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
 //   'Q': print out the uint64 number
 //   'r': call the function pointed to by the corresponding argument
 //   'R': print return status
@@ -879,6 +880,69 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                                          ASYS_TEXT (
                                            "%s: <unknown error> = %d"),
                                          va_arg (argp, ASYS_TCHAR *), errno);
+#endif /* ACE_WIN32 */
+                      }
+                    break;
+                  }
+                case 'm': // Format the string assocated with the errno value.
+                  {
+                    type = SKIP_SPRINTF;
+                    errno = ACE::map_errno (this->errnum ());
+#if !defined (ACE_HAS_WINCE)
+                    // @@ There is no strerror available on CE.
+                    //    Have to double check if this change is valid.
+                    if (errno >= 0 && errno < sys_nerr)
+                      ACE_OS::sprintf (bp,
+                                       ASYS_TEXT ("%s"),
+                                       strerror (errno));
+                    else
+#endif /* ACE_HAS_WINCE */
+                      {
+#if defined (ACE_WIN32)
+                        LPTSTR lpMsgBuf = 0;
+
+     // PharLap can't do FormatMessage, so try for socket
+     // error.
+# if !defined (ACE_HAS_PHARLAP)
+
+                        ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                                           FORMAT_MESSAGE_FROM_SYSTEM,
+                                         NULL,
+                                         errno,
+                                         MAKELANGID (LANG_NEUTRAL,
+                                                     SUBLANG_DEFAULT),
+                                                     // Default language
+                                         (LPTSTR) &lpMsgBuf,
+                                         0,
+                                         NULL);
+# endif /* ACE_HAS_PHARLAP */
+
+                        // If we don't get a valid response from
+                        // <FormatMessage>, we'll assume this is a
+                        // WinSock error and so we'll try to convert
+                        // it into a string.  If this doesn't work it
+                        // returns "unknown error" which is fine for
+                        // our purposes.
+                        if (lpMsgBuf == 0)
+                          {
+                            const ASYS_TCHAR *message =
+                              ACE::sock_error (errno);
+                            ACE_OS::sprintf (bp,
+                                             ASYS_TEXT ("%s"),
+                                             message);
+                          }
+                        else
+                          {
+                            ACE_OS::sprintf (bp,
+                                             ASYS_TEXT ("%s"),
+                                             lpMsgBuf);
+                            // Free the buffer.
+                            ::LocalFree (lpMsgBuf);
+                          }
+#elif !defined (ACE_HAS_WINCE)
+                        ACE_OS::sprintf (bp,
+                                         ASYS_TEXT ("%s: <unknown error> = %d"),
+                                         errno);
 #endif /* ACE_WIN32 */
                       }
                     break;

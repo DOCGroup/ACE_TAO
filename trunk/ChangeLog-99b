@@ -1,5 +1,27 @@
 Wed Oct  6 08:36:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.h: Changed
+  
+          #   if defined (__SUNPRO_CC < 0x500) 
+  
+          to this
+  
+          #   if defined (__SUNPRO_CC < 0x500) || ((__SUNPRO_CC == 0x500 && > __SUNPRO_CC_COMPAT == 4))  
+  
+          to work around compilation problems with Sun CC 5.0 when used in
+ 	  Sun CC 4 compatibilty mode.  Thanks to Erik Koerber
+ 	  <erik.koerber@siemens.at> for this fix.
+
+	* ace/Log_Msg.cpp (log): Added support for a %m option that
+	  behaves like strerror() rather than perror().  Thanks to Kitty
+ 	  Krishnakumar <kitty@neo.shinko.co.jp> for this feature.
+
+	* ace/OS.i (event_wait): We need to put the call to
+	  ACE_OS::cond_wait() in a loop to guard against spurious wakeups.
+  	  Thanks to Sergey Nemanov <sergey.nemanov@intel.com> and Vladimir
+ 	  Kondratiev <vladimir.kondratiev@intel.com> for reporting this
+ 	  and suggesting a fix.
+
 	* tests/Malloc_Test.cpp: Don't run the Malloc_Test on LynxOS.
 
 	* tests/MM_Shared_Memory_Test.cpp: Fixed the code so that it'll
@@ -3982,8 +4004,8 @@ Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
         * netsvcs/lib/TS_Clerk_Handler.cpp (init):
 
           Changed cast to ACE_SignalHandler to allow it to compile under
-          gcc 2.95.
-
+ 	  gcc 2.95.  Thanks to Jeffrey Franks <Jeffrey_Franks@i-o.com> for
+ 	  reporting the problem.
 
 Sun Aug  1 15:58:39 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
