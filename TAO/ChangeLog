@@ -1,3 +1,9 @@
+Wed Jul 10 10:48:51 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+
+          Updated IDL compiler section.
+
 Wed Jul 10 08:36:49 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/ast_decl.h:
