@@ -4,7 +4,7 @@
 
 #include "FT_ORBInitializer.h"
 #include "FT_PolicyFactory.h"
-#include "orbsvcs/FT_CORBAC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 
 
