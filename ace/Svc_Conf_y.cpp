@@ -244,7 +244,7 @@ YYSTYPE ace_yylval;
 #define ace_yystacksize YYSTACKSIZE
 short ace_yyss[YYSTACKSIZE];
 YYSTYPE ace_yyvs[YYSTACKSIZE];
-#line 273 "Svc_Conf.y"
+#line 274 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
 
@@ -264,7 +264,7 @@ get_module (ACE_Static_Node *str_rec, const char *svc_name)
   const ACE_Service_Type *sr = str_rec->record ();
   const ACE_Service_Type_Impl *type = sr->type ();
   ACE_Stream_Type *st = sr == 0 ? 0 : (ACE_Stream_Type *) type;
-  ACE_Module_Type *mt = st == 0 ? 0 : st->find (svc_name);
+  ACE_Module_Type *mt = st == 0 ? 0 : st->find (ASYS_WIDE_STRING (svc_name));
 
   if (sr == 0 || st == 0 || mt == 0)
     {
@@ -286,34 +286,35 @@ get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type)
   const ACE_Service_Type *sv = svc_type->record ();
   type = sv->type ();
   ACE_Module_Type *mt = (ACE_Module_Type *) type;
+  const char *module_type_name = svc_type->name ();
+  const ASYS_TCHAR *wname = ASYS_WIDE_STRING (module_type_name);
 
   if (sr == 0 || st == 0 || mt == 0)
     {
       ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot locate Module_Type %s or STREAM_Type %s\n"),
-                  ASYS_WIDE_STRING (svc_type->name ()),
+                  wname,
                   ASYS_WIDE_STRING (str_rec->name ())));
       ace_yyerrno++;
     }
 
   // Make sure that the Module has the same name as the
   // Module_Type object from the svc.conf file.
-  const char *module_type_name = svc_type->name ();
   ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
 
-  if (ACE_OS::strcmp (mp->name (), module_type_name) != 0)
+  if (ACE_OS::strcmp (mp->name (), wname) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("warning: assigning Module_Type name %s to Module %s since names differ\n"),
-                  ASYS_WIDE_STRING (module_type_name),
-                  ASYS_WIDE_STRING (mp->name ())));
-      mp->name (module_type_name);
+                  wname,
+                  mp->name ()));
+      mp->name (wname);
     }
 
   return mt;
 }
 
 ACE_Service_Type_Impl *
-ace_create_service_type (const char *name,
+ace_create_service_type (const ASYS_TCHAR *name,
                          int type,
                          void *symbol,
                          u_int flags)
@@ -328,17 +329,18 @@ ace_create_service_type (const char *name,
     {
     case ACE_SVC_OBJ_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol, name, flags),
+                      ACE_Service_Object_Type ((ACE_Service_Object *) symbol,
+                                               ASYS_WIDE_STRING (name), flags),
                       0);
       break;
     case ACE_MODULE_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Module_Type (symbol, name, flags),
+                      ACE_Module_Type (symbol, ASYS_WIDE_STRING (name), flags),
                       0);
       break;
     case ACE_STREAM_T:
       ACE_NEW_RETURN (stp,
-                      ACE_Stream_Type (symbol, name, flags),
+                      ACE_Stream_Type (symbol, ASYS_WIDE_STRING (name), flags),
                       0);
       break;
     default:
@@ -371,7 +373,7 @@ main (int argc, char *argv[])
   return ace_yyparse ();
 }
 #endif /* DEBUGGING */
-#line 375 "Svc_Conf_y.cpp"
+#line 377 "Svc_Conf_y.cpp"
 #define YYABORT goto ace_yyabort
 #define YYACCEPT goto ace_yyaccept
 #define YYERROR goto ace_yyerrlab
@@ -788,7 +790,7 @@ case 25:
 {
       if (ace_yyvsp[0].static_node_ != 0)
         {
-          ACE_ARGV args (ace_yyvsp[0].static_node_->parameters ());
+          ACE_ARGV args (ASYS_WIDE_STRING (ace_yyvsp[0].static_node_->parameters ()));
           ACE_Module_Type *mt = get_module (ace_yyvsp[-2].static_node_, ace_yyvsp[0].static_node_);
 
           if (mt->init (args.argc (), args.argv ()) == -1
@@ -850,8 +852,9 @@ case 30:
 
       if (sym != 0)
         {
-          ACE_Service_Type_Impl *stp = ace_create_service_type (ace_yyvsp[-3].ident_, ace_yyvsp[-2].type_, sym, flags);
-          ace_yyval.svc_record_ = new ACE_Service_Type (ace_yyvsp[-3].ident_, stp, ace_yyvsp[-1].location_node_->handle (), ace_yyvsp[0].type_);
+          ACE_Service_Type_Impl *stp
+            = ace_create_service_type (ASYS_WIDE_STRING (ace_yyvsp[-3].ident_), ace_yyvsp[-2].type_, sym, flags);
+          ace_yyval.svc_record_ = new ACE_Service_Type (ASYS_WIDE_STRING (ace_yyvsp[-3].ident_), stp, ace_yyvsp[-1].location_node_->handle (), ace_yyvsp[0].type_);
         }
       else
         {
@@ -862,64 +865,64 @@ case 30:
     }
 break;
 case 31:
-#line 219 "Svc_Conf.y"
+#line 220 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 32:
-#line 223 "Svc_Conf.y"
+#line 224 "Svc_Conf.y"
 {
       ace_yyval.type_ = 0;
     }
 break;
 case 33:
-#line 227 "Svc_Conf.y"
+#line 228 "Svc_Conf.y"
 {
       ace_yyval.type_ = 1;
     }
 break;
 case 34:
-#line 234 "Svc_Conf.y"
+#line 235 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Object_Node (ace_yyvsp[-2].ident_, ace_yyvsp[0].ident_);
     }
 break;
 case 35:
-#line 238 "Svc_Conf.y"
+#line 239 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Function_Node (ace_yyvsp[-4].ident_, ace_yyvsp[-2].ident_);
     }
 break;
 case 36:
-#line 242 "Svc_Conf.y"
+#line 243 "Svc_Conf.y"
 {
       ace_yyval.location_node_ = new ACE_Static_Function_Node (ace_yyvsp[-2].ident_);
     }
 break;
 case 37:
-#line 249 "Svc_Conf.y"
+#line 250 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_MODULE_T;
     }
 break;
 case 38:
-#line 253 "Svc_Conf.y"
+#line 254 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_SVC_OBJ_T;
     }
 break;
 case 39:
-#line 257 "Svc_Conf.y"
+#line 258 "Svc_Conf.y"
 {
       ace_yyval.type_ = ACE_STREAM_T;
     }
 break;
 case 41:
-#line 264 "Svc_Conf.y"
+#line 265 "Svc_Conf.y"
 { ace_yyval.ident_ = 0; }
 break;
-#line 922 "Svc_Conf_y.cpp"
+#line 925 "Svc_Conf_y.cpp"
     }
     ace_yyssp -= ace_yym;
     ace_yystate = *ace_yyssp;

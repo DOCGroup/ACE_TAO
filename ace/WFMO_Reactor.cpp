@@ -8,11 +8,11 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Thread.h"
 
-#if defined (ACE_WIN32)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 #include "ace/Auto_Ptr.h"
 
@@ -868,8 +868,8 @@ ACE_WFMO_Reactor::open (size_t size,
   // Open the handle repository
   // Two additional handles for internal purposes
   if (this->handler_rep_.open (size + 2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "opening handler repository"),
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		       ASYS_TEXT ("opening handler repository")),
 		      -1);
   else
     this->delete_handler_rep_ = 1;
@@ -879,15 +879,15 @@ ACE_WFMO_Reactor::open (size_t size,
 
   // Open the notification handler
   if (this->notify_handler_.open (*this, this->timer_queue_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "opening notify handler "),
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		       ASYS_TEXT ("opening notify handler ")),
 		      -1);
 
   // Register for <wakeup_all_threads> event
   if (this->register_handler (&this->wakeup_all_threads_handler_,
 			      this->wakeup_all_threads_.handle ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
-		       "registering thread wakeup handler"),
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		       ASYS_TEXT ("registering thread wakeup handler")),
 		      -1);
 
   // Since we have added two handles into the handler repository,
@@ -1621,7 +1621,7 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
 		  break;
 		default:
-		  ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer->mask_));
+		  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer->mask_));
 		  break;
 		}
 	      if (result == -1)

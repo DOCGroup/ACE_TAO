@@ -4,7 +4,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Asynch_IO.h"
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 // This only works on Win32 platforms
 
 #include "ace/Proactor.h"

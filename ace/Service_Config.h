@@ -241,6 +241,15 @@ public:
   // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
+#if defined (ACE_HAS_WINCE)
+  // We must provide these function to bridge Svc_Conf parser with ACE.
+  static int initialize (const ACE_Service_Type *, char parameters[]);
+  static int initialize (const char svc_name[], char parameters[]);
+  static int resume (const char svc_name[]);
+  static int suspend (const char svc_name[]);
+  static int remove (const char svc_name[]);
+#endif /* ACE_HAS_WINCE */
+
   void dump (void) const;
   // Dump the state of an object.
 

@@ -3,8 +3,6 @@
 
 #include "ace/Handle_Set.h"
 
-#if defined (ACE_WIN32)
-
 /************************************************************/
 
 ACE_INLINE int
@@ -20,6 +18,8 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
   //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%t) waking up to get updated handle set info\n")));
   return 0;
 }
+
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
 /************************************************************/
 
@@ -563,7 +563,7 @@ ACE_WFMO_Reactor::suspend_handlers (void)
 
   // First suspend all current handles
   int changes_required = 0;
-  for (int i = 0; i < this->handler_rep_.max_handlep1_ && error == 0; i++)
+  for (size_t i = 0; i < this->handler_rep_.max_handlep1_ && error == 0; i++)
     {
       result = this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i], changes_required);
       if (result == -1)
@@ -572,7 +572,7 @@ ACE_WFMO_Reactor::suspend_handlers (void)
 
   if (!error)
     // Then suspend all to_be_added_handles
-    for (int i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
+    for (size_t i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
       {
         this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 1;
       }
@@ -644,7 +644,7 @@ ACE_WFMO_Reactor::resume_handlers (void)
 
   if (!error)
     // Then resume all to_be_added_handles
-    for (int i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
+    for (size_t i = 0; i < this->handler_rep_.handles_to_be_added_; i++)
       {
         this->handler_rep_.to_be_added_info_[i].suspend_entry_ = 0;
       }
@@ -915,6 +915,23 @@ ACE_WFMO_Reactor::size (void)
 {
   // Size of repository minus the 2 used for internal purposes
   return this->handler_rep_.max_size_ - 2;
+}
+#else
+ACE_INLINE int
+ACE_WFMO_Reactor_Handler_Repository::changes_required (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_WFMO_Reactor_Handler_Repository::make_changes (void)
+{
+  return 0;
+}
+
+ACE_INLINE 
+ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository (void)
+{
 }
 
 #endif /* ACE_WIN32 */

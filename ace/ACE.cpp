@@ -505,23 +505,19 @@ netsvc.so            netsvc.so + warning      libnetsvc.so
 
 */
 
-#if !defined (ACE_HAS_WINCE)
-// @@ This is gradually getting out of hands.  Changing this part
-//    also requires changing Parse_Node.*.  I won't touch that for
-//    now.
 int
-ACE::ldfind (const char filename[],
-             char pathname[],
+ACE::ldfind (const ASYS_TCHAR filename[],
+             ASYS_TCHAR pathname[],
              size_t maxpathnamelen)
 {
   ACE_TRACE ("ACE::ldfind");
 
-  char tempcopy[MAXPATHLEN + 1];
-  char searchpathname[MAXPATHLEN + 1];
-  char searchfilename[MAXPATHLEN + 1];
+  ASYS_TCHAR tempcopy[MAXPATHLEN + 1];
+  ASYS_TCHAR searchpathname[MAXPATHLEN + 1];
+  ASYS_TCHAR searchfilename[MAXPATHLEN + 1];
 
   // Create a copy of filename to work with.
-  if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof (char)))
+  if (ACE_OS::strlen (filename) + 1 > (sizeof tempcopy / sizeof (ASYS_TCHAR)))
     {
       errno = ENOMEM;
       return -1;
@@ -530,7 +526,7 @@ ACE::ldfind (const char filename[],
     ACE_OS::strcpy (tempcopy, filename);
 
   // Insert canonical directory separators.
-  char *separator_ptr;
+  ASYS_TCHAR *separator_ptr;
 
   if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
     // Make all the directory separators ``canonical'' to simplify
@@ -557,23 +553,34 @@ ACE::ldfind (const char filename[],
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
-  char *s = ACE_OS::strrchr (searchfilename, '.');
+  ASYS_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
+
+  ASYS_TCHAR *dll_suffix =
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+    ACE_DLL_SUFFIX;
+#else
+    _TEXT (ACE_DLL_SUFFIX);
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
   if (s != 0)
     {
       // Check whether this matches the appropriate platform-specific suffix.
-      if (ACE_OS::strcmp (s, ACE_DLL_SUFFIX) == 0)
+      if (ACE_OS::strcmp (s, dll_suffix) == 0)
         got_suffix = 1;
       else
         ACE_ERROR ((LM_WARNING,
-                    "Warning: improper suffix for a shared library on this platform: %s\n",
+                    ASYS_TEXT ("Warning: improper suffix for a shared library on this platform: %s\n"),
                     s));
     }
 
   // Make sure we've got enough space in searchfilename.
   if (ACE_OS::strlen (searchfilename) +
       ACE_OS::strlen (ACE_DLL_PREFIX) +
-      got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= (sizeof searchfilename / sizeof (char)))
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+      got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / sizeof (char)))
+#else
+      got_suffix ? 0 : ACE_OS::strlen (dll_suffix) >= (sizeof searchfilename / sizeof (char)))
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     {
       errno = ENOMEM;
       return -1;
@@ -596,19 +603,19 @@ ACE::ldfind (const char filename[],
 
           // First, try matching the filename *without* adding a
           // prefix.
-          ACE_OS::sprintf (pathname, "%s%s%s",
+          ACE_OS::sprintf (pathname, ASYS_TEXT ("%s%s%s"),
                            searchpathname,
                            searchfilename,
-                           got_suffix ? "" : ACE_DLL_SUFFIX);
+                           got_suffix ? ASYS_TEXT ("") : dll_suffix);
           if (ACE_OS::access (pathname, F_OK) == 0)
             return 0;
 
           // Second, try matching the filename *with* adding a prefix.
-          ACE_OS::sprintf (pathname, "%s%s%s%s",
+          ACE_OS::sprintf (pathname, ASYS_TEXT ("%s%s%s%s"),
                            searchpathname,
                            ACE_DLL_PREFIX,
                            searchfilename,
-                           got_suffix ? "" : ACE_DLL_SUFFIX);
+                           got_suffix ? ASYS_TEXT ("") : dll_suffix);
           if (ACE_OS::access (pathname, F_OK) == 0)
             return 0;
         }
@@ -667,22 +674,22 @@ ACE::ldfind (const char filename[],
 
               // First, try matching the filename *without* adding a
               // prefix.
-              ACE_OS::sprintf (pathname, "%s%c%s%s",
+              ACE_OS::sprintf (pathname, ASYS_TEXT ("%s%c%s%s"),
                                path_entry,
                                ACE_DIRECTORY_SEPARATOR_CHAR,
                                searchfilename,
-                               got_suffix ? "" : ACE_DLL_SUFFIX);
+                               got_suffix ? ASYS_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 break;
 
               // Second, try matching the filename *with* adding a
               // prefix.
-              ACE_OS::sprintf (pathname, "%s%c%s%s%s",
+              ACE_OS::sprintf (pathname, ASYS_TEXT ("%s%c%s%s%s"),
                                path_entry,
                                ACE_DIRECTORY_SEPARATOR_CHAR,
                                ACE_DLL_PREFIX,
                                searchfilename,
-                               got_suffix ? "" : ACE_DLL_SUFFIX);
+                               got_suffix ? ASYS_TEXT ("") : dll_suffix);
               if (ACE_OS::access (pathname, F_OK) == 0)
                 break;
 
@@ -702,17 +709,16 @@ ACE::ldfind (const char filename[],
 }
 
 FILE *
-ACE::ldopen (const char *filename, const char *type)
+ACE::ldopen (const ASYS_TCHAR *filename, const ASYS_TCHAR *type)
 {
   ACE_TRACE ("ACE::ldopen");
-  char buf[MAXPATHLEN + 1];
+  ASYS_TCHAR buf[MAXPATHLEN + 1];
 
-  if (ACE::ldfind (filename, buf, sizeof buf) == -1)
+  if (ACE::ldfind (filename, buf, sizeof (buf)/sizeof (ASYS_TCHAR)) == -1)
     return 0;
   else
     return ACE_OS::fopen (buf, type);
 }
-#endif /* ACE_HAS_WINCE */
 
 const char *
 ACE::basename (const char *pathname, char delim)
