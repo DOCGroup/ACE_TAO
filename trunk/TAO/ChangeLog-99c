@@ -1,3 +1,35 @@
+Tue Jun 15 16:16:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/collocated_ss.h:
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp
+	  (void_return_type): Added a helper method to determine whether
+	  the generated function returns void or not.  Replaced several
+	  places that can use the method.
+
+	  (visit_operation): Added ACE_UNUSED_ARG for _tao_retval to avoid
+	  warngings on some platforms.
+
+	The following changes decouple the generated skeletons from the
+	generated stubs.  Therefore, there's no need to include *S.* files on
+	client side anymore.
+
+	* TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): Fixed the code to generate
+	  <_create_collocated_objref.>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): Changed to use the _create_collocated_objref
+	  of ServantBase to get the collocated object from the servant.
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_stubs): There's no need
+	  to include the server header file in client side anymore.
+
+	* tao/Servant_Base.{h,cpp} (_create_collocated_objref): This
+	  function now takes an extra argument <repository_id> so we can
+	  check whether we are asking for the right collocated object
+	  reference.
+
 Tue Jun 15 16:18:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/decode.cpp:
@@ -15,7 +47,7 @@ Tue Jun 15 15:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/Basic/run_test.pl:
 	* orbsvcs/tests/Event/Performance/run_test.pl:
-	  Use the new features in the Process perl class to timeout any of 
+	  Use the new features in the Process perl class to timeout any of
 	  the tests.
 
 Tue Jun 15 14:50:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -96,7 +128,7 @@ Mon Jun 14 22:02:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	  Added support for the new dispatching strategy
+	  Added support for the new dispatching strategy.
 
 	* orbsvcs/orbsvcs/Event/EC_Command.h:
 	* orbsvcs/orbsvcs/Event/EC_Command.i:
