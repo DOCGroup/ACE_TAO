@@ -107,7 +107,8 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
                     Servant_var<ECFS_Consumer>[consumer_count],
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
-  for (int i = 0; i != consumer_count; ++i)
+  int i;
+  for (i = 0; i != consumer_count; ++i)
     {
       consumer[i] =
         Servant_var<ECFS_Consumer> (new ECFS_Consumer (experiment_id,
@@ -131,7 +132,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
   event[0].header.source = experiment_id;
   event[0].header.ttl    = 1;
 
-  for (int i = 0; i != iterations; ++i)
+  for (i = 0; i != iterations; ++i)
     {
       ACE_hrtime_t creation = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
@@ -149,7 +150,7 @@ ECFS_Peer::run_experiment (CORBA::Long consumer_count,
   for (int j = 0; j != iterations; ++j)
     samples[j] = 0;
 
-  for (int i = 0; i != consumer_count; ++i)
+  for (i = 0; i != consumer_count; ++i)
     {
       for (int j = 0; j != iterations; ++j)
         {

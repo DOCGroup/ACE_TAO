@@ -1,3 +1,24 @@
+Fri Dec 07 09:58:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/EC_Federated_Latency/EC_Federated_Latency.dsw:
+	* orbsvcs/performance-tests/EC_Federated_Latency/client.dsp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/server.dsp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/EC_Federated_Scalability.dsw:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/client.dsp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/server.dsp:
+	* orbsvcs/performance-tests/EC_Latency/EC_Latency.dsw:
+	* orbsvcs/performance-tests/EC_Latency/client.dsp:
+	* orbsvcs/performance-tests/EC_Latency/server.dsp:
+	* orbsvcs/performance-tests/EC_Scalability/EC_Scalability.dsw:
+	* orbsvcs/performance-tests/EC_Scalability/client.dsp:
+	* orbsvcs/performance-tests/EC_Scalability/server.dsp:
+	  Add MSVC6 projects and workspaces, how they were generated is a
+	  zeeeecret.
+
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Peer.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	  MSVC6 is so lame it does not understand the scope of variable
+
 Fri Dec  7 12:05:49 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
