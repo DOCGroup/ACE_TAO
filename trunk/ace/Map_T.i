@@ -564,7 +564,7 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_I
 template <class T, class VALUE> ACE_INLINE T
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
   return T (entry.int_id_.first (),
             entry.int_id_.second ());
 }
@@ -619,7 +619,7 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Re
 template <class T, class VALUE> ACE_INLINE T
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Active_Map_Manager<VALUE>::ENTRY &entry = *this->implementation_;
   return T (entry.int_id_.first (),
             entry.int_id_.second ());
 }
@@ -1028,7 +1028,7 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE T
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
   return T (entry.ext_id_,
             entry.int_id_);
 }
@@ -1083,7 +1083,7 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> ACE_INLINE T
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
   return T (entry.ext_id_,
             entry.int_id_);
 }
@@ -1342,7 +1342,7 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Imp
 template <class T, class KEY, class VALUE> ACE_INLINE T
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
   return T (entry.ext_id_,
             entry.int_id_);
 }
@@ -1397,7 +1397,7 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reve
 template <class T, class KEY, class VALUE> ACE_INLINE T
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
+  ACE_TYPENAME ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::ENTRY &entry = *this->implementation_;
   return T (entry.ext_id_,
             entry.int_id_);
 }
