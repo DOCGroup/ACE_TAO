@@ -1,3 +1,8 @@
+Mon Jun 14 15:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Shared_Memory_Pool_Growth.cpp:
+          Added missing include for non-inlined builds.
+
 Mon Jun 14 15:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/FIFO_Test.cpp:
