@@ -46,7 +46,7 @@ test_i::method (CORBA::ULong work,
 
   RTCORBA::Priority current_priority =
     this->rt_current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   const char *priority_string = 0;
   if (current_priority == this->low_priority_)
