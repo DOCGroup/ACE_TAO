@@ -4661,12 +4661,12 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
                               (WSABUF *) msg->msg_iov,
                               msg->msg_iovlen,
                               &bytes_received,
-                              (DWORD *) &flags, 
-                              msg->msg_name,   
-                              &msg->msg_namelen,   
-                              0, 
-                              0); 
- 
+                              (DWORD *) &flags,
+                              msg->msg_name,
+                              &msg->msg_namelen,
+                              0,
+                              0);
+
   if (result != 0)
     {
       errno = ::GetLastError ();
@@ -4687,8 +4687,8 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 }
 
 ACE_INLINE int
-ACE_OS::sendmsg (ACE_HANDLE handle, 
-                 const struct msghdr *msg, 
+ACE_OS::sendmsg (ACE_HANDLE handle,
+                 const struct msghdr *msg,
                  int flags)
 {
   // ACE_TRACE ("ACE_OS::sendmsg");
@@ -4699,12 +4699,12 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
                             (WSABUF *) msg->msg_iov,
                             msg->msg_iovlen,
                             &bytes_sent,
-                            flags, 
-                            msg->msg_name,   
-                            msg->msg_namelen,   
-                            0, 
-                            0); 
- 
+                            flags,
+                            msg->msg_name,
+                            msg->msg_namelen,
+                            0,
+                            0);
+
   if (result != 0)
     {
       errno = ::GetLastError ();
@@ -6348,7 +6348,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
     }
   else
     return (ssize_t) bytes_received;
-#else  
+#else
   return ACE_OS::readv (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
 }
@@ -9921,13 +9921,13 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 # endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
-#if defined (ACE_LACKS_COND_T)
+#if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
 ACE_INLINE long
 ACE_cond_t::waiters (void) const
 {
   return this->waiters_;
 }
-#endif /* ACE_LACKS_COND_T */
+#endif /* ACE_LACKS_COND_T && ACE_HAS_THREADS */
 
 #if 0
 ACE_INLINE int
