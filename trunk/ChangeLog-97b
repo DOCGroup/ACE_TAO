@@ -1,3 +1,7 @@
+Fri Oct 10 23:31:37 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ACE version 4.3.14, released Fri Oct 10 23:31:37 1997.
+
 Fri Oct 10 18:39:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Service_Config_Test.cpp: Moved the static member function
