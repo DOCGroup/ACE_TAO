@@ -1,3 +1,26 @@
+Thu Jul 20 13:37:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/driver/drv_args.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
+
+	  The generation of ostream operators for user exceptions
+	  was removed, along with the command line option to
+	  suppress this generation. The ostream operator in the
+	  base class CORBA::Exception works fine and produces
+	  the same output. Thanks to Hans Utz 
+	  <hans.utz@student.uni-ulm.de> for pointing this out.
+
+	* docs/compiler.html:
+	* docs/releasenotes/index.html:
+
+	  Updated documentation.
+
 Wed Jul 19 21:35:46 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Simple/chat/Makefile
