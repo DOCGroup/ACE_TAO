@@ -9,24 +9,24 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN =	Env_Value_Test \
+BIN =   Aio_Platform_Test \
 	Atomic_Op_Test \
 	Barrier_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
 	Conn_Test \
 	Enum_Interfaces_Test \
+	Env_Value_Test \
 	Future_Test \
 	Handle_Set_Test \
 	OrdMultiSet_Test \
 	Hash_Map_Manager_Test \
 	IOStream_Test \
 	Map_Manager_Test \
-	MM_Shared_Memory_Test \
 	Mem_Map_Test \
+	MM_Shared_Memory_Test \
 	MT_Reactor_Timer_Test \
 	MT_SOCK_Test \
-	Simple_Message_Block_Test \
 	Message_Block_Test \
 	Message_Queue_Test \
 	Message_Queue_Notifications_Test \
@@ -48,6 +48,7 @@ BIN =	Env_Value_Test \
 	Semaphore_Test \
 	Service_Config_Test \
 	Sigset_Ops_Test \
+	Simple_Message_Block_Test \
 	SOCK_Test \
 	SOCK_Connector_Test \
 	SPIPE_Test \
@@ -64,7 +65,7 @@ BIN =	Env_Value_Test \
 	Tokens_Test \
 	TSS_Test \
 	UPIPE_SAP_Test \
-	Aio_Platform_Test
+	XtReactor_Test 
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
