@@ -4,6 +4,13 @@ Mon Jun 28 15:01:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Use the new reset_contents() method in the InputCDR stream to
 	  avoid extra memory allocations in the critical path.
 
+Mon Jun 28 14:52:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp
+	  (visit_interface):  Fixed problem with generating multiple base
+	  classes.  Thanks to Carlos for helping this out.
+
 Mon Jun 28 13:39:15 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp: Made the test more
@@ -27,9 +34,9 @@ Mon Jun 28 12:54:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 Mon Jun 28 12:46:57 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
   	  Fixed the exception macros problems. Thanks Carlos for reporting
-	  the errors. 
+	  the errors.
 
 Mon Jun 28 12:19:21 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
