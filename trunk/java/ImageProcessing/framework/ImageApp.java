@@ -7,6 +7,7 @@ import java.io.*;
 import java.awt.image.*;
 import java.applet.*;
 import gjt.Separator;
+import gjt.Util;
 import imaging.filters.Timer;
 
 public class ImageApp extends Applet
