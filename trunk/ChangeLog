@@ -1,5 +1,8 @@
 Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests/Message_Queue_Test_Ex.cpp: Fixed some ASYS_* macros with
+	  ACE_* stuff.  Thanks to Darrell for reporting this.
+
 	* ace/Message_Queue_T.h,
   	* ace/Message_Queue_T.i,
   	* ace/Message_Queue_T.cpp:
