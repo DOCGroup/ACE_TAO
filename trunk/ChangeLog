@@ -1,3 +1,9 @@
+Mon Sep 16 15:26:56 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added define ACE_HAS_TEMPLATE_TYPEDEFS to generate
+          ACE_Event_Handler_T documentation.
+
 Mon Sep 16 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:
