@@ -15,6 +15,7 @@ DIRS = \
   PortableServer \
   Messaging \
   DynamicAny \
+  DynamicInterface \
   BiDir_GIOP \
   IORManipulation \
   IORTable \
@@ -324,7 +325,6 @@ endif # minimum_corba
 ifeq ($(corba_messaging),1)
 
 DIRS += \
-  DynamicInterface \
   RTCORBA \
   RTPortableServer
 
