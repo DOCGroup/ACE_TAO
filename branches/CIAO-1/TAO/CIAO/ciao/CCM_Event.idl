@@ -41,9 +41,7 @@ module Components
   };
   typedef sequence<EmitterDescription> EmitterDescriptions;
 
-  // @@ I added the parent class "PortDescription" below as it seems
-  //    to be missing from the draft.
-  valuetype SubscriberDescription : PortDescription
+  valuetype SubscriberDescription
   {
     public Cookie ck;
     public EventConsumerBase consumer;
