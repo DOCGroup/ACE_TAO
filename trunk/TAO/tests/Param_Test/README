@@ -61,6 +61,12 @@ To run the client, type
        objref               for object references
 
 
+	There are 2 options of giving the Param_obj-ref-key i.e IOR to the client:
+
+	1. Using the -f option to read the IOR from a file.
+
+	2. Using the -k option to read the IOR from the 	
+	   command line.
 
 
 
