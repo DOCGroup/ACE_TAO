@@ -513,8 +513,8 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
       INT_ID item;
  
       item = (*part_rev_iter_).item ();
-      ACE_DEBUG((LM_DEBUG, ACE_LIB_TEXT("item=[%d]\n"), item));
-      part_rev_iter_--;
+      ACE_ASSERT (item == item_array_ [i]);
+      part_rev_iter_++;
     }
 
   part_fwd_iter_ = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (key_array_ [5], stable_tree_);
@@ -523,8 +523,8 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
       INT_ID item;
 
       item = (*part_fwd_iter_).item ();
-      ACE_DEBUG((LM_DEBUG, ACE_LIB_TEXT("item=[%d]\n"), item));
-      part_fwd_iter_--;
+      ACE_ASSERT (item == item_array_ [i]);
+      part_fwd_iter_++;
     }
 }
 
