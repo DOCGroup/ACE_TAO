@@ -256,6 +256,12 @@ struct TAO_GIOP_LocateRequestHeader
   // = DESCRIPTION
   //   Location service support
 {
+  TAO_GIOP_LocateRequestHeader (void);
+  // Constructor
+  
+  CORBA::Boolean init (CDR &msg, CORBA::Environment& env);
+  // Initialize the header from the values found in <msg>.
+    
   CORBA::ULong request_id;
   TAO_opaque object_key;
 };
