@@ -1,3 +1,9 @@
+Tue Nov 17 11:15:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * tests/version_tests/RB_Tree_Test.dsp
+          tests/version_tests/version_tests.dsw : created RB_Tree_Test project
+	  for NT version tests and added it to version tests workspace.
+
 Tue Nov 17 10:15:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Map_Manager.cpp (resize_i): Made sure the new elements in
