@@ -1,3 +1,13 @@
+Mon Sep 14 14:34:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* apps/gperf/src/gperf.dsp:
+	* apps/gperf/src/gperf_lib.dsp:
+	  Fixed the project by removing new.cpp (which disappeared a 
+	  while back) and changed the code generation to DLL.  Now
+	  seems to work on NT.
+
+	* ace/config-win32.h: ACE_HAS_GPERF now on NT.
+
 Mon Sep 14 13:41:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Fixed qsort() and bsearch() so they work correctly for
