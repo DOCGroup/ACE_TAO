@@ -8,8 +8,6 @@
 
 class Cache_Manager;
 
-#include <iostream.h>
-
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::JAWS_Cache_Manager (ACE_Allocator *alloc,

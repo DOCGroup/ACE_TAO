@@ -1,3 +1,131 @@
+Tue May  9 20:02:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Asynch_Acceptor.cpp:
+
+          Was still including "Asynch_Acceptor.i" which has been removed.
+
+        * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
+
+          Removed iostream.h include here.  This is not good since ACE 
+          already includes it, and ACE might already include <iostream>, 
+          which is incompatible with <iostream.h>.
+
+        * examples/Reactor/WFMO_Reactor/test_talker.cpp:
+
+          Looks like the constructor to Proactor was changed, but this
+          test didn't get changed also.  Removed one of the arguments
+          being passed to it.
+
+        * websvcs/lib/websvcs_export.h:
+
+          Regenerated it.  It seems like I changed the websvcs library
+          based on what I thought was in this file.  This didn't work,
+          since I was assuming that ACE_WEBSVCS_HAS_DLL was automatically
+          defined (and older versions of these export files did not do 
+          that).
+
+        * bin/msvc_auto_compile.pl:
+
+          Added a -u option that tells the script to pass the /USEENV
+          flag to msdev when it runs.
+
+          Added a -ACE option that tells the script just to compile the
+          ACE directories.  
+
+          Changed -core to -CORE to be consistent with -ACE (and the 
+          upcoming -TAO).
+
+        * apps/Gateway/Gateway/Gateway.dsp:
+        * apps/Gateway/Gateway/gatewayd.dsp:
+        * apps/Gateway/Peer/Peer.dsp:
+        * apps/Gateway/Peer/peerd.dsp:
+        * apps/JAWS/clients/Caching/Caching.dsp:
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * apps/JAWS/server/jaws.dsp:
+        * apps/JAWS2/server.dsp:
+        * apps/JAWS2/HTTPU/HTTPU.DSP:
+        * apps/JAWS2/HTTPU/HTTPU.DSW:
+        * apps/JAWS2/JAWS/jaws.dsp:
+        * examples/ASX/Event_Server/Event_Server/Event_Server.dsp:
+        * examples/ASX/Event_Server/Transceiver/transceiver.dsp:
+        * examples/ASX/Message_Queue/Bounded_Buffer.dsp:
+        * examples/ASX/Message_Queue/Buffer_Stream.dsp:
+        * examples/ASX/Message_Queue/Priority_Buffer.dsp:
+        * examples/ASX/UPIPE_Event_Server/UPIPE_Event_Server.dsp:
+        * examples/Bounded_Packet_Relay/Bounded_Packet_Relay.dsp:
+        * examples/Configuration/Test.dsp:
+        * examples/Connection/blocking/SPIPE.dsp:
+        * examples/Connection/blocking/acceptor.dsp:
+        * examples/Connection/non_blocking/non_blocking.dsp:
+        * examples/Connection/non_blocking/server.dsp:
+        * examples/IPC_SAP/ATM_SAP/CPP_client.dsp:
+        * examples/IPC_SAP/ATM_SAP/CPP_server.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_inclient.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_inserver.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memserver.dsp:
+        * examples/IPC_SAP/SOCK_SAP/C_inserver.dsp:
+        * examples/IPC_SAP/SOCK_SAP/SOCK_SAP.dsp:
+        * examples/Log_Msg/Callback.dsp:
+        * examples/Log_Msg/Log_Msg.dsp:
+        * examples/Log_Msg/Ostream.dsp:
+        * examples/Logger/Acceptor-server/server_loggerd.dsp:
+        * examples/Mem_Map/file-reverse/file_reverse.dsp:
+        * examples/Naming/Naming.dsp:
+        * examples/Naming/multiple_contexts.dsp:
+        * examples/Naming/non_existent.dsp:
+        * examples/OS/Process/Process.dsp:
+        * examples/OS/Process/imore.dsp:
+        * examples/QOS/client.dsp:
+        * examples/QOS/server.dsp:
+        * examples/Reactor/Dgram/CODgram.dsp:
+        * examples/Reactor/Dgram/Dgram.dsp:
+        * examples/Reactor/Misc/Misc.dsp:
+        * examples/Reactor/Misc/demuxing.dsp:
+        * examples/Reactor/Misc/early_timeouts.dsp:
+        * examples/Reactor/Misc/notification.dsp:
+        * examples/Reactor/Misc/reactors.dsp:
+        * examples/Reactor/Misc/signals_1.dsp:
+        * examples/Reactor/Misc/signals_2.dsp:
+        * examples/Reactor/Ntalker/ntalker.dsp:
+        * examples/Reactor/Proactor/post_completions.dsp:
+        * examples/Reactor/Proactor/test_cancel.dsp:
+        * examples/Reactor/Proactor/test_end_event_loop.dsp:
+        * examples/Reactor/Proactor/test_multiple_loops.dsp:
+        * examples/Reactor/Proactor/test_proactor.dsp:
+        * examples/Reactor/Proactor/test_timeout.dsp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.dsp:
+        * examples/Registry/Registry.dsp:
+        * examples/Registry/update.dsp:
+        * examples/Service_Configurator/Misc/Timer.dsp:
+        * examples/Service_Configurator/Misc/main.dsp:
+        * examples/Shared_Malloc/malloc.dsp:
+        * examples/Shared_Malloc/multiple_mallocs.dsp:
+        * examples/Shared_Malloc/persistence.dsp:
+        * examples/Shared_Malloc/position_independent_malloc.dsp:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Web_Crawler/Web_Crawler.dsp:
+        * performance-tests/Misc/basic_perf.dsp:
+        * performance-tests/Misc/childbirth_time.dsp:
+        * performance-tests/Misc/context_switch_time.dsp:
+        * performance-tests/Misc/test_mutex.dsp:
+        * performance-tests/Misc/test_naming.dsp:
+        * performance-tests/Misc/test_singleton.dsp:
+        * performance-tests/Server_Concurrency/Leader_Follower/Leader_Follower.dsp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Queue_Based_Workers.dsp:
+        * performance-tests/TCP/TCP.dsp:
+
+          While testing the -ACE flag in msvc_auto_compile, I found that
+          there were many dsps that were either creating precompiled 
+          headers, didn't have the correct include paths, or even weren't
+          in the CRLF format.  Fixed them up.
+
+        * apps/JAWS/clients/Caching/testing.dsp:
+        * performance-tests/Synch-Benchmarks/Synch_Tests.dsp:
+
+          These project files didn't look like they are used anymore,
+          so I removed them.
+
 Tue May  9 17:38:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/auto_compile_win32.pl:

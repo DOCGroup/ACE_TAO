@@ -83,7 +83,8 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                     month, &tms.tm_mday,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec,
                     &tms.tm_year) == 7) 
-    ;
+    {
+    }
 
   delete buf;
 
