@@ -51,10 +51,6 @@ typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;
 
 static ACE_LOG_MSG_IPC_STREAM *ACE_Log_Msg_message_queue = 0;
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include /**/ <iostream.h>
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
