@@ -56,7 +56,7 @@
 #  endif /* __HP_aCC */
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
-#  define ACE_PREPROCESSOR_ARGS "-E +W 67"
+#  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
 // Compiler supports to-be-ANSI casts
 #  define ACE_HAS_ANSI_CASTS
