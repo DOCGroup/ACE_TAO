@@ -2086,12 +2086,6 @@ sequence_type_spec
                                                         tp,
                                                         s->is_local (),
                                                         s->is_abstract ());
-              /*
-               * Add this AST_Sequence to types defined in the global scope.
-               */
-              (void) idl_global->root ()->fe_add_sequence (
-                                              AST_Sequence::narrow_from_decl ($$)
-                                            );
             }
           }
         }
@@ -2122,12 +2116,6 @@ sequence_type_spec
                     s->is_local (),
                     s->is_abstract ()
                   );
-              /*
-               * Add this AST_Sequence to types defined in the global scope
-               */
-              (void) idl_global->root ()->fe_add_sequence (
-                                              AST_Sequence::narrow_from_decl ($$)
-                                            );
             }
           }
         }
