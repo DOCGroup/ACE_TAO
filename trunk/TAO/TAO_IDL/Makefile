@@ -8,12 +8,12 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-INFO	= 
+INFO	=
 LIBS	= -lACE
 DIRS	= driver fe ast util narrow be
 BIN	= tao_idl
-TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe
-CLONE	= 
+TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe -lACE
+CLONE	=
 BUILD	= $(VBIN)
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -35,7 +35,7 @@ all:
 
 tags:
 	rm -f TAGS
-	etags -C include/*.h be_include/*.h 
+	etags -C include/*.h be_include/*.h
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
 clean:
@@ -43,4 +43,3 @@ clean:
 
 realclean:
 	rm -f tao_idl TAGS
-
