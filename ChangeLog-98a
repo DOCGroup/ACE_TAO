@@ -1,3 +1,8 @@
+Fri Jan 09 07:04:47 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_g++.GNU: removed
+          -pipe from CC and CXX.  It was already in CCFLAGS.
+
 Fri Jan 09 00:14:20 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Connection_Handler_Acceptor.cpp:
@@ -31,7 +36,7 @@ Thu Jan  8 19:50:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  <kriol@fnal.gov> for contributing this.
 
 	* include/makeinclude/platform_sunos5_g++.GNU (CXX): Added the
-	  -pipe flag.  
+	  -pipe flag.
 
 	* man: Updated all the manual pages.
 
