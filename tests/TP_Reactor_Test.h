@@ -27,6 +27,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 const  size_t MAX_SENDERS = 1000;
 const  size_t MAX_RECEIVERS = 1000;

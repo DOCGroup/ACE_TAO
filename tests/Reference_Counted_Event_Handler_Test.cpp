@@ -22,6 +22,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(tests, Reference_Counted_Event_Handler_Test, "$Id$")
 
