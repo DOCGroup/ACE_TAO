@@ -25,9 +25,7 @@ namespace CIAO
 {
 
   namespace Config_Handlers
-  {
-    
-   struct PlanConnectionDescription;
+  {  
    
    /*
     * @class Base_Handler
