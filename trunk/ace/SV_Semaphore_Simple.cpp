@@ -127,7 +127,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
   // Basically "hash" the values in the <name>.  This won't
   // necessarily guarantee uniqueness of all keys.
   // But (IMHO) CRC32 is good enough for most purposes (Carlos)
-  return ACE::crc32 (name);
+  return (key_t) ACE::crc32 (name);
 }
 
 // Open or create a ACE_SV_Semaphore.  We return 1 if all is OK, else
