@@ -1,3 +1,8 @@
+Fri Aug  6 15:44:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/TAO_Service/Makefile.am:
+	  New file.
+
 Fri Aug  6 12:51:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Argument.cpp:
@@ -42,7 +47,7 @@ Fri Aug  6 12:51:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/operation_details.cpp:
         * tao/operation_details.h:
         * tao/DynamicInterface/DII_Invocation.cpp:
-        
+
           Added TAO_HAS_INTERCEPTORS == 1 guards to all interceptor-related
           operations, so code generated from IDL operations will compile
           if Any operators (used by interceptors) are suppressed in code
@@ -60,7 +65,7 @@ Fri Aug  6 08:05:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  max_id_ to 0.  Thanks to Thomas Girard <thomas.g.girard@free.fr>
  	  for reporting this.
 
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id): 
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
 	  Duplidate object references before putting them in the hash map.
   	  Thanks to Thomas Girard <thomas.g.girard@free.fr> for this fix.
 
@@ -246,9 +251,6 @@ Tue Aug  3 08:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  This caused problems for targets w/ACE_HAS_NOTHROW_NEW.
 	  I eliminated the error checks because this function can
 	  never called with a bad buffer pointer.
-
-	* orbsvcs/TAO_Service/Makefile.am:
-	  Update, with a little help from MPC.
 
 	* orbsvcs/PSS/Makefile.am:
 	  New file.
