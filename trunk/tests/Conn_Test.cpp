@@ -31,15 +31,14 @@
 #include "ace/Get_Opt.h"
 #include "Conn_Test.h"
 
-#if defined (DEC_CXX)
+#if defined (ACE_LACKS_CONN_TEST)
 
 int
 main (int, char *[])
 {
   ACE_START_TEST ("Conn_Test");
 
-  // Conn_Test doesn't build on DEC_CXX 5.5, and doesn't run properly
-  // (it runs indefinitely) on DEC_CXX 6.0.
+  // Conn_Test doesn't build on DEC_CXX 5.5.
   ACE_ERROR ((LM_ERROR, "Conn_Test not supported on this platform\n"));
 
   ACE_END_TEST;
@@ -350,7 +349,7 @@ client (void *arg)
       (n_threads,
        ACE_THR_FUNC (client_connections),
        (void *) &info,
-       THR_NEW_LWP | THR_DETACHED) == -1)
+       THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
   // Wait for the threads to exit.
@@ -493,21 +492,21 @@ spawn_threads (ACCEPTOR *acceptor,
       (n_servers,
        ACE_THR_FUNC (server),
        (void *) acceptor,
-       THR_NEW_LWP | THR_DETACHED) == -1)
+       THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 #else
   // The OS only allow one thread to block in accept().
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (server),
        (void *) acceptor,
-       THR_NEW_LWP | THR_DETACHED) == -1)
+       THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 #endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (client),
        (void *) server_addr,
-       THR_NEW_LWP | THR_DETACHED) == -1)
+       THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n%a", "thread create failed"));
 
   // Wait for the threads to exit.
@@ -578,6 +577,8 @@ template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>;
+template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
+template class ACE_Recycling_Strategy<Svc_Handler>;
 template class ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Svc_Handler>;
@@ -597,9 +598,11 @@ template class ACE_Svc_Tuple<Svc_Handler>;
 #pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *>
 #pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Svc_Handler> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate template class ACE_NOOP_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate template class ACE_Recycling_Strategy<Svc_Handler>
 #pragma instantiate ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Svc_Tuple<Svc_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* DEC_CXX */
+#endif /* ACE_LACKS_CONN_TEST */
