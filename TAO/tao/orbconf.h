@@ -19,7 +19,9 @@
 
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+// "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
+// particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
+#include "ace/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
