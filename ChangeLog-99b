@@ -1,3 +1,7 @@
+Tue Sep  7 08:04:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/run_tests.lst: Added Signal_Test.
+
 1999-09-07  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tests/Signal_Test.cpp (main): Fixed the test so that it won't
