@@ -1846,7 +1846,7 @@ ACE::get_ip_interfaces (size_t &count,
 // The ACE_Object_Manager_Destroyer class is placed in this file, rather
 // than Object_Manager.cpp, to be sure that the static Object_Manager gets
 // linked into applications that statically link libACE.a.
-class ACE_Object_Manager_Destroyer
+class ACE_Export ACE_Object_Manager_Destroyer
 {
 public:
   ACE_Object_Manager_Destroyer ();
