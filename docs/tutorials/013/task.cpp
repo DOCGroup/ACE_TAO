@@ -8,7 +8,7 @@
 /*
    Construct the Task with zero or more subtasks.  If subtasks are requested,
    we assign our next_ pointer to the first of those and let it worry about
-   any remaining subtasks. 
+   any remaining subtasks.
  */
 Task::Task (int sub_tasks)
         : barrier_ (0)
@@ -22,7 +22,7 @@ Task::Task (int sub_tasks)
 }
 
 /*
-   Delete our barrier object and any subtasks we may have. 
+   Delete our barrier object and any subtasks we may have.
  */
 Task::~Task (void)
 {
@@ -34,8 +34,8 @@ Task::~Task (void)
 
 /*
    Open our thread pool with the requested number of threads.  If subtasks are
-   enabled, they inherit the thread-pool size.  Make sure that the subtasks can 
-   be opened before we open our own threadpool. 
+   enabled, they inherit the thread-pool size.  Make sure that the subtasks can
+   be opened before we open our own threadpool.
  */
 int Task::start (int threads)
 {
@@ -52,8 +52,8 @@ int Task::start (int threads)
 }
 
 /*
-   Close ourselves and any subtasks.  This just prints a message so that we can 
-   assure ourselves things are cleaned up correctly. 
+   Close ourselves and any subtasks.  This just prints a message so that we can
+   assure ourselves things are cleaned up correctly.
  */
 int Task::close (u_long flags)
 {
@@ -69,7 +69,7 @@ int Task::close (u_long flags)
 /*
    Wait for all of the threads in our pool to exit and then wait for any
    subtasks.  When called from the front of the task chain, this won't return
-   until all thread pools in the chain have exited. 
+   until all thread pools in the chain have exited.
  */
 int Task::wait (void)
 {
@@ -82,7 +82,7 @@ int Task::wait (void)
 }
 
 /*
-   Like the thread-pools before, this is where all of the work is done. 
+   Like the thread-pools before, this is where all of the work is done.
  */
 int Task::svc (void)
 {
@@ -95,18 +95,18 @@ int Task::svc (void)
         // of those.  We could do some casting (or even auto-casting) to
         // avoid the extra variable but I prefer to be clear about our actions.
     ACE_Message_Block *message;
-  
+
         // What we really put into the queue was our Message_Block.
-        // After we get the message from the queue, we'll cast it to this 
+        // After we get the message from the queue, we'll cast it to this
         // so that we know how to work on it.
     Message_Block *message_block;
-  
+
         // And, of course, our Message_Block contains our Data_Block
         // instead of the typical ACE_Data_Block
     Data_Block *data_block;
-  
+
       // Even though we put Work objects into the queue, we take them
-      // out using the baseclass pointer.  This allows us to create new 
+      // out using the baseclass pointer.  This allows us to create new
       // derivatives without having to change this svc() method.
     Unit_Of_Work *work;
 
@@ -154,7 +154,7 @@ int Task::svc (void)
             }
 
                 // We're now done with our copy of the block, so we can
-                // release it.  Our peers/subtasks have their own message 
+                // release it.  Our peers/subtasks have their own message
                 // block to access the shared data blocks.
             message_block->release ();
 
@@ -168,7 +168,7 @@ int Task::svc (void)
         if (next_)
         {
                 // If we have subtasks, we pass the block on to them.  Notice
-                // that I don't bother to duplicate() the block since I won't 
+                // that I don't bother to duplicate() the block since I won't
                 // release it in this case.  I could have invoked
                 // duplicate() in the puq() and then release()
                 // afterwards.  Either is acceptable.

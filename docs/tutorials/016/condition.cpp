@@ -17,7 +17,7 @@ public:
 
      // Open the Task with enough threads to make a useful test.
     int open(void);
-    
+
 protected:
      // Each thread will do work on the Condition.
     int svc(void);
@@ -56,13 +56,16 @@ Test::~Test(void)
 int Test::open(void)
 {
     seed_ = ACE_OS::gettimeofday().usec();
-    
+
     ACE_OS::srand( seed_ );
-            
+
+        // This is not a place where we want to use THR_DETACHED.
+        // We're going to be waiting for our threads and if we detach
+        // them, we'll loose track and horrible things will happen.
     return this->activate(THR_NEW_LWP, max_threads_);
 }
 
-/* Each thread will modify the condition variable in some way and then 
+/* Each thread will modify the condition variable in some way and then
    wait for the condition to be satisfied.  The derived classes
    overload modify() and test() to implement a specific test of the
    Condition class.
@@ -73,19 +76,19 @@ int Test::svc(void)
         // cause test() in other threads to delay a bit.
     int stime = ACE_OS::rand_r( seed_ ) % 5;
     ACE_OS::sleep(abs(stime)+2);
-    
+
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() befor modify, condition_ is:  %d\n", (int)condition_ ));
 
      // Change the condition variable's value
     modify();
-    
+
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() after modify, condition_ is:  %d\n", (int)condition_ ));
 
      // Test for the condition we want
     test();
-            
+
     ACE_DEBUG ((LM_INFO, "(%P|%t|%T)\tTest::svc() leaving.\n" ));
-    
+
     return(0);
 }
 
@@ -124,7 +127,7 @@ public:
 class Test_ge : public Test
 {
 public:
-     // For max_threads_ == 5, we will start the condition variable at 
+     // For max_threads_ == 5, we will start the condition variable at
      // the value 9.  When the "last" thread decrements it, the value
      // will be 4 which satisfies the condition.
     Test_ge( int _max_threads )
@@ -215,7 +218,7 @@ public:
             }
     };
 
-     // Create the CompareFunction and wait for the condition variable 
+     // Create the CompareFunction and wait for the condition variable
      // to reach the state we want.
     void test(void)
         {
@@ -224,7 +227,7 @@ public:
         }
 };
 
-/* In main() we just instantiate each of the four test objects that we 
+/* In main() we just instantiate each of the four test objects that we
    created.  After open()ing each, we wait() for it's threads to exit.
  */
 int main(int, char **)
@@ -232,18 +235,18 @@ int main(int, char **)
     Test_ne test_ne(5);
     test_ne.open();
     test_ne.wait();
-    
+
     Test_ge test_ge(5);
     test_ge.open();
     test_ge.wait();
-    
+
     Test_le test_le(5);
     test_le.open();
     test_le.wait();
-    
+
     Test_fo test_fo(5);
     test_fo.open();
     test_fo.wait();
-    
+
     return(0);
 }

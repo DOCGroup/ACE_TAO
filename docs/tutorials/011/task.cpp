@@ -24,15 +24,15 @@ Task::~Task (void)
   message->release ();
 }
 
-int 
+int
 Task::open (void *)
 {
-  return this->activate (THR_NEW_LWP,
+    return this->activate (THR_NEW_LWP,
                         this->n_threads_);
 
 }
 
-int 
+int
 Task::close (u_long flags)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -41,7 +41,7 @@ Task::close (u_long flags)
   return inherited::close (flags);
 }
 
-int 
+int
 Task::svc (void)
 {
   this->barrier_.wait ();
@@ -70,7 +70,7 @@ Task::svc (void)
 
       const char *cp = message->rd_ptr ();
       // Don't forget to skip the NULL we inserted
-      message->rd_ptr (ACE_OS::strlen (cp) + 1);  
+      message->rd_ptr (ACE_OS::strlen (cp) + 1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Block 0x%x contains (%s)\n",

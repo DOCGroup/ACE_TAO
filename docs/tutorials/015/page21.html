@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -59,7 +60,7 @@ int <font color=#008888>Crypt::send</font>(ACE_Message_Block *message, ACE_Time_
     return( 0 );
 }
 
-<font color=red>/* The upstream movement requires that we decrypt what the peer has 
+<font color=red>/* The upstream movement requires that we decrypt what the peer has
    given us.
 */</font>
 int <font color=#008888>Crypt::recv</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
@@ -81,7 +82,7 @@ int <font color=#008888>Crypt::recv</font>(ACE_Message_Block *message, ACE_Time_
         <font color=red>// Don't forget to skip past the signature before decrypting</font>
         <font color=red>// or things will be quite exciting!</font>
     message->rd_ptr( 3 );
-    
+
         <font color=red>// Perform a bogus decryption algorithm</font>
     <font color=#008888>ACE_OS::sprintf</font>( decrypted->wr_ptr(), "<font color=green>%s</font>", message->rd_ptr() );
     decrypted->wr_ptr( strlen(decrypted->wr_ptr())+1 );

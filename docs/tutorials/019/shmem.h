@@ -34,7 +34,7 @@ public:
 
   // Set the value of available_
   void available (int not_in_use);
-        
+
 protected:
   // Big enough for a simple message
   char buf_[128];

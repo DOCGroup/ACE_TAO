@@ -33,7 +33,7 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
    though we're not going to use the parameters, we still have to
    specify them.  */
 
-int 
+int
 main (int argc, char *argv[])
 {
   /* In our earlier servers, we used a global pointer to get to the
@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shutting down server daemon\n"));
-  
+
   return 0;
 }
 

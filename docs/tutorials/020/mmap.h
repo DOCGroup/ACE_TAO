@@ -24,12 +24,12 @@ class SharedData
 {
 public:
   SharedData (int initialize = 1);
-    
+
   void set (void);
   void show (void);
   int available (void);
   void available (int not_in_use);
-        
+
 protected:
   char buf_[128];
   int available_;

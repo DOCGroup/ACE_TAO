@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -64,7 +65,7 @@ threads in the pool. Also, the ACE_Guard class has been used to provide
 thread-safe counter-incrementation and destruction of the Message_Blocks
 of the thread-pool. This class guards the critical section region by
 acquiring the mutex lock on creation and releasing it as soon as it goes
-out of scope. 
+out of scope.
 <P>
 Note: a sleep period before all the threads in the pool exit is
 necessary for complete destruction of the thread pool.
@@ -74,8 +75,8 @@ thread-pool strategy and how it can be managed using the ACE_Task class,
 which provides an OO approach to thread-creation and implementation.
 </UL>
 <font size=-1>* The additions to this tutorial make use of
-ACE_Message_Queue which is discussed in depth in 
-<A HREF="../010/page01.html">Tutorial 10</A>.  Feel free to read ahead 
+ACE_Message_Queue which is discussed in depth in
+<A HREF="../010/page01.html">Tutorial 10</A>.  Feel free to read ahead
 if you get lost in the message queue stuff.
 </font>
 <P><HR WIDTH="100%">

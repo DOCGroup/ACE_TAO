@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,11 +16,11 @@
 <HR WIDTH="100%">
 <P>
 In the previous tutorial we moved our complex data into the queue by
-copy()ing it directly into the message block's data area.  I hope that 
+copy()ing it directly into the message block's data area.  I hope that
 most readers got a queasy feeling when I did that.  It just isn't a
 good idea...
 <P>
-A better idea would be to teach the message queue about our data types 
+A better idea would be to teach the message queue about our data types
 (or at least a baseclass) so that it can more efficiently handle things:
 <P>
 <HR WIDTH="100%">
@@ -98,7 +99,7 @@ carry our data along.  When our application is done with the message
 block and release()es it, we know that our work object will also be
 taken care of.
 <P>
-Let's now go to main() and see what we had to change there to use this 
+Let's now go to main() and see what we had to change there to use this
 specialization.
 <P>
 <P><HR WIDTH="100%">

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -67,9 +68,9 @@ protected:
 {
 }
 
-<font color=red>/* As usual, our open() will create one or more threads where we'll do 
+<font color=red>/* As usual, our open() will create one or more threads where we'll do
    the interesting work.
-*/</font>  
+*/</font>
 int <font color=#008888>Test::open</font>(void * _unused)
 {
     ACE_UNUSED_ARG(_unused);
@@ -80,7 +81,9 @@ int <font color=#008888>Test::open</font>(void * _unused)
         <font color=red>// details at the same time.</font>
     barrier_.threads(threads_);
 
-        <font color=red>// Activate the tasks as usual...</font>
+        <font color=red>// Activate the tasks as usual...  Like the other cases where</font>
+        <font color=red>// we're joining (or waiting for) our threads, we can't use</font>
+        <font color=red>// THR_DETACHED.</font>
     return this->activate(THR_NEW_LWP, threads_);
 }
 
@@ -158,7 +161,7 @@ int <font color=#008888>Test::svc</font>(void)
         <font color=red>// A final sleep()</font>
     delay = <font color=#008888>ACE_OS::rand_r</font>(seed)%5;
     <font color=#008888>ACE_OS::sleep</font>(abs(delay)+1);
-    
+
         <font color=red>// These should be randomly spaced like all of the other</font>
         <font color=red>// post-sleep messages.</font>
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t|%T)\<font color=#008888>tTest::svc</font>() Chaos and anarchy for all!\n</font>"));
@@ -183,7 +186,7 @@ int main(int, char**)
     test.open();
         <font color=red>// and wait for them to complete also.</font>
     test.wait();
-    
+
     return(0);
 }
 </PRE>

@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-09 16:27 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/010'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/010'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -23,7 +23,7 @@
 #    689 -rw-rw-r-- page02.pst
 #    237 -rw-rw-r-- page03.pst
 #    387 -rw-rw-r-- page04.pst
-#    366 -rw-rw-r-- page05.pst
+#    647 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -70,7 +70,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh15890; then
+if mkdir _sh04931; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -525,21 +525,26 @@ This is all pretty straight-forward too.  One gottcha we avoided was a memory le
 due to our shutdown message.  Notice that svc() enqueues that block without bothering
 to see if there are any more threads to dequeue it.  Thats why our dtor can call getq()
 without worrying about blocking infinitely:  it knows the message block will be there.
+<P>
+Also notice that we haven't used <i>THR_DETACHED</i> in this
+X      tutorial.  Why?  Because in <i>message_queue.cpp</i> we call
+X      <i>wait()</i> to wait for all of the task's threads to exit.
+X      That prevents the leak that we normally avoid by using <i>THR_DETACHED</i>.
 SHAR_EOF
-  $shar_touch -am 0124153399 'page05.pst' &&
+  $shar_touch -am 0921223299 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pst:' 'MD5 check failed'
-54b2e8e21aa451c7a3a227da8069bdf7  page05.pst
+802d999314ebcf28ebbffe6fb6dedcfa  page05.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 366 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '366,' 'current size' "$shar_count!"
+    test 647 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '647,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh15890
+rm -fr _sh04931
 exit 0

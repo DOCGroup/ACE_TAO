@@ -57,7 +57,7 @@ protected:
             // lock when we no longer need it.  The method will then
             // cleanup to prevent any memory leaks.
         int destroy (void);
- 
+
     protected:
         MLD;
     };

@@ -6,7 +6,7 @@
 #include "task.h"
 #include "block.h"
 
-int 
+int
 run_test (int iterations,
           int threads)
 {
@@ -67,22 +67,22 @@ run_test (int iterations,
 
   /* Wait for the threads in our task object to go away.  */
   task.wait ();
-  
+
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   /* Set the number of iterations through our putq() loop and the
     number of threads to use in our Task<> derivative.  */
   int iterations = argc > 1 ? atoi (argv[1]) : 9;
   int threads = argc > 2 ? atoi (argv[2]) : 2;
-  
+
   run_test (iterations, threads);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Application exiting\n"));
-  
+
   return 0;
 }

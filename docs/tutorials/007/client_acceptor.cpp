@@ -32,7 +32,7 @@ Client_Acceptor::~Client_Acceptor (void)
 
    Notice how we delegate most of the open() work to the open() method
    of our baseclass.  */
-int 
+int
 Client_Acceptor::open (const ACE_INET_Addr &addr,
                        ACE_Reactor *reactor,
                        int pool_size)
@@ -45,7 +45,7 @@ Client_Acceptor::open (const ACE_INET_Addr &addr,
 
 /* Here again we find that we have to manage the thread pool.  Like
    open() we also delegate the other work to our baseclass.  */
-int 
+int
 Client_Acceptor::close (void)
 {
   if (this->concurrency() == thread_pool_ && thread_pool_is_private ())

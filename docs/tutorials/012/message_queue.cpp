@@ -32,7 +32,7 @@ int run_test (int iterations, int threads)
   for (int i = 0; i < iterations; ++i)
   {
     /*
-       Construct a Work object that we'll put into the Queue.  Give it 
+       Construct a Work object that we'll put into the Queue.  Give it
        the iteration number so that it can identify itself in the output.
      */
     Work * data = new Work(i);
@@ -44,7 +44,7 @@ int run_test (int iterations, int threads)
     Message_Block *message = new Message_Block (128, data);
 
     /*
-       As before, put a text message into the block. 
+       As before, put a text message into the block.
      */
     ACE_OS::sprintf (message->wr_ptr (), "This is message %d.", i);
     message->wr_ptr (strlen (message->rd_ptr ())+1);

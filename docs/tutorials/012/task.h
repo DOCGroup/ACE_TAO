@@ -31,7 +31,7 @@ public:
 
     /*
       I really wanted this to be called open() but that was already
-      claimed by the Task framework.  start() will kick off our thread 
+      claimed by the Task framework.  start() will kick off our thread
       pool for us.
     */
     int start (int threads = 1);

@@ -31,14 +31,14 @@ Client_Handler::~Client_Handler (void)
 /* Query our acceptor for the concurrency strategy.  Notice that we
    don't bother to check that our acceptor pointer is valid.  That is
    proably a bad idea...  */
-int 
+int
 Client_Handler::concurrency(void)
 {
   return this->client_acceptor ()->concurrency ();
 }
 
 /* And here we ask the acceptor about the thread pool.  */
-Thread_Pool * 
+Thread_Pool *
 Client_Handler::thread_pool (void)
 {
   return this->client_acceptor ()->thread_pool ();
@@ -46,13 +46,13 @@ Client_Handler::thread_pool (void)
 
 /* Back to our open() method.  This is straight out of Tutorial 6.
    There's nothing additional here for the thread-pool implementation.  */
-int 
+int
 Client_Handler::open (void *acceptor)
 {
   client_acceptor ((Client_Acceptor *) acceptor);
 
   if (concurrency () == Client_Acceptor::thread_per_connection_)
-    return this->activate ();
+    return this->activate (THR_DETACHED);
 
   this->reactor (client_acceptor()->reactor ());
 
@@ -76,7 +76,7 @@ Client_Handler::open (void *acceptor)
 /* The destroy() method will remove us from the reactor (with the
    DONT_CALL flag set!) and then free our memory.  This allows us to
    be closed from outside of the reactor context without any danger.  */
-void 
+void
 Client_Handler::destroy (void)
 {
   this->reactor ()->remove_handler (this, REMOVE_MASK);
@@ -85,7 +85,7 @@ Client_Handler::destroy (void)
 
 /* As mentioned in the header, the typical way to close an object in a
   threaded context is to invoke it's close() method.  */
-int 
+int
 Client_Handler::close (u_long flags)
 {
   /*
@@ -94,7 +94,7 @@ Client_Handler::close (u_long flags)
     freeing our memory.
     */
   this->destroy ();
-    
+
   /* Don't forward the close() to the baseclass!  handle_close() above
     has already taken care of delete'ing.  Forwarding close() would
     cause that to happen again and things would get really ugly at
@@ -104,7 +104,7 @@ Client_Handler::close (u_long flags)
 
 /* We will be called when handle_input() returns -1.  That's our queue
   to delete ourselves to prevent memory leaks.  */
-int 
+int
 Client_Handler::handle_close (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask)
 {
@@ -112,7 +112,7 @@ Client_Handler::handle_close (ACE_HANDLE handle,
   ACE_UNUSED_ARG (mask);
 
   delete this;
-  
+
   return 0;
 }
 
@@ -129,7 +129,7 @@ Client_Handler::handle_close (ACE_HANDLE handle,
    that case, we arrange to be put into the thread pool.  If we're not
    in the creator thread then we must be in the thread pool and we can
    do some work.  */
-int 
+int
 Client_Handler::handle_input (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
@@ -187,7 +187,7 @@ Client_Handler::handle_input (ACE_HANDLE handle)
 /* Remember that when we leave our svc() method, the framework will
    take care of calling our close() method so that we can cleanup
    after ourselves.  */
-int 
+int
 Client_Handler::svc (void)
 {
   char buf[BUFSIZ];
@@ -203,7 +203,7 @@ Client_Handler::svc (void)
    all affected by our choice of threading models.  Of course, I'm not
    sharing data between threads or anything.  We'll leave locking
    issues for a later tutorial.  */
-int 
+int
 Client_Handler::process (char *rdbuf,
                          int rdbuf_len)
 {

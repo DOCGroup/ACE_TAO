@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -32,7 +33,7 @@ itself.
 <P>
 To increment the reference count of a data block, use the
 duplicate() method of the message block (or blocks) to get a new
-message block referencing the same data block.  This is very efficient 
+message block referencing the same data block.  This is very efficient
 since the actual data is not copied.
 <P>
 <HR WIDTH="100%">
@@ -96,7 +97,7 @@ protected:
             <font color=red>// lock when we no longer need it.  The method will then</font>
             <font color=red>// cleanup to prevent any memory leaks.</font>
         int destroy (void);
- 
+
     protected:
         MLD;
     };

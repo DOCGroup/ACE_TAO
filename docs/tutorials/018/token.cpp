@@ -14,7 +14,7 @@ int main(int,char**)
         // And now the ACE_Mutex.
     Mutex mutex;
     mutex.run();
-    
+
     return(0);
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

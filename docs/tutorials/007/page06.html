@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -53,14 +54,14 @@ though.
 <font color=red>/* Query our acceptor for the concurrency strategy.  Notice that we
    don't bother to check that our acceptor pointer is valid.  That is
    proably a bad idea...  */</font>
-int 
+int
 <font color=#008888>Client_Handler::concurrency</font>(void)
 {
   return this->client_acceptor ()->concurrency ();
 }
 
 <font color=red>/* And here we ask the acceptor about the thread pool.  */</font>
-Thread_Pool * 
+Thread_Pool *
 <font color=#008888>Client_Handler::thread_pool</font> (void)
 {
   return this->client_acceptor ()->thread_pool ();
@@ -68,13 +69,13 @@ Thread_Pool *
 
 <font color=red>/* Back to our open() method.  This is straight out of Tutorial 6.
    There's nothing additional here for the thread-pool implementation.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::open</font> (void *acceptor)
 {
   client_acceptor ((Client_Acceptor *) acceptor);
 
   if (concurrency () == <font color=#008888>Client_Acceptor::thread_per_connection_</font>)
-    return this->activate ();
+    return this->activate (THR_DETACHED);
 
   this->reactor (client_acceptor()->reactor ());
 
@@ -98,7 +99,7 @@ int
 <font color=red>/* The destroy() method will remove us from the reactor (with the
    DONT_CALL flag set!) and then free our memory.  This allows us to
    be closed from outside of the reactor context without any danger.  */</font>
-void 
+void
 <font color=#008888>Client_Handler::destroy</font> (void)
 {
   this->reactor ()->remove_handler (this, REMOVE_MASK);
@@ -107,7 +108,7 @@ void
 
 <font color=red>/* As mentioned in the header, the typical way to close an object in a
   threaded context is to invoke it's close() method.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::close</font> (u_long flags)
 {
   <font color=red>/*
@@ -116,7 +117,7 @@ int
     freeing our memory.
     */</font>
   this->destroy ();
-    
+
   <font color=red>/* Don't forward the close() to the baseclass!  handle_close() above
     has already taken care of delete'ing.  Forwarding close() would
     cause that to happen again and things would get really ugly at
@@ -126,7 +127,7 @@ int
 
 <font color=red>/* We will be called when handle_input() returns -1.  That's our queue
   to delete ourselves to prevent memory leaks.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::handle_close</font> (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask)
 {
@@ -134,7 +135,7 @@ int
   ACE_UNUSED_ARG (mask);
 
   delete this;
-  
+
   return 0;
 }
 
@@ -151,7 +152,7 @@ int
    that case, we arrange to be put into the thread pool.  If we're not
    in the creator thread then we must be in the thread pool and we can
    do some work.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::handle_input</font> (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);
@@ -209,7 +210,7 @@ int
 <font color=red>/* Remember that when we leave our svc() method, the framework will
    take care of calling our close() method so that we can cleanup
    after ourselves.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::svc</font> (void)
 {
   char buf[BUFSIZ];
@@ -225,7 +226,7 @@ int
    all affected by our choice of threading models.  Of course, I'm not
    sharing data between threads or anything.  We'll leave locking
    issues for a later tutorial.  */</font>
-int 
+int
 <font color=#008888>Client_Handler::process</font> (char *rdbuf,
                          int rdbuf_len)
 {

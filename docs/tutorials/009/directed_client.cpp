@@ -5,7 +5,7 @@
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int 
+int
 main (int argc, char *argv[])
 {
   ACE_INET_Addr local ((u_short) 0);

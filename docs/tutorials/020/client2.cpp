@@ -6,7 +6,7 @@
 int main (int, char *[])
 {
     ACE_Shared_Memory_MM shm_client (SHM_KEY, sizeof(SharedData));
-    
+
     char *shm = (char *) shm_client.malloc ();
 
     ACE_DEBUG ((LM_INFO, "(%P|%t) Memory Mapped file is at 0x%x\n",
@@ -19,7 +19,7 @@ int main (int, char *[])
     sd->available(1);
 
     shm_client.close();
-        
+
     return 0;
 }
 

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -26,8 +27,8 @@ On the other hand, if you're passing data between several threads, it
 is easy to loose track of who "owns" the data at any one time.  All
 too frequently, data will be deleted by one thread while another is
 still using it.  Reference counting can prevent that.  The rule of
-thumb is that you increment the reference count of the object when you 
-hand it off to a new thread.  You then decrement the count when you're 
+thumb is that you increment the reference count of the object when you
+hand it off to a new thread.  You then decrement the count when you're
 done with the object and let the object delete itself when there are
 no more references.
 <P>

@@ -76,7 +76,7 @@ public:
   virtual void destroy (void)
   {
     /* Remove ourselves from the reactor */
-    g_reactor->remove_handler 
+    g_reactor->remove_handler
       (this,
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 

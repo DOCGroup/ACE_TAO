@@ -8,7 +8,7 @@
 */
 sig_atomic_t Server::finished_ = 0;
 
-/* The simple constructor and destructor don't do anything but give us 
+/* The simple constructor and destructor don't do anything but give us
    a place to expand in the future if we want.
 */
 Server::Server(void)
@@ -55,7 +55,7 @@ int Server::run(void)
         ACE_Reactor::instance()->handle_events (&timeout);
     }
 
-        // Close the acceptor when we're done.  This may be handled by 
+        // Close the acceptor when we're done.  This may be handled by
         // the framework but it's good practice to be explicit about things.
     acceptor_.close();
 

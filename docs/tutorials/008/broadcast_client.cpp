@@ -5,7 +5,7 @@
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int 
+int
 main (int argc,char *argv[])
 {
   ACE_INET_Addr local ((u_short) 0);
@@ -44,7 +44,7 @@ main (int argc,char *argv[])
   ACE_INET_Addr remote (PORT,
                         INADDR_BROADCAST);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Sending (%s) to the server.\n",
               buf));
 

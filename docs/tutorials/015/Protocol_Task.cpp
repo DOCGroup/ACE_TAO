@@ -14,7 +14,7 @@ Protocol_Task::~Protocol_Task(void)
     ;
 }
 
-int Protocol_Task::open(void *arg) 
+int Protocol_Task::open(void *arg)
 {
   ACE_UNUSED_ARG(arg);
 
@@ -41,7 +41,7 @@ int Protocol_Task::svc(void)
 }
 
 /* There's nothing really magic about process().  We just decide if
-   we're moving data upstream or downstream and invoke the appropriate 
+   we're moving data upstream or downstream and invoke the appropriate
    virtual function to handle it.
 */
 int Protocol_Task::process(ACE_Message_Block * message, ACE_Time_Value *timeout)
@@ -50,16 +50,16 @@ int Protocol_Task::process(ACE_Message_Block * message, ACE_Time_Value *timeout)
     {
         return this->send(message,timeout);
     }
-    
+
     return this->recv(message,timeout);
 }
 
 /* We must insist that derivatives provide a meaningful overload for
-   these methods.  It's fairly common for ACE object methods to return 
+   these methods.  It's fairly common for ACE object methods to return
    an error when an overload is expected but the method cannot be
    safely made pure virtual.
  */
- 
+
 int Protocol_Task::send(ACE_Message_Block *message,
                         ACE_Time_Value *timeout)
 {

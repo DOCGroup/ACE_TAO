@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -29,7 +30,7 @@ the Data_Block.
 <font color=red>/*
    Construct a Dat_Block to contain a unit of work.  Note the careful
    construction of the baseclass to set the block type and the locking
-   strategy. 
+   strategy.
  */</font>
 <font color=#008888>Data_Block::Data_Block</font> (Unit_Of_Work * _data)
         : ACE_Data_Block (0, <font color=#008888>ACE_Message_Block::MB_DATA</font>, 0, 0, new Lock (), 0, 0)
@@ -42,7 +43,7 @@ the Data_Block.
    The Lock object created in the constructor is stored in the baseclass and
    available through the locking_strategy() method.  We can cast it's value to
    our Lock object and invoke the destroy() to indicate that we want it to go
-   away when the lock is released. 
+   away when the lock is released.
  */</font>
 <font color=#008888>Data_Block::~Data_Block</font> (void)
 {
@@ -52,7 +53,7 @@ the Data_Block.
 }
 
 <font color=red>/*
-   Return the data 
+   Return the data
  */</font>
 Unit_Of_Work *<font color=#008888>Data_Block::data</font> (void)
 {
@@ -79,7 +80,7 @@ int <font color=#008888>Data_Block::Lock</font>::destroy (void)
 }
 
 <font color=red>/*
-   Create an baseclass unit of work when we instantiate a hangup message. 
+   Create an baseclass unit of work when we instantiate a hangup message.
  */</font>
 <font color=#008888>Message_Block::Message_Block</font> (void)
         :ACE_Message_Block (new Data_Block (new Unit_Of_Work ()))
@@ -90,7 +91,7 @@ int <font color=#008888>Data_Block::Lock</font>::destroy (void)
 
 <font color=red>/*
    Store the unit of work in a Data_Block and initialize the baseclass with
-   that data. 
+   that data.
  */</font>
 <font color=#008888>Message_Block::Message_Block</font> (Unit_Of_Work * _data)
         :ACE_Message_Block (new Data_Block (_data))

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -33,7 +34,7 @@ while( the_variable != some_desired_state_or_value )
 the_mutex.release();
 </PRE>
 Note that when <i>the_condition</i> is created, it must be given a
-reference to the mutex.  That's because the wait() method will release 
+reference to the mutex.  That's because the wait() method will release
 the mutex before waiting and reacquire it after being signaled.
 </UL>
 <P>
@@ -52,9 +53,9 @@ the locking, waiting and signaling.  Even if I remember it all
 correctly it just makes my application code more complex than it
 should be.
 <P>
-To help out with that, I've created the class below to encapsulate the 
+To help out with that, I've created the class below to encapsulate the
 three elements necessary for the condition to work.  I've then added
-methods for manipulation of the condition variable and waiting for the 
+methods for manipulation of the condition variable and waiting for the
 condition to occur.
 <HR>
 <PRE>
@@ -81,7 +82,7 @@ public:
   <font color=red>// From here on I'll use value_t instead of 'int' to make any</font>
   <font color=red>// future upgrades easier.</font>
   typedef int value_t;
-    
+
   <font color=red>// Initialize the condition variable</font>
   Condition (value_t value = 0);
   ~Condition (void);
@@ -166,7 +167,7 @@ public:
      Just be sure that _compare(value_) will return non-zero when you
      consider the condition to be met.  */</font>
   int operator== (Compare & compare);
-                    
+
 private:
   <font color=red>// Prevent copy construction and assignment.</font>
   Condition (const Condition &condition);

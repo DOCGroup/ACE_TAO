@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-01-26 20:13 EST by <jcej@chiroptera.tragus.org>.
-# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/011'.
+# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/011'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -20,7 +20,7 @@
 #   2691 -rw-rw-r-- page05.pre
 #    707 -rw-rw-r-- page06.pre
 #    351 -rw-rw-r-- page02.pst
-#    208 -rw-rw-r-- page03.pst
+#    366 -rw-rw-r-- page03.pst
 #    129 -rw-rw-r-- page04.pst
 #
 save_IFS="${IFS}"
@@ -68,7 +68,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh31079; then
+if mkdir _sh04967; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -439,20 +439,23 @@ Notice how we had to create a temporary Data object to copy the stuff out
 of the message block?  Again, if there were non-trivial ctor/dtors involved
 then this wouldn't work at all.
 <P>
+Again, like <A HREF="../010/page01.html">Tutorial 10</A> we've skipped 
+<i>THR_DETACHED</i> because we <i>wait()</i> for the threads to exit
+X      elsewhere.
 SHAR_EOF
-  $shar_touch -am 0124154699 'page03.pst' &&
+  $shar_touch -am 0921223499 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pst:' 'MD5 check failed'
-82c846e0d43ceb12c5d47686d7f69715  page03.pst
+ae1320ae6609c684317a5895f69bf47d  page03.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
-    test 208 -eq "$shar_count" ||
-    $echo 'page03.pst:' 'original size' '208,' 'current size' "$shar_count!"
+    test 366 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '366,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -482,5 +485,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '129,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh31079
+rm -fr _sh04967
 exit 0

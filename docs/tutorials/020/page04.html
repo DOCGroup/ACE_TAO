@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -16,7 +17,7 @@ I wanted to show placement new again & prove that you can use it with
       a memory mapped file just as easily as with a shared memory
       segment.
     <p>
-Imagine if you had an object that contained an image & then you mapped 
+Imagine if you had an object that contained an image & then you mapped
       that to a file...  Instead of a bunch of jpg files laying
       around, you would actually have objects instead.  Save the
       image?  No problem, it's already there!
@@ -42,12 +43,12 @@ main (int, char *[])
 
     sd->set();
     sd->available(0);
-        
+
     while ( ! sd->available() )
         <font color=#008888>ACE_OS::sleep</font> (1);
 
     sd->show();
-    
+
     if (shm_server.remove () &lt; 0)
         ACE_ERROR ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>remove</font>"));
 
@@ -65,7 +66,7 @@ main (int, char *[])
 int main (int, char *[])
 {
     ACE_Shared_Memory_MM shm_client (SHM_KEY, sizeof(SharedData));
-    
+
     char *shm = (char *) shm_client.malloc ();
 
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) Memory Mapped file is at 0x%x\n</font>",
@@ -78,7 +79,7 @@ int main (int, char *[])
     sd->available(1);
 
     shm_client.close();
-        
+
     return 0;
 }
 

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -21,7 +22,7 @@ We'll take a look first at the client application.  As usual, our goal
 
 <font color=red>// $Id$</font>
 
-<font color=red>/* The Client object will implement the nasty details of connecting to 
+<font color=red>/* The Client object will implement the nasty details of connecting to
    communicating with the server
 */</font>
 <font color=blue>#include</font> "<font color=green>Client_i.h</font>"
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
         client.put( message );
 
         ACE_Message_Block * response;
-        
+
             <font color=red>// get() takes an ACE_Message_Block pointer reference.  We then</font>
             <font color=red>// assume ownership of it and must release() when we're done.</font>
         if( client.get( response ) == -1 )
@@ -70,14 +71,14 @@ int main(int argc, char *argv[])
             break;
         }
 
-        ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) The server's response:  (%s)\n</font>", 
+        ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) The server's response:  (%s)\n</font>",
                     response->rd_ptr()));
 
             <font color=red>// Now that we're through with the response we have to</font>
             <font color=red>// release() it to avoid memory leaks.</font>
         response->release();
     }
-      
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) Shutting down the stream\n</font>" ));
 
         <font color=red>// Before we exit, it's a good idea to properly close() the connection.</font>
@@ -85,7 +86,7 @@ int main(int argc, char *argv[])
     {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Client::close</font>()</font>"), -1);
     }
-  
+
     return(0);
 }
 </PRE>

@@ -17,12 +17,12 @@ main (int, char *[])
 
     sd->set();
     sd->available(0);
-        
+
     while ( ! sd->available() )
         ACE_OS::sleep (1);
 
     sd->show();
-    
+
     if (shm_server.remove () < 0)
         ACE_ERROR ((LM_ERROR, "%p\n", "remove"));
 

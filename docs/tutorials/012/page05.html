@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -14,7 +15,7 @@
 <P>
 <HR WIDTH="100%">
 <P>
-The Task is the only object we've not been through yet.  I'll go ahead 
+The Task is the only object we've not been through yet.  I'll go ahead
 and show both the header and cpp on this one page since the header
 isn't very large.
 <P>
@@ -54,7 +55,7 @@ public:
 
     <font color=red>/*
       I really wanted this to be called open() but that was already
-      claimed by the Task framework.  start() will kick off our thread 
+      claimed by the Task framework.  start() will kick off our thread
       pool for us.
     */</font>
     int start (int threads = 1);
@@ -90,7 +91,7 @@ protected:
 
 <font color=red>/*
   You'll see in the svc() method that when we get a shutdown request,
-  we always putq() it back into our message queue.  The last thread in 
+  we always putq() it back into our message queue.  The last thread in
   the pool will do this also and result in there always being one
   shutdown request left in the queue when we get here.  Just to be
   polite, we'll go ahead and get that message and release it.
@@ -111,7 +112,7 @@ protected:
 
 <font color=red>/*
   The ACE_Barrier needs to know how many threads it will be working
-  for.  For that reason, we have to put off it's construction until we 
+  for.  For that reason, we have to put off it's construction until we
   get here.  We then pass the thread count through to our base class'
   activate().
 */</font>
@@ -192,7 +193,7 @@ int <font color=#008888>Task::svc</font> (void)
     unit_of_work = message_block->data();
 
     <font color=red>/*
-       Invoke a couple of method calls on the object we constructed. 
+       Invoke a couple of method calls on the object we constructed.
      */</font>
     unit_of_work->who_am_i ();
     unit_of_work->what_am_i ();
@@ -201,14 +202,14 @@ int <font color=#008888>Task::svc</font> (void)
 
      <font color=red>/*
        Pretend that the work takes a little time to process.  This
-       prevents one thread from getting all of the action.  In a real 
+       prevents one thread from getting all of the action.  In a real
        system you wouldn't need to do this since the work really
        would take time to complete.
      */</font>
     <font color=#008888>ACE_OS::sleep</font> (ACE_Time_Value (0, 5000));
 
      <font color=red>/*
-       Release the message block and allow the unit of work to also go 
+       Release the message block and allow the unit of work to also go
        away.
      */</font>
     message->release ();
@@ -219,13 +220,13 @@ int <font color=#008888>Task::svc</font> (void)
 </PRE>
 <HR WIDTH="100%">
 <P>
-Like main() this is actually simpler than the previous tutorial.  It's 
+Like main() this is actually simpler than the previous tutorial.  It's
 much cleaner to carry around a pointer to the object we're working
 with than to try copying data.
 <P>
 The only complication is the new ACE_Barrier.  It's a pretty simple
 object that makes it easy for you to synch threads in this way.  You
-could do some fancy tricks with mutexes, counters & semaphores but why 
+could do some fancy tricks with mutexes, counters & semaphores but why
 bother when the Barrier already exists.
 <P>
 <P><HR WIDTH="100%">

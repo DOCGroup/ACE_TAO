@@ -49,7 +49,7 @@ public:
     baseclass method.  */
   virtual int open (void *void_data)
   {
-    return inherited::open (void_data); 
+    return inherited::open (void_data);
   }
 
   /*

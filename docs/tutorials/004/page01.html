@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -26,7 +27,7 @@ Kirthika says:
 <UL>
 The cool thing about this "cooler" client is how we use a C++ trick for
 streaming incoming data by using the operator<<() method. Also the
-Connector portion is wrapped in the open() method which now takes in the 
+Connector portion is wrapped in the open() method which now takes in the
 server hostname and port. The result is a cleaner looking client which
 successfully interacts with the server when connection is established.
 </UL>
@@ -99,7 +100,7 @@ protected:
 <font color=red>/* Open a connection to the server.  This hides the use of
   ACE_SOCK_Connector from our caller.  Since our caller probably
   doesn't care *how* we connect, this is a good thing.  */</font>
-int 
+int
 <font color=#008888>Client::open</font> (const char *server,
               u_short port)
 {
@@ -120,7 +121,7 @@ int
 
 <font color=red>/* The first of our put operators sends a simple string object to the
   peer.  */</font>
-Client & 
+Client &
 <font color=#008888>Client::operator</font>&lt;&lt; (ACE_SString &str)
 {
   <font color=red>/* We have to be able to allow: server &lt;&lt; foo &lt;&lt; bar &lt;&lt; stuff;
@@ -159,7 +160,7 @@ more efficient to implement this with the body of the
 operator&lt;&lt;(ACE_SString&) method and then express that method in terms
 of this one.  There's always more than one way to do things!  */</font>
 
-Client & 
+Client &
 <font color=#008888>Client::operator</font>&lt;&lt; (char *str)
 {
   ACE_SString newStr (str);
@@ -180,7 +181,7 @@ Client &
 
   Do the same thing we did with char* and convert it to ACE_SString
   where we already have a &lt;&lt; operator defined.  */</font>
-Client & 
+Client &
 <font color=#008888>Client::operator</font>&lt;&lt; (int n)
 {
   <font color=red>/* Create a character buffer large enough for the largest number.
@@ -204,7 +205,7 @@ Client &
 
 <font color=red>/* Now we pull it all together.  Like Tutorial 3, we'll allow command
   line options.  */</font>
-int 
+int
 main (int argc, char *argv[])
 {
   const char *server_host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
@@ -213,7 +214,7 @@ main (int argc, char *argv[])
 
   <font color=red>/* Use the basic constructor since the other isn't really very safe.  */</font>
   Client peer;
-  
+
   <font color=red>/* Open the server connection.  Notice how this is simpler than
     Tutorial 3 since we only have to provide a host name and port
     value.  */</font>
@@ -223,7 +224,7 @@ main (int argc, char *argv[])
                        "<font color=green>%p\n</font>",
                        "<font color=green>open</font>"),
                       -1);
-  
+
   for (int i = 0; i &lt; max_iterations; i++)
     {
       <font color=red>/* Tell the server which iteration we're on.  No more mucking
@@ -254,9 +255,9 @@ main (int argc, char *argv[])
 so hard to create an object that makes sending data much more "natural"
 than the typical send() or send_n() invocation.  You can even build
 up arbitrary objects and do some neat tricks with C++ templates to stream
-their data out as well.  (We may go into that a little later.) 
+their data out as well.  (We may go into that a little later.)
 Of course, writting the full implementation such that these streams are
-interchangable with the standard C++ ostreams is quite a bit more difficult. 
+interchangable with the standard C++ ostreams is quite a bit more difficult.
 In addition, there are a lot of optimizations that this client would benefit
 from!
 

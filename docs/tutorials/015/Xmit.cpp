@@ -46,7 +46,7 @@ int Xmit::close(u_long flags)
 int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
     int rval;
-    
+
     ACE_DEBUG ((LM_INFO, "(%P|%t) Xmit::send() sending (%s)(%d)\n", message->rd_ptr(), message->length() ));
 
      /* Since we're going to be sending data that may have been
@@ -54,7 +54,7 @@ int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
         receiver to get an entire "block" instead of having a
         partial read.
 
-        For that reason, we'll send the length of the message block 
+        For that reason, we'll send the length of the message block
         (in clear-text) to the peer so that it can then recv_n()
         the entire block contents in one read operation.
      */
@@ -71,7 +71,7 @@ int Xmit::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
     }
 
      /* Now we send the actual data.  If you're worried about
-        network efficiency then you may choose to create one buffer 
+        network efficiency then you may choose to create one buffer
         containing msize and the message data and send it all at
         once.
      */

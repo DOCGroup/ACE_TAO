@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -99,7 +100,7 @@ public:
   virtual void destroy (void)
   {
     <font color=red>/* Remove ourselves from the reactor */</font>
-    g_reactor->remove_handler 
+    g_reactor->remove_handler
       (this,
        <font color=#008888>ACE_Event_Handler::READ_MASK</font> | ACE_Event_Handler::DONT_CALL);
 

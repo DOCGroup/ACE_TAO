@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <TITLE>ACE Tutorial 001</TITLE>
@@ -48,8 +49,8 @@ client requests in its handle_input() method. It is also registered
 with the Reactor with the ACE_Event_Handler::READ_MASK.
 <P>
 The Event_Handlers can be unregistered from the Reactor using
-handle_close() methods 
-or explicitly calling the remove_handler() methods. 
+handle_close() methods
+or explicitly calling the remove_handler() methods.
 <P>
 This server application builds and executes succesfully waiting for
 client requests to arrive.
@@ -92,7 +93,7 @@ ACE_Reactor *g_reactor;
   we're satisfied with simply hard-coding a random but known value.  */</font>
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
-int 
+int
 main (int, char *[])
 {
   <font color=red>/* Create a Reactor instance.  Again, a global pointer isn't exactly
@@ -125,7 +126,7 @@ main (int, char *[])
     connections via the 'addr' object.  We're also telling it that we
     want it to be registered with our 'g_reactor' instance.  */</font>
   if (peer_acceptor->open (addr, g_reactor) == -1 )
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "<font color=green>Opening Acceptor\n</font>"),
                       -1);
 

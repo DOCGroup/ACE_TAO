@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -55,7 +56,7 @@ static u_short SERVER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const char *const SERVER_HOST = ACE_DEFAULT_SERVER_HOST;
 static const int MAX_ITERATIONS = 4;
 
-int 
+int
 main (int argc, char *argv[])
 {
   <font color=red>/* Accept the users's choice of hosts or use the default.  Then do
@@ -91,7 +92,7 @@ main (int argc, char *argv[])
                        "<font color=green>%p\n</font>",
                        "<font color=green>open</font>"),
                       -1);
-  
+
   <font color=red>/* Just for grins, we'll send the server several messages.  */</font>
   for (int i = 0; i &lt; max_iterations; i++)
     {

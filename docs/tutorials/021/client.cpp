@@ -4,7 +4,7 @@
 #include "mpool.h"
 
 #if defined(ACE_LACKS_SYSV_SHMEM)
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -47,7 +47,7 @@ main (int, char *[])
     */
   char *shm = (char *) region;
 
-  ACE_DEBUG ((LM_INFO, 
+  ACE_DEBUG ((LM_INFO,
               "Shared memory is at 0x%x\n",
               shm));
 
@@ -81,7 +81,7 @@ main (int, char *[])
 
   /*
     Now that we know it is safe to access the data, we'll run
-    through and make sure that it contains what we think the server 
+    through and make sure that it contains what we think the server
     supplied.
     */
   for (int i = 0; i < Constants::SHMSZ; i++)
@@ -90,7 +90,7 @@ main (int, char *[])
   /*
     Look back at the server.  After filling the region, it will
     attempt to acquire the lock on 'synch'.  It will wait there
-    until we release() the semaphore.  That will allow it to remove 
+    until we release() the semaphore.  That will allow it to remove
     the pool and cleanup.  We can simply exit once we perform the
     release. (Ok, a free() of the region would probably be polite...)
     */
@@ -98,7 +98,7 @@ main (int, char *[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P) client synch.release"),
                       1);
-        
+
   return 0;
 }
 

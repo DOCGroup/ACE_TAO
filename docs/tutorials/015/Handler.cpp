@@ -5,7 +5,7 @@
 #include "Protocol_Task.h"
 
 /* The Protocol_Stream gives us the option to insert a Protocol_Task
-   to process data received by the stream.  We'll get into the details 
+   to process data received by the stream.  We'll get into the details
    more when we talk about the stream in detail.  For now it's enough
    to know that Handler_Task::recv() will be invoked by the stream
    after data from the client has been received and processed (eg --
@@ -25,7 +25,7 @@ public:
 protected:
 
         // recv() is invoked after received data has been fully
-        // processed by the protocol rules.  Data processing typically 
+        // processed by the protocol rules.  Data processing typically
         // done in handle_input() can then be done here.
      int recv(ACE_Message_Block * message,
               ACE_Time_Value *timeout = 0);
@@ -74,8 +74,8 @@ int Handler::open (void *)
     {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot open the protocol stream.\n"), -1);
     }
-    
-        // Now that we know the client is valid and that the stream is 
+
+        // Now that we know the client is valid and that the stream is
         // ready for business we can register with the gloabl reactor
         // instance.  Here again is an opportunity for improvement if
         // we expect to have mulitple Server object instances.
@@ -113,8 +113,8 @@ int Handler::handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask)
     return 0;
 }
 
-/* Unlike a "traditional" handle_input() ours is very simple.  Because 
-   of the use of the protocol stream, we delegate the read function to 
+/* Unlike a "traditional" handle_input() ours is very simple.  Because
+   of the use of the protocol stream, we delegate the read function to
    the stream's get() and rely on our Handler_Task to do the real work.
 */
 int Handler::handle_input (ACE_HANDLE)
@@ -127,7 +127,7 @@ int Handler::handle_input (ACE_HANDLE)
     {
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) Cannot get data from protocol stream\n"), -1);
     }
-    
+
     return 0;
 }
 
