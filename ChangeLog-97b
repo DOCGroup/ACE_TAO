@@ -3,6 +3,9 @@ Wed Nov 12 00:20:38 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.{i,cpp} (inet_ntoa): use VxWorks' native inet_ntoa.  It's
           not documented but it works.
 
+        * ace/OS.cpp (gethostbyname): on VxWorks, load static first_addr on
+          every call, not just the first.
+
         * include/makeinclude/rules.local.GNU: removed extra "fi" in
           install operation.
 
@@ -34,7 +37,7 @@ Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 Tue Nov 11 08:09:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (inet_aton): declare local ip_addr as an ACE_UINT32
-          instead of a long.  Real programmers only use 64-bit machines.
+          instead of a long.  Real programmers have 64-bit longs.
 
         * ace/INET_Addr.cpp (get_host_name): added ACE_UNUSED_ARG (len);
           for VxWorks only.
