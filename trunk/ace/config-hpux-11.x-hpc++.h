@@ -56,7 +56,7 @@
 #  define ACE_HAS_BROKEN_CONVERSIONS
 
 // Compiler supports C++ exception handling
-#  define ACE_HAS_EXCEPTIONS
+#  define ACE_HAS_EXCEPTIONS 1
 
 // Compiler enforces the "One Definition Rule"
 #  define ACE_HAS_ONE_DEFINITION_RULE
@@ -71,7 +71,7 @@
 #  define ACE_HAS_USING_KEYWORD
 
 // Platform lacks streambuf "linebuffered ()".
-#  define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#  define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
 // Lack of (and broken) support for placement operator delete is a known
 // bug by HP, at least as of aC++ A.03.10. It may be fixed later, and if so
@@ -112,5 +112,13 @@
 #define ACE_HAS_GPERF
 
 #include "ace/config-hpux11.h"		/* OS information */
+
+
+// KCC Specific Section
+#if defined(__KCC)
+#  include "ace/config-kcc-common.h"
+#  undef ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
+#  undef ACE_CC_PREPROCESSOR_ARGS
+#endif
 
 #endif /* ACE_CONFIG_H */

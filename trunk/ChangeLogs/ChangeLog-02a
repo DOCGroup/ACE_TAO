@@ -1,3 +1,24 @@
+Mon Feb 14 12:21:01 2000  Chad Elliott  <elliott_c@ociweb.com>
+
+	* ace/config-hpux-11.x-hpc++.h
+
+	  Added a conditional include for the KCC common include file.
+	  Modified the values of ACE_HAS_EXCEPTIONS and
+	  ACE_LACKS_LINEBUFFERED_STREAMBUF to match those of the KCC
+	  common header.  This will not affect non-KCC builds on HP.
+
+	* include/makeinclude/platform_hpux_kcc.GNU
+
+	  Added this file for building on HPUX with KCC.
+
+	* include/makeinclude/platform_sunos5_kcc.GNU
+
+	  Modified to allow building static libraries.
+
+	* include/makeinclude/platform_linux_kcc.GNU
+
+	  Modified to allow building static libraries.
+
 Mon Feb 14 08:43:31 2000  Ossama Othman  <ossama@uci.edu>
 
 	* acconfig.h:
