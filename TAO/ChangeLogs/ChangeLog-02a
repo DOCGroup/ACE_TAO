@@ -1,3 +1,9 @@
+Mon Oct 22 18:54:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV.dsp:
+	* orbsvcs/orbsvcs/AV_Static.dsp: Added missing files. Should fix
+	  build problems in Win2K builds.
+
 Mon Oct 22 15:41:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Endpoint.cpp (is_equivalent): 
