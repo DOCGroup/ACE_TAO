@@ -1,80 +1,90 @@
+Wed Dec 22 17:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+
+	  Fixed library names. 
+	
+	* DAnCE/NodeApplication/NodeApplication.cpp:
+
+	  Cosmetic fixes.
+
 Wed Dec 22 16:50:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* Config_Handlers/Basic_Deployment_Data.cpp:
-	* Config_Handlers/Basic_Deployment_Data.hpp:
-	* Config_Handlers/cdp.cpp:
-	* Config_Handlers/cdp.hpp:
+ 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
 
 	  Generated code from XSC. 
 	
-	* Config_Handlers/IDD_Handler.cpp:
-	* Config_Handlers/IDD_Handler.h:
-	* Config_Handlers/ID_Handler.cpp:
-	* Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.cpp:
+	* DAnCE/Config_Handlers/ID_Handler.h:
 	  
 	  Some cosmetic changes. 
 
 Tue Oct 26 21:00:13 2004  Jules White  <Jules@dre.vanderbilt.edu>
 
- 	* Config_Handlers/Property_Handler.cpp:
- 	* Config_Handlers/Property_Handler.h:
- 	* Config_Handlers/PSPE_Handler.cpp:
- 	* Config_Handlers/PSPE_Handler.h:
- 	* Config_Handlers/RDD_Handler.cpp:
- 	* Config_Handlers/RDD_Handler.h:
- 	* Config_Handlers/Req_Handler.cpp:
- 	* Config_Handlers/Req_Handler.h:
- 	* Config_Handlers/IRDD_Handler.cpp:
- 	* Config_Handlers/IRDD_Handler.h:
- 	* Config_Handlers/ID_Handler.cpp:
- 	* Config_Handlers/ID_Handler.h:
- 	* Config_Handlers/ERE_Handler.cpp:
- 	* Config_Handlers/ERE_Handler.h:
- 	* Config_Handlers/DataType_Handler.cpp:
- 	* Config_Handlers/DataType_Handler.h:
- 	* Config_Handlers/CRDD_Handler.cpp:
- 	* Config_Handlers/CRDD_Handler.h:
- 	* Config_Handlers/CPD_Handler.cpp:
- 	* Config_Handlers/CPD_Handler.h:
- 	* Config_Handlers/ComponentPropertyDescription_Handler.cpp:
- 	* Config_Handlers/ComponentPropertyDescription_Handler.h:
- 	* Config_Handlers/CEPE_Handler.cpp:
- 	* Config_Handlers/CEPE_Handler.h:
- 	* Config_Handlers/CCD_Handler.cpp:
- 	* Config_Handlers/CCD_Handler.h:
- 	* Config_Handlers/Any_Handler.cpp:
- 	* Config_Handlers/Any_Handler.h:
- 	* Config_Handlers/ADD_Handler.cpp:
- 	* Config_Handlers/ADD_Handler.h:
+ 	* DAnCE/Config_Handlers/Property_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Property_Handler.h:
+ 	* DAnCE/Config_Handlers/PSPE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/PSPE_Handler.h:
+ 	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/RDD_Handler.h:
+ 	* DAnCE/Config_Handlers/Req_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Req_Handler.h:
+ 	* DAnCE/Config_Handlers/IRDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/IRDD_Handler.h:
+ 	* DAnCE/Config_Handlers/ID_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ID_Handler.h:
+ 	* DAnCE/Config_Handlers/ERE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ERE_Handler.h:
+ 	* DAnCE/Config_Handlers/DataType_Handler.cpp:
+ 	* DAnCE/Config_Handlers/DataType_Handler.h:
+ 	* DAnCE/Config_Handlers/CRDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CRDD_Handler.h:
+ 	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CPD_Handler.h:
+ 	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+ 	* DAnCE/Config_Handlers/CEPE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CEPE_Handler.h:
+ 	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CCD_Handler.h:
+ 	* DAnCE/Config_Handlers/Any_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Any_Handler.h:
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ADD_Handler.h:
  	
  	  Added methods to map from idl types back to XSC types.
 
 Sun Oct 10 22:58:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ExecutionManager/DAM_Map.cpp:
-	* ExecutionManager/DAM_Map.h:
+ 	* DAnCE/ExecutionManager/DAM_Map.cpp:
+	* DAnCE/ExecutionManager/DAM_Map.h:
 
 	  New files that stores the map of UUID of a plan to the reference
 	  to DomainApplicationManager.
 	
-	* ExecutionManager/ExecutionManager.mpc:
+	* DAnCE/ExecutionManager/ExecutionManager.mpc:
 	  
 	  Added new files. 
 	
-	* ExecutionManager/Execution_Manager.cpp:
+	* DAnCE/ExecutionManager/Execution_Manager.cpp:
 
 	  Removed a bunch of bogus options which contributed nothing. Made
 	  the implementation a bit cleaner and simpler. 
 	
-	* ExecutionManager/Execution_Manager_Impl.cpp:
-	* ExecutionManager/Execution_Manager_Impl.h:
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.h:
 
 	  Total revamp of the implementation. We can now handle multiple
 	  domains. We now use UUID in the plan to make an informed
 	  decision on whether we are dealing with the same plan or a
 	  different plan. 
 	
-	* Plan_Launcher/Plan_Launcher.cpp:
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp:
 
 	  Cosmetic fixes.
 	
