@@ -25,6 +25,15 @@
 
 #include "ace/Trace.h"
 
+#if defined (_MSC_VER)
+// Suppress warning e.g. "return type for
+// 'ACE_Auto_Array_Pointer<type>::operator ->' is 'type *' (i.e., not a UDT
+// or reference to a UDT.  Will produce errors if applied using infix
+// notation)"
+#  pragma warning(push)
+#  pragma warning(disable: 4284)
+#endif /* _MSC_VER */
+
 /**
  * @class ACE_Auto_Basic_Ptr
  *
@@ -169,6 +178,11 @@ public:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Auto_Ptr.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#if defined (_MSC_VER)
+// Restore the warning state to what it was before entry.
+#  pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include "ace/post.h"
 #endif /* ACE_AUTO_PTR_H */
