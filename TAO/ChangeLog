@@ -1,3 +1,41 @@
+Mon Sep 29 18:39:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+
+	  A temporary hack for Boris to keep progressing. The aim of this
+	  hack in the branch is to add a propreietary interception
+	  point. This is what this checkin is all about
+
+	  - Added a new interception point, tao_ft_interception_point ()
+	    on the server side. 
+
+	  - This will be called on the server even before the
+	    receive_request_service_context () is called
+
+	  - The server can use this interception point to send back a
+	    reply without dispatching it to the object. 
+
+ 	* tao/PortableInterceptor.pidl:
+	* tao/PortableInterceptorC.h: Added the new interception point. A
+	  default implementation is provided, so that application
+	  developers don't need to implement the proprietary interception
+	  point. 
+	
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i: Added a new method which will be used
+	  to send cached replies back to the client.
+	
+	* tao/PortableServer/Object_Adapter.cpp: Called the proprietary
+	  interception point.
+
+	* tao/PortableServer/ServerInterceptorAdapter.cpp:
+	* tao/PortableServer/ServerInterceptorAdapter.h:  Added the first
+	  interception point to be the tao's proprietary interception
+	  point. 
+
+	  This shouldn't be needed once we merge in 1369. But till then we
+	  may need this hack.
+	
 Mon Sep 29 18:19:51 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:

@@ -133,6 +133,8 @@ module PortableInterceptor {
   };
 
   local interface ServerRequestInterceptor : Interceptor {
+    /// Proprietary method in TAO for fault tolerance
+    void tao_ft_interception_point (in ServerRequestInfo ri, out CORBA::OctetSeq os) raises (ForwardRequest);
     void receive_request_service_contexts (in ServerRequestInfo ri) raises (ForwardRequest);
     void receive_request (in ServerRequestInfo ri) raises (ForwardRequest);
     void send_reply (in ServerRequestInfo ri);
