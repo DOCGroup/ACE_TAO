@@ -1,3 +1,13 @@
+Fri Sep 13 15:35:53 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/Acceptor_Registry.cpp: Put errno value in the 
+	  constructor of the CORBA exception which is created when
+	  when opening the acceptor in TAO_Acceptor_Registry::open_i() fails.
+
+	* tao/Exception.cpp: For errno values which are not handled in the
+	  switch statement, include ACE_OS_String::strerror(errno) in the
+	  error output.
+
 Fri Sep 13 14:31:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
