@@ -1,3 +1,9 @@
+Tue Feb  2 12:27:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Generalized the WIF* macros so that they will be
+ 	  defined on any platform that lacks them, not just NT.  Thanks to
+ 	  David Levine for reporting this.
+
 Tue Feb 02 08:58:32 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_Reactor_Timer_Test.cpp: Moved definition of status outside
