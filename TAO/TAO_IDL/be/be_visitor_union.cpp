@@ -570,6 +570,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "CORBA::Environment _tao_env;" << be_nl
           << "if (!_tao_any.type ()->equal (" << node->tc_name ()
           << ", _tao_env)) return 0; // not equal" << be_nl
+          << "if (_tao_any.any_owns_data ())" << be_nl
+          << "{" << be_idt_nl
           << "ACE_NEW_RETURN (_tao_elem, " << node->name () << ", 0);"
           << be_nl
           << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
@@ -583,8 +585,18 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << be_nl
           << "  return 1;" << be_uidt_nl
           << "}" << be_nl
-          << "else" << be_nl
-          << "  return 0;" << be_uidt_nl
+          << "else" << be_nl  // decode failed
+          << "{" << be_idt_nl
+          << "delete _tao_elem;" << be_nl
+          << "return 0;" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "}" << be_nl
+          << "else" << be_nl  // else any does not own the data
+          << "{" << be_idt_nl
+          << "_tao_elem = (" << node->name () << " *)_tao_any.value ();"
+          << be_nl
+          << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "}\n\n";
 
       os->indent ();

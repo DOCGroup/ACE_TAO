@@ -1,3 +1,4 @@
+// $Id$
 // This may look like C, but it's really -*- C++ -*-
 
 // constructor
@@ -20,7 +21,7 @@ CORBA_NamedValue::name (void) const
 ACE_INLINE CORBA::Any_ptr
 CORBA_NamedValue::value (void) const
 {
-  return ACE_const_cast(CORBA::Any_ptr,&this->any_);
+  return ACE_const_cast (CORBA::Any_ptr, &this->any_);
 }
 
 // return the flags
@@ -36,9 +37,7 @@ CORBA_NamedValue::flags (void) const
 // constructor
 ACE_INLINE
 CORBA_NVList::CORBA_NVList (void)
-  : values_ (0),
-    max_ (0),
-    len_ (0),
+  : max_ (0),
     refcount_ (1)
 {
 }

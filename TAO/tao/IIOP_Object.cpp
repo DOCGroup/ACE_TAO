@@ -553,6 +553,11 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
                     call.get_value (pdp->tc, ptr, env);
                   else
                     {
+                      // @@ (ASG) -  I think we must completely get rid of this
+                      // case because IDL compiler generated stubs will use
+                      // this function and they better allocate all the
+                      // memory.
+
                       // assert (value_size == tc->size());
                       *(void **)ptr = new CORBA::Octet [pdp->value_size];
                       call.get_value (pdp->tc, *(void **)ptr, env);
@@ -619,8 +624,19 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
           if (value->flags () == CORBA::ARG_IN
               || value->flags () == CORBA::ARG_INOUT)
             {
-              call.put_param (value->value ()->type (),
-                              (void *) value->value ()->value (), env);
+              // if the Any owns the data, then we already have a CDR encoded
+              // data
+              if (value->value ()->any_owns_data_)
+                {
+                  TAO_OutputCDR &cdr = call.out_stream ();
+                  TAO_InputCDR in (value->value ()->cdr_);
+                  cdr.append (value->value ()->type (), &in, env);
+                }
+              else
+                {
+                  call.put_param (value->value ()->type (),
+                                  (void *) value->value ()->value_, env);
+                }
               if (env.exception ())
                 {
                   dexc (env, "do_dynamic_call, put request parameter");
@@ -654,6 +670,10 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
         {
           if (result != 0)
             {
+#if 0
+              // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
+              // (4/21/98).
+
               // If caller didn't set OUT_LIST_MEMORY flag, allocate
               // memory for return value ...
 
@@ -676,18 +696,56 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
                       dexc (env, "do_dynamic_call, set result mem");
                     }
                 }
+#endif
+              if (!result->value ()->value_)
+                {
+                  // storage was not allocated. In this case, we simply grab
+                  // the portion of the CDR stream that contained this
+                  // parameter, The application should use the appropriate >>=
+                  // operator to retrieve the value
+                  char *begin, *end;
+                  TAO_InputCDR temp (call.inp_stream ());
+                  CORBA::TypeCode::traverse_status retval;
+                  CORBA::Any *any = result->value ();
 
-              call.get_value (result->value ()->type (),
-                              (void *) result->value ()->value (), env);
+                  begin = call.inp_stream ().rd_ptr ();
+                  // skip the parameter to get the ending position
+                  retval = temp.skip (any->type (), env);
+                  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                    {
+                      end = temp.rd_ptr ();
+                      any->cdr_ = new ACE_Message_Block (end - begin);
+                      TAO_OutputCDR out (any->cdr_);
+
+                      retval = out.append (any->type (),
+                                           &call.inp_stream (), env);
+                      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        {
+                          any->any_owns_data_ = 1;
+                          any->value_ = 0;
+                        }
+                    }
+                }
+              else
+                {
+                  // the application had allocated the top level storage. We
+                  // simply retrieve the data
+                  call.get_value (result->value ()->type (),
+                                  (void *) result->value ()->value_, env);
+                }
             }
 
           for (i = 0; i < args->count (); i++)
             {
               CORBA::NamedValue_ptr     value = args->item (i, env);
+              CORBA::Any *any = value->value ();
 
               if (value->flags () == CORBA::ARG_OUT
                   || value->flags () == CORBA::ARG_INOUT)
                 {
+#if 0
+                  // @@  (ASG) need to deal with this
+
                   // If caller didn't set OUT_LIST_MEMORY flag, allocate
                   // memory for this parameter ...
                   if (!(flags & CORBA::OUT_LIST_MEMORY))
@@ -701,6 +759,8 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
 
                       if (size != 0)
                         {
+
+
                           void *ptr = new CORBA::Octet [size];
 
                           tcp->AddRef ();
@@ -709,9 +769,43 @@ IIOP_Object::do_dynamic_call (const char *opname,               // operation nam
                           dexc (env, "do_dynamic_call, set result mem");
                         }
                     }
+#endif
 
-                  call.get_value (value->value ()->type (),
-                                  (void *) value->value ()->value (), env);
+                  if (!any->value_)
+                    {
+                      // storage was not allocated. In this case, we simply grab
+                      // the portion of the CDR stream that contained this
+                      // parameter, The application should use the appropriate >>=
+                      // operator to retrieve the value
+                      char *begin, *end;
+                      TAO_InputCDR temp (call.inp_stream ());
+                      CORBA::TypeCode::traverse_status retval;
+
+                      begin = call.inp_stream ().rd_ptr ();
+                      // skip the parameter to get the ending position
+                      retval = temp.skip (any->type (), env);
+                      if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                        {
+                          end = temp.rd_ptr ();
+                          any->cdr_ = new ACE_Message_Block (end - begin);
+                          TAO_OutputCDR out (any->cdr_);
+
+                          retval = out.append (any->type (),
+                                               &call.inp_stream (), env);
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                            {
+                              any->any_owns_data_ = 1;
+                              any->value_ = 0;
+                            }
+                        }
+                    }
+                  else
+                    {
+                      // the application had allocated the top level
+                      // storage. We simply retrieve the data
+                      call.get_value (any->type (),
+                                      (void *) any->value_, env);
+                    }
                   if (env.exception ())
                     {
                       dexc (env, "do_dynamic_call, get response parameter");

@@ -1,24 +1,87 @@
+Thu Apr 23 15:48:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_visitor_structure, be_visitor_exception,
+	be_visitor_union, be_visitor_sequence}.cpp: The code generation of
+	the >>= operators is now improved to take into account the fact
+	that an Any may not own the value. In such cases, the >>= operator
+	should simply do a cast rather than retrieving the value from the
+	CDR member
+
+	* tao/Any.{h,i}: Added a new method (TAO extension) returning a
+	boolean to indicate if the Any owns the data or not. This is used
+	by the >>= operators generated for user-defined types
+
+	* tao/Any.cpp: The constructor and assignment operator of Any that
+	was creating a CDR stream used to point its ACE_Message_Block
+	member to a buffer that was allocated on the function call
+	stack. We now explicitly call "clone" on it to make a deep copy.
+
+	* tao/GIOP.{h,i}: Added two methods that return the underlying
+	input and output CDR streams.
+
+	* tao/IIOP_Object.cpp: (do_dynamic_call): Made major
+	modifications. We are now able to handle the case when the user
+	has not supplied the top level storage for out and return
+	parameters. For these cases, we use exactly the same logic as the
+	Any::decode method. We maintain a pointer to the part of the CDR
+	stream that holds the value and save it in the Any. It is the
+	application's responsibility to use the appropriate >>= methods to
+	retrieve the value.
+
+	* tao/NVList.{h, i, cpp}: We now use ACE_Unbounded_Queue to
+	maintain the list of NamedValues. The original code was mixing up
+	C++ and C memory management by using calloc and realloc. This was
+	cauisng too many problems. At the same time, reallocing would
+	introduce a large number of deep_copies of the Anys that are held.
+	All the add_* and item methods have been affected.
+
+	* tao/ORB.cpp: Modified the create_list method since the NVList
+	now uses ACE_Unbounded_Queue<NamedValue_ptr> to maintain a list of
+	NamedValues.
+
+	* tao/{append, encode, decode, skip}.cpp: For the Union::{append,
+	encode, decode, skip} methods, it was necessary to use the >>=
+	operators to retrieve the label values. We were originally using
+	casts to the void* returned by the Any::value () method. However,
+	since this returns the underlying CDR buffer, we need to use the
+	type-safe >>= operators. For the enum case label, we explicitly
+	invoke the decoder.
+
+	* tao/Server_Request.cpp:(demarshal): We now create an NVList of
+	size 0 and then add individual items according to the
+	CallData_skel table. This is no more wasteful as in the previous
+	scheme because now we use ACE_Unbounded_Queue to mainatin the
+	internal list and hence growing the list does not result in huge
+	amounts of deep_copies.
+
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: Fixed the usage for DII in
+	struct_dii and union_dii to use the >>= operators.
+
+	* tests/Param_test/tests.cpp: Partially fixed the way DII tests
+	should be coded. Some of them are now working. I need to fix the
+	rest of them.
+
 Wed Apr 22 15:56:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
 	  The test also has a collocated scheduling service now.
 
-	* orbsvcs/tests/EC_Multiple/svc.conf: 
+	* orbsvcs/tests/EC_Multiple/svc.conf:
 	  Added a missing svc.conf file.
 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
 	  The -n option can be used to specify the scheduling service name.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+	* orbsvcs/orbsvcs/Scheduler_Factory.h:
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
 	  We can find scheduling services with different names now.
 	  Removed all method that used resolve_initial_references() to
 	  find the scheduling service; this was needed before the naming
 	  service was working.
 
-	* orbsvcs/tests/EC_Multiple/latency.pl: 
-	* orbsvcs/tests/EC_Multiple/gen_data: 
+	* orbsvcs/tests/EC_Multiple/latency.pl:
+	* orbsvcs/tests/EC_Multiple/gen_data:
 	  Simple scripts to process the data obtained in the experiments.
 
 Mon Apr 20 16:46:07 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
