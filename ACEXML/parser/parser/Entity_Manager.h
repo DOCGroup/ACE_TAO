@@ -80,7 +80,7 @@ public:
                       ACEXML_Char*& publicId);
 
   /// Number of items in the Entity Manager
-  const size_t size(void) const;
+  size_t size(void) const;
 
   /// Reset the state
   int reset (void);

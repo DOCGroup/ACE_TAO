@@ -1,3 +1,10 @@
+Fri Jun 27 12:55:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * parser/parser/Entity_Manager.h:
+        * parser/parser/Entity_Manager.i:
+          Removed not useful const return qualifier to resolve intel
+          compiler warnings.
+
 Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * parser/parser/Parser.i:
