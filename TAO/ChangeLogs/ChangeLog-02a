@@ -1,3 +1,9 @@
+Fri Feb 25 18:25:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/reopened_modules.idl:
+	* tests/IDL_Test/including.idl:
+	  Fix to accomodate platforms without namespaces.
+
 Fri Feb 25 15:08:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/releasenotes/index.html:
