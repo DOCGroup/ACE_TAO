@@ -1,3 +1,10 @@
+Sat Dec 27 16:13:59 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/{OS.i,config-linux-common.h,README} (getrusage,{get,set}rlimit):
+          added ACE_HAS_RUSAGE_WHO_ENUM and ACE_HAS_RLIMIT_RESOURCE_ENUM
+          support.  glibc 2.0 for Linux uses enums for the first arguments
+          to ::getrusage and ::{get,set}rlimit.
+
 Fri Dec 26 18:04:06 1997    <nw1@JIG>
 
         * ace/Containers.h: Added iterator traits for following classes.
