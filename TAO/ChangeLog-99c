@@ -5,6 +5,11 @@ Thu Nov 11 17:18:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added Steve Totten's <stotten@primary.net> code for
 	  the ostream operator.
 
+	* TAO_IDL/be/be_exception.cpp:
+	  Modified the generated ostream operator for 
+	  exceptions to output the same thing(s) in the same
+	  format as Steve's operator for CORBA_Exception.
+
 Thu Nov 11 15:52:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynAny_i.cpp:
