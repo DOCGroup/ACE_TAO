@@ -1,5 +1,11 @@
 Fri May 15 16:55:34 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Service_Config.cpp: Removed a duplicate 
+
+	  template class ACE_Unbounded_Queue_Iterator<ACE_CString>;
+
+	  Thanks to Ben Eng <ben@jetpen.com> for reporting this.
+
         * ace/OS: Fixed a number of problems that occurred when trying to
  	  use the PTHREAD implementation on Solaris without using
  	  ACE_HAS_STHREADS.  The problems related primarily to the
