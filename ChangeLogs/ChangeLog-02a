@@ -1,3 +1,8 @@
+Wed Oct 25 12:26:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/RMCast/RMCast_UDP_Reliable_Sender.cpp:
+          Yet another missing #include
+
 Wed Oct 25 09:50:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast_IO_UDP.h:
