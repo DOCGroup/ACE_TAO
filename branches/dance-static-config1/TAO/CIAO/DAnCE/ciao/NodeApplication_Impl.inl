@@ -2,8 +2,8 @@
 // $Id$
 
 ACE_INLINE
-CIAO::NodeApplication_Impl::
-NodeApplication_Impl (CORBA::ORB_ptr o,
+CIAO::NodeApplication_Impl_Base::
+NodeApplication_Impl_Base (CORBA::ORB_ptr o,
                       PortableServer::POA_ptr p)
 
   : orb_ (CORBA::ORB::_duplicate (o)),

@@ -49,17 +49,17 @@ using CIAO::Utility::write_IOR;
 
 namespace CIAO
 {
-  class CIAO_SERVER_Export NodeApplication_Impl
+  class CIAO_SERVER_Export NodeApplication_Impl_Base
     : public virtual POA_Deployment::NodeApplication
   {
   public:
 
     // Default constructor.
-    NodeApplication_Impl (CORBA::ORB_ptr o,
+    NodeApplication_Impl_Base (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p);
 
     // Default destructor.
-    virtual ~NodeApplication_Impl (void);
+    virtual ~NodeApplication_Impl_Base (void);
 
 
     /**
@@ -166,6 +166,9 @@ namespace CIAO
 
     protected:
 
+    virtual Container* create_container (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))=0;
+
     // @@ (OO) Methods internal to the class, e.g. protected and not
     //         defined in IDL should not be using default arguments.
     //         Please drop the "_WITH_DEFAULTS" in all of the below
@@ -243,6 +246,43 @@ namespace CIAO
                        Components::InvalidConfiguration));
     */
   };
+
+  class CIAO_SERVER_Export NodeApplication_Impl
+    : public NodeApplication_Impl_Base
+  {
+  public:
+
+    // Default constructor.
+    NodeApplication_Impl (CORBA::ORB_ptr o,
+                          PortableServer::POA_ptr p);
+
+    Container* create_container (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Default destructor.
+    virtual ~NodeApplication_Impl ();
+  };
+
+  class CIAO_SERVER_Export Static_NodeApplication_Impl
+    : public NodeApplication_Impl_Base
+  {
+  public:
+
+    // Default constructor.
+    Static_NodeApplication_Impl (CORBA::ORB_ptr o,
+                                 PortableServer::POA_ptr p,
+                                 Static_Config_EntryPoints_Maps* static_config_entrypoints_map);
+
+    Container* create_container (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Default destructor.
+    virtual ~Static_NodeApplication_Impl ();
+
+  protected:
+    Static_Config_EntryPoints_Maps* static_config_entrypoints_map_;
+  };
+
 }
 
 #if defined (__ACE_INLINE__)

@@ -23,3 +23,21 @@ project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployme
     RepositoryManager_Impl.cpp
   }
 }
+
+project(libRepository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, xerces {
+  sharedname = RepositoryManager
+  requires += exceptions
+  includes += /usr/include
+  libpaths += /usr/lib
+  libs     += Config_Handlers
+  after    += Config_Handlers
+
+  IDL_Files {
+    RepositoryManager.idl
+  }
+
+  Source_Files {
+    Update_Plan.cpp
+    RepositoryManager_Impl.cpp
+  }
+}

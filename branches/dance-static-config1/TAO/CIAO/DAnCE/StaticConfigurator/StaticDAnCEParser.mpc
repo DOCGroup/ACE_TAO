@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project(StaticDAnCEParser): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, taoexe, xerces {
+  exename   = StaticDAnCEParser
+  requires += exceptions
+  includes += /usr/include
+  includes += ../NodeApplicationManager ../DomainApplicationManager ../NodeManager
+  libpaths += /usr/lib
+  libs     += Config_Handlers 
+  after    += Config_Handlers
+  libs     += TAO_IORTable RepositoryManager NodeApplicationManager DomainApplicationManager Node_Daemon
+  after    += TAO_IORTable RepositoryManager NodeApplicationManager DomainApplicationManager Node_Daemon
+
+  Source_Files {
+    StaticDAnCEParser.cpp
+  }
+}
