@@ -387,7 +387,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
   LPCTSTR postfix = database;
 
   size_t length = 0;
-  length = sizeof lock_name_for_local_name_space / sizeof TCHAR;
+  length = sizeof lock_name_for_local_name_space / sizeof (TCHAR);
   ACE_OS::strncpy (lock_name_for_local_name_space, 
 		   __TEXT ("name_space_"),
 		   length);
@@ -395,7 +395,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 		  postfix,
 		  length - ACE_OS::strlen (__TEXT ("name_space_")));
   
-  length = sizeof lock_name_for_backing_store / sizeof TCHAR;
+  length = sizeof lock_name_for_backing_store / sizeof (TCHAR);
   ACE_OS::strncpy (lock_name_for_local_backing_store, 
 		   __TEXT ("backing_store_"),
 		   length);
