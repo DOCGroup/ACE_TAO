@@ -1,3 +1,11 @@
+Sun Aug 18 11:32:41 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing.rc (InternalName):
+	  (OriginalFilename):
+
+	  Corrected these fields.  They still refered to the old Load
+	  Balancer library.
+
 Fri Aug 16 14:22:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.bor (CFLAGS, LIBFILES):
