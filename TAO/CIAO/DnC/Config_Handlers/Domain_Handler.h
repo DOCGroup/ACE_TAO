@@ -169,6 +169,14 @@ namespace CIAO
       void parse_resource_href_doc (DOMDocument* doc, unsigned long filter,
                                     Deployment::Resource& domain_resource);
 
+      /// parse the property in a HREF format
+      void parse_property_href_doc (DOMDocument* doc, unsigned long filter,
+                                    Deployment::Property& property);
+
+      /// parse the satisfier property in a HREF format
+      void parse_satisfier_property_href_doc (DOMDocument* doc, unsigned long filter,
+                                              Deployment::SatisfierProperty& satisfier_property);
+
     private:
 
       DOMDocumentTraversal* traverse_;
