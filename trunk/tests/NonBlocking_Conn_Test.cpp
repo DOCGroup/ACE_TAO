@@ -79,7 +79,7 @@ static const char* hosts[] = {
   "www.waca.com.au:80",
   "www.uganda.co.ug:80",
   "www.cs.wustl.edu:80",
-  "www.affa-az.com:80",
+  "www.dre.vanderbilt.edu:80",
   "www.dhm.gov.np:80",
   "www.msn.com:80",
   "www.presidencymaldives.gov.mv:80" };
