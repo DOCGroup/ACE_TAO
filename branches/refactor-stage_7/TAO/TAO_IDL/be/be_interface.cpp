@@ -580,7 +580,12 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       *os << be_nl << "{" << be_idt_nl
           << "this->" << this->flat_name ()
-          << "_setup_collocation (_tao_collocated);";
+          << "_setup_collocation (_tao_collocated);" << be_nl;
+
+      if (this->is_abstract ())
+        {
+          *os << "ACE_UNUSED_ARG (oc);" << be_nl;
+	}
 
       *os << be_uidt_nl
           << "}";

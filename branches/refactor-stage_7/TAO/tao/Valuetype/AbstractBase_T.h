@@ -31,6 +31,9 @@ namespace TAO
   template<typename T>
   class AbstractBase_Narrow_Utils
   {
+  public:
+    typedef T *T_ptr;
+
     static T_ptr narrow (CORBA::AbstractBase_ptr,
                          const char *repo_id,
                          Proxy_Broker_Factory
@@ -42,7 +45,7 @@ namespace TAO
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Valetype/AbstractBase_T.cpp"
+#include "AbstractBase_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -50,4 +53,4 @@ namespace TAO
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-3endif /*TAO_ABSTRACTBASE_T_H*/
+#endif /*TAO_ABSTRACTBASE_T_H*/

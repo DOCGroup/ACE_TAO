@@ -119,9 +119,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  if (!node->is_local ())
+  if (!node->is_local () && !node->is_abstract ())
     {
       *os << "friend class TAO::Narrow_Utils<"
+          << node->local_name () << ">;" << be_nl;
+    }
+  else if (!node->is_local () && node->is_abstract ())
+    {
+      *os << "friend class TAO::AbstractBase_Narrow_Utils<"
           << node->local_name () << ">;" << be_nl;
     }
 

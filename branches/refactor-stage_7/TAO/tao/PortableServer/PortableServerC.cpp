@@ -6710,6 +6710,20 @@ CORBA::Boolean operator>>= (
     );
 }
 
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
 // Extraction to const pointer.
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
@@ -6723,20 +6737,6 @@ CORBA::Boolean operator>>= (
         PortableServer::POAManager::_tc_AdapterInactive,
         _tao_elem
       );
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
 }
 
 // TAO_IDL - Generated from
@@ -6754,19 +6754,6 @@ void operator<<= (
     );
 }
 
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::POAManager::State &_tao_elem
-  )
-{
-  return
-    TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
-        _tao_any,
-        PortableServer::POAManager::_tc_State,
-        _tao_elem
-      );
-}
-
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
@@ -6779,6 +6766,19 @@ CORBA::Boolean
 TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
 {
   return 0;
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    PortableServer::POAManager::State &_tao_elem
+  )
+{
+  return
+    TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
+        _tao_any,
+        PortableServer::POAManager::_tc_State,
+        _tao_elem
+      );
 }
 
 // TAO_IDL - Generated from

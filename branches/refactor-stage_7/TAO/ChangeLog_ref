@@ -1,3 +1,27 @@
+Sun Oct 26 11:04:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+	* TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+	  Abstract interface will use its own version of narrow and
+	  unchecked_narrow that are available in the Valutype library. 
+
+	* tao/PortableServer/PortableServerC.cpp: Fixed some warnings. 
+
+	* tao/Valuetype/AbstractBase_T.cpp:
+	* tao/Valuetype/AbstractBase_T.h: 
+
+	  Template classes that provide unchecked_narrow and narrow for
+	  the generated code. 
+
+	* tests/Makefile: Added Abstract_Interface test. 
+	* tests/Abstract_Interface/Makefile: Generated dependencies. 
+	
 Sun Oct 26 10:29:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_tmplinst.cpp:
