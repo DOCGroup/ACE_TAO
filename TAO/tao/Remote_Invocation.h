@@ -27,6 +27,11 @@ class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -46,7 +51,8 @@ namespace TAO
 
   protected:
 
-    void init_target_spec (TAO_Target_Specification &spec);
+    void init_target_spec (TAO_Target_Specification &spec
+		           ACE_ENV_ARG_DECL);
 
     void write_header (TAO_Target_Specification &spec,
                        TAO_OutputCDR &out_stream

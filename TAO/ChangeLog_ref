@@ -1,3 +1,14 @@
+Mon Jul  7 04:55:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Makefile.tao:
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Synch_Invocation.cpp: Fixed compile errors with exceptions=0. 
+
 Sun Jul 06 11:00:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bench/wire/testC.cpp: Updated to use the Invocation

@@ -81,7 +81,7 @@ namespace TAO
     ACE_CHECK;
 
     es->select_endpoint (this
-                         ACE_ENV_ARG_DECL);
+                         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (this->transport_ == 0)
@@ -106,7 +106,7 @@ namespace TAO
 
   bool
   Profile_Transport_Resolver::try_connect (TAO_Endpoint *ep
-                                           ACE_ENV_ARG_PARAMETER)
+                                           ACE_ENV_ARG_DECL)
   {
     TAO_Connector_Registry *conn_reg =
       this->stub_->orb_core ()->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);

@@ -49,7 +49,8 @@ namespace TAO
       }
 
     TAO_Target_Specification tspec;
-    this->init_target_spec (tspec);
+    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
 
 
     TAO_OutputCDR &cdr =
@@ -58,19 +59,19 @@ namespace TAO
     this->write_header (tspec,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK
+    ACE_CHECK_RETURN (-1);
 
     this->marshal_data (args,
                         args_number,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
 
     this->send_message (TAO_Transport::TAO_TWOWAY_REQUEST,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     this->resolver_.transport ()->wait_strategy ()->wait (0,
                                                           rd);
@@ -79,7 +80,7 @@ namespace TAO
                               args,
                               args_number
                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (-1);
 
     return 0;
   }
@@ -223,7 +224,8 @@ namespace TAO
         || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
       {
         TAO_Target_Specification tspec;
-        this->init_target_spec (tspec);
+        this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (-1);
 
         TAO_OutputCDR &cdr =
           this->resolver_.transport ()->messaging_object ()->out_stream ();
