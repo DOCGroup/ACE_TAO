@@ -699,7 +699,7 @@ Cubit_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
 
       this->factory_ = 
-	Cubit_Factory::_narrow (factory_object, TAO_TRY_ENV);
+	Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->factory_.in ()))

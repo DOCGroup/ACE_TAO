@@ -1,3 +1,21 @@
+Tue Jan 27 16:16:11 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Param_Test/server.cpp: Added ACE_UNUSED_ARG() inside the
+ 	TAO_CATCH() macro scope to de-warn on g++.
+
+	* tests/Param_Test/param_test_i.cpp (Param_Test_i::CTOR): Removed
+ 	argument name to de-warn on g++.
+
+	* tests/Cubit/TAO/IDL_Cubit/{svr,clnt}.cpp: Use in() method on
+ 	_var class to explicitly get an _ptr.
+
+	* tao/objtable.cpp (find): Changed conditional expression to not
+ 	rely on implicit conversion from _var to _ptr type.
+
+	* tao/giop.cpp: Updated "illegal message" error message to
+ 	actually print out the type of the offending message.  This also
+ 	caused the addition of a helper function--TAO_GIOP_message_name().
+
 Tue Jan 27 15:06:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/Makefile: 
