@@ -1,3 +1,30 @@
+Mon Feb 28 17:06:44 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	  
+	  Fixed an issue with servers requiring client authentication, whereby
+	  the server failed to resume an SSL session and terminates a
+	  connection in the middle of the handshake, because the
+	  (OpenSSL-based) SSL library was not getting correctly initialized
+	  with a call to SSL_CTX_set_session_id_context(3), as pointed out in
+	  the man page warnings section. 
+
+	  Added new service configuration option "-SSLCAFile FORMAT:file" to
+	  allow the user to explicitly specify where TAO must load the Trusted
+	  Certificates from. The FORMAT is either "PEM" or "DER". Added new
+	  service configuration option "-SSLCAPath directory" to allow
+	  explicit specification of the directory, where the Trusted
+	  Certificates are located. The directory must be in a particular
+	  format - see openssl(1) fom more details on how to install
+	  additional CA certificates.  Added new service configuration option
+	  "-SSLRand file1:file2:.." to allow specification of additional
+	  sources of randomness (entropy). The option mimics the -rand option
+	  on genrsa(1), for example. Note that on Windows platforms it accepts
+	  semi-colon (";") as path delimiter vs. colon (":") on Unix
+	  platforms.  
+	  
+
 Mon Feb 28 21:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/Default_ORTA.cpp:
@@ -59,22 +86,22 @@ Mon Feb 28 11:14:35 2005  Ciju John  <john_c@ociweb.com>
 
 Mon Feb 28 07:21:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
-	  Reverted:
-	  Fri Feb 25 21:58:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+          Reverted:
+          Fri Feb 25 21:58:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	  MPC's custom_only feature does not work with VC71.
+          MPC's custom_only feature does not work with VC71.
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Reverted:
-	  Fri Feb 25 07:00:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Reverted:
+          Fri Feb 25 07:00:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	  MPC's custom_only feature does not work with VC71.
+          MPC's custom_only feature does not work with VC71.
 
 Mon Feb 28 14:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -149,61 +176,61 @@ Sun Feb 27 07:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Feb 26 15:35:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* utils/catior/Makefile.am:
-	* utils/nslist/Makefile.am:
+        * utils/catior/Makefile.am:
+        * utils/nslist/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Sat Feb 26 15:17:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Makefile.am:
-	* orbsvcs/tests/AVStreams/Makefile.am:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/AVStreams/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated without QoS support.
+          Regenerated without QoS support.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add orbsvcs/test/BiDir_CORBALOC/Makefile to AC_CONFIG_FILES
-	  list.
+          Add orbsvcs/test/BiDir_CORBALOC/Makefile to AC_CONFIG_FILES
+          list.
 
-	* orbsvcs/test/BiDir_CORBALOC/Makefile.am:
+        * orbsvcs/test/BiDir_CORBALOC/Makefile.am:
 
-	  New file.
+          New file.
 
 Fri Feb 25 21:58:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
 
-	  Add new project for IDL generation.
+          Add new project for IDL generation.
 
 Fri Feb 25 18:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -213,25 +240,25 @@ Fri Feb 25 18:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Feb 25 07:00:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/LoadBalancing.mpc:
 
-	  Added new project just for IDL generation using the new MPC
-	  "custom_only" feature.  This avoids problems in MPC's automake
-	  support when aggregating multiple project Makefile.am's that
-	  each contain rules to compile the IDL files.
+          Added new project just for IDL generation using the new MPC
+          "custom_only" feature.  This avoids problems in MPC's automake
+          support when aggregating multiple project Makefile.am's that
+          each contain rules to compile the IDL files.
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Added new project just for IDL generation using the new MPC
-	  "custom_only" feature.  This avoids a MPC bug where only source
-	  files which are actually used in a project that compiles an IDL
-	  file are added to the list of output files.
+          Added new project just for IDL generation using the new MPC
+          "custom_only" feature.  This avoids a MPC bug where only source
+          files which are actually used in a project that compiles an IDL
+          file are added to the list of output files.
 
 Fri Feb 25 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -285,170 +312,170 @@ Fri Feb 25 09:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Feb 24 23:29:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
-	  Fixed unused "servant_upcall" argument warning in the case where
-	  interceptor support is disabled.
+          Fixed unused "servant_upcall" argument warning in the case where
+          interceptor support is disabled.
 
 Thu Feb 24 23:13:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/SystemException.h (SystemException):
+        * tao/SystemException.h (SystemException):
 
-	  Made copy constructor public.  HP aC++ wants to have a public
-	  copy constructor when the exception is listed in an exception
-	  specification.
+          Made copy constructor public.  HP aC++ wants to have a public
+          copy constructor when the exception is listed in an exception
+          specification.
 
 Thu Feb 24 22:49:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Upcall_Wrapper.h:
+        * tao/PortableServer/Upcall_Wrapper.h:
 
-	  Removed include directive for "tao/Environment.h".  Johnny's
-	  CORBA::Environment forward declaration fulfils the
-	  requirements.
+          Removed include directive for "tao/Environment.h".  Johnny's
+          CORBA::Environment forward declaration fulfils the
+          requirements.
 
 Thu Feb 24 22:19:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Sequence.cpp:
-	* tao/Sequence_T.cpp:
-	* tao/DynamicAny/DynAny_i.cpp:
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynCommon.cpp:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynUnion_i.cpp:
-	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
-	* tao/PortableServer/Active_Object_Map.cpp:
-	* tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
-	* tao/RTCORBA/Network_Priority_Mapping_Manager.i:
-	* tao/RTCORBA/Priority_Mapping_Manager.i:
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
-	* tao/RTCORBA/RT_ORB.cpp:
-	* tao/RTCORBA/RT_Policy_i.cpp:
-	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	* tao/RTCORBA/RT_Stub.cpp:
-	* tao/RTCORBA/RT_Transport_Descriptor.cpp:
-	* tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
-	* tao/RTPortableServer/RT_Policy_Validator.cpp:
-	* tao/RTScheduling/Current.cpp:
-	* tao/RTScheduling/RTScheduler_Manager.i:
-	* tao/RTScheduling/Request_Interceptor.cpp:
-	* tao/Strategies/DIOP_Acceptor.cpp:
-	* tao/Strategies/DIOP_Connector.cpp:
-	* tao/Strategies/DIOP_Endpoint.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SCIOP_Acceptor.cpp:
-	* tao/Strategies/SCIOP_Connector.cpp:
-	* tao/Strategies/SCIOP_Endpoint.cpp:
-	* tao/Strategies/SCIOP_Profile.cpp:
-	* tao/Strategies/SCIOP_Transport.cpp:
-	* tao/Strategies/UIOP_Endpoint.cpp:
-	* tao/Strategies/sciop_endpoints.cpp:
-	* tao/Strategies/sciop_endpoints.i:
-	* tao/Strategies/uiop_endpoints.cpp:
-	* tao/Strategies/uiop_endpoints.i:
-	* tao/Valuetype/AbstractBase.cpp:
-	* tao/Valuetype/Sequence_T.inl:
-	* tao/Valuetype/ValueBase.cpp:
-	* tao/Valuetype/ValueFactory_Map.cpp:
-	* tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/PortableServer/Active_Object_Map.cpp:
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.i:
+        * tao/RTCORBA/Priority_Mapping_Manager.i:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tao/RTCORBA/RT_Policy_i.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTCORBA/RT_Stub.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor.cpp:
+        * tao/RTCORBA/RT_Transport_Descriptor_Property.cpp:
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/RTScheduler_Manager.i:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Endpoint.cpp:
+        * tao/Strategies/sciop_endpoints.cpp:
+        * tao/Strategies/sciop_endpoints.i:
+        * tao/Strategies/uiop_endpoints.cpp:
+        * tao/Strategies/uiop_endpoints.i:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueFactory_Map.cpp:
+        * tao/Valuetype/Value_VarOut_T.cpp:
 
           Converting remaining deprecated ACE cast macro calls to their
-	  standard C++ counterparts.
+          standard C++ counterparts.
 
 Thu Feb 24 22:09:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Upcall_Wrapper.cpp (upcall):
+        * tao/PortableServer/Upcall_Wrapper.cpp (upcall):
 
-	  Instantiate TAO_PICurrent_Guard and perform upcall within their
-	  own scope prior to invocation of an ending interception point.
-	  Addresses a regression that was introduced after the skeleton
-	  refactoring branch merge.
+          Instantiate TAO_PICurrent_Guard and perform upcall within their
+          own scope prior to invocation of an ending interception point.
+          Addresses a regression that was introduced after the skeleton
+          refactoring branch merge.
 
 Thu Feb 24 17:34:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_skel_helper):
+        * TAO_IDL/be/be_interface.cpp (gen_skel_helper):
 
-	  Fixed order of "servant_upcall" and "servant" arguments passed
-	  to "_skel" function corresponding to virtual base class.  The
-	  order was inadvertently swapped during the skeleton-refactor
-	  merge.
+          Fixed order of "servant_upcall" and "servant" arguments passed
+          to "_skel" function corresponding to virtual base class.  The
+          order was inadvertently swapped during the skeleton-refactor
+          merge.
 
 Thu Feb 24 16:07:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/CosEvent_Service/Makefile.am:
-	* orbsvcs/Dump_Schedule/Makefile.am:
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/LoadBalancer/Makefile.am:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/Scheduling_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/Trading_Service/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/Dump_Schedule/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/LoadBalancer/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/Scheduling_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Trading_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Feb 24 15:06:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/Makefile.am:
-	* orbsvcs/TAO_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/TAO_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Removed OBV_Constants.h from Header_Files section.
+          Removed OBV_Constants.h from Header_Files section.
 
 Thu Feb 24 12:54:54 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Fixed_Size_SArgument_T.cpp:
-	* tao/PortableServer/Fixed_Size_SArgument_T.h:
-	* tao/PortableServer/Fixed_Size_SArgument_T.inl:
+        * tao/PortableServer/Fixed_Size_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Size_SArgument_T.h:
+        * tao/PortableServer/Fixed_Size_SArgument_T.inl:
 
-	  Fixed memory management and parameter passing problems.
-	  Addresses run-time problems exhibited by applications that pass
-	  fixed size types, such as fixed size structures, as parameters
-	  or return values.
+          Fixed memory management and parameter passing problems.
+          Addresses run-time problems exhibited by applications that pass
+          fixed size types, such as fixed size structures, as parameters
+          or return values.
 
 Thu Feb 24 11:12:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_arg_traits.cpp (visit_attribute):
+        * TAO_IDL/be/be_visitor_arg_traits.cpp (visit_attribute):
 
-	  Avoid generating a duplicate structure in the skeleton when
-	  generating Arg_Traits<> for ThruPOA and direct collocation
-	  code.
+          Avoid generating a duplicate structure in the skeleton when
+          generating Arg_Traits<> for ThruPOA and direct collocation
+          code.
 
 Thu Feb 24 10:38:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Removed all skeleton related "*SArgument* files.  They are now
-	  in the tao/PortableServer directory.
+          Removed all skeleton related "*SArgument* files.  They are now
+          in the tao/PortableServer directory.
 
 Thu Feb 24 10:34:49 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Object_SArgument_T.h:
-	* tao/Var_Size_SArgument_T.h:
+        * tao/Object_SArgument_T.h:
+        * tao/Var_Size_SArgument_T.h:
 
-	  Neglected to remove these files during the skeleton-refactor
-	  branch merge.  Thanks to J.T. for pointing out they were still
-	  there.
+          Neglected to remove these files during the skeleton-refactor
+          branch merge.  Thanks to J.T. for pointing out they were still
+          there.
 
 Thu Feb 24 18:14:23 2005  Olli Savia  <ops@iki.fi>
 
@@ -695,8 +722,8 @@ Tue Feb 22 07:31:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           Do not generate argument selection function templates if
           unconstrained interfaces were not seen in the IDL.  Addresses
-	  build problems for skeletons corresponding such IDL files.
-	  Thanks to Johnny for pointing out the problem.
+          build problems for skeletons corresponding such IDL files.
+          Thanks to Johnny for pointing out the problem.
 
 Tue Feb 22 15:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
