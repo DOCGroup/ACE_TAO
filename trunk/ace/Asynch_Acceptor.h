@@ -93,18 +93,21 @@ protected:
   // Subclasses must overwrite this method if a new handler creation
   // strategy is required.
   
+  int bytes_to_read (void) const;
+  // Bytes to be read with the <accept> call.
+
 private:
   ACE_HANDLE listen_handle_;
   // Handle used to listen for new connections.
 
   ACE_Asynch_Accept asynch_accept_;
-  // Asynch_Accept used to make life easier :-)
+  // <Asynch_Accept> used to make life easier :-)
 
   int pass_addresses_;
   // Flag that indicates if parsing of addresses is necessary.
 
   int bytes_to_read_;
-  // Bytes to be read with the accept call.
+  // Bytes to be read with the <accept> call.
 };
 
 #if defined (__ACE_INLINE__)
