@@ -1,3 +1,27 @@
+Fri Mar 02 09:32:33 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp (~Server_Request_Interceptor, destroy):
+
+	  Moved release of the forward object references from the
+	  destructor to the destroy() method.  There was a strange problem
+	  interdependent object life cycles.  The forward object
+	  references wouldn't be released unless the server request
+	  interceptor was destroyed (destructor called), and the
+	  interceptor wouldn't be destroyed unless the object references
+	  were released!  I'll need to examine this issue further.  In the
+	  meantime, the ServerRequestInterceptor::destroy() gets around
+	  the problem nicely, and fixes the memory leaks.
+
+	* tests/Portable_Interceptors/ForwardRequest/Server_ORBInitializer.cpp
+	  (post_init):
+
+	  Use ACE_TRY_ENV instead of TAO_ENV_ARG_PARAMETER.  There is no
+	  reason to use the latter when calling ORB supplied methods.
+
+	* tests/Portable_Interceptors/ForwardRequest/test_i.cpp:
+
+	  Removed debugging message from the destructor.
+
 Fri Mar 02 08:29:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/index.html:

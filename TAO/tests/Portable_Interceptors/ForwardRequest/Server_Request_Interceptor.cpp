@@ -15,11 +15,6 @@ Server_Request_Interceptor::Server_Request_Interceptor (void)
 
 Server_Request_Interceptor::~Server_Request_Interceptor (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "******* IN ~Server_Request_Interceptor ******\n"));
-
-  CORBA::release (this->obj_[0]);
-  CORBA::release (this->obj_[1]);
 }
 
 void
@@ -50,6 +45,8 @@ void
 Server_Request_Interceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::release (this->obj_[0]);
+  CORBA::release (this->obj_[1]);
 }
 
 void
