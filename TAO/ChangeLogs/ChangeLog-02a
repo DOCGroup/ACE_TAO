@@ -1,3 +1,38 @@
+Sun Jun 11 01:45:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.h
+        * tao/MProfile.i
+
+          Added member variable <policy_list_> and its relative acessor
+          methods. 
+
+        * tao/Profile.h
+
+          Added member variable <mprofile_>, and its relative accessor
+          methods.
+        
+        * tao/Profile.cpp
+          
+          Removed attribute <policy_list_>, now the policy list
+          is stored and accessed by the TAO_MProfile.
+
+        * tao/ORB_core.cpp
+          
+          Modifies method <create_stub_object> to set the proper
+          relationship between TAO_Profiels the TAO_Stubs that
+          own them.
+
+        * tao/Stub.h
+        * tao/Stub.i
+          
+          Added method  <TAO_MProfile& base_profiles ()>.       
+          
+        * tao/POA.cpp
+          
+          Added ACE_UNUSED_ARG to the method <TAO_POA::client_exposed_policies>
+          to fix unused argument warning when compiling without
+          RT-CORBA support.
+
 Sat Jun 10 20:44:20 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO-INSTALL.html: 
@@ -33,7 +68,7 @@ Sat Jun 10 15:48:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Sat Jun 10 14:23:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-        * orbsvcs/orbsvcs/orbsvcs.dsw:
+        * orbsvcs/orbsvcs/orbsvcs.dsw:TAO_POA::client_exposed_policies
           The RTSchedEvent.dsp file was lost in the LoadBalancing merge.
 
         * orbsvcs/orbsvcs/orbsvcs_static.dsw:

@@ -29,6 +29,7 @@
 #include "tao/PolicyC.h"
 
 class TAO_MProfile;
+class TAO_Stub;
 
 class TAO_Export TAO_Profile
 {
@@ -127,16 +128,12 @@ public:
   virtual CORBA::PolicyList&  policies (void);
   // Accessor for the client exposed policies of this profile.
 
-private:
+  virtual void the_stub (TAO_Stub *stub);
+  // Sets the TAO_Stub to which this profile is associated.
 
-  void create_policy_list (int length);
-  // This method handle the dynamic allocation of the data member
-  // <policy_list_>
+  virtual TAO_Stub* the_stub (void);
+  // Gets the TAO_MProfile that holds the TAO_Profile instance.
 
-  // @@ Angelo, please add a comment explaining what it does and why
-  // it's needed.
-  
-  // @@ Marina DONE.
 private:
   TAO_MProfile *forward_to_i (void);
   // this object keeps ownership of this object
@@ -153,6 +150,9 @@ protected:
   // Flag indicating whether the lazy decoding of the client exposed
   // policies has taken place.
 
+  TAO_Stub *stub_;
+  // Pointer to the TAO_Stub to which this profile is related.
+  
   CORBA::PolicyList *policy_list_;
   // Client exposed policies of this profile.
 
