@@ -1,3 +1,13 @@
+Sun Jul  4 12:34:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/RB_Tree.cpp: Modified Carlo's change so that we add an
+	  extra set of parens rather than using a new macro.  This is
+ 	  consistent with how we deal with this problem in other parts of
+ 	  ACE.
+	
+	* ace/RB_Tree.cpp (insert_i): Removed an unreachable statement.
+	  Thanks to David Levine for reporting this.
+
 Sat Jul  3 22:12:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Object_Manager.cpp (get_singleton_lock): 

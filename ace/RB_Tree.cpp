@@ -21,12 +21,12 @@ ACE_RCSID(ace, RB_Tree, "$Id$")
 
 template <class EXT_ID, class INT_ID>
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)
-  : k_ (k)
-  , t_ (t)
-  , color_ (RED)
-  , parent_ (0)
-  , left_ (0)
-  , right_ (0)
+  : k_ (k),
+    t_ (t),
+    color_ (RED),
+    parent_ (0),
+    left_ (0),
+    right_ (0)
 {
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)");
 }
@@ -57,7 +57,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator 
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::"
              "ACE_RB_Tree (ACE_Allocator *alloc)");
   if (this->open (alloc) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("ACE_RB_Tree::ACE_RB_Tree\n")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("ACE_RB_Tree::ACE_RB_Tree\n")));
 }
 
 // Copy constructor.
@@ -75,7 +76,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
   // Make a deep copy of the passed tree.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
-  for (iter.first (); iter.is_done () == 0; iter.next ())
+  for (iter.first ();
+
+       iter.is_done () == 0; iter.next ())
     insert_i (*(iter.key ()),
               *(iter.item ()));
 }
@@ -106,7 +109,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
   // Make a deep copy of the passed tree.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
-  for (iter.first (); iter.is_done () == 0; iter.next ())
+  for (iter.first ();
+       iter.is_done () == 0;
+       iter.next ())
     insert_i (*(iter.key ()),
               *(iter.item ()));
 
@@ -205,11 +210,11 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree
 // Method for restoring Red-Black properties after deletion.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  void
-ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup");
 
-  while (x
+  while (x != 0
          && x->parent ()
          && x->color () == ACE_RB_Tree_Node_Base::BLACK)
     {
@@ -585,12 +590,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // The right subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
 
-// This is a hack to use ACE_NEW_RETURN with this ctor that has
-// multiple parameters.
-#define ACE_RB_TREE_CTOR ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)
-
               ACE_NEW_RETURN (tmp,
-                              ACE_RB_TREE_CTOR,
+                              (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                               0);
               current->right (tmp);
 
@@ -621,7 +622,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // The left subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
               ACE_NEW_RETURN (tmp,
-                              ACE_RB_TREE_CTOR,
+                              (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                               0);
               current->left (tmp);
 
@@ -642,7 +643,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
       // The tree is empty: insert at the root and color the root
       // black.
       ACE_NEW_RETURN (root_,
-                      ACE_RB_TREE_CTOR,
+                      (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                       0);
       if (root_)
         {
@@ -701,7 +702,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
               // The right subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
               ACE_NEW_RETURN (tmp,
-                              ACE_RB_TREE_CTOR,
+                              (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                               -1);
               current->right (tmp);
 
@@ -732,7 +733,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
               // The left subtree is empty: insert new node there.
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = 0;
               ACE_NEW_RETURN (tmp,
-                              ACE_RB_TREE_CTOR,
+                              (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                               -1);
               current->left (tmp);
               // If the node was successfully inserted, set its
@@ -751,17 +752,14 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
     {
       // The tree is empty: insert at the root and color the root black.
       ACE_NEW_RETURN (root_,
-                      ACE_RB_TREE_CTOR,
+                      (ACE_RB_Tree_Node<EXT_ID, INT_ID> (k, t)),
                       -1);
       root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       entry = root_;
       return 0;
     }
-  return -1;
 }
-
-#undef ACE_RB_TREE_CTOR
 
 // Removes the item associated with the given key from the tree and
 // destroys it.  Returns 1 if it found the item and successfully
@@ -801,7 +799,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
   // Delete the node and reorganize the tree to satisfy the Red-Black
   // properties.
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *x, *y;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *x;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y;
 
   if (z->left () && z->right ())
     y = RB_tree_successor (z);
