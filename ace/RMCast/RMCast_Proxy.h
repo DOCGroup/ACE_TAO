@@ -48,7 +48,7 @@ public:
 
   //! Destructor
   virtual ~ACE_RMCast_Proxy (void);
-    
+
   //! Return the next sequence number expected by the peer. Only
   //! applies to remote receiver proxies.
   /*!
@@ -72,7 +72,7 @@ public:
    */
   virtual int reply_data (ACE_RMCast::Data &) = 0;
   virtual int reply_poll (ACE_RMCast::Poll &) = 0;
-  virtual int reply_ack_join (ACE_RMCast::Ack_Join &) = 0;
+  virtual int reply_ack_join (ACE_RMCast::Ack_Join &);
   virtual int reply_ack_leave (ACE_RMCast::Ack_Leave &) = 0;
   virtual int reply_ack (ACE_RMCast::Ack &) = 0;
   virtual int reply_join (ACE_RMCast::Join &) = 0;

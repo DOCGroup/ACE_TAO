@@ -33,3 +33,14 @@ ACE_RMCast_Proxy::ack (ACE_RMCast::Ack &ack)
   this->highest_received_ = ack.highest_received;
   return this->ACE_RMCast_Module::ack (ack);
 }
+
+int
+ACE_RMCast_Proxy::reply_ack_join (ACE_RMCast::Ack_Join &ack_join)
+{
+  if (this->next_expected_ < ack_join.next_sequence_number)
+    {
+      this->next_expected_ = ack_join.next_sequence_number;
+      this->highest_received_ = ack_join.next_sequence_number;
+    }
+  return 0;
+}
