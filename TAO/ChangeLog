@@ -57,7 +57,7 @@ Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
 	  Commented out debugging code that was always executed.
 
 	  Removed all ACE_UNUSED_ARG macros in favor of the standard C++
-	  way of marching an argument unused, i.e. only list the type of
+	  way of marking an argument unused, i.e. only list the type of
 	  the argument without the argument name.
 
 Tue Sep 24 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
