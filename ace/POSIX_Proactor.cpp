@@ -5,6 +5,7 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
+#include "ace/ACE.h"
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"

@@ -30,15 +30,15 @@ extern "C" {
 int ACE_Sock_Connect::ipv6_enabled_ = -1;
 #endif /* ACE_HAS_IPV6 */
 
-// This is a hack to work around a problem with Visual Age C++ 5 on AIX.
+// This is a hack to work around a problem with Visual Age C++ 5 and 6 on AIX.
 // Without this, the compiler auto-instantiates the ACE_Auto_Array_Ptr for
 // ifreq (contained in this module) but only adds the #include for <net/if.h>
 // and not the one for <sys/socket.h> which is also needed.  Although we
 // don't need the template defined here, it makes the compiler pull in
 // <sys/socket.h> and the build runs clean.
 #if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500)
-#  if (__IBMCPP__ >= 600)
-#    error Recheck this hack to see if version 6 fixed it!
+#  if (__IBMCPP__ >= 700)
+#    error Recheck this hack to see if version 7 fixed it!
 #  endif
 static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
 #endif /* AIX && __IBMCPP__ >= 500 */

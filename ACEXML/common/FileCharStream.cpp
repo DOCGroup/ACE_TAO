@@ -2,6 +2,7 @@
 
 #include "ACEXML/common/FileCharStream.h"
 #include "ace/ACE.h"
+#include "ace/Log_Msg.h"
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
   : filename_ (0), encoding_ (0), size_ (0), infile_ (NULL), peek_ (0)

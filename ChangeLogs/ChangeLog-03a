@@ -1,3 +1,26 @@
+Wed Nov 27 15:47:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix5.1.h: Add #define ACE_HAS_AIO_CALLS, but commented
+          out. AIX did things differently enough here to be a real problem.
+          It should be possible to get AIO working on AIX 5, but it will
+          take some real work.
+
+        * ace/POSIX_Proactor.cpp: Add #include "ace/ACE.h"
+
+        * ace/Sock_Connect.cpp: Visual Age C++ 6 still needs to hack to
+          get the templates built correctly :-(  Changed the compile-time check
+          to an alleged Visual Age C++ 7 to see if they get it right then.
+
+        * ACEXML/common/Env.i: Add missing #include "ace/Log_Msg.h" to pick
+          up ACE_ASSERT.
+
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/StrCharStream.cpp: Add missing #include "ace/Log_Msg.h"
+
+        * ACEXML/common/NamespaceSupport.h:
+        * ACEXML/parser/parser/Entity_Manager.h: Add missing #include
+          "ace/Synch.h"
+
 Wed Nov 27 07:23:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Two new tests cannot run in single

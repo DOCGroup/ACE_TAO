@@ -1,5 +1,6 @@
 // -*- C++ -*- $Id$
 
+#include "ace/Log_Msg.h"      /* to get ACE_ASSERT */
 #include "ACEXML/common/Exception.h"
 
 ACEXML_INLINE ACEXML_Exception *
