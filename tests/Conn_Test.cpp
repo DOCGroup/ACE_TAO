@@ -181,10 +181,10 @@ Svc_Handler::idle (u_long flags)
 // can't deal with them, though.
 
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  !defined (ACE_HAS_GNUG_PRE_2_8)
-size_t
-ACE_Hash_Addr<ACE_INET_Addr>::hash_i (const ACE_INET_Addr &addr) const
+u_long
+ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const
 {
-  return addr.get_ip_address () + addr.get_port_number ();
+  return this->t_.get_ip_address () + this->t_.get_port_number ();
 }
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && newer g++, if __GNUG__ */
 
@@ -698,12 +698,10 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
-#define HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
-#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_INET_Addr> > 
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr> 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class CACHED_CONNECT_STRATEGY;
-template class HASH_ADDR;
 template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class ACE_NOOP_Creation_Strategy<Svc_Handler>;
 template class ACE_Concurrency_Strategy<Svc_Handler>;
@@ -742,7 +740,6 @@ template class ACE_Unbounded_Queue<ACE_Thread_Descriptor*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate CACHED_CONNECT_STRATEGY
-#pragma instantiate HASH_ADDR
 #pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate ACE_NOOP_Creation_Strategy<Svc_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>

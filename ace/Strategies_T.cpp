@@ -468,8 +468,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
    int reuse_addr,
    int flags,
    int perms,
-   ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-   ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
+   ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
    int &found)
 {
   ACE_UNUSED_ARG (remote_addr);
@@ -503,7 +502,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
 
   // If hint is not closed, see if it is connected to the correct
   // address and is recyclable
-  else if (possible_entry->ext_id_ == search_addr)
+  else if (possible_entry->ext_id_ == remote_addr)
     {
       // Hint successful
       found = 1;
@@ -540,10 +539,12 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
    int reuse_addr,
    int flags,
    int perms,
-   ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-   ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_Hash_Addr<ACE_PEER_CONNECTOR_ADDR> >, SVC_HANDLER *> *&entry,
+   ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
    int &found)
 {
+  // Explicit type conversion
+  REFCOUNTED_HASH_RECYCLABLE_ADDRESS search_addr (remote_addr);
+
   // Try to find the address in the cache.  Only if we don't find it
   // do we create a new <SVC_HANDLER> and connect it with the server.
   if (this->connection_cache_.find (search_addr, entry) == -1)
@@ -621,9 +622,6 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   {
     CONNECTION_MAP_ENTRY *entry = 0;
 
-    // Create the search key
-    HASH_ADDRESS search_addr (remote_addr);
-
     // Synchronization is required here as the setting of the
     // recyclable state must be done atomically with the finding and
     // binding of the service handler in the cache.
@@ -639,7 +637,6 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                          reuse_addr,
                                          flags,
                                          perms,
-                                         search_addr, 
                                          entry, 
                                          found);
         if (result != 0)
@@ -656,7 +653,6 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
                                                          reuse_addr,
                                                          flags,
                                                          perms,
-                                                         search_addr, 
                                                          entry, 
                                                          found);
         if (result != 0)

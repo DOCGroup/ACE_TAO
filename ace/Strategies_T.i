@@ -393,7 +393,7 @@ ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable (void)
 }
 
 template <class T> ASYS_INLINE u_long
-ACE_Refcounted_Hash_Recyclable<T>::hash (void) const
+ACE_Refcounted_Hash_Recyclable<T>::hash_i (void) const
 {
   return this->t_.hash ();
 }
@@ -405,6 +405,15 @@ ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recycla
     return 0;
   else
     return this->t_ == rhs.t_;  
+}
+
+template <class T> ASYS_INLINE int 
+ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
+{
+  if (this->state () != ACE_Recyclable::IDLE)
+    return 0;
+  else
+    return this->t_ == rhs;  
 }
 
 template<class ADDR_T> ASYS_INLINE
@@ -436,7 +445,7 @@ ACE_Hash_Addr<ADDR_T>::hash (void) const
   return this->hash_value_;
 }
 
-template<class ADDR_T> ASYS_INLINE size_t
+template<class ADDR_T> ASYS_INLINE u_long
 ACE_Hash_Addr<ADDR_T>::hash_i (const ADDR_T &b) const
 {
   ACE_UNUSED_ARG (b);
