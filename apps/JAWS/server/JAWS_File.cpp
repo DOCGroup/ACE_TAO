@@ -158,7 +158,7 @@ size_t
 JAWS_File_Handle::size (void) const
 {
   if (this->file_ == 0)
-    return -1;
+    return (size_t) -1;
   else
     return this->file_->size ();
 }
@@ -294,7 +294,8 @@ JAWS_Virtual_Filesystem::insert (JAWS_File * new_file)
 JAWS_File *
 JAWS_Virtual_Filesystem::insert_i (JAWS_File * new_file)
 {
-  int i, max;
+  int i;
+  int max = 0;
   size_t maxsize = 0;
 
   for (i = 0; i < DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE; i++)
@@ -660,3 +661,9 @@ JAWS_File::update (void) const
 
   return result;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Read_Guard<ACE_SYNCH_RW_MUTEX>;
+template class ACE_Write_Guard<ACE_SYNCH_RW_MUTEX>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
