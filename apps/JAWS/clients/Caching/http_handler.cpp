@@ -185,7 +185,7 @@ HTTP_Connector::connect (const char * url)
   HTTP_Handler *hhptr = &hh;
 
   // First check the cache.
-  if (ACE_Filecache::instance ()->find (hh.filename ()))
+  if (ACE_Filecache::instance ()->find (hh.filename ()) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "  ``%s'' is already cached.\n",
 		  hh.filename ()));
