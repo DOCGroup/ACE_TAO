@@ -4,4 +4,4 @@ INCLDIRS	= -I$(ORBIX_ROOT)/include
 
 orbix=1
 
-include $(WRAPPER_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_sunc++.GNU

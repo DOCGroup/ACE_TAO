@@ -29,7 +29,7 @@ case $1 in
 		shift ;;
 	# -r allows the use of relative pathnames...
         -r)
-		REL="-e s;$WRAPPER_ROOT;\$(WRAPPER_ROOT);g"
+		REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g"
 		shift ;;
 esac
 

@@ -22,7 +22,7 @@ CCFLAGS		+= -ptall
 # Unknown version of SGI CC, -n32 mode
 # NOTE: -32/-n32/-64 mode is usually better set by the environment variable 'SGI_ABI'
 #CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
-LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace"
+LDFLAGS		+= -rpath "$(ACE_ROOT)/ace"
 LIBS		+= -lpthread
 PIC		= -KPIC
 AR		= ar

@@ -28,7 +28,7 @@
 #
 #               3) At the end of this script, you should have:
 #
-#                  a) A compiled toolkit in the $WRAPPER_ROOT directory
+#                  a) A compiled toolkit in the $ACE_ROOT directory
 #                  b) If you selected to save the existing installation,
 #                     a file oldACE.tar.gz will be created in MY_ACEDIR
 #                  c) The gzipped ACE source file that was initially downloaded.
@@ -44,11 +44,11 @@
 #               5) Read the README file in
 #                  http://www.cs.wustl.edu/~schmidt/ACE.html directory
 #
-#               6) Define an environment variable WRAPPER_ROOT the
+#               6) Define an environment variable ACE_ROOT the
 #                  defines which directory your ACE toolkit is to be
 #                  installed in.
 #
-#                  DO NOT MAKE "WRAPPER_ROOT" THE SAME AS "MY_ACEDIR".
+#                  DO NOT MAKE "ACE_ROOT" THE SAME AS "MY_ACEDIR".
 #
 #               7) Redefine "MY_ACEDIR" in this script to default
 #                  to the directory in which you have downloaded the ACE source.
@@ -112,7 +112,7 @@ USAGE="<Usage> : myacemaker [ auto ]"
 MY_ACEDIR=${HOME}/aceconfig
 
 #######################################################
-# Platform specific config file in ${WRAPPER_ROOT}/ace/
+# Platform specific config file in ${ACE_ROOT}/ace/
 # Uncomment and redefine this
 #######################################################
 
@@ -120,7 +120,7 @@ MY_ACEDIR=${HOME}/aceconfig
 
 #######################################################
 # Platform specific GNU macros file in
-# ${WRAPPER_ROOT}/include/makeinclude/
+# ${ACE_ROOT}/include/makeinclude/
 # Uncomment and redefine this
 #######################################################
 
@@ -135,7 +135,7 @@ MY_ACEDIR=${HOME}/aceconfig
 
 AUTO="$#"
 
-WRAPPER_ROOT=${WRAPPER_ROOT:?"ERROR: Environment variable WRAPPER_ROOT not set"} 
+ACE_ROOT=${ACE_ROOT:?"ERROR: Environment variable ACE_ROOT not set"} 
 if [ ${AUTO} -gt 1 ]
 then
   echo "$USAGE"
@@ -158,7 +158,7 @@ fi
 
 echo ""
 echo "ACE source in `ls ${MY_ACEDIR}/ACE*tar.gz`"
-echo "ACE will be installed in ${WRAPPER_ROOT}"
+echo "ACE will be installed in ${ACE_ROOT}"
 echo ""
 
 if [ $AUTO -eq 0 ]
@@ -191,7 +191,7 @@ gunzip -c ACE*tar.gz | tar xvf - || \
   exit 33
 }
 
-if [ -d ${WRAPPER_ROOT} ]
+if [ -d ${ACE_ROOT} ]
 then
 
   if [ $AUTO -eq 0 ]
@@ -206,8 +206,8 @@ then
   if [ ${choice} = 'Y' -o ${choice} = 'y' ]
   then
 
-   echo "Archiving ${WRAPPER_ROOT} to `pwd`/${OLD_ACE_TAR_FILE} using <tar> ..."
-    tar cvpf ${OLD_ACE_TAR_FILE} ${WRAPPER_ROOT}
+   echo "Archiving ${ACE_ROOT} to `pwd`/${OLD_ACE_TAR_FILE} using <tar> ..."
+    tar cvpf ${OLD_ACE_TAR_FILE} ${ACE_ROOT}
     echo ""
 
     if [ -f ${OLD_ACE_GZIPPED_TAR_FILE} ]
@@ -223,16 +223,16 @@ then
 
   fi
 
-  echo "Removing ${WRAPPER_ROOT} ..."
-  rm -r ${WRAPPER_ROOT}
+  echo "Removing ${ACE_ROOT} ..."
+  rm -r ${ACE_ROOT}
   echo ""
 fi
 
-echo "Moving `pwd`/ACE_wrappers to ${WRAPPER_ROOT} ..."
-mv ./ACE_wrappers ${WRAPPER_ROOT}
+echo "Moving `pwd`/ACE_wrappers to ${ACE_ROOT} ..."
+mv ./ACE_wrappers ${ACE_ROOT}
 echo ""
 
-cd ${WRAPPER_ROOT}/ace
+cd ${ACE_ROOT}/ace
 
 if [ ${MY_ACE_CONFIG:-undefined} = undefined ]
 then
@@ -275,7 +275,7 @@ ln -s ${MY_ACE_CONFIG} config.h
 
 echo ""
 
-cd ${WRAPPER_ROOT}/include/makeinclude
+cd ${ACE_ROOT}/include/makeinclude
 
 if [ ${MY_ACE_GNU_MACROS:-undefined} = undefined ]
 then
@@ -339,7 +339,7 @@ echo ""
 echo "Making ACE now. Examine file ${ACE_ERRFILE} for errors ..."
 echo ""
 
-cd ${WRAPPER_ROOT}
+cd ${ACE_ROOT}
 
 echo ""
 echo "Executing <gmake> ..."

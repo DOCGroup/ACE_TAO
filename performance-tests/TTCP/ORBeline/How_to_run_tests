@@ -12,8 +12,8 @@
 // there must be an ORBeline daemon running on the receiver host in your system.
 // in our case, we had an ORBeline daemon running on tango.cs.wustl.edu
 
-// WRAPPER_ROOT:
-// WRAPPER_ROOT can be set to the root directory of ACE so that these lines
+// ACE_ROOT:
+// ACE_ROOT can be set to the root directory of ACE so that these lines
 // can be cut and pasted to run tests.
 
 // Results:
@@ -23,35 +23,35 @@
 // ****** sequence ****** (-q option flag)
 
 // ATM with 64k receiver buffers (setenv ORBELINE_IPADDR=128.252.114.18)
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536 -q"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536 -q"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.64 -q
 
 // ATM with 8k reciever buffers (setenv ORBELINE_IPADDR=128.252.114.18)
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm -q"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm -q"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.8 -q
 
 // ETHERNET with 64k receiver buffers
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536 -q"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536 -q"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.64 -q
 
 // ETHERNET with 8k reciever buffers
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm -q"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm -q"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.8 -q
 
 // ****** string ****** (-q is omitted)
 
 // ATM with 64k receiver buffers (setenv ORBELINE_IPADDR=128.252.114.18)
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm -b 65536"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.64 
 
 // ATM with 8k reciever buffers (setenv ORBELINE_IPADDR=128.252.114.18)
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.64
 
 // ETHERNET with 64k receiver buffers
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.8 
 
 // ETHERNET with 8k reciever buffers
-Receiver_Host: server "$WRAPPER_ROOT/apps/ttcp/orbeline/server -s -r -fm"
+Receiver_Host: server "$ACE_ROOT/apps/ttcp/orbeline/server -s -r -fm"
 Sender_Host: run_test 64 tango.cs.wustl.edu ./results/sequence.atm.8 

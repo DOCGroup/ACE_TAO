@@ -10,7 +10,7 @@ INCLDIRS        = -I$(ORBIX_ROOT)/include
 PIC		= 
 ARFLAGS		= ruv
 RANLIB		= echo
-LDFLAGS		= -L$(ORBIX_ROOT)/lib -L$(WRAPPER_ROOT)/ace -Wl,+s
+LDFLAGS		= -L$(ORBIX_ROOT)/lib -L$(ACE_ROOT)/ace -Wl,+s
 SOFLAGS		= -b
 SOBUILD     = @echo ""; \
   echo "$(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<"; \

@@ -11,10 +11,10 @@ ORBeline and Orbix versions of ttcp code. To compile the code, you have to do th
 2. Copy this directory (ttcp) in the same directory structure to your disk space.
 
 3. setup the following environment parameters (before compilation stage):
-   WRAPPER_ROOT, ORBELINE_ROOT, ORBIX_ROOT, LD_LIBRARY_PATH.
+   ACE_ROOT, ORBELINE_ROOT, ORBIX_ROOT, LD_LIBRARY_PATH.
 
 For example:
-WRAPPER_ROOT=/project/adaptive/ACE_wrappers
+ACE_ROOT=/project/adaptive/ACE_wrappers
 ORBELINE_ROOT=/project/adaptive/ORBelineV1.2
 ORBIX_ROOT=/project/adaptive/Orbix
 LD_LIBRARY_PATH=/project/adaptive/ORBelineV1.2/lib
