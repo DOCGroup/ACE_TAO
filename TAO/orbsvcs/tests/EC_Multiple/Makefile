@@ -24,11 +24,18 @@ endif # Event
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+
+ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  # This test causes g++ 2.7.2.3 (the compiler) to core dump.
+  all clean realclean:
+	@echo orbsvcs/tests/EC_Multiple is not built with older versions of g++
+else # ! ACE_HAS_GNUG_PRE_2_8
+  include $(ACE_ROOT)/include/makeinclude/macros.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+  include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+endif # ! ACE_HAS_GNUG_PRE_2_8
 
 #### Local rules and variables...
 

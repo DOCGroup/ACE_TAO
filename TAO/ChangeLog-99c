@@ -1,87 +1,93 @@
+Tue Jul 06 11:36:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/Makefile: don't build EC_Multiple
+          with g++ prior to 2.8, because it causes g++ 2.7.2.3 (the
+          compiler) to core dump.
+
 Tue Jul  6 11:31:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/MT_Client/client.cpp:
-	  Fixed warning in IRIX when compiled without debugging info.
+        * tests/MT_Client/client.cpp:
+          Fixed warning in IRIX when compiled without debugging info.
 
 Tue Jul  6 11:01:57 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Connector.cpp (connect):
+        * tao/UIOP_Connector.cpp (connect):
 
-	  Minor update to size of character array that is only used when
-	  ORB debugging output is enabled.
+          Minor update to size of character array that is only used when
+          ORB debugging output is enabled.
 
 Tue Jul  6 10:25:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Timeout/Makefile:
-	  Added -Ge 1 flag to the IDL compiler invocation
+        * tests/Timeout/Makefile:
+          Added -Ge 1 flag to the IDL compiler invocation
 
 Tue Jul  6 09:42:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Cast the arguments in a call to ACE_Time_Value::set to long from
-	  CORBA::ULongLong to avert an MSVC warning.
+        * tao/Invocation.cpp:
+          Cast the arguments in a call to ACE_Time_Value::set to long from
+          CORBA::ULongLong to avert an MSVC warning.
 
 Mon Jul  5 21:20:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connector_Registry.h:
-	* tao/Connector_Registry.cpp:
-	* tao/GIOP.h:
-	* tao/GIOP.cpp:
-	* tao/Wait_Strategy.h:
-	* tao/Wait_Strategy.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.cpp:
-	* tao/Pluggable.h:
-	* tao/Pluggable.cpp:
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Transport_Mux_Strategy.cpp:
-	* tao/UIOP_Connector.h:
-	* tao/UIOP_Connector.cpp:
-	* tao/UIOP_Transport.h:
-	* tao/UIOP_Transport.cpp:
-	* tao/IIOP_Connector.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	  Added support for timeouts in the ORB.
-	  The Invocation classes keep track of the total time allowed for
-	  the request, this time is used to limit the duration of every
-	  expensive operation (connecting to the server, sending the
-	  request, receiving the reply, etc.).
-	  After each operation the total time is decremented, this is
-	  specially important if the operation requires transparent
-	  rebinds and forwarding.
+        * tao/Connector_Registry.h:
+        * tao/Connector_Registry.cpp:
+        * tao/GIOP.h:
+        * tao/GIOP.cpp:
+        * tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.cpp:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/UIOP_Connector.h:
+        * tao/UIOP_Connector.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/UIOP_Transport.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+          Added support for timeouts in the ORB.
+          The Invocation classes keep track of the total time allowed for
+          the request, this time is used to limit the duration of every
+          expensive operation (connecting to the server, sending the
+          request, receiving the reply, etc.).
+          After each operation the total time is decremented, this is
+          specially important if the operation requires transparent
+          rebinds and forwarding.
 
-	* tao/corbafwd.h:
-	* tao/Exception.cpp:
-	* tao/docs/Tags.html:
-	  Added new minor codes to document the timeouts.
+        * tao/corbafwd.h:
+        * tao/Exception.cpp:
+        * tao/docs/Tags.html:
+          Added new minor codes to document the timeouts.
 
-	* tests/Makefile:
-	* tests/Timeout/Makefile:
-	* tests/Timeout/README:
-	* tests/Timeout/client.cpp:
-	* tests/Timeout/run_test.pl:
-	* tests/Timeout/server.cpp:
-	* tests/Timeout/test.idl:
-	* tests/Timeout/test_i.cpp:
-	* tests/Timeout/test_i.h:
-	* tests/Timeout/test_i.i:
-	  A simple test for timeouts.
+        * tests/Makefile:
+        * tests/Timeout/Makefile:
+        * tests/Timeout/README:
+        * tests/Timeout/client.cpp:
+        * tests/Timeout/run_test.pl:
+        * tests/Timeout/server.cpp:
+        * tests/Timeout/test.idl:
+        * tests/Timeout/test_i.cpp:
+        * tests/Timeout/test_i.h:
+        * tests/Timeout/test_i.i:
+          A simple test for timeouts.
 
-	* tests/Timeout/client.dsp:
-	* tests/Timeout/server.dsp:
-	* tests/Timeout/Timeout.dsw:
-	* version_test.dsw:
-	* tests/TAO_Tests.dsw:
-	  Added project files for the new Timeout test.
+        * tests/Timeout/client.dsp:
+        * tests/Timeout/server.dsp:
+        * tests/Timeout/Timeout.dsw:
+        * version_test.dsw:
+        * tests/TAO_Tests.dsw:
+          Added project files for the new Timeout test.
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
-	  The test for UIOP required the 'English' module.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          The test for UIOP required the 'English' module.
 
-	* tao/Typecode_Constants.cpp:
-	  Fixed memory leak, the CORBA::ORB::_tc_InvalidName type code was 
-	  not released.  Thanks to Marina for reporting this problem.
+        * tao/Typecode_Constants.cpp:
+          Fixed memory leak, the CORBA::ORB::_tc_InvalidName type code was
+          not released.  Thanks to Marina for reporting this problem.
 
 Mon Jul 05 20:50:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -93,62 +99,62 @@ Mon Jul 05 20:50:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Mon Jul  5 20:44:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Acceptor_Registry.cpp (open, open_default):
+        * tao/Acceptor_Registry.cpp (open, open_default):
 
-	  Moved loop that iterates over the protocol factories to an outer 
-	  level since it only needs to be run once for each protocol.
-	  Previously it was being run for each addr within a given
-	  endpoint.  The code flow now makes more sense. This fix also
-	  removes and simplifies some code in the open_default() method.
-	  Bonus!
+          Moved loop that iterates over the protocol factories to an outer
+          level since it only needs to be run once for each protocol.
+          Previously it was being run for each addr within a given
+          endpoint.  The code flow now makes more sense. This fix also
+          removes and simplifies some code in the open_default() method.
+          Bonus!
 
-	  Add a test that checks if a usable protocol was found.  If one
-	  wasn't found then return an error.
+          Add a test that checks if a usable protocol was found.  If one
+          wasn't found then return an error.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Jul  5 19:47:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
-	* orbsvcs/orbsvcs/Naming/Entries.h
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
-	* orbsvcs/orbsvcs/Naming/Naming_Context.cpp
-	* orbsvcs/orbsvcs/Naming/Naming_Context.h
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp
-	* orbsvcs/orbsvcs/Naming/Persistent_Entries.h
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h :
-	  Fixed several memory leaks that were due to superclass
- 	  destructors not being virtual.  Updated the implementation to
- 	  reflect several changes/clarifications from the INS
- 	  specification (mostly regarding exception conditions).  Added
- 	  comments, cleaned up the code, etc. in the remaining files,
- 	  which brings my 'review' of Naming implementation files to a
- 	  close.
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp
+        * orbsvcs/orbsvcs/Naming/Entries.h
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
+        * orbsvcs/orbsvcs/Naming/Naming_Context.cpp
+        * orbsvcs/orbsvcs/Naming/Naming_Context.h
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp
+        * orbsvcs/orbsvcs/Naming/Persistent_Entries.h
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h :
+          Fixed several memory leaks that were due to superclass
+          destructors not being virtual.  Updated the implementation to
+          reflect several changes/clarifications from the INS
+          specification (mostly regarding exception conditions).  Added
+          comments, cleaned up the code, etc. in the remaining files,
+          which brings my 'review' of Naming implementation files to a
+          close.
 
-	* orbsvcs/orbsvcs/Naming/README
-	  Added a short description about the structure of implementation
- 	  files.
+        * orbsvcs/orbsvcs/Naming/README
+          Added a short description about the structure of implementation
+          files.
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp:
-	  Destroy the POA on shutdown.
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Destroy the POA on shutdown.
 
-	* orbsvcs/Naming_Service/README
-	  Updated the file and added description of
- 	  implementation-specific policies.
+        * orbsvcs/Naming_Service/README
+          Updated the file and added description of
+          implementation-specific policies.
 
-	* orbsvcs/tests/Simple_Naming/client.cpp
-	  Updated test to reflect changes in the behaviour of the Naming
- 	  Service (due to clarifications in the INS spec).
+        * orbsvcs/tests/Simple_Naming/client.cpp
+          Updated test to reflect changes in the behaviour of the Naming
+          Service (due to clarifications in the INS spec).
 
 Mon Jul 05 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -156,32 +162,32 @@ Mon Jul 05 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/RtecScheduler.idl
           orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}
           orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils[_T].{cpp, h}: bug
-	  fixes from testing, added missing schedule configuration code.
+          fixes from testing, added missing schedule configuration code.
 
 Mon Jul 05 16:06:51 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Exception.cpp (_info): Added _info() to CORBA::Exception and
-	  CORBA::SystemException. This allows the user to get the
-	  exception information as a string and does not force the user to
-	  have the print out the information.  Note that _info() is a TAO
-	  specific method.
+        * tao/Exception.cpp (_info): Added _info() to CORBA::Exception and
+          CORBA::SystemException. This allows the user to get the
+          exception information as a string and does not force the user to
+          have the print out the information.  Note that _info() is a TAO
+          specific method.
 
 Mon Jul 05 15:16:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/compiler.html: Added instructions on using environment
-	  variables CPP_LOCATION and TAO_IDL_DEFAULT_CPP_FLAGS.
-	  Also reformatted the document a bit.
+        * docs/compiler.html: Added instructions on using environment
+          variables CPP_LOCATION and TAO_IDL_DEFAULT_CPP_FLAGS.
+          Also reformatted the document a bit.
 
-	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Allow users to
-	  customize the command line options passed to the preprocessor so
-	  it's easier to use TAO_IDL for cross compilation.  Thanks to
-	  David for reporting the problem.
+        * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Allow users to
+          customize the command line options passed to the preprocessor so
+          it's easier to use TAO_IDL for cross compilation.  Thanks to
+          David for reporting the problem.
 
 Mon Jul 05 14:01:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Exception.cpp (CORBA_Exception): Made the default
-	  constructor similar to the other constructors. The <refcount_>
-	  starts off at 0.
+        * tao/Exception.cpp (CORBA_Exception): Made the default
+          constructor similar to the other constructors. The <refcount_>
+          starts off at 0.
 
 Mon Jul  5 13:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -192,27 +198,27 @@ Mon Jul  5 13:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
 Mon Jul  5 12:18:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Added new Borland Makefiles.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for these.
+        * Added new Borland Makefiles.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for these.
 
 Mon Jul  5 11:07:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Modified a check of the char value in an AST_Expression
-	  to work also with unsigned chars. which is apparently
-	  the type used by IRIX, since a warning from that
-	  platform prompted this change.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Modified a check of the char value in an AST_Expression
+          to work also with unsigned chars. which is apparently
+          the type used by IRIX, since a warning from that
+          platform prompted this change.
 
 Mon Jul  5 10:09:15 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/objref.cpp:
-	  Moved an unreachable return statement.
+        * TAO/tests/Param_Test/objref.cpp:
+          Moved an unreachable return statement.
 
 Sun Jul  4 22:27:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
 
-	  Added a UIOP IDL_Cubit run.
+          Added a UIOP IDL_Cubit run.
 
 Sun Jul 04 18:57:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
