@@ -361,8 +361,8 @@ TAO_AV_RTCP_Flow_Factory::init (int /* argc */,
 }
 
 TAO_AV_Protocol_Object*
-TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry */*entry*/,
-                                                TAO_Base_StreamEndPoint */*endpoint*/,
+TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
+                                                TAO_Base_StreamEndPoint * /*endpoint*/,
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport)
 {
@@ -493,7 +493,7 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 {
   TAO_AV_RTCP_Callback *cb = ACE_dynamic_cast (TAO_AV_RTCP_Callback*,
                                                this->callback_);
-  return cb->ts_offset (ts_offset);
+  cb->ts_offset (ts_offset);
 }
 
 // TAO_AV_RTCP_Callback

@@ -125,7 +125,7 @@ RTCP_Channel_In::updateStatistics(RTCP_SR_Packet *sr)
 }
 
 int
-RTCP_Channel_In::updateStatistics(RTCP_RR_Packet */*rr*/)
+RTCP_Channel_In::updateStatistics(RTCP_RR_Packet * /*rr*/)
 {
   return 0;
 }
