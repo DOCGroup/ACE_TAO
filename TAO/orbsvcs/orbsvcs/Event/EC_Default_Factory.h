@@ -52,7 +52,7 @@ public:
   static int init_svcs (void);
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
   // = The EC_Factory methods

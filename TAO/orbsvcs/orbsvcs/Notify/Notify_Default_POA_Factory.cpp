@@ -24,7 +24,7 @@ TAO_Notify_Default_POA_Factory::~TAO_Notify_Default_POA_Factory ()
 }
 
 int
-TAO_Notify_Default_POA_Factory::init (int /*argc*/, char* /*argv*/[])
+TAO_Notify_Default_POA_Factory::init (int /*argc*/, ACE_TCHAR* /*argv*/[])
 {
   return 0;
 }

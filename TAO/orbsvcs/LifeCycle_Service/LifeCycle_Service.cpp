@@ -13,8 +13,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "LifeCycle_Service.h"
+#include "ace/Argv_Type_Converter.h"
+#include "tao/corba.h"
 
 ACE_RCSID(LifeCycle_Service, LifeCycle_Service, "$Id$")
 
@@ -43,22 +44,24 @@ Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
 
 int
 Life_Cycle_Service_Server::init (int argc,
-                                     char *argv[]
-                                     ACE_ENV_ARG_DECL)
+                                 ACE_TCHAR *argv[]
+                                  ACE_ENV_ARG_DECL)
 {
   int retval = 0;
 
-  retval = this->orb_manager_.init (argc,
-                                    argv
+  // Copy command line parameter.
+  ACE_Argv_Type_Converter command(argc, argv);
+
+  retval = this->orb_manager_.init (command.get_argc(),
+                                    command.get_ASCII_argv()
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init"),
+                       ACE_LIB_TEXT("%p\n"),
+                       ACE_LIB_TEXT("init")),
                       -1);
-
 
   // Activate the POA manager
   retval = this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -68,12 +71,8 @@ Life_Cycle_Service_Server::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
   ACE_CHECK_RETURN (-1);
-  // Copy them, because parse_args expects them there.
-  this->argc_ = argc;
-  this->argv_ = argv;
 
-  this->parse_args ();
-
+  this->parse_args (command.get_argc(), command.get_TCHAR_argv());
 
   ACE_NEW_RETURN (this->life_Cycle_Service_i_ptr_,
                   Life_Cycle_Service_i(this->debug_level_),
@@ -86,14 +85,14 @@ Life_Cycle_Service_Server::init (int argc,
   ACE_CHECK_RETURN (-1);
 
   if (this->debug_level_ >= 2)
-    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", str.in ()));
+    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
   // Register the LifeCycle Service with the Naming Service.
   ACE_TRY
     {
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    "LifeCycle_Service: Trying to get a reference to the Naming Service.\n"));
+                    ACE_LIB_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
@@ -116,7 +115,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    "LifeCycle_Service: Have a proper reference to the Naming Service.\n"));
+                    ACE_LIB_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
 
       CosNaming::Name life_Cycle_Service_Name (1);
       life_Cycle_Service_Name.length (1);
@@ -132,7 +131,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    "LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n"));
+                    ACE_LIB_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
     }
   ACE_CATCHANY
     {
@@ -149,7 +148,7 @@ Life_Cycle_Service_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
-                "\nLifeCycle Service: Life_Cycle_Service_Server is running\n"));
+                ACE_LIB_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
 
   orb_manager_.orb()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -161,9 +160,10 @@ Life_Cycle_Service_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 // Function get_options.
 
 u_int
-Life_Cycle_Service_Server::parse_args (void)
+Life_Cycle_Service_Server::parse_args (int argc,
+                                       ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "?d:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("?d:"));
   int opt;
   int exit_code = 0;
 
@@ -177,14 +177,14 @@ Life_Cycle_Service_Server::parse_args (void)
         exit_code = 1;
         ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
-                    this->argv_[0], char(opt)));
+                    argv[0], char(opt)));
       case '?':
         ACE_DEBUG ((LM_DEBUG,
-                    "usage:  %s"
-                    " [-d] <debug level> - Set the debug level\n"
-                    " [-?]               - Prints this message\n"
-                    "\n",
-                    this->argv_[0]));
+                    ACE_LIB_TEXT("usage:  %s")
+                    ACE_LIB_TEXT(" [-d] <debug level> - Set the debug level\n")
+                    ACE_LIB_TEXT(" [-?]               - Prints this message\n")
+                    ACE_LIB_TEXT("\n"),
+                    argv[0]));
         ACE_OS::exit (exit_code);
         break;
       }
@@ -194,7 +194,7 @@ Life_Cycle_Service_Server::parse_args (void)
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
   Life_Cycle_Service_Server life_Cycle_Service_Server;
 

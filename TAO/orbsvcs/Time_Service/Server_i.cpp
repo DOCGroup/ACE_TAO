@@ -3,6 +3,7 @@
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Time_Service, Server_i, "$Id$")
 
@@ -23,9 +24,10 @@ Server_i::~Server_i (void)
 // Parse the command-line arguments and set options.
 
 int
-Server_i::parse_args (void)
+Server_i::parse_args (int argc,
+                      ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -36,22 +38,22 @@ Server_i::parse_args (void)
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), "a");
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("a"));
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n",
+                             ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
         break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "[SERVER] Process/Thread Id : (%P/%t)"
-                           "usage:  %s"
-                           " [-d]"
-                           " [-o] <ior_output_file>"
-                           "\n",
-                           argv_ [0]),
+                           ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
+                           ACE_LIB_TEXT("usage:  %s")
+                           ACE_LIB_TEXT(" [-d]")
+                           ACE_LIB_TEXT(" [-o] <ior_output_file>")
+                           ACE_LIB_TEXT("\n"),
+                           argv[0]),
                           1);
       }
 
@@ -63,13 +65,15 @@ Server_i::parse_args (void)
 // with it.
 
 int
-Server_i::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::init_naming_service (int argc,
+                               char* argv[]
+                               ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       // Initialize the POA.
-      this->orb_manager_.init_child_poa (this->argc_,
-                                         this->argv_,
+      this->orb_manager_.init_child_poa (argc,
+                                         argv,
                                          "child_poa"
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -90,7 +94,7 @@ Server_i::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from init_naming_service ()\n");
+                           ACE_LIB_TEXT("(%P|%t) Exception from init_naming_service ()\n"));
 
       return -1;
     }
@@ -145,9 +149,9 @@ Server_i::create_server (void)
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-                  "[SERVER] Process/Thread Id : (%P/%t) The Time Service "
-                  "SERVER IOR: <%s>\n",
-                   objref_server.in ()));
+                  ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service ")
+                  ACE_LIB_TEXT("SERVER IOR: <%s>\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(objref_server.in ())));
 
       // Print the IOR to a file.
 
@@ -163,7 +167,7 @@ Server_i::create_server (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in Server_i::create_server ()");
+                           ACE_LIB_TEXT("Exception in Server_i::create_server ()"));
       return -1;
     }
   ACE_ENDTRY;
@@ -246,13 +250,13 @@ Server_i::register_server (void)
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Binding ServerContext -> %s\n",
-                  server_name[1].id.in ()));
+                  ACE_LIB_TEXT("Binding ServerContext -> %s\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(server_name[1].id.in ())));
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Exception from Register Server ()\n");
+                           ACE_LIB_TEXT("(%P|%t) Exception from Register Server ()\n"));
       return -1;
     }
   ACE_ENDTRY;
@@ -266,33 +270,32 @@ Server_i::register_server (void)
 
 int
 Server_i::init (int argc,
-                char *argv[]
+                ACE_TCHAR *argv[]
                 ACE_ENV_ARG_DECL)
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   ACE_TRY
     {
+      // Make a copy of command line parameter.
+      ACE_Argv_Type_Converter command(argc, argv);
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
 
-      if (this->orb_manager_.init_child_poa (argc,
-                                             argv,
+      if (this->orb_manager_.init_child_poa (command.get_argc(),
+                                             command.get_ASCII_argv(),
                                              "time_server"
                                              ACE_ENV_ARG_PARAMETER) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                                 "%p\n",
-                                 "init_child_poa"),
-                                -1);
+                           ACE_LIB_TEXT("%p\n"),
+                           ACE_LIB_TEXT("init_child_poa")),
+                           -1);
       ACE_TRY_CHECK;
 
       // Activate the POA Manager.
       this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = this->parse_args ();
+      int result = this->parse_args (command.get_argc(), command.get_TCHAR_argv());
 
       if (result != 0)
         return result;
@@ -301,7 +304,9 @@ Server_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Use the Naming Service Register the above implementation with the Naming Service.
-      this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->init_naming_service (command.get_argc(),
+                                 command.get_ASCII_argv()
+                                 ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -314,7 +319,7 @@ Server_i::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception:"));
       return -1;
     }
   ACE_ENDTRY;
@@ -333,7 +338,7 @@ Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
+                       ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
                       -1);
   return 0;
 }

@@ -7,7 +7,7 @@ ACE_RCSID(TimeService, Time_Service_Clerk, "$Id$")
 // This is the main driver program for the Time Service clerk.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Clerk_i clerk;
 

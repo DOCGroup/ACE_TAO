@@ -10,7 +10,7 @@
 // Driver function for the TAO Notify Service.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Init factories.
   TAO_Notify_Default_CO_Factory::init_svc ();
@@ -24,7 +24,7 @@ main (int argc, char *argv[])
 
   if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Failed to start the Notification Service.\n"),
+                       ACE_LIB_TEXT("Failed to start the Notification Service.\n")),
                       1);
 
   ACE_TRY
@@ -37,7 +37,7 @@ main (int argc, char *argv[])
     {
       notify_service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Failed to start the Notification Service\n");
+                           ACE_LIB_TEXT("Failed to start the Notification Service\n"));
       return 1;
     }
   ACE_ENDTRY;

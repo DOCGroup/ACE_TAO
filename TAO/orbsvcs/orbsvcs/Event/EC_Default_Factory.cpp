@@ -49,7 +49,7 @@ TAO_EC_Default_Factory::init_svcs (void)
 }
 
 int
-TAO_EC_Default_Factory::init (int argc, char* argv[])
+TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -61,18 +61,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECDispatching") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->dispatching_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "mt") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("mt")) == 0)
                 this->dispatching_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -83,30 +83,30 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECDispatchingThreads") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECDispatchingThreads")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECFiltering") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECFiltering")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->filtering_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
                 this->filtering_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "prefix") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("prefix")) == 0)
                 this->filtering_ = 2;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -117,18 +117,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierFilter") == 0
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierFilter")) == 0
                // @@ TODO remove, only for backwards compatibility
-               || ACE_OS::strcasecmp (arg, "-ECSupplierFiltering") == 0)
+               || ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierFiltering")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->supplier_filtering_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "per-supplier") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("per-supplier")) == 0)
                 this->supplier_filtering_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -139,14 +139,14 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECTimeout") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->timeout_ = 0;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -157,16 +157,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECObserver") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECObserver")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->observer_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
                 this->observer_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -177,58 +177,58 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECScheduling") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECScheduling")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->scheduling_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "group") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("group")) == 0)
                 this->scheduling_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
-                            "EC_Default_Factory - "
-                            "unsupported scheduling <%s>\n",
+                            ACE_LIB_TEXT("EC_Default_Factory - ")
+                            ACE_LIB_TEXT("unsupported scheduling <%s>\n"),
                             opt));
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxyPushConsumerCollection") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECProxyPushConsumerCollection")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char *current_arg = arg_shifter.get_current ();
-              char *opt = ACE_OS::strdup (current_arg);
+              const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+              ACE_TCHAR *opt = ACE_OS::strdup (current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
-              char *aux;
-              for (char *arg = ACE_OS::strtok_r (opt, ":", &aux);
+              ACE_TCHAR* aux;
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_LIB_TEXT(":"), &aux);
                    arg != 0;
-                   arg = ACE_OS::strtok_r (0, ":", &aux))
+                   arg = ACE_OS::strtok_r (0, ACE_LIB_TEXT(":"), &aux))
                 {
-                  if (ACE_OS::strcasecmp (arg, "mt") == 0)
+                  if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("mt")) == 0)
                     synch_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "st") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("st")) == 0)
                     synch_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "list") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("list")) == 0)
                     collection_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "rb_tree") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("rb_tree")) == 0)
                     collection_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "immediate") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("immediate")) == 0)
                     iteration_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "copy_on_read") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_read")) == 0)
                     iteration_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "copy_on_write") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_write")) == 0)
                     iteration_type = 2;
-                  else if (ACE_OS::strcasecmp (arg, "delayed") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("delayed")) == 0)
                     iteration_type = 3;
                   else
                     ACE_ERROR ((LM_ERROR,
@@ -243,38 +243,38 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxyPushSupplierCollection") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECProxyPushSupplierCollection")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char *current_arg = arg_shifter.get_current();
-              char* opt = ACE_OS::strdup(current_arg);
+              const ACE_TCHAR* current_arg = arg_shifter.get_current();
+              ACE_TCHAR* opt = ACE_OS::strdup(current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
-              char* aux;
-              for (char* arg = ACE_OS::strtok_r (opt, ":", &aux);
+              ACE_TCHAR* aux;
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_LIB_TEXT(":"), &aux);
                    arg != 0;
-                   arg = ACE_OS::strtok_r (0, ":", &aux))
+                   arg = ACE_OS::strtok_r (0, ACE_LIB_TEXT(":"), &aux))
                 {
-                  if (ACE_OS::strcasecmp (arg, "mt") == 0)
+                  if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("mt")) == 0)
                     synch_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "st") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("st")) == 0)
                     synch_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "list") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("list")) == 0)
                     collection_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "rb_tree") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("rb_tree")) == 0)
                     collection_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "immediate") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("immediate")) == 0)
                     iteration_type = 0;
-                  else if (ACE_OS::strcasecmp (arg, "copy_on_read") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_read")) == 0)
                     iteration_type = 1;
-                  else if (ACE_OS::strcasecmp (arg, "copy_on_write") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_write")) == 0)
                     iteration_type = 2;
-                  else if (ACE_OS::strcasecmp (arg, "delayed") == 0)
+                  else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("delayed")) == 0)
                     iteration_type = 3;
                   else
                     ACE_ERROR ((LM_ERROR,
@@ -289,18 +289,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxyConsumerLock") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECProxyConsumerLock")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->consumer_lock_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "thread") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("thread")) == 0)
                 this->consumer_lock_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "recursive") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
                 this->consumer_lock_ = 2;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -311,18 +311,18 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECProxySupplierLock") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECProxySupplierLock")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->supplier_lock_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "thread") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("thread")) == 0)
                 this->supplier_lock_ = 1;
-              else if (ACE_OS::strcasecmp (opt, "recursive") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
                 this->supplier_lock_ = 2;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -333,28 +333,28 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECUseORBId") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECUseORBId")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               // Save argument for later use
-              this->orbid_ = arg_shifter.get_current ();
+              this->orbid_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECConsumerControl") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECConsumerControl")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->consumer_control_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->consumer_control_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -365,16 +365,16 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierControl") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierControl")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "null") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
                 this->supplier_control_ = 0;
-              else if (ACE_OS::strcasecmp (opt, "reactive") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->supplier_control_ = 1;
               else
                 ACE_ERROR ((LM_ERROR,
@@ -385,31 +385,31 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECConsumerControlPeriod") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECConsumerControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierControlPeriod") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECPushSupplierSet") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECPushSupplierSet")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
@@ -417,7 +417,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
           arg_shifter.consume_arg ();
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECConsumerAdminLock") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECConsumerAdminLock")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
@@ -425,7 +425,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
           arg_shifter.consume_arg ();
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECSupplierAdminLock") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECSupplierAdminLock")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "EC_Default_Factory - "
@@ -433,7 +433,7 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
           arg_shifter.consume_arg ();
         }
 
-      else if (ACE_OS::strncmp (arg, "-EC", 3) == 0)
+      else if (ACE_OS::strncmp (arg, ACE_LIB_TEXT("-EC"), 3) == 0)
         {
           arg_shifter.consume_arg ();
           ACE_ERROR ((LM_ERROR,

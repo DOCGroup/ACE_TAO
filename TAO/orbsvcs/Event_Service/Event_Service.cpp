@@ -4,6 +4,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -16,7 +17,7 @@
 
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -30,9 +31,6 @@ Event_Service::Event_Service (void)
   : module_factory_ (0),
     sched_impl_ (0),
     ec_impl_ (0),
-    service_name_ (0),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
     event_service_type_ (ES_NEW),
     global_scheduler_ (0)
 {
@@ -49,16 +47,19 @@ Event_Service::~Event_Service (void)
 }
 
 int
-Event_Service::run (int argc, char* argv[])
+Event_Service::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {
+      // Make a copy of command line parameter.
+      ACE_Argv_Type_Converter command(argc, argv);
+
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->parse_args (argc, argv) == -1)
+      if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
         return 1;
 
       CORBA::Object_var poa_object =
@@ -189,9 +190,9 @@ Event_Service::run (int argc, char* argv[])
         this->orb_->object_to_string (ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->ior_file_name_ != 0)
+      if (this->ior_file_name_.c_str() != 0)
         {
-          FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
+	  FILE *output_file= ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()), ACE_LIB_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -201,9 +202,9 @@ Event_Service::run (int argc, char* argv[])
           ACE_OS::fclose (output_file);
         }
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_.c_str() != 0)
         {
-          FILE *pidf = fopen (this->pid_file_name_, "w");
+          FILE *pidf = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()), ACE_LIB_TEXT("w"));
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
@@ -214,15 +215,17 @@ Event_Service::run (int argc, char* argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The EC IOR is <%s>\n", str.in ()));
+                  ACE_LIB_TEXT("The EC IOR is <%s>\n"), ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
-      channel_name[0].id = CORBA::string_dup (this->service_name_);
+      channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
       naming_context->rebind (channel_name, ec.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT("%s; running event service\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(__FILE__)));
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -247,12 +250,12 @@ Event_Service::run (int argc, char* argv[])
 }
 
 int
-Event_Service::parse_args (int argc, char *argv [])
+Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 {
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, "n:o:p:s:t:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:s:t:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -260,15 +263,15 @@ Event_Service::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.opt_arg ();
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.opt_arg ();
+          this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 's':
@@ -276,42 +279,42 @@ Event_Service::parse_args (int argc, char *argv [])
           // argument, but this is consistent with the EC_Multiple
           // test and also allows for a runtime scheduling service.
 
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "global") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
             {
               this->global_scheduler_ = 1;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "local") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
             {
               this->global_scheduler_ = 0;
             }
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Unknown scheduling type <%s> "
-                          "defaulting to local\n",
+                          ACE_LIB_TEXT("Unknown scheduling type <%s> ")
+                          ACE_LIB_TEXT("defaulting to local\n"),
                           get_opt.opt_arg ()));
               this->global_scheduler_ = 0;
             }
           break;
 
         case 't':
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "NEW") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("NEW")) == 0)
             {
               this->event_service_type_ = ES_NEW;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_REACTIVE") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("OLD_REACTIVE")) == 0)
             {
               this->event_service_type_ = ES_OLD_REACTIVE;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_MT") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("OLD_MT")) == 0)
             {
               this->event_service_type_ = ES_OLD_MT;
             }
           else
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Unknown event service type <%s> "
-                          "defaulting to REACTIVE\n",
+                          ACE_LIB_TEXT("Unknown event service type <%s> ")
+                          ACE_LIB_TEXT("defaulting to REACTIVE\n"),
                           get_opt.opt_arg ()));
               this->event_service_type_ = ES_NEW;
             }
@@ -320,13 +323,13 @@ Event_Service::parse_args (int argc, char *argv [])
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      "-n service_name "
-                      "-o ior_file_name "
-                      "-p pid_file_name "
-                      "-s <global|local> "
-                      "-t <new|old_reactive|old_mt> "
-                      "\n",
+                      ACE_LIB_TEXT("Usage: %s ")
+                      ACE_LIB_TEXT("-n service_name ")
+                      ACE_LIB_TEXT("-o ior_file_name ")
+                      ACE_LIB_TEXT("-p pid_file_name ")
+                      ACE_LIB_TEXT("-s <global|local> ")
+                      ACE_LIB_TEXT("-t <new|old_reactive|old_mt> ")
+                      ACE_LIB_TEXT("\n"),
                       argv[0]));
           return -1;
         }

@@ -197,7 +197,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
           continue;
         }
 
-      char buf[256];
+      ACE_TCHAR buf[256];
       multicast_group.addr_to_string (buf, sizeof buf, 1);
       ACE_SOCK_Dgram_Mcast *socket = (*j).int_id_;
       // Ignore errors, there is no appropriate policy to handle them
@@ -223,7 +223,7 @@ TAO_ECG_Mcast_EH::subscribe_to_existing_socket (
       ACE_SOCK_Dgram_Mcast *socket = this->sockets_[i];
       result =
         socket->subscribe (multicast_group, 1, this->net_if_);
-      if (result == 0)
+      if (result != -1)
         {
           // Add the subscription to the subscription list
           (void) this->subscriptions_.bind (multicast_group, socket);
@@ -279,7 +279,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (
       // This is the multicast group we want to add to...
       ACE_INET_Addr multicast_group = *k;
 
-      char buf[256];
+      ACE_TCHAR buf[256];
       multicast_group.addr_to_string (buf, sizeof buf, 1);
 
       // Try to find a socket that has space for another multicast

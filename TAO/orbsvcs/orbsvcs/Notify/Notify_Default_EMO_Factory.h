@@ -67,7 +67,7 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   // configurator.
 
   // = The Service_Object entry points
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
   virtual int fini (void);
 
   virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL);

@@ -38,7 +38,7 @@ public:
   ~TAO_Trading_Loader (void);
   // Destructor
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Called by the Service Configurator framework to initialize the
   // Event Service. Defined in <ace/Service_Config.h>
 
@@ -50,7 +50,8 @@ public:
   // Run the Trading Service
 
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                   int argc, char *argv[]
+                                   int argc,
+                                   ACE_TCHAR *argv[]
                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function call initializes the Trading Service given a reference to the
@@ -65,7 +66,7 @@ public:
   int bootstrap_to_federation (ACE_ENV_SINGLE_ARG_DECL);
   // Bootstrap to another trader, and attach to its trader network.
 
-  int parse_args (int &argc, char *argv []);
+  int parse_args (int &argc, ACE_TCHAR *argv []);
   // Parses the command line arguments
 
   TAO_ORB_Manager orb_manager_;

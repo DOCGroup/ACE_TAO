@@ -41,14 +41,16 @@ public:
   // Destructor.
 
   int init (int argc,
-            char *argv[]
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // Initialize the Server state.
 
   int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
-  int init_naming_service (ACE_ENV_SINGLE_ARG_DECL);
+  int init_naming_service (int argc,
+                           char* argv[]
+                           ACE_ENV_SINGLE_ARG_DECL);
   // Initialises the name server.
 
   int create_server (void);
@@ -57,7 +59,8 @@ public:
   int register_server (void);
   // Register the time server object with the Naming Service.
 
-  int parse_args (void);
+  int parse_args (int argc,
+                  ACE_TCHAR* argv[]);
   // Parse the commandline arguments.
 
   int if_first_server (CosNaming::Name &server_context_name);
@@ -87,12 +90,6 @@ private:
 
   CosNaming::NamingContext_var time_service_server_context_;
   // Naming context for the Naming Service.
-
-  int argc_;
-  // Number of command line arguments.
-
-  char **argv_;
-  // The command line arguments.
 };
 
 #endif /* SERVER_I_H */
