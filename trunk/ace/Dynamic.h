@@ -29,8 +29,12 @@ class ACE_Export ACE_Dynamic
   //     This class holds the pointer in a thread-safe manner between
   //     the call to operator new and the call to the constructor.
 public:
+  // = Initialization and termination method.
   ACE_Dynamic (void);
+  // Constructor.
+
   ~ACE_Dynamic (void);
+  // Destructor.
 
   void set (void);
   // Sets a flag that indicates that the object was dynamically
