@@ -483,7 +483,7 @@ namespace TAO
 
     CORBA::Exception *exception =
       this->details_.corba_exception (buf.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     exception->_tao_decode (cdr
