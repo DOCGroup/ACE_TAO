@@ -33,7 +33,7 @@ template class TAO_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPT
 
 #pragma instantiate ACE_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_SHMIOP_Server_Connection_Handler, ACE_MEM_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
 #pragma instantiate ACE_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<TAO_SHMIOP_Connection_Handler>

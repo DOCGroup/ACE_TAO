@@ -61,13 +61,13 @@ template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, const CORBA::Any*, TAO
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, const CORBA::Any*>;
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>;
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, const CORBA::Any*>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, const CORBA::Any*, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, const CORBA::Any *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

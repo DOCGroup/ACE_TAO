@@ -466,5 +466,5 @@ ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Array_Base<char *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-pragma instantiate ACE_Array_Base<char *>
+#pragma instantiate ACE_Array_Base<char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
