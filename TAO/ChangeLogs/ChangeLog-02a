@@ -2,6 +2,8 @@ Mon Apr 15 08:05:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h: Included
 	  security_export.h for the file to compile fine. 
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
 	* orbsvcs/orbsvcs/Makefile.Security: Fixed the dependency yet
 	  again :(.
 	
@@ -15,7 +17,7 @@ Mon Apr 15 08:05:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  connect. Removed portions of the code that looked up connection
 	  from cache since this code has been moved to the common base
 	  class. 
-	
+
 Mon Apr 15 07:37:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
