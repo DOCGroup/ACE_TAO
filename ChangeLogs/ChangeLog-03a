@@ -1,3 +1,16 @@
+Tue Jan 14 18:51:49 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/Auto_Ptr.h: Added pragma to disable warning 4284 for Microsoft
+          compilers. The warned-of behavior is exactly what is intended.
+
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+          Added a "WCE emulator" configuration section. This allows builds
+          for the WinCE emulator, necessary for working with the WinCE.NET
+          Standard SDK emulator.
+
 Tue Jan 14 14:56:12 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: For WinCE, don't include wce.h unless
