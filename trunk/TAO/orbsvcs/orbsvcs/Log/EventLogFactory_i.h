@@ -48,7 +48,7 @@ class TAO_EventLogNotification;
  *
  * @brief The EventLogFactory is a factory that is used to create EventLogs which are event-aware.
  */
-class TAO_EventLog_Export TAO_EventLogFactory_i :
+class TAO_EventLog_Serv_Export TAO_EventLogFactory_i :
   public POA_DsEventLogAdmin::EventLogFactory,
   public TAO_LogMgr_i
 

@@ -42,7 +42,7 @@
  *
  * @brief The BasicLogFactory is a factory that is used to create event-unaware Logs.
  */
-class TAO_Log_Export TAO_BasicLogFactory_i : 
+class TAO_Log_Serv_Export TAO_BasicLogFactory_i : 
   public POA_DsLogAdmin::BasicLogFactory,
   public TAO_LogMgr_i
 {

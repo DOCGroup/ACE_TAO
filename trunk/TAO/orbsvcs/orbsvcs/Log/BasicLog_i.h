@@ -28,7 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Log/Log_i.h"
-#include "log_export.h"
+#include "log_serv_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -48,7 +48,7 @@ class TAO_LogMgr_i;
  *
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_Log_Export TAO_BasicLog_i :
+class TAO_Log_Serv_Export TAO_BasicLog_i :
   public TAO_Log_i,
   public POA_DsLogAdmin::BasicLog,
   public virtual PortableServer::RefCountServantBase

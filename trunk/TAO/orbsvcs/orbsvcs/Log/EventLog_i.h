@@ -32,7 +32,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/Log/EventLogConsumer.h"
 
-#include "eventlog_export.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

@@ -26,6 +26,7 @@
 
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Mutex.h"
+#include "log_serv_export.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250
 
@@ -46,7 +47,7 @@ struct PersistentData
  * This implementation is to serve for illustration purposes.
  */
 
-class TAO_Log_Export TAO_PersistStore
+class TAO_Log_Serv_Export TAO_PersistStore
 {
  public:
 

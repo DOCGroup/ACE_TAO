@@ -26,7 +26,7 @@
 
 #include "orbsvcs/Log/Log_i.h"
 
-#include "log_export.h"
+#include "log_serv_export.h"
 
 /**
  * @class TAO_LogMgr_i
@@ -36,7 +36,7 @@
  * This factory base class is used to maintain a list of logs 
  * created by it. Logs can also be removed from the list.
  */
-class TAO_Log_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
+class TAO_Log_Serv_Export TAO_LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
 

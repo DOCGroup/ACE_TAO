@@ -30,7 +30,7 @@
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
-#include "log_export.h"
+#include "log_serv_export.h"
 #include "PersistStore.h"
 
 #define PERSISTENT_LOG_FILE_NAME "LOG.DATA"
@@ -48,7 +48,7 @@
  * entries. Other features include searching by time ranges.
  * @@ pradeep: The ACE_RB_Tree will come later.
  */
-class TAO_Log_Export TAO_LogRecordStore
+class TAO_Log_Serv_Export TAO_LogRecordStore
 {
  public:
   // = Initialization and termination methods
