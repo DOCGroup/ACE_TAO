@@ -7,28 +7,27 @@
 //    ace
 //
 // = FILENAME
-//    Hash_Map_Manager.h
+//    Map.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Irfan Pyarali
 //
 // ============================================================================
 
-#ifndef ACE_HASH_MAP_MANAGER_H
-#define ACE_HASH_MAP_MANAGER_H
+#ifndef ACE_MAP_H
+#define ACE_MAP_H
 
 #include "ace/OS.h"
-#include "ace/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hash_Map_Manager.i"
+#include "ace/Map.i"
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Map_T.h"
 
-#endif /* ACE_HASH_MAP_MANAGER_H */
+#endif /* ACE_MAP_H */

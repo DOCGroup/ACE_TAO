@@ -295,6 +295,40 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
                                                                                      const INT_ID &int_id,
+                                                                                     ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
+{
+  u_long dummy;
+  if (this->shared_find (ext_id, entry, dummy) == -1)
+    return this->bind_i (ext_id, int_id);
+  else
+    {
+      entry->ext_id_ = ext_id;
+      entry->int_id_ = int_id;
+      return 1;
+    }
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+                                                                                     const INT_ID &int_id,
+                                                                                     INT_ID &old_int_id,
+                                                                                     ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
+{
+  u_long dummy;
+  if (this->shared_find (ext_id, entry, dummy) == -1)
+    return this->bind_i (ext_id, int_id);
+  else
+    {
+      old_int_id = entry->int_id_;
+      entry->ext_id_ = ext_id;
+      entry->int_id_ = int_id;
+      return 1;
+    }
+}
+
+template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+                                                                                     const INT_ID &int_id,
                                                                                      EXT_ID &old_ext_id,
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)

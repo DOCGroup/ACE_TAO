@@ -34,6 +34,7 @@ main (int, ASYS_TCHAR *[])
   ACE_START_TEST (ASYS_TEXT ("SString_Test"));
 
   {
+    ACE_CString s0 ("hello");
     ACE_CString s1 ("hello");
     ACE_CString s2 ("world");
     ACE_CString s3 ("ll");
@@ -46,24 +47,41 @@ main (int, ASYS_TCHAR *[])
     ACE_CString empty_string;
     ACE_CString zero_size_string (s1.c_str (), 0, 0, 1);
 
+    // Not equal comparisons.
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
+
+    // Equal comparisons.
+    ACE_ASSERT (s1 == s1);
+    ACE_ASSERT (s1 == s0);
+
+    // Substring match.
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
     ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
+    // Substring creation.
+    ACE_ASSERT (s1.substring (0) == s1);
+    ACE_ASSERT (s1.substring (1) == s4);
+    ACE_ASSERT (s1.substring (2, 2) == s3);
+    ACE_ASSERT (s1.substring (0, 0) == empty_string);
+
+    // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
     ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
+
+    // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
   }
 
   {
+    ACE_CString s0 ("hello", 0, 0);
     ACE_CString s1 ("hello", 0, 0);
     ACE_CString s2 ("world", 0, 0);
     ACE_CString s3 ("ll", 0, 0);
@@ -76,24 +94,41 @@ main (int, ASYS_TCHAR *[])
     ACE_CString empty_string (0, 0, 0);
     ACE_CString zero_size_string (s1.c_str (), 0, 0, 0);
 
+    // Not equal comparisons.
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
+
+    // Equal comparisons.
+    ACE_ASSERT (s1 == s1);
+    ACE_ASSERT (s1 == s0);
+
+    // Substring match.
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
     ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
+    // Substring creation.
+    ACE_ASSERT (s1.substring (0) == s1);
+    ACE_ASSERT (s1.substring (1) == s4);
+    ACE_ASSERT (s1.substring (2, 2) == s3);
+    ACE_ASSERT (s1.substring (0, 0) == empty_string);
+
+    // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
     ACE_ASSERT (s3.find (s1, 1) == ACE_CString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_CString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
+
+    // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
   }
 
   {
+    ACE_WString s0 ("hello");
     ACE_WString s1 ("hello");
     ACE_WString s2 ("world");
     ACE_WString s3 ("ll");
@@ -106,19 +141,35 @@ main (int, ASYS_TCHAR *[])
     ACE_WString empty_string;
     ACE_WString zero_size_string (s1.c_str (), 0, 0);
 
+    // Not equal comparisons.
     ACE_ASSERT (s1 != s2);
     ACE_ASSERT (s1 != s5);
+
+    // Equal comparisons.
+    ACE_ASSERT (s1 == s1);
+    ACE_ASSERT (s1 == s0);
+
+    // Substring match.
     ACE_ASSERT (s1.strstr (s2) == -1);
     ACE_ASSERT (s1.strstr (s3) == 2);
     ACE_ASSERT (s3.strstr (s1) == -1);
     ACE_ASSERT (s1.strstr (s4) == 1);
 
+    // Substring creation.
+    ACE_ASSERT (s1.substring (0) == s1);
+    ACE_ASSERT (s1.substring (1) == s4);
+    ACE_ASSERT (s1.substring (2, 2) == s3);
+    ACE_ASSERT (s1.substring (0, 0) == empty_string);
+
+    // Forward search.
     ACE_ASSERT (s1.find (s3) == 2);
     ACE_ASSERT (s3.find (s1) == ACE_WString::npos);
     ACE_ASSERT (s1.find (s3, 2) == 0);
     ACE_ASSERT (s3.find (s1, 1) == ACE_WString::npos);
     ACE_ASSERT (s1.find (s2) == ACE_WString::npos);
     ACE_ASSERT (s1.find ('o') == 4);
+
+    // Reverse search.
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
   }
