@@ -1,3 +1,11 @@
+Sun Aug 17 15:31:29 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS.h (ACE_CLEANUP_FUNC):
+	* ace/config-all.h
+
+	  Moved this typedef to config-all.h.  Allows sources to use this
+	  typedef without including the compile-time expensive OS.h.
+
 Fri Aug 15 14:02:22 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
